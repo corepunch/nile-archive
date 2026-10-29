@@ -1,39 +1,8 @@
 <!doctype html>
-<html>
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest">
-<title>Loading…</title>
-<style>
-  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #111; overscroll-behavior: none; }
-  /* SDL sizes the drawing buffer from the CSS size times devicePixelRatio */
-  #canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; touch-action: none; outline: none; }
-  #loading { position: fixed; inset: 0; display: grid; place-content: center; gap: 14px; text-align: center;
-             font: 600 18px system-ui, sans-serif; color: #e9d9b0; background: #111; transition: opacity .4s; }
-  #loading.done { opacity: 0; pointer-events: none; }
-  #bar { width: 220px; height: 6px; border-radius: 3px; background: #333; overflow: hidden; }
-  #bar i { display: block; height: 100%; width: 0; background: #e2b469; transition: width .2s; }
-</style>
-</head>
-<body>
-<canvas id="canvas" tabindex="-1" oncontextmenu="event.preventDefault()"></canvas>
-<div id="loading"><div id="status">Loading…</div><div id="bar"><i></i></div></div>
-<script>
-  var bar = document.querySelector('#bar i'), status = document.getElementById('status');
-  var Module = {
-    canvas: document.getElementById('canvas'),
-    setStatus: function (text) {
-      var m = text && text.match(/\((\d+(?:\.\d+)?)\/(\d+)\)/);
-      if (m) bar.style.width = (100 * m[1] / m[2]) + '%';
-    },
-    onAbort: function () { status.textContent = 'Could not start the game. Please reload.'; }
-  };
-  addEventListener('engine-ready', function () { document.getElementById('loading').classList.add('done'); });
-  document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
-</script>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000;overscroll-behavior:none}canvas{position:fixed;inset:0;width:100vw;height:100dvh;touch-action:none;outline:none}</style>
+<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+<script>var Module = {canvas: document.getElementById('canvas')};</script>
 {{{ SCRIPT }}}
-</body>
-</html>
