@@ -301,6 +301,44 @@ static void draw_layer(metrics m, vec2 origin_px, const char *s, int spread, int
     batch_flush();
 }
 
+rect text_ink(text_style s, const char *utf8)
+{
+    if (!s.font || !utf8) return rect_make(v2(0, 0), sz2(0, 0));
+    metrics m = metrics_for(s);
+    float ascent = s.font->ascent * px_scale(s.font, m.px), pen = 0;
+    vec2 lo = v2(1e9f, 1e9f), hi = v2(-1e9f, -1e9f);
+    for (const char *p = utf8; *p;) {
+        uint32_t cp;
+        font *f;
+        float adv = advance_px(m, &p, &cp, &f);
+        float scale = px_scale(f, m.px);
+        int x0, y0, x1, y1;
+        stbtt_GetCodepointBitmapBox(&f->info, (int)cp, scale, scale, &x0, &y0, &x1, &y1);
+        if (x1 > x0 && y1 > y0) {
+            vec2 a = v2(roundf(pen) + x0, roundf(ascent) + y0), b = v2(roundf(pen) + x1, roundf(ascent) + y1);
+            lo = vec2_min(lo, a);
+            hi = vec2_max(hi, b);
+        }
+        pen += adv;
+    }
+    if (hi.x < lo.x) return rect_make(v2(0, 0), sz2(0, 0));
+    return rect_corners(vec2_scale(lo, m.unit), vec2_scale(hi, m.unit));
+}
+
+rect text_in(text_style s, rect box, vec2 align, const char *utf8)
+{
+    rect ink = text_ink(s, utf8);
+    if (ink.size.w <= 0 || ink.size.h <= 0) return rect_make(rect_point(box, align), sz2(0, 0));
+    float k = minf(1, minf(box.size.w / ink.size.w, box.size.h / ink.size.h));
+    if (k < 1) {
+        s.size *= k;
+        ink = text_ink(s, utf8);
+    }
+    rect target = rect_align(box, ink.size, align);
+    text_draw(s, vec2_sub(target.pos, ink.pos), v2(0, 0), utf8);
+    return target;
+}
+
 rect text_draw(text_style s, vec2 pos, vec2 pivot, const char *utf8)
 {
     if (!s.font || !utf8 || s.fade >= 1) return rect_make(pos, sz2(0, s.size));
@@ -372,6 +410,15 @@ rect text_box(text_style s, rect box, vec2 align, const char *utf8)
         n = wrap(m, utf8, box.size.w / m.unit, starts, ends, &widest);
         line_h = s.size * 1.22f;
         if (widest * m.unit <= box.size.w + .5f && n * line_h - (line_h - s.size) <= box.size.h + .5f) break;
+    }
+    if (n > 1) {   /* balance: the narrowest width that still needs only n lines */
+        float lo = widest / n, hi = widest;
+        for (int i = 0; i < 12 && hi - lo > 1; i++) {
+            float mid = (lo + hi) * .5f, w;
+            if (wrap(m, utf8, mid, starts, ends, &w) <= n) hi = mid;
+            else lo = mid;
+        }
+        n = wrap(m, utf8, hi, starts, ends, &widest);
     }
     size2 total = sz2(widest * m.unit, n * line_h - (line_h - s.size));
     rect area = rect_align(box, total, align);

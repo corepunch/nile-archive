@@ -26,10 +26,32 @@ shot nile-archive characters 1200x900 --screen cast
 shot nile-archive reward 1200x900 --screen win
 shot nile-archive widescreen 1600x900 --screen island
 
-shot relic-rush camp 1200x900 --screen camp
-shot relic-rush board 1200x900 --screen board
-shot relic-rush win 1200x900 --screen win
-shot relic-rush fail 1200x900 --screen fail
-shot relic-rush levels 1200x900 --screen levels
-shot relic-rush portrait-board 600x1200 --screen board
-shot relic-rush portrait-camp 600x1200 --screen camp
+# Relic Rush: portrait 480 x 900, stills plus two short animated reels
+shot relic-rush hex-first 480x900
+shot relic-rush hex-late 480x900 --level 8
+shot relic-rush island-village 480x900 --showcase
+shot relic-rush island-placement 480x900 --city 6 --placing
+shot relic-rush island-zones 480x900 --city 3 --overview
+shot relic-rush island-unlock 480x900 --city 3 --zone 1
+shot relic-rush victory 480x900 --victory
+shot relic-rush building-card 480x900 --card 1
+shot relic-rush effect-ray 480x900 --fx ray --frames 10
+shot relic-rush effect-bomb 480x900 --fx bomb --frames 10
+shot relic-rush effect-prism 480x900 --fx prism --frames 10
+for level in 1 2 3 4 5 6 7 8 9 10; do
+    "./build/relic-rush" --fresh --size 480x900 --frames 3 --level $level --shot "$tmp/shape-$level.png" > /dev/null
+done
+reel() { # name frames step args...
+    name=$1 frames=$2 step=$3
+    shift 3
+    i=0
+    while [ $i -lt "$frames" ]; do
+        "./build/relic-rush" --fresh --size 480x900 --frames $((i * step + 1)) --shot "$tmp/$name-$i.png" "$@" > /dev/null
+        i=$((i + 1))
+    done
+}
+reel fx-ray 18 2 --fx ray --reel
+reel fx-bomb 18 2 --fx bomb --reel
+reel fx-prism 18 2 --fx prism --reel
+reel result 36 3 --victory --reel
+python3 tools/make_reels.py "$tmp" games/relic-rush/docs/screenshots

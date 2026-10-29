@@ -20,9 +20,9 @@ jobs:
       - name: Smoke test (headless screenshot of every screen)
         run: |
           pip install pillow
-          ./tools/screenshots.sh
-      - name: Relic Rush bot plays a level through the real game loop
-        run: SDL_VIDEODRIVER=offscreen timeout 600 ./build/relic-rush --fresh --size 480x360 --autoplay 1
+          SDL_AUDIODRIVER=dummy ./tools/screenshots.sh
+      - name: Relic Rush smoke test (level one to level two through injected clicks)
+        run: SDL_VIDEODRIVER=offscreen SDL_AUDIODRIVER=dummy timeout 600 ./build/relic-rush --smoke --mute
       - uses: actions/upload-artifact@v4
         with:
           name: screenshots

@@ -199,6 +199,7 @@ typedef struct {
     size2 design;           /* design resolution; the logical screen keeps its short side */
     float max_aspect;       /* longest/shortest side ratio before letterboxing (0 = design) */
     bool landscape;         /* ask to rotate the device when the screen is portrait */
+    bool fixed;             /* keep exactly the design resolution and letterbox the rest */
     const char *rotate_text;/* message for the rotate prompt */
     color clear;            /* clear / letterbox colour */
     const char *data_dir;   /* asset root for relative paths (overridden by --data) */
@@ -216,6 +217,7 @@ void app_quit(void);
 rect app_screen(void);          /* logical screen, origin (0,0) */
 float app_pixel_scale(void);    /* device pixels per logical unit */
 double app_time(void);          /* seconds since start (frame time) */
+float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
@@ -272,6 +274,10 @@ void draw_ring(vec2 center, float radius, float thickness, color c);
 void draw_glow(vec2 center, float radius, color inner, color outer);
 void draw_line(vec2 a, vec2 b, float thickness, color c);
 void draw_poly(const vec2 *pts, int n, color c);   /* convex polygon */
+void draw_polyline(const vec2 *pts, int n, float thickness, color c);
+void draw_ngon(vec2 center, float radius, int sides, float angle, color c);
+void draw_star(vec2 center, float radius, float inner, int points, float angle, color c);  /* inner: ratio of radius */
+void gfx_additive(bool on);   /* additive blending for shapes (glows, sparks) */
 void gfx_clip(rect r);
 void gfx_unclip(void);
 
@@ -340,12 +346,26 @@ static inline text_style ts_fade(text_style s, float fade) { s.fade = fade; retu
 size2 text_measure(text_style s, const char *utf8);
 /* Draw one line with its pivot (0,0 top-left .. 1,1 bottom-right) at pos; returns its rect. */
 rect text_draw(text_style s, vec2 pos, vec2 pivot, const char *utf8);
-/* Word-wrapped text aligned inside box; shrinks the font (down to 60%) if it would not fit. */
+/* Word-wrapped text aligned inside box, lines balanced in length; shrinks the
+ * font (down to 60%) if it would not fit. */
 rect text_box(text_style s, rect box, vec2 align, const char *utf8);
+/* Visible ink of one line, relative to where text_draw with pivot (0,0) puts its box. */
+rect text_ink(text_style s, const char *utf8);
+/* One line placed by its visible ink: aligned inside box and shrunk to fit it.
+ * Optical centring for buttons, counters and badges. Returns the ink rect. */
+rect text_in(text_style s, rect box, vec2 align, const char *utf8);
 /* Single line that shrinks to fit the box width. */
 rect text_fit(text_style s, rect box, vec2 align, const char *utf8);
 /* Format into a rotating scratch buffer, handy for one-off labels. */
 const char *fmt(const char *f, ...);
+
+/* ===================================================================== */
+/* Audio: a tiny synthesiser for UI and game sounds                       */
+/* ===================================================================== */
+
+void sfx_tone(float hz, float seconds);   /* a soft bell-like note */
+void sfx_enable(bool on);
+bool sfx_enabled(void);
 
 /* ===================================================================== */
 /* UI: immediate mode widgets                                             */
@@ -408,9 +428,9 @@ void save_inject(const char *slot, const char *text);
 /* City: the shared building meta-game                                    */
 /* ===================================================================== */
 
-#define PURSE_MAX 4
+#define PURSE_MAX 6
 #define CITY_MAX 160
-#define CITY_ZONES 8
+#define CITY_ZONES 16
 
 /* An amount of each resource; the game names the slots (coins, stars, ...). */
 typedef struct { int v[PURSE_MAX]; } purse;
@@ -426,8 +446,11 @@ typedef struct {
     const char *about;
     const char *sprite_path;
     texture sprite;      /* loaded by city_init from sprite_path */
-    float height;        /* drawn height in world units (width keeps the aspect) */
+    float height;        /* drawn height in world units (width keeps the aspect)... */
+    float width;         /* ...or, with height 0, the drawn width */
+    float max_height;    /* cap for a height derived from width (0 = none) */
     float sink;          /* how far the sprite bottom sits below the anchor point */
+    size2 footprint;     /* half extents of the ground diamond; zero = a circle of city.spacing */
     purse cost;          /* paid when placed */
     purse reward;        /* granted once when placed */
     purse needs;         /* must be owned (not spent) to build */
@@ -437,20 +460,32 @@ typedef struct {
 
 typedef struct { vec2 pos; int type; double stamp; } building;
 
-typedef struct { rect area; purse cost; } city_zone;
+/* A region of the map that opens as a whole. `area` is used when the city has
+ * no zone_at callback; `marker` is where games put its label. */
+typedef struct { const char *name; rect area; vec2 marker; purse cost, needs; } city_zone;
 
 typedef enum {
-    CITY_NONE, CITY_BUILT, CITY_BLOCKED, CITY_CANT_AFFORD, CITY_LOCKED_TYPE, CITY_COLLECTED, CITY_NOT_READY
+    CITY_NONE,
+    CITY_BUILT,        /* a new building was placed and paid for */
+    CITY_MOVED,        /* a building got a new place */
+    CITY_BLOCKED,      /* the spot is not free, not land or not open */
+    CITY_CANT_AFFORD,
+    CITY_LOCKED_TYPE,  /* the building's `needs` are not met */
+    CITY_COLLECTED,    /* income collected */
+    CITY_NOT_READY,    /* tapped a building whose income is still growing */
+    CITY_PICKED,       /* tapped a building without income */
+    CITY_ZONE,         /* tapped land in a closed zone (event.zone) */
 } city_result;
 
 typedef struct {
     city_result result;
     int building;        /* index of the building involved, or -1 */
+    int zone;            /* zone involved, or -1 */
     purse amount;        /* paid or collected */
     vec2 screen;         /* where it happened */
 } city_event;
 
-typedef struct {
+typedef struct city {
     texture ground;
     building_def *defs;
     int def_count;
@@ -458,25 +493,55 @@ typedef struct {
     int count;
     city_zone zones[CITY_ZONES];
     int zone_count;
-    int unlocked;                      /* zones open, from the first */
-    float spacing;                     /* minimum distance between buildings */
-    bool (*buildable)(vec2 world);     /* terrain test supplied by the game */
+    unsigned open;                          /* bit per opened zone; zone 0 starts open */
+    float spacing;                          /* minimum distance between buildings without footprints */
+    size2 footprint_gap;                    /* extra clearance between footprints */
+    bool (*buildable)(vec2 world);          /* terrain test supplied by the game */
+    int (*zone_at)(vec2 world);             /* region lookup (default: zone rects); -1 = none */
+    bool (*zone_touches)(int zone, unsigned open);  /* adjacency (default: rects touching) */
+    void (*draw_over)(const struct city *c);        /* game drawing above the fog, below the ghost */
     camera cam;
-    int selected;                      /* building type in build mode, -1 = none */
-    color locked_tint;
-    texture income_icon;               /* bubble shown over buildings with income ready */
+    color fog;                              /* locked zones; default dark teal */
+    bool fog_on_land_only;                  /* fog only where buildable() */
+    color path;                             /* paths linking buildings; alpha 0 = none */
+    bool movable;                           /* drag a building to move it */
+    texture income_icon;                    /* bubble shown over buildings with income ready */
+    int selected;                           /* quick build: tap places this type at once (-1 = off) */
+
+    /* placement session, driven by city_begin_place/move, city_confirm and city_cancel */
+    int placing;                            /* building type being placed, -1 = none */
+    int moving;                             /* index being moved, -1 = a new building */
+    vec2 ghost;                             /* where it would go */
+
+    /* engine bookkeeping */
+    int press_target;                       /* 0 nothing, 1 ghost, 2 + index of a building */
+    vec2 grab;
+    int pop_index;
+    float pop_time;
 } city;
 
 void city_init(city *c, const char *ground_path);
-bool city_can_place(const city *c, vec2 world, int type);
-int city_add(city *c, vec2 world, int type, double now);    /* no checks; returns index or -1 */
+bool city_can_place(const city *c, vec2 world, int type, int ignore);   /* ignore: index to skip, or -1 */
+bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out);     /* nearest free spot to hint */
+int city_add(city *c, vec2 world, int type, double now);                /* no checks; returns index or -1 */
 int city_building_at(const city *c, vec2 world);
 bool city_ready(const city *c, int index, double now);
-/* Camera, building and collecting. `wallet` pays for and receives resources. */
-city_event city_update(city *c, input in, purse *wallet, double now);
-/* Opens the next zone if affordable. */
-bool city_unlock_next(city *c, purse *wallet);
-purse city_next_zone_cost(const city *c);
+rect city_sprite_rect(const city *c, building b);                       /* world rect of a building's sprite */
+
+int city_zone_at(const city *c, vec2 world);
+bool city_zone_open(const city *c, int zone);
+int city_open_count(const city *c);
+bool city_zone_available(const city *c, int zone, purse wallet);        /* closed, touching, affordable */
+bool city_unlock(city *c, int zone, purse *wallet);
+int city_next_zone(const city *c, purse wallet);   /* first available zone, else first closed touching one, else -1 */
+
+void city_begin_place(city *c, int type, vec2 at);
+void city_begin_move(city *c, int index);
+void city_cancel(city *c);
+city_event city_confirm(city *c, purse *wallet, double now);
+
+/* Camera, gestures, quick build and collecting. `wallet` pays and receives. */
+city_event city_update(city *c, input in, purse *wallet, double now, float dt);
 void city_draw(const city *c, input in, double now);
 void city_serialize(city *c, save *s);
 

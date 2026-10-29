@@ -52,8 +52,9 @@ static const scene_def scenes[SCENES] = {
 
 /* Sprites are 248 px tall inside the old 256 px atlas cells: drawn height and
  * how far below the anchor they reach keep the original placement. */
-#define BUILDING(name, size, coins, influence, path) \
-    {name, NULL, path, {0}, (size) * 248.0f / 256, (size) * .1044f, {{coins}}, {{0, influence}}, {{0}}, {{0}}, 0}
+#define BUILDING(title, size, coins, influence, path)                                                       \
+    {.name = title, .sprite_path = path, .height = (size) * 248.0f / 256, .sink = (size) * .1044f, .cost = {{coins}}, \
+     .reward = {{0, influence}}}
 
 static building_def buildings[] = {
     BUILDING("Дом садовника", 160, 70, 10, "buildings/0.png"),
@@ -115,9 +116,9 @@ static void island_setup(void)
     c->spacing = 120;
     c->buildable = island_buildable;
     c->zone_count = ZONES;
-    c->zones[0] = (city_zone){rc(580, 200, 600, 1050), {{0}}};
-    for (int z = 1; z < ZONES; z++) c->zones[z] = (city_zone){rc(800 + z * 380, 200, 380, 1050), {{z * 180}}};
-    c->cam = (camera){.center = v2(900, 650), .zoom = .8f, .min_zoom = .35f, .max_zoom = 2};
+    c->zones[0] = (city_zone){.area = rc(580, 200, 600, 1050)};
+    for (int z = 1; z < ZONES; z++) c->zones[z] = (city_zone){.area = rc(800 + z * 380, 200, 380, 1050), .cost = {{z * 180}}};
+    c->cam = (camera){.center = v2(900, 650), .zoom = .8f, .min_zoom = .35f, .max_zoom = 2, .cover = true};
     city_init(c, "island.png");
 }
 
@@ -126,7 +127,7 @@ static void new_game(void)
     G.wallet = (purse){{260, 10}};
     memset(G.wins, 0, sizeof G.wins);
     G.island.count = 0;
-    G.island.unlocked = 1;
+    G.island.open = 1;
     city_add(&G.island, v2(850, 650), 0, 0);
 }
 
@@ -334,7 +335,7 @@ static void island_frame(rect body, input world)
 
     G.island.cam.view = view;
     if (G.modal == MODAL_NONE) {
-        city_event ev = city_update(&G.island, world, &G.wallet, app_clock());
+        city_event ev = city_update(&G.island, world, &G.wallet, app_clock(), app_dt());
         switch (ev.result) {
         case CITY_BUILT:
             save_progress();
@@ -353,7 +354,7 @@ static void island_frame(rect body, input world)
     fx_draw();
 
     rect overlay = rect_inflate(view, -10);
-    pill(overlay, v2(0, 0), fmt("ОСТРОВ ФИЛА · ЗОНА %d / %d", G.island.unlocked, ZONES));
+    pill(overlay, v2(0, 0), fmt("ОСТРОВ ФИЛА · ЗОНА %d / %d", city_open_count(&G.island), ZONES));
     pill(overlay, v2(1, 0), G.island.selected < 0 ? "Тяните, чтобы исследовать" : "Коснитесь места для постройки");
     rect zoom = rect_align(overlay, sz2(102, 46), v2(1, 1));
     if (icon_button(rect_left(zoom, 46), "−")) G.island.cam = camera_zoom_at(G.island.cam, 1 / 1.25f, rect_center(view));
@@ -363,12 +364,13 @@ static void island_frame(rect body, input world)
     text_box(G.muted, rect_inflate2(footer, v2(-4, 0)), v2(0, .5f),
              G.island.selected < 0 ? "Выберите здание и коснитесь свободного места на острове."
                                    : fmt("Строится: %s. Повторное нажатие на карточку снимает выбор.", buildings[G.island.selected].name));
-    if (G.island.unlocked >= ZONES) {
+    int next = city_next_zone(&G.island, G.wallet);
+    if (next < 0) {
         ui_button(expand, "Весь остров открыт", UI_DISABLED);
     } else {
-        purse cost = city_next_zone_cost(&G.island);
+        purse cost = G.island.zones[next].cost;
         if (ui_button(expand, fmt("Открыть берег · %d монет", cost.v[COINS]), 0)) {
-            if (city_unlock_next(&G.island, &G.wallet)) {
+            if (city_unlock(&G.island, next, &G.wallet)) {
                 save_progress();
                 ui_toast("Открыт новый берег! Перетащите остров влево.");
             } else {
@@ -576,7 +578,7 @@ static void apply_screen_arg(void)
     } else if (!strcmp(screen, "island")) {
         int types[] = {1, 2, 3, 4, 1};
         vec2 spots[] = {{1060, 600}, {760, 860}, {960, 1000}, {1400, 700}, {1700, 900}};
-        G.island.unlocked = 3;
+        G.island.open = 7;
         for (int i = 0; i < 5; i++) city_add(&G.island, spots[i], types[i], 0);
         G.island.cam.center = v2(1150, 720);
         G.island.cam.zoom = .55f;

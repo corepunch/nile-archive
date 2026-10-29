@@ -8,7 +8,7 @@
 #   make clean
 
 GAMES   := nile-archive relic-rush
-ENGINE  := core gfx font ui save city
+ENGINE  := core gfx font ui save city audio
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 # CFLAGS is yours to override (make CFLAGS="-O0 -g -Werror"); the essentials live in ALL_CFLAGS
@@ -40,9 +40,10 @@ run-nile: build/nile-archive
 run-relic: build/relic-rush
 	./build/relic-rush
 
-# Tests link the game logic files (no main) together with the engine.
-build/tests: tests/test_main.c games/relic-rush/board.c $(ENGINE_OBJ) engine/engine.h games/relic-rush/relic.h
-	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -Igames/relic-rush -o $@ tests/test_main.c games/relic-rush/board.c $(ENGINE_OBJ) $(LIBS)
+# Tests link the games' rule files (no main) together with the engine.
+TEST_SRC := tests/test_main.c tests/test_relic.c games/relic-rush/rules.c games/relic-rush/island.c
+build/tests: $(TEST_SRC) $(ENGINE_OBJ) engine/engine.h games/relic-rush/relic.h
+	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -Igames/relic-rush -o $@ $(TEST_SRC) $(ENGINE_OBJ) $(LIBS)
 
 test: build/tests
 	SDL_VIDEODRIVER=dummy XDG_DATA_HOME=$(CURDIR)/build/test-home ./build/tests

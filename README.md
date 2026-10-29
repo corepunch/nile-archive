@@ -5,27 +5,29 @@ One repository, one small **C11 + SDL2** engine, two games built on it:
 | | Game | Core loop | Meta-game |
 | --- | --- | --- | --- |
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
-| ![](games/relic-rush/docs/screenshots/board.jpg) | **[Relic Rush](games/relic-rush/README.md)** (English) | Match-3 with blasters, bombs and relic orbs | Build an expedition camp: buildings unlock with stars and earn coins over time |
+| ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 on ten shaped boards with sand, chains, ice, rays, bombs and prisms | Restore an island: ten wonders placed freely, six regions opened with stars and compasses |
 
-The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), the camera, styled text, UI widgets, save files, effects, and the platform layer for desktop, iPad and phones (native and WebAssembly).
+The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design, letterboxed — the engine supports both.
 
 ## Layout
 
 ```
 engine/            the shared engine: ONE public header + one .c per module
-  engine.h         math, app, input, gfx, camera, fx, text, ui, save, city
+  engine.h         math, app, input, gfx, camera, fx, text, ui, audio, save, city
   core.c           window, logical screen, main loop, pointer/touch gestures, screenshots
   gfx.c            textures, anti-aliased shapes, camera, particles
   font.c           TrueType text: outline, soft shadow, gradient; Retina-crisp glyph atlas
   ui.c             immediate-mode widgets, input blocking, toasts, modals
   save.c           key=value saves (files natively, localStorage on the web)
   city.c           the city-building meta-game
+  audio.c          a tiny synthesiser for feedback tones
   third_party/     stb_truetype, stb_image, stb_image_write (public domain)
 games/
   nile-archive/    main.c + data/ (art, fonts) + docs/ + tools/
-  relic-rush/      main.c, board.c, relic.h + data/ + docs/ + tools/
-tests/             headless tests for the engine and the match-3 rules
-tools/             artkit.py (procedural art helpers), screenshots.sh
+  relic-rush/      relic.h, rules.c, island.c, board.c, vfx.c, island_view.c, screens.c, main.c
+                   + art/ (sources) + data/ (runtime) + docs/ + tools/
+tests/             headless tests for the engine and the games' rules
+tools/             screenshots.sh, make_reels.py, artkit.py (procedural art helpers)
 web/               shell.html: a bare fullscreen canvas for the web preview
 ```
 
@@ -51,7 +53,7 @@ python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile
 
 CI builds both targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 
-Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--shot out.png [--frames N]`. Games add `--screen <name>` to open a specific screen (used for screenshots) and Relic Rush has `--autoplay N`, a bot that plays N levels through the real game loop.
+Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two).
 
 ## The engine in five minutes
 
@@ -83,26 +85,30 @@ text_style title = ts_shadow(ts_outline(ts_grad((text_style){.font = serif, .siz
 text_draw(ts_size(title, 40), rect_center(box), v2(.5f, .5f), "Память возвращается");
 ```
 
-The city meta-game is data plus one update/draw pair:
+The city meta-game is data plus one update/draw pair. Relic Rush's wonders, for example:
 
 ```c
-static building_def camp_defs[] = {
-    {"Tent", "Diggers' shelter", "buildings/0.png", .height = 140, .cost = {{120}},
-     .income = {{30}}, .income_period = 60},
+building_def wonders[WONDERS] = {
+    {.name = "Expedition camp", .sprite_path = "buildings/0.png", .width = 180, .max_height = 230,
+     .footprint = {72, 34}, .cost = {{60, 10, 5}}},          /* gold, wood, stone */
     ...
 };
-city_event ev = city_update(&g.camp, input_world(), &g.wallet, app_clock());
-if (ev.result == CITY_COLLECTED) fx_text(ev.screen, &popup, fmt("+%d", ev.amount.v[COINS]));
-city_draw(&g.camp, input_world(), app_clock());
+c->buildable = island_grass;          /* the game knows its map ...               */
+c->zone_at = island_zone;             /* ... and its regions; the engine the rest */
+city_event ev = city_update(&R.island, input_world(), &R.prog.wallet, app_clock(), dt);
+if (ev.result == CITY_ZONE) open_region_card(ev.zone);
+city_draw(&R.island, input_world(), app_clock());
 ```
+
+Placement is either instant (Nile: pick a card, tap the land) or a confirmable ghost (Relic Rush: `city_begin_place`, drag, `city_confirm`); buildings can be dragged to move; zones open with a cost and requirements once they touch open land; fog, paths between buildings and timed income are options.
 
 Saves are one function per game that both reads and writes, so fields cannot drift:
 
 ```c
 static void serialize(save *s, void *user) {
-    save_int(s, "coins", &g.wallet.v[COINS]);
-    save_ints(s, "stars", g.stars, MAX_LEVELS);
-    city_serialize(&g.camp, s);
+    save_int(s, "level", &R.prog.level);
+    save_ints(s, "wallet", R.prog.wallet.v, PURSE_MAX);
+    city_serialize(&R.island, s);
 }
 save_read("progress", serialize, NULL);   // at start
 save_write("progress", serialize, NULL);  // after something worth keeping
@@ -121,7 +127,7 @@ The request was "C, or maybe C++ so it is `rect->inflate()`". This is C11 on pur
 
 ## Merging the repositories
 
-This repository is the single home for the engine and both games; Relic Rush lives in `games/relic-rush/`. `corepunch/relic-rush` can be archived once its assets are brought over, and this repository can be renamed (for example to `sprite-games`) — GitHub keeps redirects from the old name.
+This repository is the single home for the engine and both games. Relic Rush was imported from `corepunch/relic-rush` (commit `4463559`) into `games/relic-rush/`: its rules and tests were kept, its island became the engine city, and its presentation was rebuilt on the engine. `corepunch/relic-rush` can now be archived, and this repository renamed (for example to `sprite-games`) — GitHub keeps redirects from the old name.
 
 ## References
 
