@@ -121,7 +121,7 @@ The request was "C, or maybe C++ so it is `rect->inflate()`". This is C11 on pur
 
 ## Merging the repositories
 
-`corepunch/relic-rush` contained only a README and a license (GPLv3, same as this repo). Its history was merged into this repository (`git log --graph` shows both roots), so this repository is now the single home for the engine and both games. Once this lands, `relic-rush` can be archived, and this repository can be renamed (for example to `sprite-games`) — GitHub keeps redirects from the old name.
+This repository is the single home for the engine and both games; Relic Rush lives in `games/relic-rush/`. `corepunch/relic-rush` can be archived once its assets are brought over, and this repository can be renamed (for example to `sprite-games`) — GitHub keeps redirects from the old name.
 
 ## References
 
