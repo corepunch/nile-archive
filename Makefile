@@ -4,7 +4,7 @@
 #   make run-nile        build and run Nile Archive        (also: run-relic)
 #   make test            engine and game-logic tests (headless)
 #   make shots           regenerate docs/screenshots (headless, software renderer)
-#   make web             WebAssembly builds into dist/ (needs Emscripten's emcc)
+#   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
 
 GAMES   := nile-archive relic-rush
@@ -59,13 +59,11 @@ WEB_FLAGS := -std=c11 -O2 -Iengine -sUSE_SDL=2 -sALLOW_MEMORY_GROWTH=1 -sINITIAL
              --shell-file web/shell.html
 
 web: $(GAMES:%=dist/%/index.html)
-	cp web/index.html dist/index.html
 
 define WEB_RULES
 dist/$(1)/index.html: $(ENGINE:%=engine/%.c) engine/engine.h web/shell.html $(call game_src,$(1)) $(wildcard games/$(1)/*.h) $(shell find games/$(1)/data -type f 2>/dev/null)
 	@mkdir -p dist/$(1)
 	$$(EMCC) $$(WEB_FLAGS) -DGAME_DATA_DIR='"/data"' -o $$@ $(ENGINE:%=engine/%.c) $(call game_src,$(1)) --preload-file games/$(1)/data@/data
-	cp games/$(1)/web/manifest.webmanifest dist/$(1)/
 endef
 $(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
 

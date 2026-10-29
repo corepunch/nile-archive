@@ -7,7 +7,7 @@ One repository, one small **C11 + SDL2** engine, two games built on it:
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
 | ![](games/relic-rush/docs/screenshots/board.jpg) | **[Relic Rush](games/relic-rush/README.md)** (English) | Match-3 with blasters, bombs and relic orbs | Build an expedition camp: buildings unlock with stars and earn coins over time |
 
-Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), the camera, styled text, UI widgets, save files, effects, and the platform layer for desktop, iPad and phones (native and WebAssembly).
+The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), the camera, styled text, UI widgets, save files, effects, and the platform layer for desktop, iPad and phones (native and WebAssembly).
 
 ## Layout
 
@@ -26,7 +26,7 @@ games/
   relic-rush/      main.c, board.c, relic.h + data/ + docs/ + tools/
 tests/             headless tests for the engine and the match-3 rules
 tools/             artkit.py (procedural art helpers), screenshots.sh
-web/               HTML shell for the Emscripten builds
+web/               shell.html: a bare fullscreen canvas for the web preview
 ```
 
 Each game is one folder with its own content; the engine never includes game code. Adding a third game means adding `games/<name>/main.c` and a `data/` folder — the Makefile picks it up once its name is added to `GAMES`.
@@ -46,7 +46,7 @@ Web (needs the [Emscripten SDK](https://emscripten.org/docs/getting_started/down
 
 ```sh
 make web
-python3 -m http.server 8080 --directory dist   # open http://localhost:8080
+python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/
 ```
 
 CI builds both targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.

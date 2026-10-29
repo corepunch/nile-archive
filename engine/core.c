@@ -355,7 +355,6 @@ int app_run(app_desc desc, int argc, char **argv)
     if (desc.init) desc.init();
 
 #ifdef __EMSCRIPTEN__
-    EM_ASM({ if (typeof window !== 'undefined') window.dispatchEvent(new Event('engine-ready')); });
     emscripten_set_main_loop(frame, 0, 1);
 #else
     while (A.running) frame();

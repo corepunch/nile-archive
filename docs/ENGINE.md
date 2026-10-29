@@ -145,7 +145,8 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
 - **Native**: vsync'd SDL renderer, software fallback. Headless runs use
   `SDL_VIDEODRIVER=offscreen` plus `--shot`, which is how the documentation
   screenshots and the CI smoke test are produced.
-- **Web**: Emscripten with the SDL2 port. The canvas is sized by CSS
+- **Web**: a preview target only. Emscripten with the SDL2 port; `web/shell.html` is
+  nothing but a fullscreen canvas. The canvas is sized by CSS
   (`100vw × 100dvh`); SDL resizes the drawing buffer with `devicePixelRatio`.
   Assets are preloaded from `games/<name>/data` to `/data`.
 
