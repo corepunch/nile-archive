@@ -152,6 +152,12 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in SDL's preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
 
+## Selected tile art
+
+The archaeological **Relics** set (option 1) is the default match piece art: a hexagonal sun idol, coral flame, jade leaf, turquoise scarab, purple crystal cluster and amber amphora. **Jewels** and **Resources** stay available as optional art packs — `--tiles jewels` natively, `?tiles=jewels` in the browser. Gameplay, rewards and costs are the same with every pack. See the [tile-set comparison and construction research](docs/tile-sets.md).
+
+![The three packs on the same board](docs/screenshots/tile-sets.jpg)
+
 ## Run and build
 
 From the repository root (SDL2 development files needed for native builds, the Emscripten SDK for the web):
@@ -164,7 +170,7 @@ make web && python3 -m http.server 8080 --directory dist   # http://localhost:80
 
 The game keeps its 480 × 900 portrait layout and is letterboxed on other screens. Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing`, `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing`, `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 
@@ -182,7 +188,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Art and text pipeline
 
-Original generated environment paintings, a 10-building sprite sheet, a 6-relic sprite sheet and the six-sided idol are kept as editable sources in `art/`. `tools/prepare_assets.py` cuts sprites out of the sheets (largest opaque component, so neighbouring paintings never leak in), scales backgrounds to what the screen needs and writes PNG/JPG files the engine loads directly. `docs/references.md` records reference research and provenance. Generated art is a prototype asset set and needs an art consistency / IP review before a commercial release.
+Original generated environment paintings, a 10-building sprite sheet and the 6 × 3 tile sheet (`art/tile-sets/source.png`: the Relics, Jewels and Resources packs) are kept as editable sources in `art/`. `tools/prepare_assets.py` cuts sprites out of the sheets (largest opaque component, so neighbouring paintings never leak in), scales backgrounds to what the screen needs and writes PNG/JPG files the engine loads directly. `docs/references.md` records reference research and provenance. Generated art is a prototype asset set and needs an art consistency / IP review before a commercial release.
 
 Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueType with outline, gradient and drop shadow, any Unicode — Cyrillic localisation no longer needs a new atlas); **Lobster** made the gold `title.png` logo and stays in `art/fonts`. Both are unmodified SIL OFL 1.1 fonts with their license text.
 

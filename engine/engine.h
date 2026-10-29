@@ -211,7 +211,8 @@ typedef struct {
 /* Runs the game. Command line options understood by every game:
  *   --size WxH        window size            --fresh   ignore and never write saves
  *   --data DIR        asset root
- *   --shot file.png   render, save a screenshot and quit (after --frames N, default 3) */
+ *   --shot file.png   render, save a screenshot and quit (after --frames N, default 3)
+ * On the web the page's query string supplies them: ?fresh&tiles=jewels */
 int app_run(app_desc desc, int argc, char **argv);
 void app_quit(void);
 rect app_screen(void);          /* logical screen, origin (0,0) */

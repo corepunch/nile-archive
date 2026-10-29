@@ -13,6 +13,7 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
+TILE_SETS = ('relics', 'jewels', 'resources')   # relics is the default, the others are optional art packs
 ART, DATA = ROOT / 'art', ROOT / 'data'
 
 
@@ -62,19 +63,15 @@ def tile(im, size=128, inner=116):
 
 
 def main():
-    (DATA / 'relics').mkdir(parents=True, exist_ok=True)
-    (DATA / 'buildings').mkdir(parents=True, exist_ok=True)
-    for name in ('jungle', 'scene-lagoon', 'scene-temple'):
-        save_jpg(Image.open(ART / f'{name}.png'), f'{name}.jpg', (768, 1152))
-    save_jpg(Image.open(ART / 'island-organic.jpg'), 'island.jpg', (1024, 1536))
-    Image.open(ART / 'title.png').save(DATA / 'title.png', optimize=True)
-
-    sheet = Image.open(ART / 'relics.png').convert('RGBA')
-    for i in range(6):
-        im = sheet.crop((i % 3 * 512, i // 3 * 512, (i % 3 + 1) * 512, (i // 3 + 1) * 512))
-        if i == 0:   # the six-sided idol replaces the sheet's square one
-            im = Image.open(ART / 'idol-hex.png').convert('RGBA')
-        tile(im).save(DATA / 'relics' / f'{i}.png', optimize=True)
+    # Match pieces: three original six-piece packs in one 6 x 3 sheet. Row order
+    # is the pieces' meaning (idol, flame, leaf, scarab, crystal, amphora...).
+    sheet = Image.open(ART / 'tile-sets' / 'source.png').convert('RGBA')
+    for row, pack in enumerate(TILE_SETS):
+        (DATA / 'tile-sets' / pack).mkdir(parents=True, exist_ok=True)
+        for col in range(6):
+            im = sheet.crop((round(col * sheet.width / 6), round(row * sheet.height / 3),
+                             round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3)))
+            tile(im, inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
 
     sheet = Image.open(ART / 'buildings.png').convert('RGBA')
     for i in range(10):

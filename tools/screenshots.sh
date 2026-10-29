@@ -46,6 +46,9 @@ shot relic-rush island-bubble 480x900 --dialog bubble --frames 30
 shot relic-rush effect-ray 480x900 --fx ray --frames 10
 shot relic-rush effect-bomb 480x900 --fx bomb --frames 10
 shot relic-rush effect-prism 480x900 --fx prism --frames 10
+for pack in relics jewels resources; do
+    "./build/relic-rush" --fresh --size 480x900 --tiles $pack --shot "$tmp/tiles-$pack.png" > /dev/null
+done
 for level in 1 2 3 4 5 6 7 8 9 10; do
     "./build/relic-rush" --fresh --size 480x900 --frames 3 --level $level --shot "$tmp/shape-$level.png" > /dev/null
 done

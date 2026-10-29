@@ -34,7 +34,7 @@ Each mask is a distinct connected graph within the common axial-coordinate envel
 
 ## Idol
 
-`art/idol-hex.png` is a new original transparent six-sided gold idol, generated with the built-in imagegen tool. `tools/prepare_assets.py` exports it as `data/relics/0.png`, overriding only the former square idol. The other five sprite types are unchanged.
+The gold idol is six-sided, like the board. Since the tile-set update the match pieces come from `art/tile-sets/source.png` (see [tile-sets.md](tile-sets.md)); the selected Relics pack keeps the hexagonal sun idol.
 
 ## Validation
 
