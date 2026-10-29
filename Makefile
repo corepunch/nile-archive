@@ -1,0 +1,73 @@
+# Shared sprite engine + games.
+#
+#   make                 build every game natively (needs SDL2 development files)
+#   make run-nile        build and run Nile Archive        (also: run-relic)
+#   make test            engine and game-logic tests (headless)
+#   make shots           regenerate docs/screenshots (headless, software renderer)
+#   make web             WebAssembly builds into dist/ (needs Emscripten's emcc)
+#   make clean
+
+GAMES   := nile-archive relic-rush
+ENGINE  := core gfx font ui save city
+CC      ?= cc
+CFLAGS  ?= -O2 -g
+# CFLAGS is yours to override (make CFLAGS="-O0 -g -Werror"); the essentials live in ALL_CFLAGS
+ALL_CFLAGS = $(CFLAGS) -std=c11 -Wall -Wextra -Wno-unused-parameter -Iengine
+SDL_CFLAGS := $(shell pkg-config --cflags sdl2 2>/dev/null || sdl2-config --cflags)
+SDL_LIBS   := $(shell pkg-config --libs sdl2 2>/dev/null || sdl2-config --libs)
+LIBS    := $(SDL_LIBS) -lm
+
+ENGINE_OBJ := $(ENGINE:%=build/engine/%.o)
+game_src    = $(wildcard games/$(1)/*.c)
+
+.PHONY: all test shots web clean run-nile run-relic $(GAMES)
+all: $(GAMES)
+
+build/engine/%.o: engine/%.c engine/engine.h
+	@mkdir -p $(dir $@)
+	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -c $< -o $@
+
+define GAME_RULES
+$(1): build/$(1)
+build/$(1): $(ENGINE_OBJ) $(call game_src,$(1)) $(wildcard games/$(1)/*.h) engine/engine.h
+	@mkdir -p build
+	$$(CC) $$(ALL_CFLAGS) $$(SDL_CFLAGS) -DGAME_DATA_DIR='"games/$(1)/data"' -o $$@ $(call game_src,$(1)) $(ENGINE_OBJ) $$(LIBS)
+endef
+$(foreach g,$(GAMES),$(eval $(call GAME_RULES,$(g))))
+
+run-nile: build/nile-archive
+	./build/nile-archive
+run-relic: build/relic-rush
+	./build/relic-rush
+
+# Tests link the game logic files (no main) together with the engine.
+build/tests: tests/test_main.c games/relic-rush/board.c $(ENGINE_OBJ) engine/engine.h games/relic-rush/relic.h
+	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -Igames/relic-rush -o $@ tests/test_main.c games/relic-rush/board.c $(ENGINE_OBJ) $(LIBS)
+
+test: build/tests
+	SDL_VIDEODRIVER=dummy XDG_DATA_HOME=$(CURDIR)/build/test-home ./build/tests
+
+shots: all
+	./tools/screenshots.sh
+
+# --- WebAssembly (Emscripten) ------------------------------------------------
+EMCC      ?= emcc
+WEB_FLAGS := -std=c11 -O2 -Iengine -sUSE_SDL=2 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB \
+             -sEXPORTED_FUNCTIONS=_main,_malloc,_free \
+             -sEXPORTED_RUNTIME_METHODS=ccall,UTF8ToString,stringToUTF8,lengthBytesUTF8 \
+             '-sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE=$$UTF8ToString,$$stringToUTF8,$$lengthBytesUTF8' \
+             --shell-file web/shell.html
+
+web: $(GAMES:%=dist/%/index.html)
+	cp web/index.html dist/index.html
+
+define WEB_RULES
+dist/$(1)/index.html: $(ENGINE:%=engine/%.c) engine/engine.h web/shell.html $(call game_src,$(1)) $(wildcard games/$(1)/*.h) $(shell find games/$(1)/data -type f 2>/dev/null)
+	@mkdir -p dist/$(1)
+	$$(EMCC) $$(WEB_FLAGS) -DGAME_DATA_DIR='"/data"' -o $$@ $(ENGINE:%=engine/%.c) $(call game_src,$(1)) --preload-file games/$(1)/data@/data
+	cp games/$(1)/web/manifest.webmanifest dist/$(1)/
+endef
+$(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
+
+clean:
+	rm -rf build dist
