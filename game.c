@@ -2,6 +2,7 @@
 #include <emscripten.h>
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
 
 SDL_Window *w;
 SDL_Renderer *r;
@@ -114,15 +115,23 @@ EMSCRIPTEN_KEEPALIVE void restore(int x,int y,int t) {
 }
 EMSCRIPTEN_KEEPALIVE int coord(int q) {return q?by[nb-1]:bx[nb-1];}
 EMSCRIPTEN_KEEPALIVE void unlock(int z) {zones=z;}
+EMSCRIPTEN_KEEPALIVE void resize(int width,int height) {
+    if(!w||!r||width<1||height<1)return;
+    SDL_SetWindowSize(w,width,height);
+    SDL_RenderSetLogicalSize(r,1200,800);
+}
 int main(void) {
     SDL_Init(SDL_INIT_VIDEO);
     w=SDL_CreateWindow("Nile",0,0,1200,800,0);
     r=SDL_CreateRenderer(w,-1,SDL_RENDERER_ACCELERATED);
+    if(!r)r=SDL_CreateRenderer(w,-1,SDL_RENDERER_SOFTWARE);
+    if(!r){fprintf(stderr,"SDL renderer failed: %s\n",SDL_GetError());return 1;}
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY,"1");
     SDL_RenderSetLogicalSize(r,1200,800);
     SDL_SetRenderDrawBlendMode(r,SDL_BLENDMODE_BLEND);
     bg[0]=load("scene.bmp");bg[1]=load("scene1.bmp");bg[2]=load("scene2.bmp");
     island=load("island.bmp");atlas=load("atlas.bmp");
+    EM_ASM({document.title="Архив Нила";document.getElementById("canvas").dataset.rendererReady="true";window.dispatchEvent(new Event("nile-render-ready"));});
     emscripten_set_main_loop(frame,30,1);
     return 0;
 }
