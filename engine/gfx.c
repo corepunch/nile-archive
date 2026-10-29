@@ -26,6 +26,7 @@ texture tex_from_pixels(const void *rgba, int w, int h)
 texture tex_load(const char *path)
 {
     int w, h, n;
+    if (!app_renderer()) return (texture){0};   /* headless (tests): nothing to draw with */
     const char *full = app_path(path);
     unsigned char *px = stbi_load(full, &w, &h, &n, 4);
     if (!px) {
@@ -277,6 +278,42 @@ void draw_poly(const vec2 *pts, int n, color c)
     if (n < 3 || n > MAX_PATH) return;
     fill_path(pts, n, (grad){c, c, 0, 0}, feather());
 }
+
+void draw_polyline(const vec2 *pts, int n, float thickness, color c)
+{
+    float h = thickness * .5f;
+    for (int i = 0; i + 1 < n; i++) {
+        vec2 d = vec2_norm(vec2_sub(pts[i + 1], pts[i])), o = vec2_scale(v2(-d.y, d.x), h);
+        quad(vec2_add(pts[i], o), c, vec2_add(pts[i + 1], o), c, vec2_sub(pts[i + 1], o), c, vec2_sub(pts[i], o), c);
+        if (i + 2 < n) {   /* round the joint with a small fan so bends stay solid */
+            vec2 d2 = vec2_norm(vec2_sub(pts[i + 2], pts[i + 1])), o2 = vec2_scale(v2(-d2.y, d2.x), h);
+            tri(pts[i + 1], c, vec2_add(pts[i + 1], o), c, vec2_add(pts[i + 1], o2), c);
+            tri(pts[i + 1], c, vec2_sub(pts[i + 1], o), c, vec2_sub(pts[i + 1], o2), c);
+        }
+    }
+    flush();
+}
+
+void draw_ngon(vec2 center, float radius, int sides, float angle, color c)
+{
+    vec2 p[MAX_PATH];
+    sides = clampi(sides, 3, MAX_PATH - 1);
+    for (int i = 0; i < sides; i++) p[i] = vec2_add(center, vec2_polar(angle + 2 * ENGINE_PI * i / sides, radius));
+    fill_path(p, sides, (grad){c, c, 0, 0}, feather());
+}
+
+void draw_star(vec2 center, float radius, float inner, int points, float angle, color c)
+{
+    points = clampi(points, 2, 32);
+    for (int i = 0; i < points * 2; i++) {
+        float a0 = angle + ENGINE_PI * i / points, a1 = angle + ENGINE_PI * (i + 1) / points;
+        float r0 = i % 2 ? radius * inner : radius, r1 = i % 2 ? radius : radius * inner;
+        tri(center, c, vec2_add(center, vec2_polar(a0, r0)), c, vec2_add(center, vec2_polar(a1, r1)), c);
+    }
+    flush();
+}
+
+void gfx_additive(bool on) { SDL_SetRenderDrawBlendMode(app_renderer(), on ? SDL_BLENDMODE_ADD : SDL_BLENDMODE_BLEND); }
 
 void gfx_clip(rect r)
 {

@@ -28,6 +28,7 @@ static struct {
     size2 logical;
     float pixel_scale;
     double time;
+    float dt;
     Uint64 last_counter;
     input in;
     bool pinched;          /* a second finger joined during this press */
@@ -43,6 +44,7 @@ const char *app_id(void) { return A.desc.id ? A.desc.id : "game"; }
 rect app_screen(void) { return rect_make(v2(0, 0), A.logical); }
 float app_pixel_scale(void) { return A.pixel_scale; }
 double app_time(void) { return A.time; }
+float app_dt(void) { return A.dt; }
 double app_clock(void) { return (double)time(NULL); }
 void app_quit(void) { A.running = false; }
 input input_get(void) { return A.in; }
@@ -81,7 +83,8 @@ const char *app_arg(const char *name)
 
 /* The logical screen keeps the design's short side and grows along the long
  * side with the screen, up to max_aspect (beyond that SDL letterboxes).
- * Portrait screens use the design rotated, so layouts can adapt. */
+ * Portrait screens use the design rotated, so layouts can adapt. Games with
+ * `fixed` set get exactly the design size, letterboxed. */
 static void update_logical_size(void)
 {
     int ow = 1, oh = 1;
@@ -95,6 +98,7 @@ static void update_logical_size(void)
                                                : sz2(long_side, long_side / ratio);
     l = sz2(roundf(l.w), roundf(l.h));
     if (portrait) l = sz2(l.h, l.w);
+    if (A.desc.fixed) l = d;
     if (l.w != A.logical.w || l.h != A.logical.h) {
         A.logical = l;
         SDL_RenderSetLogicalSize(A.renderer, (int)l.w, (int)l.h);
@@ -279,6 +283,7 @@ static void frame(void)
     A.last_counter = now;
     if (A.shot_path || dt > .1f) dt = 1.0f / 60;
     A.time += dt;
+    A.dt = dt;
 
     poll_events();
     update_logical_size();

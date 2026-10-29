@@ -1,7 +1,6 @@
-/* Headless tests: engine math and layout, camera, purses, saves, city rules
- * and the Relic Rush match-3 board.  Run with `make test`. */
+/* Headless tests: engine math and layout, camera, purses, saves and city
+ * rules, plus the games' rules (tests/test_relic.c). Run with `make test`. */
 #include "engine.h"
-#include "relic.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -133,168 +132,76 @@ static bool flat_land(vec2 p) { return p.y > 100; }
 
 static void test_city(void)
 {
-    static building_def defs[2] = {
+    static building_def defs[3] = {
         {.name = "hut", .height = 100, .cost = {{50}}, .reward = {{0, 5}}},
         {.name = "mine", .height = 120, .cost = {{80}}, .needs = {{0, 10}}, .income = {{30}}, .income_period = 60},
+        {.name = "hall", .height = 100, .footprint = {60, 30}, .cost = {{10}}},
     };
     static city c;
-    c = (city){.defs = defs, .def_count = 2, .spacing = 100, .buildable = flat_land, .zone_count = 2};
-    c.zones[0] = (city_zone){rc(0, 0, 500, 1000), {{0}}};
-    c.zones[1] = (city_zone){rc(500, 0, 500, 1000), {{100}}};
+    c = (city){.defs = defs, .def_count = 3, .spacing = 100, .buildable = flat_land, .zone_count = 2};
+    c.zones[0] = (city_zone){.area = rc(0, 0, 500, 1000)};
+    c.zones[1] = (city_zone){.area = rc(500, 0, 500, 1000), .cost = {{100}}, .needs = {{0, 1}}};
     c.cam = (camera){.world = sz2(1000, 1000), .view = rc(0, 0, 1000, 1000), .zoom = 1};
     city_init(&c, NULL);
-    CHECK(c.selected == -1 && c.unlocked == 1);
-    CHECK(city_can_place(&c, v2(200, 300), 0));
-    CHECK(!city_can_place(&c, v2(200, 50), 0));     /* terrain */
-    CHECK(!city_can_place(&c, v2(700, 300), 0));    /* locked zone */
+    CHECK(c.selected == -1 && c.open == 1 && city_open_count(&c) == 1);
+    CHECK(city_can_place(&c, v2(200, 300), 0, -1));
+    CHECK(!city_can_place(&c, v2(200, 50), 0, -1));     /* terrain */
+    CHECK(!city_can_place(&c, v2(700, 300), 0, -1));    /* closed zone */
 
+    /* quick build: tap to place the selected type */
     purse wallet = {{200, 0}};
     c.selected = 0;
-    input tap = {.tap = true, .pos = v2(200, 300), .pinch = 1};
-    city_event ev = city_update(&c, tap, &wallet, 0);
+    input tap = {.tap = true, .pos = v2(200, 300), .press_pos = v2(200, 300), .pinch = 1};
+    city_event ev = city_update(&c, tap, &wallet, 0, 0);
     CHECK(ev.result == CITY_BUILT && c.count == 1 && wallet.v[0] == 150 && wallet.v[1] == 5);
-    tap.pos = v2(250, 320);
-    CHECK(city_update(&c, tap, &wallet, 0).result == CITY_BLOCKED);   /* too close */
+    tap.pos = tap.press_pos = v2(250, 320);
+    CHECK(city_update(&c, tap, &wallet, 0, 0).result == CITY_BLOCKED);   /* too close */
     c.selected = 1;
-    tap.pos = v2(400, 400);
-    CHECK(city_update(&c, tap, &wallet, 0).result == CITY_LOCKED_TYPE);
+    tap.pos = tap.press_pos = v2(400, 400);
+    CHECK(city_update(&c, tap, &wallet, 0, 0).result == CITY_LOCKED_TYPE);
     wallet.v[1] = 10;
-    CHECK(city_update(&c, tap, &wallet, 0).result == CITY_BUILT && wallet.v[0] == 70);
+    CHECK(city_update(&c, tap, &wallet, 0, 0).result == CITY_BUILT && wallet.v[0] == 70);
     c.selected = -1;
-    tap.pos = v2(400, 380);
-    CHECK(city_update(&c, tap, &wallet, 30).result == CITY_NOT_READY);
-    ev = city_update(&c, tap, &wallet, 61);
+    tap.pos = tap.press_pos = v2(400, 380);
+    CHECK(city_update(&c, tap, &wallet, 30, 0).result == CITY_NOT_READY);
+    ev = city_update(&c, tap, &wallet, 61, 0);
     CHECK(ev.result == CITY_COLLECTED && wallet.v[0] == 100);
-    CHECK(city_unlock_next(&c, &wallet) && c.unlocked == 2 && wallet.v[0] == 0);
-    CHECK(city_can_place(&c, v2(700, 300), 0));
+    tap.pos = tap.press_pos = v2(200, 280);
+    CHECK(city_update(&c, tap, &wallet, 61, 0).result == CITY_PICKED);
+
+    /* zones: tapping closed land reports it; opening needs and spends */
+    tap.pos = tap.press_pos = v2(700, 300);
+    ev = city_update(&c, tap, &wallet, 61, 0);
+    CHECK(ev.result == CITY_ZONE && ev.zone == 1);
+    CHECK(city_next_zone(&c, wallet) == 1 && city_zone_available(&c, 1, wallet));
+    CHECK(city_unlock(&c, 1, &wallet) && city_zone_open(&c, 1) && wallet.v[0] == 0 && wallet.v[1] == 10);
+    CHECK(!city_unlock(&c, 1, &wallet) && city_next_zone(&c, wallet) == -1);
+    CHECK(city_can_place(&c, v2(700, 300), 0, -1));
+
+    /* confirmable placement and moving; footprints may touch, not overlap */
+    wallet.v[0] = 100;
+    city_begin_place(&c, 2, v2(702, 601));
+    CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 600);   /* snapped to 4 */
+    ev = city_confirm(&c, &wallet, 0);
+    CHECK(ev.result == CITY_BUILT && c.placing == -1 && wallet.v[0] == 90);
+    int hall = ev.building;
+    city_begin_place(&c, 2, v2(760, 620));
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED && c.placing == 2);   /* overlaps */
+    c.ghost = v2(828, 600);
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BUILT);   /* 124 apart: diamonds just touch */
+    city_begin_move(&c, hall);
+    c.ghost = v2(704, 800);
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_MOVED && c.items[hall].pos.y == 800 && wallet.v[0] == 80);
+    city_begin_move(&c, hall);
+    c.ghost = v2(704, 50);
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED);
+    city_cancel(&c);
+    CHECK(c.placing == -1 && c.items[hall].pos.y == 800);
+    vec2 spot;
+    CHECK(city_find_spot(&c, 2, v2(704, 800), &spot) && city_can_place(&c, spot, 2, -1));
 }
 
-/* ------------------------------------------------------------------ board */
-
-static board fixed(const char *rows[BOARD_H])
-{
-    board b;
-    board_init(&b, 1, KINDS);
-    for (int y = 0; y < BOARD_H; y++)
-        for (int x = 0; x < BOARD_W; x++) b.cell[y][x] = (piece){(int8_t)(rows[y][x] - '0'), SP_NONE};
-    return b;
-}
-
-static bool no_matches_and_full(const board *b)
-{
-    for (int y = 0; y < BOARD_H; y++)
-        for (int x = 0; x < BOARD_W; x++) {
-            piece p = b->cell[y][x];
-            if (p.kind == EMPTY) return false;
-            if (p.kind < KINDS && x >= 2 && b->cell[y][x - 1].kind == p.kind && b->cell[y][x - 2].kind == p.kind) return false;
-            if (p.kind < KINDS && y >= 2 && b->cell[y - 1][x].kind == p.kind && b->cell[y - 2][x].kind == p.kind) return false;
-        }
-    return true;
-}
-
-static void test_board(void)
-{
-    static const char *base[BOARD_H] = {"01234501", "12345012", "23450123", "34501234",
-                                        "45012345", "50123450", "01234501", "12345012"};
-    for (uint32_t seed = 1; seed < 40; seed++) {
-        board b;
-        board_init(&b, seed, 5 + seed % 2);
-        CHECK(no_matches_and_full(&b));
-        CHECK(board_find_move(&b, NULL, NULL));
-    }
-
-    step st;
-    /* four in a row -> row blaster at the swapped cell */
-    const char *four[BOARD_H] = {"00102345", "12045012", "23450123", "34501234", "45012345", "50123450", "01234501", "12345012"};
-    board b = fixed(four);
-    CHECK(!board_swap_works(&b, iv2(6, 6), iv2(7, 7)));     /* not adjacent */
-    CHECK(board_swap_works(&b, iv2(2, 0), iv2(2, 1)));
-    ivec2 sw[2] = {{2, 0}, {2, 1}};
-    board_swap(&b, sw[0], sw[1]);
-    CHECK(board_resolve(&b, sw, &st));
-    CHECK(st.count == 4 && st.created == 1 && st.by_kind[0] == 4);
-    CHECK(b.cell[0][2].special == SP_ROW && b.cell[0][2].kind == 0);
-    CHECK(b.cell[0][0].kind == EMPTY && b.cell[0][1].kind == EMPTY && b.cell[0][3].kind == EMPTY);
-
-    /* L shape -> bomb at the corner */
-    const char *ell[BOARD_H] = {"00012345", "02345012", "03450123", "34501234", "45012345", "50123450", "01234501", "12345012"};
-    b = fixed(ell);
-    CHECK(board_resolve(&b, NULL, &st));
-    CHECK(st.count == 5 && b.cell[0][0].special == SP_BOMB);
-
-    /* five in a row -> orb */
-    const char *five[BOARD_H] = {"00000123", "12345012", "23450123", "34501234", "45012345", "50123450", "01234501", "12345012"};
-    b = fixed(five);
-    CHECK(board_resolve(&b, NULL, &st));
-    CHECK(st.count == 5 && b.cell[0][2].special == SP_ORB && b.cell[0][2].kind == ORB_KIND);
-
-    /* orb swapped with a gem clears every gem of that kind */
-    b = fixed(base);
-    b.cell[3][3] = (piece){ORB_KIND, SP_ORB};
-    int ones = 0;
-    for (int y = 0; y < BOARD_H; y++)
-        for (int x = 0; x < BOARD_W; x++) ones += b.cell[y][x].kind == 1;
-    CHECK(board_swap_works(&b, iv2(3, 3), iv2(4, 3)));
-    ivec2 orb_swap[2] = {{3, 3}, {4, 3}};
-    int target = b.cell[3][4].kind;
-    board_swap(&b, orb_swap[0], orb_swap[1]);
-    CHECK(board_resolve(&b, orb_swap, &st));
-    int target_count = 0;
-    for (int y = 0; y < BOARD_H; y++)
-        for (int x = 0; x < BOARD_W; x++) target_count += st.before[y][x].kind == target;
-    CHECK(st.by_kind[target] == target_count && target_count > 0);
-    (void)ones;
-
-    /* a row blaster hit by a match clears its whole row */
-    b = fixed(base);
-    b.cell[4][0] = (piece){2, SP_ROW};
-    b.cell[4][1] = (piece){2, SP_NONE};
-    b.cell[4][2] = (piece){2, SP_NONE};
-    CHECK(board_resolve(&b, NULL, &st));
-    for (int x = 0; x < BOARD_W; x++) CHECK(st.cleared[4][x]);
-    CHECK(st.fired_count >= 1 && st.fired[0].type == SP_ROW);
-
-    /* gravity keeps order and refills */
-    int fall[BOARD_H][BOARD_W];
-    piece above = b.cell[3][5];
-    board_collapse(&b, fall);
-    CHECK(b.cell[4][5].kind == above.kind && fall[4][5] == 1);
-    for (int y = 0; y < BOARD_H; y++)
-        for (int x = 0; x < BOARD_W; x++) CHECK(b.cell[y][x].kind != EMPTY);
-
-    /* long random play: invariants hold through cascades and shuffles */
-    board_init(&b, 2024, 6);
-    rng r = {99};
-    int cascades = 0, specials = 0;
-    for (int turn = 0; turn < 600; turn++) {
-        ivec2 a, c;
-        if (!board_find_move(&b, &a, &c)) {
-            board_shuffle(&b);
-            continue;
-        }
-        if (rng_int(&r, 3) == 0) {   /* sometimes pick a random valid move instead of the first */
-            for (int k = 0; k < 30; k++) {
-                ivec2 p = iv2(rng_int(&r, BOARD_W), rng_int(&r, BOARD_H)), q = ivec2_add(p, rng_int(&r, 2) ? iv2(1, 0) : iv2(0, 1));
-                if (board_swap_works(&b, p, q)) {
-                    a = p, c = q;
-                    break;
-                }
-            }
-        }
-        ivec2 pair[2] = {a, c};
-        board_swap(&b, a, c);
-        bool any = board_resolve(&b, pair, &st);
-        CHECK(any);
-        while (any) {
-            specials += st.created;
-            board_collapse(&b, fall);
-            any = board_resolve(&b, NULL, &st);
-            cascades += any;
-        }
-        CHECK(no_matches_and_full(&b));
-    }
-    CHECK(cascades > 0 && specials > 0);
-}
+int test_relic(int *checks);   /* tests/test_relic.c */
 
 int main(int argc, char **argv)
 {
@@ -305,7 +212,7 @@ int main(int argc, char **argv)
     test_purse();
     test_save();
     test_city();
-    test_board();
+    failures += test_relic(&checks);
     printf("%d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }
