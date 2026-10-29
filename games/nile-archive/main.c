@@ -23,7 +23,9 @@ enum { COINS, INFLUENCE };
 enum { SCENES = 3, ITEMS = 8, ZONES = 4 };
 
 typedef struct {
-    const char *title, *teaser, *story;
+    const char *title, *teaser;
+    story_line clue[2];             /* told when the chapter is first completed */
+    int clue_lines;
     const char *background;
     int gate;                       /* influence needed to enter */
     const char *names[ITEMS];
@@ -33,18 +35,19 @@ typedef struct {
 
 static const scene_def scenes[SCENES] = {
     {"Двор хранителя", "На столах двора остались вещи отца. Начните с них.",
-     "На свитке — печать семейной мастерской. Отец успел спрятать архив до наводнения.", "scene0.png", 0,
+     {{"nefra", "На свитке — печать семейной мастерской. Отец успел спрятать архив до наводнения."}}, 1, "scene0.png", 0,
      {"Анх", "Веер", "Гранат", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
      {{133, 133}, {268, 422}, {491, 316}, {574, 660}, {1150, 368}, {965, 575}, {195, 598}, {1094, 170}},
      {{27, 55}, {82, 42}, {30, 30}, {40, 24}, {45, 20}, {95, 70}, {90, 42}, {42, 55}}},
     {"Библиотека писца", "В библиотеке спрятан второй след. Для доступа нужно 20 влияния.",
-     "На обороте печати проступил план острова. След ведёт к старому храму у восточного берега.", "scene1.png", 20,
+     {{"nefra", "На обороте печати проступил план острова. След ведёт к старому храму у восточного берега."}}, 1, "scene1.png", 20,
      {"Анх", "Веер", "Гранат", "Скарабей", "Ключ", "Кошка", "Карта", "Перо"},
      {{180, 78}, {1023, 617}, {115, 430}, {513, 163}, {450, 617}, {1063, 453}, {273, 500}, {1070, 226}},
      {{25, 52}, {115, 55}, {35, 35}, {30, 42}, {45, 22}, {90, 70}, {195, 55}, {45, 55}}},
     {"Храм на закате", "Соберите последнюю цепочку улик. Нужно 50 влияния.",
-     "Последняя записка раскрыта: книги спрятаны под храмом. Восстановите остров — и библиотека снова откроется.",
-     "scene2.png", 50,
+     {{"nefra", "Последняя записка отца раскрыта."},
+      {"horem", "Книги спрятаны под храмом. Восстанови остров — и библиотека снова откроется."}},
+     2, "scene2.png", 50,
      {"Анх", "Веер", "Яблоко", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
      {{61, 109}, {1027, 530}, {120, 514}, {527, 334}, {1109, 114}, {656, 574}, {234, 98}, {379, 634}},
      {{30, 72}, {95, 50}, {35, 35}, {42, 24}, {25, 62}, {105, 58}, {70, 28}, {95, 30}}},
@@ -65,10 +68,20 @@ static building_def buildings[] = {
 };
 enum { BUILDING_TYPES = sizeof buildings / sizeof buildings[0] };
 
-static const struct { const char *name, *role, *image; } cast[] = {
-    {"Нефра", "Дочь хранителя · ищет отца и архив", "characters/nefra.png"},
-    {"Хорем", "Пропавший хранитель · оставил подсказки", "characters/horem.png"},
-    {"Мерит", "Лодочница · проводник будущих глав", "characters/merit.png"},
+static character cast[] = {
+    {.id = "nefra", .name = "Нефра", .role = "Дочь хранителя · ищет отца и архив", .portrait_path = "characters/nefra.png",
+     .color = {46, 140, 134, 255}},
+    {.id = "horem", .name = "Хорем", .role = "Пропавший хранитель · оставил подсказки", .portrait_path = "characters/horem.png",
+     .color = {185, 134, 46, 255}, .right = true},
+    {.id = "merit", .name = "Мерит", .role = "Лодочница · проводник будущих глав", .portrait_path = "characters/merit.png",
+     .color = {181, 84, 58, 255}, .right = true},
+};
+enum { CAST = sizeof cast / sizeof cast[0] };
+
+/* First launch. */
+static const story_line intro[] = {
+    {"nefra", "Отец исчез после наводнения, а библиотека опустела."},
+    {"nefra", "Но он успел спрятать книги и оставил подсказки. Я восстановлю наше поместье — и найду архив."},
 };
 
 static const purse scene_reward = {{240, 20}};
@@ -92,7 +105,7 @@ static struct {
 
     modal modal;
     float modal_time;
-    texture backgrounds[SCENES], portraits[3], coin, influence;
+    texture backgrounds[SCENES], coin, influence;
     font *serif, *sans, *sans_bold;
     ui_theme theme;
     text_style eyebrow, heading, body, muted, number, item;
@@ -139,6 +152,7 @@ static void serialize(save *s, void *user)
     save_int(s, "influence", &G.wallet.v[INFLUENCE]);
     save_ints(s, "wins", G.wins, SCENES);
     city_serialize(&G.island, s);
+    story_serialize(s);
 }
 
 static void save_progress(void) { save_write("progress", serialize, NULL); }
@@ -213,6 +227,7 @@ static void scene_tap(vec2 screen)
         if (found_count() == ITEMS) {
             G.wallet = purse_add(G.wallet, scene_reward);
             G.wins[G.scene]++;
+            story_play(fmt("chapter-%d", G.scene), sc->clue, sc->clue_lines);   /* the clue, the first time */
             save_progress();
             G.modal = MODAL_WIN;
             G.modal_time = 0;
@@ -279,7 +294,7 @@ static void draw_chapters(rect panel)
 
     rect intro = rect_cut_top(&r, 150);
     rect face = rect_cut_left(&intro, 92);
-    draw_image(G.portraits[0], rect_fit(face, G.portraits[0].size), WHITE);
+    draw_image(cast[0].portrait, rect_fit(face, cast[0].portrait.size), WHITE);
     rect_cut_left(&intro, 10);
     text_draw(G.eyebrow, intro.pos, v2(0, 0), "ЕГИПЕТ · 196 ДО Н. Э.");
     text_box(ts_size(G.heading, 21), rc(intro.pos.x, intro.pos.y + 20, intro.size.w, 52), v2(0, 0), "Остров, который помнит");
@@ -372,7 +387,7 @@ static void island_frame(rect body, input world)
         if (ui_button(expand, fmt("Открыть берег · %d монет", cost.v[COINS]), 0)) {
             if (city_unlock(&G.island, next, &G.wallet)) {
                 save_progress();
-                ui_toast("Открыт новый берег! Перетащите остров влево.");
+                story_say("merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.");
             } else {
                 ui_toast("Нужно больше монет — пройдите сцену");
             }
@@ -445,21 +460,20 @@ static void scene_frame(rect body, input world, float dt)
 
 static void win_dialog(float t)
 {
+    const scene_def *sc = &scenes[G.scene];
     rect s = app_screen();
-    rect box = rect_centered(rect_center(s), sz2(720, 380));
+    rect box = rect_centered(rect_center(s), sz2(620, 340));
     box = rect_offset(box, v2(0, (1 - ease_out_cubic(t * 3)) * 40));
     ui_panel_ex(box, hex(0x1F4645), hex(0x183B3A), hex(0xD4B775), 20);
-    rect r = rect_inflate(box, -26);
-    rect face = rect_cut_left(&r, 200);
-    draw_image(G.portraits[0], rect_fit(face, G.portraits[0].size), WHITE);
-    rect_cut_left(&r, 20);
+    rect r = rect_inflate(box, -30);
     text_draw(G.eyebrow, r.pos, v2(0, 0), "ФРАГМЕНТ АРХИВА НАЙДЕН");
     rect_cut_top(&r, 22);
     text_draw(ts_size(G.theme.title, 34), r.pos, v2(0, 0), "Память возвращается");
     rect_cut_top(&r, 54);
     rect button = rect_cut_bottom(&r, 50);
     rect reward = rect_cut_bottom(&r, 40);
-    text_box(ts_size(G.body, 18), r, v2(0, 0), scenes[G.scene].story);
+    const char *clue = sc->clue_lines > 1 ? fmt("%s «%s»", sc->clue[0].text, sc->clue[1].text) : sc->clue[0].text;
+    text_box(ts_size(G.body, 18), r, v2(0, 0), clue);
     rect label = text_draw(G.body, rect_point(reward, v2(0, .5f)), v2(0, .5f), "Награда:");
     rect coins = amount(vec2_add(rect_point(label, v2(1, .5f)), v2(12, 0)), v2(0, .5f), G.coin, fmt("%d", scene_reward.v[COINS]), G.number);
     amount(vec2_add(rect_point(coins, v2(1, .5f)), v2(18, 0)), v2(0, .5f), G.influence, fmt("%d", scene_reward.v[INFLUENCE]), G.number);
@@ -477,11 +491,12 @@ static void cast_dialog(float t)
     text_draw(ts_size(G.theme.title, 34), rect_point(head, v2(0, .5f)), v2(0, .5f), "Люди острова");
     if (ui_button(rect_align(head, sz2(50, 46), v2(1, .5f)), "×", 0)) G.modal = MODAL_NONE;
     rect_cut_top(&r, 10);
-    for (int i = 0; i < 3; i++) {
-        rect col = rect_col(r, 3, i, 20);
+    for (int i = 0; i < CAST; i++) {
+        rect col = rect_col(r, CAST, i, 20);
         rect caption = rect_cut_bottom(&col, 92);
         draw_glow(rect_point(col, v2(.5f, .78f)), col.size.w * .45f, rgba(242, 210, 140, 40), rgba(242, 210, 140, 0));
-        draw_image(G.portraits[i], rect_align(col, size2_scale(G.portraits[i].size, size2_fit(G.portraits[i].size, col.size)), v2(.5f, 1)), WHITE);
+        texture face = cast[i].portrait;
+        draw_image(face, rect_align(col, size2_scale(face.size, size2_fit(face.size, col.size)), v2(.5f, 1)), WHITE);
         text_draw(ts_size(G.heading, 25), rect_point(caption, v2(.5f, 0)), v2(.5f, 0), cast[i].name);
         text_box(G.muted, rect_inflate2(rect_bottom(caption, 54), v2(-10, 0)), v2(.5f, 0), cast[i].role);
     }
@@ -493,8 +508,9 @@ static void frame(float dt)
 {
     input in = input_get();
     input world = input_world();
-    if (G.modal != MODAL_NONE) world = (input){.pos = in.pos, .pinch = 1};
-    if (in.back) {
+    bool talking = story_active();
+    if (G.modal != MODAL_NONE || talking) world = (input){.pos = in.pos, .pinch = 1};
+    if (in.back && !talking) {
         if (G.modal == MODAL_WIN) go_home();
         else if (G.modal) G.modal = MODAL_NONE;
         else if (G.scene >= 0) go_home();
@@ -506,18 +522,19 @@ static void frame(float dt)
     rect header = rect_cut_top(&screen, 66);
     rect body = rect_inflate(screen, -12);
 
-    ui_set_enabled(G.modal == MODAL_NONE);
+    ui_set_enabled(G.modal == MODAL_NONE && !talking);
     if (G.scene < 0) island_frame(body, world);
     else scene_frame(body, world, dt);
     draw_header(header);
     ui_set_enabled(true);
 
-    if (G.modal != MODAL_NONE) {
+    if (G.modal != MODAL_NONE && !talking) {   /* a dialogue goes first: the reward waits for it */
         G.modal_time += dt;
         ui_modal_backdrop(G.modal_time * 4);
         if (G.modal == MODAL_WIN) win_dialog(G.modal_time);
         else cast_dialog(G.modal_time);
     }
+    story_frame(dt);
 }
 
 /* -------------------------------------------------------------------- setup */
@@ -552,13 +569,17 @@ static void setup_theme(void)
         .dim = rgba(6, 28, 33, 215), .toast_bg = hex(0xF0D49D), .toast_text = hex(0x203C36), .radius = 10,
     };
     ui_set_theme(&G.theme);
+    story_setup(cast, CAST,
+                &(story_style){.text = {.font = G.sans, .size = 22, .fill = hex(0x203C36)},
+                               .name = {.font = G.sans_bold, .size = 17, .fill = hex(0xFFF6E0)},
+                               .bubble = hex(0xFBF1DA), .edge = hex(0x9C7A3C), .dim = rgba(6, 28, 33, 120),
+                               .portrait_height = .64f, .skip = "Пропустить"});
 }
 
 /* Debug/QA entry points used to capture screenshots: --screen island|build|scene0..2|cast|win */
 static void apply_screen_arg(void)
 {
     const char *screen = app_arg("screen");
-    if (!screen) return;
     G.wallet.v[INFLUENCE] = 100;
     G.wallet.v[COINS] = 900;
     if (!strncmp(screen, "scene", 5)) {
@@ -575,6 +596,10 @@ static void apply_screen_arg(void)
         open_scene(1);
         G.found = 0xFF;
         G.modal = MODAL_WIN, G.modal_time = 1;
+    } else if (!strcmp(screen, "story")) {
+        story_play("intro", intro, 2);
+    } else if (!strcmp(screen, "merit")) {
+        story_say("merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.");
     } else if (!strcmp(screen, "island")) {
         int types[] = {1, 2, 3, 4, 1};
         vec2 spots[] = {{1060, 600}, {760, 860}, {960, 1000}, {1400, 700}, {1700, 900}};
@@ -589,7 +614,6 @@ static void init(void)
 {
     setup_theme();
     for (int i = 0; i < SCENES; i++) G.backgrounds[i] = tex_load(scenes[i].background);
-    for (int i = 0; i < 3; i++) G.portraits[i] = tex_load(cast[i].image);
     G.coin = tex_load("icons/coin.png");
     G.influence = tex_load("icons/influence.png");
     island_setup();
@@ -601,7 +625,8 @@ static void init(void)
     save_read("progress", serialize, NULL);
     G.scene = -1;
     G.hint = -1;
-    apply_screen_arg();
+    if (app_arg("screen")) apply_screen_arg();
+    else story_play("intro", intro, 2);
 }
 
 int main(int argc, char **argv)

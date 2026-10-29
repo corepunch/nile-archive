@@ -397,7 +397,17 @@ static int wrap(metrics m, const char *s, float max_px, const char **starts, con
     return n;
 }
 
-rect text_box(text_style s, rect box, vec2 align, const char *utf8)
+static int codepoints(const char *s, const char *end)
+{
+    int n = 0;
+    for (; *s && s < end; s++) n += ((unsigned char)*s & 0xC0) != 0x80;
+    return n;
+}
+
+/* Wraps (balanced), shrinks to fit, aligns and, when draw is set, draws the
+ * first `visible` codepoints (-1 = all). Lines keep the place they will have
+ * when complete, so revealed text never jumps. */
+static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int visible, bool draw)
 {
     if (!s.font || !utf8) return rect_make(box.pos, sz2(0, 0));
     const char *starts[MAX_LINES], *ends[MAX_LINES];
@@ -423,16 +433,40 @@ rect text_box(text_style s, rect box, vec2 align, const char *utf8)
     size2 total = sz2(widest * m.unit, n * line_h - (line_h - s.size));
     rect area = rect_align(box, total, align);
     char line[512];
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; draw && i < n; i++) {
         size_t len = (size_t)(ends[i] - starts[i]);
         if (len >= sizeof line) len = sizeof line - 1;
         memcpy(line, starts[i], len);
         line[len] = 0;
-        vec2 at = v2(lerpf(area.pos.x, rect_max(area).x, align.x), area.pos.y + i * line_h);
-        text_draw(s, at, v2(align.x, 0), line);
+        float full = text_measure(s, line).w;
+        if (visible >= 0) {   /* cut the line at the first hidden codepoint */
+            int shown = visible - codepoints(utf8, starts[i]);
+            if (shown <= 0) break;
+            int k = 0;
+            char *p = line;
+            for (; *p; p++)
+                if (((unsigned char)*p & 0xC0) != 0x80 && k++ == shown) break;
+            *p = 0;
+        }
+        float left = lerpf(area.pos.x, rect_max(area).x, align.x) - full * align.x;
+        text_draw(s, v2(left, area.pos.y + i * line_h), v2(0, 0), line);
     }
     return area;
 }
+
+rect text_box(text_style s, rect box, vec2 align, const char *utf8) { return box_layout(s, box, align, utf8, -1, true); }
+
+rect text_box_reveal(text_style s, rect box, vec2 align, const char *utf8, int visible)
+{
+    return box_layout(s, box, align, utf8, visible, true);
+}
+
+size2 text_box_size(text_style s, float width, const char *utf8)
+{
+    return box_layout(s, rc(0, 0, width, 1e6f), v2(0, 0), utf8, -1, false).size;
+}
+
+int text_length(const char *utf8) { return utf8 ? codepoints(utf8, utf8 + strlen(utf8)) : 0; }
 
 rect text_fit(text_style s, rect box, vec2 align, const char *utf8)
 {

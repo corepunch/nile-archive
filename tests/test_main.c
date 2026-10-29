@@ -201,6 +201,27 @@ static void test_city(void)
     CHECK(city_find_spot(&c, 2, v2(704, 800), &spot) && city_can_place(&c, spot, 2, -1));
 }
 
+static void serialize_story(save *s, void *user)
+{
+    (void)user;
+    story_serialize(s);
+}
+
+static void test_story(void)
+{
+    static character cast[2] = {{.id = "ann", .name = "Ann"}, {.id = "bob", .name = "Bob", .right = true}};
+    story_setup(cast, 2, &(story_style){0});
+    CHECK(story_character("bob") == &cast[1] && !story_character("eve") && !story_active());
+    story_line beat[2] = {{"ann", "Hello."}, {"bob", "Hi, Ann."}};
+    CHECK(story_play("hello", beat, 2) && story_active() && story_seen("hello"));
+    CHECK(!story_play("hello", beat, 2));       /* a beat plays once */
+    CHECK(save_write("story-slot", serialize_story, NULL));
+    story_forget();
+    CHECK(!story_seen("hello"));
+    CHECK(save_read("story-slot", serialize_story, NULL) && story_seen("hello") && !story_seen("other"));
+    CHECK(text_length("Привет") == 6 && text_length("") == 0);
+}
+
 int test_relic(int *checks);   /* tests/test_relic.c */
 
 int main(int argc, char **argv)
@@ -212,6 +233,7 @@ int main(int argc, char **argv)
     test_purse();
     test_save();
     test_city();
+    test_story();
     failures += test_relic(&checks);
     printf("%d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;

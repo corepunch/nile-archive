@@ -20,7 +20,7 @@ The visual observations above are our art-direction interpretation of the refere
 | Sunlit Lagoon | `assets/scene-lagoon.png` | Runtime background for levels 1–5; quiet center for the dynamic hex board |
 | Moonlit Sun Temple | `assets/scene-temple.png` | Runtime background for levels 6–10; indigo/teal field with amber lights at the edges |
 | Garden island | `assets/art-direction/island-gardens-concept.jpg` | Environment concept only; not a replacement terrain or placement map |
-| Expedition cast | `assets/art-direction/expedition-cast.png` | Transparent character concept lineup; portraits are not yet connected to dialogue UI |
+| Expedition cast | `assets/art-direction/expedition-cast.png` | Transparent character concept lineup; busts cut from it are the dialogue portraits |
 
 ![Sunlit Lagoon background](../art/scene-lagoon.png)
 ![Moonlit Sun Temple background](../art/scene-temple.png)

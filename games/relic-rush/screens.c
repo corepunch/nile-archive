@@ -344,7 +344,7 @@ static void zone_screen(void)
         if (city_unlock(&R.island, z, &R.prog.wallet)) {
             island_focus(zone->marker, R.island.cam.zoom);
             save_progress();
-            notice("New land is yours. Make it your own.");
+            story_say("mara", "New land is yours. Make it your own.");
             tone(820);
         }
         R.overlay = OV_NONE;

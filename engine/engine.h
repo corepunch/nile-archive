@@ -349,6 +349,11 @@ rect text_draw(text_style s, vec2 pos, vec2 pivot, const char *utf8);
 /* Word-wrapped text aligned inside box, lines balanced in length; shrinks the
  * font (down to 60%) if it would not fit. */
 rect text_box(text_style s, rect box, vec2 align, const char *utf8);
+/* text_box showing only the first `visible` codepoints, every line already in
+ * its final place: a typewriter that never re-wraps. */
+rect text_box_reveal(text_style s, rect box, vec2 align, const char *utf8, int visible);
+size2 text_box_size(text_style s, float width, const char *utf8);   /* wrapped size at that width */
+int text_length(const char *utf8);                                   /* in codepoints */
 /* Visible ink of one line, relative to where text_draw with pivot (0,0) puts its box. */
 rect text_ink(text_style s, const char *utf8);
 /* One line placed by its visible ink: aligned inside box and shrunk to fit it.
@@ -423,6 +428,48 @@ void save_ints(save *s, const char *key, int *v, int n);
 void save_vec2(save *s, const char *key, vec2 *v);
 /* Use text produced elsewhere as the source of the next save_read (e.g. a migration). */
 void save_inject(const char *slot, const char *text);
+
+/* ===================================================================== */
+/* Story: characters, dialogue and speech bubbles                         */
+/* ===================================================================== */
+
+typedef struct {
+    const char *id;              /* how scripts refer to the character */
+    const char *name, *role;
+    const char *portrait_path;
+    texture portrait;            /* loaded by story_setup */
+    color color;                 /* name tag */
+    bool right;                  /* stands on the right of the dialogue */
+} character;
+
+typedef struct { const char *who, *text; } story_line;   /* who: character id, NULL = narrator */
+
+typedef struct {
+    text_style text, name;       /* bubble text and name tag */
+    color bubble, edge, dim;     /* bubble fill and rim, backdrop behind the dialogue */
+    float portrait_height;       /* fraction of the screen height (default .5) */
+    bool framed;                 /* portraits are busts: show them in a medallion */
+    const char *skip;            /* label of a skip button, NULL for none */
+} story_style;
+
+/* The game's cast and how its dialogue looks; call once after loading fonts. */
+void story_setup(character *cast, int count, const story_style *style);
+const character *story_character(const char *id);
+/* Queue a beat once per save: false (and nothing queued) if it was seen before. */
+bool story_play(const char *beat, const story_line *lines, int count);
+void story_say(const char *who, const char *text);        /* queue one line, every time */
+bool story_active(void);
+bool story_seen(const char *beat);
+/* Draws the dialogue over everything and takes all input while it runs. Call
+ * after the game's own UI (drawn with ui_set_enabled(!story_active())). */
+void story_frame(float dt);
+void story_serialize(save *s);
+void story_forget(void);                                   /* new game: nothing seen */
+
+/* A rounded bubble around `box` whose tail points at `tip`. */
+void speech_bubble_shape(rect box, vec2 tip, color fill, color edge);
+/* A bubble with text, placed above `tip` (or below when there is no room), kept on screen. */
+rect speech_bubble(vec2 tip, const char *utf8, text_style s, color fill, color edge, float max_width);
 
 /* ===================================================================== */
 /* City: the shared building meta-game                                    */

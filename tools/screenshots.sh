@@ -25,6 +25,8 @@ shot nile-archive scene2 1200x900 --screen scene2
 shot nile-archive characters 1200x900 --screen cast
 shot nile-archive reward 1200x900 --screen win
 shot nile-archive widescreen 1600x900 --screen island
+shot nile-archive dialogue 1200x900 --screen story --frames 200
+shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
 
 # Relic Rush: portrait 480 x 900, stills plus two short animated reels
 shot relic-rush hex-first 480x900
@@ -35,6 +37,11 @@ shot relic-rush island-zones 480x900 --city 3 --overview
 shot relic-rush island-unlock 480x900 --city 3 --zone 1
 shot relic-rush victory 480x900 --victory
 shot relic-rush building-card 480x900 --card 1
+shot relic-rush dialogue-elena 480x900 --dialog intro --frames 240
+shot relic-rush dialogue-mara 480x900 --dialog mara --frames 240
+shot relic-rush dialogue-tomas 480x900 --dialog tomas --frames 240
+shot relic-rush dialogue-adrian 480x900 --dialog adrian --frames 240
+shot relic-rush island-bubble 480x900 --dialog bubble --frames 30
 shot relic-rush effect-ray 480x900 --fx ray --frames 10
 shot relic-rush effect-bomb 480x900 --fx bomb --frames 10
 shot relic-rush effect-prism 480x900 --fx prism --frames 10
