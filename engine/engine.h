@@ -440,9 +440,13 @@ typedef struct {
     texture portrait;            /* loaded by story_setup */
     color color;                 /* name tag */
     bool right;                  /* stands on the right of the dialogue */
+    vec2 mouth;                  /* where they speak from, 0..1 inside the portrait (default .5, .25) */
 } character;
 
-typedef struct { const char *who, *text; } story_line;   /* who: character id, NULL = narrator */
+/* Speech bubbles come in the shapes comics use. */
+typedef enum { BUBBLE_SPEECH, BUBBLE_THOUGHT, BUBBLE_SHOUT } bubble_kind;
+
+typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* who: character id, NULL = narrator */
 
 typedef struct {
     text_style text, name;       /* bubble text and name tag */
@@ -457,19 +461,24 @@ void story_setup(character *cast, int count, const story_style *style);
 const character *story_character(const char *id);
 /* Queue a beat once per save: false (and nothing queued) if it was seen before. */
 bool story_play(const char *beat, const story_line *lines, int count);
-void story_say(const char *who, const char *text);        /* queue one line, every time */
+void story_say(const char *who, const char *text);        /* queue one spoken line, every time */
+void story_line_add(story_line line);                      /* queue one line of any kind */
 bool story_active(void);
+void story_next(void);                                     /* move on, as a tap would after the line */
 bool story_seen(const char *beat);
 /* Draws the dialogue over everything and takes all input while it runs. Call
- * after the game's own UI (drawn with ui_set_enabled(!story_active())). */
+ * after the game's own UI (drawn with ui_set_enabled(!story_active())).
+ * Staging follows Playrix and Wooga story screens: the speaker stands at the
+ * screen edge with the bubble at face height and the tail on their mouth; the
+ * previous speaker stays on the other side, dimmed, as the listener. */
 void story_frame(float dt);
 void story_serialize(save *s);
 void story_forget(void);                                   /* new game: nothing seen */
 
-/* A rounded bubble around `box` whose tail points at `tip`. */
-void speech_bubble_shape(rect box, vec2 tip, color fill, color edge);
+/* A bubble around `box` pointing at `tip`: one outline around body and tail. */
+void speech_bubble_shape(rect box, vec2 tip, color fill, color edge, bubble_kind kind);
 /* A bubble with text, placed above `tip` (or below when there is no room), kept on screen. */
-rect speech_bubble(vec2 tip, const char *utf8, text_style s, color fill, color edge, float max_width);
+rect speech_bubble(vec2 tip, const char *utf8, text_style s, color fill, color edge, float max_width, bubble_kind kind);
 
 /* ===================================================================== */
 /* City: the shared building meta-game                                    */

@@ -114,7 +114,7 @@ story_setup(cast, 2, &(story_style){.text = speech, .name = tag, .framed = true,
 story_play("intro", (story_line[]){{"elena", "The Lost Valley at last."}, {"mara", "And now we do."}}, 2);
 ...
 story_frame(dt);   /* last in the frame: portrait, bubble, typed text, tap to continue */
-speech_bubble(above_building, "A new wonder!", speech, cream, brown, 220);   /* words over the world */
+speech_bubble(above_building, "A new wonder!", speech, cream, brown, 220, BUBBLE_SPEECH);   /* words over the world */
 ```
 
 Saves are one function per game that both reads and writes, so fields cannot drift:

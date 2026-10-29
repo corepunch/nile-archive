@@ -12,7 +12,8 @@ ENGINE  := core gfx font ui save city audio story
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 # CFLAGS is yours to override (make CFLAGS="-O0 -g -Werror"); the essentials live in ALL_CFLAGS
-ALL_CFLAGS = $(CFLAGS) -std=c11 -Wall -Wextra -Wno-unused-parameter -Iengine
+# zero is a valid default everywhere, so partial initialisers ({"who", "text"}) are idiomatic
+ALL_CFLAGS = $(CFLAGS) -std=c11 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Iengine
 SDL_CFLAGS := $(shell pkg-config --cflags sdl2 2>/dev/null || sdl2-config --cflags 2>/dev/null)
 SDL_LIBS   := $(shell pkg-config --libs sdl2 2>/dev/null || sdl2-config --libs 2>/dev/null)
 LIBS    := $(SDL_LIBS) -lm

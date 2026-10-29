@@ -60,6 +60,7 @@ This is an original adventure setting inspired by archaeological serials and los
 
 **Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion, speech bubble pointing at the speaker, name tag, typed text: tap to finish a line, tap again to continue, or skip). Each beat plays once per save:
 
+- Bubbles come in three kinds: Elena's first musing is a thought cloud, Mara's greeting a shout, the rest speech.
 - **Elena Voss** opens the expedition and explains each level's twist the first time it is played (its lesson; later it is a reminder toast).
 - **Mara Bell** greets every newly opened region.
 - **Tomas Reed** tells each restored wonder's story, and the island answers with a word bubble over the building.

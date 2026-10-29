@@ -215,6 +215,13 @@ static void test_story(void)
     story_line beat[2] = {{"ann", "Hello."}, {"bob", "Hi, Ann."}};
     CHECK(story_play("hello", beat, 2) && story_active() && story_seen("hello"));
     CHECK(!story_play("hello", beat, 2));       /* a beat plays once */
+    story_next();
+    story_next();
+    CHECK(!story_active());
+    story_line_add((story_line){"bob", "Hey!", BUBBLE_SHOUT});
+    CHECK(story_active());
+    story_next();
+    CHECK(!story_active());
     CHECK(save_write("story-slot", serialize_story, NULL));
     story_forget();
     CHECK(!story_seen("hello"));

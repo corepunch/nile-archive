@@ -170,8 +170,8 @@ Characters, dialogue and speech bubbles, shared by both games:
 
 ```c
 typedef struct { const char *id, *name, *role, *portrait_path; texture portrait;
-                 color color; bool right; } character;
-typedef struct { const char *who, *text; } story_line;
+                 color color; bool right; vec2 mouth; } character;
+typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* speech, thought, shout */
 ```
 
 - `story_setup(cast, n, &style)` registers the cast and how the dialogue looks:
@@ -181,13 +181,26 @@ typedef struct { const char *who, *text; } story_line;
 - `story_play(beat, lines, n)` queues a beat once per save (beats are hashed
   and saved by `story_serialize`); `story_say(who, text)` queues a line every
   time. `story_active()` tells the game to hold its own input and dialogs.
-- `story_frame(dt)`, called last in the frame, draws the speaker's portrait
-  (sliding in when the speaker changes), a speech bubble whose tail points at
-  them, a name tag and text that types itself out without ever re-wrapping
-  (`text_box_reveal`). A tap finishes the line, the next tap moves on; Space
-  works too, and an optional skip pill ends the beat. On wide screens the
-  bubble sits beside the speaker, on narrow ones the speaker stands above it.
-- `speech_bubble(tip, text, style, …)` is the bubble on its own: placed above
+- `story_frame(dt)`, called last in the frame, stages the conversation the
+  way Playrix and Wooga story screens do: the speaker stands in their bottom
+  corner (sliding in when the speaker changes), the bubble sits at **face
+  height** beside them and its tail ends just off their **mouth** (each
+  character's `mouth` anchor, measured on the portrait); the previous speaker
+  stays on the other side, dimmed and a little smaller, as the listener.
+  Comics' rule applies: tails aim at the head or mouth and never cross a face.
+  On narrow screens the bubble runs along the bottom with the speaker's
+  medallion standing on it and a short tail aimed at their mouth.
+  Text types itself out without ever re-wrapping (`text_box_reveal`); a tap
+  finishes the line, the next tap moves on; Space works too, and an optional
+  skip pill sits in the corner away from the speaker.
+- Bubble kinds: **speech** (rounded body, tapered tail), **thought** (a cloud
+  of puffs with shrinking puffs as the tail) and **shout** (fixed-length
+  spikes around a superellipse, one long spike to the speaker). Body and tail
+  are drawn as one shape — an outline pass of both, then a fill pass of both
+  with the tail's root reaching into the body — so no seam shows where they
+  meet.
+- `story_next()` moves on as a tap would (for timed sequences and captures).
+- `speech_bubble(tip, text, style, …, kind)` is the bubble on its own: placed above
   a point (below when there is no room), kept on screen, tail on the point —
   for words over the world, like Relic Rush's restored wonders.
 
