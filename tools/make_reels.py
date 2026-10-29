@@ -24,4 +24,9 @@ sheet = Image.new('RGB', (240 * 5 + 40, 225 * 2 + 10), (16, 47, 44))
 for i, im in enumerate(shapes):
     sheet.paste(im, (i % 5 * 250, i // 5 * 235))
 sheet.save(out / 'level-shapes-overview.jpg', quality=86)
+packs = [Image.open(src / f'tiles-{p}.png').convert('RGB') for p in ('relics', 'jewels', 'resources')]
+row = Image.new('RGB', (480 * 3 + 20, 900), (16, 47, 44))
+for i, im in enumerate(packs):
+    row.paste(im, (i * 490, 0))
+row.resize((row.width * 2 // 3, 600), Image.LANCZOS).save(out / 'tile-sets.jpg', quality=86)
 print('reels ready')

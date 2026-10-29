@@ -9,6 +9,35 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include <emscripten/html5.h>
+
+/* The page's query string as command line words: ?tiles=jewels&fresh -> --tiles jewels --fresh */
+EM_JS(char *, web_query_args, (void), {
+    var words = [];
+    new URLSearchParams(location.search).forEach(function(value, key) {
+        words.push('--' + key);
+        if (value !== '') words.push(value);
+    });
+    var text = words.join('\n'), n = lengthBytesUTF8(text) + 1, p = _malloc(n);
+    stringToUTF8(text, p, n);
+    return p;
+});
+
+static int web_args(char ***out)
+{
+    static char *argv[64];
+    int argc = 0;
+    argv[argc++] = "game";
+    for (char *word = web_query_args(); word && *word && argc < 63;) {
+        argv[argc++] = word;
+        char *end = strchr(word, '\n');
+        if (!end) break;
+        *end = 0;
+        word = end + 1;
+    }
+    argv[argc] = NULL;
+    *out = argv;
+    return argc;
+}
 #endif
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -307,6 +336,9 @@ static void frame(void)
 
 int app_run(app_desc desc, int argc, char **argv)
 {
+#ifdef __EMSCRIPTEN__
+    if (argc <= 1) argc = web_args(&argv);   /* on the web, options come from the URL */
+#endif
     A.desc = desc;
     A.argc = argc;
     A.argv = argv;

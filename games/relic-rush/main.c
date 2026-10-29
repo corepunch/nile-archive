@@ -301,7 +301,10 @@ static void init(void)
     R.scenes[0] = tex_load("scene-lagoon.jpg");
     R.scenes[1] = tex_load("scene-temple.jpg");
     R.title = tex_load("title.png");
-    for (int i = 0; i < COLORS; i++) R.relics[i] = tex_load(fmt("relics/%d.png", i));
+    /* match pieces: the Relics pack, or an optional art pack (--tiles / ?tiles=jewels|resources) */
+    const char *tiles = app_arg("tiles");
+    if (!tiles || (strcmp(tiles, "jewels") && strcmp(tiles, "resources"))) tiles = "relics";
+    for (int i = 0; i < COLORS; i++) R.relics[i] = tex_load(fmt("tile-sets/%s/%d.png", tiles, i));
     vfx_init();
     island_setup(&R.island);
 
