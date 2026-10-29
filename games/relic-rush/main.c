@@ -17,17 +17,17 @@ relic_state R;
 /* The expedition (see docs/art-direction-v2.md). Busts come from the cast lineup. */
 static character cast[] = {
     {.id = "elena", .name = "Elena Voss", .role = "Archaeologist, expedition lead", .portrait_path = "characters/elena.png",
-     .color = {44, 108, 84, 255}},
+     .color = {44, 108, 84, 255}, .mouth = {.46f, .51f}},
     {.id = "mara", .name = "Mara Bell", .role = "Pilot and expedition partner", .portrait_path = "characters/mara.png",
-     .color = {150, 74, 40, 255}, .right = true},
+     .color = {150, 74, 40, 255}, .right = true, .mouth = {.60f, .49f}},
     {.id = "tomas", .name = "Tomas Reed", .role = "Island archivist", .portrait_path = "characters/tomas.png",
-     .color = {92, 112, 58, 255}, .right = true},
+     .color = {92, 112, 58, 255}, .right = true, .mouth = {.44f, .52f}},
     {.id = "adrian", .name = "Adrian Vale", .role = "Expedition financier", .portrait_path = "characters/adrian.png",
-     .color = {104, 48, 92, 255}, .right = true},
+     .color = {104, 48, 92, 255}, .right = true, .mouth = {.46f, .52f}},
 };
 
 static const story_line intro[] = {
-    {"elena", "The Lost Valley at last. Broken sunstones, silent terraces... someone lived here once."},
+    {"elena", "The Lost Valley at last. Broken sunstones, silent terraces... someone lived here once.", BUBBLE_THOUGHT},
     {"mara", "And now we do. I'll keep the plane ready. You find out who they were."},
     {"elena", "Every puzzle is an excavation. Let's start digging."},
 };
@@ -275,7 +275,7 @@ static void debug_screens(void)
         R.toast_time = 0;
         if (!strcmp(a, "intro")) story_play("intro", intro, 3);
         else if (!strcmp(a, "adrian")) island_with(WONDERS), R.on_island = true, story_play("finale", finale, 2);
-        else if (!strcmp(a, "mara")) island_with(3), R.on_island = true, story_say("mara", "New land is yours. Make it your own.");
+        else if (!strcmp(a, "mara")) island_with(3), R.on_island = true, story_line_add((story_line){"mara", "New land is yours. Make it your own!", BUBBLE_SHOUT});
         else if (!strcmp(a, "tomas")) island_with(2), R.on_island = true, story_say("tomas", wonders[1].about);
         else if (!strcmp(a, "bubble")) {
             island_with(2), R.on_island = true;

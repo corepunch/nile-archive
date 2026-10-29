@@ -142,7 +142,7 @@ void island_screen(input in, float dt)
     if (R.bubble_time > 0 && R.bubble_wonder >= 0 && R.bubble_wonder < c->count) {
         rect sprite = camera_rect_to_screen(c->cam, city_sprite_rect(c, c->items[R.bubble_wonder]));
         gfx_clip(MAP_VIEW);
-        speech_bubble(rect_point(sprite, v2(.5f, .08f)), R.bubble_text, speech_style(15), rgba(255, 246, 222, 245), rgba(102, 68, 39, 255), 220);
+        speech_bubble(rect_point(sprite, v2(.5f, .08f)), R.bubble_text, speech_style(15), rgba(255, 246, 222, 245), rgba(102, 68, 39, 255), 220, BUBBLE_SPEECH);
         gfx_unclip();
     }
 

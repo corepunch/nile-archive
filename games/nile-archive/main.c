@@ -46,7 +46,7 @@ static const scene_def scenes[SCENES] = {
      {{25, 52}, {115, 55}, {35, 35}, {30, 42}, {45, 22}, {90, 70}, {195, 55}, {45, 55}}},
     {"Храм на закате", "Соберите последнюю цепочку улик. Нужно 50 влияния.",
      {{"nefra", "Последняя записка отца раскрыта."},
-      {"horem", "Книги спрятаны под храмом. Восстанови остров — и библиотека снова откроется."}},
+      {"horem", "Книги спрятаны под храмом. Восстанови остров — и библиотека снова откроется.", BUBBLE_THOUGHT}},
      2, "scene2.png", 50,
      {"Анх", "Веер", "Яблоко", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
      {{61, 109}, {1027, 530}, {120, 514}, {527, 334}, {1109, 114}, {656, 574}, {234, 98}, {379, 634}},
@@ -70,11 +70,11 @@ enum { BUILDING_TYPES = sizeof buildings / sizeof buildings[0] };
 
 static character cast[] = {
     {.id = "nefra", .name = "Нефра", .role = "Дочь хранителя · ищет отца и архив", .portrait_path = "characters/nefra.png",
-     .color = {46, 140, 134, 255}},
+     .color = {46, 140, 134, 255}, .mouth = {.48f, .23f}},
     {.id = "horem", .name = "Хорем", .role = "Пропавший хранитель · оставил подсказки", .portrait_path = "characters/horem.png",
-     .color = {185, 134, 46, 255}, .right = true},
+     .color = {185, 134, 46, 255}, .right = true, .mouth = {.42f, .21f}},
     {.id = "merit", .name = "Мерит", .role = "Лодочница · проводник будущих глав", .portrait_path = "characters/merit.png",
-     .color = {181, 84, 58, 255}, .right = true},
+     .color = {181, 84, 58, 255}, .right = true, .mouth = {.40f, .22f}},
 };
 enum { CAST = sizeof cast / sizeof cast[0] };
 
@@ -387,7 +387,7 @@ static void island_frame(rect body, input world)
         if (ui_button(expand, fmt("Открыть берег · %d монет", cost.v[COINS]), 0)) {
             if (city_unlock(&G.island, next, &G.wallet)) {
                 save_progress();
-                story_say("merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.");
+                story_line_add((story_line){"merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.", BUBBLE_SHOUT});
             } else {
                 ui_toast("Нужно больше монет — пройдите сцену");
             }
@@ -598,8 +598,13 @@ static void apply_screen_arg(void)
         G.modal = MODAL_WIN, G.modal_time = 1;
     } else if (!strcmp(screen, "story")) {
         story_play("intro", intro, 2);
+    } else if (!strcmp(screen, "horem")) {
+        open_scene(2);
+        G.scene = 2;
+        story_play("chapter-2", scenes[2].clue, scenes[2].clue_lines);
+        story_next();   /* Nefra listens while her father's note speaks */
     } else if (!strcmp(screen, "merit")) {
-        story_say("merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.");
+        story_line_add((story_line){"merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.", BUBBLE_SHOUT});
     } else if (!strcmp(screen, "island")) {
         int types[] = {1, 2, 3, 4, 1};
         vec2 spots[] = {{1060, 600}, {760, 860}, {960, 1000}, {1400, 700}, {1700, 900}};

@@ -26,6 +26,7 @@ shot nile-archive characters 1200x900 --screen cast
 shot nile-archive reward 1200x900 --screen win
 shot nile-archive widescreen 1600x900 --screen island
 shot nile-archive dialogue 1200x900 --screen story --frames 200
+shot nile-archive dialogue-horem 1200x900 --screen horem --frames 200
 shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
 
 # Relic Rush: portrait 480 x 900, stills plus two short animated reels
