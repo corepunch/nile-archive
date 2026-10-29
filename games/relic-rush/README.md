@@ -48,7 +48,7 @@ See the [reference study, original cast and asset gallery](docs/art-direction-v2
 
 ![Original expedition cast: Elena, Mara, Tomas and Adrian](art/art-direction/expedition-cast.png)
 
-Elena Voss leads the archaeological expedition; Mara Bell is its pilot, Tomas Reed its archivist, and Adrian Vale its ambiguous financier. These are original character concepts. The portraits and new garden-island painting are design assets; dialogue UI and a playable version of that painted island are not implemented.
+Elena Voss leads the archaeological expedition; Mara Bell is its pilot, Tomas Reed its archivist, and Adrian Vale its ambiguous financier. These are original character concepts. Their busts (cut by `tools/prepare_assets.py` from that lineup) appear in the game's dialogue; the garden-island painting is a design asset without a playable version.
 
 ## Story and world
 
@@ -58,7 +58,18 @@ You begin with a small expedition camp. Each puzzle represents an excavation: un
 
 This is an original adventure setting inspired by archaeological serials and lost-world fiction, rather than a licensed Indiana Jones setting or a claim to portray a specific historical civilization. The colorful tropical palette combines jade, turquoise, warm stone and gold, with readable silhouettes and soft jungle scenery.
 
-**Narrative status:** this is the intended story and thematic framing for the prototype. Building descriptions and level names support it in-game; named characters, dialogue, journal entries, scripted story scenes and cinematics are not implemented.
+**Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion, speech bubble pointing at the speaker, name tag, typed text: tap to finish a line, tap again to continue, or skip). Each beat plays once per save:
+
+- **Elena Voss** opens the expedition and explains each level's twist the first time it is played (its lesson; later it is a reminder toast).
+- **Mara Bell** greets every newly opened region.
+- **Tomas Reed** tells each restored wonder's story, and the island answers with a word bubble over the building.
+- **Adrian Vale** appears when the last wonder is restored, and Elena answers him.
+
+The intro and finale lines are new, short and written from the cast notes in [art-direction-v2](docs/art-direction-v2.md); everything else reuses the game's existing texts. Journal entries, branching choices and cinematics are not implemented.
+
+| Elena | Mara | Tomas | Adrian | Word bubble |
+| --- | --- | --- | --- | --- |
+| ![Elena](docs/screenshots/dialogue-elena.jpg) | ![Mara](docs/screenshots/dialogue-mara.jpg) | ![Tomas](docs/screenshots/dialogue-tomas.jpg) | ![Adrian](docs/screenshots/dialogue-adrian.jpg) | ![Bubble](docs/screenshots/island-bubble.jpg) |
 
 ## Expedition and restoration loop
 
@@ -152,7 +163,7 @@ make web && python3 -m http.server 8080 --directory dist   # http://localhost:80
 
 The game keeps its 480 × 900 portrait layout and is letterboxed on other screens. Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing`, `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing`, `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 

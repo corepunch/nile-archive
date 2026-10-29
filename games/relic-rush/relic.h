@@ -129,6 +129,10 @@ typedef struct {
     bool reduced_motion, sound, test_mode;
     const char *toast;
     float toast_time, now;
+    bool quiet;                          /* no story (stills for the docs) */
+    int bubble_wonder;                   /* a word bubble over a wonder just placed */
+    const char *bubble_text;
+    float bubble_time;
 
     /* animated readouts */
     float score_display, score_pulse, goal_display, goal_pulse, word_time;
@@ -138,6 +142,8 @@ typedef struct {
 extern relic_state R;
 
 /* main.c */
+extern const story_line finale[2];
+text_style speech_style(float size);
 void notice(const char *text);
 void tone(float hz);
 void save_progress(void);

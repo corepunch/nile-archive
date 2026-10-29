@@ -83,6 +83,14 @@ def main():
         im = isolate_sprite(sheet.crop(box))
         im.thumbnail((300, 320), Image.Resampling.LANCZOS)
         im.save(DATA / 'buildings' / f'{i}.png', optimize=True)
+    # Busts of the expedition cast for the dialogue, cut from the concept lineup.
+    (DATA / 'characters').mkdir(parents=True, exist_ok=True)
+    cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')
+    busts = {'elena': (40, 100, 370, 505), 'mara': (430, 95, 760, 500), 'tomas': (790, 100, 1120, 505), 'adrian': (1160, 85, 1490, 490)}
+    for name, box in busts.items():
+        im = cast.crop(box)
+        im.thumbnail((264, 324), Image.Resampling.LANCZOS)
+        im.save(DATA / 'characters' / f'{name}.png', optimize=True)
     print('relic-rush data ready')
 
 

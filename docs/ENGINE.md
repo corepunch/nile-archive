@@ -1,6 +1,6 @@
 # Engine architecture
 
-The engine is about 2,700 lines of C11 in seven modules behind one header,
+The engine is about 3,000 lines of C11 in eight modules behind one header,
 [`engine/engine.h`](../engine/engine.h). It targets 2D sprite games with menus,
 dialogs and a build-your-place meta-game: hidden objects, match-3, merge,
 solitaire, word games and the like.
@@ -8,7 +8,7 @@ solitaire, word games and the like.
 ```
             game (games/<name>/main.c)
    ┌────────────┬────────┬──────────┬──────────┐
-   │   city     │   ui   │   save   │ fx/audio │   meta-game, widgets, persistence, juice
+   │ city │ story │ ui │ save │ fx/audio │   meta-game, dialogue, widgets, persistence, juice
    ├────────────┴────────┴──────────┴──────────┤
    │   gfx: textures, shapes, camera │ font     │   drawing
    ├─────────────────────────────────┴──────────┤
@@ -163,6 +163,33 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
 - `city_update` returns a `city_event` (`CITY_BUILT`, `CITY_MOVED`,
   `CITY_COLLECTED`, `CITY_PICKED`, `CITY_ZONE`, `CITY_BLOCKED`, …) and the
   game decides how to celebrate or explain it.
+
+## Story
+
+Characters, dialogue and speech bubbles, shared by both games:
+
+```c
+typedef struct { const char *id, *name, *role, *portrait_path; texture portrait;
+                 color color; bool right; } character;
+typedef struct { const char *who, *text; } story_line;
+```
+
+- `story_setup(cast, n, &style)` registers the cast and how the dialogue looks:
+  text and name-tag styles, bubble colours, a backdrop, portrait height, and
+  `framed` for busts shown in a medallion (Relic Rush) rather than standing
+  cut-outs (Nile Archive).
+- `story_play(beat, lines, n)` queues a beat once per save (beats are hashed
+  and saved by `story_serialize`); `story_say(who, text)` queues a line every
+  time. `story_active()` tells the game to hold its own input and dialogs.
+- `story_frame(dt)`, called last in the frame, draws the speaker's portrait
+  (sliding in when the speaker changes), a speech bubble whose tail points at
+  them, a name tag and text that types itself out without ever re-wrapping
+  (`text_box_reveal`). A tap finishes the line, the next tap moves on; Space
+  works too, and an optional skip pill ends the beat. On wide screens the
+  bubble sits beside the speaker, on narrow ones the speaker stands above it.
+- `speech_bubble(tip, text, style, …)` is the bubble on its own: placed above
+  a point (below when there is no room), kept on screen, tail on the point —
+  for words over the world, like Relic Rush's restored wonders.
 
 ## Audio
 

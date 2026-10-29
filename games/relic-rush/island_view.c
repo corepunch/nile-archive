@@ -42,11 +42,20 @@ static void confirm_place(void)
         notice("Choose open grass clear of other buildings.");
         return;
     }
-    save_progress();
     for (int k = 0; k < 24; k++) vfx_emit(vec2_sub(ev.screen, v2(0, 30)), k % 6, false);
-    notice(fresh ? "A new wonder, exactly where you wanted it." : "A fresh place for your island wonder.");
+    R.bubble_wonder = ev.building;   /* the island answers in a word bubble over the building */
+    R.bubble_text = fresh ? "A new wonder, exactly where you wanted it." : "A fresh place for your island wonder.";
+    R.bubble_time = 3.5f;
     tone(740);
-    if (fresh && c->count == WONDERS) R.overlay = OV_FINALE;
+    if (fresh) {   /* Tomas tells each wonder's story once; the last one brings Adrian */
+        const building_def *w = &wonders[c->items[ev.building].type];
+        story_play(fmt("wonder-%d", c->items[ev.building].type), &(story_line){"tomas", w->about}, 1);
+        if (c->count == WONDERS) {
+            story_play("finale", finale, 2);
+            R.overlay = OV_FINALE;
+        }
+    }
+    save_progress();
 }
 
 static void expand(void)
@@ -129,6 +138,13 @@ void island_screen(input in, float dt)
         gfx_unclip();
     }
     vfx_particles();
+    R.bubble_time -= dt;
+    if (R.bubble_time > 0 && R.bubble_wonder >= 0 && R.bubble_wonder < c->count) {
+        rect sprite = camera_rect_to_screen(c->cam, city_sprite_rect(c, c->items[R.bubble_wonder]));
+        gfx_clip(MAP_VIEW);
+        speech_bubble(rect_point(sprite, v2(.5f, .08f)), R.bubble_text, speech_style(15), rgba(255, 246, 222, 245), rgba(102, 68, 39, 255), 220);
+        gfx_unclip();
+    }
 
     /* the HUD is drawn after the map, so tall buildings never cover buttons */
     draw_rect(rc(0, 0, SCREEN_W, 92), rgba(13, 62, 58, 225));

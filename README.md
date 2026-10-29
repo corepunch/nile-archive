@@ -7,13 +7,13 @@ One repository, one small **C11 + SDL2** engine, two games built on it:
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
 | ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 on ten shaped boards with sand, chains, ice, rays, bombs and prisms | Restore an island: ten wonders placed freely, six regions opened with stars and compasses |
 
-The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design, letterboxed — the engine supports both.
+The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design, letterboxed — the engine supports both.
 
 ## Layout
 
 ```
 engine/            the shared engine: ONE public header + one .c per module
-  engine.h         math, app, input, gfx, camera, fx, text, ui, audio, save, city
+  engine.h         math, app, input, gfx, camera, fx, text, ui, audio, save, story, city
   core.c           window, logical screen, main loop, pointer/touch gestures, screenshots
   gfx.c            textures, anti-aliased shapes, camera, particles
   font.c           TrueType text: outline, soft shadow, gradient; Retina-crisp glyph atlas
@@ -21,6 +21,7 @@ engine/            the shared engine: ONE public header + one .c per module
   save.c           key=value saves (files natively, localStorage on the web)
   city.c           the city-building meta-game
   audio.c          a tiny synthesiser for feedback tones
+  story.c          characters, dialogue with portraits, speech bubbles
   third_party/     stb_truetype, stb_image, stb_image_write (public domain)
 games/
   nile-archive/    main.c + data/ (art, fonts) + docs/ + tools/
@@ -101,6 +102,20 @@ city_draw(&R.island, input_world(), app_clock());
 ```
 
 Placement is either instant (Nile: pick a card, tap the land) or a confirmable ghost (Relic Rush: `city_begin_place`, drag, `city_confirm`); buildings can be dragged to move; zones open with a cost and requirements once they touch open land; fog, paths between buildings and timed income are options.
+
+Characters are data too; a story beat is a list of lines that plays once per save:
+
+```c
+static character cast[] = {
+    {.id = "elena", .name = "Elena Voss", .portrait_path = "characters/elena.png", .color = {44, 108, 84, 255}},
+    {.id = "mara", .name = "Mara Bell", .portrait_path = "characters/mara.png", .color = {150, 74, 40, 255}, .right = true},
+};
+story_setup(cast, 2, &(story_style){.text = speech, .name = tag, .framed = true, .skip = "SKIP"});
+story_play("intro", (story_line[]){{"elena", "The Lost Valley at last."}, {"mara", "And now we do."}}, 2);
+...
+story_frame(dt);   /* last in the frame: portrait, bubble, typed text, tap to continue */
+speech_bubble(above_building, "A new wonder!", speech, cream, brown, 220);   /* words over the world */
+```
 
 Saves are one function per game that both reads and writes, so fields cannot drift:
 

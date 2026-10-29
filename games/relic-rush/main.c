@@ -14,6 +14,32 @@
 
 relic_state R;
 
+/* The expedition (see docs/art-direction-v2.md). Busts come from the cast lineup. */
+static character cast[] = {
+    {.id = "elena", .name = "Elena Voss", .role = "Archaeologist, expedition lead", .portrait_path = "characters/elena.png",
+     .color = {44, 108, 84, 255}},
+    {.id = "mara", .name = "Mara Bell", .role = "Pilot and expedition partner", .portrait_path = "characters/mara.png",
+     .color = {150, 74, 40, 255}, .right = true},
+    {.id = "tomas", .name = "Tomas Reed", .role = "Island archivist", .portrait_path = "characters/tomas.png",
+     .color = {92, 112, 58, 255}, .right = true},
+    {.id = "adrian", .name = "Adrian Vale", .role = "Expedition financier", .portrait_path = "characters/adrian.png",
+     .color = {104, 48, 92, 255}, .right = true},
+};
+
+static const story_line intro[] = {
+    {"elena", "The Lost Valley at last. Broken sunstones, silent terraces... someone lived here once."},
+    {"mara", "And now we do. I'll keep the plane ready. You find out who they were."},
+    {"elena", "Every puzzle is an excavation. Let's start digging."},
+};
+
+const story_line finale[2] = {
+    {"adrian", "The Heart of the Sun... remarkable. My sponsors will be delighted."},
+    {"elena", "It stays in the valley, Adrian. That was always the deal."},
+};
+
+/* Dialogue text: Lilita One in dark ink on the cream bubble. */
+text_style speech_style(float size) { return (text_style){.font = R.font, .size = size, .fill = rgba(74, 50, 28, 255)}; }
+
 void notice(const char *text)
 {
     R.toast = text;
@@ -36,6 +62,7 @@ static void serialize(save *s, void *user)
     save_int(s, "seed", &seed);
     save_ints(s, "wallet", R.prog.wallet.v, PURSE_MAX);
     city_serialize(&R.island, s);
+    story_serialize(s);
     if (save_is_reading(s)) {
         R.prog.seed = (uint32_t)seed;
         R.prog.level = clampi(R.prog.level, 0, LEVELS);
@@ -57,7 +84,9 @@ void start_level(void)
     R.selected = R.tool = R.hint_a = R.hint_b = -1;
     R.idle_time = 0;
     vfx_reset();
-    notice(levels[R.g.level].lesson);
+    /* Elena explains a level's twist the first time; later it is a reminder */
+    story_line lesson = {"elena", levels[R.g.level].lesson};
+    if (R.quiet || !story_play(fmt("level-%d", R.g.level), &lesson, 1)) notice(levels[R.g.level].lesson);
 }
 
 /* After the results dialog closes: bank the reward and go build. */
@@ -92,7 +121,7 @@ static void click(vec2 p)
 static void smoke(void)
 {
     static int stage, frames, wait, partner = -1;
-    if (++frames > 6000 || R.g.lost) {
+    if (++frames > 8000 || R.g.lost) {
         fprintf(stderr, "smoke test failed at stage %d\n", stage);
         exit(4);
     }
@@ -101,6 +130,10 @@ static void smoke(void)
         return;
     }
     wait = 3;
+    if (story_active()) {   /* tap through the dialogue */
+        click(v2(240, 300));
+        return;
+    }
     if (stage == 0) {
         if (R.overlay == OV_RESULT) {
             if (R.modal_clock > 1.4f) click(rect_center(rc(76, 660, 328, 56))), stage = 1;
@@ -140,15 +173,16 @@ static void smoke(void)
 static void frame(float dt)
 {
     input in = input_get();
-    input world = R.overlay ? (input){.pos = in.pos, .pinch = 1} : input_world();
+    bool talking = story_active();
+    input world = R.overlay || talking ? (input){.pos = in.pos, .pinch = 1} : input_world();
     if (app_arg("smoke")) smoke();
     R.now += dt;
     R.toast_time -= dt;
-    if (in.back) R.overlay = R.overlay ? OV_NONE : OV_PAUSE;
+    if (in.back && !talking) R.overlay = R.overlay ? OV_NONE : OV_PAUSE;
 
     board_update(dt);
     vfx_update(dt);
-    ui_set_enabled(R.overlay == OV_NONE);
+    ui_set_enabled(R.overlay == OV_NONE && !talking);
     if (R.on_island) island_screen(world, dt);
     else board_screen(world, dt);
     if (!R.on_island) {
@@ -157,7 +191,8 @@ static void frame(float dt)
     }
     draw_toast();
     ui_set_enabled(true);
-    overlays(dt);
+    if (!talking) overlays(dt);   /* a dialogue comes first; dialogs wait for it */
+    story_frame(dt);
 }
 
 /* ---------------------------------------------------------------- debug setup */
@@ -236,10 +271,21 @@ static void debug_screens(void)
         finish_wave();
         R.toast_time = 0;
     }
-    if ((a = app_arg("dialog"))) {   /* guide, pause, failed or finale */
-        R.overlay = !strcmp(a, "guide") ? OV_GUIDE : !strcmp(a, "pause") ? OV_PAUSE : !strcmp(a, "failed") ? OV_FAILED : OV_FINALE;
-        if (R.overlay == OV_FINALE) island_with(WONDERS), R.on_island = true;
+    if ((a = app_arg("dialog"))) {   /* guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble */
         R.toast_time = 0;
+        if (!strcmp(a, "intro")) story_play("intro", intro, 3);
+        else if (!strcmp(a, "adrian")) island_with(WONDERS), R.on_island = true, story_play("finale", finale, 2);
+        else if (!strcmp(a, "mara")) island_with(3), R.on_island = true, story_say("mara", "New land is yours. Make it your own.");
+        else if (!strcmp(a, "tomas")) island_with(2), R.on_island = true, story_say("tomas", wonders[1].about);
+        else if (!strcmp(a, "bubble")) {
+            island_with(2), R.on_island = true;
+            R.bubble_wonder = 1, R.bubble_text = "A new wonder, exactly where you wanted it.", R.bubble_time = 3.5f;
+            island_focus(R.island.items[1].pos, .8f);
+        }
+        else {
+            R.overlay = !strcmp(a, "guide") ? OV_GUIDE : !strcmp(a, "pause") ? OV_PAUSE : !strcmp(a, "failed") ? OV_FAILED : OV_FINALE;
+            if (R.overlay == OV_FINALE) island_with(WONDERS), R.on_island = true;
+        }
     }
     if (R.overlay && !app_arg("reel")) R.modal_for = R.overlay, R.modal_clock = 1.6f;   /* stills show dialogs settled */
 }
@@ -247,6 +293,10 @@ static void debug_screens(void)
 static void init(void)
 {
     R.font = font_load("fonts/LilitaOne-Regular.ttf");
+    story_setup(cast, (int)(sizeof cast / sizeof cast[0]),
+                &(story_style){.text = speech_style(21), .name = pal(PAL_CREAM, 15), .bubble = {255, 246, 222, 252},
+                               .edge = {102, 68, 39, 255}, .dim = {5, 22, 22, 110}, .portrait_height = .27f, .framed = true,
+                               .skip = "SKIP"});
     R.backdrop = tex_load("jungle.jpg");
     R.scenes[0] = tex_load("scene-lagoon.jpg");
     R.scenes[1] = tex_load("scene-temple.jpg");
@@ -258,8 +308,11 @@ static void init(void)
     R.sound = true;
     R.inspect = R.zone_card = -1;
     R.test_mode = app_arg("smoke") || app_arg("shot") || app_arg("fresh");
+    R.quiet = app_arg("shot") != NULL;   /* stills skip the story unless asked for (--dialog) */
+    R.bubble_wonder = -1;
     R.prog = (progress){.seed = 782341};
     if (!app_arg("smoke")) save_read("progress", serialize, NULL);
+    if (!R.quiet) story_play("intro", intro, 3);
     start_level();
     if (R.prog.level > R.island.count || R.prog.level >= LEVELS) R.on_island = true;
     debug_screens();

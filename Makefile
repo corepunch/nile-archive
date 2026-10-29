@@ -8,7 +8,7 @@
 #   make clean
 
 GAMES   := nile-archive relic-rush
-ENGINE  := core gfx font ui save city audio
+ENGINE  := core gfx font ui save city audio story
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 # CFLAGS is yours to override (make CFLAGS="-O0 -g -Werror"); the essentials live in ALL_CFLAGS
