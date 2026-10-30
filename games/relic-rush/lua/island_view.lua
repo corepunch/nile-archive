@@ -117,8 +117,7 @@ local function bottom_panel()
         R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(restored), vec2(240, 783 + y), 15, PAL_WHITE, 0)
         R.say_at("DRAG TO SCROLL. HOLD A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
         if R.button(rect(58, 834 + y, 364, 44), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
-            if R.g.level == R.prog.level and not R.g.won and not R.g.lost then R.on_island = false
-            else R.start_level() end
+            R.play_level(R.prog.level)
         end
     end
 end

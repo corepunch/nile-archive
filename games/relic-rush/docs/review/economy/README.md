@@ -45,6 +45,7 @@ Safe-area insets: 47 top, 34 bottom.
 | expeditions-2 | ![expeditions-2 480x900](after-expeditions-2-480x900.jpg) ![expeditions-2 390x844](after-expeditions-2-390x844.jpg) |
 | expeditions-3 | ![expeditions-3 480x900](after-expeditions-3-480x900.jpg) ![expeditions-3 390x844](after-expeditions-3-390x844.jpg) |
 | expeditions-4 | ![expeditions-4 480x900](after-expeditions-4-480x900.jpg) ![expeditions-4 390x844](after-expeditions-4-390x844.jpg) |
+| expeditions-resume | ![Resume 480x900](after-expeditions-resume-480x900.jpg) ![Resume 390x844](after-expeditions-resume-390x844.jpg) |
 
 ## Reproduce and validate
 
@@ -66,7 +67,7 @@ the capture tool. No new dependency environment or model is installed.
   plus existing rule/asset checks for the other games.
 - Real-input Relic Rush smoke at 480 x 900 and 390 x 844 with safe areas covers
   first discovery, restoration, catalogue cancellation/purchase, free movement,
-  the expedition browser, a completed replay and entering level two.
+  the expedition browser, a completed replay, resuming its unfinished board and entering level two.
 - Real-input Nile smoke at 1200 x 900 and 1600 x 900 covers scene one, free
   movement, purchase preview/cancel/confirm, the fountain, scene two, the temple
   and entering scene three without earning Influence from scenes.

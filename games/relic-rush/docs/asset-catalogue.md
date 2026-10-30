@@ -25,7 +25,7 @@ prompt and reviewed game captures are recorded in the
 ## Reward and replay presentation
 
 The [economy review](review/economy/README.md) records first-clear/replay rewards,
-the measured expedition list, available/locked rows and the shop's spendable /
+the measured expedition list, available/locked/resume rows and the shop's spendable /
 reserved Gold. Sources are `lua/expeditions.lua`, `lua/screens.lua`,
 `lua/catalogue.lua` and `lua/rules.lua`. The shared form skin supplies existing
 normal/hover/pressed/disabled/focus controls. No new bitmap or icon set is added;

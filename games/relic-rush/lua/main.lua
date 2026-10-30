@@ -89,6 +89,14 @@ function R.start_level(chosen)
     return true
 end
 
+function R.play_level(level)
+    if R.g and R.g.level==level and not R.g.won and not R.g.lost then
+        R.on_island=false;R.overlay=R.OV_NONE
+        return true
+    end
+    return R.start_level(level)
+end
+
 -- After the results dialog closes: bank the reward and go build.
 function R.claim_reward()
     local paid, first = rules.progress_reward(R.prog, R.g, R.wonders)
@@ -248,12 +256,28 @@ local function smoke()
             if node.item_key=='0' and node.local_id=='play' then
                 assert(node.enabled,'completed expedition must be replayable')
                 smoke_move.replay_gold=R.prog.wallet[1];smoke_move.replay=true
-                app.inject_click(f.boxes[node.id]:center());smoke_stage=0;break
+                app.inject_click(f.boxes[node.id]:center());smoke_stage=31;break
             end
         end
+    elseif smoke_stage==31 and not R.on_island then
+        smoke_move.resume_game=R.g;smoke_move.resume_moves=R.g.moves
+        app.inject_click(vec2(40,38));smoke_stage=32
+    elseif smoke_stage==32 and R.on_island then
+        app.inject_click(vec2(127,725+R.drop));smoke_stage=33
+    elseif smoke_stage==33 and R.overlay==R.OV_EXPEDITIONS then
+        local f=R.expedition_form
+        for _,node in pairs(f.nodes) do
+            if node.item_key=='0' and node.local_id=='play' then
+                assert(node.text=='RESUME EXPEDITION','active board must offer resume')
+                app.inject_click(f.boxes[node.id]:center());smoke_stage=34;break
+            end
+        end
+    elseif smoke_stage==34 and not R.on_island then
+        assert(R.g==smoke_move.resume_game and R.g.moves==smoke_move.resume_moves,'browser must preserve unfinished board')
+        smoke_stage=0
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> expedition browser -> replay for Gold only -> level 2")
+        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> browser replay/resume -> Gold only -> level 2")
         app.quit()
     end
 end
@@ -401,7 +425,9 @@ local function debug_screens()
         R.open_catalogue(app.arg("catalogue"),tonumber(app.arg("catalogue-page")) or 1);R.toast_time=0
     end
     if app.arg("expeditions") then
-        island_with(4);R.on_island=true;R.open_expeditions(tonumber(app.arg("expedition-page")));R.toast_time=0
+        island_with(4);R.on_island=true;R.g.won=true
+        if app.arg("resume-expedition") then R.g=rules.game_start(1,123478);R.g.moves=12 end
+        R.open_expeditions(tonumber(app.arg("expedition-page")));R.toast_time=0
     end
     if app.arg("replay-victory") then
         island_with(4);R.g=rules.game_start(1,123478);R.g.won=true;R.g.score=5860;R.g.moves=12
@@ -508,6 +534,7 @@ local function init()
     if not R.quiet then story.play("intro", intro) end
     R.layout()
     R.start_level()
+    if R.prog.level>=LEVELS then R.g.won=true end -- no unfinished attempt is created at campaign completion
     if R.prog.level > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
     if R.needs_relocation then
         R.on_island=true;R.notice("Some buildings need a new spot. Hold one to move it.")

@@ -100,6 +100,9 @@ Discovery Stars measure cumulative progress and are never spent. Compasses pay f
 
 See the [Playrix/Wooga economy study, budgets and automated audit](../../docs/ECONOMY_RESEARCH.md)
 and [reviewed reward, replay and shop screens](docs/review/economy/README.md).
+Returning from the island through the expedition browser resumes an unfinished
+board. Closing the application still restarts that attempt; persistent saves
+contain the island and banked progress.
 
 ## Campaign: ten hex levels
 

@@ -130,6 +130,9 @@ first-clear surplus covers several small decorative choices immediately. The
 expedition browser exposes completed, current and future stages; the current
 discovery waits for the earned restoration, while completed stages remain
 available for earning. The finale now has a useful play-for-Gold route.
+Returning to an unfinished expedition resumes its board and moves instead of
+discarding the attempt. An unfinished board still restarts after closing the
+application, as in the existing save contract; board persistence is separate work.
 
 ## Nile Archive: implemented budget
 
