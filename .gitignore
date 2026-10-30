@@ -58,3 +58,7 @@ dkms.conf
 build/
 dist/
 __pycache__/
+
+# Xcode (the projects and their shared schemes are committed)
+xcuserdata/
+DerivedData/

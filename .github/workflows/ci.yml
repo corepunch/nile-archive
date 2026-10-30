@@ -30,6 +30,21 @@ jobs:
           name: screenshots
           path: games/*/docs/screenshots/
 
+  xcode:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Build both games for the iPad Simulator from the committed Xcode projects
+        run: |
+          for g in nile-archive relic-rush; do
+            xcodebuild -project games/$g/$g.xcodeproj -scheme $g-ipad -configuration Debug \
+              -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+              -derivedDataPath build/xcode-$g CODE_SIGNING_ALLOWED=NO build | tail -20
+            test "${PIPESTATUS[0]}" -eq 0
+          done
+
   web:
     runs-on: ubuntu-latest
     steps:
