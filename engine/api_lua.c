@@ -1119,11 +1119,14 @@ static int l_story_style_new(lua_State *L)
 
 void api_push_building_def(lua_State *L, building_def v)
 {
-    lua_createtable(L, 0, 13);
+    lua_createtable(L, 0, 16);
     lua_pushstring(L, v.name); lua_setfield(L, -2, "name");
     lua_pushstring(L, v.about); lua_setfield(L, -2, "about");
     lua_pushstring(L, v.sprite_path); lua_setfield(L, -2, "sprite_path");
     api_push_texture(L, v.sprite); lua_setfield(L, -2, "sprite");
+    lua_pushstring(L, v.shadow_path); lua_setfield(L, -2, "shadow_path");
+    api_push_texture(L, v.shadow); lua_setfield(L, -2, "shadow");
+    api_push_vec2(L, v.shadow_pivot); lua_setfield(L, -2, "shadow_pivot");
     api_push_size2(L, v.size); lua_setfield(L, -2, "size");
     api_push_vec2(L, v.pivot); lua_setfield(L, -2, "pivot");
     lua_pushnumber(L, v.base_width); lua_setfield(L, -2, "base_width");
@@ -1153,6 +1156,15 @@ building_def api_get_building_def(lua_State *L, int i)
     lua_pop(L, 1);
     lua_getfield(L, i, "sprite");
     v.sprite = api_get_texture(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "shadow_path");
+    v.shadow_path = lua_tostring(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "shadow");
+    v.shadow = api_get_texture(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "shadow_pivot");
+    v.shadow_pivot = api_get_vec2(L, -1);
     lua_pop(L, 1);
     lua_getfield(L, i, "size");
     v.size = api_get_size2(L, -1);
@@ -1191,6 +1203,9 @@ void api_store_building_def(lua_State *L, int i, building_def v)
     lua_pushstring(L, v.about); lua_setfield(L, i, "about");
     lua_pushstring(L, v.sprite_path); lua_setfield(L, i, "sprite_path");
     api_push_texture(L, v.sprite); lua_setfield(L, i, "sprite");
+    lua_pushstring(L, v.shadow_path); lua_setfield(L, i, "shadow_path");
+    api_push_texture(L, v.shadow); lua_setfield(L, i, "shadow");
+    api_push_vec2(L, v.shadow_pivot); lua_setfield(L, i, "shadow_pivot");
     api_push_size2(L, v.size); lua_setfield(L, i, "size");
     api_push_vec2(L, v.pivot); lua_setfield(L, i, "pivot");
     lua_pushnumber(L, v.base_width); lua_setfield(L, i, "base_width");
@@ -3729,6 +3744,16 @@ static int l_city_sprite_rect(lua_State *L)
     return 1;
 }
 
+/* city.shadow_rect(c, b) */
+static int l_city_shadow_rect(lua_State *L)
+{
+    city * a_c = api_check_city(L, 1);
+    building a_b = api_check_building(L, 2);
+    rect r = city_shadow_rect(a_c, a_b);
+    api_push_rect(L, r);
+    return 1;
+}
+
 /* city.zone_of(c, world) */
 static int l_city_zone_at(lua_State *L)
 {
@@ -4382,6 +4407,7 @@ static void open_city(lua_State *L)
         {"building_at", l_city_building_at},
         {"ready", l_city_ready},
         {"sprite_rect", l_city_sprite_rect},
+        {"shadow_rect", l_city_shadow_rect},
         {"zone_of", l_city_zone_at},
         {"zone_open", l_city_zone_open},
         {"open_count", l_city_open_count},

@@ -131,6 +131,14 @@ function R.island_screen(inp, dt)
     cam.view = MAP_VIEW
     c.cam = cam
     local city_input=R.overlay==R.OV_NONE and inp or input{pos=inp.pos,pinch=1}
+    -- A still has no physical pointer held down. Feed the real city gesture so
+    -- --placing dragging actually captures the lifted sprite and ground shadow.
+    if app.arg("shot") and app.arg("placing") == "dragging" and c.placing >= 0 then
+        local p = c.cam:to_screen(c.ghost)
+        city_input = input{pos=p, press_pos=p, down=true, dragging=true,
+                           pressed=not R.capture_building_held, pinch=1}
+        R.capture_building_held = true
+    end
     local ev = c:update(city_input, R.prog.wallet, app.clock(), dt)
     if R.overlay == R.OV_NONE then
         if ev.result == city.PICKED then R.inspect, R.inspect_item, R.overlay = c.items[ev.building+1].type, ev.building, R.OV_WONDER

@@ -477,6 +477,9 @@
     <field name="about" type="string"/>
     <field name="sprite_path" type="string"/>
     <field name="sprite" type="texture" doc="Loaded by city:init from sprite_path."/>
+    <field name="shadow_path" type="string" doc="Optional separate ground-shadow image; same pixel scale as sprite, with its own crop and pivot."/>
+    <field name="shadow" type="texture" doc="Loaded by city:init from shadow_path; drawn beneath all buildings and stays grounded during lift animations."/>
+    <field name="shadow_pivot" type="vec2" doc="Ground centre in shadow-image pixels; zero defaults to the sprite pivot for matching canvases."/>
     <field name="size" type="size2" doc="Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing."/>
     <field name="pivot" type="vec2" doc="Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre."/>
     <field name="base_width" type="float" doc="Sprite pixels from the footprint's left corner to its right one; sets the drawing scale."/>
@@ -546,6 +549,7 @@
     <function name="building_at" c="city_building_at"><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
     <function name="ready" c="city_ready" doc="Whether building index has income to collect."><arg name="c" type="city"/><arg name="index" type="int"/><arg name="now" type="double"/><returns type="bool"/></function>
     <function name="sprite_rect" c="city_sprite_rect" doc="World rect of a building's sprite."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
+    <function name="shadow_rect" c="city_shadow_rect" doc="World rect of the separately cropped ground shadow, at the sprite pixel scale."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
     <function name="zone_at" c="city_zone_at" lua="zone_of" doc="The zone containing a world point, or -1."><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
     <function name="zone_open" c="city_zone_open"><arg name="c" type="city"/><arg name="zone" type="int"/><returns type="bool"/></function>
     <function name="open_count" c="city_open_count"><arg name="c" type="city"/><returns type="int"/></function>

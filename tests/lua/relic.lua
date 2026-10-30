@@ -272,6 +272,27 @@ local function test_island()
     end
     check(p.wallet[rules.STARS] == 30, "stars accumulate")
 
+    -- Older footprints can overlap or have the wrong centre parity after an
+    -- art upgrade. Keep every restoration/stamp and use legal snapped spots.
+    c = city.new()
+    island.island_setup(c)
+    c.open = 63
+    c:add(vec2(760, 2030), 6, 123)
+    c:add(vec2(800, 2040), 5, 456)
+    check(island.island_register_saved(c) and c.count == 2, "register older layout without losing restorations")
+    for i = 1, c.count do
+        local b = c.items[i]
+        check(c:can_place(b.pos, b.type, i - 1), "migrated footprints do not overlap")
+        local snap = c:snap(b.pos, b.type)
+        check(b.pos.x == snap.x and b.pos.y == snap.y, "new footprint parity is snapped")
+    end
+    check(c.items[1].type == 6 and c.items[1].stamp == 123 and c.items[2].stamp == 456, "preserve kinds and income stamps")
+    local first = c.items[1].pos
+    c.cam.world = size2(200, 200)
+    c.buildable = function() return false end
+    check(not island.island_register_saved(c) and c.count == 2, "impossible relocation rolls back atomically")
+    check(c.items[1].pos.x == first.x and c.items[1].pos.y == first.y, "failed migration preserves original positions")
+
     -- shoreline, collisions, failed builds change nothing, moving is free
     c = city.new()
     island.island_setup(c)

@@ -593,6 +593,9 @@ typedef struct {
     const char *about;
     const char *sprite_path;
     texture sprite;      /* loaded by city_init from sprite_path */
+    const char *shadow_path;
+    texture shadow;      /* optional ground shadow; same pixel scale as sprite */
+    vec2 shadow_pivot;    /* ground centre in the shadow image's own pixel canvas */
     size2 size;          /* footprint in whole tiles: w along the front-left side, h along the front-right */
     vec2 pivot;          /* sprite pixel of the footprint's ground centre; zero = bottom centre */
     float base_width;    /* sprite pixels from the footprint's left corner to its right one */
@@ -680,6 +683,7 @@ int city_add(city *c, vec2 world, int type, double now);                /* no ch
 int city_building_at(const city *c, vec2 world);
 bool city_ready(const city *c, int index, double now);
 rect city_sprite_rect(const city *c, building b);                       /* world rect of a building's sprite */
+rect city_shadow_rect(const city *c, building b);                       /* separately cropped shadow at the same world scale */
 
 int city_zone_at(const city *c, vec2 world);
 bool city_zone_open(const city *c, int zone);

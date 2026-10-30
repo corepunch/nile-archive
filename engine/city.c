@@ -60,9 +60,11 @@ void city_init(city *c, const char *ground_path)
     for (int i = 0; i < c->def_count; i++) {
         building_def *d = &c->defs[i];
         if (d->sprite_path && !d->sprite.tex) d->sprite = tex_load(d->sprite_path);
+        if (d->shadow_path && !d->shadow.tex) d->shadow = tex_load(d->shadow_path);
         size2 tex = d->sprite.size;
         if (tex.h <= 0) continue;
         if (d->pivot.x == 0 && d->pivot.y == 0) d->pivot = v2(tex.w * .5f, tex.h);
+        if (d->shadow_pivot.x == 0 && d->shadow_pivot.y == 0) d->shadow_pivot = d->pivot;
         /* the footprint's left-to-right corners span size.w + size.h tile half widths */
         if (d->base_width > 0 && d->size.w > 0) d->height = tex.h * (d->size.w + d->size.h) * tile_w(c) / d->base_width;
     }
@@ -78,6 +80,13 @@ rect city_sprite_rect(const city *c, building b)
     vec2 pivot = d->sprite.size.h > 0 ? d->pivot : v2(.5f, 1);
     float k = d->height / tex.h;
     return rect_make(vec2_sub(b.pos, vec2_scale(pivot, k)), size2_scale(tex, k));
+}
+
+rect city_shadow_rect(const city *c, building b)
+{
+    const building_def *d = &c->defs[b.type];
+    float k = d->sprite.size.h > 0 ? d->height / d->sprite.size.h : 0;
+    return rect_make(vec2_sub(b.pos, vec2_scale(d->shadow_pivot, k)), size2_scale(d->shadow.size, k));
 }
 
 int city_zone_at(const city *c, vec2 p)
@@ -400,6 +409,15 @@ static void draw_building(const city *c, building b, color tint, float lift)
     draw_image(d->sprite, rect_offset(camera_rect_to_screen(c->cam, city_sprite_rect(c, b)), v2(0, -lift)), tint);
 }
 
+/* Shadow and painted sprite share a pixel scale and ground pivot. It lives on
+ * the ground: no building lift, pop, invalid-placement red tint or depth cover. */
+static void draw_building_shadow(const city *c, building b, float alpha)
+{
+    const building_def *d = &c->defs[b.type];
+    if (d->shadow.tex)
+        draw_image(d->shadow, camera_rect_to_screen(c->cam, city_shadow_rect(c, b)), color_alpha(WHITE, alpha));
+}
+
 /* Gently curved paths from every building to its nearest older neighbour. */
 static void draw_paths(const city *c)
 {
@@ -544,6 +562,18 @@ void city_draw(const city *c, input in, double now)
     if (c->path.a) draw_paths(c);
     draw_fog(c);   /* over the land, under the buildings: they stand on open ground */
 
+    /* A separate ground pass prevents a tall neighbour's shadow from being
+     * painted over a building. Omit the old position of the building in hand. */
+    for (int i = 0; i < c->count; i++)
+        if (i != c->moving) draw_building_shadow(c, c->items[i], 1);
+    if (c->placing >= 0) {
+        vec2 land = city_snap(c, c->ghost, c->placing);
+        draw_building_shadow(c, (building){land, c->placing, 0}, .7f);
+    } else if (c->selected >= 0 && in.hover && !in.down && rect_contains(cam.view, in.pos) && !ui_blocks(in.pos)) {
+        vec2 p = city_snap(c, camera_to_world(cam, in.pos), c->selected);
+        draw_building_shadow(c, (building){p, c->selected, 0}, .5f);
+    }
+
     /* painter's order: buildings further down the map are in front */
     int order[CITY_MAX], n = 0;
     for (int i = 0; i < c->count; i++) {
@@ -586,6 +616,14 @@ void city_draw(const city *c, input in, double now)
     if (c->show_footprints)   /* over the sprites, to check their measured bases */
         for (int i = 0; i < c->count; i++) {
             draw_footprint(c, c->items[i].pos, c->items[i].type, true);
+            /* Gold is the actual art base; green includes placement clearance. */
+            size2 s = c->defs[c->items[i].type].size;
+            if (s.w > 0 && s.h > 0) {
+                vec2 t = to_tile(c, c->items[i].pos), pts[4];
+                float u[4] = {-.5f, .5f, .5f, -.5f}, v[4] = {-.5f, -.5f, .5f, .5f};
+                for (int k = 0; k < 4; k++) pts[k] = camera_to_screen(cam, from_tile(c, vec2_add(t, v2(u[k] * s.w, v[k] * s.h))));
+                for (int k = 0; k < 4; k++) draw_line(pts[k], pts[(k + 1) % 4], 1.2f, rgba(255, 211, 93, 255));
+            }
             draw_circle(camera_to_screen(cam, c->items[i].pos), 4, rgba(255, 60, 200, 255));   /* the pivot */
         }
     if (c->draw_over) c->draw_over(c);

@@ -202,6 +202,18 @@ static void test_city(void)
     NEAR(defs[3].height, 300);   /* 300 px * (2 + 3) tiles * 32 / 160 px */
     rect tower = city_sprite_rect(&c, (building){v2(500, 500), 3, 0});
     NEAR(tower.pos.x, 400); NEAR(tower.pos.y, 250); NEAR(tower.size.w, 200);
+    /* A separately cropped shadow shares the sprite's pixel scale, not its
+     * dimensions or crop origin. Its empty margins never enlarge the sprite. */
+    defs[3].shadow.size = sz2(400, 180);
+    defs[3].shadow_pivot = v2(170, 80);
+    rect shadow = city_shadow_rect(&c, (building){v2(500, 500), 3, 0});
+    NEAR(shadow.pos.x, 330); NEAR(shadow.pos.y, 420);
+    NEAR(shadow.size.w, 400); NEAR(shadow.size.h, 180);
+    defs[3].height = 150;   /* both layers must scale around the same ground point */
+    shadow = city_shadow_rect(&c, (building){v2(500, 500), 3, 0});
+    NEAR(shadow.pos.x, 415); NEAR(shadow.pos.y, 460); NEAR(shadow.size.w, 200);
+    NEAR(city_sprite_rect(&c, (building){v2(500, 500), 3, 0}).size.w, 100);
+    defs[3].height = 300;
     vec2 odd = city_snap(&c, v2(10, 7), 3);   /* 2 x 3: centred on a tile edge one way, a tile centre the other */
     NEAR(odd.x, 16); NEAR(odd.y, 8);   /* tile (0.5, 0) */
 
