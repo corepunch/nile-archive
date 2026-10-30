@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<style>html,body{margin:0;height:100%;overflow:hidden;background:#000;overscroll-behavior:none}canvas{position:fixed;inset:0;width:100vw;height:100dvh;touch-action:none;outline:none}</style>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000;overscroll-behavior:none}canvas{position:fixed;left:env(safe-area-inset-left,0px);top:env(safe-area-inset-top,0px);width:calc(100vw - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));touch-action:none;outline:none}</style>
 <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
 <script>var Module = {canvas: document.getElementById('canvas')};</script>
 {{{ SCRIPT }}}
