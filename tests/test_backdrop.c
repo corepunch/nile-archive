@@ -3,7 +3,8 @@
 #include "viewport.h"
 #include <stdio.h>
 
-static int checks, failures, frames, w, h, resizes;
+static int checks, failures, frames, w, h, resizes, settling;
+static bool present_pending = true;
 static unsigned char *pixels;
 static double elapsed;
 #define CHECK(c) do { checks++; if (!(c)) { failures++; fprintf(stderr,"backdrop %d: %s\n",__LINE__,#c); } } while (0)
@@ -20,6 +21,16 @@ static void frame(float dt)
     (void)dt;
     struct AXsize size; axGetSize(&size);
     int width = (int)roundf(size.width * axGetScaling()), height = (int)roundf(size.height * axGetScaling());
+    /* X11 applies window creation/resizing asynchronously, and EGL may resize
+     * its backing surface only on swap. Present once before reading each size. */
+    int expected_width = frames >= 15 && frames < 20 ? 320 : 480;
+    int expected_height = frames >= 15 && frames < 20 ? 600 : 900;
+    if ((int)roundf(size.width) != expected_width || (int)roundf(size.height) != expected_height) {
+        if (++settling > 120) { CHECK(false); app_quit(); }
+        return;
+    }
+    settling = 0;
+    if (present_pending) { present_pending = false; return; }
     if (width != w || height != h) {
         if (w) resizes++;
         free(pixels); w=width; h=height; pixels=malloc((size_t)w*h*4);
@@ -53,8 +64,8 @@ static void frame(float dt)
     CHECK(render_read_pixels(pixels,w,h));
     c=sample(440,800);CHECK(c.r>=125 && c.r<=128);
     frames++;
-    if (frames == 15) axSetSize(240,450,false);
-    if (frames == 20) axSetSize(480,900,false);
+    if (frames == 15) { axSetSize(320,600,false); present_pending=true; }
+    if (frames == 20) { axSetSize(480,900,false); present_pending=true; }
     if (frames == 25) { CHECK(resizes >= 2); app_quit(); }
 }
 static void quit(void) { free(pixels); pixels=NULL; }
