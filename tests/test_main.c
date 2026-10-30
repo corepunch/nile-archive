@@ -200,6 +200,9 @@ static void test_city(void)
     /* confirmable placement and moving; footprints may touch, not overlap */
     wallet.v[0] = 100;
     city_begin_place(&c, 2, v2(702, 601));
+    vec2 tile_center = c.ghost;
+    city_begin_place(&c, 2, v2(703, 602));
+    NEAR(c.ghost.x, tile_center.x); NEAR(c.ghost.y, tile_center.y);
     CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 608);   /* isometric tile centre */
     ev = city_confirm(&c, &wallet, 0);
     CHECK(ev.result == CITY_BUILT && c.placing == -1 && wallet.v[0] == 90);

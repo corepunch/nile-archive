@@ -148,3 +148,4 @@ build/test-platform: tests/test_platform.c $(ENGINE_OBJ) engine/render.h
 	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
 test-platform: build/test-platform
 	./build/test-platform
+	./build/test-platform --safe-area-test
