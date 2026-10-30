@@ -175,6 +175,13 @@ state is added. The earlier unbacked HUD lost contrast and is superseded by
 phone safe areas, modal underlays and effects. Historical captures are in
 `docs/review/floating-hud/`.
 
+The island's redundant minus/plus/MAP button cluster has been removed from
+`lua/island_view.lua`. Navigation uses the shared city camera: pinch or mouse
+wheel to zoom and drag to pan. Placement, confirmation and long-press pickup
+are unchanged. No bitmap or state mapping changed. Normal, overview and
+placement captures at both phone sizes are in
+[the map-control review](review/gesture-only-map/README.md).
+
 Building pickup now uses the engine's stationary 0.5-second hold; ordinary drags
 pan the map. The existing ghost/footprint, held/released, valid/blocked and
 confirm/cancel states are retained. [Issue #21](https://github.com/corepunch/nile-archive/issues/21)
