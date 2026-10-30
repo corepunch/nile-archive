@@ -40,7 +40,16 @@
 #include "third_party/platform/unix/unix_log.c"
 #include "third_party/platform/unix/unix_net.c"
 #include "third_party/platform/unix/unix_rc.c"
+/* axListDir zero-initializes its record before copying the bounded name.
+ * GCC diagnoses that upstream strncpy even though its last byte stays zero. */
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
+#endif
 #include "third_party/platform/unix/unix_shared.c"
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 #endif
 #include "third_party/platform/unix/unix_thread.c"
 #ifdef __EMSCRIPTEN__
