@@ -3,7 +3,7 @@
 ["well", "Spring well", "wonder", 2, 2, 80, 0, "story restoration, as a landmark"],
 ["workshop", "Artisan workshop", "wonder", 3, 2, 100, 0, "story restoration, as a landmark"],
 ["market", "Jungle market", "wonder", 3, 2, 120, 0, "Farmers Market"],
-["gateway", "Sunstone gateway", "wonder", 4, 2, 140, 0, "Park Bridge"],
+["gateway", "Sunstone courtyard", "wonder", 3, 2, 140, 0, "Original dry gathering plaza"],
 ["lodge", "Explorer's lodge", "wonder", 3, 3, 160, 0, "Estate"],
 ["archive", "Lost-world archive", "wonder", 3, 3, 180, 0, "Lavish Library"],
 ["observatory", "Star observatory", "wonder", 2, 2, 200, 0, "Observatory"],

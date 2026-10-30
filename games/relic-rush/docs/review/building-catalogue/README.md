@@ -5,6 +5,11 @@ Reviewed 30 October 2026 using the game itself on macOS. Main captures are
 The source atlas and import history are documented in the
 [building catalogue](../../building-catalogue.md).
 
+ID 4 has since been replaced by the dry **Sunstone courtyard**. Its current art,
+3 x 2 registration and captures are in the
+[replacement review](../sunstone-courtyard/README.md); gateway images on this page
+are historical.
+
 ## Existing screens, before and after
 
 | Screen | Before | After |

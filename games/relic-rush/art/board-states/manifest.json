@@ -498,6 +498,9 @@
     "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face"
   },
   "buildings": "art/building-catalogue/manifest.json",
+  "building_reviews": {
+    "gateway": "docs/review/sunstone-courtyard/README.md"
+  },
   "building_states": {
     "normal": "authored restored sprite",
     "catalogue": "normal sprite; availability in form labels/button",
