@@ -3597,6 +3597,16 @@ static int l_story_bubble_shape(lua_State *L)
     return 0;
 }
 
+/* story.bubble_bounds(box, kind) */
+static int l_story_bubble_bounds(lua_State *L)
+{
+    rect a_box = api_check_rect(L, 1);
+    int a_kind = (int)luaL_checkinteger(L, 2);
+    rect r = speech_bubble_bounds(a_box, a_kind);
+    api_push_rect(L, r);
+    return 1;
+}
+
 /* story.bubble(tip, utf8, s, fill, edge, max_width, kind) */
 static int l_story_bubble(lua_State *L)
 {
@@ -4319,6 +4329,7 @@ static void open_story(lua_State *L)
         {"serialize", l_story_serialize},
         {"forget", l_story_forget},
         {"bubble_shape", l_story_bubble_shape},
+        {"bubble_bounds", l_story_bubble_bounds},
         {"bubble", l_story_bubble},
         {NULL, NULL}
     };

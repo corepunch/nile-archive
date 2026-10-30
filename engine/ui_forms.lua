@@ -2,7 +2,7 @@
 -- Templates own layout/bindings; skins own paint; games handle command IDs.
 local Form, Stack = {}, {}
 Form.__index, Stack.__index = Form, Stack
-local kinds = {column=true, row=true, overlay=true, label=true, image=true, button=true, toggle=true, progress=true, spacer=true, custom=true}
+local kinds = {column=true, row=true, list=true, overlay=true, label=true, image=true, button=true, toggle=true, progress=true, spacer=true, custom=true}
 local function fail(message) error('ui.form: ' .. message, 3) end
 local function padding(p)
     if type(p) == 'number' then return p,p,p,p end
@@ -39,27 +39,38 @@ local function valid(value, binding)
     if type(value) == 'number' and ((binding.min and value < binding.min) or (binding.max and value > binding.max)) then return false end
     return true
 end
-local function copy_node(source, ids, depth)
+local function copy_node(source, ids, depth, prefix, source_id, item_key)
     if depth > 32 then fail('template nesting exceeds 32') end
     if type(source) ~= 'table' or not kinds[source.kind] then fail('unknown node kind ' .. tostring(source and source.kind)) end
     local n = {}
     for k,v in pairs(source) do if k ~= 'children' then n[k] = v end end
+    n._depth=depth
+    if prefix then
+        n.local_id, n.source_id, n.item_key = n.id, source_id, item_key
+        for _,key in ipairs({'id','visible_field','enabled_field'}) do
+            if n[key] then n[key]=prefix..n[key] end
+        end
+    end
     if n.id then
         if ids[n.id] then fail('duplicate control ID ' .. n.id) end
         ids[n.id] = n
     end
     if (n.kind == 'button' or n.kind == 'toggle') and type(n.id) ~= 'string' then fail('interactive controls require an ID') end
+    if n.kind=='list' and (type(n.id)~='string' or type(n.item)~='function' or #(source.children or {})>0) then fail('list requires an ID and item builder; children come from its data source') end
+    if n.kind=='list' and n.direction and n.direction~='row' and n.direction~='column' then fail('invalid list direction') end
+    if n.text_align and not ({start=true,center=true,['end']=true})[n.text_align] then fail('invalid text_align') end
     for _, key in ipairs({'width','height','grow','gap','min_width','min_height'}) do
         if n[key] and (type(n[key]) ~= 'number' or n[key] < 0 or n[key] ~= n[key] or n[key] == math.huge) then fail('invalid ' .. key) end
     end
     n.children = {}
-    for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1) end
+    for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1, prefix, source_id, item_key) end
     return n
 end
 function ui.form(template)
     assert(type(template) == 'table', 'ui.form expects a template')
     local self = setmetatable({nodes={}, values={}, boxes={}, bindings={}, focus=nil}, Form)
     self.root = copy_node(template.root or template, self.nodes, 1)
+    for id,node in pairs(self.nodes) do if node.value~=nil then self.values[id]=node.value end end
     local bound = {}
     for _, b in ipairs(template.bindings or {}) do
         if not self.nodes[b.id] or type(b.field) ~= 'string' or not b.field:match('^[%w_]+[.%w_]*$') or b.field:match('%.%.') or b.field:match('%.$') then fail('invalid binding') end
@@ -75,6 +86,47 @@ function Form:set(id, value)
     self.values[id] = value; return self
 end
 function Form:get(id) return self.values[id] end
+-- Data-backed stack. Row builders return ordinary resources, never positions.
+-- Build/validate the entire replacement before touching the live list.
+function Form:set_items(id, items)
+    local list=self.nodes[id]
+    if not list or list.kind~='list' then fail('unknown list ID '..tostring(id)) end
+    local removed={}
+    local function collect(n)
+        if n.id then removed[n.id]=true end
+        for _,child in ipairs(n.children) do collect(child) end
+    end
+    for _,child in ipairs(list.children) do collect(child) end
+    local nodes={};for name,node in pairs(self.nodes) do if not removed[name] then nodes[name]=node end end
+    local ok,children=pcall(function()
+        if type(items)~='table' then fail('items must be a dense array') end
+        local count,seen=#items,0
+        for index in pairs(items) do
+            if type(index)~='number' or index%1~=0 or index<1 or index>count then fail('items must be a dense array') end
+            seen=seen+1
+        end
+        if seen~=count then fail('items must be a dense array') end
+        local rows,keys={},{}
+        for index,record in ipairs(items) do
+            local key=type(record)=='table' and record[list.key or 'id']
+            if (type(key)~='string' or key=='') and (type(key)~='number' or key%1~=0) then fail('items require a stable string/integer key') end
+            local token=type(key)..':'..tostring(key)
+            if keys[token] then fail('duplicate item key '..tostring(key)) end
+            keys[token]=true
+            local prefix=id..'['..#token..':'..token..']/'
+            rows[#rows+1]=copy_node(list.item(record,index),nodes,list._depth+1,prefix,id,key)
+        end
+        return rows
+    end)
+    if not ok then return false,children end
+    for name in pairs(removed) do self.values[name]=nil end
+    for name,node in pairs(nodes) do
+        if not self.nodes[name] or removed[name] then self.values[name]=node.value end
+    end
+    list.children,self.nodes,self.boxes=children,nodes,{}
+    if self.focus and not nodes[self.focus] then self.focus=nil end
+    return true
+end
 function Form:push(model)
     local values = {}
     for _, b in ipairs(self.bindings) do
@@ -106,30 +158,43 @@ local function visible(n, values)
 end
 local function caption(n, values)
     local v = values[n.id]
-    if n.kind == 'toggle' then return (v and n.on_text or n.off_text) or n.text or n.id end
+    if n.kind == 'toggle' then return (v and n.on_text or n.off_text) or n.text or n.local_id or n.id end
     if v == nil then return n.text or '' end
     return n.format and n.format:format(v) or tostring(v)
 end
 local function style_for(n, skin)
-    return n.style or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and 'button' or 'text']
+    return n.style or (skin.style and skin.style(n)) or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and 'button' or 'text']
 end
+local function horizontal(n) return n.kind=='row' or (n.kind=='list' and n.direction=='row') end
 local function measure(n, width, skin, values)
     if not visible(n, values) then return 0,0 end
+    width=n.width or width
     local l,t,r,b = padding(n.padding)
     local w,h = 0,0
-    if n.kind == 'row' or n.kind == 'column' or n.kind == 'overlay' then
+    if n.kind == 'row' or n.kind == 'column' or n.kind == 'list' or n.kind == 'overlay' then
         local count = 0
+        local fixed,weight=0,0
+        if horizontal(n) then
+            for _,child in ipairs(n.children) do if visible(child,values) then
+                count=count+1
+                if (child.grow or 0)>0 then weight=weight+child.grow
+                else local cw=measure(child,math.max(0,width-l-r),skin,values);fixed=fixed+cw end
+            end end
+        end
+        local remaining=math.max(0,width-l-r-fixed-math.max(0,count-1)*(n.gap or 0))
+        count=0
         for _, child in ipairs(n.children) do
             if visible(child, values) then
-                local cw,ch = measure(child, math.max(0,width-l-r), skin, values)
-                if n.kind == 'row' then w,h = w+cw,math.max(h,ch)
-                elseif n.kind == 'column' then w,h = math.max(w,cw),h+ch
+                local child_width=horizontal(n) and (child.grow or 0)>0 and remaining*child.grow/weight or math.max(0,width-l-r)
+                local cw,ch = measure(child, child_width, skin, values)
+                if horizontal(n) then w,h = w+(child.grow and child.grow>0 and child_width or cw),math.max(h,ch)
+                elseif n.kind == 'column' or n.kind=='list' then w,h = math.max(w,cw),h+ch
                 else w,h = math.max(w,cw),math.max(h,ch) end
                 count=count+1
             end
         end
         local gaps = math.max(0,count-1)*(n.gap or 0)
-        if n.kind == 'row' then w=w+gaps elseif n.kind == 'column' then h=h+gaps end
+        if horizontal(n) then w=w+gaps elseif n.kind == 'column' or n.kind=='list' then h=h+gaps end
     elseif n.kind == 'label' then
         local s = style_for(n,skin)
         if n.wrap then
@@ -148,7 +213,7 @@ local function arrange(n, box, skin, form)
     if #n.children == 0 then return end
     local l,t,r,b=padding(n.padding)
     local inner=rect(box.x+l,box.y+t,math.max(0,box.w-l-r),math.max(0,box.h-t-b))
-    local horizontal=n.kind=='row'
+    local horizontal=horizontal(n)
     local total,weight,count=0,0,0
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
@@ -164,6 +229,9 @@ local function arrange(n, box, skin, form)
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
             local cw,ch=child.measured[1],child.measured[2]
+            if horizontal and (child.grow or 0)>0 then
+                cw,ch=measure(child,remaining*child.grow/weight,skin,form.values)
+            end
             if n.kind=='overlay' then arrange(child,inner,skin,form)
             else
                 local main=horizontal and cw or ch
@@ -191,9 +259,10 @@ local function paint(n,skin,form,options,event)
         if skin.panel then skin.panel(box,n) else ui.panel(box) end
     end
     if n.kind=='label' then
+        local align=vec2(n.text_align=='start' and 0 or n.text_align=='end' and 1 or .5,.5)
         if skin.label then skin.label(box,caption(n,form.values),n,style_for(n,skin))
-        elseif n.wrap then text.box(style_for(n,skin),box,vec2(.5,.5),caption(n,form.values))
-        else text.inside(style_for(n,skin),box,vec2(.5,.5),caption(n,form.values)) end
+        elseif n.wrap then text.box(style_for(n,skin),box,align,caption(n,form.values))
+        else text.inside(style_for(n,skin),box,align,caption(n,form.values)) end
     elseif n.kind=='image' then
         local im=form.values[n.id] or n.image
         if im and im.tex then gfx.image(im, n.cover and box or box:fit(texture.size(im)),color.WHITE) end
@@ -224,7 +293,7 @@ local function paint(n,skin,form,options,event)
         if enabled and (st.clicked or keyboard) and not event then
             form.focus=n.id
             if n.kind=='toggle' then form.values[n.id]=not selected end
-            event={id=n.action or n.id,kind=n.kind=='toggle' and 'change' or 'click',value=form.values[n.id]}
+            event={id=n.action or n.local_id or n.id,kind=n.kind=='toggle' and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
         end
     end
     for _,child in ipairs(n.children) do event=paint(child,skin,form,options,event) end

@@ -232,6 +232,12 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
     without reaching across to them, and never crosses a face;
   - narration (no speaker) is a centred caption with no tail, and a named
     speaker without a portrait (Volcano's dispatcher) gets a name tag on it.
+  - the name badge is centred on the **visible outline's top edge** for all
+    three shapes. Cloud puffs, shout spikes and rims count as existing padding;
+    text spacing reserves only the remainder inside the core rectangle.
+    `speech_bubble_bounds(box,kind)` / `story.bubble_bounds` measures that outline
+    without its tail or shadow. Portrait staging uses the same edge, leaving
+    the badge half outside instead of engulfed by a cloud or burst.
   On phones (framed busts) the line sits in a **dialogue box**, the way the
   story screens of portrait match-3 games and visual novels do it: the box
   runs along the bottom from the speaker's side, sized to the phrase but never

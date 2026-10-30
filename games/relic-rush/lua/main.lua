@@ -93,9 +93,9 @@ end
 
 ---------------------------------------------------------------- smoke test
 
--- --smoke: plays level one through real (injected) mouse clicks, claims the
+-- --smoke: opens/closes the guide, plays level one through injected clicks, claims the
 -- reward, builds the first wonder and enters level two.
-local smoke_stage, smoke_frames, smoke_wait, smoke_partner = 0, 0, 0, -1
+local smoke_stage, smoke_frames, smoke_wait, smoke_partner = -2, 0, 0, -1
 
 local function smoke()
     smoke_frames = smoke_frames + 1
@@ -111,7 +111,13 @@ local function smoke()
         app.inject_click(vec2(240, 300))
         return
     end
-    if smoke_stage == 0 then
+    if smoke_stage == -2 and R.overlay==R.OV_NONE then
+        app.inject_click(vec2(419,825+R.drop));smoke_stage=-1
+    elseif smoke_stage == -1 and R.overlay==R.OV_GUIDE and R.modal_clock>.4 then
+        local done=R.guide_form.boxes.done
+        assert(done and #R.guide_form.nodes.topics.children==5,"smoke: guide data source was not laid out")
+        app.inject_click(done:center()+vec2(0,R.drop/2));smoke_stage=0
+    elseif smoke_stage == 0 then
         if R.overlay == R.OV_RESULT then
             if R.modal_clock > 1.4 then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1 end
             return
@@ -142,7 +148,7 @@ local function smoke()
         app.inject_click(vec2(240, 856 + R.drop)); smoke_stage = 5   -- PLAY HEX LEVEL 2
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: swaps -> cascades -> win -> claim -> island -> build -> level 2")
+        print("smoke test passed: data-backed guide -> swaps -> cascades -> win -> claim -> island -> build -> level 2")
         app.quit()
     end
 end

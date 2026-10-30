@@ -237,21 +237,44 @@ static vec2 round_rect_at(rect box, float r, float d, vec2 *normal)
 /* Shout: spikes at an even spacing all along a rounded box, so a wide line
  * bursts as evenly as a short one and reads as a shout, not torn paper; plus
  * one long straight spike to the speaker. */
-static void shout_shape(rect box, vec2 tip, color fill, color edge, bool tail)
+enum { SHOUT_POINTS = 140 };
+
+/* Shared by paint and bounds: layout must use the actual spike tips, including
+ * the wider rim, rather than the rounded rectangle underneath them. */
+static int shout_outline(rect box, vec2 *body, vec2 *rim)
 {
-    enum { MAX = 140 };
     const float mid = SHOUT_SPIKE * .5f;   /* spikes are spaced along their own middle line */
     float r = minf(box.size.h * .5f, 30);
     rect path = rect_inflate(box, mid);
     float around = 2 * (path.size.w + path.size.h - 4 * (r + mid)) + 2 * ENGINE_PI * (r + mid);
-    int n = clampi((int)(around / 22) & ~1, 14, MAX);
-    vec2 body[MAX], rim[MAX];
+    int n = clampi((int)(around / 22) & ~1, 14, SHOUT_POINTS);
     for (int i = 0; i < n; i++) {
         vec2 normal, p = round_rect_at(path, r + mid, around * (i + .5f) / n, &normal);
         float spike = i % 2 ? 1 - mid : SHOUT_SPIKE - mid + 3 * sinf(i * 1.7f);
         body[i] = vec2_add(p, vec2_scale(normal, spike));
         rim[i] = vec2_add(body[i], vec2_scale(normal, OUTLINE * (i % 2 ? 1 : 1.6f)));
     }
+    return n;
+}
+
+rect speech_bubble_bounds(rect box, bubble_kind kind)
+{
+    if (kind != BUBBLE_SHOUT) return rect_inflate(box, bubble_reach(kind, box));
+    vec2 body[SHOUT_POINTS], rim[SHOUT_POINTS];
+    int n = shout_outline(box, body, rim);
+    vec2 lo = rim[0], hi = rim[0];
+    for (int i = 1; i < n; i++) {
+        lo.x = minf(lo.x, rim[i].x); lo.y = minf(lo.y, rim[i].y);
+        hi.x = maxf(hi.x, rim[i].x); hi.y = maxf(hi.y, rim[i].y);
+    }
+    return rect_make(lo, sz2(hi.x - lo.x, hi.y - lo.y));
+}
+
+static void shout_shape(rect box, vec2 tip, color fill, color edge, bool tail)
+{
+    vec2 body[SHOUT_POINTS], rim[SHOUT_POINTS];
+    int n = shout_outline(box, body, rim);
+    float r = minf(box.size.h * .5f, 30);
     vec2 along, base = tail_base(box, tip, 10, &along), dir = vec2_norm(vec2_sub(tip, base));
     vec2 a = vec2_sub(vec2_add(base, vec2_scale(along, 13)), vec2_scale(dir, 10));
     vec2 b = vec2_sub(vec2_sub(base, vec2_scale(along, 13)), vec2_scale(dir, 10));
@@ -418,8 +441,20 @@ void story_frame(float dt)
     float arrow = ts.size * .8f;   /* room for the "tap to continue" arrow after the last word */
     size2 body = text_box_size(ts, max_w - 2 * pad - arrow, text);
     float width = minf(max_w, maxf(body.w + 2 * pad + arrow, maxf(tag_w + 64, ts.size * 9)));
-    float top = who ? tag * .35f : 0;   /* room under the name tag */
-    float height = maxf(body.h + 2 * vpad + top, ts.size * 2.6f);
+    float top_gap = vpad + (who ? tag * .35f : 0);
+    float top_pad = top_gap, bottom_pad = vpad;
+    float height = body.h + top_pad + bottom_pad;
+    /* Puffs and spikes already provide padding outside the core rectangle.
+     * Reserve only the remaining space inside it. Thought-puff radius depends
+     * on height; this contraction converges below a pixel in eight passes. */
+    for (int i = 0; i < 8; i++) {
+        rect bounds = speech_bubble_bounds(rc(0, 0, width, height), kind);
+        top_pad = maxf(4, top_gap + bounds.pos.y);
+        bottom_pad = maxf(4, vpad - (rect_max(bounds).y - height));
+        float next_height = body.h + top_pad + bottom_pad;
+        if (fabsf(next_height - height) < .01f) { height = next_height; break; }
+        height = next_height;
+    }
 
     rect portrait = rect_make(v2(0, 0), face), bubble;
     vec2 tip, grow_from;
@@ -450,7 +485,7 @@ void story_frame(float dt)
         width = clampf(width, minf(face.w + 60, max_w), max_w);
         bubble = rect_anchor(v2(who->right ? rect_max(screen).x - m - reach : screen.pos.x + m + reach, rect_max(screen).y - m - reach),
                              sz2(width, height), v2(who->right ? 1 : 0, 1));
-        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - 10 : bubble.pos.x + 10, bubble.pos.y - reach - tag * .5f - 2),
+        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - 10 : bubble.pos.x + 10, speech_bubble_bounds(bubble, kind).pos.y - tag * .5f - 2),
                                face, v2(who->right ? 1 : 0, 1));
         tip = rect_center(bubble);
         grow_from = rect_point(bubble, v2(who->right ? 1 : 0, 0));
@@ -484,13 +519,10 @@ void story_frame(float dt)
 
     float settle = saturate((S.arrive - POP_TIME * .5f) / (POP_TIME * .5f));
     if (who && settle > 0) {   /* name tag on the bubble's top edge, on the speaker's side */
-        vec2 at = v2(who->right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, bubble.pos.y + tag * .05f);
+        vec2 at = v2(who->right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, speech_bubble_bounds(bubble, kind).pos.y);
         name_tag(who, vec2_add(at, v2(0, (1 - settle) * 6)), v2(who->right ? 1 : 0, .5f), tag);
     }
-    rect inner = rect_inflate2(bubble, v2(-pad, -vpad));
-    inner.size.w -= arrow;
-    inner.pos.y += top;
-    inner.size.h -= top;
+    rect inner = rc(bubble.pos.x + pad, bubble.pos.y + top_pad, bubble.size.w - 2 * pad - arrow, body.h);
     text_box_reveal(ts, inner, v2(who ? 0 : .5f, .5f), text, (int)S.shown);
     if (S.shown >= length) {   /* waiting for a tap: a bobbing arrow in the corner */
         vec2 at = vec2_sub(rect_max(bubble), v2(pad * .75f, vpad * .7f - sinf(S.line_time * 6) * 3));

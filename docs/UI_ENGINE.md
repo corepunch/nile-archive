@@ -50,6 +50,7 @@ also holds visibility/enabled predicates.
 | Node | Responsibility |
 | --- | --- |
 | `column`, `row` | Automatic flow with padding, gaps, fixed lengths and weighted `grow` |
+| `list` | Data-backed row/column stack, populated with `form:set_items(id,records)` |
 | `overlay` | Children share the same content bounds |
 | `label` | Text/formatting, optional wrap, style or semantic role |
 | `image` | Bound/authored texture, fitted to its allocated bounds |
@@ -67,6 +68,43 @@ IDs. Templates reject duplicate IDs, unknown kinds, invalid sizes/bindings and
 excessive nesting. Construction copies the node tree so instances have independent
 layout, values and focus.
 
+Labels support `text_align="start|center|end"` (default `center`). Icon-and-copy
+rows use `start` for both title and wrapped description. A row measures fixed
+icon/control widths first, then wraps flexible copy in the remaining width;
+its measured height grows with the text.
+
+### Data-backed stacks
+
+```lua
+local help = ui.form{kind="list", id="topics", gap=12, item=function(record)
+    return {kind="row", gap=14, align="center", children={
+        {kind="image", image=record.icon, width=64, height=64, visible=record.icon~=nil},
+        {kind="column", grow=1, gap=4, children={
+            {kind="label", text=record.title, wrap=true,
+             text_align=record.icon and "start" or "center"},
+            {kind="label", text=record.description, wrap=true,
+             text_align=record.icon and "start" or "center"},
+        }},
+    }}
+end}
+assert(help:set_items("topics", records))
+```
+
+The source is a dense array of records with stable string/integer `id` keys
+(override the field with the list's `key`). The builder returns an ordinary node
+resource; the engine instantiates, measures and stacks it. `direction="row"`
+selects a horizontal list; the default is `column`. Rows are cached between
+frames. Call `set_items` again to refresh/reorder the source or pass `{}` to clear
+it. The engine validates the complete replacement before committing it, so bad
+keys, malformed rows or builder errors preserve the current list.
+
+Control IDs and visibility/enabled references are scoped to each record. Stable
+keys preserve keyboard focus across reordering; removal releases it. Row actions
+include `{id,kind,value,source,key}`: the action/control ID, list ID and record
+key let the game update its model and refresh the source. Source records remain
+game-owned. `node.value` supplies an initial control value on refresh. Generated
+control IDs are available through `form.nodes`/`form.boxes` for inspection.
+
 `form:measure(width,skin)` gives intrinsic width/height.
 `form:layout(bounds,skin)` exposes ID-to-rectangle results for inspection/tests.
 `form:draw(bounds,skin,options?)` lays out, paints and returns one action
@@ -81,6 +119,9 @@ rules. Touch has no artificial hover state.
 
 A skin can provide a native `ui_theme` and `styles` keyed by node role/kind.
 The same resource then gets different colours, corner radii and typography.
+A skin may provide `style(node)` for dynamic logical-unit typography: measurement
+uses the same font/size as paint, before the game animation transform. Custom
+`label` callbacks honour the resource's `text_align`.
 For authored artwork, `button_states` accepts `normal`, `selected`, `pressed`,
 `hover`, `disabled` textures. The engine selects the state and uses its authored
 pixels; it does not synthesize a disabled or selected texture.
@@ -94,7 +135,10 @@ focus, activation and layout. `state` includes `hot`, `held`, `clicked`, `disabl
 Relic Rush supplies one skin through its existing painting helpers. Its pause
 resource binds sound and reduced motion; its building resource binds the name,
 art, description, cost row and action caption. Games retain gameplay actions such
-as claiming rewards or entering placement mode.
+as claiming rewards or entering placement mode. Its Explorer's guide uses a
+stable-key source and one icon/copy row resource. The game paints authored icon
+layers inside assigned bounds; the engine owns placement, wrapping, spacing and
+the footer button.
 
 ## Modal layers and input ownership
 

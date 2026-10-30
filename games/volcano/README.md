@@ -30,7 +30,8 @@ Drag to pan; scroll or pinch to zoom. Pause freezes work and production.
 | City Centre | 16 | 3 | 11 | 2 |
 
 Campaign unlocks, completion marks, best times, sound preferences and seen
-briefings use the engine save visitor. Active missions restart from their
+briefings use the engine save visitor. Briefing name badges sit half outside the
+visible bubble outline; text padding accounts for the rim and decorative shape. Active missions restart from their
 initial state when the app is reopened; there is no mid-mission save.
 
 The macOS and iPad schemes are `volcano-macos` and `volcano-ipad` in

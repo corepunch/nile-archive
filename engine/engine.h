@@ -562,6 +562,8 @@ void story_forget(void);                                   /* new game: nothing 
 
 /* A bubble around `box` pointing at `tip`: one outline around body and tail. */
 void speech_bubble_shape(rect box, vec2 tip, color fill, color edge, bubble_kind kind);
+/* Visible outline bounds, excluding the tail and shadow. */
+rect speech_bubble_bounds(rect box, bubble_kind kind);
 /* A bubble with text, placed above `tip` (or below when there is no room), kept on screen. */
 rect speech_bubble(vec2 tip, const char *utf8, text_style s, color fill, color edge, float max_width, bubble_kind kind);
 
