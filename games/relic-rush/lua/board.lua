@@ -83,7 +83,8 @@ end
 local function draw_hud()
     local g = R.g
     local l = rules.level_of(g)
-    R.panel(rect(24, 72, 432, 112))
+    -- Float the readouts over the painting, like Nile Archive's HUD. The
+    -- shared outlined/shadowed text stays readable without hiding the scene.
     R.say_at("SCORE", vec2(90, 92), 14, PAL_WHITE, 0)
     R.say_at(tostring(math.floor(R.score_display)), vec2(90, 119), 30 + (R.reduced_motion and 0 or 5 * math.sin(R.score_pulse / .25 * PI)), PAL_GOLD, 0)
     R.say_at(("LEVEL %d"):format(g.level + 1), vec2(239, 92), 17, PAL_GOLD, 0)
@@ -93,7 +94,7 @@ local function draw_hud()
     gfx.circle(vec2(399, 112), 30, rgba(255, 223, 129))
     R.say(tostring(g.moves), rect(369, 85, 60, 37), 33, PAL_CREAM)
     R.say("MOVES", rect(365, 122, 68, 17), 11, PAL_CREAM)
-    gfx.round_rect(rect(47, 156, 386, 11), 5, rgba(163, 132, 78))
+    gfx.round_rect(rect(47, 156, 386, 11), 5, rgba(13, 47, 41, 210))
     if R.goal_display > 0 then gfx.round_rect(rect(48, 157, math.max(6, 384 * R.goal_display), 8), 4, rgba(88, 169, 92)) end
 
     -- two primary goals, then sand and lock goals when the level has them

@@ -38,6 +38,8 @@ shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
 # Relic Rush: portrait 480 x 900, stills plus two short animated reels
 shot relic-rush hex-first 480x900
 shot relic-rush hex-late 480x900 --level 8
+shot relic-rush floating-hud 480x900 --level 9
+shot relic-rush phone-floating-hud 390x844 --level 9 --safe-area 0,47,0,34
 shot relic-rush art-catalogue 480x900 --art-states
 shot relic-rush art-specials 480x900 --art-board
 shot relic-rush art-jewels 480x900 --art-board --tiles jewels
