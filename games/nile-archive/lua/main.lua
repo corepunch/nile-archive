@@ -75,7 +75,7 @@ local MODAL_NONE, MODAL_WIN, MODAL_CAST, MODAL_CHAPTERS = 0, 1, 2, 3
 local FIND_POINTS, MISS_POINTS = 300, 60
 local COMBO_WINDOW, COMBO_MAX = 5, 5
 local HINT_RECHARGE = 20
-local SLOTS = 4                   -- names shown in the item bar at once
+local SLOTS = 3                   -- names on show at once, as in June's Journey
 local STAR_TIMES = {75, 150}      -- seconds for three and two stars
 
 local G = {
@@ -683,8 +683,7 @@ end
 
 local function scene_frame(screen, world, dt)
     local sc = scenes[G.scene]
-    local bar_h = 118
-    local view = rect(screen.x, screen.y, screen.w, screen.h - bar_h + 14)
+    local view = screen   -- the scene is the whole screen; the HUD floats over it
     local playing = G.modal == MODAL_NONE and not story.active()
     if playing then
         G.clock = G.clock + dt
@@ -706,9 +705,12 @@ local function scene_frame(screen, world, dt)
         G.cam = G.cam:look(G.cam.center:approach(G.focus, 10, dt)):clamp()
     end
 
-    gfx.rect_grad(screen, hex(0x0D2A30), hex(0x08191D))
+    -- the whole picture fits; the bands it leaves show the same picture, dimmed
+    local bg = G.backgrounds[G.scene]
+    local ts = texture.size(bg)
+    gfx.image(bg, screen:align(ts:scale(ts:cover(screen:size())), vec2(.5, .5)), rgba(70, 78, 80, 255))
     gfx.clip(view)
-    G.cam:draw_texture(G.backgrounds[G.scene])
+    G.cam:draw_texture(bg)
     local now = app.time()
     for i = 1, ITEMS do
         local p = G.cam:to_screen(sc.at[i])
@@ -724,6 +726,7 @@ local function scene_frame(screen, world, dt)
         end
     end
     gfx.rect_grad(rect(view.x, view.y, view.w, 110), rgba(6, 22, 26, 140), rgba(6, 22, 26, 0))
+    gfx.rect_grad(view:bottom(130), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
     fx.draw()
     gfx.unclip()
 
@@ -758,54 +761,46 @@ local function scene_frame(screen, world, dt)
     icon_clock(vec2(clock.x + 20, clock:center().y), 13)
     text.draw(G.number, clock:center() + vec2(14, 0), vec2(.5, .5), ("%d:%02d"):format(math.floor(G.clock / 60), math.floor(G.clock % 60)))
 
-    -- bottom: what is left, the names, the hint
-    local bar = screen:bottom(bar_h)
-    gfx.shadow(bar:offset(vec2(0, -6)), 0, 18, rgba(0, 0, 0, 120))
-    gfx.rect_grad(bar, TEAL_HI, TEAL_LO)
-    gfx.rect_grad(bar:top(6), GOLD_HI, GOLD_LO)
-    gfx.rect(rect(bar.x, bar.y + 6, bar.w, 2), GOLD_SEAM)
-    ui.block(bar)
-    local row = rect(bar.x, bar.y + 8, bar.w, bar.h - 8):inflate2(vec2(-18, -10))
-    local left = row:cut_left(96)
-    local right = row:cut_right(110)
-    row:inflate2(vec2(-10, 0))
-
-    local c = left:center() - vec2(0, 6)
+    -- bottom: separate pieces over the scene, no bar: what is left (left), the
+    -- three names on their own plates (centre), the hint bulb (right corner)
+    local base = area:max().y - 40
+    local c = vec2(area.x + 40, base - 8)
+    gfx.circle(c + vec2(0, 5), 38, rgba(0, 0, 0, 80))
     gfx.circle(c, 37, GOLD_SEAM)
     gfx.circle(c, 35, GOLD)
     gfx.circle(c, 31, GOLD_SEAM)
     gfx.circle(c, 30, TEAL_LO)
     gfx.glow(c - vec2(0, 12), 30, TEAL_HI:shade(1.3), TEAL_HI:alpha(0))
     text.draw(G.count, c + vec2(0, 1), vec2(.5, .5), tostring(ITEMS - found_count()))
-    text.draw(G.eyebrow:sized(10), c + vec2(0, 44), vec2(.5, .5), "ОСТАЛОСЬ")
+    text.draw(G.eyebrow:sized(10), c + vec2(0, 47), vec2(.5, .5), "ОСТАЛОСЬ")
+    ui.block(rect.centered(c, size2(80, 80)))
 
-    local names = row:inflate2(vec2(-8, 0))
+    local plate_w = math.min(230, (area.w - 2 * 120 - 2 * 16) / SLOTS)
     for k = 1, SLOTS do
-        local slot = names:col(SLOTS, k - 1, 12)
-        gfx.round_rect(slot:offset(vec2(0, 3)), 12, rgba(0, 0, 0, 80))
-        gfx.round_rect_grad(slot, 12, hex(0xC9A35A), GOLD_LO)
-        local paper = slot:inflate(-2.5)
-        gfx.round_rect_grad(paper, 10, PARCH_HI, PARCH_LO)
+        local slot = rect.anchor(vec2(screen:center().x + (k - (SLOTS + 1) / 2) * (plate_w + 16), base), size2(plate_w, 58), vec2(.5, .5))
         local i = G.slots[k]
         if i then
-            local arrive = ease.out_cubic(num.saturate((now - (G.slot_time[k] or 0)) * 4))
-            local label = paper:offset(vec2(0, (1 - arrive) * 18))
+            local arrive = ease.out_back(num.saturate((now - (G.slot_time[k] or 0)) * 4))
+            local leave = G.found[i] and num.saturate((now - G.found[i] - .45) / .35) or 0
+            local plate = slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
+            gfx.shadow(plate:offset(vec2(0, 5)), 14, 12, rgba(0, 0, 0, 110 * (1 - leave)))
+            gfx.round_rect_grad(plate, 14, GOLD_HI:alpha(1 - leave), GOLD_LO:alpha(1 - leave))
+            local paper = plate:inflate(-3)
+            gfx.round_rect_grad(paper, 11, PARCH_HI:alpha(1 - leave), PARCH_LO:alpha(1 - leave))
             if G.found[i] then
-                local t = num.saturate((now - G.found[i]) / .8)
-                local ink = text.fit(G.item_found:faded(t * .7), label:inflate(-8), vec2(.5, .5), sc.names[i])
-                local strike = num.saturate(t * 3)
-                gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(strike, .55)), 2.5, rgba(70, 120, 60, 220))
+                local t = num.saturate((now - G.found[i]) / .45)
+                local ink = text.fit(G.item_found:faded(leave), paper:inflate(-10), vec2(.5, .5), sc.names[i])
+                gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(t, .55)), 2.5, rgba(70, 120, 60, 220 * (1 - leave)))
             else
-                gfx.clip(paper)
-                text.fit(G.item:faded(1 - arrive), label:inflate(-8), vec2(.5, .5), sc.names[i])
-                gfx.unclip()
+                text.fit(G.item:faded(1 - num.saturate(arrive)), paper:inflate(-10), vec2(.5, .5), sc.names[i])
                 if G.hint == i then gfx.round_rect_line(paper:inflate(-2), 9, 2.5, hex(0xF2B637):alpha(.6 + .4 * math.sin(now * 6))) end
             end
+            ui.block(plate)
         end
     end
 
     local ready = G.clock >= G.hint_ready
-    local hc = right:center() - vec2(0, 8)
+    local hc = vec2(area:max().x - 42, base - 8)
     if round_button(hc, 38, function(p, s2) icon_bulb(p, s2 * 1.3, ready) end) and ready then show_hint() end
     if not ready then   -- the recharge sweeps round the rim
         local f = 1 - (G.hint_ready - G.clock) / HINT_RECHARGE
