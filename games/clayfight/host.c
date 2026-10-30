@@ -80,7 +80,7 @@ void clay_input_event(const struct AXmessage *);
 static void event(const struct AXmessage *e) { if(started)clay_input_event(e); }
 static int launch(int argc,char **argv){
     saved_argc=argc;saved_argv=argv;
-    getcwd(root,sizeof root);
+    if(!getcwd(root,sizeof root))root[0]=0;
     char script[4096],exe[4096];snprintf(script,sizeof script,"%s/games/clayfight/tools/capture_server.py",root);snprintf(exe,sizeof exe,"%s/build/clayfight",root);clay_creator_config(script,exe);
     const char *data="games/clayfight/data",*lua="games/clayfight/lua";
 #ifdef __EMSCRIPTEN__

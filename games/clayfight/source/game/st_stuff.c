@@ -42,7 +42,7 @@ void ST_Drawer(const int wins[2])
     }
     if (gamemode == GM_TRAINING) V_DrawTextCentered(FONT_SMALL, 160, VIEWHEIGHT - 7, "TRAINING  /  ESC THEN Q TO LEAVE");
     if (gamemode == GM_ENDURANCE) V_DrawTextCentered(FONT_SMALL, 160, VIEWHEIGHT - 7, "ENDURANCE  /  FOUR FIGHTERS PER TEAM");
-    char clock[8];
+    char clock[12];   /* room for any int, so -Wformat-truncation stays quiet */
     if (level.time < 0) snprintf(clock, sizeof clock, "--");
     else snprintf(clock, sizeof clock, "%02d", (level.time + TICRATE - 1) / TICRATE);
     if (gamemode != GM_TUG) V_DrawTextCentered(FONT_BIG, VIEWWIDTH / 2, 5, clock);
