@@ -25,6 +25,8 @@ jobs:
           SDL_AUDIODRIVER=dummy ./tools/screenshots.sh
       - name: Relic Rush smoke test (level one to level two through injected clicks)
         run: SDL_VIDEODRIVER=offscreen SDL_AUDIODRIVER=dummy timeout 600 ./build/relic-rush --smoke --mute
+      - name: Volcano smoke test (five districts, pause, restart and replay through clicks)
+        run: SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy timeout 600 ./build/volcano --fresh --smoke --mute --size 456x342
       - uses: actions/upload-artifact@v4
         with:
           name: screenshots
@@ -36,9 +38,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Build both games' iOS targets for the Simulator from the committed Xcode projects
+      - name: Build all games' iOS targets for the Simulator from the committed Xcode projects
         run: |
-          for s in nile-archive-ipad relic-rush-iphone; do
+          for s in nile-archive-ipad relic-rush-iphone volcano-ipad; do
             g=${s%-*}
             xcodebuild -project games/$g/$g.xcodeproj -scheme $s -configuration Debug \
               -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \

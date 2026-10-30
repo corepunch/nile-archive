@@ -9,8 +9,8 @@
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
 
-GAMES   := nile-archive relic-rush
-ENGINE  := core gfx font ui save city audio story script api_lua
+GAMES   := nile-archive relic-rush volcano
+ENGINE  := core gfx font ui save city audio story sprite nav script api_lua
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 # CFLAGS is yours to override (make CFLAGS="-O0 -g -Werror"); the essentials live in ALL_CFLAGS
@@ -28,7 +28,7 @@ LUA_FLAGS  := -Wno-unused-function
 ENGINE_OBJ := $(ENGINE:%=build/engine/%.o) build/engine/lua.o
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 
-.PHONY: all test gen gen-check xcode xcode-check shots web clean run-nile run-relic $(GAMES)
+.PHONY: all test gen gen-check xcode xcode-check shots web clean run-nile run-relic run-volcano $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: engine/%.c engine/engine.h engine/api_lua.h
@@ -55,6 +55,9 @@ run-nile: build/nile-archive
 	./build/nile-archive
 run-relic: build/relic-rush
 	./build/relic-rush
+
+run-volcano: build/volcano
+	./build/volcano
 
 # --- generated Lua glue ---------------------------------------------------
 # engine/api.xml describes the API once; tools/luagen.py writes the glue, the
@@ -83,7 +86,9 @@ build/tests: $(TEST_SRC) $(ENGINE_OBJ) engine/engine.h
 	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -o $@ $(TEST_SRC) $(ENGINE_OBJ) $(LIBS)
 
 test: gen-check xcode-check build/tests
-	SDL_VIDEODRIVER=dummy XDG_DATA_HOME=$(CURDIR)/build/test-home ./build/tests tests/lua/*.lua
+	python3 games/volcano/tools/check_assets.py
+	@mkdir -p build/test-home
+	SDL_VIDEODRIVER=dummy SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests tests/lua/*.lua
 
 shots: all
 	./tools/screenshots.sh

@@ -56,6 +56,14 @@ void api_push_ui_state(lua_State *L, ui_state v);
 ui_state api_get_ui_state(lua_State *L, int i);
 ui_state api_check_ui_state(lua_State *L, int i);
 void api_store_ui_state(lua_State *L, int i, ui_state v);
+void api_push_sprite_frame(lua_State *L, sprite_frame v);
+sprite_frame api_get_sprite_frame(lua_State *L, int i);
+sprite_frame api_check_sprite_frame(lua_State *L, int i);
+void api_store_sprite_frame(lua_State *L, int i, sprite_frame v);
+void api_push_nav_blocker(lua_State *L, nav_blocker v);
+nav_blocker api_get_nav_blocker(lua_State *L, int i);
+nav_blocker api_check_nav_blocker(lua_State *L, int i);
+void api_store_nav_blocker(lua_State *L, int i, nav_blocker v);
 void api_push_character(lua_State *L, character v);
 character api_get_character(lua_State *L, int i);
 character api_check_character(lua_State *L, int i);
@@ -87,6 +95,8 @@ void api_store_city_event(lua_State *L, int i, city_event v);
 
 /* Handles. */
 void api_push_font(lua_State *L, font * p);
+nav *api_check_nav(lua_State *L, int i);
+void api_push_nav(lua_State *L, const nav *p);   /* nil if unknown */
 save * api_check_save(lua_State *L, int i);
 void api_push_save(lua_State *L, save * p);
 city *api_check_city(lua_State *L, int i);

@@ -814,6 +814,94 @@ static int l_ui_state_new(lua_State *L)
     return 1;
 }
 
+void api_push_sprite_frame(lua_State *L, sprite_frame v)
+{
+    lua_createtable(L, 0, 2);
+    api_push_rect(L, v.source); lua_setfield(L, -2, "source");
+    api_push_vec2(L, v.pivot); lua_setfield(L, -2, "pivot");
+    luaL_setmetatable(L, "engine.sprite_frame");
+}
+
+sprite_frame api_get_sprite_frame(lua_State *L, int i)
+{
+    sprite_frame v;
+    memset(&v, 0, sizeof v);
+    if (!lua_istable(L, i)) return v;   /* nil is the zero value, whatever the defaults */
+    i = lua_absindex(L, i);
+    lua_getfield(L, i, "source");
+    v.source = api_get_rect(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "pivot");
+    v.pivot = api_get_vec2(L, -1);
+    lua_pop(L, 1);
+    return v;
+}
+
+void api_store_sprite_frame(lua_State *L, int i, sprite_frame v)
+{
+    i = lua_absindex(L, i);
+    api_push_rect(L, v.source); lua_setfield(L, i, "source");
+    api_push_vec2(L, v.pivot); lua_setfield(L, i, "pivot");
+}
+
+sprite_frame api_check_sprite_frame(lua_State *L, int i)
+{
+    luaL_argexpected(L, lua_istable(L, i), i, "sprite_frame");
+    return api_get_sprite_frame(L, i);
+}
+
+static int l_sprite_frame_new(lua_State *L)
+{
+    if (lua_istable(L, 2)) { lua_settop(L, 2); luaL_setmetatable(L, "engine.sprite_frame"); return 1; }
+    lua_newtable(L);
+    luaL_setmetatable(L, "engine.sprite_frame");
+    return 1;
+}
+
+void api_push_nav_blocker(lua_State *L, nav_blocker v)
+{
+    lua_createtable(L, 0, 2);
+    api_push_vec2(L, v.pos); lua_setfield(L, -2, "pos");
+    lua_pushnumber(L, v.radius); lua_setfield(L, -2, "radius");
+    luaL_setmetatable(L, "engine.nav_blocker");
+}
+
+nav_blocker api_get_nav_blocker(lua_State *L, int i)
+{
+    nav_blocker v;
+    memset(&v, 0, sizeof v);
+    if (!lua_istable(L, i)) return v;   /* nil is the zero value, whatever the defaults */
+    i = lua_absindex(L, i);
+    lua_getfield(L, i, "pos");
+    v.pos = api_get_vec2(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "radius");
+    v.radius = (float)lua_tonumber(L, -1);
+    lua_pop(L, 1);
+    return v;
+}
+
+void api_store_nav_blocker(lua_State *L, int i, nav_blocker v)
+{
+    i = lua_absindex(L, i);
+    api_push_vec2(L, v.pos); lua_setfield(L, i, "pos");
+    lua_pushnumber(L, v.radius); lua_setfield(L, i, "radius");
+}
+
+nav_blocker api_check_nav_blocker(lua_State *L, int i)
+{
+    luaL_argexpected(L, lua_istable(L, i), i, "nav_blocker");
+    return api_get_nav_blocker(L, i);
+}
+
+static int l_nav_blocker_new(lua_State *L)
+{
+    if (lua_istable(L, 2)) { lua_settop(L, 2); luaL_setmetatable(L, "engine.nav_blocker"); return 1; }
+    lua_newtable(L);
+    luaL_setmetatable(L, "engine.nav_blocker");
+    return 1;
+}
+
 void api_push_character(lua_State *L, character v)
 {
     lua_createtable(L, 0, 8);
@@ -1290,6 +1378,88 @@ static int l_city_event_new(lua_State *L)
 void api_push_font(lua_State *L, font * p)
 {
     if (p) lua_pushlightuserdata(L, (void *)p); else lua_pushnil(L);
+}
+
+nav *api_check_nav(lua_State *L, int i)
+{
+    return (nav *)luaL_checkudata(L, i, "engine.nav");
+}
+
+void api_push_nav(lua_State *L, const nav *p)
+{
+    api_handle_lookup(L, p);
+}
+
+static int l_nav_new(lua_State *L)
+{
+    nav *p = (nav *)lua_newuserdatauv(L, sizeof *p, 1);
+    memset(p, 0, sizeof *p);
+    lua_newtable(L);
+    lua_setiuservalue(L, -2, 1);
+    luaL_setmetatable(L, "engine.nav");
+    api_handle_register(L, p, -1);
+    return 1;
+}
+
+static int l_nav_gc(lua_State *L)
+{
+    nav *p = api_check_nav(L, 1);
+    api_handle_register(L, p, 0);
+    return 0;
+}
+
+static int l_nav_index(lua_State *L)
+{
+    nav *p = api_check_nav(L, 1);
+    lua_pushvalue(L, 2);
+    lua_rawget(L, lua_upvalueindex(1));
+    if (!lua_isnil(L, -1)) return 1;
+    lua_pop(L, 1);
+    const char *k = lua_tostring(L, 2);
+    if (!k) return 0;
+    if (!strcmp(k, "nodes")) {
+        lua_createtable(L, p->node_count, 0);
+        for (int i = 0; i < p->node_count; i++) { api_push_vec2(L, p->nodes[i]); lua_rawseti(L, -2, i + 1); }
+        return 1;
+    }
+    if (!strcmp(k, "blockers")) {
+        lua_createtable(L, p->blocker_count, 0);
+        for (int i = 0; i < p->blocker_count; i++) { api_push_nav_blocker(L, p->blockers[i]); lua_rawseti(L, -2, i + 1); }
+        return 1;
+    }
+    if (!strcmp(k, "path")) {
+        lua_createtable(L, p->path_count, 0);
+        for (int i = 0; i < p->path_count; i++) { api_push_vec2(L, p->path[i]); lua_rawseti(L, -2, i + 1); }
+        return 1;
+    }
+    if (!strcmp(k, "length")) { lua_pushnumber(L, p->length); return 1; }
+    if (!strcmp(k, "link_distance")) { lua_pushnumber(L, p->link_distance); return 1; }
+    return luaL_error(L, "nav has no field '%s'", k);
+}
+
+static int l_nav_newindex(lua_State *L)
+{
+    nav *p = api_check_nav(L, 1);
+    const char *k = lua_tostring(L, 2);
+    if (!k) return luaL_error(L, "nav: bad field");
+    if (!strcmp(k, "nodes")) {
+        luaL_checktype(L, 3, LUA_TTABLE);
+        int n = (int)luaL_len(L, 3);
+        luaL_argcheck(L, n <= NAV_NODES, 3, "too many");
+        for (int i = 0; i < n; i++) { lua_rawgeti(L, 3, i + 1); p->nodes[i] = api_get_vec2(L, -1); lua_pop(L, 1); }
+        p->node_count = n;
+        return 0;
+    }
+    if (!strcmp(k, "blockers")) {
+        luaL_checktype(L, 3, LUA_TTABLE);
+        int n = (int)luaL_len(L, 3);
+        luaL_argcheck(L, n <= NAV_BLOCKERS, 3, "too many");
+        for (int i = 0; i < n; i++) { lua_rawgeti(L, 3, i + 1); p->blockers[i] = api_get_nav_blocker(L, -1); lua_pop(L, 1); }
+        p->blocker_count = n;
+        return 0;
+    }
+    if (!strcmp(k, "link_distance")) { p->link_distance = (float)lua_tonumber(L, 3); return 0; }
+    return luaL_error(L, "nav: cannot set field '%s'", k);
 }
 
 save * api_check_save(lua_State *L, int i)
@@ -3126,6 +3296,16 @@ static int l_ui_label(lua_State *L)
     return 0;
 }
 
+/* ui.progress(r, fraction, label?) */
+static int l_ui_progress(lua_State *L)
+{
+    rect a_r = api_check_rect(L, 1);
+    float a_fraction = (float)luaL_checknumber(L, 2);
+    const char * a_label = luaL_optstring(L, 3, NULL);
+    ui_progress(a_r, a_fraction, a_label);
+    return 0;
+}
+
 /* ui.toast(utf8) */
 static int l_ui_toast(lua_State *L)
 {
@@ -3148,6 +3328,55 @@ static int l_ui_set_enabled(lua_State *L)
     bool a_enabled = lua_toboolean(L, 1);
     ui_set_enabled(a_enabled);
     return 0;
+}
+
+/* sprite.bounds(frame, anchor, scale) */
+static int l_sprite_bounds(lua_State *L)
+{
+    sprite_frame a_frame = api_check_sprite_frame(L, 1);
+    vec2 a_anchor = api_check_vec2(L, 2);
+    float a_scale = (float)luaL_checknumber(L, 3);
+    rect r = sprite_bounds(a_frame, a_anchor, a_scale);
+    api_push_rect(L, r);
+    return 1;
+}
+
+/* sprite.draw(atlas, frame, anchor, scale, tint) */
+static int l_sprite_draw(lua_State *L)
+{
+    texture a_atlas = api_check_texture(L, 1);
+    sprite_frame a_frame = api_check_sprite_frame(L, 2);
+    vec2 a_anchor = api_check_vec2(L, 3);
+    float a_scale = (float)luaL_checknumber(L, 4);
+    color a_tint = api_check_color(L, 5);
+    sprite_draw(a_atlas, a_frame, a_anchor, a_scale, a_tint);
+    return 0;
+}
+
+/* sprite.sample(frames, fps, seconds) */
+static int l_sprite_sample(lua_State *L)
+{
+    sprite_frame a_frames[API_MAX_ARRAY];
+    int n_frames = api_array_len(L, 1, API_MAX_ARRAY);
+    for (int k = 0; k < n_frames; k++) { lua_rawgeti(L, 1, k + 1); a_frames[k] = api_get_sprite_frame(L, -1); lua_pop(L, 1); }
+    float a_fps = (float)luaL_checknumber(L, 2);
+    double a_seconds = luaL_checknumber(L, 3);
+    sprite_frame r = sprite_sample(a_frames, n_frames, a_fps, a_seconds);
+    api_push_sprite_frame(L, r);
+    return 1;
+}
+
+/* nav.find(g, start, finish, ignore?, footprint?) */
+static int l_nav_find(lua_State *L)
+{
+    nav * a_g = api_check_nav(L, 1);
+    vec2 a_start = api_check_vec2(L, 2);
+    vec2 a_finish = api_check_vec2(L, 3);
+    int a_ignore = (int)luaL_optinteger(L, 4, -1);
+    vec2 a_footprint = (lua_isnoneornil(L, 5) ? api_get_vec2(L, 5) : api_check_vec2(L, 5));
+    bool r = nav_find(a_g, a_start, a_finish, a_ignore, a_footprint);
+    lua_pushboolean(L, r);
+    return 1;
 }
 
 /* save.is_reading(s) */
@@ -3940,6 +4169,7 @@ static void open_ui(lua_State *L)
         {"button_frame", l_ui_button_frame},
         {"button", l_ui_button},
         {"label", l_ui_label},
+        {"progress", l_ui_progress},
         {"toast", l_ui_toast},
         {"modal_backdrop", l_ui_modal_backdrop},
         {"set_enabled", l_ui_set_enabled},
@@ -3951,6 +4181,35 @@ static void open_ui(lua_State *L)
     lua_pushinteger(L, UI_ACTIVE); lua_setfield(L, -2, "ACTIVE");
     lua_pushinteger(L, UI_FLAT); lua_setfield(L, -2, "FLAT");
     lua_setglobal(L, "ui");
+}
+
+static void open_sprite(lua_State *L)
+{
+    static const luaL_Reg funcs[] = {
+        {"bounds", l_sprite_bounds},
+        {"draw", l_sprite_draw},
+        {"sample", l_sprite_sample},
+        {NULL, NULL}
+    };
+    luaL_newlib(L, funcs);
+    lua_setglobal(L, "sprite");
+}
+
+static void open_nav(lua_State *L)
+{
+    static const luaL_Reg funcs[] = {
+        {"find", l_nav_find},
+        {"new", l_nav_new},
+        {NULL, NULL}
+    };
+    luaL_newlib(L, funcs);
+    luaL_newmetatable(L, "engine.nav");
+    lua_pushvalue(L, -2);
+    lua_pushcclosure(L, l_nav_index, 1); lua_setfield(L, -2, "__index");
+    lua_pushcfunction(L, l_nav_newindex); lua_setfield(L, -2, "__newindex");
+    lua_pushcfunction(L, l_nav_gc); lua_setfield(L, -2, "__gc");
+    lua_pop(L, 1);
+    lua_setglobal(L, "nav");
 }
 
 static void open_save(lua_State *L)
@@ -4059,6 +4318,12 @@ void api_open(lua_State *L)
     luaL_newmetatable(L, "engine.ui_state"); lua_pop(L, 1);
     lua_newtable(L); lua_newtable(L); lua_pushcfunction(L, l_ui_state_new); lua_setfield(L, -2, "__call"); lua_setmetatable(L, -2);
     lua_setglobal(L, "ui_state");
+    luaL_newmetatable(L, "engine.sprite_frame"); lua_pop(L, 1);
+    lua_newtable(L); lua_newtable(L); lua_pushcfunction(L, l_sprite_frame_new); lua_setfield(L, -2, "__call"); lua_setmetatable(L, -2);
+    lua_setglobal(L, "sprite_frame");
+    luaL_newmetatable(L, "engine.nav_blocker"); lua_pop(L, 1);
+    lua_newtable(L); lua_newtable(L); lua_pushcfunction(L, l_nav_blocker_new); lua_setfield(L, -2, "__call"); lua_setmetatable(L, -2);
+    lua_setglobal(L, "nav_blocker");
     luaL_newmetatable(L, "engine.character"); lua_pop(L, 1);
     lua_newtable(L); lua_newtable(L); lua_pushcfunction(L, l_character_new); lua_setfield(L, -2, "__call"); lua_setmetatable(L, -2);
     lua_setglobal(L, "character");
@@ -4098,6 +4363,8 @@ void api_open(lua_State *L)
     open_text(L);
     open_sfx(L);
     open_ui(L);
+    open_sprite(L);
+    open_nav(L);
     open_save(L);
     open_story(L);
     open_city(L);

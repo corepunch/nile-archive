@@ -1,13 +1,16 @@
-# Sprite engine + two games
+# Sprite engine + three games
 
-One repository, one small **C11 + SDL2** engine, two games written in **Lua** on it:
+One repository, one small **C11 + SDL2** engine, three games written in **Lua** on it:
 
 | | Game | Core loop | Meta-game |
 | --- | --- | --- | --- |
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
 | ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 on ten shaped boards with sand, chains, ice, rays, bombs and prisms | Restore an island: ten wonders placed freely, six regions opened with stars and compasses |
+| ![](games/volcano/docs/screenshots/outskirts.jpg) | **[Volcano · After the Eruption](games/volcano/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
 
-The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Both games are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design, letterboxed — the engine supports both.
+Volcano is a five-map resource-and-route rescue campaign; see [its port assessment and asset catalog](games/volcano/docs/PORT.md).
+
+The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Nile Archive and Relic Rush are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design, letterboxed — the engine supports both.
 
 **The engine knows mechanics, the games know content and rules.** The engine is C; all game logic is Lua 5.4, and the glue between them is generated from one XML description of the API, together with its reference. See [docs/SCRIPTING.md](docs/SCRIPTING.md) for the contract, [docs/LUA_API.md](docs/LUA_API.md) for the reference and [docs/LINEAGE.md](docs/LINEAGE.md) for where every idea comes from.
 
@@ -22,6 +25,8 @@ engine/            the shared engine: ONE public header + one .c per module
   ui.c             immediate-mode widgets, input blocking, toasts, modals
   save.c           key=value saves (files natively, localStorage on the web)
   city.c           the city-building meta-game
+  sprite.c         authored atlas animation and pivot-aware drawing
+  nav.c            geometric graph routes with live blockers
   audio.c          a tiny synthesiser for feedback tones
   story.c          characters, dialogue with portraits, speech bubbles
   script.c         the Lua runtime: sandboxed state, require, the main-loop callbacks
@@ -35,13 +40,14 @@ games/
   nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
                    + art/ (sources) + data/ (runtime) + docs/ + tools/ + relic-rush.xcodeproj
+  volcano/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + volcano.xcodeproj
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
 tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.sh, make_reels.py, artkit.py
 docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), LINEAGE.md
 web/               shell.html: a bare fullscreen canvas for the web preview
 ```
 
-Each game is one folder with its own content; the engine never includes game code. Adding a third game means adding `games/<name>/lua/main.lua` and a `data/` folder — the Makefile picks it up once its name is added to `GAMES`.
+Each game is one folder with its own content; the engine never includes game code. Adding another game means adding `games/<name>/lua/main.lua` and a `data/` folder — the Makefile picks it up once its name is added to `GAMES`.
 
 ## Build and run
 
@@ -49,8 +55,8 @@ Native builds need SDL2 development files (`apt install libsdl2-dev`, `brew inst
 
 ```sh
 git submodule update --init   # Lua, once
-make              # builds build/nile-archive and build/relic-rush
-make run-nile     # or: make run-relic
+make              # builds build/nile-archive, build/relic-rush and build/volcano
+make run-nile     # or: make run-relic / make run-volcano
 make test         # generated-code freshness, engine tests, the games' Lua rule tests (headless)
 make gen          # after editing engine/api.xml
 make shots        # re-render the documentation screenshots (software renderer, no display needed)
@@ -60,14 +66,14 @@ Web (needs the [Emscripten SDK](https://emscripten.org/docs/getting_started/down
 
 ```sh
 make web
-python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/
+python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/ or /volcano/
 ```
 
-**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad` (the iPad game) and `relic-rush-iphone` (the phone game). SDL2 comes from the `engine/third_party/SDL` submodule's own Xcode project, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. SDL2 comes from the `engine/third_party/SDL` submodule's own Xcode project, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
 
 CI builds the native, web and Xcode (iOS Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 
-Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--lua DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two).
+Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--lua DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two; Volcano: `--level`, `--preview repaired|complete` and a full five-district `--smoke`).
 
 ## The engine in five minutes
 
@@ -154,7 +160,7 @@ The Lua glue is not written by hand: [`engine/api.xml`](engine/api.xml) describe
 
 ## Merging the repositories
 
-This repository is the single home for the engine and both games. Relic Rush was imported from `corepunch/relic-rush` (commit `4463559`) into `games/relic-rush/`: its rules and tests were kept, its island became the engine city, and its presentation was rebuilt on the engine. `corepunch/relic-rush` can now be archived, and this repository renamed (for example to `sprite-games`) — GitHub keeps redirects from the old name.
+This repository is the single home for the engine and all three games. Relic Rush was imported from `corepunch/relic-rush` (commit `4463559`) into `games/relic-rush/`: its rules and tests were kept, its island became the engine city, and its presentation was rebuilt on the engine. `corepunch/relic-rush` can now be archived, and this repository renamed (for example to `sprite-games`) — GitHub keeps redirects from the old name.
 
 ## References
 

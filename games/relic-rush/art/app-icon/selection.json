@@ -1,0 +1,22 @@
+{
+  "row": 3,
+  "column": 2,
+  "source_grid": "output/app-icon-concepts/relic-rush-grid.png",
+  "crop_pixels": [
+    319,
+    632,
+    623,
+    926
+  ],
+  "source_pixels": [
+    288,
+    288
+  ],
+  "export": "Lanczos resize of the selected painting; no artwork regenerated",
+  "square_crop_pixels": [
+    327.0,
+    635.0,
+    615.0,
+    923.0
+  ]
+}

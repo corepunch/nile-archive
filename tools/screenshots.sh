@@ -66,3 +66,15 @@ reel fx-bomb 18 2 --fx bomb --reel
 reel fx-prism 18 2 --fx prism --reel
 reel result 36 3 --victory --reel
 python3 tools/make_reels.py "$tmp" games/relic-rush/docs/screenshots
+
+# Volcano: live campaign stages; previews play normal paid jobs in the simulation.
+shot volcano menu 1368x1026
+shot volcano outskirts 1368x1026 --level 1
+shot volcano suburbs 1368x1026 --level 2
+shot volcano square 1368x1026 --level 3
+shot volcano district 1368x1026 --level 4
+shot volcano centre 1368x1026 --level 5
+shot volcano repaired 1368x1026 --level 3 --preview repaired
+shot volcano complete 1368x1026 --level 5 --preview complete
+shot volcano pause 1368x1026 --level 1 --pause
+shot volcano briefing 1368x1026 --level 1 --dialog --frames 150

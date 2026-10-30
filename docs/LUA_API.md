@@ -26,6 +26,8 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`text`](#text) - Styled TrueType text. Every function returns the rect it drew.
 - [`sfx`](#sfx) - A tiny synthesiser for feedback tones.
 - [`ui`](#ui) - Immediate-mode widgets: call them while drawing, `if ui.button(r, 'Play') then`.
+- [`sprite`](#sprite) - Authored atlas frames, pivot-aware bounds and animation timing.
+- [`nav`](#nav) - nav.new(); assign nodes and live blockers, then find. Indices are 0-based.
 - [`save`](#save)
 - [`story`](#story) - Characters, dialogue and speech bubbles.
 - [`city`](#city) - `city.new()` makes one; configure its fields, then `c:init(ground)`.
@@ -1813,6 +1815,16 @@ True when clicked.
 | `align` | `vec2` |  |
 | `utf8` | `string` |  |
 
+### `ui.progress(r, fraction, label?)`
+
+A themed meter; fraction is clamped to 0..1.
+
+| Argument | Type | |
+|---|---|---|
+| `r` | `rect` |  |
+| `fraction` | `number` |  |
+| `label` | `string?` |  |
+
 ### `ui.toast(utf8)`
 
 A short message at the bottom of the screen.
@@ -1836,6 +1848,68 @@ While false, widgets draw but ignore input (under a modal).
 | Argument | Type | |
 |---|---|---|
 | `enabled` | `boolean` |  |
+
+## sprite
+
+Authored atlas frames, pivot-aware bounds and animation timing.
+
+### `sprite.bounds(frame, anchor, scale)`
+
+| Argument | Type | |
+|---|---|---|
+| `frame` | `sprite_frame` |  |
+| `anchor` | `vec2` |  |
+| `scale` | `number` |  |
+
+**Returns:** `rect`
+
+### `sprite.draw(atlas, frame, anchor, scale, tint)`
+
+| Argument | Type | |
+|---|---|---|
+| `atlas` | `texture` |  |
+| `frame` | `sprite_frame` |  |
+| `anchor` | `vec2` |  |
+| `scale` | `number` |  |
+| `tint` | `color` |  |
+
+### `sprite.sample(frames, fps, seconds)`
+
+| Argument | Type | |
+|---|---|---|
+| `frames` | `sprite_frame[]` |  |
+| `fps` | `number` |  |
+| `seconds` | `number` |  |
+
+**Returns:** `sprite_frame`
+
+## nav
+
+nav.new(); assign nodes and live blockers, then find. Indices are 0-based.
+
+A geometric route graph, independent of any game. Array assignment checks capacity.
+
+| Field | Type | Access | |
+|---|---|---|---|
+| `nodes` | `vec2[]` | read/write |  |
+| `blockers` | `nav_blocker[]` | read/write |  |
+| `path` | `vec2[]` | read |  |
+| `length` | `number` | read |  |
+| `link_distance` | `number` | read/write |  |
+
+### `nav.find(g, start, finish, ignore?, footprint?)  ·  g:find(start, finish, ignore?, footprint?)`
+
+Shortest route; false clears path. Exempts one blocker (default -1). Optional ellipse stops at the target footprint.
+
+| Argument | Type | |
+|---|---|---|
+| `g` | `nav` |  |
+| `start` | `vec2` |  |
+| `finish` | `vec2` |  |
+| `ignore` | `integer?` | Default -1. |
+| `footprint` | `vec2?` |  |
+
+**Returns:** `boolean`
 
 ## save
 
@@ -2337,6 +2411,24 @@ How an area was interacted with this frame.
 | `hot` | `boolean` |  |
 | `held` | `boolean` |  |
 | `clicked` | `boolean` |  |
+
+### sprite_frame
+
+One trimmed atlas frame with a normalized pivot.
+
+| Field | Type | |
+|---|---|---|
+| `source` | `rect` |  |
+| `pivot` | `vec2` |  |
+
+### nav_blocker
+
+A live circular obstacle; radius zero disables it.
+
+| Field | Type | |
+|---|---|---|
+| `pos` | `vec2` |  |
+| `radius` | `number` |  |
 
 ### character
 

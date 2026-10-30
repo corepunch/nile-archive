@@ -1,0 +1,22 @@
+{
+  "row": 3,
+  "column": 3,
+  "source_grid": "output/app-icon-concepts/nile-archive-grid.png",
+  "crop_pixels": [
+    630,
+    610,
+    937,
+    908
+  ],
+  "source_pixels": [
+    292,
+    292
+  ],
+  "export": "Lanczos resize of the selected painting; no artwork regenerated",
+  "square_crop_pixels": [
+    637.5,
+    613.0,
+    929.5,
+    905.0
+  ]
+}

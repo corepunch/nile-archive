@@ -1,4 +1,4 @@
-# Publishes both web builds to GitHub Pages. Run it from the Actions tab after
+# Publishes all three web builds to GitHub Pages. Run it from the Actions tab after
 # enabling Pages with "GitHub Actions" as the source (Settings → Pages).
 name: Deploy to GitHub Pages
 

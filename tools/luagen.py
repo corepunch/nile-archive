@@ -717,7 +717,7 @@ def main():
                 stale.append(path)
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(text, encoding='utf-8', newline='\n')
+            path.write_text(text, encoding='utf-8')
             print('wrote', path.relative_to(ROOT))
     if stale:
         sys.exit('out of date (run tools/luagen.py): ' + ', '.join(str(s.relative_to(ROOT)) for s in stale))

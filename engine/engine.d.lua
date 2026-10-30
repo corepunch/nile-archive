@@ -94,6 +94,14 @@
 ---@field held boolean
 ---@field clicked boolean
 
+---@class sprite_frame One trimmed atlas frame with a normalized pivot.
+---@field source rect
+---@field pivot vec2
+
+---@class nav_blocker A live circular obstacle; radius zero disables it.
+---@field pos vec2
+---@field radius number
+
 ---@class character Someone who speaks.
 ---@field id string How scripts refer to the character.
 ---@field name string
@@ -155,6 +163,13 @@
 ---@field screen vec2 Where it happened.
 
 ---@class font A loaded TrueType font (opaque).
+
+---@class nav A geometric route graph, independent of any game. Array assignment checks capacity.
+---@field nodes vec2[]
+---@field blockers nav_blocker[]
+---@field path vec2[]
+---@field length number
+---@field link_distance number
 
 ---@class save A save file being read or written. The same visitor function does both: `wallet = s:ints('wallet', wallet)` loads the value when reading and stores it when writing.
 
@@ -1177,6 +1192,12 @@ function ui.button(r, label, flags) end
 ---@param utf8 string
 function ui.label(r, s, align, utf8) end
 
+---A themed meter; fraction is clamped to 0..1.
+---@param r rect
+---@param fraction number
+---@param label? string
+function ui.progress(r, fraction, label) end
+
 ---A short message at the bottom of the screen.
 ---@param utf8 string
 function ui.toast(utf8) end
@@ -1188,6 +1209,40 @@ function ui.modal_backdrop(t) end
 ---While false, widgets draw but ignore input (under a modal).
 ---@param enabled boolean
 function ui.set_enabled(enabled) end
+
+---@class spritelib
+sprite = {}
+
+---@param frame sprite_frame
+---@param anchor vec2
+---@param scale number
+---@return rect
+function sprite.bounds(frame, anchor, scale) end
+
+---@param atlas texture
+---@param frame sprite_frame
+---@param anchor vec2
+---@param scale number
+---@param tint color
+function sprite.draw(atlas, frame, anchor, scale, tint) end
+
+---@param frames sprite_frame[]
+---@param fps number
+---@param seconds number
+---@return sprite_frame
+function sprite.sample(frames, fps, seconds) end
+
+---@class navlib
+nav = {}
+
+---Shortest route; false clears path. Exempts one blocker (default -1). Optional ellipse stops at the target footprint.
+---@param g nav
+---@param start vec2
+---@param finish vec2
+---@param ignore? integer
+---@param footprint? vec2
+---@return boolean
+function nav.find(g, start, finish, ignore, footprint) end
 
 ---@class savelib
 save = {}

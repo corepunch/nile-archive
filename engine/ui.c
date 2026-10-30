@@ -149,3 +149,15 @@ void ui_end_frame(float dt)
     }
     U.disabled = false;
 }
+
+/* A reusable progress meter: the game supplies only layout, value and text. */
+void ui_progress(rect r, float fraction, const char *label)
+{
+    const ui_theme *t = ui_theme_get();
+    float radius = minf(t->radius, r.size.h * .5f);
+    draw_round_rect(r, radius, t->button_bg2);
+    rect fill = r; fill.size.w *= saturate(fraction);
+    if (fill.size.w > 0) draw_round_rect_grad(fill, minf(radius, fill.size.w * .5f), t->accent, t->accent2);
+    draw_round_rect_line(r, radius, 1, t->border);
+    if (label && *label) text_fit(t->small, rect_inflate(r, -3), v2(.5f, .5f), label);
+}

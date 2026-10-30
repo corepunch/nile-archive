@@ -144,6 +144,12 @@ static bool saves_disabled(void) { return app_arg("fresh") != NULL; }
 static const char *file_for(const char *slot)
 {
     static char path[1024];
+    /* Isolate native test/preview saves without changing the user's HOME. */
+    const char *override = SDL_getenv("SPRITE_SAVE_DIR");
+    if (override && *override) {
+        snprintf(path, sizeof path, "%s/%s.sav", override, slot);
+        return path;
+    }
     char *dir = SDL_GetPrefPath("corepunch", app_id());
     snprintf(path, sizeof path, "%s%s.sav", dir ? dir : "", slot);
     SDL_free(dir);

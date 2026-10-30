@@ -266,3 +266,14 @@ the C and the Lua games and comparing them pixel for pixel.
 - Localisation tables instead of string literals.
 - An error screen for script errors instead of exiting, for development builds.
 - Hot reload of a game's Lua files while it runs.
+
+## Atlas animation and route graphs
+
+The third game, Volcano, adds `sprite.c` for authored atlas frames, animation
+timing and shared draw/pick bounds, `nav.c` for blocked geometric graphs and
+elliptical target approaches, and `ui.progress` for themed meters. These are
+game-independent APIs, described in [LUA_API.md](LUA_API.md). Volcano's Lua code
+owns its worker jobs and campaign rules. See [the port assessment](../games/volcano/docs/PORT.md).
+
+Native verification can isolate save files with `SPRITE_SAVE_DIR`, an existing
+writable directory. Normal play continues to use SDL's per-game preferences.

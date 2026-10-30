@@ -242,7 +242,7 @@ int main(int argc, char **argv)
     printf("engine: %d checks, %d failures\n", checks, failures);
 
     /* Lua tests: each file returns its failure count (and prints its own summary). */
-    script_open("tests/lua;games/relic-rush/lua;games/nile-archive/lua");
+    script_open("tests/lua;games/relic-rush/lua;games/nile-archive/lua;games/volcano/lua");
     for (int i = 1; i < argc; i++) {
         int r = script_dofile(argv[i]);
         if (r) fprintf(stderr, "%s: %s\n", argv[i], r < 0 ? "error" : "failed");

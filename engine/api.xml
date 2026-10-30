@@ -373,9 +373,32 @@
     <function name="button_frame" c="ui_button_frame" doc="Background only; draw your own content."><arg name="r" type="rect"/><arg name="flags" type="int" default="0"/><returns type="ui_state"/></function>
     <function name="button" c="ui_button" doc="True when clicked."><arg name="r" type="rect"/><arg name="label" type="string"/><arg name="flags" type="int" default="0"/><returns type="bool"/></function>
     <function name="label" c="ui_label"><arg name="r" type="rect"/><arg name="s" type="text_style"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/></function>
+    <function name="progress" c="ui_progress" doc="A themed meter; fraction is clamped to 0..1."><arg name="r" type="rect"/><arg name="fraction" type="float"/><arg name="label" type="string" optional="true"/></function>
     <function name="toast" c="ui_toast" doc="A short message at the bottom of the screen."><arg name="utf8" type="string"/></function>
     <function name="modal_backdrop" c="ui_modal_backdrop" doc="Dim everything drawn so far and block input outside dialogs; t fades it in."><arg name="t" type="float"/></function>
     <function name="set_enabled" c="ui_set_enabled" doc="While false, widgets draw but ignore input (under a modal)."><arg name="enabled" type="bool"/></function>
+  </module>
+
+  <struct name="sprite_frame" c="sprite_frame" doc="One trimmed atlas frame with a normalized pivot.">
+    <field name="source" type="rect"/><field name="pivot" type="vec2"/>
+  </struct>
+  <module name="sprite" doc="Authored atlas frames, pivot-aware bounds and animation timing.">
+    <function name="bounds" c="sprite_bounds"><arg name="frame" type="sprite_frame"/><arg name="anchor" type="vec2"/><arg name="scale" type="float"/><returns type="rect"/></function>
+    <function name="draw" c="sprite_draw"><arg name="atlas" type="texture"/><arg name="frame" type="sprite_frame"/><arg name="anchor" type="vec2"/><arg name="scale" type="float"/><arg name="tint" type="color"/></function>
+    <function name="sample" c="sprite_sample"><arg name="frames" type="sprite_frame[]"/><arg name="count" type="count" of="frames"/><arg name="fps" type="float"/><arg name="seconds" type="double"/><returns type="sprite_frame"/></function>
+  </module>
+  <struct name="nav_blocker" c="nav_blocker" doc="A live circular obstacle; radius zero disables it.">
+    <field name="pos" type="vec2"/><field name="radius" type="float"/>
+  </struct>
+  <handle name="nav" c="nav" owned="true" doc="A geometric route graph, independent of any game. Array assignment checks capacity.">
+    <field name="nodes" type="vec2[]" count="node_count" max="NAV_NODES" access="rw"/>
+    <field name="blockers" type="nav_blocker[]" count="blocker_count" max="NAV_BLOCKERS" access="rw"/>
+    <field name="path" type="vec2[]" count="path_count" max="NAV_PATH"/>
+    <field name="length" type="float"/>
+    <field name="link_distance" type="float" access="rw"/>
+  </handle>
+  <module name="nav" type="nav" doc="nav.new(); assign nodes and live blockers, then find. Indices are 0-based.">
+    <function name="find" c="nav_find" doc="Shortest route; false clears path. Exempts one blocker (default -1). Optional ellipse stops at the target footprint."><arg name="g" type="nav"/><arg name="start" type="vec2"/><arg name="finish" type="vec2"/><arg name="ignore" type="int" default="-1"/><arg name="footprint" type="vec2" optional="true"/><returns type="bool"/></function>
   </module>
 
   <!-- ================================================================ save -->

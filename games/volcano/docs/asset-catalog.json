@@ -1,0 +1,288 @@
+{
+  "runtime": [
+    {
+      "asset": "fonts/LilitaOne-Regular.ttf",
+      "sha256": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
+      "bytes": 28092
+    },
+    {
+      "asset": "fonts/lilitaone-OFL.txt",
+      "sha256": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
+      "bytes": 4393
+    },
+    {
+      "asset": "pets-to-replace.png",
+      "sha256": "739c7129f7870909bd5d2fd8f52d8c9d12505f289921ed018f09f83dfaa4aef6",
+      "bytes": 593439
+    },
+    {
+      "asset": "sprites.png",
+      "sha256": "a4bbab4eac112edf2ad64988accf98717d13f3fdeafd0aa5a3f807316de3209b",
+      "bytes": 6578339
+    },
+    {
+      "asset": "volcano-01-outskirts.png",
+      "sha256": "5d4f2c49a2b8a7f309419cf668cfe6c781283c01a4567988bcf3671a9798349f",
+      "bytes": 3912734
+    },
+    {
+      "asset": "volcano-02-suburbs.png",
+      "sha256": "a76d0dbdecde1db4674b3fc1b6be019af763ec96b8f91fbdc899351335b9053b",
+      "bytes": 4178981
+    },
+    {
+      "asset": "volcano-03-square.png",
+      "sha256": "0be70a07eeb3e29206f51fa9cd3b6cd6a2924c541ee48b92ebdb51b512823deb",
+      "bytes": 4026883
+    },
+    {
+      "asset": "volcano-04-district.png",
+      "sha256": "5bea0f98aa73d79d96adf44e7ac70e0e6d26a9f79f65bd5899315f8f9a37a044",
+      "bytes": 4011494
+    },
+    {
+      "asset": "volcano-05-centre.png",
+      "sha256": "c54da55e7b9732af0ccb9798ba0a88a3175dd6b746fbb5912f3e4ee3ecf46525",
+      "bytes": 4219967
+    }
+  ],
+  "format": "volcano-asset-catalog-1",
+  "source_commit": "a9b3a09a4ad680748c14303e5cf86455c002d7ef",
+  "borrowed": [
+    {
+      "asset": "pets-to-replace.png",
+      "origin": "Rescue Team 5 / Rionix",
+      "status": "replace",
+      "reason": "No original or CC0 cat/dog substitute exists in either repository.",
+      "uses": [
+        "cat0",
+        "dog0",
+        "dog1"
+      ],
+      "animations": [
+        "cat0_idle0",
+        "cat0_run0",
+        "cat0_run1",
+        "cat0_run2",
+        "cat0_run3",
+        "cat0_run4",
+        "cat0_run5",
+        "cat0_run6",
+        "cat0_run7",
+        "dog0_idle0",
+        "dog0_run0",
+        "dog0_run1",
+        "dog0_run2",
+        "dog0_run3",
+        "dog0_run4",
+        "dog0_run5",
+        "dog0_run6",
+        "dog0_run7",
+        "dog1_idle0",
+        "dog1_run0",
+        "dog1_run1",
+        "dog1_run2",
+        "dog1_run3",
+        "dog1_run4",
+        "dog1_run5",
+        "dog1_run6",
+        "dog1_run7"
+      ],
+      "replacement": "An original pet atlas with idle and eight running directions; keep native animation keys and pivots."
+    }
+  ],
+  "sources": [
+    {
+      "source": "assets/volcano-episode/sprites.xml",
+      "sha256": "a69fd91f01bc4836488b9f27e82640236ee43fc58cb94864ddda67c699ce41d0",
+      "origin": "volcano-original",
+      "purpose": "volcano/kitchen-damaged"
+    },
+    {
+      "source": "assets/volcano-episode/props.png",
+      "sha256": "33a92440fcd8945949cbdd09573c33b53a2291120388134738fcab3a887475ec",
+      "origin": "volcano-original",
+      "purpose": "volcano/kitchen-damaged"
+    },
+    {
+      "source": "assets/hd-static/atlas.json",
+      "sha256": "62b6e35f160253feca8d01ccabd159ad1a8a97e6b75be9b984877caacf1b110e",
+      "origin": "volcano-original",
+      "purpose": "hq"
+    },
+    {
+      "source": "assets/hd-static/buildings-hq-rounded.generated.png",
+      "sha256": "9316947efa3590a4856eeea0cba671bbe10e9288c9382cd68937e6f76723e9a5",
+      "origin": "volcano-original",
+      "purpose": "hq"
+    },
+    {
+      "source": "assets/hd-static/props.generated.png",
+      "sha256": "3155cd8ca3e30df389e55f408b4448bf7a50008f54a99bdb6180a5df2091bf8d",
+      "origin": "volcano-original",
+      "purpose": "road"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney.sprites.xml",
+      "sha256": "1a020d0a865d2fe047d7dec94d0e27935a99a1d2c5591eec4b23151785c474fa",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_wait0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-stand.png",
+      "sha256": "f5042f98f9a0a3230d16dfb1968fb234a15a5067e38de583bc19afa36681a812",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_wait0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-run.png",
+      "sha256": "6b290ebbedc6f9673da9a1071bd3f744e119a06d90c5fed9dcd3b594d1993889",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_run0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-chop.png",
+      "sha256": "04ef99f079933c77166d853a6a5f6f2d4b502a33dfee2de15f357154a4ee2929",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_wood0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-hammer.png",
+      "sha256": "0e3a855c049ec5141248f628038a70da96ad439c7403c3249ce1c9570a47830d",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_srepair0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-repair.png",
+      "sha256": "c76be27b368bf401e67ef55d127ef818c6210f9fd5e7e7a995fd78fb2cf94103",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_repair0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-pickaxe.png",
+      "sha256": "aa11fe05b87d3e76492f774b874ad1685429186d08a2518ab49320567880584d",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_pick0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-worker-pet.png",
+      "sha256": "49c19ecbf57dfc7382a88d7f4aaf08fc41cfbd41f1fcdb7f15742519d1a0503a",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "worker_pet0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-male-stand.png",
+      "sha256": "2aae1dc2f7d534b79b838da79d99a8f6b3f64eaa18248b6262564afe8b3c4698",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "man_idle0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-male-run.png",
+      "sha256": "b8f55dd57dbb8cb8682237ee3c87facad09d31d524ace791d2148c7861bd79e1",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "man_run0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-female-stand.png",
+      "sha256": "86d9d50e6f8865ea3107859df56fdeca468153f8f822ddbe19b44f21c2acfb8a",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "wman_idle0"
+    },
+    {
+      "source": "assets/kenney-characters/sprites/kenney-female-run.png",
+      "sha256": "79f98936a0c1a398c5709df1d733900fc676f8649ee519021dec5aef00a857b4",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "wman_run0"
+    },
+    {
+      "source": "reference/rescue-team/texture/lazy/cats.lua",
+      "sha256": "baa0e3f91257685d9689d684b30c71facb991d66a276f4043011677a2dc3087b",
+      "origin": "rescue-team-temporary",
+      "purpose": "cat0_idle0"
+    },
+    {
+      "source": "reference/rescue-team/texture/lazy/cats.png",
+      "sha256": "2f88090d0ccdfda7ac36a4ead50f7f4912e3781bf78f6ac8c02c9009dfed255a",
+      "origin": "rescue-team-temporary",
+      "purpose": "cat0_idle0"
+    },
+    {
+      "source": "reference/rescue-team/texture/lazy/dogs.lua",
+      "sha256": "3714c7409a80f3a906c9ca3f26dea8757e015cbd765163c3c3b64d50641c4938",
+      "origin": "rescue-team-temporary",
+      "purpose": "dog0_idle0"
+    },
+    {
+      "source": "reference/rescue-team/texture/lazy/dogs.png",
+      "sha256": "9f0edeedb289a86da66ab432f8e94550678fb145a472a9c4ae8b7ad186349653",
+      "origin": "rescue-team-temporary",
+      "purpose": "dog0_idle0"
+    },
+    {
+      "source": "missions/volcano-01-outskirts/mission.xml",
+      "sha256": "1e3737eb98be69c8b3cc0bbc30e287dc46eae1c555a93c331a6b5baaaea55e04",
+      "origin": "volcano-original",
+      "purpose": "Native Lua campaign layout"
+    },
+    {
+      "source": "missions/volcano-01-outskirts/background.png",
+      "sha256": "5d4f2c49a2b8a7f309419cf668cfe6c781283c01a4567988bcf3671a9798349f",
+      "origin": "volcano-original",
+      "purpose": "Painted campaign backdrop"
+    },
+    {
+      "source": "missions/volcano-02-suburbs/mission.xml",
+      "sha256": "1aa443f6ef1b3f88627498992447a6a53b4627bcd43a37d115d1c6bc80323a0f",
+      "origin": "volcano-original",
+      "purpose": "Native Lua campaign layout"
+    },
+    {
+      "source": "missions/volcano-02-suburbs/background.png",
+      "sha256": "a76d0dbdecde1db4674b3fc1b6be019af763ec96b8f91fbdc899351335b9053b",
+      "origin": "volcano-original",
+      "purpose": "Painted campaign backdrop"
+    },
+    {
+      "source": "missions/volcano-03-square/mission.xml",
+      "sha256": "441a48af28cacd42db8c183df7d61cd8c1a0ba349f280f0173a2fa7e232395e7",
+      "origin": "volcano-original",
+      "purpose": "Native Lua campaign layout"
+    },
+    {
+      "source": "missions/volcano-03-square/background.png",
+      "sha256": "0be70a07eeb3e29206f51fa9cd3b6cd6a2924c541ee48b92ebdb51b512823deb",
+      "origin": "volcano-original",
+      "purpose": "Painted campaign backdrop"
+    },
+    {
+      "source": "missions/volcano-04-district/mission.xml",
+      "sha256": "e12e0b19e5adb4d1067a8c7c100f21fa4dd45fb49394eba3307d0a860696a81c",
+      "origin": "volcano-original",
+      "purpose": "Native Lua campaign layout"
+    },
+    {
+      "source": "missions/volcano-04-district/background.png",
+      "sha256": "5bea0f98aa73d79d96adf44e7ac70e0e6d26a9f79f65bd5899315f8f9a37a044",
+      "origin": "volcano-original",
+      "purpose": "Painted campaign backdrop"
+    },
+    {
+      "source": "missions/volcano-05-centre/mission.xml",
+      "sha256": "0e6f817a9777262c282f004587ce35e8ca83394875a91d70ee4f39e21683dff2",
+      "origin": "volcano-original",
+      "purpose": "Native Lua campaign layout"
+    },
+    {
+      "source": "missions/volcano-05-centre/background.png",
+      "sha256": "c54da55e7b9732af0ccb9798ba0a88a3175dd6b746fbb5912f3e4ee3ecf46525",
+      "origin": "volcano-original",
+      "purpose": "Painted campaign backdrop"
+    },
+    {
+      "source": "assets/kenney-characters/README.md",
+      "sha256": "19517d82af25b94910be71b99fb4785e9b06c5da2ff1a10c186b2f1d75d13f56",
+      "origin": "kenney-cc0-and-volcano",
+      "purpose": "Kenney provenance and authored animation details"
+    }
+  ]
+}

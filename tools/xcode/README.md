@@ -42,6 +42,12 @@ What the projects contain:
 - Shared schemes in `xcshareddata/xcschemes`, so Xcode Cloud can pick a
   committed project and scheme directly; it checks out public submodules on
   its own.
+- Each game's `Assets.xcassets/AppIcon.appiconset` supplies the iOS and macOS
+  app icons. The generator includes the catalog in both targets and selects
+  `AppIcon` automatically when `Assets.xcassets` exists. Selected artwork,
+  JPEG concept grids and selection coordinates are kept in each game's
+  `art/app-icon/` directory. The current choices are Nile Archive R3C3 and
+  Relic Rush R3C2; the 1024 px masters are resized from those exact grid crops.
 
 Identifiers and files are deterministic, so regenerating an unchanged project
 changes nothing; `make test` runs `generate.py --check`, which regenerates both
@@ -60,3 +66,9 @@ xcodebuild -project games/relic-rush/relic-rush.xcodeproj -scheme relic-rush-iph
 ```
 
 The CI `xcode` job builds both games' iOS targets for the Simulator this way.
+
+Volcano adds `volcano-macos` and `volcano-ipad`; both use the same launcher and
+bundled Lua/data layout. The freshness check accepts Xcode's comments, unquoted
+settings and additional framework references while requiring every generated
+source/resource reference and build setting. New shared modules must be listed
+in both the root Makefile and `ENGINE_SOURCES` in the generator.

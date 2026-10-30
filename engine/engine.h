@@ -313,6 +313,25 @@ camera camera_look(camera c, vec2 world_point);
 camera camera_input(camera c, input in);       /* drag, wheel and pinch */
 void camera_draw_texture(camera c, texture t); /* draw a world-sized backdrop */
 
+/* Atlas animations use authored frames, pivots and timing. No game-specific drawing. */
+typedef struct { rect source; vec2 pivot; } sprite_frame;
+rect sprite_bounds(sprite_frame frame, vec2 anchor, float scale);
+void sprite_draw(texture atlas, sprite_frame frame, vec2 anchor, float scale, color tint);
+sprite_frame sprite_sample(const sprite_frame *frames, int count, float fps, double seconds);
+
+/* Small dynamic route graphs. Blocker indices and ignored target are 0-based. */
+#define NAV_NODES 768
+#define NAV_BLOCKERS 128
+#define NAV_PATH (NAV_NODES + 2)
+typedef struct { vec2 pos; float radius; } nav_blocker;
+typedef struct {
+    vec2 nodes[NAV_NODES], path[NAV_PATH];
+    nav_blocker blockers[NAV_BLOCKERS];
+    int node_count, blocker_count, path_count;
+    float link_distance, length;
+} nav;
+bool nav_find(nav *g, vec2 start, vec2 finish, int ignore, vec2 footprint);
+
 /* --- particles and floating text, drawn in screen space --- */
 void fx_burst(vec2 pos, int count, color c, float speed, float size);
 struct text_style;
@@ -416,6 +435,7 @@ void ui_panel_ex(rect r, color top, color bottom, color border, float radius);
 ui_state ui_button_frame(rect r, int flags);  /* background only; draw your own content */
 bool ui_button(rect r, const char *label, int flags);
 void ui_label(rect r, text_style s, vec2 align, const char *utf8);
+void ui_progress(rect r, float fraction, const char *label);
 void ui_toast(const char *utf8);
 /* Dim everything drawn so far and block input outside dialogs. Call before drawing a modal. */
 void ui_modal_backdrop(float t);

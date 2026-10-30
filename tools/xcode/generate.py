@@ -30,9 +30,10 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 SDL = 'engine/third_party/SDL'
 SDL_PROJECT = SDL + '/Xcode/SDL/SDL.xcodeproj'
-ENGINE_SOURCES = ['core', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'script', 'api_lua']   # as in the Makefile
+ENGINE_SOURCES = ['core', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'sprite', 'nav', 'script', 'api_lua']   # as in the Makefile
 
 GAMES = {
+    'volcano': dict(name='Volcano', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)
     'nile-archive': dict(name='Nile Archive', bundle='com.corepunch.nilearchive', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     'relic-rush': dict(name='Relic Rush', bundle='com.corepunch.relicrush', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),
@@ -56,13 +57,16 @@ def encode(value):
 
 
 def decode(text):
-    """Parse a project written by encode() (the subset of the plist format it uses)."""
+    """Read generated projects and Xcode's commented OpenStep representation."""
     pos = text.index('{')
 
     def skip():
         nonlocal pos
-        while pos < len(text) and text[pos] in ' \t\r\n':
-            pos += 1
+        while pos < len(text):
+            if text[pos].isspace(): pos += 1
+            elif text.startswith('/*', pos): pos = text.index('*/', pos + 2) + 2
+            elif text.startswith('//', pos): pos = text.find('\n', pos) if '\n' in text[pos:] else len(text)
+            else: break
 
     def value():
         nonlocal pos
@@ -103,9 +107,10 @@ def decode(text):
             s = json.loads(text[pos:end + 1])
             pos = end + 1
             return s
-        m = re.match(r'-?\d+', text[pos:])
-        pos += m.end()
-        return int(m.group())
+        m = re.match(r'[^\s=;(),{}]+', text[pos:])
+        if not m: raise ValueError('Invalid OpenStep token at ' + str(pos))
+        token = m.group(); pos += m.end()
+        return int(token) if re.fullmatch(r'-?\d+', token) else token
 
     return value()
 
@@ -222,6 +227,10 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
                       sourceTree='SOURCE_ROOT', lastKnownFileType='text.xml')
     lua_folder = project.add('game/lua', 'PBXFileReference', path='lua', sourceTree='<group>', lastKnownFileType='folder')
     data_folder = project.add('game/data', 'PBXFileReference', path='data', sourceTree='<group>', lastKnownFileType='folder')
+    assets = None
+    if (home / 'Assets.xcassets').is_dir():
+        assets = project.add('game/assets', 'PBXFileReference', path='Assets.xcassets',
+                             sourceTree='<group>', lastKnownFileType='folder.assetcatalog')
     sdl_ref = project.add('sdl/project', 'PBXFileReference', name='SDL.xcodeproj', path=rel(SDL_PROJECT),
                           sourceTree='SOURCE_ROOT', lastKnownFileType='wrapper.pb-project')
     # On iOS SDL_main.h renames the game's main to SDL_main; this public-domain
@@ -242,7 +251,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         sdl_proxies[target_name] = (target_id, proxy)
     sdl_group = project.add('sdl/products', 'PBXGroup', name='Products', children=sdl_products, sourceTree='<group>')
     browse = [
-        project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder], sourceTree='<group>'),
+        project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder] + ([assets] if assets else []), sourceTree='<group>'),
         project.add('group/engine', 'PBXGroup', name='Engine',
                     children=[header, api] + [sources[n] for n in ENGINE_SOURCES + ['lua_lib', 'launcher']], sourceTree='<group>'),
         project.add('group/sdl', 'PBXGroup', name='SDL', children=[sdl_ref, uikit_main], sourceTree='<group>'),
@@ -257,6 +266,8 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         settings = dict(INFOPLIST_FILE=f'$(PROJECT_FILE_PATH)/Generated/{"ios" if ipad else "macos"}-Info.plist',
                         OTHER_LDFLAGS=['$(inherited)', '-lm'],
                         LD_RUNPATH_SEARCH_PATHS=['$(inherited)', '@executable_path/Frameworks' if ipad else '@executable_path/../Frameworks'])
+        if assets:
+            settings['ASSETCATALOG_COMPILER_APPICON_NAME'] = 'AppIcon'
         if ipad:
             settings.update(CODE_SIGN_STYLE='Automatic', SDKROOT='iphoneos', SUPPORTED_PLATFORMS='iphoneos iphonesimulator',
                             IPHONEOS_DEPLOYMENT_TARGET='16.0', TARGETED_DEVICE_FAMILY='1' if platform == 'iphone' else '2',
@@ -303,6 +314,8 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         embed_phase = project.add(name + '/embed', 'PBXCopyFilesBuildPhase', buildActionMask=2147483647, dstPath='',
                                   dstSubfolderSpec=10, files=[embed], name='Embed Frameworks', runOnlyForDeploymentPostprocessing=0)
         resource_files = [project.add(f'{name}/{folder}', 'PBXBuildFile', fileRef=ref) for folder, ref in (('lua', lua_folder), ('data', data_folder))]
+        if assets:
+            resource_files.append(project.add(f'{name}/assets', 'PBXBuildFile', fileRef=assets))
         resources_phase = project.add(name + '/resources', 'PBXResourcesBuildPhase', buildActionMask=2147483647,
                                       files=resource_files, runOnlyForDeploymentPostprocessing=0)
         dependency_proxy = project.add(name + '/sdl-target-proxy', 'PBXContainerItemProxy', containerPortal=sdl_ref,
@@ -334,6 +347,23 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     return bundle
 
 
+def project_matches(actual, expected, field=''):
+    """Verify generated structure while allowing Xcode's extra references/settings.
+
+    Xcode may unquote numeric settings, reorder groups/resources, and add
+    framework products. None changes the expected source or resource contract.
+    """
+    if isinstance(expected, dict):
+        return isinstance(actual, dict) and all(
+            k in actual and project_matches(actual[k], v, k) for k, v in expected.items())
+    if isinstance(expected, list):
+        if not isinstance(actual, list): return False
+        if field in ('children', 'files'):
+            return all(v in actual for v in expected)
+        return len(actual) == len(expected) and all(project_matches(a, b) for a, b in zip(actual, expected))
+    return str(actual) == str(expected)
+
+
 def check():
     """Regenerate every game's project in a temporary folder and compare with the committed one."""
     stale = []
@@ -346,7 +376,10 @@ def check():
             for path in sorted(fresh.rglob('*')):
                 if path.is_file() and path.name != '.DS_Store':
                     other = committed / path.relative_to(fresh)
-                    if not other.is_file() or other.read_text() != path.read_text():
+                    same = other.is_file() and other.read_text() == path.read_text()
+                    if other.is_file() and path.name == 'project.pbxproj':
+                        same = project_matches(decode(other.read_text()), decode(path.read_text()))
+                    if not same:
                         stale.append(str(other.relative_to(ROOT)))
     if stale:
         sys.exit('out of date (run tools/xcode/generate.py <game> --unsigned): ' + ', '.join(stale))
