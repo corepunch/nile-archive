@@ -135,7 +135,9 @@ focus, activation and layout. `state` includes `hot`, `held`, `clicked`, `disabl
 Relic Rush supplies one skin through its existing painting helpers. Its pause
 resource binds sound and reduced motion; its building resource binds the name,
 art, description, cost row and action caption. Games retain gameplay actions such
-as claiming rewards or entering placement mode. Its Explorer's guide uses a
+as claiming rewards or entering placement mode. Its read-only expedition HUD also uses an engine row of three panel columns
+with computed labels and a progress paint node: score, level/name and moves
+remain grouped and have independent contrast backings. Its Explorer's guide uses a
 stable-key source and one icon/copy row resource. The game paints authored icon
 layers inside assigned bounds; the engine owns placement, wrapping, spacing and
 the footer button. Nile Archive's city move strip also uses a form, with measured
