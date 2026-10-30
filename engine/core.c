@@ -1,5 +1,5 @@
 /* core.c — window, logical screen, main loop, input gestures, screenshots. */
-#include "engine.h"
+#include "render.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,12 +45,9 @@ static int web_args(char ***out)
 #include "third_party/stb_image_write.h"
 
 #define DRAG_THRESHOLD 10.0f
-#define MAX_FINGERS 2
 
 static struct {
     app_desc desc;
-    SDL_Window *window;
-    SDL_Renderer *renderer;
     int argc;
     char **argv;
     bool running;
@@ -58,17 +55,14 @@ static struct {
     float pixel_scale;
     double time;
     float dt;
-    Uint64 last_counter;
+    longTime_t last_counter;
     input in;
     bool pinched;          /* a second finger joined during this press */
-    struct { SDL_FingerID id; vec2 pos; bool used; } fingers[MAX_FINGERS];
-    float pinch_dist;
     const char *shot_path;
     int shot_frames;
     int frame_index;
 } A;
 
-SDL_Renderer *app_renderer(void) { return A.renderer; }
 const char *app_id(void) { return A.desc.id ? A.desc.id : "game"; }
 rect app_screen(void) { return rect_make(v2(0, 0), A.logical); }
 float app_pixel_scale(void) { return A.pixel_scale; }
@@ -78,21 +72,18 @@ double app_clock(void) { return (double)time(NULL); }
 void app_quit(void) { A.running = false; }
 input input_get(void) { return A.in; }
 
-/* A press and a release at a logical point, through SDL's event queue so the
- * game sees them exactly as a tap (tests and the smoke run use it). */
+/* Queue window coordinates, just like native pointer events. */
 void app_inject_click(vec2 p)
 {
-    SDL_Event e = {0};
-    int x, y;
-    SDL_RenderLogicalToWindow(A.renderer, p.x, p.y, &x, &y);
-    e.type = SDL_MOUSEBUTTONDOWN;
-    e.button.button = SDL_BUTTON_LEFT;
-    e.button.windowID = SDL_GetWindowID(A.window);   /* SDL maps it to logical units */
-    e.button.x = x, e.button.y = y;
-    SDL_PushEvent(&e);   /* SDL rewrites the coordinates in place to logical units... */
-    e.type = SDL_MOUSEBUTTONUP;
-    e.button.x = x, e.button.y = y;   /* ...so the release needs window units again */
-    SDL_PushEvent(&e);
+    struct AXsize window = {1, 1};
+    axGetSize(&window);
+    size2 size = sz2((float)window.width, (float)window.height);
+    float scale = size2_fit(A.logical, size);
+    vec2 offset = vec2_scale(vec2_sub(size2_vec(size), vec2_scale(size2_vec(A.logical), scale)), .5f);
+    vec2 at = vec2_add(offset, vec2_scale(p, scale));
+    uint32_t xy = MAKEDWORD((int)lroundf(at.x), (int)lroundf(at.y));
+    axPostMessageW(NULL, kEventLeftButtonDown, xy, NULL);
+    axPostMessageW(NULL, kEventLeftButtonUp, xy, NULL);
 }
 
 const char *app_path(const char *rel)
@@ -128,13 +119,14 @@ const char *app_arg(const char *name)
 }
 
 /* The logical screen keeps the design's short side and grows along the long
- * side with the screen, up to max_aspect (beyond that SDL letterboxes).
+ * side with the screen, up to max_aspect (beyond that the renderer letterboxes).
  * Portrait screens use the design rotated, so layouts can adapt. Games with
  * `fixed` set get exactly the design size, letterboxed. */
 static void update_logical_size(void)
 {
-    int ow = 1, oh = 1;
-    SDL_GetRendererOutputSize(A.renderer, &ow, &oh);
+    struct AXsize output = {1, 1};
+    axGetSize(&output);
+    float ow = maxf(output.width * axGetScaling(), 1), oh = maxf(output.height * axGetScaling(), 1);
     size2 d = A.desc.design;
     float long_side = maxf(d.w, d.h), short_side = minf(d.w, d.h);
     bool portrait = oh > ow;
@@ -147,31 +139,19 @@ static void update_logical_size(void)
     if (A.desc.fixed) l = d;
     if (l.w != A.logical.w || l.h != A.logical.h) {
         A.logical = l;
-        SDL_RenderSetLogicalSize(A.renderer, (int)l.w, (int)l.h);
     }
     A.pixel_scale = minf(ow / l.w, oh / l.h);
 }
 
-static vec2 finger_to_logical(float nx, float ny)
+static vec2 window_to_logical(vec2 p)
 {
-    int ww, wh;
-    float lx, ly;
-    SDL_GetWindowSize(A.window, &ww, &wh);
-    SDL_RenderWindowToLogical(A.renderer, (int)(nx * ww), (int)(ny * wh), &lx, &ly);
-    return v2(lx, ly);
-}
-
-static int finger_count(void)
-{
-    int n = 0;
-    for (int i = 0; i < MAX_FINGERS; i++) n += A.fingers[i].used;
-    return n;
-}
-
-static void pinch_measure(float *dist, vec2 *center)
-{
-    *dist = vec2_dist(A.fingers[0].pos, A.fingers[1].pos);
-    *center = vec2_lerp(A.fingers[0].pos, A.fingers[1].pos, .5f);
+    struct AXsize window = {1, 1};
+    axGetSize(&window);
+    size2 size = sz2((float)window.width, (float)window.height);
+    float scale = size2_fit(A.logical, size);
+    if (scale <= 0) return v2(0, 0);
+    vec2 offset = vec2_scale(vec2_sub(size2_vec(size), vec2_scale(size2_vec(A.logical), scale)), .5f);
+    return vec2_scale(vec2_sub(p, offset), 1 / scale);
 }
 
 static void pointer_down(vec2 p)
@@ -207,40 +187,6 @@ static void pointer_up(vec2 p)
     in->tap = !in->dragging && !A.pinched;
 }
 
-static void handle_finger(const SDL_Event *e)
-{
-    vec2 p = finger_to_logical(e->tfinger.x, e->tfinger.y);
-    int slot = -1;
-    for (int i = 0; i < MAX_FINGERS; i++)
-        if (A.fingers[i].used && A.fingers[i].id == e->tfinger.fingerId) slot = i;
-    if (e->type == SDL_FINGERDOWN && slot < 0) {
-        for (int i = 0; i < MAX_FINGERS && slot < 0; i++)
-            if (!A.fingers[i].used) slot = i;
-        if (slot < 0) return;
-        A.fingers[slot].used = true;
-        A.fingers[slot].id = e->tfinger.fingerId;
-        A.fingers[slot].pos = p;
-        if (finger_count() == 2) {
-            vec2 c;
-            pinch_measure(&A.pinch_dist, &c);
-            A.pinched = true;
-            A.in.dragging = false;
-        }
-        return;
-    }
-    if (slot < 0) return;
-    A.fingers[slot].pos = p;
-    if (e->type == SDL_FINGERMOTION && finger_count() == 2) {
-        float d;
-        vec2 c;
-        pinch_measure(&d, &c);
-        if (A.pinch_dist > 1 && d > 1) A.in.pinch *= d / A.pinch_dist;
-        A.in.pinch_center = c;
-        A.pinch_dist = d;
-    }
-    if (e->type == SDL_FINGERUP) A.fingers[slot].used = false;
-}
-
 static void poll_events(void)
 {
     input *in = &A.in;
@@ -252,42 +198,44 @@ static void poll_events(void)
     in->back = false;
     if (!in->down) in->captured = false;
 
-    SDL_Event e;
-    while (SDL_PollEvent(&e)) {
-        switch (e.type) {
-        case SDL_QUIT: A.running = false; break;
-        case SDL_MOUSEBUTTONDOWN:
-            if (e.button.button == SDL_BUTTON_LEFT) pointer_down(v2((float)e.button.x, (float)e.button.y));
-            in->hover = e.button.which != SDL_TOUCH_MOUSEID;
+    struct AXmessage e;
+    while (axPeekMessage(&e)) {
+        vec2 p = window_to_logical(v2((int16_t)e.x, (int16_t)e.y));
+        bool hover = !(e.pointer.flags & (AX_POINTER_TOUCH | AX_POINTER_STYLUS));
+        switch (e.message) {
+        case kEventWindowClosed: A.running = false; break;
+        case kEventLeftButtonDown: pointer_down(p); in->hover = hover; break;
+        case kEventLeftButtonUp: pointer_up(p); in->hover = hover; break;
+        case kEventLeftButtonDragged:
+        case kEventMouseMoved: pointer_move(p); in->hover = hover; break;
+        case kEventScrollWheel: in->wheel += e.dy; break;
+        case kEventGesture:
+            if (e.gesture.phase == AX_GESTURE_BEGIN) { A.pinched = true; in->dragging = false; }
+            if (e.gesture.phase == AX_GESTURE_UPDATE && e.gesture.scale > 0) {
+                in->pinch *= e.gesture.scale;
+                in->pinch_center = window_to_logical(v2(e.gesture.x, e.gesture.y));
+            }
             break;
-        case SDL_MOUSEBUTTONUP:
-            if (e.button.button == SDL_BUTTON_LEFT) pointer_up(v2((float)e.button.x, (float)e.button.y));
-            in->hover = e.button.which != SDL_TOUCH_MOUSEID;
+        case kEventPointerCancel:
+        case kEventKillFocus:
+            in->down = in->dragging = in->hover = in->tap = false;
+            in->captured = false;
+            in->drag = v2(0, 0);
             break;
-        case SDL_MOUSEMOTION:
-            pointer_move(v2((float)e.motion.x, (float)e.motion.y));
-            in->hover = e.motion.which != SDL_TOUCH_MOUSEID;
-            break;
-        case SDL_MOUSEWHEEL: in->wheel += e.wheel.preciseY; break;
-        case SDL_FINGERDOWN:
-        case SDL_FINGERMOTION:
-        case SDL_FINGERUP: handle_finger(&e); break;
-        case SDL_WINDOWEVENT:
-            if (e.window.event == SDL_WINDOWEVENT_LEAVE) in->hover = false;
-            break;
-        case SDL_KEYDOWN:
-            in->key = e.key.keysym.sym;
-            if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_AC_BACK) in->back = true;
+        case kEventKeyDown:
+            in->key = e.keyCode;
+            if (e.keyCode == AX_KEY_ESCAPE) in->back = true;
             break;
         }
+        axDisposeMessage(&e);
     }
 }
 
 static bool needs_rotation(void)
 {
-    int ow, oh;
-    SDL_GetRendererOutputSize(A.renderer, &ow, &oh);
-    return A.desc.landscape && ow < oh;
+    struct AXsize output = {1, 1};
+    axGetSize(&output);
+    return A.desc.landscape && output.width < output.height;
 }
 
 static void draw_rotate_prompt(void)
@@ -306,47 +254,49 @@ static void draw_rotate_prompt(void)
 
 static void save_screenshot(void)
 {
-    int w, h;
-    SDL_GetRendererOutputSize(A.renderer, &w, &h);
+    struct AXsize output = {1, 1};
+    axGetSize(&output);
+    int w = (int)lroundf(output.width * axGetScaling()), h = (int)lroundf(output.height * axGetScaling());
     unsigned char *px = malloc((size_t)w * h * 4);
     if (!px) return;
-    SDL_RenderSetLogicalSize(A.renderer, 0, 0);
-    SDL_RenderSetScale(A.renderer, 1, 1);
-    if (SDL_RenderReadPixels(A.renderer, NULL, SDL_PIXELFORMAT_ABGR8888, px, w * 4) == 0) {
+    if (render_read_pixels(px, w, h)) {
         if (stbi_write_png(A.shot_path, w, h, 4, px, w * 4)) printf("screenshot: %s (%dx%d)\n", A.shot_path, w, h);
         else fprintf(stderr, "screenshot: cannot write %s\n", A.shot_path);
     } else {
-        fprintf(stderr, "screenshot: %s\n", SDL_GetError());
+        fprintf(stderr, "screenshot: cannot read framebuffer\n");
     }
     free(px);
     A.running = false;
 }
 
-static void frame(void)
+void app_step(void)
 {
-    Uint64 now = SDL_GetPerformanceCounter();
-    float dt = (float)(now - A.last_counter) / (float)SDL_GetPerformanceFrequency();
+    if (!A.running) return;
+    longTime_t now = axGetMilliseconds();
+    float dt = (float)(now - A.last_counter) / 1000;
     A.last_counter = now;
-    if (A.shot_path || dt > .1f) dt = 1.0f / 60;
+    if (A.shot_path || app_arg("smoke") || dt > .1f) dt = 1.0f / 60;
     A.time += dt;
     A.dt = dt;
 
-    poll_events();
+    axBeginPaint();
     update_logical_size();
+    poll_events();
     if (needs_rotation()) A.in = (input){.pos = A.in.pos, .pinch = 1};   /* the game waits behind the rotate prompt */
-    SDL_SetRenderDrawColor(A.renderer, A.desc.clear.r, A.desc.clear.g, A.desc.clear.b, 255);
-    SDL_RenderClear(A.renderer);
+    struct AXsize output = {1, 1};
+    axGetSize(&output);
+    render_begin(sz2(roundf(output.width * axGetScaling()), roundf(output.height * axGetScaling())), A.logical, A.desc.clear);
     ui_begin_frame();
     if (A.desc.frame) A.desc.frame(dt);
     ui_end_frame(dt);
     draw_rotate_prompt();
     if (A.shot_path && ++A.frame_index >= A.shot_frames) save_screenshot();
-    SDL_RenderPresent(A.renderer);
+    axEndPaint();
 
 #ifdef __EMSCRIPTEN__
     if (!A.running) {
         emscripten_cancel_main_loop();
-        if (A.desc.quit) A.desc.quit();
+        app_stop();
     }
 #endif
 }
@@ -356,6 +306,7 @@ int app_run(app_desc desc, int argc, char **argv)
 #ifdef __EMSCRIPTEN__
     if (argc <= 1) argc = web_args(&argv);   /* on the web, options come from the URL */
 #endif
+    memset(&A, 0, sizeof A);
     A.desc = desc;
     A.argc = argc;
     A.argv = argv;
@@ -365,15 +316,7 @@ int app_run(app_desc desc, int argc, char **argv)
     if (A.shot_path && !*A.shot_path) A.shot_path = NULL;
     A.shot_frames = app_arg("frames") ? atoi(app_arg("frames")) : 3;
 
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-    SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "0");
-#ifdef SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT
-    SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "#canvas");
-#endif
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0) {
-        fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
-        return 1;
-    }
+    axInit();
 
     int w = (int)A.desc.design.w, h = (int)A.desc.design.h;
     const char *size = app_arg("size");
@@ -382,40 +325,37 @@ int app_run(app_desc desc, int argc, char **argv)
     double cw, ch;
     emscripten_get_element_css_size("#canvas", &cw, &ch);
     if (cw > 0 && ch > 0) w = (int)cw, h = (int)ch;
-#else
-    SDL_DisplayMode dm;
-    if (!size && SDL_GetDesktopDisplayMode(0, &dm) == 0) {
-        float k = minf(1, minf(dm.w * .9f / w, dm.h * .85f / h));
-        w = (int)(w * k), h = (int)(h * k);
-    }
 #endif
-    A.window = SDL_CreateWindow(desc.title ? desc.title : "game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h,
-                                SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    if (!A.window) {
-        fprintf(stderr, "SDL_CreateWindow: %s\n", SDL_GetError());
-        return 1;
+    if (w <= 0 || h <= 0) { fprintf(stderr, "invalid window size\n"); axShutdown(); return 1; }
+    uint32_t flags = AX_WINDOW_RESIZABLE | AX_WINDOW_HIGHDPI | AX_WINDOW_DOUBLEBUFFER;
+    if (app_arg("headless")) flags |= AX_WINDOW_HIDDEN;
+    if (!axCreateWindow(desc.title ? desc.title : "game", w, h, flags)) {
+        fprintf(stderr, "platform: cannot create window\n"); axShutdown(); return 1;
     }
-    A.renderer = SDL_CreateRenderer(A.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!A.renderer) A.renderer = SDL_CreateRenderer(A.window, -1, SDL_RENDERER_SOFTWARE);
-    if (!A.renderer) {
-        fprintf(stderr, "SDL_CreateRenderer: %s\n", SDL_GetError());
-        return 1;
-    }
-    SDL_SetRenderDrawBlendMode(A.renderer, SDL_BLENDMODE_BLEND);
+    axSetSwapInterval(app_arg("smoke") || A.shot_path ? 0 : 1);
+    if (!render_init()) { axShutdown(); return 1; }
     update_logical_size();
     A.in.pinch = 1;
     A.running = true;
-    A.last_counter = SDL_GetPerformanceCounter();
+    A.last_counter = axGetMilliseconds();
     if (desc.init) desc.init();
 
 #ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop(frame, 0, 1);
-#else
-    while (A.running) frame();
-    if (desc.quit) desc.quit();
-    SDL_DestroyRenderer(A.renderer);
-    SDL_DestroyWindow(A.window);
-    SDL_Quit();
+    emscripten_set_main_loop(app_step, 0, 1);
+#elif !defined(AX_PLATFORM_IOS)
+    while (A.running) app_step();
+    app_stop();
 #endif
     return 0;
+}
+
+void app_stop(void)
+{
+    if (!render_ready()) return;
+    A.running = false;
+    if (A.desc.quit) A.desc.quit();
+    sfx_shutdown();
+    font_shutdown();
+    render_shutdown();
+    axShutdown();
 }

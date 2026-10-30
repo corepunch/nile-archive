@@ -3,7 +3,7 @@
  * The same function reads and writes: save_int(s, "coins", &g.coins) loads the
  * value when reading and stores it when writing, so fields can never drift
  * apart. Missing keys keep their defaults, which makes old saves forward
- * compatible. Native builds write to SDL_GetPrefPath; the web build uses
+ * compatible. Native builds retain the original save directories; the web build uses
  * localStorage. */
 #include "engine.h"
 
@@ -145,14 +145,30 @@ static const char *file_for(const char *slot)
 {
     static char path[1024];
     /* Isolate native test/preview saves without changing the user's HOME. */
-    const char *override = SDL_getenv("SPRITE_SAVE_DIR");
+    const char *override = getenv("SPRITE_SAVE_DIR");
     if (override && *override) {
         snprintf(path, sizeof path, "%s/%s.sav", override, slot);
         return path;
     }
-    char *dir = SDL_GetPrefPath("corepunch", app_id());
-    snprintf(path, sizeof path, "%s%s.sav", dir ? dir : "", slot);
-    SDL_free(dir);
+    char dir[1024];
+#if defined(__APPLE__)
+    /* Keep existing progress, including sandboxed app containers. */
+    const char *base = axSettingsDirectory();
+#ifdef AX_PLATFORM_IOS
+    snprintf(dir, sizeof dir, "%s/corepunch/%s", base, app_id());
+#else
+    snprintf(dir, sizeof dir, "%s/../corepunch/%s", base, app_id());
+#endif
+#else
+    const char *base = getenv("XDG_DATA_HOME"), *home = getenv("HOME");
+    if (base && *base) snprintf(dir, sizeof dir, "%s/corepunch/%s", base, app_id());
+    else snprintf(dir, sizeof dir, "%s/.local/share/corepunch/%s", home ? home : ".", app_id());
+#endif
+    for (char *p = dir + 1; *p; p++) if (*p == '/') {
+        *p = 0; axMkDir(dir); *p = '/';
+    }
+    axMkDir(dir);
+    snprintf(path, sizeof path, "%s/%s.sav", dir, slot);
     return path;
 }
 #endif
@@ -162,13 +178,19 @@ static char *storage_read(const char *slot)
 #ifdef __EMSCRIPTEN__
     return web_storage_get(fmt("%s/%s", app_id(), slot));
 #else
-    SDL_RWops *rw = SDL_RWFromFile(file_for(slot), "rb");
-    if (!rw) return NULL;
-    Sint64 n = SDL_RWsize(rw);
-    char *text = malloc((size_t)(n > 0 ? n : 0) + 1);
-    size_t got = SDL_RWread(rw, text, 1, (size_t)(n > 0 ? n : 0));
+    FILE *file = fopen(file_for(slot), "rb");
+    if (!file) return NULL;
+    if (fseek(file, 0, SEEK_END)) { fclose(file); return NULL; }
+    long n = ftell(file);
+    if (n < 0) { fclose(file); return NULL; }
+    rewind(file);
+    char *text = malloc((size_t)n + 1);
+    if (!text) { fclose(file); return NULL; }
+    size_t got = fread(text, 1, (size_t)n, file);
+    bool ok = !ferror(file);
+    fclose(file);
+    if (!ok) { free(text); return NULL; }
     text[got] = 0;
-    SDL_RWclose(rw);
     return text;
 #endif
 }

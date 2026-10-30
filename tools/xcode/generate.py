@@ -11,10 +11,8 @@ the Generated/ Info.plists and entitlements and the shared schemes, and the
 result is committed beside the game so Xcode and Xcode Cloud find it without
 any tool. Each project has a macOS target and an iOS one, iPad for Nile Archive and
 iPhone for Relic Rush; both compile the engine
-and link SDL2 from engine/third_party/SDL's own Xcode project, which is added
-as a project reference and built as a dependency, so no SDL package needs to
-be installed. The game's lua/ and data/ folders are bundled as folder
-references and found at run time through SDL_GetBasePath (GAME_IN_BUNDLE).
+and platform unity units directly. The game's lua/ and data/ folders are
+bundled as folder references and found through axShareDirectory.
 """
 import argparse
 import hashlib
@@ -28,11 +26,9 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
-SDL = 'engine/third_party/SDL'
-SDL_UPSTREAM_PROJECT = SDL + '/Xcode/SDL/SDL.xcodeproj'
-SDL_PROJECT = 'tools/xcode/SDL.xcodeproj'
-IOS_MINIMUM = '15.0'
-ENGINE_SOURCES = ['core', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'sprite', 'nav', 'script', 'api_lua']   # as in the Makefile
+IOS_MINIMUM = '16.0'
+UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
+ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'sprite', 'nav', 'script', 'api_lua', 'lua_lib', 'launcher']
 
 GAMES = {
     'volcano': dict(name='Volcano', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
@@ -126,38 +122,6 @@ def read_project(path):
         return {}   # not written by this generator: start afresh
 
 
-def sdl_project_text():
-    """Adapt SDL's project without changing the pinned submodule or its sources."""
-    text = (ROOT / SDL_UPSTREAM_PROJECT / 'project.pbxproj').read_text()
-    # projectDirPath keeps all upstream source, header, resource and script paths
-    # relative to SDL's own directory, even though this project lives in tools/.
-    source_root = os.path.relpath((ROOT / SDL_UPSTREAM_PROJECT).parent, (ROOT / SDL_PROJECT).parent)
-    text = text.replace('projectDirPath = "";', f'projectDirPath = {source_root};')
-    text = re.sub(r'IPHONEOS_DEPLOYMENT_TARGET = [^;]+;', f'IPHONEOS_DEPLOYMENT_TARGET = {IOS_MINIMUM};', text)
-    text = re.sub(r'MACOSX_DEPLOYMENT_TARGET = [^;]+;', 'MACOSX_DEPLOYMENT_TARGET = 12.0;', text)
-    # SDL is an embedded dependency, not a second installable archive product.
-    # Installing it separately makes Xcode classify an app archive as generic.
-    text = re.sub(r'^[ \t]*SKIP_INSTALL = (?:YES|NO);\n', '', text, flags=re.M)
-    # SDL_render_metal.m loads SDL's embedded precompiled shader headers. The
-    # extra .metal source build is unused and requires an optional Xcode toolchain.
-    return text.replace('buildSettings = {',
-                        'buildSettings = {\n\t\t\t\tEXCLUDED_SOURCE_FILE_NAMES = SDL_shaders_metal.metal;\n\t\t\t\tSKIP_INSTALL = YES;')
-
-
-def sdl_targets():
-    """SDL's framework targets, by name: (target id, product file reference id)."""
-    text = (ROOT / SDL_UPSTREAM_PROJECT / 'project.pbxproj').read_text()
-    found = {}
-    for m in re.finditer(r'(\w{24}) /\* ([^*]+) \*/ = \{\n\t\t\tisa = PBXNativeTarget;(.*?)\n\t\t\};', text, re.S):
-        product = re.search(r'productReference = (\w{24})', m.group(3))
-        if product:
-            found[m.group(2)] = (m.group(1), product.group(1))
-    for name in ('Framework', 'Framework-iOS'):
-        if name not in found:
-            sys.exit(f'{SDL_UPSTREAM_PROJECT}: target {name!r} not found; is the SDL submodule checked out?')
-    return found
-
-
 class Project:
     def __init__(self, existing):
         self.objects = {}
@@ -219,14 +183,13 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     home = (home or ROOT / 'games' / game).resolve()
     rel = lambda p: os.path.relpath(ROOT / p, home)   # paths in the project are relative to the game folder
     engine_root = '$(SRCROOT)/' + rel('.')
-    sdl = sdl_targets()
 
     common = {
         'ENGINE_ROOT': engine_root,
         'SDKROOT': 'macosx', 'GCC_C_LANGUAGE_STANDARD': 'c11', 'CLANG_ENABLE_OBJC_ARC': 'NO',
         'ENABLE_USER_SCRIPT_SANDBOXING': 'NO', 'ALWAYS_SEARCH_USER_PATHS': 'NO',
         'GCC_WARN_INHIBIT_ALL_WARNINGS': 'NO', 'GCC_WARN_ABOUT_RETURN_TYPE': 'YES',
-        'HEADER_SEARCH_PATHS': ['$(ENGINE_ROOT)/engine', '$(ENGINE_ROOT)/' + SDL + '/include'],
+        'HEADER_SEARCH_PATHS': ['$(ENGINE_ROOT)/engine'],
         'GCC_PREPROCESSOR_DEFINITIONS': ['$(inherited)', 'GAME_IN_BUNDLE=1', f'GAME_DIR=\\"games/{game}\\"'],
         'OTHER_CFLAGS': ['$(inherited)', '-Wall', '-Wextra', '-Wno-unused-parameter', '-Wno-missing-field-initializers',
                          '-Wno-deprecated-declarations'],
@@ -238,9 +201,9 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
 
     # --- files and groups ---
     sources = {}
-    for name in ENGINE_SOURCES + ['lua_lib', 'launcher']:
+    for name in UNITY_SOURCES + ENGINE_SOURCES:
         sources[name] = project.add('engine/' + name, 'PBXFileReference', path=rel(f'engine/{name}.c'),
-                                    name=name + '.c', sourceTree='SOURCE_ROOT', lastKnownFileType='sourcecode.c.c')
+                                    name=name + '.c', sourceTree='SOURCE_ROOT', lastKnownFileType='sourcecode.c.objc' if name == 'u_platform' else 'sourcecode.c.c')
     header = project.add('engine/engine.h', 'PBXFileReference', path=rel('engine/engine.h'), name='engine.h',
                          sourceTree='SOURCE_ROOT', lastKnownFileType='sourcecode.c.h')
     api = project.add('engine/api.xml', 'PBXFileReference', path=rel('engine/api.xml'), name='api.xml',
@@ -251,30 +214,10 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     if (home / 'Assets.xcassets').is_dir():
         assets = project.add('game/assets', 'PBXFileReference', path='Assets.xcassets',
                              sourceTree='<group>', lastKnownFileType='folder.assetcatalog')
-    sdl_ref = project.add('sdl/project', 'PBXFileReference', name='SDL.xcodeproj', path=rel(SDL_PROJECT),
-                          sourceTree='SOURCE_ROOT', lastKnownFileType='wrapper.pb-project')
-    # On iOS SDL_main.h renames the game's main to SDL_main; this public-domain
-    # shim from SDL supplies the real main, which starts UIKit and calls SDL_main.
-    uikit_main = project.add('sdl/uikit-main', 'PBXFileReference', name='SDL_uikit_main.c',
-                             path=rel(SDL + '/src/main/uikit/SDL_uikit_main.c'), sourceTree='SOURCE_ROOT',
-                             lastKnownFileType='sourcecode.c.c')
-    sdl_products = []
-    sdl_proxies = {}
-    for target_name, (target_id, product_id) in sdl.items():
-        if target_name not in ('Framework', 'Framework-iOS'):
-            continue
-        item = project.add(f'sdl/{target_name}/product-proxy', 'PBXContainerItemProxy', containerPortal=sdl_ref,
-                           proxyType=2, remoteGlobalIDString=product_id, remoteInfo=target_name)
-        proxy = project.add(f'sdl/{target_name}/product', 'PBXReferenceProxy', fileType='wrapper.framework',
-                            path='SDL2.framework', remoteRef=item, sourceTree='BUILT_PRODUCTS_DIR')
-        sdl_products.append(proxy)
-        sdl_proxies[target_name] = (target_id, proxy)
-    sdl_group = project.add('sdl/products', 'PBXGroup', name='Products', children=sdl_products, sourceTree='<group>')
     browse = [
         project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder] + ([assets] if assets else []), sourceTree='<group>'),
         project.add('group/engine', 'PBXGroup', name='Engine',
-                    children=[header, api] + [sources[n] for n in ENGINE_SOURCES + ['lua_lib', 'launcher']], sourceTree='<group>'),
-        project.add('group/sdl', 'PBXGroup', name='SDL', children=[sdl_ref, uikit_main], sourceTree='<group>'),
+                    children=[header, api] + [sources[n] for n in UNITY_SOURCES] + [sources[n] for n in ENGINE_SOURCES], sourceTree='<group>'),
     ]
 
     # --- targets ---
@@ -282,7 +225,6 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     for platform in ('macos', meta['device']):
         name = f'{game}-{platform}'
         ipad = platform != 'macos'   # the iOS target, iPad or iPhone
-        sdl_target, sdl_product = sdl_proxies['Framework-iOS' if ipad else 'Framework']
         settings = dict(INFOPLIST_FILE=f'$(PROJECT_FILE_PATH)/Generated/{"ios" if ipad else "macos"}-Info.plist',
                         OTHER_LDFLAGS=['$(inherited)', '-lm'],
                         LD_RUNPATH_SEARCH_PATHS=['$(inherited)', '@executable_path/Frameworks' if ipad else '@executable_path/../Frameworks'])
@@ -311,44 +253,39 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             info.update(LSRequiresIPhoneOS=True, UIRequiresFullScreen=True, UIStatusBarHidden=True,
                         UIViewControllerBasedStatusBarAppearance=False, UILaunchScreen={},
                         UISupportedInterfaceOrientations=['UIInterfaceOrientation' + o for o in meta['orientations']],
-                        UIRequiredDeviceCapabilities=['arm64'])
+                        UIRequiredDeviceCapabilities=['arm64'],
+                        UIApplicationSceneManifest=dict(UIApplicationSupportsMultipleScenes=False,
+                            UISceneConfigurations={'UIWindowSceneSessionRoleApplication': [dict(
+                                UISceneConfigurationName='Game', UISceneDelegateClassName='AXSceneDelegate')]}))
         else:
             info.update(NSHighResolutionCapable=True, NSPrincipalClass='NSApplication')
         write(bundle / 'Generated' / (('ios' if ipad else 'macos') + '-Info.plist'), plistlib.dumps(info).decode())
 
         build_files = []
-        for filename, ref in sources.items():
-            fields = {'fileRef': ref}
-            if filename == 'lua_lib':
+        for filename in UNITY_SOURCES:
+            fields = {'fileRef': sources[filename]}
+            if filename == 'u_lua':
                 fields['settings'] = {'COMPILER_FLAGS': '-Wno-unused-function'}
             build_files.append(project.add(f'{name}/{filename}.c', 'PBXBuildFile', **fields))
-        if ipad:
-            build_files.append(project.add(f'{name}/SDL_uikit_main.c', 'PBXBuildFile', fileRef=uikit_main))
         compile_phase = project.add(name + '/sources', 'PBXSourcesBuildPhase', buildActionMask=2147483647,
                                     files=build_files, runOnlyForDeploymentPostprocessing=0)
-        link = project.add(name + '/link-sdl', 'PBXBuildFile', fileRef=sdl_product)
+        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox']
+                      if ipad else ['AppKit', 'OpenGL', 'IOSurface', 'Security', 'AudioToolbox'])
+        settings['OTHER_LDFLAGS'] += [flag for framework in frameworks for flag in ('-framework', framework)]
         link_phase = project.add(name + '/frameworks', 'PBXFrameworksBuildPhase', buildActionMask=2147483647,
-                                 files=[link], runOnlyForDeploymentPostprocessing=0)
-        embed = project.add(name + '/embed-sdl', 'PBXBuildFile', fileRef=sdl_product,
-                            settings={'ATTRIBUTES': ['CodeSignOnCopy', 'RemoveHeadersOnCopy']})
-        embed_phase = project.add(name + '/embed', 'PBXCopyFilesBuildPhase', buildActionMask=2147483647, dstPath='',
-                                  dstSubfolderSpec=10, files=[embed], name='Embed Frameworks', runOnlyForDeploymentPostprocessing=0)
+                                 files=[], runOnlyForDeploymentPostprocessing=0)
         resource_files = [project.add(f'{name}/{folder}', 'PBXBuildFile', fileRef=ref) for folder, ref in (('lua', lua_folder), ('data', data_folder))]
         if assets:
             resource_files.append(project.add(f'{name}/assets', 'PBXBuildFile', fileRef=assets))
         resources_phase = project.add(name + '/resources', 'PBXResourcesBuildPhase', buildActionMask=2147483647,
                                       files=resource_files, runOnlyForDeploymentPostprocessing=0)
-        dependency_proxy = project.add(name + '/sdl-target-proxy', 'PBXContainerItemProxy', containerPortal=sdl_ref,
-                                       proxyType=1, remoteGlobalIDString=sdl_target, remoteInfo='Framework-iOS' if ipad else 'Framework')
-        dependency = project.add(name + '/sdl-dependency', 'PBXTargetDependency', name='Framework-iOS' if ipad else 'Framework',
-                                 targetProxy=dependency_proxy)
         product = project.add(name + '/product', 'PBXFileReference', path=game + '.app', sourceTree='BUILT_PRODUCTS_DIR',
                               explicitFileType='wrapper.application')
         products.append(product)
         target = project.add(name, 'PBXNativeTarget', name=name, productName=game, productReference=product,
                              productType='com.apple.product-type.application', buildConfigurationList=configs,
-                             buildPhases=[compile_phase, link_phase, resources_phase, embed_phase], buildRules=[],
-                             dependencies=[dependency])
+                             buildPhases=[compile_phase, link_phase, resources_phase], buildRules=[],
+                             dependencies=[])
         targets.append(target)
         scheme_path = bundle / 'xcshareddata/xcschemes' / (name + '.xcscheme')
         if not scheme_path.exists():
@@ -359,7 +296,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     root = project.add('project', 'PBXProject', buildConfigurationList=root_configs, compatibilityVersion='Xcode 14.0',
                        developmentRegion='en', knownRegions=['en', 'Base'], mainGroup=main_group,
                        productRefGroup=products_group, projectDirPath='', projectRoot='',
-                       projectReferences=[{'ProductGroup': sdl_group, 'ProjectRef': sdl_ref}], targets=targets)
+                       targets=targets)
     if existing.get(root, {}).get('attributes'):
         project.objects[root]['attributes'] = existing[root]['attributes']
     write(bundle / 'project.pbxproj', '// !$*UTF8*$!\n' + encode(dict(
@@ -378,7 +315,7 @@ def project_matches(actual, expected, field=''):
             k in actual and project_matches(actual[k], v, k) for k, v in expected.items())
     if isinstance(expected, list):
         if not isinstance(actual, list): return False
-        if field in ('children', 'files'):
+        if field == 'children':
             return all(v in actual for v in expected)
         return len(actual) == len(expected) and all(project_matches(a, b) for a, b in zip(actual, expected))
     return str(actual) == str(expected)
@@ -387,9 +324,6 @@ def project_matches(actual, expected, field=''):
 def check():
     """Regenerate every game's project in a temporary folder and compare with the committed one."""
     stale = []
-    sdl_project = ROOT / SDL_PROJECT / 'project.pbxproj'
-    if not sdl_project.is_file() or sdl_project.read_text() != sdl_project_text():
-        stale.append(str(sdl_project.relative_to(ROOT)))
     for game in GAMES:
         committed = ROOT / 'games' / game / (game + '.xcodeproj')
         with tempfile.TemporaryDirectory() as tmp:
@@ -423,7 +357,6 @@ def main():
         return
     if not args.game:
         parser.error('name a game or pass --check')
-    write(ROOT / SDL_PROJECT / 'project.pbxproj', sdl_project_text())
     print(generate(args.game, args.output or ROOT / 'games' / args.game, unsigned=args.unsigned or not args.team,
                    bundle_id=args.bundle_id, team=args.team, settings_from=args.settings_from))
 

@@ -2,10 +2,10 @@
  *
  * Glyphs are rasterised on demand with stb_truetype at the device pixel size
  * (so text stays crisp on Retina screens) into white-on-transparent atlas
- * pages. Colour is applied per vertex with SDL_RenderGeometry, which gives
+ * pages. Colour is applied per vertex with render_geometry, which gives
  * gradients for free. Outlines and shadows come from stb_truetype's signed
  * distance fields: one cached "spread" layer per (outline, blur) pair. */
-#include "engine.h"
+#include "render.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -38,13 +38,13 @@ typedef struct {
 } glyph;
 
 static struct {
-    SDL_Texture *tex[MAX_PAGES];
+    struct render_texture *tex[MAX_PAGES];
     int pages;
     int shelf_x, shelf_y, shelf_h;
     glyph slots[CACHE_SLOTS];
     int used;
     bool full;                      /* atlas ran out: start over before the next glyph */
-    SDL_Vertex batch[BATCH];
+    render_vertex batch[BATCH];
     int batch_count;
     int batch_page;
 } G = {.batch_page = -1};
@@ -54,16 +54,18 @@ static struct {
 font *font_load(const char *path)
 {
     const char *full = app_path(path);
-    SDL_RWops *rw = SDL_RWFromFile(full, "rb");
-    if (!rw) {
-        fprintf(stderr, "font_load: %s: %s\n", full, SDL_GetError());
-        return NULL;
-    }
-    Sint64 size = SDL_RWsize(rw);
+    FILE *file = fopen(full, "rb");
+    if (!file) { fprintf(stderr, "font_load: cannot open %s\n", full); return NULL; }
+    if (fseek(file, 0, SEEK_END)) { fclose(file); return NULL; }
+    long size = ftell(file);
+    rewind(file);
+    if (size <= 0) { fclose(file); return NULL; }
     font *f = calloc(1, sizeof *f);
+    if (!f) { fclose(file); return NULL; }
     f->data = malloc((size_t)size);
-    SDL_RWread(rw, f->data, 1, (size_t)size);
-    SDL_RWclose(rw);
+    bool ok = f->data && fread(f->data, 1, (size_t)size, file) == (size_t)size;
+    fclose(file);
+    if (!ok) { free(f->data); free(f); return NULL; }
     if (!stbtt_InitFont(&f->info, f->data, stbtt_GetFontOffsetForIndex(f->data, 0))) {
         fprintf(stderr, "font_load: %s: not a TrueType font\n", full);
         free(f->data);
@@ -120,10 +122,8 @@ static bool pack(int w, int h, int *page, int *x, int *y)
     if (G.pages == 0 || G.shelf_y + h > PAGE_SIZE) {
         if (G.pages == MAX_PAGES) return false;
         if (!G.tex[G.pages]) {
-            G.tex[G.pages] = SDL_CreateTexture(app_renderer(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STATIC, PAGE_SIZE, PAGE_SIZE);
-            SDL_SetTextureBlendMode(G.tex[G.pages], SDL_BLENDMODE_BLEND);
             void *zero = calloc(PAGE_SIZE * PAGE_SIZE, 4);
-            SDL_UpdateTexture(G.tex[G.pages], NULL, zero, PAGE_SIZE * 4);
+            G.tex[G.pages] = render_texture_create(PAGE_SIZE, PAGE_SIZE, zero);
             free(zero);
         }
         G.pages++;
@@ -148,8 +148,7 @@ static bool upload(glyph *g, const unsigned char *alpha, int w, int h)
     uint32_t *rgba = calloc((size_t)pw * ph, 4);
     for (int j = 0; j < h; j++)
         for (int i = 0; i < w; i++) rgba[(j + 1) * pw + i + 1] = 0x00FFFFFFu | (uint32_t)alpha[j * w + i] << 24;
-    SDL_Rect r = {x, y, pw, ph};
-    SDL_UpdateTexture(G.tex[page], &r, rgba, pw * 4);
+    render_texture_update(G.tex[page], x, y, pw, ph, rgba);
     free(rgba);
     g->page = (uint8_t)page;
     g->x = (int16_t)(x + 1);
@@ -259,11 +258,11 @@ size2 text_measure(text_style s, const char *utf8)
 
 static void batch_flush(void)
 {
-    if (G.batch_count && G.batch_page >= 0) SDL_RenderGeometry(app_renderer(), G.tex[G.batch_page], G.batch, G.batch_count, NULL, 0);
+    if (G.batch_count && G.batch_page >= 0) render_geometry(G.tex[G.batch_page], G.batch, G.batch_count, NULL, 0);
     G.batch_count = 0;
 }
 
-static SDL_Vertex gv(vec2 p, vec2 uv, color c) { return (SDL_Vertex){{p.x, p.y}, {c.r, c.g, c.b, c.a}, {uv.x, uv.y}}; }
+static render_vertex gv(vec2 p, vec2 uv, color c) { return (render_vertex){{p.x, p.y}, {c.r, c.g, c.b, c.a}, {uv.x, uv.y}}; }
 
 static void glyph_quad(const glyph *g, rect dst, color top, color bottom)
 {
@@ -273,9 +272,9 @@ static void glyph_quad(const glyph *g, rect dst, color top, color bottom)
     }
     float k = 1.0f / PAGE_SIZE;
     rect uv = rc(g->x * k, g->y * k, g->w * k, g->h * k);
-    SDL_Vertex a = gv(dst.pos, uv.pos, top), b = gv(rect_point(dst, v2(1, 0)), rect_point(uv, v2(1, 0)), top);
-    SDL_Vertex c = gv(rect_max(dst), rect_max(uv), bottom), d = gv(rect_point(dst, v2(0, 1)), rect_point(uv, v2(0, 1)), bottom);
-    SDL_Vertex *o = &G.batch[G.batch_count];
+    render_vertex a = gv(dst.pos, uv.pos, top), b = gv(rect_point(dst, v2(1, 0)), rect_point(uv, v2(1, 0)), top);
+    render_vertex c = gv(rect_max(dst), rect_max(uv), bottom), d = gv(rect_point(dst, v2(0, 1)), rect_point(uv, v2(0, 1)), bottom);
+    render_vertex *o = &G.batch[G.batch_count];
     o[0] = a, o[1] = b, o[2] = c, o[3] = a, o[4] = c, o[5] = d;
     G.batch_count += 6;
 }
@@ -485,4 +484,11 @@ const char *fmt(const char *f, ...)
     vsnprintf(out, sizeof buf[0], f, ap);
     va_end(ap);
     return out;
+}
+
+void font_shutdown(void)
+{
+    for (int i = 0; i < MAX_PAGES; i++) render_texture_free(G.tex[i]);
+    memset(&G, 0, sizeof G);
+    G.batch_page = -1;
 }

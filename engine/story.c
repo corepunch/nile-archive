@@ -346,7 +346,7 @@ void story_frame(float dt)
             return;
         }
     }
-    if (ui_hit(screen, 0).clicked || input_get().key == SDLK_SPACE) {
+    if (ui_hit(screen, 0).clicked || input_get().key == AX_KEY_SPACE) {
         if (S.shown < length) S.shown = (float)length;
         else next_line();
     }

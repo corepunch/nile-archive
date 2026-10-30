@@ -1,7 +1,7 @@
 /*
  * engine.h — the one public header of the shared sprite engine.
  *
- * A small SDL2 engine for 2D sprite games with a city-building meta-game:
+ * A small platform-based engine for 2D sprite games with a city-building meta-game:
  * value-type math, a letterboxed logical screen, pointer/touch gestures,
  * 2D cameras, shape drawing, styled TrueType text, an immediate-mode UI,
  * save files and a reusable "city" (economy, buildings, zones).
@@ -19,7 +19,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <SDL.h>
+#include "third_party/platform/platform.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -158,7 +158,6 @@ static inline bool rect_overlaps(rect a, rect b) { vec2 ah = rect_max(a), bh = r
 static inline rect rect_intersect(rect a, rect b) { vec2 lo = vec2_max(a.pos, b.pos), hi = vec2_max(lo, vec2_min(rect_max(a), rect_max(b))); return rect_corners(lo, hi); }
 static inline rect rect_union(rect a, rect b) { return rect_corners(vec2_min(a.pos, b.pos), vec2_max(rect_max(a), rect_max(b))); }
 static inline bool rect_ellipse_contains(rect r, vec2 p) { return vec2_ellipse(vec2_sub(p, rect_center(r)), vec2_scale(size2_vec(r.size), .5f)) <= 1; }
-static inline SDL_FRect rect_sdl(rect r) { return (SDL_FRect){r.pos.x, r.pos.y, r.size.w, r.size.h}; }
 
 /* RectCut layout (https://halt76.notion.site/RectCut-for-dead-simple-UI-layouts):
  * each cut slices `a` units off one side of *r, shrinks *r and returns the slice. */
@@ -225,7 +224,6 @@ float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
-SDL_Renderer *app_renderer(void);
 void app_inject_click(vec2 p);          /* queue a press and release at a logical point (tests) */
 const char *app_web_storage(const char *key);   /* localStorage[key] on the web, else NULL */
 
@@ -247,7 +245,7 @@ typedef struct {
     float wheel;       /* wheel steps this frame */
     float pinch;       /* zoom factor from two fingers this frame (1 = none) */
     vec2 pinch_center;
-    int key;           /* SDL_Keycode pressed this frame, 0 if none */
+    int key;           /* AX key code pressed this frame, 0 if none */
     bool back;         /* Escape / Android back */
 } input;
 
@@ -259,7 +257,7 @@ input input_world(void);
 /* Graphics                                                               */
 /* ===================================================================== */
 
-typedef struct { SDL_Texture *tex; size2 size; } texture;
+typedef struct { struct render_texture *tex; size2 size; } texture;
 
 texture tex_load(const char *path);         /* PNG/JPG/BMP via stb_image */
 texture tex_from_pixels(const void *rgba, int w, int h);

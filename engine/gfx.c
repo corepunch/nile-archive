@@ -1,5 +1,5 @@
 /* gfx.c — textures, anti-aliased shapes, 2D camera, particles. */
-#include "engine.h"
+#include "render.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -15,10 +15,8 @@
 texture tex_from_pixels(const void *rgba, int w, int h)
 {
     texture t = {0};
-    t.tex = SDL_CreateTexture(app_renderer(), SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STATIC, w, h);
+    t.tex = render_texture_create(w, h, rgba);
     if (!t.tex) return t;
-    SDL_UpdateTexture(t.tex, NULL, rgba, w * 4);
-    SDL_SetTextureBlendMode(t.tex, SDL_BLENDMODE_BLEND);
     t.size = sz2((float)w, (float)h);
     return t;
 }
@@ -26,7 +24,7 @@ texture tex_from_pixels(const void *rgba, int w, int h)
 texture tex_load(const char *path)
 {
     int w, h, n;
-    if (!app_renderer()) return (texture){0};   /* headless (tests): nothing to draw with */
+    if (!render_ready()) return (texture){0};   /* headless (tests): nothing to draw with */
     const char *full = app_path(path);
     unsigned char *px = stbi_load(full, &w, &h, &n, 4);
     if (!px) {
@@ -40,65 +38,48 @@ texture tex_load(const char *path)
 
 void tex_free(texture t)
 {
-    if (t.tex) SDL_DestroyTexture(t.tex);
+    render_texture_free(t.tex);
 }
 
 rect tex_rect(texture t) { return rect_make(v2(0, 0), t.size); }
 
-static void tint(SDL_Texture *t, color c)
-{
-    SDL_SetTextureColorMod(t, c.r, c.g, c.b);
-    SDL_SetTextureAlphaMod(t, c.a);
-}
-
 void draw_image_part(texture t, rect src, rect dst, color c)
 {
-    if (!t.tex) return;
-    SDL_Rect s = {(int)src.pos.x, (int)src.pos.y, (int)ceilf(src.size.w), (int)ceilf(src.size.h)};
-    SDL_FRect d = rect_sdl(dst);
-    tint(t.tex, c);
-    SDL_RenderCopyF(app_renderer(), t.tex, &s, &d);
+    render_image(t, src, dst, 0, c);
 }
 
 void draw_image(texture t, rect dst, color c)
 {
-    if (!t.tex) return;
-    SDL_FRect d = rect_sdl(dst);
-    tint(t.tex, c);
-    SDL_RenderCopyF(app_renderer(), t.tex, NULL, &d);
+    render_image(t, tex_rect(t), dst, 0, c);
 }
 
 void draw_image_rot(texture t, rect dst, float angle, color c)
 {
-    if (!t.tex) return;
-    SDL_FRect d = rect_sdl(dst);
-    tint(t.tex, c);
-    SDL_RenderCopyExF(app_renderer(), t.tex, NULL, &d, angle * 180 / ENGINE_PI, NULL, SDL_FLIP_NONE);
+    render_image(t, tex_rect(t), dst, angle, c);
 }
 
 /* ------------------------------------------------------------------ shapes */
 
-/* Shapes are triangle meshes drawn with SDL_RenderGeometry. Every outline gets
+/* Shapes are triangle meshes drawn with render_geometry. Every outline gets
  * a one-device-pixel "feather" ring that fades to transparent: cheap AA. */
 
 #define MAX_PATH 160
 #define MAX_VERTS 4096
 
-static SDL_Vertex verts[MAX_VERTS];
+static render_vertex verts[MAX_VERTS];
 static int vert_count;
 
-static SDL_Color sdl_color(color c) { return (SDL_Color){c.r, c.g, c.b, c.a}; }
 
 static void flush(void)
 {
-    if (vert_count) SDL_RenderGeometry(app_renderer(), NULL, verts, vert_count, NULL, 0);
+    if (vert_count) render_geometry(NULL, verts, vert_count, NULL, 0);
     vert_count = 0;
 }
 
 static void vert(vec2 p, color c)
 {
     if (vert_count >= MAX_VERTS) return;
-    verts[vert_count++] = (SDL_Vertex){{p.x, p.y}, sdl_color(c), {0, 0}};
+    verts[vert_count++] = (render_vertex){{p.x, p.y}, c, {0, 0}};
 }
 
 static void tri(vec2 a, color ca, vec2 b, color cb, vec2 c, color cc)
@@ -206,9 +187,8 @@ static void stroke_path(const vec2 *p, int n, float thickness, color c)
 
 void draw_rect(rect r, color c)
 {
-    SDL_SetRenderDrawColor(app_renderer(), c.r, c.g, c.b, c.a);
-    SDL_FRect f = rect_sdl(r);
-    SDL_RenderFillRectF(app_renderer(), &f);
+    quad(r.pos, c, rect_point(r, v2(1, 0)), c, rect_max(r), c, rect_point(r, v2(0, 1)), c);
+    flush();
 }
 
 void draw_rect_grad(rect r, color top, color bottom)
@@ -315,28 +295,27 @@ void draw_star(vec2 center, float radius, float inner, int points, float angle, 
 
 void tex_additive(texture t, bool on)
 {
-    if (t.tex) SDL_SetTextureBlendMode(t.tex, on ? SDL_BLENDMODE_ADD : SDL_BLENDMODE_BLEND);
+    render_texture_additive(t.tex, on);
 }
 
 void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m)
 {
-    SDL_Vertex v[256];
+    render_vertex v[256];
     if (n <= 0 || n > 256) return;
-    for (int i = 0; i < n; i++) v[i] = (SDL_Vertex){{pts[i].x, pts[i].y}, {cols[i].r, cols[i].g, cols[i].b, cols[i].a}, {0, 0}};
+    for (int i = 0; i < n; i++) v[i] = (render_vertex){{pts[i].x, pts[i].y}, {cols[i].r, cols[i].g, cols[i].b, cols[i].a}, {0, 0}};
     for (int i = 0; i < m; i++)
         if (idx[i] < 0 || idx[i] >= n) return;
-    SDL_RenderGeometry(app_renderer(), NULL, v, n, idx, m);
+    render_geometry(NULL, v, n, idx, m);
 }
 
-void gfx_additive(bool on) { SDL_SetRenderDrawBlendMode(app_renderer(), on ? SDL_BLENDMODE_ADD : SDL_BLENDMODE_BLEND); }
+void gfx_additive(bool on) { render_additive(on); }
 
 void gfx_clip(rect r)
 {
-    SDL_Rect s = {(int)floorf(r.pos.x), (int)floorf(r.pos.y), (int)ceilf(r.size.w), (int)ceilf(r.size.h)};
-    SDL_RenderSetClipRect(app_renderer(), &s);
+    render_clip(&r);
 }
 
-void gfx_unclip(void) { SDL_RenderSetClipRect(app_renderer(), NULL); }
+void gfx_unclip(void) { render_clip(NULL); }
 
 /* ------------------------------------------------------------------ camera */
 
@@ -473,7 +452,7 @@ void fx_update(float dt)
 
 void fx_draw(void)
 {
-    SDL_SetRenderDrawBlendMode(app_renderer(), SDL_BLENDMODE_ADD);
+    render_additive(true);
     for (int i = 0; i < MAX_PARTICLES; i++) {
         particle *p = &parts[i];
         if (p->life <= 0) continue;
@@ -485,7 +464,7 @@ void fx_draw(void)
         }
         draw_glow(p->pos, s, c, color_alpha(c, 0));
     }
-    SDL_SetRenderDrawBlendMode(app_renderer(), SDL_BLENDMODE_BLEND);
+    render_additive(false);
     for (int i = 0; i < MAX_FLOATERS; i++) {
         floater *f = &floaters[i];
         if (f->life <= 0) continue;

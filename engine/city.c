@@ -7,7 +7,7 @@
  * decide what the resources mean. The city handles the camera, placement
  * (instant or with a confirmable ghost), moving buildings, depth-sorted
  * drawing, fog over closed zones, decorative paths, income and saving. */
-#include "engine.h"
+#include "render.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -340,7 +340,7 @@ static void draw_paths(const city *c)
 static void draw_fog(const city *c)
 {
     enum { MAX_N = 64 };
-    static SDL_Vertex v[MAX_N * MAX_N];
+    static render_vertex v[MAX_N * MAX_N];
     static int idx[(MAX_N - 1) * (MAX_N - 1) * 6];
     if (c->zone_count == 0 || city_open_count(c) == c->zone_count) return;
     float step = maxf(60, maxf(c->cam.world.w, c->cam.world.h) / (MAX_N - 2));
@@ -352,7 +352,7 @@ static void draw_fog(const city *c)
             bool fog = z >= 0 && !city_zone_open(c, z) && (!c->fog_on_land_only || !c->buildable || c->buildable(c, w));
             vec2 s = camera_to_screen(c->cam, w);
             int a = fog ? (int)(c->fog.a * (.88f + .12f * ((x * 13 + y * 19) % 40) / 40.f)) : 0;
-            v[y * nx + x] = (SDL_Vertex){{s.x, s.y}, {c->fog.r, c->fog.g, c->fog.b, (Uint8)a}, {0, 0}};
+            v[y * nx + x] = (render_vertex){{s.x, s.y}, {c->fog.r, c->fog.g, c->fog.b, (uint8_t)a}, {0, 0}};
         }
     for (int y = 0; y + 1 < ny; y++)
         for (int x = 0; x + 1 < nx; x++) {
@@ -361,7 +361,7 @@ static void draw_fog(const city *c)
             memcpy(idx + n, q, sizeof q);
             n += 6;
         }
-    SDL_RenderGeometry(app_renderer(), NULL, v, nx * ny, idx, n);
+    render_geometry(NULL, v, nx * ny, idx, n);
 }
 
 static void draw_footprint(const city *c, vec2 at, int type, bool ok)

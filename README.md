@@ -1,6 +1,6 @@
 # Sprite engine + three games
 
-One repository, one small **C11 + SDL2** engine, three games written in **Lua** on it:
+One repository, one small **C11 + platform** engine, three games written in **Lua** on it:
 
 | | Game | Core loop | Meta-game |
 | --- | --- | --- | --- |
@@ -35,7 +35,8 @@ engine/            the shared engine: ONE public header + one .c per module
   api_lua.c/.h     the generated glue                   ─┤ (committed; make gen,
   engine.d.lua     generated editor annotations         ─┘  checked by make test)
   lua_lib.c        Lua 5.4 as one translation unit, sandbox libraries only
-  third_party/     lua/ and SDL/ (submodules: lua/lua at v5.4.8, libsdl-org/SDL at 2.30.12), stb_*
+  third_party/     lua/ and platform/ (pinned submodules), stb_*
+  u_*.c            committed unity compilation units (also used directly by Xcode)
 games/
   nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
@@ -51,7 +52,7 @@ Each game is one folder with its own content; the engine never includes game cod
 
 ## Build and run
 
-Native builds need SDL2 development files (`apt install libsdl2-dev`, `brew install sdl2`) and a C compiler. Lua is a git submodule (the official [lua/lua](https://github.com/lua/lua) mirror pinned to v5.4.8): clone with `--recursive`, or run `git submodule update --init` once. Tested on Linux; macOS and Windows (MSYS2) use the same Makefile through `pkg-config`/`sdl2-config`. Regenerating the Lua glue (`make gen`) needs Python 3.
+Native builds need a C compiler and the pinned [platform](https://github.com/corepunch/platform) and [Lua](https://github.com/lua/lua) submodules: clone with `--recursive`, or run `git submodule update --init` once. macOS uses the system AppKit/OpenGL/AudioToolbox frameworks. Linux uses X11/EGL/OpenGL (`apt install libx11-dev libegl1-mesa-dev libgl-dev`); `make WINDOW_SYSTEM=wayland` selects Wayland when its development libraries are installed. The engine, Lua, scripting and platform compile as separate unity units, with no SDL installation or embedded framework. Regenerating the Lua glue (`make gen`) needs Python 3.
 
 ```sh
 git submodule update --init   # Lua, once
@@ -69,7 +70,7 @@ make web
 python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/ or /volcano/
 ```
 
-**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. The games and SDL target iOS 15+ / macOS 12+. SDL2 comes from the `engine/third_party/SDL` submodule through the generated `tools/xcode/SDL.xcodeproj`, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. The games target iOS 16+ / macOS 12+. Xcode compiles the committed `engine/u_*.c` units, including platform, directly into each app and links only Apple system frameworks. `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
 
 CI builds the native, web and Xcode (iOS Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 
