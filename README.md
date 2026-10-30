@@ -169,3 +169,17 @@ This repository is the single home for the engine and all three games. Relic Rus
 - [RectCut for dead simple UI layouts](https://halt76.notion.site/RectCut-for-dead-simple-UI-layouts-d175c7ff15e74c92b235eb43702155c8) — the layout technique used by every screen.
 - [sokol headers](https://github.com/floooh/sokol) — C API style: descriptor structs, zero-init defaults, designated initialisers.
 - [Lua 5.4](https://www.lua.org/manual/5.4/) — the games' language; the [lua/lua](https://github.com/lua/lua) mirror is a submodule under `engine/third_party/lua` (MIT).
+
+### Safe areas and city placement
+
+The engine fits each game inside the native iOS safe area, using the same
+`axIOSGetSafeArea` platform API as Orca. Insets are refreshed every frame so
+rotation and inset changes update both rendering and pointer mapping. Desktop
+screens have zero insets; `--safe-area L,T,R,B` simulates them in window points.
+For example: `./build/relic-rush --size 390x844 --safe-area 0,59,0,34`.
+
+Cities snap placement previews, taps, drags and confirmations to an isometric
+grid. `city.tile` sets its half extents (default `size2(32, 16)`). Building
+`footprint` half extents define both the green/red ground diamond and collision
+checks; `sink` aligns the sprite bottom to that ground plane. Existing saved
+positions remain intact until the player confirms a move.

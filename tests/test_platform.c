@@ -1,6 +1,7 @@
 /* Real-context integration checks: pixels, logical pointer mapping and gestures.
  * Linux: xvfb-run -a make test-platform. macOS: make test-platform. */
 #include "render.h"
+#include "viewport.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -26,9 +27,13 @@ static void init(void)
 
 static color pixel(float x, float y)
 {
-    float scale = minf(width / 100.f, height / 100.f);
-    int px = (int)((width - 100 * scale) / 2 + x * scale);
-    int py = (int)((height - 100 * scale) / 2 + y * scale);
+    float l = 0, t = 0, r = 0, b = 0;
+    if (app_arg("safe-area")) sscanf(app_arg("safe-area"), "%f,%f,%f,%f", &l, &t, &r, &b);
+    float dpi = axGetScaling();
+    rect view = app_fit_view(sz2(100, 100), rc(l * dpi, t * dpi, width - (l + r) * dpi, height - (t + b) * dpi));
+    float scale = view.size.w / 100;
+    int px = (int)(view.pos.x + x * scale);
+    int py = (int)(view.pos.y + y * scale);
     unsigned char *p = pixels + (py * width + px) * 4;
     return rgba(p[0], p[1], p[2], p[3]);
 }
@@ -94,11 +99,11 @@ static void frame(float dt)
 }
 
 static void quit(void) { tex_free(tile); }
-int main(void)
+int main(int argc, char **argv)
 {
-    char *args[] = {"test-platform", "--headless", "--size", "320x200", "--mute"};
+    char *args[] = {"test-platform", "--headless", "--size", "320x200", "--mute", "--safe-area", "35,21,11,7"};
     app_desc desc = {.design = {100, 100}, .fixed = true, .clear = {16, 32, 48, 255}, .init = init, .frame = frame, .quit = quit};
-    CHECK(app_run(desc, 5, args) == 0);
+    CHECK(app_run(desc, argc > 1 ? 7 : 5, args) == 0);
     CHECK(step == 3);
     printf("platform renderer/input: %d checks, %d failures\n", checks, failures);
     return failures != 0;
