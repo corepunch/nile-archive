@@ -219,6 +219,19 @@ for burning, charging, cracked gems or tool upgrades.
 
 ## Remaining runtime asset families
 
+The [2:1 building-art trial](../art/isometric-trial/README.md) contains two
+review-only full-atlas generations, exact geometry references, saved prompts,
+edge measurements and inspected before/trial game captures. It is not runtime
+artwork: projection and authored pivot registration still fail acceptance and
+are tracked in [issue #15](https://github.com/corepunch/nile-archive/issues/15).
+No runtime inventory or interaction-state mapping changed in this experiment.
+
+The [Blender projection study](../art/isometric-blender/README.md) preserves
+editable geometry, its procedural source, a measured 2:1 camera report and two
+reviewed render previews for all ten buildings. These remain source studies;
+several footprint sizes differ from the game. Runtime adoption and state
+validation are also tracked in issue #15.
+
 These families plus the board assets above cover every file in `data/`;
 `runtime_inventory` is checked against disk by `make test`.
 
