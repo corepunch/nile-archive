@@ -23,7 +23,8 @@ another project; `--team` sets a team).
 What the projects contain:
 
 - The engine's sources (`engine/*.c`, `lua_lib.c`, `launcher.c`) compiled
-  directly, with `GAME_IN_BUNDLE=1`: the launcher finds `lua/` and `data/`
+  directly, plus SDL's `src/main/uikit/SDL_uikit_main.c` on iOS (the real
+  `main`, since `SDL_main.h` renames the game's), with `GAME_IN_BUNDLE=1`: the launcher finds `lua/` and `data/`
   through `SDL_GetBasePath()`, i.e. inside the app bundle, where the two
   folders are copied as folder references. No build products are written into
   the game folder; nothing is generated at build time.
