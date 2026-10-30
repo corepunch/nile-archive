@@ -40,6 +40,24 @@ def main():
                 page.screenshot(path=str(output))
                 print(f'{game}: WebGL launch/render passed ({colors} colors)', flush=True)
                 page.close()
+            # Play through the real game until it opens platform's WebAudio device.
+            page = browser.new_page(viewport={'width': 480, 'height': 900})
+            page.goto(f'http://127.0.0.1:{server.server_port}/relic-rush/?fresh&smoke')
+            page.wait_for_function("Module['engineAudio']", timeout=60000)
+            page.mouse.click(5, 5)  # AudioContext requires a user gesture.
+            page.wait_for_function("Module['engineAudio'].context.state === 'running'", timeout=15000)
+            page.evaluate("""() => {
+                const device = Module['engineAudio'];
+                window.audioProbe = device.context.createAnalyser();
+                device.node.connect(window.audioProbe);
+            }""")
+            page.wait_for_function("""() => {
+                const data = new Float32Array(window.audioProbe.fftSize);
+                window.audioProbe.getFloatTimeDomainData(data);
+                return data.some(sample => Math.abs(sample) > .0001);
+            }""", timeout=30000)
+            print('relic-rush: platform mixer produced nonzero WebAudio samples', flush=True)
+            page.close()
             browser.close()
     finally:
         server.shutdown()

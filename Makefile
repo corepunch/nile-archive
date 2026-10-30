@@ -31,6 +31,11 @@ else
 PLATFORM_FLAGS := $(shell pkg-config --cflags x11 egl gl)
 PLATFORM_LIBS := $(shell pkg-config --libs x11 egl gl)
 endif
+ALSA_LIBS := $(shell pkg-config --libs alsa 2>/dev/null)
+ifneq ($(ALSA_LIBS),)
+PLATFORM_FLAGS += -DHAVE_ALSA $(shell pkg-config --cflags alsa)
+PLATFORM_LIBS += $(ALSA_LIBS)
+endif
 PLATFORM_LIBS += -ldl -lpthread
 endif
 LIBS := $(PLATFORM_LIBS) -lm
