@@ -39,6 +39,8 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 
 ## Current match-4 rules and board shapes
 
+The widest nine-cell board now spans 448 of the 480 logical screen units (about 93%), with 16-unit side margins. Cells and their gems/state artwork are about 21% larger; the board remains centred between the goals and tools on both phone sizes. See the [before/after scale review](docs/review/larger-board/README.md).
+
 The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and separate refill segments. The gold idol now has a six-sided silhouette.
 
 ![All ten playable level shapes, actual SDL captures](docs/screenshots/level-shapes-overview.jpg)

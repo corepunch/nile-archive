@@ -154,6 +154,16 @@ The badge/padding audit is tracked in [issue #16](https://github.com/corepunch/n
 Reviewed comparisons live in `docs/review/dialogue-stack/` (all three shapes,
 one/two-line speech, 480×900 and safe-area 390×844, plus the guide). See [the UI engine](../../../docs/UI_ENGINE.md).
 
+Board presentation uses a 32-unit cell radius (previously 26.5), fitting the
+maximum nine-column grid into 448/480 logical screen units. Base pieces, the
+cell mask, specials, blockers and selection/hints share the same 32/26.5
+registration scale; the authored alpha and orientation are preserved. Cell
+positions, input and refill clips use the enlarged geometry, while guide icons
+retain their original size. Sources: `lua/state.lua`, `lua/board.lua`; no runtime
+asset or manifest mapping changes. Reviewed phone captures of both paintings,
+all three packs and ray/bomb/prism effects, plus reproduction, are in
+[the board-scale review](review/larger-board/README.md).
+
 The board HUD floats directly over the lagoon/temple paintings, without the old
 cream backing panel. Existing outlined/shadowed labels, the move counter and a
 slim translucent progress track supply local contrast. Before/after captures of

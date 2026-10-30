@@ -15,8 +15,13 @@ local hex_q, hex_r, hex_index, hex_neighbor, hex_distance, cell_active = rules.h
 local rgba = color
 local PI = math.pi
 
-local CELL_SIZE = 46
-local STATE_SIZE = (HEX_R - .8) * 2 -- full cell face, shared with the rendered mask
+-- Preserve the authored cell-mask registration and the guide's icon size;
+-- only live board pieces use the enlarged board scale.
+local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
+local BOARD_SCALE = HEX_R / ART_HEX_R
+local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
+local CELL_SIZE = ART_CELL_SIZE * BOARD_SCALE
+local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
 local HEX_DY = 1.732050808 * HEX_R
 local board_origin = vec2(240, 492)
 local TOOLS_Y = 790   -- the tool row sits low, near the bottom edge
@@ -26,7 +31,9 @@ local TOOLS_Y = 790   -- the tool row sits low, near the bottom edge
 function R.layout()
     R.drop = app.screen().h - SCREEN_H
     board_origin = vec2(240, 492 + R.drop / 2)
-    R.BOARD_CLIP = rect(24, 276 + R.drop / 2, 432, 432)
+    local half_w = (1.5 * rules.HEX_RADIUS + 1) * HEX_R + 6
+    local half_h = (rules.HEX_RADIUS + .5) * HEX_DY + 6
+    R.BOARD_CLIP = rect.centered(board_origin, size2(half_w * 2, half_h * 2))
 end
 
 function R.cell_pos(i) return board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
@@ -50,8 +57,8 @@ end
 
 function R.draw_relic(t, at, scale, alpha, aspect)
     if t.kind < 0 then return end
-    local s = CELL_SIZE * .95 * scale
-    local frame = STATE_SIZE * scale
+    local s = ART_CELL_SIZE * .95 * scale
+    local frame = ART_STATE_SIZE * scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
     -- Authored frames leave the matching kind visible in every optional pack.
@@ -186,7 +193,7 @@ local function draw_relics(sx)
                 gfx.clip(rect(cell_pos(i).x - CELL_SIZE / 2 - 1, top.y - HEX_DY / 2, CELL_SIZE + 2, (hi - lo + 1) * HEX_DY))
                 clipped = true
             end
-            draw_relic(t, at, scale, alpha, aspect)
+            draw_relic(t, at, scale * BOARD_SCALE, alpha, aspect)
             if clipped then gfx.clip(R.BOARD_CLIP) end
         end
     end
