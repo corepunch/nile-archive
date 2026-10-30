@@ -30,9 +30,10 @@ local function refresh()
         local current=i==R.prog.level
         local pending=island.wonder_count(R.island)<R.prog.level
         local available=done or (current and not pending)
+        local active=R.g and R.g.level==i and not R.g.won and not R.g.lost
         entries[#entries+1]={id=tostring(i),level=i,title=('%d. %s'):format(i+1,rules.levels[i+1].name),available=available,
-            action=done and 'REPLAY FOR GOLD' or current and (pending and 'RESTORE YOUR WONDER FIRST' or 'NEW DISCOVERY') or 'DISCOVER EARLIER LEVELS',
-            note=done and 'Gold only. No extra Stars, Compasses or story unlocks.' or
+            action=active and available and 'RESUME EXPEDITION' or done and 'REPLAY FOR GOLD' or current and (pending and 'RESTORE YOUR WONDER FIRST' or 'NEW DISCOVERY') or 'DISCOVER EARLIER LEVELS',
+            note=active and available and 'Continue the unfinished board. Rewards are paid only after a win.' or done and 'Gold only. No extra Stars, Compasses or story unlocks.' or
                 ('First clear: restoration funded + 80–120 spare Gold, 3 Stars, %d Compasses.'):format(rules.compass_rewards[i+1])}
     end
     assert(form:set_items('levels',entries))
@@ -56,7 +57,7 @@ function R.draw_expeditions(dt)
     elseif ev.id=='previous' or ev.id=='next' then page=page+(ev.id=='next' and 1 or -1);refresh()
     elseif ev.source=='levels' then
         for _,e in ipairs(R.expedition_records) do
-            if ev.key==e.id and e.available then stack:close();R.start_level(e.level);return end
+            if ev.key==e.id and e.available then stack:close();R.play_level(e.level);return end
         end
     end
 end
