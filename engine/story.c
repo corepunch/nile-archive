@@ -138,46 +138,49 @@ static vec2 tail_base(rect box, vec2 tip, float radius, vec2 *along)
     return base;
 }
 
-/* A tapered tail along a quadratic curve from `root` (inside the body) to
- * `tip`: the comic-book "comma". It is drawn as a strip of convex quads in one
- * colour, so their soft edges overlap without seams. `grow` widens the strip
- * for the outline pass and pushes its point a little past the tip. */
-static void curved_tail(vec2 root, vec2 ctrl, vec2 tip, float half, float grow, color c)
+#define TAIL_LEN 20.0f    /* a short comma: it says who speaks, it does not reach them */
+#define TAIL_HALF 7.0f
+
+/* The speech tail as one convex polygon: a straight leading edge from the root
+ * to the tip and a trailing edge that bows outward, the lettered "comma".
+ * One polygon has one smooth rim and no seams. `grow` widens it for the
+ * outline pass and pushes its point a little past the tip. */
+static int tail_shape(vec2 base, vec2 dir, vec2 along, float len, float half, float grow, vec2 *out)
 {
-    enum { N = 12 };
-    vec2 left[N + 1], right[N + 1];
-    for (int i = 0; i <= N; i++) {
+    enum { N = 8 };
+    vec2 side = vec2_dot(along, v2(-dir.y, dir.x)) >= 0 ? along : vec2_scale(along, -1);
+    vec2 root = vec2_sub(base, vec2_scale(dir, 8));   /* inside the body, under its rim */
+    vec2 tip = vec2_add(base, vec2_scale(dir, len + grow * 1.5f));
+    vec2 a = vec2_add(root, vec2_scale(side, half + grow)), b = vec2_sub(root, vec2_scale(side, half + grow));
+    vec2 ctrl = vec2_add(vec2_lerp(b, tip, .5f), vec2_scale(side, -(half + grow) * .7f));
+    int n = 0;
+    out[n++] = a;
+    out[n++] = tip;
+    for (int i = 1; i < N; i++) {   /* tip back to b along the bowed edge */
         float t = (float)i / N, u = 1 - t;
-        vec2 p = vec2_add(vec2_add(vec2_scale(root, u * u), vec2_scale(ctrl, 2 * u * t)), vec2_scale(tip, t * t));
-        vec2 d = vec2_norm(vec2_add(vec2_scale(vec2_sub(ctrl, root), 2 * u), vec2_scale(vec2_sub(tip, ctrl), 2 * t)));
-        if (i == N) p = vec2_add(p, vec2_scale(d, grow * 1.3f));
-        float w = half * powf(u, .85f) + grow;
-        vec2 n = v2(-d.y * w, d.x * w);
-        left[i] = vec2_add(p, n);
-        right[i] = vec2_sub(p, n);
+        out[n++] = vec2_add(vec2_add(vec2_scale(tip, u * u), vec2_scale(ctrl, 2 * u * t)), vec2_scale(b, t * t));
     }
-    for (int i = 0; i < N; i++) draw_poly((vec2[]){left[i], left[i + 1], right[i + 1], right[i]}, 4, c);
+    out[n++] = b;
+    return n;
 }
 
-/* Speech: a rounded body and a curved, tapered tail drawn as one shape. The
+/* Speech: a rounded body and a short tapered tail drawn as one shape. The
  * outline pass draws both a little larger in the edge colour, the fill pass
  * draws both on top, with the tail's root reaching into the body so no seam
- * shows. The tail bows gently away from the body's centre line, as lettered
- * tails do, so it reads as drawn rather than as a ruler-straight wedge. */
+ * shows where they meet. */
 static void speech_shape(rect box, vec2 tip, color fill, color edge, bool tail)
 {
     float r = minf(24, box.size.h * .42f);
-    vec2 along, base = tail_base(box, tip, r, &along);
-    vec2 dir = vec2_norm(vec2_sub(tip, base)), side = v2(-dir.y, dir.x);
-    float len = vec2_dist(base, tip), half = clampf(len * .3f, 9, 16);
-    vec2 root = vec2_sub(base, vec2_scale(dir, 10));   /* inside the body */
-    float bow = vec2_dot(side, vec2_sub(base, rect_center(box))) >= 0 ? 1 : -1;
-    vec2 ctrl = vec2_add(vec2_lerp(base, tip, .45f), vec2_scale(side, bow * len * .22f));
+    vec2 along, base = tail_base(box, tip, r, &along), dir = vec2_norm(vec2_sub(tip, base));
+    float len = minf(TAIL_LEN, vec2_dist(base, tip));
+    vec2 outline[12], body[12];
+    int n = tail ? tail_shape(base, dir, along, len, TAIL_HALF, OUTLINE, outline) : 0;
+    if (tail) tail_shape(base, dir, along, len, TAIL_HALF, 0, body);
     draw_shadow(rect_offset(box, v2(0, 6)), r + 4, 16, rgba(0, 0, 0, 60));
     draw_round_rect(rect_inflate(box, OUTLINE), r + OUTLINE, edge);
-    if (tail) curved_tail(root, ctrl, tip, half, OUTLINE, edge);
+    if (tail) draw_poly(outline, n, edge);
     draw_round_rect(box, r, fill);
-    if (tail) curved_tail(root, ctrl, tip, half, 0, fill);
+    if (tail) draw_poly(body, n, fill);
 }
 
 /* Thought: a cloud of puffs around the body, and shrinking puffs as the tail. */
@@ -431,11 +434,14 @@ void story_frame(float dt)
         vec2 mouth = rect_point(portrait, who->mouth);
         float side = who->right ? -1 : 1;
         float x = who->right ? mouth.x - face.w * .22f - width : mouth.x + face.w * .22f;
-        float y = mouth.y - height * .85f - 10;
+        float y = mouth.y - height - 14;   /* the bubble's bottom just above the mouth */
         bubble = rc(clampf(x, m + reach, rect_max(screen).x - m - reach - width),
                     clampf(y, m + 50, rect_max(screen).y - m - reach - height), width, height);
-        /* the tail aims at the mouth and stops short of the face */
-        tip = vec2_add(mouth, v2(side * face.w * .12f, -2));
+        /* the tail leaves the bottom edge near the speaker and leans toward
+         * their mouth; thought puffs trail further, a shout's spike a little */
+        float drop = kind == BUBBLE_THOUGHT ? 46 : kind == BUBBLE_SHOUT ? 26 : TAIL_LEN;
+        float near = who->right ? rect_max(bubble).x - 44 : bubble.pos.x + 44;
+        tip = v2(near - side * 12, rect_max(bubble).y + drop);
         grow_from = tip;
     } else if (framed_narrow) {
         /* Phones: the story screens of portrait match-3 and visual-novel games
