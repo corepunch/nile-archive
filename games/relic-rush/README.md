@@ -194,14 +194,14 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 
 ## Source layout
 
-- `relic.h`: the game's one header — rules API, island API and the state shared by the presentation files.
-- `rules.c`: hex grid, deterministic match-4 rules, specials, blockers, tools, campaign and rewards.
-- `island.c`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine `building_def`s.
-- `board.c`: the expedition screen, animation phases and swipe/tap input.
-- `vfx.c`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups and torches.
-- `island_view.c`: the island screen around the engine city: HUD, region markers, placement panel.
-- `screens.c`: text palettes, panels, buttons and every dialog.
-- `main.c`: flow, saves, sound and debug entry points.
+- `lua/state.lua`: the state shared by the game's modules, and their namespace (`R`).
+- `lua/rules.lua`: hex grid, deterministic match-4 rules, specials, blockers, tools, campaign and rewards — pure Lua, tested headlessly.
+- `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
+- `lua/board.lua`: the expedition screen, animation phases and swipe/tap input.
+- `lua/vfx.lua`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups and torches.
+- `lua/island_view.lua`: the island screen around the engine city: HUD, region markers, placement panel.
+- `lua/screens.lua`: text palettes, panels, buttons and every dialog.
+- `lua/main.lua`: flow, saves, sound and debug entry points; returns the app descriptor the engine runs.
 - `art/`, `data/`, `docs/`, `tools/`: sources, runtime assets, documentation and the asset pipeline.
 
 ## Design references and original assets

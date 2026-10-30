@@ -45,7 +45,7 @@ static vec2 snap(vec2 p) { return vec2_scale(vec2_round(vec2_scale(p, .25f)), 4)
 
 int city_zone_at(const city *c, vec2 p)
 {
-    if (c->zone_at) return c->zone_at(p);
+    if (c->zone_at) return c->zone_at(c, p);
     for (int z = 0; z < c->zone_count; z++)
         if (rect_contains(c->zones[z].area, p)) return z;
     return -1;
@@ -64,7 +64,7 @@ int city_open_count(const city *c)
 static bool open_land(const city *c, vec2 p)
 {
     if (!rect_contains(rect_make(v2(0, 0), c->cam.world), p)) return false;
-    if (c->buildable && !c->buildable(p)) return false;
+    if (c->buildable && !c->buildable(c, p)) return false;
     return c->zone_count == 0 || city_zone_open(c, city_zone_at(c, p));
 }
 
@@ -136,7 +136,7 @@ bool city_ready(const city *c, int i, double now)
 
 static bool zone_touches(const city *c, int z)
 {
-    if (c->zone_touches) return c->zone_touches(z, c->open);
+    if (c->zone_touches) return c->zone_touches(c, z, c->open);
     for (int o = 0; o < c->zone_count; o++)
         if (city_zone_open(c, o) && rect_overlaps(rect_inflate(c->zones[z].area, 1), c->zones[o].area)) return true;
     return false;
@@ -293,7 +293,7 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         return ev;
     }
     int z = city_zone_at(c, p);
-    if (z >= 0 && !city_zone_open(c, z) && (!c->buildable || c->buildable(p))) {
+    if (z >= 0 && !city_zone_open(c, z) && (!c->buildable || c->buildable(c, p))) {
         ev.zone = z;
         ev.result = CITY_ZONE;
     }
@@ -349,7 +349,7 @@ static void draw_fog(const city *c)
         for (int x = 0; x < nx; x++) {
             vec2 w = v2(x * step, y * step);
             int z = city_zone_at(c, w);
-            bool fog = z >= 0 && !city_zone_open(c, z) && (!c->fog_on_land_only || !c->buildable || c->buildable(w));
+            bool fog = z >= 0 && !city_zone_open(c, z) && (!c->fog_on_land_only || !c->buildable || c->buildable(c, w));
             vec2 s = camera_to_screen(c->cam, w);
             int a = fog ? (int)(c->fog.a * (.88f + .12f * ((x * 13 + y * 19) % 40) / 40.f)) : 0;
             v[y * nx + x] = (SDL_Vertex){{s.x, s.y}, {c->fog.r, c->fog.g, c->fog.b, (Uint8)a}, {0, 0}};

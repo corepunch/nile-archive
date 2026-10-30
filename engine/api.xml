@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  api.xml - the engine's Lua API, described once.
+
+  tools/luagen.py reads this file and writes:
+    engine/api_lua.c / api_lua.h   the Lua glue: argument checks, struct
+                                   marshalling, handle metatables, registration
+    docs/LUA_API.md                the reference games are written against
+    engine/engine.d.lua            annotations for Lua language servers
+
+  Nothing in the glue is written by hand. A function needing a hand-written
+  body (callbacks, visitors, things that keep Lua values alive) names it with
+  impl="..." and still gets its documentation and registration from here.
+
+  Elements
+    <module name lua? type? doc>        a global table; `type` makes it the
+                                        method table of that struct or handle
+    <struct name c ctor? doc>           a value passed as a Lua table
+      <field name type c? ctype? doc>   c: the C member expression (pos.x)
+    <handle name c owned|light doc>     C state behind a userdata
+      <field name type access count max alloc anchor tramp doc>
+    <enum name module prefix doc>       <value name c? doc>
+    <const name module c type doc>
+    <function name c? lua? impl? op? doc>
+      <arg name type ref? of? optional? default? doc>   ref: inout | out
+      <returns type doc>
+
+  Types: float double int uint bool string bytes ptr count, any struct or
+  handle name, and T[] for an array (a Lua sequence) whose length feeds the
+  `count` argument that names it with of="...".
+-->
+<api name="engine" version="1">
+  <description>The shared sprite engine seen from Lua. Every module is a global table; value types (vec2, rect, color, purse, camera, text style, input) are Lua tables with a metatable, so `r:cut_top(66)` and `a + b` work and `{x = 1, y = 2}` is a valid vec2 - as in C, zero is the default for every field left out. Stateful objects (a city, a save file being read) are userdata handles with methods. Functions keep the names and the argument order of engine.h, minus their type prefix.</description>
+
+  <!-- ================================================================ math -->
+
+  <struct name="vec2" c="vec2" ctor="x,y" doc="A point or offset.">
+    <field name="x" type="float"/>
+    <field name="y" type="float"/>
+  </struct>
+  <struct name="size2" c="size2" ctor="w,h" doc="A width and height.">
+    <field name="w" type="float"/>
+    <field name="h" type="float"/>
+  </struct>
+  <struct name="rect" c="rect" ctor="x,y,w,h" doc="An axis-aligned rectangle: top-left corner and size.">
+    <field name="x" type="float" c="pos.x"/>
+    <field name="y" type="float" c="pos.y"/>
+    <field name="w" type="float" c="size.w"/>
+    <field name="h" type="float" c="size.h"/>
+  </struct>
+  <struct name="color" c="color" ctor="r,g,b,a" doc="8-bit RGBA. `color(r, g, b)` is opaque; see color.hex.">
+    <field name="r" type="u8"/>
+    <field name="g" type="u8"/>
+    <field name="b" type="u8"/>
+    <field name="a" type="u8" default="255"/>
+  </struct>
+  <struct name="purse" c="purse" array="int" count="PURSE_MAX" doc="An amount of each resource: a sequence of up to purse.MAX integers (missing ones are 0). The game names the slots: `local COINS, INFLUENCE = 1, 2`.">
+  </struct>
+
+  <module name="num" doc="Scalar helpers the engine uses everywhere; `math` has the rest.">
+    <function name="clamp" c="clampf" doc="v limited to [lo, hi].">
+      <arg name="v" type="float"/><arg name="lo" type="float"/><arg name="hi" type="float"/><returns type="float"/>
+    </function>
+    <function name="clampi" c="clampi" doc="Integer clamp.">
+      <arg name="v" type="int"/><arg name="lo" type="int"/><arg name="hi" type="int"/><returns type="int"/>
+    </function>
+    <function name="saturate" c="saturate" doc="v limited to [0, 1].">
+      <arg name="v" type="float"/><returns type="float"/>
+    </function>
+    <function name="lerp" c="lerpf" doc="a + (b - a) * t.">
+      <arg name="a" type="float"/><arg name="b" type="float"/><arg name="t" type="float"/><returns type="float"/>
+    </function>
+    <function name="smoothstep" c="smoothstep" doc="Hermite ramp from 0 at a to 1 at b.">
+      <arg name="a" type="float"/><arg name="b" type="float"/><arg name="v" type="float"/><returns type="float"/>
+    </function>
+    <function name="approach" c="approachf" doc="Frame-rate independent exponential approach of cur towards target.">
+      <arg name="cur" type="float"/><arg name="target" type="float"/><arg name="rate" type="float"/><arg name="dt" type="float"/><returns type="float"/>
+    </function>
+  </module>
+
+  <module name="ease" doc="Easing curves, t in [0, 1].">
+    <function name="out_cubic" c="ease_out_cubic"><arg name="t" type="float"/><returns type="float"/></function>
+    <function name="in_cubic" c="ease_in_cubic"><arg name="t" type="float"/><returns type="float"/></function>
+    <function name="in_out" c="ease_in_out"><arg name="t" type="float"/><returns type="float"/></function>
+    <function name="out_back" c="ease_out_back" doc="Overshoots a little before settling."><arg name="t" type="float"/><returns type="float"/></function>
+    <function name="out_bounce" c="ease_out_bounce"><arg name="t" type="float"/><returns type="float"/></function>
+  </module>
+
+  <module name="vec2" type="vec2" doc="Constructor `vec2(x, y)`; operators + - * (by a number or component-wise) and unary minus; every function is also a method.">
+    <function name="splat" c="v2s" doc="(s, s)."><arg name="s" type="float"/><returns type="vec2"/></function>
+    <function name="add" c="vec2_add" op="__add"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>
+    <function name="sub" c="vec2_sub" op="__sub"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>
+    <function name="mul" c="vec2_mul" doc="Component-wise product."><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>
+    <function name="div" c="vec2_div" doc="Component-wise quotient."><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>
+    <function name="scale" c="vec2_scale"><arg name="a" type="vec2"/><arg name="s" type="float"/><returns type="vec2"/></function>
+    <function name="neg" c="vec2_neg" op="__unm"><arg name="a" type="vec2"/><returns type="vec2"/></function>
+    <function name="dot" c="vec2_dot"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="float"/></function>
+    <function name="len" c="vec2_len"><arg name="a" type="vec2"/><returns type="float"/></function>
+    <function name="dist" c="vec2_dist"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="float"/></function>
+    <function name="norm" c="vec2_norm" doc="Unit length, or the zero vector unchanged."><arg name="a" type="vec2"/><returns type="vec2"/></function>
+    <function name="lerp" c="vec2_lerp"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><arg name="t" type="float"/><returns type="vec2"/></function>
+    <function name="min" c="vec2_min"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>
+    <function name="max" c="vec2_max"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>
+    <function name="clamp" c="vec2_clamp"><arg name="v" type="vec2"/><arg name="lo" type="vec2"/><arg name="hi" type="vec2"/><returns type="vec2"/></function>
+    <function name="round" c="vec2_round"><arg name="a" type="vec2"/><returns type="vec2"/></function>
+    <function name="floor" c="vec2_floor"><arg name="a" type="vec2"/><returns type="vec2"/></function>
+    <function name="polar" c="vec2_polar" doc="A vector of length len at angle (radians)."><arg name="angle" type="float"/><arg name="len" type="float"/><returns type="vec2"/></function>
+    <function name="rotate" c="vec2_rotate"><arg name="a" type="vec2"/><arg name="angle" type="float"/><returns type="vec2"/></function>
+    <function name="approach" c="vec2_approach" doc="Exponential approach of cur towards target."><arg name="cur" type="vec2"/><arg name="target" type="vec2"/><arg name="rate" type="float"/><arg name="dt" type="float"/><returns type="vec2"/></function>
+    <function name="ellipse" c="vec2_ellipse" doc="Squared length of a in units of the ellipse radii r: at most 1 means inside."><arg name="a" type="vec2"/><arg name="r" type="vec2"/><returns type="float"/></function>
+    <function name="iso" c="iso2" doc="Isometric projection of a ground point (x, y) with height z to a screen offset."><arg name="x" type="float"/><arg name="y" type="float"/><arg name="z" type="float"/><arg name="tile" type="size2"/><returns type="vec2"/></function>
+  </module>
+
+  <module name="size2" type="size2" doc="Constructor `size2(w, h)`.">
+    <function name="splat" c="sz2s"><arg name="s" type="float"/><returns type="size2"/></function>
+    <function name="vec" c="size2_vec" doc="As a vec2 (w, h)."><arg name="s" type="size2"/><returns type="vec2"/></function>
+    <function name="of" c="size2_of" doc="From a vec2."><arg name="v" type="vec2"/><returns type="size2"/></function>
+    <function name="scale" c="size2_scale"><arg name="s" type="size2"/><arg name="k" type="float"/><returns type="size2"/></function>
+    <function name="add" c="size2_add" op="__add"><arg name="a" type="size2"/><arg name="b" type="size2"/><returns type="size2"/></function>
+    <function name="min" c="size2_min"><arg name="a" type="size2"/><arg name="b" type="size2"/><returns type="size2"/></function>
+    <function name="max" c="size2_max"><arg name="a" type="size2"/><arg name="b" type="size2"/><returns type="size2"/></function>
+    <function name="aspect" c="size2_aspect" doc="w / h."><arg name="s" type="size2"/><returns type="float"/></function>
+    <function name="fit" c="size2_fit" doc="Scale factor that fits inner entirely inside outer (contain)."><arg name="inner" type="size2"/><arg name="outer" type="size2"/><returns type="float"/></function>
+    <function name="cover" c="size2_cover" doc="Scale factor that makes inner fill all of outer."><arg name="inner" type="size2"/><arg name="outer" type="size2"/><returns type="float"/></function>
+  </module>
+
+  <module name="rect" type="rect" doc="Constructor `rect(x, y, w, h)`. Layout is RectCut: `rect.cut_top(r, 66)` slices 66 units off the top of r (changing r) and returns the slice.">
+    <function name="make" c="rect_make"><arg name="pos" type="vec2"/><arg name="size" type="size2"/><returns type="rect"/></function>
+    <function name="corners" c="rect_corners" doc="The rect spanned by two points."><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="rect"/></function>
+    <function name="pos" c="rect_pos" doc="Top-left corner."><arg name="r" type="rect"/><returns type="vec2"/></function>
+    <function name="size" c="rect_size"><arg name="r" type="rect"/><returns type="size2"/></function>
+    <function name="max" c="rect_max" doc="Bottom-right corner."><arg name="r" type="rect"/><returns type="vec2"/></function>
+    <function name="point" c="rect_point" doc="Point at normalised coordinates inside r: (0,0) top-left, (1,1) bottom-right."><arg name="r" type="rect"/><arg name="uv" type="vec2"/><returns type="vec2"/></function>
+    <function name="center" c="rect_center"><arg name="r" type="rect"/><returns type="vec2"/></function>
+    <function name="anchor" c="rect_anchor" doc="Rect of size whose pivot (normalised) sits on point."><arg name="point" type="vec2"/><arg name="size" type="size2"/><arg name="pivot" type="vec2"/><returns type="rect"/></function>
+    <function name="centered" c="rect_centered"><arg name="center" type="vec2"/><arg name="size" type="size2"/><returns type="rect"/></function>
+    <function name="align" c="rect_align" doc="Place size inside outer with normalised alignment (0.5, 0.5 = centre)."><arg name="outer" type="rect"/><arg name="size" type="size2"/><arg name="align" type="vec2"/><returns type="rect"/></function>
+    <function name="offset" c="rect_offset"><arg name="r" type="rect"/><arg name="d" type="vec2"/><returns type="rect"/></function>
+    <function name="inflate" c="rect_inflate" doc="Grow by d on every side (negative shrinks)."><arg name="r" type="rect"/><arg name="d" type="float"/><returns type="rect"/></function>
+    <function name="inflate2" c="rect_inflate2" doc="Grow by d.x horizontally and d.y vertically."><arg name="r" type="rect"/><arg name="d" type="vec2"/><returns type="rect"/></function>
+    <function name="scale" c="rect_scale" doc="Scaled about its centre."><arg name="r" type="rect"/><arg name="k" type="float"/><returns type="rect"/></function>
+    <function name="resize" c="rect_resize" doc="New size keeping the point at pivot in place."><arg name="r" type="rect"/><arg name="size" type="size2"/><arg name="pivot" type="vec2"/><returns type="rect"/></function>
+    <function name="lerp" c="rect_lerp"><arg name="a" type="rect"/><arg name="b" type="rect"/><arg name="t" type="float"/><returns type="rect"/></function>
+    <function name="fit" c="rect_fit" doc="The largest rect of inner's aspect centred in outer."><arg name="outer" type="rect"/><arg name="inner" type="size2"/><returns type="rect"/></function>
+    <function name="contains" c="rect_contains"><arg name="r" type="rect"/><arg name="p" type="vec2"/><returns type="bool"/></function>
+    <function name="overlaps" c="rect_overlaps"><arg name="a" type="rect"/><arg name="b" type="rect"/><returns type="bool"/></function>
+    <function name="intersect" c="rect_intersect"><arg name="a" type="rect"/><arg name="b" type="rect"/><returns type="rect"/></function>
+    <function name="union" c="rect_union"><arg name="a" type="rect"/><arg name="b" type="rect"/><returns type="rect"/></function>
+    <function name="ellipse_contains" c="rect_ellipse_contains" doc="Whether p is inside the ellipse inscribed in r."><arg name="r" type="rect"/><arg name="p" type="vec2"/><returns type="bool"/></function>
+    <function name="cut_left" c="rect_cut_left" doc="Slice a units off the left of r, shrinking r."><arg name="r" type="rect" ref="inout"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="cut_right" c="rect_cut_right"><arg name="r" type="rect" ref="inout"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="cut_top" c="rect_cut_top"><arg name="r" type="rect" ref="inout"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="cut_bottom" c="rect_cut_bottom"><arg name="r" type="rect" ref="inout"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="left" c="rect_left" doc="The left a units of r, r unchanged."><arg name="r" type="rect"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="right" c="rect_right"><arg name="r" type="rect"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="top" c="rect_top"><arg name="r" type="rect"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="bottom" c="rect_bottom"><arg name="r" type="rect"/><arg name="a" type="float"/><returns type="rect"/></function>
+    <function name="col" c="rect_col" doc="Column i (0-based) of n equal columns separated by gap."><arg name="r" type="rect"/><arg name="n" type="int"/><arg name="i" type="int"/><arg name="gap" type="float"/><returns type="rect"/></function>
+    <function name="row" c="rect_row" doc="Row i (0-based) of n equal rows separated by gap."><arg name="r" type="rect"/><arg name="n" type="int"/><arg name="i" type="int"/><arg name="gap" type="float"/><returns type="rect"/></function>
+  </module>
+
+  <module name="color" type="color" doc="Constructor `color(r, g, b, a)`; `color.hex(0xRRGGBB)`; constants WHITE, BLACK, CLEAR.">
+    <function name="hex" c="hex" doc="Opaque colour from 0xRRGGBB."><arg name="rgb" type="uint"/><returns type="color"/></function>
+    <function name="alpha" c="color_alpha" doc="c with its alpha multiplied by a (0..1)."><arg name="c" type="color"/><arg name="a" type="float"/><returns type="color"/></function>
+    <function name="lerp" c="color_lerp"><arg name="a" type="color"/><arg name="b" type="color"/><arg name="t" type="float"/><returns type="color"/></function>
+    <function name="shade" c="color_shade" doc="RGB multiplied by k, alpha kept."><arg name="c" type="color"/><arg name="k" type="float"/><returns type="color"/></function>
+    <const name="WHITE" c="WHITE" type="color"/>
+    <const name="BLACK" c="BLACK" type="color"/>
+    <const name="CLEAR" c="CLEAR" type="color" doc="Fully transparent."/>
+  </module>
+
+  <module name="purse" type="purse" doc="Constructor `purse(a, b, ...)`; operators + and -.">
+    <function name="add" c="purse_add" op="__add"><arg name="a" type="purse"/><arg name="b" type="purse"/><returns type="purse"/></function>
+    <function name="sub" c="purse_sub" op="__sub"><arg name="a" type="purse"/><arg name="b" type="purse"/><returns type="purse"/></function>
+    <function name="scale" c="purse_scale"><arg name="a" type="purse"/><arg name="k" type="int"/><returns type="purse"/></function>
+    <function name="covers" c="purse_covers" doc="Whether have has at least need of everything."><arg name="have" type="purse"/><arg name="need" type="purse"/><returns type="bool"/></function>
+    <function name="empty" c="purse_empty"><arg name="a" type="purse"/><returns type="bool"/></function>
+    <const name="MAX" c="PURSE_MAX" type="int" doc="Resource slots in a purse."/>
+  </module>
+
+  <!-- ================================================================= app -->
+
+  <module name="app" doc="The window, the logical screen and the main loop. A game's main.lua returns the descriptor engine.h calls app_desc - `return {title = ..., id = ..., design = size2(1200, 900), max_aspect = 16 / 9, landscape = true, fixed = false, rotate_text = ..., clear = color.hex(0x0E2B2E), init = function() end, frame = function(dt) end, quit = function() end}` - and the engine runs it: init once the window exists, frame every frame, quit at the end. Command line options understood by every game: --size WxH, --fresh (no saves), --data DIR, --lua DIR, --shot out.png [--frames N].">
+    <function name="quit" c="app_quit" doc="End the main loop after this frame."/>
+    <function name="screen" c="app_screen" doc="The logical screen, origin (0, 0)."><returns type="rect"/></function>
+    <function name="pixel_scale" c="app_pixel_scale" doc="Device pixels per logical unit."><returns type="float"/></function>
+    <function name="time" c="app_time" doc="Seconds since start (frame time)."><returns type="double"/></function>
+    <function name="dt" c="app_dt" doc="Duration of the current frame, seconds."><returns type="float"/></function>
+    <function name="clock" c="app_clock" doc="Wall clock, seconds since the Unix epoch."><returns type="double"/></function>
+    <function name="arg" c="app_arg" doc="Value after --name on the command line (or in the web page's query string): the value, &quot;&quot; for a bare flag, nil if absent."><arg name="name" type="string"/><returns type="string" optional="true"/></function>
+    <function name="path" c="app_path" doc="An asset path resolved against the data root."><arg name="rel" type="string"/><returns type="string"/></function>
+    <function name="renderer_geometry" c="draw_mesh" lua="mesh" doc="Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.">
+      <arg name="pts" type="vec2[]"/><arg name="colors" type="color[]"/><arg name="n" type="count" of="pts"/><arg name="indices" type="int[]"/><arg name="m" type="count" of="indices"/>
+    </function>
+    <function name="inject_click" c="app_inject_click" doc="Queue a press and release at a logical point, as a tap would. For automated tests only."><arg name="p" type="vec2"/></function>
+    <function name="web_storage" c="app_web_storage" doc="On the web, the value of localStorage[key], else nil. For migrating saves from older builds."><arg name="key" type="string"/><returns type="string" optional="true"/></function>
+  </module>
+
+  <struct name="input" c="input" doc="A snapshot of the pointer (mouse or first finger) with gestures. `input{pos = p, pinch = 1}` is an idle pointer at p.">
+    <field name="pos" type="vec2" doc="Pointer position, logical units."/>
+    <field name="press_pos" type="vec2" doc="Where the current or last press started."/>
+    <field name="down" type="bool" doc="Held."/>
+    <field name="pressed" type="bool" doc="Went down this frame."/>
+    <field name="released" type="bool" doc="Went up this frame."/>
+    <field name="tap" type="bool" doc="Released this frame without dragging."/>
+    <field name="dragging" type="bool" doc="Moved further than the drag threshold."/>
+    <field name="drag" type="vec2" doc="Movement this frame while dragging."/>
+    <field name="captured" type="bool" doc="The press started on UI; the world should ignore it."/>
+    <field name="hover" type="bool" doc="A real mouse is over the window."/>
+    <field name="wheel" type="float" doc="Wheel steps this frame."/>
+    <field name="pinch" type="float" doc="Zoom factor from two fingers this frame (1 = none)."/>
+    <field name="pinch_center" type="vec2"/>
+    <field name="key" type="int" doc="SDL keycode pressed this frame, 0 if none."/>
+    <field name="back" type="bool" doc="Escape or the Android back button."/>
+  </struct>
+  <module name="input" type="input">
+    <function name="get" c="input_get" doc="This frame's pointer."><returns type="input"/></function>
+    <function name="world" c="input_world" doc="The same, with pointer actions cleared when UI owns the press: what cameras, boards and cities consume."><returns type="input"/></function>
+    <const name="KEY_SPACE" c="SDLK_SPACE" type="int"/>
+    <const name="KEY_RETURN" c="SDLK_RETURN" type="int"/>
+  </module>
+
+  <!-- ============================================================ graphics -->
+
+  <struct name="texture" c="texture" doc="A loaded image; `w` and `h` are its pixel size. Textures are never freed by the collector.">
+    <field name="tex" type="ptr" ctype="SDL_Texture *" doc="The renderer's texture (opaque)."/>
+    <field name="w" type="float" c="size.w"/>
+    <field name="h" type="float" c="size.h"/>
+  </struct>
+  <module name="texture" type="texture">
+    <function name="load" c="tex_load" doc="PNG, JPG or BMP relative to the data root. A missing file gives a texture with tex = nil and size 0."><arg name="path" type="string"/><returns type="texture"/></function>
+    <function name="from_pixels" c="tex_from_pixels" doc="From raw RGBA bytes, w * h * 4 of them."><arg name="rgba" type="bytes" minlen="w * h * 4"/><arg name="w" type="int"/><arg name="h" type="int"/><returns type="texture"/></function>
+    <function name="free" c="tex_free"><arg name="t" type="texture"/></function>
+    <function name="rect" c="tex_rect" doc="(0, 0, w, h)."><arg name="t" type="texture"/><returns type="rect"/></function>
+    <function name="size" c="tex_size"><arg name="t" type="texture"/><returns type="size2"/></function>
+    <function name="additive" c="tex_additive" doc="Switch the texture between additive and normal blending."><arg name="t" type="texture"/><arg name="on" type="bool"/></function>
+  </module>
+
+  <module name="gfx" doc="Shapes and images, in logical screen units, drawn in call order.">
+    <function name="image" c="draw_image" doc="Draw t stretched to dst, multiplied by tint (color.WHITE for none)."><arg name="t" type="texture"/><arg name="dst" type="rect"/><arg name="tint" type="color"/></function>
+    <function name="image_part" c="draw_image_part" doc="Draw the src part of t (in pixels) stretched to dst."><arg name="t" type="texture"/><arg name="src" type="rect"/><arg name="dst" type="rect"/><arg name="tint" type="color"/></function>
+    <function name="image_rot" c="draw_image_rot" doc="Draw t rotated by angle (radians) about the centre of dst."><arg name="t" type="texture"/><arg name="dst" type="rect"/><arg name="angle" type="float"/><arg name="tint" type="color"/></function>
+    <function name="rect" c="draw_rect"><arg name="r" type="rect"/><arg name="c" type="color"/></function>
+    <function name="rect_grad" c="draw_rect_grad" doc="Vertical gradient."><arg name="r" type="rect"/><arg name="top" type="color"/><arg name="bottom" type="color"/></function>
+    <function name="round_rect" c="draw_round_rect"><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="c" type="color"/></function>
+    <function name="round_rect_grad" c="draw_round_rect_grad"><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="top" type="color"/><arg name="bottom" type="color"/></function>
+    <function name="round_rect_line" c="draw_round_rect_line" doc="Outline only."><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="thickness" type="float"/><arg name="c" type="color"/></function>
+    <function name="shadow" c="draw_shadow" doc="A blurred drop shadow under a rounded rect."><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="blur" type="float"/><arg name="c" type="color"/></function>
+    <function name="circle" c="draw_circle"><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="c" type="color"/></function>
+    <function name="ring" c="draw_ring"><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="thickness" type="float"/><arg name="c" type="color"/></function>
+    <function name="glow" c="draw_glow" doc="A radial gradient from inner at the centre to outer at the rim."><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="inner" type="color"/><arg name="outer" type="color"/></function>
+    <function name="line" c="draw_line"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><arg name="thickness" type="float"/><arg name="c" type="color"/></function>
+    <function name="poly" c="draw_poly" doc="A filled convex polygon."><arg name="pts" type="vec2[]"/><arg name="n" type="count" of="pts"/><arg name="c" type="color"/></function>
+    <function name="polyline" c="draw_polyline"><arg name="pts" type="vec2[]"/><arg name="n" type="count" of="pts"/><arg name="thickness" type="float"/><arg name="c" type="color"/></function>
+    <function name="ngon" c="draw_ngon" doc="A regular polygon; angle rotates it (radians)."><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="sides" type="int"/><arg name="angle" type="float"/><arg name="c" type="color"/></function>
+    <function name="star" c="draw_star" doc="A star with `points` points; inner is the inner radius as a ratio of radius."><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="inner" type="float"/><arg name="points" type="int"/><arg name="angle" type="float"/><arg name="c" type="color"/></function>
+    <function name="additive" c="gfx_additive" doc="Additive blending for shapes (glows, sparks) until switched off."><arg name="on" type="bool"/></function>
+    <function name="clip" c="gfx_clip" doc="Draw only inside r until unclip."><arg name="r" type="rect"/></function>
+    <function name="unclip" c="gfx_unclip"/>
+  </module>
+
+  <struct name="camera" c="camera" doc="A view rect on screen looking at a world of `world` size. Functions return a new camera: `cam = cam:input(in):clamp()`.">
+    <field name="center" type="vec2" doc="World point at the middle of the view."/>
+    <field name="zoom" type="float" doc="Screen units per world unit."/>
+    <field name="view" type="rect" doc="Where the camera draws on screen."/>
+    <field name="world" type="size2" doc="World bounds (0, 0) - (w, h)."/>
+    <field name="min_zoom" type="float"/>
+    <field name="max_zoom" type="float"/>
+    <field name="cover" type="bool" doc="Never show outside the world (else centre small worlds)."/>
+  </struct>
+  <module name="camera" type="camera">
+    <function name="to_world" c="camera_to_world"><arg name="c" type="camera"/><arg name="screen" type="vec2"/><returns type="vec2"/></function>
+    <function name="to_screen" c="camera_to_screen"><arg name="c" type="camera"/><arg name="world" type="vec2"/><returns type="vec2"/></function>
+    <function name="rect_to_screen" c="camera_rect_to_screen"><arg name="c" type="camera"/><arg name="world" type="rect"/><returns type="rect"/></function>
+    <function name="visible" c="camera_visible" doc="The world rect currently in view."><arg name="c" type="camera"/><returns type="rect"/></function>
+    <function name="fit_zoom" c="camera_fit_zoom" doc="The zoom at which the whole world fits the view."><arg name="c" type="camera"/><returns type="float"/></function>
+    <function name="clamp" c="camera_clamp" doc="Zoom within its limits and the view inside the world."><arg name="c" type="camera"/><returns type="camera"/></function>
+    <function name="pan" c="camera_pan"><arg name="c" type="camera"/><arg name="screen_delta" type="vec2"/><returns type="camera"/></function>
+    <function name="zoom_at" c="camera_zoom_at" doc="Multiply the zoom by factor keeping the world point under screen_point still."><arg name="c" type="camera"/><arg name="factor" type="float"/><arg name="screen_point" type="vec2"/><returns type="camera"/></function>
+    <function name="look" c="camera_look" doc="Centre on a world point."><arg name="c" type="camera"/><arg name="world_point" type="vec2"/><returns type="camera"/></function>
+    <function name="input" c="camera_input" doc="Apply drag, wheel and pinch."><arg name="c" type="camera"/><arg name="in" type="input"/><returns type="camera"/></function>
+    <function name="draw_texture" c="camera_draw_texture" doc="Draw a world-sized backdrop, only the visible part."><arg name="c" type="camera"/><arg name="t" type="texture"/></function>
+  </module>
+
+  <module name="fx" doc="Pooled particles and floating text in screen space.">
+    <function name="burst" c="fx_burst" doc="count sparks flying out from pos."><arg name="pos" type="vec2"/><arg name="count" type="int"/><arg name="c" type="color"/><arg name="speed" type="float"/><arg name="size" type="float"/></function>
+    <function name="text" c="fx_text_at" doc="Text that rises and fades."><arg name="pos" type="vec2"/><arg name="s" type="text_style"/><arg name="utf8" type="string"/></function>
+    <function name="sparkle" c="fx_sparkle" doc="A ring of twinkles."><arg name="pos" type="vec2"/><arg name="radius" type="float"/><arg name="c" type="color"/></function>
+    <function name="update" c="fx_update"><arg name="dt" type="float"/></function>
+    <function name="draw" c="fx_draw"/>
+    <function name="clear" c="fx_clear"/>
+  </module>
+
+  <!-- ================================================================ text -->
+
+  <handle name="font" c="font *" light="true" doc="A loaded TrueType font (opaque)."/>
+  <module name="font" type="font">
+    <function name="load" c="font_load" doc="A .ttf relative to the data root."><arg name="path" type="string"/><returns type="font"/></function>
+    <function name="set_fallback" c="font_set_fallback" doc="Glyphs missing from f come from fallback."><arg name="f" type="font"/><arg name="fallback" type="font"/></function>
+  </module>
+
+  <struct name="text_style" c="text_style" doc="How text is drawn. Only font and size are needed; zero means off. `style{font = f, size = 17, fill = color.hex(0xF4E8CA)}`.">
+    <field name="font" type="font"/>
+    <field name="size" type="float" doc="Line height in logical units."/>
+    <field name="fill" type="color" doc="Top colour (defaults to white when left out)."/>
+    <field name="fill2" type="color" doc="Bottom colour for a vertical gradient."/>
+    <field name="outline" type="color"/>
+    <field name="outline_width" type="float"/>
+    <field name="shadow" type="color"/>
+    <field name="shadow_offset" type="vec2"/>
+    <field name="shadow_blur" type="float"/>
+    <field name="tracking" type="float" doc="Extra letter spacing."/>
+    <field name="fade" type="float" doc="0 = opaque .. 1 = invisible."/>
+  </struct>
+  <module name="style" type="text_style" doc="Constructor `style{...}`; the methods return a tweaked copy.">
+    <function name="sized" c="ts_size"><arg name="s" type="text_style"/><arg name="size" type="float"/><returns type="text_style"/></function>
+    <function name="filled" c="ts_fill" doc="A flat fill colour."><arg name="s" type="text_style"/><arg name="c" type="color"/><returns type="text_style"/></function>
+    <function name="grad" c="ts_grad"><arg name="s" type="text_style"/><arg name="top" type="color"/><arg name="bottom" type="color"/><returns type="text_style"/></function>
+    <function name="outlined" c="ts_outline"><arg name="s" type="text_style"/><arg name="width" type="float"/><arg name="c" type="color"/><returns type="text_style"/></function>
+    <function name="shadowed" c="ts_shadow"><arg name="s" type="text_style"/><arg name="offset" type="vec2"/><arg name="blur" type="float"/><arg name="c" type="color"/><returns type="text_style"/></function>
+    <function name="faded" c="ts_fade"><arg name="s" type="text_style"/><arg name="fade" type="float"/><returns type="text_style"/></function>
+  </module>
+
+  <module name="text" doc="Styled TrueType text. Every function returns the rect it drew.">
+    <function name="measure" c="text_measure"><arg name="s" type="text_style"/><arg name="utf8" type="string"/><returns type="size2"/></function>
+    <function name="draw" c="text_draw" doc="One line with its pivot (0,0 top-left .. 1,1 bottom-right) at pos."><arg name="s" type="text_style"/><arg name="pos" type="vec2"/><arg name="pivot" type="vec2"/><arg name="utf8" type="string"/><returns type="rect"/></function>
+    <function name="box" c="text_box" doc="Word-wrapped text aligned inside box, lines balanced in length; shrinks the font (down to 60%) if it would not fit."><arg name="s" type="text_style"/><arg name="box" type="rect"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/><returns type="rect"/></function>
+    <function name="box_reveal" c="text_box_reveal" doc="text.box showing only the first visible codepoints, every line already in its final place."><arg name="s" type="text_style"/><arg name="box" type="rect"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/><arg name="visible" type="int"/><returns type="rect"/></function>
+    <function name="box_size" c="text_box_size" doc="Wrapped size at that width."><arg name="s" type="text_style"/><arg name="width" type="float"/><arg name="utf8" type="string"/><returns type="size2"/></function>
+    <function name="length" c="text_length" doc="Length in codepoints."><arg name="utf8" type="string"/><returns type="int"/></function>
+    <function name="ink" c="text_ink" doc="Visible ink of one line, relative to where text.draw with pivot (0,0) puts its box."><arg name="s" type="text_style"/><arg name="utf8" type="string"/><returns type="rect"/></function>
+    <function name="in_" c="text_in" lua="inside" doc="One line placed by its visible ink: aligned inside box and shrunk to fit it. Optical centring for buttons, counters and badges."><arg name="s" type="text_style"/><arg name="box" type="rect"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/><returns type="rect"/></function>
+    <function name="fit" c="text_fit" doc="A single line that shrinks to fit the box width."><arg name="s" type="text_style"/><arg name="box" type="rect"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/><returns type="rect"/></function>
+  </module>
+
+  <!-- =============================================================== audio -->
+
+  <module name="sfx" doc="A tiny synthesiser for feedback tones.">
+    <function name="tone" c="sfx_tone" doc="A soft bell-like note."><arg name="hz" type="float"/><arg name="seconds" type="float"/></function>
+    <function name="enable" c="sfx_enable"><arg name="on" type="bool"/></function>
+    <function name="enabled" c="sfx_enabled"><returns type="bool"/></function>
+  </module>
+
+  <!-- ================================================================== ui -->
+
+  <struct name="ui_theme" c="ui_theme" doc="Colours and text styles the widgets read.">
+    <field name="text" type="text_style"/>
+    <field name="small" type="text_style"/>
+    <field name="title" type="text_style"/>
+    <field name="button" type="text_style"/>
+    <field name="accent_text" type="text_style"/>
+    <field name="panel" type="color"/><field name="panel2" type="color"/><field name="border" type="color"/>
+    <field name="button_bg" type="color"/><field name="button_bg2" type="color"/><field name="button_hot" type="color"/><field name="button_border" type="color"/>
+    <field name="accent" type="color" doc="Primary buttons."/><field name="accent2" type="color"/>
+    <field name="active" type="color" doc="Selection outline."/>
+    <field name="dim" type="color" doc="Modal backdrop."/>
+    <field name="toast_bg" type="color"/><field name="toast_text" type="color"/>
+    <field name="radius" type="float"/>
+  </struct>
+  <struct name="ui_state" c="ui_state" doc="How an area was interacted with this frame.">
+    <field name="hot" type="bool"/><field name="held" type="bool"/><field name="clicked" type="bool"/>
+  </struct>
+  <module name="ui" doc="Immediate-mode widgets: call them while drawing, `if ui.button(r, 'Play') then`.">
+    <enum name="flags" prefix="UI_" doc="Button flags, combined with |.">
+      <value name="ACCENT" doc="Primary call to action."/><value name="DISABLED"/><value name="ACTIVE" doc="Selected / toggled on."/><value name="FLAT" doc="No background."/>
+    </enum>
+    <function name="set_theme" impl="lui_set_theme" doc="The theme every widget reads from now on."><arg name="t" type="ui_theme"/></function>
+    <function name="theme" c="ui_theme_get" doc="The current theme (a copy)."><returns type="ui_theme" ptr="true"/></function>
+    <function name="block" c="ui_block" doc="Mark r as UI so world input ignores presses on it."><arg name="r" type="rect"/></function>
+    <function name="hit" c="ui_hit" doc="Raw interaction of an area."><arg name="r" type="rect"/><arg name="flags" type="int" default="0"/><returns type="ui_state"/></function>
+    <function name="panel" c="ui_panel"><arg name="r" type="rect"/></function>
+    <function name="panel_ex" c="ui_panel_ex"><arg name="r" type="rect"/><arg name="top" type="color"/><arg name="bottom" type="color"/><arg name="border" type="color"/><arg name="radius" type="float"/></function>
+    <function name="button_frame" c="ui_button_frame" doc="Background only; draw your own content."><arg name="r" type="rect"/><arg name="flags" type="int" default="0"/><returns type="ui_state"/></function>
+    <function name="button" c="ui_button" doc="True when clicked."><arg name="r" type="rect"/><arg name="label" type="string"/><arg name="flags" type="int" default="0"/><returns type="bool"/></function>
+    <function name="label" c="ui_label"><arg name="r" type="rect"/><arg name="s" type="text_style"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/></function>
+    <function name="toast" c="ui_toast" doc="A short message at the bottom of the screen."><arg name="utf8" type="string"/></function>
+    <function name="modal_backdrop" c="ui_modal_backdrop" doc="Dim everything drawn so far and block input outside dialogs; t fades it in."><arg name="t" type="float"/></function>
+    <function name="set_enabled" c="ui_set_enabled" doc="While false, widgets draw but ignore input (under a modal)."><arg name="enabled" type="bool"/></function>
+  </module>
+
+  <!-- ================================================================ save -->
+
+  <handle name="save" c="save *" doc="A save file being read or written. The same visitor function does both: `wallet = s:ints('wallet', wallet)` loads the value when reading and stores it when writing."/>
+  <module name="save" type="save">
+    <function name="read" impl="lsave_read" doc="Call fn(s) with s reading the slot; false if no save exists."><arg name="slot" type="string"/><arg name="fn" type="function"/><returns type="bool"/></function>
+    <function name="write" impl="lsave_write" doc="Call fn(s) with s writing the slot."><arg name="slot" type="string"/><arg name="fn" type="function"/><returns type="bool"/></function>
+    <function name="is_reading" c="save_is_reading"><arg name="s" type="save"/><returns type="bool"/></function>
+    <function name="int" c="save_int" doc="The stored value when reading, else v, which is stored."><arg name="s" type="save"/><arg name="key" type="string"/><arg name="v" type="int" ref="inout"/></function>
+    <function name="number" c="save_double"><arg name="s" type="save"/><arg name="key" type="string"/><arg name="v" type="double" ref="inout"/></function>
+    <function name="ints" c="save_ints" doc="A sequence of integers; its length decides how many are read."><arg name="s" type="save"/><arg name="key" type="string"/><arg name="v" type="int[]" ref="inout"/><arg name="n" type="count" of="v"/></function>
+    <function name="vec2" c="save_vec2"><arg name="s" type="save"/><arg name="key" type="string"/><arg name="v" type="vec2" ref="inout"/></function>
+    <function name="inject" c="save_inject" doc="Use text produced elsewhere as the source of the next save.read of slot (a migration)."><arg name="slot" type="string"/><arg name="text" type="string"/></function>
+  </module>
+
+  <!-- =============================================================== story -->
+
+  <struct name="character" c="character" doc="Someone who speaks.">
+    <field name="id" type="string" doc="How scripts refer to the character."/>
+    <field name="name" type="string"/>
+    <field name="role" type="string"/>
+    <field name="portrait_path" type="string"/>
+    <field name="portrait" type="texture" doc="Loaded by story.setup."/>
+    <field name="color" type="color" doc="Name tag."/>
+    <field name="right" type="bool" doc="Stands on the right of the dialogue."/>
+    <field name="mouth" type="vec2" doc="Where they speak from, 0..1 inside the portrait (default .5, .25)."/>
+  </struct>
+  <struct name="story_line" c="story_line" doc="`{who, text, kind}` (positional or named); who is a character id, nil for the narrator.">
+    <field name="who" type="string" pos="1"/>
+    <field name="text" type="string" pos="2"/>
+    <field name="kind" type="int" pos="3" doc="story.SPEECH (default), THOUGHT or SHOUT."/>
+  </struct>
+  <struct name="story_style" c="story_style" doc="How dialogue looks.">
+    <field name="text" type="text_style" doc="Bubble text."/>
+    <field name="name" type="text_style" doc="Name tag."/>
+    <field name="bubble" type="color"/><field name="edge" type="color"/><field name="dim" type="color" doc="Backdrop behind the dialogue."/>
+    <field name="portrait_height" type="float" doc="Fraction of the screen height (default .5)."/>
+    <field name="framed" type="bool" doc="Portraits are busts: show them in a medallion."/>
+    <field name="skip" type="string" doc="Label of a skip button, nil for none."/>
+  </struct>
+  <module name="story" doc="Characters, dialogue and speech bubbles.">
+    <enum name="bubble" prefix="BUBBLE_" doc="Bubble shapes comics use."><value name="SPEECH"/><value name="THOUGHT"/><value name="SHOUT"/></enum>
+    <function name="setup" impl="lstory_setup" doc="The game's cast (a sequence of characters) and how its dialogue looks; call once after loading fonts."><arg name="cast" type="character[]"/><arg name="style" type="story_style"/></function>
+    <function name="character" c="story_character" doc="A character by id, or nil."><arg name="id" type="string"/><returns type="character" optional="true"/></function>
+    <function name="play" c="story_play" doc="Queue a beat once per save: false (and nothing queued) if it was seen before."><arg name="beat" type="string"/><arg name="lines" type="story_line[]"/><arg name="count" type="count" of="lines"/><returns type="bool"/></function>
+    <function name="say" c="story_say" doc="Queue one spoken line, every time."><arg name="who" type="string" optional="true"/><arg name="text" type="string"/></function>
+    <function name="add" c="story_line_add" doc="Queue one line of any kind."><arg name="line" type="story_line"/></function>
+    <function name="active" c="story_active" doc="Whether a dialogue is running (hold your own input)."><returns type="bool"/></function>
+    <function name="next" c="story_next" doc="Move on, as a tap would."/>
+    <function name="seen" c="story_seen"><arg name="beat" type="string"/><returns type="bool"/></function>
+    <function name="frame" c="story_frame" doc="Draw the dialogue over everything and take all input while it runs; call last in the frame."><arg name="dt" type="float"/></function>
+    <function name="serialize" c="story_serialize" doc="Beats seen, inside a save visitor."><arg name="s" type="save"/></function>
+    <function name="forget" c="story_forget" doc="New game: nothing seen."/>
+    <function name="bubble_shape" c="speech_bubble_shape" doc="A bubble around box pointing at tip."><arg name="box" type="rect"/><arg name="tip" type="vec2"/><arg name="fill" type="color"/><arg name="edge" type="color"/><arg name="kind" type="int"/></function>
+    <function name="bubble" c="speech_bubble" doc="A bubble with text above tip (below when there is no room), kept on screen. Returns its rect."><arg name="tip" type="vec2"/><arg name="utf8" type="string"/><arg name="s" type="text_style"/><arg name="fill" type="color"/><arg name="edge" type="color"/><arg name="max_width" type="float"/><arg name="kind" type="int"/><returns type="rect"/></function>
+  </module>
+
+  <!-- ================================================================ city -->
+
+  <struct name="building_def" c="building_def" doc="A building type.">
+    <field name="name" type="string"/>
+    <field name="about" type="string"/>
+    <field name="sprite_path" type="string"/>
+    <field name="sprite" type="texture" doc="Loaded by city:init from sprite_path."/>
+    <field name="height" type="float" doc="Drawn height in world units (width keeps the aspect)..."/>
+    <field name="width" type="float" doc="...or, with height 0, the drawn width."/>
+    <field name="max_height" type="float" doc="Cap for a height derived from width (0 = none)."/>
+    <field name="sink" type="float" doc="How far the sprite bottom sits below the anchor point."/>
+    <field name="footprint" type="size2" doc="Half extents of the ground diamond; zero = a circle of city.spacing."/>
+    <field name="cost" type="purse" doc="Paid when placed."/>
+    <field name="reward" type="purse" doc="Granted once when placed."/>
+    <field name="needs" type="purse" doc="Must be owned (not spent) to build."/>
+    <field name="income" type="purse" doc="Collected by tapping when ready."/>
+    <field name="income_period" type="float" doc="Seconds; 0 = no income."/>
+  </struct>
+  <struct name="building" c="building" doc="A placed building.">
+    <field name="pos" type="vec2"/><field name="type" type="int" doc="Index into the city's defs (0-based)."/><field name="stamp" type="double" doc="When income last started growing."/>
+  </struct>
+  <struct name="city_zone" c="city_zone" doc="A region of the map that opens as a whole.">
+    <field name="name" type="string"/>
+    <field name="area" type="rect" doc="Used when the city has no zone_at callback."/>
+    <field name="marker" type="vec2" doc="Where games put its label."/>
+    <field name="cost" type="purse"/><field name="needs" type="purse"/>
+  </struct>
+  <struct name="city_event" c="city_event" doc="What a city update or confirm did.">
+    <field name="result" type="int" doc="A city.* result."/>
+    <field name="building" type="int" doc="Index of the building involved, or -1."/>
+    <field name="zone" type="int" doc="Zone involved, or -1."/>
+    <field name="amount" type="purse" doc="Paid or collected."/>
+    <field name="screen" type="vec2" doc="Where it happened."/>
+  </struct>
+  <handle name="city" c="city" owned="true" doc="The building meta-game: ground, zones, a catalogue of building types and the placed buildings. Fields read and write the engine's state; struct-valued fields are copied, so `local cam = c.cam; cam.view = r; c.cam = cam`. Callbacks receive the city as their first argument.">
+    <field name="ground" type="texture" doc="Loaded by init."/>
+    <field name="defs" type="building_def[]" count="def_count" alloc="true" anchor="true" access="rw" doc="The building catalogue; assign a sequence."/>
+    <field name="items" type="building[]" count="count" max="CITY_MAX" access="rw" doc="The placed buildings."/>
+    <field name="count" type="int" access="rw" doc="How many buildings are placed."/>
+    <field name="zones" type="city_zone[]" count="zone_count" max="CITY_ZONES" anchor="true" access="rw"/>
+    <field name="zone_count" type="int"/>
+    <field name="open" type="uint" access="rw" doc="Bit per opened zone (bit 0 = zone 0, which starts open)."/>
+    <field name="spacing" type="float" access="rw" doc="Minimum distance between buildings without footprints."/>
+    <field name="footprint_gap" type="size2" access="rw" doc="Extra clearance between footprints."/>
+    <field name="buildable" type="callback" tramp="lcity_buildable" decl="bool lcity_buildable(const struct city *c, vec2 world)" doc="function(c, world) -> bool: terrain test."/>
+    <field name="zone_at" type="callback" tramp="lcity_zone_at" decl="int lcity_zone_at(const struct city *c, vec2 world)" doc="function(c, world) -> zone (0-based) or -1; default: zone rects."/>
+    <field name="zone_touches" type="callback" tramp="lcity_zone_touches" decl="bool lcity_zone_touches(const struct city *c, int zone, unsigned open)" doc="function(c, zone, open) -> bool: adjacency; default: rects touching."/>
+    <field name="draw_over" type="callback" tramp="lcity_draw_over" decl="void lcity_draw_over(const struct city *c)" doc="function(c): game drawing above the fog, below the ghost."/>
+    <field name="cam" type="camera" access="rw"/>
+    <field name="fog" type="color" access="rw" doc="Locked zones; default dark teal."/>
+    <field name="fog_on_land_only" type="bool" access="rw"/>
+    <field name="path" type="color" access="rw" doc="Paths linking buildings; alpha 0 = none."/>
+    <field name="movable" type="bool" access="rw" doc="Drag a building to move it."/>
+    <field name="income_icon" type="texture" access="rw"/>
+    <field name="selected" type="int" access="rw" doc="Quick build: a tap places this type at once (-1 = off)."/>
+    <field name="placing" type="int" doc="Building type being placed, -1 = none."/>
+    <field name="moving" type="int" doc="Index being moved, -1 = a new building."/>
+    <field name="ghost" type="vec2" access="rw" doc="Where it would go."/>
+  </handle>
+  <module name="city" type="city" doc="`city.new()` makes one; configure its fields, then `c:init(ground)`.">
+    <enum name="result" prefix="CITY_" doc="city_event results.">
+      <value name="NONE"/><value name="BUILT" doc="A new building was placed and paid for."/><value name="MOVED"/><value name="BLOCKED" doc="The spot is not free, not land or not open."/>
+      <value name="CANT_AFFORD"/><value name="LOCKED_TYPE" doc="The building's needs are not met."/><value name="COLLECTED" doc="Income collected."/><value name="NOT_READY"/>
+      <value name="PICKED" doc="Tapped a building without income."/><value name="ZONE" doc="Tapped land in a closed zone (event.zone)."/>
+    </enum>
+    <const name="MAX" c="CITY_MAX" type="int"/>
+    <const name="ZONES" c="CITY_ZONES" type="int"/>
+    <function name="init" c="city_init" doc="Load the ground and the building sprites and fill in defaults."><arg name="c" type="city"/><arg name="ground_path" type="string" optional="true"/></function>
+    <function name="can_place" c="city_can_place" doc="ignore: a building index to skip, or -1."><arg name="c" type="city"/><arg name="world" type="vec2"/><arg name="type" type="int"/><arg name="ignore" type="int" default="-1"/><returns type="bool"/></function>
+    <function name="find_spot" c="city_find_spot" doc="The nearest free spot to hint: ok, spot."><arg name="c" type="city"/><arg name="type" type="int"/><arg name="hint" type="vec2"/><arg name="out" type="vec2" ref="out"/><returns type="bool"/></function>
+    <function name="add" c="city_add" doc="Place without checks or payment; returns the index or -1."><arg name="c" type="city"/><arg name="world" type="vec2"/><arg name="type" type="int"/><arg name="now" type="double" default="0"/><returns type="int"/></function>
+    <function name="building_at" c="city_building_at"><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
+    <function name="ready" c="city_ready" doc="Whether building index has income to collect."><arg name="c" type="city"/><arg name="index" type="int"/><arg name="now" type="double"/><returns type="bool"/></function>
+    <function name="sprite_rect" c="city_sprite_rect" doc="World rect of a building's sprite."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
+    <function name="zone_at" c="city_zone_at" lua="zone_of" doc="The zone containing a world point, or -1."><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
+    <function name="zone_open" c="city_zone_open"><arg name="c" type="city"/><arg name="zone" type="int"/><returns type="bool"/></function>
+    <function name="open_count" c="city_open_count"><arg name="c" type="city"/><returns type="int"/></function>
+    <function name="zone_available" c="city_zone_available" doc="Closed, touching open land and affordable."><arg name="c" type="city"/><arg name="zone" type="int"/><arg name="wallet" type="purse"/><returns type="bool"/></function>
+    <function name="unlock" c="city_unlock" doc="Open a zone, paying from wallet; false if not available."><arg name="c" type="city"/><arg name="zone" type="int"/><arg name="wallet" type="purse" ref="inout"/><returns type="bool"/></function>
+    <function name="next_zone" c="city_next_zone" doc="The first available zone, else the first closed touching one, else -1."><arg name="c" type="city"/><arg name="wallet" type="purse"/><returns type="int"/></function>
+    <function name="begin_place" c="city_begin_place" doc="Start a placement session with a ghost at `at`."><arg name="c" type="city"/><arg name="type" type="int"/><arg name="at" type="vec2"/></function>
+    <function name="begin_move" c="city_begin_move"><arg name="c" type="city"/><arg name="index" type="int"/></function>
+    <function name="cancel" c="city_cancel"><arg name="c" type="city"/></function>
+    <function name="confirm" c="city_confirm" doc="Build or move the ghost, paying from wallet."><arg name="c" type="city"/><arg name="wallet" type="purse" ref="inout"/><arg name="now" type="double"/><returns type="city_event"/></function>
+    <function name="update" c="city_update" doc="Camera, gestures, quick build and collecting; wallet pays and receives."><arg name="c" type="city"/><arg name="in" type="input"/><arg name="wallet" type="purse" ref="inout"/><arg name="now" type="double"/><arg name="dt" type="float"/><returns type="city_event"/></function>
+    <function name="draw" c="city_draw"><arg name="c" type="city"/><arg name="in" type="input"/><arg name="now" type="double"/></function>
+    <function name="serialize" c="city_serialize" doc="Buildings and open zones, inside a save visitor."><arg name="c" type="city"/><arg name="s" type="save"/></function>
+  </module>
+</api>

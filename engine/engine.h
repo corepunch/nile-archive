@@ -104,6 +104,7 @@ static inline vec3 vec3_lerp(vec3 a, vec3 b, float t) { return v3(lerpf(a.x, b.x
 static inline vec2 vec3_xy(vec3 a) { return v2(a.x, a.y); }
 /* Isometric projection: world (x, y on the ground, z up) to screen offset. */
 static inline vec2 vec3_iso(vec3 a, size2 tile) { return v2((a.x - a.y) * tile.w * .5f, (a.x + a.y) * tile.h * .5f - a.z); }
+static inline vec2 iso2(float x, float y, float z, size2 tile) { return vec3_iso(v3(x, y, z), tile); }
 
 /* --- ivec2: integer grid coordinates --- */
 typedef struct { int x, y; } ivec2;
@@ -134,6 +135,8 @@ static inline float size2_cover(size2 inner, size2 outer) { return maxf(outer.w 
 static inline rect rc(float x, float y, float w, float h) { return (rect){{x, y}, {w, h}}; }
 static inline rect rect_make(vec2 pos, size2 size) { return (rect){pos, size}; }
 static inline rect rect_corners(vec2 a, vec2 b) { vec2 lo = vec2_min(a, b), hi = vec2_max(a, b); return rect_make(lo, size2_of(vec2_sub(hi, lo))); }
+static inline vec2 rect_pos(rect r) { return r.pos; }
+static inline size2 rect_size(rect r) { return r.size; }
 static inline vec2 rect_max(rect r) { return vec2_add(r.pos, size2_vec(r.size)); }
 /* Point at normalised coordinates inside r: (0,0) top-left, (1,1) bottom-right. */
 static inline vec2 rect_point(rect r, vec2 uv) { return vec2_add(r.pos, vec2_mul(size2_vec(r.size), uv)); }
@@ -223,6 +226,8 @@ double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
 SDL_Renderer *app_renderer(void);
+void app_inject_click(vec2 p);          /* queue a press and release at a logical point (tests) */
+const char *app_web_storage(const char *key);   /* localStorage[key] on the web, else NULL */
 
 /* ===================================================================== */
 /* Input: one pointer (mouse or first finger) with gestures               */
@@ -260,6 +265,8 @@ texture tex_load(const char *path);         /* PNG/JPG/BMP via stb_image */
 texture tex_from_pixels(const void *rgba, int w, int h);
 void tex_free(texture t);
 rect tex_rect(texture t);                   /* (0,0,w,h) */
+static inline size2 tex_size(texture t) { return t.size; }
+void tex_additive(texture t, bool on);      /* additive instead of alpha blending when drawn */
 
 void draw_image(texture t, rect dst, color tint);
 void draw_image_part(texture t, rect src, rect dst, color tint);
@@ -278,6 +285,8 @@ void draw_poly(const vec2 *pts, int n, color c);   /* convex polygon */
 void draw_polyline(const vec2 *pts, int n, float thickness, color c);
 void draw_ngon(vec2 center, float radius, int sides, float angle, color c);
 void draw_star(vec2 center, float radius, float inner, int points, float angle, color c);  /* inner: ratio of radius */
+/* Coloured triangles: one colour per vertex, three 0-based indices per triangle. */
+void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m);
 void gfx_additive(bool on);   /* additive blending for shapes (glows, sparks) */
 void gfx_clip(rect r);
 void gfx_unclip(void);
@@ -308,6 +317,7 @@ void camera_draw_texture(camera c, texture t); /* draw a world-sized backdrop */
 void fx_burst(vec2 pos, int count, color c, float speed, float size);
 struct text_style;
 void fx_text(vec2 pos, const struct text_style *s, const char *utf8);  /* rises and fades */
+void fx_text_at(vec2 pos, struct text_style s, const char *utf8);      /* the same, style by value */
 void fx_sparkle(vec2 pos, float radius, color c);
 void fx_update(float dt);
 void fx_draw(void);
@@ -553,9 +563,9 @@ typedef struct city {
     unsigned open;                          /* bit per opened zone; zone 0 starts open */
     float spacing;                          /* minimum distance between buildings without footprints */
     size2 footprint_gap;                    /* extra clearance between footprints */
-    bool (*buildable)(vec2 world);          /* terrain test supplied by the game */
-    int (*zone_at)(vec2 world);             /* region lookup (default: zone rects); -1 = none */
-    bool (*zone_touches)(int zone, unsigned open);  /* adjacency (default: rects touching) */
+    bool (*buildable)(const struct city *c, vec2 world);   /* terrain test supplied by the game */
+    int (*zone_at)(const struct city *c, vec2 world);      /* region lookup (default: zone rects); -1 = none */
+    bool (*zone_touches)(const struct city *c, int zone, unsigned open);  /* adjacency (default: rects touching) */
     void (*draw_over)(const struct city *c);        /* game drawing above the fog, below the ghost */
     camera cam;
     color fog;                              /* locked zones; default dark teal */
@@ -601,6 +611,22 @@ city_event city_confirm(city *c, purse *wallet, double now);
 city_event city_update(city *c, input in, purse *wallet, double now, float dt);
 void city_draw(const city *c, input in, double now);
 void city_serialize(city *c, save *s);
+
+/* ===================================================================== */
+/* Script: games written in Lua (see docs/SCRIPTING.md)                   */
+/* ===================================================================== */
+
+/* Create the game's Lua state: the engine API (engine/api.xml), a sandboxed
+ * standard library and `require` resolving against lua_dir (several roots
+ * separated by ';' are searched in order). */
+void script_open(const char *lua_dir);
+/* Run lua_dir/main.lua, which returns the app descriptor; its init, frame and
+ * quit become Lua calls. data_dir and id are filled in when the script
+ * leaves them out. Errors are printed and end the process with status 3. */
+app_desc script_boot(const char *lua_dir, const char *data_dir);
+/* Run one file in the open state; the integer it returns, 0 if none, -1 on error. */
+int script_dofile(const char *path);
+void script_close(void);
 
 /* ===================================================================== */
 /* Engine internals shared by the engine sources (not for games)          */

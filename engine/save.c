@@ -37,6 +37,18 @@ static struct { char slot[64]; char *text; } injected;
 
 bool save_is_reading(const save *s) { return s->reading; }
 
+const char *app_web_storage(const char *key)
+{
+#ifdef __EMSCRIPTEN__
+    static char *last;
+    free(last);
+    return last = web_storage_get(key);
+#else
+    (void)key;
+    return NULL;
+#endif
+}
+
 static char *copy_text(const char *t)
 {
     size_t n = strlen(t) + 1;

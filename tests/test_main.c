@@ -1,5 +1,6 @@
-/* Headless tests: engine math and layout, camera, purses, saves and city
- * rules, plus the games' rules (tests/test_relic.c). Run with `make test`. */
+/* Headless tests: engine math and layout, camera, purses, saves, city and
+ * story rules in C, then every Lua file named on the command line (the games'
+ * rules, the tests/lua folder) in the engine's Lua state. Run with `make test`. */
 #include "engine.h"
 
 #include <stdio.h>
@@ -128,7 +129,7 @@ static void test_save(void)
     CHECK(save_read("injected", serialize_loaded, NULL) && loaded.coins == 9);
 }
 
-static bool flat_land(vec2 p) { return p.y > 100; }
+static bool flat_land(const city *c, vec2 p) { return p.y > 100; }
 
 static void test_city(void)
 {
@@ -229,11 +230,8 @@ static void test_story(void)
     CHECK(text_length("Привет") == 6 && text_length("") == 0);
 }
 
-int test_relic(int *checks);   /* tests/test_relic.c */
-
 int main(int argc, char **argv)
 {
-    (void)argc, (void)argv;
     test_math();
     test_rect();
     test_camera();
@@ -241,7 +239,15 @@ int main(int argc, char **argv)
     test_save();
     test_city();
     test_story();
-    failures += test_relic(&checks);
-    printf("%d checks, %d failures\n", checks, failures);
+    printf("engine: %d checks, %d failures\n", checks, failures);
+
+    /* Lua tests: each file returns its failure count (and prints its own summary). */
+    script_open("tests/lua;games/relic-rush/lua;games/nile-archive/lua");
+    for (int i = 1; i < argc; i++) {
+        int r = script_dofile(argv[i]);
+        if (r) fprintf(stderr, "%s: %s\n", argv[i], r < 0 ? "error" : "failed");
+        failures += r < 0 ? 1 : r;
+    }
+    script_close();
     return failures ? 1 : 0;
 }

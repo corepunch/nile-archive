@@ -78,6 +78,23 @@ double app_clock(void) { return (double)time(NULL); }
 void app_quit(void) { A.running = false; }
 input input_get(void) { return A.in; }
 
+/* A press and a release at a logical point, through SDL's event queue so the
+ * game sees them exactly as a tap (tests and the smoke run use it). */
+void app_inject_click(vec2 p)
+{
+    SDL_Event e = {0};
+    int x, y;
+    SDL_RenderLogicalToWindow(A.renderer, p.x, p.y, &x, &y);
+    e.type = SDL_MOUSEBUTTONDOWN;
+    e.button.button = SDL_BUTTON_LEFT;
+    e.button.windowID = SDL_GetWindowID(A.window);   /* SDL maps it to logical units */
+    e.button.x = x, e.button.y = y;
+    SDL_PushEvent(&e);   /* SDL rewrites the coordinates in place to logical units... */
+    e.type = SDL_MOUSEBUTTONUP;
+    e.button.x = x, e.button.y = y;   /* ...so the release needs window units again */
+    SDL_PushEvent(&e);
+}
+
 const char *app_path(const char *rel)
 {
     static char buf[4][512];

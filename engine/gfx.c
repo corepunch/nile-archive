@@ -313,6 +313,21 @@ void draw_star(vec2 center, float radius, float inner, int points, float angle, 
     flush();
 }
 
+void tex_additive(texture t, bool on)
+{
+    if (t.tex) SDL_SetTextureBlendMode(t.tex, on ? SDL_BLENDMODE_ADD : SDL_BLENDMODE_BLEND);
+}
+
+void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m)
+{
+    SDL_Vertex v[256];
+    if (n <= 0 || n > 256) return;
+    for (int i = 0; i < n; i++) v[i] = (SDL_Vertex){{pts[i].x, pts[i].y}, {cols[i].r, cols[i].g, cols[i].b, cols[i].a}, {0, 0}};
+    for (int i = 0; i < m; i++)
+        if (idx[i] < 0 || idx[i] >= n) return;
+    SDL_RenderGeometry(app_renderer(), NULL, v, n, idx, m);
+}
+
 void gfx_additive(bool on) { SDL_SetRenderDrawBlendMode(app_renderer(), on ? SDL_BLENDMODE_ADD : SDL_BLENDMODE_BLEND); }
 
 void gfx_clip(rect r)
@@ -478,6 +493,8 @@ void fx_draw(void)
         text_draw(ts_fade(ts_size(f->style, f->style.size * pop), 1 - saturate(f->life * 3)), f->pos, v2(.5f, .5f), f->text);
     }
 }
+
+void fx_text_at(vec2 pos, text_style s, const char *utf8) { fx_text(pos, &s, utf8); }
 
 void fx_clear(void)
 {
