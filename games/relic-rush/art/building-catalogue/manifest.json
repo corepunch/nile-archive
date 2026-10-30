@@ -157,40 +157,40 @@
     {
       "id": 4,
       "key": "gateway",
-      "name": "Sunstone gateway",
+      "name": "Sunstone courtyard",
       "category": "wonder",
       "size": [
-        4,
+        3,
         2
       ],
       "pivot": [
-        168.0,
-        169.0
+        362.0,
+        363.0
       ],
-      "base_width": 328,
+      "base_width": 716,
       "gold": 140,
       "stars": 0,
       "runtime": "data/buildings/4.png",
-      "source": "art/building-catalogue/paintover-wonders.png",
+      "source": "art/building-catalogue/landmark-alternatives/source.png",
       "box": [
-        1465,
-        120,
-        1804,
-        381
+        47,
+        80,
+        780,
+        630
       ],
       "crop": [
         1,
         1,
-        338,
-        259
+        733,
+        549
       ],
-      "reference": "Park Bridge",
+      "reference": "Original dry gathering plaza",
       "cost": [
         140,
         30,
         30
       ],
-      "about": "A garden arch marks the path into your valley."
+      "about": "A sunlit gathering place brings the valley together."
     },
     {
       "id": 5,

@@ -53,16 +53,16 @@
   },
   "gateway": {
     "bottom": [
-      219,
-      251
+      425,
+      542
     ],
     "left": 4,
-    "right": 332,
+    "right": 720,
     "pivot": [
-      168.0,
-      169.0
+      362.0,
+      363.0
     ],
-    "base_width": 328
+    "base_width": 716
   },
   "lodge": {
     "bottom": [

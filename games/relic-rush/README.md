@@ -125,7 +125,7 @@ Buildings unlock in this order as expeditions are completed. Positions are chose
 | 2 | Spring well | 80 | 15 | 15 | Fresh water brings the lost valley back to life. |
 | 3 | Artisan workshop | 100 | 25 | 15 | A home for the hands that rebuild the valley. |
 | 4 | Jungle market | 120 | 25 | 25 | Stories, spices and treasures from far away. |
-| 5 | Sunstone gateway | 140 | 30 | 30 | A garden arch marks the path into your valley. |
+| 5 | Sunstone courtyard | 140 | 30 | 30 | A sunlit gathering place brings the valley together. |
 | 6 | Explorer's lodge | 160 | 35 | 35 | A warm light after a long day of adventure. |
 | 7 | Lost-world archive | 180 | 35 | 45 | Protect the knowledge buried beneath the vines. |
 | 8 | Star observatory | 200 | 40 | 50 | Follow the stars to the next discovery. |

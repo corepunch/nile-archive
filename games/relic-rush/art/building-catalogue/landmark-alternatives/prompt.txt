@@ -1,0 +1,16 @@
+Use case: stylized-concept.
+Asset type: ONE transparent game-sprite atlas containing the COMPLETE SET OF THREE alternative land landmarks for Relic Rush. All three must be authored together, no separate icons.
+Reference images show the existing game's exact finish and palette. Match their rich hand-painted 2D detail: warm cut sandstone masonry, turquoise glazed stone, restrained gold carvings, individual tropical leaves, tiny lanterns and crisp material texture. These are original archaeological garden landmarks for a dry tropical island with NO rivers.
+Composition: a wide horizontal atlas, exactly THREE separate complete sprites left to right, one row. Approximately 1536x768 or larger. At least 60px of genuinely transparent gutter between sprites and 35px around edges. No objects touching, no background, no grid, no labels or lettering.
+Every alternative sits on its own identical flat 4-by-2-tile stone foundation in the game's orthographic projection: camera elevation EXACTLY 30 degrees, azimuth45. Ground axes slope +0.5/-0.5. The front-left foundation edge is twice the length of the front-right edge (4 tiles versus 2). Preserve that oblong parallelogram with visible ground corners. All details stay INSIDE the base. No streams, water, pools, bridge, raised crossing deck, culvert or tunnel.
+
+LEFT — SUNSTONE COURTYARD (recommended replacement):
+A dry ancient gathering plaza with a large beautiful gold-and-teal sun mosaic INLAID FLAT into the sandstone paving. Low curved stone seating on two edges, lush compact palms and flowering planters in two corners, and two separate slender carved sun-stela stones on the rear edge with small turquoise/gold inlays and warm lanterns. Open central floor clearly reads as a usable plaza. Upright stones remain separate, nothing spans between them. Warm, inviting and archaeologically elegant. No altar building or roof. The sun mosaic is the central focal point.
+
+MIDDLE — CEREMONIAL GATE:
+An upright sandstone garden portal with two carved vertical piers and a modest horizontal teal-and-gold lintel, an open walk-through DOORWAY at ground level and a short dry mosaic path. Fern planters and two lanterns. A vertical entrance monument, visibly different from an arched footbridge. No stairs, deck, bridge or span to walk OVER. Nothing suggests water.
+
+RIGHT — ORCHID TERRACE:
+A richly planted dry stone garden on two very LOW wide tiers, with magenta/purple orchids, palms, fern beds, a little curved stone bench and a narrow central pale-gold mosaic walkway. Teal glazed planters with gold trim. No fountain or water. A delightful lush landscaped terrace, not a building or raised crossing.
+
+All three share the same world scale, camera, lighting from upper left, four-by-two footprint and authored finished/restored state. Keep small details sharp like the supplied paint-over reference. Authentic transparent alpha (zero opacity in all empty gutters), no colored haze, no external cast shadows, no checkerboard drawing, no text, no UI, no watermark.

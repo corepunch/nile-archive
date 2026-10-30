@@ -16,6 +16,12 @@ source/prompt history, runtime paths, whole-tile measurements, supported states,
 import commands and reviewed in-game captures. The board manifest links the
 building manifest and inventories every new runtime file.
 
+The fifth restoration is now the **Sunstone courtyard**, a dry mosaic gathering
+plaza replacing the bridge-shaped gateway. Its 3 x 2 footprint is measured from
+the new artwork. The complete three-option ImageGen atlas, selection, source,
+prompt and reviewed game captures are recorded in the
+[replacement review](review/sunstone-courtyard/README.md).
+
 ## Piece kinds and optional packs
 
 All packs use the same kind IDs and rules. Colours and silhouettes are authored;

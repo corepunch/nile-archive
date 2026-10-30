@@ -46,6 +46,18 @@ same style references, and `buildings-prompt.txt`. These larger sprites preserve
 masonry, carving, foliage and wares when the map zooms in. No icon was generated
 separately. Every group has one authored normal/restored presentation.
 
+Story ID 4 now uses the **Sunstone courtyard**, a dry gathering plaza, instead
+of the bridge-shaped gateway. Its source is the left sprite in
+`art/building-catalogue/landmark-alternatives/source.png`, a complete three-option
+atlas generated together with the built-in ImageGen tool. The exact prompt and
+reference roles are preserved beside it. The ceremonial gate and orchid terrace
+are review-only alternatives, not extra runtime entries. The original Blender
+master and wonder atlases remain historical sources; this selected paint-over
+supersedes their gateway artwork. The legacy key `gateway` and numeric ID 4 stay
+stable for saves and story order. Restoration costs remain 140 gold, 30 wood and
+30 stone. The [replacement review](review/sunstone-courtyard/README.md) supersedes
+the earlier ID 4 captures below.
+
 `tools/prepare_buildings.py` uses explicit authored boxes in `sheets.json` for
 the larger atlases, with the existing largest-component isolation to remove a
 neighboring roof or leaf fragment when bounding boxes overlap. Its threshold
@@ -84,6 +96,7 @@ skin. Buildings have no separate hover, pressed or disabled world artwork.
 /Applications/Blender.app/Contents/MacOS/Blender -b games/relic-rush/art/building-catalogue/relic_rush_buildings.blend --python games/relic-rush/tools/render_building_atlas.py -- buildings
 python3 games/relic-rush/tools/prepare_buildings.py
 python3 tools/footprint.py games/relic-rush/data/buildings/0.png --overlay /tmp/camp.png
+python3 tools/footprint.py games/relic-rush/data/buildings/4.png --bottom 425,542 --left 4 --right 720 --overlay /tmp/courtyard.png
 make CFLAGS="-O2 -g -Werror"
 make test
 ./build/relic-rush --headless --mute --fresh --catalogue --shot /tmp/shop.png
@@ -113,7 +126,7 @@ are design references only. The runtime art is original generated artwork.
 | 1 / `well` | Spring well | wonder | 2 x 2 | 119.5, 166.75 | 233 | 80 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
 | 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 145, 192.5 | 278 | 100 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
 | 3 / `market` | Jungle market | wonder | 3 x 2 | 133, 174.5 | 258 | 120 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 4 / `gateway` | Sunstone gateway | wonder | 4 x 2 | 168, 169 | 328 | 140 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 362, 363 | 716 | 140 | 0 | [Courtyard](review/sunstone-courtyard/after-footprints.jpg) |
 | 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 149, 211.5 | 290 | 160 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
 | 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 152, 189 | 296 | 180 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
 | 7 / `observatory` | Star observatory | wonder | 2 x 2 | 101.5, 201.75 | 197 | 200 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
