@@ -130,6 +130,19 @@ for burning, charging, cracked gems or tool upgrades.
 
 ## Remaining runtime asset families
 
+The [2:1 building-art trial](../art/isometric-trial/README.md) contains two
+review-only full-atlas generations, exact geometry references, saved prompts,
+edge measurements and inspected before/trial game captures. It is not runtime
+artwork: projection and authored pivot registration still fail acceptance and
+are tracked in [issue #15](https://github.com/corepunch/nile-archive/issues/15).
+No runtime inventory or interaction-state mapping changed in this experiment.
+
+The [Blender projection study](../art/isometric-blender/README.md) preserves
+editable geometry, its procedural source, a measured 2:1 camera report and two
+reviewed render previews for all ten buildings. These remain source studies;
+several footprint sizes differ from the game. Runtime adoption and state
+validation are also tracked in issue #15.
+
 These families plus the board assets above cover every file in `data/`;
 `runtime_inventory` is checked against disk by `make test`.
 
@@ -164,11 +177,16 @@ asset or manifest mapping changes. Reviewed phone captures of both paintings,
 all three packs and ray/bomb/prism effects, plus reproduction, are in
 [the board-scale review](review/larger-board/README.md).
 
-The board HUD floats directly over the lagoon/temple paintings, without the old
-cream backing panel. Existing outlined/shadowed labels, the move counter and a
-slim translucent progress track supply local contrast. Before/after captures of
-both paintings, safe-area phones, effects and modal underlays are in
-`docs/review/floating-hud/`. No artwork or interaction state was added.
+The board HUD uses three small, separate jade cards with gold rims: score,
+level/name and moves. Each label stays grouped with its value; objective pills
+share the same near-opaque backing. The painting remains visible in the gaps.
+The read-only `hud_form` in `lua/board.lua` uses engine row/column layout,
+computed values and a paint-only skin. Text keeps its outlined/shadowed palettes;
+score pulses and progress remain animated. No authored sprite or interaction
+state is added. The earlier unbacked HUD lost contrast and is superseded by
+[the grouped-card review](review/readable-hud/README.md), including both paintings,
+phone safe areas, modal underlays and effects. Historical captures are in
+`docs/review/floating-hud/`.
 
 Building pickup now uses the engine's stationary 0.5-second hold; ordinary drags
 pan the map. The existing ghost/footprint, held/released, valid/blocked and

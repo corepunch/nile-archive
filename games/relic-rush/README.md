@@ -17,7 +17,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 ## Shared UI and dialog layers
 
-Pause, building and guide dialogs use engine-owned form resources and one game skin. The guide is a measured stack populated from a stable-key data source: icon rows left-align title and description, and wrapping determines row height. Modal screens and dialogue blur earlier layers with the engine’s cached GPU Gaussian pass; foreground UI stays sharp. See the [shared UI API and adoption examples](../../docs/UI_ENGINE.md).
+Pause, building and guide dialogs use engine-owned form resources and one game skin. The expedition HUD uses a read-only engine form row: score, level/name and moves sit on separate jade cards with gold rims. Objective capsules share that backing style so every top readout stays legible over both paintings. The guide is a measured stack populated from a stable-key data source: icon rows left-align title and description, and wrapping determines row height. Modal screens and dialogue blur earlier layers with the engine’s cached GPU Gaussian pass; foreground UI stays sharp. See the [shared UI API and adoption examples](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 

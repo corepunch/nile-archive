@@ -87,27 +87,63 @@ local function draw_backdrop()
     end
 end
 
+-- Separate readout cards keep the painting visible between groups. Shared
+-- form rows/columns own the grouping; the skin only paints their bounds.
+local hud_form = ui.form{kind="column", gap=10, children={
+    {kind="row", height=68, gap=8, children={
+        {kind="column", panel=true, width=104, padding={8,6,8,6}, children={
+            {kind="label", text="SCORE", height=19, em=13, palette=PAL_WHITE},
+            {kind="label", id="score", height=37, em=30, role="score"},
+        }},
+        {kind="column", panel=true, grow=1, padding={8,6,8,6}, children={
+            {kind="label", id="level", height=20, em=15},
+            {kind="label", id="name", height=36, em=18, palette=PAL_CREAM, wrap=true},
+        }},
+        {kind="column", panel=true, width=88, padding={8,6,8,6}, children={
+            {kind="label", id="moves", height=37, em=33},
+            {kind="label", text="MOVES", height=19, em=12, palette=PAL_WHITE},
+        }},
+    }},
+    {kind="custom", id="progress", height=10, paint=function(r, value)
+        gfx.round_rect(r, 5, rgba(13,47,41,245))
+        if value>0 then gfx.round_rect(rect(r.x+1,r.y+1,math.max(6,(r.w-2)*value),r.h-2),4,rgba(88,169,92)) end
+    end},
+}}
+local function hud_style(node)
+    local pulse = node.role=="score" and not R.reduced_motion and 5*math.sin(R.score_pulse/.25*PI) or 0
+    return R.pal(node.palette or PAL_GOLD, (node.em or 18)+pulse)
+end
+local hud_skin = {
+    style=hud_style,
+    panel=function(r)
+        gfx.shadow(r:offset(vec2(0,3)),12,5,rgba(0,0,0,100))
+        gfx.round_rect(r,12,rgba(13,47,41,248))
+        gfx.round_rect_line(r:inflate(-.8),11,1.4,rgba(224,188,113,190))
+    end,
+    label=function(r, label, node)
+        if node.wrap then text.box(hud_style(node),r,vec2(.5,.5),label)
+        else text.inside(hud_style(node),r,vec2(.5,.5),label) end
+    end,
+}
+
 local function draw_hud()
     local g = R.g
     local l = rules.level_of(g)
-    -- Float the readouts over the painting, like Nile Archive's HUD. The
-    -- shared outlined/shadowed text stays readable without hiding the scene.
-    R.say_at("SCORE", vec2(90, 92), 14, PAL_WHITE, 0)
-    R.say_at(tostring(math.floor(R.score_display)), vec2(90, 119), 30 + (R.reduced_motion and 0 or 5 * math.sin(R.score_pulse / .25 * PI)), PAL_GOLD, 0)
-    R.say_at(("LEVEL %d"):format(g.level + 1), vec2(239, 92), 17, PAL_GOLD, 0)
-    R.say_at(l.name, vec2(239, 121), 18, PAL_CREAM, 184)
-    gfx.circle(vec2(399, 117), 38, rgba(122, 78, 36))
-    gfx.circle(vec2(399, 114), 34, rgba(237, 184, 77))
-    gfx.circle(vec2(399, 112), 30, rgba(255, 223, 129))
-    R.say(tostring(g.moves), rect(369, 85, 60, 37), 33, PAL_CREAM)
-    R.say("MOVES", rect(365, 122, 68, 17), 11, PAL_CREAM)
-    gfx.round_rect(rect(47, 156, 386, 11), 5, rgba(13, 47, 41, 210))
-    if R.goal_display > 0 then gfx.round_rect(rect(48, 157, math.max(6, 384 * R.goal_display), 8), 4, rgba(88, 169, 92)) end
+    hud_form:set("score",tostring(math.floor(R.score_display)))
+    hud_form:set("level",("LEVEL %d"):format(g.level+1))
+    hud_form:set("name",l.name)
+    hud_form:set("moves",tostring(g.moves))
+    hud_form:set("progress",R.goal_display)
+    hud_form:draw(rect(24,80,432,88),hud_skin,{interactive=false})
 
     -- two primary goals, then sand and lock goals when the level has them
     local goals = 2 + (l.soil > 0 and 1 or 0) + (g.initial_obstacles > 0 and 1 or 0)
     local gw = 432 / goals
-    for k = 0, goals - 1 do gfx.round_rect(rect(24 + k * gw + 2, 196, gw - 4, 36), 10, rgba(13, 47, 41, 230)) end
+    for k = 0, goals - 1 do
+        local r=rect(24+k*gw+2,196,gw-4,36)
+        gfx.round_rect(r,10,rgba(13,47,41,248))
+        gfx.round_rect_line(r:inflate(-.5),9,1,rgba(224,188,113,145))
+    end
     R.say_at(("%d / %d"):format(math.min(g.score, l.score), l.score), vec2(24 + gw * .5, 212), 17, PAL_CREAM, gw - 10)
     local pop = R.reduced_motion and 0 or 5 * math.sin(R.goal_pulse / .22 * PI)
     gfx.image(R.relics[rules.RELIC_IDOL + 1], rect(24 + gw + 5 - pop / 2, 200 - pop / 2, 29 + pop, 29 + pop), color.WHITE)
