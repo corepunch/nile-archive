@@ -607,13 +607,22 @@ local function draw_tray(r)
     end
 end
 
+local move_form = ui.form{kind="column",panel=true,padding=18,gap=8,children={
+    {kind="label",id="name",role="title",height=32},
+    {kind="label",text="Перетащите постройку или коснитесь свободного места",height=24},
+    {kind="row",height=44,gap=12,children={
+        {kind="button",id="cancel",text="Отмена",grow=1},
+        {kind="button",id="confirm",text="Подтвердить",accent=true,grow=1,enabled_field="valid"},
+    }},
+}}
+
 local function island_frame(screen, world)
     local island = G.island
     local cam = island.cam
     cam.view = app.bleed()   -- the island runs under the status bar and the home indicator
     island.cam = cam
+    local ev = island:update(world, G.wallet, app.clock(), app.dt())
     if G.modal == MODAL_NONE then
-        local ev = island:update(world, G.wallet, app.clock(), app.dt())
         if ev.result == city.BUILT then
             save_progress()
             fx.burst(ev.screen, 26, hex(0xF2D29A), 260, 9)
@@ -647,6 +656,23 @@ local function island_frame(screen, world)
     if capsule(influence:inflate2(vec2(0, -2)), G.influence, tostring(G.wallet[INFLUENCE])) then ui.toast("Влияние дают постройки на острове") end
 
     if story.active() then return end   -- story scenes keep the stage clear, as June's Journey does
+
+    if island.placing >= 0 then
+        G.tray = false
+        move_form:set("name",buildings[island.placing+1].name)
+        move_form.values.valid=island:can_place(island:snap(island.ghost,island.placing),island.placing,island.moving)
+        local width=math.min(620,screen.w-36)
+        local _,height=move_form:measure(width)
+        local box=rect.anchor(vec2(screen:center().x,screen:max().y-18),size2(width,height),vec2(.5,1))
+        local action=move_form:draw(box)
+        G.spots.move_cancel,G.spots.move_confirm=move_form.boxes.cancel:center(),move_form.boxes.confirm:center()
+        if action and action.id=="cancel" then island:cancel()
+        elseif action and action.id=="confirm" then
+            local ev=island:confirm(G.wallet,app.clock())
+            if ev.result==city.MOVED then save_progress();ui.toast("Постройка перемещена") end
+        end
+        return
+    end
 
     -- the left column: people and the next shore
     local x = area.x + 39
@@ -949,7 +975,7 @@ end
 ------------------------------------------------------------------ smoke
 
 -- --smoke plays chapter one through injected clicks: skip the intro, open the
--- chapters, play, tap a miss and every item, continue, and check the save.
+-- chapters, play, tap every item, continue, then pan and long-press move with cancel/confirm.
 local function smoke()
     G.smoke_frame = (G.smoke_frame or 0) + 1
     local f = G.smoke_frame
@@ -988,8 +1014,48 @@ local function smoke()
         app.inject_click(G.spots.continue); G.smoke_step = 6
     elseif step == 6 then
         assert(not G.scene and G.wins[1] == 1 and G.stars[1] >= 1, "continue did not bank the chapter")
-        print(("Nile smoke: chapter one played through clicks, %d points, %d stars"):format(G.result.score, G.result.stars))
-        app.quit()
+        local c=G.island
+        G.smoke_origin,G.smoke_coins=c.items[1].pos,G.wallet[COINS]
+        c.cam=c.cam:look(G.smoke_origin-vec2(0,50))
+        G.smoke_cam=c.cam.center
+        G.smoke_press=c.cam:rect_to_screen(c:sprite_rect(c.items[1])):point(vec2(.5,.65))
+        app.inject_press(G.smoke_press);G.smoke_step=7
+    elseif step==7 then
+        app.inject_move(G.smoke_press+vec2(-40,0));G.smoke_step=8
+    elseif step==8 then
+        assert(G.island.placing<0 and G.island.cam.center.x>G.smoke_cam.x,"ordinary building drag must pan")
+        app.inject_release(G.smoke_press+vec2(-40,0));G.smoke_pass=1;G.smoke_step=9
+    elseif step==9 then
+        local c=G.island
+        c.cam=c.cam:look(G.smoke_origin-vec2(0,50))
+        G.smoke_press=c.cam:rect_to_screen(c:sprite_rect(c.items[1])):point(vec2(.5,.65))
+        G.smoke_grab=G.smoke_origin-c.cam:to_world(G.smoke_press)
+        app.inject_press(G.smoke_press);G.smoke_hold=app.time();G.smoke_step=10
+    elseif step==10 and app.time()-G.smoke_hold>.65 then
+        local c=G.island
+        assert(c.moving==0 and c.held,"long press must lift the building")
+        local ok,spot=c:find_spot(c.placing,G.smoke_origin+vec2(200,0))
+        assert(ok,"no move destination")
+        G.smoke_destination=spot
+        G.smoke_drop=c.cam:to_screen(spot-G.smoke_grab)
+        app.inject_move(G.smoke_drop);G.smoke_step=11
+    elseif step==11 then
+        app.inject_release(G.smoke_drop);G.smoke_step=12
+    elseif step==12 then
+        local c=G.island
+        assert(not c.held and c.placing>=0 and c.items[1].pos:dist(G.smoke_origin)<.01 and G.wallet[COINS]==G.smoke_coins,"release must leave an uncommitted preview")
+        app.inject_click(G.smoke_pass==1 and G.spots.move_cancel or G.spots.move_confirm);G.smoke_step=13
+    elseif step==13 then
+        local c=G.island
+        assert(c.placing<0 and G.wallet[COINS]==G.smoke_coins,"move must finish without spending coins")
+        if G.smoke_pass==1 then
+            assert(c.items[1].pos:dist(G.smoke_origin)<.01,"cancel moved the building")
+            G.smoke_pass=2;G.smoke_step=9
+        else
+            assert(c.items[1].pos:dist(G.smoke_destination)<.01,"confirm did not move the building")
+            print(("Nile smoke: chapter one, pan, long-press pickup, cancel and confirm passed; %d points, %d stars"):format(G.result.score,G.result.stars))
+            app.quit()
+        end
     end
 end
 
@@ -1003,6 +1069,7 @@ local function frame_fn(dt)
     if inp.back and not talking then
         if G.modal == MODAL_WIN then go_home()
         elseif G.modal ~= MODAL_NONE then G.modal = MODAL_NONE
+        elseif G.island.placing >= 0 then G.island:cancel()
         elseif G.tray then G.tray = false; G.island.selected = -1
         elseif G.scene then G.modal, G.modal_time = MODAL_PAUSE, 0 end
     end
@@ -1068,8 +1135,10 @@ local function setup_theme()
         text = base,
         small = G.eyebrow,
         title = style{font = G.serif, size = 30}:grad(hex(0xFFF3D1), hex(0xE2B46A)):outlined(1.4, ink):shadowed(vec2(0, 3), 4, rgba(0, 0, 0, 140)),
-        button = style{font = G.sans_bold, size = 17, fill = hex(0xF5E7C5)},
-        accent_text = style{font = G.sans_bold, size = 17, fill = hex(0x293E39)},
+        button = style{font = G.sans_bold, size = 21}:grad(hex(0xFFF6DC), hex(0xF5D58E))
+            :outlined(1, ink):shadowed(vec2(0, 1), 1, rgba(0, 0, 0, 120)),
+        accent_text = style{font = G.sans_bold, size = 21}:grad(hex(0x203C36), ink)
+            :shadowed(vec2(0, 1), 0, rgba(255, 246, 220, 150)),
         panel = hex(0x1D4442), panel2 = hex(0x183A39), border = rgba(167, 173, 117, 90),
         button_bg = hex(0x2A524F), button_bg2 = hex(0x1F4442), button_hot = hex(0x38615B),
         button_border = rgba(191, 166, 107, 110),

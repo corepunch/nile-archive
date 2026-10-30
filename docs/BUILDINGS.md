@@ -63,6 +63,23 @@ sprite drawn `height` tall, standing on its bottom centre.
 - **Drawing.** The ghost's footprint is the parallelogram of its tiles with
   the tile lines inside, green when it fits and red when it doesn't.
 
+## Moving a placed building
+
+Both city games use the engine's `movable` gesture: hold a building still for
+**0.5 seconds**, then drag the lifted preview. A quick drag pans the map even
+when it begins on a building. Moving before the threshold permanently cancels
+that press's pickup; stopping the pan does not re-arm it. UI presses, two-finger
+gestures, wheel zoom, release and pointer/focus cancellation cannot trigger it.
+
+Release snaps the preview to the grid. Confirm commits a valid move at no cost;
+Cancel keeps the original position. No layout or wallet change is saved while
+previewing. Existing explicit `begin_move` commands still enter a preview;
+programmatic placement and short-tap income/details retain their own behavior.
+Nile Archive uses an engine form for Confirm/Cancel; Relic Rush uses its existing
+placement sheet. Volcano and Clayfight have no city-building relocation mode.
+
+Reviewed native-input comparisons are in [the gesture review](review/city-long-press/README.md).
+
 ## Measuring a sprite
 
 ```sh

@@ -160,6 +160,15 @@ slim translucent progress track supply local contrast. Before/after captures of
 both paintings, safe-area phones, effects and modal underlays are in
 `docs/review/floating-hud/`. No artwork or interaction state was added.
 
+Building pickup now uses the engine's stationary 0.5-second hold; ordinary drags
+pan the map. The existing ghost/footprint, held/released, valid/blocked and
+confirm/cancel states are retained. [Issue #21](https://github.com/corepunch/nile-archive/issues/21)
+tracks gesture arbitration and the two-game input audit. Sources are
+`engine/city.c`, `engine/core.c` and `lua/island_view.lua`; reviewed native-input
+captures and reproduction commands are in
+[the shared gesture review](../../../docs/review/city-long-press/README.md).
+No bitmap or atlas mapping is added.
+
 Resource capsules, island HUD panels, progress bars, menu buttons, result stars, placement outlines, land
 fog and dialogue chrome are intentional engine geometry/text; they are not gem
 or tool artwork states. Existing island, dialogue and result captures are linked

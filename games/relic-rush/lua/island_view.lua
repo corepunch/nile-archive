@@ -114,11 +114,11 @@ local function bottom_panel()
         if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.overlay = c.count, R.OV_WONDER end
     elseif R.prog.level >= rules.LEVELS then
         R.say_at("Your island, your story", vec2(240, 782 + y), 27, PAL_GOLD, 0)
-        R.say_at("DRAG TO EXPLORE. MOVE ANY BUILDING.", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "EXPLORE MY ISLAND", true) then R.notice("Drag the land to explore. Tap a wonder to move it.") end
+        R.say_at("DRAG TO EXPLORE. HOLD A BUILDING TO MOVE.", vec2(240, 811 + y), 12, PAL_WHITE, 0)
+        if R.button(rect(58, 834 + y, 364, 44), "EXPLORE MY ISLAND", true) then R.notice("Drag to explore. Hold a wonder to pick it up.") end
     else
         R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(c.count), vec2(240, 783 + y), 15, PAL_WHITE, 0)
-        R.say_at("SCROLL THE ISLAND. TAP A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
+        R.say_at("DRAG TO SCROLL. HOLD A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
         if R.button(rect(58, 834 + y, 364, 44), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
             if R.g.level == R.prog.level and not R.g.won and not R.g.lost then R.on_island = false
             else R.start_level() end
@@ -134,8 +134,9 @@ function R.island_screen(inp, dt)
     local cam = c.cam
     cam.view = MAP_VIEW
     c.cam = cam
+    local city_input=R.overlay==R.OV_NONE and inp or input{pos=inp.pos,pinch=1}
+    local ev = c:update(city_input, R.prog.wallet, app.clock(), dt)
     if R.overlay == R.OV_NONE then
-        local ev = c:update(inp, R.prog.wallet, app.clock(), dt)
         if ev.result == city.PICKED then R.inspect, R.overlay = ev.building, R.OV_WONDER
         elseif ev.result == city.ZONE then R.zone_card, R.overlay = ev.zone, R.OV_ZONE end
     end

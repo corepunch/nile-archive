@@ -98,20 +98,38 @@ static void frame(float dt)
         CHECK(in.pressed && in.released && in.tap && !in.down);
         CHECK(fabsf(in.pos.x - 30) < 1 && fabsf(in.pos.y - 20) < 1);
         draw_and_check();
+        ui_hit(app_screen(),0); /* this button exists before its press */
+        post(kEventLeftButtonDown, 100, 60);
         struct AXmessage gesture = {.message = kEventGesture, .gesture = {.phase = AX_GESTURE_BEGIN}};
         axPostMessageOwnedW(gesture);
         gesture.gesture = (ax_gesture_t){.phase = AX_GESTURE_UPDATE, .x = 100, .y = 60, .scale = 1.25f};
         axPostMessageOwnedW(gesture);
         post(kEventKeyDown, AX_KEY_ESCAPE, 0);
     } else if (step == 1) {
-        CHECK(!in.pressed && !in.released && !in.tap);
-        CHECK(fabsf(in.pinch - 1.25f) < .001f);
+        CHECK(in.captured && in.pressed && in.down && !in.released && !in.tap);
+        CHECK(fabsf(in.pinch - 1.25f) < .001f && in.multi_touch);
         CHECK(in.back && in.key == AX_KEY_ESCAPE);
-        post(kEventLeftButtonDown, 100, 60);
+        CHECK(!ui_hit(app_screen(),0).held);
+        post(kEventLeftButtonUp, 100, 60);
+    } else if (step == 2) {
+        CHECK(in.captured && in.released && !in.down && !in.tap && in.multi_touch);
+        CHECK(!ui_hit(app_screen(),0).clicked);
         post(kEventPointerCancel, 0, 0);
-    } else {
+    } else if (step == 3) {
         CHECK(!in.down && !in.pressed && !in.released && !in.dragging && !in.tap && !in.captured);
-        CHECK(in.pinch == 1 && !in.back && in.key == 0);
+        CHECK(in.pinch == 1 && !in.back && in.key == 0 && !in.multi_touch);
+    } else if (step == 4) {
+        app_inject_press(v2(30,20)); /* both UI buffers have now expired */
+    } else if (step == 5) {
+        CHECK(in.pressed && in.down && !in.captured);
+        CHECK(!ui_hit(rc(20,10,30,30),0).held); /* appears under a world press */
+        app_inject_release(v2(30,20));
+    } else if (step == 6) {
+        CHECK(in.released && in.tap && !in.captured);
+        CHECK(!ui_hit(rc(20,10,30,30),0).clicked);
+        app_inject_click(v2(30,20)); /* a fresh press on the visible control */
+    } else {
+        CHECK(in.captured && ui_hit(rc(20,10,30,30),0).clicked);
         app_quit();
     }
     step++;
@@ -123,7 +141,7 @@ int main(int argc, char **argv)
     char *args[] = {"test-platform", "--headless", "--size", "320x200", "--mute", "--safe-area", "35,21,11,7"};
     app_desc desc = {.design = {100, 100}, .fixed = true, .clear = {16, 32, 48, 255}, .init = init, .frame = frame, .quit = quit};
     CHECK(app_run(desc, argc > 1 ? 7 : 5, args) == 0);
-    CHECK(step == 3);
+    CHECK(step == 8);
     printf("platform renderer/input: %d checks, %d failures\n", checks, failures);
     return failures != 0;
 }

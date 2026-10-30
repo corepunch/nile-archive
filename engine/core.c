@@ -60,7 +60,6 @@ static struct {
     float dt;
     longTime_t last_counter;
     input in;
-    bool pinched;          /* a second finger joined during this press */
     const char *shot_path;
     int shot_frames;
     int frame_index;
@@ -85,15 +84,19 @@ void app_quit(void) { A.running = false; }
 input input_get(void) { return A.in; }
 
 /* Queue window coordinates, just like native pointer events. */
-void app_inject_click(vec2 p)
+static void inject_pointer(vec2 p, uint32_t event)
 {
     float scale = A.view.size.w / A.logical.w;
     vec2 offset = A.view.pos;
     vec2 at = vec2_add(offset, vec2_scale(p, scale));
     uint32_t xy = MAKEDWORD((int)lroundf(at.x), (int)lroundf(at.y));
-    axPostMessageW(NULL, kEventLeftButtonDown, xy, NULL);
-    axPostMessageW(NULL, kEventLeftButtonUp, xy, NULL);
+    axPostMessageW(NULL, event, xy, NULL);
 }
+
+void app_inject_press(vec2 p) { inject_pointer(p, kEventLeftButtonDown); }
+void app_inject_move(vec2 p) { inject_pointer(p, kEventLeftButtonDragged); }
+void app_inject_release(vec2 p) { inject_pointer(p, kEventLeftButtonUp); }
+void app_inject_click(vec2 p) { app_inject_press(p); app_inject_release(p); }
 
 const char *app_path(const char *rel)
 {
@@ -191,7 +194,7 @@ static void pointer_down(vec2 p)
     in->down = in->pressed = true;
     in->dragging = false;
     in->captured = ui_blocks(p);
-    A.pinched = false;
+    in->multi_touch = false;
 }
 
 static void pointer_move(vec2 p)
@@ -199,7 +202,7 @@ static void pointer_move(vec2 p)
     input *in = &A.in;
     vec2 delta = vec2_sub(p, in->pos);
     in->pos = p;
-    if (!in->down || A.pinched) return;
+    if (!in->down || in->multi_touch) return;
     if (!in->dragging && vec2_dist(p, in->press_pos) > DRAG_THRESHOLD) {
         in->dragging = true;
         delta = vec2_sub(p, in->press_pos);
@@ -214,7 +217,7 @@ static void pointer_up(vec2 p)
     if (!in->down) return;
     in->down = false;
     in->released = true;
-    in->tap = !in->dragging && !A.pinched;
+    in->tap = !in->dragging && !in->multi_touch;
 }
 
 static void poll_events(void)
@@ -242,7 +245,7 @@ static void poll_events(void)
         case kEventScrollWheel: in->wheel += e.dy; break;
         case kEventGesture:
             if (e.gesture.phase == AX_GESTURE_BEGIN) {
-                A.pinched = true;
+                in->multi_touch = true;
                 in->dragging = in->tap = false;
                 in->drag = v2(0, 0);
             }
@@ -255,6 +258,7 @@ static void poll_events(void)
         case kEventKillFocus:
             in->down = in->pressed = in->released = in->dragging = in->hover = in->tap = false;
             in->captured = false;
+            in->multi_touch = false;
             in->drag = v2(0, 0);
             break;
         case kEventKeyDown:

@@ -30,11 +30,12 @@
 ---@field down boolean Held.
 ---@field pressed boolean Went down this frame.
 ---@field released boolean Went up this frame.
----@field tap boolean Released this frame without dragging.
+---@field tap boolean Released this frame without dragging or multi-touch.
 ---@field dragging boolean Moved further than the drag threshold.
 ---@field drag vec2 Movement this frame while dragging.
 ---@field captured boolean The press started on UI; the world should ignore it.
 ---@field hover boolean A real mouse is over the window.
+---@field multi_touch boolean A second pointer joined this press; latched through release, cleared on the next press or cancellation.
 ---@field wheel number Wheel steps this frame.
 ---@field pinch number Zoom factor from two fingers this frame (1 = none).
 ---@field pinch_center vec2
@@ -193,7 +194,7 @@
 ---@field fog color Locked zones; default dark teal.
 ---@field fog_on_land_only boolean
 ---@field path color Paths linking buildings; alpha 0 = none.
----@field movable boolean Drag a building to move it.
+---@field movable boolean Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map.
 ---@field show_footprints boolean Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements.
 ---@field income_icon texture
 ---@field selected integer Quick build: a tap places this type at once (-1 = off).
@@ -748,6 +749,18 @@ function app.mesh(pts, colors, indices) end
 ---Queue a press and release at a logical point, as a tap would. For automated tests only.
 ---@param p vec2
 function app.inject_click(p) end
+
+---Queue a pointer down at a logical point, for automated hold/drag tests.
+---@param p vec2
+function app.inject_press(p) end
+
+---Queue a held pointer move at a logical point, for automated hold/drag tests.
+---@param p vec2
+function app.inject_move(p) end
+
+---Queue a pointer release at a logical point, for automated hold/drag tests.
+---@param p vec2
+function app.inject_release(p) end
 
 ---On the web, the value of localStorage[key], else nil. For migrating saves from older builds.
 ---@param key string
@@ -1512,6 +1525,7 @@ function city.snap(c, world, type) end
 ---@param at vec2
 function city.begin_place(c, type, at) end
 
+---Explicitly start a move preview; commit with confirm or discard with cancel. Pointer pickup uses the shared half-second hold.
 ---@param c city
 ---@param index integer
 function city.begin_move(c, index) end

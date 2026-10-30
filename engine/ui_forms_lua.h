@@ -165,7 +165,7 @@ static const char engine_ui_forms[] =
 "    return n.format and n.format:format(v) or tostring(v)\n"
 "end\n"
 "local function style_for(n, skin)\n"
-"    return n.style or (skin.style and skin.style(n)) or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and 'button' or 'text']\n"
+"    return n.style or (skin.style and skin.style(n)) or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and (n.accent and 'accent_text' or 'button') or 'text']\n"
 "end\n"
 "local function horizontal(n) return n.kind=='row' or (n.kind=='list' and n.direction=='row') end\n"
 "local function measure(n, width, skin, values)\n"

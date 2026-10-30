@@ -53,7 +53,10 @@ void city_init(city *c, const char *ground_path)
     if (c->spacing <= 0) c->spacing = 100;
     if (c->fog.a == 0) c->fog = rgba(13, 46, 49, 155);
     c->open |= 1;
-    c->selected = c->placing = c->moving = c->pop_index = -1;
+    c->selected = c->pop_index = -1;
+    city_cancel(c);
+    c->press_consumed = false;
+    c->lift = 0;
     for (int i = 0; i < c->def_count; i++) {
         building_def *d = &c->defs[i];
         if (d->sprite_path && !d->sprite.tex) d->sprite = tex_load(d->sprite_path);
@@ -217,6 +220,9 @@ void city_begin_place(city *c, int type, vec2 at)
     if (type < 0 || type >= c->def_count) return;
     c->placing = type;
     c->moving = -1;
+    c->held = false;
+    c->press_target = 0;
+    c->press_time = 0;
     c->ghost = city_snap(c, at, type);
 }
 
@@ -225,10 +231,20 @@ void city_begin_move(city *c, int index)
     if (index < 0 || index >= c->count) return;
     c->placing = c->items[index].type;
     c->moving = index;
+    c->held = false;
+    c->press_target = 0;
+    c->press_time = 0;
     c->ghost = city_snap(c, c->items[index].pos, c->placing);
 }
 
-void city_cancel(city *c) { c->placing = c->moving = -1, c->held = false; }
+void city_cancel(city *c)
+{
+    c->placing = c->moving = -1;
+    c->held = false;
+    c->press_target = 0;
+    c->press_time = 0;
+    /* A cancelled world gesture still owns its eventual release. */
+}
 
 city_event city_confirm(city *c, purse *wallet, double now)
 {
@@ -287,6 +303,13 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
     c->pop_time = maxf(0, c->pop_time - dt);
     bool in_view = rect_contains(c->cam.view, in.press_pos);
 
+    if (in.pressed) {
+        c->press_target = 0;
+        c->press_time = 0;
+        c->press_consumed = false;
+        c->held = false;
+    }
+
     if (in.pressed && !in.captured && in_view) {
         vec2 p = camera_to_world(c->cam, in.pos);
         int i = city_building_at(c, p);
@@ -294,28 +317,46 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         if (c->placing >= 0 && rect_contains(city_sprite_rect(c, (building){c->ghost, c->placing, 0}), p)) {
             c->press_target = 1;
             c->grab = vec2_sub(c->ghost, p);
-        } else if (c->placing < 0 && c->movable && i >= 0) {
+        } else if (c->placing < 0 && c->selected < 0 && c->movable && i >= 0) {
             c->press_target = 2 + i;
             c->grab = vec2_sub(c->items[i].pos, p);
         }
     }
-    if (in.dragging && !in.captured && c->press_target >= 2) {   /* dragging a building starts moving it */
-        city_begin_move(c, c->press_target - 2);
-        c->press_target = 1;
+    bool interrupted = in.captured || in.multi_touch || in.pinch != 1 || in.wheel != 0 || in.back;
+    if (interrupted && c->press_target) c->press_consumed = true;
+    if (c->press_target >= 2) {
+        if (!in.down || in.dragging || interrupted || !c->movable || c->selected >= 0 ||
+            !rect_contains(c->cam.view, in.pos) || c->press_target - 2 >= c->count) {
+            c->press_target = 0;   /* a pan/pinch cannot become a pickup later in the same press */
+            c->press_time = 0;
+        } else if (!in.pressed) {
+            c->press_time += maxf(0, dt);
+            if (c->press_time >= .5f) {
+                city_begin_move(c, c->press_target - 2);
+                c->press_target = 1;
+                c->press_consumed = c->held = true;
+            }
+        }
     }
     /* the ghost follows the finger freely and lands on the grid when let go */
-    if (in.dragging && !in.captured && c->press_target == 1 && c->placing >= 0) {
+    if ((in.dragging || c->held) && (in.down || in.released) && !interrupted && c->press_target == 1 && c->placing >= 0) {
         c->ghost = vec2_add(camera_to_world(c->cam, in.pos), c->grab);
         c->held = true;
     }
-    if (in.released && c->press_target == 1 && c->placing >= 0) c->ghost = city_snap(c, c->ghost, c->placing), c->held = false;
+    if (c->held && (interrupted || !in.down || c->press_target != 1)) {
+        c->ghost = city_snap(c, c->ghost, c->placing);
+        c->held = false;
+    }
+    if (!in.released && (!in.down || interrupted)) c->press_target = 0;
     c->lift = approachf(c->lift, c->held && c->placing >= 0 ? 1 : 0, 14, dt);
 
     input cam_in = in;
-    if (c->press_target) cam_in.dragging = false, cam_in.drag = v2(0, 0);
+    if (c->press_target == 1) cam_in.dragging = false, cam_in.drag = v2(0, 0);
     c->cam = camera_clamp(camera_input(c->cam, cam_in));
 
-    if (!in.tap || in.captured || !rect_contains(c->cam.view, in.pos)) {
+    bool consumed = c->press_consumed;
+    if (in.released || !in.down) c->press_consumed = false;
+    if (consumed || !in.tap || interrupted || !rect_contains(c->cam.view, in.pos)) {
         if (in.released) c->press_target = 0;
         return ev;
     }

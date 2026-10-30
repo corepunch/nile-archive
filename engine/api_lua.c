@@ -322,7 +322,7 @@ static int l_purse_new(lua_State *L)
 
 void api_push_input(lua_State *L, input v)
 {
-    lua_createtable(L, 0, 15);
+    lua_createtable(L, 0, 16);
     api_push_vec2(L, v.pos); lua_setfield(L, -2, "pos");
     api_push_vec2(L, v.press_pos); lua_setfield(L, -2, "press_pos");
     lua_pushboolean(L, v.down); lua_setfield(L, -2, "down");
@@ -333,6 +333,7 @@ void api_push_input(lua_State *L, input v)
     api_push_vec2(L, v.drag); lua_setfield(L, -2, "drag");
     lua_pushboolean(L, v.captured); lua_setfield(L, -2, "captured");
     lua_pushboolean(L, v.hover); lua_setfield(L, -2, "hover");
+    lua_pushboolean(L, v.multi_touch); lua_setfield(L, -2, "multi_touch");
     lua_pushnumber(L, v.wheel); lua_setfield(L, -2, "wheel");
     lua_pushnumber(L, v.pinch); lua_setfield(L, -2, "pinch");
     api_push_vec2(L, v.pinch_center); lua_setfield(L, -2, "pinch_center");
@@ -377,6 +378,9 @@ input api_get_input(lua_State *L, int i)
     lua_getfield(L, i, "hover");
     v.hover = lua_toboolean(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "multi_touch");
+    v.multi_touch = lua_toboolean(L, -1);
+    lua_pop(L, 1);
     lua_getfield(L, i, "wheel");
     v.wheel = (float)lua_tonumber(L, -1);
     lua_pop(L, 1);
@@ -408,6 +412,7 @@ void api_store_input(lua_State *L, int i, input v)
     api_push_vec2(L, v.drag); lua_setfield(L, i, "drag");
     lua_pushboolean(L, v.captured); lua_setfield(L, i, "captured");
     lua_pushboolean(L, v.hover); lua_setfield(L, i, "hover");
+    lua_pushboolean(L, v.multi_touch); lua_setfield(L, i, "multi_touch");
     lua_pushnumber(L, v.wheel); lua_setfield(L, i, "wheel");
     lua_pushnumber(L, v.pinch); lua_setfield(L, i, "pinch");
     api_push_vec2(L, v.pinch_center); lua_setfield(L, i, "pinch_center");
@@ -2578,6 +2583,30 @@ static int l_app_inject_click(lua_State *L)
     return 0;
 }
 
+/* app.inject_press(p) */
+static int l_app_inject_press(lua_State *L)
+{
+    vec2 a_p = api_check_vec2(L, 1);
+    app_inject_press(a_p);
+    return 0;
+}
+
+/* app.inject_move(p) */
+static int l_app_inject_move(lua_State *L)
+{
+    vec2 a_p = api_check_vec2(L, 1);
+    app_inject_move(a_p);
+    return 0;
+}
+
+/* app.inject_release(p) */
+static int l_app_inject_release(lua_State *L)
+{
+    vec2 a_p = api_check_vec2(L, 1);
+    app_inject_release(a_p);
+    return 0;
+}
+
 /* app.web_storage(key) */
 static int l_app_web_storage(lua_State *L)
 {
@@ -4055,6 +4084,9 @@ static void open_app(lua_State *L)
         {"path", l_app_path},
         {"mesh", l_app_renderer_geometry},
         {"inject_click", l_app_inject_click},
+        {"inject_press", l_app_inject_press},
+        {"inject_move", l_app_inject_move},
+        {"inject_release", l_app_inject_release},
         {"web_storage", l_app_web_storage},
         {NULL, NULL}
     };

@@ -91,7 +91,12 @@ logical units.
 `input_get()` returns a snapshot of one pointer (mouse or first finger):
 `pressed`, `released`, `tap` (released without dragging), `dragging` and
 per-frame `drag`, `wheel`, two-finger `pinch` and `pinch_center`, plus `key`
-and `back`.
+and `back`. `multi_touch` records that a second pointer joined the press;
+it stays true through release and clears on a new press or cancellation. World
+holds and UI buttons reject such a gesture even when the pinch scale is idle.
+`app.inject_press`, `app.inject_move` and `app.inject_release` queue individual
+logical-coordinate events for automated hold/drag tests; `inject_click` remains
+the immediate press/release convenience.
 
 UI and world share the pointer without callbacks: every widget registers its
 rect; when a press starts on a rect registered in the previous frame, the press
@@ -188,8 +193,14 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   `city_confirm` or `city_cancel`). A dragged ghost is not snapped until it
   is let go; meanwhile it is `held`, drawn lifted over the green or red
   footprint of the tile it will land on (`city_snap`), where validity is
-  checked. With `movable`, dragging a building
-  starts moving it. `city_find_spot` searches outwards from a hint.
+  checked. With `movable`, holding a building still for **0.5 seconds** lifts it
+  into a move preview. Ordinary drags pan even when they start on a building.
+  Movement before the threshold, pinch/wheel zoom, UI capture, release and
+  pointer/focus cancellation or Back discard the pending hold for that press. A pickup
+  consumes its release, so it cannot also collect income or open a details card.
+  Release snaps the preview; games expose Confirm/Cancel and save only on
+  `CITY_MOVED`. Keep calling update with an idle pointer while a modal blocks
+  the city, so pending/held gestures are cleared. `city_find_spot` searches outwards from a hint.
 - **Drawing.** Ground, optional curved paths linking each building to its
   nearest older neighbour, fog over closed zones (under the buildings, which
   always stand on open land, so a tall sprite near the border is never
@@ -332,7 +343,7 @@ binary's Lua state without a window, every file in `tests/lua/`: `api.lua`
 (the generated API: operators, in/out arguments, handles, callbacks) and
 `relic.lua` (Relic Rush's rules, ported from the original prototype, including
 the greedy bot's campaign runs). Relic Rush's `--smoke` drives the real game
-loop through injected mouse clicks from the first swap to the second level,
+loop through injected pointer events from the first swap through pan/hold/move/cancel/confirm to the second level,
 which catches stuck states and broken input routing. The Lua port itself was
 verified by rendering every documentation screenshot and reel frame with both
 the C and the Lua games and comparing them pixel for pixel.

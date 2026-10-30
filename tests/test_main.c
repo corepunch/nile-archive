@@ -259,6 +259,116 @@ static void test_city(void)
     CHECK(city_find_spot(&c, 2, v2(704, 816), &spot) && city_can_place(&c, spot, 2, -1));
 }
 
+/* Gesture arbitration: a map drag must never turn into a building move. */
+static void move_city(city *c)
+{
+    static building_def defs[]={{.name="income",.height=100,.income={{5}},.income_period=60}};
+    *c=(city){.defs=defs,.def_count=1,.movable=true};
+    c->cam=(camera){.world={2000,2000},.view={{0,0},{480,900}},.center={1000,1000},.zoom=1,.min_zoom=1,.max_zoom=2};
+    city_init(c,NULL);
+    city_add(c,city_snap(c,v2(1000,1000),0),0,0);
+}
+
+static input building_press(const city *c)
+{
+    vec2 p=camera_to_screen(c->cam,vec2_sub(c->items[0].pos,v2(0,30)));
+    return (input){.pos=p,.press_pos=p,.pressed=true,.down=true,.pinch=1};
+}
+
+static void test_city_hold(void)
+{
+    static city c;
+    purse wallet={{100}};
+    move_city(&c);
+    vec2 original=c.items[0].pos, cam=c.cam.center;
+    input in=building_press(&c);
+    city_update(&c,in,&wallet,100,0);
+    in.pressed=false;in.dragging=true;in.drag=v2(-40,0);in.pos=vec2_add(in.pos,in.drag);
+    city_update(&c,in,&wallet,100,.1f);
+    CHECK(c.placing<0 && c.moving<0 && !c.held);
+    NEAR(c.cam.center.x,cam.x+40);
+    in.dragging=false;in.drag=v2(0,0);
+    city_update(&c,in,&wallet,100,1);
+    CHECK(c.placing<0); /* no late re-arming after a pan */
+    in.down=false;in.released=true;
+    CHECK(city_update(&c,in,&wallet,100,0).result==CITY_NONE);
+    NEAR(c.items[0].pos.x,original.x);
+
+    move_city(&c);in=building_press(&c);
+    city_update(&c,in,&wallet,100,0);in.pressed=false;
+    city_update(&c,in,&wallet,100,.49f);
+    CHECK(c.placing<0 && !c.held);
+    city_update(&c,in,&wallet,100,.02f);
+    CHECK(c.moving==0 && c.held && c.lift>0);
+    in.pos=vec2_add(in.pos,v2(64,17));in.dragging=true;in.drag=v2(64,17);
+    city_update(&c,in,&wallet,100,.1f);
+    NEAR(c.ghost.x,original.x+64);NEAR(c.ghost.y,original.y+17);
+    in.down=false;in.released=true;in.drag=v2(0,0);
+    CHECK(city_update(&c,in,&wallet,100,0).result==CITY_NONE);
+    CHECK(!c.held && c.placing==0 && wallet.v[0]==100);
+    NEAR(c.items[0].pos.x,original.x);NEAR(c.items[0].pos.y,original.y);
+    vec2 snapped=city_snap(&c,vec2_add(original,v2(64,17)),0);
+    NEAR(c.ghost.x,snapped.x);NEAR(c.ghost.y,snapped.y);
+    CHECK(city_confirm(&c,&wallet,100).result==CITY_MOVED && wallet.v[0]==100);
+    CHECK(city_confirm(&c,&wallet,100).result==CITY_NONE);
+    NEAR(c.items[0].pos.y,snapped.y);
+
+    move_city(&c);in=building_press(&c);
+    city_update(&c,in,&wallet,100,0);in.pressed=false;
+    city_update(&c,in,&wallet,100,.51f);city_cancel(&c);
+    in.down=false;in.released=in.tap=true;
+    CHECK(city_update(&c,in,&wallet,100,0).result==CITY_NONE && wallet.v[0]==100);
+    CHECK(c.placing<0 && !c.held);
+    NEAR(c.items[0].pos.x,original.x);
+
+    for (int interrupt=0;interrupt<9;interrupt++) {
+        move_city(&c);in=building_press(&c);
+        city_update(&c,in,&wallet,100,0);in.pressed=false;
+        city_update(&c,in,&wallet,100,.2f);
+        input changed=in;
+        switch (interrupt) {
+        case 0: changed.captured=true;break;
+        case 1: changed.multi_touch=true;break;
+        case 2: changed.pinch=1.1f;break;
+        case 3: changed.dragging=true;break;
+        case 4: changed.down=false;break; /* focus loss / pointer cancellation */
+        case 5: changed.pos=v2(-1,-1);break;
+        case 6: changed.wheel=1;break;
+        case 7: c.movable=false;break;
+        case 8: changed.back=true;break;
+        }
+        city_update(&c,changed,&wallet,100,1);
+        CHECK(c.placing<0 && !c.held);
+        city_update(&c,in,&wallet,100,1);
+        CHECK(c.placing<0 && !c.held);
+        if (interrupt==0 || interrupt==1 || interrupt==2 || interrupt==6 || interrupt==8) {
+            in.down=false;in.released=in.tap=true;
+            CHECK(city_update(&c,in,&wallet,100,0).result==CITY_NONE && wallet.v[0]==100);
+        }
+    }
+    move_city(&c);in=building_press(&c);in.captured=true;
+    city_update(&c,in,&wallet,100,0);in.pressed=false;in.captured=false;
+    city_update(&c,in,&wallet,100,1);
+    CHECK(c.placing<0); /* a press that began on UI cannot become a world hold */
+
+    move_city(&c);in=building_press(&c);
+    city_update(&c,in,&wallet,100,0);in.pressed=false;in.down=false;in.released=in.tap=true;
+    CHECK(city_update(&c,in,&wallet,100,.1f).result==CITY_COLLECTED && wallet.v[0]==105);
+    move_city(&c);c.selected=0;in=building_press(&c);
+    city_update(&c,in,&wallet,100,0);in.pressed=false;
+    city_update(&c,in,&wallet,100,1);
+    CHECK(c.placing<0); /* quick-build selection takes precedence */
+
+    move_city(&c);in=building_press(&c);
+    city_update(&c,in,&wallet,100,0);in.pressed=false;
+    city_update(&c,in,&wallet,100,.51f);
+    in.multi_touch=true;
+    city_update(&c,in,&wallet,100,.1f);
+    CHECK(!c.held && c.placing==0 && c.moving==0);
+    NEAR(c.items[0].pos.x,original.x); /* interruption never commits a held preview */
+    city_cancel(&c);
+}
+
 static void serialize_story(save *s, void *user)
 {
     (void)user;
@@ -295,6 +405,7 @@ int main(int argc, char **argv)
     test_purse();
     test_save();
     test_city();
+    test_city_hold();
     test_safe_view();
     test_story();
     printf("engine: %d checks, %d failures\n", checks, failures);

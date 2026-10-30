@@ -103,6 +103,12 @@ end}
 check(measured:set_items("rows",{{id="long",text="Every little row can wrap into several lines beside its icon"}}),"wrap source")
 local measured_font=font.load("games/relic-rush/data/fonts/LilitaOne-Regular.ttf")
 local font_style={style=function()return style{font=measured_font,size=20}end}
+local accent=ui.form{kind="button",id="confirm",text="Confirm",accent=true}
+local plain=ui.form{kind="button",id="cancel",text="Confirm"}
+local typed_skin={theme={button=style{font=measured_font,size=10},accent_text=style{font=measured_font,size=30}}}
+local accent_w=accent:measure(300,typed_skin)
+local plain_w=plain:measure(300,typed_skin)
+check(accent_w>plain_w,"native accent buttons use the theme's accent typography for measure and paint")
 local _,wide=measured:measure(320,font_style)
 local _,narrow=measured:measure(180,font_style)
 check(narrow>wide,"row height grows when icon leaves less width for wrapped copy")

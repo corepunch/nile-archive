@@ -63,8 +63,10 @@ ui_state ui_hit(rect r, int flags)
     input in = input_get();
     bool over = rect_contains(r, in.pos), began = rect_contains(r, in.press_pos);
     st.hot = over && (in.hover || in.down);
-    st.held = in.down && over && began && !in.dragging;
-    st.clicked = in.released && over && began && !in.dragging;
+    /* A newly shown control cannot inherit a world press (for example the
+     * Confirm button appearing beneath a lifted building's held finger). */
+    st.held = in.captured && in.down && over && began && !in.dragging && !in.multi_touch;
+    st.clicked = in.captured && in.released && over && began && !in.dragging && !in.multi_touch;
     return st;
 }
 

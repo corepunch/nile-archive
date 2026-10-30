@@ -8,6 +8,7 @@ end
 local function near(a, b, what) check(math.abs(a - b) < 1e-3, what .. (" (%s vs %s)"):format(a, b)) end
 
 -- vec2
+check(input{multi_touch=true,pinch=1}.multi_touch,"multi-touch press state round-trips through the generated binding")
 local a = vec2(3, 4)
 near(a:len(), 5, "vec2 len")
 near((a + vec2(1, 1)).x, 4, "vec2 add operator")

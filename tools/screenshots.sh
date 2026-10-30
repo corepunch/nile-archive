@@ -115,3 +115,19 @@ shot volcano repaired 1368x1026 --level 3 --preview repaired
 shot volcano complete 1368x1026 --level 5 --preview complete
 shot volcano pause 1368x1026 --level 1 --pause
 shot volcano briefing 1368x1026 --level 1 --dialog --frames 150
+
+# Actual long-press pickup in both city games (native queued pointer events).
+make build/city-gesture
+city_hold() { # game name size press args...
+    game=$1 name=$2 size=$3 press=$4
+    shift 4
+    ./build/city-gesture --game "$game" --headless --mute --fresh --size "$size" \
+        --gesture hold --press "$press" --frames 100 --shot "$tmp/$name.png" "$@" > /dev/null
+    python3 -c "import sys; from PIL import Image; Image.open(sys.argv[1]).convert('RGB').save(sys.argv[2],quality=86)" \
+        "$tmp/$name.png" "games/$game/docs/screenshots/$name.jpg"
+}
+city_hold relic-rush relic-long-press 480x900 240,440 --city 3 --look 760,1980
+city_hold relic-rush relic-phone-long-press 390x844 240,440 --city 3 --look 760,1980 --safe-area 0,47,0,34
+city_hold nile-archive nile-long-press 1200x900 435,345 --screen island
+city_hold nile-archive nile-ipad-long-press 1368x1026 435,345 --screen island
+city_hold nile-archive nile-wide-long-press 1600x900 600,375 --screen island

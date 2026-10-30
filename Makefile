@@ -162,6 +162,8 @@ build/test-backdrop: tests/test_backdrop.c $(ENGINE_OBJ) engine/render.h
 	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
 build/test-story: tests/test_story.c $(ENGINE_OBJ) engine/render.h
 	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
+build/city-gesture: tools/capture_city_gesture.c $(ENGINE_OBJ) engine/render.h
+	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
 test-platform: build/test-platform build/test-backdrop build/test-story
 	./build/test-platform
 	./build/test-platform --safe-area-test

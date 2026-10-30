@@ -96,6 +96,7 @@ end
 -- --smoke: opens/closes the guide, plays level one through injected clicks, claims the
 -- reward, builds the first wonder and enters level two.
 local smoke_stage, smoke_frames, smoke_wait, smoke_partner = -2, 0, 0, -1
+local smoke_move={}
 
 local function smoke()
     smoke_frames = smoke_frames + 1
@@ -145,10 +146,49 @@ local function smoke()
         app.inject_click(vec2(320, 856 + R.drop)); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 1 then error("smoke: the wonder was not built") end
-        app.inject_click(vec2(240, 856 + R.drop)); smoke_stage = 5   -- PLAY HEX LEVEL 2
+        local c=R.island
+        smoke_move.origin,smoke_move.gold=c.items[1].pos,R.prog.wallet[rules.GOLD]
+        R.island_focus(smoke_move.origin-vec2(0,80),math.max(.65,c.cam.zoom))
+        smoke_move.cam=c.cam.center
+        smoke_move.press=c.cam:rect_to_screen(c:sprite_rect(c.items[1])):point(vec2(.5,.65))
+        app.inject_press(smoke_move.press);smoke_stage=6
+    elseif smoke_stage==6 then
+        app.inject_move(smoke_move.press+vec2(-40,0));smoke_stage=7
+    elseif smoke_stage==7 then
+        assert(R.island.placing<0 and R.island.cam.center.x>smoke_move.cam.x,"ordinary building drag must pan")
+        app.inject_release(smoke_move.press+vec2(-40,0));smoke_move.pass=1;smoke_stage=8
+    elseif smoke_stage==8 then
+        local c=R.island
+        R.island_focus(smoke_move.origin-vec2(0,80),math.max(.65,c.cam.zoom))
+        smoke_move.press=c.cam:rect_to_screen(c:sprite_rect(c.items[1])):point(vec2(.5,.65))
+        smoke_move.grab=smoke_move.origin-c.cam:to_world(smoke_move.press)
+        app.inject_press(smoke_move.press);smoke_move.hold=app.time();smoke_stage=9
+    elseif smoke_stage==9 and app.time()-smoke_move.hold>.65 then
+        local c=R.island
+        assert(c.moving==0 and c.held,"long press must lift the building")
+        local ok,spot=c:find_spot(c.placing,smoke_move.origin+vec2(240,0))
+        assert(ok,"no move destination")
+        smoke_move.destination=spot;smoke_move.drop=c.cam:to_screen(spot-smoke_move.grab)
+        app.inject_move(smoke_move.drop);smoke_stage=10
+    elseif smoke_stage==10 then
+        app.inject_release(smoke_move.drop);smoke_stage=11
+    elseif smoke_stage==11 then
+        local c=R.island
+        assert(not c.held and c.placing>=0 and c.items[1].pos:dist(smoke_move.origin)<.01 and R.prog.wallet[rules.GOLD]==smoke_move.gold,"release must leave an uncommitted preview")
+        app.inject_click(vec2(smoke_move.pass==1 and 100 or 320,856+R.drop));smoke_stage=12
+    elseif smoke_stage==12 then
+        local c=R.island
+        assert(c.placing<0 and R.prog.wallet[rules.GOLD]==smoke_move.gold,"move must finish without spending gold")
+        if smoke_move.pass==1 then
+            assert(c.items[1].pos:dist(smoke_move.origin)<.01,"cancel moved the building")
+            smoke_move.pass=2;smoke_stage=8
+        else
+            assert(c.items[1].pos:dist(smoke_move.destination)<.01,"confirm did not move the building")
+            app.inject_click(vec2(240,856+R.drop));smoke_stage=5
+        end
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: data-backed guide -> swaps -> cascades -> win -> claim -> island -> build -> level 2")
+        print("smoke test passed: data-backed guide -> swaps -> cascades -> win -> claim -> island -> build -> pan -> long-press move/cancel/confirm -> level 2")
         app.quit()
     end
 end

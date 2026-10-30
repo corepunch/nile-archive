@@ -1019,6 +1019,30 @@ Queue a press and release at a logical point, as a tap would. For automated test
 |---|---|---|
 | `p` | `vec2` |  |
 
+### `app.inject_press(p)`
+
+Queue a pointer down at a logical point, for automated hold/drag tests.
+
+| Argument | Type | |
+|---|---|---|
+| `p` | `vec2` |  |
+
+### `app.inject_move(p)`
+
+Queue a held pointer move at a logical point, for automated hold/drag tests.
+
+| Argument | Type | |
+|---|---|---|
+| `p` | `vec2` |  |
+
+### `app.inject_release(p)`
+
+Queue a pointer release at a logical point, for automated hold/drag tests.
+
+| Argument | Type | |
+|---|---|---|
+| `p` | `vec2` |  |
+
 ### `app.web_storage(key)`
 
 On the web, the value of localStorage[key], else nil. For migrating saves from older builds.
@@ -1040,11 +1064,12 @@ A snapshot of the pointer (mouse or first finger) with gestures. `input{pos = p,
 | `down` | `boolean` | Held. |
 | `pressed` | `boolean` | Went down this frame. |
 | `released` | `boolean` | Went up this frame. |
-| `tap` | `boolean` | Released this frame without dragging. |
+| `tap` | `boolean` | Released this frame without dragging or multi-touch. |
 | `dragging` | `boolean` | Moved further than the drag threshold. |
 | `drag` | `vec2` | Movement this frame while dragging. |
 | `captured` | `boolean` | The press started on UI; the world should ignore it. |
 | `hover` | `boolean` | A real mouse is over the window. |
+| `multi_touch` | `boolean` | A second pointer joined this press; latched through release, cleared on the next press or cancellation. |
 | `wheel` | `number` | Wheel steps this frame. |
 | `pinch` | `number` | Zoom factor from two fingers this frame (1 = none). |
 | `pinch_center` | `vec2` |  |
@@ -2198,7 +2223,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `fog` | `color` | read/write | Locked zones; default dark teal. |
 | `fog_on_land_only` | `boolean` | read/write |  |
 | `path` | `color` | read/write | Paths linking buildings; alpha 0 = none. |
-| `movable` | `boolean` | read/write | Drag a building to move it. |
+| `movable` | `boolean` | read/write | Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map. |
 | `show_footprints` | `boolean` | read/write | Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements. |
 | `income_icon` | `texture` | read/write |  |
 | `selected` | `integer` | read/write | Quick build: a tap places this type at once (-1 = off). |
@@ -2387,6 +2412,8 @@ Start a placement session with a ghost at `at`.
 | `at` | `vec2` |  |
 
 ### `city.begin_move(c, index)  ·  c:begin_move(index)`
+
+Explicitly start a move preview; commit with confirm or discard with cancel. Pointer pickup uses the shared half-second hold.
 
 | Argument | Type | |
 |---|---|---|

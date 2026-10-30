@@ -194,6 +194,9 @@
       <arg name="pts" type="vec2[]"/><arg name="colors" type="color[]"/><arg name="n" type="count" of="pts"/><arg name="indices" type="int[]"/><arg name="m" type="count" of="indices"/>
     </function>
     <function name="inject_click" c="app_inject_click" doc="Queue a press and release at a logical point, as a tap would. For automated tests only."><arg name="p" type="vec2"/></function>
+    <function name="inject_press" c="app_inject_press" doc="Queue a pointer down at a logical point, for automated hold/drag tests."><arg name="p" type="vec2"/></function>
+    <function name="inject_move" c="app_inject_move" doc="Queue a held pointer move at a logical point, for automated hold/drag tests."><arg name="p" type="vec2"/></function>
+    <function name="inject_release" c="app_inject_release" doc="Queue a pointer release at a logical point, for automated hold/drag tests."><arg name="p" type="vec2"/></function>
     <function name="web_storage" c="app_web_storage" doc="On the web, the value of localStorage[key], else nil. For migrating saves from older builds."><arg name="key" type="string"/><returns type="string" optional="true"/></function>
   </module>
 
@@ -203,11 +206,12 @@
     <field name="down" type="bool" doc="Held."/>
     <field name="pressed" type="bool" doc="Went down this frame."/>
     <field name="released" type="bool" doc="Went up this frame."/>
-    <field name="tap" type="bool" doc="Released this frame without dragging."/>
+    <field name="tap" type="bool" doc="Released this frame without dragging or multi-touch."/>
     <field name="dragging" type="bool" doc="Moved further than the drag threshold."/>
     <field name="drag" type="vec2" doc="Movement this frame while dragging."/>
     <field name="captured" type="bool" doc="The press started on UI; the world should ignore it."/>
     <field name="hover" type="bool" doc="A real mouse is over the window."/>
+    <field name="multi_touch" type="bool" doc="A second pointer joined this press; latched through release, cleared on the next press or cancellation."/>
     <field name="wheel" type="float" doc="Wheel steps this frame."/>
     <field name="pinch" type="float" doc="Zoom factor from two fingers this frame (1 = none)."/>
     <field name="pinch_center" type="vec2"/>
@@ -518,7 +522,7 @@
     <field name="fog" type="color" access="rw" doc="Locked zones; default dark teal."/>
     <field name="fog_on_land_only" type="bool" access="rw"/>
     <field name="path" type="color" access="rw" doc="Paths linking buildings; alpha 0 = none."/>
-    <field name="movable" type="bool" access="rw" doc="Drag a building to move it."/>
+    <field name="movable" type="bool" access="rw" doc="Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map."/>
     <field name="show_footprints" type="bool" access="rw" doc="Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements."/>
     <field name="income_icon" type="texture" access="rw"/>
     <field name="selected" type="int" access="rw" doc="Quick build: a tap places this type at once (-1 = off)."/>
@@ -550,7 +554,7 @@
     <function name="next_zone" c="city_next_zone" doc="The first available zone, else the first closed touching one, else -1."><arg name="c" type="city"/><arg name="wallet" type="purse"/><returns type="int"/></function>
     <function name="snap" c="city_snap" doc="Where a building of type dropped at a world point lands: its footprint on whole tiles."><arg name="c" type="city"/><arg name="world" type="vec2"/><arg name="type" type="int" default="-1"/><returns type="vec2"/></function>
     <function name="begin_place" c="city_begin_place" doc="Start a placement session with a ghost at `at`."><arg name="c" type="city"/><arg name="type" type="int"/><arg name="at" type="vec2"/></function>
-    <function name="begin_move" c="city_begin_move"><arg name="c" type="city"/><arg name="index" type="int"/></function>
+    <function name="begin_move" c="city_begin_move" doc="Explicitly start a move preview; commit with confirm or discard with cancel. Pointer pickup uses the shared half-second hold."><arg name="c" type="city"/><arg name="index" type="int"/></function>
     <function name="cancel" c="city_cancel"><arg name="c" type="city"/></function>
     <function name="confirm" c="city_confirm" doc="Build or move the ghost, paying from wallet."><arg name="c" type="city"/><arg name="wallet" type="purse" ref="inout"/><arg name="now" type="double"/><returns type="city_event"/></function>
     <function name="update" c="city_update" doc="Camera, gestures, quick build and collecting; wallet pays and receives."><arg name="c" type="city"/><arg name="in" type="input"/><arg name="wallet" type="purse" ref="inout"/><arg name="now" type="double"/><arg name="dt" type="float"/><returns type="city_event"/></function>

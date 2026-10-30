@@ -138,7 +138,12 @@ art, description, cost row and action caption. Games retain gameplay actions suc
 as claiming rewards or entering placement mode. Its Explorer's guide uses a
 stable-key source and one icon/copy row resource. The game paints authored icon
 layers inside assigned bounds; the engine owns placement, wrapping, spacing and
-the footer button.
+the footer button. Nile Archive's city move strip also uses a form, with measured
+rows, theme typography and validity-driven Confirm state. Native accent controls
+measure and paint with `theme.accent_text`. Buttons reject a press that has
+become a multi-touch gesture. Pointer activation requires a press that began on
+visible UI: a control appearing under an existing world gesture cannot inherit
+its release.
 
 ## Modal layers and input ownership
 

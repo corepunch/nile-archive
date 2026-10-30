@@ -228,6 +228,9 @@ double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
 void app_inject_click(vec2 p);          /* queue a press and release at a logical point (tests) */
+void app_inject_press(vec2 p);          /* individual pointer events, for hold/drag input tests */
+void app_inject_move(vec2 p);
+void app_inject_release(vec2 p);
 const char *app_web_storage(const char *key);   /* localStorage[key] on the web, else NULL */
 
 /* ===================================================================== */
@@ -240,11 +243,12 @@ typedef struct {
     bool down;         /* held */
     bool pressed;      /* went down this frame */
     bool released;     /* went up this frame */
-    bool tap;          /* released this frame without dragging */
+    bool tap;          /* released this frame without dragging or multi-touch */
     bool dragging;     /* moved further than the drag threshold */
     vec2 drag;         /* movement this frame while dragging */
     bool captured;     /* the press started on UI; the world should ignore it */
     bool hover;        /* a real mouse is over the window (desktop) */
+    bool multi_touch;  /* a second pointer joined this press; latched through release */
     float wheel;       /* wheel steps this frame */
     float pinch;       /* zoom factor from two fingers this frame (1 = none) */
     vec2 pinch_center;
@@ -647,7 +651,7 @@ typedef struct city {
     color fog;                              /* locked zones; default dark teal */
     bool fog_on_land_only;                  /* fog only where buildable() */
     color path;                             /* paths linking buildings; alpha 0 = none */
-    bool movable;                           /* drag a building to move it */
+    bool movable;                           /* hold a building for .5 seconds to pick it up */
     bool show_footprints;                   /* debug: every building's footprint and pivot over its sprite */
     texture income_icon;                    /* bubble shown over buildings with income ready */
     int selected;                           /* quick build: tap places this type at once (-1 = off) */
@@ -660,6 +664,8 @@ typedef struct city {
 
     /* engine bookkeeping */
     int press_target;                       /* 0 nothing, 1 ghost, 2 + index of a building */
+    float press_time;                       /* stationary single-pointer hold on a building */
+    bool press_consumed;                      /* consume the release of a claimed/cancelled world gesture */
     vec2 grab;
     int pop_index;
     float pop_time;
