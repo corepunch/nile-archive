@@ -152,6 +152,12 @@ static color grad_at(grad g, vec2 p) { return color_lerp(g.top, g.bottom, g.y1 >
 /* Fill a convex path; `soft` is the width of the outer fade (feather or blur). */
 static void fill_path(const vec2 *p, int n, grad g, float soft)
 {
+    /* The soft edge must fade outward whichever way the points wind:
+     * counter-clockwise paths would otherwise feather inward, which reads as
+     * a jagged, see-through rim. */
+    float area = 0;
+    for (int i = 0; i < n; i++) area += p[i].x * p[(i + 1) % n].y - p[(i + 1) % n].x * p[i].y;
+    if (area < 0) soft = -soft;
     vec2 center = v2(0, 0);
     for (int i = 0; i < n; i++) center = vec2_add(center, p[i]);
     center = vec2_scale(center, 1.0f / n);

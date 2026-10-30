@@ -211,8 +211,9 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   - the balloon **hugs its words**: lines are balanced and the bubble shrinks
     to the widest one, no wider than a comfortable measure, so there is never
     an empty balloon;
-  - the tail is a **curved, tapered comma** that aims at the mouth and stops
-    short of the face, and never crosses one;
+  - the tail is a **short tapered comma** (20 units) on the bubble's bottom
+    edge near the speaker, leaning toward their mouth: it says who speaks
+    without reaching across to them, and never crosses a face;
   - narration (no speaker) is a centred caption with no tail, and a named
     speaker without a portrait (Volcano's dispatcher) gets a name tag on it.
   On phones (framed busts) the line sits in a **dialogue box**, the way the
@@ -236,8 +237,9 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   alike, and one long straight spike to the speaker). Body and tail are drawn
   as one shape — an outline pass of both, then a fill pass of both with the
   tail's root reaching into the body — so no seam shows where they meet. The
-  curved tail is a strip of convex quads in one colour, so their soft edges
-  overlap without seams. Layouts know how far each kind reaches past its box,
+  tail is a single convex polygon (a straight leading edge and a bowed
+  trailing one), so it has one smooth anti-aliased rim. Filled polygons
+  feather outward whichever way their points wind. Layouts know how far each kind reaches past its box,
   so spikes and puffs stay on screen.
 - `story_next()` moves on as a tap would (for timed sequences and captures).
 - `speech_bubble(tip, text, style, …, kind)` is the bubble on its own: placed above
