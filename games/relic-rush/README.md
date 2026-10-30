@@ -1,6 +1,6 @@
 # Relic Rush · The Lost Valley
 
-A portrait mobile-first hex match-4 / island-restoration prototype, written in C11 on the repository's shared SDL2 engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
+A portrait mobile-first hex match-4 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
 Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Ten redesigned hex stages and ten buildings end in a restored sun temple. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
@@ -26,7 +26,7 @@ See [UI architecture, Playrix/Candy Crush references and regression checks](docs
 
 ## Effects and motion
 
-Travelling sun rays, expanding bomb shockwaves, prism target links, special-piece birth glows, colored fragments, resource trails, HUD landing pulses, smooth score count-up, landing squash/stretch and escalating cascade chimes are implemented in SDL. Reduced-motion mode is supported.
+Travelling sun rays, expanding bomb shockwaves, prism target links, special-piece birth glows, colored fragments, resource trails, HUD landing pulses, smooth score count-up, landing squash/stretch and escalating cascade chimes use the shared triangle renderer. Reduced-motion mode is supported.
 
 ![Actual SDL effects demonstration](docs/screenshots/effects-reel.gif)
 
@@ -150,7 +150,7 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. Wins award 3 Stars and 3 Compasses. Confirming a region consumes only its Compass cost; Stars remain. Region requirements and fog are separate from building placement.
 - Choose any valid grassy position within opened land. Drag a building, inspect green/red placement feedback and confirm or cancel. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.
-- Progress saves after rewards, construction and region unlocks (a `key=value` file in SDL's preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
+- Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
 
 ## Selected tile art
 
@@ -160,7 +160,7 @@ The archaeological **Relics** set (option 1) is the default match piece art: a h
 
 ## Run and build
 
-From the repository root (SDL2 development files needed for native builds, the Emscripten SDK for the web):
+From the repository root (system platform development files needed for native builds, the Emscripten SDK for the web):
 
 ```sh
 make run-relic                                  # native desktop

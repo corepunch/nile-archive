@@ -68,6 +68,15 @@ jobs:
           version: 3.1.64
       - name: Build WebAssembly
         run: make web
+      - name: Browser smoke tests (cloud-only browser installation)
+        run: |
+          pip install playwright
+          python3 -m playwright install --with-deps chromium
+          python3 tools/test_web.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-smoke
+          path: build/web-smoke/
       - uses: actions/upload-artifact@v4
         with:
           name: web

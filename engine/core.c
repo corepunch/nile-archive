@@ -210,7 +210,11 @@ static void poll_events(void)
         case kEventMouseMoved: pointer_move(p); in->hover = hover; break;
         case kEventScrollWheel: in->wheel += e.dy; break;
         case kEventGesture:
-            if (e.gesture.phase == AX_GESTURE_BEGIN) { A.pinched = true; in->dragging = false; }
+            if (e.gesture.phase == AX_GESTURE_BEGIN) {
+                A.pinched = true;
+                in->dragging = in->tap = false;
+                in->drag = v2(0, 0);
+            }
             if (e.gesture.phase == AX_GESTURE_UPDATE && e.gesture.scale > 0) {
                 in->pinch *= e.gesture.scale;
                 in->pinch_center = window_to_logical(v2(e.gesture.x, e.gesture.y));
@@ -218,7 +222,7 @@ static void poll_events(void)
             break;
         case kEventPointerCancel:
         case kEventKillFocus:
-            in->down = in->dragging = in->hover = in->tap = false;
+            in->down = in->pressed = in->released = in->dragging = in->hover = in->tap = false;
             in->captured = false;
             in->drag = v2(0, 0);
             break;

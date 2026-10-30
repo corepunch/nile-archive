@@ -86,7 +86,7 @@ static void frame(float dt)
         post(kEventLeftButtonDown, 100, 60);
         post(kEventPointerCancel, 0, 0);
     } else {
-        CHECK(!in.down && !in.dragging && !in.tap && !in.captured);
+        CHECK(!in.down && !in.pressed && !in.released && !in.dragging && !in.tap && !in.captured);
         CHECK(in.pinch == 1 && !in.back && in.key == 0);
         app_quit();
     }
