@@ -59,6 +59,7 @@ shot relic-rush island-zones 480x900 --city 3 --overview
 shot relic-rush island-fog 480x900 --city 3 --open 3 --look 700,1640
 shot relic-rush island-unlock 480x900 --city 3 --zone 1
 shot relic-rush victory 480x900 --victory
+shot relic-rush phone-victory 390x844 --victory --safe-area 0,47,0,34
 shot relic-rush building-card 480x900 --card 1
 shot relic-rush dialogue-elena 480x900 --dialog intro --frames 240
 shot relic-rush dialogue-mara 480x900 --dialog mara --frames 240

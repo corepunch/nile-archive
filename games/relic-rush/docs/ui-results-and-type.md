@@ -33,7 +33,7 @@ The result layout has named bounds shared by painting and input: header, stars, 
 5. The primary button appears. A tap during the intro completes the reveal without collecting anything.
 6. Collecting closes the card, then commits the reward exactly once and returns to the island.
 
-There are no victory fireworks or confetti bursts. Two small torch sconces add localized warm light and continuous rising flame wisps. Reduced motion uses stable placement and a static flame pose.
+The result card focuses on stars, score, earned resources and the next restoration. Decorative torch sconces and their flame effects have been removed. Reduced motion presents the same content with stable placement and immediate reveals.
 
 Modal motion is a parent paint transform. It never changes SDL logical size or the mouse/touch coordinate conversion. `screens.lua` owns these components and transitions; the independent gameplay rules remain in `rules.lua`.
 

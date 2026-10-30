@@ -120,8 +120,10 @@ The guide is a single medallion action, not a toggle or consumable tool.
 | Collection | Existing base-kind image flies to resource HUD with a trail |
 | Reduced motion | Suppresses trails, shake, squash and effect spawns; rule resolution stays active |
 
-Transient light, beams, rings, particles, score text, torches and sunlight motes
-are intentional animation primitives, not missing static artwork.
+Transient light, beams, rings, particles, score text and sunlight motes
+are intentional animation primitives, not missing static artwork. Result-card
+torch sconces and their flame renderer have been removed; reviewed standard
+and safe-area phone captures are in `docs/review/result-without-torches/`.
 `lua/vfx.lua` creates an additive light texture in memory; see
 [effects and capture modes](effects.md). There are no additional hidden gem skins
 for burning, charging, cracked gems or tool upgrades.
