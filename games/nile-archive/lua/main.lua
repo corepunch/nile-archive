@@ -114,6 +114,7 @@ local function island_setup()
     local c = city.new()
     c.defs = buildings
     c.tile = TILE
+    c.clearance = size2(1, 1)   -- half a tile of ground around every base
     c.spacing = 120
     c.movable = true
     c.buildable = island_buildable

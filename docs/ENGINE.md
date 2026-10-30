@@ -180,7 +180,8 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   corners) place and scale the sprite on it ([BUILDINGS.md](BUILDINGS.md)).
   `city_snap` puts a footprint on whole tiles, footprints may share an edge
   but not overlap, and every covered tile must be open land. A building
-  without a size keeps `spacing` from others. `show_footprints` draws every
+  without a size keeps `spacing` from others. `clearance` adds tiles around
+  every base, so footprints keep apart while sprites keep their size. `show_footprints` draws every
   building's footprint and pivot, to check a sprite's measurements. Placement is
   either instant (`selected`: tap the land) or a session with a ghost
   (`city_begin_place` / `city_begin_move`, drag or tap to move the ghost,

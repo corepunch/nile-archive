@@ -184,6 +184,7 @@
 ---@field open integer Bit per opened zone (bit 0 = zone 0, which starts open).
 ---@field spacing number Minimum distance between buildings without footprints.
 ---@field tile size2 Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles.
+---@field clearance size2 Tiles added to every sized footprint (w, h), so bases keep apart: size2(1, 1) leaves half a tile of ground on each side. Sprites keep their size.
 ---@field buildable function function(c, world) -> bool: terrain test.
 ---@field zone_at function function(c, world) -> zone (0-based) or -1; default: zone rects.
 ---@field zone_touches function function(c, zone, open) -> bool: adjacency; default: rects touching.

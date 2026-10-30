@@ -28,11 +28,12 @@ static vec2 to_tile(const city *c, vec2 p)
 
 static vec2 from_tile(const city *c, vec2 t) { return v2((t.x - t.y) * tile_w(c), (t.x + t.y) * tile_h(c)); }
 
-/* Footprint in tiles; a building without a size counts as one tile. */
+/* Footprint in tiles: the base plus the city's clearance; a building without
+ * a size counts as one tile. */
 static size2 tiles_of(const city *c, int type)
 {
     size2 s = type >= 0 && type < c->def_count ? c->defs[type].size : sz2(0, 0);
-    return s.w > 0 && s.h > 0 ? s : sz2(1, 1);
+    return s.w > 0 && s.h > 0 ? size2_add(s, c->clearance) : sz2(1, 1);
 }
 
 vec2 city_snap(const city *c, vec2 p, int type)

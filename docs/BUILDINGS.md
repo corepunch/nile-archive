@@ -12,10 +12,16 @@ footprint from those three numbers, so they must match the art.
 `size2(32, 16)`, a 64 × 32 diamond). Set it before `c:init`: drawn sizes
 are derived from it. Each game picks one tile for all its buildings:
 
-| Game | `city.tile` | A tile in world units |
-|---|---|---|
-| Nile Archive | `size2(24, 12)` | 48 × 24 |
-| Relic Rush | `size2(40, 20)` | 80 × 40 |
+| Game | `city.tile` | A tile in world units | `city.clearance` |
+|---|---|---|---|
+| Nile Archive | `size2(24, 12)` | 48 × 24 | `size2(1, 1)` |
+| Relic Rush | `size2(40, 20)` | 80 × 40 | `size2(1, 1)` |
+
+`city.clearance` adds tiles to every footprint around its base, so buildings
+keep apart: with `size2(1, 1)` a 2 × 2 base takes a 3 × 3 footprint, half a
+tile of open ground on each side. It changes the footprint (snapping,
+collision, the green/red tiles), never the sprite's size: `size` is always
+the base the art shows.
 
 ## A building
 
@@ -51,8 +57,8 @@ sprite drawn `height` tall, standing on its bottom centre.
   with an odd number of tiles centres on a tile, an even one on a tile edge.
   Taps, drops and confirmations all snap; a dragged ghost follows the finger
   and snaps when let go.
-- **Collision.** Footprints are rectangles in tile space: they may share an
-  edge but not overlap. Every covered tile's centre and the footprint's
+- **Collision.** Footprints (`size` plus `city.clearance`) are rectangles in
+  tile space: they may share an edge but not overlap. Every covered tile's centre and the footprint's
   corners must be open, buildable land.
 - **Drawing.** The ghost's footprint is the parallelogram of its tiles with
   the tile lines inside, green when it fits and red when it doesn't.
@@ -78,8 +84,8 @@ and pivot over its sprite:
 ./build/nile-archive --headless --mute --fresh --size 1200x900 --screen island --footprints --shot fp.png
 ```
 
-Each diamond should outline the building's base, with the pivot dot in the
-middle of it.
+Each diamond should outline the building's base (plus the clearance around
+it), with the pivot dot in the middle.
 
 ## Art for new buildings
 

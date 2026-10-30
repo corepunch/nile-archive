@@ -34,6 +34,7 @@ Buildings stand on an isometric grid of whole tiles. [docs/BUILDINGS.md](docs/BU
 - **Measure, don't guess.** Run `python3 tools/footprint.py <sprite> --overlay out.png` and look at the overlay. Pass `--bottom`, `--left` and `--right` when plants or props fool the automatic fit. Round the side ratio it prints to whole tiles.
 - **Check in the game.** Render the island with `--footprints` (Relic Rush `--showcase --footprints`, Nile Archive `--screen island --footprints`) and look at it. Every diamond must sit on its building's base, with the pivot dot at the base's centre. Post that shot in the pull request whenever building specs change.
 - **Keep one tile per game.** `city.tile` is set before `c:init`, and changing it changes every building's drawn size. When you change it, re-check all the game's buildings.
+- **Space buildings with `city.clearance`, not `size`.** `size` is the base the art shows. To keep buildings further apart, raise `city.clearance`, which adds tiles around every base. Don't inflate `size` for that: it scales the sprite up.
 - **Snap with the type.** Pass the building type to `city_snap` / `c:snap(p, type)` so the footprint lands on whole tiles. Points you hand-place on the island (seed buildings, showcase spots) should go through it too.
 
 ## Repository conventions

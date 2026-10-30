@@ -2178,6 +2178,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `open` | `integer` | read/write | Bit per opened zone (bit 0 = zone 0, which starts open). |
 | `spacing` | `number` | read/write | Minimum distance between buildings without footprints. |
 | `tile` | `size2` | read/write | Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles. |
+| `clearance` | `size2` | read/write | Tiles added to every sized footprint (w, h), so bases keep apart: size2(1, 1) leaves half a tile of ground on each side. Sprites keep their size. |
 | `buildable` | `function` | read/write | function(c, world) -> bool: terrain test. |
 | `zone_at` | `function` | read/write | function(c, world) -> zone (0-based) or -1; default: zone rects. |
 | `zone_touches` | `function` | read/write | function(c, zone, open) -> bool: adjacency; default: rects touching. |

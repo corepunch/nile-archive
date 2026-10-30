@@ -508,6 +508,7 @@
     <field name="open" type="uint" access="rw" doc="Bit per opened zone (bit 0 = zone 0, which starts open)."/>
     <field name="spacing" type="float" access="rw" doc="Minimum distance between buildings without footprints."/>
     <field name="tile" type="size2" access="rw" doc="Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles."/>
+    <field name="clearance" type="size2" access="rw" doc="Tiles added to every sized footprint (w, h), so bases keep apart: size2(1, 1) leaves half a tile of ground on each side. Sprites keep their size."/>
     <field name="buildable" type="callback" tramp="lcity_buildable" decl="bool lcity_buildable(const struct city *c, vec2 world)" doc="function(c, world) -> bool: terrain test."/>
     <field name="zone_at" type="callback" tramp="lcity_zone_at" decl="int lcity_zone_at(const struct city *c, vec2 world)" doc="function(c, world) -> zone (0-based) or -1; default: zone rects."/>
     <field name="zone_touches" type="callback" tramp="lcity_zone_touches" decl="bool lcity_zone_touches(const struct city *c, int zone, unsigned open)" doc="function(c, zone, open) -> bool: adjacency; default: rects touching."/>

@@ -200,5 +200,6 @@ width in sprite pixels, which sets the drawing scale); see
 `--footprints` check. Taps, drops and confirmations snap the footprint to the
 tiles (`c:snap(p, type)`); a dragged ghost follows the finger, lifted
 (`c.held`) over the green or red footprint of the tiles it will land on.
-Footprints may share an edge but not overlap. Existing saved positions remain
+Footprints may share an edge but not overlap; `city.clearance` adds tiles
+around every base (both games use `size2(1, 1)`) without scaling the sprites. Existing saved positions remain
 intact until the player moves a building.

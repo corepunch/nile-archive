@@ -249,6 +249,12 @@ static void test_city(void)
     NEAR(c.ghost.x, 352); NEAR(c.ghost.y, 640);
     CHECK(!c.held);
     city_cancel(&c);
+    /* clearance widens every sized footprint without scaling its sprite */
+    CHECK(city_can_place(&c, v2(832, 656), 2, -1));   /* two tiles from the second hall: edges touch */
+    c.clearance = sz2(1, 1);
+    CHECK(!city_can_place(&c, v2(832, 656), 2, -1) && city_can_place(&c, v2(864, 672), 2, -1));
+    NEAR(city_sprite_rect(&c, (building){v2(500, 500), 3, 0}).size.w, 200);
+    c.clearance = sz2(0, 0);
     vec2 spot;
     CHECK(city_find_spot(&c, 2, v2(704, 816), &spot) && city_can_place(&c, spot, 2, -1));
 }

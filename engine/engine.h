@@ -636,6 +636,7 @@ typedef struct city {
     unsigned open;                          /* bit per opened zone; zone 0 starts open */
     float spacing;                          /* minimum distance between buildings without footprints */
     size2 tile;                             /* isometric tile half extents; default 32 x 16 */
+    size2 clearance;                        /* tiles added to every sized footprint, around the base */
     bool (*buildable)(const struct city *c, vec2 world);   /* terrain test supplied by the game */
     int (*zone_at)(const struct city *c, vec2 world);      /* region lookup (default: zone rects); -1 = none */
     bool (*zone_touches)(const struct city *c, int zone, unsigned open);  /* adjacency (default: rects touching) */
