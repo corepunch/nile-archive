@@ -159,7 +159,7 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause, sound toggle and reduced motion.
 - Win rewards combine an expedition grant and actual collected idols / jade / crystals; they always cover the next building. Claims cannot be collected twice.
-- Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; use +/- to zoom and Map for the overview.
+- Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. Wins award 3 Stars and 3 Compasses. Confirming a region consumes only its Compass cost; Stars remain. Region requirements and fog are separate from building placement.
 - The island's HUD is two rows of small resource capsules (idols, leaves and crystals; then Stars and Compasses beside **Expand**) and a pause button. There is no title or header band; tap a capsule to learn what it is for. The board keeps only the way back to the island and pause in its top corners. Score, level and moves float over the background painting without a large backing panel; outlined text and a slim translucent progress track preserve readability.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
@@ -195,7 +195,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 ## Controls and saved progress
 
 - **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right button pauses (sound, reduced motion, guide); Escape does the same.
-- **Island:** drag the map to pan, including from buildings; pinch, the mouse wheel or + / − zoom; Map switches between overview and home. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
+- **Island:** drag the map to pan, including from buildings; pinch or use the mouse wheel to zoom. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
 - **Placement:** choose a grassy spot, check the green/red footprint, then confirm or cancel. Buildings cannot overlap, cross the shoreline or occupy closed land. Moving a completed building is free.
 - **Save:** level progress, resources, opened regions and building positions persist; an unfinished puzzle restarts. Saves of the standalone prototype (`progress.txt`, `localStorage["relic-rush-v1"]`) are not imported.
 

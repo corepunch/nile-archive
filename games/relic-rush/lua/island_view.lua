@@ -85,12 +85,6 @@ local function draw_markers(c)
 end
 R.draw_markers = draw_markers
 
-local function map_button(r, label, em, bg)
-    gfx.round_rect(r, 12, bg)
-    R.say(label, r, em, PAL_CREAM)
-    return R.tapped(r)
-end
-
 -- A sheet along the bottom edge: it runs on under the home indicator, so it
 -- reads as part of the screen rather than a card floating above it.
 local function bottom_panel()
@@ -157,13 +151,6 @@ function R.island_screen(inp, dt)
     -- the HUD is drawn after the map, so tall buildings never cover buttons;
     -- a placement shows itself on the ghost alone: red when it can't go there
     R.draw_header(true)
-    local dark = rgba(24, 70, 55, 235)
-    if map_button(rect(15, 702 + R.drop, 48, 45), "-", 31, dark) then c.cam = c.cam:zoom_at(1 / 1.2, MAP_VIEW:center()) end
-    if map_button(rect(72, 702 + R.drop, 48, 45), "+", 31, dark) then c.cam = c.cam:zoom_at(1.2, MAP_VIEW:center()) end
-    if map_button(rect(355, 702 + R.drop, 110, 45), "MAP", 20, dark) then
-        if c.cam.zoom > .35 then R.island_focus(vec2(island.ISLAND_W / 2, island.ISLAND_H / 2), .25)
-        else R.island_focus(vec2(760, 2010), .65) end
-    end
     bottom_panel()
 end
 
