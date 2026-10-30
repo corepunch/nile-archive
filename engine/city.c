@@ -193,7 +193,7 @@ void city_begin_move(city *c, int index)
     c->ghost = city_snap(c, c->items[index].pos);
 }
 
-void city_cancel(city *c) { c->placing = c->moving = -1; }
+void city_cancel(city *c) { c->placing = c->moving = -1, c->held = false; }
 
 city_event city_confirm(city *c, purse *wallet, double now)
 {
@@ -269,9 +269,12 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         c->press_target = 1;
     }
     /* the ghost follows the finger freely and lands on the grid when let go */
-    if (in.dragging && !in.captured && c->press_target == 1 && c->placing >= 0)
+    if (in.dragging && !in.captured && c->press_target == 1 && c->placing >= 0) {
         c->ghost = vec2_add(camera_to_world(c->cam, in.pos), c->grab);
-    if (in.released && c->press_target == 1 && c->placing >= 0) c->ghost = city_snap(c, c->ghost);
+        c->held = true;
+    }
+    if (in.released && c->press_target == 1 && c->placing >= 0) c->ghost = city_snap(c, c->ghost), c->held = false;
+    c->lift = approachf(c->lift, c->held && c->placing >= 0 ? 1 : 0, 14, dt);
 
     input cam_in = in;
     if (c->press_target) cam_in.dragging = false, cam_in.drag = v2(0, 0);
@@ -507,7 +510,8 @@ void city_draw(const city *c, input in, double now)
         vec2 land = city_snap(c, c->ghost);   /* mid-drag the footprint shows where it will land */
         bool ok = city_can_place(c, land, c->placing, c->moving);
         draw_footprint(c, land, c->placing, ok);
-        draw_building(c, (building){c->ghost, c->placing, 0}, ok ? rgba(255, 255, 255, 245) : rgba(255, 90, 80, 160), 0);   /* red: it can't go here */
+        float lift = c->lift * 34 * cam.zoom;   /* held up so the footprint shows beneath */
+        draw_building(c, (building){c->ghost, c->placing, 0}, ok ? rgba(255, 255, 255, 245) : rgba(255, 90, 80, 160), lift);   /* red: it can't go here */
     } else if (c->selected >= 0 && in.hover && !in.down && rect_contains(cam.view, in.pos) && !ui_blocks(in.pos)) {
         vec2 p = city_snap(c, camera_to_world(cam, in.pos));
         bool ok = city_can_place(c, p, c->selected, -1);

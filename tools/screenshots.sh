@@ -39,7 +39,7 @@ shot relic-rush hex-late 480x900 --level 8
 shot relic-rush island-village 480x900 --showcase
 shot relic-rush island-placement 480x900 --city 6 --placing
 shot relic-rush island-blocked 480x900 --city 6 --placing blocked
-shot relic-rush island-dragging 480x900 --city 6 --placing dragging
+shot relic-rush island-dragging 480x900 --city 6 --placing dragging --frames 30
 shot relic-rush island-zones 480x900 --city 3 --overview
 shot relic-rush island-fog 480x900 --city 3 --open 3 --look 700,1640
 shot relic-rush island-unlock 480x900 --city 3 --zone 1

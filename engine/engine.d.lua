@@ -198,6 +198,7 @@
 ---@field placing integer Building type being placed, -1 = none.
 ---@field moving integer Index being moved, -1 = a new building.
 ---@field ghost vec2 Where it would go.
+---@field held boolean The ghost is being dragged: lifted over the footprint of the tile it will land on.
 
 ---@class numlib
 num = {}

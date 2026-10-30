@@ -1548,6 +1548,7 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "placing")) { lua_pushinteger(L, p->placing); return 1; }
     if (!strcmp(k, "moving")) { lua_pushinteger(L, p->moving); return 1; }
     if (!strcmp(k, "ghost")) { api_push_vec2(L, p->ghost); return 1; }
+    if (!strcmp(k, "held")) { lua_pushboolean(L, p->held); return 1; }
     return luaL_error(L, "city has no field '%s'", k);
 }
 
@@ -1620,6 +1621,7 @@ static int l_city_newindex(lua_State *L)
     if (!strcmp(k, "income_icon")) { p->income_icon = api_get_texture(L, 3); return 0; }
     if (!strcmp(k, "selected")) { p->selected = (int)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "ghost")) { p->ghost = api_get_vec2(L, 3); return 0; }
+    if (!strcmp(k, "held")) { p->held = lua_toboolean(L, 3); return 0; }
     return luaL_error(L, "city: cannot set field '%s'", k);
 }
 

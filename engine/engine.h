@@ -647,12 +647,14 @@ typedef struct city {
     int placing;                            /* building type being placed, -1 = none */
     int moving;                             /* index being moved, -1 = a new building */
     vec2 ghost;                             /* where it would go */
+    bool held;                              /* the ghost is being dragged: lifted over its landing tile */
 
     /* engine bookkeeping */
     int press_target;                       /* 0 nothing, 1 ghost, 2 + index of a building */
     vec2 grab;
     int pop_index;
     float pop_time;
+    float lift;                             /* 0 on the ground .. 1 held up */
 } city;
 
 void city_init(city *c, const char *ground_path);

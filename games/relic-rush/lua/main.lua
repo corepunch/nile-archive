@@ -233,6 +233,7 @@ local function debug_screens()
         elseif app.arg("placing") == "dragging" then   -- held between tiles: the footprint shows where it lands
             local c = R.island
             c.ghost = c.ghost + vec2(30, 26)
+            c.held = true
         end
         R.toast_time = 0
     end

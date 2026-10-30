@@ -518,6 +518,7 @@
     <field name="placing" type="int" doc="Building type being placed, -1 = none."/>
     <field name="moving" type="int" doc="Index being moved, -1 = a new building."/>
     <field name="ghost" type="vec2" access="rw" doc="Where it would go."/>
+    <field name="held" type="bool" access="rw" doc="The ghost is being dragged: lifted over the footprint of the tile it will land on."/>
   </handle>
   <module name="city" type="city" doc="`city.new()` makes one; configure its fields, then `c:init(ground)`.">
     <enum name="result" prefix="CITY_" doc="city_event results.">

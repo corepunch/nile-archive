@@ -190,8 +190,8 @@ run to the edges this way.
 
 Cities snap placement previews, taps and confirmations to an isometric grid.
 A dragged ghost follows the finger freely and lands on the nearest tile when
-let go; meanwhile its footprint, and the red or green check, already sit on
-that tile (`c:snap(p)` gives it). `city.tile` sets its half extents (default
+let go; meanwhile it is lifted (`c.held`) over a green or red footprint on
+that tile, which is also where validity is checked (`c:snap(p)` gives it). `city.tile` sets its half extents (default
 `size2(32, 16)`). Building `footprint` half extents define both the green/red
 ground diamond and collision checks; `sink` aligns the sprite bottom to that
 ground plane. Existing saved positions remain intact until the player confirms

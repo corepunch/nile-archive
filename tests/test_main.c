@@ -233,10 +233,12 @@ static void test_city(void)
     drag = (input){.down = true, .dragging = true, .pos = v2(360, 568), .press_pos = v2(320, 558), .pinch = 1};
     city_update(&c, drag, &wallet, 0, 0);
     NEAR(c.ghost.x, 360); NEAR(c.ghost.y, 618);   /* not snapped mid-drag */
+    CHECK(c.held);
     NEAR(city_snap(&c, c.ghost).x, 352); NEAR(city_snap(&c, c.ghost).y, 624);
     drag.down = false, drag.released = true;
     city_update(&c, drag, &wallet, 0, 0);
     NEAR(c.ghost.x, 352); NEAR(c.ghost.y, 624);
+    CHECK(!c.held);
     city_cancel(&c);
     vec2 spot;
     CHECK(city_find_spot(&c, 2, v2(704, 800), &spot) && city_can_place(&c, spot, 2, -1));

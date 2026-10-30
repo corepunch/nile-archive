@@ -2163,6 +2163,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `placing` | `integer` | read | Building type being placed, -1 = none. |
 | `moving` | `integer` | read | Index being moved, -1 = a new building. |
 | `ghost` | `vec2` | read/write | Where it would go. |
+| `held` | `boolean` | read/write | The ghost is being dragged: lifted over the footprint of the tile it will land on. |
 
 **city.{NONE, BUILT, MOVED, BLOCKED, CANT_AFFORD, LOCKED_TYPE, COLLECTED, NOT_READY, PICKED, ZONE}** - city_event results.
 
