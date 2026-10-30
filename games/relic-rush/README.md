@@ -58,7 +58,7 @@ You begin with a small expedition camp. Each puzzle represents an excavation: un
 
 This is an original adventure setting inspired by archaeological serials and lost-world fiction, rather than a licensed Indiana Jones setting or a claim to portray a specific historical civilization. The colorful tropical palette combines jade, turquoise, warm stone and gold, with readable silhouettes and soft jungle scenery.
 
-**Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion, speech bubble pointing at the speaker, name tag, typed text: tap to finish a line, tap again to continue, or skip). Each beat plays once per save:
+**Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion standing above a dialogue box sized to the line, name plate on the box's edge and no tail, as in the story screens of portrait match-3 games; typed text: tap to finish a line, tap again to continue, or skip). Each beat plays once per save:
 
 - Bubbles come in three kinds: Elena's first musing is a thought cloud, Mara's greeting a shout, the rest speech.
 - **Elena Voss** opens the expedition and explains each level's twist the first time it is played (its lesson; later it is a reminder toast).
@@ -71,6 +71,12 @@ The intro and finale lines are new, short and written from the cast notes in [ar
 | Elena | Mara | Tomas | Adrian | Word bubble |
 | --- | --- | --- | --- | --- |
 | ![Elena](docs/screenshots/dialogue-elena.jpg) | ![Mara](docs/screenshots/dialogue-mara.jpg) | ![Tomas](docs/screenshots/dialogue-tomas.jpg) | ![Adrian](docs/screenshots/dialogue-adrian.jpg) | ![Bubble](docs/screenshots/island-bubble.jpg) |
+
+On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the jungle run to the screen edges while the controls stay inside the safe area:
+
+| Island | Board |
+| --- | --- |
+| ![Island on an iPhone](docs/screenshots/phone-island.jpg) | ![Board on an iPhone](docs/screenshots/phone-board.jpg) |
 
 ## Expedition and restoration loop
 
@@ -168,7 +174,7 @@ make test                                       # rules, island and engine tests
 make web && python3 -m http.server 8080 --directory dist   # http://localhost:8080/relic-rush/
 ```
 
-The game keeps its 480 × 900 portrait layout and is letterboxed on other screens. Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
+The game keeps its 480 × 900 portrait layout inside the device's safe area; its jungle backdrop, the island and the header band run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`), so taller phones show more scenery instead of dark bars. Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
 Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing`, `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 

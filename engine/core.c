@@ -54,6 +54,7 @@ static struct {
     bool running;
     size2 logical;
     rect view;
+    size2 output;   /* window points */
     float pixel_scale;
     double time;
     float dt;
@@ -67,6 +68,15 @@ static struct {
 
 const char *app_id(void) { return A.desc.id ? A.desc.id : "game"; }
 rect app_screen(void) { return rect_make(v2(0, 0), A.logical); }
+
+/* Games draw controls in the safe, logical screen; backgrounds may run on
+ * under the status bar, the home indicator and any letterbox bars. */
+rect app_bleed(void)
+{
+    float scale = A.logical.w > 0 ? A.view.size.w / A.logical.w : 0;
+    if (scale <= 0) return app_screen();
+    return rect_make(vec2_scale(A.view.pos, -1 / scale), size2_scale(A.output, 1 / scale));
+}
 float app_pixel_scale(void) { return A.pixel_scale; }
 double app_time(void) { return A.time; }
 float app_dt(void) { return A.dt; }
@@ -151,6 +161,7 @@ static void update_logical_size(void)
         A.logical = l;
     }
     A.view = app_fit_view(l, safe);
+    A.output = sz2(output.width, output.height);
     A.pixel_scale = A.view.size.w * axGetScaling() / l.w;
 }
 

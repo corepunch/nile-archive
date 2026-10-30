@@ -951,6 +951,12 @@ The logical screen, origin (0, 0).
 
 **Returns:** `rect`
 
+### `app.bleed()`
+
+The whole display in logical units: the screen plus letterbox bars and safe-area margins (x and y may be negative). Draw backgrounds over it inside gfx.bleed(true); keep controls in app.screen().
+
+**Returns:** `rect`
+
 ### `app.pixel_scale()`
 
 Device pixels per logical unit.
@@ -1314,6 +1320,14 @@ Draw only inside r until unclip.
 | `r` | `rect` |  |
 
 ### `gfx.unclip()`
+
+### `gfx.bleed(on)`
+
+While on, drawing may reach the whole display (app.bleed()), not only the logical screen: for full-bleed backgrounds. Resets any clip.
+
+| Argument | Type | |
+|---|---|---|
+| `on` | `boolean` |  |
 
 ## camera
 

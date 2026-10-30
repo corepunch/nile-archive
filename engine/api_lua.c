@@ -2487,6 +2487,14 @@ static int l_app_screen(lua_State *L)
     return 1;
 }
 
+/* app.bleed() */
+static int l_app_bleed(lua_State *L)
+{
+    rect r = app_bleed();
+    api_push_rect(L, r);
+    return 1;
+}
+
 /* app.pixel_scale() */
 static int l_app_pixel_scale(lua_State *L)
 {
@@ -2848,6 +2856,14 @@ static int l_gfx_clip(lua_State *L)
 static int l_gfx_unclip(lua_State *L)
 {
     gfx_unclip();
+    return 0;
+}
+
+/* gfx.bleed(on) */
+static int l_gfx_bleed(lua_State *L)
+{
+    bool a_on = lua_toboolean(L, 1);
+    gfx_bleed(a_on);
     return 0;
 }
 
@@ -3972,6 +3988,7 @@ static void open_app(lua_State *L)
     static const luaL_Reg funcs[] = {
         {"quit", l_app_quit},
         {"screen", l_app_screen},
+        {"bleed", l_app_bleed},
         {"pixel_scale", l_app_pixel_scale},
         {"time", l_app_time},
         {"dt", l_app_dt},
@@ -4050,6 +4067,7 @@ static void open_gfx(lua_State *L)
         {"additive", l_gfx_additive},
         {"clip", l_gfx_clip},
         {"unclip", l_gfx_unclip},
+        {"bleed", l_gfx_bleed},
         {NULL, NULL}
     };
     luaL_newlib(L, funcs);

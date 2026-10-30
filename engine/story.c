@@ -394,7 +394,11 @@ void story_frame(float dt)
 
     rect screen = app_screen();
     float m = 16, in = ease_out_cubic(S.enter * 4), h = screen.size.h * S.style.portrait_height;
-    if (S.style.dim.a) draw_rect(screen, color_alpha(S.style.dim, in));
+    if (S.style.dim.a) {   /* the whole display dims, safe-area margins too */
+        gfx_bleed(true);
+        draw_rect(app_bleed(), color_alpha(S.style.dim, in));
+        gfx_bleed(false);
+    }
     ui_block(screen);
 
     bool has_face = who && who->portrait.tex;
@@ -410,8 +414,9 @@ void story_frame(float dt)
     float max_w = beside ? minf(560, screen.size.w * .45f)
                 : has_face ? screen.size.w - 2 * (m + reach)
                 : minf(screen.size.w - 2 * (m + reach), maxf(560, screen.size.w * .62f));
-    size2 body = text_box_size(ts, max_w - 2 * pad, text);
-    float width = minf(max_w, maxf(body.w + 2 * pad, maxf(tag_w + 64, ts.size * 9)));
+    float arrow = ts.size * .8f;   /* room for the "tap to continue" arrow after the last word */
+    size2 body = text_box_size(ts, max_w - 2 * pad - arrow, text);
+    float width = minf(max_w, maxf(body.w + 2 * pad + arrow, maxf(tag_w + 64, ts.size * 9)));
     float top = who ? tag * .35f : 0;   /* room under the name tag */
     float height = maxf(body.h + 2 * vpad + top, ts.size * 2.6f);
 
@@ -432,14 +437,19 @@ void story_frame(float dt)
         /* the tail aims at the mouth and stops short of the face */
         tip = vec2_add(mouth, v2(side * face.w * .12f, -2));
         grow_from = tip;
-    } else if (framed_narrow) {   /* phones: the medallion in its corner, the bubble above it, tail down */
-        portrait = stand(who, h);
-        float x = who->right ? rect_max(portrait).x - width : portrait.pos.x;
-        float y = portrait.pos.y - 26 - reach - height;
-        bubble = rc(clampf(x, m + reach, rect_max(screen).x - m - reach - width), maxf(y, m + reach), width, height);
-        /* the tail drops toward the face and stops just above the frame */
-        tip = v2(rect_point(portrait, who->mouth).x, portrait.pos.y - 8);
-        grow_from = tip;
+    } else if (framed_narrow) {
+        /* Phones: the story screens of portrait match-3 and visual-novel games
+         * use a dialogue box, not a balloon. It runs along the bottom from the
+         * speaker's side, sized to the phrase but never narrower than the
+         * medallion, which stands just above it with the name plate on the
+         * box's edge. A tail would only fight the frame, so there is none. */
+        width = clampf(width, minf(face.w + 60, max_w), max_w);
+        bubble = rect_anchor(v2(who->right ? rect_max(screen).x - m - reach : screen.pos.x + m + reach, rect_max(screen).y - m - reach),
+                             sz2(width, height), v2(who->right ? 1 : 0, 1));
+        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - 10 : bubble.pos.x + 10, bubble.pos.y - reach - tag * .5f - 2),
+                               face, v2(who->right ? 1 : 0, 1));
+        tip = rect_center(bubble);
+        grow_from = rect_point(bubble, v2(who->right ? 1 : 0, 0));
     } else {   /* narrow screens, standing figures: a panel along the bottom, the speaker standing on it */
         bubble = rect_anchor(v2(rect_center(screen).x, rect_max(screen).y - m - reach), sz2(width, height), v2(.5f, 1));
         portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - m : bubble.pos.x + m, bubble.pos.y + face.h * .08f),
@@ -453,6 +463,9 @@ void story_frame(float dt)
     bool listening = listener && listener->portrait.tex && who && listener->right != who->right && listener != who;
     if (listening) {
         rect r = stand(listener, h * (framed_narrow ? .8f : .92f));
+        if (framed_narrow)   /* on the speaker's baseline, above the box */
+            r = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 10 : screen.pos.x + m + 10, rect_max(portrait).y), r.size,
+                            v2(listener->right ? 1 : 0, 1));
         draw_portrait(listener, rect_offset(r, v2(0, framed_narrow ? 0 : h * .02f)), rgba(120, 124, 132, 235));
     }
 
@@ -471,6 +484,7 @@ void story_frame(float dt)
         name_tag(who, vec2_add(at, v2(0, (1 - settle) * 6)), v2(who->right ? 1 : 0, .5f), tag);
     }
     rect inner = rect_inflate2(bubble, v2(-pad, -vpad));
+    inner.size.w -= arrow;
     inner.pos.y += top;
     inner.size.h -= top;
     text_box_reveal(ts, inner, v2(who ? 0 : .5f, .5f), text, (int)S.shown);
@@ -486,8 +500,11 @@ void story_frame(float dt)
         float icon = tag * .55f;
         size2 size = sz2(text_measure(ns, S.style.skip).w + tag * 1.2f + icon + 6, tag * 1.25f);
         rect pill = rect_anchor(v2(left ? bubble.pos.x : rect_max(bubble).x, bubble.pos.y - 12 - reach), size, v2(left ? 0 : 1, 1));
-        if (beside || (framed_narrow && !listening))   /* the free bottom corner away from the speaker */
+        if (beside)   /* the bottom corner away from the speaker */
             pill = rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, rect_max(screen).y - m), pill.size, v2(left ? 0 : 1, 1));
+        else if (framed_narrow)   /* across from the medallion, above the box; the top corner when a listener stands there */
+            pill = listening ? rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, screen.pos.y + m), pill.size, v2(left ? 0 : 1, 0))
+                             : rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, bubble.pos.y - 12 - reach), pill.size, v2(left ? 0 : 1, 1));
         ui_state st = ui_hit(pill, 0);
         rect r = rect_offset(pill, v2(0, st.held ? 2 : 0));
         draw_shadow(rect_offset(r, v2(0, 3)), r.size.h * .5f, 8, rgba(0, 0, 0, 70));

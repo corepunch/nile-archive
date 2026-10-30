@@ -316,6 +316,7 @@ void gfx_clip(rect r)
 }
 
 void gfx_unclip(void) { render_clip(NULL); }
+void gfx_bleed(bool on) { render_bleed(on); }
 
 /* ------------------------------------------------------------------ camera */
 

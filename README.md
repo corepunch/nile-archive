@@ -10,7 +10,7 @@ One repository, one small **C11 + platform** engine, three games written in **Lu
 
 Volcano is a five-map resource-and-route rescue campaign; see [its port assessment and asset catalog](games/volcano/docs/PORT.md).
 
-The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Nile Archive and Relic Rush are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design, letterboxed — the engine supports both.
+The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Nile Archive and Relic Rush are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design inside the safe area, with its backgrounds running on to the screen edges — the engine supports both.
 
 **The engine knows mechanics, the games know content and rules.** The engine is C; all game logic is Lua 5.4, and the glue between them is generated from one XML description of the API, together with its reference. See [docs/SCRIPTING.md](docs/SCRIPTING.md) for the contract, [docs/LUA_API.md](docs/LUA_API.md) for the reference and [docs/LINEAGE.md](docs/LINEAGE.md) for where every idea comes from.
 
@@ -177,6 +177,12 @@ The engine fits each game inside the native iOS safe area, using the same
 rotation and inset changes update both rendering and pointer mapping. Desktop
 screens have zero insets; `--safe-area L,T,R,B` simulates them in window points.
 For example: `./build/relic-rush --size 390x844 --safe-area 0,59,0,34`.
+
+Controls stay in that safe screen, but backgrounds may fill the whole display:
+`app.bleed()` is the display in logical units (status bar, home indicator and
+letterbox bars included), and drawing between `gfx.bleed(true)` and
+`gfx.bleed(false)` may reach it. Relic Rush's jungle, island and header band
+run to the edges this way.
 
 Cities snap placement previews, taps, drags and confirmations to an isometric
 grid. `city.tile` sets its half extents (default `size2(32, 16)`). Building

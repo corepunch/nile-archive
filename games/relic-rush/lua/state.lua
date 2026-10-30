@@ -6,7 +6,6 @@ local R = {
     SCREEN_W = 480, SCREEN_H = 900,
     HEX_R = 26.5,
     BOARD_CLIP = rect(24, 276, 432, 432),
-    MAP_VIEW = rect(0, 164, 480, 576),
 
     -- overlays and board phases
     OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7,

@@ -3,7 +3,7 @@
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
-local SCREEN_W, SCREEN_H, MAP_VIEW = R.SCREEN_W, R.SCREEN_H, R.MAP_VIEW
+local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM, PAL_GREEN, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_GREEN, R.PAL_WHITE
 local STARS, COMPASSES = rules.STARS, rules.COMPASSES
 local rgba = color
@@ -119,8 +119,11 @@ local function bottom_panel()
     end
 end
 
+-- The island fills the whole display, safe-area margins included, and the HUD
+-- floats over it inside the safe screen, as island screens of match-3 games do.
 function R.island_screen(inp, dt)
     local c = R.island
+    local MAP_VIEW = app.bleed()
     local cam = c.cam
     cam.view = MAP_VIEW
     c.cam = cam
@@ -130,8 +133,10 @@ function R.island_screen(inp, dt)
         elseif ev.result == city.ZONE then R.zone_card, R.overlay = ev.zone, R.OV_ZONE end
     end
 
-    gfx.rect(rect(0, 0, SCREEN_W, SCREEN_H), rgba(22, 110, 119))
+    gfx.bleed(true)
+    gfx.rect(MAP_VIEW, rgba(22, 110, 119))
     c:draw(inp, app.clock())
+    gfx.bleed(false)
     if c.placing >= 0 then
         local ok = c:can_place(c.ghost, c.placing, c.moving)
         local p = c.cam:to_screen(c.ghost)
@@ -150,7 +155,9 @@ function R.island_screen(inp, dt)
     end
 
     -- the HUD is drawn after the map, so tall buildings never cover buttons
-    gfx.rect(rect(0, 0, SCREEN_W, 92), rgba(13, 62, 58, 225))
+    gfx.bleed(true)   -- the header band reaches up under the status bar
+    gfx.rect(rect(MAP_VIEW.x, MAP_VIEW.y, MAP_VIEW.w, 92 - MAP_VIEW.y), rgba(13, 62, 58, 225))
+    gfx.bleed(false)
     R.draw_header(true)
     local stats = rect(15, 170, 290, 30)
     gfx.round_rect(stats, 10, rgba(22, 68, 52, 220))

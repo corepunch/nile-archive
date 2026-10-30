@@ -218,6 +218,7 @@ typedef struct {
 int app_run(app_desc desc, int argc, char **argv);
 void app_quit(void);
 rect app_screen(void);          /* logical screen, origin (0,0) */
+rect app_bleed(void);           /* the whole display around it: screen plus letterbox and safe-area margins */
 float app_pixel_scale(void);    /* device pixels per logical unit */
 double app_time(void);          /* seconds since start (frame time) */
 float app_dt(void);             /* duration of the current frame, seconds */
@@ -288,6 +289,7 @@ void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m)
 void gfx_additive(bool on);   /* additive blending for shapes (glows, sparks) */
 void gfx_clip(rect r);
 void gfx_unclip(void);
+void gfx_bleed(bool on);        /* let drawing reach app_bleed() (backgrounds), not only app_screen(); resets the clip */
 
 /* --- 2D camera: a view rect on screen looking at a world of `world` size --- */
 typedef struct {

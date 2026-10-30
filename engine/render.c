@@ -22,11 +22,11 @@
 struct render_texture { GLuint id; bool additive; };
 static struct {
     GLuint program, vao, vertices, indices, white;
-    GLint screen;
+    GLint screen, origin;
     size2 pixels, logical;
     float scale;
     vec2 offset;
-    bool additive;
+    bool additive, bleed;
 } R;
 
 static GLuint render_shader(GLenum type, const char *body)
@@ -53,9 +53,9 @@ static GLuint render_shader(GLenum type, const char *body)
 bool render_init(void)
 {
     GLuint vs = render_shader(GL_VERTEX_SHADER,
-        "in vec2 position; in vec4 color; in vec2 uv; uniform vec2 screen;\n"
+        "in vec2 position; in vec4 color; in vec2 uv; uniform vec2 screen, origin;\n"
         "out vec4 tint; out vec2 texcoord;\n"
-        "void main(){gl_Position=vec4(position/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;}\n");
+        "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord; uniform sampler2D image; out vec4 pixel;\n"
         "void main(){pixel=texture(image,texcoord)*tint;}\n");
@@ -75,6 +75,7 @@ bool render_init(void)
         render_shutdown(); return false;
     }
     R.screen = glGetUniformLocation(R.program, "screen");
+    R.origin = glGetUniformLocation(R.program, "origin");
     glUseProgram(R.program);
     glUniform1i(glGetUniformLocation(R.program, "image"), 0);
     glGenVertexArrays(1, &R.vao); glBindVertexArray(R.vao);
@@ -100,20 +101,26 @@ void render_shutdown(void)
     memset(&R, 0, sizeof R);
 }
 
+/* The whole framebuffer is the viewport: logical coordinates map onto the
+ * fitted view, and whatever lies outside it (letterbox bars, safe-area
+ * margins) is still addressable, at negative or beyond-size coordinates.
+ * Drawing is clipped to the logical screen unless bleed is on. */
 void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
 {
     R.pixels = pixels; R.logical = logical;
     R.scale = viewport.size.w / logical.w;
-    size2 view = viewport.size;
     R.offset = viewport.pos;
+    R.bleed = false;
     glDisable(GL_SCISSOR_TEST); glDisable(GL_DEPTH_TEST); glDisable(GL_CULL_FACE);
     glViewport(0, 0, (int)pixels.w, (int)pixels.h);
     glClearColor(clear.r / 255.f, clear.g / 255.f, clear.b / 255.f, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    glViewport((int)R.offset.x, (int)(pixels.h - R.offset.y - view.h), (int)view.w, (int)view.h);
     glEnable(GL_BLEND); R.additive = false;
-    glUseProgram(R.program); glUniform2f(R.screen, logical.w, logical.h);
+    glUseProgram(R.program);
+    glUniform2f(R.screen, pixels.w / R.scale, pixels.h / R.scale);
+    glUniform2f(R.origin, R.offset.x / R.scale, R.offset.y / R.scale);
     glActiveTexture(GL_TEXTURE0); glBindVertexArray(R.vao);
+    render_clip(NULL);
 }
 
 struct render_texture *render_texture_create(int w, int h, const void *rgba)
@@ -168,11 +175,23 @@ void render_image(texture t, rect src, rect dst, float angle, color tint)
     render_geometry(t.tex, v, 4, idx, 6);
 }
 
+/* The area drawing may reach: the logical screen, or the whole display. */
+static rect render_bounds(void)
+{
+    if (!R.bleed || R.scale <= 0) return rect_make(v2(0, 0), R.logical);
+    return rect_make(vec2_scale(R.offset, -1 / R.scale), size2_scale(R.pixels, 1 / R.scale));
+}
+
+void render_bleed(bool on)
+{
+    R.bleed = on;
+    render_clip(NULL);
+}
+
 void render_clip(const rect *r)
 {
     if (!render_ready()) return;
-    if (!r) { glDisable(GL_SCISSOR_TEST); return; }
-    rect clipped = rect_intersect(*r, rect_make(v2(0, 0), R.logical));
+    rect clipped = rect_intersect(r ? *r : render_bounds(), render_bounds());
     int x = (int)floorf(R.offset.x + clipped.pos.x * R.scale);
     int y = (int)floorf(R.pixels.h - R.offset.y - (clipped.pos.y + clipped.size.h) * R.scale);
     int w = (int)ceilf(clipped.size.w * R.scale), h = (int)ceilf(clipped.size.h * R.scale);

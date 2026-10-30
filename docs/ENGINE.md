@@ -67,6 +67,18 @@ screen is exactly the design and the renderer letterboxes the rest. Relic Rush i
 480 × 900 portrait game laid out in absolute coordinates; on an iPad it is a
 centred column.
 
+**Full bleed.** The logical screen sits inside the device's safe area, so
+controls never meet the notch, the status bar or the home indicator. The
+renderer still covers the whole display: `app_bleed()` is that display in
+logical units (the screen plus letterbox bars and safe-area margins, so its
+origin is usually negative), and between `gfx_bleed(true)` and
+`gfx_bleed(false)` drawing may reach it. Drawing is otherwise clipped to the
+logical screen, so nothing spills into the margins by accident. This follows
+Apple's game guidance: safe areas are guides for controls, not the margins of
+the game, and the environment should use every pixel. Relic Rush draws its
+jungle backdrop, its island and the top of its header band this way; the
+engine's dialogue and modal dimming cover the whole display too.
+
 `app_pixel_scale()` reports device pixels per logical unit; text uses it to
 rasterise at native resolution (crisp on Retina) while all game code stays in
 logical units.
@@ -203,10 +215,14 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
     short of the face, and never crosses one;
   - narration (no speaker) is a centred caption with no tail, and a named
     speaker without a portrait (Volcano's dispatcher) gets a name tag on it.
-  On phones (framed busts) the medallion stands in its bottom corner and the
-  bubble, still sized to its phrase, sits above it with a short tail down to
-  the face; nothing overlaps the bubble's rim. The listener stands in the
-  other corner, dimmed and smaller.
+  On phones (framed busts) the line sits in a **dialogue box**, the way the
+  story screens of portrait match-3 games and visual novels do it: the box
+  runs along the bottom from the speaker's side, sized to the phrase but never
+  narrower than the medallion, which stands just above its end with the name
+  plate on the box's edge. There is no tail: next to a framed portrait a tail
+  only competes with the frame, and tails are kept for words placed in the
+  world (`speech_bubble`) and for the standing figures of the iPad staging.
+  The listener stands on the same baseline across the screen, dimmed and smaller.
   A new speaker's bubble springs out of its tail (`ease_out_back`), then the
   text types itself out at 40 characters a second without ever re-wrapping
   (`text_box_reveal`), with a beat after sentences and a shorter one after

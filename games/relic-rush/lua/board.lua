@@ -69,8 +69,13 @@ local function wrapf(v, m) return v - m * math.floor(v / m) end
 
 local function draw_backdrop()
     local scene = R.scenes[R.g.level >= 5 and 2 or 1]
-    gfx.image(scene.tex and scene or R.backdrop, rect(0, 0, SCREEN_W, SCREEN_H), color.WHITE)
-    gfx.rect(rect(0, 0, SCREEN_W, SCREEN_H), rgba(5, 30, 29, 35))
+    local tex = scene.tex and scene or R.backdrop
+    local full = app.bleed()   -- the jungle runs on under the status bar and the home indicator
+    local size = texture.size(tex)
+    gfx.bleed(true)
+    gfx.image(tex, full:align(size:scale(size:cover(full:size())), vec2(.5, .5)), color.WHITE)
+    gfx.rect(full, rgba(5, 30, 29, 35))
+    gfx.bleed(false)
     for i = 0, 11 do   -- drifting motes of sunlight
         local p = vec2(20 + wrapf(i * 93 + R.now * (i % 2 == 1 and 3 or -4) + 480, 440), 170 + wrapf(i * 139 + R.now * 5, 620))
         gfx.circle(p, 1.5 + math.sin(R.now + i) * .5, rgba(255, 228, 139, 70 + 50 * math.sin(R.now + i)))
