@@ -30,7 +30,7 @@ engine/            the shared engine: ONE public header + one .c per module
   api_lua.c/.h     the generated glue                   ─┤ (committed; make gen,
   engine.d.lua     generated editor annotations         ─┘  checked by make test)
   lua_lib.c        Lua 5.4 as one translation unit, sandbox libraries only
-  third_party/     Lua 5.4.8, stb_truetype, stb_image, stb_image_write
+  third_party/     lua/ (submodule: the lua/lua mirror at v5.4.8), stb_truetype, stb_image, stb_image_write
 games/
   nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
@@ -45,9 +45,10 @@ Each game is one folder with its own content; the engine never includes game cod
 
 ## Build and run
 
-Native builds need SDL2 development files (`apt install libsdl2-dev`, `brew install sdl2`) and a C compiler; Lua is vendored. Tested on Linux; macOS and Windows (MSYS2) use the same Makefile through `pkg-config`/`sdl2-config`. Regenerating the Lua glue (`make gen`) needs Python 3.
+Native builds need SDL2 development files (`apt install libsdl2-dev`, `brew install sdl2`) and a C compiler. Lua is a git submodule (the official [lua/lua](https://github.com/lua/lua) mirror pinned to v5.4.8): clone with `--recursive`, or run `git submodule update --init` once. Tested on Linux; macOS and Windows (MSYS2) use the same Makefile through `pkg-config`/`sdl2-config`. Regenerating the Lua glue (`make gen`) needs Python 3.
 
 ```sh
+git submodule update --init   # Lua, once
 make              # builds build/nile-archive and build/relic-rush
 make run-nile     # or: make run-relic
 make test         # generated-code freshness, engine tests, the games' Lua rule tests (headless)
@@ -158,4 +159,4 @@ This repository is the single home for the engine and both games. Relic Rush was
 - [docs/LINEAGE.md](docs/LINEAGE.md) — 2D engines from hardware sprites and Turbo Pascal's SPX to LÖVE, Defold and PICO-8; Lua in shipped games; XML-described APIs — and what was taken from each.
 - [RectCut for dead simple UI layouts](https://halt76.notion.site/RectCut-for-dead-simple-UI-layouts-d175c7ff15e74c92b235eb43702155c8) — the layout technique used by every screen.
 - [sokol headers](https://github.com/floooh/sokol) — C API style: descriptor structs, zero-init defaults, designated initialisers.
-- [Lua 5.4](https://www.lua.org/manual/5.4/) — the games' language, vendored under `engine/third_party/lua` (MIT).
+- [Lua 5.4](https://www.lua.org/manual/5.4/) — the games' language; the [lua/lua](https://github.com/lua/lua) mirror is a submodule under `engine/third_party/lua` (MIT).
