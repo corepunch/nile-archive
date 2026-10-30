@@ -416,7 +416,12 @@ end
 local function win_dialog(t)
     local sc = scenes[G.scene]
     local s = app.screen()
-    local box = rect.centered(s:center(), size2(620, 340))
+    local clue = #sc.clue > 1 and ("%s «%s»"):format(sc.clue[1][2], sc.clue[2][2]) or sc.clue[1][2]
+    local body = G.body:sized(18)
+    local w = 620
+    local clue_h = text.box_size(body, w - 60, clue).h
+    -- the panel fits its content: eyebrow, title, clue, a ruled reward row, the button
+    local box = rect.centered(s:center(), size2(w, 30 + 22 + 54 + clue_h + 24 + 52 + 16 + 50 + 30))
     box = box:offset(vec2(0, (1 - ease.out_cubic(t * 3)) * 40))
     ui.panel_ex(box, hex(0x1F4645), hex(0x183B3A), hex(0xD4B775), 20)
     local r = box:inflate(-30)
@@ -424,14 +429,16 @@ local function win_dialog(t)
     r:cut_top(22)
     text.draw(G.theme.title:sized(34), r:pos(), vec2(0, 0), "Память возвращается")
     r:cut_top(54)
-    local button = r:cut_bottom(50)
-    local reward = r:cut_bottom(40)
-    local clue = #sc.clue > 1 and ("%s «%s»"):format(sc.clue[1][2], sc.clue[2][2]) or sc.clue[1][2]
-    text.box(G.body:sized(18), r, vec2(0, 0), clue)
+    text.box(body, r:cut_top(clue_h), vec2(0, 0), clue)
+    r:cut_top(24)
+    local reward = r:cut_top(52)
+    gfx.line(reward:pos(), reward:point(vec2(1, 0)), 1, rgba(212, 183, 117, 70))
+    gfx.line(reward:point(vec2(0, 1)), reward:point(vec2(1, 1)), 1, rgba(212, 183, 117, 70))
     local label = text.draw(G.body, reward:point(vec2(0, .5)), vec2(0, .5), "Награда:")
     local coins = amount(label:point(vec2(1, .5)) + vec2(12, 0), vec2(0, .5), G.coin, tostring(scene_reward[COINS]), G.number)
     amount(coins:point(vec2(1, .5)) + vec2(18, 0), vec2(0, .5), G.influence, tostring(scene_reward[INFLUENCE]), G.number)
-    if ui.button(button:align(size2(280, 50), vec2(0, .5)), "Вернуться на остров", ui.ACCENT) then go_home() end
+    r:cut_top(16)
+    if ui.button(r:cut_top(50):align(size2(280, 50), vec2(0, .5)), "Вернуться на остров", ui.ACCENT) then go_home() end
 end
 
 local function cast_dialog(t)

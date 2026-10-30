@@ -27,7 +27,7 @@ end
 local function start(i,quiet)
     S.chapter=num.clampi(i,1,#levels);S.g=sim.new(levels[S.chapter]);S.screen='play';S.modal=nil;S.selected=nil
     S.banked=false;load_back(S.chapter);camera_reset();fx.clear()
-    if not quiet then story.play('briefing-'..i,{{text=levels[i].briefing}}) end
+    if not quiet then story.play('briefing-'..i,{{'dispatch',levels[i].briefing}}) end
 end
 local function animation(e)
     local d=e.def
@@ -142,7 +142,8 @@ end
 local function modal()
     local kind=S.modal
     if not kind then return end
-    ui.set_enabled(true);ui.modal_backdrop(1);ui.panel(rect(344,226,680,574))
+    -- each panel fits its content: no empty band under the last button
+    ui.set_enabled(true);ui.modal_backdrop(1);ui.panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
     local title=kind=='pause' and 'Rescue paused' or kind=='win' and 'District restored!' or 'Every route matters'
     label(rect(385,267,598,62),title,42,vec2(.5,.5))
     if kind=='win' then
@@ -160,7 +161,7 @@ local function modal()
         if ui.button(rect(414,620,540,58),'Districts') then S.screen='menu';S.modal=nil end
     else
         label(rect(390,342,588,262),'Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n\nKitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n\nDrag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home.',23,vec2(0,0))
-        if ui.button(rect(414,666,540,62),'Ready',ui.ACCENT) then S.modal=nil end
+        if ui.button(rect(414,630,540,62),'Ready',ui.ACCENT) then S.modal=nil end
     end
 end
 local function smoke()
@@ -246,7 +247,9 @@ local function init()
         panel=color(25,57,62,246),panel2=color(18,43,48,248),border=color(226,201,150,135),
         button_bg=color.hex(0x346068),button_bg2=color.hex(0x23474E),button_hot=color.hex(0x477A7E),button_border=color(235,211,164,130),
         accent=C.gold,accent2=color.hex(0xD6A050),active=C.gold,dim=color(9,23,28,196),toast_bg=C.cream,toast_text=C.ink,radius=13})
-    story.setup({},story_style{text=S.text:filled(C.ink):sized(27),name=S.text:sized(23),bubble=C.cream,edge=C.teal,dim=color(9,23,28,100),skip='START RESCUE'})
+    -- briefings come from the rescue dispatcher: a caption with a name tag, no portrait
+    story.setup({{id='dispatch',name='Rescue dispatch',color=color.hex(0xB4532A)}},
+        story_style{text=S.text:filled(C.ink):sized(27),name=S.text:sized(21),bubble=C.cream,edge=C.teal,dim=color(9,23,28,150),skip='START RESCUE'})
     S.testing=app.arg('fresh')~=nil or app.arg('shot')~=nil or app.arg('smoke')~=nil
     S.smoke=app.arg('smoke')~=nil
     if not S.testing then save.read('campaign',serialize) end

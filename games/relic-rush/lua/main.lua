@@ -282,7 +282,7 @@ end
 local function init()
     R.font = font.load("fonts/LilitaOne-Regular.ttf")
     story.setup(cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
-                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 110), portrait_height = .27, framed = true, skip = "SKIP"})
+                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), portrait_height = .27, framed = true, skip = "SKIP"})
     R.backdrop = texture.load("jungle.jpg")
     R.scenes[1] = texture.load("scene-lagoon.jpg")
     R.scenes[2] = texture.load("scene-temple.jpg")
