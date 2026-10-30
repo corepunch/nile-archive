@@ -240,10 +240,12 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
     the badge half outside instead of engulfed by a cloud or burst.
   On phones (framed busts) the line sits in a **dialogue box**, the way the
   story screens of portrait match-3 games and visual novels do it: the box
-  runs along the bottom from the speaker's side, sized to the phrase but never
-  narrower than the medallion, which stands just above its end with the name
-  plate on the box's edge. There is no tail: next to a framed portrait a tail
-  only competes with the frame, and tails are kept for words placed in the
+  is sized to the phrase but never narrower than the medallion, which stands
+  just above its end with the name plate on the box's edge. The renderer centres
+  the complete portrait-and-box unit horizontally and vertically within the
+  safe screen, using the frame and visible bubble outline (including puffs or
+  spikes). A listener participates in the same measured unit. There is no tail:
+  next to a framed portrait a tail only competes with the frame, and tails are kept for words placed in the
   world (`speech_bubble`) and for the standing figures of the iPad staging.
   The listener stands on the same baseline across the screen, dimmed and smaller.
   A new speaker's bubble springs out of its tail (`ease_out_back`), then the
@@ -251,8 +253,9 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   (`text_box_reveal`), with a beat after sentences and a shorter one after
   commas and dashes. A tap finishes the line, the next tap moves on; Space
   works too. The optional skip pill (with a fast-forward mark) sits in the
-  bottom corner away from the speaker, or above the bubble's far end when a
-  listener stands in that corner.
+  bottom corner away from a standing speaker. For framed phone dialogue it
+  travels with the centred unit, across from the medallion above the box, or
+  above the whole unit when a listener occupies that end.
 - Bubble kinds: **speech** (rounded body, curved tapered tail), **thought** (a
   cloud of puffs with detached, shrinking puffs as the tail) and **shout**
   (spikes evenly spaced along a rounded box, so long and short lines burst

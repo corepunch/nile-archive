@@ -477,11 +477,9 @@ void story_frame(float dt)
         tip = v2(near - side * 12, rect_max(bubble).y + drop);
         grow_from = tip;
     } else if (framed_narrow) {
-        /* Phones: the story screens of portrait match-3 and visual-novel games
-         * use a dialogue box, not a balloon. It runs along the bottom from the
-         * speaker's side, sized to the phrase but never narrower than the
-         * medallion, which stands just above it with the name plate on the
-         * box's edge. A tail would only fight the frame, so there is none. */
+        /* Build the phone's portrait/box unit first, then centre its complete
+         * visible bounds below. The box stays sized to the phrase, with the
+         * medallion above the speaker's end and no competing tail. */
         width = clampf(width, minf(face.w + 60, max_w), max_w);
         bubble = rect_anchor(v2(who->right ? rect_max(screen).x - m - reach : screen.pos.x + m + reach, rect_max(screen).y - m - reach),
                              sz2(width, height), v2(who->right ? 1 : 0, 1));
@@ -500,13 +498,29 @@ void story_frame(float dt)
     /* the listener: the previous speaker, dimmed, on the other side */
     const character *listener = S.listener;
     bool listening = listener && listener->portrait.tex && who && listener->right != who->right && listener != who;
+    rect listener_portrait = rc(0, 0, 0, 0), group = screen;
     if (listening) {
-        rect r = stand(listener, h * (framed_narrow ? .8f : .92f));
+        listener_portrait = stand(listener, h * (framed_narrow ? .8f : .92f));
         if (framed_narrow)   /* on the speaker's baseline, above the box */
-            r = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 10 : screen.pos.x + m + 10, rect_max(portrait).y), r.size,
-                            v2(listener->right ? 1 : 0, 1));
-        draw_portrait(listener, rect_offset(r, v2(0, framed_narrow ? 0 : h * .02f)), rgba(120, 124, 132, 235));
+            listener_portrait = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 10 : screen.pos.x + m + 10,
+                                               rect_max(portrait).y), listener_portrait.size, v2(listener->right ? 1 : 0, 1));
     }
+    if (framed_narrow) {
+        /* Centre the authored frame plus the actual puff/spike outline, not
+         * just the bubble or a fixed-height placeholder. Safe areas are already
+         * represented by app_screen(). Keep a listener in the same unit. */
+        group = rect_union(rect_inflate(portrait, 5), speech_bubble_bounds(bubble, kind));
+        if (listening) group = rect_union(group, rect_inflate(listener_portrait, 5));
+        vec2 offset = vec2_sub(rect_center(screen), rect_center(group));
+        portrait = rect_offset(portrait, offset);
+        bubble = rect_offset(bubble, offset);
+        listener_portrait = rect_offset(listener_portrait, offset);
+        tip = vec2_add(tip, offset);
+        grow_from = vec2_add(grow_from, offset);
+        group = rect_offset(group, offset);
+    }
+    if (listening)
+        draw_portrait(listener, rect_offset(listener_portrait, v2(0, framed_narrow ? 0 : h * .02f)), rgba(120, 124, 132, 235));
 
     float slide = (1 - ease_out_cubic(S.arrive * 5)) * face.w * .3f;
     rect shown_portrait = rect_offset(portrait, v2((who && who->right ? 1 : -1) * slide, 0));
@@ -538,9 +552,9 @@ void story_frame(float dt)
         rect pill = rect_anchor(v2(left ? bubble.pos.x : rect_max(bubble).x, bubble.pos.y - 12 - reach), size, v2(left ? 0 : 1, 1));
         if (beside)   /* the bottom corner away from the speaker */
             pill = rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, rect_max(screen).y - m), pill.size, v2(left ? 0 : 1, 1));
-        else if (framed_narrow)   /* across from the medallion, above the box; the top corner when a listener stands there */
-            pill = listening ? rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, screen.pos.y + m), pill.size, v2(left ? 0 : 1, 0))
-                             : rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, bubble.pos.y - 12 - reach), pill.size, v2(left ? 0 : 1, 1));
+        else if (framed_narrow)   /* travel with the unit; sit above it when a listener occupies the far end */
+            pill = rect_anchor(v2(left ? group.pos.x : rect_max(group).x,
+                                  listening ? group.pos.y - 12 : bubble.pos.y - 12 - reach), pill.size, v2(left ? 0 : 1, 1));
         ui_state st = ui_hit(pill, 0);
         rect r = rect_offset(pill, v2(0, st.held ? 2 : 0));
         draw_shadow(rect_offset(r, v2(0, 3)), r.size.h * .5f, 8, rgba(0, 0, 0, 70));

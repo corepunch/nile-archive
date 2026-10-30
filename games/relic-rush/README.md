@@ -63,7 +63,7 @@ You begin with a small expedition camp. Each puzzle represents an excavation: un
 
 This is an original adventure setting inspired by archaeological serials and lost-world fiction, rather than a licensed Indiana Jones setting or a claim to portray a specific historical civilization. The colorful tropical palette combines jade, turquoise, warm stone and gold, with readable silhouettes and soft jungle scenery.
 
-**Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion standing above a dialogue box sized to the line, name plate on the box's edge and no tail, as in the story screens of portrait match-3 games; typed text: tap to finish a line, tap again to continue, or skip). Name badges are centred on the visible outline of speech, cloud and burst bubbles; decorative puffs/spikes count toward the padding so they do not engulf the badge. Each beat plays once per save:
+**Narrative status:** the cast now speaks through the engine's dialogue system (portrait and bubble centred together in the safe screen; bust in a medallion standing above a dialogue box sized to the line, name plate on the box's edge and no tail, as in the story screens of portrait match-3 games; typed text: tap to finish a line, tap again to continue, or skip). Name badges are centred on the visible outline of speech, cloud and burst bubbles; decorative puffs/spikes count toward the padding so they do not engulf the badge. Each beat plays once per save:
 
 - Bubbles come in three kinds: Elena's first musing is a thought cloud, Mara's greeting a shout, the rest speech.
 - **Elena Voss** opens the expedition and explains each level's twist the first time it is played (its lesson; later it is a reminder toast).

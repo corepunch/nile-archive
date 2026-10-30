@@ -144,8 +144,11 @@ The reusable engine UI now owns form layout, input, focus, data exchange and mod
 Gaussian blur; the game supplies its skin and templates for pause, building and
 guide dialogs. The guide uses one stable-key data source, a measured list and
 left-aligned icon/copy rows. Speech, thought-cloud and shout-burst badges centre
-on the visible outline; their puffs/spikes contribute to text padding. This
-layout audit is tracked in [issue #16](https://github.com/corepunch/nile-archive/issues/16).
+on the visible outline; their puffs/spikes contribute to text padding. Framed
+phone dialogue centres the portrait, visible bubble and any listener as one
+measured unit within the safe screen; Skip travels with that unit. Reviewed
+480×900 and safe-area 390×844 comparisons are in `docs/review/centered-dialogue/`.
+The badge/padding audit is tracked in [issue #16](https://github.com/corepunch/nile-archive/issues/16).
 Reviewed comparisons live in `docs/review/dialogue-stack/` (all three shapes,
 one/two-line speech, 480×900 and safe-area 390×844, plus the guide). See [the UI engine](../../../docs/UI_ENGINE.md).
 
