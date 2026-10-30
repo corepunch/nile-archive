@@ -706,6 +706,10 @@ function app.quit() end
 ---@return rect
 function app.screen() end
 
+---The whole display in logical units: the screen plus letterbox bars and safe-area margins (x and y may be negative). Draw backgrounds over it inside gfx.bleed(true); keep controls in app.screen().
+---@return rect
+function app.bleed() end
+
 ---Device pixels per logical unit.
 ---@return number
 function app.pixel_scale() end
@@ -912,6 +916,10 @@ function gfx.additive(on) end
 function gfx.clip(r) end
 
 function gfx.unclip() end
+
+---While on, drawing may reach the whole display (app.bleed()), not only the logical screen: for full-bleed backgrounds. Resets any clip.
+---@param on boolean
+function gfx.bleed(on) end
 
 ---@class cameralib
 ---@overload fun(t?: table): camera

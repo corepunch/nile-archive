@@ -183,6 +183,7 @@
   <module name="app" doc="The window, the logical screen and the main loop. A game's main.lua returns the descriptor engine.h calls app_desc - `return {title = ..., id = ..., design = size2(1200, 900), max_aspect = 16 / 9, landscape = true, fixed = false, rotate_text = ..., clear = color.hex(0x0E2B2E), init = function() end, frame = function(dt) end, quit = function() end}` - and the engine runs it: init once the window exists, frame every frame, quit at the end. Command line options understood by every game: --size WxH, --fresh (no saves), --data DIR, --lua DIR, --shot out.png [--frames N].">
     <function name="quit" c="app_quit" doc="End the main loop after this frame."/>
     <function name="screen" c="app_screen" doc="The logical screen, origin (0, 0)."><returns type="rect"/></function>
+    <function name="bleed" c="app_bleed" doc="The whole display in logical units: the screen plus letterbox bars and safe-area margins (x and y may be negative). Draw backgrounds over it inside gfx.bleed(true); keep controls in app.screen()."><returns type="rect"/></function>
     <function name="pixel_scale" c="app_pixel_scale" doc="Device pixels per logical unit."><returns type="float"/></function>
     <function name="time" c="app_time" doc="Seconds since start (frame time)."><returns type="double"/></function>
     <function name="dt" c="app_dt" doc="Duration of the current frame, seconds."><returns type="float"/></function>
@@ -257,6 +258,7 @@
     <function name="additive" c="gfx_additive" doc="Additive blending for shapes (glows, sparks) until switched off."><arg name="on" type="bool"/></function>
     <function name="clip" c="gfx_clip" doc="Draw only inside r until unclip."><arg name="r" type="rect"/></function>
     <function name="unclip" c="gfx_unclip"/>
+    <function name="bleed" c="gfx_bleed" doc="While on, drawing may reach the whole display (app.bleed()), not only the logical screen: for full-bleed backgrounds. Resets any clip."><arg name="on" type="bool"/></function>
   </module>
 
   <struct name="camera" c="camera" doc="A view rect on screen looking at a world of `world` size. Functions return a new camera: `cam = cam:input(in):clamp()`.">

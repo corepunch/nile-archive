@@ -367,8 +367,10 @@ function R.overlays(dt)
     end
     local entry = R.reduced_motion and 1 or ease.out_cubic(R.modal_clock / .28)
     local exit = R.modal_closing and ease.out_cubic(R.modal_exit / .2) or 0
-    gfx.rect(rect(0, 0, SCREEN_W, SCREEN_H), rgba(5, 22, 22, 185 * entry * (1 - exit)))
-    ui.block(rect(0, 0, SCREEN_W, SCREEN_H))
+    gfx.bleed(true)
+    gfx.rect(app.bleed(), rgba(5, 22, 22, 185 * entry * (1 - exit)))
+    gfx.bleed(false)
+    ui.block(app.bleed())
     local scale = .96 + .04 * entry
     P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit), entry * (1 - exit)
     local draw = dialogs[R.overlay]

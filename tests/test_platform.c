@@ -68,6 +68,22 @@ static void draw_and_check(void)
     c = pixel(85, 85); CHECK(c.r > 240 && c.g < 15 && c.b < 15);
     /* The left letterbox stays at the clear color, outside the logical scene. */
     CHECK(pixels[(height / 2 * width) * 4] == 16);
+
+    /* Off the logical screen, drawing is clipped until bleed lets it reach the display. */
+    rect bleed = app_bleed(), screen = app_screen();
+    CHECK(bleed.pos.x < 0 && bleed.pos.y <= 0 && rect_max(bleed).x > rect_max(screen).x && rect_max(bleed).y >= rect_max(screen).y);
+    draw_rect(rc(bleed.pos.x, 0, -bleed.pos.x, 100), hex(0xFF0000));
+    CHECK(render_read_pixels(pixels, width, height));
+    CHECK(pixels[(height / 2 * width) * 4] == 16);
+    gfx_bleed(true);
+    draw_rect(bleed, hex(0x40A060));
+    gfx_bleed(false);
+    draw_rect(rc(bleed.pos.x, 0, -bleed.pos.x, 100), hex(0xFF0000));   /* clipped again */
+    CHECK(render_read_pixels(pixels, width, height));
+    unsigned char *corner = pixels, *edge = pixels + (height / 2 * width) * 4, *last = pixels + ((size_t)width * height - 1) * 4;
+    CHECK(corner[0] == 0x40 && corner[1] == 0xA0 && corner[2] == 0x60);
+    CHECK(edge[0] == 0x40 && edge[1] == 0xA0 && edge[2] == 0x60);
+    CHECK(last[0] == 0x40 && last[1] == 0xA0 && last[2] == 0x60);
     free(pixels); pixels = NULL;
 }
 

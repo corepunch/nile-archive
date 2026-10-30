@@ -125,9 +125,10 @@ void ui_toast(const char *utf8)
 void ui_modal_backdrop(float t)
 {
     const ui_theme *th = ui_theme_get();
-    rect s = app_screen();
-    draw_rect(s, color_alpha(th->dim, saturate(t)));
-    ui_block(s);
+    gfx_bleed(true);
+    draw_rect(app_bleed(), color_alpha(th->dim, saturate(t)));
+    gfx_bleed(false);
+    ui_block(app_bleed());
 }
 
 void ui_end_frame(float dt)

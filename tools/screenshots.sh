@@ -44,6 +44,8 @@ shot relic-rush dialogue-mara 480x900 --dialog mara --frames 240
 shot relic-rush dialogue-tomas 480x900 --dialog tomas --frames 240
 shot relic-rush dialogue-adrian 480x900 --dialog adrian --frames 240
 shot relic-rush island-bubble 480x900 --dialog bubble --frames 30
+shot relic-rush phone-island 390x844 --city 3 --safe-area 0,47,0,34
+shot relic-rush phone-board 390x844 --safe-area 0,47,0,34
 shot relic-rush effect-ray 480x900 --fx ray --frames 10
 shot relic-rush effect-bomb 480x900 --fx bomb --frames 10
 shot relic-rush effect-prism 480x900 --fx prism --frames 10
