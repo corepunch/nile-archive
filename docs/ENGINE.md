@@ -203,16 +203,17 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
     short of the face, and never crosses one;
   - narration (no speaker) is a centred caption with no tail, and a named
     speaker without a portrait (Volcano's dispatcher) gets a name tag on it.
-  On narrow screens the bubble is a panel along the bottom with the speaker's
-  medallion standing on its rim in front of it and the name tag beside the
-  medallion; the listener stands on the other side, dimmed.
+  On phones (framed busts) the medallion stands in its bottom corner and the
+  bubble, still sized to its phrase, sits above it with a short tail down to
+  the face; nothing overlaps the bubble's rim. The listener stands in the
+  other corner, dimmed and smaller.
   A new speaker's bubble springs out of its tail (`ease_out_back`), then the
   text types itself out at 40 characters a second without ever re-wrapping
   (`text_box_reveal`), with a beat after sentences and a shorter one after
   commas and dashes. A tap finishes the line, the next tap moves on; Space
   works too. The optional skip pill (with a fast-forward mark) sits in the
-  corner away from the speaker, or in the top corner when a listener stands
-  there.
+  bottom corner away from the speaker, or above the bubble's far end when a
+  listener stands in that corner.
 - Bubble kinds: **speech** (rounded body, curved tapered tail), **thought** (a
   cloud of puffs with detached, shrinking puffs as the tail) and **shout**
   (spikes evenly spaced along a rounded box, so long and short lines burst
