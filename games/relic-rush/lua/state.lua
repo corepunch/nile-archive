@@ -4,8 +4,8 @@
 local R = {
     -- the game is laid out for a 480 x 900 portrait screen; taller phones add height
     SCREEN_W = 480, SCREEN_H = 900,
-    HEX_R = 26.5,
-    BOARD_CLIP = rect(24, 276, 432, 432),
+    HEX_R = 32,         -- radius-4 board spans 14 radii: 448 wide, with 16-unit screen margins
+    BOARD_CLIP = rect(10, 236, 460, 512),
     drop = 0,            -- extra screen height on tall phones (see R.layout)
     hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
