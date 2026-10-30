@@ -15,7 +15,7 @@ EM_JS(char *, web_query_args, (void), {
     var words = [];
     new URLSearchParams(location.search).forEach(function(value, key) {
         words.push('--' + key);
-        if (value !== '') words.push(value);
+        if (value !== "") words.push(value);
     });
     var text = words.join('\n'), n = lengthBytesUTF8(text) + 1, p = _malloc(n);
     stringToUTF8(text, p, n);

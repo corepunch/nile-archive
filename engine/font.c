@@ -15,7 +15,7 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "third_party/stb_truetype.h"
 
-#define PAGE_SIZE 1024
+#define FONT_PAGE_SIZE 1024
 #define MAX_PAGES 8
 #define CACHE_SLOTS 8192
 #define BATCH 1536
@@ -113,17 +113,17 @@ static void cache_reset(void)
 
 static bool pack(int w, int h, int *page, int *x, int *y)
 {
-    if (w > PAGE_SIZE || h > PAGE_SIZE) return false;
-    if (G.pages == 0 || G.shelf_x + w > PAGE_SIZE) {
+    if (w > FONT_PAGE_SIZE || h > FONT_PAGE_SIZE) return false;
+    if (G.pages == 0 || G.shelf_x + w > FONT_PAGE_SIZE) {
         G.shelf_x = 0;
         G.shelf_y += G.shelf_h;
         G.shelf_h = 0;
     }
-    if (G.pages == 0 || G.shelf_y + h > PAGE_SIZE) {
+    if (G.pages == 0 || G.shelf_y + h > FONT_PAGE_SIZE) {
         if (G.pages == MAX_PAGES) return false;
         if (!G.tex[G.pages]) {
-            void *zero = calloc(PAGE_SIZE * PAGE_SIZE, 4);
-            G.tex[G.pages] = render_texture_create(PAGE_SIZE, PAGE_SIZE, zero);
+            void *zero = calloc(FONT_PAGE_SIZE * FONT_PAGE_SIZE, 4);
+            G.tex[G.pages] = render_texture_create(FONT_PAGE_SIZE, FONT_PAGE_SIZE, zero);
             free(zero);
         }
         G.pages++;
@@ -270,7 +270,7 @@ static void glyph_quad(const glyph *g, rect dst, color top, color bottom)
         batch_flush();
         G.batch_page = g->page;
     }
-    float k = 1.0f / PAGE_SIZE;
+    float k = 1.0f / FONT_PAGE_SIZE;
     rect uv = rc(g->x * k, g->y * k, g->w * k, g->h * k);
     render_vertex a = gv(dst.pos, uv.pos, top), b = gv(rect_point(dst, v2(1, 0)), rect_point(uv, v2(1, 0)), top);
     render_vertex c = gv(rect_max(dst), rect_max(uv), bottom), d = gv(rect_point(dst, v2(0, 1)), rect_point(uv, v2(0, 1)), bottom);
