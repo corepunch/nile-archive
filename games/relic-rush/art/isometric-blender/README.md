@@ -17,10 +17,11 @@ footprints and centre pivots on the saved render.
 
 Every building has one restored presentation. Selected, pressed, hover, disabled
 and blocked-placement states are not new authored states in this study. The
-gateway, lodge, archive, fountain and temple have study footprints that differ
-from the current game definitions; see `w`, `h` and `game` in the report.
-Runtime adoption, matching footprints, sprite export, state review and in-game
-validation remain tracked by [issue #15](https://github.com/corepunch/nile-archive/issues/15).
+The runtime paint-over now adopts the study's `w`/`h` footprints; the report's
+`game` column preserves earlier dimensions for provenance. The unchanged master
+also supplies isolated shadow-catcher renders. See the
+[ImageGen paint-over pipeline](../isometric-paintover/README.md) and
+[issue #15](https://github.com/corepunch/nile-archive/issues/15).
 
 ## Reproduce
 

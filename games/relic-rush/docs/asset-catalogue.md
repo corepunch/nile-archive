@@ -222,9 +222,11 @@ for burning, charging, cracked gems or tool upgrades.
 The [ImageGen paint-over](../art/isometric-paintover/README.md) uses the original
 Blender grid render as its edit target and the original Relic Rush buildings as
 its style reference. All ten buildings were painted together in one call; the
-saved master, exact prompt and comparison are preserved. It is a review image,
-with no runtime/state mapping changes. Pixel registration, alpha extraction and
-runtime validation remain tracked in [issue #15](https://github.com/corepunch/nile-archive/issues/15).
+saved masters, exact prompts and comparison are preserved. Its transparent atlas
+supplies all ten runtime buildings, with isolated Blender shadow passes and
+generated per-layer pivots. See [building registration](BUILDINGS.md) and the
+[reviewed capture matrix](review/painted-buildings/README.md).
+The fixing PR closes [issue #15](https://github.com/corepunch/nile-archive/issues/15).
 
 The [2:1 building-art trial](../art/isometric-trial/README.md) contains two
 review-only full-atlas generations, exact geometry references, saved prompts,
@@ -235,16 +237,16 @@ No runtime inventory or interaction-state mapping changed in this experiment.
 
 The [Blender projection study](../art/isometric-blender/README.md) preserves
 editable geometry, its procedural source, a measured 2:1 camera report and two
-reviewed render previews for all ten buildings. These remain source studies;
-several footprint sizes differ from the game. Runtime adoption and state
-validation are also tracked in issue #15.
+reviewed render previews for all ten buildings. The runtime adopts its `w`/`h`
+footprints. Its `game` column records earlier sizes for provenance.
 
 These families plus the board assets above cover every file in `data/`;
 `runtime_inventory` is checked against disk by `make test`.
 
 | Runtime files | Source / ownership | Supported states |
 | --- | --- | --- |
-| `data/buildings/0..9.png` | `art/buildings.png`; prepare_assets.py | Restored sprites; valid placement reuses the sprite, invalid placement is the engine’s semitransparent red ghost |
+| `data/buildings/0..9.png` | `art/isometric-paintover/buildings-transparent.png`; saved ImageGen prompts; `tools/building_assets.py` | Authored restored sprite; valid placement reuses it, blocked placement uses the existing engine red ghost, held placement lifts it; cards/rewards use it alone |
+| `data/building-shadows/0..9.png` | Original Blender master; `art/isometric-paintover/render_shadows.py` and persistent `shadows/0..9.png`; same importer | Separate grounded shadow for restored/valid/blocked/held states; own crop/pivot and shared pixel scale; all shadows below all buildings; omitted in cards/rewards |
 | `data/characters/{elena,mara,tomas,adrian}.png` | `art/art-direction/expedition-cast.png`; prepare_assets.py | One authored bust each; engine supplies speech/thought/shout bubbles |
 | `data/{island,jungle,scene-lagoon,scene-temple}.jpg` | Corresponding paintings in `art/` | Island, fallback jungle, levels 1–5 lagoon, levels 6–10 temple |
 | `data/board-states/cell-mask.png` | Actual `gfx.ngon` capture in `art/board-states/cell-mask.png` | Shared flat-top slot silhouette; clip mask, not an icon/state |

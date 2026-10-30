@@ -2326,6 +2326,17 @@ World rect of a building's sprite.
 
 **Returns:** `rect`
 
+### `city.shadow_rect(c, b)  ·  c:shadow_rect(b)`
+
+World rect of the separately cropped ground shadow, at the sprite pixel scale.
+
+| Argument | Type | |
+|---|---|---|
+| `c` | `city` |  |
+| `b` | `building` |  |
+
+**Returns:** `rect`
+
 ### `city.zone_of(c, world)  ·  c:zone_of(world)`
 
 The zone containing a world point, or -1.
@@ -2579,6 +2590,9 @@ A building type.
 | `about` | `string` |  |
 | `sprite_path` | `string` |  |
 | `sprite` | `texture` | Loaded by city:init from sprite_path. |
+| `shadow_path` | `string` | Optional separate ground-shadow image; same pixel scale as sprite, with its own crop and pivot. |
+| `shadow` | `texture` | Loaded by city:init from shadow_path; drawn beneath all buildings and stays grounded during lift animations. |
+| `shadow_pivot` | `vec2` | Ground centre in shadow-image pixels; zero defaults to the sprite pivot for matching canvases. |
 | `size` | `size2` | Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing. |
 | `pivot` | `vec2` | Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre. |
 | `base_width` | `number` | Sprite pixels from the footprint's left corner to its right one; sets the drawing scale. |

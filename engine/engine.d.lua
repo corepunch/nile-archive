@@ -135,6 +135,9 @@
 ---@field about string
 ---@field sprite_path string
 ---@field sprite texture Loaded by city:init from sprite_path.
+---@field shadow_path string Optional separate ground-shadow image; same pixel scale as sprite, with its own crop and pivot.
+---@field shadow texture Loaded by city:init from shadow_path; drawn beneath all buildings and stays grounded during lift animations.
+---@field shadow_pivot vec2 Ground centre in shadow-image pixels; zero defaults to the sprite pivot for matching canvases.
 ---@field size size2 Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing.
 ---@field pivot vec2 Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre.
 ---@field base_width number Sprite pixels from the footprint's left corner to its right one; sets the drawing scale.
@@ -1475,6 +1478,12 @@ function city.ready(c, index, now) end
 ---@param b building
 ---@return rect
 function city.sprite_rect(c, b) end
+
+---World rect of the separately cropped ground shadow, at the sprite pixel scale.
+---@param c city
+---@param b building
+---@return rect
+function city.shadow_rect(c, b) end
 
 ---The zone containing a world point, or -1.
 ---@param c city
