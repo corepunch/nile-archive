@@ -1,4 +1,7 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
+-- Idol/Leaf/Crystal artwork also identifies Gold/Wood/Stone in the island purse.
+-- Board clears score points; the fixed first-clear grant and Gold-only replay
+-- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}

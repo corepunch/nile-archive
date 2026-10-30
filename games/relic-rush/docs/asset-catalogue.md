@@ -22,6 +22,20 @@ the new artwork. The complete three-option ImageGen atlas, selection, source,
 prompt and reviewed game captures are recorded in the
 [replacement review](review/sunstone-courtyard/README.md).
 
+## Reward and replay presentation
+
+The [economy review](review/economy/README.md) records first-clear/replay rewards,
+the measured expedition list, available/locked rows and the shop's spendable /
+reserved Gold. Sources are `lua/expeditions.lua`, `lua/screens.lua`,
+`lua/catalogue.lua` and `lua/rules.lua`. The shared form skin supplies existing
+normal/hover/pressed/disabled/focus controls. No new bitmap or icon set is added;
+the existing normal Idol/Leaf/Crystal artwork identifies Gold/Wood/Stone. Board
+matches contribute to score/objectives; wallet payouts use the separate fixed
+grant contract. Discovery Stars/Compasses are one-time progress rewards, and
+replays pay Gold only. All piece packs and authored board/tool states retain
+their existing artwork and state mapping. Reproduce with `--victory`,
+`--replay-victory`, `--expeditions --expedition-page N` and `--catalogue`.
+
 ## Piece kinds and optional packs
 
 All packs use the same kind IDs and rules. Colours and silhouettes are authored;
@@ -29,11 +43,11 @@ the game does not recolour one gem into other kinds.
 
 | ID / rule name | Relics (default) | Jewels | Resources | Rule meaning |
 | --- | --- | --- | --- | --- |
-| 0 / IDOL | Gold sun idol | Yellow hex gem | Coins | Idol objective; gold collection |
+| 0 / IDOL | Gold sun idol | Yellow hex gem | Coins | Idol objective and score; reused Gold purse icon |
 | 1 / FLAME | Coral flame | Red heart | Terracotta amphora | A matched, unlocked flame thaws adjacent ice |
-| 2 / LEAF | Jade leaf | Green square gem | Timber | Wood collection |
+| 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
-| 4 / CRYSTAL | Purple crystal cluster | Purple diamond | Stone | Stone collection |
+| 4 / CRYSTAL | Purple crystal cluster | Purple diamond | Stone | Ordinary matching kind; reused Stone purse icon |
 | 5 / AMPHORA | Amber amphora | Orange star | Wheat | Ordinary matching kind |
 
 Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:

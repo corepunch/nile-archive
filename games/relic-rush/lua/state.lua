@@ -10,7 +10,7 @@ local R = {
     hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
     -- overlays and board phases
-    OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8,
+    OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9,
     PH_IDLE = 0, PH_SWAP = 1, PH_REJECT = 2, PH_CLEAR = 3, PH_FALL = 4,
     PAL_GOLD = 0, PAL_CREAM = 1, PAL_GREEN = 2, PAL_WHITE = 3,
 

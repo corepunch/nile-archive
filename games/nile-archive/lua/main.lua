@@ -4,6 +4,7 @@
 -- engine; this file holds the content, the hidden-object rules and the screen
 -- layout. The island itself is an engine city.
 local hex, rgba = color.hex, color
+local economy = require("archive_economy")
 
 ------------------------------------------------------------------- content
 
@@ -13,41 +14,44 @@ local ITEMS, ZONES = 8, 4
 local scenes = {
     {title = "Двор хранителя", teaser = "На столах двора остались вещи отца. Начните с них.",
      clue = {{"nefra", "На свитке — печать семейной мастерской. Отец успел спрятать архив до наводнения."}},
-     background = "scene0.png", gate = 0,
+     background = "scene0.png",
      names = {"Анх", "Веер", "Гранат", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
      at = {vec2(133, 133), vec2(268, 422), vec2(491, 316), vec2(574, 660), vec2(1150, 368), vec2(965, 575), vec2(195, 598), vec2(1094, 170)},
      radius = {vec2(27, 55), vec2(82, 42), vec2(30, 30), vec2(40, 24), vec2(45, 20), vec2(95, 70), vec2(90, 42), vec2(42, 55)}},
     {title = "Библиотека писца", teaser = "В библиотеке спрятан второй след. Для доступа нужно 20 влияния.",
      clue = {{"nefra", "На обороте печати проступил план острова. След ведёт к старому храму у восточного берега."}},
-     background = "scene1.png", gate = 20,
+     background = "scene1.png",
      names = {"Анх", "Веер", "Гранат", "Скарабей", "Ключ", "Кошка", "Карта", "Перо"},
      at = {vec2(180, 78), vec2(1023, 617), vec2(115, 430), vec2(513, 163), vec2(450, 617), vec2(1063, 453), vec2(273, 500), vec2(1070, 226)},
      radius = {vec2(25, 52), vec2(115, 55), vec2(35, 35), vec2(30, 42), vec2(45, 22), vec2(90, 70), vec2(195, 55), vec2(45, 55)}},
     {title = "Храм на закате", teaser = "Соберите последнюю цепочку улик. Нужно 50 влияния.",
      clue = {{"nefra", "Последняя записка отца раскрыта."},
              {"horem", "Книги спрятаны под храмом. Восстанови остров — и библиотека снова откроется.", story.THOUGHT}},
-     background = "scene2.png", gate = 50,
+     background = "scene2.png",
      names = {"Анх", "Веер", "Яблоко", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
      at = {vec2(61, 109), vec2(1027, 530), vec2(120, 514), vec2(527, 334), vec2(1109, 114), vec2(656, 574), vec2(234, 98), vec2(379, 634)},
      radius = {vec2(30, 72), vec2(95, 50), vec2(35, 35), vec2(42, 24), vec2(25, 62), vec2(105, 58), vec2(70, 28), vec2(95, 30)}},
 }
 local SCENES = #scenes
+for i,scene in ipairs(scenes) do scene.gate=economy.gates[i] end
 
 -- Each sprite's footprint is measured in its own pixels (docs/BUILDINGS.md):
 -- the ground centre it stands on (pivot), the width from its left corner to
 -- its right one, and its size in whole TILE tiles.
 local TILE = size2(24, 12)   -- half extents: a tile is 48 x 24 world units
 
-local function building(title, w, h, pivot, base, coins, influence, path)
-    return {name = title, sprite_path = path, size = size2(w, h), pivot = pivot, base_width = base, cost = purse(coins), reward = purse(0, influence)}
+local function building(id, title, w, h, pivot, base, path)
+    local balance=economy.buildings[id]
+    return {name = title, sprite_path = path, size = size2(w, h), pivot = pivot, base_width = base,
+            cost = purse(balance.coins), reward = purse(0, balance.influence), needs=purse(0,0,balance.chapters)}
 end
 
 local buildings = {
-    building("Дом садовника", 2, 2, vec2(81, 200), 150, 70, 10, "buildings/0.png"),
-    building("Храм Исиды", 3, 2, vec2(86, 198), 171, 160, 30, "buildings/1.png"),
-    building("Архив", 3, 2, vec2(76, 187), 151, 130, 25, "buildings/2.png"),
-    building("Фонтан", 2, 2, vec2(80, 192), 151, 60, 10, "buildings/3.png"),
-    building("Мастерская", 2, 2, vec2(76, 187), 143, 100, 15, "buildings/4.png"),
+    building(1,"Дом садовника", 2, 2, vec2(81, 200), 150, "buildings/0.png"),
+    building(2,"Храм Исиды", 3, 2, vec2(86, 198), 171, "buildings/1.png"),
+    building(3,"Архив", 3, 2, vec2(76, 187), 151, "buildings/2.png"),
+    building(4,"Фонтан", 2, 2, vec2(80, 192), 151, "buildings/3.png"),
+    building(5,"Мастерская", 2, 2, vec2(76, 187), 143, "buildings/4.png"),
 }
 
 local cast = {
@@ -65,8 +69,6 @@ local intro = {
     {"nefra", "Но он успел спрятать книги и оставил подсказки. Я восстановлю наше поместье — и найду архив."},
 }
 local merit_shore = {"merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.", story.SHOUT}
-
-local scene_reward = purse(240, 20)
 
 
 --------------------------------------------------------------------- state
@@ -91,6 +93,7 @@ local G = {
     hint = nil, hint_ready = 0,
     slots = {}, slot_time = {},   -- the item bar: item per slot, when it arrived
     score = 0, combo = 0, combo_left = 0, clock = 0, result = nil,
+    misses = 0, hints = 0,
     cam = nil,                    -- hidden-object camera
     focus = vec2(), focus_time = 0,
     modal = MODAL_NONE, modal_time = 0,
@@ -119,7 +122,7 @@ local function island_setup()
     c.movable = true
     c.buildable = island_buildable
     local zones = {{area = rect(580, 200, 600, 1050)}}
-    for z = 1, ZONES - 1 do zones[z + 1] = {area = rect(800 + z * 380, 200, 380, 1050), cost = purse(z * 180)} end
+    for z = 1, ZONES - 1 do zones[z + 1] = {area = rect(800 + z * 380, 200, 380, 1050), cost = purse(economy.shore_costs[z]), needs=purse(0,0,z)} end
     c.zones = zones
     c.cam = camera{center = vec2(900, 650), zoom = .8, min_zoom = .35, max_zoom = 2, cover = true}
     c:init("island.png")
@@ -128,8 +131,9 @@ local function island_setup()
 end
 
 local function new_game()
-    G.wallet = purse(260, 10)
+    G.wallet = purse(economy.START_COINS, economy.START_INFLUENCE)
     G.wins = {0, 0, 0}
+    G.stars = {0, 0, 0}
     G.island.count = 0
     G.island.open = 1
     G.island:add(G.island:snap(vec2(850, 650), 0), 0, 0)
@@ -137,11 +141,12 @@ end
 
 
 local function serialize(s)
-    s:int("version", 2)
+    s:int("version", 3)
     G.wallet[COINS] = s:int("coins", G.wallet[COINS])
     G.wallet[INFLUENCE] = s:int("influence", G.wallet[INFLUENCE])
     G.wins = s:ints("wins", G.wins)
     G.stars = s:ints("stars", G.stars)
+    G.wallet[3]=economy.completed(G.wins) -- a non-spendable requirement, rebuilt from saved wins
     G.island:serialize(s)
     story.serialize(s)
 end
@@ -199,6 +204,7 @@ local function open_scene(i)
     G.hint, G.hint_ready = nil, 0
     G.slots, G.slot_time = {}, {}
     G.score, G.combo, G.combo_left, G.clock, G.result = 0, 0, 0, 0, nil
+    G.misses, G.hints = 0, 0
     G.island.selected = -1
     G.tray = false
     G.modal = MODAL_NONE
@@ -222,6 +228,7 @@ local function show_hint()
     end
     for i = 1, ITEMS do if not pick and not G.found[i] then pick = i end end
     if not pick then return end
+    G.hints = G.hints + 1
     G.hint = pick
     G.hint_ready = G.clock + HINT_RECHARGE
     G.focus = scenes[G.scene].at[pick]
@@ -249,10 +256,8 @@ local function scene_tap(screen)
             fx.text(at - vec2(0, 30), G.float, ("+%d"):format(gain))
             if found_count() == ITEMS then
                 local stars = stars_for(G.clock)
-                G.result = {score = G.score, time = G.clock, stars = stars}
-                G.wallet = G.wallet + scene_reward
-                G.wins[G.scene] = G.wins[G.scene] + 1
-                G.stars[G.scene] = math.max(G.stars[G.scene], stars)
+                G.result = {score = G.score, time = G.clock, stars = stars, complete=true, perfect=G.misses==0 and G.hints==0}
+                assert(economy.claim(G,G.scene,G.result),"completed scene must pay once")
                 story.play(("chapter-%d"):format(G.scene - 1), sc.clue)   -- the clue, the first time
                 save_progress()
                 G.modal = MODAL_WIN
@@ -263,6 +268,7 @@ local function scene_tap(screen)
     end
     -- a stray tap: points lost and the combo broken
     G.score = math.max(0, G.score - MISS_POINTS)
+    G.misses = G.misses + 1
     G.combo, G.combo_left = 0, 0
     fx.text(screen - vec2(0, 20), G.float_miss, ("−%d"):format(MISS_POINTS))
 end
@@ -515,7 +521,7 @@ end
 
 local function chapter_goal()
     for i = 1, SCENES do
-        if G.wins[i] == 0 then return i, G.wallet[INFLUENCE] >= scenes[i].gate end
+        if G.wins[i] == 0 then return i, economy.can_play(G.wins,G.wallet[INFLUENCE],i) end
     end
     return nil, true
 end
@@ -560,7 +566,7 @@ local function draw_goal(c)
     local eyebrow, title
     if not i then eyebrow, title = "АРХИВ СОБРАН", "Переиграйте главы на три звезды"
     elseif ready then eyebrow, title = ("ГЛАВА %d ГОТОВА"):format(i), scenes[i].title
-    else eyebrow, title = ("ГЛАВА %d · НУЖНО %d ВЛИЯНИЯ"):format(i, scenes[i].gate), "Стройте здания на острове" end
+    else eyebrow, title = ("ГЛАВА %d · ЕЩЁ %d ВЛИЯНИЯ"):format(i, math.max(0,scenes[i].gate-G.wallet[INFLUENCE])), "Постройте здание за монеты" end
     local w = math.max(text.measure(G.goal_title, title).w, text.measure(G.goal_eyebrow, eyebrow).w) + 110
     local r = rect.anchor(c, size2(w, 66), vec2(.5, 1))
     local st = ui.hit(r, 0)
@@ -571,45 +577,59 @@ local function draw_goal(c)
     text.draw(G.goal_title, inner:pos() + vec2(0, 27), vec2(0, 0), title)
     local arrow = vec2(inner:max().x - 18, inner:center().y)
     gfx.poly({arrow + vec2(-6, -9), arrow + vec2(6, 0), arrow + vec2(-6, 9)}, INK_SOFT)
-    if st.clicked then G.modal, G.modal_time = MODAL_CHAPTERS, 0 end
+    if st.clicked then
+        if i and not ready then G.tray=true else G.modal, G.modal_time = MODAL_CHAPTERS, 0 end
+    end
 end
 
+local build_form=ui.form{kind="column",panel=true,role="tray",padding=16,gap=8,children={
+    {kind="row",height=30,gap=10,children={
+        {kind="label",id="budget",role="budget",grow=1,text_align="start"},
+        {kind="button",id="close",text="Закрыть",width=100},
+    }},
+    {kind="list",id="stock",direction="row",gap=12,item=function(e)
+        return {kind="column",panel=true,grow=1,padding=8,gap=4,children={
+            {kind="label",text=e.name,height=38,wrap=true},
+            {kind="image",image=e.sprite,height=80},
+            {kind="label",text=("+%d влияния"):format(e.influence),height=22},
+            {kind="label",text=("%d монет"):format(e.coins),height=22},
+            {kind="button",id="buy",text=e.action,enabled=e.available,height=36},
+        }}
+    end},
+}}
+local build_skin={
+    panel=function(box,n) frame(box,n.role~="tray",n.role=="tray" and 20 or 12) end,
+    style=function(n) return n.role=="budget" and G.body:sized(17) or n.kind=="button" and G.button:sized(16) or G.card_title:sized(17) end,
+}
+
 local function draw_tray(r)
-    local inner = frame(r, false, 20)
-    local head = inner:cut_top(30)
-    text.draw(G.eyebrow, head:pos() + vec2(16, 12), vec2(0, 0), "ПОСТРОЙКИ · ВЫБЕРИТЕ И КОСНИТЕСЬ ОСТРОВА")
-    if round_button(vec2(r:max().x - 8, r.y + 8), 20, icon_close) then G.tray = false; G.island.selected = -1 end
-    local cards = inner:inflate2(vec2(-14, -10))
-    cards:cut_top(-2)
-    for i, d in ipairs(buildings) do
-        local card = cards:col(#buildings, i - 1, 12)
-        local selected = G.island.selected == i - 1
-        local st = ui.hit(card, 0)
-        if st.clicked then G.island.selected = selected and -1 or i - 1 end
-        local c = st.held and card:offset(vec2(0, 2)) or card
-        if selected then gfx.glow(c:center(), c.w * .75, rgba(255, 220, 120, 90), rgba(255, 220, 120, 0)) end
-        gfx.round_rect_grad(c, 12, selected and hex(0xFFF1B8) or GOLD_HI, selected and hex(0xE8A93C) or GOLD_LO)
-        local body = c:inflate(-3)
-        gfx.round_rect_grad(body, 10, PARCH_HI, PARCH_LO)
-        local price = body:cut_bottom(28)
-        gfx.round_rect(price:inflate2(vec2(-6, -3)), 10, rgba(58, 41, 20, 30))
-        local afford = G.wallet[COINS] >= d.cost[COINS]
-        amount(price:center(), vec2(.5, .5), G.coin, tostring(d.cost[COINS]), G.price:filled(afford and INK or hex(0xA83A2A)))
-        local name = body:cut_top(24)
-        text.fit(G.card_title, name:inflate2(vec2(-6, 0)), vec2(.5, .6), d.name)
-        local pic = body:inflate(-2)
-        gfx.clip(pic)   -- the sprites carry transparent margins: draw them larger, clipped to the card
-        gfx.image(d.sprite, pic:fit(texture.size(d.sprite)):scale(1.4), WHITE)
-        gfx.unclip()
-        local tag = rect.anchor(body:point(vec2(1, 0)) + vec2(-4, 28), size2(54, 22), vec2(1, 0))
-        gfx.round_rect(tag, 11, rgba(30, 79, 86, 230))
-        amount(tag:center(), vec2(.5, .5), G.influence, ("+%d"):format(d.reward[INFLUENCE]), G.tiny_num)
+    local stock={}
+    for i,d in ipairs(buildings) do
+        local unlocked=G.wallet:covers(d.needs)
+        local afford=G.wallet:covers(d.cost)
+        stock[#stock+1]={id=i,name=d.name,sprite=d.sprite,coins=d.cost[COINS],influence=d.reward[INFLUENCE],
+            available=unlocked and afford,action=not unlocked and ("Пройдите главу %d"):format(d.needs[3]) or afford and "Выбрать место" or "Не хватает монет"}
+    end
+    assert(build_form:set_items("stock",stock))
+    build_form:set("budget",("%d монет · Влияние дают только постройки"):format(G.wallet[COINS]))
+    local _,height=build_form:measure(r.w,build_skin)
+    r=r:bottom(height)
+    ui.block(r)
+    local event=build_form:draw(r,build_skin)
+    G.spots.build_form=build_form
+    if event and event.id=="close" then G.tray=false
+    elseif event and event.source=="stock" then
+        local kind=event.key-1
+        local ok,spot=G.island:find_spot(kind,G.island.cam.center)
+        if ok then G.island:begin_place(kind,spot);G.island.selected=-1;G.tray=false
+        else ui.toast("Откройте берег, чтобы найти свободное место") end
     end
 end
 
 local move_form = ui.form{kind="column",panel=true,padding=18,gap=8,children={
     {kind="label",id="name",role="title",height=32},
     {kind="label",text="Перетащите постройку или коснитесь свободного места",height=24},
+    {kind="label",id="payment",height=24},
     {kind="row",height=44,gap=12,children={
         {kind="button",id="cancel",text="Отмена",grow=1},
         {kind="button",id="confirm",text="Подтвердить",accent=true,grow=1,enabled_field="valid"},
@@ -631,6 +651,8 @@ local function island_frame(screen, world)
             ui.toast("Недостаточно монет. Пройдите сцену ещё раз.")
         elseif ev.result == city.BLOCKED then
             ui.toast("Нужно свободное место на открытом берегу")
+        elseif ev.result == city.LOCKED_TYPE then
+            ui.toast("Сначала пройдите нужную главу")
         end
     end
     local full = app.bleed()
@@ -652,14 +674,17 @@ local function island_frame(screen, world)
     local influence = top:cut_right(150)
     top:cut_right(22)
     local coins = top:cut_right(170)
-    if capsule(coins:inflate2(vec2(0, -2)), G.coin, tostring(G.wallet[COINS])) then ui.toast("Монеты дают найденные предметы: пройдите главу") end
-    if capsule(influence:inflate2(vec2(0, -2)), G.influence, tostring(G.wallet[INFLUENCE])) then ui.toast("Влияние дают постройки на острове") end
+    if capsule(coins:inflate2(vec2(0, -2)), G.coin, tostring(G.wallet[COINS])) then ui.toast("80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок") end
+    if capsule(influence:inflate2(vec2(0, -2)), G.influence, tostring(G.wallet[INFLUENCE])) then ui.toast("Влияние дают только постройки. Оно открывает главы и не тратится.") end
 
     if story.active() then return end   -- story scenes keep the stage clear, as June's Journey does
 
     if island.placing >= 0 then
         G.tray = false
         move_form:set("name",buildings[island.placing+1].name)
+        local def=buildings[island.placing+1]
+        move_form:set("payment",island.moving>=0 and "Перемещение бесплатно" or ("%d монет · +%d влияния после подтверждения"):format(def.cost[COINS],def.reward[INFLUENCE]))
+        move_form:set("confirm",island.moving>=0 and "Подтвердить" or "Построить")
         move_form.values.valid=island:can_place(island:snap(island.ghost,island.placing),island.placing,island.moving)
         local width=math.min(620,screen.w-36)
         local _,height=move_form:measure(width)
@@ -669,7 +694,9 @@ local function island_frame(screen, world)
         if action and action.id=="cancel" then island:cancel()
         elseif action and action.id=="confirm" then
             local ev=island:confirm(G.wallet,app.clock())
-            if ev.result==city.MOVED then save_progress();ui.toast("Постройка перемещена") end
+            if ev.result==city.MOVED then save_progress();ui.toast("Постройка перемещена")
+            elseif ev.result==city.BUILT then save_progress();ui.toast(("Готово · +%d влияния. Откройте главы, чтобы продолжить."):format(def.reward[INFLUENCE]))
+            elseif ev.result==city.CANT_AFFORD then ui.toast("Недостаточно монет. Переиграйте открытую главу.") end
         end
         return
     end
@@ -685,27 +712,19 @@ local function island_frame(screen, world)
                 save_progress()
                 story.add(merit_shore)
             else
-                ui.toast(("Новый берег стоит %d монет — пройдите главу"):format(cost))
+                ui.toast(G.wallet[3]<island.zones[nxt+1].needs[3] and ("Сначала пройдите главу %d"):format(island.zones[nxt+1].needs[3]) or ("Берег стоит %d монет. Переиграйте открытую главу."):format(cost))
             end
         end
     end
 
     if G.tray then
-        local tray = area:bottom(184)
-        draw_tray(tray)
-        if island.selected >= 0 then
-            local s = G.eyebrow:sized(14)
-            local label = ("Коснитесь свободного места: %s"):format(buildings[island.selected + 1].name)
-            local pill = rect.anchor(vec2(screen:center().x, tray.y - 18), size2(text.measure(s, label).w + 36, 36), vec2(.5, 1))
-            gfx.round_rect(pill, 18, rgba(9, 28, 32, 222))
-            gfx.round_rect_line(pill, 18, 1.4, rgba(233, 199, 123, 170))
-            text.draw(s, pill:center(), vec2(.5, .5), label)
-        end
+        draw_tray(area)
         return
     end
 
     -- bottom: build, the current goal, play
-    if round_button(vec2(area.x + 46, area:max().y - 56), 40, icon_house, "Строить") then G.tray = true end
+    G.spots.build=vec2(area.x + 46, area:max().y - 56)
+    if round_button(G.spots.build, 40, icon_house, "Строить") then G.tray = true end
     draw_goal(vec2(screen:center().x, area:max().y))
     local play = vec2(area:max().x - 62, area:max().y - 66)
     G.spots.chapters = play
@@ -868,7 +887,8 @@ local function win_dialog(t)
     local clue = #sc.clue > 1 and ("%s «%s»"):format(sc.clue[1][2], sc.clue[2][2]) or sc.clue[1][2]
     local clue_s = G.ink_body
     local clue_h = text.box_size(clue_s, 560 - 80, clue).h
-    local box, r = popup(640, 410 + clue_h, t, "Глава пройдена!")
+    local payout=res.payout or economy.reward(G.wins[G.scene],G.stars[G.scene],res.stars,false)
+    local box, r = popup(640, 470 + clue_h, t, "Глава пройдена!")
     r:cut_top(44)
     star_row(r:point(vec2(.5, 0)) + vec2(0, 34), 26, res.stars, t)
     r:cut_top(84)
@@ -880,26 +900,28 @@ local function win_dialog(t)
     text.draw(G.eyebrow, half:point(vec2(.5, 0)), vec2(.5, 0), "ВРЕМЯ")
     text.draw(G.score_style, half:point(vec2(.5, 1)), vec2(.5, 1), ("%d:%02d"):format(math.floor(res.time / 60), math.floor(res.time % 60)))
     r:cut_top(14)
-    local rewards = r:cut_top(64):inflate2(vec2(-110, 0))
-    for k, item in ipairs({{G.coin, scene_reward[COINS]}, {G.influence, scene_reward[INFLUENCE]}}) do
-        local tile = rewards:col(2, k - 1, 20)
-        local inner = frame(tile, true, 14)
-        amount(inner:center(), vec2(.5, .5), item[1], ("+%d"):format(item[2]), G.reward)
-    end
+    local rewards = r:cut_top(54):inflate2(vec2(-110, 0))
+    local inner = frame(rewards, true, 14)
+    amount(inner:center(), vec2(.5, .5), G.coin, ("+%d"):format(payout.coins), G.reward)
+    local breakdown=("%d за поиск · %d первая победа\n%d новые звёзды · %d без ошибок и подсказок"):format(payout.base,payout.first,payout.mastery,payout.perfect)
+    text.box(G.body:sized(16),r:cut_top(62):inflate2(vec2(-30,-6)),vec2(.5,.5),breakdown)
     r:cut_top(16)
     local note = r:cut_top(clue_h + 46):inflate2(vec2(-24, 0))
     local paper = frame(note, true, 14)
-    text.draw(G.goal_eyebrow, paper:pos() + vec2(16, 10), vec2(0, 0), "ФРАГМЕНТ АРХИВА")
+    text.draw(G.goal_eyebrow, paper:pos() + vec2(16, 10), vec2(0, 0), payout.first>0 and "НОВЫЙ ФРАГМЕНТ АРХИВА" or "УЛИКА УЖЕ НАЙДЕНА")
     text.box(clue_s, rect(paper.x + 16, paper.y + 28, paper.w - 32, clue_h), vec2(0, 0), clue)
     r:cut_top(18)
     local continue = r:cut_top(56):align(size2(280, 56), vec2(.5, .5))
     G.spots.continue = continue:center()
-    if button(continue, "Продолжить", "green") then go_home() end
+    local next_chapter,ready=chapter_goal()
+    local restore=next_chapter and not ready
+    if button(continue, restore and "Строить за монеты" or "На остров", "green") then go_home();G.tray=not not restore end
 end
 
 local function chapter_card(r, i)
     local sc = scenes[i]
-    local locked = G.wallet[INFLUENCE] < sc.gate
+    local locked = not economy.can_play(G.wins,G.wallet[INFLUENCE],i)
+    local previous=i>1 and G.wins[i-1]==0 and G.wins[i]==0
     local inner = frame(r, true, 18)
     local pic = inner:cut_top(inner.w * 2 / 3):inflate(-8)
     pic.y = pic.y + 4
@@ -921,11 +943,13 @@ local function chapter_card(r, i)
     text.fit(G.card_title:sized(23), inner:cut_top(30):inflate2(vec2(-12, 0)), vec2(.5, .5), sc.title)
     star_row(inner:cut_top(36):center() + vec2(0, 4), 11, G.stars[i])
     local teaser = inner:cut_top(math.max(0, inner.h - 74))
-    text.box(G.ink_small, teaser:inflate2(vec2(-16, -2)), vec2(.5, 0), sc.teaser)
+    local note=previous and ("Сначала пройдите главу %d."):format(i-1) or sc.teaser
+    note=note.."\n80 монет за поиск + бонусы.\nВлияние дают постройки."
+    text.box(G.ink_small, teaser:inflate2(vec2(-16, -2)), vec2(.5, 0), note)
     local b = inner:inflate2(vec2(-16, -10)):bottom(50)
     G.spots["play" .. i] = b:center()
     if locked then
-        button(b, ("Нужно %d влияния"):format(sc.gate), "off")
+        button(b, previous and ("Пройдите главу %d"):format(i-1) or ("Ещё %d влияния"):format(math.max(0,sc.gate-G.wallet[INFLUENCE])), "off")
     elseif button(b, G.wins[i] > 0 and "Играть снова" or "Играть", G.wins[i] > 0 and "blue" or "green") then
         open_scene(i)
     end
@@ -945,7 +969,7 @@ end
 local function chapters_dialog(t)
     local w = math.min(1040, app.screen().w - 40)
     local card_w = (w - 10 - 44 - 40) / SCENES
-    local card_h = (card_w - 26) * 2 / 3 + 8 + 10 + 30 + 36 + 54 + 74
+    local card_h = (card_w - 26) * 2 / 3 + 8 + 10 + 30 + 36 + 108 + 74
     local box, r = popup(1040, card_h + 10 + 28 + 40 + 6, t, "Главы архива")
     close_button(box)
     r = r:inflate2(vec2(-22, -14))
@@ -975,7 +999,19 @@ end
 ------------------------------------------------------------------ smoke
 
 -- --smoke plays chapter one through injected clicks: skip the intro, open the
--- chapters, play, tap every item, continue, then pan and long-press move with cancel/confirm.
+-- chapters, play, move, cancel/buy a restoration, then reach chapter three by
+-- finding the second clue and building the temple through real form input.
+local function smoke_buy(key)
+    local f=G.spots.build_form
+    assert(f,'building catalogue was not drawn')
+    for _,node in pairs(f.nodes) do
+        if node.item_key==key and node.local_id=='buy' then
+            assert(node.enabled,'expected building is not affordable/unlocked')
+            app.inject_click(f.boxes[node.id]:center());return
+        end
+    end
+    error('building key absent from catalogue')
+end
 local function smoke()
     G.smoke_frame = (G.smoke_frame or 0) + 1
     local f = G.smoke_frame
@@ -1014,6 +1050,7 @@ local function smoke()
         app.inject_click(G.spots.continue); G.smoke_step = 6
     elseif step == 6 then
         assert(not G.scene and G.wins[1] == 1 and G.stars[1] >= 1, "continue did not bank the chapter")
+        assert(G.wallet[INFLUENCE]==10 and not economy.can_play(G.wins,10,2),'scene must leave the building gate intact')
         local c=G.island
         G.smoke_origin,G.smoke_coins=c.items[1].pos,G.wallet[COINS]
         c.cam=c.cam:look(G.smoke_origin-vec2(0,50))
@@ -1053,9 +1090,51 @@ local function smoke()
             G.smoke_pass=2;G.smoke_step=9
         else
             assert(c.items[1].pos:dist(G.smoke_destination)<.01,"confirm did not move the building")
-            print(("Nile smoke: chapter one, pan, long-press pickup, cancel and confirm passed; %d points, %d stars"):format(G.result.score,G.result.stars))
-            app.quit()
+            app.inject_click(G.spots.build);G.smoke_step=14
         end
+    elseif step==14 then
+        assert(G.tray,'build catalogue did not open')
+        G.smoke_purchase_coins=G.wallet[COINS];smoke_buy(4);G.smoke_step=15
+    elseif step==15 then
+        assert(G.island.placing==3 and G.wallet[COINS]==G.smoke_purchase_coins,'purchase preview charged early')
+        app.inject_click(G.spots.move_cancel);G.smoke_step=16
+    elseif step==16 then
+        assert(G.island.placing<0 and G.wallet[COINS]==G.smoke_purchase_coins,'cancelled purchase charged')
+        app.inject_click(G.spots.build);G.smoke_step=17
+    elseif step==17 then smoke_buy(4);G.smoke_step=18
+    elseif step==18 then app.inject_click(G.spots.move_confirm);G.smoke_step=19
+    elseif step==19 then
+        assert(G.wallet[COINS]==G.smoke_purchase_coins-60 and G.wallet[INFLUENCE]==20 and G.island.count==2,
+            'confirmed fountain must charge once and grant Influence once')
+        app.inject_click(G.spots.chapters);G.smoke_step=20
+    elseif step==20 then
+        assert(G.modal==MODAL_CHAPTERS,'chapter browser did not open')
+        app.inject_click(G.spots.play2);G.smoke_step=21
+    elseif step==21 then
+        assert(G.scene==2,'restoration did not open chapter two')
+        for i=1,ITEMS do if not G.found[i] then
+            local at=G.cam:to_screen(scenes[2].at[i])
+            if not app.screen():inflate2(vec2(-110,-110)):contains(at) then
+                G.cam=G.cam:look(scenes[2].at[i]):clamp();at=G.cam:to_screen(scenes[2].at[i])
+            end
+            app.inject_click(at);return
+        end end
+        G.smoke_step=22
+    elseif step==22 then
+        assert(G.modal==MODAL_WIN and G.wallet[INFLUENCE]==20,'second scene bypassed the island gate')
+        app.inject_click(G.spots.continue);G.smoke_step=23
+    elseif step==23 then
+        assert(G.tray,'result should lead to construction when Influence is needed')
+        smoke_buy(2);G.smoke_step=24
+    elseif step==24 then app.inject_click(G.spots.move_confirm);G.smoke_step=25
+    elseif step==25 then
+        assert(G.wallet[INFLUENCE]==50 and G.island.count==3,'temple must open final chapter')
+        app.inject_click(G.spots.chapters);G.smoke_step=26
+    elseif step==26 then app.inject_click(G.spots.play3);G.smoke_step=27
+    elseif step==27 then
+        assert(G.scene==3,'final chapter did not open')
+        print('Nile smoke: scene rewards -> free move -> purchase cancel/confirm -> fountain -> chapter two -> temple -> chapter three passed')
+        app.quit()
     end
 end
 
@@ -1160,6 +1239,7 @@ end
 local function apply_screen_arg(screen)
     G.wallet[INFLUENCE] = 100
     G.wallet[COINS] = 900
+    G.wins={1,1,0};G.wallet[3]=economy.completed(G.wins)
     if screen:sub(1, 5) == "scene" then
         open_scene(num.clampi((tonumber(screen:sub(6)) or 0) + 1, 1, SCENES))
         if app.arg("found") then
@@ -1173,7 +1253,19 @@ local function apply_screen_arg(screen)
         end
     elseif screen == "build" then
         G.tray = true
-        G.island.selected = 1
+    elseif screen == "purchase" then
+        local ok,spot=G.island:find_spot(3,vec2(940,760))
+        assert(ok);G.island:begin_place(3,spot)
+    elseif screen == "opening" then
+        G.wallet=purse(economy.START_COINS,economy.START_INFLUENCE);G.wins={0,0,0};G.stars={0,0,0}
+    elseif screen == "first-build" then
+        G.wallet=purse(140,10,1);G.wins={1,0,0};G.tray=true
+    elseif screen == "first-win" then
+        open_scene(1)
+        G.wallet=purse(140,10,1);G.wins={1,0,0};G.stars={1,0,0}
+        for i=1,ITEMS do G.found[i]=0 end
+        G.result={score=2400,time=180,stars=1,payout=economy.reward(0,0,1,false)}
+        G.modal,G.modal_time=MODAL_WIN,2
     elseif screen == "cast" then
         G.modal, G.modal_time = MODAL_CAST, 1
     elseif screen == "pause" then
@@ -1183,11 +1275,13 @@ local function apply_screen_arg(screen)
     elseif screen == "chapters" then
         G.wallet[INFLUENCE] = 30
         G.wins, G.stars = {1, 0, 0}, {3, 0, 0}
+        G.wallet[3]=economy.completed(G.wins)
         G.modal, G.modal_time = MODAL_CHAPTERS, 1
     elseif screen == "win" then
         open_scene(2)
         for i = 1, ITEMS do G.found[i] = 0 end
-        G.result = {score = 4200, time = 68, stars = 3}
+        G.wins={1,0,0};G.stars={3,0,0};G.wallet[3]=economy.completed(G.wins)
+        G.result = {score = 4200, time = 68, stars = 3, payout=economy.reward(0,0,3,true)}
         G.modal, G.modal_time = MODAL_WIN, 2
     elseif screen == "story" then
         story.play("intro", intro)

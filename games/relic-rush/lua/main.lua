@@ -7,6 +7,7 @@ local rules = require("rules")
 local island = require("island")
 require("screens")
 require("catalogue")
+require("expeditions")
 require("vfx")
 require("board")
 require("island_view")
@@ -68,8 +69,12 @@ function R.save_progress()
     if not R.test_mode then save.write("progress", serialize) end
 end
 
-function R.start_level()
-    local lvl = num.clampi(R.prog.level, 0, LEVELS - 1)
+function R.start_level(chosen)
+    local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
+    if lvl > R.prog.level then return false end
+    if chosen and lvl == R.prog.level and island.wonder_count(R.island) < R.prog.level then
+        R.notice("Restore your earned wonder before the next discovery."); return false
+    end
     R.g = rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF)
     R.pending = rules.new_match()
     R.on_island = false
@@ -81,15 +86,17 @@ function R.start_level()
     -- Elena explains a level's twist the first time; later it is a reminder
     local lesson = rules.level_of(R.g).lesson
     if R.quiet or not story.play(("level-%d"):format(R.g.level), {{"elena", lesson}}) then R.notice(lesson) end
+    return true
 end
 
 -- After the results dialog closes: bank the reward and go build.
 function R.claim_reward()
-    rules.progress_reward(R.prog, R.g, R.wonders)
+    local paid, first = rules.progress_reward(R.prog, R.g, R.wonders)
+    if not paid then return end
     R.save_progress()
     R.on_island = true
     R.overlay = R.OV_NONE
-    R.notice("Your next wonder is ready to restore.")
+    R.notice(first and "Restoration funded. Spare Gold is yours to decorate." or "Replay Gold collected. Choose a treasure in the Build Shop.")
 end
 
 ---------------------------------------------------------------- smoke test
@@ -102,7 +109,7 @@ local smoke_move={}
 local function smoke()
     smoke_frames = smoke_frames + 1
     if smoke_frames > 8000 or R.g.lost then
-        error(("smoke test failed at stage %d"):format(smoke_stage))
+        error(("smoke test failed at stage %d (overlay %d, level %d)"):format(smoke_stage,R.overlay,R.g.level))
     end
     if smoke_wait > 0 then   -- one click per few frames, so each press and release is its own frame
         smoke_wait = smoke_wait - 1
@@ -140,6 +147,12 @@ local function smoke()
         end
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
+        if smoke_move.replay then
+            local gain=R.prog.wallet[1]-smoke_move.replay_gold
+            assert(gain>=60 and gain<=100 and R.prog.wallet[4]==3 and R.prog.wallet[5]==1 and island.wonder_count(R.island)==1,
+                "replay must pay only Gold without changing discoveries or restoration")
+            app.inject_click(vec2(240,856+R.drop));smoke_stage=5;return
+        end
         app.inject_click(vec2(240, 856 + R.drop)); smoke_stage = 2   -- CHOOSE A LOCATION
     elseif smoke_stage == 2 and R.overlay == R.OV_WONDER then
         app.inject_click(rect(76, 632, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 3
@@ -228,10 +241,19 @@ local function smoke()
         assert(R.island.moving==1 and R.island.placing==37,"details must move the purchased instance")
         app.inject_click(vec2(100,856+R.drop));smoke_stage=29
     elseif smoke_stage==29 and R.island.placing<0 then
-        app.inject_click(vec2(240,856+R.drop));smoke_stage=5
+        app.inject_click(vec2(127,725+R.drop));smoke_stage=30
+    elseif smoke_stage==30 and R.overlay==R.OV_EXPEDITIONS then
+        local f=R.expedition_form
+        for _,node in pairs(f.nodes) do
+            if node.item_key=='0' and node.local_id=='play' then
+                assert(node.enabled,'completed expedition must be replayable')
+                smoke_move.replay_gold=R.prog.wallet[1];smoke_move.replay=true
+                app.inject_click(f.boxes[node.id]:center());smoke_stage=0;break
+            end
+        end
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: data-backed guide -> swaps -> cascades -> win -> claim -> island -> build -> pan -> long-press move/cancel/confirm -> catalogue -> cancel/buy decoration -> level 2")
+        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> expedition browser -> replay for Gold only -> level 2")
         app.quit()
     end
 end
@@ -274,17 +296,19 @@ end
 -- regions a player would have opened by then, stars and compasses to match.
 local function island_with(n)
     local opened_at = {0, 2, 3, 5, 7, 9}
-    R.prog = {level = n, seed = 782341, wallet = purse(340, 115, 92, n * 3, n * 3)}
+    R.prog = {level = n, seed = 782341, wallet = purse(340, 115, 92, n * 3, rules.discovery_compasses(n))}
     R.island.count = 0
     local open = 1
     for z = 1, ISLAND_ZONES - 1 do
         if n >= opened_at[z + 1] then
             open = open | (1 << z)
-            R.prog.wallet[COMPASSES] = R.prog.wallet[COMPASSES] - R.island.zones[z + 1].cost[COMPASSES]
         end
     end
     R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
     R.island.open = R.island.open | 1
+    for z=1,ISLAND_ZONES-1 do
+        if R.island:zone_open(z) then R.prog.wallet[COMPASSES]=R.prog.wallet[COMPASSES]-R.island.zones[z+1].cost[COMPASSES] end
+    end
     local spend = purse(100000, 100000, 100000)
     for _ = 1, n do island.island_place_next(R.island, spend, n, 0) end
 end
@@ -375,6 +399,13 @@ local function debug_screens()
     if app.arg("catalogue") then
         island_with(4);R.on_island=true
         R.open_catalogue(app.arg("catalogue"),tonumber(app.arg("catalogue-page")) or 1);R.toast_time=0
+    end
+    if app.arg("expeditions") then
+        island_with(4);R.on_island=true;R.open_expeditions(tonumber(app.arg("expedition-page")));R.toast_time=0
+    end
+    if app.arg("replay-victory") then
+        island_with(4);R.g=rules.game_start(1,123478);R.g.won=true;R.g.score=5860;R.g.moves=12
+        R.on_island=false;R.overlay=R.OV_RESULT;R.toast_time=0
     end
     if app.arg("building-review") then
         local first=((tonumber(app.arg("building-review")) or 1)-1)*4

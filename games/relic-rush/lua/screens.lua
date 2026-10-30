@@ -168,8 +168,8 @@ local function relic_icon(kind)
 end
 local capsule_icons = {relic_icon(RELIC_IDOL), relic_icon(RELIC_LEAF), relic_icon(RELIC_CRYSTAL),
                        function(c, radius) star_icon(c, radius * .8) end, function(c, radius) compass_icon(c, radius * .72) end}
-local capsule_notes = {"Idols come from expeditions. Wonders cost them.", "Leaves come from expeditions. Wonders cost them.",
-                       "Crystals come from expeditions. Wonders cost them.", "Stars open new land. They stay with you.",
+local capsule_notes = {"Gold buys buildings. Replay expeditions to earn more.", "Wood funds restorations. First wins grant the full cost.",
+                       "Stone funds restorations. First wins grant the full cost.", "Discovery Stars unlock stock and land. First clears only; never spent.",
                        "Compasses are spent to open new land."}
 
 -- The island shows its purse in two rows of capsules; tapping EXPAND opens the
@@ -228,14 +228,16 @@ end
 local function result_screen()
     local l = result_rects()
     local w = R.wonders[R.g.level + 1]
+    local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
+    local reward = breakdown.total
     local s
     panel(l.card)
     rrect(l.header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
     rrect(l.header, 18, rgba(31, 83, 69))
     rrect(l.header:inflate(-3), 15, rgba(44, 108, 84))
-    say("Expedition complete", rect(l.header.x + 14, l.header.y + 9, l.header.w - 28, 34), 31, PAL_GOLD)
+    say(breakdown.first and "Expedition complete" or "Replay complete", rect(l.header.x + 14, l.header.y + 9, l.header.w - 28, 34), 31, PAL_GOLD)
     say(("LEVEL %d  -  WELL EXPLORED"):format(R.g.level + 1), rect(l.header.x + 12, l.header.y + 48, l.header.w - 24, 15), 14, PAL_GOLD)
-    for k = 0, 2 do
+    for k = 0, breakdown.first and 2 or -1 do
         local slot = l.stars:col(3, k, 8)
         s = section(.24 + k * .13, .32, 13)
         local t = R.reduced_motion and 1 or num.saturate((R.modal_clock - .24 - k * .13) / .32)
@@ -244,18 +246,19 @@ local function result_screen()
         star_icon(slot:center(), (k == 1 and 29 or 24) * pop)
         set_paint(s)
     end
+    if not breakdown.first then say("GOLD FOR YOUR ISLAND",l.stars,23,PAL_GOLD) end
     s = section(.43, .3, 9)
     say("EXPEDITION SCORE", l.score_label, 12, PAL_CREAM)
     local count = R.reduced_motion and 1 or ease.out_cubic((R.modal_clock - .43) / .65)
     say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
     set_paint(s)
     s = section(.62, .25, 8)
-    say("TREASURES FOUND", l.treasure_label, 12, PAL_CREAM)
+    say(breakdown.first and "RESTORATION GRANT + SPARE GOLD" or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
     set_paint(s)
-    local reward = rules.level_reward(R.g, R.wonders)
     local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-    for k = 0, 2 do
-        local r = l.rewards:col(3, k, 10)
+    local columns=breakdown.first and 3 or 1
+    for k = 0, columns-1 do
+        local r = l.rewards:col(columns, k, 10)
         s = section(.66 + k * .1, .28, 10)
         rrect(r, 12, rgba(241, 218, 157))
         rrect(r:inflate(-2), 10, rgba(255, 242, 201))
@@ -263,20 +266,25 @@ local function result_screen()
         say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
         set_paint(s)
     end
+    say(breakdown.first and ("%d restoration Gold + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
+        ("%d base Gold + %d move bonus"):format(breakdown.base,breakdown.bonus),
+        rect(l.rewards.x,l.rewards.y+l.rewards.h+2,l.rewards.w,15),13,PAL_CREAM)
     s = section(.93, .24, 8)
-    for k = 0, 1 do
+    for k = 0, breakdown.first and 1 or -1 do
         local r = l.progress:col(2, k, 12)
         rrect(r, 16, rgba(221, 228, 182))
         local icon = vec2(r.x + 20, r:center().y)
         if k == 1 then compass_icon(icon, 12) else star_icon(icon, 11) end
-        say(k == 1 and "+3 Compasses" or "+3 Stars", rect(r.x + 38, r.y, r.w - 44, r.h), 16, PAL_CREAM)
+        local value=reward[k==1 and rules.COMPASSES or rules.STARS]
+        say(("+%d %s"):format(value,k==1 and (value==1 and "Compass" or "Compasses") or "Stars"), rect(r.x + 38, r.y, r.w - 44, r.h), 16, PAL_CREAM)
     end
+    if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))
     picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
-    say_left("READY TO RESTORE", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(w.name, rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
+    say_left(breakdown.first and "READY TO RESTORE" or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
+    say_left(breakdown.first and w.name or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
     set_paint(s)
     s = section(1.12, .22, 8)
     if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
@@ -408,7 +416,7 @@ local function failed_screen()
     say_at("One more adventure?", vec2(240, 317), 32, PAL_GOLD, 0)
     say_at("THE RUINS WILL WAIT FOR YOU.", vec2(240, 366), 16, PAL_WHITE, 0)
     say_at("Try a special combo or use a tool.", vec2(240, 404), 17, PAL_CREAM, 0)
-    if button(rect(83, 448, 314, 50), "TRY AGAIN", true) then R.start_level() end
+    if button(rect(83, 448, 314, 50), "TRY AGAIN", true) then R.start_level(R.g.level) end
     if button(rect(115, 520, 250, 42), "VISIT ISLAND", true) then R.on_island, R.overlay = true, R.OV_NONE end
 end
 
@@ -455,6 +463,7 @@ function R.overlays(dt)
     end
     if R.overlay == R.OV_NONE then return end
     if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
+    if R.overlay == R.OV_EXPEDITIONS then R.draw_expeditions(dt); return end
     R.modal_clock = R.modal_clock + dt
     if R.modal_closing then
         R.modal_exit = R.modal_exit + dt
