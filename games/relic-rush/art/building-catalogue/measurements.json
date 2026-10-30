@@ -1,0 +1,340 @@
+{
+  "camp": {
+    "bottom": [
+      121,
+      205
+    ],
+    "left": 3,
+    "right": 237,
+    "pivot": [
+      120.0,
+      146.5
+    ],
+    "base_width": 234
+  },
+  "well": {
+    "bottom": [
+      119,
+      225
+    ],
+    "left": 3,
+    "right": 236,
+    "pivot": [
+      119.5,
+      166.75
+    ],
+    "base_width": 233
+  },
+  "workshop": {
+    "bottom": [
+      169,
+      262
+    ],
+    "left": 6,
+    "right": 284,
+    "pivot": [
+      145.0,
+      192.5
+    ],
+    "base_width": 278
+  },
+  "market": {
+    "bottom": [
+      155,
+      239
+    ],
+    "left": 4,
+    "right": 262,
+    "pivot": [
+      133.0,
+      174.5
+    ],
+    "base_width": 258
+  },
+  "gateway": {
+    "bottom": [
+      219,
+      251
+    ],
+    "left": 4,
+    "right": 332,
+    "pivot": [
+      168.0,
+      169.0
+    ],
+    "base_width": 328
+  },
+  "lodge": {
+    "bottom": [
+      152,
+      284
+    ],
+    "left": 4,
+    "right": 294,
+    "pivot": [
+      149.0,
+      211.5
+    ],
+    "base_width": 290
+  },
+  "archive": {
+    "bottom": [
+      149,
+      263
+    ],
+    "left": 4,
+    "right": 300,
+    "pivot": [
+      152.0,
+      189.0
+    ],
+    "base_width": 296
+  },
+  "observatory": {
+    "bottom": [
+      101,
+      251
+    ],
+    "left": 3,
+    "right": 200,
+    "pivot": [
+      101.5,
+      201.75
+    ],
+    "base_width": 197
+  },
+  "fountain": {
+    "bottom": [
+      138,
+      243
+    ],
+    "left": 3,
+    "right": 270,
+    "pivot": [
+      136.5,
+      176.25
+    ],
+    "base_width": 267
+  },
+  "temple": {
+    "bottom": [
+      171,
+      271
+    ],
+    "left": 4,
+    "right": 337,
+    "pivot": [
+      170.5,
+      187.75
+    ],
+    "base_width": 333
+  },
+  "log_cabin": {
+    "bottom": [
+      145,
+      289
+    ],
+    "left": 3,
+    "right": 291,
+    "pivot": [
+      147.0,
+      217.0
+    ],
+    "base_width": 288
+  },
+  "apothecary": {
+    "bottom": [
+      143,
+      279
+    ],
+    "left": 4,
+    "right": 289,
+    "pivot": [
+      146.5,
+      207.75
+    ],
+    "base_width": 285
+  },
+  "mess_hall": {
+    "bottom": [
+      176,
+      296
+    ],
+    "left": 4,
+    "right": 312,
+    "pivot": [
+      158.0,
+      219.0
+    ],
+    "base_width": 308
+  },
+  "stilt_house": {
+    "bottom": [
+      170,
+      296
+    ],
+    "left": 4,
+    "right": 301,
+    "pivot": [
+      152.5,
+      221.75
+    ],
+    "base_width": 297
+  },
+  "map_room": {
+    "bottom": [
+      164,
+      298
+    ],
+    "left": 4,
+    "right": 296,
+    "pivot": [
+      150.0,
+      225.0
+    ],
+    "base_width": 292
+  },
+  "greenhouse": {
+    "bottom": [
+      182,
+      272
+    ],
+    "left": 4,
+    "right": 310,
+    "pivot": [
+      157.0,
+      195.5
+    ],
+    "base_width": 306
+  },
+  "trading_post": {
+    "bottom": [
+      162,
+      291
+    ],
+    "left": 3,
+    "right": 309,
+    "pivot": [
+      156.0,
+      214.5
+    ],
+    "base_width": 306
+  },
+  "water_mill": {
+    "bottom": [
+      167,
+      282
+    ],
+    "left": 4,
+    "right": 301,
+    "pivot": [
+      152.5,
+      207.75
+    ],
+    "base_width": 297
+  },
+  "clock_tower": {
+    "bottom": [
+      116,
+      341
+    ],
+    "left": 3,
+    "right": 227,
+    "pivot": [
+      115.0,
+      285.0
+    ],
+    "base_width": 224
+  },
+  "lighthouse": {
+    "bottom": [
+      120,
+      338
+    ],
+    "left": 3,
+    "right": 236,
+    "pivot": [
+      119.5,
+      279.75
+    ],
+    "base_width": 233
+  },
+  "treehouse": {
+    "bottom": [
+      161,
+      340
+    ],
+    "left": 19,
+    "right": 304,
+    "pivot": [
+      161.5,
+      268.75
+    ],
+    "base_width": 285
+  },
+  "aviary": {
+    "bottom": [
+      150,
+      303
+    ],
+    "left": 4,
+    "right": 299,
+    "pivot": [
+      151.5,
+      229.25
+    ],
+    "base_width": 295
+  },
+  "beached_ship": {
+    "bottom": [
+      193,
+      274
+    ],
+    "left": 4,
+    "right": 299,
+    "pivot": [
+      151.5,
+      200.25
+    ],
+    "base_width": 295
+  },
+  "amphitheater": {
+    "bottom": [
+      185,
+      205
+    ],
+    "left": 3,
+    "right": 303,
+    "pivot": [
+      153.0,
+      130.0
+    ],
+    "base_width": 300
+  },
+  "museum": {
+    "bottom": [
+      166,
+      258
+    ],
+    "left": 4,
+    "right": 304,
+    "pivot": [
+      154.0,
+      183.0
+    ],
+    "base_width": 300
+  },
+  "hanging_gardens": {
+    "bottom": [
+      159,
+      275
+    ],
+    "left": 17,
+    "right": 307,
+    "pivot": [
+      162.0,
+      202.5
+    ],
+    "base_width": 290
+  }
+}

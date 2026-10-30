@@ -357,7 +357,7 @@ static const char engine_ui_forms[] =
 "            bounds=rect.centered(screen:center(),size2(width,math.min(config.height or height,screen.h-32)))\n"
 "        end\n"
 "        local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers,input=options.input or input.get()})\n"
-"        if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value} end\n"
+"        if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end\n"
 "    end\n"
 "    local top=self.layers[#self.layers]\n"
 "    if top and (options.input or input.get()).back then event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'} end\n"

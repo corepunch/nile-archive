@@ -23,7 +23,7 @@ def save_jpg(im, name, size):
     im.convert('RGB').resize(size, Image.Resampling.LANCZOS).save(DATA / name, quality=90, subsampling=0, optimize=True)
 
 
-def isolate_sprite(im):
+def isolate_sprite(im, with_box=False):
     im = im.convert('RGBA')
     w, h = im.size
     alpha = im.getchannel('A')
@@ -51,7 +51,8 @@ def isolate_sprite(im):
     mask = Image.frombytes('L', (w, h), bytes(keep)).filter(ImageFilter.MaxFilter(7))
     im.putalpha(ImageChops.multiply(alpha, mask))
     box = im.getchannel('A').getbbox()
-    return im.crop(box) if box else im
+    result = im.crop(box) if box else im
+    return (result, box or (0,0,w,h)) if with_box else result
 
 
 def tile(im, size=128, inner=116):
@@ -75,13 +76,7 @@ def main():
                              round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3)))
             tile(isolate_sprite(im), inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
 
-    sheet = Image.open(ART / 'buildings.png').convert('RGBA')
-    for i in range(10):
-        box = (round(i % 5 * sheet.width / 5), round(i // 5 * sheet.height / 2),
-               round((i % 5 + 1) * sheet.width / 5), round((i // 5 + 1) * sheet.height / 2))
-        im = isolate_sprite(sheet.crop(box))
-        im.thumbnail((300, 320), Image.Resampling.LANCZOS)
-        im.save(DATA / 'buildings' / f'{i}.png', optimize=True)
+    subprocess.run([sys.executable, str(ROOT / 'tools/prepare_buildings.py')], check=True)
     # Busts of the expedition cast for the dialogue, cut from the concept lineup.
     (DATA / 'characters').mkdir(parents=True, exist_ok=True)
     cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')

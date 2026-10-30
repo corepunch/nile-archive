@@ -42,4 +42,23 @@ assert (ROOT / manifest["cell_mask"]["runtime"]).is_file(), "Missing runtime cel
 for pack in manifest["packs"]:
     for kind in range(len(kinds)):
         assert (ROOT / f"data/tile-sets/{pack}/{kind}.png").is_file()
-print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 authored states covered")
+buildings = json.loads((ROOT / manifest['buildings']).read_text())
+assert (ROOT / buildings['source']).is_file()
+assert (ROOT / buildings['registration']).is_file()
+assert len(buildings['items']) == 96
+assert len({b['key'] for b in buildings['items']}) == 96
+definitions = (ROOT / 'lua/buildings.lua').read_text()
+building_doc = (ROOT / 'docs/building-catalogue.md').read_text()
+for i, b in enumerate(buildings['items']):
+    assert b['id'] == i and b['runtime'] in actual
+    assert (ROOT / b['source']).is_file(), b['key']
+    assert all(n > 0 and n % 1 == 0 for n in b['size'])
+    assert b['base_width'] > 0 and len(b['pivot']) == 2
+    data = (ROOT / b['runtime']).read_bytes()
+    assert data[:8] == b'\x89PNG\r\n\x1a\n' and data[25] == 6, b['key']
+    width,height = struct.unpack('>II',data[16:24])
+    assert (width,height) == (b['crop'][2]-b['crop'][0],b['crop'][3]-b['crop'][1])
+    assert 'key="'+b['key']+'"' in definitions and '`'+b['key']+'`' in building_doc
+    assert (ROOT / f'docs/review/building-catalogue/footprints-{i//4+1:02d}.jpg').is_file()
+assert '96' in doc and 'building-catalogue.md' in doc
+print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 authored states, 96 buildings covered")

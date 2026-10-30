@@ -355,7 +355,7 @@ function Stack:draw(dt,options)
             bounds=rect.centered(screen:center(),size2(width,math.min(config.height or height,screen.h-32)))
         end
         local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers,input=options.input or input.get()})
-        if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value} end
+        if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end
     end
     local top=self.layers[#self.layers]
     if top and (options.input or input.get()).back then event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'} end

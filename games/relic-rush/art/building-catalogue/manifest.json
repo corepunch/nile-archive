@@ -1,0 +1,3654 @@
+{
+  "source": "art/building-catalogue/paintover-atlas.png",
+  "registration": "art/building-catalogue/registration.json",
+  "items": [
+    {
+      "id": 0,
+      "key": "camp",
+      "name": "Expedition camp",
+      "category": "wonder",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        120.0,
+        146.5
+      ],
+      "base_width": 234,
+      "gold": 60,
+      "stars": 0,
+      "runtime": "data/buildings/0.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        96,
+        138,
+        341,
+        352
+      ],
+      "crop": [
+        2,
+        1,
+        244,
+        213
+      ],
+      "reference": "story restoration, as a landmark",
+      "cost": [
+        60,
+        10,
+        5
+      ],
+      "about": "Every great discovery begins with a little canvas."
+    },
+    {
+      "id": 1,
+      "key": "well",
+      "name": "Spring well",
+      "category": "wonder",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        119.5,
+        166.75
+      ],
+      "base_width": 233,
+      "gold": 80,
+      "stars": 0,
+      "runtime": "data/buildings/1.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        434,
+        124,
+        678,
+        356
+      ],
+      "crop": [
+        2,
+        1,
+        243,
+        231
+      ],
+      "reference": "story restoration, as a landmark",
+      "cost": [
+        80,
+        15,
+        15
+      ],
+      "about": "Fresh water brings the lost valley back to life."
+    },
+    {
+      "id": 2,
+      "key": "workshop",
+      "name": "Artisan workshop",
+      "category": "wonder",
+      "size": [
+        3,
+        2
+      ],
+      "pivot": [
+        145.0,
+        192.5
+      ],
+      "base_width": 278,
+      "gold": 100,
+      "stars": 0,
+      "runtime": "data/buildings/2.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        769,
+        109,
+        1063,
+        378
+      ],
+      "crop": [
+        1,
+        2,
+        293,
+        268
+      ],
+      "reference": "story restoration, as a landmark",
+      "cost": [
+        100,
+        25,
+        15
+      ],
+      "about": "A home for the hands that rebuild the valley."
+    },
+    {
+      "id": 3,
+      "key": "market",
+      "name": "Jungle market",
+      "category": "wonder",
+      "size": [
+        3,
+        2
+      ],
+      "pivot": [
+        133.0,
+        174.5
+      ],
+      "base_width": 258,
+      "gold": 120,
+      "stars": 0,
+      "runtime": "data/buildings/3.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        1134,
+        122,
+        1405,
+        369
+      ],
+      "crop": [
+        1,
+        1,
+        269,
+        246
+      ],
+      "reference": "Farmers Market",
+      "cost": [
+        120,
+        25,
+        25
+      ],
+      "about": "Stories, spices and treasures from far away."
+    },
+    {
+      "id": 4,
+      "key": "gateway",
+      "name": "Sunstone gateway",
+      "category": "wonder",
+      "size": [
+        4,
+        2
+      ],
+      "pivot": [
+        168.0,
+        169.0
+      ],
+      "base_width": 328,
+      "gold": 140,
+      "stars": 0,
+      "runtime": "data/buildings/4.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        1465,
+        120,
+        1804,
+        381
+      ],
+      "crop": [
+        1,
+        1,
+        338,
+        259
+      ],
+      "reference": "Park Bridge",
+      "cost": [
+        140,
+        30,
+        30
+      ],
+      "about": "A garden arch marks the path into your valley."
+    },
+    {
+      "id": 5,
+      "key": "lodge",
+      "name": "Explorer's lodge",
+      "category": "wonder",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        149.0,
+        211.5
+      ],
+      "base_width": 290,
+      "gold": 160,
+      "stars": 0,
+      "runtime": "data/buildings/5.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        76,
+        439,
+        377,
+        732
+      ],
+      "crop": [
+        1,
+        2,
+        300,
+        292
+      ],
+      "reference": "Estate",
+      "cost": [
+        160,
+        35,
+        35
+      ],
+      "about": "A warm light after a long day of adventure."
+    },
+    {
+      "id": 6,
+      "key": "archive",
+      "name": "Lost-world archive",
+      "category": "wonder",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        152.0,
+        189.0
+      ],
+      "base_width": 296,
+      "gold": 180,
+      "stars": 0,
+      "runtime": "data/buildings/6.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        435,
+        460,
+        742,
+        732
+      ],
+      "crop": [
+        1,
+        2,
+        305,
+        271
+      ],
+      "reference": "Lavish Library",
+      "cost": [
+        180,
+        35,
+        45
+      ],
+      "about": "Protect the knowledge buried beneath the vines."
+    },
+    {
+      "id": 7,
+      "key": "observatory",
+      "name": "Star observatory",
+      "category": "wonder",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        101.5,
+        201.75
+      ],
+      "base_width": 197,
+      "gold": 200,
+      "stars": 0,
+      "runtime": "data/buildings/7.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        818,
+        460,
+        1026,
+        719
+      ],
+      "crop": [
+        2,
+        1,
+        207,
+        258
+      ],
+      "reference": "Observatory",
+      "cost": [
+        200,
+        40,
+        50
+      ],
+      "about": "Follow the stars to the next discovery."
+    },
+    {
+      "id": 8,
+      "key": "fountain",
+      "name": "Jade fountain",
+      "category": "wonder",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        136.5,
+        176.25
+      ],
+      "base_width": 267,
+      "gold": 220,
+      "stars": 0,
+      "runtime": "data/buildings/8.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        1122,
+        481,
+        1400,
+        733
+      ],
+      "crop": [
+        2,
+        1,
+        277,
+        250
+      ],
+      "reference": "Fountain",
+      "cost": [
+        220,
+        45,
+        55
+      ],
+      "about": "Let the ancient spring flow once more."
+    },
+    {
+      "id": 9,
+      "key": "temple",
+      "name": "Temple of the sun",
+      "category": "wonder",
+      "size": [
+        4,
+        4
+      ],
+      "pivot": [
+        170.5,
+        187.75
+      ],
+      "base_width": 333,
+      "gold": 250,
+      "stars": 0,
+      "runtime": "data/buildings/9.png",
+      "source": "art/building-catalogue/paintover-wonders.png",
+      "box": [
+        1460,
+        465,
+        1804,
+        747
+      ],
+      "crop": [
+        1,
+        2,
+        343,
+        281
+      ],
+      "reference": "story finale, as a landmark",
+      "cost": [
+        250,
+        50,
+        60
+      ],
+      "about": "The heart of the valley shines again."
+    },
+    {
+      "id": 10,
+      "key": "log_cabin",
+      "name": "Trapper's cabin",
+      "category": "building",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        147.0,
+        217.0
+      ],
+      "base_width": 288,
+      "gold": 200,
+      "stars": 6,
+      "runtime": "data/buildings/log_cabin.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        7,
+        12,
+        306,
+        309
+      ],
+      "crop": [
+        2,
+        2,
+        298,
+        296
+      ],
+      "reference": "Summer House",
+      "cost": [
+        200,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 11,
+      "key": "apothecary",
+      "name": "Herbalist's hut",
+      "category": "building",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        146.5,
+        207.75
+      ],
+      "base_width": 285,
+      "gold": 220,
+      "stars": 6,
+      "runtime": "data/buildings/apothecary.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        322,
+        19,
+        618,
+        304
+      ],
+      "crop": [
+        1,
+        1,
+        295,
+        284
+      ],
+      "reference": "Flower Shop",
+      "cost": [
+        220,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 12,
+      "key": "mess_hall",
+      "name": "Mess hall",
+      "category": "building",
+      "size": [
+        3,
+        2
+      ],
+      "pivot": [
+        158.0,
+        219.0
+      ],
+      "base_width": 308,
+      "gold": 240,
+      "stars": 9,
+      "runtime": "data/buildings/mess_hall.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        623,
+        17,
+        942,
+        320
+      ],
+      "crop": [
+        1,
+        1,
+        318,
+        302
+      ],
+      "reference": "Orchid Island Gourmet",
+      "cost": [
+        240,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 13,
+      "key": "stilt_house",
+      "name": "Stilt house",
+      "category": "building",
+      "size": [
+        3,
+        2
+      ],
+      "pivot": [
+        152.5,
+        221.75
+      ],
+      "base_width": 297,
+      "gold": 260,
+      "stars": 9,
+      "runtime": "data/buildings/stilt_house.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        945,
+        18,
+        1253,
+        322
+      ],
+      "crop": [
+        1,
+        2,
+        306,
+        303
+      ],
+      "reference": "Stately Stilt House",
+      "cost": [
+        260,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 14,
+      "key": "map_room",
+      "name": "Cartographer's house",
+      "category": "building",
+      "size": [
+        3,
+        2
+      ],
+      "pivot": [
+        150.0,
+        225.0
+      ],
+      "base_width": 292,
+      "gold": 280,
+      "stars": 12,
+      "runtime": "data/buildings/map_room.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        4,
+        311,
+        307,
+        616
+      ],
+      "crop": [
+        1,
+        1,
+        302,
+        304
+      ],
+      "reference": "Schoolhouse",
+      "cost": [
+        280,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 15,
+      "key": "greenhouse",
+      "name": "Glass greenhouse",
+      "category": "building",
+      "size": [
+        3,
+        2
+      ],
+      "pivot": [
+        157.0,
+        195.5
+      ],
+      "base_width": 306,
+      "gold": 300,
+      "stars": 12,
+      "runtime": "data/buildings/greenhouse.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        310,
+        335,
+        627,
+        615
+      ],
+      "crop": [
+        1,
+        1,
+        316,
+        279
+      ],
+      "reference": "Orangerie",
+      "cost": [
+        300,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 16,
+      "key": "trading_post",
+      "name": "Trading post",
+      "category": "building",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        156.0,
+        214.5
+      ],
+      "base_width": 306,
+      "gold": 320,
+      "stars": 15,
+      "runtime": "data/buildings/trading_post.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        628,
+        323,
+        945,
+        623
+      ],
+      "crop": [
+        2,
+        1,
+        316,
+        298
+      ],
+      "reference": "Central Station",
+      "cost": [
+        320,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 17,
+      "key": "water_mill",
+      "name": "Water mill",
+      "category": "building",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        152.5,
+        207.75
+      ],
+      "base_width": 297,
+      "gold": 340,
+      "stars": 15,
+      "runtime": "data/buildings/water_mill.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        947,
+        338,
+        1254,
+        629
+      ],
+      "crop": [
+        1,
+        1,
+        307,
+        289
+      ],
+      "reference": "Windmill",
+      "cost": [
+        340,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 18,
+      "key": "clock_tower",
+      "name": "Clock tower",
+      "category": "building",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        115.0,
+        285.0
+      ],
+      "base_width": 224,
+      "gold": 360,
+      "stars": 18,
+      "runtime": "data/buildings/clock_tower.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        43,
+        610,
+        278,
+        957
+      ],
+      "crop": [
+        2,
+        1,
+        233,
+        345
+      ],
+      "reference": "Clock Tower",
+      "cost": [
+        360,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 19,
+      "key": "lighthouse",
+      "name": "Valley lighthouse",
+      "category": "building",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        119.5,
+        279.75
+      ],
+      "base_width": 233,
+      "gold": 380,
+      "stars": 18,
+      "runtime": "data/buildings/lighthouse.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        352,
+        614,
+        596,
+        960
+      ],
+      "crop": [
+        2,
+        1,
+        242,
+        344
+      ],
+      "reference": "Lighthouse",
+      "cost": [
+        380,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 20,
+      "key": "treehouse",
+      "name": "Canopy treehouse",
+      "category": "building",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        161.5,
+        268.75
+      ],
+      "base_width": 285,
+      "gold": 400,
+      "stars": 21,
+      "runtime": "data/buildings/treehouse.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        622,
+        616,
+        934,
+        964
+      ],
+      "crop": [
+        1,
+        1,
+        311,
+        346
+      ],
+      "reference": "Tree House",
+      "cost": [
+        400,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 21,
+      "key": "aviary",
+      "name": "Great aviary",
+      "category": "building",
+      "size": [
+        3,
+        3
+      ],
+      "pivot": [
+        151.5,
+        229.25
+      ],
+      "base_width": 295,
+      "gold": 420,
+      "stars": 21,
+      "runtime": "data/buildings/aviary.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        948,
+        639,
+        1254,
+        952
+      ],
+      "crop": [
+        1,
+        2,
+        305,
+        312
+      ],
+      "reference": "Aviary",
+      "cost": [
+        420,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 22,
+      "key": "beached_ship",
+      "name": "Beached schooner",
+      "category": "building",
+      "size": [
+        4,
+        2
+      ],
+      "pivot": [
+        151.5,
+        200.25
+      ],
+      "base_width": 295,
+      "gold": 440,
+      "stars": 24,
+      "runtime": "data/buildings/beached_ship.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        10,
+        952,
+        317,
+        1236
+      ],
+      "crop": [
+        2,
+        1,
+        306,
+        283
+      ],
+      "reference": "Pirate Ship",
+      "cost": [
+        440,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 23,
+      "key": "amphitheater",
+      "name": "Stone amphitheatre",
+      "category": "building",
+      "size": [
+        4,
+        3
+      ],
+      "pivot": [
+        153.0,
+        130.0
+      ],
+      "base_width": 300,
+      "gold": 460,
+      "stars": 24,
+      "runtime": "data/buildings/amphitheater.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        319,
+        993,
+        631,
+        1217
+      ],
+      "crop": [
+        2,
+        1,
+        310,
+        222
+      ],
+      "reference": "Amphitheater",
+      "cost": [
+        460,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 24,
+      "key": "museum",
+      "name": "Relic museum",
+      "category": "building",
+      "size": [
+        4,
+        3
+      ],
+      "pivot": [
+        154.0,
+        183.0
+      ],
+      "base_width": 300,
+      "gold": 500,
+      "stars": 27,
+      "runtime": "data/buildings/museum.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        628,
+        971,
+        940,
+        1239
+      ],
+      "crop": [
+        2,
+        1,
+        311,
+        266
+      ],
+      "reference": "Museum",
+      "cost": [
+        500,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 25,
+      "key": "hanging_gardens",
+      "name": "Hanging gardens",
+      "category": "building",
+      "size": [
+        4,
+        4
+      ],
+      "pivot": [
+        162.0,
+        202.5
+      ],
+      "base_width": 290,
+      "gold": 550,
+      "stars": 30,
+      "runtime": "data/buildings/hanging_gardens.png",
+      "source": "art/building-catalogue/paintover-buildings.png",
+      "box": [
+        940,
+        954,
+        1254,
+        1238
+      ],
+      "crop": [
+        1,
+        1,
+        312,
+        283
+      ],
+      "reference": "Hanging Gardens",
+      "cost": [
+        550,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 26,
+      "key": "palm_young",
+      "name": "Young palm",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.234,
+        113.733
+      ],
+      "base_width": 194.92,
+      "gold": 30,
+      "stars": 0,
+      "runtime": "data/buildings/palm_young.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        256,
+        256,
+        384,
+        384
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Small Lush Tree",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 27,
+      "key": "jungle_tree",
+      "name": "Round jungle tree",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        50.067,
+        114.752
+      ],
+      "base_width": 150.278,
+      "gold": 30,
+      "stars": 0,
+      "runtime": "data/buildings/jungle_tree.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        384,
+        256,
+        512,
+        384
+      ],
+      "crop": [
+        13,
+        0,
+        114,
+        128
+      ],
+      "reference": "Large Lush Tree",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 28,
+      "key": "cypress",
+      "name": "Temple cypress",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        51.0,
+        116.367
+      ],
+      "base_width": 130.064,
+      "gold": 45,
+      "stars": 3,
+      "runtime": "data/buildings/cypress.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        512,
+        256,
+        640,
+        384
+      ],
+      "crop": [
+        13,
+        0,
+        128,
+        128
+      ],
+      "reference": "Conical Tree",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 29,
+      "key": "banana",
+      "name": "Banana plant",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        58.631,
+        86.582
+      ],
+      "base_width": 178.977,
+      "gold": 45,
+      "stars": 3,
+      "runtime": "data/buildings/banana.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        640,
+        256,
+        768,
+        384
+      ],
+      "crop": [
+        0,
+        8,
+        128,
+        128
+      ],
+      "reference": "Banana Plants",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 30,
+      "key": "fan_palm",
+      "name": "Fan palm",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.136,
+        81.93
+      ],
+      "base_width": 175.489,
+      "gold": 45,
+      "stars": 6,
+      "runtime": "data/buildings/fan_palm.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        768,
+        256,
+        896,
+        384
+      ],
+      "crop": [
+        0,
+        14,
+        128,
+        124
+      ],
+      "reference": "Fan Palm",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 31,
+      "key": "papaya",
+      "name": "Papaya tree",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.379,
+        115.668
+      ],
+      "base_width": 177.218,
+      "gold": 60,
+      "stars": 9,
+      "runtime": "data/buildings/papaya.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        896,
+        256,
+        1024,
+        384
+      ],
+      "crop": [
+        0,
+        0,
+        120,
+        128
+      ],
+      "reference": "Papaya Tree",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 32,
+      "key": "frangipani",
+      "name": "Frangipani",
+      "category": "tree",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        56.395,
+        115.502
+      ],
+      "base_width": 161.012,
+      "gold": 75,
+      "stars": 12,
+      "runtime": "data/buildings/frangipani.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1024,
+        256,
+        1152,
+        384
+      ],
+      "crop": [
+        9,
+        0,
+        128,
+        128
+      ],
+      "reference": "Plumeria Tree",
+      "cost": [
+        75,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 33,
+      "key": "bamboo",
+      "name": "Bamboo grove",
+      "category": "tree",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        66.818,
+        101.685
+      ],
+      "base_width": 163.101,
+      "gold": 120,
+      "stars": 6,
+      "runtime": "data/buildings/bamboo.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1152,
+        256,
+        1280,
+        384
+      ],
+      "crop": [
+        0,
+        0,
+        126,
+        128
+      ],
+      "reference": "Lush Reeds",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 34,
+      "key": "twin_palms",
+      "name": "Twin palms",
+      "category": "tree",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        51.254,
+        103.363
+      ],
+      "base_width": 185.966,
+      "gold": 150,
+      "stars": 6,
+      "runtime": "data/buildings/twin_palms.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1280,
+        256,
+        1408,
+        384
+      ],
+      "crop": [
+        8,
+        0,
+        128,
+        128
+      ],
+      "reference": "Tropical Tree",
+      "cost": [
+        150,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 35,
+      "key": "mango",
+      "name": "Mango tree",
+      "category": "tree",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        65.839,
+        113.221
+      ],
+      "base_width": 192.966,
+      "gold": 180,
+      "stars": 9,
+      "runtime": "data/buildings/mango.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1408,
+        256,
+        1536,
+        384
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Oak, Apple Orchard",
+      "cost": [
+        180,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 36,
+      "key": "kapok",
+      "name": "Giant kapok",
+      "category": "tree",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        63.632,
+        107.163
+      ],
+      "base_width": 117.121,
+      "gold": 300,
+      "stars": 18,
+      "runtime": "data/buildings/kapok.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        0,
+        384,
+        128,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Oak",
+      "cost": [
+        300,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 37,
+      "key": "shrub",
+      "name": "Round shrub",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        59.735,
+        97.123
+      ],
+      "base_width": 217.299,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/shrub.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        128,
+        384,
+        256,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Bush",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 38,
+      "key": "fern",
+      "name": "Forest fern",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.136,
+        64.348
+      ],
+      "base_width": 192.202,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/fern.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        256,
+        384,
+        384,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        114
+      ],
+      "reference": "Verdant Bush",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 39,
+      "key": "monstera",
+      "name": "Big-leaf monstera",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        62.56,
+        74.826
+      ],
+      "base_width": 194.635,
+      "gold": 30,
+      "stars": 3,
+      "runtime": "data/buildings/monstera.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        384,
+        384,
+        512,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Marvelous Mangroves",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 40,
+      "key": "flower_shrub",
+      "name": "Flowering shrub",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.975,
+        98.781
+      ],
+      "base_width": 196.062,
+      "gold": 30,
+      "stars": 3,
+      "runtime": "data/buildings/flower_shrub.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        512,
+        384,
+        640,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Bouganvillea",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 41,
+      "key": "berry",
+      "name": "Berry bush",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        61.129,
+        95.979
+      ],
+      "base_width": 208.783,
+      "gold": 30,
+      "stars": 6,
+      "runtime": "data/buildings/berry.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        640,
+        384,
+        768,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Berry Bush",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 42,
+      "key": "reeds",
+      "name": "Riverside reeds",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.941,
+        106.646
+      ],
+      "base_width": 137.146,
+      "gold": 30,
+      "stars": 6,
+      "runtime": "data/buildings/reeds.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        768,
+        384,
+        896,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Lush Reeds",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 43,
+      "key": "topiary",
+      "name": "Topiary ball",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        112.114
+      ],
+      "base_width": 171.579,
+      "gold": 45,
+      "stars": 9,
+      "runtime": "data/buildings/topiary.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        896,
+        384,
+        1024,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Marble Planter",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 44,
+      "key": "hedge",
+      "name": "Clipped hedge block",
+      "category": "bush",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.0,
+        86.33
+      ],
+      "base_width": 130.232,
+      "gold": 30,
+      "stars": 9,
+      "runtime": "data/buildings/hedge.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1024,
+        384,
+        1152,
+        512
+      ],
+      "crop": [
+        1,
+        0,
+        128,
+        128
+      ],
+      "reference": "Spear Grass",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 45,
+      "key": "orchid",
+      "name": "Wild orchids",
+      "category": "flower",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.566,
+        90.648
+      ],
+      "base_width": 215.795,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/orchid.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1152,
+        384,
+        1280,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Pink Flower",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 46,
+      "key": "hibiscus",
+      "name": "Red hibiscus",
+      "category": "flower",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        74.249,
+        89.709
+      ],
+      "base_width": 225.913,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/hibiscus.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1280,
+        384,
+        1408,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Poppy Patch",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 47,
+      "key": "daisies",
+      "name": "Sunny daisies",
+      "category": "flower",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        65.546,
+        84.599
+      ],
+      "base_width": 227.333,
+      "gold": 15,
+      "stars": 3,
+      "runtime": "data/buildings/daisies.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1408,
+        384,
+        1536,
+        512
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Springtime Blooms",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 48,
+      "key": "blue_lily",
+      "name": "Blue lilies",
+      "category": "flower",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        62.122,
+        98.491
+      ],
+      "base_width": 187.833,
+      "gold": 30,
+      "stars": 6,
+      "runtime": "data/buildings/blue_lily.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        0,
+        512,
+        128,
+        640
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Lovely Lupines",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 49,
+      "key": "flower_box",
+      "name": "Flower planter",
+      "category": "flower",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        79.111
+      ],
+      "base_width": 186.668,
+      "gold": 30,
+      "stars": 6,
+      "runtime": "data/buildings/flower_box.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        128,
+        512,
+        256,
+        640
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        116
+      ],
+      "reference": "Planter",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 50,
+      "key": "bromeliad",
+      "name": "Blooming bromeliad",
+      "category": "flower",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        71.91
+      ],
+      "base_width": 222.733,
+      "gold": 30,
+      "stars": 9,
+      "runtime": "data/buildings/bromeliad.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        256,
+        512,
+        384,
+        640
+      ],
+      "crop": [
+        0,
+        14,
+        128,
+        128
+      ],
+      "reference": "Blooming Bromeliad",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 51,
+      "key": "flower_bed",
+      "name": "Flower bed",
+      "category": "flower",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        41.771
+      ],
+      "base_width": 113.131,
+      "gold": 90,
+      "stars": 6,
+      "runtime": "data/buildings/flower_bed.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        384,
+        512,
+        512,
+        640
+      ],
+      "crop": [
+        0,
+        25,
+        128,
+        128
+      ],
+      "reference": "Blossoming Nook",
+      "cost": [
+        90,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 52,
+      "key": "rainbow_bed",
+      "name": "Rainbow garden",
+      "category": "flower",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        68.575
+      ],
+      "base_width": 164.992,
+      "gold": 180,
+      "stars": 15,
+      "runtime": "data/buildings/rainbow_bed.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        512,
+        512,
+        640,
+        640
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        114
+      ],
+      "reference": "Rainbow Grove",
+      "cost": [
+        180,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 53,
+      "key": "broken_column",
+      "name": "Broken column",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        94.952
+      ],
+      "base_width": 159.63,
+      "gold": 30,
+      "stars": 3,
+      "runtime": "data/buildings/broken_column.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        640,
+        512,
+        768,
+        640
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Column Arch",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 54,
+      "key": "idol_head",
+      "name": "Stone idol",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        55.0,
+        97.34
+      ],
+      "base_width": 137.336,
+      "gold": 45,
+      "stars": 3,
+      "runtime": "data/buildings/idol_head.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        768,
+        512,
+        896,
+        640
+      ],
+      "crop": [
+        9,
+        0,
+        128,
+        128
+      ],
+      "reference": "Statue",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 55,
+      "key": "jaguar",
+      "name": "Jaguar guardian",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        84.099
+      ],
+      "base_width": 151.352,
+      "gold": 60,
+      "stars": 6,
+      "runtime": "data/buildings/jaguar.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        896,
+        512,
+        1024,
+        640
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        116
+      ],
+      "reference": "Statue",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 56,
+      "key": "obelisk",
+      "name": "Sun obelisk",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        103.913
+      ],
+      "base_width": 107.247,
+      "gold": 60,
+      "stars": 9,
+      "runtime": "data/buildings/obelisk.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1024,
+        512,
+        1152,
+        640
+      ],
+      "crop": [
+        0,
+        0,
+        126,
+        128
+      ],
+      "reference": "Marble Vase",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 57,
+      "key": "sundial",
+      "name": "Sundial",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        51.0,
+        104.243
+      ],
+      "base_width": 188.014,
+      "gold": 60,
+      "stars": 9,
+      "runtime": "data/buildings/sundial.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1152,
+        512,
+        1280,
+        640
+      ],
+      "crop": [
+        13,
+        0,
+        114,
+        128
+      ],
+      "reference": "Shining Sundial",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 58,
+      "key": "explorer",
+      "name": "Explorer statue",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        49.0,
+        99.863
+      ],
+      "base_width": 125.853,
+      "gold": 90,
+      "stars": 12,
+      "runtime": "data/buildings/explorer.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1280,
+        512,
+        1408,
+        640
+      ],
+      "crop": [
+        15,
+        0,
+        114,
+        128
+      ],
+      "reference": "Statue",
+      "cost": [
+        90,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 59,
+      "key": "gold_idol",
+      "name": "Golden idol",
+      "category": "statue",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        51.0,
+        97.31
+      ],
+      "base_width": 137.515,
+      "gold": 150,
+      "stars": 18,
+      "runtime": "data/buildings/gold_idol.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1408,
+        512,
+        1536,
+        640
+      ],
+      "crop": [
+        13,
+        0,
+        114,
+        128
+      ],
+      "reference": "Ebony Thoroughbred",
+      "cost": [
+        150,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 60,
+      "key": "stone_arch",
+      "name": "Ruined arch",
+      "category": "statue",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        62.757,
+        90.452
+      ],
+      "base_width": 131.062,
+      "gold": 180,
+      "stars": 12,
+      "runtime": "data/buildings/stone_arch.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        0,
+        640,
+        128,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Flourishing Archway",
+      "cost": [
+        180,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 61,
+      "key": "giant_head",
+      "name": "Giant stone head",
+      "category": "statue",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        78.134,
+        86.91
+      ],
+      "base_width": 155.404,
+      "gold": 240,
+      "stars": 15,
+      "runtime": "data/buildings/giant_head.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        128,
+        640,
+        256,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Garden Grotto",
+      "cost": [
+        240,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 62,
+      "key": "birdbath",
+      "name": "Birdbath",
+      "category": "water",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        104.393
+      ],
+      "base_width": 186.22,
+      "gold": 45,
+      "stars": 3,
+      "runtime": "data/buildings/birdbath.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        256,
+        640,
+        384,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Watering Post",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 63,
+      "key": "small_fountain",
+      "name": "Little fountain",
+      "category": "water",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        94.686
+      ],
+      "base_width": 170.471,
+      "gold": 90,
+      "stars": 9,
+      "runtime": "data/buildings/small_fountain.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        384,
+        640,
+        512,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Flowing Fountain",
+      "cost": [
+        90,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 64,
+      "key": "lily_pond",
+      "name": "Lily pond",
+      "category": "water",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        58.769,
+        41.971
+      ],
+      "base_width": 144.086,
+      "gold": 120,
+      "stars": 6,
+      "runtime": "data/buildings/lily_pond.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        512,
+        640,
+        640,
+        768
+      ],
+      "crop": [
+        0,
+        26,
+        128,
+        128
+      ],
+      "reference": "Giant Water Lilies",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 65,
+      "key": "duck_pond",
+      "name": "Duck pond",
+      "category": "water",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        76.963
+      ],
+      "base_width": 172.165,
+      "gold": 150,
+      "stars": 9,
+      "runtime": "data/buildings/duck_pond.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        640,
+        640,
+        768,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Duck Pond",
+      "cost": [
+        150,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 66,
+      "key": "spring_rocks",
+      "name": "Rock spring",
+      "category": "water",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        54.96,
+        80.218
+      ],
+      "base_width": 154.625,
+      "gold": 240,
+      "stars": 15,
+      "runtime": "data/buildings/spring_rocks.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        768,
+        640,
+        896,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Sunny Spring",
+      "cost": [
+        240,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 67,
+      "key": "bench",
+      "name": "Garden bench",
+      "category": "garden",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        62.296,
+        97.849
+      ],
+      "base_width": 170.395,
+      "gold": 30,
+      "stars": 0,
+      "runtime": "data/buildings/bench.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        896,
+        640,
+        1024,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Garden Chairs",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 68,
+      "key": "lantern",
+      "name": "Lantern post",
+      "category": "garden",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.0,
+        113.018
+      ],
+      "base_width": 157.274,
+      "gold": 30,
+      "stars": 0,
+      "runtime": "data/buildings/lantern.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1024,
+        640,
+        1152,
+        768
+      ],
+      "crop": [
+        0,
+        0,
+        101,
+        128
+      ],
+      "reference": "Gilded Lampost",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 69,
+      "key": "tiki",
+      "name": "Tiki torch",
+      "category": "garden",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        33.0,
+        117.013
+      ],
+      "base_width": 171.079,
+      "gold": 30,
+      "stars": 3,
+      "runtime": "data/buildings/tiki.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1152,
+        640,
+        1280,
+        768
+      ],
+      "crop": [
+        31,
+        0,
+        108,
+        128
+      ],
+      "reference": "Tiki Torches",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 70,
+      "key": "signpost",
+      "name": "Signpost",
+      "category": "garden",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        42.161,
+        115.804
+      ],
+      "base_width": 167.836,
+      "gold": 30,
+      "stars": 3,
+      "runtime": "data/buildings/signpost.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1280,
+        640,
+        1408,
+        768
+      ],
+      "crop": [
+        21,
+        0,
+        105,
+        128
+      ],
+      "reference": "Crossroads Signpost",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 71,
+      "key": "flagpole",
+      "name": "Expedition flag",
+      "category": "garden",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        35.069,
+        110.835
+      ],
+      "base_width": 107.825,
+      "gold": 45,
+      "stars": 6,
+      "runtime": "data/buildings/flagpole.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1408,
+        640,
+        1536,
+        768
+      ],
+      "crop": [
+        27,
+        0,
+        116,
+        128
+      ],
+      "reference": "Feature Film Board",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 72,
+      "key": "pump",
+      "name": "Water pump",
+      "category": "garden",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        63.426,
+        98.704
+      ],
+      "base_width": 185.179,
+      "gold": 45,
+      "stars": 9,
+      "runtime": "data/buildings/pump.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        0,
+        768,
+        128,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Water Barrel Pump",
+      "cost": [
+        45,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 73,
+      "key": "picnic",
+      "name": "Picnic rug",
+      "category": "garden",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        57.403,
+        64.42
+      ],
+      "base_width": 137.229,
+      "gold": 120,
+      "stars": 6,
+      "runtime": "data/buildings/picnic.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        128,
+        768,
+        256,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        98
+      ],
+      "reference": "Picnic Perfection",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 74,
+      "key": "hammock",
+      "name": "Palm hammock",
+      "category": "garden",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        61.917,
+        99.388
+      ],
+      "base_width": 186.75,
+      "gold": 150,
+      "stars": 6,
+      "runtime": "data/buildings/hammock.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        256,
+        768,
+        384,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        126
+      ],
+      "reference": "Summer Swing",
+      "cost": [
+        150,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 75,
+      "key": "pergola",
+      "name": "Vine pergola",
+      "category": "garden",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        91.747
+      ],
+      "base_width": 129.48,
+      "gold": 180,
+      "stars": 9,
+      "runtime": "data/buildings/pergola.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        384,
+        768,
+        512,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Shaded Respite",
+      "cost": [
+        180,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 76,
+      "key": "swing",
+      "name": "Garden swing",
+      "category": "garden",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        88.156
+      ],
+      "base_width": 152.07,
+      "gold": 240,
+      "stars": 12,
+      "runtime": "data/buildings/swing.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        512,
+        768,
+        640,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        118
+      ],
+      "reference": "Summer Swing",
+      "cost": [
+        240,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 77,
+      "key": "gazebo",
+      "name": "Jade gazebo",
+      "category": "garden",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        97.734
+      ],
+      "base_width": 136.911,
+      "gold": 300,
+      "stars": 12,
+      "runtime": "data/buildings/gazebo.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        640,
+        768,
+        768,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Gilded Gazebo",
+      "cost": [
+        300,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 78,
+      "key": "crates",
+      "name": "Supply crates",
+      "category": "camp",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        61.44,
+        96.973
+      ],
+      "base_width": 146.904,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/crates.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        768,
+        768,
+        896,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        114
+      ],
+      "reference": "Barrel-Aged Bounty",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 79,
+      "key": "barrels",
+      "name": "Barrels",
+      "category": "camp",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        69.017,
+        87.524
+      ],
+      "base_width": 200.684,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/barrels.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        896,
+        768,
+        1024,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Barrel-Aged Bounty",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 80,
+      "key": "campfire",
+      "name": "Campfire",
+      "category": "camp",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        64.278,
+        76.607
+      ],
+      "base_width": 181.937,
+      "gold": 30,
+      "stars": 0,
+      "runtime": "data/buildings/campfire.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1024,
+        768,
+        1152,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        114
+      ],
+      "reference": "Summer Fire Pit",
+      "cost": [
+        30,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 81,
+      "key": "field_scope",
+      "name": "Field telescope",
+      "category": "camp",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        59.645,
+        106.804
+      ],
+      "base_width": 160.355,
+      "gold": 60,
+      "stars": 9,
+      "runtime": "data/buildings/field_scope.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1152,
+        768,
+        1280,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        114,
+        128
+      ],
+      "reference": "News Column",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 82,
+      "key": "globe",
+      "name": "Explorer's globe",
+      "category": "camp",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        53.0,
+        104.088
+      ],
+      "base_width": 173.099,
+      "gold": 90,
+      "stars": 15,
+      "runtime": "data/buildings/globe.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1280,
+        768,
+        1408,
+        896
+      ],
+      "crop": [
+        11,
+        0,
+        128,
+        128
+      ],
+      "reference": "Classic Commissions",
+      "cost": [
+        90,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 83,
+      "key": "chest",
+      "name": "Treasure chest",
+      "category": "camp",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        75.164,
+        80.224
+      ],
+      "base_width": 151.987,
+      "gold": 120,
+      "stars": 15,
+      "runtime": "data/buildings/chest.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1408,
+        768,
+        1536,
+        896
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Fruity Feast",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 84,
+      "key": "supply_tent",
+      "name": "Supply tent",
+      "category": "camp",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        70.499,
+        77.507
+      ],
+      "base_width": 141.433,
+      "gold": 120,
+      "stars": 3,
+      "runtime": "data/buildings/supply_tent.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        0,
+        896,
+        128,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Holiday Hut",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 85,
+      "key": "dig_site",
+      "name": "Dig site",
+      "category": "camp",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        57.914
+      ],
+      "base_width": 143.59,
+      "gold": 120,
+      "stars": 6,
+      "runtime": "data/buildings/dig_site.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        128,
+        896,
+        256,
+        1024
+      ],
+      "crop": [
+        0,
+        14,
+        128,
+        114
+      ],
+      "reference": "Herbal Harvest",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 86,
+      "key": "rowboat",
+      "name": "Rowboat",
+      "category": "camp",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        47.563,
+        60.143
+      ],
+      "base_width": 164.506,
+      "gold": 150,
+      "stars": 9,
+      "runtime": "data/buildings/rowboat.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        256,
+        896,
+        384,
+        1024
+      ],
+      "crop": [
+        0,
+        14,
+        128,
+        128
+      ],
+      "reference": "Merrily Rowing",
+      "cost": [
+        150,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 87,
+      "key": "cart",
+      "name": "Market cart",
+      "category": "camp",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        64.0,
+        89.13
+      ],
+      "base_width": 200.0,
+      "gold": 180,
+      "stars": 9,
+      "runtime": "data/buildings/cart.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        384,
+        896,
+        512,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        110
+      ],
+      "reference": "Hotdog Stand",
+      "cost": [
+        180,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 88,
+      "key": "turtle",
+      "name": "Sunning turtle",
+      "category": "animal",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        55.6,
+        82.992
+      ],
+      "base_width": 221.94,
+      "gold": 60,
+      "stars": 6,
+      "runtime": "data/buildings/turtle.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        512,
+        896,
+        640,
+        1024
+      ],
+      "crop": [
+        0,
+        5,
+        128,
+        112
+      ],
+      "reference": "Foraging Foxes",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 89,
+      "key": "toucan",
+      "name": "Toucan perch",
+      "category": "animal",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        65.598,
+        108.307
+      ],
+      "base_width": 155.909,
+      "gold": 60,
+      "stars": 6,
+      "runtime": "data/buildings/toucan.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        640,
+        896,
+        768,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        114,
+        128
+      ],
+      "reference": "Hesitant Heron",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 90,
+      "key": "parrot",
+      "name": "Parrot perch",
+      "category": "animal",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        35.0,
+        108.503
+      ],
+      "base_width": 153.295,
+      "gold": 60,
+      "stars": 9,
+      "runtime": "data/buildings/parrot.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        768,
+        896,
+        896,
+        1024
+      ],
+      "crop": [
+        29,
+        0,
+        128,
+        128
+      ],
+      "reference": "Hesitant Heron",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 91,
+      "key": "monkey",
+      "name": "Curious monkey",
+      "category": "animal",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        58.448,
+        108.987
+      ],
+      "base_width": 196.697,
+      "gold": 90,
+      "stars": 12,
+      "runtime": "data/buildings/monkey.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        896,
+        896,
+        1024,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Curious Critters",
+      "cost": [
+        90,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 92,
+      "key": "capybara",
+      "name": "Capybara",
+      "category": "animal",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        66.45,
+        82.073
+      ],
+      "base_width": 248.928,
+      "gold": 90,
+      "stars": 12,
+      "runtime": "data/buildings/capybara.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1024,
+        896,
+        1152,
+        1024
+      ],
+      "crop": [
+        0,
+        12,
+        128,
+        128
+      ],
+      "reference": "Mischievous Moles",
+      "cost": [
+        90,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 93,
+      "key": "boulder",
+      "name": "Boulder",
+      "category": "rock",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        60.825,
+        89.135
+      ],
+      "base_width": 213.945,
+      "gold": 15,
+      "stars": 0,
+      "runtime": "data/buildings/boulder.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1152,
+        896,
+        1280,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Hyacinth Rockery",
+      "cost": [
+        15,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 94,
+      "key": "crystal",
+      "name": "Crystal cluster",
+      "category": "rock",
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        59.39,
+        110.386
+      ],
+      "base_width": 194.288,
+      "gold": 120,
+      "stars": 18,
+      "runtime": "data/buildings/crystal.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1280,
+        896,
+        1408,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Lovely Lily Pads",
+      "cost": [
+        120,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    },
+    {
+      "id": 95,
+      "key": "mossy_rocks",
+      "name": "Mossy boulders",
+      "category": "rock",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        66.564,
+        77.312
+      ],
+      "base_width": 183.684,
+      "gold": 60,
+      "stars": 3,
+      "runtime": "data/buildings/mossy_rocks.png",
+      "source": "art/building-catalogue/paintover-atlas.png",
+      "box": [
+        1408,
+        896,
+        1536,
+        1024
+      ],
+      "crop": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "reference": "Hyacinth Rockery",
+      "cost": [
+        60,
+        0,
+        0
+      ],
+      "about": "Place this treasure anywhere on open grass."
+    }
+  ]
+}

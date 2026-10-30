@@ -305,6 +305,43 @@ local function test_island()
     check(not island.island_zone_touches(5, 1), "the temple ridge is far from the harbour")
 end
 
+local function test_catalogue()
+    check(#island.catalogue==96 and #island.buildings==96,"complete building catalogue")
+    local c=city.new();island.island_setup(c);c.open=63
+    local wallet=purse(1000,500,500,30,10)
+    local shrub=37
+    check(not island.can_buy(c,purse(65,10,5),1,shrub),"earned wonder gold is reserved")
+    check(island.can_buy(c,purse(75,10,5),1,shrub),"only spare gold funds decorations")
+    check(not island.can_buy(c,purse(1000),0,10),"stars gate advanced buildings")
+    for _=1,2 do
+        local ok,spot=c:find_spot(shrub,vec2(760,2030));check(ok,"decoration fits")
+        local before=wallet[1]
+        c:begin_place(shrub,spot);c:cancel()
+        check(wallet[1]==before,"cancelled purchase is free")
+        c:begin_place(shrub,spot)
+        check(c:confirm(wallet,0).result==city.BUILT and wallet[1]==before-15,"repeatable purchase charges once")
+    end
+    check(island.owned(c,shrub)==2 and island.wonder_count(c)==0,"purchases are independent of story count")
+    check(wallet[4]==30,"shop unlock stars are never spent")
+    check(island.island_place_next(c,wallet,1,0),"first story restoration follows optional purchases")
+    check(c.items[3].type==0 and island.wonder_count(c)==1,"story uses type rather than placed item index")
+    check(not island.island_place_next(c,wallet,1,0),"decoration does not unlock another restoration")
+    local restored=city.new();island.island_setup(restored)
+    save.write("relic-catalogue-test",function(s)c:serialize(s)end)
+    save.read("relic-catalogue-test",function(s)restored:serialize(s)end)
+    island.restore_saved(restored,1)
+    check(restored.count==3 and island.owned(restored,shrub)==2 and island.wonder_count(restored)==1,"save preserves repeat purchases beyond campaign level")
+    for i,b in ipairs(restored.items) do
+        check(restored:can_place(b.pos,b.type,i-1),"saved objects occupy valid nonoverlapping footprints")
+    end
+    restored.buildable=function()return false end
+    check(island.restore_saved(restored,1) and restored.count==3,
+        "a save with no free plots retains ownership for manual relocation")
+    local before=wallet[1]
+    c:begin_place(shrub,vec2(0,0))
+    check(c:confirm(wallet,0).result==city.BLOCKED and wallet[1]==before,"invalid shop placement never charges")
+end
+
 local function test_campaign()
     local m = rules.new_match()
     local total, runs = 0, 0
@@ -343,6 +380,7 @@ test_matching()
 test_holes_and_shapes()
 test_moves_and_blockers()
 test_island()
+test_catalogue()
 test_campaign()
 -- Interaction precedence: depleted/busy controls cannot appear actionable,
 -- touch presses require an origin inside the button; touch has no hover.

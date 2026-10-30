@@ -8,6 +8,14 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 ![All packs and authored states rendered by the game](screenshots/art-catalogue.jpg)
 
+## Buildings and decorations
+
+The [building catalogue](building-catalogue.md) covers **96** registered sprites,
+including ten story wonders and 86 repeatable shop items. It records the full
+source/prompt history, runtime paths, whole-tile measurements, supported states,
+import commands and reviewed in-game captures. The board manifest links the
+building manifest and inventories every new runtime file.
+
 ## Piece kinds and optional packs
 
 All packs use the same kind IDs and rules. Colours and silhouettes are authored;

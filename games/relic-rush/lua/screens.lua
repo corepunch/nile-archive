@@ -7,6 +7,7 @@
 -- a dialog is clickable where it will come to rest.
 local R = require("state")
 local rules = require("rules")
+local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM, PAL_GREEN, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_GREEN, R.PAL_WHITE
 local RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
@@ -108,6 +109,8 @@ local form_skin = {
     end,
     focus = function(r) gfx.round_rect_line(pr(r:inflate(3)), 15 * P.scale, 2, pc(rgba(255, 223, 129))) end,
 }
+
+R.form_skin = form_skin
 
 -- Two-tone gold star on a darker rim, lit from above.
 function R.star_icon(center, radius)
@@ -311,21 +314,22 @@ local wonder_form = ui.form{
     },
 }
 local function wonder_screen()
-    local i = R.inspect >= 0 and R.inspect or R.island.count
-    if i < 0 or i >= #R.wonders then return end
-    local w = R.wonders[i + 1]
-    local can_build, built = i == R.island.count and i < R.prog.level, i < R.island.count
+    local i = R.inspect >= 0 and R.inspect or island.wonder_count(R.island)
+    if i < 0 or i >= #R.buildings then return end
+    local w = R.buildings[i + 1]
+    local can_build, built = island.can_buy(R.island,R.prog.wallet,R.prog.level,i), R.inspect_item and R.inspect_item>=0
     local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=w.about,
-        cost={w.cost[1],w.cost[2],w.cost[3]}, action=can_build and "CHOOSE A LOCATION" or built and "MOVE THIS BUILDING" or "BACK TO ISLAND"}
+        cost={w.cost[1],w.cost[2],w.cost[3]}, action=built and "MOVE THIS BUILDING" or can_build and "CHOOSE A LOCATION" or "BACK TO ISLAND"}
     assert(ok,message)
     wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1]):set("wood_icon",R.relics[RELIC_LEAF+1]):set("stone_icon",R.relics[RELIC_CRYSTAL+1])
-    wonder_form.values.can_build, wonder_form.values.show_notice = can_build, not can_build
-    wonder_form:set("notice",built and "RESTORED WITH YOUR EXPEDITION TREASURES" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER")
+    wonder_form.values.can_build, wonder_form.values.show_notice = can_build and not built, built or not can_build
+    wonder_form:set("notice",built and "HOLD AND DRAG ON THE ISLAND TO MOVE" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER")
     local event = wonder_form:draw(rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592)),form_skin,{hit_offset=vec2(0,R.hit_dy)})
     if event and event.id == "action" then
-        if can_build or built then R.island_begin(i,true) else R.overlay=R.OV_NONE end
+        if can_build or built then R.island_begin(i,true,built and R.inspect_item or nil) else R.overlay=R.OV_NONE end
     elseif event and event.id == "close" then R.overlay=R.OV_NONE end
 end
+R.wonder_form=wonder_form
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
@@ -450,6 +454,7 @@ function R.overlays(dt)
         R.modal_closing = false
     end
     if R.overlay == R.OV_NONE then return end
+    if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
     R.modal_clock = R.modal_clock + dt
     if R.modal_closing then
         R.modal_exit = R.modal_exit + dt
