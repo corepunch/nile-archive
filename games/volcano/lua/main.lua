@@ -5,8 +5,22 @@ local art=require('volcano_art')
 local S={chapter=1,unlocked=1,completed=0,sound=true,screen='menu',textures={},backs={},best={0,0,0,0,0}}
 local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB78),teal=color.hex(0x234F55)}
 local white=color.WHITE
-local function label(box,value,size,align)
-    ui.label(box,S.text:sized(size or 23),align or vec2(0,.5),value)
+-- Relic Rush's Lilita One palettes, with the rim and cast shadow scaled by em.
+local palettes={
+    cream={color(255,249,226),color(244,221,166)},
+    gold={color(255,255,219),color(239,169,57)},
+    green={color(199,255,201),color(91,198,130)},
+    white={white,color(196,232,220)},
+}
+local function lettering(size,palette)
+    local colors=palettes[palette or 'cream']
+    local em=size/1.171875
+    return style{font=S.font,size=size,fill=colors[1],fill2=colors[2],
+        outline=color(62,49,29),outline_width=em*4/64,
+        shadow=color(31,35,24,184),shadow_offset=vec2(0,em*5/64)}
+end
+local function label(box,value,size,align,palette)
+    ui.label(box,lettering(size or 23,palette),align or vec2(0,.5),value)
 end
 local function serialize(s)
     s:int('version',1)
@@ -98,16 +112,16 @@ end
 local function hud()
     local g=S.g
     ui.panel(rect(14,12,1340,68))
-    label(rect(34,20,336,24),('VOLCANO  /  %02d'):format(S.chapter),19)
+    label(rect(34,20,336,24),('VOLCANO  /  %02d'):format(S.chapter),19,nil,'gold')
     label(rect(34,44,330,27),levels[S.chapter].title,25)
     local total=0;local idle=0
     for _,w in ipairs(g.workers) do if not w.recruit then total=total+1;if w.phase=='idle' then idle=idle+1 end end end
     for i,r in ipairs({'food','wood','money'}) do
         label(rect(385+(i-1)*167,20,155,23),r:upper(),15)
-        label(rect(385+(i-1)*167,42,155,30),tostring(g.wallet[r]),29)
+        label(rect(385+(i-1)*167,42,155,30),tostring(g.wallet[r]),29,nil,'gold')
     end
     label(rect(887,23,206,23),('WORKERS  %d / %d'):format(idle,total),20)
-    label(rect(887,48,195,20),('%02d:%02d'):format(math.floor(g.time/60),math.floor(g.time%60)),17)
+    label(rect(887,48,195,20),('%02d:%02d'):format(math.floor(g.time/60),math.floor(g.time%60)),17,nil,'white')
     if ui.button(rect(1114,24,106,44),'Hint') then
         S.selected=sim.suggest(g)
         if S.selected then
@@ -117,7 +131,7 @@ local function hud()
     if ui.button(rect(1230,24,110,44),'Pause') then S.modal='pause';g.paused=true end
     ui.panel(rect(14,932,1340,80))
     label(rect(34,943,440,26),S.selected and S.selected.def.title or 'Restore the city, one route at a time',23)
-    label(rect(34,975,900,24),sim.detail(g,S.selected),17)
+    label(rect(34,975,900,24),sim.detail(g,S.selected),17,nil,'white')
     local denominator=g.level.people+g.level.animals+g.routes
     local complete=g.rescued+g.animals+g.cleared
     label(rect(963,942,366,26),('People %d/%d   Pets %d/%d   Roads %d/%d'):format(g.rescued,g.level.people,g.animals,g.level.animals,g.cleared,g.routes),17)
@@ -127,7 +141,7 @@ local function menu()
     gfx.image(load_back(S.chapter),app.screen(),white)
     ui.modal_backdrop(.85)
     ui.panel(rect(325,110,718,806))
-    label(rect(365,145,638,62),'VOLCANO',62,vec2(.5,.5))
+    label(rect(365,145,638,62),'VOLCANO',62,vec2(.5,.5),'gold')
     label(rect(365,215,638,30),'AFTER THE ERUPTION',24,vec2(.5,.5))
     label(rect(374,264,620,53),'Reopen the streets. Restore supplies. Bring everyone home.',23,vec2(.5,.5))
     for i,level in ipairs(levels) do
@@ -145,7 +159,7 @@ local function modal()
     -- each panel fits its content: no empty band under the last button
     ui.set_enabled(true);ui.modal_backdrop(1);ui.panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
     local title=kind=='pause' and 'Rescue paused' or kind=='win' and 'District restored!' or 'Every route matters'
-    label(rect(385,267,598,62),title,42,vec2(.5,.5))
+    label(rect(385,267,598,62),title,42,vec2(.5,.5),'gold')
     if kind=='win' then
         local g=S.g
         label(rect(390,342,588,112),('All %d residents and %d pets are safe.\n%d roads restored in %d:%02d.'):format(g.rescued,g.animals,g.routes,math.floor(g.time/60),math.floor(g.time%60)),27,vec2(.5,.5))
@@ -223,7 +237,7 @@ local function frame(dt)
         end
         for _,ev in ipairs(S.g.events) do
             local p=S.cam:to_screen(vec2(ev.x,ev.y))
-            if ev.kind=='income' then fx.text(p,S.text:sized(18),'+ supplies')
+            if ev.kind=='income' then fx.text(p,lettering(18,'green'),'+ supplies')
             else fx.burst(p,12,C.gold,70,3);sfx.tone(ev.kind=='rescue' and 660 or 440,.12) end
         end
         S.g.events={}
@@ -241,15 +255,14 @@ local function frame(dt)
     if S.smoke then smoke() end
 end
 local function init()
-    local f=font.load('fonts/LilitaOne-Regular.ttf')
-    S.text=style{font=f,size=24,fill=C.cream}
-    ui.set_theme(ui_theme{text=S.text,small=S.text:sized(16),title=S.text:sized(36),button=S.text:sized(25),accent_text=S.text:filled(C.ink):sized(25),
+    S.font=font.load('fonts/LilitaOne-Regular.ttf')
+    ui.set_theme(ui_theme{text=lettering(24),small=lettering(16),title=lettering(36,'gold'),button=lettering(25),accent_text=lettering(25),
         panel=color(25,57,62,246),panel2=color(18,43,48,248),border=color(226,201,150,135),
         button_bg=color.hex(0x346068),button_bg2=color.hex(0x23474E),button_hot=color.hex(0x477A7E),button_border=color(235,211,164,130),
         accent=C.gold,accent2=color.hex(0xD6A050),active=C.gold,dim=color(9,23,28,196),toast_bg=C.cream,toast_text=C.ink,radius=13})
     -- briefings come from the rescue dispatcher: a caption with a name tag, no portrait
     story.setup({{id='dispatch',name='Rescue dispatch',color=color.hex(0xB4532A)}},
-        story_style{text=S.text:filled(C.ink):sized(27),name=S.text:sized(21),bubble=C.cream,edge=C.teal,dim=color(9,23,28,150),skip='START RESCUE'})
+        story_style{text=style{font=S.font,size=27,fill=C.ink},name=lettering(21),bubble=C.cream,edge=C.teal,dim=color(9,23,28,150),skip='START RESCUE'})
     S.testing=app.arg('fresh')~=nil or app.arg('shot')~=nil or app.arg('smoke')~=nil
     S.smoke=app.arg('smoke')~=nil
     if not S.testing then save.read('campaign',serialize) end
