@@ -76,33 +76,33 @@
 "defaultConfigurationName" = "Debug";
 };
 "03CCB44CBD5B6AA80E5680F5" = {"isa" = "PBXFileReference";
-"path" = "../../engine/u_engine.c";
+"path" = "u_engine.c";
 "name" = "u_engine.c";
-"sourceTree" = "SOURCE_ROOT";
+"sourceTree" = "DERIVED_FILE_DIR";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "7639A619D9D273EE5E063BE3" = {"isa" = "PBXFileReference";
-"path" = "../../engine/u_script.c";
+"path" = "u_script.c";
 "name" = "u_script.c";
-"sourceTree" = "SOURCE_ROOT";
+"sourceTree" = "DERIVED_FILE_DIR";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "0539F83D58675373B1BBEF96" = {"isa" = "PBXFileReference";
-"path" = "../../engine/u_lua.c";
+"path" = "u_lua.c";
 "name" = "u_lua.c";
-"sourceTree" = "SOURCE_ROOT";
+"sourceTree" = "DERIVED_FILE_DIR";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "93AABD575BE4735D7E53DA97" = {"isa" = "PBXFileReference";
-"path" = "../../engine/u_platform.c";
+"path" = "u_platform.c";
 "name" = "u_platform.c";
-"sourceTree" = "SOURCE_ROOT";
+"sourceTree" = "DERIVED_FILE_DIR";
 "lastKnownFileType" = "sourcecode.c.objc";
 };
 "2FD0038054919877206EA9E2" = {"isa" = "PBXFileReference";
-"path" = "../../engine/u_launcher.c";
+"path" = "u_launcher.c";
 "name" = "u_launcher.c";
-"sourceTree" = "SOURCE_ROOT";
+"sourceTree" = "DERIVED_FILE_DIR";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "8C7BBF5CEC333F89C39F4DD3" = {"isa" = "PBXFileReference";
@@ -150,6 +150,18 @@
 "2C6345C1907FD24B6EEFEC5A" = {"isa" = "PBXFileReference";
 "path" = "../../engine/audio.c";
 "name" = "audio.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"67B17D0959CAEF090C77BD01" = {"isa" = "PBXFileReference";
+"path" = "../../engine/raster.c";
+"name" = "raster.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"2E3DCDD6520A0EBC2CD112A7" = {"isa" = "PBXFileReference";
+"path" = "../../engine/photo.c";
+"name" = "photo.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
@@ -234,11 +246,6 @@
 "name" = "Engine";
 "children" = ("EB5CBE17182664B6DBD76360",
 "541B66CD1C747C1DB8B77446",
-"03CCB44CBD5B6AA80E5680F5",
-"7639A619D9D273EE5E063BE3",
-"0539F83D58675373B1BBEF96",
-"93AABD575BE4735D7E53DA97",
-"2FD0038054919877206EA9E2",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -247,6 +254,8 @@
 "ADBE7599AFC06409EDF9F7DA",
 "744E0DC332E76F47A555E499",
 "2C6345C1907FD24B6EEFEC5A",
+"67B17D0959CAEF090C77BD01",
+"2E3DCDD6520A0EBC2CD112A7",
 "45B4B9CF2B44A145D927FBC6",
 "8A8386A2CEEEFE289DA8945E",
 "4F62C834EFF9537C0E92FC7C",
@@ -254,6 +263,16 @@
 "5A3E88961896E4AB82DE84B5",
 "332638782EE028D2FCDBBFAB",
 "06369032B38F99A704630800",
+);
+"sourceTree" = "<group>";
+};
+"DEDC912316C3B5051B5130F9" = {"isa" = "PBXGroup";
+"name" = "Build unity sources";
+"children" = ("03CCB44CBD5B6AA80E5680F5",
+"7639A619D9D273EE5E063BE3",
+"0539F83D58675373B1BBEF96",
+"93AABD575BE4735D7E53DA97",
+"2FD0038054919877206EA9E2",
 );
 "sourceTree" = "<group>";
 };
@@ -330,6 +349,22 @@
 "defaultConfigurationIsVisible" = 0;
 "defaultConfigurationName" = "Debug";
 };
+"769187EDA46AF65D8267BE2B" = {"isa" = "PBXShellScriptBuildPhase";
+"name" = "Generate unity sources";
+"buildActionMask" = 2147483647;
+"files" = ();
+"inputPaths" = ("$(ENGINE_ROOT)/tools/unity.sh",
+);
+"outputPaths" = ("$(DERIVED_FILE_DIR)/u_engine.c",
+"$(DERIVED_FILE_DIR)/u_script.c",
+"$(DERIVED_FILE_DIR)/u_lua.c",
+"$(DERIVED_FILE_DIR)/u_platform.c",
+"$(DERIVED_FILE_DIR)/u_launcher.c",
+);
+"shellPath" = "/bin/sh";
+"runOnlyForDeploymentPostprocessing" = 0;
+"shellScript" = "set -eu\nmkdir -p \"$DERIVED_FILE_DIR\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" engine > \"$DERIVED_FILE_DIR/u_engine.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" script > \"$DERIVED_FILE_DIR/u_script.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" lua > \"$DERIVED_FILE_DIR/u_lua.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" platform > \"$DERIVED_FILE_DIR/u_platform.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" launcher > \"$DERIVED_FILE_DIR/u_launcher.c\"\n";
+};
 "CA826C1AA0710185A5473B4D" = {"isa" = "PBXBuildFile";
 "fileRef" = "03CCB44CBD5B6AA80E5680F5";
 };
@@ -390,7 +425,8 @@
 "productReference" = "D20BB7AFA807B4873DC30CAC";
 "productType" = "com.apple.product-type.application";
 "buildConfigurationList" = "E9006A4DBE6F76CD31FAF1AF";
-"buildPhases" = ("7DC3FD64D038E4123CA1E8BB",
+"buildPhases" = ("769187EDA46AF65D8267BE2B",
+"7DC3FD64D038E4123CA1E8BB",
 "7230CF63DA0E35FF6C2C59A5",
 "FA4553F21395A0E3FBFF5707",
 );
@@ -480,6 +516,22 @@
 "defaultConfigurationIsVisible" = 0;
 "defaultConfigurationName" = "Debug";
 };
+"7FC5F2AFF27F6E0D636BA944" = {"isa" = "PBXShellScriptBuildPhase";
+"name" = "Generate unity sources";
+"buildActionMask" = 2147483647;
+"files" = ();
+"inputPaths" = ("$(ENGINE_ROOT)/tools/unity.sh",
+);
+"outputPaths" = ("$(DERIVED_FILE_DIR)/u_engine.c",
+"$(DERIVED_FILE_DIR)/u_script.c",
+"$(DERIVED_FILE_DIR)/u_lua.c",
+"$(DERIVED_FILE_DIR)/u_platform.c",
+"$(DERIVED_FILE_DIR)/u_launcher.c",
+);
+"shellPath" = "/bin/sh";
+"runOnlyForDeploymentPostprocessing" = 0;
+"shellScript" = "set -eu\nmkdir -p \"$DERIVED_FILE_DIR\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" engine > \"$DERIVED_FILE_DIR/u_engine.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" script > \"$DERIVED_FILE_DIR/u_script.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" lua > \"$DERIVED_FILE_DIR/u_lua.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" platform > \"$DERIVED_FILE_DIR/u_platform.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" launcher > \"$DERIVED_FILE_DIR/u_launcher.c\"\n";
+};
 "3F600A8103D284E5CBE5E53F" = {"isa" = "PBXBuildFile";
 "fileRef" = "03CCB44CBD5B6AA80E5680F5";
 };
@@ -540,7 +592,8 @@
 "productReference" = "1A2A40820C581B58EB8416F7";
 "productType" = "com.apple.product-type.application";
 "buildConfigurationList" = "2428DFD9D68BC0D678327514";
-"buildPhases" = ("8BDA36A014BA4F4B4E62642B",
+"buildPhases" = ("7FC5F2AFF27F6E0D636BA944",
+"8BDA36A014BA4F4B4E62642B",
 "7D16D73F793E0C19171502A8",
 "B780CF5DB070E9FCC44D7434",
 );
@@ -557,6 +610,7 @@
 "664F835B1ED89846DAB355B5" = {"isa" = "PBXGroup";
 "children" = ("3F1DC9CC1C3A830C738C48D7",
 "2D25A9B56DCCB8131EBB5456",
+"DEDC912316C3B5051B5130F9",
 "BEAD8915881B60FC177E63AB",
 );
 "sourceTree" = "<group>";

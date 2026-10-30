@@ -1,6 +1,6 @@
-# Sprite engine + three games
+# Sprite engine + games
 
-One repository, one small **C11 + platform** engine, three games written in **Lua** on it:
+One repository, one small **C11 + platform** engine, games driven by **Lua** on it:
 
 | | Game | Core loop | Meta-game |
 | --- | --- | --- | --- |
@@ -8,11 +8,13 @@ One repository, one small **C11 + platform** engine, three games written in **Lu
 | ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 on ten shaped boards with sand, chains, ice, rays, bombs and prisms | Restore an island: ten wonders placed freely, six regions opened with stars and compasses |
 | ![](games/volcano/docs/screenshots/outskirts.jpg) | **[Volcano · After the Eruption](games/volcano/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
 
+[Clayfight](games/clayfight/README.md) runs its complete original C fighting game on the shared engine, with Lua frame scheduling, custom clay fighters, conquest, training, tug-of-war, endurance, and native iOS photo/video capture. Its original PC reference data is supplied locally and ignored by Git.
+
 Volcano is a five-map resource-and-route rescue campaign; see [its port assessment and asset catalog](games/volcano/docs/PORT.md).
 
 The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Nile Archive and Relic Rush are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design inside the safe area, with its backgrounds running on to the screen edges — the engine supports both.
 
-**The engine knows mechanics, the games know content and rules.** The engine is C; all game logic is Lua 5.4, and the glue between them is generated from one XML description of the API, together with its reference. See [docs/SCRIPTING.md](docs/SCRIPTING.md) for the contract, [docs/LUA_API.md](docs/LUA_API.md) for the reference and [docs/LINEAGE.md](docs/LINEAGE.md) for where every idea comes from.
+**The engine knows mechanics, the games know content and rules.** The engine is C; the original three games use Lua 5.4 for game logic (Clayfight retains its tested C simulation), and the glue between them is generated from one XML description of the API, together with its reference. See [docs/SCRIPTING.md](docs/SCRIPTING.md) for the contract, [docs/LUA_API.md](docs/LUA_API.md) for the reference and [docs/LINEAGE.md](docs/LINEAGE.md) for where every idea comes from.
 
 ## Layout
 
@@ -27,7 +29,9 @@ engine/            the shared engine: ONE public header + one .c per module
   city.c           the city-building meta-game
   sprite.c         authored atlas animation and pivot-aware drawing
   nav.c            geometric graph routes with live blockers
-  audio.c          a tiny synthesiser for feedback tones
+  audio.c          shared stereo PCM mixer and feedback-tone synthesiser
+  raster.c         caller-owned CPU surfaces and indexed sprite drawing
+  photo.c          background removal, common scale and shared photo palettes
   story.c          characters, dialogue with portraits, speech bubbles
   script.c         the Lua runtime: sandboxed state, require, the main-loop callbacks
   launcher.c       main() for a Lua game, built once per game
@@ -36,12 +40,12 @@ engine/            the shared engine: ONE public header + one .c per module
   engine.d.lua     generated editor annotations         ─┘  checked by make test)
   lua_lib.c        Lua 5.4 as one translation unit, sandbox libraries only
   third_party/     lua/ and platform/ (pinned submodules), stb_*
-  u_*.c            committed unity compilation units (also used directly by Xcode)
 games/
   nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
                    + art/ (sources) + data/ (runtime) + docs/ + tools/ + relic-rush.xcodeproj
   volcano/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + volcano.xcodeproj
+  clayfight/      native game rules/resources + Lua scheduling + data/ + capture tools
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
 tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.sh, make_reels.py, artkit.py
 docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), LINEAGE.md
@@ -56,7 +60,7 @@ Native builds need a C compiler and the pinned [platform](https://github.com/cor
 
 ```sh
 git submodule update --init   # Lua, once
-make              # builds build/nile-archive, build/relic-rush and build/volcano
+make              # builds Nile Archive, Relic Rush, Volcano and Clayfight
 make run-nile     # or: make run-relic / make run-volcano
 make test         # generated-code freshness, engine tests, the games' Lua rule tests (headless)
 make gen          # after editing engine/api.xml
@@ -70,7 +74,7 @@ make web
 python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/ or /volcano/
 ```
 
-**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. The games target iOS 16+ / macOS 12+. Xcode compiles the committed `engine/u_*.c` units, including platform, directly into each app and links only Apple system frameworks. `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. The games target iOS 16+ / macOS 12+. Xcode generates temporary `u_*.c` units in its build directory, compiles them into each app, and links only Apple system frameworks. `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
 
 CI builds the native, web and Xcode (iOS Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 

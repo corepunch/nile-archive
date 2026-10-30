@@ -15,20 +15,21 @@ for the pinned Lua and corepunch/platform dependencies.
 
 ## Compilation
 
-Every target compiles exactly five committed unity sources:
+A build phase emits temporary unity sources into `DERIVED_FILE_DIR` using
+`tools/unity.sh`, before the Sources phase compiles them:
 
-- `engine/u_engine.c`: engine modules and the triangle renderer.
-- `engine/u_script.c`: game scripting and generated Lua API bindings.
-- `engine/u_lua.c`: the sandbox's Lua interpreter and standard libraries.
-- `engine/u_platform.c`: the shared platform backend and audio, compiled as
+- `u_engine.c`: engine modules and the triangle renderer.
+- `u_script.c`: game scripting and generated Lua API bindings.
+- `u_lua.c`: the sandbox's Lua interpreter and standard libraries.
+- `u_platform.c`: the shared platform backend and audio, compiled as
   Objective-C on Apple targets. Target headers select macOS or iOS.
-- `engine/u_launcher.c`: the per-game entry point.
+- `u_launcher.c`: the per-game entry point (Clayfight uses its own host).
 
 The included individual sources remain visible for browsing, with no separate
 compile membership. Xcode tracks their includes for incremental rebuilds.
-There is no generated build-time source, dependency project, SDL framework,
-or embed phase. Only Apple system frameworks are linked. The same unity
-sources are used by Make and WebAssembly builds.
+Unity files are build outputs and are never committed or stored in `engine/`.
+Only Apple system frameworks are linked. Make and WebAssembly stream the same
+include lists into the compiler without writing unity files to disk.
 
 Platform owns the native window, graphics context, event queue, and audio.
 The renderer draws textured and colored triangles with OpenGL 3.2 on macOS

@@ -142,6 +142,13 @@ void render_texture_update(struct render_texture *t, int x, int y, int w, int h,
     glBindTexture(GL_TEXTURE_2D, t->id);
     glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, rgba);
 }
+void render_texture_nearest(struct render_texture *t)
+{
+    if (!t) return;
+    glBindTexture(GL_TEXTURE_2D, t->id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+}
 void render_texture_free(struct render_texture *t) { if (t) { glDeleteTextures(1, &t->id); free(t); } }
 void render_texture_additive(struct render_texture *t, bool on) { if (t) t->additive = on; }
 void render_additive(bool on) { R.additive = on; }

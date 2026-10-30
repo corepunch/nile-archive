@@ -248,9 +248,21 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 
 ## Audio
 
-`sfx_tone(hz, seconds)` plays a soft bell-like note on a one-voice synthesiser
-(Relic Rush chimes rising notes as cascades grow). The audio device opens on
-the first note; `--mute` and `sfx_enable(false)` silence it.
+`sfx_tone(hz, seconds)` plays a soft bell-like note (Relic Rush chimes rising
+notes as cascades grow). The native C API `sfx_play(sample, volume, pan)` mixes
+up to 16 unsigned 8-bit mono PCM samples into 44.1 kHz stereo, with source-rate
+conversion, volume and panning. The sample descriptor is copied; its PCM storage
+must remain valid until playback ends or `sfx_stop_samples()` returns. One audio
+device serves samples and tones and opens on first playback. `--mute` and
+`sfx_enable(false)` silence both; disabling clears queued voices and tones.
+
+The native C APIs in `raster.c` draw indexed sprites into caller-owned ARGB
+surfaces, including clipping, density, hotspots, flip, flash, shadow and fade.
+`photo.c` loads images through `image_load_rgba`, removes backgrounds and builds
+an indexed atlas with a shared 31-colour palette and configurable display
+density. `photo_free` releases the set and atlas. These APIs contain no game
+resource formats; Clayfight converts their results into its own frames and
+alternate palettes. They are C APIs for native modules, not Lua bindings.
 
 ## Platform notes
 
@@ -267,9 +279,10 @@ the first note; `--mute` and `sfx_enable(false)` silence it.
   `web_audio.c` supplies a WebAudio device for the platform mixer because its
   upstream hardware playback backend currently has no browser implementation.
 
-Make, Xcode and WebAssembly compile the same committed `u_*.c` unity units.
-The individual `.c` modules are included by those units and never compiled
-separately. Lua is isolated in its own unit to avoid static-name collisions.
+Make and WebAssembly pipe unity include lists from `tools/unity.sh` directly
+into the compiler. Xcode generates temporary `u_*.c` files in its build directory
+from the same recipe. The individual engine modules are included by those units.
+Lua is isolated in its own unit to avoid static-name collisions.
 
 ## Script
 
@@ -301,7 +314,7 @@ the C and the Lua games and comparing them pixel for pixel.
 
 ## Possible next steps
 
-- A mixer for music and sampled sounds next to the tone synthesiser.
+- Music streaming alongside the sampled-sound mixer.
 - Texture atlases / sprite sheets and frame animation for characters.
 - A tween helper for UI transitions (games currently use `ease_*` directly).
 - Removing placed buildings, and building upgrades.

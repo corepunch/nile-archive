@@ -21,7 +21,7 @@ def main():
                   for device in group if device.get('isAvailable')]
     if not candidates:
         raise SystemExit('No installed iOS Simulator device available')
-    groups = [('iPad', [('nile-archive', 'com.corepunch.nilearchive'), ('volcano', 'com.corepunch.volcano')]),
+    groups = [('iPad', [('nile-archive', 'com.corepunch.nilearchive'), ('volcano', 'com.corepunch.volcano'), ('clayfight', 'com.corepunch.clayfight')]),
               ('iPhone', [('relic-rush', 'com.corepunch.relicrush')])]
     for family, games in groups:
         matching = [d for d in candidates if d['name'].startswith(family)]
@@ -48,7 +48,7 @@ def main():
                     png = b''
                     while time.monotonic() < deadline:
                         png = shot.read_bytes() if shot.exists() else b''
-                        if len(png) > 10000 and png[-12:] == b'\0\0\0\0IEND\xaeB`\x82':
+                        if len(png) > (2000 if game == 'clayfight' else 10000) and png[-12:] == b'\0\0\0\0IEND\xaeB`\x82':
                             break
                         time.sleep(.5)
                     else:

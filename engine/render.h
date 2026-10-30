@@ -17,6 +17,7 @@ struct render_texture *render_texture_create(int w, int h, const void *rgba);
 void render_texture_update(struct render_texture *tex, int x, int y, int w, int h, const void *rgba);
 void render_texture_free(struct render_texture *tex);
 void render_texture_additive(struct render_texture *tex, bool on);
+void render_texture_nearest(struct render_texture *tex);
 void render_additive(bool on);
 void render_clip(const rect *r);   /* NULL: the logical screen, or the display while bleeding */
 void render_bleed(bool on);

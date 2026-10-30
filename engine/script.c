@@ -17,6 +17,8 @@
 static lua_State *L;
 static char lua_dir[512];
 static app_desc desc;
+static void (*extension_open)(lua_State *);
+void script_set_extension(void (*open)(lua_State *)) { extension_open = open; }
 
 /* ------------------------------------------------------------------ calls */
 
@@ -124,6 +126,7 @@ void script_open(const char *dir)
     L = luaL_newstate();
     open_libs();
     api_open(L);
+    if (extension_open) extension_open(L);
     lua_gc(L, LUA_GCGEN, 0, 0);
 }
 

@@ -17,7 +17,7 @@ def main():
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(args=['--enable-unsafe-swiftshader'])
-            for game in ('nile-archive', 'relic-rush', 'volcano'):
+            for game in ('nile-archive', 'relic-rush', 'volcano', 'clayfight'):
                 page = browser.new_page(viewport={'width': 800, 'height': 600})
                 errors = []
                 page.on('pageerror', lambda error: errors.append(str(error)))
@@ -33,7 +33,7 @@ def main():
                         colors.add(pixels[i] * 65536 + pixels[i + 1] * 256 + pixels[i + 2]);
                     resolve(colors.size);
                 }))''')
-                if errors or colors < 100:
+                if errors or colors < (16 if game == 'clayfight' else 100):
                     raise RuntimeError(f'{game}: {colors} rendered colors; errors: {errors}')
                 output = ROOT / f'build/web-smoke/{game}.png'
                 output.parent.mkdir(parents=True, exist_ok=True)

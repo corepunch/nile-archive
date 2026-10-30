@@ -208,6 +208,7 @@ typedef struct {
     void (*init)(void);
     void (*frame)(float dt);
     void (*quit)(void);
+    void (*event)(const struct AXmessage *event); /* borrowed until callback returns */
 } app_desc;
 
 /* Runs the game. Command line options understood by every game:
@@ -395,9 +396,54 @@ rect text_fit(text_style s, rect box, vec2 align, const char *utf8);
 const char *fmt(const char *f, ...);
 
 /* ===================================================================== */
-/* Audio: a tiny synthesiser for UI and game sounds                       */
+/* CPU rendering: caller-owned ARGB surface, indexed sprites              */
+/* ===================================================================== */
+typedef struct { uint32_t *pixels; int w, h, units; } raster;
+typedef struct {
+    int w, h, x, y;                /* size and hotspot in logical units */
+    const uint8_t *pixels;         /* palette index 0 is transparent */
+    const uint8_t *detail;         /* optional higher-density pixels */
+    int density;                  /* detail pixels per logical pixel */
+} indexed_sprite;
+enum { RASTER_FLIP=1, RASTER_FLASH=2, RASTER_SHADOW=4, RASTER_FADE=8 };
+uint32_t raster_rgb(int r, int g, int b);
+uint32_t raster_lerp(uint32_t a, uint32_t b, float t);
+void raster_clear(raster dst, uint32_t color);
+void raster_fill(raster dst, int x, int y, int w, int h, uint32_t color);
+void raster_gradient(raster dst, int y, int h, uint32_t top, uint32_t bottom);
+void raster_draw(raster dst, int x, int y, indexed_sprite src,
+                 const uint32_t *palette, int flags, float sx, float sy);
+/* Literal filesystem path; returned RGBA storage is released with free(). */
+uint8_t *image_load_rgba(const char *path, int *w, int *h, char *error, size_t capacity);
+
+/* Photograph processing: background removal, common scale and palette. */
+typedef struct {
+    int w, h, x, y;
+    uint8_t *pixels, *detail;
+} photo_frame;
+typedef struct {
+    int count, density;
+    photo_frame *frames;
+    uint32_t colors[32];           /* transparent + 31 shared colors */
+} photo_atlas;
+typedef struct photo_set photo_set;
+photo_set *photo_begin(const char *name);
+int photo_add(photo_set *set, const char *path); /* deduplicates paths, max 64 */
+/* Aborts with a diagnostic on invalid photos, matching native asset loaders. */
+photo_atlas *photo_finish(photo_set *set, const char *backdrop, int reference, int height, int density);
+void photo_free(photo_set *set);    /* releases the set, atlas, frames and pixel storage */
+
+/* ===================================================================== */
+/* Audio: shared stereo PCM mixing and feedback tones                       */
 /* ===================================================================== */
 
+typedef struct {
+    const uint8_t *data;           /* unsigned 8-bit mono PCM */
+    int length, rate;             /* data must live until playback stops */
+} sfx_sample;
+/* 16 voices; volume 0..1, pan -1..1. The descriptor is copied. */
+void sfx_play(sfx_sample sample, float volume, float pan);
+void sfx_stop_samples(void);
 void sfx_tone(float hz, float seconds);   /* a soft bell-like note */
 void sfx_enable(bool on);
 bool sfx_enabled(void);
@@ -645,6 +691,8 @@ void script_open(const char *lua_dir);
  * quit become Lua calls. data_dir and id are filled in when the script
  * leaves them out. Errors are printed and end the process with status 3. */
 app_desc script_boot(const char *lua_dir, const char *data_dir);
+struct lua_State;
+void script_set_extension(void (*open)(struct lua_State *));
 /* Run one file in the open state; the integer it returns, 0 if none, -1 on error. */
 int script_dofile(const char *path);
 void script_close(void);
