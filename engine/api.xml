@@ -507,7 +507,7 @@
     <field name="buildable" type="callback" tramp="lcity_buildable" decl="bool lcity_buildable(const struct city *c, vec2 world)" doc="function(c, world) -> bool: terrain test."/>
     <field name="zone_at" type="callback" tramp="lcity_zone_at" decl="int lcity_zone_at(const struct city *c, vec2 world)" doc="function(c, world) -> zone (0-based) or -1; default: zone rects."/>
     <field name="zone_touches" type="callback" tramp="lcity_zone_touches" decl="bool lcity_zone_touches(const struct city *c, int zone, unsigned open)" doc="function(c, zone, open) -> bool: adjacency; default: rects touching."/>
-    <field name="draw_over" type="callback" tramp="lcity_draw_over" decl="void lcity_draw_over(const struct city *c)" doc="function(c): game drawing above the fog, below the ghost."/>
+    <field name="draw_over" type="callback" tramp="lcity_draw_over" decl="void lcity_draw_over(const struct city *c)" doc="function(c): game drawing above the fog and buildings, below the ghost."/>
     <field name="cam" type="camera" access="rw"/>
     <field name="fog" type="color" access="rw" doc="Locked zones; default dark teal."/>
     <field name="fog_on_land_only" type="bool" access="rw"/>
