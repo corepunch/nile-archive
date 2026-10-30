@@ -63,9 +63,9 @@ make web
 python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/
 ```
 
-**iPad and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with `<game>-ipad` and `<game>-macos` schemes. SDL2 comes from the `engine/third_party/SDL` submodule's own Xcode project, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad` (the iPad game) and `relic-rush-iphone` (the phone game). SDL2 comes from the `engine/third_party/SDL` submodule's own Xcode project, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
 
-CI builds the native, web and Xcode (iPad Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
+CI builds the native, web and Xcode (iOS Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 
 Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--lua DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two).
 

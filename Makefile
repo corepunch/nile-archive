@@ -67,7 +67,8 @@ gen-check:
 	python3 tools/luagen.py --check
 
 # --- Xcode projects -------------------------------------------------------
-# One committed project per game with macOS and iPad targets, SDL2 from the
+# One committed project per game with a macOS and an iOS target (iPad for Nile
+# Archive, iPhone for Relic Rush), SDL2 from the
 # engine/third_party/SDL submodule's own Xcode project; see tools/xcode/README.md.
 xcode:
 	for g in $(GAMES); do python3 tools/xcode/generate.py $$g --unsigned; done

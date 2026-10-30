@@ -412,7 +412,7 @@
 };
 "7C57A91C1DD525A44B7C1544" = {"isa" = "XCBuildConfiguration";
 "name" = "Debug";
-"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ipad-Info.plist";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ios-Info.plist";
 "OTHER_LDFLAGS" = ("$(inherited)",
 "-lm",
 );
@@ -432,7 +432,7 @@
 };
 "B0FD2B67669DB173ACF2E2AB" = {"isa" = "XCBuildConfiguration";
 "name" = "Release";
-"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ipad-Info.plist";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ios-Info.plist";
 "OTHER_LDFLAGS" = ("$(inherited)",
 "-lm",
 );

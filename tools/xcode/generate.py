@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Generate the native Xcode project of a game: games/<game>/<game>.xcodeproj.
 
-    tools/xcode/generate.py nile-archive --unsigned
-    tools/xcode/generate.py relic-rush --unsigned
+    tools/xcode/generate.py nile-archive --unsigned     # nile-archive-macos, nile-archive-ipad
+    tools/xcode/generate.py relic-rush --unsigned       # relic-rush-macos, relic-rush-iphone
     tools/xcode/generate.py --check            # fail if a committed project is stale (make test)
 
 After orion-ui's tools/xcode/generate.py: the project file is written directly
 with deterministic identifiers (a hash of what each object is), together with
 the Generated/ Info.plists and entitlements and the shared schemes, and the
 result is committed beside the game so Xcode and Xcode Cloud find it without
-any tool. Each project has a macOS and an iPad target; both compile the engine
+any tool. Each project has a macOS target and an iOS one, iPad for Nile Archive and
+iPhone for Relic Rush; both compile the engine
 and link SDL2 from engine/third_party/SDL's own Xcode project, which is added
 as a project reference and built as a dependency, so no SDL package needs to
 be installed. The game's lua/ and data/ folders are bundled as folder
@@ -32,8 +33,9 @@ SDL_PROJECT = SDL + '/Xcode/SDL/SDL.xcodeproj'
 ENGINE_SOURCES = ['core', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'script', 'api_lua']   # as in the Makefile
 
 GAMES = {
-    'nile-archive': dict(name='Nile Archive', bundle='com.corepunch.nilearchive', orientations=('LandscapeLeft', 'LandscapeRight')),
-    'relic-rush': dict(name='Relic Rush', bundle='com.corepunch.relicrush', orientations=('Portrait', 'PortraitUpsideDown')),
+    # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)
+    'nile-archive': dict(name='Nile Archive', bundle='com.corepunch.nilearchive', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
+    'relic-rush': dict(name='Relic Rush', bundle='com.corepunch.relicrush', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),
 }
 
 
@@ -243,16 +245,17 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
 
     # --- targets ---
     targets, products = [], []
-    for platform in ('macos', 'ipad'):
+    for platform in ('macos', meta['device']):
         name = f'{game}-{platform}'
-        ipad = platform == 'ipad'
+        ipad = platform != 'macos'   # the iOS target, iPad or iPhone
         sdl_target, sdl_product = sdl_proxies['Framework-iOS' if ipad else 'Framework']
-        settings = dict(INFOPLIST_FILE=f'$(PROJECT_FILE_PATH)/Generated/{platform}-Info.plist',
+        settings = dict(INFOPLIST_FILE=f'$(PROJECT_FILE_PATH)/Generated/{"ios" if ipad else "macos"}-Info.plist',
                         OTHER_LDFLAGS=['$(inherited)', '-lm'],
                         LD_RUNPATH_SEARCH_PATHS=['$(inherited)', '@executable_path/Frameworks' if ipad else '@executable_path/../Frameworks'])
         if ipad:
             settings.update(CODE_SIGN_STYLE='Automatic', SDKROOT='iphoneos', SUPPORTED_PLATFORMS='iphoneos iphonesimulator',
-                            IPHONEOS_DEPLOYMENT_TARGET='16.0', TARGETED_DEVICE_FAMILY='2', SUPPORTS_MACCATALYST='NO')
+                            IPHONEOS_DEPLOYMENT_TARGET='16.0', TARGETED_DEVICE_FAMILY='1' if platform == 'iphone' else '2',
+                            SUPPORTS_MACCATALYST='NO')
         else:
             settings.update(SUPPORTED_PLATFORMS='macosx', MACOSX_DEPLOYMENT_TARGET='12.0',
                             CODE_SIGN_STYLE='Automatic', CODE_SIGN_IDENTITY='-',
@@ -275,7 +278,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
                         UIRequiredDeviceCapabilities=['arm64'])
         else:
             info.update(NSHighResolutionCapable=True, NSPrincipalClass='NSApplication')
-        write(bundle / 'Generated' / (platform + '-Info.plist'), plistlib.dumps(info).decode())
+        write(bundle / 'Generated' / (('ios' if ipad else 'macos') + '-Info.plist'), plistlib.dumps(info).decode())
 
         build_files = []
         for filename, ref in sources.items():
