@@ -195,18 +195,33 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   height** beside them and its tail ends just off their **mouth** (each
   character's `mouth` anchor, measured on the portrait); the previous speaker
   stays on the other side, dimmed and a little smaller, as the listener.
-  Comics' rule applies: tails aim at the head or mouth and never cross a face.
-  On narrow screens the bubble runs along the bottom with the speaker's
-  medallion standing on it and a short tail aimed at their mouth.
-  Text types itself out without ever re-wrapping (`text_box_reveal`); a tap
-  finishes the line, the next tap moves on; Space works too, and an optional
-  skip pill sits in the corner away from the speaker.
-- Bubble kinds: **speech** (rounded body, tapered tail), **thought** (a cloud
-  of puffs with shrinking puffs as the tail) and **shout** (fixed-length
-  spikes around a superellipse, one long spike to the speaker). Body and tail
-  are drawn as one shape — an outline pass of both, then a fill pass of both
-  with the tail's root reaching into the body — so no seam shows where they
-  meet.
+  Comic lettering rules apply (Blambot, Comicraft, Clip Studio lettering guides):
+  - the balloon **hugs its words**: lines are balanced and the bubble shrinks
+    to the widest one, no wider than a comfortable measure, so there is never
+    an empty balloon;
+  - the tail is a **curved, tapered comma** that aims at the mouth and stops
+    short of the face, and never crosses one;
+  - narration (no speaker) is a centred caption with no tail, and a named
+    speaker without a portrait (Volcano's dispatcher) gets a name tag on it.
+  On narrow screens the bubble is a panel along the bottom with the speaker's
+  medallion standing on its rim in front of it and the name tag beside the
+  medallion; the listener stands on the other side, dimmed.
+  A new speaker's bubble springs out of its tail (`ease_out_back`), then the
+  text types itself out at 40 characters a second without ever re-wrapping
+  (`text_box_reveal`), with a beat after sentences and a shorter one after
+  commas and dashes. A tap finishes the line, the next tap moves on; Space
+  works too. The optional skip pill (with a fast-forward mark) sits in the
+  corner away from the speaker, or in the top corner when a listener stands
+  there.
+- Bubble kinds: **speech** (rounded body, curved tapered tail), **thought** (a
+  cloud of puffs with detached, shrinking puffs as the tail) and **shout**
+  (spikes evenly spaced along a rounded box, so long and short lines burst
+  alike, and one long straight spike to the speaker). Body and tail are drawn
+  as one shape — an outline pass of both, then a fill pass of both with the
+  tail's root reaching into the body — so no seam shows where they meet. The
+  curved tail is a strip of convex quads in one colour, so their soft edges
+  overlap without seams. Layouts know how far each kind reaches past its box,
+  so spikes and puffs stay on screen.
 - `story_next()` moves on as a tap would (for timed sequences and captures).
 - `speech_bubble(tip, text, style, …, kind)` is the bubble on its own: placed above
   a point (below when there is no room), kept on screen, tail on the point —

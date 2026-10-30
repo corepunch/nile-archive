@@ -9,7 +9,9 @@ mkdir -p "$tmp"
 shot() { # game name size args...
     game=$1 name=$2 size=$3
     shift 3
-    "./build/$game" --headless --mute --fresh --size "$size" --frames 4 --shot "$tmp/$game-$name.png" "$@" > /dev/null
+    # four frames unless the shot names its own (the first --frames on the command line wins)
+    case " $* " in *" --frames "*) frames="" ;; *) frames="--frames 4" ;; esac
+    "./build/$game" --headless --mute --fresh --size "$size" $frames --shot "$tmp/$game-$name.png" "$@" > /dev/null
     out="games/$game/docs/screenshots/$name.jpg"
     mkdir -p "$(dirname "$out")"
     python3 -c "import sys; from PIL import Image; Image.open(sys.argv[1]).convert('RGB').save(sys.argv[2], quality=86)" \
