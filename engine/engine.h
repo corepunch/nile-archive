@@ -536,7 +536,7 @@ typedef struct {
     text_style text, name;       /* bubble text and name tag */
     color bubble, edge, dim;     /* bubble fill and rim, backdrop behind the dialogue */
     float portrait_height;       /* fraction of the screen height (default .5) */
-    bool framed;                 /* portraits are busts: show them in a medallion */
+    bool framed;                 /* bust medallions; narrow screens centre the portrait/bubble unit */
     float backdrop_blur;         /* optional logical-pixel blur behind dialogue */
     const char *skip;            /* label of a skip button, NULL for none */
 } story_style;
