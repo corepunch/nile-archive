@@ -1,5 +1,6 @@
 """Real-game before/after capture matrix for building art and ground shadows."""
 from pathlib import Path
+import os
 import subprocess
 import sys
 from PIL import Image
@@ -27,8 +28,12 @@ for size in ('480x900', '390x844'):
     for name, args in scenes.items():
         png = tmp / f'{label}-{name}-{size}.png'
         extra = ['--safe-area', '0,47,0,34'] if size == '390x844' else []
-        subprocess.run([str(ROOT / 'build/relic-rush'), '--headless', '--mute', '--fresh',
-                        '--size', size, '--shot', str(png), *args, *extra], cwd=ROOT, check=True)
+        source = []
+        for flag, env in (('--lua', 'RR_CAPTURE_LUA'), ('--data', 'RR_CAPTURE_DATA')):
+            if os.environ.get(env): source += [flag, os.environ[env]]
+        binary = os.environ.get('RR_CAPTURE_BINARY', str(ROOT / 'build/relic-rush'))
+        subprocess.run([binary, '--headless', '--mute', '--fresh',
+                        '--size', size, '--shot', str(png), *args, *extra, *source], cwd=ROOT, check=True)
         with Image.open(png) as im:
             im.convert('RGB').save(OUT / f'{label}-{name}-{size}.jpg', quality=88)
         png.unlink()
