@@ -84,7 +84,7 @@ function R.vfx_emit(at, kind, flying)
         local p = parts[part_next % PARTICLES + 1]
         part_next = part_next + 1
         local a, speed = rng_float() * 2 * PI, 55 + rng_float() * 125
-        local to = kind == RELIC_IDOL and vec2(24 + 432 / goal_count() + 19, 248) or vec2(90, 153)   -- idol goal or score
+        local to = kind == RELIC_IDOL and vec2(24 + 432 / goal_count() + 19, 214) or vec2(90, 119)   -- idol goal or score
         p.at, p.vel, p.to = at, vec2.polar(a, speed) + vec2(0, -35), to
         p.age = flying and -rng_float() * .14 or 0
         p.life = flying and .75 + rng_float() * .2 or .35 + rng_float() * .32
@@ -288,7 +288,7 @@ function R.vfx_draw()
     if R.word_time > 0 then
         local t = 1 - R.word_time / .75
         local word = R.word_combo >= 5 and "SUNSTORM!" or R.word_combo >= 3 and "MAGNIFICENT!" or "BRILLIANT!"
-        R.say_at(word, vec2(240, 732 - math.sin(t * PI) * 8), 28 + 8 * math.sin(math.min(1, t * 4) * PI), R.PAL_GOLD, 420)
+        R.say_at(word, vec2(240, 759 + R.drop - math.sin(t * PI) * 8), 28 + 8 * math.sin(math.min(1, t * 4) * PI), R.PAL_GOLD, 420)
     end
 end
 

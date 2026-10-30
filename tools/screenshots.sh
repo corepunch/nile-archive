@@ -38,6 +38,7 @@ shot relic-rush hex-first 480x900
 shot relic-rush hex-late 480x900 --level 8
 shot relic-rush island-village 480x900 --showcase
 shot relic-rush island-placement 480x900 --city 6 --placing
+shot relic-rush island-blocked 480x900 --city 6 --placing blocked
 shot relic-rush island-zones 480x900 --city 3 --overview
 shot relic-rush island-unlock 480x900 --city 3 --zone 1
 shot relic-rush victory 480x900 --victory

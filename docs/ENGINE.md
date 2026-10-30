@@ -63,9 +63,12 @@ Landscape-only games set `.landscape = true` and the engine shows a rotate
 prompt in portrait and holds input until the device turns.
 
 Games whose art is composed for one frame set `.fixed = true`: the logical
-screen is exactly the design and the renderer letterboxes the rest. Relic Rush is a
-480 × 900 portrait game laid out in absolute coordinates; on an iPad it is a
-centred column.
+screen is exactly the design and the renderer letterboxes the rest. A fixed
+game that also sets `max_aspect` keeps its width but grows along its long side
+up to that ratio, so a tall phone gets a taller screen instead of bars. Relic
+Rush is a 480 × 900 portrait game laid out in absolute coordinates with
+`max_aspect = 2.2`: on an iPad it is a centred column, on a 390 × 844 iPhone it
+is 480 × 939, and it pins its bottom controls to `app_screen()`'s bottom edge.
 
 **Full bleed.** The logical screen sits inside the device's safe area, so
 controls never meet the notch, the status bar or the home indicator. The

@@ -69,12 +69,12 @@ function R.panel(r)
 end
 local panel = R.panel
 
-function R.tapped(r) return ui.hit(r, 0).clicked end
+function R.tapped(r) return ui.hit(r:offset(vec2(0, R.hit_dy)), 0).clicked end
 local tapped = R.tapped
 
 -- Buttons respond even when drawn disabled, so the game can explain why not.
 function R.button(r, label, enabled)
-    local st = ui.hit(r, 0)
+    local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
     local b = st.held and r:offset(vec2(0, 2)) or r
     rrect(r:offset(vec2(0, 6)), 15, rgba(13, 54, 43))
     rrect(b, 15, enabled and rgba(46, 112, 70) or rgba(75, 94, 80))
@@ -113,43 +113,67 @@ local star_icon, compass_icon = R.star_icon, R.compass_icon
 
 --------------------------------------------------------------------- header
 
-local function header_button(r, label, em)
-    rrect(r, 13, rgba(22, 60, 50, 220))
-    say(label, r:inflate(-4), em, PAL_CREAM)
-    return tapped(r)
+-- No title and no band: the picture runs up to the status bar, with small
+-- glassy controls in the corners, as Nile Archive's screens do.
+local function corner_button(center, label, em)
+    local st = ui.hit(rect.centered(center, size2(56, 56)), 0)
+    local c = st.held and center + vec2(0, 2) or center
+    disc(c + vec2(0, 3), 24, rgba(0, 0, 0, 80))
+    disc(c, 24, rgba(233, 199, 123, 200))
+    disc(c, 22, rgba(13, 47, 41, st.hot and 245 or 225))
+    say(label, rect.centered(c, size2(40, 36)), em, PAL_CREAM)
+    return st.clicked
 end
 
+-- A resource readout: a dark pill with a gold seam, its icon overhanging the left end.
+function R.capsule(r, icon, value)
+    gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
+    gfx.round_rect(r, r.h * .5, rgba(13, 47, 41, 225))
+    gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
+    icon(vec2(r.x + 6, r:center().y), r.h * .5 + 6)
+    say(value, rect(r.x + r.h * .5 + 10, r.y, r.w - r.h * .5 - 18, r.h), 18, PAL_CREAM)
+    return tapped(r)
+end
+local capsule = R.capsule
+
+local function relic_icon(kind)
+    return function(c, radius) picture(R.relics[kind + 1], rect.centered(c, size2(radius * 2, radius * 2)), 255) end
+end
+local capsule_icons = {relic_icon(RELIC_IDOL), relic_icon(RELIC_LEAF), relic_icon(RELIC_CRYSTAL),
+                       function(c, radius) star_icon(c, radius * .8) end, function(c, radius) compass_icon(c, radius * .72) end}
+local capsule_notes = {"Idols come from expeditions. Wonders cost them.", "Leaves come from expeditions. Wonders cost them.",
+                       "Crystals come from expeditions. Wonders cost them.", "Stars open new land. They stay with you.",
+                       "Compasses are spent to open new land."}
+
+-- The island shows its purse in two rows of capsules; tapping EXPAND opens the
+-- next region. The board keeps only the way back and the pause button.
 function R.draw_header(island)
-    local c = R.island
-    picture(R.title, rect(137, 12, 206, 206 * R.title.h / math.max(R.title.w, 1)), 255)
-    if header_button(rect(21, 26, 53, 48), island and "<" or "Isle", 19) then
-        if not island then
-            R.on_island = true
-        elseif c.placing >= 0 then
-            c:cancel()
-            R.notice("Your island is unchanged.")
-        elseif R.prog.level == c.count and R.prog.level < rules.LEVELS then
-            if R.g.won or R.g.lost or R.g.level ~= R.prog.level then R.start_level() else R.on_island = false end
-        else
-            R.notice("Restore your new wonder to continue.")
+    if not island then
+        if corner_button(vec2(40, 38), "Isle", 15) then R.on_island = true end
+    else
+        for k = 1, 5 do
+            local r = rect(34 + (k - 1) % 3 * 120, k <= 3 and 14 or 58, 96, 34)
+            if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end
         end
+        local r = rect(274, 58, 96, 34)
+        gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
+        gfx.round_rect(r, r.h * .5, rgba(47, 105, 67, 240))
+        gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
+        say("EXPAND +", r:inflate2(vec2(-10, 0)), 15, PAL_CREAM)
+        if tapped(r) then R.expand() end
     end
-    if header_button(rect(407, 26, 53, 48), "II", 26) then R.overlay = R.OV_PAUSE end
-    if not island then return end
-    panel(rect(22, 92, 436, 67))
-    local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-    local icon_x, text_x = {35, 171, 304}, {104, 240, 379}
-    for k = 1, 3 do
-        picture(R.relics[kinds[k] + 1], rect(icon_x[k], 104, 40, 40), 255)
-        say_at(tostring(R.prog.wallet[k]), vec2(text_x[k], 121), 24, k > 1 and PAL_CREAM or PAL_GOLD, 0)
-    end
+    if corner_button(vec2(440, 38), "II", 22) then R.overlay = R.OV_PAUSE end
 end
 
 function R.draw_toast()
     if R.toast_time <= 0 or R.overlay ~= R.OV_NONE then return end
-    local y = R.on_island and 716 or 93
-    rrect(rect(18, y - 15, 444, 30), 11, rgba(10, 37, 31, 235))
-    say_at(R.toast, vec2(240, y - 1), 14, PAL_CREAM, 424)
+    if R.on_island then   -- above the map buttons
+        rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
+    else   -- between the corner buttons
+        rrect(rect(74, 23, 332, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 37), 14, PAL_CREAM, 316)
+    end
 end
 
 -------------------------------------------------------------------- dialogs
@@ -372,10 +396,13 @@ function R.overlays(dt)
     gfx.bleed(false)
     ui.block(app.bleed())
     local scale = .96 + .04 * entry
-    P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit), entry * (1 - exit)
+    -- dialogs are laid out on the 900-tall design: centre them on a taller screen
+    R.hit_dy = R.drop / 2
+    P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit + R.hit_dy), entry * (1 - exit)
     local draw = dialogs[R.overlay]
     if draw then draw() end
     reset_paint()
+    R.hit_dy = 0
 end
 
 return R

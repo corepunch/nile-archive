@@ -4,8 +4,7 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
-local PAL_GOLD, PAL_CREAM, PAL_GREEN, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_GREEN, R.PAL_WHITE
-local STARS, COMPASSES = rules.STARS, rules.COMPASSES
+local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 local rgba = color
 
 function R.island_focus(world, zoom)
@@ -60,7 +59,7 @@ local function confirm_place()
     R.save_progress()
 end
 
-local function expand()
+function R.expand()
     local z = R.island:next_zone(R.prog.wallet)
     if z < 0 then R.notice("Your whole island is open to explore.")
     else R.zone_card, R.overlay = z, R.OV_ZONE end
@@ -92,27 +91,35 @@ local function map_button(r, label, em, bg)
     return R.tapped(r)
 end
 
+-- A sheet along the bottom edge: it runs on under the home indicator, so it
+-- reads as part of the screen rather than a card floating above it.
 local function bottom_panel()
     local c = R.island
-    R.panel(rect(16, 745, 448, 138))
+    local full = app.bleed()
+    local y = R.drop
+    local sheet = rect(12, 758 + y, 456, full:max().y - 758 - y + 24)
+    gfx.bleed(true)
+    R.panel(sheet)
+    gfx.bleed(false)
+    ui.block(sheet)
     if c.placing >= 0 then
         local ok = c:can_place(c.ghost, c.placing, c.moving)
-        R.say_at(R.wonders[c.placing + 1].name, vec2(240, 767), 25, PAL_GOLD, 410)
-        R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 797), 11, PAL_WHITE, 0)
-        if R.button(rect(32, 824, 140, 40), "CANCEL", true) then c:cancel(); R.notice("Your island is unchanged.") end
-        if R.button(rect(191, 824, 257, 40), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
+        R.say_at(R.wonders[c.placing + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
+        R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 811 + y), 11, PAL_WHITE, 0)
+        if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your island is unchanged.") end
+        if R.button(rect(188, 834 + y, 262, 44), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
     elseif c.count < R.prog.level then
-        R.say_at(R.wonders[c.count + 1].name, vec2(240, 767), 25, PAL_GOLD, 410)
-        R.say_at("CHOOSE ITS PLACE ON YOUR ISLAND", vec2(240, 797), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 824, 364, 40), "CHOOSE A LOCATION", true) then R.inspect, R.overlay = c.count, R.OV_WONDER end
+        R.say_at(R.wonders[c.count + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
+        R.say_at("CHOOSE ITS PLACE ON YOUR ISLAND", vec2(240, 811 + y), 12, PAL_WHITE, 0)
+        if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.overlay = c.count, R.OV_WONDER end
     elseif R.prog.level >= rules.LEVELS then
-        R.say_at("Your island, your story", vec2(240, 767), 27, PAL_GOLD, 0)
-        R.say_at("DRAG TO EXPLORE. MOVE ANY BUILDING.", vec2(240, 797), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 824, 364, 40), "EXPLORE MY ISLAND", true) then R.notice("Drag the land to explore. Tap a wonder to move it.") end
+        R.say_at("Your island, your story", vec2(240, 782 + y), 27, PAL_GOLD, 0)
+        R.say_at("DRAG TO EXPLORE. MOVE ANY BUILDING.", vec2(240, 811 + y), 12, PAL_WHITE, 0)
+        if R.button(rect(58, 834 + y, 364, 44), "EXPLORE MY ISLAND", true) then R.notice("Drag the land to explore. Tap a wonder to move it.") end
     else
-        R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(c.count), vec2(240, 768), 15, PAL_WHITE, 0)
-        R.say_at("SCROLL THE ISLAND. TAP A BUILDING TO MOVE IT.", vec2(240, 797), 11, PAL_WHITE, 0)
-        if R.button(rect(58, 824, 364, 40), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
+        R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(c.count), vec2(240, 783 + y), 15, PAL_WHITE, 0)
+        R.say_at("SCROLL THE ISLAND. TAP A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
+        if R.button(rect(58, 834 + y, 364, 44), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
             if R.g.level == R.prog.level and not R.g.won and not R.g.lost then R.on_island = false
             else R.start_level() end
         end
@@ -137,14 +144,6 @@ function R.island_screen(inp, dt)
     gfx.rect(MAP_VIEW, rgba(22, 110, 119))
     c:draw(inp, app.clock())
     gfx.bleed(false)
-    if c.placing >= 0 then
-        local ok = c:can_place(c.ghost, c.placing, c.moving)
-        local p = c.cam:to_screen(c.ghost)
-        gfx.clip(MAP_VIEW)
-        gfx.round_rect(rect(p.x - 60, p.y + 15, 120, 26), 9, rgba(23, 64, 48, 235))
-        R.say_at(ok and "LOOKS GOOD" or "CAN'T PLACE", p + vec2(0, 26), 13, ok and PAL_GREEN or PAL_CREAM, 0)
-        gfx.unclip()
-    end
     R.vfx_particles()
     R.bubble_time = R.bubble_time - dt
     if R.bubble_time > 0 and R.bubble_wonder >= 0 and R.bubble_wonder < c.count then
@@ -154,20 +153,13 @@ function R.island_screen(inp, dt)
         gfx.unclip()
     end
 
-    -- the HUD is drawn after the map, so tall buildings never cover buttons
-    gfx.bleed(true)   -- the header band reaches up under the status bar
-    gfx.rect(rect(MAP_VIEW.x, MAP_VIEW.y, MAP_VIEW.w, 92 - MAP_VIEW.y), rgba(13, 62, 58, 225))
-    gfx.bleed(false)
+    -- the HUD is drawn after the map, so tall buildings never cover buttons;
+    -- a placement shows itself on the ghost alone: red when it can't go there
     R.draw_header(true)
-    local stats = rect(15, 170, 290, 30)
-    gfx.round_rect(stats, 10, rgba(22, 68, 52, 220))
-    ui.block(stats)
-    R.say_at(("STARS %d   COMPASSES %d"):format(R.prog.wallet[STARS], R.prog.wallet[COMPASSES]), vec2(160, 182), 16, PAL_GOLD, 275)
-    if map_button(rect(318, 170, 146, 30), "EXPAND  +", 16, rgba(47, 105, 67, 245)) then expand() end
     local dark = rgba(24, 70, 55, 235)
-    if map_button(rect(15, 675, 48, 45), "-", 31, dark) then c.cam = c.cam:zoom_at(1 / 1.2, MAP_VIEW:center()) end
-    if map_button(rect(72, 675, 48, 45), "+", 31, dark) then c.cam = c.cam:zoom_at(1.2, MAP_VIEW:center()) end
-    if map_button(rect(355, 675, 110, 45), "MAP", 20, dark) then
+    if map_button(rect(15, 702 + R.drop, 48, 45), "-", 31, dark) then c.cam = c.cam:zoom_at(1 / 1.2, MAP_VIEW:center()) end
+    if map_button(rect(72, 702 + R.drop, 48, 45), "+", 31, dark) then c.cam = c.cam:zoom_at(1.2, MAP_VIEW:center()) end
+    if map_button(rect(355, 702 + R.drop, 110, 45), "MAP", 20, dark) then
         if c.cam.zoom > .35 then R.island_focus(vec2(island.ISLAND_W / 2, island.ISLAND_H / 2), .25)
         else R.island_focus(vec2(760, 2010), .65) end
     end

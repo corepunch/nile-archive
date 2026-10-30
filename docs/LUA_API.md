@@ -15,7 +15,7 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`rect`](#rect) - Constructor `rect(x, y, w, h)`. Layout is RectCut: `rect.cut_top(r, 66)` slices 66 units off the top of r (changing r) and returns the slice.
 - [`color`](#color) - Constructor `color(r, g, b, a)`; `color.hex(0xRRGGBB)`; constants WHITE, BLACK, CLEAR.
 - [`purse`](#purse) - Constructor `purse(a, b, ...)`; operators + and -.
-- [`app`](#app) - The window, the logical screen and the main loop. A game's main.lua returns the descriptor engine.h calls app_desc - `return {title = ..., id = ..., design = size2(1200, 900), max_aspect = 16 / 9, landscape = true, fixed = false, rotate_text = ..., clear = color.hex(0x0E2B2E), init = function() end, frame = function(dt) end, quit = function() end}` - and the engine runs it: init once the window exists, frame every frame, quit at the end. Command line options understood by every game: --size WxH, --fresh (no saves), --data DIR, --lua DIR, --shot out.png [--frames N].
+- [`app`](#app) - The window, the logical screen and the main loop. A game's main.lua returns the descriptor engine.h calls app_desc - `return {title = ..., id = ..., design = size2(1200, 900), max_aspect = 16 / 9, landscape = true, fixed = false, rotate_text = ..., clear = color.hex(0x0E2B2E), init = function() end, frame = function(dt) end, quit = function() end}` - and the engine runs it (fixed keeps the design size and letterboxes the rest; a fixed game with a max_aspect still grows along its long side up to that ratio, so read app.screen() for its height): init once the window exists, frame every frame, quit at the end. Command line options understood by every game: --size WxH, --fresh (no saves), --data DIR, --lua DIR, --shot out.png [--frames N].
 - [`input`](#input)
 - [`texture`](#texture)
 - [`gfx`](#gfx) - Shapes and images, in logical screen units, drawn in call order.
@@ -939,7 +939,7 @@ Whether have has at least need of everything.
 
 ## app
 
-The window, the logical screen and the main loop. A game's main.lua returns the descriptor engine.h calls app_desc - `return {title = ..., id = ..., design = size2(1200, 900), max_aspect = 16 / 9, landscape = true, fixed = false, rotate_text = ..., clear = color.hex(0x0E2B2E), init = function() end, frame = function(dt) end, quit = function() end}` - and the engine runs it: init once the window exists, frame every frame, quit at the end. Command line options understood by every game: --size WxH, --fresh (no saves), --data DIR, --lua DIR, --shot out.png [--frames N].
+The window, the logical screen and the main loop. A game's main.lua returns the descriptor engine.h calls app_desc - `return {title = ..., id = ..., design = size2(1200, 900), max_aspect = 16 / 9, landscape = true, fixed = false, rotate_text = ..., clear = color.hex(0x0E2B2E), init = function() end, frame = function(dt) end, quit = function() end}` - and the engine runs it (fixed keeps the design size and letterboxes the rest; a fixed game with a max_aspect still grows along its long side up to that ratio, so read app.screen() for its height): init once the window exists, frame every frame, quit at the end. Command line options understood by every game: --size WxH, --fresh (no saves), --data DIR, --lua DIR, --shot out.png [--frames N].
 
 ### `app.quit()`
 

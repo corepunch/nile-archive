@@ -13,6 +13,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | ![First hex match-4 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
 | ![Later level with ice and chains](docs/screenshots/hex-late.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
+| | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
 ## Result screens and typography
 
@@ -72,7 +73,7 @@ The intro and finale lines are new, short and written from the cast notes in [ar
 | --- | --- | --- | --- | --- |
 | ![Elena](docs/screenshots/dialogue-elena.jpg) | ![Mara](docs/screenshots/dialogue-mara.jpg) | ![Tomas](docs/screenshots/dialogue-tomas.jpg) | ![Adrian](docs/screenshots/dialogue-adrian.jpg) | ![Bubble](docs/screenshots/island-bubble.jpg) |
 
-On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the jungle run to the screen edges while the controls stay inside the safe area:
+On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the jungle run to the screen edges while the controls stay inside the safe area. The screen grows taller there (480 × 939) rather than showing bars: the top HUD stays at the top, the tools and the island's bottom sheet move down to the bottom edge, and the board and dialogs stay centred:
 
 | Island | Board |
 | --- | --- |
@@ -154,7 +155,8 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Win rewards combine an expedition grant and actual collected idols / jade / crystals; they always cover the next building. Claims cannot be collected twice.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag empty land to pan; use +/- to zoom and Map for the overview.
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. Wins award 3 Stars and 3 Compasses. Confirming a region consumes only its Compass cost; Stars remain. Region requirements and fog are separate from building placement.
-- Choose any valid grassy position within opened land. Drag a building, inspect green/red placement feedback and confirm or cancel. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
+- The island's HUD is two rows of small resource capsules (idols, leaves and crystals; then Stars and Compasses beside **Expand**) and a pause button. There is no title or header band; tap a capsule to learn what it is for. The board keeps only the way back to the island and pause in its top corners.
+- Choose any valid grassy position within opened land. Drag a building and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
 
@@ -174,9 +176,9 @@ make test                                       # rules, island and engine tests
 make web && python3 -m http.server 8080 --directory dist   # http://localhost:8080/relic-rush/
 ```
 
-The game keeps its 480 × 900 portrait layout inside the device's safe area; its jungle backdrop, the island and the header band run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`), so taller phones show more scenery instead of dark bars. Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
+The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the bottom sheet run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing`, `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions), `--showcase`, `--overview`, `--placing [blocked]` (`blocked`: the red ghost over a built wonder), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 
