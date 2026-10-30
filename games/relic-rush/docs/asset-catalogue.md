@@ -149,7 +149,13 @@ layout audit is tracked in [issue #16](https://github.com/corepunch/nile-archive
 Reviewed comparisons live in `docs/review/dialogue-stack/` (all three shapes,
 one/two-line speech, 480×900 and safe-area 390×844, plus the guide). See [the UI engine](../../../docs/UI_ENGINE.md).
 
-Resource capsules, HUD panels, progress bars, menu buttons, result stars, placement outlines, land
+The board HUD floats directly over the lagoon/temple paintings, without the old
+cream backing panel. Existing outlined/shadowed labels, the move counter and a
+slim translucent progress track supply local contrast. Before/after captures of
+both paintings, safe-area phones, effects and modal underlays are in
+`docs/review/floating-hud/`. No artwork or interaction state was added.
+
+Resource capsules, island HUD panels, progress bars, menu buttons, result stars, placement outlines, land
 fog and dialogue chrome are intentional engine geometry/text; they are not gem
 or tool artwork states. Existing island, dialogue and result captures are linked
 from the [README](../README.md). App icons live in `Assets.xcassets/`, outside the
