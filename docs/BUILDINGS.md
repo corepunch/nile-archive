@@ -111,3 +111,10 @@ diamond or parallelogram whose sides follow the tile directions, cropped
 tightly with a transparent background. Keep plants and props inside the
 footprint where possible. Anything that hangs outside it overlaps the
 neighbours, because footprints may touch.
+
+Relic Rush's [96-entry catalogue](../games/relic-rush/docs/building-catalogue.md)
+also includes decorations without a visible slab. Their Blender ground origin
+and projected whole-tile reservation define the virtual base; a small prop's
+`base_width` can exceed its visible sprite width. This keeps trees, flowers and
+furniture at the model's intended scale while reserving at least one whole tile.
+Slab-based buildings use the measured corners of the final painted base.

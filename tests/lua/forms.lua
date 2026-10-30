@@ -81,6 +81,12 @@ local focused=list.focus
 check(focused==item_node("a","open").id,"list controls participate in form focus order")
 local selected=list:draw(rect(0,0,300,200),list_skin,{input={key=input.KEY_RETURN}})
 check(selected and selected.id=="choose" and selected.source=="topics" and selected.key=="a","list actions identify their source and record")
+local list_stack=ui.modals(list_skin)
+check(list_stack:open("catalogue",list,{}, {bounds=rect(0,0,300,200)}),"list opens in modal")
+local modal_selected=list_stack:draw(0,{input={key=input.KEY_RETURN},reduced_motion=true})
+check(modal_selected and modal_selected.modal=="catalogue" and modal_selected.source=="topics" and modal_selected.key=="a",
+    "modal list actions preserve record identity")
+list_stack:close()
 check(drawn_align[item_node("a","title").id]=="start" and drawn_align[item_node("b","title").id]=="center","alignment follows icon presence")
 check(builds==2,"rows are cached across layout and draw")
 check(list:set_items("topics",{data[2],data[1]}) and list.focus==focused,"stable keys preserve focus across reordering")

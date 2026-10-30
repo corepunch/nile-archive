@@ -14,29 +14,31 @@ function R.island_focus(world, zoom)
 end
 
 -- Start placing the next wonder (or moving a built one) and look at it.
-function R.island_begin(i, focus)
+function R.island_begin(kind, focus, item)
     local c = R.island
-    R.overlay = R.OV_NONE
-    R.inspect = -1
-    if i == c.count then
-        local ok, spot = c:find_spot(i, island.island_suggestion(i))
-        if not ok then
-            R.notice("Open more land before placing this wonder.")
+    if item and item>=0 then
+        if item>=c.count then return end
+        c:begin_move(item)
+    else
+        if not island.can_buy(c,R.prog.wallet,R.prog.level,kind) then
+            R.notice("Earn more expedition treasures to build this.")
             return
         end
-        c:begin_place(i, spot)
-    elseif i >= 0 and i < c.count then
-        c:begin_move(i)
-    else
-        return
+        local ok,spot=c:find_spot(kind,island.island_suggestion(math.min(kind,9)))
+        if not ok then R.notice("Open more land before placing this building."); return end
+        c:begin_place(kind,spot)
     end
-    if focus then R.island_focus(c.ghost - vec2(0, 90), math.max(.65, c.cam.zoom)) end
+    R.overlay, R.inspect = R.OV_NONE, -1
+    if focus then R.island_focus(c.ghost-vec2(0,90),math.max(.65,c.cam.zoom)) end
     R.notice("Tap to choose a spot. Drag the building or scroll the land.")
 end
 
 local function confirm_place()
     local c = R.island
     local fresh = c.moving < 0
+    if fresh and not island.can_buy(c,R.prog.wallet,R.prog.level,c.placing) then
+        R.notice("Earn more expedition treasures to build this."); return
+    end
     local ev = c:confirm(R.prog.wallet, app.clock())
     if ev.result ~= city.BUILT and ev.result ~= city.MOVED then
         R.notice("Choose open grass clear of other buildings.")
@@ -47,11 +49,11 @@ local function confirm_place()
     R.bubble_text = fresh and "A new wonder, exactly where you wanted it." or "A fresh place for your island wonder."
     R.bubble_time = 3.5
     R.tone(740)
-    if fresh then   -- Tomas tells each wonder's story once; the last one brings Adrian
+    if fresh and c.items[ev.building+1].type < island.WONDERS then   -- Tomas tells each wonder's story once; the last one brings Adrian
         local kind = c.items[ev.building + 1].type
         local w = R.wonders[kind + 1]
         story.play(("wonder-%d"):format(kind), {{"tomas", w.about}})
-        if c.count == island.WONDERS then
+        if island.wonder_count(c) == island.WONDERS then
             story.play("finale", R.finale)
             R.overlay = R.OV_FINALE
         end
@@ -96,22 +98,23 @@ local function bottom_panel()
     R.panel(sheet)
     gfx.bleed(false)
     ui.block(sheet)
+    local restored=island.wonder_count(c)
     if c.placing >= 0 then
         local ok = c:can_place(c:snap(c.ghost, c.placing), c.placing, c.moving)
-        R.say_at(R.wonders[c.placing + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
+        R.say_at(R.buildings[c.placing + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
         R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 811 + y), 11, PAL_WHITE, 0)
         if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your island is unchanged.") end
         if R.button(rect(188, 834 + y, 262, 44), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
-    elseif c.count < R.prog.level then
-        R.say_at(R.wonders[c.count + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
+    elseif restored < R.prog.level then
+        R.say_at(R.wonders[restored + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
         R.say_at("CHOOSE ITS PLACE ON YOUR ISLAND", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.overlay = c.count, R.OV_WONDER end
+        if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end
     elseif R.prog.level >= rules.LEVELS then
         R.say_at("Your island, your story", vec2(240, 782 + y), 27, PAL_GOLD, 0)
         R.say_at("DRAG TO EXPLORE. HOLD A BUILDING TO MOVE.", vec2(240, 811 + y), 12, PAL_WHITE, 0)
         if R.button(rect(58, 834 + y, 364, 44), "EXPLORE MY ISLAND", true) then R.notice("Drag to explore. Hold a wonder to pick it up.") end
     else
-        R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(c.count), vec2(240, 783 + y), 15, PAL_WHITE, 0)
+        R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(restored), vec2(240, 783 + y), 15, PAL_WHITE, 0)
         R.say_at("DRAG TO SCROLL. HOLD A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
         if R.button(rect(58, 834 + y, 364, 44), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
             if R.g.level == R.prog.level and not R.g.won and not R.g.lost then R.on_island = false
@@ -131,7 +134,7 @@ function R.island_screen(inp, dt)
     local city_input=R.overlay==R.OV_NONE and inp or input{pos=inp.pos,pinch=1}
     local ev = c:update(city_input, R.prog.wallet, app.clock(), dt)
     if R.overlay == R.OV_NONE then
-        if ev.result == city.PICKED then R.inspect, R.overlay = ev.building, R.OV_WONDER
+        if ev.result == city.PICKED then R.inspect, R.inspect_item, R.overlay = c.items[ev.building+1].type, ev.building, R.OV_WONDER
         elseif ev.result == city.ZONE then R.zone_card, R.overlay = ev.zone, R.OV_ZONE end
     end
 
@@ -151,6 +154,7 @@ function R.island_screen(inp, dt)
     -- the HUD is drawn after the map, so tall buildings never cover buttons;
     -- a placement shows itself on the ghost alone: red when it can't go there
     R.draw_header(true)
+    if c.placing<0 and R.button(rect(300,704+R.drop,162,42),"BUILD SHOP",true) then R.open_catalogue() end
     bottom_panel()
 end
 

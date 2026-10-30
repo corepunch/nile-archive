@@ -1,0 +1,82 @@
+{
+  "camp": {
+    "about": "Every great discovery begins with a little canvas.",
+    "cost": [
+      60,
+      10,
+      5
+    ]
+  },
+  "well": {
+    "about": "Fresh water brings the lost valley back to life.",
+    "cost": [
+      80,
+      15,
+      15
+    ]
+  },
+  "workshop": {
+    "about": "A home for the hands that rebuild the valley.",
+    "cost": [
+      100,
+      25,
+      15
+    ]
+  },
+  "market": {
+    "about": "Stories, spices and treasures from far away.",
+    "cost": [
+      120,
+      25,
+      25
+    ]
+  },
+  "gateway": {
+    "about": "A garden arch marks the path into your valley.",
+    "cost": [
+      140,
+      30,
+      30
+    ]
+  },
+  "lodge": {
+    "about": "A warm light after a long day of adventure.",
+    "cost": [
+      160,
+      35,
+      35
+    ]
+  },
+  "archive": {
+    "about": "Protect the knowledge buried beneath the vines.",
+    "cost": [
+      180,
+      35,
+      45
+    ]
+  },
+  "observatory": {
+    "about": "Follow the stars to the next discovery.",
+    "cost": [
+      200,
+      40,
+      50
+    ]
+  },
+  "fountain": {
+    "about": "Let the ancient spring flow once more.",
+    "cost": [
+      220,
+      45,
+      55
+    ]
+  },
+  "temple": {
+    "about": "The heart of the valley shines again.",
+    "cost": [
+      250,
+      50,
+      60
+    ]
+  }
+}

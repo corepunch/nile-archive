@@ -6,6 +6,7 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 require("screens")
+require("catalogue")
 require("vfx")
 require("board")
 require("island_view")
@@ -51,7 +52,7 @@ end
 ------------------------------------------------------------------ progress
 
 local function serialize(s)
-    s:int("version", 1)
+    s:int("version", 2)
     R.prog.level = s:int("level", R.prog.level)
     R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
     R.prog.wallet = s:ints("wallet", R.prog.wallet)
@@ -59,7 +60,7 @@ local function serialize(s)
     story.serialize(s)
     if save.is_reading(s) then
         R.prog.level = num.clampi(R.prog.level, 0, LEVELS)
-        if R.island.count > R.prog.level then R.island.count = R.prog.level end   -- never more wonders than wins
+        R.needs_relocation=island.restore_saved(R.island,R.prog.level)
     end
 end
 
@@ -184,11 +185,53 @@ local function smoke()
             smoke_move.pass=2;smoke_stage=8
         else
             assert(c.items[1].pos:dist(smoke_move.destination)<.01,"confirm did not move the building")
-            app.inject_click(vec2(240,856+R.drop));smoke_stage=5
+            R.open_catalogue();smoke_move.categories=0;smoke_stage=20
         end
+    elseif smoke_stage==20 and R.overlay==R.OV_SHOP then
+        if smoke_move.categories<2 then
+            app.inject_click(R.catalogue_form.boxes.category_next:center())
+            smoke_move.categories=smoke_move.categories+1
+        else smoke_stage=21 end
+    elseif smoke_stage==21 and R.overlay==R.OV_SHOP then
+        local f=R.catalogue_form
+        assert(R.catalogue_records[1].id=="shrub","category source must refresh")
+        for _,node in pairs(f.nodes) do
+            if node.item_key=="shrub" and node.local_id=="buy" then
+                assert(node.enabled,"smoke: starter decoration should be affordable")
+                smoke_move.shop_gold=R.prog.wallet[1]
+                app.inject_click(f.boxes[node.id]:center());smoke_stage=22;break
+            end
+        end
+    elseif smoke_stage==22 and R.island.placing>=0 then
+        assert(R.island.placing==37,"catalogue action lost its stable item key")
+        app.inject_click(vec2(100,856+R.drop));smoke_stage=23
+    elseif smoke_stage==23 and R.island.placing<0 then
+        assert(R.island.count==1 and R.prog.wallet[1]==smoke_move.shop_gold,"cancelled purchase changed save state")
+        R.open_catalogue();smoke_stage=24
+    elseif smoke_stage==24 and R.overlay==R.OV_SHOP then
+        for _,node in pairs(R.catalogue_form.nodes) do
+            if node.item_key=="shrub" and node.local_id=="buy" then
+                app.inject_click(R.catalogue_form.boxes[node.id]:center());smoke_stage=25;break
+            end
+        end
+    elseif smoke_stage==25 and R.island.placing>=0 then
+        app.inject_click(vec2(320,856+R.drop));smoke_stage=26
+    elseif smoke_stage==26 and R.island.placing<0 then
+        assert(R.island.count==2 and island.wonder_count(R.island)==1,"decoration changed campaign restoration count")
+        assert(R.prog.wallet[1]==smoke_move.shop_gold-15,"purchase must charge once")
+        local c=R.island
+        app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5,.65)));smoke_stage=27
+    elseif smoke_stage==27 and R.overlay==R.OV_WONDER then
+        assert(R.inspect==37 and R.inspect_item==1,"purchased details confused type and placed item index")
+        app.inject_click(R.wonder_form.boxes.action:center()+vec2(0,R.drop/2));smoke_stage=28
+    elseif smoke_stage==28 and R.island.placing>=0 then
+        assert(R.island.moving==1 and R.island.placing==37,"details must move the purchased instance")
+        app.inject_click(vec2(100,856+R.drop));smoke_stage=29
+    elseif smoke_stage==29 and R.island.placing<0 then
+        app.inject_click(vec2(240,856+R.drop));smoke_stage=5
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: data-backed guide -> swaps -> cascades -> win -> claim -> island -> build -> pan -> long-press move/cancel/confirm -> level 2")
+        print("smoke test passed: data-backed guide -> swaps -> cascades -> win -> claim -> island -> build -> pan -> long-press move/cancel/confirm -> catalogue -> cancel/buy decoration -> level 2")
         app.quit()
     end
 end
@@ -329,6 +372,40 @@ local function debug_screens()
         R.finish_wave()
         R.toast_time = 0
     end
+    if app.arg("catalogue") then
+        island_with(4);R.on_island=true
+        R.open_catalogue(app.arg("catalogue"),tonumber(app.arg("catalogue-page")) or 1);R.toast_time=0
+    end
+    if app.arg("building-review") then
+        local first=((tonumber(app.arg("building-review")) or 1)-1)*4
+        R.prog={level=10,seed=782341,wallet=purse(2000,500,500,30,10)}
+        R.island.count=0;R.island.open=63
+        local spots={vec2(700,1500),vec2(1100,1500),vec2(700,1850),vec2(1100,1850)}
+        for k=0,3 do
+            local kind=first+k
+            if kind<#island.catalogue then
+                local ok,spot=R.island:find_spot(kind,spots[k+1])
+                assert(ok,"building review requires a valid footprint")
+                R.island:add(spot,kind,0)
+            end
+        end
+        R.island_focus(vec2(900,1550),.65)
+        R.on_island=true;R.toast_time=0
+    end
+    if app.arg("catalogue-item") then
+        island_with(10);R.on_island=true
+        local kind=tonumber(app.arg("catalogue-item")) or 10
+        R.prog.wallet=purse(2000,500,500,30,10)
+        R.island_begin(kind,true)
+    end
+    if app.arg("catalogue-card") then
+        island_with(10);R.on_island=true
+        local kind=tonumber(app.arg("catalogue-card")) or 37
+        local ok,spot=R.island:find_spot(kind,vec2(760,2030))
+        assert(ok,"catalogue card needs a valid plot")
+        R.inspect_item=R.island:add(spot,kind,0)
+        R.inspect=kind;R.overlay=R.OV_WONDER;R.toast_time=0
+    end
     if app.arg("art-states") then R.art_review, R.toast_time = true, 0 end
     if app.arg("art-board") then
         R.g = rules.game_start(8, 123478)
@@ -386,7 +463,9 @@ local function init()
     R.island = city.new()
     island.island_setup(R.island)
     R.island.draw_over = R.draw_markers
-    R.wonders = R.island.defs   -- with the sprites loaded
+    R.buildings = R.island.defs   -- with the sprites loaded
+    R.wonders = {}
+    for i=1,WONDERS do R.wonders[i]=R.buildings[i] end
 
     R.sound = true
     R.inspect, R.zone_card = -1, -1
@@ -398,7 +477,10 @@ local function init()
     if not R.quiet then story.play("intro", intro) end
     R.layout()
     R.start_level()
-    if R.prog.level > R.island.count or R.prog.level >= LEVELS then R.on_island = true end
+    if R.prog.level > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
+    if R.needs_relocation then
+        R.on_island=true;R.notice("Some buildings need a new spot. Hold one to move it.")
+    end
     debug_screens()
 end
 

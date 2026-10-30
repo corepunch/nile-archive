@@ -1,0 +1,2905 @@
+{
+ "buildings": [
+  {
+   "key": "camp",
+   "title": "Expedition camp",
+   "cat": "wonder",
+   "w": 2,
+   "h": 2,
+   "u0": -16,
+   "v0": 14,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.6,
+   "verts": 1909
+  },
+  {
+   "key": "well",
+   "title": "Spring well",
+   "cat": "wonder",
+   "w": 2,
+   "h": 2,
+   "u0": -13,
+   "v0": 11,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.8,
+   "verts": 1688
+  },
+  {
+   "key": "workshop",
+   "title": "Artisan workshop",
+   "cat": "wonder",
+   "w": 3,
+   "h": 2,
+   "u0": -10,
+   "v0": 8,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.043,
+   "verts": 1508
+  },
+  {
+   "key": "market",
+   "title": "Jungle market",
+   "cat": "wonder",
+   "w": 3,
+   "h": 2,
+   "u0": -6,
+   "v0": 4,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.83,
+   "verts": 3208
+  },
+  {
+   "key": "gateway",
+   "title": "Sunstone gateway",
+   "cat": "wonder",
+   "w": 4,
+   "h": 2,
+   "u0": -2,
+   "v0": -1,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.3,
+   "verts": 2456
+  },
+  {
+   "key": "lodge",
+   "title": "Explorer's lodge",
+   "cat": "wonder",
+   "w": 3,
+   "h": 3,
+   "u0": 3,
+   "v0": -6,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.1,
+   "verts": 3654
+  },
+  {
+   "key": "archive",
+   "title": "Lost-world archive",
+   "cat": "wonder",
+   "w": 3,
+   "h": 3,
+   "u0": 7,
+   "v0": -10,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.98,
+   "verts": 4604
+  },
+  {
+   "key": "observatory",
+   "title": "Star observatory",
+   "cat": "wonder",
+   "w": 2,
+   "h": 2,
+   "u0": 11,
+   "v0": -13,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.232,
+   "verts": 4531
+  },
+  {
+   "key": "fountain",
+   "title": "Jade fountain",
+   "cat": "wonder",
+   "w": 3,
+   "h": 3,
+   "u0": 14,
+   "v0": -17,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.38,
+   "verts": 3172
+  },
+  {
+   "key": "temple",
+   "title": "Temple of the sun",
+   "cat": "wonder",
+   "w": 4,
+   "h": 4,
+   "u0": 6,
+   "v0": 6,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.26,
+   "verts": 5065
+  },
+  {
+   "key": "log_cabin",
+   "title": "Trapper's cabin",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "u0": 3,
+   "v0": 33,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.96,
+   "verts": 1360
+  },
+  {
+   "key": "apothecary",
+   "title": "Herbalist's hut",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "u0": 6,
+   "v0": 30,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.0,
+   "verts": 2374
+  },
+  {
+   "key": "mess_hall",
+   "title": "Mess hall",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "u0": 9,
+   "v0": 27,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.26,
+   "verts": 2114
+  },
+  {
+   "key": "stilt_house",
+   "title": "Stilt house",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "u0": 13,
+   "v0": 23,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.36,
+   "verts": 2283
+  },
+  {
+   "key": "map_room",
+   "title": "Cartographer's house",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "u0": 17,
+   "v0": 19,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.865,
+   "verts": 2671
+  },
+  {
+   "key": "greenhouse",
+   "title": "Glass greenhouse",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "u0": 21,
+   "v0": 15,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.77,
+   "verts": 2190
+  },
+  {
+   "key": "trading_post",
+   "title": "Trading post",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "u0": 25,
+   "v0": 10,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.68,
+   "verts": 3243
+  },
+  {
+   "key": "water_mill",
+   "title": "Water mill",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "u0": 29,
+   "v0": 6,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.305,
+   "verts": 2288
+  },
+  {
+   "key": "clock_tower",
+   "title": "Clock tower",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "u0": 33,
+   "v0": 3,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 4.32,
+   "verts": 2298
+  },
+  {
+   "key": "lighthouse",
+   "title": "Valley lighthouse",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "u0": 13,
+   "v0": 41,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.78,
+   "verts": 2030
+  },
+  {
+   "key": "treehouse",
+   "title": "Canopy treehouse",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "u0": 16,
+   "v0": 37,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.32,
+   "verts": 2785
+  },
+  {
+   "key": "aviary",
+   "title": "Great aviary",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "u0": 20,
+   "v0": 33,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.65,
+   "verts": 6243
+  },
+  {
+   "key": "beached_ship",
+   "title": "Beached schooner",
+   "cat": "building",
+   "w": 4,
+   "h": 2,
+   "u0": 24,
+   "v0": 29,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.6,
+   "verts": 1671
+  },
+  {
+   "key": "amphitheater",
+   "title": "Stone amphitheatre",
+   "cat": "building",
+   "w": 4,
+   "h": 3,
+   "u0": 29,
+   "v0": 24,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.21,
+   "verts": 1496
+  },
+  {
+   "key": "museum",
+   "title": "Relic museum",
+   "cat": "building",
+   "w": 4,
+   "h": 3,
+   "u0": 34,
+   "v0": 19,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.55,
+   "verts": 3179
+  },
+  {
+   "key": "hanging_gardens",
+   "title": "Hanging gardens",
+   "cat": "building",
+   "w": 4,
+   "h": 4,
+   "u0": 39,
+   "v0": 13,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.28,
+   "verts": 8192
+  },
+  {
+   "key": "palm_young",
+   "title": "Young palm",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 21,
+   "v0": 50,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.86,
+   "verts": 292
+  },
+  {
+   "key": "jungle_tree",
+   "title": "Round jungle tree",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 23,
+   "v0": 48,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.14,
+   "verts": 404
+  },
+  {
+   "key": "cypress",
+   "title": "Temple cypress",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 25,
+   "v0": 46,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.36,
+   "verts": 116
+  },
+  {
+   "key": "banana",
+   "title": "Banana plant",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 27,
+   "v0": 44,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.48,
+   "verts": 504
+  },
+  {
+   "key": "fan_palm",
+   "title": "Fan palm",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 29,
+   "v0": 42,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.6,
+   "verts": 337
+  },
+  {
+   "key": "papaya",
+   "title": "Papaya tree",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 31,
+   "v0": 40,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.98,
+   "verts": 568
+  },
+  {
+   "key": "frangipani",
+   "title": "Frangipani",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "u0": 33,
+   "v0": 38,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.06,
+   "verts": 2356
+  },
+  {
+   "key": "bamboo",
+   "title": "Bamboo grove",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "u0": 35,
+   "v0": 35,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.864,
+   "verts": 1876
+  },
+  {
+   "key": "twin_palms",
+   "title": "Twin palms",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "u0": 38,
+   "v0": 32,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.38,
+   "verts": 1144
+  },
+  {
+   "key": "mango",
+   "title": "Mango tree",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "u0": 41,
+   "v0": 29,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.7,
+   "verts": 826
+  },
+  {
+   "key": "kapok",
+   "title": "Giant kapok",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "u0": 44,
+   "v0": 26,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.66,
+   "verts": 680
+  },
+  {
+   "key": "shrub",
+   "title": "Round shrub",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 47,
+   "v0": 24,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.63,
+   "verts": 512
+  },
+  {
+   "key": "fern",
+   "title": "Forest fern",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 49,
+   "v0": 22,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.135,
+   "verts": 189
+  },
+  {
+   "key": "monstera",
+   "title": "Big-leaf monstera",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 51,
+   "v0": 20,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.3,
+   "verts": 210
+  },
+  {
+   "key": "flower_shrub",
+   "title": "Flowering shrub",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 25,
+   "v0": 54,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.697,
+   "verts": 2432
+  },
+  {
+   "key": "berry",
+   "title": "Berry bush",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 27,
+   "v0": 52,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.63,
+   "verts": 960
+  },
+  {
+   "key": "reeds",
+   "title": "Riverside reeds",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 29,
+   "v0": 50,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.988,
+   "verts": 184
+  },
+  {
+   "key": "topiary",
+   "title": "Topiary ball",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 31,
+   "v0": 48,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.95,
+   "verts": 208
+  },
+  {
+   "key": "hedge",
+   "title": "Clipped hedge block",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "u0": 33,
+   "v0": 46,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.56,
+   "verts": 8
+  },
+  {
+   "key": "orchid",
+   "title": "Wild orchids",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "u0": 35,
+   "v0": 44,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.55,
+   "verts": 1329
+  },
+  {
+   "key": "hibiscus",
+   "title": "Red hibiscus",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "u0": 37,
+   "v0": 42,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.52,
+   "verts": 1664
+  },
+  {
+   "key": "daisies",
+   "title": "Sunny daisies",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "u0": 39,
+   "v0": 40,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.442,
+   "verts": 2117
+  },
+  {
+   "key": "blue_lily",
+   "title": "Blue lilies",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "u0": 41,
+   "v0": 38,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.72,
+   "verts": 326
+  },
+  {
+   "key": "flower_box",
+   "title": "Flower planter",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "u0": 43,
+   "v0": 36,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.4,
+   "verts": 2576
+  },
+  {
+   "key": "bromeliad",
+   "title": "Blooming bromeliad",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "u0": 45,
+   "v0": 34,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.47,
+   "verts": 258
+  },
+  {
+   "key": "flower_bed",
+   "title": "Flower bed",
+   "cat": "flower",
+   "w": 2,
+   "h": 2,
+   "u0": 47,
+   "v0": 31,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.295,
+   "verts": 8232
+  },
+  {
+   "key": "rainbow_bed",
+   "title": "Rainbow garden",
+   "cat": "flower",
+   "w": 2,
+   "h": 2,
+   "u0": 50,
+   "v0": 28,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.42,
+   "verts": 13952
+  },
+  {
+   "key": "broken_column",
+   "title": "Broken column",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 53,
+   "v0": 26,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.93,
+   "verts": 340
+  },
+  {
+   "key": "idol_head",
+   "title": "Stone idol",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 55,
+   "v0": 24,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.85,
+   "verts": 64
+  },
+  {
+   "key": "jaguar",
+   "title": "Jaguar guardian",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 30,
+   "v0": 59,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.73,
+   "verts": 672
+  },
+  {
+   "key": "obelisk",
+   "title": "Sun obelisk",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 32,
+   "v0": 57,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.46,
+   "verts": 32
+  },
+  {
+   "key": "sundial",
+   "title": "Sundial",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 34,
+   "v0": 55,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.84,
+   "verts": 174
+  },
+  {
+   "key": "explorer",
+   "title": "Explorer statue",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 36,
+   "v0": 53,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.15,
+   "verts": 408
+  },
+  {
+   "key": "gold_idol",
+   "title": "Golden idol",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "u0": 38,
+   "v0": 51,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.06,
+   "verts": 76
+  },
+  {
+   "key": "stone_arch",
+   "title": "Ruined arch",
+   "cat": "statue",
+   "w": 2,
+   "h": 2,
+   "u0": 40,
+   "v0": 48,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.664,
+   "verts": 1256
+  },
+  {
+   "key": "giant_head",
+   "title": "Giant stone head",
+   "cat": "statue",
+   "w": 2,
+   "h": 2,
+   "u0": 43,
+   "v0": 45,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.54,
+   "verts": 1320
+  },
+  {
+   "key": "birdbath",
+   "title": "Birdbath",
+   "cat": "water",
+   "w": 1,
+   "h": 1,
+   "u0": 46,
+   "v0": 43,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.81,
+   "verts": 324
+  },
+  {
+   "key": "small_fountain",
+   "title": "Little fountain",
+   "cat": "water",
+   "w": 1,
+   "h": 1,
+   "u0": 48,
+   "v0": 41,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.82,
+   "verts": 280
+  },
+  {
+   "key": "lily_pond",
+   "title": "Lily pond",
+   "cat": "water",
+   "w": 2,
+   "h": 2,
+   "u0": 50,
+   "v0": 38,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.248,
+   "verts": 2000
+  },
+  {
+   "key": "duck_pond",
+   "title": "Duck pond",
+   "cat": "water",
+   "w": 2,
+   "h": 2,
+   "u0": 53,
+   "v0": 35,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.6,
+   "verts": 1176
+  },
+  {
+   "key": "spring_rocks",
+   "title": "Rock spring",
+   "cat": "water",
+   "w": 2,
+   "h": 2,
+   "u0": 56,
+   "v0": 32,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.94,
+   "verts": 1480
+  },
+  {
+   "key": "bench",
+   "title": "Garden bench",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "u0": 59,
+   "v0": 30,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.61,
+   "verts": 64
+  },
+  {
+   "key": "lantern",
+   "title": "Lantern post",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "u0": 36,
+   "v0": 65,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.09,
+   "verts": 76
+  },
+  {
+   "key": "tiki",
+   "title": "Tiki torch",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "u0": 38,
+   "v0": 63,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.04,
+   "verts": 228
+  },
+  {
+   "key": "signpost",
+   "title": "Signpost",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "u0": 40,
+   "v0": 61,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.04,
+   "verts": 108
+  },
+  {
+   "key": "flagpole",
+   "title": "Expedition flag",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "u0": 42,
+   "v0": 59,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.55,
+   "verts": 140
+  },
+  {
+   "key": "pump",
+   "title": "Water pump",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "u0": 44,
+   "v0": 57,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.883,
+   "verts": 116
+  },
+  {
+   "key": "picnic",
+   "title": "Picnic rug",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "u0": 46,
+   "v0": 54,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.32,
+   "verts": 1400
+  },
+  {
+   "key": "hammock",
+   "title": "Palm hammock",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "u0": 49,
+   "v0": 51,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.36,
+   "verts": 1249
+  },
+  {
+   "key": "pergola",
+   "title": "Vine pergola",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "u0": 52,
+   "v0": 48,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.68,
+   "verts": 2328
+  },
+  {
+   "key": "swing",
+   "title": "Garden swing",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "u0": 55,
+   "v0": 45,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.35,
+   "verts": 1104
+  },
+  {
+   "key": "gazebo",
+   "title": "Jade gazebo",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "u0": 58,
+   "v0": 42,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.14,
+   "verts": 248
+  },
+  {
+   "key": "crates",
+   "title": "Supply crates",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "u0": 61,
+   "v0": 40,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.74,
+   "verts": 48
+  },
+  {
+   "key": "barrels",
+   "title": "Barrels",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "u0": 63,
+   "v0": 38,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.44,
+   "verts": 252
+  },
+  {
+   "key": "campfire",
+   "title": "Campfire",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "u0": 65,
+   "v0": 36,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.454,
+   "verts": 712
+  },
+  {
+   "key": "field_scope",
+   "title": "Field telescope",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "u0": 41,
+   "v0": 70,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.021,
+   "verts": 96
+  },
+  {
+   "key": "globe",
+   "title": "Explorer's globe",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "u0": 43,
+   "v0": 68,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.877,
+   "verts": 544
+  },
+  {
+   "key": "chest",
+   "title": "Treasure chest",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "u0": 45,
+   "v0": 66,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.534,
+   "verts": 204
+  },
+  {
+   "key": "supply_tent",
+   "title": "Supply tent",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "u0": 47,
+   "v0": 63,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.02,
+   "verts": 585
+  },
+  {
+   "key": "dig_site",
+   "title": "Dig site",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "u0": 50,
+   "v0": 60,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.615,
+   "verts": 248
+  },
+  {
+   "key": "rowboat",
+   "title": "Rowboat",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "u0": 53,
+   "v0": 57,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.44,
+   "verts": 731
+  },
+  {
+   "key": "cart",
+   "title": "Market cart",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "u0": 56,
+   "v0": 54,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.64,
+   "verts": 1216
+  },
+  {
+   "key": "turtle",
+   "title": "Sunning turtle",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "u0": 59,
+   "v0": 52,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.376,
+   "verts": 520
+  },
+  {
+   "key": "toucan",
+   "title": "Toucan perch",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "u0": 61,
+   "v0": 50,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.05,
+   "verts": 358
+  },
+  {
+   "key": "parrot",
+   "title": "Parrot perch",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "u0": 63,
+   "v0": 48,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.07,
+   "verts": 488
+  },
+  {
+   "key": "monkey",
+   "title": "Curious monkey",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "u0": 65,
+   "v0": 46,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.83,
+   "verts": 592
+  },
+  {
+   "key": "capybara",
+   "title": "Capybara",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "u0": 67,
+   "v0": 44,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.43,
+   "verts": 464
+  },
+  {
+   "key": "boulder",
+   "title": "Boulder",
+   "cat": "rock",
+   "w": 1,
+   "h": 1,
+   "u0": 69,
+   "v0": 42,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.518,
+   "verts": 272
+  },
+  {
+   "key": "crystal",
+   "title": "Crystal cluster",
+   "cat": "rock",
+   "w": 1,
+   "h": 1,
+   "u0": 71,
+   "v0": 40,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.86,
+   "verts": 144
+  },
+  {
+   "key": "mossy_rocks",
+   "title": "Mossy boulders",
+   "cat": "rock",
+   "w": 2,
+   "h": 2,
+   "u0": 59,
+   "v0": 59,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 0.835,
+   "verts": 1184
+  }
+ ],
+ "resolution": [
+  4200,
+  4140
+ ],
+ "grid_max_error_px": 0.00026,
+ "tile_edge_px": [
+  60.0,
+  -30.0
+ ],
+ "slope": 0.5,
+ "origin_px": [
+  2040.0,
+  390.0
+ ],
+ "tile_px": [
+  120,
+  60
+ ],
+ "z_px": 73.485,
+ "items": [
+  {
+   "key": "camp",
+   "title": "Expedition camp",
+   "cat": "wonder",
+   "w": 2,
+   "h": 2,
+   "gold": 60,
+   "stars": 0,
+   "like": "story restoration, as a landmark",
+   "top": 1.5999999046325684,
+   "u0": -16,
+   "v0": 14,
+   "cu": -15.0,
+   "cv": 15.0
+  },
+  {
+   "key": "well",
+   "title": "Spring well",
+   "cat": "wonder",
+   "w": 2,
+   "h": 2,
+   "gold": 80,
+   "stars": 0,
+   "like": "story restoration, as a landmark",
+   "top": 1.7999999523162842,
+   "u0": -13,
+   "v0": 11,
+   "cu": -12.0,
+   "cv": 12.0
+  },
+  {
+   "key": "workshop",
+   "title": "Artisan workshop",
+   "cat": "wonder",
+   "w": 3,
+   "h": 2,
+   "gold": 100,
+   "stars": 0,
+   "like": "story restoration, as a landmark",
+   "top": 2.0430290699005127,
+   "u0": -10,
+   "v0": 8,
+   "cu": -8.5,
+   "cv": 9.0
+  },
+  {
+   "key": "market",
+   "title": "Jungle market",
+   "cat": "wonder",
+   "w": 3,
+   "h": 2,
+   "gold": 120,
+   "stars": 0,
+   "like": "Farmers Market",
+   "top": 1.8300000429153442,
+   "u0": -6,
+   "v0": 4,
+   "cu": -4.5,
+   "cv": 5.0
+  },
+  {
+   "key": "gateway",
+   "title": "Sunstone gateway",
+   "cat": "wonder",
+   "w": 4,
+   "h": 2,
+   "gold": 140,
+   "stars": 0,
+   "like": "Park Bridge",
+   "top": 1.3000000715255737,
+   "u0": -2,
+   "v0": -1,
+   "cu": 0.0,
+   "cv": 0.0
+  },
+  {
+   "key": "lodge",
+   "title": "Explorer's lodge",
+   "cat": "wonder",
+   "w": 3,
+   "h": 3,
+   "gold": 160,
+   "stars": 0,
+   "like": "Estate",
+   "top": 3.0999999046325684,
+   "u0": 3,
+   "v0": -6,
+   "cu": 4.5,
+   "cv": -4.5
+  },
+  {
+   "key": "archive",
+   "title": "Lost-world archive",
+   "cat": "wonder",
+   "w": 3,
+   "h": 3,
+   "gold": 180,
+   "stars": 0,
+   "like": "Lavish Library",
+   "top": 2.9800000190734863,
+   "u0": 7,
+   "v0": -10,
+   "cu": 8.5,
+   "cv": -8.5
+  },
+  {
+   "key": "observatory",
+   "title": "Star observatory",
+   "cat": "wonder",
+   "w": 2,
+   "h": 2,
+   "gold": 200,
+   "stars": 0,
+   "like": "Observatory",
+   "top": 3.2318174839019775,
+   "u0": 11,
+   "v0": -13,
+   "cu": 12.0,
+   "cv": -12.0
+  },
+  {
+   "key": "fountain",
+   "title": "Jade fountain",
+   "cat": "wonder",
+   "w": 3,
+   "h": 3,
+   "gold": 220,
+   "stars": 0,
+   "like": "Fountain",
+   "top": 2.379999876022339,
+   "u0": 14,
+   "v0": -17,
+   "cu": 15.5,
+   "cv": -15.5
+  },
+  {
+   "key": "temple",
+   "title": "Temple of the sun",
+   "cat": "wonder",
+   "w": 4,
+   "h": 4,
+   "gold": 250,
+   "stars": 0,
+   "like": "story finale, as a landmark",
+   "top": 3.259999990463257,
+   "u0": 6,
+   "v0": 6,
+   "cu": 8.0,
+   "cv": 8.0
+  },
+  {
+   "key": "log_cabin",
+   "title": "Trapper's cabin",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "gold": 200,
+   "stars": 6,
+   "like": "Summer House",
+   "top": 1.9600000381469727,
+   "u0": 3,
+   "v0": 33,
+   "cu": 4.0,
+   "cv": 34.0
+  },
+  {
+   "key": "apothecary",
+   "title": "Herbalist's hut",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "gold": 220,
+   "stars": 6,
+   "like": "Flower Shop",
+   "top": 2.0,
+   "u0": 6,
+   "v0": 30,
+   "cu": 7.0,
+   "cv": 31.0
+  },
+  {
+   "key": "mess_hall",
+   "title": "Mess hall",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "gold": 240,
+   "stars": 9,
+   "like": "Orchid Island Gourmet",
+   "top": 2.259999990463257,
+   "u0": 9,
+   "v0": 27,
+   "cu": 10.5,
+   "cv": 28.0
+  },
+  {
+   "key": "stilt_house",
+   "title": "Stilt house",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "gold": 260,
+   "stars": 9,
+   "like": "Stately Stilt House",
+   "top": 2.359999895095825,
+   "u0": 13,
+   "v0": 23,
+   "cu": 14.5,
+   "cv": 24.0
+  },
+  {
+   "key": "map_room",
+   "title": "Cartographer's house",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "gold": 280,
+   "stars": 12,
+   "like": "Schoolhouse",
+   "top": 2.8645195960998535,
+   "u0": 17,
+   "v0": 19,
+   "cu": 18.5,
+   "cv": 20.0
+  },
+  {
+   "key": "greenhouse",
+   "title": "Glass greenhouse",
+   "cat": "building",
+   "w": 3,
+   "h": 2,
+   "gold": 300,
+   "stars": 12,
+   "like": "Orangerie",
+   "top": 1.7699999809265137,
+   "u0": 21,
+   "v0": 15,
+   "cu": 22.5,
+   "cv": 16.0
+  },
+  {
+   "key": "trading_post",
+   "title": "Trading post",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "gold": 320,
+   "stars": 15,
+   "like": "Central Station",
+   "top": 2.679999828338623,
+   "u0": 25,
+   "v0": 10,
+   "cu": 26.5,
+   "cv": 11.5
+  },
+  {
+   "key": "water_mill",
+   "title": "Water mill",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "gold": 340,
+   "stars": 15,
+   "like": "Windmill",
+   "top": 2.305000066757202,
+   "u0": 29,
+   "v0": 6,
+   "cu": 30.5,
+   "cv": 7.5
+  },
+  {
+   "key": "clock_tower",
+   "title": "Clock tower",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "gold": 360,
+   "stars": 18,
+   "like": "Clock Tower",
+   "top": 4.319999694824219,
+   "u0": 33,
+   "v0": 3,
+   "cu": 34.0,
+   "cv": 4.0
+  },
+  {
+   "key": "lighthouse",
+   "title": "Valley lighthouse",
+   "cat": "building",
+   "w": 2,
+   "h": 2,
+   "gold": 380,
+   "stars": 18,
+   "like": "Lighthouse",
+   "top": 3.7799999713897705,
+   "u0": 13,
+   "v0": 41,
+   "cu": 14.0,
+   "cv": 42.0
+  },
+  {
+   "key": "treehouse",
+   "title": "Canopy treehouse",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "gold": 400,
+   "stars": 21,
+   "like": "Tree House",
+   "top": 3.320000171661377,
+   "u0": 16,
+   "v0": 37,
+   "cu": 17.5,
+   "cv": 38.5
+  },
+  {
+   "key": "aviary",
+   "title": "Great aviary",
+   "cat": "building",
+   "w": 3,
+   "h": 3,
+   "gold": 420,
+   "stars": 21,
+   "like": "Aviary",
+   "top": 2.6500000953674316,
+   "u0": 20,
+   "v0": 33,
+   "cu": 21.5,
+   "cv": 34.5
+  },
+  {
+   "key": "beached_ship",
+   "title": "Beached schooner",
+   "cat": "building",
+   "w": 4,
+   "h": 2,
+   "gold": 440,
+   "stars": 24,
+   "like": "Pirate Ship",
+   "top": 2.5999999046325684,
+   "u0": 24,
+   "v0": 29,
+   "cu": 26.0,
+   "cv": 30.0
+  },
+  {
+   "key": "amphitheater",
+   "title": "Stone amphitheatre",
+   "cat": "building",
+   "w": 4,
+   "h": 3,
+   "gold": 460,
+   "stars": 24,
+   "like": "Amphitheater",
+   "top": 1.2100000381469727,
+   "u0": 29,
+   "v0": 24,
+   "cu": 31.0,
+   "cv": 25.5
+  },
+  {
+   "key": "museum",
+   "title": "Relic museum",
+   "cat": "building",
+   "w": 4,
+   "h": 3,
+   "gold": 500,
+   "stars": 27,
+   "like": "Museum",
+   "top": 2.549999952316284,
+   "u0": 34,
+   "v0": 19,
+   "cu": 36.0,
+   "cv": 20.5
+  },
+  {
+   "key": "hanging_gardens",
+   "title": "Hanging gardens",
+   "cat": "building",
+   "w": 4,
+   "h": 4,
+   "gold": 550,
+   "stars": 30,
+   "like": "Hanging Gardens",
+   "top": 3.2799999713897705,
+   "u0": 39,
+   "v0": 13,
+   "cu": 41.0,
+   "cv": 15.0
+  },
+  {
+   "key": "palm_young",
+   "title": "Young palm",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 0,
+   "like": "Small Lush Tree",
+   "top": 0.8600000143051147,
+   "u0": 21,
+   "v0": 50,
+   "cu": 21.5,
+   "cv": 50.5
+  },
+  {
+   "key": "jungle_tree",
+   "title": "Round jungle tree",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 0,
+   "like": "Large Lush Tree",
+   "top": 1.1399999856948853,
+   "u0": 23,
+   "v0": 48,
+   "cu": 23.5,
+   "cv": 48.5
+  },
+  {
+   "key": "cypress",
+   "title": "Temple cypress",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 3,
+   "like": "Conical Tree",
+   "top": 1.3600000143051147,
+   "u0": 25,
+   "v0": 46,
+   "cu": 25.5,
+   "cv": 46.5
+  },
+  {
+   "key": "banana",
+   "title": "Banana plant",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 3,
+   "like": "Banana Plants",
+   "top": 0.47999998927116394,
+   "u0": 27,
+   "v0": 44,
+   "cu": 27.5,
+   "cv": 44.5
+  },
+  {
+   "key": "fan_palm",
+   "title": "Fan palm",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 6,
+   "like": "Fan Palm",
+   "top": 0.6000000238418579,
+   "u0": 29,
+   "v0": 42,
+   "cu": 29.5,
+   "cv": 42.5
+  },
+  {
+   "key": "papaya",
+   "title": "Papaya tree",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 9,
+   "like": "Papaya Tree",
+   "top": 0.9800000190734863,
+   "u0": 31,
+   "v0": 40,
+   "cu": 31.5,
+   "cv": 40.5
+  },
+  {
+   "key": "frangipani",
+   "title": "Frangipani",
+   "cat": "tree",
+   "w": 1,
+   "h": 1,
+   "gold": 75,
+   "stars": 12,
+   "like": "Plumeria Tree",
+   "top": 1.0600000619888306,
+   "u0": 33,
+   "v0": 38,
+   "cu": 33.5,
+   "cv": 38.5
+  },
+  {
+   "key": "bamboo",
+   "title": "Bamboo grove",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "gold": 120,
+   "stars": 6,
+   "like": "Lush Reeds",
+   "top": 1.8640799522399902,
+   "u0": 35,
+   "v0": 35,
+   "cu": 36.0,
+   "cv": 36.0
+  },
+  {
+   "key": "twin_palms",
+   "title": "Twin palms",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "gold": 150,
+   "stars": 6,
+   "like": "Tropical Tree",
+   "top": 1.3799998760223389,
+   "u0": 38,
+   "v0": 32,
+   "cu": 39.0,
+   "cv": 33.0
+  },
+  {
+   "key": "mango",
+   "title": "Mango tree",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "gold": 180,
+   "stars": 9,
+   "like": "Oak, Apple Orchard",
+   "top": 1.7000000476837158,
+   "u0": 41,
+   "v0": 29,
+   "cu": 42.0,
+   "cv": 30.0
+  },
+  {
+   "key": "kapok",
+   "title": "Giant kapok",
+   "cat": "tree",
+   "w": 2,
+   "h": 2,
+   "gold": 300,
+   "stars": 18,
+   "like": "Oak",
+   "top": 2.6599998474121094,
+   "u0": 44,
+   "v0": 26,
+   "cu": 45.0,
+   "cv": 27.0
+  },
+  {
+   "key": "shrub",
+   "title": "Round shrub",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Bush",
+   "top": 0.6299999952316284,
+   "u0": 47,
+   "v0": 24,
+   "cu": 47.5,
+   "cv": 24.5
+  },
+  {
+   "key": "fern",
+   "title": "Forest fern",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Verdant Bush",
+   "top": 0.1354999989271164,
+   "u0": 49,
+   "v0": 22,
+   "cu": 49.5,
+   "cv": 22.5
+  },
+  {
+   "key": "monstera",
+   "title": "Big-leaf monstera",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 3,
+   "like": "Marvelous Mangroves",
+   "top": 0.30000001192092896,
+   "u0": 51,
+   "v0": 20,
+   "cu": 51.5,
+   "cv": 20.5
+  },
+  {
+   "key": "flower_shrub",
+   "title": "Flowering shrub",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 3,
+   "like": "Bouganvillea",
+   "top": 0.6974999904632568,
+   "u0": 25,
+   "v0": 54,
+   "cu": 25.5,
+   "cv": 54.5
+  },
+  {
+   "key": "berry",
+   "title": "Berry bush",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 6,
+   "like": "Berry Bush",
+   "top": 0.6299999952316284,
+   "u0": 27,
+   "v0": 52,
+   "cu": 27.5,
+   "cv": 52.5
+  },
+  {
+   "key": "reeds",
+   "title": "Riverside reeds",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 6,
+   "like": "Lush Reeds",
+   "top": 0.9881318807601929,
+   "u0": 29,
+   "v0": 50,
+   "cu": 29.5,
+   "cv": 50.5
+  },
+  {
+   "key": "topiary",
+   "title": "Topiary ball",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 9,
+   "like": "Marble Planter",
+   "top": 0.9500000476837158,
+   "u0": 31,
+   "v0": 48,
+   "cu": 31.5,
+   "cv": 48.5
+  },
+  {
+   "key": "hedge",
+   "title": "Clipped hedge block",
+   "cat": "bush",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 9,
+   "like": "Spear Grass",
+   "top": 0.5600000023841858,
+   "u0": 33,
+   "v0": 46,
+   "cu": 33.5,
+   "cv": 46.5
+  },
+  {
+   "key": "orchid",
+   "title": "Wild orchids",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Pink Flower",
+   "top": 0.550000011920929,
+   "u0": 35,
+   "v0": 44,
+   "cu": 35.5,
+   "cv": 44.5
+  },
+  {
+   "key": "hibiscus",
+   "title": "Red hibiscus",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Poppy Patch",
+   "top": 0.5199999809265137,
+   "u0": 37,
+   "v0": 42,
+   "cu": 37.5,
+   "cv": 42.5
+  },
+  {
+   "key": "daisies",
+   "title": "Sunny daisies",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 3,
+   "like": "Springtime Blooms",
+   "top": 0.4424999952316284,
+   "u0": 39,
+   "v0": 40,
+   "cu": 39.5,
+   "cv": 40.5
+  },
+  {
+   "key": "blue_lily",
+   "title": "Blue lilies",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 6,
+   "like": "Lovely Lupines",
+   "top": 0.7200000286102295,
+   "u0": 41,
+   "v0": 38,
+   "cu": 41.5,
+   "cv": 38.5
+  },
+  {
+   "key": "flower_box",
+   "title": "Flower planter",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 6,
+   "like": "Planter",
+   "top": 0.3999999761581421,
+   "u0": 43,
+   "v0": 36,
+   "cu": 43.5,
+   "cv": 36.5
+  },
+  {
+   "key": "bromeliad",
+   "title": "Blooming bromeliad",
+   "cat": "flower",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 9,
+   "like": "Blooming Bromeliad",
+   "top": 0.4699999988079071,
+   "u0": 45,
+   "v0": 34,
+   "cu": 45.5,
+   "cv": 34.5
+  },
+  {
+   "key": "flower_bed",
+   "title": "Flower bed",
+   "cat": "flower",
+   "w": 2,
+   "h": 2,
+   "gold": 90,
+   "stars": 6,
+   "like": "Blossoming Nook",
+   "top": 0.29500001668930054,
+   "u0": 47,
+   "v0": 31,
+   "cu": 48.0,
+   "cv": 32.0
+  },
+  {
+   "key": "rainbow_bed",
+   "title": "Rainbow garden",
+   "cat": "flower",
+   "w": 2,
+   "h": 2,
+   "gold": 180,
+   "stars": 15,
+   "like": "Rainbow Grove",
+   "top": 0.41999998688697815,
+   "u0": 50,
+   "v0": 28,
+   "cu": 51.0,
+   "cv": 29.0
+  },
+  {
+   "key": "broken_column",
+   "title": "Broken column",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 3,
+   "like": "Column Arch",
+   "top": 0.9299999475479126,
+   "u0": 53,
+   "v0": 26,
+   "cu": 53.5,
+   "cv": 26.5
+  },
+  {
+   "key": "idol_head",
+   "title": "Stone idol",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 3,
+   "like": "Statue",
+   "top": 0.8499999642372131,
+   "u0": 55,
+   "v0": 24,
+   "cu": 55.5,
+   "cv": 24.5
+  },
+  {
+   "key": "jaguar",
+   "title": "Jaguar guardian",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 6,
+   "like": "Statue",
+   "top": 0.7300000190734863,
+   "u0": 30,
+   "v0": 59,
+   "cu": 30.5,
+   "cv": 59.5
+  },
+  {
+   "key": "obelisk",
+   "title": "Sun obelisk",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 9,
+   "like": "Marble Vase",
+   "top": 1.4600000381469727,
+   "u0": 32,
+   "v0": 57,
+   "cu": 32.5,
+   "cv": 57.5
+  },
+  {
+   "key": "sundial",
+   "title": "Sundial",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 9,
+   "like": "Shining Sundial",
+   "top": 0.8399999737739563,
+   "u0": 34,
+   "v0": 55,
+   "cu": 34.5,
+   "cv": 55.5
+  },
+  {
+   "key": "explorer",
+   "title": "Explorer statue",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 90,
+   "stars": 12,
+   "like": "Statue",
+   "top": 1.149999976158142,
+   "u0": 36,
+   "v0": 53,
+   "cu": 36.5,
+   "cv": 53.5
+  },
+  {
+   "key": "gold_idol",
+   "title": "Golden idol",
+   "cat": "statue",
+   "w": 1,
+   "h": 1,
+   "gold": 150,
+   "stars": 18,
+   "like": "Ebony Thoroughbred",
+   "top": 1.0600000619888306,
+   "u0": 38,
+   "v0": 51,
+   "cu": 38.5,
+   "cv": 51.5
+  },
+  {
+   "key": "stone_arch",
+   "title": "Ruined arch",
+   "cat": "statue",
+   "w": 2,
+   "h": 2,
+   "gold": 180,
+   "stars": 12,
+   "like": "Flourishing Archway",
+   "top": 1.6643993854522705,
+   "u0": 40,
+   "v0": 48,
+   "cu": 41.0,
+   "cv": 49.0
+  },
+  {
+   "key": "giant_head",
+   "title": "Giant stone head",
+   "cat": "statue",
+   "w": 2,
+   "h": 2,
+   "gold": 240,
+   "stars": 15,
+   "like": "Garden Grotto",
+   "top": 1.540000081062317,
+   "u0": 43,
+   "v0": 45,
+   "cu": 44.0,
+   "cv": 46.0
+  },
+  {
+   "key": "birdbath",
+   "title": "Birdbath",
+   "cat": "water",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 3,
+   "like": "Watering Post",
+   "top": 0.8100000023841858,
+   "u0": 46,
+   "v0": 43,
+   "cu": 46.5,
+   "cv": 43.5
+  },
+  {
+   "key": "small_fountain",
+   "title": "Little fountain",
+   "cat": "water",
+   "w": 1,
+   "h": 1,
+   "gold": 90,
+   "stars": 9,
+   "like": "Flowing Fountain",
+   "top": 0.8199999928474426,
+   "u0": 48,
+   "v0": 41,
+   "cu": 48.5,
+   "cv": 41.5
+  },
+  {
+   "key": "lily_pond",
+   "title": "Lily pond",
+   "cat": "water",
+   "w": 2,
+   "h": 2,
+   "gold": 120,
+   "stars": 6,
+   "like": "Giant Water Lilies",
+   "top": 0.2475000023841858,
+   "u0": 50,
+   "v0": 38,
+   "cu": 51.0,
+   "cv": 39.0
+  },
+  {
+   "key": "duck_pond",
+   "title": "Duck pond",
+   "cat": "water",
+   "w": 2,
+   "h": 2,
+   "gold": 150,
+   "stars": 9,
+   "like": "Duck Pond",
+   "top": 0.6000000238418579,
+   "u0": 53,
+   "v0": 35,
+   "cu": 54.0,
+   "cv": 36.0
+  },
+  {
+   "key": "spring_rocks",
+   "title": "Rock spring",
+   "cat": "water",
+   "w": 2,
+   "h": 2,
+   "gold": 240,
+   "stars": 15,
+   "like": "Sunny Spring",
+   "top": 0.9399999976158142,
+   "u0": 56,
+   "v0": 32,
+   "cu": 57.0,
+   "cv": 33.0
+  },
+  {
+   "key": "bench",
+   "title": "Garden bench",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 0,
+   "like": "Garden Chairs",
+   "top": 0.6100000143051147,
+   "u0": 59,
+   "v0": 30,
+   "cu": 59.5,
+   "cv": 30.5
+  },
+  {
+   "key": "lantern",
+   "title": "Lantern post",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 0,
+   "like": "Gilded Lampost",
+   "top": 1.090000033378601,
+   "u0": 36,
+   "v0": 65,
+   "cu": 36.5,
+   "cv": 65.5
+  },
+  {
+   "key": "tiki",
+   "title": "Tiki torch",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 3,
+   "like": "Tiki Torches",
+   "top": 1.0399999618530273,
+   "u0": 38,
+   "v0": 63,
+   "cu": 38.5,
+   "cv": 63.5
+  },
+  {
+   "key": "signpost",
+   "title": "Signpost",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 3,
+   "like": "Crossroads Signpost",
+   "top": 1.0399999618530273,
+   "u0": 40,
+   "v0": 61,
+   "cu": 40.5,
+   "cv": 61.5
+  },
+  {
+   "key": "flagpole",
+   "title": "Expedition flag",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 6,
+   "like": "Feature Film Board",
+   "top": 1.5500000715255737,
+   "u0": 42,
+   "v0": 59,
+   "cu": 42.5,
+   "cv": 59.5
+  },
+  {
+   "key": "pump",
+   "title": "Water pump",
+   "cat": "garden",
+   "w": 1,
+   "h": 1,
+   "gold": 45,
+   "stars": 9,
+   "like": "Water Barrel Pump",
+   "top": 0.8831398487091064,
+   "u0": 44,
+   "v0": 57,
+   "cu": 44.5,
+   "cv": 57.5
+  },
+  {
+   "key": "picnic",
+   "title": "Picnic rug",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "gold": 120,
+   "stars": 6,
+   "like": "Picnic Perfection",
+   "top": 0.3199999928474426,
+   "u0": 46,
+   "v0": 54,
+   "cu": 47.0,
+   "cv": 55.0
+  },
+  {
+   "key": "hammock",
+   "title": "Palm hammock",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "gold": 150,
+   "stars": 6,
+   "like": "Summer Swing",
+   "top": 1.3599998950958252,
+   "u0": 49,
+   "v0": 51,
+   "cu": 50.0,
+   "cv": 52.0
+  },
+  {
+   "key": "pergola",
+   "title": "Vine pergola",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "gold": 180,
+   "stars": 9,
+   "like": "Shaded Respite",
+   "top": 1.6800000667572021,
+   "u0": 52,
+   "v0": 48,
+   "cu": 53.0,
+   "cv": 49.0
+  },
+  {
+   "key": "swing",
+   "title": "Garden swing",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "gold": 240,
+   "stars": 12,
+   "like": "Summer Swing",
+   "top": 1.3499999046325684,
+   "u0": 55,
+   "v0": 45,
+   "cu": 56.0,
+   "cv": 46.0
+  },
+  {
+   "key": "gazebo",
+   "title": "Jade gazebo",
+   "cat": "garden",
+   "w": 2,
+   "h": 2,
+   "gold": 300,
+   "stars": 12,
+   "like": "Gilded Gazebo",
+   "top": 2.140000104904175,
+   "u0": 58,
+   "v0": 42,
+   "cu": 59.0,
+   "cv": 43.0
+  },
+  {
+   "key": "crates",
+   "title": "Supply crates",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Barrel-Aged Bounty",
+   "top": 0.7400000095367432,
+   "u0": 61,
+   "v0": 40,
+   "cu": 61.5,
+   "cv": 40.5
+  },
+  {
+   "key": "barrels",
+   "title": "Barrels",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Barrel-Aged Bounty",
+   "top": 0.4399999976158142,
+   "u0": 63,
+   "v0": 38,
+   "cu": 63.5,
+   "cv": 38.5
+  },
+  {
+   "key": "campfire",
+   "title": "Campfire",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "gold": 30,
+   "stars": 0,
+   "like": "Summer Fire Pit",
+   "top": 0.45399999618530273,
+   "u0": 65,
+   "v0": 36,
+   "cu": 65.5,
+   "cv": 36.5
+  },
+  {
+   "key": "field_scope",
+   "title": "Field telescope",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 9,
+   "like": "News Column",
+   "top": 1.0206263065338135,
+   "u0": 41,
+   "v0": 70,
+   "cu": 41.5,
+   "cv": 70.5
+  },
+  {
+   "key": "globe",
+   "title": "Explorer's globe",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "gold": 90,
+   "stars": 15,
+   "like": "Classic Commissions",
+   "top": 0.8769876956939697,
+   "u0": 43,
+   "v0": 68,
+   "cu": 43.5,
+   "cv": 68.5
+  },
+  {
+   "key": "chest",
+   "title": "Treasure chest",
+   "cat": "camp",
+   "w": 1,
+   "h": 1,
+   "gold": 120,
+   "stars": 15,
+   "like": "Fruity Feast",
+   "top": 0.5339826941490173,
+   "u0": 45,
+   "v0": 66,
+   "cu": 45.5,
+   "cv": 66.5
+  },
+  {
+   "key": "supply_tent",
+   "title": "Supply tent",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "gold": 120,
+   "stars": 3,
+   "like": "Holiday Hut",
+   "top": 1.0199999809265137,
+   "u0": 47,
+   "v0": 63,
+   "cu": 48.0,
+   "cv": 64.0
+  },
+  {
+   "key": "dig_site",
+   "title": "Dig site",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "gold": 120,
+   "stars": 6,
+   "like": "Herbal Harvest",
+   "top": 0.6149527430534363,
+   "u0": 50,
+   "v0": 60,
+   "cu": 51.0,
+   "cv": 61.0
+  },
+  {
+   "key": "rowboat",
+   "title": "Rowboat",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "gold": 150,
+   "stars": 9,
+   "like": "Merrily Rowing",
+   "top": 0.4399999976158142,
+   "u0": 53,
+   "v0": 57,
+   "cu": 54.0,
+   "cv": 58.0
+  },
+  {
+   "key": "cart",
+   "title": "Market cart",
+   "cat": "camp",
+   "w": 2,
+   "h": 2,
+   "gold": 180,
+   "stars": 9,
+   "like": "Hotdog Stand",
+   "top": 0.6399999856948853,
+   "u0": 56,
+   "v0": 54,
+   "cu": 57.0,
+   "cv": 55.0
+  },
+  {
+   "key": "turtle",
+   "title": "Sunning turtle",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 6,
+   "like": "Foraging Foxes",
+   "top": 0.3763999938964844,
+   "u0": 59,
+   "v0": 52,
+   "cu": 59.5,
+   "cv": 52.5
+  },
+  {
+   "key": "toucan",
+   "title": "Toucan perch",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 6,
+   "like": "Hesitant Heron",
+   "top": 1.0499999523162842,
+   "u0": 61,
+   "v0": 50,
+   "cu": 61.5,
+   "cv": 50.5
+  },
+  {
+   "key": "parrot",
+   "title": "Parrot perch",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "gold": 60,
+   "stars": 9,
+   "like": "Hesitant Heron",
+   "top": 1.0699999332427979,
+   "u0": 63,
+   "v0": 48,
+   "cu": 63.5,
+   "cv": 48.5
+  },
+  {
+   "key": "monkey",
+   "title": "Curious monkey",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "gold": 90,
+   "stars": 12,
+   "like": "Curious Critters",
+   "top": 0.8299999833106995,
+   "u0": 65,
+   "v0": 46,
+   "cu": 65.5,
+   "cv": 46.5
+  },
+  {
+   "key": "capybara",
+   "title": "Capybara",
+   "cat": "animal",
+   "w": 1,
+   "h": 1,
+   "gold": 90,
+   "stars": 12,
+   "like": "Mischievous Moles",
+   "top": 0.4300000071525574,
+   "u0": 67,
+   "v0": 44,
+   "cu": 67.5,
+   "cv": 44.5
+  },
+  {
+   "key": "boulder",
+   "title": "Boulder",
+   "cat": "rock",
+   "w": 1,
+   "h": 1,
+   "gold": 15,
+   "stars": 0,
+   "like": "Hyacinth Rockery",
+   "top": 0.5183999538421631,
+   "u0": 69,
+   "v0": 42,
+   "cu": 69.5,
+   "cv": 42.5
+  },
+  {
+   "key": "crystal",
+   "title": "Crystal cluster",
+   "cat": "rock",
+   "w": 1,
+   "h": 1,
+   "gold": 120,
+   "stars": 18,
+   "like": "Lovely Lily Pads",
+   "top": 0.8600000143051147,
+   "u0": 71,
+   "v0": 40,
+   "cu": 71.5,
+   "cv": 40.5
+  },
+  {
+   "key": "mossy_rocks",
+   "title": "Mossy boulders",
+   "cat": "rock",
+   "w": 2,
+   "h": 2,
+   "gold": 60,
+   "stars": 3,
+   "like": "Hyacinth Rockery",
+   "top": 0.8351999521255493,
+   "u0": 59,
+   "v0": 59,
+   "cu": 60.0,
+   "cv": 60.0
+  }
+ ]
+}

@@ -1,0 +1,236 @@
+{
+  "2": {
+    "source": "paintover-wonders.png",
+    "box": [
+      769,
+      109,
+      1063,
+      378
+    ]
+  },
+  "4": {
+    "source": "paintover-wonders.png",
+    "box": [
+      1465,
+      120,
+      1804,
+      381
+    ]
+  },
+  "3": {
+    "source": "paintover-wonders.png",
+    "box": [
+      1134,
+      122,
+      1405,
+      369
+    ]
+  },
+  "1": {
+    "source": "paintover-wonders.png",
+    "box": [
+      434,
+      124,
+      678,
+      356
+    ]
+  },
+  "0": {
+    "source": "paintover-wonders.png",
+    "box": [
+      96,
+      138,
+      341,
+      352
+    ]
+  },
+  "5": {
+    "source": "paintover-wonders.png",
+    "box": [
+      76,
+      439,
+      377,
+      732
+    ]
+  },
+  "6": {
+    "source": "paintover-wonders.png",
+    "box": [
+      435,
+      460,
+      742,
+      732
+    ]
+  },
+  "7": {
+    "source": "paintover-wonders.png",
+    "box": [
+      818,
+      460,
+      1026,
+      719
+    ]
+  },
+  "9": {
+    "source": "paintover-wonders.png",
+    "box": [
+      1460,
+      465,
+      1804,
+      747
+    ]
+  },
+  "8": {
+    "source": "paintover-wonders.png",
+    "box": [
+      1122,
+      481,
+      1400,
+      733
+    ]
+  },
+  "10": {
+    "source": "paintover-buildings.png",
+    "box": [
+      7,
+      12,
+      306,
+      309
+    ]
+  },
+  "12": {
+    "source": "paintover-buildings.png",
+    "box": [
+      623,
+      17,
+      942,
+      320
+    ]
+  },
+  "13": {
+    "source": "paintover-buildings.png",
+    "box": [
+      945,
+      18,
+      1253,
+      322
+    ]
+  },
+  "11": {
+    "source": "paintover-buildings.png",
+    "box": [
+      322,
+      19,
+      618,
+      304
+    ]
+  },
+  "14": {
+    "source": "paintover-buildings.png",
+    "box": [
+      4,
+      311,
+      307,
+      616
+    ]
+  },
+  "16": {
+    "source": "paintover-buildings.png",
+    "box": [
+      628,
+      323,
+      945,
+      623
+    ]
+  },
+  "15": {
+    "source": "paintover-buildings.png",
+    "box": [
+      310,
+      335,
+      627,
+      615
+    ]
+  },
+  "17": {
+    "source": "paintover-buildings.png",
+    "box": [
+      947,
+      338,
+      1254,
+      629
+    ]
+  },
+  "18": {
+    "source": "paintover-buildings.png",
+    "box": [
+      43,
+      610,
+      278,
+      957
+    ]
+  },
+  "19": {
+    "source": "paintover-buildings.png",
+    "box": [
+      352,
+      614,
+      596,
+      960
+    ]
+  },
+  "20": {
+    "source": "paintover-buildings.png",
+    "box": [
+      622,
+      616,
+      934,
+      964
+    ]
+  },
+  "21": {
+    "source": "paintover-buildings.png",
+    "box": [
+      948,
+      639,
+      1254,
+      952
+    ]
+  },
+  "22": {
+    "source": "paintover-buildings.png",
+    "box": [
+      10,
+      952,
+      317,
+      1236
+    ]
+  },
+  "25": {
+    "source": "paintover-buildings.png",
+    "box": [
+      940,
+      954,
+      1254,
+      1238
+    ]
+  },
+  "24": {
+    "source": "paintover-buildings.png",
+    "box": [
+      628,
+      971,
+      940,
+      1239
+    ]
+  },
+  "23": {
+    "source": "paintover-buildings.png",
+    "box": [
+      319,
+      993,
+      631,
+      1217
+    ]
+  }
+}

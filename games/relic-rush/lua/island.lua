@@ -17,23 +17,61 @@ local STARS, COMPASSES = 4, 5
 -- whole TILE tiles.
 M.TILE = size2(40, 20)   -- half extents: a tile is 80 x 40 world units
 
-local function wonder(title, about, i, w, h, pivot, base, gold, wood, stone)
-    return {name = title, about = about, sprite_path = ("buildings/%d.png"):format(i),
-            size = size2(w, h), pivot = pivot, base_width = base, cost = purse(gold, wood, stone)}
+-- The catalogue owns sprite registration, prices, descriptions and unlocks.
+M.catalogue = require("buildings")
+M.buildings, M.wonders = M.catalogue, {}
+for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
+
+function M.wonder_count(c)
+    local n=0
+    for _,b in ipairs(c.items) do if b.type < WONDERS then n=n+1 end end
+    return n
 end
 
-M.wonders = {
-    wonder("Expedition camp", "Every great discovery begins with a little canvas.", 0, 2, 2, vec2(150, 248), 280, 60, 10, 5),
-    wonder("Spring well", "Fresh water brings the lost valley back to life.", 1, 2, 2, vec2(142, 234), 245, 80, 15, 15),
-    wonder("Artisan workshop", "A home for the hands that rebuild the valley.", 2, 3, 2, vec2(144, 246), 278, 100, 25, 15),
-    wonder("Jungle market", "Stories, spices and treasures from far away.", 3, 3, 2, vec2(140, 249), 270, 120, 25, 25),
-    wonder("Sunstone gateway", "A garden arch marks the path into your valley.", 4, 3, 2, vec2(148, 193), 296, 140, 30, 30),
-    wonder("Explorer's lodge", "A warm light after a long day of adventure.", 5, 3, 2, vec2(138, 249), 269, 160, 35, 35),
-    wonder("Lost-world archive", "Protect the knowledge buried beneath the vines.", 6, 2, 2, vec2(131, 258), 245, 180, 35, 45),
-    wonder("Star observatory", "Follow the stars to the next discovery.", 7, 2, 2, vec2(108, 268), 205, 200, 40, 50),
-    wonder("Jade fountain", "Let the ancient spring flow once more.", 8, 2, 2, vec2(119, 260), 234, 220, 45, 55),
-    wonder("Temple of the sun", "The heart of the valley shines again.", 9, 3, 3, vec2(128, 256), 251, 250, 50, 60),
-}
+function M.owned(c, kind)
+    local n=0
+    for _,b in ipairs(c.items) do if b.type==kind then n=n+1 end end
+    return n
+end
+
+function M.can_buy(c, wallet, level, kind)
+    if kind<0 or kind>=#M.buildings or c.count>=160 then return false end
+    local d=M.buildings[kind+1]
+    if kind<WONDERS and (kind~=M.wonder_count(c) or kind>=level) then return false end
+    if kind>=WONDERS and wallet[1]-M.reserved_gold(c,level)<d.cost[1] then return false end
+    if not wallet:covers(d.needs) or not wallet:covers(d.cost) then return false end
+    return true
+end
+
+-- Keep the earned story restorations affordable in the finite campaign economy.
+function M.reserved_gold(c, level)
+    local gold=0
+    for kind=0,math.min(level,WONDERS)-1 do
+        if M.owned(c,kind)==0 then gold=gold+M.wonders[kind+1].cost[1] end
+    end
+    return gold
+end
+
+function M.restore_saved(c,level)
+    -- Purchased decorations do not count toward campaign restoration progress.
+    -- Rehome old, larger footprints onto valid tiles without charging again.
+    local items,seen=c.items,{}
+    local needs_relocation=false
+    c.count=0
+    for _,b in ipairs(items) do
+        local valid=b.type>=WONDERS or (b.type<level and not seen[b.type])
+        if valid then
+            local spot=c:snap(b.pos,b.type)
+            local ok=c:can_place(spot,b.type,-1)
+            if not ok then ok,spot=c:find_spot(b.type,spot) end
+            -- Preserve ownership even if a future terrain change leaves no free
+            -- plot. The player can move it after opening more land.
+            if not ok then spot=b.pos;needs_relocation=true end
+            c:add(spot,b.type,b.stamp);seen[b.type]=true
+        end
+    end
+    return needs_relocation
+end
 
 local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights", "Temple ridge"}
 local zone_stars = {0, 6, 9, 15, 21, 27}
@@ -142,7 +180,7 @@ function M.island_suggestion(i) return suggestions[num.clampi(i, 0, WONDERS - 1)
 
 -- Map, zones, wonders and rules for an engine city.
 function M.island_setup(c)
-    c.defs = M.wonders
+    c.defs = M.buildings
     local zones = {}
     for z = 1, ZONES do
         zones[z] = {name = zone_names[z], marker = zone_centers[z], needs = purse(0, 0, 0, zone_stars[z]), cost = purse(0, 0, 0, 0, zone_compasses[z])}
@@ -163,7 +201,7 @@ end
 
 -- Build the next wonder at a free spot.
 function M.island_place_next(c, wallet, built_limit, now)
-    local nxt = c.count
+    local nxt = M.wonder_count(c)
     if nxt >= WONDERS or nxt >= built_limit then return false end
     local ok, spot = c:find_spot(nxt, M.island_suggestion(nxt))
     if not ok then return false end
