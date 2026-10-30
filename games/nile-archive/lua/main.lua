@@ -36,7 +36,7 @@ local SCENES = #scenes
 -- Sprites are 248 px tall inside the old 256 px atlas cells: drawn height and
 -- how far below the anchor they reach keep the original placement.
 local function building(title, size, coins, influence, path)
-    return {name = title, sprite_path = path, height = size * 248 / 256, sink = size * .1044, cost = purse(coins), reward = purse(0, influence)}
+    return {name = title, sprite_path = path, height = size * 248 / 256, sink = size * .17, footprint = size2(size * .38, size * .17), cost = purse(coins), reward = purse(0, influence)}
 end
 
 local buildings = {
@@ -97,6 +97,7 @@ local function island_setup()
     local c = city.new()
     c.defs = buildings
     c.spacing = 120
+    c.movable = true
     c.buildable = island_buildable
     local zones = {{area = rect(580, 200, 600, 1050)}}
     for z = 1, ZONES - 1 do zones[z + 1] = {area = rect(800 + z * 380, 200, 380, 1050), cost = purse(z * 180)} end

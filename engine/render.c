@@ -100,17 +100,17 @@ void render_shutdown(void)
     memset(&R, 0, sizeof R);
 }
 
-void render_begin(size2 pixels, size2 logical, color clear)
+void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
 {
     R.pixels = pixels; R.logical = logical;
-    R.scale = size2_fit(logical, pixels);
-    size2 view = size2_scale(logical, R.scale);
-    R.offset = v2(floorf((pixels.w - view.w) * .5f), floorf((pixels.h - view.h) * .5f));
+    R.scale = viewport.size.w / logical.w;
+    size2 view = viewport.size;
+    R.offset = viewport.pos;
     glDisable(GL_SCISSOR_TEST); glDisable(GL_DEPTH_TEST); glDisable(GL_CULL_FACE);
     glViewport(0, 0, (int)pixels.w, (int)pixels.h);
     glClearColor(clear.r / 255.f, clear.g / 255.f, clear.b / 255.f, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-    glViewport((int)R.offset.x, (int)R.offset.y, (int)view.w, (int)view.h);
+    glViewport((int)R.offset.x, (int)(pixels.h - R.offset.y - view.h), (int)view.w, (int)view.h);
     glEnable(GL_BLEND); R.additive = false;
     glUseProgram(R.program); glUniform2f(R.screen, logical.w, logical.h);
     glActiveTexture(GL_TEXTURE0); glBindVertexArray(R.vao);

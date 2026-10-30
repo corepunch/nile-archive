@@ -1,5 +1,6 @@
 /* core.c — window, logical screen, main loop, input gestures, screenshots. */
 #include "render.h"
+#include "viewport.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,6 +53,7 @@ static struct {
     char **argv;
     bool running;
     size2 logical;
+    rect view;
     float pixel_scale;
     double time;
     float dt;
@@ -75,11 +77,8 @@ input input_get(void) { return A.in; }
 /* Queue window coordinates, just like native pointer events. */
 void app_inject_click(vec2 p)
 {
-    struct AXsize window = {1, 1};
-    axGetSize(&window);
-    size2 size = sz2((float)window.width, (float)window.height);
-    float scale = size2_fit(A.logical, size);
-    vec2 offset = vec2_scale(vec2_sub(size2_vec(size), vec2_scale(size2_vec(A.logical), scale)), .5f);
+    float scale = A.view.size.w / A.logical.w;
+    vec2 offset = A.view.pos;
     vec2 at = vec2_add(offset, vec2_scale(p, scale));
     uint32_t xy = MAKEDWORD((int)lroundf(at.x), (int)lroundf(at.y));
     axPostMessageW(NULL, kEventLeftButtonDown, xy, NULL);
@@ -126,7 +125,18 @@ static void update_logical_size(void)
 {
     struct AXsize output = {1, 1};
     axGetSize(&output);
-    float ow = maxf(output.width * axGetScaling(), 1), oh = maxf(output.height * axGetScaling(), 1);
+    float left = 0, top = 0, right = 0, bottom = 0;
+#ifdef AX_PLATFORM_IOS
+    axIOSGetSafeArea(&left, &top, &right, &bottom);
+#endif
+    const char *insets = app_arg("safe-area");
+    if (insets) sscanf(insets, "%f,%f,%f,%f", &left, &top, &right, &bottom);
+    left = clampf(left, 0, maxf(0, output.width - 1));
+    right = clampf(right, 0, maxf(0, output.width - left - 1));
+    top = clampf(top, 0, maxf(0, output.height - 1));
+    bottom = clampf(bottom, 0, maxf(0, output.height - top - 1));
+    rect safe = rc(left, top, maxf(1, output.width - left - right), maxf(1, output.height - top - bottom));
+    float ow = safe.size.w * axGetScaling(), oh = safe.size.h * axGetScaling();
     size2 d = A.desc.design;
     float long_side = maxf(d.w, d.h), short_side = minf(d.w, d.h);
     bool portrait = oh > ow;
@@ -140,17 +150,15 @@ static void update_logical_size(void)
     if (l.w != A.logical.w || l.h != A.logical.h) {
         A.logical = l;
     }
-    A.pixel_scale = minf(ow / l.w, oh / l.h);
+    A.view = app_fit_view(l, safe);
+    A.pixel_scale = A.view.size.w * axGetScaling() / l.w;
 }
 
 static vec2 window_to_logical(vec2 p)
 {
-    struct AXsize window = {1, 1};
-    axGetSize(&window);
-    size2 size = sz2((float)window.width, (float)window.height);
-    float scale = size2_fit(A.logical, size);
+    float scale = A.view.size.w / A.logical.w;
     if (scale <= 0) return v2(0, 0);
-    vec2 offset = vec2_scale(vec2_sub(size2_vec(size), vec2_scale(size2_vec(A.logical), scale)), .5f);
+    vec2 offset = A.view.pos;
     return vec2_scale(vec2_sub(p, offset), 1 / scale);
 }
 
@@ -289,7 +297,7 @@ void app_step(void)
     if (needs_rotation()) A.in = (input){.pos = A.in.pos, .pinch = 1};   /* the game waits behind the rotate prompt */
     struct AXsize output = {1, 1};
     axGetSize(&output);
-    render_begin(sz2(roundf(output.width * axGetScaling()), roundf(output.height * axGetScaling())), A.logical, A.desc.clear);
+    render_begin(sz2(roundf(output.width * axGetScaling()), roundf(output.height * axGetScaling())), A.logical, rect_make(vec2_scale(A.view.pos, axGetScaling()), size2_scale(A.view.size, axGetScaling())), A.desc.clear);
     ui_begin_frame();
     if (A.desc.frame) A.desc.frame(dt);
     ui_end_frame(dt);

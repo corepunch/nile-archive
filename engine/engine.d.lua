@@ -182,6 +182,7 @@
 ---@field zone_count integer
 ---@field open integer Bit per opened zone (bit 0 = zone 0, which starts open).
 ---@field spacing number Minimum distance between buildings without footprints.
+---@field tile size2 Isometric tile half extents; defaults to 32 x 16. Placement snaps to tile centres.
 ---@field footprint_gap size2 Extra clearance between footprints.
 ---@field buildable function function(c, world) -> bool: terrain test.
 ---@field zone_at function function(c, world) -> zone (0-based) or -1; default: zone rects.

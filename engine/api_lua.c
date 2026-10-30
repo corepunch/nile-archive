@@ -1532,6 +1532,7 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "zone_count")) { lua_pushinteger(L, p->zone_count); return 1; }
     if (!strcmp(k, "open")) { lua_pushinteger(L, (lua_Integer)p->open); return 1; }
     if (!strcmp(k, "spacing")) { lua_pushnumber(L, p->spacing); return 1; }
+    if (!strcmp(k, "tile")) { api_push_size2(L, p->tile); return 1; }
     if (!strcmp(k, "footprint_gap")) { api_push_size2(L, p->footprint_gap); return 1; }
     if (!strcmp(k, "buildable")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "buildable"); return 1; }
     if (!strcmp(k, "zone_at")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "zone_at"); return 1; }
@@ -1585,6 +1586,7 @@ static int l_city_newindex(lua_State *L)
     }
     if (!strcmp(k, "open")) { p->open = (unsigned)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "spacing")) { p->spacing = (float)lua_tonumber(L, 3); return 0; }
+    if (!strcmp(k, "tile")) { p->tile = api_get_size2(L, 3); return 0; }
     if (!strcmp(k, "footprint_gap")) { p->footprint_gap = api_get_size2(L, 3); return 0; }
     if (!strcmp(k, "buildable")) {
         if (!lua_isnoneornil(L, 3)) luaL_checktype(L, 3, LUA_TFUNCTION);
