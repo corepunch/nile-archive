@@ -2,3 +2,7 @@
 	path = engine/third_party/lua
 	url = https://github.com/lua/lua
 	shallow = true
+[submodule "engine/third_party/SDL"]
+	path = engine/third_party/SDL
+	url = https://github.com/libsdl-org/SDL
+	shallow = true

@@ -30,13 +30,13 @@ engine/            the shared engine: ONE public header + one .c per module
   api_lua.c/.h     the generated glue                   ─┤ (committed; make gen,
   engine.d.lua     generated editor annotations         ─┘  checked by make test)
   lua_lib.c        Lua 5.4 as one translation unit, sandbox libraries only
-  third_party/     lua/ (submodule: the lua/lua mirror at v5.4.8), stb_truetype, stb_image, stb_image_write
+  third_party/     lua/ and SDL/ (submodules: lua/lua at v5.4.8, libsdl-org/SDL at 2.30.12), stb_*
 games/
-  nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/
+  nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
-                   + art/ (sources) + data/ (runtime) + docs/ + tools/
+                   + art/ (sources) + data/ (runtime) + docs/ + tools/ + relic-rush.xcodeproj
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
-tools/             luagen.py (XML → glue + docs), screenshots.sh, make_reels.py, artkit.py
+tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.sh, make_reels.py, artkit.py
 docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), LINEAGE.md
 web/               shell.html: a bare fullscreen canvas for the web preview
 ```
@@ -63,7 +63,9 @@ make web
 python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/
 ```
 
-CI builds both targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
+**iPad and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with `<game>-ipad` and `<game>-macos` schemes. SDL2 comes from the `engine/third_party/SDL` submodule's own Xcode project, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+
+CI builds the native, web and Xcode (iPad Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 
 Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--lua DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two).
 

@@ -4,6 +4,7 @@
 #   make run-nile        build and run Nile Archive        (also: run-relic)
 #   make test            generated-code freshness, engine tests and the games' Lua rule tests (headless)
 #   make gen             regenerate the Lua glue, docs/LUA_API.md and engine.d.lua from engine/api.xml
+#   make xcode           regenerate games/<name>/<name>.xcodeproj (tools/xcode/generate.py)
 #   make shots           regenerate docs/screenshots (headless, software renderer)
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
@@ -27,7 +28,7 @@ LUA_FLAGS  := -Wno-unused-function
 ENGINE_OBJ := $(ENGINE:%=build/engine/%.o) build/engine/lua.o
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 
-.PHONY: all test gen gen-check shots web clean run-nile run-relic $(GAMES)
+.PHONY: all test gen gen-check xcode xcode-check shots web clean run-nile run-relic $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: engine/%.c engine/engine.h engine/api_lua.h
@@ -65,6 +66,14 @@ gen:
 gen-check:
 	python3 tools/luagen.py --check
 
+# --- Xcode projects -------------------------------------------------------
+# One committed project per game with macOS and iPad targets, SDL2 from the
+# engine/third_party/SDL submodule's own Xcode project; see tools/xcode/README.md.
+xcode:
+	for g in $(GAMES); do python3 tools/xcode/generate.py $$g --unsigned; done
+xcode-check:
+	python3 tools/xcode/generate.py --check
+
 # --- tests ----------------------------------------------------------------
 # Engine tests in C, then the games' rules in Lua (tests/lua/*.lua) run by the
 # same binary through the engine's Lua state, without a window.
@@ -72,7 +81,7 @@ TEST_SRC := tests/test_main.c
 build/tests: $(TEST_SRC) $(ENGINE_OBJ) engine/engine.h
 	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -o $@ $(TEST_SRC) $(ENGINE_OBJ) $(LIBS)
 
-test: gen-check build/tests
+test: gen-check xcode-check build/tests
 	SDL_VIDEODRIVER=dummy XDG_DATA_HOME=$(CURDIR)/build/test-home ./build/tests tests/lua/*.lua
 
 shots: all
