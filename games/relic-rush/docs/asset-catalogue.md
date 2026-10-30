@@ -219,6 +219,13 @@ for burning, charging, cracked gems or tool upgrades.
 
 ## Remaining runtime asset families
 
+The [ImageGen paint-over](../art/isometric-paintover/README.md) uses the original
+Blender grid render as its edit target and the original Relic Rush buildings as
+its style reference. All ten buildings were painted together in one call; the
+saved master, exact prompt and comparison are preserved. It is a review image,
+with no runtime/state mapping changes. Pixel registration, alpha extraction and
+runtime validation remain tracked in [issue #15](https://github.com/corepunch/nile-archive/issues/15).
+
 The [2:1 building-art trial](../art/isometric-trial/README.md) contains two
 review-only full-atlas generations, exact geometry references, saved prompts,
 edge measurements and inspected before/trial game captures. It is not runtime
