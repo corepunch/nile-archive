@@ -441,7 +441,7 @@ void city_draw(const city *c, input in, double now)
     if (c->placing >= 0) {
         bool ok = city_can_place(c, c->ghost, c->placing, c->moving);
         draw_footprint(c, c->ghost, c->placing, ok);
-        draw_building(c, (building){c->ghost, c->placing, 0}, ok ? rgba(255, 255, 255, 245) : rgba(255, 255, 255, 165), 0);
+        draw_building(c, (building){c->ghost, c->placing, 0}, ok ? rgba(255, 255, 255, 245) : rgba(255, 90, 80, 160), 0);   /* red: it can't go here */
     } else if (c->selected >= 0 && in.hover && !in.down && rect_contains(cam.view, in.pos) && !ui_blocks(in.pos)) {
         vec2 p = snap(c, camera_to_world(cam, in.pos));
         bool ok = city_can_place(c, p, c->selected, -1);

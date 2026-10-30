@@ -156,7 +156,18 @@ static void update_logical_size(void)
                                                : sz2(long_side, long_side / ratio);
     l = sz2(roundf(l.w), roundf(l.h));
     if (portrait) l = sz2(l.h, l.w);
-    if (A.desc.fixed) l = d;
+    if (A.desc.fixed) {
+        /* fixed keeps the design's short side and layout; with a max_aspect it
+         * may still grow along its long side, so a tall phone gets a taller
+         * screen instead of letterbox bars */
+        bool same_way = portrait == (d.h > d.w);
+        float grown = roundf(short_side * minf(ratio, A.desc.max_aspect));
+        l = d;
+        if (same_way && grown > long_side) {
+            if (d.h > d.w) l.h = grown;
+            else l.w = grown;
+        }
+    }
     if (l.w != A.logical.w || l.h != A.logical.h) {
         A.logical = l;
     }

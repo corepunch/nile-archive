@@ -113,7 +113,7 @@ local function smoke()
     end
     if smoke_stage == 0 then
         if R.overlay == R.OV_RESULT then
-            if R.modal_clock > 1.4 then app.inject_click(rect(76, 660, 328, 56):center()); smoke_stage = 1 end
+            if R.modal_clock > 1.4 then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1 end
             return
         end
         if R.phase == R.PH_IDLE and R.overlay == R.OV_NONE and R.selected < 0 then
@@ -132,14 +132,14 @@ local function smoke()
         end
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        app.inject_click(vec2(240, 844)); smoke_stage = 2   -- CHOOSE A LOCATION
+        app.inject_click(vec2(240, 856 + R.drop)); smoke_stage = 2   -- CHOOSE A LOCATION
     elseif smoke_stage == 2 and R.overlay == R.OV_WONDER then
-        app.inject_click(rect(76, 632, 328, 56):center()); smoke_stage = 3
+        app.inject_click(rect(76, 632, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
-        app.inject_click(vec2(320, 844)); smoke_stage = 4   -- PLACE & BUILD
+        app.inject_click(vec2(320, 856 + R.drop)); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 1 then error("smoke: the wonder was not built") end
-        app.inject_click(vec2(240, 844)); smoke_stage = 5   -- PLAY HEX LEVEL 2
+        app.inject_click(vec2(240, 856 + R.drop)); smoke_stage = 5   -- PLAY HEX LEVEL 2
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
         print("smoke test passed: swaps -> cascades -> win -> claim -> island -> build -> level 2")
@@ -153,6 +153,7 @@ local function frame(dt)
     local inp = input.get()
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
+    R.layout()
     if app.arg("smoke") then smoke() end
     R.now = R.now + dt
     R.toast_time = R.toast_time - dt
@@ -219,6 +220,11 @@ local function debug_screens()
     if app.arg("placing") and R.island.count < WONDERS then
         R.prog.level = R.island.count + 1
         R.island_begin(R.island.count, true)
+        if app.arg("placing") == "blocked" and R.island.count > 0 then   -- over a built wonder: the red ghost
+            local c = R.island
+            c.ghost = c.items[c.count].pos
+            R.island_focus(c.ghost - vec2(0, 90), c.cam.zoom)
+        end
         R.toast_time = 0
     end
     a = app.arg("zone")
@@ -286,7 +292,6 @@ local function init()
     R.backdrop = texture.load("jungle.jpg")
     R.scenes[1] = texture.load("scene-lagoon.jpg")
     R.scenes[2] = texture.load("scene-temple.jpg")
-    R.title = texture.load("title.png")
     -- match pieces: the Relics pack, or an optional art pack (--tiles / ?tiles=jewels|resources)
     local tiles = app.arg("tiles")
     if tiles ~= "jewels" and tiles ~= "resources" then tiles = "relics" end
@@ -305,6 +310,7 @@ local function init()
     R.prog = {level = 0, seed = 782341, wallet = purse()}
     if not app.arg("smoke") then save.read("progress", serialize) end
     if not R.quiet then story.play("intro", intro) end
+    R.layout()
     R.start_level()
     if R.prog.level > R.island.count or R.prog.level >= LEVELS then R.on_island = true end
     debug_screens()
@@ -315,6 +321,7 @@ return {
     id = "relic-rush",
     design = size2(R.SCREEN_W, R.SCREEN_H),
     fixed = true,
+    max_aspect = 2.2,   -- tall phones (19.5:9) get a taller screen, not bars
     clear = rgba(9, 33, 31),
     init = init,
     frame = frame,

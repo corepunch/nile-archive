@@ -2,17 +2,19 @@
 -- every module attaches its public functions here (R.notice, R.cell_pos, ...)
 -- so they can call each other without import cycles, the way relic.h did.
 local R = {
-    -- the game is laid out for a 480 x 900 portrait screen, letterboxed elsewhere
+    -- the game is laid out for a 480 x 900 portrait screen; taller phones add height
     SCREEN_W = 480, SCREEN_H = 900,
     HEX_R = 26.5,
     BOARD_CLIP = rect(24, 276, 432, 432),
+    drop = 0,            -- extra screen height on tall phones (see R.layout)
+    hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
     -- overlays and board phases
     OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7,
     PH_IDLE = 0, PH_SWAP = 1, PH_REJECT = 2, PH_CLEAR = 3, PH_FALL = 4,
     PAL_GOLD = 0, PAL_CREAM = 1, PAL_GREEN = 2, PAL_WHITE = 3,
 
-    backdrop = nil, scenes = {}, title = nil, relics = {}, glow = nil,
+    backdrop = nil, scenes = {}, relics = {}, glow = nil,
     font = nil,
     prog = nil,          -- {level, seed, wallet}
     island = nil,        -- the engine city

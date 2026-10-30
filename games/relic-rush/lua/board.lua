@@ -17,6 +17,15 @@ local PI = math.pi
 local CELL_SIZE = 46
 local HEX_DY = 1.732050808 * HEX_R
 local board_origin = vec2(240, 492)
+local TOOLS_Y = 790   -- the tool row sits low, near the bottom edge
+
+-- The screen is 480 wide and at least 900 tall; tall phones add height. The
+-- bottom group moves down by all of it (R.drop) and the board by half.
+function R.layout()
+    R.drop = app.screen().h - SCREEN_H
+    board_origin = vec2(240, 492 + R.drop / 2)
+    R.BOARD_CLIP = rect(24, 276 + R.drop / 2, 432, 432)
+end
 
 function R.cell_pos(i) return board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
 local cell_pos = R.cell_pos
@@ -85,33 +94,33 @@ end
 local function draw_hud()
     local g = R.g
     local l = rules.level_of(g)
-    R.panel(rect(24, 106, 432, 112))
-    R.say_at("SCORE", vec2(90, 126), 14, PAL_WHITE, 0)
-    R.say_at(tostring(math.floor(R.score_display)), vec2(90, 153), 30 + (R.reduced_motion and 0 or 5 * math.sin(R.score_pulse / .25 * PI)), PAL_GOLD, 0)
-    R.say_at(("LEVEL %d"):format(g.level + 1), vec2(239, 126), 17, PAL_GOLD, 0)
-    R.say_at(l.name, vec2(239, 155), 18, PAL_CREAM, 184)
-    gfx.circle(vec2(399, 151), 38, rgba(122, 78, 36))
-    gfx.circle(vec2(399, 148), 34, rgba(237, 184, 77))
-    gfx.circle(vec2(399, 146), 30, rgba(255, 223, 129))
-    R.say(tostring(g.moves), rect(369, 119, 60, 37), 33, PAL_CREAM)
-    R.say("MOVES", rect(365, 156, 68, 17), 11, PAL_CREAM)
-    gfx.round_rect(rect(47, 190, 386, 11), 5, rgba(163, 132, 78))
-    if R.goal_display > 0 then gfx.round_rect(rect(48, 191, math.max(6, 384 * R.goal_display), 8), 4, rgba(88, 169, 92)) end
+    R.panel(rect(24, 72, 432, 112))
+    R.say_at("SCORE", vec2(90, 92), 14, PAL_WHITE, 0)
+    R.say_at(tostring(math.floor(R.score_display)), vec2(90, 119), 30 + (R.reduced_motion and 0 or 5 * math.sin(R.score_pulse / .25 * PI)), PAL_GOLD, 0)
+    R.say_at(("LEVEL %d"):format(g.level + 1), vec2(239, 92), 17, PAL_GOLD, 0)
+    R.say_at(l.name, vec2(239, 121), 18, PAL_CREAM, 184)
+    gfx.circle(vec2(399, 117), 38, rgba(122, 78, 36))
+    gfx.circle(vec2(399, 114), 34, rgba(237, 184, 77))
+    gfx.circle(vec2(399, 112), 30, rgba(255, 223, 129))
+    R.say(tostring(g.moves), rect(369, 85, 60, 37), 33, PAL_CREAM)
+    R.say("MOVES", rect(365, 122, 68, 17), 11, PAL_CREAM)
+    gfx.round_rect(rect(47, 156, 386, 11), 5, rgba(163, 132, 78))
+    if R.goal_display > 0 then gfx.round_rect(rect(48, 157, math.max(6, 384 * R.goal_display), 8), 4, rgba(88, 169, 92)) end
 
     -- two primary goals, then sand and lock goals when the level has them
     local goals = 2 + (l.soil > 0 and 1 or 0) + (g.initial_obstacles > 0 and 1 or 0)
     local gw = 432 / goals
-    for k = 0, goals - 1 do gfx.round_rect(rect(24 + k * gw + 2, 230, gw - 4, 36), 10, rgba(13, 47, 41, 230)) end
-    R.say_at(("%d / %d"):format(math.min(g.score, l.score), l.score), vec2(24 + gw * .5, 246), 17, PAL_CREAM, gw - 10)
+    for k = 0, goals - 1 do gfx.round_rect(rect(24 + k * gw + 2, 196, gw - 4, 36), 10, rgba(13, 47, 41, 230)) end
+    R.say_at(("%d / %d"):format(math.min(g.score, l.score), l.score), vec2(24 + gw * .5, 212), 17, PAL_CREAM, gw - 10)
     local pop = R.reduced_motion and 0 or 5 * math.sin(R.goal_pulse / .22 * PI)
-    gfx.image(R.relics[rules.RELIC_IDOL + 1], rect(24 + gw + 5 - pop / 2, 234 - pop / 2, 29 + pop, 29 + pop), color.WHITE)
-    R.say_at(("%d / %d"):format(math.min(g.relics, l.relics), l.relics), vec2(24 + gw * 1.58, 246), 19, PAL_GOLD, gw - 33)
+    gfx.image(R.relics[rules.RELIC_IDOL + 1], rect(24 + gw + 5 - pop / 2, 200 - pop / 2, 29 + pop, 29 + pop), color.WHITE)
+    R.say_at(("%d / %d"):format(math.min(g.relics, l.relics), l.relics), vec2(24 + gw * 1.58, 212), 19, PAL_GOLD, gw - 33)
     local slot = 2
     if l.soil > 0 then
-        R.say_at(("SAND %d"):format(l.soil - g.dug), vec2(24 + gw * (slot + .5), 246), 17, PAL_CREAM, gw - 8)
+        R.say_at(("SAND %d"):format(l.soil - g.dug), vec2(24 + gw * (slot + .5), 212), 17, PAL_CREAM, gw - 8)
         slot = slot + 1
     end
-    if g.initial_obstacles > 0 then R.say_at(("LOCK %d"):format(g.obstacles), vec2(24 + gw * (slot + .5), 246), 17, PAL_WHITE, gw - 8) end
+    if g.initial_obstacles > 0 then R.say_at(("LOCK %d"):format(g.obstacles), vec2(24 + gw * (slot + .5), 212), 17, PAL_WHITE, gw - 8) end
 end
 
 local function draw_cells(sx)
@@ -221,19 +230,19 @@ local function draw_blockers(sx)
     end
 end
 
-local function draw_tool_icon(k, x)
+local function draw_tool_icon(k, x, y)
     if k == 0 then   -- pickaxe
-        gfx.line(vec2(x - 12, 812), vec2(x + 9, 782), 7, rgba(109, 66, 38))
-        gfx.line(vec2(x - 16, 783), vec2(x + 20, 792), 9, rgba(234, 237, 196))
+        gfx.line(vec2(x - 12, y + 46), vec2(x + 9, y + 16), 7, rgba(109, 66, 38))
+        gfx.line(vec2(x - 16, y + 17), vec2(x + 20, y + 26), 9, rgba(234, 237, 196))
     elseif k == 1 then   -- dynamite
-        for z = -1, 1 do gfx.round_rect(rect(x + z * 10 - 5, 783, 10, 30), 4, rgba(190 + z * 15, 66, 42)) end
-        gfx.rect(rect(x - 16, 795, 32, 5), rgba(244, 202, 129))
-        gfx.circle(vec2(x + 9, 780), 4, rgba(255, 235, 141))
+        for z = -1, 1 do gfx.round_rect(rect(x + z * 10 - 5, y + 17, 10, 30), 4, rgba(190 + z * 15, 66, 42)) end
+        gfx.rect(rect(x - 16, y + 29, 32, 5), rgba(244, 202, 129))
+        gfx.circle(vec2(x + 9, y + 14), 4, rgba(255, 235, 141))
     else   -- sunburst
-        gfx.circle(vec2(x, 798), 14, rgba(255, 234, 147))
+        gfx.circle(vec2(x, y + 32), 14, rgba(255, 234, 147))
         for z = 0, 7 do
             local d = vec2.polar(z * PI / 4, 1)
-            gfx.line(vec2(x, 798) + d:scale(17), vec2(x, 798) + d:scale(23), 2, rgba(255, 232, 154))
+            gfx.line(vec2(x, y + 32) + d:scale(17), vec2(x, y + 32) + d:scale(23), 2, rgba(255, 232, 154))
         end
     end
 end
@@ -242,17 +251,18 @@ local tool_names = {"Pickaxe", "Dynamite", "Sunburst"}
 
 local function draw_tools()
     if R.word_time <= 0 or R.reduced_motion then
-        R.say_at(R.tool >= 0 and "TAP A RELIC TO USE YOUR TOOL" or "CONNECT 4+ MATCHING NEIGHBORS.", vec2(240, 739), 13, PAL_WHITE, 0)
+        R.say_at(R.tool >= 0 and "TAP A RELIC TO USE YOUR TOOL" or "CONNECT 4+ MATCHING NEIGHBORS.", vec2(240, 766 + R.drop), 13, PAL_WHITE, 0)
     end
+    local y = TOOLS_Y + R.drop
     for k = 0, 2 do
         local x = 63 + k * 112
-        local r = rect(x - 38, 766, 76, 65)
+        local r = rect(x - 38, y, 76, 65)
         gfx.round_rect(r, 14, rgba(50, 45, 31, 240))
-        gfx.round_rect(rect(x - 35, 768, 70, 58), 12, R.tool == k and rgba(168, 191, 92) or rgba(220, 178, 99))
-        draw_tool_icon(k, x)
-        gfx.circle(vec2(x + 29, 772), 13, rgba(44, 88, 61))
-        R.say(tostring(R.g.tools[k + 1]), rect(x + 16, 759, 26, 26), 16, PAL_CREAM)
-        R.say_at(tool_names[k + 1], vec2(x, 846), 15, PAL_CREAM, 0)
+        gfx.round_rect(rect(x - 35, y + 2, 70, 58), 12, R.tool == k and rgba(168, 191, 92) or rgba(220, 178, 99))
+        draw_tool_icon(k, x, y)
+        gfx.circle(vec2(x + 29, y + 6), 13, rgba(44, 88, 61))
+        R.say(tostring(R.g.tools[k + 1]), rect(x + 16, y - 7, 26, 26), 16, PAL_CREAM)
+        R.say_at(tool_names[k + 1], vec2(x, y + 80), 15, PAL_CREAM, 0)
         if R.tapped(r) and R.phase == PH_IDLE then
             if R.g.tools[k + 1] > 0 then
                 R.tool = R.tool == k and -1 or k
@@ -263,12 +273,11 @@ local function draw_tools()
             end
         end
     end
-    local guide = rect(387, 774, 63, 55)
+    local guide = rect(387, y + 8, 63, 55)
     gfx.round_rect(guide, 14, rgba(28, 77, 61, 240))
     R.say("?", guide:inflate(-3), 33, PAL_GOLD)
-    R.say_at("GUIDE", vec2(419, 845), 12, PAL_WHITE, 0)
+    R.say_at("GUIDE", vec2(419, y + 79), 12, PAL_WHITE, 0)
     if R.tapped(guide) then R.overlay = R.OV_GUIDE end
-    R.say_at("THE LOST VALLEY", vec2(240, 881), 11, PAL_WHITE, 0)
 end
 
 ---------------------------------------------------------------------- input

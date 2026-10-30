@@ -201,7 +201,8 @@ typedef struct {
     size2 design;           /* design resolution; the logical screen keeps its short side */
     float max_aspect;       /* longest/shortest side ratio before letterboxing (0 = design) */
     bool landscape;         /* ask to rotate the device when the screen is portrait */
-    bool fixed;             /* keep exactly the design resolution and letterbox the rest */
+    bool fixed;             /* keep the design resolution and letterbox the rest; with
+                               max_aspect, grow only along the long side up to it */
     const char *rotate_text;/* message for the rotate prompt */
     color clear;            /* clear / letterbox colour */
     const char *data_dir;   /* asset root for relative paths (overridden by --data) */
