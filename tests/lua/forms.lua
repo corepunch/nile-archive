@@ -51,5 +51,68 @@ local was=form:get("sound")
 local event=form:draw(rect(0,0,300,160),skin,{input={key=input.KEY_RETURN}})
 check(event and event.id=="sound" and form:get("sound")~=was,"Return activates a focused bound toggle")
 check(not form:draw(rect(0,0,300,160),skin,{interactive=false,input={key=input.KEY_RETURN}}),"lower modal cannot activate via keyboard")
+-- Data source replacement, row ownership and stable-key keyboard focus.
+local builds=0
+local list=ui.form{kind="list",id="topics",gap=8,item=function(item)
+    builds=builds+1
+    if item.bad then error("invalid row payload") end
+    return {kind="row",gap=12,align="center",children={
+        {kind="custom",width=60,height=60,visible=item.icon~=false},
+        {kind="column",id="content",grow=1,gap=4,children={
+            {kind="label",id="title",text=item.title,height=20,text_align=item.icon==false and "center" or "start"},
+            {kind="label",id="description",text="Explanation",height=20,wrap=true},
+        }},
+        {kind="button",id="open",text="Open",width=40,height=40,action="choose"},
+    }}
+end}
+local data={{id="a",title="First"},{id="b",title="Second",icon=false}}
+check(list:set_items("topics",data),"populate data source")
+local function item_node(key,id)
+    for _,node in pairs(list.nodes) do if node.item_key==key and node.local_id==id then return node end end
+end
+local a,b=item_node("a","content"),item_node("b","content")
+local row_boxes=list:layout(rect(0,0,300,200))
+check(row_boxes[a.id].x==72 and row_boxes[a.id].w==176,"icon column consumes width before measuring text")
+check(row_boxes[b.id].x==0 and row_boxes[b.id].y==68,"iconless row uses its own measured stack")
+local drawn_align={}
+local list_skin={button=function()end,button_text=function()end,focus=function()end,label=function(_,_,node) drawn_align[node.id]=node.text_align end}
+list:draw(rect(0,0,300,200),list_skin,{input={key=input.KEY_TAB}})
+local focused=list.focus
+check(focused==item_node("a","open").id,"list controls participate in form focus order")
+local selected=list:draw(rect(0,0,300,200),list_skin,{input={key=input.KEY_RETURN}})
+check(selected and selected.id=="choose" and selected.source=="topics" and selected.key=="a","list actions identify their source and record")
+check(drawn_align[item_node("a","title").id]=="start" and drawn_align[item_node("b","title").id]=="center","alignment follows icon presence")
+check(builds==2,"rows are cached across layout and draw")
+check(list:set_items("topics",{data[2],data[1]}) and list.focus==focused,"stable keys preserve focus across reordering")
+check(not list:set_items("topics",{data[1],data[1]}),"duplicate source keys rejected")
+check(list.focus==focused and #list.nodes.topics.children==2,"bad refresh leaves current rows and focus intact")
+check(not list:set_items("topics",{data[2],{id="broken",bad=true}}),"row builder failures reject refresh")
+check(list.focus==focused and #list.nodes.topics.children==2,"partially built refresh never leaks into live rows")
+check(not list:set_items("topics",{[1]=data[1],[3]=data[2]}),"sparse source rejected")
+check(not list:set_items("topics",{{title="Missing key"}}),"stable source key required")
+check(list:set_items("topics",{data[2]}) and list.focus==nil and not list.nodes[focused],"removed records release nodes and focus")
+data[2].title="Updated"
+check(list:set_items("topics",data) and item_node("b","title").text=="Updated","source refresh replaces row contents")
+check(list:set_items("topics",{}) and #list.nodes.topics.children==0,"empty source clears its stack")
+check(not pcall(ui.form,{kind="list",id="bad"}),"list requires a row builder")
+check(not pcall(ui.form,{kind="label",text_align="diagonal"}),"unknown text alignment rejected")
+local measured=ui.form{kind="list",id="rows",item=function(item)
+    return {kind="row",gap=12,children={{kind="custom",width=60,height=50},
+        {kind="label",grow=1,wrap=true,text=item.text,text_align="start"}}}
+end}
+check(measured:set_items("rows",{{id="long",text="Every little row can wrap into several lines beside its icon"}}),"wrap source")
+local measured_font=font.load("games/relic-rush/data/fonts/LilitaOne-Regular.ttf")
+local font_style={style=function()return style{font=measured_font,size=20}end}
+local _,wide=measured:measure(320,font_style)
+local _,narrow=measured:measure(180,font_style)
+check(narrow>wide,"row height grows when icon leaves less width for wrapped copy")
+measured.root.children[1].align="center"
+measured:layout(rect(0,0,180,narrow),font_style)
+local wrapped=measured.root.children[1].children[2].box
+check(wrapped.h==narrow and wrapped.y==0,"centered grow content uses its allocated width when arranging wrapped text")
+local leaf={kind="list",id="deep",item=function()return {kind="column",children={{kind="label",text="too deep"}}}end}
+for _=1,30 do leaf={kind="column",children={leaf}} end
+local deep=ui.form(leaf)
+check(not deep:set_items("deep",{{id="x"}}),"data rows obey the whole resource nesting limit")
 print(("UI forms: %d checks, %d failures"):format(checks,failures))
 return failures

@@ -31,6 +31,7 @@ shot nile-archive reward 1200x900 --screen win --frames 60
 shot nile-archive widescreen 1600x900 --screen island
 shot nile-archive ipad-scene 1180x820 --screen scene0 --found --safe-area 0,24,0,20
 shot nile-archive dialogue 1200x900 --screen story --frames 200
+shot nile-archive ipad-dialogue 1368x1026 --screen story --frames 240
 shot nile-archive dialogue-horem 1200x900 --screen horem --frames 200
 shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
 
@@ -43,6 +44,7 @@ shot relic-rush art-jewels 480x900 --art-board --tiles jewels
 shot relic-rush art-resources 480x900 --art-board --tiles resources
 shot relic-rush art-phone 390x844 --level 8 --safe-area 0,47,0,34
 shot relic-rush guide 480x900 --dialog guide
+shot relic-rush phone-guide 390x844 --dialog guide --safe-area 0,47,0,34
 shot relic-rush pause 480x900 --dialog pause
 shot relic-rush phone-pause 390x844 --dialog pause --safe-area 0,47,0,34
 shot relic-rush phone-card 390x844 --card 1 --safe-area 0,47,0,34
@@ -60,6 +62,9 @@ shot relic-rush dialogue-elena 480x900 --dialog intro --frames 240
 shot relic-rush dialogue-mara 480x900 --dialog mara --frames 240
 shot relic-rush dialogue-tomas 480x900 --dialog tomas --frames 240
 shot relic-rush dialogue-adrian 480x900 --dialog adrian --frames 240
+for speaker in intro mara tomas adrian; do
+    shot relic-rush phone-dialogue-$speaker 390x844 --dialog $speaker --frames 240 --safe-area 0,47,0,34
+done
 shot relic-rush island-bubble 480x900 --dialog bubble --frames 30
 shot relic-rush phone-island 390x844 --city 3 --safe-area 0,47,0,34
 shot relic-rush phone-board 390x844 --safe-area 0,47,0,34

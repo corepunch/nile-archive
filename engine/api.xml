@@ -462,6 +462,7 @@
     <function name="serialize" c="story_serialize" doc="Beats seen, inside a save visitor."><arg name="s" type="save"/></function>
     <function name="forget" c="story_forget" doc="New game: nothing seen."/>
     <function name="bubble_shape" c="speech_bubble_shape" doc="A bubble around box pointing at tip."><arg name="box" type="rect"/><arg name="tip" type="vec2"/><arg name="fill" type="color"/><arg name="edge" type="color"/><arg name="kind" type="int"/></function>
+    <function name="bubble_bounds" c="speech_bubble_bounds" doc="Visible outline bounds, excluding the tail and shadow; use these to anchor badges."><arg name="box" type="rect"/><arg name="kind" type="int"/><returns type="rect"/></function>
     <function name="bubble" c="speech_bubble" doc="A bubble with text above tip (below when there is no room), kept on screen. Returns its rect."><arg name="tip" type="vec2"/><arg name="utf8" type="string"/><arg name="s" type="text_style"/><arg name="fill" type="color"/><arg name="edge" type="color"/><arg name="max_width" type="float"/><arg name="kind" type="int"/><returns type="rect"/></function>
   </module>
 

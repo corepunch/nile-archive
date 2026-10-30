@@ -1384,6 +1384,12 @@ function story.forget() end
 ---@param kind integer
 function story.bubble_shape(box, tip, fill, edge, kind) end
 
+---Visible outline bounds, excluding the tail and shadow; use these to anchor badges.
+---@param box rect
+---@param kind integer
+---@return rect
+function story.bubble_bounds(box, kind) end
+
 ---A bubble with text above tip (below when there is no room), kept on screen. Returns its rect.
 ---@param tip vec2
 ---@param utf8 string
@@ -1554,6 +1560,8 @@ function ui_form:pull(model, validator) end
 ---@return ui_form
 function ui_form:set(id, value) end
 function ui_form:get(id) end
+---@return boolean, string?
+function ui_form:set_items(id, items) end
 ---@return number, number
 function ui_form:measure(width, skin) end
 ---@return table<string,rect>

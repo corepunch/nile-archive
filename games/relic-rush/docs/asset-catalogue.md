@@ -141,8 +141,13 @@ These families plus the board assets above cover every file in `data/`;
 | `data/fonts/LilitaOne-Regular.ttf`, `lilitaone-OFL.txt` | Bundled licensed font | Dynamic labels, counters, outlined/gradient typography |
 
 The reusable engine UI now owns form layout, input, focus, data exchange and modal
-Gaussian blur; the game supplies its skin and templates for the pause and building
-dialogs. See [the UI engine](../../../docs/UI_ENGINE.md).
+Gaussian blur; the game supplies its skin and templates for pause, building and
+guide dialogs. The guide uses one stable-key data source, a measured list and
+left-aligned icon/copy rows. Speech, thought-cloud and shout-burst badges centre
+on the visible outline; their puffs/spikes contribute to text padding. This
+layout audit is tracked in [issue #16](https://github.com/corepunch/nile-archive/issues/16).
+Reviewed comparisons live in `docs/review/dialogue-stack/` (all three shapes,
+one/two-line speech, 480×900 and safe-area 390×844, plus the guide). See [the UI engine](../../../docs/UI_ENGINE.md).
 
 Resource capsules, HUD panels, progress bars, menu buttons, result stars, placement outlines, land
 fog and dialogue chrome are intentional engine geometry/text; they are not gem

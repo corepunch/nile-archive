@@ -726,6 +726,8 @@ function ui_form:pull(model, validator) end
 ---@return ui_form
 function ui_form:set(id, value) end
 function ui_form:get(id) end
+---@return boolean, string?
+function ui_form:set_items(id, items) end
 ---@return number, number
 function ui_form:measure(width, skin) end
 ---@return table<string,rect>

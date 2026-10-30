@@ -17,7 +17,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 ## Shared UI and dialog layers
 
-Pause and building dialogs use engine-owned form resources, model bindings and one game skin. Modal screens and dialogue blur earlier layers with the engine’s cached GPU Gaussian pass; foreground UI stays sharp. See the [shared UI API and adoption examples](../../docs/UI_ENGINE.md).
+Pause, building and guide dialogs use engine-owned form resources and one game skin. The guide is a measured stack populated from a stable-key data source: icon rows left-align title and description, and wrapping determines row height. Modal screens and dialogue blur earlier layers with the engine’s cached GPU Gaussian pass; foreground UI stays sharp. See the [shared UI API and adoption examples](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
@@ -63,7 +63,7 @@ You begin with a small expedition camp. Each puzzle represents an excavation: un
 
 This is an original adventure setting inspired by archaeological serials and lost-world fiction, rather than a licensed Indiana Jones setting or a claim to portray a specific historical civilization. The colorful tropical palette combines jade, turquoise, warm stone and gold, with readable silhouettes and soft jungle scenery.
 
-**Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion standing above a dialogue box sized to the line, name plate on the box's edge and no tail, as in the story screens of portrait match-3 games; typed text: tap to finish a line, tap again to continue, or skip). Each beat plays once per save:
+**Narrative status:** the cast now speaks through the engine's dialogue system (bust in a medallion standing above a dialogue box sized to the line, name plate on the box's edge and no tail, as in the story screens of portrait match-3 games; typed text: tap to finish a line, tap again to continue, or skip). Name badges are centred on the visible outline of speech, cloud and burst bubbles; decorative puffs/spikes count toward the padding so they do not engulf the badge. Each beat plays once per save:
 
 - Bubbles come in three kinds: Elena's first musing is a thought cloud, Mara's greeting a shout, the rest speech.
 - **Elena Voss** opens the expedition and explains each level's twist the first time it is played (its lesson; later it is a reminder toast).
@@ -200,7 +200,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 ## Verification
 
 - `make test` runs the original rule regressions, ported: grid invariants, four-of-a-kind and bent/diamond groups, rejection of triples, five/six special creation, holes and segmented gravity, chain and ice locks, fire thawing, tools, prism colour clears, ten distinct connected board masks, 1,000 opening boards (100 seeds × 10 levels) without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 300 greedy campaign trials — 298 wins, identical to the standalone build.
-- `--smoke` drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, the island, construction and the start of level two.
+- `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, the island, construction and the start of level two.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
 

@@ -90,14 +90,21 @@ local button = R.button
 
 -- One game skin; the shared form engine owns layout, hits, focus and bindings.
 local form_skin = {
+    -- Measurement stays in logical units; painting applies the dialog transform.
+    style = function(node)
+        local em=node.em or ((node.kind=="button" or node.kind=="toggle") and 25 or node.wrap and 22 or 26)
+        return style{font=R.font,size=em*1.171875}
+    end,
     panel = panel,
     button = function(r, st, node) if not node.flat then R.paint_button(r, st, not st.disabled) end end,
     button_text = function(r, label, node, st)
         say(label, (st.held and r:offset(vec2(0, 2)) or r):inflate(-8), node.em or 25, PAL_CREAM)
     end,
     label = function(r, label, node)
-        if node.wrap then paragraph(label, r, node.em or 22, node.palette or PAL_CREAM)
-        else say(label, r, node.em or 26, node.palette or PAL_GOLD) end
+        local align=vec2(node.text_align=='start' and 0 or node.text_align=='end' and 1 or .5,.5)
+        local s=pal(node.palette or (node.wrap and PAL_CREAM or PAL_GOLD),node.em or (node.wrap and 22 or 26))
+        if node.wrap then text.box(s,pr(r),align,label)
+        else text.inside(s,pr(r),align,label) end
     end,
     focus = function(r) gfx.round_rect_line(pr(r:inflate(3)), 15 * P.scale, 2, pc(rgba(255, 223, 129))) end,
 }
@@ -322,32 +329,56 @@ local function wonder_screen()
     elseif event and event.id == "close" then R.overlay=R.OV_NONE end
 end
 
-local guide_titles = {"Connect 4+ neighbors", "Group 5: lightning", "Group 6+: bomb or prism", "Chains & ancient sand", "Ice & fire"}
-local guide_lines = {"Bends and diamonds count. Three do not.", "A sun ray follows the longest axis.",
-                     "Six in a line: prism. Other shapes: bomb.", "Match on them to break or excavate.",
-                     "Match on ice; nearby flames also thaw it."}
-
-local function guide_screen()
-    panel(rect(24, 144, 432, 632))
-    say_at("Explorer's guide", vec2(240, 182), 34, PAL_GOLD, 0)
-    say_at("SWIPE OR TAP TWO NEIGHBORING RELICS", vec2(240, 221), 13, PAL_WHITE, 0)
-    for k = 0, 4 do
-        local y = 278 + k * 79
-        if k == 2 then
-            R.draw_relic(rules.tile(k, rules.BOMB), pp(vec2(53, y)), P.scale * .7, 255 * P.alpha, 1)
-            R.draw_relic(rules.tile(k, rules.PRISM), pp(vec2(85, y)), P.scale * .7, 255 * P.alpha, 1)
-        else
-            if k == 3 then picture(R.board_art.sand, rect(40, y - 26, 52, 52), 255) end
-            R.draw_relic(rules.tile(k, k == 1 and rules.ROW or rules.NORMAL), pp(vec2(66, y)), P.scale, 255 * P.alpha, 1)
-            if k == 3 then picture(R.board_art.chain, rect(42, y - 24, 48, 48), 255)
-            elseif k == 4 then picture(R.board_art["ice-2"], rect(42, y - 24, 48, 48), 255) end
-        end
-        say_at(guide_titles[k + 1], vec2(273, y - 12), 23, PAL_GOLD, 318)
-        say_at(guide_lines[k + 1], vec2(273, y + 15), 16, PAL_CREAM, 318)
+-- One data source and one row resource; the engine measures and stacks every
+-- row. Composite icon painting uses the same authored layers as the board.
+local guide_entries = {
+    {id="neighbors", title="Connect 4+ neighbors", description="Bends and diamonds count. Three do not.",
+     icon={tiles={{kind=0,special=rules.NORMAL}}}},
+    {id="lightning", title="Group 5: lightning", description="A sun ray follows the longest axis.",
+     icon={tiles={{kind=1,special=rules.ROW}}}},
+    {id="specials", title="Group 6+: bomb or prism", description="Six in a line: prism. Other shapes: bomb.",
+     icon={tiles={{kind=2,special=rules.BOMB,x=-16,scale=.7},{kind=2,special=rules.PRISM,x=16,scale=.7}}}},
+    {id="blockers", title="Chains & ancient sand", description="Match on them to break or excavate.",
+     icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
+    {id="ice", title="Ice & fire", description="Match on ice; nearby flames also thaw it.",
+     icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
+}
+local function guide_icon(box, icon)
+    local at=box:center()
+    local layer=rect.centered(at,size2(52,52))
+    if icon.back then picture(R.board_art[icon.back],layer,255) end
+    for _,tile in ipairs(icon.tiles) do
+        R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
-    say_at("TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.", vec2(240, 679), 12, PAL_WHITE, 0)
-    local done = button(rect(78, 709, 324, 45), "LET'S EXPLORE", true)
-    if done or tapped(rect(0, 700, SCREEN_W, SCREEN_H - 700)) then R.overlay = R.OV_NONE end
+    if icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
+end
+local guide_form=ui.form{kind="column",panel=true,padding=20,children={
+    {kind="label",text="Explorer's guide",height=44,em=34},
+    {kind="label",text="SWIPE OR TAP TWO NEIGHBORING RELICS",height=26,em=13,palette=PAL_WHITE},
+    {kind="spacer",height=14},
+    {kind="list",id="topics",gap=12,item=function(entry)
+        local align=entry.icon and "start" or "center"
+        return {kind="row",gap=14,align="center",children={
+            {kind="custom",width=64,height=64,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
+            {kind="column",grow=1,gap=4,children={
+                {kind="label",text=entry.title,wrap=true,text_align=align,em=22,palette=PAL_GOLD},
+                {kind="label",text=entry.description,wrap=true,text_align=align,em=16,palette=PAL_CREAM},
+            }},
+        }}
+    end},
+    {kind="spacer",height=18},
+    {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,palette=PAL_WHITE},
+    {kind="spacer",height=10},
+    {kind="button",id="done",text="LET'S EXPLORE",height=45,em=25},
+}}
+assert(guide_form:set_items("topics",guide_entries))
+R.guide_form=guide_form -- measured control bounds are also used by the input smoke test
+local function guide_screen()
+    local width=432
+    local _,height=guide_form:measure(width,form_skin)
+    local bounds=rect.centered(vec2(240,460),size2(width,height))
+    local action=guide_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
+    if action and action.id=="done" then R.overlay=R.OV_NONE end
 end
 
 local pause_form = ui.form{

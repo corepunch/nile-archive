@@ -2145,6 +2145,17 @@ A bubble around box pointing at tip.
 | `edge` | `color` |  |
 | `kind` | `integer` |  |
 
+### `story.bubble_bounds(box, kind)`
+
+Visible outline bounds, excluding the tail and shadow; use these to anchor badges.
+
+| Argument | Type | |
+|---|---|---|
+| `box` | `rect` |  |
+| `kind` | `integer` |  |
+
+**Returns:** `rect`
+
 ### `story.bubble(tip, utf8, s, fill, edge, max_width, kind)`
 
 A bubble with text above tip (below when there is no room), kept on screen. Returns its rect.
