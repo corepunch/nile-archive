@@ -1,7 +1,9 @@
 # Blender building projection study
 
-Editable geometry and review renders for all ten Relic Rush buildings. This is
-an art study, not a replacement for `data/buildings/` or the runtime definitions.
+Editable geometry and review renders for the 96 assets proposed in
+[`docs/island-catalogue.md`](../../docs/island-catalogue.md): ten wonders, 16 income
+buildings and 70 decorations, listed in `catalogue.json`. This is an art study, not
+a replacement for `data/buildings/` or the runtime definitions.
 The persistent source master is `relic_rush_buildings.blend`; the procedural
 source is `build_scene.py`. Both are committed alongside the previews.
 
@@ -15,10 +17,11 @@ geometry checks. The saved report has slope 0.5 and maximum sampled projection
 error 0.00019 pixels. `annotate.py` independently overlays the analytic ground
 footprints and centre pivots on the saved render.
 
-Every building has one restored presentation. Selected, pressed, hover, disabled
+Every asset has one restored presentation. Selected, pressed, hover, disabled
 and blocked-placement states are not new authored states in this study. The
 gateway, lodge, archive, fountain and temple have study footprints that differ
-from the current game definitions; see `w`, `h` and `game` in the report.
+from the current game definitions; see the catalogue. Decorations stand on the grass
+without a slab.
 Runtime adoption, matching footprints, sprite export, state review and in-game
 validation remain tracked by [issue #15](https://github.com/corepunch/nile-archive/issues/15).
 
