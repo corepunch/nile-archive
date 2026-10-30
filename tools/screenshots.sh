@@ -28,6 +28,7 @@ shot nile-archive chapters 1200x900 --screen chapters --frames 30
 shot nile-archive build 1200x900 --screen build
 shot nile-archive reward 1200x900 --screen win --frames 60
 shot nile-archive widescreen 1600x900 --screen island
+shot nile-archive ipad-scene 1180x820 --screen scene0 --found --safe-area 0,24,0,20
 shot nile-archive dialogue 1200x900 --screen story --frames 200
 shot nile-archive dialogue-horem 1200x900 --screen horem --frames 200
 shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
