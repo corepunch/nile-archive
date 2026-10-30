@@ -3993,8 +3993,8 @@ static void open_input(lua_State *L)
         {NULL, NULL}
     };
     luaL_newlib(L, funcs);
-    lua_pushinteger(L, SDLK_SPACE); lua_setfield(L, -2, "KEY_SPACE");
-    lua_pushinteger(L, SDLK_RETURN); lua_setfield(L, -2, "KEY_RETURN");
+    lua_pushinteger(L, AX_KEY_SPACE); lua_setfield(L, -2, "KEY_SPACE");
+    lua_pushinteger(L, AX_KEY_ENTER); lua_setfield(L, -2, "KEY_RETURN");
     luaL_newmetatable(L, "engine.input");
     lua_pushvalue(L, -2); lua_setfield(L, -2, "__index");
     lua_pop(L, 1);

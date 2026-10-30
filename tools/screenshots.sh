@@ -3,14 +3,13 @@
 #   make shots
 set -eu
 cd "$(dirname "$0")/.."
-export SDL_VIDEODRIVER="${SDL_VIDEODRIVER:-offscreen}"
 tmp="build/shots"
 mkdir -p "$tmp"
 
 shot() { # game name size args...
     game=$1 name=$2 size=$3
     shift 3
-    "./build/$game" --fresh --size "$size" --frames 4 --shot "$tmp/$game-$name.png" "$@" > /dev/null
+    "./build/$game" --headless --mute --fresh --size "$size" --frames 4 --shot "$tmp/$game-$name.png" "$@" > /dev/null
     out="games/$game/docs/screenshots/$name.jpg"
     mkdir -p "$(dirname "$out")"
     python3 -c "import sys; from PIL import Image; Image.open(sys.argv[1]).convert('RGB').save(sys.argv[2], quality=86)" \
@@ -47,17 +46,17 @@ shot relic-rush effect-ray 480x900 --fx ray --frames 10
 shot relic-rush effect-bomb 480x900 --fx bomb --frames 10
 shot relic-rush effect-prism 480x900 --fx prism --frames 10
 for pack in relics jewels resources; do
-    "./build/relic-rush" --fresh --size 480x900 --tiles $pack --shot "$tmp/tiles-$pack.png" > /dev/null
+    "./build/relic-rush" --headless --mute --fresh --size 480x900 --tiles $pack --shot "$tmp/tiles-$pack.png" > /dev/null
 done
 for level in 1 2 3 4 5 6 7 8 9 10; do
-    "./build/relic-rush" --fresh --size 480x900 --frames 3 --level $level --shot "$tmp/shape-$level.png" > /dev/null
+    "./build/relic-rush" --headless --mute --fresh --size 480x900 --frames 3 --level $level --shot "$tmp/shape-$level.png" > /dev/null
 done
 reel() { # name frames step args...
     name=$1 frames=$2 step=$3
     shift 3
     i=0
     while [ $i -lt "$frames" ]; do
-        "./build/relic-rush" --fresh --size 480x900 --frames $((i * step + 1)) --shot "$tmp/$name-$i.png" "$@" > /dev/null
+        "./build/relic-rush" --headless --mute --fresh --size 480x900 --frames $((i * step + 1)) --shot "$tmp/$name-$i.png" "$@" > /dev/null
         i=$((i + 1))
     done
 }

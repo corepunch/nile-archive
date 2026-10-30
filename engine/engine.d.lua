@@ -38,7 +38,7 @@
 ---@field wheel number Wheel steps this frame.
 ---@field pinch number Zoom factor from two fingers this frame (1 = none).
 ---@field pinch_center vec2
----@field key integer SDL keycode pressed this frame, 0 if none.
+---@field key integer AX key code pressed this frame, 0 if none.
 ---@field back boolean Escape or the Android back button.
 
 ---@class texture A loaded image; `w` and `h` are its pixel size. Textures are never freed by the collector.

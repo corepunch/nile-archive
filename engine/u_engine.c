@@ -1,0 +1,12 @@
+/* Engine unity unit. Compile this, never its included modules separately. */
+#include "core.c"
+#include "render.c"
+#include "gfx.c"
+#include "font.c"
+#include "ui.c"
+#include "save.c"
+#include "city.c"
+#include "audio.c"
+#include "story.c"
+#include "sprite.c"
+#include "nav.c"

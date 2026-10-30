@@ -210,20 +210,20 @@
     <field name="wheel" type="float" doc="Wheel steps this frame."/>
     <field name="pinch" type="float" doc="Zoom factor from two fingers this frame (1 = none)."/>
     <field name="pinch_center" type="vec2"/>
-    <field name="key" type="int" doc="SDL keycode pressed this frame, 0 if none."/>
+    <field name="key" type="int" doc="AX key code pressed this frame, 0 if none."/>
     <field name="back" type="bool" doc="Escape or the Android back button."/>
   </struct>
   <module name="input" type="input">
     <function name="get" c="input_get" doc="This frame's pointer."><returns type="input"/></function>
     <function name="world" c="input_world" doc="The same, with pointer actions cleared when UI owns the press: what cameras, boards and cities consume."><returns type="input"/></function>
-    <const name="KEY_SPACE" c="SDLK_SPACE" type="int"/>
-    <const name="KEY_RETURN" c="SDLK_RETURN" type="int"/>
+    <const name="KEY_SPACE" c="AX_KEY_SPACE" type="int"/>
+    <const name="KEY_RETURN" c="AX_KEY_ENTER" type="int"/>
   </module>
 
   <!-- ============================================================ graphics -->
 
   <struct name="texture" c="texture" doc="A loaded image; `w` and `h` are its pixel size. Textures are never freed by the collector.">
-    <field name="tex" type="ptr" ctype="SDL_Texture *" doc="The renderer's texture (opaque)."/>
+    <field name="tex" type="ptr" ctype="struct render_texture *" doc="The renderer's texture (opaque)."/>
     <field name="w" type="float" c="size.w"/>
     <field name="h" type="float" c="size.h"/>
   </struct>

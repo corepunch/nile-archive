@@ -1042,7 +1042,7 @@ A snapshot of the pointer (mouse or first finger) with gestures. `input{pos = p,
 | `wheel` | `number` | Wheel steps this frame. |
 | `pinch` | `number` | Zoom factor from two fingers this frame (1 = none). |
 | `pinch_center` | `vec2` |  |
-| `key` | `integer` | SDL keycode pressed this frame, 0 if none. |
+| `key` | `integer` | AX key code pressed this frame, 0 if none. |
 | `back` | `boolean` | Escape or the Android back button. |
 
 - `input.KEY_SPACE` (integer)

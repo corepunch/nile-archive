@@ -67,3 +67,6 @@ DerivedData/
 
 # Local reference games, original resource packs and migration safety backups
 /reference/
+
+# Untracked legacy SDL checkout retained for local migration comparisons.
+/engine/third_party/SDL/
