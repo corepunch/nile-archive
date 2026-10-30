@@ -498,6 +498,14 @@
     "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face"
   },
   "buildings": "art/building-catalogue/manifest.json",
+  "economy_presentation": {
+    "contract": "lua/rules.lua reward_breakdown; lua/art.lua names existing normal artwork",
+    "wallet_icons": "existing Idol/Leaf/Crystal art identifies Gold/Wood/Stone; random board colour counts do not mint wallet resources",
+    "discovery": "one-time restoration grant, spare Gold, 3 Discovery Stars and scheduled Compasses",
+    "replay": "Gold only; no repeated discovery or restoration reward",
+    "controls": "existing shared form skin normal/hover/pressed/disabled/focus; modal opening input is consumed",
+    "review": "docs/review/economy/README.md"
+  },
   "building_reviews": {
     "gateway": "docs/review/sunstone-courtyard/README.md"
   },

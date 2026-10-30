@@ -67,7 +67,8 @@ local function refresh()
     end
     assert(form:set_items('stock',records))
     form:set('category',categories[category][2]):set('page',('%d / %d  (%d items)'):format(page,pages,#filtered))
-    form:set('wallet',('%d gold   /   %d stars'):format(R.prog.wallet[1],R.prog.wallet[4]))
+    local reserved=island.reserved_gold(R.island,R.prog.level)
+    form:set('wallet',('%d spendable Gold / %d reserved / %d Stars'):format(math.max(0,R.prog.wallet[1]-reserved),reserved,R.prog.wallet[4]))
     form.nodes.previous.enabled,form.nodes.next.enabled=page>1,page<pages
     R.catalogue_records=records
 end

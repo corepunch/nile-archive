@@ -1,0 +1,164 @@
+{
+  "disclaimer": "Automated solvability and payout audit, not measured human difficulty or retention.",
+  "nile": {
+    "first_clear_max": 200.0,
+    "first_clear_min": 140.0,
+    "mastered_replay_max": 100.0,
+    "mastered_replay_min": 80.0,
+    "minimum_story_path": {
+      "builds": 2.0,
+      "clears": 3.0,
+      "construction_cost": 220.0,
+      "influence": 50.0
+    },
+    "shores": [
+      120.0,
+      180.0,
+      240.0
+    ],
+    "start_coins": 0.0,
+    "start_influence": 10.0
+  },
+  "policy": "greedy highest evaluated legal swap; no tools; seeds 1..20",
+  "relic_budget": {
+    "compass_income": 20.0,
+    "compass_sinks": 20.0,
+    "maximum_spare_gold": 1200.0,
+    "minimum_spare_gold": 800.0,
+    "replay_max": 100.0,
+    "replay_min": 60.0
+  },
+  "relic_levels": [
+    {
+      "first_compasses": 1.0,
+      "level": 1.0,
+      "moves_left": 21.3,
+      "name": "First Light",
+      "new_spare_gold": 119.8,
+      "previous_spare_gold": 31.1,
+      "previous_spare_stone": 13.85,
+      "previous_spare_wood": 14.7,
+      "replay_gold": 99.8,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 1.0,
+      "level": 2.0,
+      "moves_left": 23.45,
+      "name": "The Jade Crescent",
+      "new_spare_gold": 119.9,
+      "previous_spare_gold": 37.95,
+      "previous_spare_stone": 21.25,
+      "previous_spare_wood": 20.95,
+      "replay_gold": 99.9,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 3.0,
+      "level": 3.0,
+      "moves_left": 26.95,
+      "name": "Sunstone Spiral",
+      "new_spare_gold": 119.9,
+      "previous_spare_gold": 36.85,
+      "previous_spare_stone": 21.0,
+      "previous_spare_wood": 20.35,
+      "replay_gold": 99.9,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 2.0,
+      "level": 4.0,
+      "moves_left": 21.6842,
+      "name": "The Vine Constellation",
+      "new_spare_gold": 116.8421,
+      "previous_spare_gold": 42.6316,
+      "previous_spare_stone": 27.5263,
+      "previous_spare_wood": 27.1579,
+      "replay_gold": 96.8421,
+      "samples": 20.0,
+      "wins": 19.0
+    },
+    {
+      "first_compasses": 2.0,
+      "level": 5.0,
+      "moves_left": 27.1,
+      "name": "Three Paths Meet",
+      "new_spare_gold": 119.9,
+      "previous_spare_gold": 49.75,
+      "previous_spare_stone": 31.05,
+      "previous_spare_wood": 31.4,
+      "replay_gold": 99.9,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 2.0,
+      "level": 6.0,
+      "moves_left": 29.45,
+      "name": "Winter Lotus",
+      "new_spare_gold": 120.0,
+      "previous_spare_gold": 41.6,
+      "previous_spare_stone": 24.85,
+      "previous_spare_wood": 26.05,
+      "replay_gold": 100.0,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 3.0,
+      "level": 7.0,
+      "moves_left": 21.6,
+      "name": "The Ember Ring",
+      "new_spare_gold": 118.0,
+      "previous_spare_gold": 55.7,
+      "previous_spare_stone": 38.35,
+      "previous_spare_wood": 38.5,
+      "replay_gold": 98.0,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 3.0,
+      "level": 8.0,
+      "moves_left": 29.1,
+      "name": "Prism Observatory",
+      "new_spare_gold": 120.0,
+      "previous_spare_gold": 53.45,
+      "previous_spare_stone": 36.05,
+      "previous_spare_wood": 34.8,
+      "replay_gold": 100.0,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 3.0,
+      "level": 9.0,
+      "moves_left": 32.2,
+      "name": "The Sixfold Seal",
+      "new_spare_gold": 120.0,
+      "previous_spare_gold": 64.25,
+      "previous_spare_stone": 43.75,
+      "previous_spare_wood": 43.5,
+      "replay_gold": 100.0,
+      "samples": 20.0,
+      "wins": 20.0
+    },
+    {
+      "first_compasses": 0.0,
+      "level": 10.0,
+      "moves_left": 32.1,
+      "name": "Heart of the Hexagon",
+      "new_spare_gold": 119.9,
+      "previous_spare_gold": 58.95,
+      "previous_spare_stone": 40.5,
+      "previous_spare_wood": 42.15,
+      "replay_gold": 99.9,
+      "samples": 20.0,
+      "wins": 20.0
+    }
+  ],
+  "samples_per_level": 20.0
+}

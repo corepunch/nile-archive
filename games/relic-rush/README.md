@@ -89,12 +89,17 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
 2. Complete its score, idol, excavation and blocker objectives within the move budget.
-3. Claim the win once, receiving building resources plus 3 Stars and 3 Compasses.
+3. Claim the first win once: the full next restoration cost, 80–120 spare Gold, 3 Discovery Stars and the scheduled Compass grant.
 4. Return to the island, select the next restoration and choose its location on opened grass.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Set out for the next expedition. Ten completed stages support ten restored buildings, ending at the sun temple.
 
-Gold, wood and stone pay for buildings. Stars measure cumulative expedition progress and are never spent. Compasses are spent on land expansion. The prototype grants enough resources for the next building; it has no energy timers, purchase flow or backend economy.
+Gold, Wood and Stone pay for story restorations. The guaranteed grant covers the full cost; random match colours do not change it. Spare Gold buys catalogue decorations. Earn more by opening **EXPEDITIONS** and replaying a completed stage: **60 Gold + 2 per move saved, capped at 40 bonus Gold**. First clears give 80 spare Gold with the same bonus. Replays do not add Stars, Compasses, materials, wonders or story progress. Failed attempts are free.
+
+Discovery Stars measure cumulative progress and are never spent. Compasses pay for land: levels 1–10 grant **1, 1, 3, 2, 2, 2, 3, 3, 3, 0**, covering the full 20-Compass map by discovery nine. Restore the earned wonder before the next new discovery; completed expeditions remain replayable. The campaign leaves **800–1,200 spare Gold**, with renewable Gold afterward. There is no energy, waiting timer or purchase backend.
+
+See the [Playrix/Wooga economy study, budgets and automated audit](../../docs/ECONOMY_RESEARCH.md)
+and [reviewed reward, replay and shop screens](docs/review/economy/README.md).
 
 ## Campaign: ten hex levels
 
@@ -166,12 +171,12 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Four connected relics → ordinary match; five → directional lightning relic; six or more → hex bomb, or a sun prism when six form a straight line.
 - Swap two specials for a combination attack; prism + special converts that color before detonation.
 - Ancient sand is excavated by matches above it. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits. Matched flame relics also thaw adjacent ice.
-- Cascades increase score multipliers. Collected resources fly to the top HUD.
+- Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause, sound toggle and reduced motion.
-- Win rewards combine an expedition grant and actual collected idols / jade / crystals; they always cover the next building. Claims cannot be collected twice.
+- First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
-- June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. Wins award 3 Stars and 3 Compasses. Confirming a region consumes only its Compass cost; Stars remain. Region requirements and fog are separate from building placement.
+- June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
 - The island's HUD is two rows of small resource capsules (idols, leaves and crystals; then Stars and Compasses beside **Expand**) and a pause button. There is no title or header band; tap a capsule to learn what it is for. The board keeps only the way back to the island and pause in its top corners. Score, level and moves float over the background painting without a large backing panel; outlined text and a slim translucent progress track preserve readability.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.

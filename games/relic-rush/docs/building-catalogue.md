@@ -12,8 +12,11 @@ story wonders. There is a 160-object island limit.
 Story wonders remain in expedition order, one per completed level. Optional
 purchases do not count as restorations, trigger story scenes, or advance the
 campaign. Gold needed for earned but unbuilt story wonders is reserved; the shop
-explains when it cannot be spent. This is the existing finite offline economy:
-no production timers, premium purchases, flower score or upgrade stages are added.
+shows spendable and reserved Gold separately. Completed expeditions can now be
+replayed for 60–100 Gold, keeping every decorative saving goal reachable. First
+discoveries leave 80–120 spare Gold after funding their restoration. See the
+[economy study](../../../docs/ECONOMY_RESEARCH.md). No production timers, premium
+purchases, flower score or upgrade stages are added.
 
 ## Source, import and registration
 

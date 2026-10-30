@@ -1,5 +1,34 @@
 # Shared UI states
 
+## Rewards, chapter gates and building purchases
+
+The [economy review](review/economy/README.md) covers the result, chapters,
+building list, initial estate, purchase preview and minimum-reward restoration
+route at 1200 x 900, 1368 x 1026 and 1600 x 900. Source: `lua/main.lua` and
+`lua/archive_economy.lua`; shared controls/layout: `engine/ui_forms.lua`. The
+existing five building sprites, Coin and Influence icons, fonts, theme and
+button rendering are reused. No runtime bitmap, icon set or ImageGen prompt is
+added. The repeatable building list uses `form:set_items` with stable IDs 1–5,
+one price/payoff/requirement data source and measured horizontal item columns.
+
+| Presentation/control | Meaning and supported states |
+| --- | --- |
+| Coin result | Actual base + first-clear + newly improved Star + clean-search payout; informational |
+| Scene Stars | Existing 1–3 best-time rating; improvements award Coins once; no separate spending state |
+| Influence | Existing estate icon; building-only cumulative progress, never a scene payout or spendable balance |
+| Chapter button | Play/replay when preceding clue and Influence permit; disabled with the missing requirement otherwise; existing normal/hover/pressed/focus/disabled skin |
+| Building row | Existing normal sprite; price, Influence return and chapter requirement; no persistent selected state |
+| Buy/close | Engine buttons with normal/hover/pressed/focus; Buy disabled for locked or unaffordable stock |
+| Purchase preview | Existing city ghost/valid-invalid footprint; shows cost and Influence return; charges only on confirmation |
+| Goal | Shows missing Influence and opens the building list, or opens chapters when ready |
+
+Reproduce with `--screen win`, `first-win`, `chapters`, `build`, `first-build`, `purchase`,
+`opening` and `island`. `--smoke` plays two scenes, cancels/confirms purchases,
+builds the fountain/temple and enters chapter three using actual control input.
+Pure economy tests cover minimum/maximum rewards, repeated claims, best-Star
+improvements, clue order and legacy scene access. The shared modal stack also
+consumes opening-frame input before enabling its controls.
+
 ## City move strip
 
 Source: the `move_form` resource in `lua/main.lua`, using `engine/ui_forms.lua`,
@@ -8,10 +37,11 @@ No bitmap, generated icon or runtime asset file is added.
 
 | Control/content | Meaning and states |
 | --- | --- |
-| `name` | Moving building's name, informational title |
+| `name` | Moving or purchasing building's name, informational title |
+| `payment` | Free move, or Coin cost and Influence return after purchase confirmation |
 | Instruction | Drag the preview or tap a free location; informational label |
 | `cancel` | Cancel preview and retain the original location; normal, hover (mouse), pressed, keyboard focus |
-| `confirm` | Commit a valid move at no cost; normal, hover, pressed, keyboard focus; disabled when terrain/zone/collision validation fails |
+| `confirm` | Commit a valid move at no cost, or purchase at the displayed cost; normal, hover, pressed, keyboard focus; disabled when terrain/zone/collision validation fails |
 | Ghost | Existing building sprite lifted while held, snapped on release, green valid footprint / red blocked preview; original layout remains unchanged until confirmation |
 
 The engine measures and places the strip and handles hit testing/focus. The

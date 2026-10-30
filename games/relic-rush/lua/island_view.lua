@@ -111,8 +111,8 @@ local function bottom_panel()
         if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end
     elseif R.prog.level >= rules.LEVELS then
         R.say_at("Your island, your story", vec2(240, 782 + y), 27, PAL_GOLD, 0)
-        R.say_at("DRAG TO EXPLORE. HOLD A BUILDING TO MOVE.", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "EXPLORE MY ISLAND", true) then R.notice("Drag to explore. Hold a wonder to pick it up.") end
+        R.say_at("REPLAY EXPEDITIONS TO EARN DECORATION GOLD", vec2(240, 811 + y), 12, PAL_WHITE, 0)
+        if R.button(rect(58, 834 + y, 364, 44), "PLAY FOR GOLD", true) then R.open_expeditions() end
     else
         R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(restored), vec2(240, 783 + y), 15, PAL_WHITE, 0)
         R.say_at("DRAG TO SCROLL. HOLD A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
@@ -154,6 +154,7 @@ function R.island_screen(inp, dt)
     -- the HUD is drawn after the map, so tall buildings never cover buttons;
     -- a placement shows itself on the ghost alone: red when it can't go there
     R.draw_header(true)
+    if c.placing<0 and R.button(rect(18,704+R.drop,218,42),"EXPEDITIONS",true) then R.open_expeditions() end
     if c.placing<0 and R.button(rect(300,704+R.drop,162,42),"BUILD SHOP",true) then R.open_catalogue() end
     bottom_panel()
 end

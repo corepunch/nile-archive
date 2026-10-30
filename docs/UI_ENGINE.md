@@ -168,6 +168,11 @@ elseif action and action.kind == "cancel" then modals:close(action.modal) end
 `cancel`). Automatic bounds centre the measured form within the logical screen.
 Each layer blurs/dims all earlier drawing; the next layer can blur the previous
 dialog too. Only the top form receives input. Escape emits its cancel action.
+A newly opened modal paints once with input disabled, so the release or
+key that opened it cannot also press a newly appeared button or cancel it. The
+next draw accepts input normally; lower layers remain inactive. This is covered
+by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
+
 List actions retain their `source` list ID and stable item `key` through the modal
 stack, so refreshing or reordering catalogue rows does not change their commands.
 `close(id?)` closes only the top layer; duplicate open IDs are rejected.

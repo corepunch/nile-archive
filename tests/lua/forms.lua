@@ -83,6 +83,8 @@ local selected=list:draw(rect(0,0,300,200),list_skin,{input={key=input.KEY_RETUR
 check(selected and selected.id=="choose" and selected.source=="topics" and selected.key=="a","list actions identify their source and record")
 local list_stack=ui.modals(list_skin)
 check(list_stack:open("catalogue",list,{}, {bounds=rect(0,0,300,200)}),"list opens in modal")
+check(not list_stack:draw(0,{input={key=input.KEY_RETURN,back=true},reduced_motion=true}),
+    "opening input cannot activate or cancel a newly opened modal")
 local modal_selected=list_stack:draw(0,{input={key=input.KEY_RETURN},reduced_motion=true})
 check(modal_selected and modal_selected.modal=="catalogue" and modal_selected.source=="topics" and modal_selected.key=="a",
     "modal list actions preserve record identity")

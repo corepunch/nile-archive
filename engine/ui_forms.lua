@@ -332,7 +332,7 @@ end
 function Stack:open(id,form,model,options)
     for _,layer in ipairs(self.layers) do if layer.id==id then fail('modal already open: '..id) end end
     local ok,message=form:push(model or {});if not ok then return false,message end
-    self.layers[#self.layers+1]={id=id,form=form,model=model or {},options=options or {},clock=0}
+    self.layers[#self.layers+1]={id=id,form=form,model=model or {},options=options or {},clock=0,fresh=true}
     ui.block(app.bleed());return true
 end
 function Stack:close(id)
@@ -341,7 +341,7 @@ function Stack:close(id)
     self.layers[#self.layers]=nil;return true
 end
 function Stack:draw(dt,options)
-    options=options or {};local event
+    options=options or {};local event;local top_fresh=false
     ui.set_enabled(true)
     for i,layer in ipairs(self.layers) do
         layer.clock=layer.clock+dt
@@ -354,10 +354,14 @@ function Stack:draw(dt,options)
             local _,height=layer.form:measure(width,self.skin)
             bounds=rect.centered(screen:center(),size2(width,math.min(config.height or height,screen.h-32)))
         end
-        local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers,input=options.input or input.get()})
+        -- The release/key that opened a modal belongs to the previous screen.
+        -- In particular it must not activate a new button underneath that tap.
+        if i==#self.layers then top_fresh=layer.fresh end
+        local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers and not layer.fresh,input=options.input or input.get()})
+        layer.fresh=false
         if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end
     end
     local top=self.layers[#self.layers]
-    if top and (options.input or input.get()).back then event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'} end
+    if top and not top_fresh and (options.input or input.get()).back then event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'} end
     return event
 end

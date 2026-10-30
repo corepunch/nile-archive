@@ -554,17 +554,41 @@ end
 
 M.GOLD, M.WOOD, M.STONE, M.STARS, M.COMPASSES = 1, 2, 3, 4, 5   -- purse slots
 
--- Reward for winning the current expedition, once per level.
-function M.level_reward(g, wonders)
+-- Guaranteed restoration funding is separate from the discretionary Gold purse.
+-- Matches score points; their random colour mix cannot reduce a building grant.
+M.FIRST_GOLD, M.REPLAY_GOLD, M.MOVE_GOLD, M.MAX_MOVE_GOLD = 80, 60, 2, 40
+-- Pays the 20-compass land budget by the ninth discovery, at the Star gates.
+M.compass_rewards = {1, 1, 3, 2, 2, 2, 3, 3, 3, 0}
+
+function M.discovery_compasses(count)
+    local n=0
+    for i=1,math.min(count,LEVELS) do n=n+M.compass_rewards[i] end
+    return n
+end
+
+function M.reward_breakdown(g, wonders, progress)
+    local first = not progress or g.level == progress.level
+    local bonus = math.min(M.MAX_MOVE_GOLD, math.max(0, g.moves) * M.MOVE_GOLD)
     local w = wonders[g.level + 1]
-    return purse(w.cost[1] + g.relics + 20, w.cost[2] + g.wood + 5, w.cost[3] + g.stone + 5, 3, 3)
+    local grant = first and w.cost or purse()
+    local gold = first and M.FIRST_GOLD or M.REPLAY_GOLD
+    return {first=first, grant=grant, base=gold, bonus=bonus,
+        total=purse(grant[1]+gold+bonus, grant[2], grant[3], first and 3 or 0,
+                    first and M.compass_rewards[g.level+1] or 0)}
+end
+
+function M.level_reward(g, wonders, progress)
+    return M.reward_breakdown(g,wonders,progress).total
 end
 
 function M.progress_reward(p, g, wonders)
-    if not g.won or p.level ~= g.level then return end
-    p.wallet = p.wallet + M.level_reward(g, wonders)
-    p.level = p.level + 1
+    if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
+    local reward = M.reward_breakdown(g,wonders,p)
+    p.wallet = p.wallet + reward.total
+    if reward.first then p.level = p.level + 1 end
     p.seed = g.rng
+    g.reward_claimed = true
+    return true, reward.first
 end
 
 return M
