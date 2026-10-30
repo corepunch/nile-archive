@@ -11,7 +11,7 @@ void font_shutdown(void);
 bool render_init(void);
 void render_shutdown(void);
 bool render_ready(void);
-void render_begin(size2 pixels, size2 logical, color clear);
+void render_begin(size2 pixels, size2 logical, rect viewport, color clear);
 void render_geometry(struct render_texture *tex, const render_vertex *v, int n, const int *indices, int count);
 struct render_texture *render_texture_create(int w, int h, const void *rgba);
 void render_texture_update(struct render_texture *tex, int x, int y, int w, int h, const void *rgba);

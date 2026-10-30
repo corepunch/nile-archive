@@ -14,7 +14,7 @@ local STARS, COMPASSES = 4, 5
 -- Ten restorations in campaign order: footprint and draw width per sprite.
 local function wonder(title, about, i, w, gold, wood, stone)
     return {name = title, about = about, sprite_path = ("buildings/%d.png"):format(i), width = w, max_height = 230,
-            footprint = size2(math.floor(w * .4), math.floor(w * .19)), cost = purse(gold, wood, stone)}
+            sink = math.floor(w * .19), footprint = size2(math.floor(w * .4), math.floor(w * .19)), cost = purse(gold, wood, stone)}
 end
 
 M.wonders = {

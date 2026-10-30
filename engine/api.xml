@@ -500,6 +500,7 @@
     <field name="zone_count" type="int"/>
     <field name="open" type="uint" access="rw" doc="Bit per opened zone (bit 0 = zone 0, which starts open)."/>
     <field name="spacing" type="float" access="rw" doc="Minimum distance between buildings without footprints."/>
+    <field name="tile" type="size2" access="rw" doc="Isometric tile half extents; defaults to 32 x 16. Placement snaps to tile centres."/>
     <field name="footprint_gap" type="size2" access="rw" doc="Extra clearance between footprints."/>
     <field name="buildable" type="callback" tramp="lcity_buildable" decl="bool lcity_buildable(const struct city *c, vec2 world)" doc="function(c, world) -> bool: terrain test."/>
     <field name="zone_at" type="callback" tramp="lcity_zone_at" decl="int lcity_zone_at(const struct city *c, vec2 world)" doc="function(c, world) -> zone (0-based) or -1; default: zone rects."/>

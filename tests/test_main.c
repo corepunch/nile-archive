@@ -2,6 +2,7 @@
  * story rules in C, then every Lua file named on the command line (the games'
  * rules, the tests/lua folder) in the engine's Lua state. Run with `make test`. */
 #include "engine.h"
+#include "viewport.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -131,6 +132,23 @@ static void test_save(void)
 
 static bool flat_land(const city *c, vec2 p) { return p.y > 100; }
 
+static void test_safe_view(void)
+{
+    rect v = app_fit_view(sz2(480, 900), rc(0, 59, 390, 751));
+    NEAR(v.pos.x, 0); NEAR(v.pos.y, 68.875f);
+    NEAR(v.size.w, 390); NEAR(v.size.h, 731.25f);
+    v = app_fit_view(sz2(1200, 900), rc(59, 0, 759, 369));
+    CHECK(v.pos.x >= 59 && v.pos.y >= 0);
+    CHECK(rect_max(v).x <= 818 && rect_max(v).y <= 369);
+    vec2 p = v2(320, 844);
+    float scale = v.size.w / 1200;
+    vec2 native = vec2_add(v.pos, vec2_scale(p, scale));
+    vec2 logical = vec2_scale(vec2_sub(native, v.pos), 1 / scale);
+    NEAR(logical.x, p.x); NEAR(logical.y, p.y);
+    v = app_fit_view(sz2(480, 900), rc(0, 0, 480, 900));
+    NEAR(v.pos.x, 0); NEAR(v.pos.y, 0); NEAR(v.size.h, 900);
+}
+
 static void test_city(void)
 {
     static building_def defs[3] = {
@@ -182,10 +200,16 @@ static void test_city(void)
     /* confirmable placement and moving; footprints may touch, not overlap */
     wallet.v[0] = 100;
     city_begin_place(&c, 2, v2(702, 601));
-    CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 600);   /* snapped to 4 */
+    CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 608);   /* isometric tile centre */
     ev = city_confirm(&c, &wallet, 0);
     CHECK(ev.result == CITY_BUILT && c.placing == -1 && wallet.v[0] == 90);
     int hall = ev.building;
+    NEAR(c.items[hall].pos.x, 704); NEAR(c.items[hall].pos.y, 608);
+    city_begin_move(&c, hall);
+    vec2 original = c.items[hall].pos;
+    c.ghost = v2(703, 607);
+    city_cancel(&c);
+    NEAR(c.items[hall].pos.x, original.x); NEAR(c.items[hall].pos.y, original.y);
     city_begin_place(&c, 2, v2(760, 620));
     CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED && c.placing == 2);   /* overlaps */
     c.ghost = v2(828, 600);
@@ -238,6 +262,7 @@ int main(int argc, char **argv)
     test_purse();
     test_save();
     test_city();
+    test_safe_view();
     test_story();
     printf("engine: %d checks, %d failures\n", checks, failures);
 
