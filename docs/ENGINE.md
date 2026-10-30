@@ -1,6 +1,6 @@
 # Engine architecture
 
-The engine is about 3,500 lines of C11 in ten modules behind one header,
+The engine uses small C11 modules behind one public header,
 [`engine/engine.h`](../engine/engine.h), plus Lua 5.4 and the glue generated
 from [`engine/api.xml`](../engine/api.xml). It targets 2D sprite games with
 menus, dialogs and a build-your-place meta-game: hidden objects, match-3,
@@ -17,7 +17,7 @@ where the ideas come from.
    ├────────────┴────────┴──────────┴──────────┤
    │   gfx: textures, shapes, camera │ font     │   drawing
    ├─────────────────────────────────┴──────────┤
-   │   core: window, logical screen, input, loop │   platform (SDL2, Emscripten)
+   │   core: window, logical screen, input, loop │   corepunch/platform (native, Emscripten)
    └────────────────────────────────────────────┘
         math: header-only value types (vec2, rect, …)
 ```
@@ -63,7 +63,7 @@ Landscape-only games set `.landscape = true` and the engine shows a rotate
 prompt in portrait and holds input until the device turns.
 
 Games whose art is composed for one frame set `.fixed = true`: the logical
-screen is exactly the design and SDL letterboxes the rest. Relic Rush is a
+screen is exactly the design and the renderer letterboxes the rest. Relic Rush is a
 480 × 900 portrait game laid out in absolute coordinates; on an iPad it is a
 centred column.
 
@@ -89,7 +89,7 @@ while drawing what sits under the dialog.
 
 - **Textures** load through `stb_image` (PNG/JPG/BMP) and are drawn with a tint.
 - **Shapes** (`draw_round_rect_grad`, `draw_ring`, `draw_line`, `draw_glow`,
-  `draw_shadow`, `draw_poly`) are triangle meshes sent to `SDL_RenderGeometry`.
+  `draw_shadow`, `draw_poly`) are triangle meshes sent to the shared triangle renderer.
   Each outline gets a one-device-pixel ring fading to transparent, which gives
   anti-aliased edges without MSAA; `draw_shadow` widens that ring into a blur.
 - **Camera**: a view rect on screen looking at a world. `camera_input` applies
@@ -132,7 +132,7 @@ both games. Layout is plain rect arithmetic with RectCut plus `rect_col`,
 A game writes one `serialize(save *s, void *user)` function; `save_read` and
 `save_write` call it in read or write mode. Files are `key=value` text, so they
 are diffable and forward compatible: missing keys keep their defaults.
-Native builds store them under `SDL_GetPrefPath("corepunch", id)`, the web
+Native builds retain the original `corepunch/<id>` save namespace under Application Support (Apple) or the XDG data directory (Linux); the web
 build in `localStorage["<id>/<slot>"]`. `save_inject` feeds text from elsewhere
 into the next read — Nile Archive uses it to import progress from the old
 HTML version's `localStorage["nile-v1"]` JSON.
@@ -220,13 +220,22 @@ the first note; `--mute` and `sfx_enable(false)` silence it.
 
 ## Platform notes
 
-- **Native**: vsync'd SDL renderer, software fallback. Headless runs use
-  `SDL_VIDEODRIVER=offscreen` plus `--shot`, which is how the documentation
-  screenshots and the CI smoke test are produced.
-- **Web**: a preview target only. Emscripten with the SDL2 port; `web/shell.html` is
-  nothing but a fullscreen canvas. The canvas is sized by CSS
-  (`100vw × 100dvh`); SDL resizes the drawing buffer with `devicePixelRatio`.
-  Assets are preloaded from `games/<name>/data` to `/data`.
+- **Native**: corepunch/platform owns the window, GL context, events and audio.
+  The engine streams colored and textured triangles through OpenGL 3.2 or ES 3.
+  `--headless --shot file.png` hides the window for screenshot runs; Linux CI
+  uses Xvfb and Mesa. `make test-platform` checks actual pixels and queued input.
+- **iOS**: `axRunApplication` gives UIKit ownership of the frame loop. The
+  launcher starts the game after its scene is laid out. Touch, pinch, focus
+  cancellation and Retina scale come from platform.
+- **Web**: Emscripten and platform's WebGL backend, requiring WebGL 2.
+  `web/shell.html` is a fullscreen canvas (`100vw × 100dvh`); platform sizes
+  its drawing buffer for `devicePixelRatio`. Assets preload at `/data`.
+  `web_audio.c` supplies a WebAudio device for the platform mixer because its
+  upstream hardware playback backend currently has no browser implementation.
+
+Make, Xcode and WebAssembly compile the same committed `u_*.c` unity units.
+The individual `.c` modules are included by those units and never compiled
+separately. Lua is isolated in its own unit to avoid static-name collisions.
 
 ## Script
 
@@ -276,4 +285,4 @@ game-independent APIs, described in [LUA_API.md](LUA_API.md). Volcano's Lua code
 owns its worker jobs and campaign rules. See [the port assessment](../games/volcano/docs/PORT.md).
 
 Native verification can isolate save files with `SPRITE_SAVE_DIR`, an existing
-writable directory. Normal play continues to use SDL's per-game preferences.
+writable directory. Normal play continues to use the existing per-game save directories.

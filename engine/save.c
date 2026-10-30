@@ -143,12 +143,12 @@ static bool saves_disabled(void) { return app_arg("fresh") != NULL; }
 #ifndef __EMSCRIPTEN__
 static const char *file_for(const char *slot)
 {
-    static char path[1024];
+    static char path[2048];
     /* Isolate native test/preview saves without changing the user's HOME. */
     const char *override = getenv("SPRITE_SAVE_DIR");
     if (override && *override) {
-        snprintf(path, sizeof path, "%s/%s.sav", override, slot);
-        return path;
+        int n = snprintf(path, sizeof path, "%s/%s.sav", override, slot);
+        return n >= 0 && (size_t)n < sizeof path ? path : NULL;
     }
     char dir[1024];
 #if defined(__APPLE__)
@@ -168,8 +168,8 @@ static const char *file_for(const char *slot)
         *p = 0; axMkDir(dir); *p = '/';
     }
     axMkDir(dir);
-    snprintf(path, sizeof path, "%s/%s.sav", dir, slot);
-    return path;
+    int n = snprintf(path, sizeof path, "%s/%s.sav", dir, slot);
+    return n >= 0 && (size_t)n < sizeof path ? path : NULL;
 }
 #endif
 
@@ -178,7 +178,9 @@ static char *storage_read(const char *slot)
 #ifdef __EMSCRIPTEN__
     return web_storage_get(fmt("%s/%s", app_id(), slot));
 #else
-    FILE *file = fopen(file_for(slot), "rb");
+    const char *path = file_for(slot);
+    if (!path) return NULL;
+    FILE *file = fopen(path, "rb");
     if (!file) return NULL;
     if (fseek(file, 0, SEEK_END)) { fclose(file); return NULL; }
     long n = ftell(file);
@@ -201,7 +203,8 @@ static bool storage_write(const char *slot, const char *text)
     return web_storage_set(fmt("%s/%s", app_id(), slot), text);
 #else
     const char *path = file_for(slot);
-    char tmp[1100];
+    if (!path) return false;
+    char tmp[2100];
     snprintf(tmp, sizeof tmp, "%s.tmp", path);
     FILE *f = fopen(tmp, "wb");
     if (!f) return false;
