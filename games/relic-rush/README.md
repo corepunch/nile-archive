@@ -21,7 +21,7 @@ Pause, building and guide dialogs use engine-owned form resources and one game s
 
 ## Result screens and typography
 
-The result screen now reveals stars, score, resources, progression and the next restoration in sequence, with a short animated return to the island. Quiet torch sconces replace victory fireworks. Building cards use clean sprite extraction and balanced text wrapping.
+The result screen now reveals stars, score, resources, progression and the next restoration in sequence, with a short animated return to the island. Building cards use clean sprite extraction and balanced text wrapping.
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
@@ -217,7 +217,7 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 - `lua/rules.lua`: hex grid, deterministic match-4 rules, specials, blockers, tools, campaign and rewards — pure Lua, tested headlessly.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
 - `lua/board.lua`: the expedition screen, animation phases and swipe/tap input.
-- `lua/vfx.lua`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups and torches.
+- `lua/vfx.lua`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups.
 - `lua/island_view.lua`: the island screen around the engine city: HUD, region markers, placement panel.
 - `lua/screens.lua`: text palettes, panels, buttons and every dialog.
 - `lua/main.lua`: flow, saves, sound and debug entry points; returns the app descriptor the engine runs.

@@ -1,6 +1,6 @@
 -- vfx.lua — presentation-only effects with their own random stream and fixed
 -- pools: impacts, travelling sun rays, blast shockwaves, prism links, special
--- births, score pop-ups, sparks, relics flying to the HUD and torch flames.
+-- births, score pop-ups, sparks and relics flying to the HUD.
 -- Gameplay never reads anything from here.
 local R = require("state")
 local rules = require("rules")
@@ -290,30 +290,6 @@ function R.vfx_draw()
         local word = R.word_combo >= 5 and "SUNSTORM!" or R.word_combo >= 3 and "MAGNIFICENT!" or "BRILLIANT!"
         R.say_at(word, vec2(240, 759 + R.drop - math.sin(t * PI) * 8), 28 + 8 * math.sin(math.min(1, t * 4) * PI), R.PAL_GOLD, 420)
     end
-end
-
--- A quiet torch: buoyant flame parcels, a warm core and translucent wisps.
-function R.vfx_torch(at, t)
-    vfx_halo(at + vec2(0, -20), 53, rgba(255, 122, 26, 90))
-    gfx.round_rect(rect(at.x - 12, at.y - 42, 24, 49), 11, rgba(78, 87, 57))
-    texture.additive(R.glow, false)
-    local clock = R.reduced_motion and 1.2 or t
-    for k = 0, 33 do
-        local seed = math.sin(k * 127.1 + 311.7) * .5 + .5
-        local life = .65 + .5 * seed
-        local a = math.fmod(clock + seed * life * 5, life) / life
-        local fade = (1 - a) ^ 1.2
-        local p = vec2(at.x + math.sin(a * 6 + k * .8) * (2 + a * 4) + math.sin(clock * 3 + seed * 4) * 1.3, at.y - 4 - 40 * a - 8 * a * a)
-        local r = (5 + seed * 4) * fade
-        gfx.image(R.glow, rect(p.x - r, p.y - r * 2, r * 2, r * 4), rgba(255, 72 + seed * 64, 8, 105 * fade))
-        gfx.image(R.glow, rect(p.x - r * .55, p.y - r * 1.3, r * 1.1, r * 2.6), rgba(255, 179 + seed * 55, 62, 150 * fade))
-    end
-    texture.additive(R.glow, true)
-    vfx_halo(at + vec2(0, -4), 18, rgba(255, 234, 150, 160))
-    gfx.round_rect(rect(at.x - 3, at.y + 8, 6, 22), 2, rgba(93, 60, 33))
-    gfx.round_rect(rect(at.x - 11, at.y + 5, 22, 7), 3, rgba(147, 98, 45))
-    gfx.round_rect(rect(at.x - 9, at.y + 1, 18, 6), 2, rgba(211, 160, 78))
-    gfx.rect(rect(at.x - 7, at.y + 2, 14, 2), rgba(255, 219, 131))
 end
 
 return R

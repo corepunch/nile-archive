@@ -241,8 +241,6 @@ local function result_screen()
         star_icon(slot:center(), (k == 1 and 29 or 24) * pop)
         set_paint(s)
     end
-    R.vfx_torch(pp(vec2(l.card.x + 35, l.score.y + 20)), R.now)
-    R.vfx_torch(pp(vec2(l.card:max().x - 35, l.score.y + 20)), R.now + .3)
     s = section(.43, .3, 9)
     say("EXPEDITION SCORE", l.score_label, 12, PAL_CREAM)
     local count = R.reduced_motion and 1 or ease.out_cubic((R.modal_clock - .43) / .65)
