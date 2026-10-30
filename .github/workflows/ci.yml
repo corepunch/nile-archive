@@ -27,6 +27,8 @@ jobs:
           xvfb-run -a ./tools/screenshots.sh
       - name: Relic Rush smoke test (level one to level two through injected clicks)
         run: xvfb-run -a timeout 600 ./build/relic-rush --headless --fresh --smoke --mute
+      - name: Nile Archive smoke test (chapter one through injected clicks)
+        run: xvfb-run -a timeout 600 ./build/nile-archive --headless --fresh --smoke --mute
       - name: Volcano smoke test (five districts, pause, restart and replay through clicks)
         run: xvfb-run -a timeout 600 ./build/volcano --headless --fresh --smoke --mute --size 456x342
       - uses: actions/upload-artifact@v4
