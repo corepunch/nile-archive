@@ -177,6 +177,12 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "wrapper.pb-project";
 };
+"2A6267F9E3933A7A486B39EE" = {"isa" = "PBXFileReference";
+"name" = "SDL_uikit_main.c";
+"path" = "../../engine/third_party/SDL/src/main/uikit/SDL_uikit_main.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
 "603D073CCC19074BD329EAAD" = {"isa" = "PBXContainerItemProxy";
 "containerPortal" = "A6D651DDAEB690FBC7397F53";
 "proxyType" = 2;
@@ -237,6 +243,7 @@
 "FD17E07B712BBB8CD7AA6FCA" = {"isa" = "PBXGroup";
 "name" = "SDL";
 "children" = ("A6D651DDAEB690FBC7397F53",
+"2A6267F9E3933A7A486B39EE",
 );
 "sourceTree" = "<group>";
 };
@@ -495,6 +502,9 @@
 "44CE0CBA4D207007C2FB482A" = {"isa" = "PBXBuildFile";
 "fileRef" = "06369032B38F99A704630800";
 };
+"E5BA34E0FDF26B467432F98D" = {"isa" = "PBXBuildFile";
+"fileRef" = "2A6267F9E3933A7A486B39EE";
+};
 "A772095BF84DEA49B03164A5" = {"isa" = "PBXSourcesBuildPhase";
 "buildActionMask" = 2147483647;
 "files" = ("9D8444F8F2B2462704512842",
@@ -509,6 +519,7 @@
 "EC81CA96460C51D6A134315C",
 "1F91D9DDE3659D2CEA764602",
 "44CE0CBA4D207007C2FB482A",
+"E5BA34E0FDF26B467432F98D",
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };

@@ -224,6 +224,11 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     data_folder = project.add('game/data', 'PBXFileReference', path='data', sourceTree='<group>', lastKnownFileType='folder')
     sdl_ref = project.add('sdl/project', 'PBXFileReference', name='SDL.xcodeproj', path=rel(SDL_PROJECT),
                           sourceTree='SOURCE_ROOT', lastKnownFileType='wrapper.pb-project')
+    # On iOS SDL_main.h renames the game's main to SDL_main; this public-domain
+    # shim from SDL supplies the real main, which starts UIKit and calls SDL_main.
+    uikit_main = project.add('sdl/uikit-main', 'PBXFileReference', name='SDL_uikit_main.c',
+                             path=rel(SDL + '/src/main/uikit/SDL_uikit_main.c'), sourceTree='SOURCE_ROOT',
+                             lastKnownFileType='sourcecode.c.c')
     sdl_products = []
     sdl_proxies = {}
     for target_name, (target_id, product_id) in sdl.items():
@@ -240,7 +245,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder], sourceTree='<group>'),
         project.add('group/engine', 'PBXGroup', name='Engine',
                     children=[header, api] + [sources[n] for n in ENGINE_SOURCES + ['lua_lib', 'launcher']], sourceTree='<group>'),
-        project.add('group/sdl', 'PBXGroup', name='SDL', children=[sdl_ref], sourceTree='<group>'),
+        project.add('group/sdl', 'PBXGroup', name='SDL', children=[sdl_ref, uikit_main], sourceTree='<group>'),
     ]
 
     # --- targets ---
@@ -286,6 +291,8 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             if filename == 'lua_lib':
                 fields['settings'] = {'COMPILER_FLAGS': '-Wno-unused-function'}
             build_files.append(project.add(f'{name}/{filename}.c', 'PBXBuildFile', **fields))
+        if ipad:
+            build_files.append(project.add(f'{name}/SDL_uikit_main.c', 'PBXBuildFile', fileRef=uikit_main))
         compile_phase = project.add(name + '/sources', 'PBXSourcesBuildPhase', buildActionMask=2147483647,
                                     files=build_files, runOnlyForDeploymentPostprocessing=0)
         link = project.add(name + '/link-sdl', 'PBXBuildFile', fileRef=sdl_product)
