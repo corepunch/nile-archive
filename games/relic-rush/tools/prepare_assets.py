@@ -11,6 +11,8 @@ from collections import deque
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageFilter
+import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 TILE_SETS = ('relics', 'jewels', 'resources')   # relics is the default, the others are optional art packs
@@ -71,7 +73,7 @@ def main():
         for col in range(6):
             im = sheet.crop((round(col * sheet.width / 6), round(row * sheet.height / 3),
                              round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3)))
-            tile(im, inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
+            tile(isolate_sprite(im), inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
 
     sheet = Image.open(ART / 'buildings.png').convert('RGBA')
     for i in range(10):
@@ -89,6 +91,7 @@ def main():
         im.thumbnail((264, 324), Image.Resampling.LANCZOS)
         im.save(DATA / 'characters' / f'{name}.png', optimize=True)
     print('relic-rush data ready')
+    subprocess.run([sys.executable, str(ROOT / 'tools/board_assets.py')], check=True)
 
 
 if __name__ == '__main__':

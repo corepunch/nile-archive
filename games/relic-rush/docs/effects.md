@@ -33,6 +33,11 @@ Our interpretation is anticipation → attack → tile response → collection �
 
 `vfx.lua` isolates presentation from `rules.lua`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. A small procedural additive light texture is created once; rings, beams and sparkles use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
 
+Static specials, blockers and tool controls use authored atlas artwork; their
+states and the intentional procedural animation primitives are listed in the
+[asset catalogue](asset-catalogue.md). Ray direction, bomb/prism identity and ice
+strength are no longer supplied by procedural glyphs.
+
 Effects only read the board; the ported rule tests (`make test`) and the `--smoke` run cover gameplay with effects active.
 
 Capture single moments with `--fx ray|bomb|prism --frames N --shot file.png` (N frames after the special fires); `tools/screenshots.sh` renders the reel frames and assembles `screenshots/effects-reel.gif`. These modes do not write player progress.

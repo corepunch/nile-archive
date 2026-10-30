@@ -36,6 +36,15 @@ shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
 # Relic Rush: portrait 480 x 900, stills plus two short animated reels
 shot relic-rush hex-first 480x900
 shot relic-rush hex-late 480x900 --level 8
+shot relic-rush art-catalogue 480x900 --art-states
+shot relic-rush art-specials 480x900 --art-board
+shot relic-rush art-jewels 480x900 --art-board --tiles jewels
+shot relic-rush art-resources 480x900 --art-board --tiles resources
+shot relic-rush art-phone 390x844 --level 8 --safe-area 0,47,0,34
+shot relic-rush guide 480x900 --dialog guide
+shot relic-rush pause 480x900 --dialog pause
+shot relic-rush phone-pause 390x844 --dialog pause --safe-area 0,47,0,34
+shot relic-rush phone-card 390x844 --card 1 --safe-area 0,47,0,34
 shot relic-rush island-village 480x900 --showcase
 shot relic-rush island-placement 480x900 --city 6 --placing
 shot relic-rush island-blocked 480x900 --city 6 --placing blocked
@@ -75,6 +84,15 @@ reel fx-bomb 18 2 --fx bomb --reel
 reel fx-prism 18 2 --fx prism --reel
 reel result 36 3 --victory --reel
 python3 tools/make_reels.py "$tmp" games/relic-rush/docs/screenshots
+
+# Shared form resources: same template with two skins and stacked modal layers.
+for mode in skins layers; do
+    extra=""
+    if [ "$mode" = layers ]; then extra="--nested"; fi
+    ./build/relic-rush --headless --mute --fresh --lua tests/fixtures/ui \
+        --data games/relic-rush/data --size 900x700 $extra --shot "$tmp/ui-$mode.png" > /dev/null
+    python3 -c "from PIL import Image; im=Image.open('$tmp/ui-$mode.png').convert('RGB'); im.thumbnail((1200,1000)); im.save('docs/screenshots/ui-$mode.jpg',quality=90)"
+done
 
 # Volcano: live campaign stages; previews play normal paid jobs in the simulation.
 shot volcano menu 1368x1026

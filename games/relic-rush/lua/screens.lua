@@ -73,17 +73,34 @@ function R.tapped(r) return ui.hit(r:offset(vec2(0, R.hit_dy)), 0).clicked end
 local tapped = R.tapped
 
 -- Buttons respond even when drawn disabled, so the game can explain why not.
-function R.button(r, label, enabled)
-    local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
+function R.paint_button(r, st, enabled)
     local b = st.held and r:offset(vec2(0, 2)) or r
     rrect(r:offset(vec2(0, 6)), 15, rgba(13, 54, 43))
     rrect(b, 15, enabled and rgba(46, 112, 70) or rgba(75, 94, 80))
     rrect(rect(b.x + 3, b.y + 3, b.w - 6, b.h - 7), 12, enabled and rgba(113, 185, 83) or rgba(110, 126, 108))
     rrect(rect(b.x + 6, b.y + 4, b.w - 12, b.h * .4), 10, enabled and rgba(159, 213, 109) or rgba(130, 145, 125))
-    say(label, b:inflate(-12), 25, PAL_CREAM)
+end
+function R.button(r, label, enabled)
+    local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
+    R.paint_button(r, st, enabled)
+    say(label, (st.held and r:offset(vec2(0, 2)) or r):inflate(-12), 25, PAL_CREAM)
     return st.clicked
 end
 local button = R.button
+
+-- One game skin; the shared form engine owns layout, hits, focus and bindings.
+local form_skin = {
+    panel = panel,
+    button = function(r, st, node) if not node.flat then R.paint_button(r, st, not st.disabled) end end,
+    button_text = function(r, label, node, st)
+        say(label, (st.held and r:offset(vec2(0, 2)) or r):inflate(-8), node.em or 25, PAL_CREAM)
+    end,
+    label = function(r, label, node)
+        if node.wrap then paragraph(label, r, node.em or 22, node.palette or PAL_CREAM)
+        else say(label, r, node.em or 26, node.palette or PAL_GOLD) end
+    end,
+    focus = function(r) gfx.round_rect_line(pr(r:inflate(3)), 15 * P.scale, 2, pc(rgba(255, 223, 129))) end,
+}
 
 -- Two-tone gold star on a darker rim, lit from above.
 function R.star_icon(center, radius)
@@ -188,13 +205,6 @@ local function result_rects()
             claim = rect(x + 40, y + 480 * s, w - 80, 56 * s)}
 end
 
-local function wonder_rects()
-    local w, s = math.min(420, SCREEN_W - 48), math.min(1, (SCREEN_H - 100) / 592)
-    local x, y = (SCREEN_W - w) / 2, (SCREEN_H - 592 * s) / 2
-    return {card = rect(x, y, w, 592 * s), title = rect(x + 24, y + 20 * s, w - 48, 44 * s), art = rect(x + 76, y + 83 * s, w - 152, 205 * s),
-            description = rect(x + 24, y + 306 * s, w - 48, 62 * s), costs = rect(x + 40, y + 382 * s, w - 80, 78 * s),
-            action = rect(x + 46, y + 478 * s, w - 92, 56 * s), close = rect(x + 96, y + 551 * s, w - 192, 28 * s)}
-end
 
 -- Fade and lift a part of a dialog in after `delay`; returns the paint to restore.
 local function section(delay, duration, rise)
@@ -268,32 +278,48 @@ local function result_screen()
     set_paint(s)
 end
 
+local wonder_form = ui.form{
+    root = {kind="column", panel=true, padding={24,20,24,13}, children={
+        {kind="label", id="name", height=44, em=34},
+        {kind="spacer", height=19},
+        {kind="image", id="sprite", height=205},
+        {kind="spacer", height=18},
+        {kind="label", id="about", height=62, wrap=true, em=22, palette=PAL_CREAM},
+        {kind="spacer", height=14},
+        {kind="row", height=78, padding={16,0,16,0}, gap=10, visible_field="can_build", children={
+            {kind="column", grow=1, gap=9, children={{kind="image",id="gold_icon",height=34},{kind="label",id="gold",height=28}}},
+            {kind="column", grow=1, gap=9, children={{kind="image",id="wood_icon",height=34},{kind="label",id="wood",height=28}}},
+            {kind="column", grow=1, gap=9, children={{kind="image",id="stone_icon",height=34},{kind="label",id="stone",height=28}}},
+        }},
+        {kind="label",id="notice",height=78,wrap=true,em=15,palette=PAL_CREAM,visible_field="show_notice"},
+        {kind="spacer",height=18},
+        {kind="button",id="action",height=56},
+        {kind="spacer",height=17},
+        {kind="button",id="close",text="CLOSE",height=28,flat=true,em=16},
+    }},
+    bindings={
+        {id="name",field="name",readonly=true},{id="sprite",field="sprite",type="texture",readonly=true},
+        {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
+        {id="gold",field="cost.1",type="integer",readonly=true},
+        {id="wood",field="cost.2",type="integer",readonly=true},
+        {id="stone",field="cost.3",type="integer",readonly=true},
+    },
+}
 local function wonder_screen()
     local i = R.inspect >= 0 and R.inspect or R.island.count
     if i < 0 or i >= #R.wonders then return end
     local w = R.wonders[i + 1]
-    local can_build = i == R.island.count and i < R.prog.level
-    local built = i < R.island.count
-    local l = wonder_rects()
-    panel(l.card)
-    say(w.name, l.title, 34, PAL_GOLD)
-    picture_fit(w.sprite, l.art, 255)
-    paragraph(w.about, l.description, 22, PAL_CREAM)
-    if can_build then
-        local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-        for k = 0, 2 do
-            local r = l.costs:col(3, k, 10)
-            picture_fit(R.relics[kinds[k + 1] + 1], rect(r.x + (r.w - 34) / 2, r.y, 34, 34), 255)
-            say(tostring(w.cost[k + 1]), rect(r.x, r.y + 43, r.w, 28), 26, PAL_GOLD)
-        end
-    else
-        paragraph(built and "RESTORED WITH YOUR EXPEDITION TREASURES" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER", l.costs, 15, PAL_CREAM)
-    end
-    if button(l.action, can_build and "CHOOSE A LOCATION" or built and "MOVE THIS BUILDING" or "BACK TO ISLAND", true) then
-        if can_build or built then R.island_begin(i, true) else R.overlay = R.OV_NONE end
-    end
-    say("CLOSE", l.close, 16, PAL_CREAM)
-    if tapped(l.close) then R.overlay = R.OV_NONE end
+    local can_build, built = i == R.island.count and i < R.prog.level, i < R.island.count
+    local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=w.about,
+        cost={w.cost[1],w.cost[2],w.cost[3]}, action=can_build and "CHOOSE A LOCATION" or built and "MOVE THIS BUILDING" or "BACK TO ISLAND"}
+    assert(ok,message)
+    wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1]):set("wood_icon",R.relics[RELIC_LEAF+1]):set("stone_icon",R.relics[RELIC_CRYSTAL+1])
+    wonder_form.values.can_build, wonder_form.values.show_notice = can_build, not can_build
+    wonder_form:set("notice",built and "RESTORED WITH YOUR EXPEDITION TREASURES" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER")
+    local event = wonder_form:draw(rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592)),form_skin,{hit_offset=vec2(0,R.hit_dy)})
+    if event and event.id == "action" then
+        if can_build or built then R.island_begin(i,true) else R.overlay=R.OV_NONE end
+    elseif event and event.id == "close" then R.overlay=R.OV_NONE end
 end
 
 local guide_titles = {"Connect 4+ neighbors", "Group 5: lightning", "Group 6+: bomb or prism", "Chains & ancient sand", "Ice & fire"}
@@ -307,7 +333,15 @@ local function guide_screen()
     say_at("SWIPE OR TAP TWO NEIGHBORING RELICS", vec2(240, 221), 13, PAL_WHITE, 0)
     for k = 0, 4 do
         local y = 278 + k * 79
-        R.draw_relic(rules.tile(k, k == 1 and rules.ROW or k == 2 and rules.BOMB or rules.NORMAL), pp(vec2(66, y)), P.scale, 255 * P.alpha, 1)
+        if k == 2 then
+            R.draw_relic(rules.tile(k, rules.BOMB), pp(vec2(53, y)), P.scale * .7, 255 * P.alpha, 1)
+            R.draw_relic(rules.tile(k, rules.PRISM), pp(vec2(85, y)), P.scale * .7, 255 * P.alpha, 1)
+        else
+            if k == 3 then picture(R.board_art.sand, rect(40, y - 26, 52, 52), 255) end
+            R.draw_relic(rules.tile(k, k == 1 and rules.ROW or rules.NORMAL), pp(vec2(66, y)), P.scale, 255 * P.alpha, 1)
+            if k == 3 then picture(R.board_art.chain, rect(42, y - 24, 48, 48), 255)
+            elseif k == 4 then picture(R.board_art["ice-2"], rect(42, y - 24, 48, 48), 255) end
+        end
         say_at(guide_titles[k + 1], vec2(273, y - 12), 23, PAL_GOLD, 318)
         say_at(guide_lines[k + 1], vec2(273, y + 15), 16, PAL_CREAM, 318)
     end
@@ -316,16 +350,24 @@ local function guide_screen()
     if done or tapped(rect(0, 700, SCREEN_W, SCREEN_H - 700)) then R.overlay = R.OV_NONE end
 end
 
+local pause_form = ui.form{
+    root={kind="column",panel=true,padding={46,20,46,35},gap=20,children={
+        {kind="label",text="Take a breath",height=44,em=34},
+        {kind="button",id="resume",text="RESUME",height=49},
+        {kind="toggle",id="sound",on_text="SOUND ON",off_text="SOUND OFF",height=49},
+        {kind="toggle",id="motion",on_text="MOTION REDUCED",off_text="FULL ANIMATION",height=49},
+        {kind="button",id="guide",text="EXPLORER'S GUIDE",height=49},
+    }},
+    bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
+}
 local function pause_screen()
-    panel(rect(42, 252, 396, 382))
-    say_at("Take a breath", vec2(240, 291), 34, PAL_GOLD, 0)
-    if button(rect(88, 337, 304, 49), "RESUME", true) then R.overlay = R.OV_NONE end
-    if button(rect(88, 406, 304, 49), R.sound and "SOUND ON" or "SOUND OFF", true) then
-        R.sound = not R.sound
-        sfx.enable(R.sound)
-    end
-    if button(rect(88, 475, 304, 49), R.reduced_motion and "MOTION REDUCED" or "FULL ANIMATION", true) then R.reduced_motion = not R.reduced_motion end
-    if button(rect(88, 544, 304, 49), "EXPLORER'S GUIDE", true) then R.overlay = R.OV_GUIDE end
+    local ok,message=pause_form:push(R);assert(ok,message)
+    local event=pause_form:draw(rect(42,252,396,382),form_skin,{hit_offset=vec2(0,R.hit_dy)})
+    if not event then return end
+    if event.kind=="change" then
+        ok,message=pause_form:pull(R);assert(ok,message);sfx.enable(R.sound)
+    elseif event.id=="resume" then R.overlay=R.OV_NONE
+    elseif event.id=="guide" then R.overlay=R.OV_GUIDE end
 end
 
 local function failed_screen()
@@ -391,10 +433,7 @@ function R.overlays(dt)
     end
     local entry = R.reduced_motion and 1 or ease.out_cubic(R.modal_clock / .28)
     local exit = R.modal_closing and ease.out_cubic(R.modal_exit / .2) or 0
-    gfx.bleed(true)
-    gfx.rect(app.bleed(), rgba(5, 22, 22, 185 * entry * (1 - exit)))
-    gfx.bleed(false)
-    ui.block(app.bleed())
+    ui.modal_layer(7 * entry * (1 - exit), rgba(5, 22, 22, 185 * entry * (1 - exit)))
     local scale = .96 + .04 * entry
     -- dialogs are laid out on the 900-tall design: centre them on a taller screen
     R.hit_dy = R.drop / 2

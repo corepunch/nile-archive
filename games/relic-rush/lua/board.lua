@@ -6,15 +6,17 @@
 -- segment); after a fall the board is checked again, so cascades chain.
 local R = require("state")
 local rules = require("rules")
+local art = require("art")
 local CELLS, HEX_R, SCREEN_W, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_W, R.SCREEN_H
 local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL = R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL
 local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
-local NORMAL, ROW, COLUMN, DIAGONAL, BOMB, PRISM = rules.NORMAL, rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM
+local NORMAL, PRISM = rules.NORMAL, rules.PRISM
 local hex_q, hex_r, hex_index, hex_neighbor, hex_distance, cell_active = rules.hex_q, rules.hex_r, rules.hex_index, rules.hex_neighbor, rules.hex_distance, rules.game_cell_active
 local rgba = color
 local PI = math.pi
 
 local CELL_SIZE = 46
+local STATE_SIZE = (HEX_R - .8) * 2 -- full cell face, shared with the rendered mask
 local HEX_DY = 1.732050808 * HEX_R
 local board_origin = vec2(240, 492)
 local TOOLS_Y = 790   -- the tool row sits low, near the bottom edge
@@ -49,28 +51,15 @@ end
 function R.draw_relic(t, at, scale, alpha, aspect)
     if t.kind < 0 then return end
     local s = CELL_SIZE * .95 * scale
-    gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect, s / aspect)), rgba(255, 255, 255, alpha))
-    if t.special == NORMAL then return end
-    local r = 18 * scale
-    local cream = rgba(255, 251, 194, alpha)
-    if t.special == ROW or t.special == COLUMN or t.special == DIAGONAL then
-        local a = (t.special == ROW and 30 or t.special == COLUMN and 90 or 150) * PI / 180
-        local dir, n = vec2.polar(a, r), vec2.polar(a + PI / 2, 7 * scale)
-        for k = -1, 1 do
-            local c = at + n:scale(k)
-            gfx.line(c - dir, c + dir, 1.6 * scale, cream)
-        end
-    elseif t.special == BOMB then
-        gfx.circle(at, 12 * scale, rgba(74, 47, 50, alpha))
-        gfx.circle(at + vec2.splat(-3 * scale), 3 * scale, cream)
-        gfx.line(at + vec2(6, -9):scale(scale), at + vec2(13, -18):scale(scale), 1.6 * scale, cream)
-        gfx.circle(at + vec2(13, -18):scale(scale), 3 * scale, rgba(255, 185, 65, alpha))
-    else   -- prism
-        gfx.circle(at, 12 * scale, cream)
-        for k = 0, 5 do
-            gfx.circle(at + vec2.polar(k * PI / 3, 8 * scale), 3 * scale, rgba(100 + k * 20, 220 - k * 20, 180, alpha))
-        end
+    local frame = STATE_SIZE * scale
+    local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
+    local tint = rgba(255, 255, 255, alpha)
+    -- Authored frames leave the matching kind visible in every optional pack.
+    if t.special ~= PRISM then
+        local inner = t.special == NORMAL and 1 or .72
+        gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect * inner, s / aspect * inner)), tint)
     end
+    if t.special ~= NORMAL then gfx.image(R.board_art[art.specials[t.special]], dst, tint) end
 end
 local draw_relic = R.draw_relic
 
@@ -135,17 +124,17 @@ local function draw_cells(sx)
                     gfx.line(at + vec2.polar(a, HEX_R - .5), at + vec2.polar(b, HEX_R - .5), 2, rgba(212, 175, 95))
                 end
             end
-            gfx.ngon(at, HEX_R - .8, 6, 0, rgba(75, 120, 91))
-            gfx.ngon(at, HEX_R - 2, 6, 0, (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73))
-            if g.soil[i] > 0 then
-                gfx.ngon(at, HEX_R - 1.5, 6, 0, rgba(209, 166, 85))
-                gfx.ngon(at, HEX_R - 4, 6, 0, rgba(164, 121, 57))
-                gfx.circle(at + vec2(-13, -12), 2, rgba(247, 211, 141, 220))
-            end
-            if i == R.selected or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE) then
-                local a = i == R.selected and 255 or 110 + 70 * math.sin(R.now * 5)
-                gfx.ngon(at, HEX_R - 1, 6, 0, rgba(255, 234, 138, a))
-                gfx.ngon(at, HEX_R - 4, 6, 0, rgba(65, 123, 82))
+            local dst = rect.centered(at, size2.splat(STATE_SIZE))
+            local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
+                              or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
+            -- State panels replace the old green face/rim; no cell sticks out.
+            gfx.image(R.board_art["cell-mask"], dst, has_state and rgba(13, 47, 41)
+                      or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73))
+            if g.soil[i] > 0 then gfx.image(R.board_art.sand, dst, color.WHITE) end
+            if i == R.selected then
+                gfx.image(R.board_art.selected, dst, color.WHITE)
+            elseif (i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE then
+                gfx.image(R.board_art.hint, dst, rgba(255, 255, 255, R.reduced_motion and 220 or 170 + 60 * math.sin(R.now * 5)))
             end
         end
     end
@@ -203,53 +192,21 @@ local function draw_relics(sx)
     gfx.unclip()
 end
 
-local cracks = {{vec2(-11, -18), vec2(11, -18)}, {vec2(-20, 0), vec2(-11, -18)}, {vec2(-7, -19), vec2(4, -4)}, {vec2(4, -4), vec2(-4, 11)}, {vec2(18, -10), vec2(-10, 17)}}
-
 local function draw_blockers(sx)
     local g = R.g
-    local ice = rgba(225, 253, 255, 235)
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
             local at = cell_pos(i) + vec2(sx, 0)
-            if g.ice[i] > 0 then
-                gfx.ngon(at, HEX_R - 2, 6, 0, rgba(170, 230, 249, 110))
-                for k = 1, g.ice[i] > 1 and 5 or 4 do gfx.line(at + cracks[k][1], at + cracks[k][2], 1.5, ice) end
-            end
-            if g.chain[i] > 0 then
-                for a = -1, 1, 2 do
-                    for k = -2, 2 do
-                        local link = at + vec2(k * 7, a * k * 6)
-                        gfx.round_rect(rect.centered(link, size2(10, 6)), 2, rgba(42, 45, 42))
-                        gfx.round_rect(rect.centered(link, size2(6, 2)), 1, rgba(194, 186, 151))
-                    end
-                end
-                gfx.round_rect(rect(at.x - 7, at.y - 5, 14, 13), 3, rgba(224, 183, 76))
-                gfx.circle(at, 2, rgba(72, 68, 48))
-            end
-        end
-    end
-end
-
-local function draw_tool_icon(k, x, y)
-    if k == 0 then   -- pickaxe
-        gfx.line(vec2(x - 12, y + 46), vec2(x + 9, y + 16), 7, rgba(109, 66, 38))
-        gfx.line(vec2(x - 16, y + 17), vec2(x + 20, y + 26), 9, rgba(234, 237, 196))
-    elseif k == 1 then   -- dynamite
-        for z = -1, 1 do gfx.round_rect(rect(x + z * 10 - 5, y + 17, 10, 30), 4, rgba(190 + z * 15, 66, 42)) end
-        gfx.rect(rect(x - 16, y + 29, 32, 5), rgba(244, 202, 129))
-        gfx.circle(vec2(x + 9, y + 14), 4, rgba(255, 235, 141))
-    else   -- sunburst
-        gfx.circle(vec2(x, y + 32), 14, rgba(255, 234, 147))
-        for z = 0, 7 do
-            local d = vec2.polar(z * PI / 4, 1)
-            gfx.line(vec2(x, y + 32) + d:scale(17), vec2(x, y + 32) + d:scale(23), 2, rgba(255, 232, 154))
+            local dst = rect.centered(at, size2.splat(STATE_SIZE))
+            if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, color.WHITE) end
+            if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, color.WHITE) end
         end
     end
 end
 
 local tool_names = {"Pickaxe", "Dynamite", "Sunburst"}
 
-local function draw_tools()
+local function draw_tools(inp)
     if R.word_time <= 0 or R.reduced_motion then
         R.say_at(R.tool >= 0 and "TAP A RELIC TO USE YOUR TOOL" or "CONNECT 4+ MATCHING NEIGHBORS.", vec2(240, 766 + R.drop), 13, PAL_WHITE, 0)
     end
@@ -257,9 +214,9 @@ local function draw_tools()
     for k = 0, 2 do
         local x = 63 + k * 112
         local r = rect(x - 38, y, 76, 65)
-        gfx.round_rect(r, 14, rgba(50, 45, 31, 240))
-        gfx.round_rect(rect(x - 35, y + 2, 70, 58), 12, R.tool == k and rgba(168, 191, 92) or rgba(220, 178, 99))
-        draw_tool_icon(k, x, y)
+        local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
+                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE)
+        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], r:inflate(5), color.WHITE)
         gfx.circle(vec2(x + 29, y + 6), 13, rgba(44, 88, 61))
         R.say(tostring(R.g.tools[k + 1]), rect(x + 16, y - 7, 26, 26), 16, PAL_CREAM)
         R.say_at(tool_names[k + 1], vec2(x, y + 80), 15, PAL_CREAM, 0)
@@ -274,8 +231,7 @@ local function draw_tools()
         end
     end
     local guide = rect(387, y + 8, 63, 55)
-    gfx.round_rect(guide, 14, rgba(28, 77, 61, 240))
-    R.say("?", guide:inflate(-3), 33, PAL_GOLD)
+    gfx.image(R.board_art.guide, guide, color.WHITE)
     R.say_at("GUIDE", vec2(419, y + 79), 12, PAL_WHITE, 0)
     if R.tapped(guide) then R.overlay = R.OV_GUIDE end
 end
@@ -384,6 +340,7 @@ local function settle()
 end
 
 function R.board_update(dt)
+    if R.art_review then return end
     R.shake = math.max(0, R.shake - dt)
     if R.overlay ~= R.OV_NONE or R.on_island then return end
     R.idle_time = R.idle_time + dt
@@ -420,7 +377,8 @@ function R.board_screen(inp, dt)
     draw_cells(sx)
     draw_relics(sx)
     draw_blockers(sx)
-    draw_tools()
+    draw_tools(inp)
+    if app.arg("art-states") then art.draw_catalogue(R) end
     board_input(inp)
 end
 

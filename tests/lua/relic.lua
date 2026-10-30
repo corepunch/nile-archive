@@ -344,5 +344,16 @@ test_holes_and_shapes()
 test_moves_and_blockers()
 test_island()
 test_campaign()
+-- Interaction precedence: depleted/busy controls cannot appear actionable,
+-- touch presses require an origin inside the button; touch has no hover.
+do
+    local art = require("art")
+    check(art.tool_state(0, true, true, true, true, true, true) == "disabled", "exhausted tool overrides selected/pressed")
+    check(art.tool_state(2, false, true, true, true, false, true) == "pressed", "touch press artwork")
+    check(art.tool_state(2, false, true, true, false, false, true) == "normal", "drag into tool is not a press")
+    check(art.tool_state(2, false, true, false, false, true, true) == "hover", "mouse hover artwork")
+    check(art.tool_state(2, true, true, false, false, true, true) == "selected", "selection overrides hover")
+    check(art.tool_state(2, true, false, false, false, false, false) == "disabled", "busy board disables tool")
+end
 print(("relic rush: %d checks, %d failures"):format(checks, failures))
 return failures

@@ -1,0 +1,414 @@
+{
+  "source": "art/board-states/source.png",
+  "prompt": "art/board-states.prompt.txt",
+  "generator": "built-in image_gen, 2026-10-30; first full-atlas geometry edit selected; user requested 30-degree tool rotation of original ornate selected/hint frames",
+  "source_size": [
+    1374,
+    1145
+  ],
+  "assets": {
+    "ray-diagonal": {
+      "box": [
+        18,
+        48,
+        239,
+        231
+      ],
+      "runtime": "data/board-states/ray-diagonal.png",
+      "fit": "hex-slot"
+    },
+    "ray-column": {
+      "box": [
+        245,
+        48,
+        466,
+        231
+      ],
+      "runtime": "data/board-states/ray-column.png",
+      "fit": "hex-slot"
+    },
+    "ray-row": {
+      "box": [
+        475,
+        48,
+        694,
+        231
+      ],
+      "runtime": "data/board-states/ray-row.png",
+      "fit": "hex-slot"
+    },
+    "bomb": {
+      "box": [
+        708,
+        48,
+        914,
+        232
+      ],
+      "runtime": "data/board-states/bomb.png",
+      "fit": "hex-slot"
+    },
+    "prism": {
+      "box": [
+        928,
+        48,
+        1144,
+        235
+      ],
+      "runtime": "data/board-states/prism.png",
+      "fit": "hex-slot"
+    },
+    "sand": {
+      "box": [
+        1156,
+        48,
+        1368,
+        233
+      ],
+      "runtime": "data/board-states/sand.png",
+      "fit": "hex-slot"
+    },
+    "chain": {
+      "box": [
+        0,
+        261,
+        230,
+        493
+      ],
+      "runtime": "data/board-states/chain.png"
+    },
+    "ice-2": {
+      "box": [
+        237,
+        275,
+        473,
+        481
+      ],
+      "runtime": "data/board-states/ice-2.png",
+      "fit": "hex-slot"
+    },
+    "ice-1": {
+      "box": [
+        477,
+        276,
+        697,
+        484
+      ],
+      "runtime": "data/board-states/ice-1.png",
+      "fit": "hex-slot"
+    },
+    "selected": {
+      "box": [
+        700,
+        261,
+        923,
+        493
+      ],
+      "runtime": "data/board-states/selected.png",
+      "fit": "hex-slot",
+      "rotation_degrees": -30
+    },
+    "hint": {
+      "box": [
+        928,
+        261,
+        1148,
+        493
+      ],
+      "runtime": "data/board-states/hint.png",
+      "fit": "hex-slot",
+      "rotation_degrees": -30
+    },
+    "guide": {
+      "box": [
+        1145,
+        261,
+        1374,
+        493
+      ],
+      "runtime": "data/board-states/guide.png"
+    },
+    "pickaxe-normal": {
+      "box": [
+        15,
+        499,
+        238,
+        689
+      ],
+      "runtime": "data/board-states/pickaxe-normal.png"
+    },
+    "pickaxe-selected": {
+      "box": [
+        246,
+        499,
+        470,
+        689
+      ],
+      "runtime": "data/board-states/pickaxe-selected.png"
+    },
+    "pickaxe-pressed": {
+      "box": [
+        478,
+        499,
+        694,
+        689
+      ],
+      "runtime": "data/board-states/pickaxe-pressed.png"
+    },
+    "pickaxe-hover": {
+      "box": [
+        706,
+        499,
+        928,
+        689
+      ],
+      "runtime": "data/board-states/pickaxe-hover.png"
+    },
+    "pickaxe-disabled": {
+      "box": [
+        936,
+        499,
+        1156,
+        689
+      ],
+      "runtime": "data/board-states/pickaxe-disabled.png"
+    },
+    "dynamite-normal": {
+      "box": [
+        15,
+        699,
+        238,
+        889
+      ],
+      "runtime": "data/board-states/dynamite-normal.png"
+    },
+    "dynamite-selected": {
+      "box": [
+        246,
+        699,
+        470,
+        889
+      ],
+      "runtime": "data/board-states/dynamite-selected.png"
+    },
+    "dynamite-pressed": {
+      "box": [
+        478,
+        699,
+        694,
+        889
+      ],
+      "runtime": "data/board-states/dynamite-pressed.png"
+    },
+    "dynamite-hover": {
+      "box": [
+        706,
+        699,
+        928,
+        889
+      ],
+      "runtime": "data/board-states/dynamite-hover.png"
+    },
+    "dynamite-disabled": {
+      "box": [
+        936,
+        699,
+        1156,
+        889
+      ],
+      "runtime": "data/board-states/dynamite-disabled.png"
+    },
+    "sunburst-normal": {
+      "box": [
+        15,
+        899,
+        238,
+        1111
+      ],
+      "runtime": "data/board-states/sunburst-normal.png"
+    },
+    "sunburst-selected": {
+      "box": [
+        246,
+        899,
+        470,
+        1111
+      ],
+      "runtime": "data/board-states/sunburst-selected.png"
+    },
+    "sunburst-pressed": {
+      "box": [
+        478,
+        899,
+        694,
+        1111
+      ],
+      "runtime": "data/board-states/sunburst-pressed.png"
+    },
+    "sunburst-hover": {
+      "box": [
+        706,
+        899,
+        928,
+        1111
+      ],
+      "runtime": "data/board-states/sunburst-hover.png"
+    },
+    "sunburst-disabled": {
+      "box": [
+        936,
+        899,
+        1156,
+        1111
+      ],
+      "runtime": "data/board-states/sunburst-disabled.png"
+    }
+  },
+  "packs": [
+    "relics",
+    "jewels",
+    "resources"
+  ],
+  "kinds": [
+    "IDOL",
+    "FLAME",
+    "LEAF",
+    "SCARAB",
+    "CRYSTAL",
+    "AMPHORA"
+  ],
+  "specials": {
+    "NORMAL": null,
+    "ROW": "ray-row",
+    "COLUMN": "ray-column",
+    "DIAGONAL": "ray-diagonal",
+    "BOMB": "bomb",
+    "PRISM": "prism"
+  },
+  "tools": [
+    "pickaxe",
+    "dynamite",
+    "sunburst"
+  ],
+  "tool_states": [
+    "normal",
+    "selected",
+    "pressed",
+    "hover",
+    "disabled"
+  ],
+  "runtime_inventory": [
+    "data/board-states/bomb.png",
+    "data/board-states/cell-mask.png",
+    "data/board-states/chain.png",
+    "data/board-states/dynamite-disabled.png",
+    "data/board-states/dynamite-hover.png",
+    "data/board-states/dynamite-normal.png",
+    "data/board-states/dynamite-pressed.png",
+    "data/board-states/dynamite-selected.png",
+    "data/board-states/guide.png",
+    "data/board-states/hint.png",
+    "data/board-states/ice-1.png",
+    "data/board-states/ice-2.png",
+    "data/board-states/pickaxe-disabled.png",
+    "data/board-states/pickaxe-hover.png",
+    "data/board-states/pickaxe-normal.png",
+    "data/board-states/pickaxe-pressed.png",
+    "data/board-states/pickaxe-selected.png",
+    "data/board-states/prism.png",
+    "data/board-states/ray-column.png",
+    "data/board-states/ray-diagonal.png",
+    "data/board-states/ray-row.png",
+    "data/board-states/sand.png",
+    "data/board-states/selected.png",
+    "data/board-states/sunburst-disabled.png",
+    "data/board-states/sunburst-hover.png",
+    "data/board-states/sunburst-normal.png",
+    "data/board-states/sunburst-pressed.png",
+    "data/board-states/sunburst-selected.png",
+    "data/buildings/0.png",
+    "data/buildings/1.png",
+    "data/buildings/2.png",
+    "data/buildings/3.png",
+    "data/buildings/4.png",
+    "data/buildings/5.png",
+    "data/buildings/6.png",
+    "data/buildings/7.png",
+    "data/buildings/8.png",
+    "data/buildings/9.png",
+    "data/characters/adrian.png",
+    "data/characters/elena.png",
+    "data/characters/mara.png",
+    "data/characters/tomas.png",
+    "data/fonts/LilitaOne-Regular.ttf",
+    "data/fonts/lilitaone-OFL.txt",
+    "data/island.jpg",
+    "data/jungle.jpg",
+    "data/scene-lagoon.jpg",
+    "data/scene-temple.jpg",
+    "data/tile-sets/jewels/0.png",
+    "data/tile-sets/jewels/1.png",
+    "data/tile-sets/jewels/2.png",
+    "data/tile-sets/jewels/3.png",
+    "data/tile-sets/jewels/4.png",
+    "data/tile-sets/jewels/5.png",
+    "data/tile-sets/relics/0.png",
+    "data/tile-sets/relics/1.png",
+    "data/tile-sets/relics/2.png",
+    "data/tile-sets/relics/3.png",
+    "data/tile-sets/relics/4.png",
+    "data/tile-sets/relics/5.png",
+    "data/tile-sets/resources/0.png",
+    "data/tile-sets/resources/1.png",
+    "data/tile-sets/resources/2.png",
+    "data/tile-sets/resources/3.png",
+    "data/tile-sets/resources/4.png",
+    "data/tile-sets/resources/5.png",
+    "data/title.png"
+  ],
+  "hex_slot": {
+    "orientation": "flat-top",
+    "radius": 25.7,
+    "texture_size": 128,
+    "art_size": [
+      128,
+      111
+    ],
+    "offset": [
+      0,
+      8
+    ],
+    "vertices": [
+      [
+        0,
+        64
+      ],
+      [
+        32,
+        8
+      ],
+      [
+        96,
+        8
+      ],
+      [
+        128,
+        64
+      ],
+      [
+        96,
+        119
+      ],
+      [
+        32,
+        119
+      ]
+    ],
+    "overscan": 144
+  },
+  "cell_mask": {
+    "source": "art/board-states/cell-mask.png",
+    "runtime": "data/board-states/cell-mask.png",
+    "capture": "python3 games/relic-rush/tools/capture_cell_mask.py",
+    "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face"
+  }
+}

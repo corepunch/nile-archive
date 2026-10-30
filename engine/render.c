@@ -27,6 +27,9 @@ static struct {
     float scale;
     vec2 offset;
     bool additive, bleed;
+    GLuint blur_program, blur_texture[4], blur_fbo[4];
+    int blur_w, blur_h;
+    bool blur_failed;
 } R;
 
 static GLuint render_shader(GLenum type, const char *body)
@@ -95,6 +98,9 @@ bool render_init(void)
 bool render_ready(void) { return R.program != 0; }
 void render_shutdown(void)
 {
+    glDeleteTextures(4, R.blur_texture);
+    glDeleteFramebuffers(4, R.blur_fbo);
+    glDeleteProgram(R.blur_program);
     glDeleteTextures(1, &R.white);
     glDeleteBuffers(1, &R.vertices); glDeleteBuffers(1, &R.indices);
     glDeleteVertexArrays(1, &R.vao); glDeleteProgram(R.program);
@@ -201,7 +207,11 @@ void render_clip(const rect *r)
     rect clipped = rect_intersect(r ? *r : render_bounds(), render_bounds());
     int x = (int)floorf(R.offset.x + clipped.pos.x * R.scale);
     int y = (int)floorf(R.pixels.h - R.offset.y - (clipped.pos.y + clipped.size.h) * R.scale);
-    int w = (int)ceilf(clipped.size.w * R.scale), h = (int)ceilf(clipped.size.h * R.scale);
+    /* Round both endpoints. Rounding an origin just below zero to -1 and
+     * rounding the length separately can omit the display's last pixel. */
+    int right = (int)ceilf(R.offset.x + (clipped.pos.x + clipped.size.w) * R.scale);
+    int top = (int)ceilf(R.pixels.h - R.offset.y - clipped.pos.y * R.scale);
+    int w = clipped.size.w > 0 ? right - x : 0, h = clipped.size.h > 0 ? top - y : 0;
     glEnable(GL_SCISSOR_TEST); glScissor(x, y, w, h);
 }
 
@@ -217,4 +227,144 @@ bool render_read_pixels(void *rgba, int w, int h)
             p[(h - y - 1) * w * 4 + x] = a;
         }
     return true;
+}
+
+/* Drawing order is the layer stack. Capture all earlier draws, resolve/downsample,
+ * then two separable GPU passes. No readback, game-owned textures or scene copies.
+ * Save the real default FBO: on iOS it is not necessarily zero. */
+static bool render_blur_prepare(int w, int h)
+{
+    if (R.blur_failed) return false;
+    if (!R.blur_program) {
+        GLuint vs = render_shader(GL_VERTEX_SHADER,
+            "out vec2 uv; void main(){vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2);"
+            "uv=p;gl_Position=vec4(p*2.-1.,0,1);}");
+        GLuint fs = render_shader(GL_FRAGMENT_SHADER,
+            "in vec2 uv; uniform sampler2D image; uniform vec2 delta; uniform vec4 dim; out vec4 pixel;"
+            "uniform int pairs; uniform float center_weight, weights[8], offsets[8];"
+            "void main(){vec3 c=texture(image,uv).rgb*center_weight;"
+            "for(int i=0;i<8;i++){if(i>=pairs)break;vec2 d=delta*offsets[i];"
+            "c+=(texture(image,uv+d).rgb+texture(image,uv-d).rgb)*weights[i];}"
+            "pixel=vec4(mix(c,dim.rgb,dim.a),1);}");
+        if (vs && fs) {
+            R.blur_program = glCreateProgram();
+            glAttachShader(R.blur_program, vs); glAttachShader(R.blur_program, fs);
+            glLinkProgram(R.blur_program);
+            GLint ok = 0; glGetProgramiv(R.blur_program, GL_LINK_STATUS, &ok);
+            if (!ok) { glDeleteProgram(R.blur_program); R.blur_program = 0; }
+        }
+        glDeleteShader(vs); glDeleteShader(fs);
+        if (!R.blur_program) {
+            fprintf(stderr, "renderer: backdrop shader unavailable; using dim-only fallback\n");
+            R.blur_failed = true; return false;
+        }
+    }
+    if (w == R.blur_w && h == R.blur_h) return true;
+    glDeleteTextures(4, R.blur_texture); memset(R.blur_texture, 0, sizeof R.blur_texture);
+    glDeleteFramebuffers(4, R.blur_fbo); memset(R.blur_fbo, 0, sizeof R.blur_fbo);
+    glGenFramebuffers(4, R.blur_fbo);
+    for (int i = 0; i < 4; i++) {
+        int divisor = i == 0 ? 1 : i == 1 ? 2 : 4;
+        int tw = (w + divisor - 1) / divisor, th = (h + divisor - 1) / divisor;
+        struct render_texture *t = render_texture_create(tw, th, NULL);
+        if (!t) { R.blur_failed = true; break; }
+        R.blur_texture[i] = t->id; free(t);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, R.blur_fbo[i]);
+        glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, R.blur_texture[i], 0);
+        if (glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { R.blur_failed = true; break; }
+    }
+    if (R.blur_failed) {
+        fprintf(stderr, "renderer: backdrop targets unavailable at %dx%d; using dim-only fallback\n", w, h);
+        return false;
+    }
+    R.blur_w = w; R.blur_h = h;
+    return true;
+}
+
+void render_backdrop(float radius, color dim)
+{
+    if (!render_ready()) return;
+    if (!isfinite(radius)) radius = 0;
+    radius = clampf(radius, 0, 32);
+    if (radius <= 0 && dim.a == 0) return;
+    GLint draw_fbo, read_fbo, viewport[4], scissor[4];
+    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &draw_fbo);
+    glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &read_fbo);
+    glGetIntegerv(GL_VIEWPORT, viewport); glGetIntegerv(GL_SCISSOR_BOX, scissor);
+    GLboolean clipping = glIsEnabled(GL_SCISSOR_TEST), blending = glIsEnabled(GL_BLEND);
+    glDisable(GL_SCISSOR_TEST);
+    int w = (int)R.pixels.w, h = (int)R.pixels.h;
+    bool blurred = radius > 0 && render_blur_prepare(w, h);
+    if (blurred) {
+        int bw = (w + 3) / 4, bh = (h + 3) / 4;
+        glDisable(GL_BLEND);
+        /* Equal-sized first blit also resolves a multisampled platform FBO. */
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, (GLuint)draw_fbo);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, R.blur_fbo[0]);
+        glBlitFramebuffer(0, 0, w, h, 0, 0, w, h, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+        /* Two filtered half steps suppress high-frequency aliasing before blur. */
+        int hw = (w + 1) / 2, hh = (h + 1) / 2;
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, R.blur_fbo[0]);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, R.blur_fbo[1]);
+        glBlitFramebuffer(0, 0, w, h, 0, 0, hw, hh, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, R.blur_fbo[1]);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, R.blur_fbo[2]);
+        glBlitFramebuffer(0, 0, hw, hh, 0, 0, bw, bh, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+        glUseProgram(R.blur_program); glBindVertexArray(R.vao); glActiveTexture(GL_TEXTURE0);
+        glUniform1i(glGetUniformLocation(R.blur_program, "image"), 0);
+        GLint delta = glGetUniformLocation(R.blur_program, "delta"), tint = glGetUniformLocation(R.blur_program, "dim");
+        glUniform4f(tint, 0, 0, 0, 0);
+        /* A real Gaussian at contiguous texel positions. Adjacent weights are
+         * combined into one bilinear fetch; never space a small fixed kernel
+         * apart, which leaves a visible grid through text and fine geometry. */
+        float sigma = clampf(radius * R.scale / 8, .35f, 5.3f);
+        int taps = clampi((int)ceilf(3 * sigma), 1, 16);
+        float kernel[17], total = 0, weights[8] = {0}, offsets[8] = {0};
+        for (int i = 0; i <= taps; i++) {
+            kernel[i] = expf(-(float)(i * i) / (2 * sigma * sigma));
+            total += kernel[i] * (i ? 2 : 1);
+        }
+        int pairs = 0;
+        for (int i = 1; i <= taps; i += 2) {
+            float a = kernel[i] / total, b = i + 1 <= taps ? kernel[i + 1] / total : 0;
+            weights[pairs] = a + b;
+            offsets[pairs++] = (i * a + (i + 1) * b) / (a + b);
+        }
+        glUniform1i(glGetUniformLocation(R.blur_program, "pairs"), pairs);
+        glUniform1f(glGetUniformLocation(R.blur_program, "center_weight"), kernel[0] / total);
+        glUniform1fv(glGetUniformLocation(R.blur_program, "weights[0]"), 8, weights);
+        glUniform1fv(glGetUniformLocation(R.blur_program, "offsets[0]"), 8, offsets);
+        glViewport(0, 0, bw, bh);
+        for (int pass = 0; pass < 2; pass++) {
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, R.blur_fbo[pass ? 2 : 3]);
+            glBindTexture(GL_TEXTURE_2D, R.blur_texture[pass ? 3 : 2]);
+            glUniform2f(delta, pass ? 0 : 1.f / bw, pass ? 1.f / bh : 0);
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+        }
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, (GLuint)draw_fbo);
+        glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+        glBindTexture(GL_TEXTURE_2D, R.blur_texture[2]);
+        glUniform2f(delta, 0, 0);
+        glUniform1i(glGetUniformLocation(R.blur_program, "pairs"), 0);
+        glUniform1f(glGetUniformLocation(R.blur_program, "center_weight"), 1);
+        glUniform4f(tint, dim.r / 255.f, dim.g / 255.f, dim.b / 255.f, dim.a / 255.f);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+    }
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, (GLuint)draw_fbo);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, (GLuint)read_fbo);
+    glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+    glUseProgram(R.program); glBindVertexArray(R.vao); glActiveTexture(GL_TEXTURE0);
+    if (blending) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+    if (!blurred && dim.a) {
+        vec2 lo = vec2_scale(R.offset, -1 / R.scale);
+        vec2 hi = vec2_add(lo, size2_vec(size2_scale(R.pixels, 1 / R.scale)));
+        render_vertex v[] = {{lo,dim,{0,0}},{{hi.x,lo.y},dim,{0,0}},{hi,dim,{0,0}},
+                             {lo,dim,{0,0}},{hi,dim,{0,0}},{{lo.x,hi.y},dim,{0,0}}};
+        bool saved_additive = R.additive; R.additive = false;
+        glEnable(GL_BLEND); render_geometry(NULL, v, 6, NULL, 0);
+        R.additive = saved_additive;
+        if (!blending) glDisable(GL_BLEND);
+    }
+    glScissor(scissor[0], scissor[1], scissor[2], scissor[3]);
+    if (clipping) glEnable(GL_SCISSOR_TEST); else glDisable(GL_SCISSOR_TEST);
 }

@@ -150,6 +150,12 @@ end
 -------------------------------------------------------------------- frame
 
 local function frame(dt)
+    if app.arg("cell-mask") then
+        -- Same flat-top polygon as a cell, captured at texture resolution.
+        gfx.rect(rect(0, 0, R.SCREEN_W, R.SCREEN_H), color(0, 0, 0))
+        gfx.ngon(vec2(R.SCREEN_W / 2, R.SCREEN_H / 2), 64, 6, 0, color.WHITE)
+        return
+    end
     local inp = input.get()
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
@@ -276,6 +282,20 @@ local function debug_screens()
         R.finish_wave()
         R.toast_time = 0
     end
+    if app.arg("art-states") then R.art_review, R.toast_time = true, 0 end
+    if app.arg("art-board") then
+        R.g = rules.game_start(8, 123478)
+        R.pending = rules.new_match()
+        local cells = {rules.hex_index(-2, 0), rules.hex_index(-1, 0), rules.hex_index(0, 0), rules.hex_index(1, 0), rules.hex_index(2, 0)}
+        for k, cell in ipairs(cells) do
+            R.g.tiles[cell] = rules.tile(k - 1, k)
+            R.g.chain[cell], R.g.ice[cell] = 0, 0
+        end
+        R.selected, R.hint_a, R.hint_b = rules.hex_index(-2, 1), rules.hex_index(1, 1), rules.hex_index(2, 1)
+        R.g.tools = {2, 2, 0}
+        R.tool, R.toast_time, R.on_island = 1, 0, false
+        R.art_review = true
+    end
     a = app.arg("dialog")
     if a then   -- guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble
         R.toast_time = 0
@@ -296,9 +316,10 @@ local function debug_screens()
 end
 
 local function init()
+    if app.arg("cell-mask") then return end
     R.font = font.load("fonts/LilitaOne-Regular.ttf")
     story.setup(cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
-                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), portrait_height = .27, framed = true, skip = "SKIP"})
+                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, framed = true, skip = "SKIP"})
     R.backdrop = texture.load("jungle.jpg")
     R.scenes[1] = texture.load("scene-lagoon.jpg")
     R.scenes[2] = texture.load("scene-temple.jpg")
@@ -306,6 +327,14 @@ local function init()
     local tiles = app.arg("tiles")
     if tiles ~= "jewels" and tiles ~= "resources" then tiles = "relics" end
     for i = 0, rules.COLORS - 1 do R.relics[i + 1] = texture.load(("tile-sets/%s/%d.png"):format(tiles, i)) end
+    R.board_art = require("art").load()
+    if app.arg("art-states") then
+        R.art_packs = {}
+        for _, pack in ipairs({"relics", "jewels", "resources"}) do
+            R.art_packs[pack] = {}
+            for k = 0, rules.COLORS - 1 do R.art_packs[pack][k + 1] = texture.load(("tile-sets/%s/%d.png"):format(pack, k)) end
+        end
+    end
     R.vfx_init()
     R.island = city.new()
     island.island_setup(R.island)

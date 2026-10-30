@@ -101,6 +101,8 @@ for i, b in ipairs(buildings) do
 end
 ```
 
+The [shared UI engine](docs/UI_ENGINE.md) adds declarative forms, reusable skins, typed model bindings, keyboard focus and nested modal layers with GPU Gaussian blur. Relic Rush’s pause and building dialogs use these resources.
+
 Styled text is a value you tweak per call:
 
 ```lua
