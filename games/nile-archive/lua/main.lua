@@ -197,7 +197,7 @@ local function open_scene(i)
     G.island.selected = -1
     G.tray = false
     G.modal = MODAL_NONE
-    G.cam = camera{center = vec2(600, 400), zoom = 0, world = size2(1200, 800)}
+    G.cam = camera{center = vec2(600, 400), zoom = 0, world = size2(1200, 800), cover = true}
     refill_slots(app.time(), 0)
     for k = 1, SLOTS do G.slot_time[k] = app.time() - 10 end   -- the opening list is simply there; refills slide in
     fx.clear()
@@ -605,7 +605,7 @@ end
 local function island_frame(screen, world)
     local island = G.island
     local cam = island.cam
-    cam.view = screen
+    cam.view = app.bleed()   -- the island runs under the status bar and the home indicator
     island.cam = cam
     if G.modal == MODAL_NONE then
         local ev = island:update(world, G.wallet, app.clock(), app.dt())
@@ -619,11 +619,15 @@ local function island_frame(screen, world)
             ui.toast("Нужно свободное место на открытом берегу")
         end
     end
+    local full = app.bleed()
+    gfx.bleed(true)
     island:draw(world, app.clock())
     -- a soft vignette keeps the corners readable under the HUD
-    gfx.rect_grad(screen:top(120), rgba(6, 22, 26, 150), rgba(6, 22, 26, 0))
-    gfx.rect_grad(screen:bottom(150), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
+    gfx.rect_grad(rect(full.x, full.y, full.w, screen.y - full.y + 120), rgba(6, 22, 26, 150), rgba(6, 22, 26, 0))
+    local low = screen:max().y - 150
+    gfx.rect_grad(rect(full.x, low, full.w, full:max().y - low), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
     fx.draw()
+    gfx.bleed(false)
 
     local m = 18
     local area = screen:inflate(-m)
@@ -683,7 +687,9 @@ end
 
 local function scene_frame(screen, world, dt)
     local sc = scenes[G.scene]
-    local view = screen   -- the scene is the whole screen; the HUD floats over it
+    -- the picture covers the whole display, safe-area margins included (no
+    -- bars); drag to see its edges. The HUD floats over it inside the safe screen.
+    local view = app.bleed()
     local playing = G.modal == MODAL_NONE and not story.active()
     if playing then
         G.clock = G.clock + dt
@@ -693,8 +699,8 @@ local function scene_frame(screen, world, dt)
     refill_slots(app.time(), .8)
 
     G.cam.view = view
-    G.cam.min_zoom = G.cam:fit_zoom()
-    G.cam.max_zoom = G.cam.min_zoom * 3
+    G.cam.min_zoom = 0                -- cover sets the floor: the picture always fills the view
+    G.cam.max_zoom = G.cam:fit_zoom() * 3.4
     G.cam = G.cam:clamp()
     if G.modal == MODAL_NONE then
         G.cam = G.cam:input(world):clamp()
@@ -705,10 +711,8 @@ local function scene_frame(screen, world, dt)
         G.cam = G.cam:look(G.cam.center:approach(G.focus, 10, dt)):clamp()
     end
 
-    -- the whole picture fits; the bands it leaves show the same picture, dimmed
     local bg = G.backgrounds[G.scene]
-    local ts = texture.size(bg)
-    gfx.image(bg, screen:align(ts:scale(ts:cover(screen:size())), vec2(.5, .5)), rgba(70, 78, 80, 255))
+    gfx.bleed(true)
     gfx.clip(view)
     G.cam:draw_texture(bg)
     local now = app.time()
@@ -729,6 +733,7 @@ local function scene_frame(screen, world, dt)
     gfx.rect_grad(view:bottom(130), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
     fx.draw()
     gfx.unclip()
+    gfx.bleed(false)
 
     -- top: home, the chapter, score with its combo, the clock
     local area = screen:inflate(-16)
@@ -955,7 +960,17 @@ local function smoke()
         G.smoke_step = 4
     elseif step == 4 then
         for i = 1, ITEMS do
-            if not G.found[i] then app.inject_click(G.cam:to_screen(scenes[1].at[i])) return end
+            if not G.found[i] then
+                -- the picture covers the screen, so an item may start off it or
+                -- under the HUD: pan to it as a player would, then tap it
+                local at = G.cam:to_screen(scenes[1].at[i])
+                if not app.screen():inflate2(vec2(-110, -110)):contains(at) then
+                    G.cam = G.cam:look(scenes[1].at[i]):clamp()
+                    at = G.cam:to_screen(scenes[1].at[i])
+                end
+                app.inject_click(at)
+                return
+            end
         end
         G.smoke_step = 5
     elseif step == 5 then
