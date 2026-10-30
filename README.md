@@ -52,7 +52,7 @@ Each game is one folder with its own content; the engine never includes game cod
 
 ## Build and run
 
-Native builds need a C compiler and the pinned [platform](https://github.com/corepunch/platform) and [Lua](https://github.com/lua/lua) submodules: clone with `--recursive`, or run `git submodule update --init` once. macOS uses the system AppKit/OpenGL/AudioToolbox frameworks. Linux uses X11/EGL/OpenGL (`apt install libx11-dev libegl1-mesa-dev libgl-dev`); `make WINDOW_SYSTEM=wayland` selects Wayland when its development libraries are installed. The engine, Lua, scripting and platform compile as separate unity units, with no SDL installation or embedded framework. Regenerating the Lua glue (`make gen`) needs Python 3.
+Native builds need a C compiler and the pinned [platform](https://github.com/corepunch/platform) and [Lua](https://github.com/lua/lua) submodules: clone with `--recursive`, or run `git submodule update --init` once. macOS uses the system AppKit/OpenGL/AudioToolbox frameworks. Linux uses X11/EGL/OpenGL (`apt install libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev`); `make WINDOW_SYSTEM=wayland` selects Wayland when its development libraries are installed. The engine, Lua, scripting and platform compile as separate unity units, with no SDL installation or embedded framework. Regenerating the Lua glue (`make gen`) needs Python 3.
 
 ```sh
 git submodule update --init   # Lua, once
