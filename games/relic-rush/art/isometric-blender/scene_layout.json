@@ -1,0 +1,295 @@
+{
+ "buildings": [
+  {
+   "key": "camp",
+   "title": "Expedition camp",
+   "w": 2,
+   "h": 2,
+   "game": "2x2",
+   "u0": -9,
+   "v0": 7,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.6,
+   "verts": 1909
+  },
+  {
+   "key": "well",
+   "title": "Spring well",
+   "w": 2,
+   "h": 2,
+   "game": "2x2",
+   "u0": -6,
+   "v0": 4,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.8,
+   "verts": 1688
+  },
+  {
+   "key": "workshop",
+   "title": "Artisan workshop",
+   "w": 3,
+   "h": 2,
+   "game": "3x2",
+   "u0": -3,
+   "v0": 1,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.043,
+   "verts": 1508
+  },
+  {
+   "key": "market",
+   "title": "Jungle market",
+   "w": 3,
+   "h": 2,
+   "game": "3x2",
+   "u0": 1,
+   "v0": -3,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.83,
+   "verts": 3208
+  },
+  {
+   "key": "gateway",
+   "title": "Sunstone gateway",
+   "w": 4,
+   "h": 2,
+   "game": "3x2",
+   "u0": 5,
+   "v0": -8,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 1.3,
+   "verts": 2464
+  },
+  {
+   "key": "lodge",
+   "title": "Explorer's lodge",
+   "w": 3,
+   "h": 3,
+   "game": "3x2",
+   "u0": -3,
+   "v0": 12,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.1,
+   "verts": 3670
+  },
+  {
+   "key": "archive",
+   "title": "Lost-world archive",
+   "w": 3,
+   "h": 3,
+   "game": "2x2",
+   "u0": 1,
+   "v0": 8,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.98,
+   "verts": 4652
+  },
+  {
+   "key": "observatory",
+   "title": "Star observatory",
+   "w": 2,
+   "h": 2,
+   "game": "2x2",
+   "u0": 5,
+   "v0": 5,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.232,
+   "verts": 4531
+  },
+  {
+   "key": "fountain",
+   "title": "Jade fountain",
+   "w": 3,
+   "h": 3,
+   "game": "2x2",
+   "u0": 8,
+   "v0": 1,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 2.38,
+   "verts": 3164
+  },
+  {
+   "key": "temple",
+   "title": "Temple of the sun",
+   "w": 4,
+   "h": 4,
+   "game": "3x3",
+   "u0": 12,
+   "v0": -4,
+   "overhang": {
+    "solid": 0.0,
+    "plants": 0.0
+   },
+   "top": 3.26,
+   "verts": 5033
+  }
+ ],
+ "resolution": [
+  2520,
+  870
+ ],
+ "grid_max_error_px": 0.00019,
+ "tile_edge_px": [
+  60.0,
+  -30.0
+ ],
+ "slope": 0.5,
+ "origin_px": [
+  1200.0,
+  300.0
+ ],
+ "tile_px": [
+  120,
+  60
+ ],
+ "z_px": 73.485,
+ "items": [
+  {
+   "key": "camp",
+   "title": "Expedition camp",
+   "w": 2,
+   "h": 2,
+   "game": "2x2",
+   "u0": -9,
+   "v0": 7,
+   "cu": -8.0,
+   "cv": 8.0,
+   "top": 1.5999999046325684
+  },
+  {
+   "key": "well",
+   "title": "Spring well",
+   "w": 2,
+   "h": 2,
+   "game": "2x2",
+   "u0": -6,
+   "v0": 4,
+   "cu": -5.0,
+   "cv": 5.0,
+   "top": 1.7999999523162842
+  },
+  {
+   "key": "workshop",
+   "title": "Artisan workshop",
+   "w": 3,
+   "h": 2,
+   "game": "3x2",
+   "u0": -3,
+   "v0": 1,
+   "cu": -1.5,
+   "cv": 2.0,
+   "top": 2.0430290699005127
+  },
+  {
+   "key": "market",
+   "title": "Jungle market",
+   "w": 3,
+   "h": 2,
+   "game": "3x2",
+   "u0": 1,
+   "v0": -3,
+   "cu": 2.5,
+   "cv": -2.0,
+   "top": 1.8300000429153442
+  },
+  {
+   "key": "gateway",
+   "title": "Sunstone gateway",
+   "w": 4,
+   "h": 2,
+   "game": "3x2",
+   "u0": 5,
+   "v0": -8,
+   "cu": 7.0,
+   "cv": -7.0,
+   "top": 1.3000000715255737
+  },
+  {
+   "key": "lodge",
+   "title": "Explorer's lodge",
+   "w": 3,
+   "h": 3,
+   "game": "3x2",
+   "u0": -3,
+   "v0": 12,
+   "cu": -1.5,
+   "cv": 13.5,
+   "top": 3.0999999046325684
+  },
+  {
+   "key": "archive",
+   "title": "Lost-world archive",
+   "w": 3,
+   "h": 3,
+   "game": "2x2",
+   "u0": 1,
+   "v0": 8,
+   "cu": 2.5,
+   "cv": 9.5,
+   "top": 2.9800000190734863
+  },
+  {
+   "key": "observatory",
+   "title": "Star observatory",
+   "w": 2,
+   "h": 2,
+   "game": "2x2",
+   "u0": 5,
+   "v0": 5,
+   "cu": 6.0,
+   "cv": 6.0,
+   "top": 3.2318174839019775
+  },
+  {
+   "key": "fountain",
+   "title": "Jade fountain",
+   "w": 3,
+   "h": 3,
+   "game": "2x2",
+   "u0": 8,
+   "v0": 1,
+   "cu": 9.5,
+   "cv": 2.5,
+   "top": 2.379999876022339
+  },
+  {
+   "key": "temple",
+   "title": "Temple of the sun",
+   "w": 4,
+   "h": 4,
+   "game": "3x3",
+   "u0": 12,
+   "v0": -4,
+   "cu": 14.0,
+   "cv": -2.0,
+   "top": 3.259999990463257
+  }
+ ]
+}
