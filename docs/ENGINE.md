@@ -179,7 +179,9 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   must be open land and diamonds may touch but not overlap. Placement is
   either instant (`selected`: tap the land) or a session with a ghost
   (`city_begin_place` / `city_begin_move`, drag or tap to move the ghost,
-  `city_confirm` or `city_cancel`). With `movable`, dragging a building
+  `city_confirm` or `city_cancel`). A dragged ghost is not snapped until it
+  is let go; `city_snap` gives the tile it will land on, where the footprint
+  is drawn and validity checked meanwhile. With `movable`, dragging a building
   starts moving it. `city_find_spot` searches outwards from a hint.
 - **Drawing.** Ground, optional curved paths linking each building to its
   nearest older neighbour, fog over closed zones (under the buildings, which

@@ -230,6 +230,9 @@ local function debug_screens()
             local c = R.island
             c.ghost = c.items[c.count].pos
             R.island_focus(c.ghost - vec2(0, 90), c.cam.zoom)
+        elseif app.arg("placing") == "dragging" then   -- held between tiles: the footprint shows where it lands
+            local c = R.island
+            c.ghost = c.ghost + vec2(30, 26)
         end
         R.toast_time = 0
     end

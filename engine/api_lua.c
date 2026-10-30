@@ -3716,6 +3716,16 @@ static int l_city_next_zone(lua_State *L)
     return 1;
 }
 
+/* city.snap(c, world) */
+static int l_city_snap(lua_State *L)
+{
+    city * a_c = api_check_city(L, 1);
+    vec2 a_world = api_check_vec2(L, 2);
+    vec2 r = city_snap(a_c, a_world);
+    api_push_vec2(L, r);
+    return 1;
+}
+
 /* city.begin_place(c, type, at) */
 static int l_city_begin_place(lua_State *L)
 {
@@ -4293,6 +4303,7 @@ static void open_city(lua_State *L)
         {"zone_available", l_city_zone_available},
         {"unlock", l_city_unlock},
         {"next_zone", l_city_next_zone},
+        {"snap", l_city_snap},
         {"begin_place", l_city_begin_place},
         {"begin_move", l_city_begin_move},
         {"cancel", l_city_cancel},

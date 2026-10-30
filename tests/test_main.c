@@ -225,6 +225,19 @@ static void test_city(void)
     CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED);
     city_cancel(&c);
     CHECK(c.placing == -1 && c.items[hall].pos.y == 800);
+
+    /* dragging the ghost follows the finger; letting go lands it on the grid */
+    city_begin_place(&c, 2, v2(320, 608));
+    input drag = {.pressed = true, .down = true, .pos = v2(320, 558), .press_pos = v2(320, 558), .pinch = 1};
+    city_update(&c, drag, &wallet, 0, 0);
+    drag = (input){.down = true, .dragging = true, .pos = v2(360, 568), .press_pos = v2(320, 558), .pinch = 1};
+    city_update(&c, drag, &wallet, 0, 0);
+    NEAR(c.ghost.x, 360); NEAR(c.ghost.y, 618);   /* not snapped mid-drag */
+    NEAR(city_snap(&c, c.ghost).x, 352); NEAR(city_snap(&c, c.ghost).y, 624);
+    drag.down = false, drag.released = true;
+    city_update(&c, drag, &wallet, 0, 0);
+    NEAR(c.ghost.x, 352); NEAR(c.ghost.y, 624);
+    city_cancel(&c);
     vec2 spot;
     CHECK(city_find_spot(&c, 2, v2(704, 800), &spot) && city_can_place(&c, spot, 2, -1));
 }

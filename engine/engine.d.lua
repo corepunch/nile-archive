@@ -1473,6 +1473,12 @@ function city.unlock(c, zone, wallet) end
 ---@return integer
 function city.next_zone(c, wallet) end
 
+---The isometric tile centre nearest a world point: where a dropped ghost lands.
+---@param c city
+---@param world vec2
+---@return vec2
+function city.snap(c, world) end
+
 ---Start a placement session with a ghost at `at`.
 ---@param c city
 ---@param type integer

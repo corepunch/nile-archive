@@ -42,7 +42,7 @@ rect city_sprite_rect(const city *c, building b)
     return rect_anchor(vec2_add(b.pos, v2(0, d->sink)), sz2(d->height * size2_aspect(tex), d->height), v2(.5f, 1));
 }
 
-static vec2 snap(const city *c, vec2 p)
+vec2 city_snap(const city *c, vec2 p)
 {
     float w = c->tile.w > 0 ? c->tile.w : 32, h = c->tile.h > 0 ? c->tile.h : 16;
     float u = roundf((p.x / w + p.y / h) * .5f);
@@ -102,7 +102,7 @@ bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out)
 {
     float w = c->tile.w > 0 ? c->tile.w : 32, h = c->tile.h > 0 ? c->tile.h : 16;
     float step = minf(w, h);
-    hint = snap(c, hint);
+    hint = city_snap(c, hint);
     int rings = (int)(maxf(c->cam.world.w, c->cam.world.h) / step) + 1;
     for (int ring = 0; ring <= rings; ring++)
         for (int y = -ring; y <= ring; y++)
@@ -182,7 +182,7 @@ void city_begin_place(city *c, int type, vec2 at)
     if (type < 0 || type >= c->def_count) return;
     c->placing = type;
     c->moving = -1;
-    c->ghost = snap(c, at);
+    c->ghost = city_snap(c, at);
 }
 
 void city_begin_move(city *c, int index)
@@ -190,7 +190,7 @@ void city_begin_move(city *c, int index)
     if (index < 0 || index >= c->count) return;
     c->placing = c->items[index].type;
     c->moving = index;
-    c->ghost = snap(c, c->items[index].pos);
+    c->ghost = city_snap(c, c->items[index].pos);
 }
 
 void city_cancel(city *c) { c->placing = c->moving = -1; }
@@ -199,7 +199,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
 {
     city_event ev = {CITY_NONE, c->moving, -1, {{0}}, camera_to_screen(c->cam, c->ghost)};
     if (c->placing < 0) return ev;
-    c->ghost = snap(c, c->ghost);
+    c->ghost = city_snap(c, c->ghost);
     const building_def *d = &c->defs[c->placing];
     if (!city_can_place(c, c->ghost, c->placing, c->moving)) {
         ev.result = CITY_BLOCKED;
@@ -230,7 +230,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
 
 static city_event quick_build(city *c, vec2 p, purse *wallet, double now, vec2 screen)
 {
-    p = snap(c, p);
+    p = city_snap(c, p);
     const building_def *d = &c->defs[c->selected];
     city_event ev = {CITY_NONE, -1, -1, d->cost, screen};
     if (!purse_covers(*wallet, d->needs)) ev.result = CITY_LOCKED_TYPE;
@@ -268,8 +268,10 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         city_begin_move(c, c->press_target - 2);
         c->press_target = 1;
     }
+    /* the ghost follows the finger freely and lands on the grid when let go */
     if (in.dragging && !in.captured && c->press_target == 1 && c->placing >= 0)
-        c->ghost = snap(c, vec2_add(camera_to_world(c->cam, in.pos), c->grab));
+        c->ghost = vec2_add(camera_to_world(c->cam, in.pos), c->grab);
+    if (in.released && c->press_target == 1 && c->placing >= 0) c->ghost = city_snap(c, c->ghost);
 
     input cam_in = in;
     if (c->press_target) cam_in.dragging = false, cam_in.drag = v2(0, 0);
@@ -284,7 +286,7 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
     c->press_target = 0;
 
     if (c->placing >= 0) {
-        if (press_target != 1) c->ghost = snap(c, p);   /* tap the land to put the ghost there */
+        if (press_target != 1) c->ghost = city_snap(c, p);   /* tap the land to put the ghost there */
         return ev;
     }
     if (c->selected >= 0 && c->selected < c->def_count) return quick_build(c, p, wallet, now, in.pos);
@@ -502,11 +504,12 @@ void city_draw(const city *c, input in, double now)
     if (c->draw_over) c->draw_over(c);
 
     if (c->placing >= 0) {
-        bool ok = city_can_place(c, c->ghost, c->placing, c->moving);
-        draw_footprint(c, c->ghost, c->placing, ok);
+        vec2 land = city_snap(c, c->ghost);   /* mid-drag the footprint shows where it will land */
+        bool ok = city_can_place(c, land, c->placing, c->moving);
+        draw_footprint(c, land, c->placing, ok);
         draw_building(c, (building){c->ghost, c->placing, 0}, ok ? rgba(255, 255, 255, 245) : rgba(255, 90, 80, 160), 0);   /* red: it can't go here */
     } else if (c->selected >= 0 && in.hover && !in.down && rect_contains(cam.view, in.pos) && !ui_blocks(in.pos)) {
-        vec2 p = snap(c, camera_to_world(cam, in.pos));
+        vec2 p = city_snap(c, camera_to_world(cam, in.pos));
         bool ok = city_can_place(c, p, c->selected, -1);
         draw_footprint(c, p, c->selected, ok);
         draw_building(c, (building){p, c->selected, 0}, ok ? rgba(255, 255, 255, 170) : rgba(255, 140, 130, 140), 0);

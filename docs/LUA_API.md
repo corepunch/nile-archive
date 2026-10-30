@@ -2321,6 +2321,17 @@ The first available zone, else the first closed touching one, else -1.
 
 **Returns:** `integer`
 
+### `city.snap(c, world)  ·  c:snap(world)`
+
+The isometric tile centre nearest a world point: where a dropped ghost lands.
+
+| Argument | Type | |
+|---|---|---|
+| `c` | `city` |  |
+| `world` | `vec2` |  |
+
+**Returns:** `vec2`
+
 ### `city.begin_place(c, type, at)  ·  c:begin_place(type, at)`
 
 Start a placement session with a ghost at `at`.

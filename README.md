@@ -188,8 +188,11 @@ letterbox bars included), and drawing between `gfx.bleed(true)` and
 `gfx.bleed(false)` may reach it. Relic Rush's jungle, island and header band
 run to the edges this way.
 
-Cities snap placement previews, taps, drags and confirmations to an isometric
-grid. `city.tile` sets its half extents (default `size2(32, 16)`). Building
-`footprint` half extents define both the green/red ground diamond and collision
-checks; `sink` aligns the sprite bottom to that ground plane. Existing saved
-positions remain intact until the player confirms a move.
+Cities snap placement previews, taps and confirmations to an isometric grid.
+A dragged ghost follows the finger freely and lands on the nearest tile when
+let go; meanwhile its footprint, and the red or green check, already sit on
+that tile (`c:snap(p)` gives it). `city.tile` sets its half extents (default
+`size2(32, 16)`). Building `footprint` half extents define both the green/red
+ground diamond and collision checks; `sink` aligns the sprite bottom to that
+ground plane. Existing saved positions remain intact until the player confirms
+a move.

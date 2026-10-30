@@ -656,6 +656,7 @@ typedef struct city {
 } city;
 
 void city_init(city *c, const char *ground_path);
+vec2 city_snap(const city *c, vec2 world);                              /* nearest isometric tile centre */
 bool city_can_place(const city *c, vec2 world, int type, int ignore);   /* ignore: index to skip, or -1 */
 bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out);     /* nearest free spot to hint */
 int city_add(city *c, vec2 world, int type, double now);                /* no checks; returns index or -1 */

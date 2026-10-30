@@ -540,6 +540,7 @@
     <function name="zone_available" c="city_zone_available" doc="Closed, touching open land and affordable."><arg name="c" type="city"/><arg name="zone" type="int"/><arg name="wallet" type="purse"/><returns type="bool"/></function>
     <function name="unlock" c="city_unlock" doc="Open a zone, paying from wallet; false if not available."><arg name="c" type="city"/><arg name="zone" type="int"/><arg name="wallet" type="purse" ref="inout"/><returns type="bool"/></function>
     <function name="next_zone" c="city_next_zone" doc="The first available zone, else the first closed touching one, else -1."><arg name="c" type="city"/><arg name="wallet" type="purse"/><returns type="int"/></function>
+    <function name="snap" c="city_snap" doc="The isometric tile centre nearest a world point: where a dropped ghost lands."><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="vec2"/></function>
     <function name="begin_place" c="city_begin_place" doc="Start a placement session with a ghost at `at`."><arg name="c" type="city"/><arg name="type" type="int"/><arg name="at" type="vec2"/></function>
     <function name="begin_move" c="city_begin_move"><arg name="c" type="city"/><arg name="index" type="int"/></function>
     <function name="cancel" c="city_cancel"><arg name="c" type="city"/></function>
