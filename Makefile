@@ -19,7 +19,9 @@ SDL_CFLAGS := $(shell pkg-config --cflags sdl2 2>/dev/null || sdl2-config --cfla
 SDL_LIBS   := $(shell pkg-config --libs sdl2 2>/dev/null || sdl2-config --libs 2>/dev/null)
 LIBS    := $(SDL_LIBS) -lm
 
-# Lua 5.4 (engine/third_party/lua, MIT) as one translation unit (engine/lua_lib.c), no platform extras.
+# Lua 5.4: the lua/lua git mirror as a submodule in engine/third_party/lua (MIT),
+# pinned to a release tag and built as one translation unit (engine/lua_lib.c).
+LUA_DIR    := engine/third_party/lua
 LUA_SRC    := engine/lua_lib.c
 LUA_FLAGS  := -Wno-unused-function
 ENGINE_OBJ := $(ENGINE:%=build/engine/%.o) build/engine/lua.o
@@ -32,7 +34,10 @@ build/engine/%.o: engine/%.c engine/engine.h engine/api_lua.h
 	@mkdir -p $(dir $@)
 	$(CC) $(ALL_CFLAGS) $(SDL_CFLAGS) -c $< -o $@
 
-build/engine/lua.o: $(LUA_SRC) $(wildcard engine/third_party/lua/*.c) $(wildcard engine/third_party/lua/*.h)
+$(LUA_DIR)/lua.h:
+	@echo "Lua sources missing: run 'git submodule update --init' (the Lua interpreter is a submodule)" >&2; exit 1
+
+build/engine/lua.o: $(LUA_SRC) $(LUA_DIR)/lua.h $(wildcard $(LUA_DIR)/*.c) $(wildcard $(LUA_DIR)/*.h)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -std=c11 -Wall $(LUA_FLAGS) -c $< -o $@
 
@@ -85,7 +90,7 @@ WEB_FLAGS := -std=gnu11 -O2 -Iengine -sUSE_SDL=2 -sALLOW_MEMORY_GROWTH=1 -sINITI
 web: $(GAMES:%=dist/%/index.html)
 
 define WEB_RULES
-dist/$(1)/index.html: $(ENGINE:%=engine/%.c) $(LUA_SRC) engine/launcher.c engine/engine.h engine/api_lua.h web/shell.html $(call game_lua,$(1)) $(shell find games/$(1)/data -type f 2>/dev/null)
+dist/$(1)/index.html: $(ENGINE:%=engine/%.c) $(LUA_SRC) $(LUA_DIR)/lua.h engine/launcher.c engine/engine.h engine/api_lua.h web/shell.html $(call game_lua,$(1)) $(shell find games/$(1)/data -type f 2>/dev/null)
 	@mkdir -p dist/$(1)
 	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -o $$@ \
 	    engine/launcher.c $(ENGINE:%=engine/%.c) $(LUA_SRC) \

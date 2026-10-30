@@ -1,0 +1,4 @@
+[submodule "engine/third_party/lua"]
+	path = engine/third_party/lua
+	url = https://github.com/lua/lua
+	shallow = true

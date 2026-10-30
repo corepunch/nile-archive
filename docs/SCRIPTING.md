@@ -144,7 +144,8 @@ same.
 
 Each game gets its own Lua state with `base`, `table`, `string`, `math`,
 `utf8` and `coroutine`. `io`, `os`, `package` and `debug` are not in the build
-(`engine/lua_lib.c` amalgamates only the libraries the sandbox opens);
+(`engine/lua_lib.c` amalgamates only the libraries the sandbox opens from the
+`lua/lua` submodule, pinned to v5.4.8);
 `dofile` and `loadfile` are removed. `require(name)` resolves `name` (dots as
 slashes) against the game's `lua/` folder — or, for the test binary, the
 list of folders it is given — and caches the module. Assets are reached

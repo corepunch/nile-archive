@@ -120,7 +120,7 @@ docs". The precedents, and what `tools/luagen.py` copies from each:
 - **A retained scene graph** (cocos2d, Godot, Flash): the UI and screens are
   immediate-mode functions; nothing has to be kept in sync.
 - **A custom scripting language** (TorqueScript, GML): Lua 5.4 as shipped,
-  vendored unchanged under `engine/third_party/lua`.
+  the official mirror as a submodule under `engine/third_party/lua`, unchanged.
 - **Message passing to engine objects** (Defold): the games are small enough
   that direct calls on handles read better; callbacks are synchronous.
 - **Bindings from C++ templates** (sol2): the engine is C, and the reference
