@@ -151,13 +151,14 @@ static void test_safe_view(void)
 
 static void test_city(void)
 {
-    static building_def defs[3] = {
+    static building_def defs[4] = {
         {.name = "hut", .height = 100, .cost = {{50}}, .reward = {{0, 5}}},
         {.name = "mine", .height = 120, .cost = {{80}}, .needs = {{0, 10}}, .income = {{30}}, .income_period = 60},
-        {.name = "hall", .height = 100, .footprint = {60, 30}, .cost = {{10}}},
+        {.name = "hall", .height = 100, .size = {2, 2}, .cost = {{10}}},
+        {.name = "tower", .sprite = {.size = {200, 300}}, .size = {2, 3}, .pivot = {100, 250}, .base_width = 160},
     };
     static city c;
-    c = (city){.defs = defs, .def_count = 3, .spacing = 100, .buildable = flat_land, .zone_count = 2};
+    c = (city){.defs = defs, .def_count = 4, .spacing = 100, .buildable = flat_land, .zone_count = 2};
     c.zones[0] = (city_zone){.area = rc(0, 0, 500, 1000)};
     c.zones[1] = (city_zone){.area = rc(500, 0, 500, 1000), .cost = {{100}}, .needs = {{0, 1}}};
     c.cam = (camera){.world = sz2(1000, 1000), .view = rc(0, 0, 1000, 1000), .zoom = 1};
@@ -197,51 +198,59 @@ static void test_city(void)
     CHECK(!city_unlock(&c, 1, &wallet) && city_next_zone(&c, wallet) == -1);
     CHECK(city_can_place(&c, v2(700, 300), 0, -1));
 
-    /* confirmable placement and moving; footprints may touch, not overlap */
+    /* a sprite is scaled so its base spans the footprint's tiles and stands on its pivot */
+    NEAR(defs[3].height, 300);   /* 300 px * (2 + 3) tiles * 32 / 160 px */
+    rect tower = city_sprite_rect(&c, (building){v2(500, 500), 3, 0});
+    NEAR(tower.pos.x, 400); NEAR(tower.pos.y, 250); NEAR(tower.size.w, 200);
+    vec2 odd = city_snap(&c, v2(10, 7), 3);   /* 2 x 3: centred on a tile edge one way, a tile centre the other */
+    NEAR(odd.x, 16); NEAR(odd.y, 8);   /* tile (0.5, 0) */
+
+    /* confirmable placement and moving; footprints may share an edge, not overlap */
     wallet.v[0] = 100;
     city_begin_place(&c, 2, v2(702, 601));
-    vec2 tile_center = c.ghost;
+    vec2 tile_corner = c.ghost;
     city_begin_place(&c, 2, v2(703, 602));
-    NEAR(c.ghost.x, tile_center.x); NEAR(c.ghost.y, tile_center.y);
-    CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 608);   /* isometric tile centre */
+    NEAR(c.ghost.x, tile_corner.x); NEAR(c.ghost.y, tile_corner.y);
+    CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 592);   /* 2 x 2 centres on a tile corner */
     ev = city_confirm(&c, &wallet, 0);
     CHECK(ev.result == CITY_BUILT && c.placing == -1 && wallet.v[0] == 90);
     int hall = ev.building;
-    NEAR(c.items[hall].pos.x, 704); NEAR(c.items[hall].pos.y, 608);
+    NEAR(c.items[hall].pos.x, 704); NEAR(c.items[hall].pos.y, 592);
     city_begin_move(&c, hall);
     vec2 original = c.items[hall].pos;
     c.ghost = v2(703, 607);
     city_cancel(&c);
     NEAR(c.items[hall].pos.x, original.x); NEAR(c.items[hall].pos.y, original.y);
-    city_begin_place(&c, 2, v2(760, 620));
-    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED && c.placing == 2);   /* overlaps */
-    c.ghost = v2(828, 600);
-    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BUILT);   /* 124 apart: diamonds just touch */
+    city_begin_place(&c, 2, v2(730, 600));
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED && c.placing == 2);   /* one tile over: overlaps */
+    c.ghost = v2(768, 624);
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_BUILT);   /* two tiles over: they share an edge */
     city_begin_move(&c, hall);
-    c.ghost = v2(704, 800);
-    CHECK(city_confirm(&c, &wallet, 0).result == CITY_MOVED && c.items[hall].pos.y == 800 && wallet.v[0] == 80);
+    c.ghost = v2(704, 816);
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_MOVED && c.items[hall].pos.y == 816 && wallet.v[0] == 80);
     city_begin_move(&c, hall);
     c.ghost = v2(704, 50);
     CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED);
     city_cancel(&c);
-    CHECK(c.placing == -1 && c.items[hall].pos.y == 800);
+    CHECK(c.placing == -1 && c.items[hall].pos.y == 816);
 
     /* dragging the ghost follows the finger; letting go lands it on the grid */
     city_begin_place(&c, 2, v2(320, 608));
-    input drag = {.pressed = true, .down = true, .pos = v2(320, 558), .press_pos = v2(320, 558), .pinch = 1};
+    CHECK(c.ghost.x == 320 && c.ghost.y == 624);
+    input drag = {.pressed = true, .down = true, .pos = v2(320, 574), .press_pos = v2(320, 574), .pinch = 1};
     city_update(&c, drag, &wallet, 0, 0);
-    drag = (input){.down = true, .dragging = true, .pos = v2(360, 568), .press_pos = v2(320, 558), .pinch = 1};
+    drag = (input){.down = true, .dragging = true, .pos = v2(360, 584), .press_pos = v2(320, 574), .pinch = 1};
     city_update(&c, drag, &wallet, 0, 0);
-    NEAR(c.ghost.x, 360); NEAR(c.ghost.y, 618);   /* not snapped mid-drag */
+    NEAR(c.ghost.x, 360); NEAR(c.ghost.y, 634);   /* not snapped mid-drag */
     CHECK(c.held);
-    NEAR(city_snap(&c, c.ghost).x, 352); NEAR(city_snap(&c, c.ghost).y, 624);
+    NEAR(city_snap(&c, c.ghost, 2).x, 352); NEAR(city_snap(&c, c.ghost, 2).y, 640);
     drag.down = false, drag.released = true;
     city_update(&c, drag, &wallet, 0, 0);
-    NEAR(c.ghost.x, 352); NEAR(c.ghost.y, 624);
+    NEAR(c.ghost.x, 352); NEAR(c.ghost.y, 640);
     CHECK(!c.held);
     city_cancel(&c);
     vec2 spot;
-    CHECK(city_find_spot(&c, 2, v2(704, 800), &spot) && city_can_place(&c, spot, 2, -1));
+    CHECK(city_find_spot(&c, 2, v2(704, 816), &spot) && city_can_place(&c, spot, 2, -1));
 }
 
 static void serialize_story(save *s, void *user)

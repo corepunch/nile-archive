@@ -587,11 +587,10 @@ typedef struct {
     const char *about;
     const char *sprite_path;
     texture sprite;      /* loaded by city_init from sprite_path */
-    float height;        /* drawn height in world units (width keeps the aspect)... */
-    float width;         /* ...or, with height 0, the drawn width */
-    float max_height;    /* cap for a height derived from width (0 = none) */
-    float sink;          /* how far the sprite bottom sits below the anchor point */
-    size2 footprint;     /* half extents of the ground diamond; zero = a circle of city.spacing */
+    size2 size;          /* footprint in whole tiles: w along the front-left side, h along the front-right */
+    vec2 pivot;          /* sprite pixel of the footprint's ground centre; zero = bottom centre */
+    float base_width;    /* sprite pixels from the footprint's left corner to its right one */
+    float height;        /* drawn height in world units; city_init derives it from base_width and size */
     purse cost;          /* paid when placed */
     purse reward;        /* granted once when placed */
     purse needs;         /* must be owned (not spent) to build */
@@ -637,7 +636,6 @@ typedef struct city {
     unsigned open;                          /* bit per opened zone; zone 0 starts open */
     float spacing;                          /* minimum distance between buildings without footprints */
     size2 tile;                             /* isometric tile half extents; default 32 x 16 */
-    size2 footprint_gap;                    /* extra clearance between footprints */
     bool (*buildable)(const struct city *c, vec2 world);   /* terrain test supplied by the game */
     int (*zone_at)(const struct city *c, vec2 world);      /* region lookup (default: zone rects); -1 = none */
     bool (*zone_touches)(const struct city *c, int zone, unsigned open);  /* adjacency (default: rects touching) */
@@ -647,6 +645,7 @@ typedef struct city {
     bool fog_on_land_only;                  /* fog only where buildable() */
     color path;                             /* paths linking buildings; alpha 0 = none */
     bool movable;                           /* drag a building to move it */
+    bool show_footprints;                   /* debug: every building's footprint and pivot over its sprite */
     texture income_icon;                    /* bubble shown over buildings with income ready */
     int selected;                           /* quick build: tap places this type at once (-1 = off) */
 
@@ -665,7 +664,7 @@ typedef struct city {
 } city;
 
 void city_init(city *c, const char *ground_path);
-vec2 city_snap(const city *c, vec2 world);                              /* nearest isometric tile centre */
+vec2 city_snap(const city *c, vec2 world, int type);                    /* where a building of type lands on the grid */
 bool city_can_place(const city *c, vec2 world, int type, int ignore);   /* ignore: index to skip, or -1 */
 bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out);     /* nearest free spot to hint */
 int city_add(city *c, vec2 world, int type, double now);                /* no checks; returns index or -1 */

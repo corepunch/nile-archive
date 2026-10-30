@@ -33,18 +33,21 @@ local scenes = {
 }
 local SCENES = #scenes
 
--- Sprites are 248 px tall inside the old 256 px atlas cells: drawn height and
--- how far below the anchor they reach keep the original placement.
-local function building(title, size, coins, influence, path)
-    return {name = title, sprite_path = path, height = size * 248 / 256, sink = size * .17, footprint = size2(size * .38, size * .17), cost = purse(coins), reward = purse(0, influence)}
+-- Each sprite's footprint is measured in its own pixels (docs/BUILDINGS.md):
+-- the ground centre it stands on (pivot), the width from its left corner to
+-- its right one, and its size in whole TILE tiles.
+local TILE = size2(24, 12)   -- half extents: a tile is 48 x 24 world units
+
+local function building(title, w, h, pivot, base, coins, influence, path)
+    return {name = title, sprite_path = path, size = size2(w, h), pivot = pivot, base_width = base, cost = purse(coins), reward = purse(0, influence)}
 end
 
 local buildings = {
-    building("Дом садовника", 160, 70, 10, "buildings/0.png"),
-    building("Храм Исиды", 210, 160, 30, "buildings/1.png"),
-    building("Архив", 190, 130, 25, "buildings/2.png"),
-    building("Фонтан", 150, 60, 10, "buildings/3.png"),
-    building("Мастерская", 170, 100, 15, "buildings/4.png"),
+    building("Дом садовника", 2, 2, vec2(81, 200), 150, 70, 10, "buildings/0.png"),
+    building("Храм Исиды", 3, 2, vec2(86, 198), 171, 160, 30, "buildings/1.png"),
+    building("Архив", 3, 2, vec2(76, 187), 151, 130, 25, "buildings/2.png"),
+    building("Фонтан", 2, 2, vec2(80, 192), 151, 60, 10, "buildings/3.png"),
+    building("Мастерская", 2, 2, vec2(76, 187), 143, 100, 15, "buildings/4.png"),
 }
 
 local cast = {
@@ -110,6 +113,7 @@ end
 local function island_setup()
     local c = city.new()
     c.defs = buildings
+    c.tile = TILE
     c.spacing = 120
     c.movable = true
     c.buildable = island_buildable
@@ -127,7 +131,7 @@ local function new_game()
     G.wins = {0, 0, 0}
     G.island.count = 0
     G.island.open = 1
-    G.island:add(vec2(850, 650), 0, 0)
+    G.island:add(G.island:snap(vec2(850, 650), 0), 0, 0)
 end
 
 
@@ -1081,7 +1085,8 @@ local function setup_theme()
 end
 
 -- Debug/QA entry points used to capture screenshots:
--- --screen island|build|scene0..2|cast|chapters|pause|win|story|horem|merit
+-- --screen island|build|scene0..2|cast|chapters|pause|win|story|horem|merit,
+-- and --footprints to check the buildings' measured footprints and pivots
 local function apply_screen_arg(screen)
     G.wallet[INFLUENCE] = 100
     G.wallet[COINS] = 900
@@ -1126,7 +1131,7 @@ local function apply_screen_arg(screen)
         local types = {1, 2, 3, 4, 1}
         local spots = {vec2(1060, 600), vec2(760, 860), vec2(960, 1000), vec2(1400, 700), vec2(1700, 900)}
         G.island.open = 7
-        for i = 1, 5 do G.island:add(spots[i], types[i], 0) end
+        for i = 1, 5 do G.island:add(G.island:snap(spots[i], types[i]), types[i], 0) end
         local cam = G.island.cam
         cam.center = vec2(1150, 720)
         cam.zoom = .55
@@ -1146,6 +1151,7 @@ local function init()
     G.scene = nil
     G.hint = nil
     G.smoke = app.arg("smoke") ~= nil
+    G.island.show_footprints = app.arg("footprints") ~= nil
     local screen = app.arg("screen")
     if screen then apply_screen_arg(screen) else story.play("intro", intro) end
 end

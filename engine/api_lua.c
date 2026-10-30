@@ -1114,16 +1114,15 @@ static int l_story_style_new(lua_State *L)
 
 void api_push_building_def(lua_State *L, building_def v)
 {
-    lua_createtable(L, 0, 14);
+    lua_createtable(L, 0, 13);
     lua_pushstring(L, v.name); lua_setfield(L, -2, "name");
     lua_pushstring(L, v.about); lua_setfield(L, -2, "about");
     lua_pushstring(L, v.sprite_path); lua_setfield(L, -2, "sprite_path");
     api_push_texture(L, v.sprite); lua_setfield(L, -2, "sprite");
+    api_push_size2(L, v.size); lua_setfield(L, -2, "size");
+    api_push_vec2(L, v.pivot); lua_setfield(L, -2, "pivot");
+    lua_pushnumber(L, v.base_width); lua_setfield(L, -2, "base_width");
     lua_pushnumber(L, v.height); lua_setfield(L, -2, "height");
-    lua_pushnumber(L, v.width); lua_setfield(L, -2, "width");
-    lua_pushnumber(L, v.max_height); lua_setfield(L, -2, "max_height");
-    lua_pushnumber(L, v.sink); lua_setfield(L, -2, "sink");
-    api_push_size2(L, v.footprint); lua_setfield(L, -2, "footprint");
     api_push_purse(L, v.cost); lua_setfield(L, -2, "cost");
     api_push_purse(L, v.reward); lua_setfield(L, -2, "reward");
     api_push_purse(L, v.needs); lua_setfield(L, -2, "needs");
@@ -1150,20 +1149,17 @@ building_def api_get_building_def(lua_State *L, int i)
     lua_getfield(L, i, "sprite");
     v.sprite = api_get_texture(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "size");
+    v.size = api_get_size2(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "pivot");
+    v.pivot = api_get_vec2(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "base_width");
+    v.base_width = (float)lua_tonumber(L, -1);
+    lua_pop(L, 1);
     lua_getfield(L, i, "height");
     v.height = (float)lua_tonumber(L, -1);
-    lua_pop(L, 1);
-    lua_getfield(L, i, "width");
-    v.width = (float)lua_tonumber(L, -1);
-    lua_pop(L, 1);
-    lua_getfield(L, i, "max_height");
-    v.max_height = (float)lua_tonumber(L, -1);
-    lua_pop(L, 1);
-    lua_getfield(L, i, "sink");
-    v.sink = (float)lua_tonumber(L, -1);
-    lua_pop(L, 1);
-    lua_getfield(L, i, "footprint");
-    v.footprint = api_get_size2(L, -1);
     lua_pop(L, 1);
     lua_getfield(L, i, "cost");
     v.cost = api_get_purse(L, -1);
@@ -1190,11 +1186,10 @@ void api_store_building_def(lua_State *L, int i, building_def v)
     lua_pushstring(L, v.about); lua_setfield(L, i, "about");
     lua_pushstring(L, v.sprite_path); lua_setfield(L, i, "sprite_path");
     api_push_texture(L, v.sprite); lua_setfield(L, i, "sprite");
+    api_push_size2(L, v.size); lua_setfield(L, i, "size");
+    api_push_vec2(L, v.pivot); lua_setfield(L, i, "pivot");
+    lua_pushnumber(L, v.base_width); lua_setfield(L, i, "base_width");
     lua_pushnumber(L, v.height); lua_setfield(L, i, "height");
-    lua_pushnumber(L, v.width); lua_setfield(L, i, "width");
-    lua_pushnumber(L, v.max_height); lua_setfield(L, i, "max_height");
-    lua_pushnumber(L, v.sink); lua_setfield(L, i, "sink");
-    api_push_size2(L, v.footprint); lua_setfield(L, i, "footprint");
     api_push_purse(L, v.cost); lua_setfield(L, i, "cost");
     api_push_purse(L, v.reward); lua_setfield(L, i, "reward");
     api_push_purse(L, v.needs); lua_setfield(L, i, "needs");
@@ -1543,7 +1538,6 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "open")) { lua_pushinteger(L, (lua_Integer)p->open); return 1; }
     if (!strcmp(k, "spacing")) { lua_pushnumber(L, p->spacing); return 1; }
     if (!strcmp(k, "tile")) { api_push_size2(L, p->tile); return 1; }
-    if (!strcmp(k, "footprint_gap")) { api_push_size2(L, p->footprint_gap); return 1; }
     if (!strcmp(k, "buildable")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "buildable"); return 1; }
     if (!strcmp(k, "zone_at")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "zone_at"); return 1; }
     if (!strcmp(k, "zone_touches")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "zone_touches"); return 1; }
@@ -1553,6 +1547,7 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "fog_on_land_only")) { lua_pushboolean(L, p->fog_on_land_only); return 1; }
     if (!strcmp(k, "path")) { api_push_color(L, p->path); return 1; }
     if (!strcmp(k, "movable")) { lua_pushboolean(L, p->movable); return 1; }
+    if (!strcmp(k, "show_footprints")) { lua_pushboolean(L, p->show_footprints); return 1; }
     if (!strcmp(k, "income_icon")) { api_push_texture(L, p->income_icon); return 1; }
     if (!strcmp(k, "selected")) { lua_pushinteger(L, p->selected); return 1; }
     if (!strcmp(k, "placing")) { lua_pushinteger(L, p->placing); return 1; }
@@ -1598,7 +1593,6 @@ static int l_city_newindex(lua_State *L)
     if (!strcmp(k, "open")) { p->open = (unsigned)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "spacing")) { p->spacing = (float)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "tile")) { p->tile = api_get_size2(L, 3); return 0; }
-    if (!strcmp(k, "footprint_gap")) { p->footprint_gap = api_get_size2(L, 3); return 0; }
     if (!strcmp(k, "buildable")) {
         if (!lua_isnoneornil(L, 3)) luaL_checktype(L, 3, LUA_TFUNCTION);
         lua_getiuservalue(L, 1, 1); lua_pushvalue(L, 3); lua_setfield(L, -2, "buildable"); lua_pop(L, 1);
@@ -1628,6 +1622,7 @@ static int l_city_newindex(lua_State *L)
     if (!strcmp(k, "fog_on_land_only")) { p->fog_on_land_only = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "path")) { p->path = api_get_color(L, 3); return 0; }
     if (!strcmp(k, "movable")) { p->movable = lua_toboolean(L, 3); return 0; }
+    if (!strcmp(k, "show_footprints")) { p->show_footprints = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "income_icon")) { p->income_icon = api_get_texture(L, 3); return 0; }
     if (!strcmp(k, "selected")) { p->selected = (int)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "ghost")) { p->ghost = api_get_vec2(L, 3); return 0; }
@@ -3756,12 +3751,13 @@ static int l_city_next_zone(lua_State *L)
     return 1;
 }
 
-/* city.snap(c, world) */
+/* city.snap(c, world, type?) */
 static int l_city_snap(lua_State *L)
 {
     city * a_c = api_check_city(L, 1);
     vec2 a_world = api_check_vec2(L, 2);
-    vec2 r = city_snap(a_c, a_world);
+    int a_type = (int)luaL_optinteger(L, 3, -1);
+    vec2 r = city_snap(a_c, a_world, a_type);
     api_push_vec2(L, r);
     return 1;
 }

@@ -472,11 +472,10 @@
     <field name="about" type="string"/>
     <field name="sprite_path" type="string"/>
     <field name="sprite" type="texture" doc="Loaded by city:init from sprite_path."/>
-    <field name="height" type="float" doc="Drawn height in world units (width keeps the aspect)..."/>
-    <field name="width" type="float" doc="...or, with height 0, the drawn width."/>
-    <field name="max_height" type="float" doc="Cap for a height derived from width (0 = none)."/>
-    <field name="sink" type="float" doc="How far the sprite bottom sits below the anchor point."/>
-    <field name="footprint" type="size2" doc="Half extents of the ground diamond; zero = a circle of city.spacing."/>
+    <field name="size" type="size2" doc="Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing."/>
+    <field name="pivot" type="vec2" doc="Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre."/>
+    <field name="base_width" type="float" doc="Sprite pixels from the footprint's left corner to its right one; sets the drawing scale."/>
+    <field name="height" type="float" doc="Drawn height in world units; derived from base_width and size when both are set."/>
     <field name="cost" type="purse" doc="Paid when placed."/>
     <field name="reward" type="purse" doc="Granted once when placed."/>
     <field name="needs" type="purse" doc="Must be owned (not spent) to build."/>
@@ -508,8 +507,7 @@
     <field name="zone_count" type="int"/>
     <field name="open" type="uint" access="rw" doc="Bit per opened zone (bit 0 = zone 0, which starts open)."/>
     <field name="spacing" type="float" access="rw" doc="Minimum distance between buildings without footprints."/>
-    <field name="tile" type="size2" access="rw" doc="Isometric tile half extents; defaults to 32 x 16. Placement snaps to tile centres."/>
-    <field name="footprint_gap" type="size2" access="rw" doc="Extra clearance between footprints."/>
+    <field name="tile" type="size2" access="rw" doc="Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles."/>
     <field name="buildable" type="callback" tramp="lcity_buildable" decl="bool lcity_buildable(const struct city *c, vec2 world)" doc="function(c, world) -> bool: terrain test."/>
     <field name="zone_at" type="callback" tramp="lcity_zone_at" decl="int lcity_zone_at(const struct city *c, vec2 world)" doc="function(c, world) -> zone (0-based) or -1; default: zone rects."/>
     <field name="zone_touches" type="callback" tramp="lcity_zone_touches" decl="bool lcity_zone_touches(const struct city *c, int zone, unsigned open)" doc="function(c, zone, open) -> bool: adjacency; default: rects touching."/>
@@ -519,6 +517,7 @@
     <field name="fog_on_land_only" type="bool" access="rw"/>
     <field name="path" type="color" access="rw" doc="Paths linking buildings; alpha 0 = none."/>
     <field name="movable" type="bool" access="rw" doc="Drag a building to move it."/>
+    <field name="show_footprints" type="bool" access="rw" doc="Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements."/>
     <field name="income_icon" type="texture" access="rw"/>
     <field name="selected" type="int" access="rw" doc="Quick build: a tap places this type at once (-1 = off)."/>
     <field name="placing" type="int" doc="Building type being placed, -1 = none."/>
@@ -547,7 +546,7 @@
     <function name="zone_available" c="city_zone_available" doc="Closed, touching open land and affordable."><arg name="c" type="city"/><arg name="zone" type="int"/><arg name="wallet" type="purse"/><returns type="bool"/></function>
     <function name="unlock" c="city_unlock" doc="Open a zone, paying from wallet; false if not available."><arg name="c" type="city"/><arg name="zone" type="int"/><arg name="wallet" type="purse" ref="inout"/><returns type="bool"/></function>
     <function name="next_zone" c="city_next_zone" doc="The first available zone, else the first closed touching one, else -1."><arg name="c" type="city"/><arg name="wallet" type="purse"/><returns type="int"/></function>
-    <function name="snap" c="city_snap" doc="The isometric tile centre nearest a world point: where a dropped ghost lands."><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="vec2"/></function>
+    <function name="snap" c="city_snap" doc="Where a building of type dropped at a world point lands: its footprint on whole tiles."><arg name="c" type="city"/><arg name="world" type="vec2"/><arg name="type" type="int" default="-1"/><returns type="vec2"/></function>
     <function name="begin_place" c="city_begin_place" doc="Start a placement session with a ghost at `at`."><arg name="c" type="city"/><arg name="type" type="int"/><arg name="at" type="vec2"/></function>
     <function name="begin_move" c="city_begin_move"><arg name="c" type="city"/><arg name="index" type="int"/></function>
     <function name="cancel" c="city_cancel"><arg name="c" type="city"/></function>

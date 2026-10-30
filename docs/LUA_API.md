@@ -2177,8 +2177,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `zone_count` | `integer` | read |  |
 | `open` | `integer` | read/write | Bit per opened zone (bit 0 = zone 0, which starts open). |
 | `spacing` | `number` | read/write | Minimum distance between buildings without footprints. |
-| `tile` | `size2` | read/write | Isometric tile half extents; defaults to 32 x 16. Placement snaps to tile centres. |
-| `footprint_gap` | `size2` | read/write | Extra clearance between footprints. |
+| `tile` | `size2` | read/write | Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles. |
 | `buildable` | `function` | read/write | function(c, world) -> bool: terrain test. |
 | `zone_at` | `function` | read/write | function(c, world) -> zone (0-based) or -1; default: zone rects. |
 | `zone_touches` | `function` | read/write | function(c, zone, open) -> bool: adjacency; default: rects touching. |
@@ -2188,6 +2187,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `fog_on_land_only` | `boolean` | read/write |  |
 | `path` | `color` | read/write | Paths linking buildings; alpha 0 = none. |
 | `movable` | `boolean` | read/write | Drag a building to move it. |
+| `show_footprints` | `boolean` | read/write | Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements. |
 | `income_icon` | `texture` | read/write |  |
 | `selected` | `integer` | read/write | Quick build: a tap places this type at once (-1 = off). |
 | `placing` | `integer` | read | Building type being placed, -1 = none. |
@@ -2352,14 +2352,15 @@ The first available zone, else the first closed touching one, else -1.
 
 **Returns:** `integer`
 
-### `city.snap(c, world)  ·  c:snap(world)`
+### `city.snap(c, world, type?)  ·  c:snap(world, type?)`
 
-The isometric tile centre nearest a world point: where a dropped ghost lands.
+Where a building of type dropped at a world point lands: its footprint on whole tiles.
 
 | Argument | Type | |
 |---|---|---|
 | `c` | `city` |  |
 | `world` | `vec2` |  |
+| `type` | `integer?` | Default -1. |
 
 **Returns:** `vec2`
 
@@ -2539,11 +2540,10 @@ A building type.
 | `about` | `string` |  |
 | `sprite_path` | `string` |  |
 | `sprite` | `texture` | Loaded by city:init from sprite_path. |
-| `height` | `number` | Drawn height in world units (width keeps the aspect)... |
-| `width` | `number` | ...or, with height 0, the drawn width. |
-| `max_height` | `number` | Cap for a height derived from width (0 = none). |
-| `sink` | `number` | How far the sprite bottom sits below the anchor point. |
-| `footprint` | `size2` | Half extents of the ground diamond; zero = a circle of city.spacing. |
+| `size` | `size2` | Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing. |
+| `pivot` | `vec2` | Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre. |
+| `base_width` | `number` | Sprite pixels from the footprint's left corner to its right one; sets the drawing scale. |
+| `height` | `number` | Drawn height in world units; derived from base_width and size when both are set. |
 | `cost` | `purse` | Paid when placed. |
 | `reward` | `purse` | Granted once when placed. |
 | `needs` | `purse` | Must be owned (not spent) to build. |

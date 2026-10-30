@@ -156,7 +156,7 @@ HTML version's `localStorage["nile-v1"]` JSON.
 
 ```c
 typedef struct { const char *name, *about, *sprite_path; texture sprite;
-                 float height, width, max_height, sink; size2 footprint;
+                 size2 size; vec2 pivot; float base_width, height;
                  purse cost, reward, needs, income; float income_period; } building_def;
 ```
 
@@ -174,9 +174,14 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   grid and blurred, so region borders of any shape (Relic Rush's are hex
   staircases) become soft cloud banks. The mask is rebuilt only when a zone
   opens; a frame draws only the visible, foggy cells.
-- **Placement.** A building without a footprint keeps `spacing` from others.
-  With a `footprint` (half extents of its ground diamond) five probe points
-  must be open land and diamonds may touch but not overlap. Placement is
+- **Placement.** A building's `size` is its footprint in whole tiles of
+  `city.tile`; its `pivot` (the sprite pixel of the footprint's ground
+  centre) and `base_width` (sprite pixels between the base's left and right
+  corners) place and scale the sprite on it ([BUILDINGS.md](BUILDINGS.md)).
+  `city_snap` puts a footprint on whole tiles, footprints may share an edge
+  but not overlap, and every covered tile must be open land. A building
+  without a size keeps `spacing` from others. `show_footprints` draws every
+  building's footprint and pivot, to check a sprite's measurements. Placement is
   either instant (`selected`: tap the land) or a session with a ghost
   (`city_begin_place` / `city_begin_move`, drag or tap to move the ghost,
   `city_confirm` or `city_cancel`). A dragged ghost is not snapped until it

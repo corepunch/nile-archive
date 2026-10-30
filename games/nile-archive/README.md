@@ -111,7 +111,7 @@ make web                           # WebAssembly, нужен Emscripten SDK
 python3 -m http.server 8080 --directory dist   # затем http://localhost:8080/nile-archive/
 ```
 
-Полезные параметры: `--fresh` — не читать и не записывать сохранение; `--screen island|build|scene0|scene1|scene2|cast|chapters|win` — открыть нужный экран; `--shot файл.png` — сохранить кадр и выйти; `--smoke` — пройти первую главу нажатиями и проверить сохранение (запускается в CI).
+Полезные параметры: `--fresh` — не читать и не записывать сохранение; `--screen island|build|scene0|scene1|scene2|cast|chapters|win` — открыть нужный экран; `--footprints` — показать поверх построек их клетки и опорную точку (проверка размеров, см. `docs/BUILDINGS.md`); `--shot файл.png` — сохранить кадр и выйти; `--smoke` — пройти первую главу нажатиями и проверить сохранение (запускается в CI).
 
 Прогресс старой HTML-версии (`localStorage["nile-v1"]`) при первом запуске веб-версии переносится автоматически.
 

@@ -103,7 +103,7 @@ local function bottom_panel()
     gfx.bleed(false)
     ui.block(sheet)
     if c.placing >= 0 then
-        local ok = c:can_place(c:snap(c.ghost), c.placing, c.moving)
+        local ok = c:can_place(c:snap(c.ghost, c.placing), c.placing, c.moving)
         R.say_at(R.wonders[c.placing + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
         R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 811 + y), 11, PAL_WHITE, 0)
         if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your island is unchanged.") end

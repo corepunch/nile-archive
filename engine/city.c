@@ -13,6 +13,36 @@
 #include <stdio.h>
 #include <string.h>
 
+/* ------------------------------------------------------------------- tiles */
+
+/* Tile coordinates: u runs down-right, v down-left, one unit per tile; tile
+ * centres are whole numbers. */
+static float tile_w(const city *c) { return c->tile.w > 0 ? c->tile.w : 32; }
+static float tile_h(const city *c) { return c->tile.h > 0 ? c->tile.h : 16; }
+
+static vec2 to_tile(const city *c, vec2 p)
+{
+    float x = p.x / tile_w(c), y = p.y / tile_h(c);
+    return v2((x + y) * .5f, (y - x) * .5f);
+}
+
+static vec2 from_tile(const city *c, vec2 t) { return v2((t.x - t.y) * tile_w(c), (t.x + t.y) * tile_h(c)); }
+
+/* Footprint in tiles; a building without a size counts as one tile. */
+static size2 tiles_of(const city *c, int type)
+{
+    size2 s = type >= 0 && type < c->def_count ? c->defs[type].size : sz2(0, 0);
+    return s.w > 0 && s.h > 0 ? s : sz2(1, 1);
+}
+
+vec2 city_snap(const city *c, vec2 p, int type)
+{
+    size2 s = tiles_of(c, type);
+    vec2 half = v2((s.w - 1) * .5f, (s.h - 1) * .5f);   /* even sides centre on a tile edge */
+    vec2 t = vec2_sub(to_tile(c, p), half);
+    return from_tile(c, vec2_add(v2(roundf(t.x), roundf(t.y)), half));
+}
+
 void city_init(city *c, const char *ground_path)
 {
     if (ground_path) c->ground = tex_load(ground_path);
@@ -26,28 +56,24 @@ void city_init(city *c, const char *ground_path)
     for (int i = 0; i < c->def_count; i++) {
         building_def *d = &c->defs[i];
         if (d->sprite_path && !d->sprite.tex) d->sprite = tex_load(d->sprite_path);
-        if (d->height <= 0 && d->width > 0 && d->sprite.size.w > 0) {
-            d->height = d->width / size2_aspect(d->sprite.size);
-            if (d->max_height > 0) d->height = minf(d->height, d->max_height);
-        }
+        size2 tex = d->sprite.size;
+        if (tex.h <= 0) continue;
+        if (d->pivot.x == 0 && d->pivot.y == 0) d->pivot = v2(tex.w * .5f, tex.h);
+        /* the footprint's left-to-right corners span size.w + size.h tile half widths */
+        if (d->base_width > 0 && d->size.w > 0) d->height = tex.h * (d->size.w + d->size.h) * tile_w(c) / d->base_width;
     }
 }
 
 /* ------------------------------------------------------------------ geometry */
 
+/* The sprite is scaled to the drawn height and placed with its pivot on b.pos. */
 rect city_sprite_rect(const city *c, building b)
 {
     const building_def *d = &c->defs[b.type];
     size2 tex = d->sprite.size.h > 0 ? d->sprite.size : sz2s(1);
-    return rect_anchor(vec2_add(b.pos, v2(0, d->sink)), sz2(d->height * size2_aspect(tex), d->height), v2(.5f, 1));
-}
-
-vec2 city_snap(const city *c, vec2 p)
-{
-    float w = c->tile.w > 0 ? c->tile.w : 32, h = c->tile.h > 0 ? c->tile.h : 16;
-    float u = roundf((p.x / w + p.y / h) * .5f);
-    float v = roundf((p.y / h - p.x / w) * .5f);
-    return v2((u - v) * w, (u + v) * h);
+    vec2 pivot = d->sprite.size.h > 0 ? d->pivot : v2(.5f, 1);
+    float k = d->height / tex.h;
+    return rect_make(vec2_sub(b.pos, vec2_scale(pivot, k)), size2_scale(tex, k));
 }
 
 int city_zone_at(const city *c, vec2 p)
@@ -79,36 +105,44 @@ bool city_can_place(const city *c, vec2 p, int type, int ignore)
 {
     if (type < 0 || type >= c->def_count) return false;
     if (ignore < 0 && c->count >= CITY_MAX) return false;
-    size2 f = c->defs[type].footprint;
-    vec2 probes[5] = {p, vec2_sub(p, v2(f.w, 0)), vec2_add(p, v2(f.w, 0)), vec2_sub(p, v2(0, f.h)), vec2_add(p, v2(0, f.h))};
-    for (int k = 0; k < (f.w > 0 ? 5 : 1); k++)
-        if (!open_land(c, probes[k])) return false;
+    bool sized = c->defs[type].size.w > 0;
+    size2 f = tiles_of(c, type);
+    vec2 t = to_tile(c, p);
+    if (!open_land(c, p)) return false;
+    if (sized) {
+        /* every tile centre and, just inside them, the footprint's corners */
+        for (int i = 0; i < (int)f.w; i++)
+            for (int j = 0; j < (int)f.h; j++)
+                if (!open_land(c, from_tile(c, vec2_add(t, v2(i - (f.w - 1) * .5f, j - (f.h - 1) * .5f))))) return false;
+        for (int k = 0; k < 4; k++) {
+            vec2 corner = v2((k & 1 ? .5f : -.5f) * f.w * .9f, (k & 2 ? .5f : -.5f) * f.h * .9f);
+            if (!open_land(c, from_tile(c, vec2_add(t, corner)))) return false;
+        }
+    }
     for (int i = 0; i < c->count; i++) {
         if (i == ignore) continue;
-        size2 g = c->defs[c->items[i].type].footprint;
-        vec2 d = vec2_sub(p, c->items[i].pos);
-        if (f.w <= 0 && g.w <= 0) {
-            if (vec2_len(d) < c->spacing) return false;
+        int other = c->items[i].type;
+        if (!sized && c->defs[other].size.w <= 0) {
+            if (vec2_dist(p, c->items[i].pos) < c->spacing) return false;
             continue;
         }
-        /* ground diamonds may touch but not intersect */
-        size2 sum = size2_add(size2_add(f.w > 0 ? f : sz2s(c->spacing * .5f), g.w > 0 ? g : sz2s(c->spacing * .5f)), c->footprint_gap);
-        if (fabsf(d.x) / sum.w + fabsf(d.y) / sum.h < 1) return false;
+        /* footprints may share an edge but not overlap */
+        size2 g = tiles_of(c, other);
+        vec2 d = vec2_sub(t, to_tile(c, c->items[i].pos));
+        if (fabsf(d.x) < (f.w + g.w) * .5f - 1e-3f && fabsf(d.y) < (f.h + g.h) * .5f - 1e-3f) return false;
     }
     return true;
 }
 
 bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out)
 {
-    float w = c->tile.w > 0 ? c->tile.w : 32, h = c->tile.h > 0 ? c->tile.h : 16;
-    float step = minf(w, h);
-    hint = city_snap(c, hint);
-    int rings = (int)(maxf(c->cam.world.w, c->cam.world.h) / step) + 1;
+    vec2 t = to_tile(c, city_snap(c, hint, type));
+    int rings = (int)((c->cam.world.w / tile_w(c) + c->cam.world.h / tile_h(c)) * .5f) + 1;
     for (int ring = 0; ring <= rings; ring++)
         for (int y = -ring; y <= ring; y++)
             for (int x = -ring; x <= ring; x++) {
                 if (abs(x) != ring && abs(y) != ring) continue;   /* only the ring's edge */
-                vec2 p = vec2_add(hint, v2((x - y) * w, (x + y) * h));
+                vec2 p = from_tile(c, vec2_add(t, v2(x, y)));
                 if (city_can_place(c, p, type, -1)) {
                     *out = p;
                     return true;
@@ -182,7 +216,7 @@ void city_begin_place(city *c, int type, vec2 at)
     if (type < 0 || type >= c->def_count) return;
     c->placing = type;
     c->moving = -1;
-    c->ghost = city_snap(c, at);
+    c->ghost = city_snap(c, at, type);
 }
 
 void city_begin_move(city *c, int index)
@@ -190,7 +224,7 @@ void city_begin_move(city *c, int index)
     if (index < 0 || index >= c->count) return;
     c->placing = c->items[index].type;
     c->moving = index;
-    c->ghost = city_snap(c, c->items[index].pos);
+    c->ghost = city_snap(c, c->items[index].pos, c->placing);
 }
 
 void city_cancel(city *c) { c->placing = c->moving = -1, c->held = false; }
@@ -199,7 +233,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
 {
     city_event ev = {CITY_NONE, c->moving, -1, {{0}}, camera_to_screen(c->cam, c->ghost)};
     if (c->placing < 0) return ev;
-    c->ghost = city_snap(c, c->ghost);
+    c->ghost = city_snap(c, c->ghost, c->placing);
     const building_def *d = &c->defs[c->placing];
     if (!city_can_place(c, c->ghost, c->placing, c->moving)) {
         ev.result = CITY_BLOCKED;
@@ -230,7 +264,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
 
 static city_event quick_build(city *c, vec2 p, purse *wallet, double now, vec2 screen)
 {
-    p = city_snap(c, p);
+    p = city_snap(c, p, c->selected);
     const building_def *d = &c->defs[c->selected];
     city_event ev = {CITY_NONE, -1, -1, d->cost, screen};
     if (!purse_covers(*wallet, d->needs)) ev.result = CITY_LOCKED_TYPE;
@@ -273,7 +307,7 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         c->ghost = vec2_add(camera_to_world(c->cam, in.pos), c->grab);
         c->held = true;
     }
-    if (in.released && c->press_target == 1 && c->placing >= 0) c->ghost = city_snap(c, c->ghost), c->held = false;
+    if (in.released && c->press_target == 1 && c->placing >= 0) c->ghost = city_snap(c, c->ghost, c->placing), c->held = false;
     c->lift = approachf(c->lift, c->held && c->placing >= 0 ? 1 : 0, 14, dt);
 
     input cam_in = in;
@@ -289,7 +323,7 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
     c->press_target = 0;
 
     if (c->placing >= 0) {
-        if (press_target != 1) c->ghost = city_snap(c, p);   /* tap the land to put the ghost there */
+        if (press_target != 1) c->ghost = city_snap(c, p, c->placing);   /* tap the land to put the ghost there */
         return ev;
     }
     if (c->selected >= 0 && c->selected < c->def_count) return quick_build(c, p, wallet, now, in.pos);
@@ -444,16 +478,19 @@ static void draw_fog(const city *c)
 
 static void draw_footprint(const city *c, vec2 at, int type, bool ok)
 {
-    size2 f = c->defs[type].footprint;
-    vec2 s = camera_to_screen(c->cam, at);
     color fill = ok ? rgba(114, 221, 136, 110) : rgba(245, 100, 84, 145), line = ok ? rgba(217, 255, 189, 255) : rgba(255, 208, 179, 255);
-    if (f.w <= 0) {
-        draw_glow(s, c->spacing * .5f * c->cam.zoom, fill, color_alpha(fill, 0));
+    if (c->defs[type].size.w <= 0) {
+        draw_glow(camera_to_screen(c->cam, at), c->spacing * .5f * c->cam.zoom, fill, color_alpha(fill, 0));
         return;
     }
-    size2 k = size2_scale(f, c->cam.zoom);
-    vec2 pts[4] = {vec2_sub(s, v2(k.w, 0)), vec2_sub(s, v2(0, k.h)), vec2_add(s, v2(k.w, 0)), vec2_add(s, v2(0, k.h))};
+    size2 f = tiles_of(c, type);
+    vec2 t = to_tile(c, at);
+#define CORNER(u, v) camera_to_screen(c->cam, from_tile(c, vec2_add(t, v2((u) - f.w * .5f, (v) - f.h * .5f))))
+    vec2 pts[4] = {CORNER(0, 0), CORNER(f.w, 0), CORNER(f.w, f.h), CORNER(0, f.h)};
     draw_poly(pts, 4, fill);
+    for (int i = 1; i < f.w; i++) draw_line(CORNER(i, 0), CORNER(i, f.h), 1, color_alpha(line, .45f));   /* the tiles inside */
+    for (int j = 1; j < f.h; j++) draw_line(CORNER(0, j), CORNER(f.w, j), 1, color_alpha(line, .45f));
+#undef CORNER
     for (int i = 0; i < 4; i++) draw_line(pts[i], pts[(i + 1) % 4], 1.5f, line);
 }
 
@@ -504,16 +541,21 @@ void city_draw(const city *c, input in, double now)
         }
     }
 
+    if (c->show_footprints)   /* over the sprites, to check their measured bases */
+        for (int i = 0; i < c->count; i++) {
+            draw_footprint(c, c->items[i].pos, c->items[i].type, true);
+            draw_circle(camera_to_screen(cam, c->items[i].pos), 4, rgba(255, 60, 200, 255));   /* the pivot */
+        }
     if (c->draw_over) c->draw_over(c);
 
     if (c->placing >= 0) {
-        vec2 land = city_snap(c, c->ghost);   /* mid-drag the footprint shows where it will land */
+        vec2 land = city_snap(c, c->ghost, c->placing);   /* mid-drag the footprint shows where it will land */
         bool ok = city_can_place(c, land, c->placing, c->moving);
         draw_footprint(c, land, c->placing, ok);
         float lift = c->lift * 34 * cam.zoom;   /* held up so the footprint shows beneath */
         draw_building(c, (building){c->ghost, c->placing, 0}, ok ? rgba(255, 255, 255, 245) : rgba(255, 90, 80, 160), lift);   /* red: it can't go here */
     } else if (c->selected >= 0 && in.hover && !in.down && rect_contains(cam.view, in.pos) && !ui_blocks(in.pos)) {
-        vec2 p = city_snap(c, camera_to_world(cam, in.pos));
+        vec2 p = city_snap(c, camera_to_world(cam, in.pos), c->selected);
         bool ok = city_can_place(c, p, c->selected, -1);
         draw_footprint(c, p, c->selected, ok);
         draw_building(c, (building){p, c->selected, 0}, ok ? rgba(255, 255, 255, 170) : rgba(255, 140, 130, 140), 0);

@@ -26,6 +26,16 @@ Every pull request that can change what a player sees must include screenshots i
   A table puts before and after next to each other.
 - **Check them first.** Look at every screenshot before posting it. A half-typed line, an empty frame or a missing texture is a bug to fix, not a picture to post.
 
+## City buildings: tiles, size and pivot
+
+Buildings stand on an isometric grid of whole tiles. [docs/BUILDINGS.md](docs/BUILDINGS.md) is the spec. Read it before you add or change a building, its sprite, `city.tile` or the placement code.
+
+- **Give every building three measurements.** These are `size`, its footprint in whole tiles (`size2(2, 2)`, `size2(3, 2)`, …), `pivot`, the sprite pixel of the footprint's ground centre, and `base_width`, the base's width in sprite pixels from its left corner to its right one. Don't size a building with `height`, and don't sink or nudge the sprite to fit. Wrong numbers put the building beside its footprint, which is the bug this spec exists to prevent.
+- **Measure, don't guess.** Run `python3 tools/footprint.py <sprite> --overlay out.png` and look at the overlay. Pass `--bottom`, `--left` and `--right` when plants or props fool the automatic fit. Round the side ratio it prints to whole tiles.
+- **Check in the game.** Render the island with `--footprints` (Relic Rush `--showcase --footprints`, Nile Archive `--screen island --footprints`) and look at it. Every diamond must sit on its building's base, with the pivot dot at the base's centre. Post that shot in the pull request whenever building specs change.
+- **Keep one tile per game.** `city.tile` is set before `c:init`, and changing it changes every building's drawn size. When you change it, re-check all the game's buildings.
+- **Snap with the type.** Pass the building type to `city_snap` / `c:snap(p, type)` so the footprint lands on whole tiles. Points you hand-place on the island (seed buildings, showcase spots) should go through it too.
+
 ## Repository conventions
 
 - **Catalogue every visual addition in the same PR.** For Relic Rush, update `games/relic-rush/docs/asset-catalogue.md`, the runtime inventory and state mapping in `games/relic-rush/art/board-states/manifest.json`, and the runtime contract in `lua/art.lua` when applicable. Other games must maintain an equivalent catalogue in their `docs/`. Record rule meaning, every supported visual/interaction state, source/prompt, runtime path, reproduction command and reviewed in-game capture. New kinds, powerups, blockers, skins, effects and temporary visual fallbacks all count.

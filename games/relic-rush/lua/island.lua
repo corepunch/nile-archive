@@ -11,23 +11,28 @@ M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 6, 10
 local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
 local STARS, COMPASSES = 4, 5
 
--- Ten restorations in campaign order: footprint and draw width per sprite.
-local function wonder(title, about, i, w, gold, wood, stone)
-    return {name = title, about = about, sprite_path = ("buildings/%d.png"):format(i), width = w, max_height = 230,
-            sink = math.floor(w * .19), footprint = size2(math.floor(w * .4), math.floor(w * .19)), cost = purse(gold, wood, stone)}
+-- Ten restorations in campaign order. Each sprite's footprint is measured in
+-- its own pixels (see docs/BUILDINGS.md): the ground centre it stands on
+-- (pivot), the width from its left corner to its right one, and its size in
+-- whole TILE tiles.
+M.TILE = size2(40, 20)   -- half extents: a tile is 80 x 40 world units
+
+local function wonder(title, about, i, w, h, pivot, base, gold, wood, stone)
+    return {name = title, about = about, sprite_path = ("buildings/%d.png"):format(i),
+            size = size2(w, h), pivot = pivot, base_width = base, cost = purse(gold, wood, stone)}
 end
 
 M.wonders = {
-    wonder("Expedition camp", "Every great discovery begins with a little canvas.", 0, 180, 60, 10, 5),
-    wonder("Spring well", "Fresh water brings the lost valley back to life.", 1, 145, 80, 15, 15),
-    wonder("Artisan workshop", "A home for the hands that rebuild the valley.", 2, 180, 100, 25, 15),
-    wonder("Jungle market", "Stories, spices and treasures from far away.", 3, 165, 120, 25, 25),
-    wonder("Sunstone gateway", "A garden arch marks the path into your valley.", 4, 190, 140, 30, 30),
-    wonder("Explorer's lodge", "A warm light after a long day of adventure.", 5, 185, 160, 35, 35),
-    wonder("Lost-world archive", "Protect the knowledge buried beneath the vines.", 6, 190, 180, 35, 45),
-    wonder("Star observatory", "Follow the stars to the next discovery.", 7, 165, 200, 40, 50),
-    wonder("Jade fountain", "Let the ancient spring flow once more.", 8, 165, 220, 45, 55),
-    wonder("Temple of the sun", "The heart of the valley shines again.", 9, 220, 250, 50, 60),
+    wonder("Expedition camp", "Every great discovery begins with a little canvas.", 0, 2, 2, vec2(150, 248), 280, 60, 10, 5),
+    wonder("Spring well", "Fresh water brings the lost valley back to life.", 1, 2, 2, vec2(142, 234), 245, 80, 15, 15),
+    wonder("Artisan workshop", "A home for the hands that rebuild the valley.", 2, 3, 2, vec2(144, 246), 278, 100, 25, 15),
+    wonder("Jungle market", "Stories, spices and treasures from far away.", 3, 3, 2, vec2(140, 249), 270, 120, 25, 25),
+    wonder("Sunstone gateway", "A garden arch marks the path into your valley.", 4, 3, 2, vec2(148, 193), 296, 140, 30, 30),
+    wonder("Explorer's lodge", "A warm light after a long day of adventure.", 5, 3, 2, vec2(138, 249), 269, 160, 35, 35),
+    wonder("Lost-world archive", "Protect the knowledge buried beneath the vines.", 6, 2, 2, vec2(131, 258), 245, 180, 35, 45),
+    wonder("Star observatory", "Follow the stars to the next discovery.", 7, 2, 2, vec2(108, 268), 205, 200, 40, 50),
+    wonder("Jade fountain", "Let the ancient spring flow once more.", 8, 2, 2, vec2(119, 260), 234, 220, 45, 55),
+    wonder("Temple of the sun", "The heart of the valley shines again.", 9, 3, 3, vec2(128, 256), 251, 250, 50, 60),
 }
 
 local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights", "Temple ridge"}
@@ -146,7 +151,7 @@ function M.island_setup(c)
     c.buildable = function(_, p) return M.island_grass(p) end
     c.zone_at = function(_, p) return M.island_zone(p) end
     c.zone_touches = function(_, z, open) return M.island_zone_touches(z, open) end
-    c.footprint_gap = size2(14, 12)
+    c.tile = M.TILE
     c.fog = color(233, 242, 224, 240)
     c.fog_on_land_only = true
     c.path = color(222, 204, 151, 240)

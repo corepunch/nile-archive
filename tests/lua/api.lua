@@ -72,7 +72,7 @@ check(not save.read("no-such-slot", serialize), "missing save")
 
 -- city handle: fields, arrays, callbacks and out arguments
 local c2 = city.new()
-c2.defs = {{name = "hut", cost = purse(10)}, {name = "well", cost = purse(20), footprint = size2(30, 15)}}
+c2.defs = {{name = "hut", cost = purse(10)}, {name = "well", cost = purse(20), size = size2(2, 1)}}
 c2.spacing = 100
 c2.zones = {{area = rect(0, 0, 500, 500)}, {area = rect(500, 0, 500, 500), cost = purse(5)}}
 local calls = 0

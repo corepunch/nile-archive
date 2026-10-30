@@ -201,6 +201,7 @@ local function island_with(n)
 end
 
 local function debug_screens()
+    R.island.show_footprints = app.arg("footprints") ~= nil
     local a = app.arg("level")
     if a then R.g = rules.game_start(tonumber(a) - 1, 123478); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
     a = app.arg("city")
@@ -212,7 +213,7 @@ local function debug_screens()
         R.island.count = 0
         R.island.open = 63
         for i = 0, WONDERS - 1 do
-            local p = spots[i + 1]
+            local p = R.island:snap(spots[i + 1], i)
             if not R.island:can_place(p, i, -1) then
                 local _, spot = R.island:find_spot(i, p)
                 p = spot

@@ -26,6 +26,7 @@ shot nile-archive scene2 1200x900 --screen scene2
 shot nile-archive characters 1200x900 --screen cast --frames 30
 shot nile-archive chapters 1200x900 --screen chapters --frames 30
 shot nile-archive build 1200x900 --screen build
+shot nile-archive footprints 1200x900 --screen island --footprints
 shot nile-archive reward 1200x900 --screen win --frames 60
 shot nile-archive widescreen 1600x900 --screen island
 shot nile-archive ipad-scene 1180x820 --screen scene0 --found --safe-area 0,24,0,20
@@ -46,6 +47,7 @@ shot relic-rush pause 480x900 --dialog pause
 shot relic-rush phone-pause 390x844 --dialog pause --safe-area 0,47,0,34
 shot relic-rush phone-card 390x844 --card 1 --safe-area 0,47,0,34
 shot relic-rush island-village 480x900 --showcase
+shot relic-rush footprints 480x900 --showcase --footprints
 shot relic-rush island-placement 480x900 --city 6 --placing
 shot relic-rush island-blocked 480x900 --city 6 --placing blocked
 shot relic-rush island-dragging 480x900 --city 6 --placing dragging --frames 30

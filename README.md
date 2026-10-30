@@ -115,12 +115,13 @@ The city meta-game is data plus one update/draw pair. Relic Rush's wonders, for 
 
 ```lua
 local wonders = {
-    {name = "Expedition camp", sprite_path = "buildings/0.png", width = 180, max_height = 230,
-     footprint = size2(72, 34), cost = purse(60, 10, 5)},          -- gold, wood, stone
+    {name = "Expedition camp", sprite_path = "buildings/0.png", size = size2(2, 2),  -- tiles
+     pivot = vec2(150, 248), base_width = 280, cost = purse(60, 10, 5)},  -- gold, wood, stone
     ...
 }
 local c = city.new()
 c.defs = wonders
+c.tile = size2(40, 20)                                     -- tile half extents, before init
 c.buildable = function(c, p) return island.grass(p) end   -- the game knows its map ...
 c.zone_at = function(c, p) return island.zone(p) end      -- ... and its regions; the engine the rest
 c:init("island.jpg")
@@ -190,11 +191,14 @@ letterbox bars included), and drawing between `gfx.bleed(true)` and
 `gfx.bleed(false)` may reach it. Relic Rush's jungle, island and header band
 run to the edges this way.
 
-Cities snap placement previews, taps and confirmations to an isometric grid.
-A dragged ghost follows the finger freely and lands on the nearest tile when
-let go; meanwhile it is lifted (`c.held`) over a green or red footprint on
-that tile, which is also where validity is checked (`c:snap(p)` gives it). `city.tile` sets its half extents (default
-`size2(32, 16)`). Building `footprint` half extents define both the green/red
-ground diamond and collision checks; `sink` aligns the sprite bottom to that
-ground plane. Existing saved positions remain intact until the player confirms
-a move.
+Cities place buildings on an isometric grid of whole tiles. `city.tile` sets
+a tile's half extents (default `size2(32, 16)`). Each building type gives its
+`size` in tiles (2 × 2, 3 × 2, …), its `pivot` (the sprite pixel of the
+footprint's ground centre, where it stands) and its `base_width` (the base's
+width in sprite pixels, which sets the drawing scale); see
+[docs/BUILDINGS.md](docs/BUILDINGS.md) for the spec, the measuring tool and the
+`--footprints` check. Taps, drops and confirmations snap the footprint to the
+tiles (`c:snap(p, type)`); a dragged ghost follows the finger, lifted
+(`c.held`) over the green or red footprint of the tiles it will land on.
+Footprints may share an edge but not overlap. Existing saved positions remain
+intact until the player moves a building.

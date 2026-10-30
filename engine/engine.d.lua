@@ -134,11 +134,10 @@
 ---@field about string
 ---@field sprite_path string
 ---@field sprite texture Loaded by city:init from sprite_path.
----@field height number Drawn height in world units (width keeps the aspect)...
----@field width number ...or, with height 0, the drawn width.
----@field max_height number Cap for a height derived from width (0 = none).
----@field sink number How far the sprite bottom sits below the anchor point.
----@field footprint size2 Half extents of the ground diamond; zero = a circle of city.spacing.
+---@field size size2 Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing.
+---@field pivot vec2 Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre.
+---@field base_width number Sprite pixels from the footprint's left corner to its right one; sets the drawing scale.
+---@field height number Drawn height in world units; derived from base_width and size when both are set.
 ---@field cost purse Paid when placed.
 ---@field reward purse Granted once when placed.
 ---@field needs purse Must be owned (not spent) to build.
@@ -184,8 +183,7 @@
 ---@field zone_count integer
 ---@field open integer Bit per opened zone (bit 0 = zone 0, which starts open).
 ---@field spacing number Minimum distance between buildings without footprints.
----@field tile size2 Isometric tile half extents; defaults to 32 x 16. Placement snaps to tile centres.
----@field footprint_gap size2 Extra clearance between footprints.
+---@field tile size2 Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles.
 ---@field buildable function function(c, world) -> bool: terrain test.
 ---@field zone_at function function(c, world) -> zone (0-based) or -1; default: zone rects.
 ---@field zone_touches function function(c, zone, open) -> bool: adjacency; default: rects touching.
@@ -195,6 +193,7 @@
 ---@field fog_on_land_only boolean
 ---@field path color Paths linking buildings; alpha 0 = none.
 ---@field movable boolean Drag a building to move it.
+---@field show_footprints boolean Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements.
 ---@field income_icon texture
 ---@field selected integer Quick build: a tap places this type at once (-1 = off).
 ---@field placing integer Building type being placed, -1 = none.
@@ -1493,11 +1492,12 @@ function city.unlock(c, zone, wallet) end
 ---@return integer
 function city.next_zone(c, wallet) end
 
----The isometric tile centre nearest a world point: where a dropped ghost lands.
+---Where a building of type dropped at a world point lands: its footprint on whole tiles.
 ---@param c city
 ---@param world vec2
+---@param type? integer
 ---@return vec2
-function city.snap(c, world) end
+function city.snap(c, world, type) end
 
 ---Start a placement session with a ghost at `at`.
 ---@param c city
