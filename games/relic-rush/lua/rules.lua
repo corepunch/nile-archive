@@ -237,7 +237,7 @@ function M.game_matches(g, m, preferred)
                 end
                 -- four is the base match; larger groups reward deliberate combinations
                 local sp = n >= 6 and (longest >= 6 and PRISM or BOMB) or n == 5 and ray_for_axis(long_axis) or NORMAL
-                if pick >= 0 then m.make[pick] = sp end
+                if pick >= 0 and sp ~= NORMAL then m.make[pick] = sp end
             end
         end
     end

@@ -78,6 +78,13 @@ end
 local function test_matching()
     local m = rules.new_match()
     local c = hex_center()
+    local function check_four_clears(g)
+        check(next(m.make) == nil, "four creates no special")
+        check(rules.game_apply(g, m) == 4, "four clears four relics")
+        for i = 0, CELLS - 1 do
+            if m.mask[i] then check(g.tiles[i].kind == -1, "every matched relic disappears") end
+        end
+    end
     for lvl = 0, LEVELS - 1 do
         for seed = 1, 100 do
             local g = rules.game_start(lvl, seed)
@@ -95,6 +102,7 @@ local function test_matching()
         line(g, start, axis, 4, 2)
         rules.game_matches(g, m, c)
         check(m.hits == 4 and (m.make[c] or NORMAL) == NORMAL, "four in a line")
+        check_four_clears(g)
         g = blank()
         line(g, start, axis, 5, 2)
         rules.game_matches(g, m, c)
@@ -128,11 +136,13 @@ local function test_matching()
         g.tiles[e].kind = 0
         rules.game_matches(g, m, c)
         check(m.hits == 4 and (m.make[c] or NORMAL) == NORMAL, "bent four matches")
+        check_four_clears(g)
     end
     g = blank()   -- two compact triangles make a four-cell diamond
     g.tiles[c].kind, g.tiles[hex_index(1, 0)].kind, g.tiles[hex_index(0, 1)].kind, g.tiles[hex_index(1, 1)].kind = 2, 2, 2, 2
     rules.game_matches(g, m, c)
     check(m.hits == 4, "diamond matches")
+    check_four_clears(g)
 end
 
 local function test_holes_and_shapes()
