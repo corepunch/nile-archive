@@ -23,8 +23,10 @@ shot nile-archive island 1200x900 --screen island
 shot nile-archive scene0 1200x900 --screen scene0 --found
 shot nile-archive scene1 1200x900 --screen scene1
 shot nile-archive scene2 1200x900 --screen scene2
-shot nile-archive characters 1200x900 --screen cast
-shot nile-archive reward 1200x900 --screen win
+shot nile-archive characters 1200x900 --screen cast --frames 30
+shot nile-archive chapters 1200x900 --screen chapters --frames 30
+shot nile-archive build 1200x900 --screen build
+shot nile-archive reward 1200x900 --screen win --frames 60
 shot nile-archive widescreen 1600x900 --screen island
 shot nile-archive dialogue 1200x900 --screen story --frames 200
 shot nile-archive dialogue-horem 1200x900 --screen horem --frames 200
