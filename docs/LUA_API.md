@@ -25,7 +25,7 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`style`](#style) - Constructor `style{...}`; the methods return a tweaked copy.
 - [`text`](#text) - Styled TrueType text. Every function returns the rect it drew.
 - [`sfx`](#sfx) - A tiny synthesiser for feedback tones.
-- [`ui`](#ui) - Immediate-mode widgets: call them while drawing, `if ui.button(r, 'Play') then`.
+- [`ui`](#ui) - Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.
 - [`sprite`](#sprite) - Authored atlas frames, pivot-aware bounds and animation timing.
 - [`nav`](#nav) - nav.new(); assign nodes and live blockers, then find. Indices are 0-based.
 - [`save`](#save)
@@ -1053,6 +1053,8 @@ A snapshot of the pointer (mouse or first finger) with gestures. `input{pos = p,
 
 - `input.KEY_SPACE` (integer)
 
+- `input.KEY_TAB` (integer)
+
 - `input.KEY_RETURN` (integer)
 
 ### `input.get()`
@@ -1135,6 +1137,15 @@ Switch the texture between additive and normal blending.
 ## gfx
 
 Shapes and images, in logical screen units, drawn in call order.
+
+### `gfx.backdrop(radius, dim)`
+
+Blur/dim all earlier drawing layers, including safe areas. Later UI stays sharp. Radius is logical pixels (0..32); zero only dims. Preserves clip and drawing state.
+
+| Argument | Type | |
+|---|---|---|
+| `radius` | `number` |  |
+| `dim` | `color` |  |
 
 ### `gfx.image(t, dst, tint)`
 
@@ -1738,7 +1749,7 @@ A soft bell-like note.
 
 ## ui
 
-Immediate-mode widgets: call them while drawing, `if ui.button(r, 'Play') then`.
+Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.
 
 **ui.{ACCENT, DISABLED, ACTIVE, FLAT}** - Button flags, combined with |.
 
@@ -1808,6 +1819,16 @@ Background only; draw your own content.
 
 **Returns:** `ui_state`
 
+### `ui.button_paint(r, flags, state)`
+
+Paint a previously hit-tested state; useful with animated/translated form skins.
+
+| Argument | Type | |
+|---|---|---|
+| `r` | `rect` |  |
+| `flags` | `integer` |  |
+| `state` | `ui_state` |  |
+
 ### `ui.button(r, label, flags?)`
 
 True when clicked.
@@ -1849,11 +1870,20 @@ A short message at the bottom of the screen.
 
 ### `ui.modal_backdrop(t)`
 
-Dim everything drawn so far and block input outside dialogs; t fades it in.
+Blur/dim earlier layers using the theme and block world input; t fades the effect in.
 
 | Argument | Type | |
 |---|---|---|
 | `t` | `number` |  |
+
+### `ui.modal_layer(radius, dim)`
+
+Blur/dim earlier layers and block world input. Draw the dialog afterward.
+
+| Argument | Type | |
+|---|---|---|
+| `radius` | `number` |  |
+| `dim` | `color` |  |
 
 ### `ui.set_enabled(enabled)`
 
@@ -2428,6 +2458,7 @@ Colours and text styles the widgets read.
 | `toast_bg` | `color` |  |
 | `toast_text` | `color` |  |
 | `radius` | `number` |  |
+| `backdrop_blur` | `number` | Modal blur radius in logical pixels; zero keeps it sharp. |
 
 ### ui_state
 
@@ -2488,6 +2519,7 @@ How dialogue looks.
 
 | Field | Type | |
 |---|---|---|
+| `backdrop_blur` | `number` | Optional logical-pixel blur behind the dialogue. |
 | `text` | `text_style` | Bubble text. |
 | `name` | `text_style` | Name tag. |
 | `bubble` | `color` |  |
@@ -2552,3 +2584,7 @@ What a city update or confirm did.
 | `amount` | `purse` | Paid or collected. |
 | `screen` | `vec2` | Where it happened. |
 
+
+## Shared Lua forms
+
+The embedded UI framework extends ui with ui.form(template) and ui.modals(skin). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).

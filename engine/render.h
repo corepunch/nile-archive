@@ -21,6 +21,7 @@ void render_texture_nearest(struct render_texture *tex);
 void render_additive(bool on);
 void render_clip(const rect *r);   /* NULL: the logical screen, or the display while bleeding */
 void render_bleed(bool on);
+void render_backdrop(float radius, color dim);
 void render_image(texture tex, rect src, rect dst, float angle, color tint);
 bool render_read_pixels(void *rgba, int w, int h);
 #endif

@@ -398,9 +398,7 @@ void story_frame(float dt)
     rect screen = app_screen();
     float m = 16, in = ease_out_cubic(S.enter * 4), h = screen.size.h * S.style.portrait_height;
     if (S.style.dim.a) {   /* the whole display dims, safe-area margins too */
-        gfx_bleed(true);
-        draw_rect(app_bleed(), color_alpha(S.style.dim, in));
-        gfx_bleed(false);
+        ui_modal_layer(S.style.backdrop_blur * in, color_alpha(S.style.dim, in));
     }
     ui_block(screen);
 

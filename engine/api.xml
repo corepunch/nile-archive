@@ -218,6 +218,7 @@
     <function name="get" c="input_get" doc="This frame's pointer."><returns type="input"/></function>
     <function name="world" c="input_world" doc="The same, with pointer actions cleared when UI owns the press: what cameras, boards and cities consume."><returns type="input"/></function>
     <const name="KEY_SPACE" c="AX_KEY_SPACE" type="int"/>
+    <const name="KEY_TAB" c="AX_KEY_TAB" type="int"/>
     <const name="KEY_RETURN" c="AX_KEY_ENTER" type="int"/>
   </module>
 
@@ -238,6 +239,7 @@
   </module>
 
   <module name="gfx" doc="Shapes and images, in logical screen units, drawn in call order.">
+    <function name="backdrop" c="gfx_backdrop" doc="Blur/dim all earlier drawing layers, including safe areas. Later UI stays sharp. Radius is logical pixels (0..32); zero only dims. Preserves clip and drawing state."><arg name="radius" type="float"/><arg name="dim" type="color"/></function>
     <function name="image" c="draw_image" doc="Draw t stretched to dst, multiplied by tint (color.WHITE for none)."><arg name="t" type="texture"/><arg name="dst" type="rect"/><arg name="tint" type="color"/></function>
     <function name="image_part" c="draw_image_part" doc="Draw the src part of t (in pixels) stretched to dst."><arg name="t" type="texture"/><arg name="src" type="rect"/><arg name="dst" type="rect"/><arg name="tint" type="color"/></function>
     <function name="image_rot" c="draw_image_rot" doc="Draw t rotated by angle (radians) about the centre of dst."><arg name="t" type="texture"/><arg name="dst" type="rect"/><arg name="angle" type="float"/><arg name="tint" type="color"/></function>
@@ -358,11 +360,12 @@
     <field name="dim" type="color" doc="Modal backdrop."/>
     <field name="toast_bg" type="color"/><field name="toast_text" type="color"/>
     <field name="radius" type="float"/>
+    <field name="backdrop_blur" type="float" doc="Modal blur radius in logical pixels; zero keeps it sharp."/>
   </struct>
   <struct name="ui_state" c="ui_state" doc="How an area was interacted with this frame.">
     <field name="hot" type="bool"/><field name="held" type="bool"/><field name="clicked" type="bool"/>
   </struct>
-  <module name="ui" doc="Immediate-mode widgets: call them while drawing, `if ui.button(r, 'Play') then`.">
+  <module name="ui" doc="Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.">
     <enum name="flags" prefix="UI_" doc="Button flags, combined with |.">
       <value name="ACCENT" doc="Primary call to action."/><value name="DISABLED"/><value name="ACTIVE" doc="Selected / toggled on."/><value name="FLAT" doc="No background."/>
     </enum>
@@ -373,11 +376,13 @@
     <function name="panel" c="ui_panel"><arg name="r" type="rect"/></function>
     <function name="panel_ex" c="ui_panel_ex"><arg name="r" type="rect"/><arg name="top" type="color"/><arg name="bottom" type="color"/><arg name="border" type="color"/><arg name="radius" type="float"/></function>
     <function name="button_frame" c="ui_button_frame" doc="Background only; draw your own content."><arg name="r" type="rect"/><arg name="flags" type="int" default="0"/><returns type="ui_state"/></function>
+    <function name="button_paint" c="ui_button_paint" doc="Paint a previously hit-tested state; useful with animated/translated form skins."><arg name="r" type="rect"/><arg name="flags" type="int"/><arg name="state" type="ui_state"/></function>
     <function name="button" c="ui_button" doc="True when clicked."><arg name="r" type="rect"/><arg name="label" type="string"/><arg name="flags" type="int" default="0"/><returns type="bool"/></function>
     <function name="label" c="ui_label"><arg name="r" type="rect"/><arg name="s" type="text_style"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/></function>
     <function name="progress" c="ui_progress" doc="A themed meter; fraction is clamped to 0..1."><arg name="r" type="rect"/><arg name="fraction" type="float"/><arg name="label" type="string" optional="true"/></function>
     <function name="toast" c="ui_toast" doc="A short message at the bottom of the screen."><arg name="utf8" type="string"/></function>
-    <function name="modal_backdrop" c="ui_modal_backdrop" doc="Dim everything drawn so far and block input outside dialogs; t fades it in."><arg name="t" type="float"/></function>
+    <function name="modal_backdrop" c="ui_modal_backdrop" doc="Blur/dim earlier layers using the theme and block world input; t fades the effect in."><arg name="t" type="float"/></function>
+    <function name="modal_layer" c="ui_modal_layer" doc="Blur/dim earlier layers and block world input. Draw the dialog afterward."><arg name="radius" type="float"/><arg name="dim" type="color"/></function>
     <function name="set_enabled" c="ui_set_enabled" doc="While false, widgets draw but ignore input (under a modal)."><arg name="enabled" type="bool"/></function>
   </module>
 
@@ -435,6 +440,7 @@
     <field name="kind" type="int" pos="3" doc="story.SPEECH (default), THOUGHT or SHOUT."/>
   </struct>
   <struct name="story_style" c="story_style" doc="How dialogue looks.">
+    <field name="backdrop_blur" type="float" doc="Optional logical-pixel blur behind the dialogue."/>
     <field name="text" type="text_style" doc="Bubble text."/>
     <field name="name" type="text_style" doc="Name tag."/>
     <field name="bubble" type="color"/><field name="edge" type="color"/><field name="dim" type="color" doc="Backdrop behind the dialogue."/>

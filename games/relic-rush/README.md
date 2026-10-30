@@ -15,6 +15,10 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
+## Shared UI and dialog layers
+
+Pause and building dialogs use engine-owned form resources, model bindings and one game skin. Modal screens and dialogue blur earlier layers with the engine’s cached GPU Gaussian pass; foreground UI stays sharp. See the [shared UI API and adoption examples](../../docs/UI_ENGINE.md).
+
 ## Result screens and typography
 
 The result screen now reveals stars, score, resources, progression and the next restoration in sequence, with a short animated return to the island. Quiet torch sconces replace victory fireworks. Building cards use clean sprite extraction and balanced text wrapping.
@@ -162,6 +166,12 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 
 ## Selected tile art
 
+The [artwork and state catalogue](docs/asset-catalogue.md) inventories every gem
+pack, special, blocker, tool and animation state, with source/runtime paths and
+reproduction commands. Specials, blockers and all five tool interaction states
+use one authored atlas; `--art-states` shows the complete set and `--art-board`
+freezes a board with all specials. Catalogue coverage runs in `make test`.
+
 The archaeological **Relics** set (option 1) is the default match piece art: a hexagonal sun idol, coral flame, jade leaf, turquoise scarab, purple crystal cluster and amber amphora. **Jewels** and **Resources** stay available as optional art packs — `--tiles jewels` natively, `?tiles=jewels` in the browser. Gameplay, rewards and costs are the same with every pack. See the [tile-set comparison and construction research](docs/tile-sets.md).
 
 ![The three packs on the same board](docs/screenshots/tile-sets.jpg)
@@ -178,7 +188,7 @@ make web && python3 -m http.server 8080 --directory dist   # http://localhost:80
 
 The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the bottom sheet run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 
@@ -203,6 +213,7 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 ## Source layout
 
 - `lua/state.lua`: the state shared by the game's modules, and their namespace (`R`).
+- `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.
 - `lua/rules.lua`: hex grid, deterministic match-4 rules, specials, blockers, tools, campaign and rewards — pure Lua, tested headlessly.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
 - `lua/board.lua`: the expedition screen, animation phases and swipe/tap input.

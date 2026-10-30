@@ -84,6 +84,9 @@ static void draw_and_check(void)
     CHECK(corner[0] == 0x40 && corner[1] == 0xA0 && corner[2] == 0x60);
     CHECK(edge[0] == 0x40 && edge[1] == 0xA0 && edge[2] == 0x60);
     CHECK(last[0] == 0x40 && last[1] == 0xA0 && last[2] == 0x60);
+    if (last[0] != 0x40 || last[1] != 0xA0 || last[2] != 0x60)
+        fprintf(stderr, "safe-area last pixel: %u,%u,%u at %dx%d; bleed %.9g %.9g %.9g %.9g\n",
+                last[0],last[1],last[2],width,height,bleed.pos.x,bleed.pos.y,bleed.size.w,bleed.size.h);
     free(pixels); pixels = NULL;
 }
 

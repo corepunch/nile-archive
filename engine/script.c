@@ -9,6 +9,7 @@
  * and PICO-8 calls _init/_draw. Errors print a traceback and end the process
  * with status 3, so a broken script fails a headless run loudly. */
 #include "api_lua.h"
+#include "ui_forms_lua.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -126,6 +127,10 @@ void script_open(const char *dir)
     L = luaL_newstate();
     open_libs();
     api_open(L);
+    if (luaL_loadbuffer(L, engine_ui_forms, sizeof engine_ui_forms - 1, "@engine/ui_forms.lua") != LUA_OK || lua_pcall(L, 0, 0, 0) != LUA_OK) {
+        fprintf(stderr, "engine UI: %s\n", lua_tostring(L, -1));
+        exit(3);
+    }
     if (extension_open) extension_open(L);
     lua_gc(L, LUA_GCGEN, 0, 0);
 }

@@ -82,11 +82,10 @@ void ui_panel(rect r)
     ui_panel_ex(r, t->panel, t->panel2, t->border, t->radius);
 }
 
-ui_state ui_button_frame(rect r, int flags)
+void ui_button_paint(rect r, int flags, ui_state st)
 {
     const ui_theme *t = ui_theme_get();
-    ui_state st = ui_hit(r, flags);
-    if (flags & UI_FLAT) return st;
+    if (flags & UI_FLAT) return;
     bool accent = flags & UI_ACCENT;
     float a = (flags & UI_DISABLED) ? .45f : 1;
     rect body = st.held ? rect_inflate(r, -2) : r;
@@ -100,6 +99,12 @@ ui_state ui_button_frame(rect r, int flags)
                          rgba(255, 255, 255, (int)(accent ? 70 * a : 22 * a)), rgba(255, 255, 255, 0));
     draw_round_rect_line(body, t->radius, 1.5f, color_alpha(accent ? color_shade(t->accent2, .7f) : t->button_border, a));
     if (flags & UI_ACTIVE) draw_round_rect_line(rect_inflate(body, 2.5f), t->radius + 2, 3, t->active);
+}
+
+ui_state ui_button_frame(rect r, int flags)
+{
+    ui_state st = ui_hit(r, flags);
+    ui_button_paint(r, flags, st);
     return st;
 }
 
@@ -122,13 +127,16 @@ void ui_toast(const char *utf8)
     U.toast_time = 2.8f;
 }
 
+void ui_modal_layer(float radius, color dim)
+{
+    gfx_backdrop(radius, dim);
+    ui_block(app_bleed());
+}
+
 void ui_modal_backdrop(float t)
 {
     const ui_theme *th = ui_theme_get();
-    gfx_bleed(true);
-    draw_rect(app_bleed(), color_alpha(th->dim, saturate(t)));
-    gfx_bleed(false);
-    ui_block(app_bleed());
+    ui_modal_layer(th->backdrop_blur * saturate(t), color_alpha(th->dim, saturate(t)));
 }
 
 void ui_end_frame(float dt)

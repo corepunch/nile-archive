@@ -332,6 +332,7 @@ void gfx_clip(rect r)
 
 void gfx_unclip(void) { render_clip(NULL); }
 void gfx_bleed(bool on) { render_bleed(on); }
+void gfx_backdrop(float radius, color dim) { render_backdrop(radius, dim); }
 
 /* ------------------------------------------------------------------ camera */
 

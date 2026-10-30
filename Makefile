@@ -90,7 +90,7 @@ run-relic: run-relic-rush
 # engine/api.xml describes the API once; tools/luagen.py writes the glue, the
 # reference and the editor annotations. They are committed, so building needs
 # no Python; `make test` fails when they are stale.
-GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua
+GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua engine/ui_forms_lua.h
 gen:
 	python3 tools/luagen.py
 gen-check:
@@ -119,6 +119,7 @@ build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
 test: gen-check xcode-check build/tests build/test-audio test-clayfight
 	./build/test-audio
 	python3 games/volcano/tools/check_assets.py
+	python3 games/relic-rush/tools/check_art_catalogue.py
 	@mkdir -p build/test-home
 	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests tests/lua/*.lua
 
@@ -157,6 +158,9 @@ clean:
 .PHONY: test-platform
 build/test-platform: tests/test_platform.c $(ENGINE_OBJ) engine/render.h
 	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-test-platform: build/test-platform
+build/test-backdrop: tests/test_backdrop.c $(ENGINE_OBJ) engine/render.h
+	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
+test-platform: build/test-platform build/test-backdrop
 	./build/test-platform
 	./build/test-platform --safe-area-test
+	./build/test-backdrop

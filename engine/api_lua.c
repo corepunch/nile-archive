@@ -638,7 +638,7 @@ static int l_text_style_new(lua_State *L)
 
 void api_push_ui_theme(lua_State *L, ui_theme v)
 {
-    lua_createtable(L, 0, 19);
+    lua_createtable(L, 0, 20);
     api_push_text_style(L, v.text); lua_setfield(L, -2, "text");
     api_push_text_style(L, v.small); lua_setfield(L, -2, "small");
     api_push_text_style(L, v.title); lua_setfield(L, -2, "title");
@@ -658,6 +658,7 @@ void api_push_ui_theme(lua_State *L, ui_theme v)
     api_push_color(L, v.toast_bg); lua_setfield(L, -2, "toast_bg");
     api_push_color(L, v.toast_text); lua_setfield(L, -2, "toast_text");
     lua_pushnumber(L, v.radius); lua_setfield(L, -2, "radius");
+    lua_pushnumber(L, v.backdrop_blur); lua_setfield(L, -2, "backdrop_blur");
     luaL_setmetatable(L, "engine.ui_theme");
 }
 
@@ -724,6 +725,9 @@ ui_theme api_get_ui_theme(lua_State *L, int i)
     lua_getfield(L, i, "radius");
     v.radius = (float)lua_tonumber(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "backdrop_blur");
+    v.backdrop_blur = (float)lua_tonumber(L, -1);
+    lua_pop(L, 1);
     return v;
 }
 
@@ -749,6 +753,7 @@ void api_store_ui_theme(lua_State *L, int i, ui_theme v)
     api_push_color(L, v.toast_bg); lua_setfield(L, i, "toast_bg");
     api_push_color(L, v.toast_text); lua_setfield(L, i, "toast_text");
     lua_pushnumber(L, v.radius); lua_setfield(L, i, "radius");
+    lua_pushnumber(L, v.backdrop_blur); lua_setfield(L, i, "backdrop_blur");
 }
 
 ui_theme api_check_ui_theme(lua_State *L, int i)
@@ -1030,7 +1035,8 @@ static int l_story_line_new(lua_State *L)
 
 void api_push_story_style(lua_State *L, story_style v)
 {
-    lua_createtable(L, 0, 8);
+    lua_createtable(L, 0, 9);
+    lua_pushnumber(L, v.backdrop_blur); lua_setfield(L, -2, "backdrop_blur");
     api_push_text_style(L, v.text); lua_setfield(L, -2, "text");
     api_push_text_style(L, v.name); lua_setfield(L, -2, "name");
     api_push_color(L, v.bubble); lua_setfield(L, -2, "bubble");
@@ -1048,6 +1054,9 @@ story_style api_get_story_style(lua_State *L, int i)
     memset(&v, 0, sizeof v);
     if (!lua_istable(L, i)) return v;   /* nil is the zero value, whatever the defaults */
     i = lua_absindex(L, i);
+    lua_getfield(L, i, "backdrop_blur");
+    v.backdrop_blur = (float)lua_tonumber(L, -1);
+    lua_pop(L, 1);
     lua_getfield(L, i, "text");
     v.text = api_get_text_style(L, -1);
     lua_pop(L, 1);
@@ -1078,6 +1087,7 @@ story_style api_get_story_style(lua_State *L, int i)
 void api_store_story_style(lua_State *L, int i, story_style v)
 {
     i = lua_absindex(L, i);
+    lua_pushnumber(L, v.backdrop_blur); lua_setfield(L, i, "backdrop_blur");
     api_push_text_style(L, v.text); lua_setfield(L, i, "text");
     api_push_text_style(L, v.name); lua_setfield(L, i, "name");
     api_push_color(L, v.bubble); lua_setfield(L, i, "bubble");
@@ -2653,6 +2663,15 @@ static int l_texture_additive(lua_State *L)
     return 0;
 }
 
+/* gfx.backdrop(radius, dim) */
+static int l_gfx_backdrop(lua_State *L)
+{
+    float a_radius = (float)luaL_checknumber(L, 1);
+    color a_dim = api_check_color(L, 2);
+    gfx_backdrop(a_radius, a_dim);
+    return 0;
+}
+
 /* gfx.image(t, dst, tint) */
 static int l_gfx_image(lua_State *L)
 {
@@ -3294,6 +3313,16 @@ static int l_ui_button_frame(lua_State *L)
     return 1;
 }
 
+/* ui.button_paint(r, flags, state) */
+static int l_ui_button_paint(lua_State *L)
+{
+    rect a_r = api_check_rect(L, 1);
+    int a_flags = (int)luaL_checkinteger(L, 2);
+    ui_state a_state = api_check_ui_state(L, 3);
+    ui_button_paint(a_r, a_flags, a_state);
+    return 0;
+}
+
 /* ui.button(r, label, flags?) */
 static int l_ui_button(lua_State *L)
 {
@@ -3339,6 +3368,15 @@ static int l_ui_modal_backdrop(lua_State *L)
 {
     float a_t = (float)luaL_checknumber(L, 1);
     ui_modal_backdrop(a_t);
+    return 0;
+}
+
+/* ui.modal_layer(radius, dim) */
+static int l_ui_modal_layer(lua_State *L)
+{
+    float a_radius = (float)luaL_checknumber(L, 1);
+    color a_dim = api_check_color(L, 2);
+    ui_modal_layer(a_radius, a_dim);
     return 0;
 }
 
@@ -4025,6 +4063,7 @@ static void open_input(lua_State *L)
     };
     luaL_newlib(L, funcs);
     lua_pushinteger(L, AX_KEY_SPACE); lua_setfield(L, -2, "KEY_SPACE");
+    lua_pushinteger(L, AX_KEY_TAB); lua_setfield(L, -2, "KEY_TAB");
     lua_pushinteger(L, AX_KEY_ENTER); lua_setfield(L, -2, "KEY_RETURN");
     luaL_newmetatable(L, "engine.input");
     lua_pushvalue(L, -2); lua_setfield(L, -2, "__index");
@@ -4059,6 +4098,7 @@ static void open_texture(lua_State *L)
 static void open_gfx(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
+        {"backdrop", l_gfx_backdrop},
         {"image", l_gfx_image},
         {"image_part", l_gfx_image_part},
         {"image_rot", l_gfx_image_rot},
@@ -4199,11 +4239,13 @@ static void open_ui(lua_State *L)
         {"panel", l_ui_panel},
         {"panel_ex", l_ui_panel_ex},
         {"button_frame", l_ui_button_frame},
+        {"button_paint", l_ui_button_paint},
         {"button", l_ui_button},
         {"label", l_ui_label},
         {"progress", l_ui_progress},
         {"toast", l_ui_toast},
         {"modal_backdrop", l_ui_modal_backdrop},
+        {"modal_layer", l_ui_modal_layer},
         {"set_enabled", l_ui_set_enabled},
         {NULL, NULL}
     };

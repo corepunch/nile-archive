@@ -292,6 +292,9 @@ void gfx_additive(bool on);   /* additive blending for shapes (glows, sparks) */
 void gfx_clip(rect r);
 void gfx_unclip(void);
 void gfx_bleed(bool on);        /* let drawing reach app_bleed() (backgrounds), not only app_screen(); resets the clip */
+/* Composite everything already drawn as a blurred layer; subsequent UI stays sharp.
+ * Radius is in logical pixels; zero only dims. Includes safe areas, preserves clip. */
+void gfx_backdrop(float radius, color dim);
 
 /* --- 2D camera: a view rect on screen looking at a world of `world` size --- */
 typedef struct {
@@ -462,6 +465,7 @@ typedef struct {
     color dim;                             /* modal backdrop */
     color toast_bg, toast_text;
     float radius;
+    float backdrop_blur;                  /* logical pixels; zero preserves a sharp backdrop */
 } ui_theme;
 
 enum {
@@ -480,12 +484,14 @@ ui_state ui_hit(rect r, int flags);        /* raw interaction of an area */
 void ui_panel(rect r);
 void ui_panel_ex(rect r, color top, color bottom, color border, float radius);
 ui_state ui_button_frame(rect r, int flags);  /* background only; draw your own content */
+void ui_button_paint(rect r, int flags, ui_state st); /* paint a state already hit-tested */
 bool ui_button(rect r, const char *label, int flags);
 void ui_label(rect r, text_style s, vec2 align, const char *utf8);
 void ui_progress(rect r, float fraction, const char *label);
 void ui_toast(const char *utf8);
 /* Dim everything drawn so far and block input outside dialogs. Call before drawing a modal. */
 void ui_modal_backdrop(float t);
+void ui_modal_layer(float radius, color dim); /* blur/dim all earlier layers and block world input */
 /* While false, widgets draw but ignore input (e.g. under a modal). */
 void ui_set_enabled(bool enabled);
 
@@ -531,6 +537,7 @@ typedef struct {
     color bubble, edge, dim;     /* bubble fill and rim, backdrop behind the dialogue */
     float portrait_height;       /* fraction of the screen height (default .5) */
     bool framed;                 /* portraits are busts: show them in a medallion */
+    float backdrop_blur;         /* optional logical-pixel blur behind dialogue */
     const char *skip;            /* label of a skip button, NULL for none */
 } story_style;
 

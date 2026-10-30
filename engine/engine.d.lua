@@ -88,6 +88,7 @@
 ---@field toast_bg color
 ---@field toast_text color
 ---@field radius number
+---@field backdrop_blur number Modal blur radius in logical pixels; zero keeps it sharp.
 
 ---@class ui_state How an area was interacted with this frame.
 ---@field hot boolean
@@ -118,6 +119,7 @@
 ---@field kind integer story.SPEECH (default), THOUGHT or SHOUT.
 
 ---@class story_style How dialogue looks.
+---@field backdrop_blur number Optional logical-pixel blur behind the dialogue.
 ---@field text text_style Bubble text.
 ---@field name text_style Name tag.
 ---@field bubble color
@@ -754,6 +756,7 @@ function app.web_storage(key) end
 
 ---@class inputlib
 ---@field KEY_SPACE integer
+---@field KEY_TAB integer
 ---@field KEY_RETURN integer
 ---@overload fun(t?: table): input
 input = {}
@@ -801,6 +804,11 @@ function texture.additive(t, on) end
 
 ---@class gfxlib
 gfx = {}
+
+---Blur/dim all earlier drawing layers, including safe areas. Later UI stays sharp. Radius is logical pixels (0..32); zero only dims. Preserves clip and drawing state.
+---@param radius number
+---@param dim color
+function gfx.backdrop(radius, dim) end
 
 ---Draw t stretched to dst, multiplied by tint (color.WHITE for none).
 ---@param t texture
@@ -1189,6 +1197,12 @@ function ui.panel_ex(r, top, bottom, border, radius) end
 ---@return ui_state
 function ui.button_frame(r, flags) end
 
+---Paint a previously hit-tested state; useful with animated/translated form skins.
+---@param r rect
+---@param flags integer
+---@param state ui_state
+function ui.button_paint(r, flags, state) end
+
 ---True when clicked.
 ---@param r rect
 ---@param label string
@@ -1212,9 +1226,14 @@ function ui.progress(r, fraction, label) end
 ---@param utf8 string
 function ui.toast(utf8) end
 
----Dim everything drawn so far and block input outside dialogs; t fades it in.
+---Blur/dim earlier layers using the theme and block world input; t fades the effect in.
 ---@param t number
 function ui.modal_backdrop(t) end
+
+---Blur/dim earlier layers and block world input. Draw the dialog afterward.
+---@param radius number
+---@param dim color
+function ui.modal_layer(radius, dim) end
 
 ---While false, widgets draw but ignore input (under a modal).
 ---@param enabled boolean
@@ -1520,3 +1539,37 @@ function city.draw(c, in, now) end
 ---@param c city
 ---@param s save
 function city.serialize(c, s) end
+
+---@class ui_form
+---@field values table
+---@field boxes table<string,rect>
+local ui_form = {}
+---@return ui_form
+function ui.form(template) end
+---@return boolean, string?
+function ui_form:push(model) end
+---@return boolean, string?
+function ui_form:pull(model, validator) end
+---@return ui_form
+function ui_form:set(id, value) end
+function ui_form:get(id) end
+---@return number, number
+function ui_form:measure(width, skin) end
+---@return table<string,rect>
+function ui_form:layout(bounds, skin) end
+---@return table?
+function ui_form:draw(bounds, skin, options) end
+---@class ui_modal_stack
+local ui_modal_stack = {}
+---@return ui_modal_stack
+function ui.modals(skin) end
+---@return boolean
+function ui_modal_stack:active() end
+---@return boolean
+function ui_modal_stack:begin() end
+---@return boolean, string?
+function ui_modal_stack:open(id, form, model, options) end
+---@return boolean
+function ui_modal_stack:close(id) end
+---@return table?
+function ui_modal_stack:draw(dt, options) end

@@ -21,12 +21,18 @@ jobs:
         run: xvfb-run -a make test-platform
       - name: Unit tests
         run: make test
+      - name: Verify authored Relic Rush atlas crops
+        run: |
+          pip install pillow
+          python3 games/relic-rush/tools/board_assets.py --check
       - name: Smoke test (headless screenshot of every screen)
         run: |
           pip install pillow
           xvfb-run -a ./tools/screenshots.sh
       - name: Relic Rush smoke test (level one to level two through injected clicks)
         run: xvfb-run -a timeout 600 ./build/relic-rush --headless --fresh --smoke --mute
+      - name: Shared UI skins, bindings and nested modal input smoke test
+        run: xvfb-run -a ./build/relic-rush --headless --mute --fresh --lua tests/fixtures/ui --data games/relic-rush/data --size 900x700 --smoke
       - name: Nile Archive smoke test (chapter one through injected clicks)
         run: xvfb-run -a timeout 600 ./build/nile-archive --headless --fresh --smoke --mute
       - name: Volcano smoke test (five districts, pause, restart and replay through clicks)
