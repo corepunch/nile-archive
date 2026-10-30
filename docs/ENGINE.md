@@ -1,13 +1,18 @@
 # Engine architecture
 
-The engine is about 3,000 lines of C11 in eight modules behind one header,
-[`engine/engine.h`](../engine/engine.h). It targets 2D sprite games with menus,
-dialogs and a build-your-place meta-game: hidden objects, match-3, merge,
-solitaire, word games and the like.
+The engine is about 3,500 lines of C11 in ten modules behind one header,
+[`engine/engine.h`](../engine/engine.h), plus Lua 5.4 and the glue generated
+from [`engine/api.xml`](../engine/api.xml). It targets 2D sprite games with
+menus, dialogs and a build-your-place meta-game: hidden objects, match-3,
+merge, solitaire, word games and the like. Games are written in Lua; see
+[SCRIPTING.md](SCRIPTING.md) for that side and [LINEAGE.md](LINEAGE.md) for
+where the ideas come from.
 
 ```
-            game (games/<name>/main.c)
-   ┌────────────┬────────┬──────────┬──────────┐
+            game (games/<name>/lua/main.lua + modules)      Lua 5.4
+   ┌────────────────────────────────────────────┐
+   │ script: sandboxed state, require, callbacks │   generated glue (api.xml → api_lua.c)
+   ├────────────┬────────┬──────────┬──────────┤
    │ city │ story │ ui │ save │ fx/audio │   meta-game, dialogue, widgets, persistence, juice
    ├────────────┴────────┴──────────┴──────────┤
    │   gfx: textures, shapes, camera │ font     │   drawing
@@ -25,18 +30,20 @@ solitaire, word games and the like.
    `camera_clamp(camera_zoom_at(cam, 1.25f, rect_center(cam.view)))`.
    The exceptions are deliberate: RectCut's `rect_cut_*(&r, n)` mutates the rect
    it cuts from, and stateful objects (`city`, `font`) are pointers.
-2. **One public header.** Every module's internals are `static`. Games include
-   `engine.h` and nothing else; a game needing more than one source file adds
-   at most one header of its own (Relic Rush has `relic.h` so the tests can
-   share its rules).
+2. **One public header.** Every module's internals are `static`. The Lua API
+   is that header seen from Lua, generated from `api.xml`, so the two cannot
+   drift; games see nothing else.
 3. **Zero means default.** Descriptors (`app_desc`, `text_style`, `camera`,
    `building_def`, `ui_theme`) work with designated initialisers that only name
    what differs, in the spirit of the sokol headers.
 4. **Immediate mode.** Screens are functions that lay out, react and draw in
    one pass every frame. There is no retained widget tree to keep in sync.
-5. **Engine knows mechanics, games know content.** The city module knows how
-   to place, sort, draw, pay for and collect from buildings; it does not know
-   what "coins" or "influence" are. Resources are just slots in a `purse`.
+5. **Engine knows mechanics, games know content and rules.** The city module
+   knows how to place, sort, draw, pay for and collect from buildings; it does
+   not know what "coins" or "influence" are. Resources are just slots in a
+   `purse`. Since the games moved to Lua this is a hard boundary: no game
+   logic is compiled into the engine, and the engine reaches a game only
+   through the descriptor `main.lua` returns and the callbacks it registers.
 
 ## The screen model
 
@@ -142,9 +149,10 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   (Nile's influence, Relic Rush's stars are never spent), `income` is
   collected by tapping once `income_period` seconds of wall-clock time have
   passed (offline progress included; time comes from `app_clock()`).
-- **Terrain and regions come from the game.** `buildable(vec2)` says where
+- **Terrain and regions come from the game.** `buildable(c, vec2)` says where
   land is; zones are rects by default (Nile's shore strips) or come from a
-  `zone_at(vec2)` callback (Relic Rush's six flood-filled hex regions). A zone
+  `zone_at(c, vec2)` callback (Relic Rush's six flood-filled hex regions).
+  Callbacks receive the city so a Lua trampoline can find its closure. A zone
   opens with `city_unlock` when it touches open land (rect contact or the
   game's `zone_touches`), the wallet covers its `needs` and pays its `cost`.
   Closed zones are covered by fog: a vertex grid sampled over the world, so
@@ -220,15 +228,33 @@ the first note; `--mute` and `sfx_enable(false)` silence it.
   (`100vw × 100dvh`); SDL resizes the drawing buffer with `devicePixelRatio`.
   Assets are preloaded from `games/<name>/data` to `/data`.
 
+## Script
+
+`script.c` is the Lua runtime: one state per game with a sandboxed standard
+library (no `io`, `os`, `package`, `debug`), a `require` that resolves inside
+the game's `lua/` folder, the main-loop trampolines (`init`, `frame`, `quit`
+from the descriptor `main.lua` returns), and the few bindings a generator
+cannot write: save visitors, the cast, the theme and the city's callbacks.
+`launcher.c` is `main()` for every game, built once per game with the game's
+folder compiled in. Everything else Lua can call lives in the generated
+`api_lua.c`; the description it is generated from is `api.xml` and the
+generator `tools/luagen.py`. The details are in [SCRIPTING.md](SCRIPTING.md).
+
 ## Testing
 
-`make test` runs the engine tests (`tests/test_main.c`: vector and rect maths,
-RectCut, the camera round trip and clamping, purses, save round trips and
-defaults, city placement, footprints, sessions, moving, income and zones) and
-Relic Rush's rule tests (`tests/test_relic.c`, ported from the original
-prototype, including 300 greedy campaign runs). Relic Rush's `--smoke` drives
-the real game loop through injected mouse clicks from the first swap to the
-second level, which catches stuck states and broken input routing.
+`make test` first checks that the generated glue, reference and annotations
+match `api.xml` (`make gen-check`), then runs the engine tests
+(`tests/test_main.c`: vector and rect maths, RectCut, the camera round trip
+and clamping, purses, save round trips and defaults, city placement,
+footprints, sessions, moving, income and zones, story beats) and, in the same
+binary's Lua state without a window, every file in `tests/lua/`: `api.lua`
+(the generated API: operators, in/out arguments, handles, callbacks) and
+`relic.lua` (Relic Rush's rules, ported from the original prototype, including
+the greedy bot's campaign runs). Relic Rush's `--smoke` drives the real game
+loop through injected mouse clicks from the first swap to the second level,
+which catches stuck states and broken input routing. The Lua port itself was
+verified by rendering every documentation screenshot and reel frame with both
+the C and the Lua games and comparing them pixel for pixel.
 
 ## Possible next steps
 
@@ -238,3 +264,5 @@ second level, which catches stuck states and broken input routing.
 - Removing placed buildings, and building upgrades.
 - iOS and Android packaging for the engine (both games target the iPad).
 - Localisation tables instead of string literals.
+- An error screen for script errors instead of exiting, for development builds.
+- Hot reload of a game's Lua files while it runs.

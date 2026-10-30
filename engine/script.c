@@ -1,0 +1,304 @@
+/* script.c — the Lua runtime: one Lua 5.4 state per game, the engine API
+ * generated from api.xml, a sandboxed standard library, `require` from the
+ * game's lua/ folder, and the handful of bindings a generator cannot write:
+ * the main-loop callbacks, save visitors, the cast (which the engine keeps)
+ * and the city's callback fields.
+ *
+ * Games never see a lua_State: main.lua returns the app descriptor and the
+ * engine drives init/frame/quit from C, the way LÖVE calls love.load/draw
+ * and PICO-8 calls _init/_draw. Errors print a traceback and end the process
+ * with status 3, so a broken script fails a headless run loudly. */
+#include "api_lua.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static lua_State *L;
+static char lua_dir[512];
+static app_desc desc;
+
+/* ------------------------------------------------------------------ calls */
+
+static int traceback(lua_State *S)
+{
+    const char *msg = lua_tostring(S, 1);
+    luaL_traceback(S, S, msg ? msg : "(error object is not a string)", 1);
+    return 1;
+}
+
+/* Call the function below its nargs arguments; a Lua error is fatal. */
+static void call(int nargs, int nresults)
+{
+    int base = lua_gettop(L) - nargs;
+    lua_pushcfunction(L, traceback);
+    lua_insert(L, base);
+    if (lua_pcall(L, nargs, nresults, base) != LUA_OK) {
+        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
+        exit(3);
+    }
+    lua_remove(L, base);
+}
+
+/* Push desc.<key> if it is a function; false otherwise. */
+static bool hook(const char *key)
+{
+    lua_getfield(L, LUA_REGISTRYINDEX, "engine.desc");
+    lua_getfield(L, -1, key);
+    lua_remove(L, -2);
+    if (lua_isfunction(L, -1)) return true;
+    lua_pop(L, 1);
+    return false;
+}
+
+static void on_init(void)
+{
+    if (hook("init")) call(0, 0);
+}
+
+static void on_frame(float dt)
+{
+    if (!hook("frame")) return;
+    lua_pushnumber(L, dt);
+    call(1, 0);
+    lua_gc(L, LUA_GCSTEP, 0);   /* a small step every frame keeps pauses short */
+}
+
+static void on_quit(void)
+{
+    if (hook("quit")) call(0, 0);
+}
+
+/* ---------------------------------------------------------------- sandbox */
+
+/* require("island") loads island.lua from the first script root that has it
+ * (lua_dir is one folder, or several separated by ';'); dots become slashes. */
+static int l_require(lua_State *S)
+{
+    const char *name = luaL_checkstring(S, 1);
+    lua_getfield(S, LUA_REGISTRYINDEX, "engine.loaded");
+    lua_getfield(S, -1, name);
+    if (!lua_isnil(S, -1)) return 1;
+    lua_pop(S, 1);
+    char path[640];
+    int status = LUA_ERRFILE;
+    for (const char *root = lua_dir; root && status == LUA_ERRFILE; root = strchr(root, ';') ? strchr(root, ';') + 1 : NULL) {
+        int n = (int)strcspn(root, ";");
+        snprintf(path, sizeof path, "%.*s/%s.lua", n, root, name);
+        for (char *p = path + n + 1; *p; p++)
+            if (*p == '.' && strcmp(p, ".lua")) *p = '/';
+        lua_settop(S, 2);
+        status = luaL_loadfile(S, path);
+    }
+    if (status != LUA_OK) return luaL_error(S, "module '%s' not found (looked for %s)", name, path);
+    lua_pushstring(S, name);
+    lua_call(S, 1, 1);
+    if (lua_isnil(S, -1)) lua_pop(S, 1), lua_pushboolean(S, 1);
+    lua_pushvalue(S, -1);
+    lua_setfield(S, 2, name);
+    return 1;
+}
+
+static void open_libs(void)
+{
+    static const luaL_Reg libs[] = {{LUA_GNAME, luaopen_base},     {LUA_TABLIBNAME, luaopen_table}, {LUA_STRLIBNAME, luaopen_string},
+                                    {LUA_MATHLIBNAME, luaopen_math}, {LUA_UTF8LIBNAME, luaopen_utf8},  {LUA_COLIBNAME, luaopen_coroutine},
+                                    {NULL, NULL}};
+    for (const luaL_Reg *lib = libs; lib->func; lib++) {
+        luaL_requiref(L, lib->name, lib->func, 1);
+        lua_pop(L, 1);
+    }
+    /* no io, os, debug or package: a game reads assets through the engine and
+     * code through require; what it can touch is what api.xml lists */
+    static const char *const dropped[] = {"dofile", "loadfile", NULL};
+    for (int i = 0; dropped[i]; i++) lua_pushnil(L), lua_setglobal(L, dropped[i]);
+    lua_newtable(L);
+    lua_setfield(L, LUA_REGISTRYINDEX, "engine.loaded");
+    lua_pushcfunction(L, l_require);
+    lua_setglobal(L, "require");
+}
+
+void script_open(const char *dir)
+{
+    snprintf(lua_dir, sizeof lua_dir, "%s", dir ? dir : ".");
+    L = luaL_newstate();
+    open_libs();
+    api_open(L);
+    lua_gc(L, LUA_GCGEN, 0, 0);
+}
+
+void script_close(void)
+{
+    if (L) lua_close(L);
+    L = NULL;
+}
+
+int script_dofile(const char *path)
+{
+    int top = lua_gettop(L);
+    lua_pushcfunction(L, traceback);
+    if (luaL_loadfile(L, path) != LUA_OK || lua_pcall(L, 0, 1, top + 1) != LUA_OK) {
+        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
+        lua_settop(L, top);
+        return -1;
+    }
+    int result = (int)lua_tointeger(L, -1);
+    lua_settop(L, top);
+    return result;
+}
+
+app_desc script_boot(const char *dir, const char *data_dir)
+{
+    script_open(dir);
+    char path[640];
+    snprintf(path, sizeof path, "%s/main.lua", lua_dir);
+    lua_pushcfunction(L, traceback);
+    if (luaL_loadfile(L, path) != LUA_OK || lua_pcall(L, 0, 1, 1) != LUA_OK) {
+        fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
+        exit(3);
+    }
+    if (!lua_istable(L, -1)) {
+        fprintf(stderr, "lua: %s must return the app descriptor table\n", path);
+        exit(3);
+    }
+    /* the table stays referenced, so its strings stay valid for app_run */
+    lua_pushvalue(L, -1);
+    lua_setfield(L, LUA_REGISTRYINDEX, "engine.desc");
+    int t = lua_gettop(L);
+    memset(&desc, 0, sizeof desc);
+    lua_getfield(L, t, "title"), desc.title = lua_tostring(L, -1);
+    lua_getfield(L, t, "id"), desc.id = lua_tostring(L, -1);
+    lua_getfield(L, t, "rotate_text"), desc.rotate_text = lua_tostring(L, -1);
+    lua_getfield(L, t, "design"), desc.design = api_get_size2(L, -1);
+    lua_getfield(L, t, "max_aspect"), desc.max_aspect = (float)lua_tonumber(L, -1);
+    lua_getfield(L, t, "landscape"), desc.landscape = lua_toboolean(L, -1);
+    lua_getfield(L, t, "fixed"), desc.fixed = lua_toboolean(L, -1);
+    lua_getfield(L, t, "clear"), desc.clear = api_get_color(L, -1);
+    lua_settop(L, 0);
+    desc.data_dir = data_dir;
+    desc.init = on_init;
+    desc.frame = on_frame;
+    desc.quit = on_quit;
+    return desc;
+}
+
+/* --------------------------------------------------------- hand-written API */
+
+/* save.read(slot, fn) / save.write(slot, fn): fn(s) runs with a save handle. */
+static void visit(save *s, void *user)
+{
+    (void)user;
+    lua_pushvalue(L, 2);
+    api_push_save(L, s);
+    call(1, 0);
+}
+
+int lsave_read(lua_State *S)
+{
+    const char *slot = luaL_checkstring(S, 1);
+    luaL_checktype(S, 2, LUA_TFUNCTION);
+    lua_settop(S, 2);
+    lua_pushboolean(S, save_read(slot, visit, NULL));
+    return 1;
+}
+
+int lsave_write(lua_State *S)
+{
+    const char *slot = luaL_checkstring(S, 1);
+    luaL_checktype(S, 2, LUA_TFUNCTION);
+    lua_settop(S, 2);
+    lua_pushboolean(S, save_write(slot, visit, NULL));
+    return 1;
+}
+
+/* story.setup(cast, style): the engine keeps the cast, so it lives here and
+ * the Lua table stays referenced for its strings. */
+#define CAST_MAX 16
+static character cast[CAST_MAX];
+
+int lstory_setup(lua_State *S)
+{
+    luaL_checktype(S, 1, LUA_TTABLE);
+    int n = (int)luaL_len(S, 1);
+    luaL_argcheck(S, n <= CAST_MAX, 1, "too many characters");
+    story_style style = api_check_story_style(S, 2);
+    for (int i = 0; i < n; i++) {
+        lua_rawgeti(S, 1, i + 1);
+        cast[i] = api_get_character(S, -1);
+        lua_pop(S, 1);
+    }
+    lua_pushvalue(S, 1);
+    lua_setfield(S, LUA_REGISTRYINDEX, "engine.cast");
+    lua_pushvalue(S, 2);
+    lua_setfield(S, LUA_REGISTRYINDEX, "engine.story_style");
+    story_setup(cast, n, &style);
+    return 0;
+}
+
+/* ui.set_theme(t): the widgets read the theme by pointer, so it lives here. */
+static ui_theme theme;
+
+int lui_set_theme(lua_State *S)
+{
+    theme = api_check_ui_theme(S, 1);
+    lua_pushvalue(S, 1);
+    lua_setfield(S, LUA_REGISTRYINDEX, "engine.theme");
+    ui_set_theme(&theme);
+    return 0;
+}
+
+/* City callbacks: find the handle, then the function stored under its name. */
+static bool city_callback(const city *c, const char *name)
+{
+    api_push_city(L, c);
+    if (lua_isnil(L, -1)) {
+        lua_pop(L, 1);
+        return false;
+    }
+    lua_getiuservalue(L, -1, 1);
+    lua_getfield(L, -1, name);
+    lua_remove(L, -2);
+    if (!lua_isfunction(L, -1)) {
+        lua_pop(L, 2);
+        return false;
+    }
+    lua_insert(L, -2);   /* function, city */
+    return true;
+}
+
+bool lcity_buildable(const struct city *c, vec2 world)
+{
+    if (!city_callback(c, "buildable")) return true;
+    api_push_vec2(L, world);
+    call(2, 1);
+    bool ok = lua_toboolean(L, -1);
+    lua_pop(L, 1);
+    return ok;
+}
+
+int lcity_zone_at(const struct city *c, vec2 world)
+{
+    if (!city_callback(c, "zone_at")) return -1;
+    api_push_vec2(L, world);
+    call(2, 1);
+    int z = (int)luaL_optinteger(L, -1, -1);
+    lua_pop(L, 1);
+    return z;
+}
+
+bool lcity_zone_touches(const struct city *c, int zone, unsigned open)
+{
+    if (!city_callback(c, "zone_touches")) return false;
+    lua_pushinteger(L, zone);
+    lua_pushinteger(L, open);
+    call(3, 1);
+    bool ok = lua_toboolean(L, -1);
+    lua_pop(L, 1);
+    return ok;
+}
+
+void lcity_draw_over(const struct city *c)
+{
+    if (!city_callback(c, "draw_over")) return;
+    call(1, 0);
+}

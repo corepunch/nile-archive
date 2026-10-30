@@ -31,7 +31,7 @@ Our interpretation is anticipation → attack → tile response → collection �
 
 ## Implementation and verification
 
-`vfx.c` isolates presentation from `rules.c`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. A small procedural additive light texture is created once; rings, beams and sparkles use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
+`vfx.lua` isolates presentation from `rules.lua`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. A small procedural additive light texture is created once; rings, beams and sparkles use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
 
 Effects only read the board; the ported rule tests (`make test`) and the `--smoke` run cover gameplay with effects active.
 

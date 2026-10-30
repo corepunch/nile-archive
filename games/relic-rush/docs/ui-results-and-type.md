@@ -18,7 +18,7 @@ The old shared-cell atlas was drawn directly into one image. Negative bearings a
 
 The pipeline now renders each glyph on its own surface, packs it with gutters and exports its precise source rectangle, bearings and advance. The runtime samples only that rectangle, applies kerning and composites the complete string mask. Its actual nonzero ink bounds are retained separately from the shared outline, texture padding and drop shadow.
 
-The result and wonder card layouts are pure functions of the viewport in `screens.c`. Text is placed by its measured ink with the engine's `text_in`: it shrinks to fit an area and centring means the ink centre equals the area's centre. Buttons and circular counters use the same call, without per-label baseline corrections. The engine draws the shadow and outline layers behind the complete string, so one letter's border never covers another letter's fill.
+The result and wonder card layouts are pure functions of the viewport in `screens.lua`. Text is placed by its measured ink with the engine's `text_in`: it shrinks to fit an area and centring means the ink centre equals the area's centre. Buttons and circular counters use the same call, without per-label baseline corrections. The engine draws the shadow and outline layers behind the complete string, so one letter's border never covers another letter's fill.
 
 Paragraphs use a cached balanced wrap layout, minimizing short orphan lines. The generated atlas remains Latin ASCII; full localized text shaping is outside this prototype.
 
@@ -35,7 +35,7 @@ The result layout has named bounds shared by painting and input: header, stars, 
 
 There are no victory fireworks or confetti bursts. Two small torch sconces add localized warm light and continuous rising flame wisps. Reduced motion uses stable placement and a static flame pose.
 
-Modal motion is a parent paint transform. It never changes SDL logical size or the mouse/touch coordinate conversion. `screens.c` owns these components and transitions; the independent gameplay rules remain in `rules.c`.
+Modal motion is a parent paint transform. It never changes SDL logical size or the mouse/touch coordinate conversion. `screens.lua` owns these components and transitions; the independent gameplay rules remain in `rules.lua`.
 
 ## Sprite extraction
 
