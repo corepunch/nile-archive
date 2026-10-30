@@ -188,7 +188,8 @@ local function island_with(n)
             R.prog.wallet[COMPASSES] = R.prog.wallet[COMPASSES] - R.island.zones[z + 1].cost[COMPASSES]
         end
     end
-    R.island.open = open
+    R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
+    R.island.open = R.island.open | 1
     local spend = purse(100000, 100000, 100000)
     for _ = 1, n do island.island_place_next(R.island, spend, n, 0) end
 end
@@ -217,6 +218,11 @@ local function debug_screens()
         R.toast_time = 0
     end
     if app.arg("overview") then R.island_focus(vec2(island.ISLAND_W / 2, island.ISLAND_H / 2), .25) end
+    a = app.arg("look")
+    if a then   -- --look X,Y: centre the island camera on a world point
+        local x, y = a:match("(%d+),(%d+)")
+        if x then R.island_focus(vec2(tonumber(x), tonumber(y)), R.island.cam.zoom) end
+    end
     if app.arg("placing") and R.island.count < WONDERS then
         R.prog.level = R.island.count + 1
         R.island_begin(R.island.count, true)

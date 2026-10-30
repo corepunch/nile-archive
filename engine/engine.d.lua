@@ -187,7 +187,7 @@
 ---@field buildable function function(c, world) -> bool: terrain test.
 ---@field zone_at function function(c, world) -> zone (0-based) or -1; default: zone rects.
 ---@field zone_touches function function(c, zone, open) -> bool: adjacency; default: rects touching.
----@field draw_over function function(c): game drawing above the fog, below the ghost.
+---@field draw_over function function(c): game drawing above the fog and buildings, below the ghost.
 ---@field cam camera
 ---@field fog color Locked zones; default dark teal.
 ---@field fog_on_land_only boolean

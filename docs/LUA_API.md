@@ -2152,7 +2152,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `buildable` | `function` | read/write | function(c, world) -> bool: terrain test. |
 | `zone_at` | `function` | read/write | function(c, world) -> zone (0-based) or -1; default: zone rects. |
 | `zone_touches` | `function` | read/write | function(c, zone, open) -> bool: adjacency; default: rects touching. |
-| `draw_over` | `function` | read/write | function(c): game drawing above the fog, below the ghost. |
+| `draw_over` | `function` | read/write | function(c): game drawing above the fog and buildings, below the ghost. |
 | `cam` | `camera` | read/write |  |
 | `fog` | `color` | read/write | Locked zones; default dark teal. |
 | `fog_on_land_only` | `boolean` | read/write |  |

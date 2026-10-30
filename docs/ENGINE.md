@@ -170,8 +170,10 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   Callbacks receive the city so a Lua trampoline can find its closure. A zone
   opens with `city_unlock` when it touches open land (rect contact or the
   game's `zone_touches`), the wallet covers its `needs` and pays its `cost`.
-  Closed zones are covered by fog: a vertex grid sampled over the world, so
-  region borders of any shape fade softly.
+  Closed zones are covered by fog: closed land is sampled once on a fine world
+  grid and blurred, so region borders of any shape (Relic Rush's are hex
+  staircases) become soft cloud banks. The mask is rebuilt only when a zone
+  opens; a frame draws only the visible, foggy cells.
 - **Placement.** A building without a footprint keeps `spacing` from others.
   With a `footprint` (half extents of its ground diamond) five probe points
   must be open land and diamonds may touch but not overlap. Placement is
@@ -180,9 +182,11 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   `city_confirm` or `city_cancel`). With `movable`, dragging a building
   starts moving it. `city_find_spot` searches outwards from a hint.
 - **Drawing.** Ground, optional curved paths linking each building to its
-  nearest older neighbour, buildings depth-sorted by their anchor's y (the
-  newest one bounces in), income bubbles, fog, a `draw_over` hook for the
-  game's labels, then the ghost with its green or red footprint.
+  nearest older neighbour, fog over closed zones (under the buildings, which
+  always stand on open land, so a tall sprite near the border is never
+  veiled), buildings depth-sorted by their anchor's y (the newest one bounces
+  in), income bubbles, a `draw_over` hook for the game's labels, then the
+  ghost with its green or red footprint (red and see-through when blocked).
 - `city_update` returns a `city_event` (`CITY_BUILT`, `CITY_MOVED`,
   `CITY_COLLECTED`, `CITY_PICKED`, `CITY_ZONE`, `CITY_BLOCKED`, …) and the
   game decides how to celebrate or explain it.

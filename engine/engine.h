@@ -634,7 +634,7 @@ typedef struct city {
     bool (*buildable)(const struct city *c, vec2 world);   /* terrain test supplied by the game */
     int (*zone_at)(const struct city *c, vec2 world);      /* region lookup (default: zone rects); -1 = none */
     bool (*zone_touches)(const struct city *c, int zone, unsigned open);  /* adjacency (default: rects touching) */
-    void (*draw_over)(const struct city *c);        /* game drawing above the fog, below the ghost */
+    void (*draw_over)(const struct city *c);        /* game drawing above the fog and buildings, below the ghost */
     camera cam;
     color fog;                              /* locked zones; default dark teal */
     bool fog_on_land_only;                  /* fog only where buildable() */

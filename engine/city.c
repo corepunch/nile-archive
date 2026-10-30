@@ -6,7 +6,8 @@
  * and, optionally, their own region map (`zone_at`, `zone_touches`); they
  * decide what the resources mean. The city handles the camera, placement
  * (instant or with a confirmable ghost), moving buildings, depth-sorted
- * drawing, fog over closed zones, decorative paths, income and saving. */
+ * drawing, soft fog over closed zones (under the buildings), decorative
+ * paths, income and saving. */
 #include "render.h"
 
 #include <stdio.h>
@@ -346,32 +347,94 @@ static void draw_paths(const city *c)
     }
 }
 
-/* Fog: a vertex grid over the world, opaque where a zone is still closed. */
-static void draw_fog(const city *c)
+/* Fog over closed zones. Region borders are often staircases (Relic Rush's
+ * come from a hex grid), and a coarse grid of all-or-nothing vertices turns
+ * them into a saw edge. Instead the closed land is sampled once on a fine
+ * world grid and blurred into soft cloud banks, and the result is kept until
+ * the open zones change; a frame draws only the visible, foggy cells. */
+enum { FOG_MAX = 160 };
+#define FOG_SOFT 56.f   /* blur reach in world units: rounds off steps up to a hex wide */
+
+static struct {
+    const city *c;
+    unsigned open;
+    int zone_count, nx, ny;
+    size2 world;
+    bool land_only;
+    float step;
+    float a[FOG_MAX * FOG_MAX];   /* 0 clear .. 1 fully fogged, per grid point */
+} fog;
+
+/* One box-blur pass along rows (dx = 1) or columns (dx = nx), edges clamped. */
+static void fog_box(const float *src, float *dst, int nx, int ny, bool rows, int r)
 {
-    enum { MAX_N = 64 };
-    static render_vertex v[MAX_N * MAX_N];
-    static int idx[(MAX_N - 1) * (MAX_N - 1) * 6];
-    if (c->zone_count == 0 || city_open_count(c) == c->zone_count) return;
-    float step = maxf(60, maxf(c->cam.world.w, c->cam.world.h) / (MAX_N - 2));
-    int nx = clampi((int)(c->cam.world.w / step) + 2, 2, MAX_N), ny = clampi((int)(c->cam.world.h / step) + 2, 2, MAX_N), n = 0;
+    int len = rows ? nx : ny, lines = rows ? ny : nx;
+    for (int l = 0; l < lines; l++)
+        for (int k = 0; k < len; k++) {
+            float sum = 0;
+            for (int d = -r; d <= r; d++) {
+                int m = clampi(k + d, 0, len - 1);
+                sum += src[rows ? l * nx + m : m * nx + l];
+            }
+            dst[rows ? l * nx + k : k * nx + l] = sum / (2 * r + 1);
+        }
+}
+
+static void fog_build(const city *c)
+{
+    static float tmp[FOG_MAX * FOG_MAX];
+    size2 world = c->cam.world;
+    float step = maxf(20, maxf(world.w, world.h) / (FOG_MAX - 2));
+    int nx = clampi((int)ceilf(world.w / step) + 1, 2, FOG_MAX), ny = clampi((int)ceilf(world.h / step) + 1, 2, FOG_MAX);
     for (int y = 0; y < ny; y++)
         for (int x = 0; x < nx; x++) {
             vec2 w = v2(x * step, y * step);
             int z = city_zone_at(c, w);
-            bool fog = z >= 0 && !city_zone_open(c, z) && (!c->fog_on_land_only || !c->buildable || c->buildable(c, w));
-            vec2 s = camera_to_screen(c->cam, w);
-            int a = fog ? (int)(c->fog.a * (.88f + .12f * ((x * 13 + y * 19) % 40) / 40.f)) : 0;
-            v[y * nx + x] = (render_vertex){{s.x, s.y}, {c->fog.r, c->fog.g, c->fog.b, (uint8_t)a}, {0, 0}};
+            bool closed = z >= 0 && !city_zone_open(c, z) && (!c->fog_on_land_only || !c->buildable || c->buildable(c, w));
+            fog.a[y * nx + x] = closed ? 1.f : 0.f;
         }
-    for (int y = 0; y + 1 < ny; y++)
-        for (int x = 0; x + 1 < nx; x++) {
-            int i = y * nx + x;
-            int q[6] = {i, i + 1, i + nx, i + 1, i + nx + 1, i + nx};
+    int r = clampi((int)roundf(FOG_SOFT / step), 1, 8);
+    for (int pass = 0; pass < 2; pass++) {   /* two box passes each way: nearly gaussian */
+        fog_box(fog.a, tmp, nx, ny, true, r);
+        fog_box(tmp, fog.a, nx, ny, false, r);
+    }
+    fog.c = c, fog.open = c->open, fog.zone_count = c->zone_count, fog.world = world;
+    fog.land_only = c->fog_on_land_only, fog.nx = nx, fog.ny = ny, fog.step = step;
+}
+
+static void draw_fog(const city *c)
+{
+    static render_vertex v[FOG_MAX * FOG_MAX];
+    static int idx[(FOG_MAX - 1) * (FOG_MAX - 1) * 6];
+    if (c->zone_count == 0 || city_open_count(c) == c->zone_count) return;
+    if (fog.c != c || fog.open != c->open || fog.zone_count != c->zone_count || fog.land_only != c->fog_on_land_only ||
+        fog.world.w != c->cam.world.w || fog.world.h != c->cam.world.h)
+        fog_build(c);
+
+    /* the grid points under the view, one cell of margin */
+    float step = fog.step;
+    vec2 lo = camera_to_world(c->cam, c->cam.view.pos), hi = camera_to_world(c->cam, rect_max(c->cam.view));
+    int x0 = clampi((int)floorf(lo.x / step) - 1, 0, fog.nx - 1), x1 = clampi((int)ceilf(hi.x / step) + 1, 0, fog.nx - 1);
+    int y0 = clampi((int)floorf(lo.y / step) - 1, 0, fog.ny - 1), y1 = clampi((int)ceilf(hi.y / step) + 1, 0, fog.ny - 1);
+    int w = x1 - x0 + 1, n = 0;
+    for (int y = y0; y <= y1; y++)
+        for (int x = x0; x <= x1; x++) {
+            vec2 p = v2(x * step, y * step);
+            /* edges ease in and out; the bank itself drifts gently, like cloud */
+            float t = smoothstep(.12f, .88f, fog.a[y * fog.nx + x]);
+            float cloud = .9f + .1f * sinf(p.x * .006f + 1.7f * sinf(p.y * .004f)) * sinf(p.y * .005f - p.x * .002f);
+            vec2 s = camera_to_screen(c->cam, p);
+            v[(y - y0) * w + x - x0] = (render_vertex){{s.x, s.y}, {c->fog.r, c->fog.g, c->fog.b, (uint8_t)(c->fog.a * t * cloud)}, {0, 0}};
+        }
+    for (int y = 0; y < y1 - y0; y++)
+        for (int x = 0; x < x1 - x0; x++) {
+            int i = y * w + x;
+            if (!(v[i].color.a | v[i + 1].color.a | v[i + w].color.a | v[i + w + 1].color.a)) continue;   /* clear land */
+            int q[6] = {i, i + 1, i + w, i + 1, i + w + 1, i + w};
             memcpy(idx + n, q, sizeof q);
             n += 6;
         }
-    render_geometry(NULL, v, nx * ny, idx, n);
+    if (n) render_geometry(NULL, v, w * (y1 - y0 + 1), idx, n);
 }
 
 static void draw_footprint(const city *c, vec2 at, int type, bool ok)
@@ -395,6 +458,7 @@ void city_draw(const city *c, input in, double now)
     gfx_clip(cam.view);
     camera_draw_texture(cam, c->ground);
     if (c->path.a) draw_paths(c);
+    draw_fog(c);   /* over the land, under the buildings: they stand on open ground */
 
     /* painter's order: buildings further down the map are in front */
     int order[CITY_MAX], n = 0;
@@ -435,7 +499,6 @@ void city_draw(const city *c, input in, double now)
         }
     }
 
-    draw_fog(c);
     if (c->draw_over) c->draw_over(c);
 
     if (c->placing >= 0) {
