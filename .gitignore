@@ -64,3 +64,6 @@ xcuserdata/
 DerivedData/
 
 .DS_Store
+
+# Local reference games, original resource packs and migration safety backups
+/reference/

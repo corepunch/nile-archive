@@ -1,0 +1,135 @@
+/* Architecture guarantees, on the project's own First Rescue mission:
+ * worlds are isolated values, art never changes rules, and a failed load
+ * leaves the running world (and its art) untouched. */
+#include "game_test.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+static bool isolated_world_check(const char *mission,bool barrier)
+{
+    Game *active=game_current();double active_time=active->time;int active_completed=active->completed;
+    LevelSpec spec;Game *world=NULL;bool ok=false;
+    if (!mission_load(mission,&spec) || !(world=game_world_create(&spec))) return false;
+    if (game_current()!=active) { game_fail("Candidate world became active");goto done; }
+    int target=-1,worker=-1;
+    for (int i=0;i<world->object_count && target<0;i++) {
+        Entity *e=&world->objects[i];
+        bool candidate=barrier?e->kind==BARRIER && e->type->reward.wood>0:e->kind==RESOURCE;
+        if (candidate && game_dispatch(world,i,true)) target=i;
+    }
+    if (target<0) { game_fail("Isolated test found no reachable job");goto done; }
+    for (int i=0;i<world->worker_count;i++) if (world->workers[i].target==target) worker=i;
+    if (worker<0) { game_fail("Isolated dispatch lost its worker");goto done; }
+    Entity *e=&world->objects[target];
+    Stock cost=game_job_cost(world,e);
+    Resource resource=barrier?RESOURCE_WOOD:e->type->resource;
+    int before=world->stock.amount[resource],reward=barrier?e->type->reward.wood:e->type->amount;
+    /* Replacing art must not alter routing compatibility, fees or delivery. */
+    e->sprite="cosmetic_replacement";
+    Stock renamed=game_job_cost(world,e);
+    if (memcmp(&cost,&renamed,sizeof cost)) { game_fail("Artwork changed a resolved gameplay cost");goto done; }
+    for (int tick=0;tick<9000 && world->workers[worker].phase!=IDLE;tick++) game_tick(world,TICK_SECONDS);
+    if (world->workers[worker].phase!=IDLE || !e->done || world->stock.amount[resource]!=before+reward) {
+        game_fail("Isolated callback lost its reward or return journey");goto done;
+    }
+    if (game_handle_key(world,SDLK_r)!=GAME_COMMAND_RESTART || game_current()!=active ||
+        active->time!=active_time || active->completed!=active_completed) {
+        game_fail("Updating a candidate world mutated the active world");goto done;
+    }
+    ok=true;
+done:
+    game_world_free(world);return ok;
+}
+
+/* Writes a mission that parses but fails while building the world. */
+static bool failed_load_check(void)
+{
+    char path[]="/tmp/volcano-architecture-XXXXXX";
+    int fd=mkstemp(path);
+    if (fd<0) return game_fail("Cannot create rollback fixture");
+    FILE *output=fdopen(fd,"w");
+    bool written=output && fputs(
+        "<mission format=\"volcano-mission-1\" retail-background=\"103\">\n"
+        "  <settings rules=\"rescue\" people=\"1\"/>\n"
+        "  <traffic>10,10 20,10</traffic>\n"
+        "  <object id=\"1\" type=\"hq\" x=\"10\" y=\"10\"/>\n"
+        "  <object id=\"2\" type=\"worker\" x=\"10\" y=\"10\"/>\n"
+        "  <object id=\"3\" type=\"decor\" sprite=\"no_such_sprite\" x=\"20\" y=\"10\"/>\n"
+        "</mission>\n",output)>=0;
+    if (output) fclose(output);else close(fd);
+    Game *active=game_current();double time=active->time;int completed=active->completed;
+    bool loaded=written && game_init_file(path);
+    bool ok=written && !loaded && game_current()==active && active->time==time && active->completed==completed &&
+        strstr(last_error,"no_such_sprite");
+    unlink(path);error_clear();
+    /* The running level must still draw: its art layer was restored. */
+    ok=ok && test_frame("architecture-after-failed-load");
+    return ok?true:game_fail("Failed candidate load did not preserve the active world");
+}
+
+/* Exercise a different canvas without modifying any shipping mission. */
+static bool canvas_check(const char *mission)
+{
+    char path[]="/tmp/volcano-canvas-XXXXXX";int fd=mkstemp(path);
+    if (fd<0) return false;
+    FILE *out=fdopen(fd,"w");
+    if (!out) { close(fd);unlink(path);return false; }
+    fputs("<mission format='volcano-mission-1' width='1368' height='1026' retail-background='103'>"
+          "<settings rules='rescue' food='20' people='0' clear-routes='true'/>"
+          "<traffic>200,250 230,250 260,250 290,250 320,250 350,250 380,250</traffic>"
+          "<object id='1' type='hq' x='200' y='250'/>"
+          "<object id='2' type='worker' x='200' y='250'/>"
+          "<object id='3' type='tree' x='290' y='250'/>"
+          "<object id='4' type='civilian' x='380' y='250'/></mission>",out);
+    fclose(out);bool ok=game_init_file(path);unlink(path);
+    if (!ok) return false;
+    ok=render_width()==1368 && render_height()==1026;
+    game_click(42,46);ok=ok && game_current()->paused;
+    game_click(684,427);ok=ok && !game_current()->paused;
+    game_update(.1);ok=ok && !game_current()->won;
+    test_click_entity(test_entity(3));ok=ok && game_current()->objects[test_entity(3)].assigned;
+    ok=ok && test_frame("ipad-canvas");
+    for (int tick=0;tick<3000 && !game_current()->won;tick++) game_update(.1);
+    ok=ok && game_current()->won && game_current()->cleared==1;
+    if (!game_init_file(mission)) return false;
+    ok=ok && render_width()==(game_current()->spec.width?game_current()->spec.width:GAME_WIDTH);
+    return ok?true:game_fail("Canvas dimensions, top HUD, centered pause or world picking failed");
+}
+
+/* SDL2 owns both letterboxing and pointer conversion. Exercise window sizes
+ * representative of 4:3, wider iPads and a portrait/resized window. */
+static bool viewport_check(void)
+{
+    const int sizes[][2]={{1024,768},{1376,1032},{1210,834},{1180,820},{1133,744},{768,1024}};
+    SDL_SetHint(SDL_HINT_RENDER_LOGICAL_SIZE_MODE,"letterbox");
+    SDL_Window *window=SDL_CreateWindow("viewport test",0,0,1024,768,SDL_WINDOW_HIDDEN|SDL_WINDOW_RESIZABLE);
+    SDL_Renderer *view=window?SDL_CreateRenderer(window,-1,SDL_RENDERER_SOFTWARE):NULL;
+    bool ok=view!=NULL;
+    for (unsigned i=0;ok && i<sizeof sizes/sizeof *sizes;i++) {
+        int w=sizes[i][0],h=sizes[i][1];SDL_SetWindowSize(window,w,h);
+        ok=SDL_RenderSetLogicalSize(view,1368,1026)==0;
+        int x0,y0,x1,y1;float lx,ly;
+        SDL_RenderLogicalToWindow(view,0,0,&x0,&y0);
+        SDL_RenderLogicalToWindow(view,1368,1026,&x1,&y1);
+        float scale=fminf(w/1368.f,h/1026.f);
+        ok=ok && x0>=0 && y0>=0 && x1<=w+1 && y1<=h+1 &&
+            fabsf((x1-x0)-1368*scale)<=2 && fabsf((y1-y0)-1026*scale)<=2 &&
+            abs(x0-(w-x1))<=2 && abs(y0-(h-y1))<=2;
+        SDL_RenderWindowToLogical(view,w/2,h/2,&lx,&ly);
+        ok=ok && fabsf(lx-684)<=2 && fabsf(ly-513)<=2;
+    }
+    if (view) SDL_DestroyRenderer(view);
+    if (window) SDL_DestroyWindow(window);
+    return ok?true:game_fail("SDL2 aspect-fit or input mapping failed across iPad window sizes");
+}
+
+bool game_architecture_selftest(const char *mission)
+{
+    if (!game_init_file(mission) || !isolated_world_check(mission,true) || !isolated_world_check(mission,false) ||
+        !failed_load_check() || !canvas_check(mission) || !viewport_check()) return false;
+    puts("PASS: isolated worlds, callback work/returns, artwork-independent costs/cargo, and rollback after a failed load.");
+    return true;
+}

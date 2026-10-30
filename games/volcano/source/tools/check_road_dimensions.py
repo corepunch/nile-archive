@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+"""Check recorded manual road calipers against the shared logical road standard.
+
+This verifies measured evidence, not semantic road detection. Re-measure changed
+paintings: hashes prevent accidentally reusing calipers from an older layout.
+"""
+import hashlib
+import json
+import math
+from pathlib import Path
+import struct
+import xml.etree.ElementTree as ET
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def check():
+    dimensions = json.loads((ROOT / "assets/road-dimensions.json").read_text())
+    measurements = json.loads((ROOT / "art-source/road-width-measurements.json").read_text())
+    expected = {p.parent.name for p in (ROOT / "missions").glob("*/mission.xml")
+                if p.parent.name != "first-rescue" and (p.parent / ET.parse(p).getroot().get("background", "")).is_file()}
+    if {entry["level"] for entry in measurements["images"]} != expected:
+        raise ValueError("road calipers must cover every custom-painted level")
+    target, tolerance = dimensions["road_clear_width"], dimensions["road_width_tolerance"]
+    for entry in measurements["images"]:
+        path = ROOT / "missions" / entry["level"] / "background.png"
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != entry["sha256"]:
+            raise ValueError(f"re-measure changed artwork: {path.name}")
+        width, height = struct.unpack(">II", data[16:24])
+        if [width, height] != entry["dimensions"] or len(entry["calipers"]) < 2:
+            raise ValueError(f"missing measurement evidence: {path.name}")
+        mission = ET.parse(path.parent / "mission.xml").getroot()
+        canvas_w, canvas_h = int(mission.get("width", 1366)), int(mission.get("height", 768))
+        sizes = []
+        for caliper in entry["calipers"]:
+            (x0, y0), (x1, y1) = caliper["endpoints"]
+            if not all(0 <= x < width and 0 <= y < height for x, y in [(x0, y0), (x1, y1)]):
+                raise ValueError(f"caliper outside image: {path.name}")
+            logical = math.hypot((x1-x0)*canvas_w/width, (y1-y0)*canvas_h/height)
+            if abs(logical-target) > tolerance:
+                message = f"{entry['level']}: {caliper['name']} is {logical:.2f}, nominal {target}±{tolerance}"
+                if not entry.get("reviewed_deviation") or not 16 <= logical <= 32:
+                    raise ValueError(message)
+                print(f"REVIEWED DEVIATION: {message}; {entry['reviewed_deviation']}")
+            sizes.append(f"{logical:.2f}")
+        print(f"PASS: {entry['level']} sampled clear widths: {', '.join(sizes)} logical pixels")
+
+
+if __name__ == "__main__":
+    try:
+        check()
+    except (ValueError, KeyError, OSError) as error:
+        raise SystemExit(str(error)) from error

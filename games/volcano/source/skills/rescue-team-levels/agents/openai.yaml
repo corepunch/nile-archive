@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rescue Team Levels"
+  short_description: "Create, verify, and launch Rescue Team missions"
+  default_prompt: "Use $rescue-team-levels to create and launch a new Rescue Team mission from a theme, with an editable mission.xml and verified gameplay."

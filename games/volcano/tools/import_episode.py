@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """One-time source migration; normal builds only use committed Lua + PNG assets.
-Usage: python3 games/volcano/tools/import_episode.py /path/to/volcano-sdl2
+Usage: python3 games/volcano/tools/import_episode.py [source-folder]
+Defaults to games/volcano/source, preserved locally with the authored levels.
 Requires Pillow. Repackages existing artwork without inventing visual states.
 """
 import argparse
@@ -24,7 +25,7 @@ def lua(v):
     return str(round(v, 6) if isinstance(v,float) else v)
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__); parser.add_argument('source',type=Path); args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__); parser.add_argument('source',type=Path,nargs='?',default=DEST/'source'); args=parser.parse_args()
     src=args.source.resolve(); data=DEST/'data'; code=DEST/'lua'
     entries={}; originals={}; catalog=[]
     def record(path, purpose, origin='volcano-original'):
@@ -118,7 +119,12 @@ def main():
     (code/'volcano_levels.lua').write_text('-- Native Lua campaign: no XML or retail level loader at runtime.\nreturn '+lua(levels)+'\n')
     record(src/'assets/kenney-characters/README.md','Kenney provenance and authored animation details','kenney-cc0-and-volcano')
     runtime=[dict(asset=str(p.relative_to(data)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),bytes=p.stat().st_size) for p in sorted(data.rglob('*')) if p.is_file()]
-    (DEST/'docs/asset-catalog.json').write_text(json.dumps(dict(runtime=runtime,format='volcano-asset-catalog-1',source_commit=subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip(),borrowed=catalog,sources=list(originals.values())),indent=2)+'\n')
+    preservation=DEST/'docs/source-preservation.json'
+    if src==(DEST/'source').resolve() and preservation.is_file():
+        source_commit=json.loads(preservation.read_text())['source_commit']
+    else:
+        source_commit=subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()
+    (DEST/'docs/asset-catalog.json').write_text(json.dumps(dict(runtime=runtime,format='volcano-asset-catalog-1',source_root='games/volcano/source',source_commit=source_commit,borrowed=catalog,sources=list(originals.values())),indent=2)+'\n')
     licenses=list((src/'assets/kenney-characters/source').rglob('*[Ll]icense*'))
     for p in licenses:
         if p.is_file(): shutil.copyfile(p,DEST/'docs'/('kenney-'+p.name))

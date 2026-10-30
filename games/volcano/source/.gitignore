@@ -1,0 +1,6 @@
+/build/
+/resources/
+/reference/
+*.bmp
+.DS_Store
+__pycache__/

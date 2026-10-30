@@ -9,11 +9,13 @@ infrastructure that the source maintained separately.
 ## Boundary
 
 The shipped port is the complete **After the Eruption** five-map episode from
-`/Users/igor/Developer/volcano-sdl2`. Its six earlier standalone experimental
-missions and original Rescue Team campaigns are not included. Boat missions,
+the former `volcano-sdl2` checkout. Its six earlier standalone experimental
+missions are preserved with their artwork in [source/missions](../source/missions/)
+and are not yet playable in the new engine. The original Rescue Team campaigns
+remain ignored local reference data. See [source preservation](SOURCE-PRESERVATION.md). Boat missions,
 retail campaign binaries, retail save migration, original GUI/font systems,
 asset mounts, XML parsers, retail declaration interpreters and compatibility
-rules are not carried into the runtime. The source repository is unchanged.
+rules are not carried into the runtime. The source checkout has been preserved locally and retired.
 
 This port keeps the episode's authored graphs and placements, initial supplies,
 prices, rewards, five-second work/production intervals, two starting workers,
@@ -63,8 +65,9 @@ solvable route rather than overriding player spending decisions.
 metadata; `data/` contains self-contained PNGs and an OFL font. Neither file
 requires an XML or retail reader. `tools/import_episode.py` is a one-time,
 explicit developer migration tool; it is not invoked by normal builds.
-The importer accepts a source repository path, preserves authored frames and
-records input hashes and the source commit in the asset catalog. Replacing a
+The importer defaults to the preserved `games/volcano/source` folder, preserves
+authored frames and records input hashes and the original source commit in the
+asset catalog. It needs the ignored local references when repacking pet art. Replacing a
 pet atlas requires changing its frame metadata, without changing simulation.
 
 ## Verification

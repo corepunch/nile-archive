@@ -47,6 +47,7 @@
     }
   ],
   "format": "volcano-asset-catalog-1",
+  "source_root": "games/volcano/source",
   "source_commit": "a9b3a09a4ad680748c14303e5cf86455c002d7ef",
   "borrowed": [
     {

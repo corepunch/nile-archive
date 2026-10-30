@@ -55,3 +55,16 @@ final replay; only time is accelerated.
 See [the port assessment](docs/PORT.md), [asset replacements](docs/ASSETS.md),
 [the machine-readable provenance catalog](docs/asset-catalog.json) and
 [character attribution](docs/CHARACTERS.md).
+
+All **11 authored missions**, their editable artwork, character models and original
+tools are preserved in [source/](source/). The five campaign maps above are playable
+in the new engine; the six earlier missions retain their original source format.
+Original game references and local recovery backups live in the ignored root
+`reference/` folder. See [the preservation inventory](docs/SOURCE-PRESERVATION.md).
+
+To rebuild the campaign assets using only this repository's local files:
+
+```sh
+python3 games/volcano/tools/import_episode.py
+python3 games/volcano/tools/preserve_source.py --verify
+```
