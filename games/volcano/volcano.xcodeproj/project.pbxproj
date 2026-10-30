@@ -185,7 +185,7 @@
 };
 "A6D651DDAEB690FBC7397F53" = {"isa" = "PBXFileReference";
 "name" = "SDL.xcodeproj";
-"path" = "../../engine/third_party/SDL/Xcode/SDL/SDL.xcodeproj";
+"path" = "../../tools/xcode/SDL.xcodeproj";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "wrapper.pb-project";
 };
@@ -451,7 +451,7 @@
 "CODE_SIGN_STYLE" = "Automatic";
 "SDKROOT" = "iphoneos";
 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
-"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+"IPHONEOS_DEPLOYMENT_TARGET" = "15.0";
 "TARGETED_DEVICE_FAMILY" = "2";
 "SUPPORTS_MACCATALYST" = "NO";
 "GCC_OPTIMIZATION_LEVEL" = "0";
@@ -471,7 +471,7 @@
 "CODE_SIGN_STYLE" = "Automatic";
 "SDKROOT" = "iphoneos";
 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
-"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+"IPHONEOS_DEPLOYMENT_TARGET" = "15.0";
 "TARGETED_DEVICE_FAMILY" = "2";
 "SUPPORTS_MACCATALYST" = "NO";
 "GCC_OPTIMIZATION_LEVEL" = "s";

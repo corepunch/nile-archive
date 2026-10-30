@@ -13,7 +13,7 @@ open games/relic-rush/relic-rush.xcodeproj
 
 Choose the `nile-archive-macos` / `nile-archive-ipad` or `relic-rush-macos` /
 `relic-rush-iphone` scheme. The iOS schemes run in the Simulator and on
-devices (iOS 16+); the Mac targets need macOS 12+. For
+devices (iOS 15+); the Mac targets need macOS 12+. For
 device builds select a team in **Signing & Capabilities** and keep automatic
 signing; no team or certificate is needed for macOS or Simulator builds. With
 `--unsigned`, regeneration preserves signing settings, bundle identifiers and
@@ -28,12 +28,18 @@ What the projects contain:
   through `SDL_GetBasePath()`, i.e. inside the app bundle, where the two
   folders are copied as folder references. No build products are written into
   the game folder; nothing is generated at build time.
-- **SDL2 from the `engine/third_party/SDL` submodule**: SDL's own
-  `Xcode/SDL/SDL.xcodeproj` is a project reference, its `Framework` (macOS)
+- **SDL2 from the `engine/third_party/SDL` submodule**: the committed
+  `tools/xcode/SDL.xcodeproj` adapts SDL's upstream project, and its `Framework` (macOS)
   or `Framework-iOS` target a dependency, and `SDL2.framework` is linked and
   embedded. The generator reads SDL's target identifiers from that project,
-  so updating the submodule needs no change here. Clone with `--recursive`
-  or run `git submodule update --init` first.
+  so updating the submodule only needs `make xcode`. This generated copy keeps
+  its source root in the submodule and aligns SDL with iOS 15 / macOS 12 without
+  modifying the submodule. It excludes the unused `.metal` compilation step:
+  SDL's renderer already loads the precompiled shader headers supplied upstream,
+  so local and Cloud builds do not need the optional Metal compiler download.
+  SDL also uses `SKIP_INSTALL=YES` so archives contain one installable app, with
+  SDL embedded inside it, and remain eligible for app distribution.
+  Clone with `--recursive` or run `git submodule update --init` first.
 - `Generated/macos-Info.plist`, `Generated/ios-Info.plist` (orientations per
   game: landscape for Nile Archive, portrait for Relic Rush; full screen,
   status bar hidden) and `Generated/macos.entitlements` (App Sandbox; saves

@@ -69,7 +69,7 @@ make web
 python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/ or /volcano/
 ```
 
-**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. SDL2 comes from the `engine/third_party/SDL` submodule's own Xcode project, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. The games and SDL target iOS 15+ / macOS 12+. SDL2 comes from the `engine/third_party/SDL` submodule through the generated `tools/xcode/SDL.xcodeproj`, so nothing needs installing; `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
 
 CI builds the native, web and Xcode (iOS Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 

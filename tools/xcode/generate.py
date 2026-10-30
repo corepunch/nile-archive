@@ -29,7 +29,9 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
 SDL = 'engine/third_party/SDL'
-SDL_PROJECT = SDL + '/Xcode/SDL/SDL.xcodeproj'
+SDL_UPSTREAM_PROJECT = SDL + '/Xcode/SDL/SDL.xcodeproj'
+SDL_PROJECT = 'tools/xcode/SDL.xcodeproj'
+IOS_MINIMUM = '15.0'
 ENGINE_SOURCES = ['core', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'sprite', 'nav', 'script', 'api_lua']   # as in the Makefile
 
 GAMES = {
@@ -124,9 +126,27 @@ def read_project(path):
         return {}   # not written by this generator: start afresh
 
 
+def sdl_project_text():
+    """Adapt SDL's project without changing the pinned submodule or its sources."""
+    text = (ROOT / SDL_UPSTREAM_PROJECT / 'project.pbxproj').read_text()
+    # projectDirPath keeps all upstream source, header, resource and script paths
+    # relative to SDL's own directory, even though this project lives in tools/.
+    source_root = os.path.relpath((ROOT / SDL_UPSTREAM_PROJECT).parent, (ROOT / SDL_PROJECT).parent)
+    text = text.replace('projectDirPath = "";', f'projectDirPath = {source_root};')
+    text = re.sub(r'IPHONEOS_DEPLOYMENT_TARGET = [^;]+;', f'IPHONEOS_DEPLOYMENT_TARGET = {IOS_MINIMUM};', text)
+    text = re.sub(r'MACOSX_DEPLOYMENT_TARGET = [^;]+;', 'MACOSX_DEPLOYMENT_TARGET = 12.0;', text)
+    # SDL is an embedded dependency, not a second installable archive product.
+    # Installing it separately makes Xcode classify an app archive as generic.
+    text = re.sub(r'^[ \t]*SKIP_INSTALL = (?:YES|NO);\n', '', text, flags=re.M)
+    # SDL_render_metal.m loads SDL's embedded precompiled shader headers. The
+    # extra .metal source build is unused and requires an optional Xcode toolchain.
+    return text.replace('buildSettings = {',
+                        'buildSettings = {\n\t\t\t\tEXCLUDED_SOURCE_FILE_NAMES = SDL_shaders_metal.metal;\n\t\t\t\tSKIP_INSTALL = YES;')
+
+
 def sdl_targets():
     """SDL's framework targets, by name: (target id, product file reference id)."""
-    text = (ROOT / SDL_PROJECT / 'project.pbxproj').read_text()
+    text = (ROOT / SDL_UPSTREAM_PROJECT / 'project.pbxproj').read_text()
     found = {}
     for m in re.finditer(r'(\w{24}) /\* ([^*]+) \*/ = \{\n\t\t\tisa = PBXNativeTarget;(.*?)\n\t\t\};', text, re.S):
         product = re.search(r'productReference = (\w{24})', m.group(3))
@@ -134,7 +154,7 @@ def sdl_targets():
             found[m.group(2)] = (m.group(1), product.group(1))
     for name in ('Framework', 'Framework-iOS'):
         if name not in found:
-            sys.exit(f'{SDL_PROJECT}: target {name!r} not found; is the SDL submodule checked out?')
+            sys.exit(f'{SDL_UPSTREAM_PROJECT}: target {name!r} not found; is the SDL submodule checked out?')
     return found
 
 
@@ -270,7 +290,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             settings['ASSETCATALOG_COMPILER_APPICON_NAME'] = 'AppIcon'
         if ipad:
             settings.update(CODE_SIGN_STYLE='Automatic', SDKROOT='iphoneos', SUPPORTED_PLATFORMS='iphoneos iphonesimulator',
-                            IPHONEOS_DEPLOYMENT_TARGET='16.0', TARGETED_DEVICE_FAMILY='1' if platform == 'iphone' else '2',
+                            IPHONEOS_DEPLOYMENT_TARGET=IOS_MINIMUM, TARGETED_DEVICE_FAMILY='1' if platform == 'iphone' else '2',
                             SUPPORTS_MACCATALYST='NO')
         else:
             settings.update(SUPPORTED_PLATFORMS='macosx', MACOSX_DEPLOYMENT_TARGET='12.0',
@@ -367,6 +387,9 @@ def project_matches(actual, expected, field=''):
 def check():
     """Regenerate every game's project in a temporary folder and compare with the committed one."""
     stale = []
+    sdl_project = ROOT / SDL_PROJECT / 'project.pbxproj'
+    if not sdl_project.is_file() or sdl_project.read_text() != sdl_project_text():
+        stale.append(str(sdl_project.relative_to(ROOT)))
     for game in GAMES:
         committed = ROOT / 'games' / game / (game + '.xcodeproj')
         with tempfile.TemporaryDirectory() as tmp:
@@ -400,6 +423,7 @@ def main():
         return
     if not args.game:
         parser.error('name a game or pass --check')
+    write(ROOT / SDL_PROJECT / 'project.pbxproj', sdl_project_text())
     print(generate(args.game, args.output or ROOT / 'games' / args.game, unsigned=args.unsigned or not args.team,
                    bundle_id=args.bundle_id, team=args.team, settings_from=args.settings_from))
 
