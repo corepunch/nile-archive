@@ -68,7 +68,7 @@ local scene_reward = purse(240, 20)
 
 --------------------------------------------------------------------- state
 
-local MODAL_NONE, MODAL_WIN, MODAL_CAST, MODAL_CHAPTERS = 0, 1, 2, 3
+local MODAL_NONE, MODAL_WIN, MODAL_CAST, MODAL_CHAPTERS, MODAL_PAUSE = 0, 1, 2, 3, 4
 
 -- Hidden-object scoring, after June's Journey: each find scores more while a
 -- combo is alive, a stray tap costs points, and the stars come from the time.
@@ -729,95 +729,89 @@ local function scene_frame(screen, world, dt)
             gfx.ring(p, r * pulse, 3, rgba(255, 225, 116, 255))
         end
     end
-    gfx.rect_grad(rect(view.x, view.y, view.w, 110), rgba(6, 22, 26, 140), rgba(6, 22, 26, 0))
-    gfx.rect_grad(view:bottom(130), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
     fx.draw()
     gfx.unclip()
     gfx.bleed(false)
 
-    -- top: home, the chapter, score with its combo, the clock
-    local area = screen:inflate(-16)
-    if round_button(vec2(area.x + 30, area.y + 30), 28, icon_house) then go_home() end
-    local s = G.eyebrow:sized(13)
-    local chapter = rect.anchor(vec2(area.x + 72, area.y + 30), size2(text.measure(s, sc.title).w + 30, 32), vec2(0, .5))
-    gfx.round_rect(chapter, 16, rgba(9, 28, 32, 210))
-    gfx.round_rect_line(chapter, 16, 1.2, rgba(233, 199, 123, 150))
-    text.draw(s, chapter:center(), vec2(.5, .5), sc.title)
+    -- June's Journey keeps the picture clear: a bonus bar while a combo runs and
+    -- a pause button on top, translucent name pills and the hint bulb below.
+    -- Score and time wait for the result.
+    local area = screen:inflate(-18)
 
-    local plaque = rect.anchor(vec2(screen:center().x, area.y - 6), size2(230, 66), vec2(.5, 0))
-    local inner = frame(plaque, false, 16)
-    text.draw(G.eyebrow:sized(11), inner:point(vec2(.5, 0)) + vec2(0, 7), vec2(.5, 0), "ОЧКИ")
-    text.draw(G.score_style, inner:point(vec2(.5, 1)) - vec2(0, 4), vec2(.5, 1), tostring(G.score))
-    if G.combo >= 2 then   -- the combo bar hangs under the plaque while it lasts
-        local bar = rect.anchor(plaque:point(vec2(.5, 1)) + vec2(10, 8), size2(180, 14), vec2(.5, 0))
-        gfx.round_rect(bar:inflate(2), 9, GOLD_LO)
-        gfx.round_rect(bar, 7, rgba(6, 22, 26, 230))
-        local f = G.combo_left / COMBO_WINDOW
-        gfx.round_rect_grad(rect(bar.x, bar.y, math.max(bar.h, bar.w * f), bar.h), 7, hex(0x9BE7FF), hex(0x2D8FC4))
-        local c = vec2(bar.x - 4, bar:center().y)
-        gfx.circle(c, 17, GOLD_SEAM)
-        gfx.circle(c, 15.5, hex(0xF2B637))
-        text.draw(G.badge, c + vec2(0, 1), vec2(.5, .5), ("×%d"):format(G.combo))
+    -- pause, top right: a glassy circle
+    local pc = vec2(area:max().x - 30, area.y + 30)
+    local pause = ui.hit(rect.centered(pc, size2(64, 64)), 0)
+    local pp = pause.held and pc + vec2(0, 2) or pc
+    gfx.circle(pp, 29, rgba(20, 16, 12, pause.hot and 150 or 110))
+    gfx.ring(pp, 28, 3, rgba(255, 248, 230, 235))
+    for k = -1, 1, 2 do gfx.round_rect(rect.centered(pp + vec2(k * 6.5, 0), size2(7, 22)), 2.5, rgba(255, 248, 230, 245)) end
+    if pause.clicked then G.modal, G.modal_time = MODAL_PAUSE, 0 end
+
+    -- the bonus bar: it fills on each find and drains; the badge counts the chain
+    local shown = G.combo >= 2 and 1 or 0
+    G.bonus_in = (G.bonus_in or 0) + (shown - (G.bonus_in or 0)) * math.min(1, dt * 10)
+    if G.bonus_in > .02 then
+        local a = G.bonus_in
+        local bar = rect.anchor(vec2(screen:center().x - 30, area.y + 30), size2(330, 40), vec2(.5, .5))
+        gfx.round_rect(bar:inflate(2), 22, rgba(255, 236, 190, 170 * a))
+        gfx.round_rect(bar, 20, rgba(20, 16, 12, 130 * a))
+        local f = num.saturate(G.combo_left / COMBO_WINDOW)
+        local fill = rect(bar.x + 3, bar.y + 3, math.max(34, (bar.w - 6) * f), bar.h - 6)
+        gfx.round_rect_grad(fill, 17, hex(0x7FE3F5):alpha(a), hex(0x1E97C2):alpha(a))
+        gfx.round_rect(rect(fill.x + 6, fill.y + 2, fill.w - 12, fill.h * .35), 8, rgba(255, 255, 255, 70 * a))
+        text.draw(G.bonus:faded(1 - a), bar:center() - vec2(14, 0), vec2(.5, .52), "Бонус")
+        local c = vec2(bar:max().x, bar:center().y)
+        gfx.circle(c + vec2(0, 3), 31, rgba(0, 0, 0, 70 * a))
+        gfx.circle(c, 30, GOLD_SEAM:alpha(a))
+        gfx.circle(c, 28, GOLD:alpha(a))
+        gfx.circle(c, 24, hex(0xFFF6DE):alpha(a))
+        text.draw(G.multiplier:faded(1 - a), c + vec2(0, 1), vec2(.5, .5), ("%dx"):format(G.combo))
     end
 
-    local clock = rect.anchor(vec2(area:max().x, area.y + 30), size2(124, 40), vec2(1, .5))
-    gfx.round_rect(clock, 20, rgba(9, 28, 32, 222))
-    gfx.round_rect_line(clock, 20, 1.6, rgba(233, 199, 123, 190))
-    icon_clock(vec2(clock.x + 20, clock:center().y), 13)
-    text.draw(G.number, clock:center() + vec2(14, 0), vec2(.5, .5), ("%d:%02d"):format(math.floor(G.clock / 60), math.floor(G.clock % 60)))
+    -- hint, bottom right: a glowing bulb in a gold ring
+    local ready = G.clock >= G.hint_ready
+    local hc = vec2(area:max().x - 44, area:max().y - 38)
+    local hint = ui.hit(rect.centered(hc, size2(96, 96)), 0)
+    local hp = hint.held and hc + vec2(0, 2) or hc
+    if ready then gfx.glow(hp, 62, rgba(255, 214, 110, 150 + 40 * math.sin(now * 3)), rgba(255, 214, 110, 0)) end
+    gfx.circle(hp, 42, GOLD_SEAM)
+    gfx.circle(hp, 40, ready and GOLD_HI or hex(0xB8A27A))
+    gfx.circle(hp, 34, GOLD_SEAM)
+    gfx.circle(hp, 33, rgba(30, 22, 14, 150))
+    icon_bulb(hp + vec2(0, 2), 20, ready)
+    if not ready then   -- the recharge sweeps round the ring
+        local f = 1 - (G.hint_ready - G.clock) / HINT_RECHARGE
+        local pts = {}
+        for k = 0, 40 do
+            local ang = -math.pi / 2 + (k / 40) * f * math.pi * 2
+            pts[#pts + 1] = hp + vec2(math.cos(ang), math.sin(ang)):scale(37)
+        end
+        if #pts > 1 then gfx.polyline(pts, 5, hex(0x8FE0F0)) end
+    end
+    if hint.clicked and ready then show_hint() end
 
-    -- bottom: separate pieces over the scene, no bar: what is left (left), the
-    -- three names on their own plates (centre), the hint bulb (right corner)
-    local base = area:max().y - 40
-    local c = vec2(area.x + 40, base - 8)
-    gfx.circle(c + vec2(0, 5), 38, rgba(0, 0, 0, 80))
-    gfx.circle(c, 37, GOLD_SEAM)
-    gfx.circle(c, 35, GOLD)
-    gfx.circle(c, 31, GOLD_SEAM)
-    gfx.circle(c, 30, TEAL_LO)
-    gfx.glow(c - vec2(0, 12), 30, TEAL_HI:shade(1.3), TEAL_HI:alpha(0))
-    text.draw(G.count, c + vec2(0, 1), vec2(.5, .5), tostring(ITEMS - found_count()))
-    text.draw(G.eyebrow:sized(10), c + vec2(0, 47), vec2(.5, .5), "ОСТАЛОСЬ")
-    ui.block(rect.centered(c, size2(80, 80)))
-
-    local plate_w = math.min(230, (area.w - 2 * 120 - 2 * 16) / SLOTS)
+    -- the names: three translucent pills across the bottom, the picture showing through
+    local row = rect(area.x, area:max().y - 66, hc.x - 56 - area.x, 60)
     for k = 1, SLOTS do
-        local slot = rect.anchor(vec2(screen:center().x + (k - (SLOTS + 1) / 2) * (plate_w + 16), base), size2(plate_w, 58), vec2(.5, .5))
+        local slot = row:col(SLOTS, k - 1, 14)
         local i = G.slots[k]
         if i then
             local arrive = ease.out_back(num.saturate((now - (G.slot_time[k] or 0)) * 4))
             local leave = G.found[i] and num.saturate((now - G.found[i] - .45) / .35) or 0
-            local plate = slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
-            gfx.shadow(plate:offset(vec2(0, 5)), 14, 12, rgba(0, 0, 0, 110 * (1 - leave)))
-            gfx.round_rect_grad(plate, 14, GOLD_HI:alpha(1 - leave), GOLD_LO:alpha(1 - leave))
-            local paper = plate:inflate(-3)
-            gfx.round_rect_grad(paper, 11, PARCH_HI:alpha(1 - leave), PARCH_LO:alpha(1 - leave))
+            local a = num.saturate(arrive) * (1 - leave)
+            local pill = slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
+            local hinted = G.hint == i and not G.found[i]
+            gfx.round_rect(pill:inflate(2.5), pill.h * .5 + 2.5, (hinted and hex(0xFFE08A) or hex(0xE2BC6E)):alpha(a))
+            local fill = hinted and rgba(176, 118, 36, 215) or rgba(48, 28, 12, 168)
+            gfx.round_rect(pill, pill.h * .5, fill:alpha(a))
+            gfx.round_rect(rect(pill.x + pill.h * .4, pill.y + 3, pill.w - pill.h * .8, pill.h * .3), pill.h * .15, rgba(255, 236, 200, 16 * a))
+            local ink = text.fit(G.pill_text:faded(1 - a), pill:inflate2(vec2(-pill.h * .5, -8)), vec2(.5, .54), sc.names[i])
             if G.found[i] then
                 local t = num.saturate((now - G.found[i]) / .45)
-                local ink = text.fit(G.item_found:faded(leave), paper:inflate(-10), vec2(.5, .5), sc.names[i])
-                gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(t, .55)), 2.5, rgba(70, 120, 60, 220 * (1 - leave)))
-            else
-                text.fit(G.item:faded(1 - num.saturate(arrive)), paper:inflate(-10), vec2(.5, .5), sc.names[i])
-                if G.hint == i then gfx.round_rect_line(paper:inflate(-2), 9, 2.5, hex(0xF2B637):alpha(.6 + .4 * math.sin(now * 6))) end
+                gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(t, .55)), 3, rgba(150, 235, 140, 240 * a))
             end
-            ui.block(plate)
+            ui.block(pill)
         end
-    end
-
-    local ready = G.clock >= G.hint_ready
-    local hc = vec2(area:max().x - 42, base - 8)
-    if round_button(hc, 38, function(p, s2) icon_bulb(p, s2 * 1.3, ready) end) and ready then show_hint() end
-    if not ready then   -- the recharge sweeps round the rim
-        local f = 1 - (G.hint_ready - G.clock) / HINT_RECHARGE
-        local pts = {}
-        for a = 0, 40 do
-            local ang = -math.pi / 2 + (a / 40) * f * math.pi * 2
-            pts[#pts + 1] = hc + vec2(math.cos(ang), math.sin(ang)):scale(42)
-        end
-        if #pts > 1 then gfx.polyline(pts, 5, hex(0x8FE0F0)) end
-        text.draw(G.eyebrow:sized(11), hc + vec2(0, 50), vec2(.5, .5), ("%d С"):format(math.ceil(G.hint_ready - G.clock)))
-    else
-        text.draw(G.eyebrow:sized(10), hc + vec2(0, 50), vec2(.5, .5), "ПОДСКАЗКА")
     end
 end
 
@@ -904,6 +898,17 @@ local function chapter_card(r, i)
     elseif button(b, G.wins[i] > 0 and "Играть снова" or "Играть", G.wins[i] > 0 and "blue" or "green") then
         open_scene(i)
     end
+end
+
+local function pause_dialog(t)
+    local box, r = popup(560, 216, t, "Пауза")
+    r:cut_top(44)
+    text.box(G.body:sized(19), r:cut_top(40):inflate2(vec2(-30, 0)), vec2(.5, .5),
+             ("%s · найдено %d из %d"):format(scenes[G.scene].title, found_count(), ITEMS))
+    r:cut_top(18)
+    local buttons = r:cut_top(56):inflate2(vec2(-40, 0))
+    if button(buttons:col(2, 0, 20), "На остров", "blue") then go_home() end
+    if button(buttons:col(2, 1, 20), "Продолжить", "green") then G.modal = MODAL_NONE end
 end
 
 local function chapters_dialog(t)
@@ -994,7 +999,7 @@ local function frame_fn(dt)
         if G.modal == MODAL_WIN then go_home()
         elseif G.modal ~= MODAL_NONE then G.modal = MODAL_NONE
         elseif G.tray then G.tray = false; G.island.selected = -1
-        elseif G.scene then go_home() end
+        elseif G.scene then G.modal, G.modal_time = MODAL_PAUSE, 0 end
     end
     fx.update(dt)
 
@@ -1008,6 +1013,7 @@ local function frame_fn(dt)
         ui.modal_backdrop(G.modal_time * 4)
         if G.modal == MODAL_WIN then win_dialog(G.modal_time)
         elseif G.modal == MODAL_CHAPTERS then chapters_dialog(G.modal_time)
+        elseif G.modal == MODAL_PAUSE then pause_dialog(G.modal_time)
         else cast_dialog(G.modal_time) end
     end
     story.frame(dt)
@@ -1037,7 +1043,6 @@ local function setup_theme()
     G.button = style{font = G.sans_bold, size = 21, fill = WHITE, shadow = rgba(0, 0, 0, 80), shadow_offset = vec2(0, 2), shadow_blur = 1}
     G.ribbon = style{font = G.serif, size = 26}:grad(hex(0xFFF6DC), hex(0xF5D58E)):outlined(1.6, hex(0x5A150F)):shadowed(vec2(0, 2), 2, rgba(0, 0, 0, 120))
     G.score_style = style{font = G.serif, size = 30}:grad(hex(0xFFF3D1), hex(0xE2B46A)):outlined(1.4, ink):shadowed(vec2(0, 2), 3, rgba(0, 0, 0, 140))
-    G.count = style{font = G.serif, size = 32}:grad(hex(0xFFF3D1), hex(0xE2B46A)):outlined(1.4, ink)
     G.item = style{font = G.serif, size = 22, fill = INK}
     G.item_found = style{font = G.serif, size = 22, fill = hex(0x4E7A44)}
     G.card_title = style{font = G.serif, size = 18, fill = INK}
@@ -1047,6 +1052,10 @@ local function setup_theme()
     G.ink_small = style{font = G.sans, size = 14, fill = INK_SOFT}
     G.goal_eyebrow = style{font = G.sans_bold, size = 11, fill = hex(0x8A5A22), tracking = 1.4}
     G.goal_title = style{font = G.serif, size = 20, fill = INK}
+    G.pill_text = style{font = G.sans_bold, size = 30, fill = WHITE, outline = rgba(40, 24, 10, 230), outline_width = 2,
+                        shadow = rgba(0, 0, 0, 120), shadow_offset = vec2(0, 2), shadow_blur = 2}
+    G.bonus = style{font = G.sans_bold, size = 22, fill = WHITE, outline = rgba(10, 50, 70, 220), outline_width = 1.6}
+    G.multiplier = style{font = G.serif, size = 24}:grad(hex(0xF6C24A), hex(0xB8761C)):outlined(1.2, hex(0x5A3608))
     G.float = style{font = G.serif, size = 26}:grad(hex(0xFFF6DC), hex(0xF5C860)):outlined(1.6, hex(0x4A2A08))
     G.float_miss = style{font = G.serif, size = 22, fill = hex(0xFF8A70), outline = hex(0x3A0E08), outline_width = 1.4}
 
@@ -1072,7 +1081,7 @@ local function setup_theme()
 end
 
 -- Debug/QA entry points used to capture screenshots:
--- --screen island|build|scene0..2|cast|chapters|win|story|horem|merit
+-- --screen island|build|scene0..2|cast|chapters|pause|win|story|horem|merit
 local function apply_screen_arg(screen)
     G.wallet[INFLUENCE] = 100
     G.wallet[COINS] = 900
@@ -1085,12 +1094,17 @@ local function apply_screen_arg(screen)
             for k = 1, SLOTS do G.slot_time[k] = app.time() - 10 end
             show_hint()
             G.hint_ready = G.clock + 6
+            G.bonus_in = 1
         end
     elseif screen == "build" then
         G.tray = true
         G.island.selected = 1
     elseif screen == "cast" then
         G.modal, G.modal_time = MODAL_CAST, 1
+    elseif screen == "pause" then
+        open_scene(1)
+        for _, i in ipairs({2, 5}) do G.found[i] = -10 end
+        G.modal, G.modal_time = MODAL_PAUSE, 1
     elseif screen == "chapters" then
         G.wallet[INFLUENCE] = 30
         G.wins, G.stars = {1, 0, 0}, {3, 0, 0}
