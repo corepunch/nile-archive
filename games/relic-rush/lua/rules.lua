@@ -522,7 +522,11 @@ function M.game_check_end(g)
     local l = M.levels[g.level + 1]
     g.won = g.score >= l.score and g.relics >= l.relics and g.dug >= l.soil and g.obstacles == 0
     g.lost = not g.won and g.moves <= 0
-    if not g.won and not g.lost and not game_hint(g) then game_shuffle(g) end
+    if not g.won and not g.lost and not game_hint(g) then
+        game_shuffle(g)
+        return true   -- presentation must discard stale selection/hints after a reshuffle
+    end
+    return false
 end
 
 -- Tools: 0 pickaxe (one cell), 1 dynamite (radius 1), 2 sunburst (three axes).

@@ -377,7 +377,10 @@ local function settle()
         return
     end
     R.phase = PH_IDLE
-    rules.game_check_end(R.g)
+    if rules.game_check_end(R.g) then
+        R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
+        R.notice("No moves. Board reshuffled.")
+    end
     if R.g.won then R.overlay = R.OV_RESULT; R.tone(880)
     elseif R.g.lost then R.overlay = R.OV_FAILED; R.tone(165) end
     R.idle_time = 0
@@ -395,9 +398,10 @@ function R.board_update(dt)
             R.finish_wave()
         end
     end
-    if R.idle_time > 5 and R.hint_a < 0 and R.phase == PH_IDLE then
+    if R.idle_time > 5 and R.hint_a < 0 and R.phase == PH_IDLE and not R.g.won and not R.g.lost then
         local ok, a, b = rules.game_hint(R.g)
-        if ok then R.hint_a, R.hint_b = a, b end
+        if ok then R.hint_a, R.hint_b = a, b
+        else settle() end   -- idle/resumed dead boards need the same recovery as a completed fall
     end
     if R.phase == PH_IDLE then return end
     R.phase_time = R.phase_time + dt

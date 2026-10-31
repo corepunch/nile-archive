@@ -10,6 +10,7 @@ This supersedes the prototype's earlier straight-line match-3 rules.
 - Four clears normally; five leaves a directional ray; six or more leaves a bomb, with a prism for a straight run of six. A ray follows the longest straight axis of the matched component.
 - Existing specials, combos, fire thawing, ice layers, chains, excavation and tools retain their respective effects.
 - A ready group is checked on the idle board before hints/input and after every completed fall. All cascade waves finish before victory/failure is checked. Automatic waves do not spend additional moves.
+- Hints highlight a legal swap after five idle seconds. If the hint search finds no swap, idle boards use the same free reshuffle as boards settling after a fall, with a “No moves. Board reshuffled.” notice. Recovery resets selection/tool targeting and stale hints, preserving move/tool budgets, objective progress, holes, sand, ice, chains and their locked relics. Victory and exhausted moves take precedence over reshuffling.
 
 The old detector considered only straight runs. Visually connected bent/compact groups were therefore ignored. Detection now walks the entire six-neighbor component. In addition, the idle animation state actively checks ready groups rather than relying solely on the previous swap/collapse transition.
 
@@ -42,6 +43,7 @@ The gold idol is six-sided, like the board. Since the tile-set update the match 
 - Hand-authored triples, bent fours in all six rotations, compact diamonds, five/six specials and hole-separated groups.
 - Mask connectivity/uniqueness, absence of tiles/blockers in holes, gravity segmented at holes and locks, and invalid targeting of missing cells.
 - Actual SDL update-loop regression: a three-cell group remains; adding its fourth cell triggers automatically without spending a move; after refill no ready group remains. A ready cascade discovered after falling also resolves automatically.
+- Dead-board update-loop regression across all ten masks, with zero tool charges: idle and post-fall recovery, preserved terrain/progress, playable-board hints, pause/island suspension, ready-group and result precedence. The reported level-seven photo's five-amphora swap is covered separately. See [before/after game captures](review/dead-board/README.md).
 - Scaled mouse/touch regressions and hole-selection checks.
 - 298/300 deterministic greedy campaign trials win without tools. This is a diagnostic, not a human difficulty rating or guarantee for every play strategy.
 

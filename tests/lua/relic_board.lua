@@ -1,0 +1,125 @@
+-- Exercise the real expedition update loop, including an idle dead board.
+local rules = require("rules")
+local R = require("board")
+local dead_board = require("fixtures/dead_board")
+local checks, failures = 0, 0
+local function check(ok, message)
+    checks = checks + 1
+    if not ok then failures = failures + 1; print("FAIL relic board: " .. message) end
+end
+
+R.notice = function(message) R.toast = message end
+R.tone = function() end
+R.vfx_wave = function() end
+local function setup(g)
+    R.g, R.pending = g, rules.new_match()
+    R.phase, R.phase_time, R.idle_time = R.PH_IDLE, 0, 5
+    R.overlay, R.on_island, R.art_review = R.OV_NONE, false, false
+    R.selected, R.tool, R.hint_a, R.hint_b = 0, 0, -1, -1
+    R.toast = nil
+end
+
+for level = 0, rules.LEVELS - 1 do
+    local g = dead_board(level)
+    setup(g)
+    rules.game_matches(g, R.pending, -1)
+    check(R.pending.hits == 0 and not rules.game_hint(g), "fixture has no match or move")
+    local before = rules.game_copy(g)
+    R.board_update(.02)
+    check(rules.game_hint(g), "idle board recovers without a tool or player move")
+    rules.game_matches(g, R.pending, -1)
+    check(R.pending.hits == 0, "recovered board has no free matches")
+    check(R.selected == -1 and R.tool == -1 and R.hint_a == -1 and R.hint_b == -1,
+          "reshuffle discards stale selection and hints")
+    check(R.toast == "No moves. Board reshuffled.", "recovery explains the changed board")
+    for _, key in ipairs({"moves", "score", "relics", "dug", "obstacles", "wood", "stone"}) do
+        check(g[key] == before[key], "reshuffle preserves " .. key)
+    end
+    for i = 0, rules.CELLS - 1 do
+        check(g.active[i] == before.active[i] and g.soil[i] == before.soil[i]
+              and g.chain[i] == before.chain[i] and g.ice[i] == before.ice[i], "terrain survives recovery")
+        if g.chain[i] > 0 or g.ice[i] > 0 or not g.active[i] then
+            check(g.tiles[i].kind == before.tiles[i].kind and g.tiles[i].special == before.tiles[i].special,
+                  "locked relics and holes survive recovery")
+        end
+    end
+    check(g.tools[1] == 0 and g.tools[2] == 0 and g.tools[3] == 0, "recovery needs no charges")
+end
+
+-- Pausing and visiting the island must not change the suspended board.
+for _, blocked in ipairs({"overlay", "on_island"}) do
+    local g = dead_board()
+    setup(g)
+    if blocked == "overlay" then R.overlay = R.OV_PAUSE else R.on_island = true end
+    local rng = g.rng
+    R.board_update(.02)
+    check(g.rng == rng and not rules.game_hint(g) and not R.toast, "suspended board waits: " .. blocked)
+end
+
+-- A playable board gets a hint rather than changing its pieces.
+do
+    local g = rules.game_start(6, 123)
+    setup(g)
+    local before = rules.game_copy(g)
+    R.board_update(.02)
+    check(g.rng == before.rng and R.hint_a >= 0 and R.hint_b >= 0 and not R.toast, "playable board only hints")
+    check(rules.game_swap(rules.game_copy(g), R.hint_a, R.hint_b, rules.new_match()), "hint is a legal move")
+end
+
+-- Resolve ready groups before trying to recover a board; never skip a wave.
+do
+    local g = dead_board(0)
+    setup(g)
+    for q = -2, 1 do g.tiles[rules.hex_index(q, 0)] = rules.tile(rules.RELIC_IDOL) end
+    local rng, moves = g.rng, g.moves
+    R.board_update(.02)
+    check(R.phase == R.PH_CLEAR and g.rng == rng and g.moves == moves, "ready group clears before hints/recovery")
+end
+
+-- The reported level-seven photo is playable: swap the right-hand idol up
+-- into the amphora above it, joining five amphorae including two chains.
+do
+    local g = dead_board()
+    local columns = {"00132", "101453", "2245134", "532--414", "104---203",
+                     "500--231", "2335543", "450152", "03504"}
+    for column, kinds in ipairs(columns) do
+        local q = column - 5
+        for offset = 1, #kinds do
+            local i = rules.hex_index(q, math.max(-4, -q - 4) + offset - 1)
+            if g.active[i] then g.tiles[i] = rules.tile(tonumber(kinds:sub(offset, offset))) end
+            g.chain[i], g.ice[i] = 0, 0
+        end
+    end
+    local upper, lower = rules.hex_index(2, -1), rules.hex_index(2, 0)
+    g.chain[upper], g.chain[lower], g.ice[rules.hex_index(2, -2)] = 1, 1, 1
+    g.obstacles = 3
+    setup(g)
+    local m, copy = rules.new_match(), rules.game_copy(g)
+    check(rules.game_swap(copy, rules.hex_index(3, -2), rules.hex_index(3, -3), m)
+          and m.hits == 5 and m.mask[upper] and m.mask[lower], "photo has a five-amphora move hitting both chains")
+    local rng = g.rng
+    R.board_update(.02)
+    check(g.rng == rng and not R.toast and R.hint_a >= 0, "photo board receives a hint without reshuffling")
+end
+
+-- Settlement and the idle fallback share recovery and terminal precedence.
+for _, mode in ipairs({"fall", "won", "lost"}) do
+    local g = dead_board()
+    setup(g)
+    local rng = g.rng
+    if mode == "fall" then R.phase, R.phase_time = R.PH_FALL, 1
+    elseif mode == "won" then
+        local l = rules.level_of(g)
+        g.score, g.relics, g.dug, g.obstacles, g.moves = l.score, l.relics, l.soil, 0, 0
+    else g.moves = 0 end
+    R.board_update(.02)
+    if mode == "fall" then
+        check(rules.game_hint(g) and R.toast == "No moves. Board reshuffled.", "post-fall recovery explains reshuffle too")
+    else
+        check(g.rng == rng and not R.toast, "terminal board is not shuffled: " .. mode)
+        check(R.overlay == (mode == "won" and R.OV_RESULT or R.OV_FAILED), "terminal result precedes recovery: " .. mode)
+    end
+end
+
+print(("relic board: %d checks, %d failures"):format(checks, failures))
+return failures

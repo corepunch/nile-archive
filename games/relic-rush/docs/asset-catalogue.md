@@ -113,6 +113,11 @@ blockers over them; sand is beneath both. Board cells and outer edge lines remai
 simple intentional layout geometry. Empty/inactive cells have no piece artwork.
 Hint opacity pulses; reduced motion uses a steady frame. There are no hover/pressed
 states for individual pieces: a touch selects a piece or initiates a swap.
+If idle hint search finds no legal swap, the existing reshuffle now also recovers
+idle boards and shows the text-only notice “No moves. Board reshuffled.” No new
+sprites or derived artwork are used. The existing hint artwork still marks only
+legal swaps; [review captures and reproduction](review/dead-board/README.md)
+cover a zero-charge ring at both phone sizes.
 
 ## Tools: complete interaction matrix
 

@@ -43,6 +43,8 @@ The widest nine-cell board now spans 448 of the 480 logical screen units (about 
 
 The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and separate refill segments. The gold idol now has a six-sided silhouette.
 
+After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
+
 ![All ten playable level shapes, actual SDL captures](docs/screenshots/level-shapes-overview.jpg)
 
 See [rules, shape list, implementation notes and reference sources](docs/match4-rules.md).
