@@ -11,13 +11,16 @@ game.init=function()
         R.g.obstacles=0
         R.art_review=true
     end
+    if app.arg("moves") then R.g.moves=tonumber(app.arg("moves")) end
     moves,board=R.g.moves,R.g
 end
 local function background() app.inject_click(vec2(6,app.screen().h-4)) end
 game.frame=function(dt)
     frame(dt)
-    if not app.arg("header-smoke") then return end
     tick=tick+1
+    -- A real tap on the Dynamite button; --tap-tool X gives its centre for older layouts.
+    if app.arg("tap-tool") and tick==2 then app.inject_click(vec2(tonumber(app.arg("tap-tool")) or 240,834+R.drop)) end
+    if not app.arg("header-smoke") then return end
     if tick%24~=0 then return end
     if stage==0 then app.inject_click(vec2(40,38))
     elseif stage==1 then

@@ -287,7 +287,7 @@ function R.vfx_draw()
     if R.word_time > 0 then
         local t = 1 - R.word_time / .75
         local word = R.word_combo >= 5 and "SUNSTORM!" or R.word_combo >= 3 and "MAGNIFICENT!" or "BRILLIANT!"
-        R.say_at(word, vec2(240, 759 + R.drop - math.sin(t * PI) * 8), 28 + 8 * math.sin(math.min(1, t * 4) * PI), R.PAL_GOLD, 420)
+        R.say_at(word, vec2(240, 738 + R.drop - math.sin(t * PI) * 8), 28 + 8 * math.sin(math.min(1, t * 4) * PI), R.PAL_GOLD, 420)
     end
 end
 
