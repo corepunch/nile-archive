@@ -92,6 +92,13 @@ painting. The paint-over pass is tracked in
 [issue #32](https://github.com/corepunch/nile-archive/issues/32), and so is
 whether the 2×2 decorations should grow too.
 
+## Cloud fog
+
+Closed regions use the engine's animated cloud banks: `city.fog_clouds`, in the warm white
+palette `city.fog = rgba(239, 241, 228, 240)`. It is a continuous procedural effect, with no
+icon or interaction-state art. Opened regions clear immediately, and ground shadows draw below
+it. See [the spec](../../../docs/BUILDINGS.md#cloud-fog) and [the review](review/cloud-fog/README.md).
+
 ## Supported presentation and interactions
 
 Every object has one rendered normal sprite. It has no damaged, construction,

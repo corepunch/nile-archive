@@ -524,6 +524,7 @@
     <field name="cam" type="camera" access="rw"/>
     <field name="fog" type="color" access="rw" doc="Locked zones; default dark teal."/>
     <field name="fog_on_land_only" type="bool" access="rw"/>
+    <field name="fog_clouds" type="bool" access="rw" doc="Animated world-space cloud density and billow lighting, clipped to the closed-region mask."/>
     <field name="path" type="color" access="rw" doc="Paths linking buildings; alpha 0 = none."/>
     <field name="movable" type="bool" access="rw" doc="Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map."/>
     <field name="show_footprints" type="bool" access="rw" doc="Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements."/>

@@ -477,7 +477,7 @@ def radial_frame(cx, cy, r, a):
 G = .1   # top of the base slab
 
 
-def _to_object(name, bucket, mat, materials, coll, parent):
+def to_object(name, bucket, mat, materials, coll, parent):
     me = bpy.data.meshes.new(name)
     me.from_pydata(bucket["v"], [], bucket["f"])
     me.update()
@@ -551,7 +551,7 @@ def assemble(scene_name, items, builders, blend, slab=None, slab_color=None, mod
         coll.objects.link(pivot)
         u, row_h = u + it["w"] + 2, max(row_h, it["h"])
         for mat, bucket in k.buckets.items():
-            _to_object(it["key"] + "." + mat, bucket, mat, materials, coll, pivot)
+            to_object(it["key"] + "." + mat, bucket, mat, materials, coll, pivot)
         for p, watts in k.lights:
             light = bpy.data.lights.new(it["key"] + ".light", "POINT")
             # the same light on the surfaces at the scaled distance

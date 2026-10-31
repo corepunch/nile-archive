@@ -16,8 +16,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    291.4
+    206.291,
+    302.797
    ],
    "base_width": 409.808,
    "cost": [
@@ -28,8 +28,8 @@
    "stars": 0,
    "about": "A warm welcome for every winter visitor.",
    "image": [
-    416,
-    426
+    412,
+    435
    ],
    "runtime": "data/buildings/arch.png",
    "shadow": "data/building-shadows/arch.png",
@@ -45,8 +45,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    255.067
+    206.291,
+    322.0
    ],
    "base_width": 409.808,
    "cost": [
@@ -57,8 +57,8 @@
    "stars": 0,
    "about": "Fresh timber for a market full of wishes.",
    "image": [
-    416,
-    389
+    412,
+    455
    ],
    "runtime": "data/buildings/lumber.png",
    "shadow": "data/building-shadows/lumber.png",
@@ -74,8 +74,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    267.262
+    206.291,
+    322.0
    ],
    "base_width": 409.808,
    "cost": [
@@ -86,8 +86,8 @@
    "stars": 0,
    "about": "Follow the smell of cinnamon and warm gingerbread.",
    "image": [
-    416,
-    402
+    412,
+    455
    ],
    "runtime": "data/buildings/bakery.png",
    "shadow": "data/building-shadows/bakery.png",
@@ -103,8 +103,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    231.253
+    206.291,
+    321.776
    ],
    "base_width": 409.808,
    "cost": [
@@ -115,8 +115,8 @@
    "stars": 0,
    "about": "A warm cup and a sweet candy cane for cold hands.",
    "image": [
-    416,
-    365
+    412,
+    454
    ],
    "runtime": "data/buildings/cocoa.png",
    "shadow": "data/building-shadows/cocoa.png",
@@ -132,8 +132,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    281.33
+    206.382,
+    335.168
    ],
    "base_width": 409.808,
    "cost": [
@@ -144,8 +144,8 @@
    "stars": 0,
    "about": "Little wooden toys, made with Christmas care.",
    "image": [
-    416,
-    416
+    412,
+    468
    ],
    "runtime": "data/buildings/toys.png",
    "shadow": "data/building-shadows/toys.png",
@@ -161,8 +161,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    200.422
+    206.291,
+    300.319
    ],
    "base_width": 409.808,
    "cost": [
@@ -173,8 +173,8 @@
    "stars": 0,
    "about": "Tie every winter wish with a bright red ribbon.",
    "image": [
-    416,
-    335
+    412,
+    433
    ],
    "runtime": "data/buildings/gifts.png",
    "shadow": "data/building-shadows/gifts.png",
@@ -190,8 +190,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    267.238
+    206.291,
+    322.0
    ],
    "base_width": 409.808,
    "cost": [
@@ -202,8 +202,8 @@
    "stars": 0,
    "about": "Let a hundred little candles light the snowy evening.",
    "image": [
-    416,
-    401
+    412,
+    455
    ],
    "runtime": "data/buildings/candles.png",
    "shadow": "data/building-shadows/candles.png",
@@ -219,8 +219,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    205.479
+    206.291,
+    289.164
    ],
    "base_width": 409.808,
    "cost": [
@@ -231,8 +231,8 @@
    "stars": 0,
    "about": "Take a magical ride beneath the fairy lights.",
    "image": [
-    416,
-    340
+    412,
+    422
    ],
    "runtime": "data/buildings/carousel.png",
    "shadow": "data/building-shadows/carousel.png",
@@ -248,8 +248,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    195.508
+    206.291,
+    221.055
    ],
    "base_width": 409.808,
    "cost": [
@@ -260,8 +260,8 @@
    "stars": 0,
    "about": "A place to skate, laugh and make winter memories.",
    "image": [
-    416,
-    330
+    412,
+    354
    ],
    "runtime": "data/buildings/rink.png",
    "shadow": "data/building-shadows/rink.png",
@@ -277,8 +277,8 @@
     3
    ],
    "pivot": [
-    207.904,
-    275.746
+    206.291,
+    302.282
    ],
    "base_width": 409.808,
    "cost": [
@@ -289,8 +289,8 @@
    "stars": 0,
    "about": "The star on top lights up our Christmas square.",
    "image": [
-    416,
-    410
+    412,
+    435
    ],
    "runtime": "data/buildings/tree.png",
    "shadow": "data/building-shadows/tree.png",
@@ -306,8 +306,8 @@
     2
    ],
    "pivot": [
-    139.603,
-    167.73
+    137.99,
+    180.249
    ],
    "base_width": 273.205,
    "cost": [
@@ -316,8 +316,8 @@
    "stars": 0,
    "about": "Snowy firs and a lantern make the paths feel like home.",
    "image": [
-    279,
-    258
+    276,
+    269
    ],
    "runtime": "data/buildings/firs.png",
    "shadow": "data/building-shadows/firs.png",
@@ -333,8 +333,8 @@
     2
    ],
    "pivot": [
-    139.603,
-    141.966
+    137.99,
+    159.923
    ],
    "base_width": 273.205,
    "cost": [
@@ -343,8 +343,8 @@
    "stars": 0,
    "about": "A friendly snowman is saving you a seat.",
    "image": [
-    279,
-    232
+    276,
+    248
    ],
    "runtime": "data/buildings/bench.png",
    "shadow": "data/building-shadows/bench.png",

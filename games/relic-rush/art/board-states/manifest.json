@@ -737,5 +737,27 @@
       "docs/review/pause-actions/README.md",
       "../../docs/review/ui-skin-files/README.md"
     ]
+  },
+  "island_layers": {
+    "cloud-fog": {
+      "source": "engine/city.c",
+      "runtime": "city.fog_clouds",
+      "states": [
+        "closed animated banks",
+        "open clear land"
+      ],
+      "review": "docs/review/cloud-fog/README.md"
+    },
+    "building-shadows": {
+      "source": "art/building-catalogue/relic_rush_buildings.blend",
+      "runtime": "building_def.shadow_*",
+      "states": [
+        "placed",
+        "held",
+        "released",
+        "cancel"
+      ],
+      "reproduction": "make buildings GAME=relic-rush"
+    }
   }
 }

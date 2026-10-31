@@ -197,3 +197,11 @@ a layer uses the sprite's pixel scale. Shadows draw beneath all buildings and st
 grounded during a lift. `tools/render_buildings_blender.py` renders each layer from
 the building's own geometry: invisible clay casters, direct sun and fill, a
 transparent Cycles catcher.
+All placed shadows draw before the fog, so closed land covers them too.
+
+## Cloud fog
+
+`city.fog_clouds` opts into world-space animated density and cloud lighting over the cached
+closed-land mask. Animation uses frame time; income timestamps keep using wall-clock time.
+This leaves pan and zoom, unlocking and terrain rules unchanged. Relic Rush and Nile Archive
+use it. `city.fog` sets the palette.

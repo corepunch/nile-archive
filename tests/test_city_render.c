@@ -1,13 +1,16 @@
-/* Real-renderer contracts for the city's depth order. */
+/* Real-renderer contracts for the city's depth order and animated fog. */
 #include "render.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static int checks, failures;
 static city c;
 static building_def defs[2];
-static unsigned char *pixels;
+static unsigned char *pixels, *first;
 static int w, h;
+static bool sampling_fog;
+static double fog_start;
 #define CHECK(x) do { checks++; if (!(x)) { failures++; fprintf(stderr, "%d: %s\n", __LINE__, #x); } } while (0)
 
 static color at(int x, int y)
@@ -29,9 +32,14 @@ static void init(void)
 
 static void frame(float dt)
 {
+    if (sampling_fog) {
+        if (app_time() - fog_start < 4) return;
+        goto compare_fog;
+    }
     struct AXsize size; axGetSize(&size);
     w = (int)roundf(size.width * axGetScaling()); h = (int)roundf(size.height * axGetScaling());
-    pixels = malloc((size_t)w * h * 4);
+    size_t bytes = (size_t)w * h * 4;
+    pixels = malloc(bytes); first = malloc(bytes);
     /* a long footprint draws behind the small one past it, whose ground centre is higher up */
     vec2 long_at = v2(80, 100), small_at = vec2_add(long_at, city_tile_to_world(&c, v2(1, -2.5f)));
     CHECK(small_at.y < long_at.y);
@@ -39,7 +47,27 @@ static void frame(float dt)
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(at(103, 75).r > 200 && at(103, 75).g < 60);
-    free(pixels);
+    /* cloud fog moves on frame time alone, and unlocking clears it at once */
+    c.count = 0;
+    c.zone_count = 2; c.zones[0].area = rc(0, 0, 160, 40); c.zones[1].area = rc(0, 40, 160, 120);
+    c.fog = rgba(233, 242, 224, 240); c.fog_clouds = true;
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    memcpy(first, pixels, bytes);
+    sampling_fog = true; fog_start = app_time();
+    return;
+compare_fog:
+    city_draw(&c, (input){0}, 8);
+    CHECK(render_read_pixels(pixels, w, h));
+    bytes = (size_t)w * h * 4;
+    int changed = 0;
+    for (size_t i = 0; i < bytes; i += 4) if (abs(pixels[i] - first[i]) > 3) changed++;
+    CHECK(changed > w * h / 10);   /* visible motion without camera or input changes */
+    c.open = 3;
+    city_draw(&c, (input){0}, 8);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(at(80, 140).g == 150 && at(80, 140).r == 50);
+    free(first); free(pixels);
     app_quit();
 }
 
@@ -49,6 +77,6 @@ int main(void)
     char *args[] = {"test-city-render", "--headless", "--mute", "--size", "160x160"};
     app_desc desc = {.design = {160, 160}, .fixed = true, .init = init, .frame = frame, .quit = quit};
     CHECK(app_run(desc, 5, args) == 0);
-    printf("city renderer: %d checks, %d failures; depth order\n", checks, failures);
+    printf("city renderer: %d checks, %d failures; depth order, fog motion and unlock\n", checks, failures);
     return failures != 0;
 }

@@ -22,7 +22,7 @@ plans is still to come.
 | Step | File |
 | --- | --- |
 | Catalogue: key, name, category, footprint, cost, Star unlock, description | `art/building-catalogue/catalogue.json` |
-| Models, one builder per key | `art/building-catalogue/build_scene.py` |
+| Models, one builder per key | `art/building-catalogue/market_wishes.py` for the first twelve, `build_scene.py` for the rest |
 | Master scene, one collection per object, named after its key | `art/building-catalogue/christmas_market_buildings.blend` |
 | Render, one sprite and shadow per object at 100 px a tile side | `make buildings GAME=christmas-market` |
 | Pivot and base width | `art/building-catalogue/registration.json` |

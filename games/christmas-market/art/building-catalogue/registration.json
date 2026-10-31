@@ -10,18 +10,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/arch.png",
    "image": [
-    416,
-    426
+    412,
+    435
    ],
    "pivot": [
-    207.904,
-    291.4
+    206.291,
+    302.797
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/arch.png",
    "shadow_pivot": [
-    98.614,
-    73.571
+    104.606,
+    73.795
    ],
    "shadow_base_width": 115.91
   },
@@ -34,18 +34,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/lumber.png",
    "image": [
-    416,
-    389
+    412,
+    455
    ],
    "pivot": [
-    207.904,
-    255.067
+    206.291,
+    322.0
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/lumber.png",
    "shadow_pivot": [
-    104.511,
-    65.295
+    113.521,
+    79.226
    ],
    "shadow_base_width": 115.91
   },
@@ -58,18 +58,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/bakery.png",
    "image": [
-    416,
-    402
+    412,
+    455
    ],
    "pivot": [
-    207.904,
-    267.262
+    206.291,
+    322.0
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/bakery.png",
    "shadow_pivot": [
-    92.224,
-    67.744
+    113.533,
+    79.226
    ],
    "shadow_base_width": 115.91
   },
@@ -82,18 +82,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/cocoa.png",
    "image": [
-    416,
-    365
+    412,
+    454
    ],
    "pivot": [
-    207.904,
-    231.253
+    206.291,
+    321.776
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/cocoa.png",
    "shadow_pivot": [
-    95.089,
-    59.559
+    107.012,
+    77.163
    ],
    "shadow_base_width": 115.91
   },
@@ -106,18 +106,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/toys.png",
    "image": [
-    416,
-    416
+    412,
+    468
    ],
    "pivot": [
-    207.904,
-    281.33
+    206.382,
+    335.168
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/toys.png",
    "shadow_pivot": [
-    98.607,
-    70.723
+    113.572,
+    83.95
    ],
    "shadow_base_width": 115.91
   },
@@ -130,18 +130,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/gifts.png",
    "image": [
-    416,
-    335
+    412,
+    433
    ],
    "pivot": [
-    207.904,
-    200.422
+    206.291,
+    300.319
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/gifts.png",
    "shadow_pivot": [
-    88.425,
-    53.122
+    106.546,
+    73.377
    ],
    "shadow_base_width": 115.91
   },
@@ -154,18 +154,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/candles.png",
    "image": [
-    416,
-    401
+    412,
+    455
    ],
    "pivot": [
-    207.904,
-    267.238
+    206.291,
+    322.0
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/candles.png",
    "shadow_pivot": [
-    92.509,
-    67.737
+    113.558,
+    79.226
    ],
    "shadow_base_width": 115.91
   },
@@ -178,18 +178,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/carousel.png",
    "image": [
-    416,
-    340
+    412,
+    422
    ],
    "pivot": [
-    207.904,
-    205.479
+    206.291,
+    289.164
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/carousel.png",
    "shadow_pivot": [
-    90.213,
-    57.269
+    111.725,
+    68.939
    ],
    "shadow_base_width": 115.91
   },
@@ -202,18 +202,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/rink.png",
    "image": [
-    416,
-    330
+    412,
+    354
    ],
    "pivot": [
-    207.904,
-    195.508
+    206.291,
+    221.055
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/rink.png",
    "shadow_pivot": [
-    69.123,
-    53.449
+    77.035,
+    57.958
    ],
    "shadow_base_width": 115.91
   },
@@ -226,18 +226,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/tree.png",
    "image": [
-    416,
-    410
+    412,
+    435
    ],
    "pivot": [
-    207.904,
-    275.746
+    206.291,
+    302.282
    ],
    "base_width": 409.808,
    "shadow": "data/building-shadows/tree.png",
    "shadow_pivot": [
-    81.331,
-    65.144
+    78.023,
+    70.932
    ],
    "shadow_base_width": 115.91
   },
@@ -250,18 +250,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/firs.png",
    "image": [
-    279,
-    258
+    276,
+    269
    ],
    "pivot": [
-    139.603,
-    167.73
+    137.99,
+    180.249
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/firs.png",
    "shadow_pivot": [
-    44.651,
-    42.592
+    57.911,
+    44.416
    ],
    "shadow_base_width": 77.273
   },
@@ -274,18 +274,18 @@
    "scale": 1.0,
    "sprite": "data/buildings/bench.png",
    "image": [
-    279,
-    232
+    276,
+    248
    ],
    "pivot": [
-    139.603,
-    141.966
+    137.99,
+    159.923
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/bench.png",
    "shadow_pivot": [
-    44.991,
-    37.305
+    47.91,
+    41.667
    ],
    "shadow_base_width": 77.273
   },
