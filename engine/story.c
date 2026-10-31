@@ -24,9 +24,9 @@
 
 typedef struct {
     const character *who;
-    rect from, to;
+    rect bounds;
     color from_tint, to_tint;
-    tween blend;
+    tween blend, visibility;
     bool wanted, active;
 } portrait_track;
 
@@ -397,38 +397,41 @@ static void draw_portrait(const character *c, rect r, color tint)
     draw_round_rect_line(rect_inflate(r, 1), 19, 4, color_alpha(S.style.edge, alpha));
 }
 
+/* Entrance/exit own the slide. Speaking state owns colour only, so a
+ * speaker/listener change cannot restart the slide or resize the portrait. */
 static rect portrait_pose(const portrait_track *p)
 {
-    float t = tween_value(p->blend);
-    return rect_make(vec2_lerp(p->from.pos, p->to.pos, t),
-                     sz2(lerpf(p->from.size.w, p->to.size.w, t), lerpf(p->from.size.h, p->to.size.h, t)));
+    float slide = (1 - tween_value(p->visibility)) * p->bounds.size.w * .3f;
+    return rect_offset(p->bounds, v2(p->who->right ? slide : -slide, 0));
 }
 
-/* Retarget only when staging changes, starting at the currently drawn pose.
- * Typing, waiting and consecutive lines from one speaker never restart motion. */
-static void portrait_target(portrait_track *p, rect r, color tint)
+static color portrait_tint(const portrait_track *p)
 {
-    if (!memcmp(&p->to, &r, sizeof r) && !memcmp(&p->to_tint, &tint, sizeof tint)) return;
-    p->from = portrait_pose(p);
+    return color_alpha(color_lerp(p->from_tint, p->to_tint, tween_value(p->blend)), tween_value(p->visibility));
+}
+
+static void portrait_target(portrait_track *p, color tint)
+{
+    if (!memcmp(&p->to_tint, &tint, sizeof tint)) return;
     p->from_tint = color_lerp(p->from_tint, p->to_tint, tween_value(p->blend));
-    p->to = r;
     p->to_tint = tint;
     p->blend = (tween){.to=1, .duration=PORTRAIT_TIME};
 }
 
 static void portrait_stage(const character *who, rect r, bool active)
 {
+    color tint = active ? WHITE : rgba(120, 124, 132, 235);
     portrait_track *p = NULL;
     for (int i = 0; i < QUEUE; i++) if (S.portraits[i].who == who) { p = &S.portraits[i]; break; }
     if (!p) {
         for (int i = 0; i < QUEUE; i++) if (!S.portraits[i].who) { p = &S.portraits[i]; break; }
         if (!p) return;
-        rect outside = rect_offset(r, v2((who->right ? 1 : -1) * r.size.w * .3f, 0));
-        *p = (portrait_track){.who=who, .from=outside, .to=outside};
+        *p = (portrait_track){.who=who, .from_tint=tint, .to_tint=tint};
     }
+    p->bounds = r;
     p->wanted = true;
     p->active = active;
-    portrait_target(p, r, active ? WHITE : rgba(120, 124, 132, 235));
+    portrait_target(p, tint);
 }
 
 static void portraits_frame(float dt)
@@ -436,16 +439,12 @@ static void portraits_frame(float dt)
     for (int pass = 0; pass < 2; pass++) for (int i = 0; i < QUEUE; i++) {
         portrait_track *p = &S.portraits[i];
         if (!p->who || p->active != (pass == 1)) continue;
-        if (!p->wanted && p->to_tint.a) {
-            rect outside = rect_offset(p->to, v2((p->who->right ? 1 : -1) * p->to.size.w * .3f, 0));
-            color tint = p->to_tint;
-            tint.a = 0;
-            portrait_target(p, outside, tint);
-        }
+        tween_to(&p->visibility, p->wanted ? 1 : 0, PORTRAIT_TIME);
+        tween_step(&p->visibility, dt);
         tween_step(&p->blend, dt);
-        color tint = color_lerp(p->from_tint, p->to_tint, tween_value(p->blend));
+        color tint = portrait_tint(p);
         if (tint.a) draw_portrait(p->who, portrait_pose(p), tint);
-        if (!p->wanted && p->blend.elapsed >= p->blend.duration) *p = (portrait_track){0};
+        if (!p->wanted && p->visibility.elapsed >= p->visibility.duration) *p = (portrait_track){0};
     }
 }
 
@@ -455,7 +454,7 @@ bool story_test_portrait(const character *who, rect *r, color *tint)
     for (int i = 0; i < QUEUE; i++) if (S.portraits[i].who == who) {
         portrait_track *p = &S.portraits[i];
         *r = portrait_pose(p);
-        *tint = color_lerp(p->from_tint, p->to_tint, tween_value(p->blend));
+        *tint = portrait_tint(p);
         return true;
     }
     return false;
@@ -565,7 +564,7 @@ void story_frame(float dt)
         width = clampf(width, minf(face.w + 60, max_w), max_w);
         bubble = rect_anchor(v2(who->right ? rect_max(screen).x - m - reach : screen.pos.x + m + reach, rect_max(screen).y - m - reach),
                              sz2(width, height), v2(who->right ? 1 : 0, 1));
-        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - 10 : bubble.pos.x + 10, speech_bubble_bounds(bubble, kind).pos.y - tag * .5f - 2),
+        portrait = rect_anchor(v2(who->right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5, speech_bubble_bounds(bubble, kind).pos.y - tag * .5f - 2),
                                face, v2(who->right ? 1 : 0, 1));
         tip = rect_center(bubble);
         grow_from = rect_point(bubble, v2(who->right ? 1 : 0, 0));
@@ -582,9 +581,9 @@ void story_frame(float dt)
     bool listening = listener && listener->portrait.tex && who && listener->right != who->right && listener != who;
     rect listener_portrait = rc(0, 0, 0, 0), group = screen;
     if (listening) {
-        listener_portrait = stand(listener, h * (framed_narrow ? .8f : .92f));
+        listener_portrait = stand(listener, h);
         if (framed_narrow)   /* on the speaker's baseline, above the box */
-            listener_portrait = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 10 : screen.pos.x + m + 10,
+            listener_portrait = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5,
                                                rect_max(portrait).y), listener_portrait.size, v2(listener->right ? 1 : 0, 1));
     }
     if (framed_narrow) {
@@ -601,7 +600,7 @@ void story_frame(float dt)
         grow_from = vec2_add(grow_from, offset);
         group = rect_offset(group, offset);
     }
-    if (listening) portrait_stage(listener, rect_offset(listener_portrait, v2(0, framed_narrow ? 0 : h * .02f)), false);
+    if (listening) portrait_stage(listener, listener_portrait, false);
     if (has_face) portrait_stage(who, portrait, true);
     portraits_frame(dt);
 

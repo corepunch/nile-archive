@@ -152,7 +152,8 @@
       "exiting",
       "settled"
     ],
-    "curve": "finite cubic tween; no idle loops",
-    "review": "../../../docs/review/motion/README.md"
+    "curve": "finite cubic entrance/exit slide and fade; independent active/listener colour tween",
+    "review": "../../../docs/review/motion/README.md",
+    "geometry": "speaker/listener share size and side anchors; entrance/exit slide only; no resizing, rotation or idle bobbing"
   }
 }
