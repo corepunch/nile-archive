@@ -9,7 +9,8 @@ The held capture feeds the actual city hold gesture. The wider projection audit
 remains issue #15; these changes do not claim to finish that audit.
 
 Reproduce with `python3 games/relic-rush/tools/capture_buildings.py after`;
-the before source is main `6a56346` with shadow fields absent.
+the before source is main `6a56346` with shadow fields absent. Both fixtures
+use the integration renderer, including the gold occupied-base debug outline.
 
 | Screen / logical size | Before | After |
 | --- | --- | --- |
