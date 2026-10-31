@@ -76,6 +76,10 @@ extern int numlumps;
 
 void W_Init(const char *datadir);
 void W_DrawArcadeStage(int stage, int camx);
+// Virtual HUD slots preserve the original authored health/stun tile maps.
+enum { HUD_HEALTH_LEFT=0, HUD_HEALTH_RIGHT=121, HUD_STUN_LEFT=242,
+       HUD_STUN_RIGHT=311, HUD_HEART=380, HUD_BRAIN=390, HUD_NAME=408,
+       HUD_FRAMES=415 };
 gra_t *W_LoadGra(const char *name); // cached; fatal if missing
 gra_t *W_TryLoadGra(const char *name); // NULL if missing
 gra_t *W_GraById(int id); // compatibility access to the arcade object bank

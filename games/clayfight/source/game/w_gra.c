@@ -150,6 +150,40 @@ static void Composite(patch_t *dst,const patch_t *src,int x,int y,int bank)
         dst->pixels[(y+j)*dst->w+x+i]=v+bank;
     }
 }
+static patch_t *AlphaPatch(uint32_t map)
+{
+    int w=X_U8(map),h=X_U8(map+1);
+    if(!w || w>42 || !h || h>30 || !X_Valid(map,2+w*h*2))I_Error("Invalid arcade alpha map %#x",map);
+    patch_t *p=Patch(w*8,h*8);
+    for(int y=0;y<p->h;y++)for(int x=0;x<p->w;x++){
+        int code=X_U16(map+2+2*(y/8*w+x/8))&4095;
+        int v=characters[code*32+y%8*4+x%8/2];
+        p->pixels[y*p->w+x]=(v>>(x%2?0:4))&15;
+    }
+    Bounds(p);return p;
+}
+static gra_t *Hud(void)
+{
+    gra_t *g=Bank("hud",HUD_FRAMES,10);
+    Palette(&g->palettes[0],0x61482,16); // alpha bank 6: red health vein
+    Palette(&g->palettes[1],0x614a2,16); // alpha bank 7: gold stun vein
+    Palette(&g->palettes[2],0x61742,32); // common heart and brain sprites
+    const uint32_t tables[]={0x1ff43e,0x1ff622,0x1ff806,0x1ff91a};
+    const int starts[]={HUD_HEALTH_LEFT,HUD_HEALTH_RIGHT,HUD_STUN_LEFT,HUD_STUN_RIGHT};
+    for(int k=0;k<4;k++)for(int i=0;i<(k<2?121:69);i++){
+        int slot=starts[k]+i;patch_t *p=AlphaPatch(X_U32(tables[k]+i*4));
+        g->frames[slot]=(frame_t){.w=p->w,.h=p->h,.decoded=true,.patch=p};
+        bank_pals[g-banks][slot]=k<2?0:1;
+    }
+    for(int i=0;i<10;i++)Frame(g,HUD_HEART+i,1767+i,2);
+    for(int i=0;i<18;i++)Frame(g,HUD_BRAIN+i,1777+i,2);
+    for(int c=0;c<7;c++){
+        uint32_t desc=X_U32(0x73e74+c*4);
+        Palette(&g->palettes[3+c],0x64d02+c*128,64);
+        Frame(g,HUD_NAME+c,X_U32(desc),3+c);
+    }
+    return g;
+}
 static gra_t *Select(void)
 {
     gra_t *g=Bank("select",155,31);
@@ -181,6 +215,16 @@ gra_t *W_TryLoadGra(const char *name)
     if(!strcasecmp(name,"arcade"))return &body;
     for(int i=0;i<bank_count;i++)if(!strcasecmp(banks[i].name,name))return &banks[i];
     if(!strcasecmp(name,"select"))return Select();
+    if(!strcasecmp(name,"hud"))return Hud();
+    if(!strcasecmp(name,"stone-font")){
+        gra_t *g=Bank(name,128,1);Palette(g->palettes,0x68e3a,16);
+        for(int c='A';c<='Z';c++)Frame(g,c,391+c-'A',0);
+        for(int c='1';c<='9';c++)Frame(g,c,417+c-'1',0);
+        Frame(g,'0',426,0);
+        const char chars[]="$!.?:#'&";const int ids[]={427,428,429,430,431,432,433,434};
+        for(int i=0;chars[i];i++)Frame(g,chars[i],ids[i],0);
+        return g;
+    }
     if(!strcasecmp(name,"slabs")){
         gra_t *g=Bank(name,38,1);Palette(g->palettes,0x61042,64);Frame(g,37,826,0);return g;
     }
