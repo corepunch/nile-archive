@@ -8,26 +8,26 @@ local stack = ui.modals(R.form_skin)
 local PAGE_SIZE = 4
 local form = ui.form{kind='column',panel=true,padding=18,gap=8,children={
     {kind='label',text='Build your market',height=40,em=32},
-    {kind='label',id='wallet',height=24,em=16,palette=R.PAL_CREAM},
+    {kind='label',id='wallet',height=24,em=16,text_style=R.PAL_CREAM},
     {kind='row',height=38,gap=8,children={
         {kind='button',id='category_prev',text='<',width=42,em=22},
         {kind='label',id='category',grow=1,em=21},
         {kind='button',id='category_next',text='>',width=42,em=22},
     }},
-    {kind='label',text='Choose Christmas magic for the market.',height=24,em=14,palette=R.PAL_CREAM},
+    {kind='label',text='Choose Christmas magic for the market.',height=24,em=14,text_style=R.PAL_CREAM},
     {kind='list',id='stock',gap=10,item=function(entry)
         return {kind='row',height=116,gap=12,align='center',children={
             {kind='custom',width=98,height=100,paint=function(box) R.picture_fit(entry.sprite,box,255) end},
             {kind='column',grow=1,gap=4,children={
                 {kind='label',text=entry.name,wrap=true,text_align='start',em=20},
-                {kind='label',text=entry.details,wrap=true,text_align='start',em=14,palette=R.PAL_CREAM},
+                {kind='label',text=entry.details,wrap=true,text_align='start',em=14,text_style=R.PAL_CREAM},
                 {kind='button',id='buy',text=entry.action,height=34,em=17,enabled=entry.available},
             }},
         }}
     end},
     {kind='row',height=38,gap=10,children={
         {kind='button',id='previous',text='PREV',width=90,em=17},
-        {kind='label',id='page',grow=1,em=17,palette=R.PAL_CREAM},
+        {kind='label',id='page',grow=1,em=17,text_style=R.PAL_CREAM},
         {kind='button',id='next',text='NEXT',width=90,em=17},
     }},
     {kind='button',id='close',text='BACK TO MARKET',height=42,em=21},

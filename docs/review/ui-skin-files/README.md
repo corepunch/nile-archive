@@ -99,3 +99,19 @@ and resumes the board through real input.
 | RESTART held (pressed) |
 | --- |
 | ![Pressed](after-relic-pause-restart-pressed.jpg) |
+
+## Christmas Market: the same pixels, now from its skin file
+
+Christmas Market forked Relic Rush's paint code; `games/christmas-market/lua/skin.lua`
+now holds its palettes, parchment panel, festive red button (pressed, disabled,
+flat) and focus ring. 32 captures are pixel-identical to the code it replaced:
+pause, guide, building card, two shop categories, expeditions, victory, failure,
+finale, region card, market, board and placement at 480×900 and 390×844 with
+safe areas, plus the pause and card pop-in, the mid-animation victory card and
+held presses on RESUME, the card's action and the guide's button.
+
+| | Before | After |
+| --- | --- | --- |
+| Pause | ![Before](before-christmas-pause.jpg) | ![After](after-christmas-pause.jpg) |
+| Shop | ![Before](before-christmas-shop.jpg) | ![After](after-christmas-shop.jpg) |
+| RESUME held | ![Before](before-christmas-pause-press.jpg) | ![After](after-christmas-pause-press.jpg) |
