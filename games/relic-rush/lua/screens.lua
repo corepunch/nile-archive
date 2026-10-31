@@ -143,7 +143,7 @@ local star_icon, compass_icon = R.star_icon, R.compass_icon
 -- On the island the picture runs up to the status bar with a small medallion
 -- in the corner; on the board the medallion sits in the HUD band beside the goals.
 local function pause_button(island)
-    local bounds=island and rect(414,12,52,52) or rect(406,20,52,52)
+    local bounds=island and rect(414,12,52,52) or rect(418,8,44,44)
     local st=ui.hit(bounds,0)
     local state=st.held and "pressed" or st.hot and "hover" or "normal"
     picture(R.hud_art["pause-"..state],bounds,255)
@@ -194,8 +194,8 @@ function R.draw_toast()
         rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
     else   -- just below the HUD band, above the board
-        rrect(rect(38, 112, 404, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 127), 14, PAL_CREAM, 388)
+        rrect(rect(38, 78, 404, 28), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 92), 14, PAL_CREAM, 388)
     end
 end
 

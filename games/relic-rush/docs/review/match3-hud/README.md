@@ -6,24 +6,24 @@ line above the tools, captions under every tool and a guide book beside them.
 It now uses the layout that portrait match-3 games (Royal Match, Toon Blast,
 Homescapes, Candy Crush) share. See [references](../../references.md#match-3-level-hud).
 
-- **One top band.** A jade band with a gold trim hangs from the top edge and runs
-  under the status bar. It holds:
-  - a hexagonal **Moves** medallion, echoing the board cells, that overhangs the band;
-  - a recessed plate of **goal icons** with the remaining count beneath each;
+- **One slim top band.** A 60-unit jade band with a gold trim hangs from the top
+  edge and runs under the status bar. It holds:
+  - a flat-top hexagonal **Moves** medallion, the same shape as the board cells, that overhangs the band;
+  - one recessed row of **goal icons**, each with its remaining count beside it;
   - the authored **pause** medallion.
-- **Goals.** A met goal dims and shows the check seal instead of "DONE".
+- **Goals.** A met goal dims and shows the check seal in place of its count, not "DONE".
   Collection flights land on their goal icon, which bounces.
 - **Last moves.** Over the last five moves the medallion turns red and glows.
 - **No portrait.** Elena's investigation cutout is gone from the board. She still
   speaks in dialogue. The source art is kept but no longer exported to `data/`.
-- **Bottom tray.** The three tools stand in sockets in a matching tray along the
+- **Low bottom tray.** The three tools stand up out of a 68-unit tray along the
   bottom edge, evenly spaced and without captions. Choosing one names it and its
   effect in the toast, for example "Dynamite: tap a relic to blast around it."
 - **Less clutter.** The standing "CONNECT 4+ MATCHING NEIGHBORS." line and the
   guide book are gone from the board. The Explorer's Guide opens from Pause, and
   Elena still explains each level's twist the first time.
-- **Bigger stage.** The board moves up 52 units into the freed space, centred
-  between the band and the tray. Tall phones still add their extra height around it.
+- **More painting.** Both bars stay slim, so the scenery shows above and below
+  the board. The board moves up 58 units, centred between the band and the tray. Tall phones still add their extra height around it.
 
 Before: commit `6a56346`. Every image is captured from the actual game.
 
