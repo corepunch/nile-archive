@@ -9,7 +9,7 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
-local PAL_GOLD, PAL_CREAM, PAL_GREEN, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_GREEN, R.PAL_WHITE
+local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 local RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
 local rgba = color
 
@@ -33,7 +33,7 @@ function R.picture(t, r, alpha) gfx.image(t, pr(r), rgba(255, 255, 255, alpha * 
 function R.picture_fit(t, box, alpha)
     if t.w > 0 then R.picture(t, box:fit(texture.size(t)), alpha) end
 end
-local fill, rrect, disc, seg, picture, picture_fit = R.fill, R.rrect, R.disc, R.seg, R.picture, R.picture_fit
+local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_fit
 
 ---------------------------------------------------------------------- text
 
@@ -58,7 +58,7 @@ function R.say_at(s, center, em, palette, max_width)
     return R.say(s, rect.centered(center, size2(w, em * 2)), em, palette)
 end
 function R.paragraph(s, box, em, palette) text.box(pal(palette, em), pr(box), vec2(.5, .5), s) end
-local say, say_left, say_at, paragraph = R.say, R.say_left, R.say_at, R.paragraph
+local say, say_left, say_at = R.say, R.say_left, R.say_at
 
 -------------------------------------------------------------------- widgets
 
@@ -172,8 +172,8 @@ local capsule_notes = {"Gold buys buildings. Replay expeditions to earn more.", 
 
 -- The island shows its purse in two rows of capsules; tapping EXPAND opens the
 -- next region. An unfinished expedition exposes only pause, never island access.
-function R.draw_header(island)
-    if island then
+function R.draw_header(on_island)
+    if on_island then
         for k = 1, 5 do
             local r = rect(34 + (k - 1) % 3 * 120, k <= 3 and 14 or 58, 96, 34)
             if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end

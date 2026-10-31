@@ -41,7 +41,8 @@ engine/            the shared engine: ONE public header + one .c per module
   lua_lib.c        Lua 5.4 as one translation unit, sandbox libraries only
   third_party/     lua/ and platform/ (pinned submodules), stb_*
 games/
-  nile-archive/    lua/main.lua + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
+  nile-archive/    lua/ (main, state, content, economy, progress, kit, island, scene, dialogs, smoke)
+                   + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
                    + art/ (sources) + data/ (runtime) + docs/ + tools/ + relic-rush.xcodeproj
   volcano/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + volcano.xcodeproj

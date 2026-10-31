@@ -83,8 +83,8 @@ local function draw_one(e)
         ui.progress(rect(p.x-27,p.y-85*S.cam.zoom,54,6),e.clock/5,'')
     end
     if e.def.kind=='worker' and e.target and e.target.def.kind=='animal' and e.phase=='returning' then
-        local pet=e.target;local a=art[pet.type..pet.variant..'_run'..(e.direction or 0)]
-        sprite.draw(S.textures[a.image],sprite.sample(a.frames,a.fps,S.g.time),p+vec2(12,6),a.scale*S.cam.zoom,white)
+        local pet=e.target;local run=art[pet.type..pet.variant..'_run'..(e.direction or 0)]
+        sprite.draw(S.textures[run.image],sprite.sample(run.frames,run.fps,S.g.time),p+vec2(12,6),run.scale*S.cam.zoom,white)
     end
 end
 local function pick(p)

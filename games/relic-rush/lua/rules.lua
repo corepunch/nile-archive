@@ -401,7 +401,6 @@ function M.game_collapse(g)
     end
     return from
 end
-local game_collapse = M.game_collapse
 
 local function copy_array(t)
     local c = {}

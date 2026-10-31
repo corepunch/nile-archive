@@ -213,36 +213,36 @@ local function arrange(n, box, skin, form)
     if #n.children == 0 then return end
     local l,t,r,b=padding(n.padding)
     local inner=rect(box.x+l,box.y+t,math.max(0,box.w-l-r),math.max(0,box.h-t-b))
-    local horizontal=horizontal(n)
+    local across=horizontal(n)
     local total,weight,count=0,0,0
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
             local cw,ch=measure(child,inner.w,skin,form.values)
             child.measured={cw,ch}; count=count+1
-            if child.grow and child.grow>0 then weight=weight+child.grow else total=total+(horizontal and cw or ch) end
+            if child.grow and child.grow>0 then weight=weight+child.grow else total=total+(across and cw or ch) end
         end
     end
     local gap=n.gap or 0
-    local available=horizontal and inner.w or inner.h
+    local available=across and inner.w or inner.h
     local remaining=math.max(0,available-total-gap*math.max(0,count-1))
-    local cursor=horizontal and inner.x or inner.y
+    local cursor=across and inner.x or inner.y
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
             local cw,ch=child.measured[1],child.measured[2]
-            if horizontal and (child.grow or 0)>0 then
+            if across and (child.grow or 0)>0 then
                 cw,ch=measure(child,remaining*child.grow/weight,skin,form.values)
             end
             if n.kind=='overlay' then arrange(child,inner,skin,form)
             else
-                local main=horizontal and cw or ch
+                local main=across and cw or ch
                 if child.grow and child.grow>0 then main=remaining*child.grow/weight end
-                main=math.max(0,math.min(main, (horizontal and inner.x+inner.w or inner.y+inner.h)-cursor))
-                local cross=(n.align or 'stretch')=='stretch' and (horizontal and inner.h or inner.w) or math.min(horizontal and ch or cw,horizontal and inner.h or inner.w)
-                local explicit=horizontal and child.height or child.width
+                main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor))
+                local cross=(n.align or 'stretch')=='stretch' and (across and inner.h or inner.w) or math.min(across and ch or cw,across and inner.h or inner.w)
+                local explicit=across and child.height or child.width
                 if explicit then cross=math.min(cross,explicit) end
-                local free=(horizontal and inner.h or inner.w)-cross
+                local free=(across and inner.h or inner.w)-cross
                 local offset=n.align=='center' and free/2 or n.align=='end' and free or 0
-                local cb=horizontal and rect(cursor,inner.y+offset,main,cross) or rect(inner.x+offset,cursor,cross,main)
+                local cb=across and rect(cursor,inner.y+offset,main,cross) or rect(inner.x+offset,cursor,cross,main)
                 arrange(child,cb,skin,form); cursor=cursor+main+gap
             end
         end

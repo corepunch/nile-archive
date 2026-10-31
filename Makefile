@@ -6,6 +6,7 @@
 #   make run-volcano      build and run Volcano
 #   make run-volcano ARGS="--fresh --mute"                 pass game options
 #   make test            generated-code freshness, engine tests and the games' Lua rule tests (headless)
+#   make lint            luacheck over every game, the engine's Lua and the tests (apt: lua-check)
 #   make gen             regenerate the Lua glue, docs/LUA_API.md and engine.d.lua from engine/api.xml
 #   make xcode           regenerate games/<name>/<name>.xcodeproj (tools/xcode/generate.py)
 #   make shots           regenerate docs/screenshots (headless, software renderer)
@@ -53,7 +54,7 @@ ENGINE_DEPS := $(UNITY) $(wildcard engine/*.c engine/*.h)
 PLATFORM_DEPS := $(shell find $(PLATFORM_DIR) -type f \( -name '*.c' -o -name '*.m' -o -name '*.h' \) 2>/dev/null)
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 
-.PHONY: all test gen gen-check xcode xcode-check shots web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
+.PHONY: all test gen gen-check lint xcode xcode-check shots web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: $(ENGINE_DEPS)
@@ -95,6 +96,12 @@ gen:
 	python3 tools/luagen.py
 gen-check:
 	python3 tools/luagen.py --check
+
+# --- lint -----------------------------------------------------------------
+# .luacheckrc declares the engine's globals, so an undefined global is a typo
+# or a missing import and an unused local is dead code.
+lint:
+	luacheck -q games/*/lua engine/ui_forms.lua tests/lua tests/fixtures tools/*.lua
 
 # --- Xcode projects -------------------------------------------------------
 # One committed project per game with a macOS and an iOS target (iPad for Nile

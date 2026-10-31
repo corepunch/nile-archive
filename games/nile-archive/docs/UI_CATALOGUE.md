@@ -4,8 +4,8 @@
 
 The [economy review](review/economy/README.md) covers the result, chapters,
 building list, initial estate, purchase preview and minimum-reward restoration
-route at 1200 x 900, 1368 x 1026 and 1600 x 900. Source: `lua/main.lua` and
-`lua/archive_economy.lua`; shared controls/layout: `engine/ui_forms.lua`. The
+route at 1200 x 900, 1368 x 1026 and 1600 x 900. Source: `lua/archive_island.lua`,
+`lua/archive_dialogs.lua` and `lua/archive_economy.lua`; shared controls/layout: `engine/ui_forms.lua`. The
 existing five building sprites, Coin and Influence icons, fonts, theme and
 button rendering are reused. No runtime bitmap, icon set or ImageGen prompt is
 added. The repeatable building list uses `form:set_items` with stable IDs 1–5,
@@ -31,8 +31,8 @@ consumes opening-frame input before enabling its controls.
 
 ## City move strip
 
-Source: the `move_form` resource in `lua/main.lua`, using `engine/ui_forms.lua`,
-`ui_theme` from `setup_theme`, and the shared city gesture in `engine/city.c`.
+Source: the `move_form` resource in `lua/archive_island.lua`, using `engine/ui_forms.lua`,
+`ui_theme` from `setup_theme` in `lua/archive_kit.lua`, and the shared city gesture in `engine/city.c`.
 No bitmap, generated icon or runtime asset file is added.
 
 | Control/content | Meaning and states |
@@ -64,6 +64,6 @@ and `nile-wide-long-press.jpg`; `make shots` reproduces them.
 
 See [button typography review](../../../docs/review/button-text/README.md) for
 reviewed captures at 1200×900, 1368×1026 and 1600×900, button states and
-reproduction commands. Source: `setup_theme` in `lua/main.lua`; rendering:
+reproduction commands. Source: `setup_theme` in `lua/archive_kit.lua`; rendering:
 `engine/ui_forms.lua` and `engine/font.c`. This is authored text styling, with
 no ImageGen prompt or added runtime texture.

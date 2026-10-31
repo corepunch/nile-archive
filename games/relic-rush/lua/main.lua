@@ -12,7 +12,7 @@ require("vfx")
 require("board")
 require("island_view")
 local LEVELS, WONDERS, ISLAND_ZONES = rules.LEVELS, island.WONDERS, island.ISLAND_ZONES
-local STARS, COMPASSES = rules.STARS, rules.COMPASSES
+local COMPASSES = rules.COMPASSES
 local rgba = color
 
 -- The expedition (see docs/art-direction-v2.md). Busts come from the cast lineup.
