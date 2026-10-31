@@ -8,6 +8,31 @@ A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.tool_size = 76   -- square authored artwork and matching square touch targets
+A.hud_icons = {"score", "complete"}
+
+function A.load_hud()
+    local textures = {}
+    for _, state in ipairs(A.states) do textures["pause-" .. state] = texture.load("expedition-hud/pause-" .. state .. ".png") end
+    for _, name in ipairs(A.hud_icons) do textures[name] = texture.load("expedition-hud/" .. name .. ".png") end
+    textures.elena = texture.load("characters/elena-investigating.png")
+    return textures
+end
+
+function A.draw_hud_catalogue(R)
+    gfx.round_rect(rect(18,220,444,490),18,color(12,47,41,250))
+    R.say_at("EXPEDITION ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
+    for i,state in ipairs(A.states) do
+        local x=62+(i-1)*89
+        gfx.image(R.hud_art["pause-"..state],rect(x-32,280,64,64),color.WHITE)
+        R.say_at(state,vec2(x,365),12,R.PAL_CREAM,85)
+    end
+    gfx.image(R.hud_art.score,rect(56,414,66,66),color.WHITE)
+    gfx.image(R.hud_art.complete,rect(148,414,66,66),color.WHITE)
+    R.say_at("score",vec2(89,502),14,R.PAL_CREAM,90)
+    R.say_at("complete",vec2(181,502),14,R.PAL_CREAM,90)
+    gfx.image(R.hud_art.elena,rect(258,398,174,268):fit(texture.size(R.hud_art.elena)),color.WHITE)
+    R.say_at("Elena investigates",vec2(240,683),17,R.PAL_CREAM,400)
+end
 
 function A.tool_state(charges, selected, inside, down, started_inside, hover, idle)
     if charges <= 0 or not idle then return "disabled" end

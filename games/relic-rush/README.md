@@ -17,7 +17,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 ## Shared UI and dialog layers
 
-Pause, building and guide dialogs use engine-owned form resources and one game skin. The expedition HUD uses a read-only engine form row: score, level/name and moves sit on separate jade cards with gold rims. Objective capsules share that backing style so every top readout stays legible over both paintings. The guide is a measured stack populated from a stable-key data source: icon rows left-align title and description, and wrapping determines row height. Modal screens and dialogue blur earlier layers with the engine’s cached GPU Gaussian pass; foreground UI stays sharp. See the [shared UI API and adoption examples](../../docs/UI_ENGINE.md).
+Pause, building and guide dialogs use engine-owned form resources and one game skin. The expedition header shows only a Goal panel of remaining objective counts, Moves and an authored jade/gold pause button. Elena examines a relic beside the cards in a static portrait prepared for later animation. Level details live in Pause; score/reward totals live in Results. The measured goal list retains every win condition without duplicate totals or a progress bar. The guide uses a measured data-backed list too. Menus and other closable popups dismiss on background taps through the shared engine; results retain explicit actions. Modal screens and dialogue use the engine’s cached GPU Gaussian blur. See the [header and popup review](docs/review/expedition-header/README.md) and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
@@ -104,9 +104,9 @@ Discovery Stars measure cumulative progress and are never spent. Compasses pay f
 
 See the [Playrix/Wooga economy study, budgets and automated audit](../../docs/ECONOMY_RESEARCH.md)
 and [reviewed reward, replay and shop screens](docs/review/economy/README.md).
-Returning from the island through the expedition browser resumes an unfinished
-board. Closing the application still restarts that attempt; persistent saves
-contain the island and banked progress.
+An expedition stays on its board until it is won or lost; Pause resumes the same
+round, and no island shortcut is available. Closing the application still restarts
+that attempt; persistent saves contain the island and banked progress.
 
 ## Campaign: ten hex levels
 
@@ -184,7 +184,7 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
-- The island's HUD is two rows of small resource capsules (idols, leaves and crystals; then Stars and Compasses beside **Expand**) and a pause button. There is no title or header band; tap a capsule to learn what it is for. The board keeps only the way back to the island and pause in its top corners. Score, level and moves float over the background painting without a large backing panel; outlined text and a slim translucent progress track preserve readability.
+- The island's HUD is two rows of small resource capsules (idols, leaves and crystals; then Stars and Compasses beside **Expand**) and an authored pause medallion. Tap a capsule to learn what it is for. During expeditions the header contains Goal, Moves, Pause and Elena's investigating portrait. Remaining score/idol/sand/lock counts share one Goal panel. Island access returns after win/loss.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
@@ -217,7 +217,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Controls and saved progress
 
-- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right button pauses (sound, reduced motion, guide); Escape does the same.
+- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right medallion pauses (level details, sound, reduced motion, guide); Escape does the same. Finish the round before returning to the island. Tap outside a closable popup to dismiss it; results require an explicit action.
 - **Island:** drag the map to pan, including from buildings; pinch or use the mouse wheel to zoom. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
 - **Placement:** choose a grassy spot, check the green/red footprint, then confirm or cancel. Buildings cannot overlap, cross the shoreline or occupy closed land. Moving a completed building is free.
 - **Save:** level progress, resources, opened regions and building positions persist; an unfinished puzzle restarts. Saves of the standalone prototype (`progress.txt`, `localStorage["relic-rush-v1"]`) are not imported.

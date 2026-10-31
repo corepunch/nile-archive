@@ -452,9 +452,17 @@
     "data/buildings/twin_palms.png",
     "data/buildings/water_mill.png",
     "data/characters/adrian.png",
+    "data/characters/elena-investigating.png",
     "data/characters/elena.png",
     "data/characters/mara.png",
     "data/characters/tomas.png",
+    "data/expedition-hud/complete.png",
+    "data/expedition-hud/pause-disabled.png",
+    "data/expedition-hud/pause-hover.png",
+    "data/expedition-hud/pause-normal.png",
+    "data/expedition-hud/pause-pressed.png",
+    "data/expedition-hud/pause-selected.png",
+    "data/expedition-hud/score.png",
     "data/fonts/LilitaOne-Regular.ttf",
     "data/fonts/lilitaone-OFL.txt",
     "data/island.jpg",
@@ -578,5 +586,6 @@
     ],
     "review": "docs/review/square-tools/README.md",
     "reproduction": "python3 games/relic-rush/tools/board_assets.py; python3 tests/fixtures/relic-tools/capture.py --before-ref 3120b70"
-  }
+  },
+  "expedition_hud": "art/expedition-hud/manifest.json"
 }

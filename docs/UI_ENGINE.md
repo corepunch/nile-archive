@@ -164,14 +164,24 @@ elseif action and action.kind == "cancel" then modals:close(action.modal) end
 ```
 
 `open(id,form,model,options)` pushes model values and a layer. Options include
-`bounds`, `width`, `height`, `blur`, `dim`, and a `cancel` command ID (default
+`bounds`, `width`, `height`, `blur`, `dim`, `close_on_background` (default true), and a `cancel` command ID (default
 `cancel`). Automatic bounds centre the measured form within the logical screen.
 Each layer blurs/dims all earlier drawing; the next layer can blur the previous
-dialog too. Only the top form receives input. Escape emits its cancel action.
+dialog too. Only the top form receives input. Escape or a background tap emits
+its cancel action. Set `close_on_background=false` for required confirmations.
 A newly opened modal paints once with input disabled, so the release or
 key that opened it cannot also press a newly appeared button or cancel it. The
 next draw accepts input normally; lower layers remain inactive. This is covered
 by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
+
+Custom painted dialogs share `ui.modal_dismiss(visible_bounds, options)`. It
+registers the full bleed area for capture and returns true for Back or an eligible
+background tap; the caller handles its cancel action. Options accept `input`,
+`fresh`, `interactive` and `close_on_background`. The tap must be captured, begin
+and end outside the visible dialog, and be free of dragging/multi-touch. An
+inside-to-outside drag, an inherited world release or a fresh opening release
+cannot dismiss. Pass actual transformed/safe-area bounds. Result screens can
+omit the helper entirely when they require an explicit choice.
 
 List actions retain their `source` list ID and stable item `key` through the modal
 stack, so refreshing or reordering catalogue rows does not change their commands.

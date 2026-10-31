@@ -2,7 +2,8 @@
 
 This is the review inventory for the current game, audited 31 October 2026.
 The original gap and acceptance criteria are tracked in [issue #11](https://github.com/corepunch/nile-archive/issues/11).
-There are **18 base pieces, 5 special modifiers and 27 authored board/control sprites**.
+There are **18 base pieces, 5 special modifiers, 27 authored board/control sprites,
+7 expedition-header icons and one investigating Elena cutout**.
 The complete filename inventory, crop rectangles, rule names and state matrix live in
 [`manifest.json`](../art/board-states/manifest.json). Paths below are relative to this game.
 
@@ -153,6 +154,46 @@ Priority: depleted or board busy → disabled; held pointer that began inside �
 pressed; selected tool → selected; real mouse inside → hover; otherwise normal.
 Touch never receives hover art. Charge counts are dynamic text on a counter.
 The guide is a single medallion action, not a toggle or consumable tool.
+
+## Expedition header and investigation portrait
+
+The header presents one Goal panel of remaining objective counts, one Moves
+card and an authored pause medallion. Score remains a win condition, represented
+by the star seal; idols, sand and lock counts use their existing artwork. A zero
+remaining count uses the completed seal and DONE. No score total, level title,
+progress bar or island shortcut is displayed during an expedition. Level details
+are in Pause; results retain score/reward details. An unfinished round cannot
+return to the island. Win/failure screens provide the exit actions.
+
+`art/expedition-hud/controls.png` contains **all seven new icons together in one
+built-in ImageGen call**. The exact prompt is
+[`controls-prompt.txt`](../art/expedition-hud/controls-prompt.txt). `pause-normal`,
+`pause-selected`, `pause-pressed`, `pause-hover`, `pause-disabled` are individually
+painted jade/gold medallions. `score` denotes the remaining score objective;
+`complete` denotes any fulfilled objective. The runtime button uses normal,
+pressed and real-mouse hover states; selected/disabled artwork is supplied for
+the complete control contract. No tint or procedural bars create states.
+Runtime: `data/expedition-hud/<name>.png`, 128×128 RGBA.
+
+`art/expedition-hud/elena-investigating.png` is a separate ImageGen identity edit
+of the existing Elena portrait: she examines a sun fragment through a magnifying
+glass. [Exact portrait prompt](../art/expedition-hud/elena-prompt.txt). Runtime:
+`data/characters/elena-investigating.png`. It is a static waist-up investigation
+pose; its independent texture/anchor leaves room for future animation. Dialogue
+continues using the original Elena portrait.
+
+Measured crops, source dimensions, prompts and runtime paths are recorded in
+[`expedition-hud/manifest.json`](../art/expedition-hud/manifest.json), referenced
+by the primary runtime manifest. Import is aspect-preserving spatial registration
+with authored alpha retained, never derived state artwork:
+`python3 games/relic-rush/tools/prepare_hud.py` (`--check` verifies exact exports).
+`lua/art.lua` loads the contract; the measured engine list in `lua/board.lua`
+owns goal rows. Collection flights land on the new goal positions.
+[Reviewed game captures and native input checks](review/expedition-header/README.md)
+cover both backgrounds, both phone sizes, completed goals, every pause state,
+and dismissible/required popup behavior.
+
+![All five pause states, both goal glyphs and the investigation portrait in the game](review/expedition-header/after-states-480x900.jpg)
 
 ## Animation and effect states
 

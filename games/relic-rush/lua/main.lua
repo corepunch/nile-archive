@@ -83,9 +83,9 @@ function R.start_level(chosen)
     R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
     R.idle_time = 0
     R.vfx_reset()
-    -- Elena explains a level's twist the first time; later it is a reminder
+    -- Elena explains a level's twist once; repeat visits keep the header quiet.
     local lesson = rules.level_of(R.g).lesson
-    if R.quiet or not story.play(("level-%d"):format(R.g.level), {{"elena", lesson}}) then R.notice(lesson) end
+    if not R.quiet then story.play(("level-%d"):format(R.g.level), {{"elena", lesson}}) end
     return true
 end
 
@@ -262,22 +262,18 @@ local function smoke()
     elseif smoke_stage==31 and not R.on_island then
         smoke_move.resume_game=R.g;smoke_move.resume_moves=R.g.moves
         app.inject_click(vec2(40,38));smoke_stage=32
-    elseif smoke_stage==32 and R.on_island then
-        app.inject_click(vec2(127,725+R.drop));smoke_stage=33
-    elseif smoke_stage==33 and R.overlay==R.OV_EXPEDITIONS then
-        local f=R.expedition_form
-        for _,node in pairs(f.nodes) do
-            if node.item_key=='0' and node.local_id=='play' then
-                assert(node.text=='RESUME EXPEDITION','active board must offer resume')
-                app.inject_click(f.boxes[node.id]:center());smoke_stage=34;break
-            end
-        end
-    elseif smoke_stage==34 and not R.on_island then
-        assert(R.g==smoke_move.resume_game and R.g.moves==smoke_move.resume_moves,'browser must preserve unfinished board')
+    elseif smoke_stage==32 then
+        assert(not R.on_island and R.overlay==R.OV_NONE,'unfinished expedition must not expose island access')
+        app.inject_click(vec2(440,38));smoke_stage=33
+    elseif smoke_stage==33 and R.overlay==R.OV_PAUSE and R.modal_clock>.3 then
+        app.inject_click(vec2(12,220+R.drop/2));smoke_stage=34
+    elseif smoke_stage==34 and R.overlay==R.OV_NONE then
+        assert(not R.on_island and R.g==smoke_move.resume_game and R.g.moves==smoke_move.resume_moves,
+               'background dismissal must resume the same unfinished board')
         smoke_stage=0
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> browser replay/resume -> Gold only -> level 2")
+        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> no island escape -> pause/background resume -> Gold only -> level 2")
         app.quit()
     end
 end
@@ -298,7 +294,7 @@ local function frame(dt)
     if app.arg("smoke") then smoke() end
     R.now = R.now + dt
     R.toast_time = R.toast_time - dt
-    if inp.back and not talking then R.overlay = R.overlay ~= R.OV_NONE and R.OV_NONE or R.OV_PAUSE end
+    if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
     R.board_update(dt)
     R.vfx_update(dt)
@@ -464,6 +460,7 @@ local function debug_screens()
         R.inspect=kind;R.overlay=R.OV_WONDER;R.toast_time=0
     end
     if app.arg("art-states") then R.art_review, R.toast_time = true, 0 end
+    if app.arg("hud-states") then R.art_review, R.toast_time = true, 0 end
     if app.arg("art-board") then
         R.g = rules.game_start(8, 123478)
         R.pending = rules.new_match()
@@ -509,6 +506,7 @@ local function init()
     if tiles ~= "jewels" and tiles ~= "resources" then tiles = "relics" end
     for i = 0, rules.COLORS - 1 do R.relics[i + 1] = texture.load(("tile-sets/%s/%d.png"):format(tiles, i)) end
     R.board_art = require("art").load()
+    R.hud_art = require("art").load_hud()
     if app.arg("art-states") then
         R.art_packs = {}
         for _, pack in ipairs({"relics", "jewels", "resources"}) do

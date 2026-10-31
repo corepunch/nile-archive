@@ -42,6 +42,36 @@ check(stack:open("one",form,model),"first modal")
 check(stack:open("two",readonly,model),"nested modal")
 check(not stack:close("one") and stack:active(),"only top modal can close")
 check(stack:close("two") and stack:close("one") and not stack:active(),"nested stack unwinds")
+-- Backdrop dismissal belongs to the shared engine, including custom dialogs.
+local modal_bounds=rect(50,50,200,200)
+local outside={captured=true,released=true,tap=true,pos=vec2(20,30),press_pos=vec2(20,30)}
+check(ui.modal_dismiss(modal_bounds,{input=outside}),"background tap cancels")
+check(not ui.modal_dismiss(modal_bounds,{input=outside,fresh=true}),"opening release cannot cancel")
+check(not ui.modal_dismiss(modal_bounds,{input=outside,close_on_background=false}),"required result can opt out")
+outside.press_pos=vec2(100,100)
+check(not ui.modal_dismiss(modal_bounds,{input=outside}),"inside-to-outside release cannot cancel")
+outside.press_pos=vec2(20,30);outside.pos=vec2(100,100)
+check(not ui.modal_dismiss(modal_bounds,{input=outside}),"outside-to-inside release cannot cancel")
+outside.pos=vec2(20,30);outside.dragging=true
+check(not ui.modal_dismiss(modal_bounds,{input=outside}),"backdrop pan cannot cancel")
+outside.dragging=false;outside.multi_touch=true
+check(not ui.modal_dismiss(modal_bounds,{input=outside}),"pinch cannot cancel")
+outside.multi_touch=false;outside.captured=false
+check(not ui.modal_dismiss(modal_bounds,{input=outside}),"inherited world press cannot cancel")
+check(ui.modal_dismiss(modal_bounds,{input={back=true},close_on_background=false}),"back key remains separate from backdrop policy")
+local backdrop_stack=ui.modals({label=function()end})
+outside.captured=true
+assert(backdrop_stack:open("lower",readonly,model,{bounds=modal_bounds}))
+assert(backdrop_stack:open("upper",readonly,model,{bounds=modal_bounds}))
+check(not backdrop_stack:draw(0,{input=outside,reduced_motion=true}),"fresh nested layer ignores opening background release")
+local cancel=backdrop_stack:draw(0,{input=outside,reduced_motion=true})
+check(cancel and cancel.kind=="cancel" and cancel.modal=="upper","only top nested layer receives background cancel")
+check(#backdrop_stack.layers==2,"cancel event does not mutate modal stack implicitly")
+assert(backdrop_stack:close("upper"));assert(backdrop_stack:close("lower"))
+assert(backdrop_stack:open("required",readonly,model,{bounds=modal_bounds,close_on_background=false}))
+backdrop_stack:draw(0,{input=outside,reduced_motion=true})
+check(not backdrop_stack:draw(0,{input=outside,reduced_motion=true}),"required modal ignores background taps")
+backdrop_stack:close()
 local skin={button=function()end,button_text=function()end,label=function()end,focus=function()end}
 form:draw(rect(0,0,300,160),skin,{input={key=input.KEY_TAB}})
 check(form.focus=="accept","Tab focuses the first actionable control")

@@ -87,6 +87,7 @@ def main():
         im.save(DATA / 'characters' / f'{name}.png', optimize=True)
     print('relic-rush data ready')
     subprocess.run([sys.executable, str(ROOT / 'tools/board_assets.py')], check=True)
+    subprocess.run([sys.executable, str(ROOT / 'tools/prepare_hud.py')], check=True)
 
 
 if __name__ == '__main__':

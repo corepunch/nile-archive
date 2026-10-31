@@ -1,0 +1,103 @@
+{
+  "controls": {
+    "source": "art/expedition-hud/controls.png",
+    "prompt": "art/expedition-hud/controls-prompt.txt",
+    "size": [
+      1983,
+      793
+    ],
+    "generator": "built-in ImageGen, 2026-10-31; all pause states and both goal glyphs in one atlas"
+  },
+  "icons": {
+    "pause-normal": {
+      "box": [
+        30,
+        14,
+        420,
+        384
+      ],
+      "runtime": "data/expedition-hud/pause-normal.png",
+      "meaning": "Pause control: normal"
+    },
+    "pause-selected": {
+      "box": [
+        432,
+        14,
+        811,
+        384
+      ],
+      "runtime": "data/expedition-hud/pause-selected.png",
+      "meaning": "Pause control: selected"
+    },
+    "pause-pressed": {
+      "box": [
+        810,
+        14,
+        1173,
+        384
+      ],
+      "runtime": "data/expedition-hud/pause-pressed.png",
+      "meaning": "Pause control: pressed"
+    },
+    "pause-hover": {
+      "box": [
+        1173,
+        14,
+        1545,
+        384
+      ],
+      "runtime": "data/expedition-hud/pause-hover.png",
+      "meaning": "Pause control: hover"
+    },
+    "pause-disabled": {
+      "box": [
+        1558,
+        14,
+        1945,
+        384
+      ],
+      "runtime": "data/expedition-hud/pause-disabled.png",
+      "meaning": "Pause control: disabled"
+    },
+    "score": {
+      "box": [
+        28,
+        386,
+        417,
+        765
+      ],
+      "runtime": "data/expedition-hud/score.png",
+      "meaning": "Remaining score goal"
+    },
+    "complete": {
+      "box": [
+        426,
+        386,
+        811,
+        765
+      ],
+      "runtime": "data/expedition-hud/complete.png",
+      "meaning": "Completed objective"
+    }
+  },
+  "portrait": {
+    "source": "art/expedition-hud/elena-investigating.png",
+    "prompt": "art/expedition-hud/elena-prompt.txt",
+    "runtime": "data/characters/elena-investigating.png",
+    "box": [
+      0,
+      20,
+      1090,
+      1390
+    ],
+    "max_size": [
+      320,
+      400
+    ],
+    "generator": "built-in ImageGen, 2026-10-31; original Elena portrait used as identity reference",
+    "pose": "Static investigation: examining a sun fragment with a magnifying glass; animation-ready independent cutout"
+  },
+  "registration": "Measured crops, aspect-preserving resize into 120x120 on 128x128 RGBA canvas; original alpha preserved",
+  "review": "docs/review/expedition-header/README.md",
+  "reproduction": "python3 games/relic-rush/tools/prepare_hud.py"
+}

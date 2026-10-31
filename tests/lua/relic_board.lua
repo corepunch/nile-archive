@@ -121,5 +121,18 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     end
 end
 
+-- The compact header reports remaining win conditions from the rules, without
+-- dropping score/sand/locks or exposing redundant current/target totals.
+do
+    local g=rules.game_start(6,123)
+    R.g=g
+    local goals=R.goal_entries()
+    check(#goals==4 and goals[1].remaining==3800 and goals[2].remaining==16
+          and goals[3].remaining==15 and goals[4].remaining==g.obstacles,"late HUD exposes all four remaining goals")
+    g.score,g.relics,g.dug,g.obstacles=9000,99,99,0
+    for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
+    R.g=rules.game_start(0,123)
+    check(#R.goal_entries()==2,"opening HUD omits absent sand/lock objectives")
+end
 print(("relic board: %d checks, %d failures"):format(checks, failures))
 return failures

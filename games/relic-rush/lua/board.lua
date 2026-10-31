@@ -87,74 +87,82 @@ local function draw_backdrop()
     end
 end
 
--- Separate readout cards keep the painting visible between groups. Shared
--- form rows/columns own the grouping; the skin only paints their bounds.
-local hud_form = ui.form{kind="column", gap=10, children={
-    {kind="row", height=68, gap=8, children={
-        {kind="column", panel=true, width=104, padding={8,6,8,6}, children={
-            {kind="label", text="SCORE", height=19, em=13, palette=PAL_WHITE},
-            {kind="label", id="score", height=37, em=30, role="score"},
-        }},
-        {kind="column", panel=true, grow=1, padding={8,6,8,6}, children={
-            {kind="label", id="level", height=20, em=15},
-            {kind="label", id="name", height=36, em=18, palette=PAL_CREAM, wrap=true},
-        }},
-        {kind="column", panel=true, width=88, padding={8,6,8,6}, children={
-            {kind="label", id="moves", height=37, em=33},
-            {kind="label", text="MOVES", height=19, em=12, palette=PAL_WHITE},
-        }},
+-- One goal panel, a moves card and Elena's independent investigation cutout.
+-- Repeated goal rows use the shared measured list, with stable objective keys.
+function R.goal_entries()
+    local g, l = R.g, rules.level_of(R.g)
+    local entries = {
+        {id="score", icon="score", remaining=math.max(0, l.score-g.score)},
+        {id="idols", icon="idols", remaining=math.max(0, l.relics-g.relics)},
+    }
+    if l.soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,l.soil-g.dug)} end
+    if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
+    return entries
+end
+local function goal_icon(box, entry)
+    local image = entry.remaining==0 and R.hud_art.complete
+        or entry.icon=="score" and R.hud_art.score
+        or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
+        or R.board_art[entry.icon]
+    gfx.image(image, box, color.WHITE)
+end
+local hud_form=ui.form{kind="row",gap=8,children={
+    {kind="column",panel=true,width=224,padding={12,8,12,10},gap=4,children={
+        {kind="label",text="GOAL",height=18,em=14},
+        {kind="list",id="goals",gap=4,item=function(row)
+            local cells={}
+            for _,entry in ipairs(row.entries) do
+                cells[#cells+1]={kind="row",grow=1,gap=6,align="center",children={
+                    {kind="custom",width=28,height=28,paint=function(box) goal_icon(box,entry) end},
+                    {kind="label",text=entry.remaining==0 and "DONE" or tostring(entry.remaining),grow=1,em=17,text_align="start"},
+                }}
+            end
+            return {kind="row",height=36,gap=8,children=cells}
+        end},
     }},
-    {kind="custom", id="progress", height=10, paint=function(r, value)
-        gfx.round_rect(r, 5, rgba(13,47,41,245))
-        if value>0 then gfx.round_rect(rect(r.x+1,r.y+1,math.max(6,(r.w-2)*value),r.h-2),4,rgba(88,169,92)) end
-    end},
+    {kind="spacer",grow=1},
+    {kind="column",panel=true,width=88,height=116,padding={8,8,8,10},gap=4,children={
+        {kind="label",text="MOVES",height=18,em=14},
+        {kind="label",id="moves",grow=1,em=43},
+    }},
 }}
 local function hud_style(node)
-    local pulse = node.role=="score" and not R.reduced_motion and 5*math.sin(R.score_pulse/.25*PI) or 0
-    return R.pal(node.palette or PAL_GOLD, (node.em or 18)+pulse)
+    return style{font=R.font,size=(node.em or 17)*1.171875,fill=rgba(78,52,27)}
 end
-local hud_skin = {
+local hud_skin={
     style=hud_style,
     panel=function(r)
-        gfx.shadow(r:offset(vec2(0,3)),12,5,rgba(0,0,0,100))
-        gfx.round_rect(r,12,rgba(13,47,41,248))
-        gfx.round_rect_line(r:inflate(-.8),11,1.4,rgba(224,188,113,190))
+        gfx.shadow(r:offset(vec2(0,4)),16,8,rgba(0,0,0,85))
+        gfx.round_rect(r,16,rgba(139,87,38))
+        gfx.round_rect(r:inflate(-2),14,rgba(228,181,92))
+        gfx.round_rect(r:inflate(-5),12,rgba(255,237,187))
+        gfx.round_rect_line(r:inflate(-6),11,1,rgba(255,252,219,190))
     end,
-    label=function(r, label, node)
-        if node.wrap then text.box(hud_style(node),r,vec2(.5,.5),label)
-        else text.inside(hud_style(node),r,vec2(.5,.5),label) end
+    label=function(r,label,node)
+        text.inside(hud_style(node),r,vec2(node.text_align=="start" and 0 or .5,.5),label)
     end,
 }
-
-local function draw_hud()
-    local g = R.g
-    local l = rules.level_of(g)
-    hud_form:set("score",tostring(math.floor(R.score_display)))
-    hud_form:set("level",("LEVEL %d"):format(g.level+1))
-    hud_form:set("name",l.name)
-    hud_form:set("moves",tostring(g.moves))
-    hud_form:set("progress",R.goal_display)
-    hud_form:draw(rect(24,80,432,88),hud_skin,{interactive=false})
-
-    -- two primary goals, then sand and lock goals when the level has them
-    local goals = 2 + (l.soil > 0 and 1 or 0) + (g.initial_obstacles > 0 and 1 or 0)
-    local gw = 432 / goals
-    for k = 0, goals - 1 do
-        local r=rect(24+k*gw+2,196,gw-4,36)
-        gfx.round_rect(r,10,rgba(13,47,41,248))
-        gfx.round_rect_line(r:inflate(-.5),9,1,rgba(224,188,113,145))
-    end
-    R.say_at(("%d / %d"):format(math.min(g.score, l.score), l.score), vec2(24 + gw * .5, 212), 17, PAL_CREAM, gw - 10)
-    local pop = R.reduced_motion and 0 or 5 * math.sin(R.goal_pulse / .22 * PI)
-    gfx.image(R.relics[rules.RELIC_IDOL + 1], rect(24 + gw + 5 - pop / 2, 200 - pop / 2, 29 + pop, 29 + pop), color.WHITE)
-    R.say_at(("%d / %d"):format(math.min(g.relics, l.relics), l.relics), vec2(24 + gw * 1.58, 212), 19, PAL_GOLD, gw - 33)
-    local slot = 2
-    if l.soil > 0 then
-        R.say_at(("SAND %d"):format(l.soil - g.dug), vec2(24 + gw * (slot + .5), 212), 17, PAL_CREAM, gw - 8)
-        slot = slot + 1
-    end
-    if g.initial_obstacles > 0 then R.say_at(("LOCK %d"):format(g.obstacles), vec2(24 + gw * (slot + .5), 212), 17, PAL_WHITE, gw - 8) end
+function R.goal_target(kind)
+    -- Collection flights land on the goal they advance, rather than the old HUD.
+    local column=kind==rules.RELIC_IDOL and 1 or 0
+    local entries=R.goal_entries()
+    return #entries==2 and vec2(50,122+column*40) or vec2(50+column*104,122)
 end
+local function draw_hud()
+    local entries, rows=R.goal_entries(),{}
+    local per_row=#entries==2 and 1 or 2
+    for i=1,#entries,per_row do
+        local row={id=entries[i].id,entries={}}
+        for j=i,math.min(#entries,i+per_row-1) do row.entries[#row.entries+1]=entries[j] end
+        rows[#rows+1]=row
+    end
+    assert(hud_form:set_items("goals",rows))
+    hud_form:set("moves",tostring(R.g.moves))
+    -- Separate portrait texture/anchor will also work for later animated poses.
+    gfx.image(R.hud_art.elena,rect(242,18,132,174):fit(texture.size(R.hud_art.elena)),color.WHITE)
+    hud_form:draw(rect(24,74,432,116),hud_skin,{interactive=false})
+end
+R.hud_form=hud_form
 
 local function draw_cells(sx)
     local g = R.g
@@ -427,6 +435,7 @@ function R.board_screen(inp, dt)
     draw_blockers(sx)
     draw_tools(inp)
     if app.arg("art-states") then art.draw_catalogue(R) end
+    if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     board_input(inp)
 end
 

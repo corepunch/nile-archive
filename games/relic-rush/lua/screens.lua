@@ -142,13 +142,11 @@ local star_icon, compass_icon = R.star_icon, R.compass_icon
 
 -- No title and no band: the picture runs up to the status bar, with small
 -- glassy controls in the corners, as Nile Archive's screens do.
-local function corner_button(center, label, em)
-    local st = ui.hit(rect.centered(center, size2(56, 56)), 0)
-    local c = st.held and center + vec2(0, 2) or center
-    disc(c + vec2(0, 3), 24, rgba(0, 0, 0, 80))
-    disc(c, 24, rgba(233, 199, 123, 200))
-    disc(c, 22, rgba(13, 47, 41, st.hot and 245 or 225))
-    say(label, rect.centered(c, size2(40, 36)), em, PAL_CREAM)
+local function pause_button()
+    local bounds=rect(414,12,52,52)
+    local st=ui.hit(bounds,0)
+    local state=st.held and "pressed" or st.hot and "hover" or "normal"
+    picture(R.hud_art["pause-"..state],bounds,255)
     return st.clicked
 end
 
@@ -173,11 +171,9 @@ local capsule_notes = {"Gold buys buildings. Replay expeditions to earn more.", 
                        "Compasses are spent to open new land."}
 
 -- The island shows its purse in two rows of capsules; tapping EXPAND opens the
--- next region. The board keeps only the way back and the pause button.
+-- next region. An unfinished expedition exposes only pause, never island access.
 function R.draw_header(island)
-    if not island then
-        if corner_button(vec2(40, 38), "Isle", 15) then R.on_island = true end
-    else
+    if island then
         for k = 1, 5 do
             local r = rect(34 + (k - 1) % 3 * 120, k <= 3 and 14 or 58, 96, 34)
             if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end
@@ -189,7 +185,7 @@ function R.draw_header(island)
         say("EXPAND +", r:inflate2(vec2(-10, 0)), 15, PAL_CREAM)
         if tapped(r) then R.expand() end
     end
-    if corner_button(vec2(440, 38), "II", 22) then R.overlay = R.OV_PAUSE end
+    if pause_button() then R.overlay = R.OV_PAUSE end
 end
 
 function R.draw_toast()
@@ -197,9 +193,9 @@ function R.draw_toast()
     if R.on_island then   -- above the map buttons
         rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
-    else   -- between the corner buttons
-        rrect(rect(74, 23, 332, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 37), 14, PAL_CREAM, 316)
+    else   -- below the compact header, clear of Elena and the pause control
+        rrect(rect(38, 200, 404, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 215), 14, PAL_CREAM, 388)
     end
 end
 
@@ -332,7 +328,9 @@ local function wonder_screen()
     wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1]):set("wood_icon",R.relics[RELIC_LEAF+1]):set("stone_icon",R.relics[RELIC_CRYSTAL+1])
     wonder_form.values.can_build, wonder_form.values.show_notice = can_build and not built, built or not can_build
     wonder_form:set("notice",built and "HOLD AND DRAG ON THE ISLAND TO MOVE" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER")
-    local event = wonder_form:draw(rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592)),form_skin,{hit_offset=vec2(0,R.hit_dy)})
+    local bounds=rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592))
+    R.modal_bounds=pr(bounds)
+    local event = wonder_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
     if event and event.id == "action" then
         if can_build or built then R.island_begin(i,true,built and R.inspect_item or nil) else R.overlay=R.OV_NONE end
     elseif event and event.id == "close" then R.overlay=R.OV_NONE end
@@ -387,6 +385,7 @@ local function guide_screen()
     local width=432
     local _,height=guide_form:measure(width,form_skin)
     local bounds=rect.centered(vec2(240,460),size2(width,height))
+    R.modal_bounds=pr(bounds)
     local action=guide_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
     if action and action.id=="done" then R.overlay=R.OV_NONE end
 end
@@ -394,6 +393,7 @@ end
 local pause_form = ui.form{
     root={kind="column",panel=true,padding={46,20,46,35},gap=20,children={
         {kind="label",text="Take a breath",height=44,em=34},
+        {kind="label",id="level",height=30,em=16,palette=PAL_CREAM},
         {kind="button",id="resume",text="RESUME",height=49},
         {kind="toggle",id="sound",on_text="SOUND ON",off_text="SOUND OFF",height=49},
         {kind="toggle",id="motion",on_text="MOTION REDUCED",off_text="FULL ANIMATION",height=49},
@@ -403,13 +403,17 @@ local pause_form = ui.form{
 }
 local function pause_screen()
     local ok,message=pause_form:push(R);assert(ok,message)
-    local event=pause_form:draw(rect(42,252,396,382),form_skin,{hit_offset=vec2(0,R.hit_dy)})
+    pause_form:set("level",R.on_island and "Your valley" or ("%d. %s"):format(R.g.level+1,rules.level_of(R.g).name))
+    local bounds=rect(42,227,396,432)
+    R.modal_bounds=pr(bounds)
+    local event=pause_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
     if not event then return end
     if event.kind=="change" then
         ok,message=pause_form:pull(R);assert(ok,message);sfx.enable(R.sound)
     elseif event.id=="resume" then R.overlay=R.OV_NONE
     elseif event.id=="guide" then R.overlay=R.OV_GUIDE end
 end
+R.pause_form=pause_form
 
 local function failed_screen()
     panel(rect(38, 272, 404, 333))
@@ -424,6 +428,7 @@ local function zone_screen()
     local z = R.zone_card
     local zone = R.island.zones[z + 1]
     local ready = R.island:zone_available(z, R.prog.wallet)
+    R.modal_bounds=pr(rect(30,263,420,365))
     panel(rect(30, 263, 420, 365))
     say_at(zone.name, vec2(240, 304), 34, PAL_GOLD, 380)
     say_at("A NEW PLACE TO DISCOVER", vec2(240, 349), 16, PAL_CREAM, 0)
@@ -440,7 +445,7 @@ local function zone_screen()
     end
     say_at("COMPASSES ARE SPENT. STARS STAY WITH YOU.", vec2(240, 559), 12, PAL_WHITE, 0)
     say_at("CLOSE", vec2(240, 592), 15, PAL_WHITE, 0)
-    if tapped(rect(0, 575, SCREEN_W, SCREEN_H - 575)) then R.overlay = R.OV_NONE end
+    if tapped(rect(180,575,120,38)) then R.overlay = R.OV_NONE end
 end
 
 local function finale_screen()
@@ -481,8 +486,12 @@ function R.overlays(dt)
     -- dialogs are laid out on the 900-tall design: centre them on a taller screen
     R.hit_dy = R.drop / 2
     P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit + R.hit_dy), entry * (1 - exit)
+    local before=R.overlay
+    R.modal_bounds=nil
     local draw = dialogs[R.overlay]
     if draw then draw() end
+    if R.overlay==before and R.modal_bounds and not R.modal_closing
+            and ui.modal_dismiss(R.modal_bounds,{fresh=R.modal_clock<=dt}) then R.overlay=R.OV_NONE end
     reset_paint()
     R.hit_dy = 0
 end

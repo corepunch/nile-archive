@@ -323,6 +323,19 @@ end
 function ui.modals(skin)
     return setmetatable({layers={},skin=skin or {}},Stack)
 end
+-- Shared cancellation for both form stacks and custom painted dialogs. A tap
+-- must begin AND end on the backdrop; drags and inherited opening releases
+-- cannot dismiss a dialog or activate the world underneath it.
+function ui.modal_dismiss(bounds,options)
+    options=options or {}
+    ui.block(app.bleed())
+    if options.fresh or options.interactive==false then return false end
+    local inp=options.input or input.get()
+    if inp.back then return true end
+    return options.close_on_background~=false and inp.captured and inp.released and inp.tap
+        and not inp.dragging and not inp.multi_touch and inp.pos and inp.press_pos
+        and not bounds:contains(inp.pos) and not bounds:contains(inp.press_pos) or false
+end
 function Stack:active() return #self.layers>0 end
 function Stack:begin()
     ui.set_enabled(not self:active())
@@ -341,7 +354,7 @@ function Stack:close(id)
     self.layers[#self.layers]=nil;return true
 end
 function Stack:draw(dt,options)
-    options=options or {};local event;local top_fresh=false
+    options=options or {};local event;local top_fresh=false;local top_bounds
     ui.set_enabled(true)
     for i,layer in ipairs(self.layers) do
         layer.clock=layer.clock+dt
@@ -356,12 +369,15 @@ function Stack:draw(dt,options)
         end
         -- The release/key that opened a modal belongs to the previous screen.
         -- In particular it must not activate a new button underneath that tap.
-        if i==#self.layers then top_fresh=layer.fresh end
+        if i==#self.layers then top_fresh,top_bounds=layer.fresh,bounds end
         local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers and not layer.fresh,input=options.input or input.get()})
         layer.fresh=false
         if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end
     end
     local top=self.layers[#self.layers]
-    if top and not top_fresh and (options.input or input.get()).back then event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'} end
+    if top and not event and ui.modal_dismiss(top_bounds,{fresh=top_fresh,input=options.input,
+            close_on_background=top.options.close_on_background}) then
+        event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'}
+    end
     return event
 end
