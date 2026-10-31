@@ -98,8 +98,10 @@ local function tap(screen)
             local gain = FIND_POINTS * G.combo
             G.score = G.score + gain
             local at = G.cam:to_screen(sc.at[i])
-            fx.sparkle(at, 40 * G.cam.zoom + 20, hex(0xFFE7A0))
-            fx.text(at - vec2(0, 30), S.float, ("+%d"):format(gain))
+            if not G.reduced_motion then
+                fx.sparkle(at, 40 * G.cam.zoom + 20, hex(0xFFE7A0))
+                fx.text(at - vec2(0, 30), S.float, ("+%d"):format(gain))
+            end
             if M.found_count() == ITEMS then
                 local stars = stars_for(G.clock)
                 G.result = {score = G.score, time = G.clock, stars = stars, complete = true, perfect = G.misses == 0 and G.hints == 0}
@@ -116,7 +118,7 @@ local function tap(screen)
     G.score = math.max(0, G.score - MISS_POINTS)
     G.misses = G.misses + 1
     G.combo, G.combo_left = 0, 0
-    fx.text(screen - vec2(0, 20), S.float_miss, ("−%d"):format(MISS_POINTS))
+    if not G.reduced_motion then fx.text(screen - vec2(0, 20), S.float_miss, ("−%d"):format(MISS_POINTS)) end
 end
 
 ------------------------------------------------------------------- screen
@@ -155,12 +157,12 @@ function M.frame(screen, world, dt)
     for i = 1, ITEMS do
         local p = G.cam:to_screen(sc.at[i])
         if G.found[i] then
-            local t = ease.out_back(num.saturate((now - G.found[i]) * 3))
+            local t = G.reduced_motion and 1 or ease.out_back(num.saturate((now - G.found[i]) * 3))
             gfx.ring(p, 15 * t, 2.5, rgba(172, 239, 195, 230))
             gfx.ring(p, 21 * t, 1.5, rgba(172, 239, 195, 120))
         elseif G.hint == i then
             local r = math.max(25, math.min(sc.radius[i].x, sc.radius[i].y)) * G.cam.zoom
-            local pulse = 1 + math.sin(now * 6) * .06
+            local pulse = G.reduced_motion and 1 or 1 + math.sin(now * 6) * .06
             gfx.glow(p, r * 1.6, rgba(255, 225, 116, 70), rgba(255, 225, 116, 0))
             gfx.ring(p, r * pulse, 3, rgba(255, 225, 116, 255))
         end
@@ -176,6 +178,7 @@ function M.frame(screen, world, dt)
 
     -- pause, top right: a glassy circle
     local pc = vec2(area:max().x - 30, area.y + 30)
+    G.spots.pause = pc
     local pause = ui.hit(rect.centered(pc, size2(64, 64)), 0)
     local pp = pause.held and pc + vec2(0, 2) or pc
     gfx.circle(pp, 29, rgba(20, 16, 12, pause.hot and 150 or 110))
@@ -209,7 +212,7 @@ function M.frame(screen, world, dt)
     local hc = vec2(area:max().x - 44, area:max().y - 38)
     local hint = ui.hit(rect.centered(hc, size2(96, 96)), 0)
     local hp = hint.held and hc + vec2(0, 2) or hc
-    if ready then gfx.glow(hp, 62, rgba(255, 214, 110, 150 + 40 * math.sin(now * 3)), rgba(255, 214, 110, 0)) end
+    if ready then gfx.glow(hp, 62, rgba(255, 214, 110, G.reduced_motion and 170 or 150 + 40 * math.sin(now * 3)), rgba(255, 214, 110, 0)) end
     gfx.circle(hp, 42, K.GOLD_SEAM)
     gfx.circle(hp, 40, ready and K.GOLD_HI or hex(0xB8A27A))
     gfx.circle(hp, 34, K.GOLD_SEAM)
@@ -232,10 +235,10 @@ function M.frame(screen, world, dt)
         local slot = row:col(SLOTS, k - 1, 14)
         local i = G.slots[k]
         if i then
-            local arrive = ease.out_back(num.saturate((now - (G.slot_time[k] or 0)) * 4))
+            local arrive = G.reduced_motion and 1 or ease.out_back(num.saturate((now - (G.slot_time[k] or 0)) * 4))
             local leave = G.found[i] and num.saturate((now - G.found[i] - .45) / .35) or 0
             local a = num.saturate(arrive) * (1 - leave)
-            local pill = slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
+            local pill = G.reduced_motion and slot or slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
             local hinted = G.hint == i and not G.found[i]
             gfx.round_rect(pill:inflate(2.5), pill.h * .5 + 2.5, (hinted and hex(0xFFE08A) or hex(0xE2BC6E)):alpha(a))
             local fill = hinted and rgba(176, 118, 36, 215) or rgba(48, 28, 12, 168)

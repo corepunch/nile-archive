@@ -50,7 +50,7 @@ local function frame(dt)
 
     if G.modal ~= MODAL_NONE and not talking then   -- a dialogue goes first: the reward waits for it
         G.modal_time = G.modal_time + dt
-        ui.modal_backdrop(G.modal_time * 4)
+        ui.modal_backdrop(G.reduced_motion and 1 or G.modal_time * 4)
         dialogs.draw(G.modal, G.modal_time)
     end
     story.frame(dt)

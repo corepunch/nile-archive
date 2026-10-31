@@ -268,7 +268,7 @@ function M.frame(screen, world)
     if G.modal == MODAL_NONE then
         if ev.result == city.BUILT then
             progress.save()
-            fx.burst(ev.screen, 26, hex(0xF2D29A), 260, 9)
+            if not G.reduced_motion then fx.burst(ev.screen, 26, hex(0xF2D29A), 260, 9) end
             local gain = G.buildings[island.items[ev.building + 1].type + 1].reward[INFLUENCE]
             ui.toast(gain > 0 and ("Постройка готова · +%d влияния"):format(gain) or "Украшение на месте")
         elseif ev.result == city.CANT_AFFORD then
