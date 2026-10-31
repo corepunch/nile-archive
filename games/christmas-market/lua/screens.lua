@@ -37,18 +37,12 @@ local rrect, picture, picture_fit = R.rrect, R.picture, R.picture_fit
 
 ---------------------------------------------------------------------- text
 
--- Lilita One sizes are given in em like the original pipeline; the engine
--- measures ascent to descent, 1.17 em for this font. Every palette shares a
--- dark rim and a drop shadow cast by the rimmed silhouette.
-local tops = {[0] = rgba(255, 255, 219), rgba(255, 249, 226), rgba(199, 255, 201), rgba(255, 255, 255)}
-local bottoms = {[0] = rgba(239, 169, 57), rgba(244, 221, 166), rgba(91, 198, 130), rgba(196, 232, 220)}
-function R.pal(palette, em)
-    palette = num.clampi(palette, 0, 3)
-    em = em * P.scale
-    return style{font = R.font, size = em * 1.171875, fill = tops[palette], fill2 = bottoms[palette],
-                 outline = rgba(62, 49, 29), outline_width = em * 4 / 64, shadow = rgba(31, 35, 24, 184),
-                 shadow_offset = vec2(0, em * 5 / 64), fade = 1 - P.alpha}
-end
+-- The look lives in skin.lua; the engine paints it through the dialog's
+-- current transform. A palette is one of the skin's text styles (R.PAL_*).
+local skin = require("skin")
+skin.transform = function() return P.scale, P.offset, P.alpha end
+R.skin = skin
+function R.pal(palette, em) return skin:text(palette, em) end
 local pal = R.pal
 
 function R.say(s, box, em, palette) return text.inside(pal(palette, em), pr(box), vec2(.5, .5), s) end
@@ -62,12 +56,7 @@ local say, say_left, say_at = R.say, R.say_left, R.say_at
 
 -------------------------------------------------------------------- widgets
 
-function R.panel(r)
-    rrect(r:offset(vec2(0, 6)), 18, rgba(9, 28, 26, 145))
-    rrect(r, 18, rgba(102, 68, 39))
-    rrect(r:inflate(-2), 16, rgba(239, 204, 135))
-    rrect(r:inflate(-5), 13, rgba(255, 239, 188))
-end
+function R.panel(r) skin:paint("panel", r) end
 local panel = R.panel
 
 function R.tapped(r) return ui.hit(r:offset(vec2(0, R.hit_dy)), 0).clicked end
@@ -75,11 +64,7 @@ local tapped = R.tapped
 
 -- Buttons respond even when drawn disabled, so the game can explain why not.
 function R.paint_button(r, st, enabled)
-    local b = st.held and r:offset(vec2(0, 2)) or r
-    rrect(r:offset(vec2(0, 6)), 15, rgba(13, 54, 43))
-    rrect(b, 15, enabled and rgba(133, 35, 46) or rgba(75, 94, 80))
-    rrect(rect(b.x + 3, b.y + 3, b.w - 6, b.h - 7), 12, enabled and rgba(184, 64, 65) or rgba(110, 126, 108))
-    rrect(rect(b.x + 6, b.y + 4, b.w - 12, b.h * .4), 10, enabled and rgba(211, 102, 91) or rgba(130, 145, 125))
+    skin:paint("button", r, {hot = st.hot, held = st.held, disabled = not enabled})
 end
 function R.button(r, label, enabled)
     local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
@@ -89,27 +74,8 @@ function R.button(r, label, enabled)
 end
 local button = R.button
 
--- One game skin; the shared form engine owns layout, hits, focus and bindings.
-local form_skin = {
-    -- Measurement stays in logical units; painting applies the dialog transform.
-    style = function(node)
-        local em=node.em or ((node.kind=="button" or node.kind=="toggle") and 25 or node.wrap and 22 or 26)
-        return style{font=R.font,size=em*1.171875}
-    end,
-    panel = panel,
-    button = function(r, st, node) if not node.flat then R.paint_button(r, st, not st.disabled) end end,
-    button_text = function(r, label, node, st)
-        say(label, (st.held and r:offset(vec2(0, 2)) or r):inflate(-8), node.em or 25, PAL_CREAM)
-    end,
-    label = function(r, label, node)
-        local align=vec2(node.text_align=='start' and 0 or node.text_align=='end' and 1 or .5,.5)
-        local s=pal(node.palette or (node.wrap and PAL_CREAM or PAL_GOLD),node.em or (node.wrap and 22 or 26))
-        if node.wrap then text.box(s,pr(r),align,label)
-        else text.inside(s,pr(r),align,label) end
-    end,
-    focus = function(r) gfx.round_rect_line(pr(r:inflate(3)), 15 * P.scale, 2, pc(rgba(255, 223, 129))) end,
-}
-
+-- Forms take the same skin; the shared form engine owns layout, hits, focus and bindings.
+local form_skin = skin
 R.form_skin = form_skin
 
 function R.star_icon(center, radius)
@@ -278,14 +244,14 @@ local wonder_form = ui.form{
         {kind="spacer", height=19},
         {kind="image", id="sprite", height=205},
         {kind="spacer", height=18},
-        {kind="label", id="about", height=62, wrap=true, em=22, palette=PAL_CREAM},
+        {kind="label", id="about", height=62, wrap=true, em=22, text_style=PAL_CREAM},
         {kind="spacer", height=14},
         {kind="row", height=78, padding={16,0,16,0}, gap=10, visible_field="can_build", children={
             {kind="column", grow=1, gap=9, children={{kind="image",id="gold_icon",height=34},{kind="label",id="gold",height=28}}},
             {kind="column", grow=1, gap=9, children={{kind="image",id="wood_icon",height=34},{kind="label",id="wood",height=28}}},
             {kind="column", grow=1, gap=9, children={{kind="image",id="stone_icon",height=34},{kind="label",id="stone",height=28}}},
         }},
-        {kind="label",id="notice",height=78,wrap=true,em=15,palette=PAL_CREAM,visible_field="show_notice"},
+        {kind="label",id="notice",height=78,wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
         {kind="spacer",height=18},
         {kind="button",id="action",height=56},
         {kind="spacer",height=17},
@@ -344,20 +310,20 @@ local function guide_icon(box, icon)
 end
 local guide_form=ui.form{kind="column",panel=true,padding=20,children={
     {kind="label",text="Market keeper's guide",height=44,em=34},
-    {kind="label",text="SWIPE OR TAP TWO NEIGHBORING TREATS",height=26,em=13,palette=PAL_WHITE},
+    {kind="label",text="SWIPE OR TAP TWO NEIGHBORING TREATS",height=26,em=13,text_style=PAL_WHITE},
     {kind="spacer",height=14},
     {kind="list",id="topics",gap=12,item=function(entry)
         local align=entry.icon and "start" or "center"
         return {kind="row",gap=14,align="center",children={
             {kind="custom",width=64,height=64,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
             {kind="column",grow=1,gap=4,children={
-                {kind="label",text=entry.title,wrap=true,text_align=align,em=22,palette=PAL_GOLD},
-                {kind="label",text=entry.description,wrap=true,text_align=align,em=16,palette=PAL_CREAM},
+                {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style=PAL_GOLD},
+                {kind="label",text=entry.description,wrap=true,text_align=align,em=16,text_style=PAL_CREAM},
             }},
         }}
     end},
     {kind="spacer",height=18},
-    {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,palette=PAL_WHITE},
+    {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,text_style=PAL_WHITE},
     {kind="spacer",height=10},
     {kind="button",id="done",text="LET'S MAKE MAGIC",height=45,em=25},
 }}
@@ -375,7 +341,7 @@ end
 local pause_form = ui.form{
     root={kind="column",panel=true,padding={46,20,46,35},gap=20,children={
         {kind="label",text="Take a breath",height=44,em=34},
-        {kind="label",id="level",height=30,em=16,palette=PAL_CREAM},
+        {kind="label",id="level",height=30,em=16,text_style=PAL_CREAM},
         {kind="button",id="resume",text="RESUME",height=49},
         {kind="toggle",id="sound",on_text="SOUND ON",off_text="SOUND OFF",height=49},
         {kind="toggle",id="motion",on_text="MOTION REDUCED",off_text="FULL ANIMATION",height=49},

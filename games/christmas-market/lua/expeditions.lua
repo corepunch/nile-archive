@@ -6,11 +6,11 @@ local page=1
 local stack=ui.modals(R.form_skin)
 local form=ui.form{kind='column',panel=true,padding=20,gap=12,children={
     {kind='label',text='Winter wishes',height=42,em=34},
-    {kind='label',text='First clear: building materials + Christmas Stars.\nReplay: 60 Gold + up to 40 for moves saved.',wrap=true,em=17,palette=R.PAL_CREAM},
+    {kind='label',text='First clear: building materials + Christmas Stars.\nReplay: 60 Gold + up to 40 for moves saved.',wrap=true,em=17,text_style=R.PAL_CREAM},
     {kind='list',id='levels',gap=12,item=function(e)
         return {kind='column',panel=true,padding=12,gap=6,children={
             {kind='label',text=e.title,wrap=true,text_align='start',em=24},
-            {kind='label',text=e.note,wrap=true,text_align='start',em=15,palette=R.PAL_CREAM},
+            {kind='label',text=e.note,wrap=true,text_align='start',em=15,text_style=R.PAL_CREAM},
             {kind='button',id='play',text=e.action,enabled=e.available,height=42,em=21},
         }}
     end},
