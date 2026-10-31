@@ -245,7 +245,9 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 - `lua/vfx.lua`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups.
 - `lua/island_view.lua`: the island screen around the engine city: HUD, region markers, placement panel.
 - `lua/screens.lua`: text palettes, panels, buttons and every dialog.
-- `lua/main.lua`: flow, saves, sound and debug entry points; returns the app descriptor the engine runs.
+- `lua/main.lua`: flow, saves and sound; returns the app descriptor the engine runs.
+- `lua/debug_screens.lua`: the `--level`, `--city`, `--dialog`, `--catalogue` … entry points that open a screen directly for screenshots.
+- `lua/smoke.lua`: the `--smoke` run through injected input, including the engine's `city.move_test`.
 - `art/`, `data/`, `docs/`, `tools/`: sources, runtime assets, documentation and the asset pipeline.
 
 ## Design references and original assets

@@ -1596,3 +1596,8 @@ function ui_modal_stack:open(id, form, model, options) end
 function ui_modal_stack:close(id) end
 ---@return table?
 function ui_modal_stack:draw(dt, options) end
+---Smoke-test driver for the deliberate building pickup (engine/city_smoke.lua): call the returned function once per tick while it returns true
+---@param c city
+---@param opts {look: fun(at: vec2), wallet: fun(): number, cancel: fun(), confirm: fun(), offset: vec2?}
+---@return fun(): boolean
+function city.move_test(c, opts) end
