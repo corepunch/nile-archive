@@ -17,14 +17,18 @@ one price/payoff/requirement data source and measured horizontal item columns.
 | Scene Stars | Existing 1–3 best-time rating; improvements award Coins once; no separate spending state |
 | Influence | Existing estate icon; building-only cumulative progress, never a scene payout or spendable balance |
 | Chapter button | Play/replay when preceding clue and Influence permit; disabled with the missing requirement otherwise; existing normal/hover/pressed/focus/disabled skin |
-| Building row | Existing normal sprite; price, Influence return and chapter requirement; no persistent selected state |
+| Building row | Existing normal sprite; price, Influence return (restorations) or «Украшение · W×H» (catalogue decorations), and chapter or Star requirement; no persistent selected state |
+| Category/page arrows | Engine buttons in the tray header (category ‹ ›, wrapping through «Восстановление», «Все постройки» and 11 catalogue categories) and footer («Назад»/«Далее», disabled at the first/last page); light category label on the dark tray |
 | Buy/close | Engine buttons with normal/hover/pressed/focus; Buy disabled for locked or unaffordable stock |
 | Purchase preview | Existing city ghost/valid-invalid footprint; shows cost and Influence return; charges only on confirmation |
 | Goal | Shows missing Influence and opens the building list, or opens chapters when ready |
 
+The 96 decorations are documented in [building-catalogue.md](building-catalogue.md); the tray
+lists any category with `--screen build --catalogue <category> --catalogue-page N`.
 Reproduce with `--screen win`, `first-win`, `chapters`, `build`, `first-build`, `purchase`,
 `opening` and `island`. `--smoke` plays two scenes, cancels/confirms purchases,
-builds the fountain/temple and enters chapter three using actual control input.
+builds the fountain/temple, browses decoration categories and pages, buys a date palm
+and enters chapter three using actual control input.
 Pure economy tests cover minimum/maximum rewards, repeated claims, best-Star
 improvements, clue order and legacy scene access. The shared modal stack also
 consumes opening-frame input before enabling its controls.

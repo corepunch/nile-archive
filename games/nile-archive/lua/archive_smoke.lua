@@ -1,12 +1,13 @@
 -- archive_smoke.lua — the --smoke run: plays chapter one through injected
 -- clicks, runs the engine's pickup-and-move check on the island, cancels and
--- confirms a purchase, then reaches chapter three by finding the second clue
--- and building the temple through real form input. Every step asserts what it
--- expects.
+-- confirms a purchase, then reaches chapter three by finding the second clue,
+-- building the temple and browsing the decoration catalogue (categories, pages
+-- and a purchase) through real form input. Every step asserts what it expects.
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
 local scene = require("archive_scene")
+local island = require("archive_island")
 local scenes = content.scenes
 local ITEMS, COINS, INFLUENCE = G.ITEMS, G.COINS, G.INFLUENCE
 local MODAL_NONE, MODAL_WIN, MODAL_CHAPTERS = G.MODAL_NONE, G.MODAL_WIN, G.MODAL_CHAPTERS
@@ -29,6 +30,12 @@ local function buy(key)
         end
     end
     error("building key absent from catalogue")
+end
+
+-- Press one of a form's own controls by id.
+local function press(f, id)
+    assert(f and f.boxes[id] and f.nodes[id].enabled ~= false, "form control " .. id .. " is not available")
+    app.inject_click(f.boxes[id]:center())
 end
 
 -- Tap the next unfound item of chapter `i`; true while one was left. The
@@ -112,11 +119,35 @@ function M.step()
     elseif step == 24 then app.inject_click(G.spots.move_confirm); step = 25
     elseif step == 25 then
         assert(G.wallet[INFLUENCE] == 50 and G.island.count == 3, "temple must open final chapter")
+        app.inject_click(G.spots.build); step = 40
+    elseif step == 40 then   -- browse the decoration catalogue: categories, then pages
+        assert(G.tray, "build tray did not open")
+        if island.TRAY_CATEGORIES[island.tray.category][1] ~= "tree" then
+            press(G.spots.build_form, "category_next")
+        else
+            press(G.spots.build_form, "page_next"); step = 41
+        end
+    elseif step == 41 then
+        assert(island.tray.page == 2, "catalogue did not page forward")
+        press(G.spots.build_form, "page_prev"); step = 42
+    elseif step == 42 then
+        assert(island.tray.page == 1, "catalogue did not page back")
+        purchase_coins = G.wallet[COINS]
+        for i, kind in ipairs(content.kinds) do
+            if kind.key == "date_palm" then buy(i) end
+        end
+        step = 43
+    elseif step == 43 then
+        assert(content.kinds[G.island.placing + 1].key == "date_palm", "decoration preview did not start")
+        app.inject_click(G.spots.move_confirm); step = 44
+    elseif step == 44 then
+        assert(G.island.count == 4 and G.wallet[COINS] == purchase_coins - 30 and G.wallet[INFLUENCE] == 50,
+            "a decoration must charge its coins once and grant no Influence")
         app.inject_click(G.spots.chapters); step = 26
     elseif step == 26 then app.inject_click(G.spots.play3); step = 27
     elseif step == 27 then
         assert(G.scene == 3, "final chapter did not open")
-        print("Nile smoke: scene rewards -> free move -> purchase cancel/confirm -> fountain -> chapter two -> temple -> chapter three passed")
+        print("Nile smoke: scene rewards -> free move -> purchase cancel/confirm -> fountain -> chapter two -> temple -> decoration catalogue -> chapter three passed")
         app.quit()
     end
 end

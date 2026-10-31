@@ -1,6 +1,7 @@
 -- archive_content.lua — Nile Archive's content: the three hidden-object
 -- chapters, the island's buildings, the cast and the scripted dialogue.
 local economy = require("archive_economy")
+local catalogue = require("archive_catalogue")
 local rgba = color
 
 local M = {}
@@ -47,6 +48,19 @@ M.buildings = {
     building(4, "Фонтан", 2, 2, vec2(80, 192), 151, "buildings/3.png"),
     building(5, "Мастерская", 2, 2, vec2(76, 187), 143, "buildings/4.png"),
 }
+
+-- The five restorations above grant Influence. The 96 catalogue objects after
+-- them (docs/building-catalogue.md) are decorations: they cost coins, grant
+-- nothing and unlock with the best Stars earned across the chapters. Their
+-- types follow the restorations' (5..100), so saves stay compatible.
+M.RESTORATIONS = #M.buildings
+M.kinds = {}   -- per type: category, Star unlock and key (the engine's defs keep only the city fields)
+for i = 1, M.RESTORATIONS do M.kinds[i] = {category = "story", stars = 0} end
+for _, e in ipairs(catalogue) do
+    M.buildings[#M.buildings + 1] = {name = e.name, sprite_path = e.sprite_path, size = e.size, pivot = e.pivot,
+        base_width = e.base_width, cost = purse(e.coins), reward = purse(), needs = purse(0, 0, 0, e.stars)}
+    M.kinds[#M.buildings] = {category = e.category, stars = e.stars, key = e.key}
+end
 
 M.cast = {
     {id = "nefra", name = "Нефра", role = "Дочь хранителя · ищет отца и архив", portrait_path = "characters/nefra.png",

@@ -4,7 +4,7 @@
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
-local COINS, INFLUENCE, CHAPTERS = G.COINS, G.INFLUENCE, G.CHAPTERS
+local COINS, INFLUENCE, CHAPTERS, STARS = G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
 
 local M = {}
 
@@ -23,7 +23,8 @@ local function serialize(s)
     G.wallet[INFLUENCE] = s:int("influence", G.wallet[INFLUENCE])
     G.wins = s:ints("wins", G.wins)
     G.stars = s:ints("stars", G.stars)
-    G.wallet[CHAPTERS] = economy.completed(G.wins)   -- a non-spendable requirement, rebuilt from saved wins
+    G.wallet[CHAPTERS] = economy.completed(G.wins)   -- non-spendable requirements, rebuilt from saved records
+    G.wallet[STARS] = economy.stars(G.stars)
     G.island:serialize(s)
     story.serialize(s)
 end
