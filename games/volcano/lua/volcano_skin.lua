@@ -54,6 +54,32 @@ return ui.skin{
             }},
         },
 
+        -- A teal box in the buttons' rim that shows a gold tick when checked.
+        -- Hover lifts it, pressing sinks box and tick 1 unit, disabled fades it.
+        checkbox = {
+            size = 36, gap = 14, text = "cream", em = 25,
+            box = {
+                normal = {layers = {
+                    {name = "shadow", shadow = "#0000003C", radius = 11, blur = 6, offset = {0, 3}, fixed = true},
+                    {name = "body", fill = "button", fill2 = "button_low", radius = 9},
+                    {name = "gloss", fill = "#FFFFFF16", fill2 = "#FFFFFF00", radius = 6, height_ratio = .5, inset = {3, 2, 3, 2}},
+                    {name = "rim", border = "button_border", width = 1.5, radius = 9},
+                }},
+                hover = {set = {body = {fill = "button_hot"}}},
+                pressed = {offset = {0, 1}},
+                disabled = {alpha = .45},
+            },
+            mark = {
+                normal = {layers = {
+                    {name = "tick_rim", check = "ink", width = 7, inset = 2},
+                    {name = "tick", check = "gold", width = 4, inset = 2},
+                }},
+                pressed = {offset = {0, 1}},
+                disabled = {alpha = .45},
+            },
+            disabled = {text = "cream_off"},
+        },
+
         -- Progress meters: a dark track, a gold fill and the panel's rim over both.
         progress = {
             track = {normal = {layers = {{fill = "button_low", radius = 13}}}},

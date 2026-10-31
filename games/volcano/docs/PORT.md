@@ -63,7 +63,7 @@ solvable route rather than overriding player spending decisions.
 
 `lua/volcano_levels.lua` is the campaign. `lua/volcano_art.lua` is native atlas
 metadata; `lua/volcano_skin.lua` is the whole interface look (lettering, theme,
-panels, buttons with every state and meters) as an engine skin file; `data/` contains self-contained PNGs and an OFL font. Neither file
+panels, buttons with every state, meters and the menu's Sound checkbox) as an engine skin file; `data/` contains self-contained PNGs and an OFL font. Neither file
 requires an XML or retail reader. `tools/import_episode.py` is a one-time,
 explicit developer migration tool; it is not invoked by normal builds.
 The importer defaults to the preserved `games/volcano/source` folder, preserves
