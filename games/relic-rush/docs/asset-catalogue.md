@@ -453,5 +453,6 @@ the hex, other objects fit its inscribed square. Guide and HUD sizes retain thei
 own registration. Artwork and its alpha remain unchanged. Reproduce the reviewed
 boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters.
 
-Portraits use finite engine tweens for entrance/exit and active/listener changes;
-settled portraits have no idle motion. See [motion, captures and timing review](../../../docs/review/motion/README.md).
+Portraits retain finite entrance/exit slides and fades. An independent colour
+tween brightens/dims active/listener states without replaying the slide. Size is
+constant for speaker/listener, with no scale/rotation animation or idle wobble. See [motion, captures and timing review](../../../docs/review/motion/README.md).

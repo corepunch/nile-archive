@@ -390,12 +390,13 @@ ignored, and completion returns the exact target. The default curve is monotonic
 cubic out. There is no global animation manager or implicit wall clock.
 
 Dialogue staging in `engine/story.c` keeps one track per visible character.
-Layout computes target rectangles; staging snapshots the current rectangle and
-colour only when the target changes; rendering samples the tween. New characters
-slide/fade in, departing characters slide/fade out, and returning speakers blend
-from their listener pose instead of entering again. Frame, outline and shadow
-share the portrait's opacity. A settled track stays still while text types or
-waits for input. Bubble arrival uses a monotonic cubic curve, too.
+An independent visibility tween slides/fades portraits in and out. Speaking state
+uses a separate colour tween to brighten/dim the portrait; it cannot restart or
+retarget the visibility tween. Layout owns the rectangle, with the same portrait
+size and side anchor for speaker and listener. There is no scale or rotation
+animation. Frame, outline and shadow share the portrait's opacity. Settled
+portraits stay still while text types or waits for input. Bubble arrival uses a
+monotonic cubic curve, too.
 
 C tests cover interruption, repeated targets, frame subdivision, entrance,
 active/inactive switching, return and exit. Real-renderer tests compare portrait
