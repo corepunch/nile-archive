@@ -296,15 +296,17 @@ The badge/padding audit is tracked in [issue #16](https://github.com/corepunch/n
 Reviewed comparisons live in `docs/review/dialogue-stack/` (all three shapes,
 one/two-line speech, 480×900 and safe-area 390×844, plus the guide). See [the UI engine](../../../docs/UI_ENGINE.md).
 
-Board presentation uses a 32-unit cell radius (previously 26.5), fitting the
-maximum nine-column grid into 448/480 logical screen units. Base pieces, the
-cell mask, specials, blockers and selection/hints share the same 32/26.5
-registration scale; the authored alpha and orientation are preserved. Cell
-positions, input and refill clips use the enlarged geometry, while guide icons
-retain their original size. Sources: `lua/state.lua`, `lua/board.lua`; no runtime
-asset or manifest mapping changes. Reviewed phone captures of both paintings,
-all three packs and ray/bomb/prism effects, plus reproduction, are in
-[the board-scale review](review/larger-board/README.md).
+Board presentation restores the original 26.5-unit cell radius, fitting the
+maximum nine-column grid into 371/480 logical screen units. The previous fixed
+32-unit radius made the settled board about 21% too large. Base pieces, the
+cell mask, specials, blockers and selection/hints share the restored geometry;
+authored alpha and orientation are preserved. Cell positions, input and refill
+clips use the same radius. Guide icons retain their original size. Sources:
+`lua/state.lua`, `lua/board.lua`; no bitmap or interaction state is added.
+The entrance settles to a 1× pose after natural completion, skipping or reduced
+motion. Representative before/after captures at both phone sizes, plus
+reproduction, are in
+[the size correction review](review/board-size-fix/README.md).
 
 Superseded twice (by the Goal/Moves cards and then the match-3 HUD above):
 the board HUD used three small, separate jade cards with gold rims: score,

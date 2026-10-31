@@ -212,6 +212,13 @@ do
         check(g.moves == moves and g.rng == rng and R.selected < 0 and R.intro:done(), "skip release consumes no move or selection")
         R.board_update(.01)
         check(R.phase == R.PH_IDLE and not R.intro, "completed entrance returns to idle")
+        R.present_board(); R.board_update(3)
+        check(R.phase == R.PH_IDLE and not R.intro, "natural completion releases the entrance too")
+        local _, pos, scale, _, aspect = R.piece_pose(rules.hex_center(), 0)
+        near(scale, 1, "finished gem has no enlargement")
+        near(aspect, 1, "finished gem has no squash")
+        near((pos-at):len(), 0, "finished gem sits at its cell centre")
+        check(R.cell_at(pos) == rules.hex_center(), "resting cell input matches its pose")
         R.present_board(); R.reset_board(g)
         check(not R.intro and R.phase == R.PH_IDLE, "reset clears pending entrance")
     end
