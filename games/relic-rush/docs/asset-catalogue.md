@@ -37,6 +37,23 @@ replays pay Gold only. All piece packs and authored board/tool states retain
 their existing artwork and state mapping. Reproduce with `--victory`,
 `--replay-victory`, `--expeditions --expedition-page N` and `--catalogue`.
 
+## Pause menu actions
+
+`lua/screens.lua` uses the existing shared form skin for Resume, Restart, Sound,
+Explorer's Guide and Quit to Island. Restart resets the current puzzle; Quit to
+Island suspends it without paying rewards. Island Pause hides Restart and Quit.
+The animation toggle is removed. Both menus measure their content before
+centring, including the taller safe-area phone layout. Existing normal, hover,
+pressed, disabled and keyboard-focus button states are reused; no artwork,
+source prompt, runtime file or sprite transform is added. The menu contract is
+recorded in `art/board-states/manifest.json` under `pause_menu`.
+
+Reproduce and inspect both contexts at both phone sizes with
+`python3 tests/fixtures/pause-actions/capture.py`; reviewed captures and exact
+commands are in the [pause menu review](review/pause-actions/README.md).
+The game's `--smoke` run exercises Restart, Quit to Island, hidden island actions,
+resuming through the expedition browser, and unchanged banked rewards.
+
 ## Piece kinds and optional packs
 
 All packs use the same kind IDs and rules. Colours and silhouettes are authored;

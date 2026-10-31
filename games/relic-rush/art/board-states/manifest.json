@@ -609,5 +609,31 @@
     },
     "excluded": "ID 4 courtyard and 86 catalogue decorations keep their existing authored artwork; no bridge shadow reused",
     "review": "docs/review/painted-buildings/README.md"
+  },
+  "pause_menu": {
+    "source": "lua/screens.lua",
+    "runtime": "existing shared form skin; no new texture files",
+    "expedition": [
+      "resume",
+      "restart",
+      "sound",
+      "guide",
+      "quit to island"
+    ],
+    "island": [
+      "resume",
+      "sound",
+      "guide"
+    ],
+    "states": [
+      "normal",
+      "hover",
+      "pressed",
+      "disabled",
+      "keyboard focus"
+    ],
+    "removed": "motion toggle",
+    "reproduction": "python3 tests/fixtures/pause-actions/capture.py",
+    "review": "docs/review/pause-actions/README.md"
   }
 }

@@ -131,17 +131,58 @@ function R.smoke()
         shop.resume_game, shop.resume_moves = R.g, R.g.moves
         app.inject_click(vec2(40, 38)); stage = 32
     elseif stage == 32 then
-        assert(not R.on_island and R.overlay == R.OV_NONE, "unfinished expedition must not expose island access")
+        assert(not R.on_island and R.overlay == R.OV_NONE, "old header corner must not return to the island")
         app.inject_click(vec2(440, 38)); stage = 33
     elseif stage == 33 and R.overlay == R.OV_PAUSE and R.modal_clock > .3 then
         app.inject_click(vec2(12, 220 + R.drop / 2)); stage = 34
-    elseif stage == 34 and R.overlay == R.OV_NONE then
-        assert(not R.on_island and R.g == shop.resume_game and R.g.moves == shop.resume_moves,
-               "background dismissal must resume the same unfinished board")
-        stage = 0
+    elseif stage==34 and R.overlay==R.OV_NONE then
+        assert(not R.on_island and R.g==shop.resume_game and R.g.moves==shop.resume_moves,
+               'background dismissal must resume the same unfinished board')
+        shop.pause_gold=R.prog.wallet[1]
+        local ok,a,b=rules.game_hint(R.g)
+        assert(ok,'restart smoke needs a legal move')
+        app.inject_click(R.cell_pos(a));partner=b;stage=43
+    elseif stage==43 and R.selected>=0 then
+        app.inject_click(R.cell_pos(partner));partner=-1;stage=44
+    elseif stage==44 and R.phase==R.PH_IDLE and R.g.moves<shop.resume_moves then
+        assert(R.g.score>0,'restart smoke must exercise a partly played board')
+        app.inject_click(vec2(440,38));stage=35
+    elseif stage==35 and R.overlay==R.OV_PAUSE and R.modal_clock>.3 then
+        assert(not R.pause_form.nodes.motion,'pause must not expose the animation toggle')
+        app.inject_click(R.pause_form.boxes.restart:center()+vec2(0,R.drop/2));stage=36
+    elseif stage==36 and R.overlay==R.OV_NONE then
+        assert(not R.on_island and R.g~=shop.resume_game and R.g.level==0 and R.g.score==0
+               and R.g.moves==rules.level_of(R.g).moves and R.selected<0 and R.tool<0
+               and R.phase==R.PH_IDLE and R.shake==0,
+               'restart must create a fresh attempt of the same expedition')
+        shop.resume_game,shop.resume_moves=R.g,R.g.moves
+        app.inject_click(vec2(440,38));stage=37
+    elseif stage==37 and R.overlay==R.OV_PAUSE and R.modal_clock>.3 then
+        app.inject_click(R.pause_form.boxes.quit:center()+vec2(0,R.drop/2));stage=38
+    elseif stage==38 and R.on_island and R.overlay==R.OV_NONE then
+        assert(R.prog.wallet[1]==shop.pause_gold and R.prog.level==1
+               and R.prog.wallet[4]==3 and R.prog.wallet[5]==1 and island.wonder_count(R.island)==1,
+               'restart and quit must not award rewards or change restoration progress')
+        app.inject_click(vec2(440,38));stage=39
+    elseif stage==39 and R.overlay==R.OV_PAUSE and R.modal_clock>.3 then
+        assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit,
+               'island pause must hide expedition-only actions')
+        app.inject_click(R.pause_form.boxes.resume:center()+vec2(0,R.drop/2));stage=40
+    elseif stage==40 and R.overlay==R.OV_NONE then
+        app.inject_click(R.island_buttons.expeditions + vec2(0,R.drop));stage=41
+    elseif stage==41 and R.overlay==R.OV_EXPEDITIONS then
+        for _,node in pairs(R.expedition_form.nodes) do
+            if node.item_key=='0' and node.local_id=='play' then
+                app.inject_click(R.expedition_form.boxes[node.id]:center());stage=42;break
+            end
+        end
+    elseif stage==42 and not R.on_island and R.overlay==R.OV_NONE then
+        assert(R.g==shop.resume_game and R.g.moves==shop.resume_moves,
+               'returning from island must preserve the suspended attempt')
+        stage=0
     elseif stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> no island escape -> pause/background resume -> Gold only -> level 2")
+        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> pause/background resume -> restart -> quit to island -> resume expedition -> Gold only -> level 2")
         app.quit()
     end
 end
