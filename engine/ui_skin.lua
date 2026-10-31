@@ -7,7 +7,6 @@
 -- into immediate-mode helpers, so forms and hand-placed widgets share one look.
 -- The engine still owns layout, hit testing, focus and activation.
 local Skin = {}
-Skin.__index = Skin
 local fonts = {}   -- font files are shared between skins
 local STATES = {'normal', 'selected', 'hover', 'pressed', 'disabled'}
 local function fail(message) error('ui.skin: ' .. message, 3) end
@@ -42,12 +41,17 @@ local function edges(v)
     return v[1] or 0, v[2] or 0, v[3] or 0, v[4] or 0
 end
 
+-- A font entry is a path, {path, scale, fallback} or {font = already_loaded}.
+-- `fallback` names the font that supplies glyphs this one lacks.
 local function font_of(skin, name)
     local spec = skin.def.fonts and skin.def.fonts[name]
     if not spec then fail('unknown font ' .. tostring(name)) end
     if type(spec) == 'string' then spec = {path = spec} end
-    if not spec.path then return spec.font, spec.scale or 1 end   -- an already loaded font
-    if not fonts[spec.path] then fonts[spec.path] = font.load(spec.path) end
+    if not spec.path then return spec.font, spec.scale or 1 end
+    if not fonts[spec.path] then
+        fonts[spec.path] = font.load(spec.path)
+        if spec.fallback then font.set_fallback(fonts[spec.path], (font_of(skin, spec.fallback))) end
+    end
     return fonts[spec.path], spec.scale or 1
 end
 
@@ -71,7 +75,8 @@ local function make_style(skin, name, em, paint)
     local f, font_scale = font_of(skin, spec.font)
     local scale, _, alpha = 1, nil, 1
     if paint and skin.transform then scale, _, alpha = skin.transform() end
-    local k = em / (spec.em or em) * scale
+    -- Lengths follow the size a control asks for, unless the style pins them.
+    local k = (spec.scale_lengths == false and 1 or em / (spec.em or em)) * scale
     local s = {font = f, size = em * font_scale * scale, fill = parse_color(skin, spec.fill or '#FFFFFF')}
     s.fill2 = parse_color(skin, spec.fill2)
     if spec.outline then s.outline, s.outline_width = parse_color(skin, spec.outline), (spec.outline_width or 1) * k end
@@ -80,29 +85,53 @@ local function make_style(skin, name, em, paint)
         s.shadow_blur = spec.shadow_blur and spec.shadow_blur * k
     end
     if spec.tracking then s.tracking = spec.tracking * k end
-    if alpha < 1 then s.fade = 1 - alpha end
+    local fade = 1 - (1 - (spec.fade or 0)) * alpha
+    if fade > 0 then s.fade = fade end
     return style(s)
 end
 
 ----------------------------------------------------------------- looks
 
--- A control's look in one interaction state: its spec's normal look with the
--- active states merged over it, in order. `layers` replaces the list; `set`
--- patches named layers, so a state only states what differs.
-local function merge_look(base, over)
+-- A look is `layers` plus fields: `offset` and `inset` move or shrink every
+-- layer that isn't `fixed` (and the caption), `alpha` fades its shapes, `text`
+-- swaps the caption style. A partial look may also `set` (patch) named layers.
+local function patch_layers(layers, set)
+    local out = {}
+    for i, layer in ipairs(layers or {}) do
+        local patch = layer.name and set[layer.name]
+        if patch then layer = copy(layer); for k, v in pairs(patch) do layer[k] = v end end
+        out[i] = layer
+    end
+    return out
+end
+
+-- Two partial looks (a variant over a control's state): later keys win and
+-- patches to the same layer merge, so nothing either one says is lost.
+local function combine(base, over)
     if not over then return base end
-    local look = copy(base)
+    local look = copy(base or {})
     for k, v in pairs(over) do
-        if k == 'set' then
-            local layers = {}
-            for i, layer in ipairs(look.layers or {}) do
-                local patch = layer.name and v[layer.name]
-                if patch then layer = copy(layer); for pk, pv in pairs(patch) do layer[pk] = pv end end
-                layers[i] = layer
+        if k == 'set' and look.set then
+            local set = copy(look.set)
+            for name, patch in pairs(v) do
+                local merged = copy(set[name] or {})
+                for pk, pv in pairs(patch) do merged[pk] = pv end
+                set[name] = merged
             end
-            look.layers = layers
+            look.set = set
         else look[k] = v end
     end
+    return look
+end
+
+-- A state's look over a resolved one: `layers` replaces the list, `set`
+-- patches named layers, every other field replaces.
+local function apply(base, over)
+    if not over then return base end
+    local look = copy(base)
+    for k, v in pairs(over) do if k ~= 'set' then look[k] = v end end
+    if over.set then look.layers = patch_layers(look.layers, over.set) end
+    look.set = nil
     return look
 end
 
@@ -125,7 +154,7 @@ local function control_spec(skin, kind, node)
                 for k, v in pairs(variant) do
                     local state = false
                     for _, s in ipairs(STATES) do state = state or s == k end
-                    merged[k] = state and merge_look(spec[k] or {}, v) or v
+                    merged[k] = state and combine(spec[k], v) or v
                 end
                 spec = merged
             end
@@ -136,12 +165,12 @@ end
 
 local function look_for(spec, st)
     if not spec then return nil end
-    local look = spec.normal or {}
+    local look = apply({}, spec.normal or {})
     if st then
-        if st.selected then look = merge_look(look, spec.selected) end
-        if st.hot and not st.disabled then look = merge_look(look, spec.hover) end
-        if st.held and not st.disabled then look = merge_look(look, spec.pressed) end
-        if st.disabled then look = merge_look(look, spec.disabled) end
+        if st.selected then look = apply(look, spec.selected) end
+        if st.hot and not st.disabled then look = apply(look, spec.hover) end
+        if st.held and not st.disabled then look = apply(look, spec.pressed) end
+        if st.disabled then look = apply(look, spec.disabled) end
     end
     return look
 end
@@ -175,19 +204,35 @@ local function nine_slice(t, dst, l, t_, r, b, tint)
     end end
 end
 
--- Layers draw in order inside the control box. Box fields: `inset` (number or
--- {left, top, right, bottom}; negative grows), `offset` {x, y}, `height_ratio`
--- (keep the top fraction of the box). A look's `offset` moves every layer that
--- is not `fixed`, and the caption.
-local function draw_layer(skin, layer, box, look_offset, node, st)
-    local l, t, r, b = edges(layer.inset)
-    local lb = rect(box.x + l, box.y + t, box.w - l - r, box.h - t - b)
-    if layer.height_ratio then lb = rect(lb.x, lb.y, lb.w, box.h * layer.height_ratio) end
-    lb = lb:offset(vec(layer.offset))
-    if not layer.fixed then lb = lb:offset(look_offset) end
+local function shrink(box, inset)
+    local l, t, r, b = edges(inset)
+    return rect(box.x + l, box.y + t, box.w - l - r, box.h - t - b)
+end
+
+-- A layer's corner radius: fixed, or following the caller's (node.radius)
+-- through `radius_scale` and `radius_delta`, never below `radius_min`.
+local function radius_of(layer, node)
+    local radius = layer.radius or 0
+    if node and node.radius and (layer.radius_delta or layer.radius_scale) then
+        radius = node.radius * (layer.radius_scale or 1) + (layer.radius_delta or 0)
+    end
+    return layer.radius_min and math.max(layer.radius_min, radius) or radius
+end
+
+-- Layers draw in order inside the control box. Box fields: `height_ratio`
+-- (keep the top fraction first), then `inset` (number or {left, top, right,
+-- bottom}; negative grows) and `offset` {x, y}.
+local function draw_layer(skin, layer, box, look, node, st)
+    if layer.hidden then return end
+    if not layer.fixed and look.inset then box = shrink(box, look.inset) end
+    local lb = box
+    if layer.height_ratio then lb = rect(lb.x, lb.y, lb.w, lb.h * layer.height_ratio) end
+    lb = shrink(lb, layer.inset):offset(vec(layer.offset))
+    if not layer.fixed then lb = lb:offset(vec(look.offset)) end
     if layer.paint then layer.paint(lb, node, st, skin); return end
     local out, scale, alpha = transformed(skin, lb)
-    local radius = (layer.radius or 0) * scale
+    alpha = alpha * (look.alpha or 1)
+    local radius = radius_of(layer, node) * scale
     local function c(v) local parsed = parse_color(skin, v); return alpha < 1 and color.alpha(parsed, alpha) or parsed end
     if layer.shadow then gfx.shadow(out, radius, (layer.blur or 8) * scale, c(layer.shadow))
     elseif layer.fill then
@@ -212,8 +257,7 @@ end
 
 local function draw_look(skin, look, box, node, st)
     if not look then return end
-    local offset = vec(look.offset)
-    for _, layer in ipairs(look.layers or {}) do draw_layer(skin, layer, box, offset, node, st) end
+    for _, layer in ipairs(look.layers or {}) do draw_layer(skin, layer, box, look, node, st) end
 end
 
 -------------------------------------------------------- the form contract
@@ -248,6 +292,7 @@ end
 
 function Skin:text(name, em) return make_style(self, name, em, true) end
 function Skin:font(name) return (font_of(self, name)) end
+function Skin:color(name) return parse_color(self, name) end
 function Skin:measure_text(name, em) return make_style(self, name, em, false) end
 
 function Skin:paint(kind, box, st, node)
@@ -255,12 +300,20 @@ function Skin:paint(kind, box, st, node)
     if spec then draw_look(self, look_for(spec, st), box, node, st) end
 end
 
+-- The caption sits in the box less the look's inset and `text_inset` (a number
+-- or {x, y}), moved with the look; `text_align` places it and `text_fit`
+-- shrinks a single line that would not fit.
 function Skin:paint_caption(kind, box, caption, st, node, align)
     local name, em, look, spec = caption_for(self, kind, node, st)
-    local inset = (spec and spec.text_inset) or 8
-    local inner = box:offset(vec(look.offset)):inflate(-inset)
+    spec = spec or {}
+    local inset = spec.text_inset or 8
+    local ix, iy = type(inset) == 'table' and inset[1] or inset, type(inset) == 'table' and inset[2] or inset
+    if look.inset then box = shrink(box, look.inset) end
+    local inner = box:offset(vec(look.offset)):inflate2(vec2(-ix, -iy))
     local out = transformed(self, inner)
-    text.inside(make_style(self, name, em, true), out, align or vec2(.5, .5), caption)
+    local place = align or (spec.text_align and vec(spec.text_align)) or vec2(.5, .5)
+    local s = make_style(self, name, em, true)
+    if spec.text_fit then text.fit(s, out, place, caption) else text.inside(s, out, place, caption) end
 end
 
 function Skin:paint_panel(box, node) self:paint('panel', box, nil, node) end
@@ -313,21 +366,24 @@ function Skin:paint_progress(box, fraction, node)
     draw_look(self, look_for(spec.track, nil), box, node)
     fraction = math.max(0, math.min(1, fraction))
     if fraction > 0 then draw_look(self, look_for(spec.fill, nil), rect(box.x, box.y, box.w * fraction, box.h), node) end
+    if spec.over then draw_look(self, look_for(spec.over, nil), box, node) end   -- a rim drawn over the fill
 end
 
 ---------------------------------------------------------- immediate mode
 
 -- A skinned button outside a form: returns true when clicked. Options:
--- enabled (default true), accent, flat, selected, role, hit_offset.
+-- enabled (default true), accent, flat, selected, role, radius, hit_offset,
+-- and kind (default 'button') to draw another control's look.
 function Skin:draw_button(box, caption, opts)
     opts = opts or {}
-    local node = {kind = 'button', accent = opts.accent, flat = opts.flat, role = opts.role}
+    local kind = opts.kind or 'button'
+    local node = {kind = kind, accent = opts.accent, flat = opts.flat, role = opts.role, radius = opts.radius}
     local enabled = opts.enabled ~= false
     local hit = opts.hit_offset and box:offset(opts.hit_offset) or box
     local st = ui.hit(hit, enabled and 0 or ui.DISABLED)
     st.disabled, st.selected = not enabled, not not opts.selected
-    self:paint('button', box, st, node)
-    self:paint_caption('button', box, caption, st, node)
+    self:paint(kind, box, st, node)
+    self:paint_caption(kind, box, caption, st, node)
     return enabled and st.clicked
 end
 
@@ -368,7 +424,8 @@ end
 local function build_theme(skin, t)
     local theme = ui.theme()
     for k, v in pairs(t) do
-        if type(v) == 'string' and skin.def.text and skin.def.text[v] then theme[k] = make_style(skin, v, nil, false)
+        if type(v) == 'table' and type(v[1]) == 'string' then theme[k] = make_style(skin, v[1], v[2], false)   -- {style, em}
+        elseif type(v) == 'string' and skin.def.text and skin.def.text[v] then theme[k] = make_style(skin, v, nil, false)
         elseif k == 'radius' or k == 'backdrop_blur' then theme[k] = v
         else theme[k] = parse_color(skin, v) end
     end
@@ -387,12 +444,27 @@ function ui.skin(def)
             if key == 'focused' then fail(kind .. ': draw focus with controls.focus') end
         end
     end
-    local skin = setmetatable({def = def, texts = {}, images = {}, transform = def.transform}, Skin)
+    -- The theme loads fonts, so it is built on first use, after the game starts.
+    local skin = setmetatable({def = def, texts = {}, images = {}, transform = def.transform}, {__index = function(t, k)
+        if k == 'theme' and def.theme then
+            local theme = build_theme(t, def.theme)
+            rawset(t, 'theme', theme)
+            return theme
+        end
+        return Skin[k]
+    end})
     -- The form contract (plain functions that ui.form calls); the methods
     -- above keep distinct names so these fields never shadow them.
     skin.style = function(node) return skin:measure_style(node) end
     skin.panel = def.controls and def.controls.panel and function(box, node) skin:paint_panel(box, node) end or nil
-    skin.button = function(box, st, node) skin:paint_button(box, st, node) end
+    -- Theme colours are checked now; its text styles wait for the fonts.
+    for k, v in pairs(def.theme or {}) do
+        local text_entry = type(v) == 'table' and type(v[1]) == 'string' or type(v) == 'string' and def.text and def.text[v]
+        if k ~= 'radius' and k ~= 'backdrop_blur' and not text_entry then parse_color(skin, v) end
+    end
+    -- Without button looks, forms keep the native button paint and its theme.
+    local function has_looks(kind) local spec = control_spec(skin, kind); return spec and spec.normal ~= nil end
+    if has_looks('button') or has_looks('toggle') then skin.button = function(box, st, node) skin:paint_button(box, st, node) end end
     skin.button_text = function(box, caption, node, st)
         skin:paint_caption(node.kind == 'toggle' and 'toggle' or 'button', box, caption, st, node)
     end
@@ -401,7 +473,6 @@ function ui.skin(def)
     skin.checkbox = function(box, caption, node, st) skin:paint_checkbox(box, caption, node, st) end
     skin.measure_checkbox = function(node, caption) return skin:checkbox_size(node, caption) end
     skin.progress = function(box, fraction, node) skin:paint_progress(box, fraction, node) end
-    if def.theme then skin.theme = build_theme(skin, def.theme) end
     return skin
 end
 ui.SKIN_STATES = STATES

@@ -125,7 +125,7 @@ end
 
 local function stars_text(n) return ("%d %s"):format(n, plural(n, "звезда", "звезды", "звёзд")) end
 
-local build_form = ui.form{kind = "column", panel = true, role = "tray", padding = 16, gap = 8, children = {
+local build_form = ui.form{kind = "column", panel = true, radius = 20, padding = 16, gap = 8, children = {
     {kind = "row", height = 34, gap = 10, children = {
         {kind = "label", id = "budget", role = "budget", grow = 1, text_align = "start"},
         {kind = "button", id = "category_prev", text = "<", width = 44},
@@ -134,7 +134,7 @@ local build_form = ui.form{kind = "column", panel = true, role = "tray", padding
         {kind = "button", id = "close", text = "Закрыть", width = 100},
     }},
     {kind = "list", id = "stock", direction = "row", gap = 12, item = function(e)
-        return {kind = "column", panel = true, grow = 1, padding = 8, gap = 4, children = {
+        return {kind = "column", panel = true, role = "parchment", radius = 12, grow = 1, padding = 8, gap = 4, children = {
             {kind = "label", text = e.name, height = 38, wrap = true},
             {kind = "image", image = e.sprite, height = 80},
             {kind = "label", text = e.detail, height = 22},
@@ -148,14 +148,8 @@ local build_form = ui.form{kind = "column", panel = true, role = "tray", padding
         {kind = "button", id = "page_next", text = "Далее", width = 110},
     }},
 }}
-local build_skin = {
-    panel = function(box, n) K.frame(box, n.role ~= "tray", n.role == "tray" and 20 or 12) end,
-    style = function(n)
-        if n.role == "budget" then return S.body:sized(17) end
-        if n.kind == "button" or n.role == "category" then return S.button:sized(17) end
-        return S.card_title:sized(17)
-    end,
-}
+-- Frames, card text and the tray's roles all come from archive_skin.lua.
+local build_skin = K.skin
 
 -- Opens the tray on a category ("story", "tree", ...) and page.
 function M.open_tray(category, page)

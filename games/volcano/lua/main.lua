@@ -5,19 +5,13 @@ local art=require('volcano_art')
 local S={chapter=1,unlocked=1,completed=0,sound=true,screen='menu',textures={},backs={},best={0,0,0,0,0}}
 local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB78),teal=color.hex(0x234F55)}
 local white=color.WHITE
--- Relic Rush's Lilita One palettes, with the rim and cast shadow scaled by em.
-local palettes={
-    cream={color(255,249,226),color(244,221,166)},
-    gold={color(255,255,219),color(239,169,57)},
-    green={color(199,255,201),color(91,198,130)},
-    white={white,color(196,232,220)},
-}
-local function lettering(size,palette)
-    local colors=palettes[palette or 'cream']
-    local em=size/1.171875
-    return style{font=S.font,size=size,fill=colors[1],fill2=colors[2],
-        outline=color(62,49,29),outline_width=em*4/64,
-        shadow=color(31,35,24,184),shadow_offset=vec2(0,em*5/64)}
+-- The look lives in volcano_skin.lua; lettering is one of its text styles at a size.
+local skin=require('volcano_skin')
+local function lettering(size,palette) return skin:text(palette or 'cream',size) end
+local function panel(r) ui.block(r);skin:paint('panel',r) end
+local function button(r,caption,flags)
+    flags=flags or 0
+    return skin:draw_button(r,caption,{enabled=flags&ui.DISABLED==0,accent=flags&ui.ACCENT~=0})
 end
 local function label(box,value,size,align,palette)
     ui.label(box,lettering(size or 23,palette),align or vec2(0,.5),value)
@@ -78,9 +72,9 @@ local function draw_one(e)
     if e.assigned and not e.done then
         local frac=0
         for _,w in ipairs(S.g.workers) do if w.target==e and w.phase=='working' then frac=w.work/(e.def.duration or 5) end end
-        ui.progress(rect(p.x-31,p.y-70*S.cam.zoom,62,9),frac,'')
+        skin:paint_progress(rect(p.x-31,p.y-70*S.cam.zoom,62,9),frac)
     elseif e.def.kind=='station' and e.done then
-        ui.progress(rect(p.x-27,p.y-85*S.cam.zoom,54,6),e.clock/5,'')
+        skin:paint_progress(rect(p.x-27,p.y-85*S.cam.zoom,54,6),e.clock/5)
     end
     if e.def.kind=='worker' and e.target and e.target.def.kind=='animal' and e.phase=='returning' then
         local pet=e.target;local run=art[pet.type..pet.variant..'_run'..(e.direction or 0)]
@@ -111,7 +105,7 @@ local function world()
 end
 local function hud()
     local g=S.g
-    ui.panel(rect(14,12,1340,68))
+    panel(rect(14,12,1340,68))
     label(rect(34,20,336,24),('VOLCANO  /  %02d'):format(S.chapter),19,nil,'gold')
     label(rect(34,44,330,27),levels[S.chapter].title,25)
     local total=0;local idle=0
@@ -122,60 +116,60 @@ local function hud()
     end
     label(rect(887,23,206,23),('WORKERS  %d / %d'):format(idle,total),20)
     label(rect(887,48,195,20),('%02d:%02d'):format(math.floor(g.time/60),math.floor(g.time%60)),17,nil,'white')
-    if ui.button(rect(1114,24,106,44),'Hint') then
+    if button(rect(1114,24,106,44),'Hint') then
         S.selected=sim.suggest(g)
         if S.selected then
             S.cam=S.cam:look(vec2(S.selected.x,S.selected.y));ui.toast(S.selected.def.title..': '..sim.detail(g,S.selected))
         else ui.toast('Let the team finish its jobs and the stations deliver supplies.') end
     end
-    if ui.button(rect(1230,24,110,44),'Pause') then S.modal='pause';g.paused=true end
-    ui.panel(rect(14,932,1340,80))
+    if button(rect(1230,24,110,44),'Pause') then S.modal='pause';g.paused=true end
+    panel(rect(14,932,1340,80))
     label(rect(34,943,440,26),S.selected and S.selected.def.title or 'Restore the city, one route at a time',23)
     label(rect(34,975,900,24),sim.detail(g,S.selected),17,nil,'white')
     local denominator=g.level.people+g.level.animals+g.routes
     local complete=g.rescued+g.animals+g.cleared
     label(rect(963,942,366,26),('People %d/%d   Pets %d/%d   Roads %d/%d'):format(g.rescued,g.level.people,g.animals,g.level.animals,g.cleared,g.routes),17)
-    ui.progress(rect(966,978,361,12),complete/denominator,'')
+    skin:paint_progress(rect(966,978,361,12),complete/denominator)
 end
 local function menu()
     gfx.image(load_back(S.chapter),app.screen(),white)
     ui.modal_backdrop(.85)
-    ui.panel(rect(325,110,718,806))
+    panel(rect(325,110,718,806))
     label(rect(365,145,638,62),'VOLCANO',62,vec2(.5,.5),'gold')
     label(rect(365,215,638,30),'AFTER THE ERUPTION',24,vec2(.5,.5))
     label(rect(374,264,620,53),'Reopen the streets. Restore supplies. Bring everyone home.',23,vec2(.5,.5))
     for i,level in ipairs(levels) do
         local done=(S.completed&(1<<(i-1)))~=0
         local title=('%02d   %s%s'):format(i,level.title,done and '   - restored' or '')
-        if ui.button(rect(380,340+(i-1)*82,608,64),title,i>S.unlocked and ui.DISABLED or (i==S.unlocked and ui.ACCENT or 0)) then start(i,false) end
+        if button(rect(380,340+(i-1)*82,608,64),title,i>S.unlocked and ui.DISABLED or (i==S.unlocked and ui.ACCENT or 0)) then start(i,false) end
     end
-    if ui.button(rect(380,774,292,54),'How to play') then S.modal='help' end
-    if ui.button(rect(690,774,298,54),S.sound and 'Sound: on' or 'Sound: off') then S.sound=not S.sound;sfx.enable(S.sound);persist() end
+    if button(rect(380,774,292,54),'How to play') then S.modal='help' end
+    if button(rect(690,774,298,54),S.sound and 'Sound: on' or 'Sound: off') then S.sound=not S.sound;sfx.enable(S.sound);persist() end
     label(rect(374,850,620,27),'Five districts. One rescue team. A fresh start.',20,vec2(.5,.5))
 end
 local function modal()
     local kind=S.modal
     if not kind then return end
     -- each panel fits its content: no empty band under the last button
-    ui.set_enabled(true);ui.modal_backdrop(1);ui.panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
+    ui.set_enabled(true);ui.modal_backdrop(1);panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
     local title=kind=='pause' and 'Rescue paused' or kind=='win' and 'District restored!' or 'Every route matters'
     label(rect(385,267,598,62),title,42,vec2(.5,.5),'gold')
     if kind=='win' then
         local g=S.g
         label(rect(390,342,588,112),('All %d residents and %d pets are safe.\n%d roads restored in %d:%02d.'):format(g.rescued,g.animals,g.routes,math.floor(g.time/60),math.floor(g.time%60)),27,vec2(.5,.5))
-        if ui.button(rect(414,495,540,64),S.chapter<#levels and 'Next district' or 'Play the episode again',ui.ACCENT) then
+        if button(rect(414,495,540,64),S.chapter<#levels and 'Next district' or 'Play the episode again',ui.ACCENT) then
             start(S.chapter<#levels and S.chapter+1 or 1,false)
         end
-        if ui.button(rect(414,580,540,58),'Replay district') then start(S.chapter,false) end
-        if ui.button(rect(414,660,540,58),'Districts') then S.screen='menu';S.modal=nil end
+        if button(rect(414,580,540,58),'Replay district') then start(S.chapter,false) end
+        if button(rect(414,660,540,58),'Districts') then S.screen='menu';S.modal=nil end
     elseif kind=='pause' then
         label(rect(398,350,572,52),'Your team and production are paused.',25,vec2(.5,.5))
-        if ui.button(rect(414,442,540,64),'Resume rescue',ui.ACCENT) then S.modal=nil;S.g.paused=false end
-        if ui.button(rect(414,533,540,58),'Restart district') then start(S.chapter,true) end
-        if ui.button(rect(414,620,540,58),'Districts') then S.screen='menu';S.modal=nil end
+        if button(rect(414,442,540,64),'Resume rescue',ui.ACCENT) then S.modal=nil;S.g.paused=false end
+        if button(rect(414,533,540,58),'Restart district') then start(S.chapter,true) end
+        if button(rect(414,620,540,58),'Districts') then S.screen='menu';S.modal=nil end
     else
         label(rect(390,342,588,262),'Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n\nKitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n\nDrag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home.',23,vec2(0,0))
-        if ui.button(rect(414,630,540,62),'Ready',ui.ACCENT) then S.modal=nil end
+        if button(rect(414,630,540,62),'Ready',ui.ACCENT) then S.modal=nil end
     end
 end
 local function smoke()
@@ -255,11 +249,8 @@ local function frame(dt)
     if S.smoke then smoke() end
 end
 local function init()
-    S.font=font.load('fonts/LilitaOne-Regular.ttf')
-    ui.set_theme(ui_theme{text=lettering(24),small=lettering(16),title=lettering(36,'gold'),button=lettering(25),accent_text=lettering(25),
-        panel=color(25,57,62,246),panel2=color(18,43,48,248),border=color(226,201,150,135),
-        button_bg=color.hex(0x346068),button_bg2=color.hex(0x23474E),button_hot=color.hex(0x477A7E),button_border=color(235,211,164,130),
-        accent=C.gold,accent2=color.hex(0xD6A050),active=C.gold,dim=color(9,23,28,196),toast_bg=C.cream,toast_text=C.ink,radius=13})
+    S.font=skin:font('lilita')
+    ui.set_theme(skin.theme)
     -- briefings come from the rescue dispatcher: a caption with a name tag, no portrait
     story.setup({{id='dispatch',name='Rescue dispatch',color=color.hex(0xB4532A)}},
         story_style{text=style{font=S.font,size=27,fill=C.ink},name=lettering(21),bubble=C.cream,edge=C.teal,dim=color(9,23,28,150),skip='START RESCUE'})

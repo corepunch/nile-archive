@@ -169,29 +169,38 @@ return ui.skin{
 ```
 
 **Fonts.** A name maps to a path (loaded once, shared by every skin) or to
-`{path, scale}`, where `scale` converts the style's `em` to the engine's size
-(Lilita One measures 1.17 em ascent to descent). `{font = f}` uses an
-already loaded font. `skin:font(name)` returns it for the game's own text.
+`{path, scale, fallback}`. `scale` converts the style's `em` to the engine's size
+(Lilita One measures 1.17 em ascent to descent); `fallback` names the font that
+supplies glyphs this one lacks. `{font = f}` uses an already loaded font.
+`skin:font(name)` returns it for the game's own text.
 
 **Colours** are `"#RRGGBB"`, `"#RRGGBBAA"`, `{r, g, b, a}` or a name from
-`colors`, which can name another entry.
+`colors`, which can name another entry. `skin:color(name)` returns one, so a
+game's drawn icons and ornaments share the skin's palette.
 
 **Text styles** have `font`, `em`, `fill`, `fill2` (vertical gradient),
 `outline`, `outline_width`, `shadow`, `shadow_offset`, `shadow_blur`,
-`tracking` and `extends`. Lengths are given at the style's `em` and scale with
-the size a control asks for, so one outlined style serves every size. A node
+`tracking`, `fade` and `extends`. Lengths are given at the style's `em` and scale with
+the size a control asks for, so one outlined style serves every size;
+`scale_lengths = false` keeps them fixed when only the size should change. A node
 chooses its style with `text_style`, its size with `em`, or both through `role`.
 
 **Controls and states.** Each control has a look per state: `normal`,
 `selected` (an on toggle, a checked checkbox), `hover`, `pressed` and
 `disabled`. Looks merge over `normal` in that order, so a state names only what
 differs: `layers` replaces the list, `set` patches named layers, `offset` moves
-every layer that isn't `fixed`, and the caption, and `text` swaps its style.
+and `inset` shrinks every layer that isn't `fixed` (and the caption), `alpha`
+fades its shapes, and `text` swaps its style. Variants and states combine:
+a variant's hover patch and the control's hover patch both apply.
 Disabled controls never show hover or press. Keyboard focus is its own control,
 `focus`, drawn around the focused one. `variants` apply for `flat`, `accent` or a
 node's `role` and merge the same way. `extends` reuses another control.
 A checkbox has `box` and `mark` looks (each with its own states), `size` and `gap`;
-a progress bar has `track` and `fill`.
+a progress bar has `track`, `fill` and an optional `over` (a rim drawn on top).
+A control's caption takes `text`, `em`, `text_inset` (a number or `{x, y}`),
+`text_align` `{x, y}` and `text_fit` (shrink one line to fit). A control without
+state looks, such as `button = {text = "button", em = 17}`, only styles the
+caption; forms then keep the native button paint.
 
 **Layers** draw in order inside the control's box:
 
@@ -204,9 +213,12 @@ a progress bar has `track` and `fill`.
 | `{check, width}` | A tick, for checkboxes without artwork |
 | `{paint = function(box, node, state, skin)}` | Game code, for ornaments the table can't express |
 
-Every layer takes `inset` (a number or `{left, top, right, bottom}`; negative
-grows), `offset {x, y}`, `height_ratio` (keep the top fraction, for gloss) and
-an optional `name` for `set` patches.
+Every layer takes `height_ratio` (keep the top fraction, for gloss), then
+`inset` (a number or `{left, top, right, bottom}`; negative grows) and
+`offset {x, y}`, plus `fixed` (ignores the state's offset and inset), `hidden`
+and an optional `name` for `set` patches. `radius` is the corner radius. When a
+caller passes `node.radius` (a frame drawn at several sizes), layers with
+`radius_delta` and/or `radius_scale` follow it, never below `radius_min`.
 
 **Authored artwork.** A control drawn from images must name an image for every
 state it supports; the engine never tints one state into another.
@@ -220,7 +232,8 @@ opacity. Measurement always uses logical units, so layout doesn't change.
 
 **Immediate mode.** Outside forms the same skin paints hand-placed controls:
 `skin:draw_button(bounds, caption, opts)` returns true when clicked (`opts`:
-`enabled`, `accent`, `flat`, `selected`, `role`, `hit_offset`), and
+`enabled`, `accent`, `flat`, `selected`, `role`, `radius`, `hit_offset`, and
+`kind` to draw another control, such as Nile Archive's `pill`), and
 `skin:draw_checkbox(bounds, caption, value, opts)` returns the new value.
 `skin:paint(kind, bounds, state, node)` and
 `skin:paint_caption(kind, bounds, caption, state, node)` paint any control's
@@ -235,16 +248,32 @@ style (following the transform) for free text.
 can still pass a hand-written table with any subset, a native `theme`, `styles`
 keyed by role/kind, or `button_states` textures; whatever it leaves out uses the
 native look. `state` includes `hot`, `held`, `clicked`, `disabled`, `selected`,
-`focused`. Theme changes are scoped to the form draw and restored. A skin's
-`theme` fields override the engine theme current when the skin is compiled.
+`focused`. Theme changes are scoped to the form draw and restored.
+
+**Native widgets.** A skin's `theme` (colours, `radius`, `backdrop_blur`, and
+text styles by name or as `{style, em}`) builds the `ui_theme` for toasts,
+modal backdrops and native widgets: `ui.set_theme(skin.theme)`. Fields the skin
+doesn't name keep the engine theme. The theme is built on first use, after the
+fonts can load; its colours are checked when the skin is compiled.
 
 Relic Rush keeps its entire look in `lua/skin.lua`: four outlined text palettes,
 the parchment panel, the jade button (pressed sinks it 2 units; disabled drains
 its colour), the flat CLOSE variant and the focus ring. Its pause, building,
 guide, shop and expedition dialogs and its island buttons all paint through it;
-captures are pixel-identical to the hand-written paint code it replaced. Nile
-Archive's build tray and Volcano's native widgets still use themes and paint
-callbacks; moving them to skin files is the next step. Relic Rush's read-only
+captures are pixel-identical to the hand-written paint code it replaced.
+
+Every game now has one skin file:
+
+| Game | Skin file | What it holds |
+| --- | --- | --- |
+| Relic Rush | `games/relic-rush/lua/skin.lua` | Outlined palettes, parchment panel, jade button, flat variant, focus ring |
+| Nile Archive | `games/nile-archive/lua/archive_skin.lua` | Three fonts with a fallback, 21 text styles, the theme, the gold-rimmed teal/parchment frame at any radius (corner studs as a `paint` layer) and green/blue/red pills whose disabled state turns grey |
+| Volcano | `games/volcano/lua/volcano_skin.lua` | Lilita palettes at any size, the theme, and the panel, button (hover, pressed, disabled, gold accent) and meters that native widgets used to draw |
+
+Their captures, including held presses, are pixel-identical to the code each
+replaced. Nile Archive's round icon buttons, currency capsules, ribbons and
+drawn icons stay in `archive_kit.lua` as ornaments that read the skin's fonts,
+styles and colours. Relic Rush's read-only
 expedition HUD uses an engine row with computed labels. Its Explorer's guide uses a
 stable-key source and one icon/copy row resource. The game paints authored icon
 layers inside assigned bounds; the engine owns placement, wrapping, spacing and
