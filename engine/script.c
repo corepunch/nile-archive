@@ -13,11 +13,13 @@
 #ifdef ENGINE_TEST
 #include "test.h"
 static void test_lua_open(lua_State *S);
+static bool test_rules_active;
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 static lua_State *L;
 static char lua_dir[512];
@@ -42,10 +44,12 @@ static void call(int nargs, int nresults)
     lua_insert(L, base);
     if (lua_pcall(L, nargs, nresults, base) != LUA_OK) {
 #ifdef ENGINE_TEST
-        test_abort(lua_tostring(L, -1));
-#endif
+        if (test_rules_active) lua_error(L); /* enclosing named case/file catches it */
+        test_abort(lua_tostring(L, -1));       /* frame callback has no outer Lua call */
+#else
         fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
         exit(3);
+#endif
     }
     lua_remove(L, base);
 }
@@ -160,10 +164,14 @@ void script_close(void)
 
 int script_dofile(const char *path)
 {
+#ifdef ENGINE_TEST
+    test_rules_active = true;
+#endif
     int top = lua_gettop(L);
     lua_pushcfunction(L, traceback);
     if (luaL_loadfile(L, path) != LUA_OK || lua_pcall(L, 0, 1, top + 1) != LUA_OK) {
 #ifdef ENGINE_TEST
+        test_rules_active = false;
         test_fail("", 0, "%s", lua_tostring(L, -1));
 #else
         fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
@@ -171,6 +179,14 @@ int script_dofile(const char *path)
         lua_settop(L, top);
         return -1;
     }
+#ifdef ENGINE_TEST
+    test_rules_active = false;
+    if (!lua_isnil(L, -1) && (!lua_isinteger(L, -1) || lua_tointeger(L, -1) < 0 || lua_tointeger(L, -1) > INT_MAX)) {
+        test_fail(path, 0, "test must return nil or a nonnegative integer failure count");
+        lua_settop(L, top);
+        return -1;
+    }
+#endif
     int result = (int)lua_tointeger(L, -1);
     lua_settop(L, top);
     return result;

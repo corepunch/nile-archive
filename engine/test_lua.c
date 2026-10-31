@@ -1,5 +1,6 @@
 /* test_lua.c — Lua's side of the test build, included by script.c under ENGINE_TEST:
  * check() and near() for tests, and the reader for tests/games/<suite>.lua. */
+#include <unistd.h>
 
 static int l_test_check(lua_State *S)
 {
@@ -18,10 +19,34 @@ static int l_test_near(lua_State *S)
     return 0;
 }
 
+static int l_test_advance(lua_State *S)
+{
+    double dt = luaL_checknumber(S, 1);
+    luaL_argcheck(S, isfinite(dt) && dt >= 0, 1, "expected finite nonnegative seconds");
+    app_test_advance(dt);
+    return 0;
+}
+static int l_test_input(lua_State *S)
+{
+    luaL_checktype(S, 1, LUA_TTABLE);
+    app_test_input(api_get_input(S, 1));
+    return 0;
+}
+static int l_test_reset(lua_State *S) { app_test_reset(); return 0; }
+
 static void test_lua_open(lua_State *S)
 {
     lua_register(S, "check", l_test_check);
     lua_register(S, "near", l_test_near);
+    app_test_reset();
+    static const luaL_Reg hooks[] = {
+        {"advance", l_test_advance}, {"input", l_test_input}, {"reset", l_test_reset}, {NULL, NULL}
+    };
+    luaL_newlib(S, hooks);
+    lua_pushstring(S, test_suite()); lua_setfield(S, -2, "game");
+    const char *extended = getenv("SPRITE_TEST_EXTENDED");
+    lua_pushboolean(S, extended && !strcmp(extended, "1")); lua_setfield(S, -2, "extended");
+    lua_setglobal(S, "testing");
 }
 
 static const char test_spec_prelude[] =
@@ -57,6 +82,12 @@ int test_read_jobs(const char *path, test_job *jobs, int max)
     L = S;   /* open_libs works on the script state */
     open_libs();
     L = game;
+    const char *root = getenv("SPRITE_MATCH3_ROOT");
+    if (!root) root = "engine";
+    char module[512];
+    snprintf(module, sizeof module, "%s/match3.lua", root);
+    if (!access(module, R_OK)) lua_pushstring(S, root); else lua_pushnil(S);
+    lua_setglobal(S, "match3_root");
     if (luaL_dostring(S, test_spec_prelude) != LUA_OK || luaL_dofile(S, path) != LUA_OK) {
         fprintf(stderr, "tests: %s\n", lua_tostring(S, -1));
         lua_close(S);

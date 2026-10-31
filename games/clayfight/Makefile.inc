@@ -29,7 +29,8 @@ build/clayfight-%: games/clayfight/tests/%.c $(CLAY_OBJ) $(ENGINE_OBJ)
 	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -o $@ $^ $(LIBS)
 .PHONY: test-clayfight test-clayfight-retail
 # The first pair is suitable for clean CI, without proprietary data.
-test-clayfight: build/clayfight-video build/clayfight-photo build/clayfight-input
+test-clayfight: build/test/engine build/clayfight-video build/clayfight-photo build/clayfight-input
+	./build/test/engine clayfight $(TEST_ARGS)
 	./build/clayfight-video
 	./build/clayfight-photo
 	./build/clayfight-input

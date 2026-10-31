@@ -84,7 +84,27 @@ rect app_bleed(void)
 float app_pixel_scale(void) { return A.pixel_scale; }
 double app_time(void) { return A.time; }
 float app_dt(void) { return A.dt; }
+#ifdef ENGINE_TEST
+static double test_clock;
+static bool test_clock_active;
+void app_test_reset(void)
+{
+    memset(&A, 0, sizeof A);
+    A.logical = sz2(1200, 900);
+    A.view = rc(0, 0, 1200, 900);
+    A.output = A.logical;
+    A.pixel_scale = 1;
+    A.in.pinch = 1;
+    test_clock = 1700000000;
+    test_clock_active = true;
+    ui_restart(); story_restart(); fx_restart(); city_restart();
+}
+void app_test_advance(double dt) { A.dt = (float)dt; A.time += dt; test_clock += dt; }
+void app_test_input(input in) { A.in = in; }
+double app_clock(void) { return test_clock_active ? test_clock : (double)time(NULL); }
+#else
 double app_clock(void) { return (double)time(NULL); }
+#endif
 void app_quit(void) { A.running = false; }
 input input_get(void) { return A.in; }
 
@@ -371,6 +391,7 @@ int app_run(app_desc desc, int argc, char **argv)
 #endif
     memset(&A, 0, sizeof A);
 #ifdef ENGINE_TEST
+    test_clock_active = false;
     /* every test shares this process, and each starts clean */
     ui_restart();
     story_restart();

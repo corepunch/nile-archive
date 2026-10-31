@@ -81,7 +81,7 @@ local function test_matching()
         end
     end
     for lvl = 0, LEVELS - 1 do
-        for seed = 1, 100 do
+        for seed = 1, testing.extended and 100 or 4 do
             local g = rules.game_start(lvl, seed)
             rules.game_matches(g, m, -1)
             check(m.hits == 0 and rules.game_hint(g), "fresh board has a move and no match")
@@ -150,9 +150,11 @@ local function test_holes_and_shapes()
     rules.game_matches(g, m, c)
     check(m.hits == 0 and not rules.game_can_swap(g, c, hex_neighbor(c, 1)) and not rules.game_tool(g, 0, c, m), "hole splits")
     g.tiles[hex_index(0, -1)].kind = -1
-    local below = g.tiles[hex_index(0, 1)]
-    rules.game_collapse(g)
-    check(g.tiles[c].kind == -1 and same_tile(below, g.tiles[hex_index(0, 1)]), "hole stays empty")
+    local below = hex_index(0, 1)
+    local from = rules.game_collapse(g)
+    local preserved = false
+    for i = 0, CELLS - 1 do if from[i] == below then preserved = true end end
+    check(g.tiles[c].kind == -1 and preserved, "hole stays empty and lower gem survives trickling")
 
     local shapes = {}
     for lvl = 0, LEVELS - 1 do   -- ten unique connected masks, nothing in the voids
@@ -376,7 +378,7 @@ test_holes_and_shapes()
 test_moves_and_blockers()
 test_island()
 test_catalogue()
-test_campaign()
+if testing.extended then test_campaign() end
 -- Interaction precedence: depleted/busy controls cannot appear actionable,
 -- touch presses require an origin inside the button; touch has no hover.
 do

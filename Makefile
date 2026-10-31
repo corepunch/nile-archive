@@ -104,7 +104,7 @@ gen-check:
 # .luacheckrc declares the engine's globals, so an undefined global is a typo
 # or a missing import and an unused local is dead code.
 lint:
-	luacheck -q games/*/lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua tests/lua tests/fixtures tools/*.lua
+	luacheck -q games/*/lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua tests/lua tests/games tests/fixtures tools/*.lua
 
 # --- Xcode projects -------------------------------------------------------
 # One committed project per game with a macOS and an iOS target (iPad for Nile
@@ -150,7 +150,24 @@ test: gen-check xcode-check $(TEST_BINS) build/test-audio test-clayfight
 	python3 games/christmas-market/tools/check_assets.py
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 tools/buildings.py --check
-	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) || status=1; done; exit $$status
+	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) $(TEST_ARGS) || status=1; done; exit $$status
+
+# Fast mode uses the same per-game binaries/manifests, with no rendering or sleeps.
+.PHONY: test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
+test-fast: $(TEST_BINS) build/test-audio test-clayfight
+	./build/test-audio
+	@status=0; for t in $(TEST_BINS); do ./$$t --fast $(TEST_ARGS) || status=1; done; exit $$status
+$(TEST_GAMES:%=test-%): test-%: build/test/%
+	./build/test/$* --fast $(TEST_ARGS)
+test-engine: build/test/engine build/test-audio
+	./build/test/engine --fast $(TEST_ARGS)
+	./build/test-audio
+test-extended:
+	$(MAKE) test-fast TEST_ARGS=--extended
+MATCH3_LUA_DIR ?= engine
+test-match3: build/test/engine
+	test -f "$(MATCH3_LUA_DIR)/match3.lua"
+	SPRITE_MATCH3_ROOT="$(MATCH3_LUA_DIR)" ./build/test/engine engine_match3 $(TEST_ARGS)
 
 shots: $(TEST_BINS)
 	@for t in $(TEST_GAMES); do ./build/test/$$t shot frame reel hold || exit 1; done

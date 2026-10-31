@@ -65,6 +65,9 @@ git submodule update --init   # Lua, once
 make              # builds Nile Archive, Relic Rush, Volcano and Clayfight
 make run-nile     # or: make run-relic / make run-volcano
 make test         # generated-code freshness, then every test, in one start per game (docs/TESTING.md)
+make test-fast    # all CPU/rule suites, without windows or artwork
+make test-relic-rush # one game's fast suite; substitute another game name
+make test-extended # larger seeds and greedy campaign, using the same test binaries
 make smoke        # only the games' smoke runs
 make gen          # after editing engine/api.xml
 make shots        # re-render the documentation screenshots (software renderer, no display needed)

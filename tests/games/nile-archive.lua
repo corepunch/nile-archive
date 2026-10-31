@@ -1,4 +1,6 @@
 -- Nile Archive: every test, in one start of build/test/nile-archive. See docs/TESTING.md.
+rules("archive_rewards")
+rules("building_economy")
 smoke()
 
 shot("island", "1200x900", "--screen island")
