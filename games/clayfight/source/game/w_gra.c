@@ -190,7 +190,8 @@ gra_t *W_TryLoadGra(const char *name)
     }
     if(!strcasecmp(name,"globe")){
         gra_t *g=Bank(name,47,4);Palette(&g->palettes[0],0x65cfa,64);Palette(&g->palettes[1],0x65d7a,64);Palette(&g->palettes[2],0x65dfa,64);Palette(&g->palettes[3],0x65e7a,64);
-        for(int i=0;i<47;i++)Frame(g,i,MAX(491,491+i-8),i<20?0:1);return g;
+        for(int i=0;i<47;i++)Frame(g,i,MAX(491,491+i-8),i<20?0:1);
+        return g;
     }
     if(!strcasecmp(name,"fonts")){
         gra_t *g=Bank(name,128,1);g->palettes[0].count=15;
