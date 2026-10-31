@@ -170,7 +170,7 @@ The 1920 × 2880 world scrolls beyond the phone screen. Hidden six-neighbor land
 | Ancient heights | 21 | 5 |
 | Temple ridge | 27 | 6 |
 
-A region must touch opened land, meet its Star requirement and have its Compass cost available. Select the clouded region and confirm expansion; only Compasses are deducted. This follows the June's Journey expansion principle. Regions do not open on a timer, and players do not need to build roads. Decorative paths adapt to the selected building positions.
+A region must touch opened land, meet its Star requirement and have its Compass cost available. Select the clouded region and confirm expansion; only Compasses are deducted. This follows the June's Journey expansion principle. Regions do not open on a timer, and players do not need to build roads. Buildings do not generate connecting roads.
 
 ## Play
 
@@ -186,7 +186,7 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
 - The island's HUD follows the home screens of Royal Match, Homescapes and June's Journey, leaving the map uncovered. One row of slim pills shows Gold, Wood, Stone, Stars and Compasses beside the pause medallion; tap a pill to learn what it is for. At the bottom one big button plays the next level (or builds the restored wonder, named above it), flanked by round **Expeditions** and **Shop** buttons. Regions open from their markers in the fog; a marker that can open now shows "+" and glows. During expeditions the HUD is the slim Moves/Goals band and the tool tray. Island access returns after win/loss. See the [island HUD review](docs/review/island-hud/README.md).
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
-- Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.
+- Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
 
 ## Selected tile art

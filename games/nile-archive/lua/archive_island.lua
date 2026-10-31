@@ -28,6 +28,7 @@ function M.setup()
     c.tile = content.TILE
     c.clearance = size2(1, 1)   -- half a tile of ground around every base
     c.spacing = 120
+    c.path = color(0, 0, 0, 0)   -- no automatic roads between buildings
     c.movable = true
     c.buildable = buildable
     local zones = {{area = rect(580, 200, 600, 1050)}}

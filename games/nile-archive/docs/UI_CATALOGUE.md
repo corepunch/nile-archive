@@ -71,3 +71,10 @@ reviewed captures at 1200×900, 1368×1026 and 1600×900, button states and
 reproduction commands. Source: `setup_theme` in `lua/archive_kit.lua`; rendering:
 `engine/ui_forms.lua` and `engine/font.c`. This is authored text styling, with
 no ImageGen prompt or added runtime texture.
+
+## Island roads
+
+`archive_island.lua` explicitly disables automatic building connectors with
+a transparent `city.path` (matching the previous default). Paths painted into
+`data/island.png` remain part of the terrain. Reviewed iPad and 16:9 captures
+are in [the road removal comparison](review/no-auto-roads/README.md).

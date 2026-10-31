@@ -360,3 +360,10 @@ inventory entry, an absent authored state, or a stale atlas crop fails CI. When
 changing existing definitions, audit their actual rule meaning as well as names.
 If any visual gap remains, open/link a GitHub issue here before handoff. No known
 placeholder board/control states remain from issue #11.
+
+## Island connector removal
+
+`lua/island.lua` disables the engine's procedural roads between buildings
+with a transparent `city.path`. Building sprites, shadows and terrain assets
+keep their existing registrations. Reviewed 480×900 and 390×844 captures are
+in [the road removal comparison](review/no-auto-roads/README.md).
