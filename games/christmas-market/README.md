@@ -21,8 +21,9 @@ The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
 input/timing. This game provides campaign data, graphics and integer behavior
 flags. Every exposed column top (no active cell directly above) spawns gems
-vertically. Interior empty cells prefer reachable upper diagonals, with direct
-downward refill as the fallback. Locks still route gems around their sides.
+vertically. Interior gems fall straight down whenever their cell below is
+empty and movable, and slide diagonally only when that cell is occupied,
+locked or missing. Locks still route gems around their sides.
 
 All board imagery uses one `data/match3.png` override atlas. The engine embeds
 a neutral resource atlas for games without an override; `--default-match3`

@@ -346,8 +346,8 @@ function E.new(config)
     end
     local game_apply = M.game_apply
 
-    -- Gravity follows the three downward hex edges, preferring either diagonal
-    -- over straight down. Empty diagonal paths wait for reachable existing gems;
+    -- Gravity follows the three downward hex edges, preferring straight down.
+    -- A gem can slide diagonally only when its own cell below is unavailable;
     -- every exposed column top creates new pieces directly from above. Interior
     -- cells still trickle around locks, or spawn when all parents are blocked.
     -- Return original source IDs plus simultaneous one-edge animation steps.
@@ -363,12 +363,11 @@ function E.new(config)
         local from, steps, spawned = {}, {}, 0
         for i = 0, CELLS - 1 do from[i] = i end
         local function movable(i) return cell_active(g, i) and not locked(g, i) end
-        local function reachable(i, seen)
-            if not movable(i) or seen[i] then return false end
-            if g.tiles[i].kind >= 0 then return true end
-            seen[i] = true
-            return reachable(hex_neighbor(i, 3), seen) or reachable(hex_neighbor(i, 5), seen)
-                or reachable(hex_neighbor(i, 4), seen)
+        local function donor(i) return movable(i) and g.tiles[i].kind >= 0 end
+        local function side_donor(i)
+            if not donor(i) then return false end
+            local down = hex_neighbor(i, 1)
+            return not movable(down) or g.tiles[down].kind >= 0
         end
         while true do
             local step, used, empty = {tiles = {}, from = {}}, {}, 0
@@ -386,10 +385,9 @@ function E.new(config)
                     local above, source = hex_neighbor(i, 4), nil
                     local inlet = not cell_active(g, above)
                     if not inlet then
-                        if movable(left) and g.tiles[left].kind >= 0 and not used[left] then source = left
-                        elseif movable(right) and g.tiles[right].kind >= 0 and not used[right] then source = right
-                        elseif not reachable(left, {}) and not reachable(right, {})
-                            and movable(above) and g.tiles[above].kind >= 0 and not used[above] then source = above end
+                        if donor(above) and not used[above] then source = above
+                        elseif side_donor(left) and not used[left] then source = left
+                        elseif side_donor(right) and not used[right] then source = right end
                     end
                     if source then
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]

@@ -32,7 +32,7 @@ The old detector considered only straight runs. Visually connected bent/compact 
 
 ![All ten actual SDL boards](screenshots/level-shapes-overview.jpg)
 
-Each mask is a distinct connected graph within the common axial-coordinate envelope. Missing cells are excluded from rendering, matching, tile selection, swapping, booster targeting, obstacle placement and refill. Matching never crosses a gap. Gravity prefers the two upper diagonals, waiting for existing gems along empty side routes before taking a gem directly above. Every active cell with no active cell directly above spawns vertically before considering side donors, so the whole stepped top edge refills together. Interior cells spawn only when all upstream donors are blocked. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Directional special attacks may travel across gaps but only affect actual cells. The silhouette follows the active cells rather than a permanently painted large hexagonal frame.
+Each mask is a distinct connected graph within the common axial-coordinate envelope. Missing cells are excluded from rendering, matching, tile selection, swapping, booster targeting, obstacle placement and refill. Matching never crosses a gap. Gravity moves gems straight down whenever the cell beneath them is empty. Diagonal movement is allowed only when that cell is occupied, locked or missing. Every active cell with no active cell directly above spawns vertically before considering side donors, so the whole stepped top edge refills together. Interior cells spawn only when all upstream donors are blocked. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Directional special attacks may travel across gaps but only affect actual cells. The silhouette follows the active cells rather than a permanently painted large hexagonal frame.
 
 ## Idol
 
@@ -44,7 +44,7 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 
 - 1,000 seeded startup boards across all ten masks: no pre-existing four-plus component and at least one legal opening move.
 - Hand-authored triples, bent fours in all six rotations, compact diamonds, five/six specials and hole-separated groups.
-- Mask connectivity/uniqueness, absence of tiles/blockers in holes, diagonal priority, reachable-donor waiting, inlet refill and lock/void boundaries, and invalid targeting of missing cells.
+- Mask connectivity/uniqueness, absence of tiles/blockers in holes, straight-down priority, blocked-down diagonal fallback, inlet refill and lock/void boundaries, and invalid targeting of missing cells.
 - Actual SDL update-loop regression: a three-cell group remains; adding its fourth cell triggers automatically without spending a move; after refill no ready group remains. A ready cascade discovered after falling also resolves automatically.
 - Dead-board update-loop regression across all ten masks, with zero tool charges: idle and post-fall recovery, preserved terrain/progress, playable-board hints, pause/island suspension, ready-group and result precedence. The reported level-seven photo's five-amphora swap is covered separately. See [before/after game captures](review/dead-board/README.md).
 - Scaled mouse/touch regressions and hole-selection checks.

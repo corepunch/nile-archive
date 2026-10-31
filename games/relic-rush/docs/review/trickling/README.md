@@ -1,5 +1,9 @@
 # Diagonal trickling and engine atlas review
 
+Historical migration captures below show the former diagonal-first behavior.
+Current gravity prefers straight down and permits a diagonal only when the
+donor’s cell below is occupied, locked or missing.
+
 The engine now owns the hex match rules and board interaction. The game supplies
 campaign data, graphics and integer behavior flags. Both games use a single
 atlas override; the neutral engine resource skin is available without one.
@@ -37,7 +41,7 @@ The capture script starts each test suite once; tests/games declares all cases
 and tests/fixtures/trickling freezes the seeded board using engine flags.
 
 Validation: `make CFLAGS="-O2 -g -Werror"`, `make test`, `make lint`, each game's
-real-input `--smoke`, and native renderer tests. Shared regressions cover
-side priority, delayed donors, voids, ice/chains, inlet spawning, competing
+real-input `--smoke`, and native renderer tests. Shared regressions now cover
+straight-down priority, blocked-down diagonal fallback, voids, ice/chains, inlet spawning, competing
 destinations, conservation, deterministic replay and all ten masks. The
 update-loop regression waits for every fall step in normal/reduced motion.

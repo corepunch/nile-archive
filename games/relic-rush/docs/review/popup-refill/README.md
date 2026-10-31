@@ -4,7 +4,8 @@ The building and resource icons now share their popup's position, scale and
 opacity. Form images use the skin's `image` paint callback; unskinned forms
 retain their native drawing path. Every active puzzle cell with no active cell
 directly above it spawns vertically, including stepped edges and cells below
-holes. Interior diagonal priority and blocker routing are unchanged.
+holes. Interior gems fall straight down first; diagonal slides require the donor’s
+cell below to be occupied, locked or missing.
 
 These short game-rendered clips compare the previous and corrected animations.
 The refill fixture clears the ring-shaped seventh board so every inlet is
