@@ -185,3 +185,34 @@ do
     R.g=rules.game_start(0,123)
     check(#R.goal_entries()==2,"opening HUD omits absent sand/lock objectives")
 end
+
+-- Entrance uses the real shared view: dialogue and overlays freeze its clock,
+-- a skip release cannot play a move, and reset discards suspended presentation.
+do
+    testing.reset()
+    R.vfx_emit, R.vfx_slam = function() end, function() end
+    for _, reduced in ipairs{false, true} do
+        local g = rules.game_start(4, 982)
+        R.reset_board(g)
+        R.overlay, R.on_island, R.art_review, R.reduced_motion = R.OV_NONE, false, false, reduced
+        R.present_board()
+        local moves, rng = g.moves, g.rng
+        story.say(nil, "Please wait.")
+        R.board_update(.2)
+        check(R.intro.t == 0, "entrance waits for dialogue")
+        story.next(); story.next()
+        R.overlay = R.OV_PAUSE; R.board_update(.2)
+        check(R.intro.t == 0, "modal pauses entrance")
+        R.overlay, R.on_island = R.OV_NONE, true; R.board_update(.2)
+        check(R.intro.t == 0, "island pauses entrance")
+        R.on_island = false; R.board_update(.1)
+        check(R.intro.t > 0, "entrance advances when visible")
+        local at = R.cell_pos(rules.hex_center())
+        R.board_input{released=true,pos=at,press_pos=at}
+        check(g.moves == moves and g.rng == rng and R.selected < 0 and R.intro:done(), "skip release consumes no move or selection")
+        R.board_update(.01)
+        check(R.phase == R.PH_IDLE and not R.intro, "completed entrance returns to idle")
+        R.present_board(); R.reset_board(g)
+        check(not R.intro and R.phase == R.PH_IDLE, "reset clears pending entrance")
+    end
+end

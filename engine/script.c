@@ -145,6 +145,7 @@ void script_open(const char *dir)
         {"@engine/city_smoke.lua", engine_city_smoke, sizeof engine_city_smoke - 1},
         {"@engine/match3.lua", engine_match3, sizeof engine_match3 - 1, "match3"},
         {"@engine/match3_frames.lua", engine_match3_frames, sizeof engine_match3_frames - 1, "match3.frames"},
+        {"@engine/board_intro.lua", engine_board_intro, sizeof engine_board_intro - 1},
     };
     for (size_t i = 0; i < sizeof embedded / sizeof embedded[0]; i++) {
         if (luaL_loadbuffer(L, embedded[i].source, embedded[i].size, embedded[i].name) != LUA_OK || lua_pcall(L, 0, embedded[i].module ? 1 : 0, 0) != LUA_OK) {

@@ -29,6 +29,7 @@ shot("art-states", "480x900", "--art-states")
 shot("hud-states", "480x900", "--hud-states")
 shot("specials-board", "480x900", "--art-board")
 shot("building-card", "480x900", "--card 2")
+reel("christmas-market-board-intro", 18, 6, "480x900", "--level 4 --present --reel")
 for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
 
 -- Shared-engine atlas and refill captures: all runs share this test process.
@@ -42,3 +43,5 @@ end
 frame("atlas-christmas-market-board", "480x900", "--level 7 --art-states")
 frame("atlas-christmas-market-hud", "480x900", "--level 7 --hud-states")
 frame("atlas-christmas-market-effects", "480x900", "--fx bomb --frames 8")
+
+reel("christmas-market-phone-board-intro", 12, 8, "390x844", "--level 4 --present --reel --safe-area 0,47,0,34")

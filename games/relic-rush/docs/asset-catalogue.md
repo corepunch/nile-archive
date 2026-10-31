@@ -231,6 +231,7 @@ pause, guide and the island.
 
 | State | Presentation / assets |
 | --- | --- |
+| PRESENT | The board's entrance after any dialogue: existing HUD, tool, cell, piece and blocker artwork move on the shared timeline in `engine/board_intro.lua`, with transient glows, sparks and a sheen. No new art. Tap skips it. Capture: `build/test/relic-rush board-intro` (`--level 5 --present --reel`), frames in `build/shots/frames/` |
 | Idle | Base or special frame, optional sand/selection/hint/blocker layers |
 | SWAP | Existing piece artwork moves to neighbour |
 | REJECT | Same artwork returns; no move spent |
@@ -239,7 +240,7 @@ pause, guide and the island.
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
 | Collection | Existing base-kind image flies to resource HUD with a trail |
-| Reduced motion | Suppresses trails, shake, squash and effect spawns; rule resolution stays active |
+| Reduced motion | Suppresses trails, shake, squash and effect spawns; the board's entrance becomes a short fade; rule resolution stays active |
 
 Transient light, beams, rings, particles, score text and sunlight motes
 are intentional animation primitives, not missing static artwork. Result-card

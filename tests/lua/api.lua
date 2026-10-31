@@ -110,3 +110,40 @@ check(not story.play("lua-hello", {{"ann", "Hello."}}), "beat plays once")
 story.next(); story.next()
 check(not story.active(), "lines consumed")
 
+
+-- The match board's entrance: pure functions of one clock.
+local entrance = {
+    {id = 1, at = vec2(0, 0), ring = 0, column = 0, row = 1, drop = 200},
+    {id = 2, at = vec2(0, 50), ring = 1, column = 0, row = 0, drop = 200},
+    {id = 3, at = vec2(50, 25), ring = 1, column = 1, row = 0, drop = 100},
+}
+local landed, slammed, sheened = 0, 0, 0
+local intro = board_intro.new(entrance, {
+    blocked = function(id) return id == 3 end,
+    on_land = function() landed = landed + 1 end,
+    on_slam = function() slammed = slammed + 1 end,
+    on_sheen = function() sheened = sheened + 1 end,
+})
+check(intro:cell(1) == 0 and not intro:relic(1) and intro:arrive(0) == 0, "nothing shows before the clock starts")
+intro:update(1 / 60)
+check(not intro:done() and intro:arrive(0) > 0, "the HUD moves first")
+local seen_over = false
+for _ = 1, 600 do
+    intro:update(1 / 60)
+    seen_over = seen_over or intro:arrive(.1, 3, .4) > 1
+end
+check(seen_over, "spring arrivals overshoot")
+check(intro:done() and landed == 3 and slammed == 1 and sheened == 1, "every piece lands once, every blocker slams once")
+near(intro:cell(1), 1, "a finished cell is full size")
+local visible, height, aspect = intro:relic(2)
+check(visible, "a finished piece shows")
+near(height, 0, "a finished piece sits in its cell")
+near(aspect, 1, "a finished piece has its own shape")
+local skipped = board_intro.new(entrance, {on_land = function() error("skipping must not call back") end})
+skipped:update(1 / 60); skipped:skip(); skipped:update(1 / 60)
+check(skipped:done(), "a tap ends the entrance")
+local calm = board_intro.new(entrance, {reduced = true, on_land = function() error("reduced motion has no landings") end})
+calm:update(.1)
+check(calm:cell(1) == 1 and calm:fade() < 1, "reduced motion fades everything in place")
+calm:update(1)
+check(calm:done() and calm:fade() == 1 and select(2, calm:relic(1)) == 0, "and takes no time to speak of")

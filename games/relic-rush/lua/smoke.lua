@@ -33,10 +33,19 @@ function R.smoke()
     end
     wait = 3
     if story.active() then   -- tap through the dialogue
+        assert(R.phase ~= R.PH_PRESENT or R.intro.t == 0, "smoke: the board fills only after the dialogue")
         app.inject_click(vec2(240, 300))
         return
     end
+    -- The board's entrance takes no moves. A tap skips the first; the rest play out.
+    if R.phase == R.PH_PRESENT and R.overlay == R.OV_NONE and not R.on_island then
+        if not shop.skipped and R.intro.t > 0 then
+            app.inject_click(R.cell_pos(rules.hex_center())); shop.skipped = true
+        end
+        return
+    end
     if stage == -2 and R.overlay == R.OV_NONE then
+        assert(R.selected < 0 and R.g.moves == rules.level_of(R.g).moves, "smoke: the tap that skips the entrance must not play")
         app.inject_click(vec2(432, 46)); stage = -3
     elseif stage == -3 and R.overlay == R.OV_PAUSE and R.modal_clock > .4 then   -- Sound off, then on again
         smoke_sound = R.sound

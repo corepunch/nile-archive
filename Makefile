@@ -104,7 +104,7 @@ gen-check:
 # .luacheckrc declares the engine's globals, so an undefined global is a typo
 # or a missing import and an unused local is dead code.
 lint:
-	luacheck -q games/*/lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua engine/match3.lua engine/match3_frames.lua tests/lua tests/games tests/fixtures tools/*.lua
+	luacheck -q games/*/lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua engine/match3.lua engine/match3_frames.lua engine/board_intro.lua tests/lua tests/games tests/fixtures tools/*.lua
 
 # --- Xcode projects -------------------------------------------------------
 # One committed project per game with a macOS and an iOS target (iPad for Nile

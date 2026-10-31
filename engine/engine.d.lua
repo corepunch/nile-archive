@@ -1638,3 +1638,24 @@ function ui_modal_stack:draw(dt, options) end
 ---@param opts {look: fun(at: vec2), wallet: fun(): number, cancel: fun(), confirm: fun(), offset: vec2?}
 ---@return fun(): boolean
 function city.move_test(c, opts) end
+
+---A match board's entrance as pure functions of one clock (engine/board_intro.lua): the HUD lands, cells ripple out, pieces rain down, blockers slam, a sheen runs across
+---@class board_intro
+---@field t number
+board_intro = {}
+---@param cells table[] {id, at, ring, column, row, drop}
+---@param opts? table {reduced, blocked, on_ring, on_land, on_slam, on_sheen}
+---@return board_intro
+function board_intro.new(cells, opts) end
+---@param view table
+---@param rules table
+function board_intro.bind(view, rules) end
+function board_intro:update(dt) end
+function board_intro:done() end
+function board_intro:skip() end
+function board_intro:arrive(delay, hz, damping) end
+function board_intro:fade() end
+function board_intro:cell(id) end
+function board_intro:relic(id) end
+function board_intro:blocker(id) end
+function board_intro:sheen(id) end
