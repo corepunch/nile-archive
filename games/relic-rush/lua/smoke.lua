@@ -36,7 +36,9 @@ function R.smoke()
         return
     end
     if stage == -2 and R.overlay == R.OV_NONE then
-        app.inject_click(vec2(419, 825 + R.drop)); stage = -1
+        app.inject_click(vec2(432, 46)); stage = -3
+    elseif stage == -3 and R.overlay == R.OV_PAUSE and R.modal_clock > .4 then
+        app.inject_click(R.pause_form.boxes.guide:center() + vec2(0, R.drop / 2)); stage = -1
     elseif stage == -1 and R.overlay == R.OV_GUIDE and R.modal_clock > .4 then
         local done = R.guide_form.boxes.done
         assert(done and #R.guide_form.nodes.topics.children == 5, "smoke: guide data source was not laid out")

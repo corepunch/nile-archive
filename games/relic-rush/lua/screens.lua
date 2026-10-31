@@ -140,10 +140,10 @@ local star_icon, compass_icon = R.star_icon, R.compass_icon
 
 --------------------------------------------------------------------- header
 
--- No title and no band: the picture runs up to the status bar, with small
--- glassy controls in the corners, as Nile Archive's screens do.
-local function pause_button()
-    local bounds=rect(414,12,52,52)
+-- On the island the picture runs up to the status bar with a small medallion
+-- in the corner; on the board the medallion sits in the HUD band beside the goals.
+local function pause_button(island)
+    local bounds=island and rect(414,12,52,52) or rect(406,20,52,52)
     local st=ui.hit(bounds,0)
     local state=st.held and "pressed" or st.hot and "hover" or "normal"
     picture(R.hud_art["pause-"..state],bounds,255)
@@ -185,7 +185,7 @@ function R.draw_header(on_island)
         say("EXPAND +", r:inflate2(vec2(-10, 0)), 15, PAL_CREAM)
         if tapped(r) then R.expand() end
     end
-    if pause_button() then R.overlay = R.OV_PAUSE end
+    if pause_button(island) then R.overlay = R.OV_PAUSE end
 end
 
 function R.draw_toast()
@@ -193,9 +193,9 @@ function R.draw_toast()
     if R.on_island then   -- above the map buttons
         rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
-    else   -- below the compact header, clear of Elena and the pause control
-        rrect(rect(38, 200, 404, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 215), 14, PAL_CREAM, 388)
+    else   -- just below the HUD band, above the board
+        rrect(rect(38, 112, 404, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 127), 14, PAL_CREAM, 388)
     end
 end
 

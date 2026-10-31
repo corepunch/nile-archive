@@ -80,24 +80,14 @@
       "meaning": "Completed objective"
     }
   },
-  "portrait": {
-    "source": "art/expedition-hud/elena-investigating.png",
-    "prompt": "art/expedition-hud/elena-prompt.txt",
-    "runtime": "data/characters/elena-investigating.png",
-    "box": [
-      0,
-      20,
-      1090,
-      1390
-    ],
-    "max_size": [
-      320,
-      400
-    ],
-    "generator": "built-in ImageGen, 2026-10-31; original Elena portrait used as identity reference",
-    "pose": "Static investigation: examining a sun fragment with a magnifying glass; animation-ready independent cutout"
-  },
   "registration": "Measured crops, aspect-preserving resize into 120x120 on 128x128 RGBA canvas; original alpha preserved",
   "review": "docs/review/expedition-header/README.md",
-  "reproduction": "python3 games/relic-rush/tools/prepare_hud.py"
+  "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
+  "retired_portrait": {
+    "source": "art/expedition-hud/elena-investigating.png",
+    "prompt": "art/expedition-hud/elena-prompt.txt",
+    "generator": "built-in ImageGen, 2026-10-31; original Elena portrait used as identity reference",
+    "pose": "Static investigation: examining a sun fragment with a magnifying glass; animation-ready independent cutout",
+    "status": "retired 2026-10-31: the in-level HUD no longer shows a character; source kept for reference, no runtime export"
+  }
 }

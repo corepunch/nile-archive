@@ -51,12 +51,12 @@ for pack in manifest["packs"]:
         assert (ROOT / f"data/tile-sets/{pack}/{kind}.png").is_file()
 hud = json.loads((ROOT / manifest["expedition_hud"]).read_text())
 assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete"}
-for asset in [hud["controls"], hud["portrait"]]:
+for asset in [hud["controls"], hud["retired_portrait"]]:
     assert (ROOT / asset["source"]).is_file() and (ROOT / asset["prompt"]).is_file()
 for name, asset in hud["icons"].items():
     assert "`" + name + "`" in doc
     assert (ROOT / asset["runtime"]).is_file()
-assert (ROOT / hud["portrait"]["runtime"]).is_file()
+assert not (ROOT / "data/characters/elena-investigating.png").exists(), "retired portrait must not ship"
 buildings = json.loads((ROOT / manifest['buildings']).read_text())
 assert (ROOT / buildings['source']).is_file()
 assert (ROOT / buildings['registration']).is_file()
@@ -76,4 +76,4 @@ for i, b in enumerate(buildings['items']):
     assert 'key="'+b['key']+'"' in definitions and '`'+b['key']+'`' in building_doc
     assert (ROOT / f'docs/review/building-catalogue/footprints-{i//4+1:02d}.jpg').is_file()
 assert '96' in doc and 'building-catalogue.md' in doc
-print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 board states, 7 HUD icons, investigating portrait, 96 buildings covered")
+print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 board states, 7 HUD icons, 96 buildings covered")

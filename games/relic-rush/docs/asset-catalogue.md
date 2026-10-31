@@ -106,7 +106,7 @@ copies. See [match rules](match4-rules.md) for special-combination resolution.
 | `ice-1` | Broken icy shell; one hit remains, including after damage to ice-2 |
 | `selected` | Gold/jade frame under the tapped piece |
 | `hint` | Distinct fine gold frame under both idle-hint pieces |
-| `guide` | Jade book medallion that opens the explorer guide |
+| `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
 Ice and chain are independent layers; if both exist, both are shown. A blocker hit
 removes a layer before collecting its piece. Selected/hint frames are under pieces,
@@ -153,14 +153,22 @@ cover every tool/state plus normal and exhausted rows at both phone sizes.
 Priority: depleted or board busy → disabled; held pointer that began inside →
 pressed; selected tool → selected; real mouse inside → hover; otherwise normal.
 Touch never receives hover art. Charge counts are dynamic text on a counter.
-The guide is a single medallion action, not a toggle or consumable tool.
+The tools stand in a jade tray along the bottom edge, three evenly spaced
+sockets without captions; choosing one names it and its effect in the toast.
 
-## Expedition header and investigation portrait
+## Expedition header
 
-The header presents one Goal panel of remaining objective counts, one Moves
-card and an authored pause medallion. Score remains a win condition, represented
-by the star seal; idols, sand and lock counts use their existing artwork. A zero
-remaining count uses the completed seal and DONE. No score total, level title,
+The header follows the portrait match-3 convention (Royal Match, Toon Blast,
+Homescapes): one jade band with a gold trim hangs from the top edge, under the
+status bar. It holds a hexagonal Moves medallion that overhangs the band, a
+recessed goal plate and the authored pause medallion. Goals are icons with their
+remaining count beneath. Score remains a win condition, represented by the star
+seal; idols, sand and lock counts use their existing artwork. A met goal dims its
+icon and replaces the count with the completed seal. Collections landing on a
+goal make its icon bounce. Over the last five moves the medallion face turns
+red and glows. The band, trim, plate and medallion are drawn with engine shapes
+(gradients, polygons); they are frames, not interaction states of an authored
+control, and the medallion has no pressed/hover states because it is read-only. No score total, level title,
 progress bar or island shortcut is displayed during an expedition. Level details
 are in Pause; results retain score/reward details. An unfinished round cannot
 return to the island. Win/failure screens provide the exit actions.
@@ -177,9 +185,9 @@ Runtime: `data/expedition-hud/<name>.png`, 128×128 RGBA.
 
 `art/expedition-hud/elena-investigating.png` is a separate ImageGen identity edit
 of the existing Elena portrait: she examines a sun fragment through a magnifying
-glass. [Exact portrait prompt](../art/expedition-hud/elena-prompt.txt). Runtime:
-`data/characters/elena-investigating.png`. It is a static waist-up investigation
-pose; its independent texture/anchor leaves room for future animation. Dialogue
+glass. [Exact portrait prompt](../art/expedition-hud/elena-prompt.txt). It was
+shown between the old goal and moves cards; the match-3 HUD retires it, so it has
+no runtime export and the manifest lists it as `retired_portrait`. Dialogue
 continues using the original Elena portrait.
 
 Measured crops, source dimensions, prompts and runtime paths are recorded in
@@ -187,13 +195,17 @@ Measured crops, source dimensions, prompts and runtime paths are recorded in
 by the primary runtime manifest. Import is aspect-preserving spatial registration
 with authored alpha retained, never derived state artwork:
 `python3 games/relic-rush/tools/prepare_hud.py` (`--check` verifies exact exports).
-`lua/art.lua` loads the contract; the measured engine list in `lua/board.lua`
-owns goal rows. Collection flights land on the new goal positions.
+`lua/art.lua` loads the contract; the measured horizontal engine list in
+`lua/board.lua` owns the goal cells. Collection flights land on the new goal positions.
 [Reviewed game captures and native input checks](review/expedition-header/README.md)
 cover both backgrounds, both phone sizes, completed goals, every pause state,
 and dismissible/required popup behavior.
 
-![All five pause states, both goal glyphs and the investigation portrait in the game](review/expedition-header/after-states-480x900.jpg)
+[Match-3 HUD before/after captures](review/match3-hud/README.md) cover both
+paintings, both phone sizes, completed goals, the last moves, a tapped tool,
+pause, guide and the island.
+
+![The match-3 HUD on a late level](review/match3-hud/after-late-480x900.jpg)
 
 ## Animation and effect states
 
@@ -276,7 +288,8 @@ asset or manifest mapping changes. Reviewed phone captures of both paintings,
 all three packs and ray/bomb/prism effects, plus reproduction, are in
 [the board-scale review](review/larger-board/README.md).
 
-The board HUD uses three small, separate jade cards with gold rims: score,
+Superseded twice (by the Goal/Moves cards and then the match-3 HUD above):
+the board HUD used three small, separate jade cards with gold rims: score,
 level/name and moves. Each label stays grouped with its value; objective pills
 share the same near-opaque backing. The painting remains visible in the gaps.
 The read-only `hud_form` in `lua/board.lua` uses engine row/column layout,

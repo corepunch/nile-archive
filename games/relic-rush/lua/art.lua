@@ -15,7 +15,6 @@ function A.load_hud()
     local textures = {}
     for _, state in ipairs(A.states) do textures["pause-" .. state] = texture.load("expedition-hud/pause-" .. state .. ".png") end
     for _, name in ipairs(A.hud_icons) do textures[name] = texture.load("expedition-hud/" .. name .. ".png") end
-    textures.elena = texture.load("characters/elena-investigating.png")
     return textures
 end
 
@@ -31,8 +30,6 @@ function A.draw_hud_catalogue(R)
     gfx.image(R.hud_art.complete,rect(148,414,66,66),color.WHITE)
     R.say_at("score",vec2(89,502),14,R.PAL_CREAM,90)
     R.say_at("complete",vec2(181,502),14,R.PAL_CREAM,90)
-    gfx.image(R.hud_art.elena,rect(258,398,174,268):fit(texture.size(R.hud_art.elena)),color.WHITE)
-    R.say_at("Elena investigates",vec2(240,683),17,R.PAL_CREAM,400)
 end
 
 function A.tool_state(charges, selected, inside, down, started_inside, hover, idle)
