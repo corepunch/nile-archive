@@ -54,8 +54,9 @@ uses actual injected clicks for jobs, pause/resume, restart, next district and
 final replay; only time is accelerated.
 
 See [the port assessment](docs/PORT.md), [asset replacements](docs/ASSETS.md),
-[the machine-readable provenance catalog](docs/asset-catalog.json) and
-[character attribution](docs/CHARACTERS.md).
+[the machine-readable provenance catalog](docs/asset-catalog.json),
+[character attribution](docs/CHARACTERS.md) and
+[how to render and edit the characters](docs/CHARACTER-PIPELINE.md).
 
 All **11 authored missions**, their editable artwork, character models and original
 tools are preserved in [source/](source/). The five campaign maps above are playable

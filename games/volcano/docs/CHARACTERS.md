@@ -15,3 +15,6 @@ The editable Blender source, source FBX models and texture authoring tools are
 preserved in [source/assets/kenney-characters](../source/assets/kenney-characters/).
 They are not runtime dependencies or included in the data bundle. Source declaration
 and image hashes are recorded in [asset-catalog.json](asset-catalog.json).
+
+[CHARACTER-PIPELINE.md](CHARACTER-PIPELINE.md) explains how the sheets are rendered
+and how to change the characters, animations and textures.
