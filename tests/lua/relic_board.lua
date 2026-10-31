@@ -3,6 +3,7 @@ local rules = require("rules")
 local R = require("board")
 local dead_board = require("fixtures/dead_board")
 
+
 R.notice = function(message) R.toast = message end
 R.tone = function() end
 R.vfx_wave = function() end
@@ -113,6 +114,39 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     else
         check(g.rng == rng and not R.toast, "terminal board is not shuffled: " .. mode)
         check(R.overlay == (mode == "won" and R.OV_RESULT or R.OV_FAILED), "terminal result precedes recovery: " .. mode)
+    end
+end
+
+-- Real animation-phase updates, with virtual time and no renderer. A swap
+-- charges once, pauses mid-flight, then resolves every cascade without input.
+for level=0,rules.LEVELS-1 do
+    for _,reduced in ipairs({false,true}) do
+        testing.reset()
+        local g=rules.game_start(level,100+level)
+        setup(g)
+        R.reduced_motion=reduced
+        local ok,a,b=rules.game_hint(g)
+        check(ok,"phase fixture has a legal move")
+        local moves=g.moves
+        R.attempt_swap(a,b)
+        check(R.phase==R.PH_SWAP and g.moves==moves-1 and g.score==0,"swap debits once before animation")
+        R.attempt_swap(a,b)
+        check(g.moves==moves-1,"busy phase ignores another swap")
+        local before=rules.game_copy(g)
+        R.overlay=R.OV_PAUSE
+        testing.advance(30)
+        R.board_update(app.dt())
+        check(R.phase==R.PH_SWAP and R.phase_time==0 and require('support').same(g,before),"pause freezes a pending wave")
+        R.overlay=R.OV_NONE
+        for _=1,500 do
+            testing.advance(.05)
+            R.board_update(app.dt())
+            if R.phase==R.PH_IDLE then break end
+        end
+        check(R.phase==R.PH_IDLE and g.score>0 and g.moves==moves-1,"all cascades settle without extra move charges")
+        local m=rules.new_match()
+        rules.game_matches(g,m,-1)
+        check(m.hits==0,"settled board contains no unresolved matches")
     end
 end
 

@@ -1,7 +1,9 @@
 -- Relic Rush: every test, in one start of build/test/relic-rush. See docs/TESTING.md.
+rules("match_matrix")
+rules("building_economy")
 rules("relic")
 rules("relic_board")
-rules("progression", "games/nile-archive/lua")
+rules("progression")
 smoke()
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 

@@ -12,6 +12,7 @@
 #ifndef ENGINE_TEST_H
 #define ENGINE_TEST_H
 
+#include "engine.h"
 #include <math.h>
 #include <stdbool.h>
 
@@ -49,6 +50,10 @@ int test_read_jobs(const char *path, test_job *jobs, int max);
 /* core.c and the runner share these. */
 void app_test_recover(void);
 void app_test_close_window(void);
+void app_test_reset(void);
+void app_test_advance(double dt);
+void app_test_input(input in);
+const char *test_suite(void);
 
 int test_main(const char *suite, const char *lua_dir, const char *data_dir, int argc, char **argv);
 

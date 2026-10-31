@@ -103,3 +103,7 @@ The original source backup is under ignored `reference/clayfight/original-source
 See [PORT.md](docs/PORT.md) for acceptance evidence and validation limits,
 [creature-format.md](docs/creature-format.md) for the content format and
 [primal-rage-scripts.md](docs/primal-rage-scripts.md) for the original VM.
+
+## Fast rule tests
+
+Run `make test-clayfight` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.

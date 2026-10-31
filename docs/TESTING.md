@@ -94,3 +94,75 @@ the engine, add it the same way rather than adding boilerplate to the test.
 
 `make shots` runs only the picture tests, then `tools/screenshots.py` turns them into documentation
 images without starting a game.
+
+## Fast rules and deterministic injections
+
+The same binaries and manifests support a window-free pass:
+
+```sh
+make test-fast
+make test-relic-rush             # substitute nile-archive, christmas-market or volcano
+make test-engine
+make test-clayfight              # includes its Lua scheduler and native/JS checks
+make test-extended               # CPU/rules, larger deterministic sample
+build/test/relic-rush --fast     # same executable used for full screenshots and smoke
+```
+
+Fast mode runs Lua rules and the engine's CPU tests, skipping renderer tests,
+smoke, screenshots, reels and gestures. The puzzle suites take about one second
+per game on the development Mac. `make test` retains the full integrated suite.
+CI runs `make test TEST_ARGS=--extended`, keeping the thousand opening boards
+and greedy campaign simulation alongside the added coverage.
+
+Under `#ifdef ENGINE_TEST`, the private `testing` table provides
+`testing.reset()`, `testing.advance(seconds)` and `testing.input{...}`. Reset
+clears frame time, input and engine UI/story/effect/city state and selects a fixed
+wall-clock epoch. Advance changes frame/wall clocks and `app.dt()` instantly;
+tests explicitly call updates. Input reaches the real `input.get()` without a
+window. Negative and nonfinite durations are rejected. Real game runs switch
+back to their normal clock. `testing.game` identifies the manifest's suite and
+`testing.extended` selects the larger sample. Release builds expose none of these
+hooks; declarations live with the existing test infrastructure in `engine/test.h`.
+
+Each rule file gets a fresh Lua state and selected game + engine + test module
+roots. Save output uses a unique temporary directory per suite invocation, which
+is removed at exit. A rule file may return nil or a nonnegative integer failure
+count; invalid return values and positive failure counts fail its job. Errors in
+engine-to-Lua callbacks remain catchable by named cases, while uncaught frame
+errors retain the existing job recovery path.
+
+`tests/lua/support.lua` supplies named cases: use `suite:case(label, fn)` and
+`suite:check(condition, message)`, then `return suite:finish()`. Case failures
+include their fixture parameters and feed the engine's existing reporter.
+
+Puzzle assertions live once in `tests/lua/contracts/puzzle.lua`, accepting a
+configured rules instance; `match_matrix.lua` selects the game's public adapter.
+There are roughly 10,000 board cases per game: every straight run/direction/colour,
+an independent component oracle, every tool mask, all 512 isolated central-lane
+occupancies, holes/locks, special pairs, blocker strengths, materials and final
+move precedence. Lane tests isolate side cells so they allow diagonal trickling
+when it is enabled on a wider board. Both games also exercise real animation
+phases, paused waves, cascades and dead-board recovery.
+
+`building_economy.lua` checks every real catalogue entry: each resource one short,
+each requirement one short, exact funds, preview/cancel, exact deductions and
+rewards, duplicate confirmation and free moving. Engine cases cover both quick
+and confirm paths, all resource slots together, full cities, blocked terrain,
+region unlocks, the income boundary and injected hold/move/cancel input. Volcano
+checks all job costs, duplicate dispatch and blocked/paused/busy/unreachable work.
+
+The parallel shared-engine migration exposes `match3.new(config)`. Its direct
+suite tests all 64 behavior-flag combinations, default match-3, configurable
+thresholds/colours, multiple radii and the same board contract. The engine manifest
+includes it automatically when `engine/match3.lua` is present. Until that change
+lands, test its source without copying it into this branch:
+
+```sh
+make test-match3 MATCH3_LUA_DIR=/path/to/engine
+```
+
+The direct suite has also passed against a snapshot of the referenced engine
+migration checkout. It loads no game modules or artwork.
+
+This change adds test coverage and test-only hooks; no player-visible screenshots
+are required for its pull request.

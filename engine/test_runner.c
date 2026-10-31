@@ -22,11 +22,14 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include <dirent.h>
 
 enum { MAX_C_TESTS = 128, MAX_JOBS = 512, MAX_NOTES = 12, MAX_ARGS = 64, TIME_LIMIT = 600 };
 
 static struct { const char *name; void (*fn)(void); } c_tests[MAX_C_TESTS];
 static int c_test_count;
+static const char *current_suite = "engine";
+const char *test_suite(void) { return current_suite; }
 
 static struct {
     int checks, failed_checks;
@@ -177,10 +180,11 @@ static void run_game(const test_job *j, const char *suite, const char *lua_dir, 
 static void run_rules(const test_job *j, const char *lua_dir)
 {
     char roots[512], path[128];
-    snprintf(roots, sizeof roots, "tests/lua;%s%s%s", lua_dir, j->roots[0] ? ";" : "", j->roots);
+    snprintf(roots, sizeof roots, "%s;%s%sengine;tests/lua", lua_dir, j->roots, j->roots[0] ? ";" : "");
     snprintf(path, sizeof path, "tests/lua/%s.lua", j->file);
     script_open(roots);
-    script_dofile(path);
+    int result = script_dofile(path);
+    if (result > 0 && !test_failures()) test_fail(path, 0, "reported %d failed cases", result);
     script_close();
 }
 
@@ -264,17 +268,23 @@ static bool wanted(const char *label, int argc, char **argv)
 
 int test_main(const char *suite, const char *lua_dir, const char *data_dir, int argc, char **argv)
 {
+    current_suite = suite;
     static test_job jobs[MAX_JOBS];
     static char failures[4096];
     char spec[128], log[160];
     bool list = false;
+    bool fast = false;
     for (int i = 1; i < argc; i++) list |= !strcmp(argv[i], "--list");
+    for (int i = 1; i < argc; i++) {
+        fast |= !strcmp(argv[i], "--fast");
+        if (!strcmp(argv[i], "--extended")) setenv("SPRITE_TEST_EXTENDED", "1", 1);
+    }
     snprintf(spec, sizeof spec, "tests/games/%s.lua", suite);
     int job_count = access(spec, R_OK) ? 0 : test_read_jobs(spec, jobs, MAX_JOBS);
     if (job_count < 0) return 2;
     snprintf(T.shot_dir, sizeof T.shot_dir, "build/shots");
-    make_dirs("build/test/home");
-    setenv("SPRITE_SAVE_DIR", "build/test/home", 1);
+    char home[] = "/tmp/sprite-tests-XXXXXX";
+    if (!mkdtemp(home) || setenv("SPRITE_SAVE_DIR", home, 1)) { perror("test save directory"); return 2; }
     snprintf(log, sizeof log, "build/test/%s.log", suite);
     report_fd = dup(1);
     colour = isatty(report_fd);
@@ -286,6 +296,9 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
     for (int i = 0; i < total; i++) {
         const test_job *j = i < c_test_count ? NULL : &jobs[i - c_test_count];
         const char *kind = j ? j->kind : "", *name = j ? j->name : c_tests[i].name;
+        if (fast && (j ? strcmp(kind, "rules") != 0 :
+            !strcmp(name, "platform") || !strcmp(name, "platform_safe_area") ||
+            !strcmp(name, "backdrop") || !strcmp(name, "story_layouts") || !strcmp(name, "city_render"))) continue;
         char label[100];
         snprintf(label, sizeof label, "%s%s%s", kind, kind[0] ? " " : "", name);
         if (!wanted(label, argc, argv)) continue;
@@ -310,6 +323,16 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         report(kind, name, seconds_now() - T.started, log, &passed, &failed, failures, sizeof failures);
     }
     app_test_close_window();
+    DIR *dir = opendir(home);
+    if (dir) {
+        struct dirent *entry;
+        while ((entry = readdir(dir))) {
+            if (entry->d_name[0] == '.') continue;
+            char path[512]; snprintf(path, sizeof path, "%s/%s", home, entry->d_name); unlink(path);
+        }
+        closedir(dir);
+    }
+    rmdir(home);
     if (list) return 0;
     say("%s: %s%d passed, %d failed%s, %ld checks, %.1fs\n", suite, colour ? (failed ? "\033[31;1m" : "\033[32m") : "",
         passed, failed, colour ? "\033[0m" : "", checks, seconds_now() - began);

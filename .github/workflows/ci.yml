@@ -20,7 +20,7 @@ jobs:
       - name: Build games
         run: make CFLAGS="-O2 -g -Werror"
       - name: Every test, in one start per game
-        run: xvfb-run -a make test
+        run: xvfb-run -a make test TEST_ARGS=--extended
       - name: Lua lint
         run: make lint
       - name: Verify authored Relic Rush atlas crops

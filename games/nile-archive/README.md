@@ -173,3 +173,7 @@ python3 -m http.server 8080 --directory dist   # затем http://localhost:808
 ## Лицензия
 
 См. [LICENSE](../../LICENSE).
+
+## Fast rule tests
+
+Run `make test-nile-archive` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.

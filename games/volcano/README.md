@@ -70,3 +70,7 @@ To rebuild the campaign assets using only this repository's local files:
 python3 games/volcano/tools/import_episode.py
 python3 games/volcano/tools/preserve_source.py --verify
 ```
+
+## Fast rule tests
+
+Run `make test-volcano` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.
