@@ -22,5 +22,3 @@ pointer={down=false,pos=vec2(25,330)};game.frame(0)
 assert(keys[#keys][1]==string.byte('w') and not keys[#keys][2], 'touch release clears movement')
 game.quit()
 clay,font,app,input,gfx,ui=saved.clay,saved.font,saved.app,saved.input,saved.gfx,saved.ui
-print('clayfight: fixed ticks, stall cap and touch controls passed')
-return 0

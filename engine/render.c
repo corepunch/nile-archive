@@ -19,7 +19,13 @@
 #include <GL/glext.h>
 #endif
 
-struct render_texture { GLuint id; bool additive; };
+struct render_texture {
+    GLuint id;
+    bool additive;
+#ifdef ENGINE_TEST
+    struct render_texture *prev, *next;
+#endif
+};
 static struct {
     GLuint program, vao, vertices, indices, white;
     GLint screen, origin;
@@ -52,6 +58,29 @@ static GLuint render_shader(GLenum type, const char *body)
     glDeleteShader(shader);
     return 0;
 }
+
+#ifdef ENGINE_TEST
+/* Every test shares this process, so a test that ends frees all its textures. */
+static struct render_texture *live_textures;
+
+static void texture_track(struct render_texture *t)
+{
+    t->next = live_textures;
+    if (live_textures) live_textures->prev = t;
+    live_textures = t;
+}
+
+static void texture_forget(struct render_texture *t)
+{
+    if (t->prev) t->prev->next = t->next;
+    else if (live_textures == t) live_textures = t->next;
+    if (t->next) t->next->prev = t->prev;
+    t->prev = t->next = NULL;
+}
+#else
+#define texture_track(t) ((void)0)
+#define texture_forget(t) ((void)0)
+#endif
 
 bool render_init(void)
 {
@@ -91,13 +120,22 @@ bool render_init(void)
     uint32_t white = UINT32_MAX;
     struct render_texture *t = render_texture_create(1, 1, &white);
     if (!t) { render_shutdown(); return false; }
-    R.white = t->id; free(t);
+    R.white = t->id; texture_forget(t); free(t);
     return true;
 }
 
 bool render_ready(void) { return R.program != 0; }
 void render_shutdown(void)
 {
+#ifdef ENGINE_TEST
+    /* Handles may outlive this in Lua until its state closes, so only the GL side goes now. */
+    while (live_textures) {
+        struct render_texture *t = live_textures;
+        glDeleteTextures(1, &t->id);
+        t->id = 0;
+        texture_forget(t);
+    }
+#endif
     glDeleteTextures(4, R.blur_texture);
     glDeleteFramebuffers(4, R.blur_fbo);
     glDeleteProgram(R.blur_program);
@@ -140,6 +178,7 @@ struct render_texture *render_texture_create(int w, int h, const void *rgba)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgba);
+    texture_track(t);
     return t;
 }
 void render_texture_update(struct render_texture *t, int x, int y, int w, int h, const void *rgba)
@@ -155,7 +194,13 @@ void render_texture_nearest(struct render_texture *t)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
-void render_texture_free(struct render_texture *t) { if (t) { glDeleteTextures(1, &t->id); free(t); } }
+void render_texture_free(struct render_texture *t)
+{
+    if (!t) return;
+    if (t->id) glDeleteTextures(1, &t->id);   /* zero: already gone with its test */
+    texture_forget(t);
+    free(t);
+}
 void render_texture_additive(struct render_texture *t, bool on) { if (t) t->additive = on; }
 void render_additive(bool on) { R.additive = on; }
 
@@ -268,7 +313,7 @@ static bool render_blur_prepare(int w, int h)
         int tw = (w + divisor - 1) / divisor, th = (h + divisor - 1) / divisor;
         struct render_texture *t = render_texture_create(tw, th, NULL);
         if (!t) { R.blur_failed = true; break; }
-        R.blur_texture[i] = t->id; free(t);
+        R.blur_texture[i] = t->id; texture_forget(t); free(t);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, R.blur_fbo[i]);
         glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, R.blur_texture[i], 0);
         if (glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { R.blur_failed = true; break; }

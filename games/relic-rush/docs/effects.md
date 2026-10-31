@@ -40,4 +40,4 @@ strength are no longer supplied by procedural glyphs.
 
 Effects only read the board; the ported rule tests (`make test`) and the `--smoke` run cover gameplay with effects active.
 
-Capture single moments with `--fx ray|bomb|prism --frames N --shot file.png` (N frames after the special fires); `tools/screenshots.sh` renders the reel frames and assembles `screenshots/effects-reel.gif`. These modes do not write player progress.
+Capture single moments with `--fx ray|bomb|prism --frames N --shot file.png` (N frames after the special fires); `tools/screenshots.py` renders the reel frames and assembles `screenshots/effects-reel.gif`. These modes do not write player progress.

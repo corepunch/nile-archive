@@ -12,6 +12,7 @@
 #   make buildings GAME=relic-rush [KEYS="lodge well"] [REBUILD=1]
 #                        render city buildings by name from the game's Blender master
 #   make shots           regenerate docs/screenshots (headless, software renderer)
+#   make smoke           every game's smoke run
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
 
@@ -56,7 +57,7 @@ ENGINE_DEPS := $(UNITY) $(wildcard engine/*.c engine/*.h)
 PLATFORM_DEPS := $(shell find $(PLATFORM_DIR) -type f \( -name '*.c' -o -name '*.m' -o -name '*.h' \) 2>/dev/null)
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 
-.PHONY: all test gen gen-check lint xcode xcode-check shots buildings web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
+.PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: $(ENGINE_DEPS)
@@ -117,15 +118,31 @@ xcode-check:
 # --- tests ----------------------------------------------------------------
 # Engine tests in C, then the games' rules in Lua (tests/lua/*.lua) run by the
 # same binary through the engine's Lua state, without a window.
-TEST_SRC := tests/test_main.c
-build/tests: $(TEST_SRC) $(ENGINE_OBJ) engine/engine.h
-	$(CC) $(ALL_CFLAGS) -o $@ $(TEST_SRC) $(ENGINE_OBJ) $(LIBS)
+# The test build: engine and launcher with -DENGINE_TEST. One start of a binary runs
+# every test of that suite (docs/TESTING.md). make test ONLY=smoke runs a part.
+TEST_GAMES := nile-archive relic-rush christmas-market volcano
+TEST_BINS := build/test/engine $(TEST_GAMES:%=build/test/%)
+TEST_OBJ := build/test-obj/engine.o build/test-obj/script.o build/engine/lua.o build/engine/platform.o
+TEST_DEPS := engine/test.h engine/test_runner.c engine/test_lua.c
+build/test-obj/%.o: $(ENGINE_DEPS) $(TEST_DEPS)
+	@mkdir -p $(dir $@)
+	sh $(UNITY) $* | $(CC) $(ALL_CFLAGS) -DENGINE_TEST -x c -c -o $@ -
+define TEST_GAME_RULES
+build/test/$(1): $(TEST_OBJ) engine/launcher.c $(TEST_DEPS)
+	@mkdir -p build/test
+	$$(CC) $$(ALL_CFLAGS) -DENGINE_TEST -DGAME_NAME='"$(1)"' -DGAME_DIR='"games/$(1)"' -o $$@ engine/launcher.c $(TEST_OBJ) $$(LIBS)
+endef
+$(foreach g,$(TEST_GAMES),$(eval $(call TEST_GAME_RULES,$(g))))
+ENGINE_TEST_SRC := tests/test_main.c tests/test_platform.c tests/test_backdrop.c tests/test_story.c tests/test_city_render.c
+build/test/engine: $(ENGINE_TEST_SRC) $(TEST_OBJ) $(TEST_DEPS)
+	@mkdir -p build/test
+	$(CC) $(ALL_CFLAGS) -DENGINE_TEST -o $@ $(ENGINE_TEST_SRC) $(TEST_OBJ) $(LIBS)
 
 build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
 	@mkdir -p build
 	$(CC) $(ALL_CFLAGS) -o $@ tests/test_audio.c engine/audio.c -lm
 
-test: gen-check xcode-check build/tests build/test-audio test-clayfight
+test: gen-check xcode-check $(TEST_BINS) build/test-audio test-clayfight
 	./build/test-audio
 	python3 games/volcano/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
@@ -133,12 +150,14 @@ test: gen-check xcode-check build/tests build/test-audio test-clayfight
 	python3 games/christmas-market/tools/check_assets.py
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 tools/buildings.py --check
-	@mkdir -p build/test-home
-	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests $(filter-out tests/lua/christmas.lua,$(wildcard tests/lua/*.lua))
-	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests --lua-dir games/christmas-market/lua tests/lua/christmas.lua
+	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) || status=1; done; exit $$status
 
-shots: all
-	./tools/screenshots.sh
+shots: $(TEST_BINS)
+	@for t in $(TEST_GAMES); do ./build/test/$$t shot frame reel hold || exit 1; done
+	python3 tools/screenshots.py
+
+smoke: $(TEST_BINS)
+	@status=0; for t in $(TEST_GAMES); do ./build/test/$$t smoke || status=1; done; exit $$status
 
 buildings:
 	python3 tools/buildings.py $(GAME) $(KEYS) $(if $(REBUILD),--rebuild)
@@ -173,19 +192,5 @@ clean:
 
 # Exercises the real renderer/event queue; run under Xvfb on Linux.
 .PHONY: test-platform
-build/test-platform: tests/test_platform.c $(ENGINE_OBJ) engine/render.h
-	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-build/test-backdrop: tests/test_backdrop.c $(ENGINE_OBJ) engine/render.h
-	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-build/test-story: tests/test_story.c $(ENGINE_OBJ) engine/render.h
-	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-build/city-gesture: tools/capture_city_gesture.c $(ENGINE_OBJ) engine/render.h
-	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-build/test-city-render: tests/test_city_render.c $(ENGINE_OBJ) engine/render.h
-	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-test-platform: build/test-platform build/test-backdrop build/test-story build/test-city-render
-	./build/test-platform
-	./build/test-platform --safe-area-test
-	./build/test-backdrop
-	./build/test-story
-	./build/test-city-render
+test-platform: build/test/engine
+	./build/test/engine platform backdrop story_layouts city_render

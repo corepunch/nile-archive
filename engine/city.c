@@ -478,6 +478,10 @@ static struct {
     float a[FOG_MAX * FOG_MAX];   /* 0 clear .. 1 fully fogged, per grid point */
 } fog;
 
+#ifdef ENGINE_TEST
+void city_restart(void) { fog.c = NULL; }   /* a new city may reuse the old one's address */
+#endif
+
 /* One box-blur pass along rows (dx = 1) or columns (dx = nx), edges clamped. */
 static void fog_box(const float *src, float *dst, int nx, int ny, bool rows, int r)
 {

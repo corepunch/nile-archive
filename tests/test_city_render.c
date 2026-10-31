@@ -1,17 +1,16 @@
 /* Real-renderer contracts for the city's depth order and animated fog. */
 #include "render.h"
+#include "test.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-static int checks, failures;
 static city c;
 static building_def defs[2];
 static unsigned char *pixels, *first;
 static int w, h;
 static bool sampling_fog;
 static double fog_start;
-#define CHECK(x) do { checks++; if (!(x)) { failures++; fprintf(stderr, "%d: %s\n", __LINE__, #x); } } while (0)
 
 static color at(int x, int y)
 {
@@ -22,6 +21,7 @@ static color at(int x, int y)
 
 static void init(void)
 {
+    sampling_fog = false;
     color green = rgba(50, 150, 60, 255), white = WHITE, red = rgba(220, 30, 30, 255);
     defs[0] = (building_def){.sprite = tex_from_pixels(&white, 1, 1), .size = {1, 6}, .pivot = {.5, 1}, .base_width = 1};
     defs[1] = (building_def){.sprite = tex_from_pixels(&red, 1, 1), .size = {1, 1}, .pivot = {.5, 1}, .base_width = 1};
@@ -72,11 +72,9 @@ compare_fog:
 }
 
 static void quit(void) { tex_free(c.ground); tex_free(defs[0].sprite); tex_free(defs[1].sprite); }
-int main(void)
+TEST(city_render)
 {
     char *args[] = {"test-city-render", "--headless", "--mute", "--size", "160x160"};
     app_desc desc = {.design = {160, 160}, .fixed = true, .init = init, .frame = frame, .quit = quit};
     CHECK(app_run(desc, 5, args) == 0);
-    printf("city renderer: %d checks, %d failures; depth order, fog motion and unlock\n", checks, failures);
-    return failures != 0;
 }

@@ -10,6 +10,10 @@
  * with status 3, so a broken script fails a headless run loudly. */
 #include "api_lua.h"
 #include "ui_forms_lua.h"
+#ifdef ENGINE_TEST
+#include "test.h"
+static void test_lua_open(lua_State *S);
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +41,9 @@ static void call(int nargs, int nresults)
     lua_pushcfunction(L, traceback);
     lua_insert(L, base);
     if (lua_pcall(L, nargs, nresults, base) != LUA_OK) {
+#ifdef ENGINE_TEST
+        test_abort(lua_tostring(L, -1));
+#endif
         fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
         exit(3);
     }
@@ -139,6 +146,9 @@ void script_open(const char *dir)
             exit(3);
         }
     if (extension_open) extension_open(L);
+#ifdef ENGINE_TEST
+    test_lua_open(L);
+#endif
     lua_gc(L, LUA_GCGEN, 0, 0);
 }
 
@@ -153,7 +163,11 @@ int script_dofile(const char *path)
     int top = lua_gettop(L);
     lua_pushcfunction(L, traceback);
     if (luaL_loadfile(L, path) != LUA_OK || lua_pcall(L, 0, 1, top + 1) != LUA_OK) {
+#ifdef ENGINE_TEST
+        test_fail("", 0, "%s", lua_tostring(L, -1));
+#else
         fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
+#endif
         lua_settop(L, top);
         return -1;
     }
@@ -169,6 +183,9 @@ app_desc script_boot(const char *dir, const char *data_dir)
     snprintf(path, sizeof path, "%s/main.lua", lua_dir);
     lua_pushcfunction(L, traceback);
     if (luaL_loadfile(L, path) != LUA_OK || lua_pcall(L, 0, 1, 1) != LUA_OK) {
+#ifdef ENGINE_TEST
+        test_abort(lua_tostring(L, -1));
+#endif
         fprintf(stderr, "lua: %s\n", lua_tostring(L, -1));
         exit(3);
     }
@@ -317,3 +334,7 @@ void lcity_draw_over(const struct city *c)
     if (!city_callback(c, "draw_over")) return;
     call(1, 0);
 }
+
+#ifdef ENGINE_TEST
+#include "test_lua.c"
+#endif

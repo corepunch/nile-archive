@@ -409,6 +409,15 @@ static particle parts[MAX_PARTICLES];
 static floater floaters[MAX_FLOATERS];
 static rng fx_rng = {0x51ED1u};
 
+#ifdef ENGINE_TEST
+void fx_restart(void)
+{
+    memset(parts, 0, sizeof parts);
+    memset(floaters, 0, sizeof floaters);
+    fx_rng = (rng){0x51ED1u};
+}
+#endif
+
 static particle *spawn(void)
 {
     particle *best = &parts[0];

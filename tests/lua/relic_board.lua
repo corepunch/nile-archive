@@ -2,11 +2,6 @@
 local rules = require("rules")
 local R = require("board")
 local dead_board = require("fixtures/dead_board")
-local checks, failures = 0, 0
-local function check(ok, message)
-    checks = checks + 1
-    if not ok then failures = failures + 1; print("FAIL relic board: " .. message) end
-end
 
 R.notice = function(message) R.toast = message end
 R.tone = function() end
@@ -134,5 +129,3 @@ do
     R.g=rules.game_start(0,123)
     check(#R.goal_entries()==2,"opening HUD omits absent sand/lock objectives")
 end
-print(("relic board: %d checks, %d failures"):format(checks, failures))
-return failures

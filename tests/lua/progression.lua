@@ -1,11 +1,6 @@
 local rules=require('rules')
 local island=require('island')
 local archive=require('archive_economy')
-local checks,failures=0,0
-local function check(ok,message)
-    checks=checks+1
-    if not ok then failures=failures+1;print('FAIL progression: '..message) end
-end
 
 -- Worst case: no efficiency bonus, buy decorations with every available coin.
 -- Every restoration and the full map still fit the ten first-clear budgets.
@@ -96,5 +91,3 @@ do
     end
 end
 
-print(('progression economies: %d checks, %d failures'):format(checks,failures))
-return failures

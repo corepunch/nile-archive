@@ -1,11 +1,6 @@
 local sim=require('volcano_sim')
 local levels=require('volcano_levels')
 local art=require('volcano_art')
-local checks,failures=0,0
-local function check(ok,msg)
-    checks=checks+1
-    if not ok then failures=failures+1;print('FAIL volcano: '..msg) end
-end
 -- Shared engine geometry and blocker semantics, including final off-graph approach.
 local n=nav.new();n.nodes={{x=0,y=0},{x=30,y=0},{x=60,y=0},{x=90,y=0}}
 n.blockers={{pos={x=45,y=0},radius=10}}
@@ -81,5 +76,3 @@ while not kitchen.done do sim.update(g,.1) end
 g.wallet.food=0
 for _=1,51 do sim.update(g,.1) end
 check(g.wallet.food>=5,'automatic food recovery')
-print(('volcano: %d checks, %d failures'):format(checks,failures))
-return failures

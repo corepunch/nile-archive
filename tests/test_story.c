@@ -1,9 +1,10 @@
 /* Real rendered pixels: a cloud/burst must not engulf the speaker's badge or
  * introduce a large blank band above the words. Also exercise resize/letterbox, centred framed groups and Skip input. */
 #include "render.h"
+#include "test.h"
 #include <stdio.h>
 
-static int checks, failures, sample_index, settling, skip_wait;
+static int sample_index, settling, skip_wait;
 static bool testing_skip;
 static bool present_pending = true;
 static font *lettering;
@@ -20,7 +21,8 @@ static int screen_for(int index)
     return index<24 ? index/12 : (index-24)/6;
 }
 static const int widths[] = {480,390,1200}, heights[] = {900,844,900};
-#define CHECK(c) do { checks++; if (!(c)) { failures++; fprintf(stderr,"story %d case %d: %s\n",__LINE__,sample_index,#c); } } while (0)
+#undef CHECK
+#define CHECK(c) CHECKF(c, "case %d", sample_index)
 static int imin(int a,int b) { return a<b ? a:b; }
 static int imax(int a,int b) { return a>b ? a:b; }
 
@@ -91,7 +93,7 @@ static void frame(float dt)
         CHECK(fabsf((x0+x1+1)*.5f-expected.x)<3*scale+1);
         CHECK(fabsf((y0+y1+1)*.5f-expected.y)<3*scale+1);
         CHECK(x0>0 && y0>0 && x1<w-1 && y1<h-1);
-        if (failures) fprintf(stderr,"  framed %d,%d..%d,%d expected %.2f,%.2f scale %.2f\n",x0,y0,x1,y1,expected.x,expected.y,scale);
+        if (test_failures()) fprintf(stderr,"  framed %d,%d..%d,%d expected %.2f,%.2f scale %.2f\n",x0,y0,x1,y1,expected.x,expected.y,scale);
         if (sample_index==TOTAL_CASES-1) {
             /* Find the real rendered Skip pill above a two-portrait unit,
              * then activate it through the platform's input queue. */
@@ -129,7 +131,7 @@ static void frame(float dt)
          * the next visible spike. Rounded/cloud outlines agree to a pixel. */
         CHECK(fabsf(center-outline)<=(kind==BUBBLE_SHOUT ? 6 : 2)*scale+1);
         CHECK(ink>center+12*scale && ink<center+34*scale);
-        if (failures) fprintf(stderr,"  badge %.2f, outline %d, ink %d, scale %.2f\n",center,outline,ink,scale);
+        if (test_failures()) fprintf(stderr,"  badge %.2f, outline %d, ink %d, scale %.2f\n",center,outline,ink,scale);
     }
     free(pixels);story_next();story_frame(0);
     int previous_screen=screen_for(sample_index);
@@ -142,13 +144,11 @@ static void frame(float dt)
 
 static void quit(void) { tex_free(portrait); }
 
-int main(void)
+TEST(story_layouts)
 {
     char *args[]={"test-story","--headless","--mute","--size","480x900","--safe-area","0,47,0,34"};
     app_desc desc={.design={480,900},.fixed=true,.max_aspect=2.2f,.clear={10,20,70,255},
         .data_dir="games/relic-rush/data",.init=init,.frame=frame,.quit=quit};
     CHECK(app_run(desc,7,args)==0);
     CHECK(sample_index==TOTAL_CASES);
-    printf("story: %d checks, %d failures; speech/thought/shout, one/two lines, phone/tall-phone/letterbox; centred framed groups and listeners with safe areas\n",checks,failures);
-    return failures!=0;
 }

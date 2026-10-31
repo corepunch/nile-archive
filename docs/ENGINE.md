@@ -307,6 +307,9 @@ alternate palettes. They are C APIs for native modules, not Lua bindings.
   The engine streams colored and textured triangles through OpenGL 3.2 or ES 3.
   `--headless --shot file.png` hides the window for screenshot runs; Linux CI
   uses Xvfb and Mesa. `make test-platform` checks actual pixels and queued input.
+  The test build (`-DENGINE_TEST`, [TESTING.md](TESTING.md)) runs many of those in one
+  process: `app_run` resets engine state, `render_shutdown` frees every live texture,
+  and one window is resized for each test.
 - **iOS**: `axRunApplication` gives UIKit ownership of the frame loop. The
   launcher starts the game after its scene is laid out. Touch, pinch, focus
   cancellation and Retina scale come from platform.

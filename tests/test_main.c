@@ -1,22 +1,14 @@
-/* Headless tests: engine math and layout, camera, purses, saves, city and
- * story rules in C, then every Lua file named on the command line (the games'
- * rules, the tests/lua folder) in the engine's Lua state. Run with `make test`. */
-#include "engine.h"
+/* The engine's tests: math and layout, camera, purses, saves, city and story rules.
+ * With the real-renderer tests beside it and tests/games/engine.lua, this is
+ * build/test/engine, one start for all of them. See docs/TESTING.md. */
+#include "test_runner.c"
 #include "viewport.h"
 
 #include <stdio.h>
 #include <string.h>
 
-static int failures, checks;
 
-#define CHECK(cond)                                                                    \
-    do {                                                                               \
-        checks++;                                                                      \
-        if (!(cond)) failures++, fprintf(stderr, "%s:%d: CHECK(%s)\n", __FILE__, __LINE__, #cond); \
-    } while (0)
-#define NEAR(a, b) CHECK(fabsf((float)(a) - (float)(b)) < 1e-3f)
-
-static void test_math(void)
+TEST(math)
 {
     vec2 a = v2(3, 4);
     NEAR(vec2_len(a), 5);
@@ -31,7 +23,7 @@ static void test_math(void)
     NEAR(ease_out_back(0), 0);
 }
 
-static void test_rect(void)
+TEST(rect)
 {
     rect r = rc(0, 0, 100, 50);
     rect c = rect_inflate(rect_offset(r, v2(10, 10)), 5);
@@ -58,7 +50,7 @@ static void test_rect(void)
     CHECK(rect_ellipse_contains(rc(0, 0, 20, 10), v2(10, 5)) && !rect_ellipse_contains(rc(0, 0, 20, 10), v2(1, 1)));
 }
 
-static void test_camera(void)
+TEST(camera)
 {
     camera c = {.center = v2(500, 500), .zoom = 1, .view = rc(100, 50, 400, 300), .world = sz2(1000, 800), .max_zoom = 4, .cover = true};
     c = camera_clamp(c);
@@ -81,7 +73,7 @@ static void test_camera(void)
     NEAR(small.center.x, 50);                    /* a small world is centred */
 }
 
-static void test_purse(void)
+TEST(purse)
 {
     purse wallet = {{100, 5}}, cost = {{60, 0}}, need = {{0, 6}};
     CHECK(purse_covers(wallet, cost));
@@ -114,7 +106,7 @@ static void serialize_loaded(save *s, void *user)
     CHECK(missing == 77);   /* absent keys keep defaults */
 }
 
-static void test_save(void)
+TEST(save)
 {
     saved.coins = 1234;
     saved.list[0] = 1, saved.list[1] = -2, saved.list[2] = 3;
@@ -132,7 +124,7 @@ static void test_save(void)
 
 static bool flat_land(const city *c, vec2 p) { return p.y > 100; }
 
-static void test_safe_view(void)
+TEST(safe_view)
 {
     rect v = app_fit_view(sz2(480, 900), rc(0, 59, 390, 751));
     NEAR(v.pos.x, 0); NEAR(v.pos.y, 68.875f);
@@ -149,7 +141,7 @@ static void test_safe_view(void)
     NEAR(v.pos.x, 0); NEAR(v.pos.y, 0); NEAR(v.size.h, 900);
 }
 
-static void test_city(void)
+TEST(city)
 {
     static building_def defs[4] = {
         {.name = "hut", .height = 100, .cost = {{50}}, .reward = {{0, 5}}},
@@ -308,7 +300,7 @@ static input building_press(const city *c)
     return (input){.pos=p,.press_pos=p,.pressed=true,.down=true,.pinch=1};
 }
 
-static void test_city_hold(void)
+TEST(city_hold)
 {
     static city c;
     purse wallet={{100}};
@@ -408,7 +400,7 @@ static void serialize_story(save *s, void *user)
     story_serialize(s);
 }
 
-static void test_story(void)
+TEST(story)
 {
     static character cast[2] = {{.id = "ann", .name = "Ann"}, {.id = "bob", .name = "Bob", .right = true}};
     story_setup(cast, 2, &(story_style){0});
@@ -432,27 +424,12 @@ static void test_story(void)
 
 int main(int argc, char **argv)
 {
-    test_math();
-    test_rect();
-    test_camera();
-    test_purse();
-    test_save();
-    test_city();
-    test_city_hold();
-    test_safe_view();
-    test_story();
-    printf("engine: %d checks, %d failures\n", checks, failures);
-
-    /* Lua tests: each file returns its failure count (and prints its own summary). */
-    const char *roots = "tests/lua;games/clayfight/lua;games/relic-rush/lua;games/nile-archive/lua;games/volcano/lua";
-    int first = 1;
-    if (argc > 2 && !strcmp(argv[1], "--lua-dir")) roots = argv[2], first = 3;
-    script_open(roots);
-    for (int i = first; i < argc; i++) {
-        int r = script_dofile(argv[i]);
-        if (r) fprintf(stderr, "%s: %s\n", argv[i], r < 0 ? "error" : "failed");
-        failures += r < 0 ? 1 : r;
+    if (argc > 2 && !strcmp(argv[1], "--script")) {   /* a Lua tool with every game's modules, as economy_audit.py uses */
+        script_open("tests/lua;games/clayfight/lua;games/relic-rush/lua;games/nile-archive/lua;games/volcano/lua");
+        script_dofile(argv[2]);
+        script_close();
+        if (test_failures()) fprintf(stderr, "%s\n", T.notes[0]);
+        return test_failures() != 0;
     }
-    script_close();
-    return failures ? 1 : 0;
+    return test_main("engine", "tests/lua", "games/relic-rush/data", argc, argv);
 }

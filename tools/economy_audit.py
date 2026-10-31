@@ -7,7 +7,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 save_dir = ROOT / 'build/economy-audit-home'
 save_dir.mkdir(parents=True, exist_ok=True)
-result = subprocess.run([str(ROOT / 'build/tests'), 'tools/economy_audit.lua'],
+result = subprocess.run([str(ROOT / 'build/test/engine'), '--script', 'tools/economy_audit.lua'],
                         cwd=ROOT, env={**os.environ, 'SPRITE_SAVE_DIR': str(save_dir)},
                         text=True, capture_output=True, check=True)
 report = None

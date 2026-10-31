@@ -20,6 +20,10 @@ static struct {
     float toast_time;
 } U;
 
+#ifdef ENGINE_TEST
+void ui_restart(void) { memset(&U, 0, sizeof U); }
+#endif
+
 static const ui_theme fallback_theme = {
     .panel = {28, 65, 64, 245}, .panel2 = {22, 52, 52, 245}, .border = {191, 166, 107, 110},
     .button_bg = {44, 86, 82, 255}, .button_bg2 = {33, 68, 66, 255}, .button_hot = {60, 104, 96, 255},

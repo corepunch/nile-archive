@@ -11,15 +11,15 @@ preview; only Confirm saves a move, while Cancel preserves the original layout.
 
 ## Capture the actual games
 
-`tools/capture_city_gesture.c` wraps the normal game's frame callback and queues
+`engine/launcher.c`, with `--gesture`, wraps the normal game's frame callback and queues
 native pointer events, without changing game drawing or synthesizing placement
-state. Build with `make build/city-gesture CFLAGS="-O2 -g -Werror"`, then run:
+state. Build with `make CFLAGS="-O2 -g -Werror"`, then run:
 
 ```sh
-./build/city-gesture --game relic-rush --headless --fresh --mute \
+./build/relic-rush --headless --fresh --mute \
   --city 3 --look 760,1980 --size 480x900 --gesture pan --press 240,440 \
   --frames 100 --shot out.png
-./build/city-gesture --game nile-archive --headless --fresh --mute \
+./build/nile-archive --headless --fresh --mute \
   --screen island --size 1200x900 --gesture hold --press 435,345 \
   --frames 100 --shot out.png
 ```

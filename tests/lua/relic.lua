@@ -9,11 +9,6 @@ local hex_index, hex_q, hex_r, hex_neighbor, hex_distance, hex_center =
     rules.hex_index, rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.hex_distance, rules.hex_center
 local tile = rules.tile
 
-local failures, checks = 0, 0
-local function check(cond, what)
-    checks = checks + 1
-    if not cond then failures = failures + 1; print("FAIL " .. what) end
-end
 
 local function blank()
     local g = {tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, level = 0, moves = 80, score = 0, relics = 0, dug = 0,
@@ -393,5 +388,3 @@ do
     check(art.tool_state(2, true, true, false, false, true, true) == "selected", "selection overrides hover")
     check(art.tool_state(2, true, false, false, false, false, false) == "disabled", "busy board disables tool")
 end
-print(("relic rush: %d checks, %d failures"):format(checks, failures))
-return failures

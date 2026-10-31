@@ -1,0 +1,27 @@
+-- Christmas Market: every test, in one start of build/test/christmas-market. See docs/TESTING.md.
+default_frames = 3
+rules("christmas")
+smoke()
+
+shot("market", "480x900", "--showcase")
+shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
+shot("main-character-board", "480x900", "--level 4")
+shot("phone-board", "390x844", "--level 4 --safe-area 0,47,0,34")
+shot("dialogue", "480x900", "--dialog intro --frames 180")
+shot("main-character-dialogue", "390x844", "--dialog intro --frames 180 --safe-area 0,47,0,34")
+shot("placement", "480x900", "--city 2 --placing")
+shot("blocked-placement", "480x900", "--city 2 --placing blocked")
+shot("region", "480x900", "--city 3 --zone 1")
+shot("shop", "480x900", "--catalogue building")
+shot("winter-wishes", "480x900", "--expeditions")
+shot("reward", "480x900", "--victory")
+shot("pause", "480x900", "--level 4 --dialog pause")
+shot("guide", "480x900", "--level 4 --dialog guide")
+shot("failed", "480x900", "--level 4 --dialog failed")
+shot("finale", "480x900", "--dialog finale")
+shot("footprints", "480x900", "--showcase --footprints")
+shot("art-states", "480x900", "--art-states")
+shot("hud-states", "480x900", "--hud-states")
+shot("specials-board", "480x900", "--art-board")
+shot("building-card", "480x900", "--card 2")
+for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
