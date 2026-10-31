@@ -229,8 +229,13 @@ gra_t *W_TryLoadGra(const char *name)
         gra_t *g=Bank(name,38,1);Palette(g->palettes,0x61042,64);Frame(g,37,826,0);return g;
     }
     if(!strcasecmp(name,"title")){
-        gra_t *g=Bank(name,46,3);Palette(&g->palettes[0],0x68d7a,64);Palette(&g->palettes[1],0x650e2,64);Palette(&g->palettes[2],0x652c2,64);
-        for(int i=0;i<14;i++)Frame(g,i,447+i,2);
+        gra_t *g=Bank(name,46,3);
+        // Native title setup 35bc0 copies seven 64-colour banks from 650e2.
+        // Plaque, PRIMAL and RAGE select different offsets in their descriptors.
+        const uint32_t descriptors[]={0x7422c,0x7423c,0x7425c};
+        uint32_t base=X_U32(0x35bc8);
+        for(int i=0;i<3;i++)Palette(&g->palettes[i],base+X_U16(descriptors[i]+6)*2,64);
+        for(int i=0;i<14;i++)Frame(g,i,447+i,1);
         for(int i=0;i<6;i++)Frame(g,14+i,475+i,2);
         Frame(g,45,446,0);return g;
     }

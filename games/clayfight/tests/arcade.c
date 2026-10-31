@@ -53,6 +53,37 @@ static void hud_checks(void)
     memcpy(roster[7]->name,saved,sizeof saved);
     puts("arcade HUD: authored bar states, mirrored 2x heart, stone digits and custom-name capture passed");
 }
+static void title_palette_checks(void)
+{
+    gra_t *g=W_LoadGra("title");
+    const uint32_t descriptors[]={0x7422c,0x7423c,0x7425c};
+    const int slots[]={45,13,19},origins[][2]={{0,0},{14,14},{15,19}};
+    uint32_t base=X_U32(0x35bc8);assert(base==0x650e2);
+    for(int i=0;i<20;i++){
+        const patch_t *p=W_Frame(g,i);
+        assert(p && p->maxval<=g->palettes[W_FramePalette(g,i)].count);
+    }
+    M_StartTitle();for(int t=0;t<120;t++)M_Ticker();D_Display();
+    for(int layer=0;layer<3;layer++){
+        const patch_t *p=W_Frame(g,slots[layer]);
+        int color=X_U16(descriptors[layer]+6);
+        for(int value=0;value<64;value++){
+            int rgb=X_U16(base+color*2+value*2);
+            pixel_t expected=W_RGB((rgb>>10&31)*255/31,(rgb>>5&31)*255/31,(rgb&31)*255/31);
+            assert(g->palettes[layer].colors[value]==expected);
+        }
+        if(!layer)continue; // lettering correctly occludes the original plaque
+        for(int y=0;y<p->h;y++)for(int x=0;x<p->w;x++){
+            int value=p->pixels[y*p->w+x];if(!value)continue;
+            int rgb=X_U16(base+color*2+value*2);
+            pixel_t expected=W_RGB((rgb>>10&31)*255/31,(rgb>>5&31)*255/31,(rgb&31)*255/31);
+            int sx=origins[layer][0]+x-p->x,sy=origins[layer][1]+y-p->y;
+            for(int dy=0;dy<2;dy++)for(int dx=0;dx<2;dx++)
+                assert(screen[(sy*2+dy)*SCREENWIDTH+sx*2+dx]==expected);
+        }
+    }
+    puts("arcade title: descriptor palettes and every visible PRIMAL/RAGE texel match the original RGB555 colours at exact 2x");
+}
 static void scenery_checks(void)
 {
     // Independently decoded source samples at native (168,100)/(168,230),
@@ -173,6 +204,6 @@ int main(int argc,char **argv)
     }
     puts("arcade sound: original DSP effects and all seven voice tables decoded");
     assert(P_CheckAnims()==0);
-    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();I_Shutdown();
+    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();title_palette_checks();I_Shutdown();
     printf("arcade: all checks passed, CPU %.3f seconds\n",(double)(clock()-start)/CLOCKS_PER_SEC);return 0;
 }

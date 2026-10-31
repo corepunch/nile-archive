@@ -1926,6 +1926,11 @@
       475,
       480
     ],
-    "palette": "0x652c2"
+    "palette_source": "0x650e2",
+    "palettes": {
+      "plaque": "0x650e2",
+      "primal": "0x65162",
+      "rage": "0x652e2"
+    }
   }
 }

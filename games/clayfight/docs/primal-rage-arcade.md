@@ -20,7 +20,7 @@ from active data. Custom clay photographs remain in `data/creatures/`.
 | Fighter ground shadows | Per-character pose lookup `0x6b068`; descriptors `0x6d5e0`; palette `0x61702` | Original per-pose shadow sprite and mirror; native Diablo scale; custom photo fighters retain their own procedural contact shadow |
 | Hit and blocked contacts | Scripts `0x56e28`/`0x56e36`, descriptor `0x6cf50`; palettes `0x61822`/`0x61802` | Source 10-frame contact cycles, three ticks per frame, all 64 colours; replaces square-particle art |
 | Ambient tribespeople | Six idle descriptors `0x6d270 + variant×16`; team palettes `0x63382 + character×128` | Four original animated people behind the fighters, port-specific placement at 0.75 scale; interactions remain outside this port |
-| Title and menu panel | Motion object 446, PRIMAL animation 447–460, RAGE animation 475–480; palettes `0x68d7a`, `0x652c2` | Source lettering frames keep their authored pivots; original stone art resized only for the menu panel |
+| Title and menu panel | Motion object 446, PRIMAL animation 447–460, RAGE animation 475–480; native setup `0x35bc0`, descriptors `0x7422c`/`0x7423c`/`0x7425c` | Blue stone `0x650e2`, red PRIMAL `0x65162`, cream/orange RAGE `0x652e2`; source pivots and independent palettes retained |
 | Character-selection temple | Objects 784/785; palettes `0x6717a`/`0x671fa` | Complete 336×240 background at 2×, sky plus temple |
 | Podiums | Objects 786/787; palette `0x6727a` | Both source podiums; inward-facing animated previews above their surfaces |
 | Original selection states | Reliefs 788–794 and original body palettes | Unselected stone reliefs in background; coloured source heads under P1/P2 cursors; procedural red/yellow focus outlines retained |
@@ -127,7 +127,12 @@ The prior guessed associations for Talon, Armadon and Chaos were incorrect.
 The broader audit also replaced generic ellipse shadows for original fighters
 with the native pose lookup, restored the original hit/block contact sprites
 and all their palette colours, and replaced repeated title-patch aliases with
-the original PRIMAL/RAGE lettering animation. Contact timing follows the native
+the original PRIMAL/RAGE lettering animation. The title loader reads each
+layer's palette offset from its native descriptor. Previously both words shared
+`0x652c2`, which also starts 16 colours before RAGE's actual bank, and the plaque
+used an unrelated brown palette. The corrected title/menu plaque is blue stone,
+PRIMAL is red, and RAGE retains its cream/orange shading. Pixel checks compare
+every visible lettering texel at 2× with its original RGB555 source colour. Contact timing follows the native
 three-tick setup in `0x15b1a`. Team-coloured ambient tribespeople use six source
 idle scripts. Their port-specific world x offsets are −58/−36/76/98 from the
 arena centre, y is the port's foot plane minus 7/4 pixels, and scale is 0.75;

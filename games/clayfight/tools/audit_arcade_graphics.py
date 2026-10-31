@@ -114,7 +114,10 @@ def audit(roms):
                               hit_palette='0x61822 (descriptor 0x6cf50, colour 0x190)', frame_ticks=3),
                 tribes=dict(descriptors='0x6d270 + variant*16', variants=6, team_palettes='0x63382 + character*128',
                             presentation='Four ambient spectators; idle ROM scripts, 0.75 scale. No eating/worship AI.'),
-                title=dict(primal_frames=[447, 460], rage_frames=[475, 480], palette='0x652c2'))
+                title=dict(primal_frames=[447, 460], rage_frames=[475, 480],
+                           palette_source=hex(u32(0x35bc8)),
+                           palettes={name: hex(u32(0x35bc8) + u16(desc + 6) * 2)
+                                     for name, desc in [('plaque', 0x7422c), ('primal', 0x7423c), ('rage', 0x7425c)]}))
 
 
 def main():
