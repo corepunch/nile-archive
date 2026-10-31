@@ -1,7 +1,8 @@
 -- archive_smoke.lua — the --smoke run: plays chapter one through injected
--- clicks, pans and long-presses the island, cancels and confirms a move and a
--- purchase, then reaches chapter three by finding the second clue and building
--- the temple through real form input. Every step asserts what it expects.
+-- clicks, runs the engine's pickup-and-move check on the island, cancels and
+-- confirms a purchase, then reaches chapter three by finding the second clue
+-- and building the temple through real form input. Every step asserts what it
+-- expects.
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
@@ -13,7 +14,8 @@ local MODAL_NONE, MODAL_WIN, MODAL_CHAPTERS = G.MODAL_NONE, G.MODAL_WIN, G.MODAL
 local M = {}
 
 local frames, step = 0, 0
-local move = {}   -- the building move in progress: origin, grab offset, destination, coins before
+local move             -- the engine's pickup/move check, while it runs
+local purchase_coins   -- coins before a purchase preview
 
 -- Press the Buy button of the catalogue row with this stable item key.
 local function buy(key)
@@ -47,14 +49,6 @@ local function find_next(i)
     return false
 end
 
--- Press the first building where a player would, looking at it first.
-local function press_building()
-    local c = G.island
-    c.cam = c.cam:look(move.origin - vec2(0, 50))
-    move.press = c.cam:rect_to_screen(c:sprite_rect(c.items[1])):point(vec2(.5, .65))
-    return c
-end
-
 function M.step()
     frames = frames + 1
     if frames > 6000 then error("Nile smoke timed out at step " .. tostring(step)) end
@@ -78,58 +72,29 @@ function M.step()
     elseif step == 6 then
         assert(not G.scene and G.wins[1] == 1 and G.stars[1] >= 1, "continue did not bank the chapter")
         assert(G.wallet[INFLUENCE] == 10 and not economy.can_play(G.wins, 10, 2), "scene must leave the building gate intact")
-        move.origin, move.coins = G.island.items[1].pos, G.wallet[COINS]
-        local c = press_building()
-        move.cam = c.cam.center
-        app.inject_press(move.press); step = 7
-    elseif step == 7 then
-        app.inject_move(move.press + vec2(-40, 0)); step = 8
-    elseif step == 8 then
-        assert(G.island.placing < 0 and G.island.cam.center.x > move.cam.x, "ordinary building drag must pan")
-        app.inject_release(move.press + vec2(-40, 0)); move.pass = 1; step = 9
-    elseif step == 9 then
-        local c = press_building()
-        move.grab = move.origin - c.cam:to_world(move.press)
-        app.inject_press(move.press); move.hold = app.time(); step = 10
-    elseif step == 10 and app.time() - move.hold > .65 then
-        local c = G.island
-        assert(c.moving == 0 and c.held, "long press must lift the building")
-        local ok, spot = c:find_spot(c.placing, move.origin + vec2(200, 0))
-        assert(ok, "no move destination")
-        move.destination = spot
-        move.drop = c.cam:to_screen(spot - move.grab)
-        app.inject_move(move.drop); step = 11
-    elseif step == 11 then
-        app.inject_release(move.drop); step = 12
-    elseif step == 12 then
-        local c = G.island
-        assert(not c.held and c.placing >= 0 and c.items[1].pos:dist(move.origin) < .01 and G.wallet[COINS] == move.coins,
-               "release must leave an uncommitted preview")
-        app.inject_click(move.pass == 1 and G.spots.move_cancel or G.spots.move_confirm); step = 13
-    elseif step == 13 then
-        local c = G.island
-        assert(c.placing < 0 and G.wallet[COINS] == move.coins, "move must finish without spending coins")
-        if move.pass == 1 then
-            assert(c.items[1].pos:dist(move.origin) < .01, "cancel moved the building")
-            move.pass = 2; step = 9
-        else
-            assert(c.items[1].pos:dist(move.destination) < .01, "confirm did not move the building")
-            app.inject_click(G.spots.build); step = 14
-        end
+        move = city.move_test(G.island, {
+            look = function(at) G.island.cam = G.island.cam:look(at - vec2(0, 50)) end,
+            wallet = function() return G.wallet[COINS] end,
+            cancel = function() app.inject_click(G.spots.move_cancel) end,
+            confirm = function() app.inject_click(G.spots.move_confirm) end,
+        })
+        step = 7
+    elseif step == 7 then   -- pan, hold to lift, drag, cancel, then confirm
+        if not move() then app.inject_click(G.spots.build); step = 14 end
     elseif step == 14 then
         assert(G.tray, "build catalogue did not open")
-        move.purchase_coins = G.wallet[COINS]
+        purchase_coins = G.wallet[COINS]
         buy(4); step = 15
     elseif step == 15 then
-        assert(G.island.placing == 3 and G.wallet[COINS] == move.purchase_coins, "purchase preview charged early")
+        assert(G.island.placing == 3 and G.wallet[COINS] == purchase_coins, "purchase preview charged early")
         app.inject_click(G.spots.move_cancel); step = 16
     elseif step == 16 then
-        assert(G.island.placing < 0 and G.wallet[COINS] == move.purchase_coins, "cancelled purchase charged")
+        assert(G.island.placing < 0 and G.wallet[COINS] == purchase_coins, "cancelled purchase charged")
         app.inject_click(G.spots.build); step = 17
     elseif step == 17 then buy(4); step = 18
     elseif step == 18 then app.inject_click(G.spots.move_confirm); step = 19
     elseif step == 19 then
-        assert(G.wallet[COINS] == move.purchase_coins - 60 and G.wallet[INFLUENCE] == 20 and G.island.count == 2,
+        assert(G.wallet[COINS] == purchase_coins - 60 and G.wallet[INFLUENCE] == 20 and G.island.count == 2,
                "confirmed fountain must charge once and grant Influence once")
         app.inject_click(G.spots.chapters); step = 20
     elseif step == 20 then
