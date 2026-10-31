@@ -43,10 +43,9 @@ local cell_pos = R.cell_pos
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.kind < 0 then return end
-    -- Hex silhouettes meet all six neighboring edges; other silhouettes fit
-    -- the cell's inscribed square. Account for the authored 8px canvas gutter.
-    local span = t.kind == R.hex_piece_kind and 2 or 1.732050808
-    local s = (board and span * ART_HEX_R * 128 / 112 or ART_CELL_SIZE * .95) * scale
+    -- Preserve the original piece canvas, including its transparent gutter.
+    -- Filling the cell with the opaque interior makes pieces crowd its edges.
+    local s = ART_CELL_SIZE * .95 * scale
     local frame = (board and 2 * ART_HEX_R or ART_STATE_SIZE) * scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)

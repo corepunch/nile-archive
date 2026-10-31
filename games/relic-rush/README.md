@@ -56,7 +56,7 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 
 ## Current match-4 rules and board shapes
 
-The widest nine-cell board spans 371 of the 480 logical screen units, using the original 26.5-unit cell radius. Cells, gems and state artwork share this resting size; the entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [before/after size correction](docs/review/board-size-fix/README.md).
+The widest nine-cell board spans 371 of the 480 logical screen units, using the original 26.5-unit cell radius. Gems retain their original 43.7-unit canvas, including transparent padding, inside the full-diameter cell and state artwork; the entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [board-size correction](docs/review/board-size-fix/README.md) and [settled gem-to-cell fit correction](docs/review/gem-cell-fit/README.md).
 
 The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 

@@ -450,11 +450,14 @@ by this game's overrides. Reproduce with `python3 tools/match3_atlas.py` and
 
 ### Cell registration and dialogue motion
 
-Board state canvases now span the complete hex diameter. The authored 112px
-piece interior on a 128px canvas is registered explicitly: hex silhouettes fill
-the hex, other objects fit its inscribed square. Guide and HUD sizes retain their
-own registration. Artwork and its alpha remain unchanged. Reproduce the reviewed
-boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters.
+Board state canvases span the complete hex diameter. Pieces use the original
+43.7-unit square canvas at the 26.5-unit cell radius, preserving their transparent
+gutter. Expanding the 112px opaque interior of the 128px canvas to fill the cell
+made pieces crowd neighbouring cells even after the entrance returned to 1×;
+restoring the board radius alone did not correct this independent enlargement.
+Guide, HUD and state-panel registration remain unchanged, as do the artwork and
+its alpha. See the [settled gem-to-cell fit review](review/gem-cell-fit/README.md)
+for both phone sizes and the existing capture commands.
 
 Portraits retain finite entrance/exit slides and fades. An independent colour
 tween brightens/dims active/listener states without replaying the slide. Size is
