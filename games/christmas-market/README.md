@@ -12,6 +12,21 @@ The original transparent building atlas and the labeled reference sheet are pres
 
 The supplied portrait is now the identity reference for Noelle, the main character (`art/noelle-reference.jpg`). Her transparent cutout is used in dialogue and the puzzle header. Her [portrait app icon](art/app-icon-1024.png) is installed in the iOS/macOS `AppIcon` catalogue; its opaque square master leaves corner masking to the OS. `python3 games/christmas-market/tools/prepare_character.py` reproduces the portrait resize and all icon sizes. Built-in ImageGen prompts are in `art/character-and-icon-prompts.json`.
 
+## Shared match engine and atlas
+
+The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
+swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
+input/timing. This game provides campaign data, graphics and integer behavior
+flags. Empty cells prefer reachable upper diagonals; direct downward refill
+is the fallback. New pieces enter at upstream inlets instead of appearing
+beneath a hole that can receive a gem from the side.
+
+All board imagery uses one `data/match3.png` override atlas. The engine embeds
+a neutral resource atlas for games without an override; `--default-match3`
+previews it. `python3 tools/match3_atlas.py` reproduces both skins while
+preserving authored alpha and every control state. See the
+[review captures](docs/review/trickling/README.md).
+
 ## Draft implementation
 
 `make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has ten puzzles, funded construction, player-chosen placement, land expansion, a shop and Noelle's dialogue. Native macOS and iOS project files are included.

@@ -9,6 +9,7 @@
 #define STBI_ONLY_JPEG
 #define STBI_ONLY_BMP
 #include "third_party/stb_image.h"
+#include "match3_atlas.h"
 
 uint8_t *image_load_rgba(const char *path, int *w, int *h, char *error, size_t capacity)
 {
@@ -30,6 +31,30 @@ texture tex_from_pixels(const void *rgba, int w, int h)
     return t;
 }
 
+texture tex_match3_default(void)
+{
+    if (!render_ready()) return (texture){0};
+    static const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    size_t capacity = (sizeof engine_match3_atlas - 1) / 4 * 3, count = 0;
+    unsigned char *encoded = malloc(capacity);
+    if (!encoded) return (texture){0};
+    unsigned int bits = 0, held = 0;
+    for (const char *p = engine_match3_atlas; *p && *p != '='; p++) {
+        const char *digit = strchr(alphabet, *p);
+        if (!digit) continue;
+        bits = (bits << 6) | (unsigned int)(digit - alphabet);
+        held += 6;
+        if (held >= 8) { held -= 8; encoded[count++] = (unsigned char)(bits >> held); }
+    }
+    int w, h, channels;
+    unsigned char *rgba = stbi_load_from_memory(encoded, (int)count, &w, &h, &channels, 4);
+    free(encoded);
+    if (!rgba) return (texture){0};
+    texture result = tex_from_pixels(rgba, w, h);
+    stbi_image_free(rgba);
+    return result;
+}
+
 texture tex_load(const char *path)
 {
     int w, h, n;
@@ -45,9 +70,19 @@ texture tex_load(const char *path)
     return t;
 }
 
+texture tex_region(texture atlas, rect source)
+{
+    if (source.pos.x < 0 || source.pos.y < 0 || source.size.w <= 0 || source.size.h <= 0 ||
+        rect_max(source).x > atlas.size.w || rect_max(source).y > atlas.size.h) return (texture){0};
+    rect uv = atlas.uv.size.w > 0 ? atlas.uv : rc(0, 0, 1, 1);
+    vec2 scale = v2(uv.size.w / atlas.size.w, uv.size.h / atlas.size.h);
+    return (texture){atlas.tex, source.size, {vec2_add(uv.pos, vec2_mul(source.pos, scale)),
+        sz2(source.size.w * scale.x, source.size.h * scale.y)}, true, atlas.additive};
+}
+
 void tex_free(texture t)
 {
-    render_texture_free(t.tex);
+    if (!t.borrowed) render_texture_free(t.tex);
 }
 
 rect tex_rect(texture t) { return rect_make(v2(0, 0), t.size); }

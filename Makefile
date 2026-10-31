@@ -94,7 +94,7 @@ run-relic: run-relic-rush
 # engine/api.xml describes the API once; tools/luagen.py writes the glue, the
 # reference and the editor annotations. They are committed, so building needs
 # no Python; `make test` fails when they are stale.
-GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua engine/ui_forms_lua.h
+GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua engine/ui_forms_lua.h engine/match3_atlas.h
 gen:
 	python3 tools/luagen.py
 gen-check:
@@ -104,7 +104,7 @@ gen-check:
 # .luacheckrc declares the engine's globals, so an undefined global is a typo
 # or a missing import and an unused local is dead code.
 lint:
-	luacheck -q games/*/lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua tests/lua tests/games tests/fixtures tools/*.lua
+	luacheck -q games/*/lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua engine/match3.lua engine/match3_frames.lua tests/lua tests/games tests/fixtures tools/*.lua
 
 # --- Xcode projects -------------------------------------------------------
 # One committed project per game with a macOS and an iOS target (iPad for Nile
@@ -150,6 +150,7 @@ test: gen-check xcode-check $(TEST_BINS) build/test-audio test-clayfight
 	python3 games/christmas-market/tools/check_assets.py
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 tools/buildings.py --check
+	python3 tools/match3_atlas.py --check
 	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) $(TEST_ARGS) || status=1; done; exit $$status
 
 # Fast mode uses the same per-game binaries/manifests, with no rendering or sleeps.

@@ -66,8 +66,7 @@ function R.start_level(chosen)
     if chosen and lvl == R.prog.level and island.wonder_count(R.island) < R.prog.level then
         R.notice("Build your earned stall before the next winter wish."); return false
     end
-    R.g = rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF)
-    R.pending = rules.new_match()
+    R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
     R.on_island = false
     R.overlay = R.OV_NONE
     R.phase = R.PH_IDLE
@@ -468,19 +467,19 @@ local function init()
     R.font = R.skin:font("lilita")
     story.setup(cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
                                   edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, framed = true, skip = "SKIP"})
-    R.backdrop = texture.load("winter.jpg")
-    R.scenes[1] = R.backdrop
-    R.scenes[2] = R.backdrop
+    local board_skin = require("art").skin()
+    R.backdrop = board_skin.background
+    R.scenes[1], R.scenes[2] = board_skin["scene-1"] or R.backdrop, board_skin["scene-2"] or R.backdrop
     -- match pieces: the Relics pack, or an optional art pack (--tiles / ?tiles=jewels|resources)
     local tiles = "festive"
-    for i = 0, rules.COLORS - 1 do R.relics[i + 1] = texture.load(("tile-sets/%s/%d.png"):format(tiles, i)) end
+    for i = 0, rules.COLORS - 1 do R.relics[i + 1] = board_skin[(app.arg("default-match3") and "kind-" or tiles .. "-") .. i] end
     R.board_art = require("art").load()
     R.hud_art = require("art").load_hud()
     if app.arg("art-states") then
         R.art_packs = {}
         for _, pack in ipairs({"festive"}) do
             R.art_packs[pack] = {}
-            for k = 0, rules.COLORS - 1 do R.art_packs[pack][k + 1] = texture.load(("tile-sets/%s/%d.png"):format(pack, k)) end
+            for k = 0, rules.COLORS - 1 do R.art_packs[pack][k + 1] = board_skin[(app.arg("default-match3") and "kind-" or pack .. "-") .. k] end
         end
     end
     R.vfx_init()

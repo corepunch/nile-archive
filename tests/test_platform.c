@@ -51,6 +51,20 @@ static void draw_and_check(void)
     gfx_additive(false);
     draw_image_part(tile, rc(1, 0, 1, 1), rc(25, 50, 20, 20), hex(0xFFFFFF));
     draw_image_rot(tile, rc(50, 50, 40, 40), ENGINE_PI, hex(0xFFFFFF));
+    /* A view keeps its own logical size, shares storage, and composes nested UVs.
+     * Freeing it cannot invalidate the owning atlas. */
+    texture right = tex_region(tile, rc(1, 0, 1, 2));
+    texture green = tex_region(right, rc(0, 0, 1, 1));
+    CHECK(right.tex == tile.tex && right.borrowed && right.size.w == 1 && right.size.h == 2);
+    CHECK(green.uv.pos.x == .5f && green.uv.pos.y == 0 && green.uv.size.h == .5f);
+    tex_free(green);
+    draw_image(green, rc(72, 42, 8, 8), hex(0xFFFFFF));
+    draw_image_part(right, rc(0, 1, 1, 1), rc(82, 42, 8, 8), hex(0xFFFFFF));
+    draw_rect(rc(42, 42, 16, 8), hex(0xFF0000));
+    green.additive = true;
+    draw_image(green, rc(42, 42, 8, 8), hex(0xFFFFFF));
+    green.additive = false;
+    draw_image(green, rc(50, 42, 8, 8), hex(0xFFFFFF));
     struct AXsize size;
     axGetSize(&size);
     width = (int)roundf(size.width * axGetScaling()); height = (int)roundf(size.height * axGetScaling());
@@ -66,6 +80,10 @@ static void draw_and_check(void)
     c = pixel(10, 60); CHECK(c.r > 120 && c.r < 135 && c.g > 120 && c.g < 135 && c.b == 0);
     c = pixel(35, 60); CHECK(c.g > 230 && c.r < 25);
     c = pixel(85, 85); CHECK(c.r > 240 && c.g < 15 && c.b < 15);
+    c = pixel(46, 46); CHECK(c.r > 240 && c.g > 240 && c.b < 15);
+    c = pixel(54, 46); CHECK(c.r < 15 && c.g > 240 && c.b < 15);
+    c = pixel(76, 46); CHECK(c.g > 240 && c.r < 15 && c.b < 15);
+    c = pixel(86, 46); CHECK(c.r > 240 && c.g > 240 && c.b > 240);
     /* The left letterbox stays at the clear color, outside the logical scene. */
     CHECK(pixels[(height / 2 * width) * 4] == 16);
 

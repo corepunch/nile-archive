@@ -1,0 +1,369 @@
+{
+  "runtime": "data/match3.png",
+  "size": [
+    2048,
+    2048
+  ],
+  "frames": {
+    "background": [
+      2,
+      2,
+      600,
+      900
+    ],
+    "character": [
+      606,
+      2,
+      320,
+      480
+    ],
+    "bomb": [
+      930,
+      2,
+      128,
+      128
+    ],
+    "cell-mask": [
+      1062,
+      2,
+      128,
+      128
+    ],
+    "chain": [
+      1194,
+      2,
+      128,
+      128
+    ],
+    "complete": [
+      1326,
+      2,
+      128,
+      128
+    ],
+    "dynamite-disabled": [
+      1458,
+      2,
+      128,
+      128
+    ],
+    "dynamite-hover": [
+      1590,
+      2,
+      128,
+      128
+    ],
+    "dynamite-normal": [
+      1722,
+      2,
+      128,
+      128
+    ],
+    "dynamite-pressed": [
+      1854,
+      2,
+      128,
+      128
+    ],
+    "dynamite-selected": [
+      2,
+      906,
+      128,
+      128
+    ],
+    "festive-0": [
+      134,
+      906,
+      128,
+      128
+    ],
+    "festive-1": [
+      266,
+      906,
+      128,
+      128
+    ],
+    "festive-2": [
+      398,
+      906,
+      128,
+      128
+    ],
+    "festive-3": [
+      530,
+      906,
+      128,
+      128
+    ],
+    "festive-4": [
+      662,
+      906,
+      128,
+      128
+    ],
+    "festive-5": [
+      794,
+      906,
+      128,
+      128
+    ],
+    "guide": [
+      926,
+      906,
+      128,
+      128
+    ],
+    "hint": [
+      1058,
+      906,
+      128,
+      128
+    ],
+    "ice-1": [
+      1190,
+      906,
+      128,
+      128
+    ],
+    "ice-2": [
+      1322,
+      906,
+      128,
+      128
+    ],
+    "pause-disabled": [
+      1454,
+      906,
+      128,
+      128
+    ],
+    "pause-hover": [
+      1586,
+      906,
+      128,
+      128
+    ],
+    "pause-normal": [
+      1718,
+      906,
+      128,
+      128
+    ],
+    "pause-pressed": [
+      1850,
+      906,
+      128,
+      128
+    ],
+    "pause-selected": [
+      2,
+      1038,
+      128,
+      128
+    ],
+    "pickaxe-disabled": [
+      134,
+      1038,
+      128,
+      128
+    ],
+    "pickaxe-hover": [
+      266,
+      1038,
+      128,
+      128
+    ],
+    "pickaxe-normal": [
+      398,
+      1038,
+      128,
+      128
+    ],
+    "pickaxe-pressed": [
+      530,
+      1038,
+      128,
+      128
+    ],
+    "pickaxe-selected": [
+      662,
+      1038,
+      128,
+      128
+    ],
+    "prism": [
+      794,
+      1038,
+      128,
+      128
+    ],
+    "ray-column": [
+      926,
+      1038,
+      128,
+      128
+    ],
+    "ray-diagonal": [
+      1058,
+      1038,
+      128,
+      128
+    ],
+    "ray-row": [
+      1190,
+      1038,
+      128,
+      128
+    ],
+    "sand": [
+      1322,
+      1038,
+      128,
+      128
+    ],
+    "selected": [
+      1454,
+      1038,
+      128,
+      128
+    ],
+    "sunburst-disabled": [
+      1586,
+      1038,
+      128,
+      128
+    ],
+    "sunburst-hover": [
+      1718,
+      1038,
+      128,
+      128
+    ],
+    "sunburst-normal": [
+      1850,
+      1038,
+      128,
+      128
+    ],
+    "sunburst-pressed": [
+      2,
+      1170,
+      128,
+      128
+    ],
+    "sunburst-selected": [
+      134,
+      1170,
+      128,
+      128
+    ],
+    "glow": [
+      266,
+      1170,
+      64,
+      64
+    ],
+    "kind-0": [
+      134,
+      906,
+      128,
+      128
+    ],
+    "kind-1": [
+      266,
+      906,
+      128,
+      128
+    ],
+    "kind-2": [
+      398,
+      906,
+      128,
+      128
+    ],
+    "kind-3": [
+      530,
+      906,
+      128,
+      128
+    ],
+    "kind-4": [
+      662,
+      906,
+      128,
+      128
+    ],
+    "kind-5": [
+      794,
+      906,
+      128,
+      128
+    ],
+    "scene-1": [
+      2,
+      2,
+      600,
+      900
+    ],
+    "scene-2": [
+      2,
+      2,
+      600,
+      900
+    ],
+    "score": [
+      1326,
+      2,
+      128,
+      128
+    ]
+  },
+  "sources": {
+    "festive-0": "data/tile-sets/festive/0.png",
+    "festive-1": "data/tile-sets/festive/1.png",
+    "festive-2": "data/tile-sets/festive/2.png",
+    "festive-3": "data/tile-sets/festive/3.png",
+    "festive-4": "data/tile-sets/festive/4.png",
+    "festive-5": "data/tile-sets/festive/5.png",
+    "bomb": "data/board-states/bomb.png",
+    "cell-mask": "data/board-states/cell-mask.png",
+    "chain": "data/board-states/chain.png",
+    "dynamite-disabled": "data/board-states/dynamite-disabled.png",
+    "dynamite-hover": "data/board-states/dynamite-hover.png",
+    "dynamite-normal": "data/board-states/dynamite-normal.png",
+    "dynamite-pressed": "data/board-states/dynamite-pressed.png",
+    "dynamite-selected": "data/board-states/dynamite-selected.png",
+    "guide": "data/board-states/guide.png",
+    "hint": "data/board-states/hint.png",
+    "ice-1": "data/board-states/ice-1.png",
+    "ice-2": "data/board-states/ice-2.png",
+    "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
+    "pickaxe-hover": "data/board-states/pickaxe-hover.png",
+    "pickaxe-normal": "data/board-states/pickaxe-normal.png",
+    "pickaxe-pressed": "data/board-states/pickaxe-pressed.png",
+    "pickaxe-selected": "data/board-states/pickaxe-selected.png",
+    "prism": "data/board-states/prism.png",
+    "ray-column": "data/board-states/ray-column.png",
+    "ray-diagonal": "data/board-states/ray-diagonal.png",
+    "ray-row": "data/board-states/ray-row.png",
+    "sand": "data/board-states/sand.png",
+    "selected": "data/board-states/selected.png",
+    "sunburst-disabled": "data/board-states/sunburst-disabled.png",
+    "sunburst-hover": "data/board-states/sunburst-hover.png",
+    "sunburst-normal": "data/board-states/sunburst-normal.png",
+    "sunburst-pressed": "data/board-states/sunburst-pressed.png",
+    "sunburst-selected": "data/board-states/sunburst-selected.png",
+    "complete": "data/expedition-hud/complete.png",
+    "pause-disabled": "data/expedition-hud/pause-disabled.png",
+    "pause-hover": "data/expedition-hud/pause-hover.png",
+    "pause-normal": "data/expedition-hud/pause-normal.png",
+    "pause-pressed": "data/expedition-hud/pause-pressed.png",
+    "pause-selected": "data/expedition-hud/pause-selected.png",
+    "background": "data/winter.jpg",
+    "character": "data/characters/noelle.png"
+  },
+  "procedural_glow": "Original 64px white cubic radial alpha; transient light, packed alongside sprites",
+  "transform": "RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters",
+  "reproduction": "python3 tools/match3_atlas.py",
+  "review": "docs/review/trickling/README.md"
+}

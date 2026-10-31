@@ -227,10 +227,15 @@ void render_image(texture t, rect src, rect dst, float angle, color tint)
     render_vertex v[4];
     for (int i = 0; i < 4; i++) {
         if (angle) p[i] = vec2_add(rect_center(dst), vec2_rotate(vec2_sub(p[i], rect_center(dst)), angle));
-        v[i] = (render_vertex){p[i], tint, vec2_div(uv[i], size2_vec(t.size))};
+        vec2 local_uv = vec2_div(uv[i], size2_vec(t.size));
+        if (t.uv.size.w > 0) local_uv = vec2_add(t.uv.pos, vec2_mul(local_uv, size2_vec(t.uv.size)));
+        v[i] = (render_vertex){p[i], tint, local_uv};
     }
     const int idx[] = {0, 1, 2, 0, 2, 3};
+    bool original_blend = t.tex->additive;
+    if (t.additive) t.tex->additive = true;
     render_geometry(t.tex, v, 4, idx, 6);
+    t.tex->additive = original_blend;
 }
 
 /* The area drawing may reach: the logical screen, or the whole display. */

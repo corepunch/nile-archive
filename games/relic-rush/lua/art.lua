@@ -13,10 +13,18 @@ A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.tool_size = 76   -- square authored artwork and matching square touch targets
 A.hud_icons = {"score", "complete"}
 
+-- Nil override uses the engine's neutral resource skin. A game skin supplies
+-- graphics only; behavior is the integer flags field in rules.lua.
+function A.skin()
+    local match3 = require("match3")
+    if app.arg("default-match3") then return match3.skin() end
+    return match3.skin(require("match3_skin"))
+end
+
 function A.load_hud()
     local textures = {}
-    for _, state in ipairs(A.states) do textures["pause-" .. state] = texture.load("expedition-hud/pause-" .. state .. ".png") end
-    for _, name in ipairs(A.hud_icons) do textures[name] = texture.load("expedition-hud/" .. name .. ".png") end
+    for _, state in ipairs(A.states) do textures["pause-" .. state] = A.skin()["pause-" .. state] end
+    for _, name in ipairs(A.hud_icons) do textures[name] = A.skin()[name] end
     return textures
 end
 
@@ -44,7 +52,7 @@ end
 
 function A.load()
     local textures = {}
-    local function load(name) textures[name] = texture.load("board-states/" .. name .. ".png") end
+    local function load(name) textures[name] = A.skin()[name] end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     load("cell-mask")

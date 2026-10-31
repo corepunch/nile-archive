@@ -25,3 +25,5 @@ files["tests/lua"] = {read_globals = {"check", "near", "testing"}}   -- from the
 files["tests/games"] = {read_globals = {"rules", "smoke", "shot", "frame", "reel", "hold", "match3_root"}, globals = {"default_frames"}}
 
 files["tests/lua/injections.lua"] = {read_globals = {"check", "near", "testing"}, globals = {"print"}}
+
+files["tests/fixtures/trickling"] = {read_globals = {"testing"}} -- test-build presentation fixture

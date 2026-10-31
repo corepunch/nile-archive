@@ -1090,6 +1090,26 @@ A loaded image; `w` and `h` are its pixel size. Textures are never freed by the 
 | `tex` | `userdata` | The renderer's texture (opaque). |
 | `w` | `number` |  |
 | `h` | `number` |  |
+| `uv` | `rect` | Normalized atlas view bounds; zero means the whole backing texture. |
+| `additive` | `boolean` | Additive blend for this image/view only; does not change the owning atlas. |
+| `borrowed` | `boolean` | Atlas views borrow storage; freeing a view leaves its atlas alive. |
+
+### `texture.region(atlas, source)  ·  atlas:region(source)`
+
+Borrow a pixel rectangle of an atlas as a normal texture. Supports nested regions; invalid bounds return an empty texture. Keep the atlas alive while views are used.
+
+| Argument | Type | |
+|---|---|---|
+| `atlas` | `texture` |  |
+| `source` | `rect` |  |
+
+**Returns:** `texture`
+
+### `texture.match3_default()`
+
+Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web.
+
+**Returns:** `texture`
 
 ### `texture.load(path)`
 

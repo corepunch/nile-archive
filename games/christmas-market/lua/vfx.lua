@@ -39,15 +39,8 @@ local vfx_color = R.vfx_color
 
 -- A soft radial glow texture (cubic falloff), drawn additively.
 function R.vfx_init()
-    local px = {}
-    for y = 0, 63 do
-        for x = 0, 63 do
-            local t = math.max(0, 1 - vec2(x - 31.5, y - 31.5):len() / 32)
-            px[#px + 1] = string.char(255, 255, 255, math.floor(255 * t * t * t))
-        end
-    end
-    R.glow = texture.from_pixels(table.concat(px), 64, 64)
-    texture.additive(R.glow, true)
+    R.glow = require("art").skin().glow
+    R.glow.additive = true   -- per-view blend; other atlas frames retain alpha blending
 end
 
 function R.vfx_reset()

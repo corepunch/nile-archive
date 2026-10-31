@@ -1,7 +1,7 @@
 -- state.lua — the state shared by Relic Rush's modules, and their namespace:
 -- every module attaches its public functions here (R.notice, R.cell_pos, ...)
 -- so they can call each other without import cycles, the way relic.h did.
-local R = {
+local R = require("match3").view{
     -- the game is laid out for a 480 x 900 portrait screen; taller phones add height
     SCREEN_W = 480, SCREEN_H = 900,
     HEX_R = 32,         -- radius-4 board spans 14 radii: 448 wide, with 16-unit screen margins
@@ -11,22 +11,12 @@ local R = {
 
     -- overlays and board phases
     OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10,
-    PH_IDLE = 0, PH_SWAP = 1, PH_REJECT = 2, PH_CLEAR = 3, PH_FALL = 4,
     PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white",   -- text styles in skin.lua
 
     backdrop = nil, scenes = {}, relics = {}, glow = nil,
     font = nil,
     prog = nil,          -- {level, seed, wallet}
     island = nil,        -- the engine city
-
-    -- the expedition in progress
-    g = nil,
-    pending = nil,       -- the match being cleared
-    old_tiles = {},      -- the board before the current animation step
-    fall_from = {}, wave_ice = {}, wave_chain = {},
-    phase = 0,
-    phase_time = 0, idle_time = 0, shake = 0,
-    selected = -1, swap_a = -1, swap_b = -1, tool = -1, hint_a = -1, hint_b = -1,
 
     -- screens
     on_island = false,

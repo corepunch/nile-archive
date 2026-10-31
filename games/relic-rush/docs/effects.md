@@ -14,7 +14,7 @@ This is a capture of the actual renderer using deterministic ray, bomb and prism
 | Prism | Staggered branching light links from the prism to affected targets |
 | Special combination | Broader bomb shockwaves or rays along all three board axes |
 | Special creation | Delayed birth halo, an expanding ring and orbiting sparkles |
-| Landing | Eased movement and a short squash/stretch at the end of the fall |
+| Landing | Shared engine one-edge trickling steps and a short squash/stretch after the final step |
 | Resource collection | Staggered curved flights, light trails and a small HUD landing pulse; locked pieces do not send unearned resource icons |
 | Score | Smooth count-up, progress-bar interpolation, a small number pulse and one floating score per cascade wave |
 | Cascade | Escalating chimes and animated BRILLIANT / MAGNIFICENT / SUNSTORM feedback |

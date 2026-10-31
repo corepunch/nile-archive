@@ -1,6 +1,19 @@
 -- The generated Lua API: value types, operators, methods, in/out arguments,
 -- handles. Runs without a window (nothing here draws).
 
+-- Borrowed atlas views round-trip through the generated API, including nesting.
+do
+    local atlas = {w=256, h=128}
+    local view = texture.region(atlas, rect(64, 16, 64, 32))
+    check(view.w==64 and view.h==32 and view.borrowed, "atlas view has its own size and borrows storage")
+    near(view.uv.x, .25, "atlas view UV origin")
+    near(view.uv.w, .25, "atlas view UV width")
+    local nested = texture.region(view, rect(16, 8, 16, 8))
+    near(nested.uv.x, .3125, "nested UV origin")
+    near(nested.uv.w, .0625, "nested UV width")
+    check(texture.region(view, rect(60, 0, 16, 8)).w==0, "invalid region fails without borrowing out of bounds")
+end
+
 -- vec2
 check(input{multi_touch=true,pinch=1}.multi_touch,"multi-touch press state round-trips through the generated binding")
 local a = vec2(3, 4)

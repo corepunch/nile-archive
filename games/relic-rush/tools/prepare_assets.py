@@ -65,6 +65,33 @@ def tile(im, size=128, inner=116):
     return out
 
 
+HEX_CROPS = {('relics', 0): (10, 50, 316, 289), ('jewels', 0): (12, 340, 315, 570)}
+
+
+def original_tile(row, col):
+    sheet = Image.open(ART / 'tile-sets/source.png').convert('RGBA')
+    bounds = (round(col * sheet.width / 6), round(row * sheet.height / 3),
+              round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3))
+    return tile(isolate_sprite(sheet.crop(bounds)), inner=112)
+
+
+def hex_replacements():
+    # Correct only the two hex silhouettes; all other 16 originals stay in use.
+    source = Image.open(ART / 'tile-sets/source-flat-hex.png').convert('RGBA')
+    mask = Image.open(DATA / 'board-states/cell-mask.png').getchannel('A')
+    left, top, right, bottom = mask.point(lambda a: 255 if a > 128 else 0).getbbox()
+    height = round(112 * (bottom - top) / (right - left))
+    result = {}
+    for key, box in HEX_CROPS.items():
+        im = source.crop(box)
+        bounds = im.getchannel('A').point(lambda a: 255 if a > 70 else 0).getbbox()
+        im = im.crop(bounds).resize((112, height), Image.Resampling.LANCZOS)
+        out = Image.new('RGBA', (128, 128))
+        out.paste(im, ((128 - im.width) // 2, (128 - im.height) // 2))
+        result[key] = out
+    return result
+
+
 def main():
     # Match pieces: three original six-piece packs in one 6 x 3 sheet. Row order
     # is the pieces' meaning (idol, flame, leaf, scarab, crystal, amphora...).
@@ -75,6 +102,9 @@ def main():
             im = sheet.crop((round(col * sheet.width / 6), round(row * sheet.height / 3),
                              round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3)))
             tile(isolate_sprite(im), inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
+
+    for (pack, kind), image in hex_replacements().items():
+        image.save(DATA / 'tile-sets' / pack / f'{kind}.png', optimize=True)
 
     # Busts of the expedition cast for the dialogue, cut from the concept lineup.
     (DATA / 'characters').mkdir(parents=True, exist_ok=True)

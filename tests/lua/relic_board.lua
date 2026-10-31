@@ -13,6 +13,7 @@ local function setup(g)
     R.overlay, R.on_island, R.art_review = R.OV_NONE, false, false
     R.selected, R.tool, R.hint_a, R.hint_b = 0, 0, -1, -1
     R.toast = nil
+    R.fall_steps = nil
 end
 
 for level = 0, rules.LEVELS - 1 do
@@ -149,6 +150,27 @@ for level=0,rules.LEVELS-1 do
         check(m.hits==0,"settled board contains no unresolved matches")
     end
 end
+-- Gravity has multiple simultaneous steps. Cascades/results cannot settle
+-- until the last step is shown, including reduced-motion timing.
+for _, reduced in ipairs({false, true}) do
+    local g = rules.game_start(6, 123)
+    for i=0,rules.CELLS-1 do
+        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and rules.hex_r(i)>0 then g.tiles[i]=rules.tile(-1) end
+    end
+    setup(g)
+    R.reduced_motion = reduced
+    R.phase, R.phase_time = R.PH_CLEAR, 1
+    R.board_update(.01)
+    check(R.phase==R.PH_FALL and #R.fall_steps>1, "clear enters engine trickling steps")
+    local speed = reduced and .35 or 1
+    local duration = (#R.fall_steps * rules.FALL_STEP + .08) * speed
+    local moves = g.moves
+    R.board_update(duration - .001)
+    check(R.phase==R.PH_FALL and g.moves==moves, "engine waits for every fall step")
+    R.board_update(.002)
+    check(R.phase~=R.PH_FALL and g.moves==moves, "engine settles without spending another move")
+end
+R.reduced_motion = false
 
 -- The compact header reports remaining win conditions from the rules, without
 -- dropping score/sand/locks or exposing redundant current/target totals.
