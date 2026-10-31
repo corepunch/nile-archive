@@ -258,7 +258,9 @@ fonts can load; its colours are checked when the skin is compiled.
 
 Relic Rush keeps its entire look in `lua/skin.lua`: four outlined text palettes,
 the parchment panel, the jade button (pressed sinks it 2 units; disabled drains
-its colour), the flat CLOSE variant and the focus ring. Its pause, building,
+its colour), the flat CLOSE variant and the focus ring. Its Pause menu uses the `checkbox`
+control for Sound and Reduce motion: a wooden-rimmed well that fills with jade
+and a cream tick, bound to the game's settings. Its pause, building,
 guide, shop and expedition dialogs and its island buttons all paint through it;
 captures are pixel-identical to the hand-written paint code it replaced.
 
@@ -266,7 +268,7 @@ Every game now has one skin file:
 
 | Game | Skin file | What it holds |
 | --- | --- | --- |
-| Relic Rush | `games/relic-rush/lua/skin.lua` | Outlined palettes, parchment panel, jade button, flat variant, focus ring |
+| Relic Rush | `games/relic-rush/lua/skin.lua` | Outlined palettes, parchment panel, jade button, flat variant, focus ring, and the Pause checkboxes (Sound, Reduce motion) |
 | Nile Archive | `games/nile-archive/lua/archive_skin.lua` | Three fonts with a fallback, 21 text styles, the theme, the gold-rimmed teal/parchment frame at any radius (corner studs as a `paint` layer) and green/blue/red pills whose disabled state turns grey |
 | Volcano | `games/volcano/lua/volcano_skin.lua` | Lilita palettes at any size, the theme, and the panel, button (hover, pressed, disabled, gold accent) and meters that native widgets used to draw |
 

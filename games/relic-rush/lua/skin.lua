@@ -30,12 +30,19 @@ return ui.skin{
 
     controls = {
         -- Parchment in a dark wooden rim, on a soft jade shadow.
-        panel = {normal = {layers = {
-            {fill = "#091C1A91", radius = 18, offset = {0, 6}},
-            {fill = "#664427", radius = 18},
-            {fill = "#EFCC87", radius = 16, inset = 2},
-            {fill = "#FFEFBC", radius = 13, inset = 5},
-        }}},
+        panel = {
+            normal = {layers = {
+                {fill = "#091C1A91", radius = 18, offset = {0, 6}},
+                {fill = "#664427", radius = 18},
+                {fill = "#EFCC87", radius = 16, inset = 2},
+                {fill = "#FFEFBC", radius = 13, inset = 5},
+            }},
+            -- A recessed well that groups related settings inside a dialog.
+            variants = {group = {normal = {layers = {
+                {fill = "#E8CC8E", fill2 = "#F6E2B0", radius = 14},
+                {border = "#C9A464", width = 1.5, radius = 14},
+            }}}},
+        },
 
         -- A green jade button with a gloss; pressing sinks it onto its shadow.
         -- Disabled drains the colour from the same layers. Hover and selected
@@ -50,9 +57,40 @@ return ui.skin{
             }},
             pressed = {offset = {0, 2}},
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},
-            variants = {flat = {normal = {layers = {}}}},   -- a text-only action, such as CLOSE
+            variants = {
+                flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE
+                -- Secondary actions (Restart, Quit) in carved wood, beside the jade primary.
+                secondary = {normal = {set = {shadow = {fill = "#4A2C12"}, body = {fill = "#7A4C22"},
+                                              face = {fill = "#B98446"}, gloss = {fill = "#D9A865"}}}},
+                link = {text = "gold", normal = {layers = {}}},   -- a text link, such as the guide
+            },
         },
         toggle = {extends = "button"},
+
+        -- A wooden-rimmed well that fills with jade and a cream tick when checked.
+        -- Pressing sinks box and tick 2 units; disabled greys the rim and fill.
+        checkbox = {
+            size = 40, gap = 16, text = "cream", em = 25,
+            box = {
+                normal = {layers = {
+                    {name = "shadow", fill = "#0D362B", radius = 11, offset = {0, 5}, fixed = true},
+                    {name = "rim", fill = "#664427", radius = 11},
+                    {name = "well", fill = "#E6CB8C", fill2 = "#FFF3CC", radius = 8, inset = 3},
+                }},
+                pressed = {offset = {0, 2}},
+                disabled = {set = {rim = {fill = "#6E655A"}, well = {fill = "#C9C2B2", fill2 = "#DDD8CC"}}},
+            },
+            mark = {
+                normal = {layers = {
+                    {name = "face", fill = "#71B953", fill2 = "#4E9A3E", radius = 8, inset = 3},
+                    {name = "gloss", fill = "#9FD56D", radius = 6, height_ratio = .42, inset = {6, 5, 6, -5}},
+                    {name = "tick_rim", check = "#1F4A2A", width = 7.5, inset = 3},
+                    {name = "tick", check = "#FFF9E2", width = 4.5, inset = 3},
+                }},
+                pressed = {offset = {0, 2}},
+                disabled = {set = {face = {fill = "#8E9A88", fill2 = "#76806F"}, gloss = {fill = "#A9B3A2"}}},
+            },
+        },
 
         label = {text = "gold", em = 26, wrap_text = "cream", wrap_em = 22},
 

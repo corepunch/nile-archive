@@ -698,29 +698,44 @@
     "review": "docs/review/painted-buildings/README.md"
   },
   "pause_menu": {
-    "source": "lua/screens.lua",
-    "runtime": "existing shared form skin; no new texture files",
+    "source": "lua/screens.lua; look in lua/skin.lua",
+    "runtime": "engine geometry from the skin; no texture files",
     "expedition": [
+      "settings group: sound checkbox, reduce motion checkbox",
       "resume",
-      "restart",
-      "sound",
-      "guide",
-      "quit to island"
+      "restart (secondary, confirmed)",
+      "quit to island (secondary)",
+      "guide (link)"
     ],
     "island": [
+      "settings group: sound checkbox, reduce motion checkbox",
       "resume",
-      "sound",
-      "guide"
+      "guide (link)"
     ],
-    "states": [
-      "normal",
-      "hover",
-      "pressed",
-      "disabled",
-      "keyboard focus"
+    "confirm": [
+      "restart",
+      "keep playing (link)"
     ],
-    "removed": "motion toggle",
+    "states": {
+      "checkbox": [
+        "unchecked",
+        "checked",
+        "pressed",
+        "disabled"
+      ],
+      "button": [
+        "normal",
+        "hover",
+        "pressed",
+        "disabled",
+        "keyboard focus"
+      ]
+    },
+    "history": "the motion toggle was removed, then returned as the Reduce motion checkbox",
     "reproduction": "python3 tests/fixtures/pause-actions/capture.py",
-    "review": "docs/review/pause-actions/README.md"
+    "review": [
+      "docs/review/pause-actions/README.md",
+      "../../docs/review/ui-skin-files/README.md"
+    ]
   }
 }

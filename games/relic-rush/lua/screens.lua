@@ -348,17 +348,25 @@ local function guide_screen()
     if action and action.id=="done" then R.overlay=R.OV_NONE end
 end
 
+-- Pause, as in other match-3 games: the settings grouped in one well, then
+-- Resume and the secondary actions. Restart asks first; Quit keeps the board,
+-- which LEVEL / Expeditions resume later. From the island only Resume applies.
 local pause_form = ui.form{
-    root={kind="column",panel=true,padding={46,20,46,35},gap=20,children={
+    root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
         {kind="label",text="Take a breath",height=44,em=34},
-        {kind="label",id="level",height=30,em=16,text_style=PAL_CREAM},
-        {kind="button",id="resume",text="RESUME",height=49},
-        {kind="button",id="restart",text="RESTART",height=49,visible_field="expedition"},
-        {kind="toggle",id="sound",on_text="SOUND ON",off_text="SOUND OFF",height=49},
-        {kind="button",id="guide",text="EXPLORER'S GUIDE",height=49},
-        {kind="button",id="quit",text="QUIT TO ISLAND",height=49,visible_field="expedition"},
+        {kind="label",id="level",height=22,em=16,text_style=PAL_CREAM},
+        {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
+            {kind="checkbox",id="sound",text="SOUND",height=50},
+            {kind="checkbox",id="motion",text="REDUCE MOTION",height=50},
+        }},
+        {kind="column",gap=12,children={
+            {kind="button",id="resume",text="RESUME",height=52},
+            {kind="button",id="restart",text="RESTART",height=46,role="secondary",visible_field="expedition"},
+            {kind="button",id="quit",text="QUIT TO ISLAND",height=46,role="secondary",visible_field="expedition"},
+        }},
+        {kind="button",id="guide",text="EXPLORER'S GUIDE",height=32,role="link",em=20},
     }},
-    bindings={{id="sound",field="sound",type="boolean"}},
+    bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
 }
 local function pause_screen()
     local ok,message=pause_form:push(R);assert(ok,message)
@@ -372,11 +380,33 @@ local function pause_screen()
     if event.kind=="change" then
         ok,message=pause_form:pull(R);assert(ok,message);sfx.enable(R.sound)
     elseif event.id=="resume" then R.overlay=R.OV_NONE
-    elseif event.id=="restart" then R.start_level(R.g.level)
-    elseif event.id=="quit" then R.on_island,R.overlay=true,R.OV_NONE
+    elseif event.id=="restart" then R.overlay=R.OV_CONFIRM
+    elseif event.id=="quit" then   -- the unfinished board waits on the island
+        R.on_island,R.overlay=true,R.OV_NONE
+        R.notice(("Your board is saved. Tap LEVEL %d or Expeditions to continue."):format(R.g.level+1))
     elseif event.id=="guide" then R.overlay=R.OV_GUIDE end
 end
 R.pause_form=pause_form
+
+-- Restart throws the board away, so it asks first. Retrying is always free.
+local confirm_form = ui.form{
+    root={kind="column",panel=true,padding={36,22,36,18},gap=14,children={
+        {kind="label",text="Restart this expedition?",height=40,em=28},
+        {kind="label",text="The board starts over: moves, goals and tools reset. Retrying is always free.",
+         height=56,wrap=true,em=18,text_style=PAL_CREAM},
+        {kind="button",id="confirm",text="RESTART",height=50},
+        {kind="button",id="cancel",text="KEEP PLAYING",height=32,role="link",em=20},
+    }},
+}
+local function confirm_screen()
+    local _,height=confirm_form:measure(396,form_skin)
+    local bounds=rect.centered(vec2(240,450),size2(396,height))
+    R.modal_bounds=pr(bounds)
+    local event=confirm_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
+    if event and event.id=="confirm" then R.start_level(R.g.level);R.overlay=R.OV_NONE
+    elseif event and event.id=="cancel" then R.overlay=R.OV_PAUSE end
+end
+R.confirm_form=confirm_form
 
 local function failed_screen()
     panel(rect(38, 272, 404, 333))
@@ -420,7 +450,8 @@ local function finale_screen()
 end
 
 local dialogs = {[R.OV_GUIDE] = guide_screen, [R.OV_PAUSE] = pause_screen, [R.OV_RESULT] = result_screen, [R.OV_FAILED] = failed_screen,
-                 [R.OV_WONDER] = wonder_screen, [R.OV_ZONE] = zone_screen, [R.OV_FINALE] = finale_screen}
+                 [R.OV_WONDER] = wonder_screen, [R.OV_ZONE] = zone_screen, [R.OV_FINALE] = finale_screen,
+                 [R.OV_CONFIRM] = confirm_screen}
 
 -- Draws the open dialog over everything; it alone receives input.
 function R.overlays(dt)
