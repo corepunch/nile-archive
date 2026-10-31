@@ -60,7 +60,7 @@ with tempfile.TemporaryDirectory(prefix="relic-hud-") as directory:
                 if revision=="before" and "--tap-tool" in extra:extra=extra+["175"]   # old Dynamite centre
                 shot=scripts/"shot.png"
                 subprocess.run(base+["--frames",str(frames),"--shot",str(shot)]+extra,cwd=ROOT,check=True,
-                               stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                               stdout=subprocess.DEVNULL)
                 with Image.open(shot) as image:
                     image=image.convert("RGB");image.thumbnail((480,1100))
                     image.save(out/f"{revision}-{name}-{size}.jpg",quality=88)
