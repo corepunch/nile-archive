@@ -84,6 +84,16 @@ for flags=0,63 do
         local from=R.game_collapse(g)
         t:check(from[center]==(flags&E.NO_TRICKLE~=0 and above or side),'NO_TRICKLE selects the expected original donor')
     end)
+    t:case('flags='..flags..' exposed top inlets',function()
+        local g=H.board(R)
+        for i=0,R.CELLS-1 do g.active[i]=false end
+        local center,side=R.hex_center(),R.hex_index(-1,0)
+        g.active[center],g.active[side]=true,true
+        g.tiles[side]=R.tile(2,R.BOMB)
+        local _,steps=R.game_collapse(g)
+        t:check(steps[1].from[center]<0,'top cell spawns instead of borrowing diagonally')
+        t:check(g.tiles[side].kind==2 and g.tiles[side].special==R.BOMB,'side donor stays put')
+    end)
     t:case('flags='..flags..' dead-board recovery',function()
         local g=H.board(R)
         for i=0,R.CELLS-1 do g.tiles[i]=R.tile(i) end

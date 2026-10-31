@@ -93,3 +93,11 @@ reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --re
 reel("dialogue-to-board", 30, 8, "480x900", "--dialog intro --talk-through 45 --reel")
 frame("entrance-settled-relic-rush-480x900", "480x900", "--level 5 --present --frames 180")
 frame("entrance-settled-relic-rush-390x844", "390x844", "--level 5 --present --frames 180 --safe-area 0,47,0,34")
+
+-- Building art must ride the popup; each top edge cell supplies the refill.
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    reel("relic-rush-building-entrance-"..size, 16, 3, size, "--card 1 --reel"..safe)
+    reel("relic-rush-top-edge-refill-"..size, 16, 3, size,
+        "--lua tests/fixtures/trickling;games/relic-rush/lua;. --review-top-edge --reel"..safe)
+end

@@ -227,8 +227,10 @@ state it supports; the engine never tints one state into another.
 for asset checks.
 
 **Animated dialogs.** Set `skin.transform = function() return scale, offset, alpha end`
-and every layer and caption follows the dialog's current scale, position and
-opacity. Measurement always uses logical units, so layout doesn't change.
+and every layer, caption and form image follows the dialog's current scale,
+position and opacity. Image nodes fit their texture in logical bounds before transforming;
+`cover` nodes use the full allocated box. Measurement always uses logical
+units, so layout doesn't change.
 
 **Immediate mode.** Outside forms the same skin paints hand-placed controls:
 `skin:draw_button(bounds, caption, opts)` returns true when clicked (`opts`:
@@ -242,8 +244,8 @@ style (following the transform) for free text.
 
 **The paint contract.** Forms call `style(node)`, `panel(bounds, node)`,
 `button(bounds, state, node)`, `button_text(bounds, caption, node, state)`,
-`label(bounds, caption, node, style)`, `focus(bounds, node)`,
-`checkbox(bounds, caption, node, state)`, `measure_checkbox(node, caption)` and
+`label(bounds, caption, node, style)`, `image(bounds, texture, node)`,
+`focus(bounds, node)`, `checkbox(bounds, caption, node, state)`, `measure_checkbox(node, caption)` and
 `progress(bounds, fraction, node)`. A compiled skin provides all of them. A game
 can still pass a hand-written table with any subset, a native `theme`, `styles`
 keyed by role/kind, or `button_states` textures; whatever it leaves out uses the

@@ -348,8 +348,8 @@ function E.new(config)
 
     -- Gravity follows the three downward hex edges, preferring either diagonal
     -- over straight down. Empty diagonal paths wait for reachable existing gems;
-    -- only upstream inlets (no movable parent) create new pieces. In particular,
-    -- a hole/lock above does not create a refill inlet if a side can feed it.
+    -- every exposed column top creates new pieces directly from above. Interior
+    -- cells still trickle around locks, or spawn when all parents are blocked.
     -- Return original source IDs plus simultaneous one-edge animation steps.
     M.FALL_STEP = .08
     local fall_order = {}
@@ -384,14 +384,17 @@ function E.new(config)
                     if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
-                    if movable(left) and g.tiles[left].kind >= 0 and not used[left] then source = left
-                    elseif movable(right) and g.tiles[right].kind >= 0 and not used[right] then source = right
-                    elseif not reachable(left, {}) and not reachable(right, {})
-                        and movable(above) and g.tiles[above].kind >= 0 and not used[above] then source = above end
+                    local inlet = not cell_active(g, above)
+                    if not inlet then
+                        if movable(left) and g.tiles[left].kind >= 0 and not used[left] then source = left
+                        elseif movable(right) and g.tiles[right].kind >= 0 and not used[right] then source = right
+                        elseif not reachable(left, {}) and not reachable(right, {})
+                            and movable(above) and g.tiles[above].kind >= 0 and not used[above] then source = above end
+                    end
                     if source then
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
-                    elseif not movable(left) and not movable(right) and not movable(above) then
+                    elseif inlet or not movable(left) and not movable(right) and not movable(above) then
                         spawned = spawned + 1
                         step.tiles[i], step.from[i], next_from[i] = tile(randn(g, COLORS)), -1, -spawned
                     end

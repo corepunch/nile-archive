@@ -269,7 +269,10 @@ local function paint(n,skin,form,options,event)
         else text.inside(style_for(n,skin),box,align,caption(n,form.values)) end
     elseif n.kind=='image' then
         local im=form.values[n.id] or n.image
-        if im and im.tex then gfx.image(im, n.cover and box or box:fit(texture.size(im)),color.WHITE) end
+        if im and im.tex then
+            if skin.image then skin.image(box,im,n)
+            else gfx.image(im,n.cover and box or box:fit(texture.size(im)),color.WHITE) end
+        end
     elseif n.kind=='progress' then
         local fraction=tonumber(form.values[n.id]) or n.value or 0
         if skin.progress then skin.progress(box,fraction,n) else ui.progress(box,fraction,n.text) end

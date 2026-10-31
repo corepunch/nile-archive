@@ -59,16 +59,18 @@ restoration economy. Matching and input do not live in either game.
 ## Diagonal refill
 
 A gravity step moves each gem at most one downward hex edge. For each empty
-cell, either upper diagonal takes priority over the cell directly above.
+interior cell, either upper diagonal takes priority over the cell directly above.
 If a diagonal path has empty cells but a reachable existing gem farther up,
 the destination waits for it. Equal side choices alternate deterministically
 by position without spending RNG. Two destinations cannot consume the same
 gem in one step.
 
-Only cells with no movable upstream neighbor generate new pieces. Holes,
-chains and ice do not donate gems; reachable side inlets feed cells below
-holes/blockers. A wide gap with no diagonal route permits an inlet above the
-isolated cell. Pieces never cross a missing cell or a locked donor.
+Every active cell with no active cell directly above it is an inlet: it
+spawns vertically before considering side donors. All exposed column tops,
+including the stepped edges and cells immediately below holes, refill together
+instead of borrowing diagonally from the highest cell. Interior cells still
+trickle around chains and ice; they spawn only if all upstream donors are
+inactive or locked. Pieces never cross a missing cell or a locked donor.
 
 `game_collapse(g)` fills the board and returns `from, steps`. `from[cell]` is
 its original source ID (negative for a new gem). Each animation step contains

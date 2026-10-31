@@ -21,18 +21,19 @@ for _, side in ipairs({{-1, 0}, {1, -1}}) do
     check(steps[1].from[center] == source, "diagonal beats direct vertical")
     check(g.tiles[center].kind == 4 and g.tiles[center].special == rules.BOMB, "special survives trickling")
 end
--- Wait for a gem farther up an empty diagonal route, rather than taking above.
+-- Interior cells still wait for an existing gem up an empty diagonal route.
 do
-    local g = board({{0, 0}, {0, -1, 2}, {-1, 0}, {-2, 0, 5}})
+    local g = board({{0, 0}, {0, -1, 2}, {-1, 0}, {-1, -1}, {-2, 0, 5}})
     local _, steps = rules.game_collapse(g)
     check(steps[1].tiles[center].kind == -1, "wait for a reachable diagonal gem")
     check(steps[2].from[center] == left and g.tiles[center].kind == 5, "feed through empty diagonal cells")
 end
--- A void above feeds from the side; a wide void with no side route is an inlet.
+-- Every exposed column top spawns vertically, even beside an occupied diagonal.
 do
     local g = board({{0, 0}, {1, -1, 3}})
     local _, steps = rules.game_collapse(g)
-    check(steps[1].from[center] == right and g.tiles[above].kind == -1, "go around a hole")
+    check(steps[1].from[center] < 0 and g.tiles[above].kind == -1, "spawn above a column's exposed top")
+    check(steps[1].tiles[right].kind == 3, "top inlet does not steal the side gem")
     g = board({{0, 0}})
     local from
     from, steps = rules.game_collapse(g)
@@ -40,6 +41,19 @@ do
     g = board({{0, 0}, {0, -1, 1}})
     _, steps = rules.game_collapse(g)
     check(steps[1].from[center] == above, "straight fall when no diagonal can feed")
+end
+-- The whole stepped top edge refills together, rather than from one apex.
+for level = 0, rules.LEVELS - 1 do
+    local g = rules.game_start(level, 123)
+    for i = 0, rules.CELLS - 1 do
+        g.chain[i], g.ice[i], g.tiles[i] = 0, 0, tile(-1)
+    end
+    local _, steps = rules.game_collapse(g)
+    for i = 0, rules.CELLS - 1 do
+        if g.active[i] and not rules.game_cell_active(g, rules.hex_neighbor(i, 4)) then
+            check(steps[1].from[i] < 0 and steps[1].tiles[i].kind >= 0, "every top cell spawns in the first step")
+        end
+    end
 end
 -- Ice and chains block donors; an empty diagonal inlet supplies from its edge,
 -- never by spawning directly in the lower cell behind the blocker.
@@ -79,9 +93,11 @@ for level = 0, rules.LEVELS - 1 do
                               or source == rules.hex_neighbor(i, 5), "one downward edge, never across voids")
                         check(old.active[source] and old.chain[source] == 0 and old.ice[source] == 0, "donor is movable")
                     else
-                        for _, d in ipairs({3, 4, 5}) do
-                            local p = rules.hex_neighbor(i, d)
-                            check(not rules.game_cell_active(old, p) or old.chain[p] > 0 or old.ice[p] > 0, "spawn only at upstream inlets")
+                        if rules.game_cell_active(old, rules.hex_neighbor(i, 4)) then
+                            for _, d in ipairs({3, 4, 5}) do
+                                local p = rules.hex_neighbor(i, d)
+                                check(not rules.game_cell_active(old, p) or old.chain[p] > 0 or old.ice[p] > 0, "interior spawns only when all donors are blocked")
+                            end
                         end
                     end
                 end

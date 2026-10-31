@@ -318,6 +318,12 @@ end
 
 function Skin:paint_panel(box, node) self:paint('panel', box, nil, node) end
 
+function Skin:paint_image(box, image, node)
+    if not node.cover then box = box:fit(texture.size(image)) end
+    local out, _, alpha = transformed(self, box)
+    gfx.image(image, out, color(255, 255, 255, math.floor(255 * alpha + .5)))
+end
+
 function Skin:paint_button(box, st, node)
     self:paint(node and node.kind == 'toggle' and 'toggle' or 'button', box, st, node)
 end
@@ -469,6 +475,7 @@ function ui.skin(def)
         skin:paint_caption(node.kind == 'toggle' and 'toggle' or 'button', box, caption, st, node)
     end
     skin.label = function(box, caption, node) skin:paint_label(box, caption, node) end
+    skin.image = function(box, image, node) skin:paint_image(box, image, node) end
     skin.focus = def.controls and def.controls.focus and function(box, node) skin:paint_focus(box, node) end or nil
     skin.checkbox = function(box, caption, node, st) skin:paint_checkbox(box, caption, node, st) end
     skin.measure_checkbox = function(node, caption) return skin:checkbox_size(node, caption) end
