@@ -7,10 +7,10 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
-local CELLS, HEX_R, SCREEN_W, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_W, R.SCREEN_H
+local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
 local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL = R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL
-local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
-local NORMAL, PRISM = rules.NORMAL, rules.PRISM
+local PAL_CREAM, PAL_WHITE = R.PAL_CREAM, R.PAL_WHITE
+local NORMAL, BOMB, PRISM = rules.NORMAL, rules.BOMB, rules.PRISM
 local hex_q, hex_r, hex_index, hex_neighbor, hex_distance, cell_active = rules.hex_q, rules.hex_r, rules.hex_index, rules.hex_neighbor, rules.hex_distance, rules.game_cell_active
 local rgba = color
 local PI = math.pi

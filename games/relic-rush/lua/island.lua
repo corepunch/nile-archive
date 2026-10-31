@@ -9,7 +9,6 @@ local M = {}
 
 M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 6, 10
 local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
-local STARS, COMPASSES = 4, 5
 
 -- Ten restorations in campaign order. Each sprite's footprint is measured in
 -- its own pixels (see docs/BUILDINGS.md): the ground centre it stands on
