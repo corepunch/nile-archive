@@ -2,7 +2,7 @@
 -- Templates own layout/bindings; skins own paint; games handle command IDs.
 local Form, Stack = {}, {}
 Form.__index, Stack.__index = Form, Stack
-local kinds = {column=true, row=true, list=true, overlay=true, label=true, image=true, button=true, toggle=true, progress=true, spacer=true, custom=true}
+local kinds = {column=true, row=true, list=true, overlay=true, label=true, image=true, button=true, toggle=true, checkbox=true, progress=true, spacer=true, custom=true}
 local function fail(message) error('ui.form: ' .. message, 3) end
 local function padding(p)
     if type(p) == 'number' then return p,p,p,p end
@@ -55,7 +55,7 @@ local function copy_node(source, ids, depth, prefix, source_id, item_key)
         if ids[n.id] then fail('duplicate control ID ' .. n.id) end
         ids[n.id] = n
     end
-    if (n.kind == 'button' or n.kind == 'toggle') and type(n.id) ~= 'string' then fail('interactive controls require an ID') end
+    if (n.kind == 'button' or n.kind == 'toggle' or n.kind == 'checkbox') and type(n.id) ~= 'string' then fail('interactive controls require an ID') end
     if n.kind=='list' and (type(n.id)~='string' or type(n.item)~='function' or #(source.children or {})>0) then fail('list requires an ID and item builder; children come from its data source') end
     if n.kind=='list' and n.direction and n.direction~='row' and n.direction~='column' then fail('invalid list direction') end
     if n.text_align and not ({start=true,center=true,['end']=true})[n.text_align] then fail('invalid text_align') end
@@ -159,6 +159,7 @@ end
 local function caption(n, values)
     local v = values[n.id]
     if n.kind == 'toggle' then return (v and n.on_text or n.off_text) or n.text or n.local_id or n.id end
+    if n.kind == 'checkbox' then return n.text or n.local_id or n.id end
     if v == nil then return n.text or '' end
     return n.format and n.format:format(v) or tostring(v)
 end
@@ -204,6 +205,9 @@ local function measure(n, width, skin, values)
         local image = values[n.id] or n.image; w,h=image and image.w or 0,image and image.h or 0
     elseif n.kind == 'button' or n.kind == 'toggle' then
         local s=style_for(n,skin); local measured=text.measure(s,caption(n,values)); w,h=measured.w+24,math.max(44,measured.h+16)
+    elseif n.kind == 'checkbox' then
+        if skin.measure_checkbox then w,h=skin.measure_checkbox(n,caption(n,values))
+        else local measured=text.measure(style_for(n,skin),caption(n,values)); w,h=measured.w+38,math.max(44,measured.h) end
     elseif n.kind == 'progress' then w,h=100,20 end
     return math.max(n.min_width or 0,n.width or w+l+r),math.max(n.min_height or 0,n.height or h+t+b)
 end
@@ -267,33 +271,46 @@ local function paint(n,skin,form,options,event)
         local im=form.values[n.id] or n.image
         if im and im.tex then gfx.image(im, n.cover and box or box:fit(texture.size(im)),color.WHITE) end
     elseif n.kind=='progress' then
-        ui.progress(box,tonumber(form.values[n.id]) or n.value or 0,n.text)
+        local fraction=tonumber(form.values[n.id]) or n.value or 0
+        if skin.progress then skin.progress(box,fraction,n) else ui.progress(box,fraction,n.text) end
     elseif n.kind=='custom' then
         if n.paint then n.paint(box,form.values[n.id],options) end
-    elseif n.kind=='button' or n.kind=='toggle' then
+    elseif n.kind=='button' or n.kind=='toggle' or n.kind=='checkbox' then
         local enabled=options.interactive~=false and n.enabled~=false and (not n.enabled_field or form.values[n.enabled_field])
-        local selected=n.kind=='toggle' and not not form.values[n.id]
+        local selected=(n.kind=='toggle' or n.kind=='checkbox') and not not form.values[n.id]
         local flags=(enabled and 0 or ui.DISABLED)|(n.accent and ui.ACCENT or 0)|(selected and ui.ACTIVE or 0)|(n.flat and ui.FLAT or 0)
         local hitbox=options.hit_offset and box:offset(options.hit_offset) or box
         local st=ui.hit(hitbox,flags)
-        if not skin.button and not skin.button_states then ui.button_paint(box,flags,st) end
+        local checkbox=n.kind=='checkbox'
+        if not checkbox and not skin.button and not skin.button_states then ui.button_paint(box,flags,st) end
         st.disabled,st.selected,st.focused=not enabled,selected,form.focus==n.id
-        if skin.button then skin.button(box,st,n)
+        if checkbox then
+            if skin.checkbox then skin.checkbox(box,caption(n,form.values),n,st)
+            else   -- the native look: a themed box, a tick when checked, then the caption
+                local side=rect(box.x,box.y+(box.h-28)/2,28,28)
+                gfx.round_rect(side,6,enabled and theme.button_bg or color.alpha(theme.button_bg,.45))
+                gfx.round_rect_line(side,6,1.5,st.hot and theme.active or theme.button_border)
+                if selected then gfx.polyline({side:point(vec2(.2,.52)),side:point(vec2(.42,.74)),side:point(vec2(.8,.28))},3,theme.active) end
+                text.inside(style_for(n,skin),rect(box.x+38,box.y,math.max(0,box.w-38),box.h),vec2(0,.5),caption(n,form.values))
+            end
+        elseif skin.button then skin.button(box,st,n)
         elseif skin.button_states then
             local state=not enabled and 'disabled' or st.held and 'pressed' or selected and 'selected' or st.hot and 'hover' or 'normal'
             local im=skin.button_states[state] or skin.button_states.normal
             if im then gfx.image(im,box,color.WHITE) end
         end
-        if skin.button_text then skin.button_text(box,caption(n,form.values),n,st)
-        else text.inside(style_for(n,skin),box:inflate(-8),vec2(.5,.5),caption(n,form.values)) end
+        if not checkbox then   -- a checkbox paints its own caption beside the box
+            if skin.button_text then skin.button_text(box,caption(n,form.values),n,st)
+            else text.inside(style_for(n,skin),box:inflate(-8),vec2(.5,.5),caption(n,form.values)) end
+        end
         if st.focused and options.interactive~=false then
             if skin.focus then skin.focus(box,n) else gfx.round_rect_line(box:inflate(3),theme.radius or 8,2,theme.active) end
         end
         local keyboard=options.interactive~=false and form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
         if enabled and (st.clicked or keyboard) and not event then
             form.focus=n.id
-            if n.kind=='toggle' then form.values[n.id]=not selected end
-            event={id=n.action or n.local_id or n.id,kind=n.kind=='toggle' and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
+            if n.kind=='toggle' or checkbox then form.values[n.id]=not selected end
+            event={id=n.action or n.local_id or n.id,kind=(n.kind=='toggle' or checkbox) and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
         end
     end
     for _,child in ipairs(n.children) do event=paint(child,skin,form,options,event) end
@@ -306,7 +323,7 @@ function Form:draw(box,skin,options)
     local focusable={}
     local function collect(n)
         if not visible(n,self.values) then return end
-        if (n.kind=='button' or n.kind=='toggle') and n.enabled~=false and (not n.enabled_field or self.values[n.enabled_field]) then focusable[#focusable+1]=n.id end
+        if (n.kind=='button' or n.kind=='toggle' or n.kind=='checkbox') and n.enabled~=false and (not n.enabled_field or self.values[n.enabled_field]) then focusable[#focusable+1]=n.id end
         for _,child in ipairs(n.children) do collect(child) end
     end
     collect(self.root)

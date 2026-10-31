@@ -1584,6 +1584,27 @@ function ui_form:measure(width, skin) end
 function ui_form:layout(bounds, skin) end
 ---@return table?
 function ui_form:draw(bounds, skin, options) end
+---A compiled skin file (engine/ui_skin.lua): fonts, colours, images, text styles and per-state control looks
+---@class ui_skin
+---@field theme ui_theme?
+---@field transform (fun(): number, vec2, number)?
+ui_skin = {}
+---Compile a declarative skin; the result is accepted wherever a form skin is
+---@param def table
+---@return ui_skin
+function ui.skin(def) end
+---@return text_style
+function ui_skin:text(name, em) end
+---@return font
+function ui_skin:font(name) end
+function ui_skin:paint(kind, bounds, state, node) end
+function ui_skin:paint_caption(kind, bounds, caption, state, node, align) end
+---@return boolean
+function ui_skin:draw_button(bounds, caption, opts) end
+---@return boolean
+function ui_skin:draw_checkbox(bounds, caption, value, opts) end
+---@return {control: string, state: string}[]
+function ui_skin:audit(required) end
 ---@class ui_modal_stack
 local ui_modal_stack = {}
 ---@return ui_modal_stack

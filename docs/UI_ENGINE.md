@@ -56,6 +56,7 @@ also holds visibility/enabled predicates.
 | `image` | Bound/authored texture, fitted to its allocated bounds |
 | `button` | Command ID; pointer, disabled, focus and keyboard activation |
 | `toggle` | Bound boolean with on/off captions; same interaction as a button |
+| `checkbox` | Bound boolean drawn as a box, a mark when checked, and its caption; same interaction as a toggle |
 | `progress` | Bound fraction through the engine meter |
 | `spacer` | Fixed or flexible space |
 | `custom` | Game-specific painting inside engine-assigned bounds |
@@ -117,27 +118,134 @@ rules. Touch has no artificial hover state.
 
 ## Skins
 
-A skin can provide a native `ui_theme` and `styles` keyed by node role/kind.
-The same resource then gets different colours, corner radii and typography.
-A skin may provide `style(node)` for dynamic logical-unit typography: measurement
-uses the same font/size as paint, before the game animation transform. Custom
-`label` callbacks honour the resource's `text_align`.
-For authored artwork, `button_states` accepts `normal`, `selected`, `pressed`,
-`hover`, `disabled` textures. The engine selects the state and uses its authored
-pixels; it does not synthesize a disabled or selected texture.
+Each game describes its look in **one skin file**, for example
+[`games/relic-rush/lua/skin.lua`](../games/relic-rush/lua/skin.lua). The file
+returns `ui.skin{...}`: fonts, named colours, images, text styles and, for every
+control, what each interaction state draws. `ui.skin` (in `engine/ui_skin.lua`)
+compiles it into the paint contract below, so the result goes straight to
+`form:draw`, `form:measure` and `ui.modals`. The same object paints hand-placed
+widgets, so a game's forms and its own buttons can't drift apart. The engine
+still owns layout, hit testing, focus, activation and data exchange.
 
-Custom paint callbacks are `panel(bounds,node)`, `button(bounds,state,node)`,
-`button_text(bounds,caption,node,state)`, `label(bounds,caption,node,style)` and
-`focus(bounds,node)`. They own paint only; the engine still owns hit testing,
-focus, activation and layout. `state` includes `hot`, `held`, `clicked`, `disabled`,
-`selected`, `focused`. Theme changes are scoped to the form draw and restored.
+![One template, two skin files: every control and state](screenshots/ui-skins.jpg)
 
-Relic Rush supplies one skin through its existing painting helpers. Its pause
-resource binds sound and reduced motion; its building resource binds the name,
-art, description, cost row and action caption. Games retain gameplay actions such
-as claiming rewards or entering placement mode. Its read-only expedition HUD also uses an engine row of three panel columns
-with computed labels and a progress paint node: score, level/name and moves
-remain grouped and have independent contrast backings. Its Explorer's guide uses a
+```lua
+-- games/<game>/lua/skin.lua
+return ui.skin{
+    fonts = {display = {path = "fonts/LilitaOne-Regular.ttf", scale = 1}},
+    colors = {ink = "#47341E", sand = "#EBCB84", rim = "#BB9555", rust = "#AC713A"},
+    text = {
+        body = {font = "display", em = 23, fill = "ink"},
+        muted = {extends = "body", fill = "#47341E80"},
+        button = {font = "display", em = 24, fill = "ink", outline = "#00000040", outline_width = 1},
+    },
+    roles = {title = {text = "title", em = 31}},     -- a node's role picks a style
+    controls = {
+        panel = {normal = {layers = {{fill = "#FFF0C0", radius = 20}, {border = "rim", width = 1.5, radius = 20}}}},
+        button = {
+            text = "button",
+            normal = {layers = {
+                {shadow = "#00000040", radius = 20, blur = 8, offset = {0, 3}, fixed = true},
+                {name = "body", fill = "sand", radius = 20},
+            }},
+            hover = {set = {body = {fill = "#FFE3A1"}}},
+            pressed = {offset = {0, 2}},
+            selected = {set = {body = {fill = "rust"}}},
+            disabled = {text = "muted", set = {body = {fill = "#EBCB8480"}}},
+            variants = {accent = {normal = {set = {body = {fill = "#D6AC62"}}}}, flat = {normal = {layers = {}}}},
+        },
+        toggle = {extends = "button"},
+        checkbox = {size = 30, gap = 12, text = "body",
+            box = {normal = {layers = {{name = "face", fill = "#FFF8DE", radius = 8}}}, pressed = {set = {face = {fill = "sand"}}}},
+            mark = {normal = {layers = {{check = "rust", width = 3.5}}}},
+            disabled = {text = "muted"}},
+        progress = {track = {normal = {layers = {{fill = "#E3D2A4", radius = 12}}}},
+                    fill = {normal = {layers = {{fill = "#D6AC62", radius = 12}}}}},
+        label = {text = "body", wrap_text = "body", wrap_em = 20},
+        focus = {normal = {layers = {{border = "rust", width = 2, radius = 22, inset = -3}}}},
+    },
+    theme = {dim = "#040F1996", backdrop_blur = 7},   -- native widgets and modal backdrops
+}
+```
+
+**Fonts.** A name maps to a path (loaded once, shared by every skin) or to
+`{path, scale}`, where `scale` converts the style's `em` to the engine's size
+(Lilita One measures 1.17 em ascent to descent). `{font = f}` uses an
+already loaded font. `skin:font(name)` returns it for the game's own text.
+
+**Colours** are `"#RRGGBB"`, `"#RRGGBBAA"`, `{r, g, b, a}` or a name from
+`colors`, which can name another entry.
+
+**Text styles** have `font`, `em`, `fill`, `fill2` (vertical gradient),
+`outline`, `outline_width`, `shadow`, `shadow_offset`, `shadow_blur`,
+`tracking` and `extends`. Lengths are given at the style's `em` and scale with
+the size a control asks for, so one outlined style serves every size. A node
+chooses its style with `text_style`, its size with `em`, or both through `role`.
+
+**Controls and states.** Each control has a look per state: `normal`,
+`selected` (an on toggle, a checked checkbox), `hover`, `pressed` and
+`disabled`. Looks merge over `normal` in that order, so a state names only what
+differs: `layers` replaces the list, `set` patches named layers, `offset` moves
+every layer that isn't `fixed`, and the caption, and `text` swaps its style.
+Disabled controls never show hover or press. Keyboard focus is its own control,
+`focus`, drawn around the focused one. `variants` apply for `flat`, `accent` or a
+node's `role` and merge the same way. `extends` reuses another control.
+A checkbox has `box` and `mark` looks (each with its own states), `size` and `gap`;
+a progress bar has `track` and `fill`.
+
+**Layers** draw in order inside the control's box:
+
+| Layer | Draws |
+| --- | --- |
+| `{fill, fill2?, radius}` | Rounded rectangle, optionally a vertical gradient |
+| `{border, width, radius}` | Rounded outline |
+| `{shadow, radius, blur}` | Soft shadow |
+| `{image, slice?, fit?}` | Authored art: stretched, `fit = "contain"`, or nine-slice with `slice = {left, top, right, bottom}` |
+| `{check, width}` | A tick, for checkboxes without artwork |
+| `{paint = function(box, node, state, skin)}` | Game code, for ornaments the table can't express |
+
+Every layer takes `inset` (a number or `{left, top, right, bottom}`; negative
+grows), `offset {x, y}`, `height_ratio` (keep the top fraction, for gloss) and
+an optional `name` for `set` patches.
+
+**Authored artwork.** A control drawn from images must name an image for every
+state it supports; the engine never tints one state into another.
+`skin:audit(required?)` lists `{control, state}` pairs whose images are missing
+(by default hover, pressed and disabled; pass the game's own list per control),
+for asset checks.
+
+**Animated dialogs.** Set `skin.transform = function() return scale, offset, alpha end`
+and every layer and caption follows the dialog's current scale, position and
+opacity. Measurement always uses logical units, so layout doesn't change.
+
+**Immediate mode.** Outside forms the same skin paints hand-placed controls:
+`skin:draw_button(bounds, caption, opts)` returns true when clicked (`opts`:
+`enabled`, `accent`, `flat`, `selected`, `role`, `hit_offset`), and
+`skin:draw_checkbox(bounds, caption, value, opts)` returns the new value.
+`skin:paint(kind, bounds, state, node)` and
+`skin:paint_caption(kind, bounds, caption, state, node)` paint any control's
+look for a state the game tracks itself, and `skin:text(name, em)` gives a text
+style (following the transform) for free text.
+
+**The paint contract.** Forms call `style(node)`, `panel(bounds, node)`,
+`button(bounds, state, node)`, `button_text(bounds, caption, node, state)`,
+`label(bounds, caption, node, style)`, `focus(bounds, node)`,
+`checkbox(bounds, caption, node, state)`, `measure_checkbox(node, caption)` and
+`progress(bounds, fraction, node)`. A compiled skin provides all of them. A game
+can still pass a hand-written table with any subset, a native `theme`, `styles`
+keyed by role/kind, or `button_states` textures; whatever it leaves out uses the
+native look. `state` includes `hot`, `held`, `clicked`, `disabled`, `selected`,
+`focused`. Theme changes are scoped to the form draw and restored. A skin's
+`theme` fields override the engine theme current when the skin is compiled.
+
+Relic Rush keeps its entire look in `lua/skin.lua`: four outlined text palettes,
+the parchment panel, the jade button (pressed sinks it 2 units; disabled drains
+its colour), the flat CLOSE variant and the focus ring. Its pause, building,
+guide, shop and expedition dialogs and its island buttons all paint through it;
+captures are pixel-identical to the hand-written paint code it replaced. Nile
+Archive's build tray and Volcano's native widgets still use themes and paint
+callbacks; moving them to skin files is the next step. Relic Rush's read-only
+expedition HUD uses an engine row with computed labels. Its Explorer's guide uses a
 stable-key source and one icon/copy row resource. The game paints authored icon
 layers inside assigned bounds; the engine owns placement, wrapping, spacing and
 the footer button. Nile Archive's city move strip also uses a form, with measured
@@ -215,11 +323,13 @@ test only. This is a desktop measurement; mobile hardware performance is not yet
 measured. `tests/test_backdrop.c` checks clip restoration, full-screen coverage,
 sharp later drawing, nested blur, dim-only composition and resize/reallocation.
 `tests/lua/forms.lua` checks binding transactions, layout/reflow, focus and
-validation. The real-window fixture checks bound toggles, deferred commit and
+validation. `tests/lua/ui_skin.lua` checks skin compilation: colours, text
+style inheritance and scaling, state merging and precedence, variants, the paint
+transform, checkbox binding and keyboard input, immediate widgets and the audit. The real-window fixture checks bound toggles, deferred commit and
 nested modal input.
 
 ```sh
-make gen                         # after API, engine/ui_forms.lua or engine/city_smoke.lua changes
+make gen                         # after API, engine/ui_forms.lua, engine/ui_skin.lua or engine/city_smoke.lua changes
 make CFLAGS="-O2 -g -Werror"
 make test
 make test-platform               # prefix with xvfb-run -a on Linux
@@ -227,12 +337,12 @@ make test-platform               # prefix with xvfb-run -a on Linux
   --data games/relic-rush/data --size 900x700 --smoke
 ```
 
-The fixture accepts `--nested --shot file.png`; without `--nested` it shows two
-skins using the same template. `make shots` captures both. The runtime embeds
-`engine/ui_forms.lua` through the generated `engine/ui_forms_lua.h`; native,
+The fixture accepts `--nested --shot file.png`; without `--nested` it shows the
+same template in two skin files (`tests/fixtures/ui/*_skin.lua`). `make shots` captures both. The runtime embeds
+`engine/ui_forms.lua` and `engine/ui_skin.lua` through the generated `engine/ui_forms_lua.h`; native,
 iOS and web games use the same implementation without extra game resources.
 
-This core supports display, action and boolean controls. Text-entry/IME, combo
+This core supports display, action and boolean controls (toggle and checkbox). Text-entry/IME, combo
 boxes, scrolling containers, screen-reader integration and a visual resource
 editor are not implemented here. Add those behaviours to the engine and extend
 its tests/skin contract when needed. This is an adoption path for the existing
