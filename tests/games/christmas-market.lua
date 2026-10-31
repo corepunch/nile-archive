@@ -40,8 +40,7 @@ for _, size in ipairs{"480x900", "390x844"} do
             "--lua tests/fixtures/trickling;games/christmas-market/lua;. --review-game christmas-market --review-gravity "..mode.." --fall-time .04"..safe)
     end
 end
-frame("atlas-christmas-market-board", "480x900", "--level 7 --art-states")
-frame("atlas-christmas-market-hud", "480x900", "--level 7 --hud-states")
+-- Board/HUD states reuse the art-states and hud-states shots above.
 frame("atlas-christmas-market-effects", "480x900", "--fx bomb --frames 8")
 
 reel("christmas-market-phone-board-intro", 12, 8, "390x844", "--level 4 --present --reel --safe-area 0,47,0,34")

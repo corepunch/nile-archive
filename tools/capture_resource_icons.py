@@ -14,8 +14,19 @@ args = parser.parse_args()
 OUT.mkdir(parents=True, exist_ok=True)
 version = 'before' if args.before else 'after'
 if not args.existing:
-    subprocess.run([str(ROOT/'build/test/relic-rush'), 'resource-icons'], cwd=ROOT, check=True)
-for source in (ROOT/'build/shots/frames').glob('resource-icons-*.png'):
-    name = source.name.removeprefix('resource-icons-')
-    if 'states' not in name:
-        shutil.copy2(source, OUT/f'{version}-{name}')
+    subprocess.run([str(ROOT/'build/test/relic-rush'), 'frame resource-icons-default-480x900',
+        'frame resource-icons-default-390x844', 'shot floating-hud', 'shot phone-floating-hud',
+        'shot art-jewels', 'shot art-resources', 'shot guide'], cwd=ROOT, check=True)
+# Reuse each game's canonical pack/HUD captures instead of rendering another
+# board per pack and size. Explicit sources also exclude stale scratch PNGs.
+sources = {
+    'default-480x900': 'frames/resource-icons-default-480x900',
+    'default-390x844': 'frames/resource-icons-default-390x844',
+    'relics-480x900': 'relic-rush/floating-hud',
+    'relics-390x844': 'relic-rush/phone-floating-hud',
+    'jewels-480x900': 'relic-rush/art-jewels',
+    'resources-480x900': 'relic-rush/art-resources',
+    'guide': 'relic-rush/guide',
+}
+for name, source in sources.items():
+    shutil.copy2(ROOT/'build/shots'/(source+'.png'), OUT/f'{version}-{name}.png')

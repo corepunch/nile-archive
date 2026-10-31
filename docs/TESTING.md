@@ -1,5 +1,40 @@
 # Testing
 
+The default workflow is: select affected checks, capture a baseline when needed,
+edit, build affected targets, run the selected checks and lint, then stop. Expand
+coverage only for shared changes, a failure, an explicit request, or a concrete
+unresolved concern. A pull request does not itself require a full local run.
+
+For a game-local fix, use the affected tests and representative captures.
+For example, a Relic Rush board-size correction can use:
+
+```sh
+time make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
+time build/test/relic-rush "rules relic_board" "shot hex-first" "shot phone-board"
+time make lint
+```
+
+Filters match substrings of `kind name`. Including the kind avoids selecting
+unrelated captures: `phone-board` also matches an entrance reel, whereas
+`"shot phone-board"` selects just the screenshot. Check `--list` when unsure.
+Use before/after pairs at the two relevant sizes for a uniform visual change;
+add state boards or reels when the behaviour they cover changes. Run full local
+coverage for shared engine changes or a concrete unresolved concern. CI always
+runs the complete suite. See [AGENTS.md](../AGENTS.md) for scope rules.
+
+When reporting timings, use measured elapsed seconds and distinguish builds,
+tests/captures and lint. Label estimates and do not compare a full-task duration
+with a test-only duration. Reuse successful results until relevant code changes;
+documentation-only workflow edits do not require rerunning game tests.
+
+Review exporters reuse canonical captures. `capture_match3_default.py` takes
+board/HUD states from each game's existing state shots and Relic Rush's effect
+from `effect-bomb`; `capture_resource_icons.py` reuses the pack, guide and phone
+shots. Only the engine's default skin needs separate resource-icon frames.
+Use either script's `--existing` option to export a completed run without
+rendering again. Avoid adding another manifest entry just to give an existing
+view a different review filename.
+
 `make test` builds the engine and games with `-DENGINE_TEST` and runs each suite once.
 One start of a test binary runs every test in its suite, in one process and one window:
 

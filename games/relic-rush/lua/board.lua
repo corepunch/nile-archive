@@ -18,7 +18,7 @@ local rgba = color
 local PI = math.pi
 
 -- Preserve the authored cell-mask registration and the guide's icon size;
--- only live board pieces use the enlarged board scale.
+-- only live board pieces follow the board's geometry.
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2

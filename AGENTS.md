@@ -1,21 +1,36 @@
 # Instructions for coding agents
 
+## Match verification to the change
+
+Use this workflow for every change, including work intended for a pull request:
+
+1. Identify the affected game, behaviour and shared dependencies before choosing checks.
+2. Choose the smallest existing named tests and representative captures that cover the change; capture the baseline before editing when needed.
+3. Make the change, build the affected targets, then run the selected checks and lint. Batch the game's selected tests into one invocation.
+4. Stop when those checks pass. Expand or repeat only after another code change, a failure, or a stated unresolved concern. Full local runs require the scope reasons below; opening a PR alone is not one.
+5. Report what ran and its measured duration in seconds when discussing performance. Separate build, test/capture and lint time; label estimates explicitly. The previous ~1.5-second focused verification is an example, not a universal time guarantee.
+
+- **Start with the affected game and behaviour.** For a game-local correction, build only that game and its test binary, run the relevant named tests and lint. Reuse existing captures and test entry points. Expand coverage only for changed shared code, a failure, or a concrete unresolved concern.
+- **Keep visual review small.** A uniform size, spacing or colour correction normally needs one representative screen at the primary and alternate supported sizes: two before/after pairs (four images total). Add a dense state view only if the change independently affects specials, blockers or interaction states. Packs and levels using the same unchanged drawing path do not each need screenshots. Animation timing changes need a short relevant reel; static geometry changes do not.
+- **Keep local tests focused; keep CI complete.** Full `make test` remains required in CI. Run it locally for shared engine/API/renderer changes, changes spanning games, or when explicitly requested. A game-local fix may be handed off or pushed after its scoped build, relevant tests and lint pass; report exactly what ran. Do not run other games' screens, asset pipelines or reels for an isolated game constant.
+- **Use existing tools.** Avoid custom capture orchestration and full documentation screenshot regeneration for a small correction. Test filters match substrings of `kind name`; include the kind (for example `"shot phone-board"`) to avoid accidentally selecting a similarly named reel. Add regression tests only when they catch a meaningful failure; do not duplicate existing coverage or assert implementation details merely because a constant changed.
+
 ## Pull requests: always show screenshots
 
 Every pull request that can change what a player sees must include screenshots in its description. That covers UI, layout, art, text, dialogue, effects and engine drawing code. Add them whenever it is possible at all. When it isn't, for example a pure build or test change, say so in one line.
 
-- **Show the changed screens.** Include every screen the change touches, with before and after shots side by side when something existing changed.
+- **Show the changed screens.** Include each distinct changed screen, with before and after shots side by side when something existing changed. Follow the representative coverage above; every level or asset pack using that screen is not a separate screen.
 - **Cover the sizes the change affects.** Nile Archive and Volcano are iPad landscape (1200×900, 1368×1026). Relic Rush and Christmas Market are 480×900 phone portraits. Add a 16:9 or a 390×844 shot when the layout adapts to it.
 - **Capture the game itself.** Every game renders headlessly with the software renderer:
 
   ```sh
-  make
+  make nile-archive                            # build only the game being captured
   Xvfb :99 -screen 0 2000x1400x24 &            # or prefix each command with xvfb-run -a
   export DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1
   ./build/nile-archive --headless --mute --fresh --size 1200x900 --screen island --shot out.png
-  make shots                                   # re-renders every documentation screenshot
-  make smoke                                   # every game's smoke run
   ```
+
+  `make shots` and `make smoke` cover every game; use them for deliberate full maintenance, not routine game-local verification.
 
   Each game has entry points for its screens: Nile Archive takes `--screen …`, Relic Rush `--level`, `--city`, `--dialog …` and others, and Volcano `--level`, `--pause` and `--preview`. Pass `--frames N` for a later frame, for example once dialogue has finished typing.
 - **Embed images, don't just link them.** Commit the screenshots under `games/<game>/docs/screenshots/`, or another tracked path when they are only for review. Reference them in the description with URLs pinned to the pushed commit, so they keep showing what was reviewed:
@@ -69,11 +84,11 @@ Buildings stand on a grid of whole tiles. [docs/BUILDINGS.md](docs/BUILDINGS.md)
 ## Repository conventions
 
 - **Catalogue every visual addition in the same PR.** For Relic Rush, update `games/relic-rush/docs/asset-catalogue.md`, the runtime inventory and state mapping in `games/relic-rush/art/board-states/manifest.json`, and the runtime contract in `lua/art.lua` when applicable. Other games must maintain an equivalent catalogue in their `docs/`. Record rule meaning, every supported visual/interaction state, source/prompt, runtime path, reproduction command and reviewed in-game capture. New kinds, powerups, blockers, skins, effects and temporary visual fallbacks all count.
-- **Audit artwork before handing it over.** Compare rule/state definitions with the catalogue; inspect all packs, blocker strengths, special axes and normal/selected/pressed/hover/disabled controls in actual game captures. Run `make test` and the game's asset checks. A screenshot of only an ordinary opening board does not cover specials or exhausted tools.
+- **Audit changed artwork before handing it over.** For added or changed assets/state mappings, compare rule/state definitions with the catalogue and inspect the affected packs, blocker strengths, special axes and normal/selected/pressed/hover/disabled controls in actual game captures. Run the game's relevant asset checks and tests. An ordinary opening board does not cover changed specials or exhausted tools. A uniform geometry correction with unchanged assets does not require re-auditing the entire art library or adding asset metadata.
 - **Track gaps immediately.** If the audit finds placeholder art, a missing state, an uncatalogued asset or a visual defect that will remain, create or link a GitHub issue before handoff. Record the issue in the catalogue with concrete missing states and acceptance criteria; do not silently ship geometry, tinting, or reused artwork as a finished state. When fixed, close the issue through the PR.
 - **Author state artwork together.** Generate an icon set and all required interaction states in one ImageGen atlas. Preserve authored alpha; do not manufacture states with recolouring, tint filters or procedural glyph overlays. Spatial crop/rotation/resize registration may align existing artwork to slots; preserve its design and record the transform. Hex states must match the board slot's size, centre and flat-top orientation. Animation transforms and transient beams/particles may remain procedural when explicitly catalogued.
 
-- **Build and test before pushing.** Run `make CFLAGS="-O2 -g -Werror"`, `make test` (under Xvfb on Linux) and `make lint` (luacheck; `.luacheckrc` declares the engine's globals, so an undefined global is a typo and an unused local is dead code). CI runs the same checks.
+- **Build and test before pushing.** Follow the scope rules above. For a game-local change, use `make CFLAGS="-O2 -g -Werror" <game> build/test/<game>`, relevant named tests and `make lint`. Shared changes require the full build and `make test` (under Xvfb on Linux). CI always runs the full build, tests and lint. `.luacheckrc` declares the engine's globals, so an undefined global is a typo and an unused local is dead code.
 - **Regenerate generated code.** After editing `engine/api.xml`, run `make gen`, and commit the generated files.
 - **Keep reusable UI in the engine.** Use `ui.form` templates, bindings and `ui.modals` for new reusable dialogs. Games provide skins, data and command handling; a game's look belongs in its skin file (`ui.skin`, see `docs/UI_ENGINE.md#skins`): add a state, variant or text style there instead of new paint code; layout, hit testing, keyboard focus, data exchange and modal layering belong in `engine/ui_forms.lua` / `engine/ui.c`. Extend the engine for missing behaviour instead of cloning it into a game. Skin callbacks paint controls and do not implement their input logic. Document new controls/states in `docs/UI_ENGINE.md`, and cover them in form and renderer/input tests.
 - **Use measured rows for repeated UI.** Populate engine `list` nodes with `form:set_items` and stable keys; keep titles, descriptions and icons in one data source. Icon-and-copy rows left-align both labels; iconless copy may centre. Measure wrapped text after allocating icon width. Check source refresh/reorder/removal and actual input at every affected size. Dialogue badges anchor to `story.bubble_bounds`, and bubble padding includes the decorative outline rather than adding it twice. Centre framed phone portraits and bubbles together using their visible bounds within the safe screen; include any listener and keep Skip attached to the group.
