@@ -12,6 +12,9 @@ game.init=function()
         R.art_review=true
     end
     if app.arg("moves") then R.g.moves=tonumber(app.arg("moves")) end
+    -- Island review states: a restored wonder waiting for its place, and land ready to open.
+    if app.arg("pending-wonder") then R.prog.level=require("island").wonder_count(R.island)+1 end
+    if app.arg("rich") then R.prog.wallet[4],R.prog.wallet[5]=60,20 end
     moves,board=R.g.moves,R.g
 end
 local function background() app.inject_click(vec2(6,app.screen().h-4)) end

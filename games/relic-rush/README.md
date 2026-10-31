@@ -83,7 +83,7 @@ The intro and finale lines are new, short and written from the cast notes in [ar
 | --- | --- | --- | --- | --- |
 | ![Elena](docs/screenshots/dialogue-elena.jpg) | ![Mara](docs/screenshots/dialogue-mara.jpg) | ![Tomas](docs/screenshots/dialogue-tomas.jpg) | ![Adrian](docs/screenshots/dialogue-adrian.jpg) | ![Bubble](docs/screenshots/island-bubble.jpg) |
 
-On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the jungle run to the screen edges while the controls stay inside the safe area. The screen grows taller there (480 × 939) rather than showing bars: the top HUD stays at the top, the tools and the island's bottom sheet move down to the bottom edge, and the board and dialogs stay centred:
+On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the jungle run to the screen edges while the controls stay inside the safe area. The screen grows taller there (480 × 939) rather than showing bars: the top HUD stays at the top, the tools and the island's bottom buttons move down to the bottom edge, and the board and dialogs stay centred:
 
 | Island | Board |
 | --- | --- |
@@ -146,7 +146,7 @@ Buildings unlock in this order as expeditions are completed. Positions are chose
 
 These are restoration milestones, not autonomous resource factories: production timers, citizens and upgrade trees are future possibilities rather than current mechanics.
 
-The island's **BUILD SHOP** adds 86 repeatable buildings and decorations to these
+The island's **SHOP** adds 86 repeatable buildings and decorations to these
 ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,
 furniture, supplies, wildlife and rocks. Browse categories and pages, check the
 Gold price and cumulative Star requirement, then choose a location and confirm.
@@ -184,7 +184,7 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
-- The island's HUD is two rows of small resource capsules (idols, leaves and crystals; then Stars and Compasses beside **Expand**) and an authored pause medallion. Tap a capsule to learn what it is for. During expeditions the header contains Goal, Moves, Pause and Elena's investigating portrait. Remaining score/idol/sand/lock counts share one Goal panel. Island access returns after win/loss.
+- The island's HUD follows the home screens of Royal Match, Homescapes and June's Journey, leaving the map uncovered. One row of slim pills shows Gold, Wood, Stone, Stars and Compasses beside the pause medallion; tap a pill to learn what it is for. At the bottom one big button plays the next level (or builds the restored wonder, named above it), flanked by round **Expeditions** and **Shop** buttons. Regions open from their markers in the fog; a marker that can open now shows "+" and glows. During expeditions the HUD is the slim Moves/Goals band and the tool tray. Island access returns after win/loss. See the [island HUD review](docs/review/island-hud/README.md).
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Decorative paths are generated from the chosen positions; no road management is required.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
@@ -211,7 +211,7 @@ make test                                       # rules, island and engine tests
 make web && python3 -m http.server 8080 --directory dist   # http://localhost:8080/relic-rush/
 ```
 
-The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the bottom sheet run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
+The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the HUD bands run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
 Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 

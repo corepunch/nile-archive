@@ -1,6 +1,7 @@
-"""Before/after captures of the match-3 HUD from the actual game.
+"""Before/after captures of the match-3 HUD and the island HUD from the actual game.
 
 python3 tests/fixtures/match3-hud/capture.py --before-ref 6a56346
+python3 tests/fixtures/match3-hud/capture.py --suite island --before-ref 6410ad8
 
 Reuses the expedition-header fixture (goal completion, move count, a real tool
 tap and native popup input checks) against the old and the current Lua.
@@ -14,13 +15,20 @@ from PIL import Image
 ROOT=Path(__file__).resolve().parents[3]
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--before-ref",default="6a56346")
+parser.add_argument("--suite",choices=("board","island"),default="board")
 args=parser.parse_args()
-out=ROOT/"games/relic-rush/docs/review/match3-hud"
+out=ROOT/"games/relic-rush/docs/review"/("match3-hud" if args.suite=="board" else "island-hud")
 out.mkdir(parents=True,exist_ok=True)
-cases={"first":(["--level","1"],60),"late":(["--level","7"],60),"temple":(["--level","10"],60),
+board_cases={"first":(["--level","1"],60),"late":(["--level","7"],60),"temple":(["--level","10"],60),
        "complete":(["--level","7","--goals-complete"],60),"last-moves":(["--level","4","--moves","3"],60),
        "tool":(["--level","4","--tap-tool"],30),"pause":(["--dialog","pause"],30),
        "guide":(["--dialog","guide"],40),"island":(["--city","3"],30)}
+island_cases={"island":(["--city","6"],30),"wonder":(["--city","3","--pending-wonder"],30),
+              "placing":(["--city","6","--placing"],30),"blocked":(["--city","6","--placing","blocked"],30),
+              "fog":(["--city","3","--rich"],30),"overview":(["--city","3","--overview","--rich"],30),
+              "showcase":(["--showcase"],30),"unlock":(["--city","3","--zone","1"],30),
+              "shop":(["--catalogue","bush"],30),"expeditions":(["--expeditions"],30)}
+cases=board_cases if args.suite=="board" else island_cases
 fixture=ROOT/"tests/fixtures/expedition-header/main.lua"
 with tempfile.TemporaryDirectory(prefix="relic-hud-") as directory:
     scripts=Path(directory)
@@ -42,8 +50,9 @@ with tempfile.TemporaryDirectory(prefix="relic-hud-") as directory:
             (data/"characters").mkdir(exist_ok=True)
             for entry in (ROOT/"games/relic-rush/data/characters").iterdir():
                 if not (data/"characters"/entry.name).exists():(data/"characters"/entry.name).symlink_to(entry)
-            (data/"characters/elena-investigating.png").write_bytes(subprocess.check_output(
-                ["git","show",f"{args.before_ref}:games/relic-rush/data/characters/elena-investigating.png"],cwd=ROOT))
+            old=subprocess.run(["git","show",f"{args.before_ref}:games/relic-rush/data/characters/elena-investigating.png"],
+                               cwd=ROOT,capture_output=True)
+            if old.returncode==0:(data/"characters/elena-investigating.png").write_bytes(old.stdout)
         for size in ("480x900","390x844"):
             base=[str(ROOT/"build/relic-rush"),"--headless","--mute","--fresh","--lua",str(scripts),"--data",str(data),"--size",size]
             if size=="390x844":base += ["--safe-area","0,47,0,34"]

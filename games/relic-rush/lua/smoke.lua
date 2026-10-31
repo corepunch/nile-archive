@@ -120,7 +120,7 @@ function R.smoke()
         assert(R.island.moving == 1 and R.island.placing == 37, "details must move the purchased instance")
         app.inject_click(vec2(100, 856 + R.drop)); stage = 29
     elseif stage == 29 and R.island.placing < 0 then
-        app.inject_click(vec2(127, 725 + R.drop)); stage = 30
+        app.inject_click(R.island_buttons.expeditions + vec2(0, R.drop)); stage = 30
     elseif stage == 30 and R.overlay == R.OV_EXPEDITIONS then
         shop.replay_gold = R.prog.wallet[1]
         local node = press_row(R.expedition_form, "0", "play")

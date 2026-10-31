@@ -1,5 +1,5 @@
 -- island_view.lua — the restored island: an engine city with the expedition's
--- HUD, region markers in the fog, placement and the next-step panel.
+-- HUD, region markers in the fog, placement and the bottom controls.
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
@@ -67,7 +67,9 @@ function R.expand()
     else R.zone_card, R.overlay = z, R.OV_ZONE end
 end
 
--- Region markers float over the fog: "+" when the region can open now.
+-- Region markers float over the fog: "+" when the region can open now, with a
+-- breathing glow, so they replace a separate expand button. The name is plain
+-- outlined text, without a plate.
 local function draw_markers(c)
     local cam = c.cam
     local zones = c.zones
@@ -76,49 +78,72 @@ local function draw_markers(c)
             local p = cam:to_screen(zones[z + 1].marker)
             if not (p.x < -90 or p.x > SCREEN_W + 90 or p.y < cam.view.y - 50 or p.y > cam.view:max().y + 40) then
                 local ready = c:zone_available(z, R.prog.wallet)
-                gfx.circle(p, 25, rgba(102, 135, 101, 220))
-                gfx.circle(p + vec2(0, -2), 22, ready and rgba(249, 211, 104) or rgba(231, 224, 185))
-                R.say_at(ready and "+" or "?", p + vec2(0, -5), 30, PAL_CREAM, 0)
-                gfx.round_rect(rect(p.x - 76, p.y + 29, 152, 26), 10, rgba(30, 68, 53, 220))
-                R.say_at(zones[z + 1].name, p + vec2(0, 40), 15, PAL_CREAM, 142)
+                if ready and not R.reduced_motion then
+                    gfx.glow(p, 40, rgba(255, 220, 120, 110 + 60 * math.sin(R.now * 3)), rgba(255, 220, 120, 0))
+                end
+                gfx.circle(p + vec2(0, 2), 22, rgba(31, 35, 24, 90))
+                gfx.circle(p, 21, rgba(102, 135, 101, 230))
+                gfx.circle(p + vec2(0, -2), 18, ready and rgba(249, 211, 104) or rgba(231, 224, 185))
+                R.say_at(ready and "+" or "?", p + vec2(0, -4), 25, PAL_CREAM, 0)
+                R.say_at(zones[z + 1].name, p + vec2(0, 34), 15, PAL_CREAM, 160)
             end
         end
     end
 end
 R.draw_markers = draw_markers
 
--- A sheet along the bottom edge: it runs on under the home indicator, so it
--- reads as part of the screen rather than a card floating above it.
-local function bottom_panel()
+-- No sheet over the map: one big Play button at the bottom, flanked by round
+-- Expeditions and Shop buttons with captions, as in the home screens of Royal
+-- Match and Homescapes. Placement keeps only the building's name and its two
+-- actions; the toast explains the gestures.
+local function round_button(center, caption, icon)
+    local r = rect.centered(center, size2(64, 64))
+    ui.block(r)
+    local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
+    local c = st.held and center + vec2(0, 2) or center
+    gfx.circle(center + vec2(0, 4), 32, rgba(5, 30, 28, 150))
+    gfx.circle(c, 32, rgba(116, 74, 33))
+    gfx.circle(c, 30, rgba(236, 196, 112))
+    gfx.circle(c, 26, rgba(176, 120, 48))
+    gfx.circle(c, 25, rgba(12, 62, 52))
+    gfx.glow(c + vec2(0, -5), 21, rgba(40, 132, 100), rgba(12, 62, 52, 0))
+    icon(c)
+    R.say_at(caption, center + vec2(0, 42), 13, PAL_CREAM, 0)
+    return st.clicked
+end
+R.island_buttons = {expeditions = vec2(58, 842), shop = vec2(422, 842)}
+
+local function play_button(label, sub)
+    local r = rect(116, 818 + R.drop, 248, 60)
+    ui.block(r)
+    if sub then R.say_at(sub, vec2(240, 800 + R.drop), 20, PAL_GOLD, 420) end
+    return R.button(r, label, true)
+end
+
+local function bottom_controls()
     local c = R.island
-    local full = app.bleed()
     local y = R.drop
-    local sheet = rect(12, 758 + y, 456, full:max().y - 758 - y + 24)
-    gfx.bleed(true)
-    R.panel(sheet)
-    gfx.bleed(false)
-    ui.block(sheet)
     local restored=island.wonder_count(c)
     if c.placing >= 0 then
         local ok = c:can_place(c:snap(c.ghost, c.placing), c.placing, c.moving)
-        R.say_at(R.buildings[c.placing + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
-        R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 811 + y), 11, PAL_WHITE, 0)
+        R.say_at(R.buildings[c.placing + 1].name, vec2(240, 810 + y), 22, PAL_GOLD, 410)
+        ui.block(rect(30, 834 + y, 420, 44))
         if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your island is unchanged.") end
         if R.button(rect(188, 834 + y, 262, 44), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
-    elseif restored < R.prog.level then
-        R.say_at(R.wonders[restored + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
-        R.say_at("CHOOSE ITS PLACE ON YOUR ISLAND", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end
+        return
+    end
+    if round_button(R.island_buttons.expeditions + vec2(0, y), "EXPEDITIONS",
+                    function(at) R.compass_icon(at, 17) end) then R.open_expeditions() end
+    if round_button(R.island_buttons.shop + vec2(0, y), "SHOP",
+                    function(at) R.picture_fit(R.buildings[4].sprite, rect.centered(at + vec2(0, -1), size2(42, 38)), 255) end) then
+        R.open_catalogue()
+    end
+    if restored < R.prog.level then
+        if play_button("BUILD", R.wonders[restored + 1].name) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end
     elseif R.prog.level >= rules.LEVELS then
-        R.say_at("Your island, your story", vec2(240, 782 + y), 27, PAL_GOLD, 0)
-        R.say_at("REPLAY EXPEDITIONS TO EARN DECORATION GOLD", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "PLAY FOR GOLD", true) then R.open_expeditions() end
-    else
-        R.say_at(("%d WONDERS  -  NEW LAND AWAITS"):format(restored), vec2(240, 783 + y), 15, PAL_WHITE, 0)
-        R.say_at("DRAG TO SCROLL. HOLD A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
-            R.play_level(R.prog.level)
-        end
+        if play_button("PLAY FOR GOLD") then R.open_expeditions() end
+    elseif play_button(("LEVEL %d"):format(R.prog.level + 1)) then
+        R.play_level(R.prog.level)
     end
 end
 
@@ -161,9 +186,7 @@ function R.island_screen(inp, dt)
     -- the HUD is drawn after the map, so tall buildings never cover buttons;
     -- a placement shows itself on the ghost alone: red when it can't go there
     R.draw_header(true)
-    if c.placing<0 and R.button(rect(18,704+R.drop,218,42),"EXPEDITIONS",true) then R.open_expeditions() end
-    if c.placing<0 and R.button(rect(300,704+R.drop,162,42),"BUILD SHOP",true) then R.open_catalogue() end
-    bottom_panel()
+    bottom_controls()
 end
 
 return R
