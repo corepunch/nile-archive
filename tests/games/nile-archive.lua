@@ -13,6 +13,8 @@ shot("build", "1200x900", "--screen build")
 shot("catalogue", "1200x900", "--screen build --catalogue wonder")
 shot("footprints", "1200x900", "--screen island --footprints")
 shot("reward", "1200x900", "--screen win --frames 60")
+-- the engine's motion module (tests/fixtures/motion): 16 pictures, 6 frames apart, into docs/screenshots/motion-reel.gif
+reel("motion", 16, 6, "1200x900", "--lua tests/fixtures/motion")
 shot("widescreen", "1600x900", "--screen island")
 shot("ipad-scene", "1180x820", "--screen scene0 --found --safe-area 0,24,0,20")
 shot("dialogue", "1200x900", "--screen story --frames 200")

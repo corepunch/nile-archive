@@ -121,6 +121,10 @@ while drawing what sits under the dialog.
   `camera_draw_texture` blits only the visible part of a world-sized image.
 - **fx**: a pooled particle system (`fx_burst`, `fx_sparkle`) drawn additively,
   and floating text (`fx_text`) for score pop-ups.
+- **motion** (Lua, `engine/tween.lua`): the easing catalogue and tweens,
+  timelines, staggers, punch and shake, ticked by the engine before each
+  frame; the design follows GSAP, flux, DOTween and Godot's Tween
+  ([MOTION.md](MOTION.md)).
 
 ## Text
 

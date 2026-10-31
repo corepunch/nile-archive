@@ -84,8 +84,11 @@ the games implement their screenshot entry points (`--screen`, `--level`,
 
 Every module is a **global table** (`app`, `input`, `gfx`, `texture`,
 `camera`, `fx`, `font`, `style`, `text`, `sfx`, `ui`, `save`, `story`, `city`,
-`vec2`, `size2`, `rect`, `color`, `purse`, `num`, `ease`). There is nothing to
+`vec2`, `size2`, `rect`, `color`, `purse`, `num`, `ease`, `tween`). There is nothing to
 `require` from the engine; `require("island")` loads the game's own files.
+`ease` and `tween` are the engine's Lua motion module ([MOTION.md](MOTION.md)):
+the engine advances every tween before it calls `frame`, so a game sets a goal
+once and draws the field every frame.
 
 **Value types are tables with a metatable.** `vec2(3, 4)`, `rect(0, 0, 100, 50)`,
 `color.hex(0xF4E8CA)`, `purse(60, 10, 5)`, `camera{center = ..., zoom = .8}`,
