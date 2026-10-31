@@ -144,7 +144,11 @@ local function menu()
         if button(rect(380,340+(i-1)*82,608,64),title,i>S.unlocked and ui.DISABLED or (i==S.unlocked and ui.ACCENT or 0)) then start(i,false) end
     end
     if button(rect(380,774,292,54),'How to play') then S.modal='help' end
-    if button(rect(690,774,298,54),S.sound and 'Sound: on' or 'Sound: off') then S.sound=not S.sound;sfx.enable(S.sound);persist() end
+    -- Sound is a checkbox, centred in the slot beside How to play.
+    local width=skin:checkbox_size({kind='checkbox'},'Sound')
+    S.sound_box=rect(690+(298-width)/2,774,width,54)
+    local sound=skin:draw_checkbox(S.sound_box,'Sound',S.sound)
+    if sound~=S.sound then S.sound=sound;sfx.enable(S.sound);persist() end
     label(rect(374,850,620,27),'Five districts. One rescue team. A fresh start.',20,vec2(.5,.5))
 end
 local function modal()
@@ -178,6 +182,13 @@ local function smoke()
     if S.smoke_frames%5~=0 then return end
     S.smoke_stage=S.smoke_stage or 0
     if story.active() then app.inject_click(vec2(680,510));return end
+    if S.screen=='menu' and (S.smoke_sound or 0)<3 then   -- the Sound checkbox: off, then on again
+        local n=S.smoke_sound or 0
+        if n==1 then assert(not S.sound,'smoke: the Sound checkbox turns sound off') end
+        if n==2 then assert(S.sound,'smoke: the Sound checkbox turns sound back on') end
+        S.smoke_sound=n+1
+        if n<2 then app.inject_click(S.sound_box:center());return end
+    end
     if S.screen=='menu' then app.inject_click(vec2(680,372));return end
     if S.modal=='win' then
         assert(S.g.won,'smoke results without victory')
@@ -189,7 +200,7 @@ local function smoke()
     end
     if S.smoke_stage==9 then
         assert(S.chapter==1 and S.g.cleared==0,'final replay did not restart the episode')
-        print('Volcano smoke: all five districts, pause, restart and final replay passed through injected clicks')
+        print('Volcano smoke: sound checkbox, all five districts, pause, restart and final replay passed through injected clicks')
         app.quit();return
     elseif S.smoke_stage==0 then
         S.smoke_stage=1;app.inject_click(vec2(1280,46));return

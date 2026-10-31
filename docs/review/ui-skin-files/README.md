@@ -115,3 +115,18 @@ held presses on RESUME, the card's action and the guide's button.
 | Pause | ![Before](before-christmas-pause.jpg) | ![After](after-christmas-pause.jpg) |
 | Shop | ![Before](before-christmas-shop.jpg) | ![After](after-christmas-shop.jpg) |
 | RESUME held | ![Before](before-christmas-pause-press.jpg) | ![After](after-christmas-pause-press.jpg) |
+
+## Volcano: Sound checkbox
+
+The menu's "Sound: on / Sound: off" toggle button is now a checkbox, centred in
+the same slot beside How to play: a teal box in the buttons' rim with a gold tick.
+Hover lifts the box, pressing sinks box and tick, disabled fades both.
+`--smoke` clicks it off and on again through real input.
+
+| Before | After |
+| --- | --- |
+| ![Before](before-volcano-sound-toggle.jpg) | ![After](after-volcano-sound-checkbox.jpg) |
+
+| Clicked off | Held (pressed) |
+| --- | --- |
+| ![Off](after-volcano-sound-off.jpg) | ![Pressed](after-volcano-sound-pressed.jpg) |
