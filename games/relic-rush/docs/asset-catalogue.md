@@ -153,8 +153,8 @@ cover every tool/state plus normal and exhausted rows at both phone sizes.
 Priority: depleted or board busy → disabled; held pointer that began inside →
 pressed; selected tool → selected; real mouse inside → hover; otherwise normal.
 Touch never receives hover art. Charge counts are dynamic text on a counter.
-The tools stand in a jade tray along the bottom edge, three evenly spaced
-sockets without captions; choosing one names it and its effect in the toast.
+The tools stand up out of a low jade tray along the bottom edge, three evenly
+spaced sockets without captions; choosing one names it and its effect in the toast.
 
 ## Expedition header
 
@@ -162,7 +162,7 @@ The header follows the portrait match-3 convention (Royal Match, Toon Blast,
 Homescapes): one jade band with a gold trim hangs from the top edge, under the
 status bar. It holds a hexagonal Moves medallion that overhangs the band, a
 recessed goal plate and the authored pause medallion. Goals are icons with their
-remaining count beneath. Score remains a win condition, represented by the star
+remaining count beside them; both bars stay slim to leave the painting visible. Score remains a win condition, represented by the star
 seal; idols, sand and lock counts use their existing artwork. A met goal dims its
 icon and replaces the count with the completed seal. Collections landing on a
 goal make its icon bounce. Over the last five moves the medallion face turns
