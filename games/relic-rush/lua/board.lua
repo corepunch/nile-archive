@@ -118,14 +118,14 @@ local hud_form=ui.form{kind="row",gap=10,children={
     {kind="row",panel=true,grow=1,padding={4,4,4,4},children={
         {kind="spacer",grow=1},
         {kind="list",id="goals",direction="row",gap=4,item=function(entry)
-            return {kind="row",width=72,gap=4,align="center",children={
+            return {kind="row",width=66,gap=4,align="center",children={
                 {kind="custom",width=28,height=28,paint=function(box) goal_icon(box,entry) end},
-                {kind="custom",width=40,height=24,paint=function(box) goal_count(box,entry) end},
+                {kind="custom",width=34,height=24,paint=function(box) goal_count(box,entry) end},
             }}
         end},
         {kind="spacer",grow=1},
     }},
-    {kind="spacer",width=46},    -- pause, drawn by the shared header
+    {kind="spacer",width=64},    -- pause, drawn by the shared header
 }}
 -- A recessed jade plate inside the band, so the goals read as one group.
 local hud_skin={

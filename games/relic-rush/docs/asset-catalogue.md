@@ -201,6 +201,13 @@ painted jade/gold medallions. `score` denotes the remaining score objective;
 `complete` denotes any fulfilled objective. The runtime button uses normal,
 pressed and real-mouse hover states; selected/disabled artwork is supplied for
 the complete control contract. No tint or procedural bars create states.
+
+The shared board/city Pause medallion uses a 64×64 logical-unit canvas and touch
+area, enlarged from 44×44. The existing authored states scale directly. Board
+goals reserve 64 units beside the button; city currency pills use 76-unit spacing
+and 72-unit widths to stay clear of it. The smoke run opens board Pause at the
+new left edge and city Pause at the new lower edge, outside the old touch area.
+[Reviewed headers at both phone sizes](review/larger-pause/README.md).
 Runtime: `data/expedition-hud/<name>.png`, 128×128 RGBA.
 
 `art/expedition-hud/elena-investigating.png` is a separate ImageGen identity edit
