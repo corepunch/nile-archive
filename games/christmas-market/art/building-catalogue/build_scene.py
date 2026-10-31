@@ -1,25 +1,16 @@
 # Christmas Market buildings and decorations as procedural Blender geometry.
 #
 # The master scene for games/christmas-market, made as docs/BUILDING_ART.md
-# describes: every object is modelled on the game's isometric grid, one
-# collection each (cm_<key>), with its pivot at the footprint's ground centre.
-# tools/render_buildings.py renders each one alone from the game's camera at a
-# fixed scale; tools/prepare_catalogue.py crops the renders and writes
-# lua/buildings.lua. The first twelve rows follow the building direction sheet
+# describes: every object is modelled on the game's grid, one collection each,
+# named after its key, with its pivot at the footprint's ground centre.
+# The first twelve rows follow the building direction sheet
 # (art/building-reference-sheet.png); the rest are extra shop objects.
 #
-# Convention (docs/BUILDINGS.md, engine/city.c):
-#   1 Blender unit = 1 tile side. World X = tile u (down-right on screen, the
-#   front-left side, size.w). World Y = -tile v (up-right, the front-right
-#   side, size.h). The camera is orthographic, 30 degrees above the ground and
-#   45 degrees round, so ground slopes project to exactly +-1/2: the game's 2:1
-#   grid. Visible walls face +X (on the right) and -Y (on the left).
+# Convention: tools/building_kit.py and docs/BUILDINGS.md. 1 Blender unit = 1 tile side.
+# World X = tile u (the front-left side, size.w). World Y = -v (the front-right side,
+# size.h). The city camera comes from tools/city_camera.py.
 #
-#   cd games/christmas-market/art/building-catalogue && blender -b --python build_scene.py
-# rebuilds christmas_market_buildings.blend and scene_layout.json. Without a
-# Blender binary, `pip install bpy` gives the same Blender as a Python module.
-# In a live Blender, send it through the MCP socket bridge to inspect or tweak:
-#   python3 games/volcano/source/tools/blender_mcp.py games/christmas-market/art/building-catalogue/build_scene.py
+#   make buildings GAME=christmas-market REBUILD=1
 import json
 import math
 import os
@@ -31,9 +22,9 @@ import bmesh
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(globals().get("__file__", "."))) if "__file__" in globals() else "."
+sys.path.insert(0, os.path.join(HERE, "..", "..", "..", "..", "tools"))
+import city_camera
 SCENE_NAME = "ChristmasMarketIso"
-TILE_W = 128                                   # tile width in rendered sprite pixels (render_buildings.py)
-PPU = TILE_W / math.sqrt(2)                    # sprite pixels per Blender unit
 R = random.Random(12)
 PREFIX = "cm_"
 
@@ -1706,12 +1697,12 @@ def add_lights(scn):
     scn.world = w
 
 
-def iso_camera(scn, ppu):
+def iso_camera(scn):
     cam = bpy.data.cameras.new(PREFIX + "iso_cam")
     cam.type = "ORTHO"
     cam.clip_start, cam.clip_end = .1, 400
     co = bpy.data.objects.new("iso_camera", cam)
-    co.rotation_euler = (math.radians(60), 0, math.radians(45))
+    co.rotation_euler = city_camera.ROTATION
     scn.collection.objects.link(co)
     scn.camera = co
     rot = co.rotation_euler.to_matrix()
@@ -1723,9 +1714,8 @@ def build():
     clean_previous()
     scn = bpy.data.scenes.new(SCENE_NAME)
     materials = make_materials()
-    root = bpy.data.collections.new(PREFIX + "objects")
+    root = bpy.data.collections.new("buildings")
     scn.collection.children.link(root)
-    report = []
     u = v = 0
     row_h = 0
     for i, it in enumerate(CATALOGUE):
@@ -1733,11 +1723,12 @@ def build():
         if u + it["w"] > 24:
             u, v = 0, v + row_h + 2
             row_h = 0
-        coll = bpy.data.collections.new(PREFIX + it["key"])
+        coll = bpy.data.collections.new(it["key"])
         root.children.link(coll)
         pivot = bpy.data.objects.new(it["key"] + ".pivot", None)
         pivot.location = (u + it["w"] / 2, -(v + it["h"] / 2), 0)
         pivot.empty_display_size = .25
+        pivot["title"], pivot["w"], pivot["h"] = it["title"], it["w"], it["h"]
         coll.objects.link(pivot)
         for mat, bucket in k.buckets.items():
             to_object(it["key"] + "." + mat, bucket, mat, materials, coll, pivot)
@@ -1750,33 +1741,26 @@ def build():
             lo.location = p
             lo.parent = pivot
             coll.objects.link(lo)
-        top = max(vv[2] for b in k.buckets.values() for vv in b["v"])
-        report.append(dict(key=it["key"], title=it["title"], cat=it["cat"], w=it["w"], h=it["h"], top=round(top, 3),
-                           verts=sum(len(b["v"]) for b in k.buckets.values())))
         u += it["w"] + 2
         row_h = max(row_h, it["h"])
     add_lights(scn)
     setup_render(scn)
-    co, right, up, back = iso_camera(scn, PPU)
+    co, right, up, back = iso_camera(scn)
     co.location = Vector((10, -6, 0)) + back * 120
     co.data.ortho_scale = 34
     for ob in scn.objects:
         ob["cm_iso"] = True
     for win in getattr(bpy.context.window_manager, "windows", []):
         win.scene = scn
-    # the projection of ground points against the analytic 2:1 formula
-    rot = co.rotation_euler.to_matrix()
-    right, up = rot @ Vector((1, 0, 0)), rot @ Vector((0, 1, 0))
-    err = 0
-    for u_, v_ in ((0, 0), (5, -3), (-7, 4), (11, 9)):
-        p = Vector((u_, -v_, 0))
-        err = max(err, abs(p.dot(right) * PPU - (u_ - v_) * TILE_W / 2), abs(-p.dot(up) * PPU - (u_ + v_) * TILE_W / 4))
-    return scn, dict(buildings=report, tile_px=TILE_W, grid_max_error_px=round(err, 6))
+    return scn
 
 
 if __name__ == "__main__" or "__file__" in globals():
-    SCN, REPORT = build()
-    with open(os.path.join(HERE, "scene_layout.json"), "w") as f:
-        json.dump(REPORT, f, indent=1)
-    if bpy.app.background and "--no-save" not in sys.argv:   # never overwrite a live session's file
-        bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "christmas_market_buildings.blend"), compress=True)
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    build()
+    for other in list(bpy.data.scenes):
+        if "buildings" not in other.collection.children:
+            bpy.data.scenes.remove(other)
+    bpy.context.preferences.filepaths.save_version = 0   # no .blend1 beside the master
+    blend = sys.argv[sys.argv.index("--") + 1] if "--" in sys.argv else os.path.join(HERE, "christmas_market_buildings.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=blend)

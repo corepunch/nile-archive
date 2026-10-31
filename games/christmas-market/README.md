@@ -2,7 +2,7 @@
 
 An in-progress Christmas market game based on Relic Rush's hex match-4 and free-placement city systems. Its 37 buildings and decorations are modelled and rendered in Blender after the building direction sheet. See the [building catalogue](docs/building-catalogue.md).
 
-![The 37 Blender-rendered buildings and decorations](art/building-catalogue/geometry-atlas.png)
+![The 37 Blender-rendered buildings and decorations](docs/screenshots/buildings.jpg)
 
 The [reference sheet](art/building-reference-sheet.png) covers ten campaign buildings: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, an igloo, a chapel, a log cabin, Santa's workshop and more.
 

@@ -1,7 +1,10 @@
 {
  "source": "art/building-catalogue/nile_archive_buildings.blend",
  "registration": "art/building-catalogue/registration.json",
- "tile_px": 128,
+ "camera": {
+  "yaw": 30.0,
+  "elevation": 40.0
+ },
  "items": [
   {
    "id": 0,
@@ -13,24 +16,21 @@
     2
    ],
    "pivot": [
-    127,
-    123
+    138.139,
+    137.875
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 240,
    "stars": 0,
    "note": "Relic slot 0 · stepped limestone pyramid with a gilded cap",
    "image": [
-    254,
-    186
-   ],
-   "crop": [
-    5,
-    7
+    276,
+    226
    ],
    "runtime": "data/buildings/small_pyramid.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_small_pyramid"
+   "shadow": "data/building-shadows/small_pyramid.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#small_pyramid"
   },
   {
    "id": 1,
@@ -42,24 +42,21 @@
     2
    ],
    "pivot": [
-    127,
-    125
+    138.138,
+    144.446
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 260,
    "stars": 0,
    "note": "Relic slot 1 · stepped well that measures the flood",
    "image": [
-    254,
-    188
-   ],
-   "crop": [
-    5,
-    4
+    276,
+    232
    ],
    "runtime": "data/buildings/nilometer.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_nilometer"
+   "shadow": "data/building-shadows/nilometer.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#nilometer"
   },
   {
    "id": 2,
@@ -71,24 +68,21 @@
     2
    ],
    "pivot": [
-    159,
-    111
+    181.44,
+    117.265
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 300,
    "stars": 1,
    "note": "Relic slot 2 · reclining guardian on a plinth",
    "image": [
-    318,
-    189
-   ],
-   "crop": [
-    5,
-    4
+    363,
+    221
    ],
    "runtime": "data/buildings/sphinx.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sphinx"
+   "shadow": "data/building-shadows/sphinx.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#sphinx"
   },
   {
    "id": 3,
@@ -100,24 +94,21 @@
     2
    ],
    "pivot": [
-    159,
-    185
+    181.44,
+    198.247
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 320,
    "stars": 1,
    "note": "Relic slot 3 · sacred boat on a pedestal under a canopy",
    "image": [
-    318,
-    263
-   ],
-   "crop": [
-    5,
-    5
+    363,
+    302
    ],
    "runtime": "data/buildings/barque_shrine.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_barque_shrine"
+   "shadow": "data/building-shadows/barque_shrine.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#barque_shrine"
   },
   {
    "id": 4,
@@ -129,24 +120,21 @@
     2
    ],
    "pivot": [
-    159,
-    225
+    181.44,
+    235.567
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 340,
    "stars": 2,
    "note": "Relic slot 4 · twin battered towers with a gate and flags",
    "image": [
-    318,
-    303
-   ],
-   "crop": [
-    5,
-    5
+    363,
+    340
    ],
    "runtime": "data/buildings/pylon_gate.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pylon_gate"
+   "shadow": "data/building-shadows/pylon_gate.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#pylon_gate"
   },
   {
    "id": 5,
@@ -158,24 +146,21 @@
     3
    ],
    "pivot": [
-    191,
-    231
+    206.44,
+    261.772
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 380,
    "stars": 3,
    "note": "Relic slot 5 · roofed hall of papyrus columns",
    "image": [
-    382,
-    325
-   ],
-   "crop": [
-    5,
-    5
+    413,
+    394
    ],
    "runtime": "data/buildings/hypostyle.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_hypostyle"
+   "shadow": "data/building-shadows/hypostyle.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#hypostyle"
   },
   {
    "id": 6,
@@ -187,24 +172,21 @@
     3
    ],
    "pivot": [
-    191,
-    238
+    206.44,
+    242.194
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 420,
    "stars": 4,
    "note": "Relic slot 6 · open court with an obelisk and altar",
    "image": [
-    382,
-    332
-   ],
-   "crop": [
-    5,
-    4
+    412,
+    374
    ],
    "runtime": "data/buildings/sun_temple.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sun_temple"
+   "shadow": "data/building-shadows/sun_temple.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#sun_temple"
   },
   {
    "id": 7,
@@ -216,24 +198,21 @@
     2
    ],
    "pivot": [
-    127,
-    242
+    138.138,
+    238.619
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 450,
    "stars": 5,
    "note": "Relic slot 7 · stepped tower with a fire on top",
    "image": [
-    254,
-    305
-   ],
-   "crop": [
-    5,
-    5
+    276,
+    326
    ],
    "runtime": "data/buildings/lighthouse.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_lighthouse"
+   "shadow": "data/building-shadows/lighthouse.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#lighthouse"
   },
   {
    "id": 8,
@@ -245,24 +224,21 @@
     3
    ],
    "pivot": [
-    191,
-    117
+    206.44,
+    146.961
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 500,
    "stars": 6,
    "note": "Relic slot 8 · stone-lined pool with lotus and steps",
    "image": [
-    382,
-    211
-   ],
-   "crop": [
-    5,
-    4
+    413,
+    279
    ],
    "runtime": "data/buildings/sacred_lake.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sacred_lake"
+   "shadow": "data/building-shadows/sacred_lake.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#sacred_lake"
   },
   {
    "id": 9,
@@ -274,24 +250,21 @@
     4
    ],
    "pivot": [
-    255,
-    243
+    274.741,
+    239.407
    ],
-   "base_width": 512.0,
+   "base_width": 546.41,
    "scale": 1.0,
    "coins": 750,
    "stars": 9,
    "note": "Relic slot 9 · finale landmark",
    "image": [
-    510,
-    369
-   ],
-   "crop": [
-    5,
-    4
+    549,
+    415
    ],
    "runtime": "data/buildings/great_pyramid.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_great_pyramid"
+   "shadow": "data/building-shadows/great_pyramid.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#great_pyramid"
   },
   {
    "id": 10,
@@ -303,24 +276,21 @@
     2
    ],
    "pivot": [
-    127,
-    173
+    138.138,
+    189.522
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 200,
    "stars": 2,
    "note": "Relic slot 10 · whitewashed house with a roof terrace",
    "image": [
-    254,
-    236
-   ],
-   "crop": [
-    5,
-    5
+    276,
+    277
    ],
    "runtime": "data/buildings/mud_house.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_mud_house"
+   "shadow": "data/building-shadows/mud_house.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#mud_house"
   },
   {
    "id": 11,
@@ -332,24 +302,21 @@
     2
    ],
    "pivot": [
-    127,
-    124
+    138.138,
+    143.94
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 220,
    "stars": 2,
    "note": "Relic slot 11 · kiln, wheel and jars",
    "image": [
-    254,
-    187
-   ],
-   "crop": [
-    5,
-    5
+    276,
+    232
    ],
    "runtime": "data/buildings/pottery.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pottery"
+   "shadow": "data/building-shadows/pottery.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#pottery"
   },
   {
    "id": 12,
@@ -361,24 +328,21 @@
     2
    ],
    "pivot": [
-    159,
-    155
+    181.44,
+    174.377
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 240,
    "stars": 3,
    "note": "Relic slot 12 · domed ovens and bread",
    "image": [
-    318,
-    233
-   ],
-   "crop": [
-    5,
-    5
+    363,
+    279
    ],
    "runtime": "data/buildings/bakery.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bakery"
+   "shadow": "data/building-shadows/bakery.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#bakery"
   },
   {
    "id": 13,
@@ -390,24 +354,21 @@
     2
    ],
    "pivot": [
-    159,
-    150
+    181.44,
+    171.108
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 260,
    "stars": 3,
    "note": "Relic slot 13 · loom under an awning",
    "image": [
-    318,
-    228
-   ],
-   "crop": [
-    5,
-    6
+    363,
+    275
    ],
    "runtime": "data/buildings/weaver.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_weaver"
+   "shadow": "data/building-shadows/weaver.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#weaver"
   },
   {
    "id": 14,
@@ -419,24 +380,21 @@
     2
    ],
    "pivot": [
-    159,
-    171
+    181.44,
+    193.602
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 280,
    "stars": 4,
    "note": "Relic slot 14 · columned porch and scroll racks",
    "image": [
-    318,
-    249
-   ],
-   "crop": [
-    5,
-    5
+    363,
+    298
    ],
    "runtime": "data/buildings/scribe_school.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_scribe_school"
+   "shadow": "data/building-shadows/scribe_school.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#scribe_school"
   },
   {
    "id": 15,
@@ -448,24 +406,21 @@
     2
    ],
    "pivot": [
-    159,
-    134
+    181.44,
+    143.137
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "scale": 1.0,
    "coins": 300,
    "stars": 4,
    "note": "Relic slot 15 · beehive silos in a walled yard",
    "image": [
-    318,
-    212
-   ],
-   "crop": [
-    5,
-    4
+    363,
+    247
    ],
    "runtime": "data/buildings/granary.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_granary"
+   "shadow": "data/building-shadows/granary.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#granary"
   },
   {
    "id": 16,
@@ -477,24 +432,21 @@
     3
    ],
    "pivot": [
-    191,
-    164
+    206.44,
+    185.697
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 320,
    "stars": 5,
    "note": "Relic slot 16 · striped stalls and baskets",
    "image": [
-    382,
-    258
-   ],
-   "crop": [
-    5,
-    4
+    413,
+    318
    ],
    "runtime": "data/buildings/bazaar.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bazaar"
+   "shadow": "data/building-shadows/bazaar.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#bazaar"
   },
   {
    "id": 17,
@@ -506,24 +458,21 @@
     3
    ],
    "pivot": [
-    191,
-    237
+    206.44,
+    264.82
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 340,
    "stars": 5,
    "note": "Relic slot 17 · two-storey house with a garden",
    "image": [
-    382,
-    331
-   ],
-   "crop": [
-    5,
-    5
+    413,
+    397
    ],
    "runtime": "data/buildings/villa.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_villa"
+   "shadow": "data/building-shadows/villa.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#villa"
   },
   {
    "id": 18,
@@ -535,24 +484,21 @@
     2
    ],
    "pivot": [
-    127,
-    196
+    138.138,
+    201.912
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 360,
    "stars": 5,
    "note": "Relic slot 18 · tall tower with nest holes",
    "image": [
-    254,
-    259
-   ],
-   "crop": [
-    5,
-    3
+    276,
+    290
    ],
    "runtime": "data/buildings/dovecote.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_dovecote"
+   "shadow": "data/building-shadows/dovecote.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#dovecote"
   },
   {
    "id": 19,
@@ -564,24 +510,21 @@
     2
    ],
    "pivot": [
-    127,
-    236
+    138.138,
+    237.769
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 380,
    "stars": 5,
    "note": "Relic slot 19 · battered tower with banner",
    "image": [
-    254,
-    299
-   ],
-   "crop": [
-    5,
-    3
+    276,
+    326
    ],
    "runtime": "data/buildings/watchtower.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_watchtower"
+   "shadow": "data/building-shadows/watchtower.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#watchtower"
   },
   {
    "id": 20,
@@ -593,24 +536,21 @@
     3
    ],
    "pivot": [
-    191,
-    178
+    206.44,
+    213.158
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 400,
    "stars": 6,
    "note": "Relic slot 20 · vine pergola and press",
    "image": [
-    382,
-    272
-   ],
-   "crop": [
-    5,
-    5
+    412,
+    345
    ],
    "runtime": "data/buildings/winery.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_winery"
+   "shadow": "data/building-shadows/winery.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#winery"
   },
   {
    "id": 21,
@@ -622,24 +562,21 @@
     3
    ],
    "pivot": [
-    191,
-    187
+    206.44,
+    209.229
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "scale": 1.0,
    "coins": 420,
    "stars": 6,
    "note": "Relic slot 21 · chapel with cat statues",
    "image": [
-    382,
-    281
-   ],
-   "crop": [
-    5,
-    5
+    412,
+    341
    ],
    "runtime": "data/buildings/bastet_shrine.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bastet_shrine"
+   "shadow": "data/building-shadows/bastet_shrine.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#bastet_shrine"
   },
   {
    "id": 22,
@@ -651,24 +588,21 @@
     2
    ],
    "pivot": [
-    191,
-    105
+    224.741,
+    129.305
    ],
-   "base_width": 384.0,
+   "base_width": 446.41,
    "scale": 1.0,
    "coins": 440,
    "stars": 7,
    "note": "Relic slot 22 · moored sailing boat",
    "image": [
-    382,
-    199
-   ],
-   "crop": [
-    5,
-    4
+    449,
+    249
    ],
    "runtime": "data/buildings/felucca_dock.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_felucca_dock"
+   "shadow": "data/building-shadows/felucca_dock.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#felucca_dock"
   },
   {
    "id": 23,
@@ -680,24 +614,21 @@
     3
    ],
    "pivot": [
-    223,
-    195
+    249.741,
+    225.623
    ],
-   "base_width": 448.0,
+   "base_width": 496.41,
    "scale": 1.0,
    "coins": 460,
    "stars": 7,
    "note": "Relic slot 23 · colonnaded stable and chariot",
    "image": [
-    446,
-    305
-   ],
-   "crop": [
-    5,
-    6
+    499,
+    373
    ],
    "runtime": "data/buildings/chariot_stable.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_chariot_stable"
+   "shadow": "data/building-shadows/chariot_stable.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#chariot_stable"
   },
   {
    "id": 24,
@@ -709,24 +640,21 @@
     3
    ],
    "pivot": [
-    223,
-    181
+    249.741,
+    209.314
    ],
-   "base_width": 448.0,
+   "base_width": 496.41,
    "scale": 1.0,
    "coins": 500,
    "stars": 8,
    "note": "Relic slot 24 · workshop with statues in progress",
    "image": [
-    446,
-    291
-   ],
-   "crop": [
-    5,
-    5
+    499,
+    357
    ],
    "runtime": "data/buildings/sculptor_yard.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sculptor_yard"
+   "shadow": "data/building-shadows/sculptor_yard.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#sculptor_yard"
   },
   {
    "id": 25,
@@ -738,24 +666,21 @@
     4
    ],
    "pivot": [
-    255,
-    238
+    274.741,
+    272.44
    ],
-   "base_width": 512.0,
+   "base_width": 546.41,
    "scale": 1.0,
    "coins": 550,
    "stars": 9,
    "note": "Relic slot 25 · terraced garden with pool and kiosk",
    "image": [
-    510,
-    364
-   ],
-   "crop": [
-    5,
-    4
+    549,
+    448
    ],
    "runtime": "data/buildings/pharaoh_garden.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pharaoh_garden"
+   "shadow": "data/building-shadows/pharaoh_garden.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#pharaoh_garden"
   },
   {
    "id": 26,
@@ -767,24 +692,21 @@
     1
    ],
    "pivot": [
-    75,
-    166
+    49.944,
+    97.321
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.0918647050857544,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 26",
    "image": [
-    155,
-    173
-   ],
-   "crop": [
-    4,
-    4
+    99,
+    105
    ],
    "runtime": "data/buildings/date_palm.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_date_palm"
+   "shadow": "data/building-shadows/date_palm.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#date_palm"
   },
   {
    "id": 27,
@@ -796,24 +718,21 @@
     1
    ],
    "pivot": [
-    79,
-    153
+    48.888,
+    82.194
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.04347825050354,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 27 · branching palm",
    "image": [
-    158,
-    159
-   ],
-   "crop": [
-    5,
-    3
+    98,
+    89
    ],
    "runtime": "data/buildings/doum_palm.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_doum_palm"
+   "shadow": "data/building-shadows/doum_palm.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#doum_palm"
   },
   {
    "id": 28,
@@ -825,24 +744,21 @@
     1
    ],
    "pivot": [
-    48,
-    223
+    50.589,
+    203.939
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.8461538553237915,
    "coins": 45,
    "stars": 1,
    "note": "Relic slot 28",
    "image": [
-    96,
-    229
-   ],
-   "crop": [
-    20,
-    4
+    101,
+    213
    ],
    "runtime": "data/buildings/cypress.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cypress"
+   "shadow": "data/building-shadows/cypress.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#cypress"
   },
   {
    "id": 29,
@@ -854,24 +770,21 @@
     1
    ],
    "pivot": [
-    73,
-    165
+    39.022,
+    92.645
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.0,
    "coins": 45,
    "stars": 1,
    "note": "Relic slot 29 · flat umbrella crown",
    "image": [
-    165,
-    170
-   ],
-   "crop": [
-    3,
-    4
+    92,
+    99
    ],
    "runtime": "data/buildings/acacia.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_acacia"
+   "shadow": "data/building-shadows/acacia.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#acacia"
   },
   {
    "id": 30,
@@ -883,24 +796,21 @@
     1
    ],
    "pivot": [
-    57,
-    179
+    44.378,
+    123.92
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.354080319404602,
    "coins": 45,
    "stars": 2,
    "note": "Relic slot 30",
    "image": [
-    107,
-    185
-   ],
-   "crop": [
-    11,
-    4
+    88,
+    133
    ],
    "runtime": "data/buildings/fig.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_fig"
+   "shadow": "data/building-shadows/fig.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#fig"
   },
   {
    "id": 31,
@@ -912,24 +822,21 @@
     1
    ],
    "pivot": [
-    59,
-    163
+    52.351,
+    126.77
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.5238792896270752,
    "coins": 60,
    "stars": 3,
    "note": "Relic slot 31",
    "image": [
-    110,
-    168
-   ],
-   "crop": [
-    9,
-    3
+    102,
+    134
    ],
    "runtime": "data/buildings/pomegranate.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pomegranate"
+   "shadow": "data/building-shadows/pomegranate.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#pomegranate"
   },
   {
    "id": 32,
@@ -941,24 +848,21 @@
     1
    ],
    "pivot": [
-    52,
-    164
+    43.971,
+    114.797
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.3521674871444702,
    "coins": 75,
    "stars": 4,
    "note": "Relic slot 32",
    "image": [
-    103,
-    170
-   ],
-   "crop": [
-    16,
-    4
+    89,
+    122
    ],
    "runtime": "data/buildings/olive.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_olive"
+   "shadow": "data/building-shadows/olive.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#olive"
   },
   {
    "id": 33,
@@ -970,24 +874,21 @@
     2
    ],
    "pivot": [
-    65,
-    132
+    69.728,
+    145.423
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 120,
    "stars": 2,
    "note": "Relic slot 33",
    "image": [
-    152,
-    175
-   ],
-   "crop": [
-    67,
-    4
+    163,
+    205
    ],
    "runtime": "data/buildings/palm_grove.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_palm_grove"
+   "shadow": "data/building-shadows/palm_grove.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#palm_grove"
   },
   {
    "id": 34,
@@ -999,24 +900,21 @@
     2
    ],
    "pivot": [
-    54,
-    132
+    75.463,
+    144.88
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 150,
    "stars": 2,
    "note": "Relic slot 34",
    "image": [
-    124,
-    154
-   ],
-   "crop": [
-    78,
-    3
+    149,
+    177
    ],
    "runtime": "data/buildings/twin_palms.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_twin_palms"
+   "shadow": "data/building-shadows/twin_palms.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#twin_palms"
   },
   {
    "id": 35,
@@ -1028,24 +926,21 @@
     2
    ],
    "pivot": [
-    54,
-    134
+    68.243,
+    136.476
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 180,
    "stars": 3,
    "note": "Relic slot 35 · broad sacred fig",
    "image": [
-    109,
-    144
-   ],
-   "crop": [
-    78,
-    3
+    135,
+    153
    ],
    "runtime": "data/buildings/sycamore.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sycamore"
+   "shadow": "data/building-shadows/sycamore.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#sycamore"
   },
   {
    "id": 36,
@@ -1057,24 +952,21 @@
     2
    ],
    "pivot": [
-    55,
-    116
+    66.242,
+    121.006
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 300,
    "stars": 5,
    "note": "Relic slot 36 · feathery pink-flowered tree",
    "image": [
-    112,
-    122
-   ],
-   "crop": [
-    77,
-    4
+    130,
+    130
    ],
    "runtime": "data/buildings/tamarisk.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_tamarisk"
+   "shadow": "data/building-shadows/tamarisk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#tamarisk"
   },
   {
    "id": 37,
@@ -1086,24 +978,21 @@
     1
    ],
    "pivot": [
-    62,
-    106
+    45.848,
+    67.069
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.1915706396102905,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 37",
    "image": [
-    134,
-    134
-   ],
-   "crop": [
-    6,
-    3
+    95,
+    90
    ],
    "runtime": "data/buildings/shrub.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_shrub"
+   "shadow": "data/building-shadows/shrub.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#shrub"
   },
   {
    "id": 38,
@@ -1115,24 +1004,21 @@
     1
    ],
    "pivot": [
-    76,
-    164
+    45.877,
+    107.405
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.114884614944458,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 38",
    "image": [
-    152,
-    183
-   ],
-   "crop": [
-    4,
-    3
+    98,
+    123
    ],
    "runtime": "data/buildings/papyrus.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_papyrus"
+   "shadow": "data/building-shadows/papyrus.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#papyrus"
   },
   {
    "id": 39,
@@ -1144,24 +1030,21 @@
     1
    ],
    "pivot": [
-    63,
-    133
+    50.271,
+    89.582
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.3333332538604736,
    "coins": 30,
    "stars": 1,
    "note": "Relic slot 39",
    "image": [
-    128,
-    174
-   ],
-   "crop": [
-    5,
-    4
+    100,
+    126
    ],
    "runtime": "data/buildings/aloe.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_aloe"
+   "shadow": "data/building-shadows/aloe.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#aloe"
   },
   {
    "id": 40,
@@ -1173,24 +1056,21 @@
     1
    ],
    "pivot": [
-    71,
-    119
+    51.217,
+    76.9
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.197882056236267,
    "coins": 30,
    "stars": 1,
    "note": "Relic slot 40 · flowering shrub",
    "image": [
-    142,
-    147
-   ],
-   "crop": [
-    4,
-    4
+    100,
+    101
    ],
    "runtime": "data/buildings/oleander.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_oleander"
+   "shadow": "data/building-shadows/oleander.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#oleander"
   },
   {
    "id": 41,
@@ -1202,24 +1082,21 @@
     1
    ],
    "pivot": [
-    70,
-    98
+    49.581,
+    63.909
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.219923496246338,
    "coins": 30,
    "stars": 2,
    "note": "Relic slot 41 · white-flowered shrub",
    "image": [
-    138,
-    123
-   ],
-   "crop": [
-    4,
-    4
+    98,
+    87
    ],
    "runtime": "data/buildings/henna.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_henna"
+   "shadow": "data/building-shadows/henna.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#henna"
   },
   {
    "id": 42,
@@ -1231,24 +1108,21 @@
     1
    ],
    "pivot": [
-    64,
-    185
+    40.306,
+    108.892
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.2113738059997559,
    "coins": 30,
    "stars": 2,
    "note": "Relic slot 42",
    "image": [
-    128,
-    210
-   ],
-   "crop": [
-    4,
-    4
+    89,
+    131
    ],
    "runtime": "data/buildings/reeds.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_reeds"
+   "shadow": "data/building-shadows/reeds.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#reeds"
   },
   {
    "id": 43,
@@ -1260,24 +1134,21 @@
     1
    ],
    "pivot": [
-    49,
-    156
+    50.589,
+    146.034
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.823496699333191,
    "coins": 45,
    "stars": 3,
    "note": "Relic slot 43",
    "image": [
-    97,
-    167
-   ],
-   "crop": [
-    19,
-    4
+    101,
+    162
    ],
    "runtime": "data/buildings/potted_tree.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_potted_tree"
+   "shadow": "data/building-shadows/potted_tree.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#potted_tree"
   },
   {
    "id": 44,
@@ -1289,24 +1160,21 @@
     1
    ],
    "pivot": [
-    105,
-    126
+    59.177,
+    74.44
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.0,
    "coins": 30,
    "stars": 3,
    "note": "Relic slot 44",
    "image": [
-    210,
-    174
-   ],
-   "crop": [
-    10,
-    12
+    118,
+    110
    ],
    "runtime": "data/buildings/hedge.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_hedge"
+   "shadow": "data/building-shadows/hedge.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#hedge"
   },
   {
    "id": 45,
@@ -1318,24 +1186,21 @@
     1
    ],
    "pivot": [
-    63,
-    56
+    48.607,
+    48.317
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.3333332538604736,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 45",
    "image": [
-    126,
-    79
-   ],
-   "crop": [
-    6,
-    6
+    97,
+    72
    ],
    "runtime": "data/buildings/blue_lotus.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_blue_lotus"
+   "shadow": "data/building-shadows/blue_lotus.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#blue_lotus"
   },
   {
    "id": 46,
@@ -1347,24 +1212,21 @@
     1
    ],
    "pivot": [
-    54,
-    88
+    48.292,
+    76.028
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.5473839044570923,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 46",
    "image": [
-    120,
-    123
-   ],
-   "crop": [
-    14,
-    4
+    106,
+    114
    ],
    "runtime": "data/buildings/poppies.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_poppies"
+   "shadow": "data/building-shadows/poppies.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#poppies"
   },
   {
    "id": 47,
@@ -1376,24 +1238,21 @@
     1
    ],
    "pivot": [
-    64,
-    81
+    53.643,
+    66.614
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.4203014373779297,
    "coins": 15,
    "stars": 1,
    "note": "Relic slot 47",
    "image": [
-    125,
-    116
-   ],
-   "crop": [
-    4,
-    4
+    106,
+    102
    ],
    "runtime": "data/buildings/chamomile.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_chamomile"
+   "shadow": "data/building-shadows/chamomile.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#chamomile"
   },
   {
    "id": 48,
@@ -1405,24 +1264,21 @@
     1
    ],
    "pivot": [
-    52,
-    100
+    52.148,
+    96.221
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.7268893718719482,
    "coins": 30,
    "stars": 2,
    "note": "Relic slot 48",
    "image": [
     108,
-    130
-   ],
-   "crop": [
-    16,
-    4
+    133
    ],
    "runtime": "data/buildings/cornflowers.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cornflowers"
+   "shadow": "data/building-shadows/cornflowers.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#cornflowers"
   },
   {
    "id": 49,
@@ -1434,24 +1290,21 @@
     1
    ],
    "pivot": [
-    74,
-    80
+    57.589,
+    58.149
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.2972972393035889,
    "coins": 30,
    "stars": 2,
    "note": "Relic slot 49",
    "image": [
-    148,
-    115
-   ],
-   "crop": [
-    7,
-    4
+    115,
+    89
    ],
    "runtime": "data/buildings/flower_box.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_flower_box"
+   "shadow": "data/building-shadows/flower_box.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#flower_box"
   },
   {
    "id": 50,
@@ -1463,24 +1316,21 @@
     1
    ],
    "pivot": [
-    58,
-    122
+    48.364,
+    96.216
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.5,
    "coins": 30,
    "stars": 3,
    "note": "Relic slot 50",
    "image": [
-    116,
-    138
-   ],
-   "crop": [
-    10,
-    4
+    97,
+    114
    ],
    "runtime": "data/buildings/irises.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_irises"
+   "shadow": "data/building-shadows/irises.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#irises"
   },
   {
    "id": 51,
@@ -1492,24 +1342,21 @@
     2
    ],
    "pivot": [
-    126,
-    74
+    136.406,
+    99.781
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 90,
    "stars": 2,
    "note": "Relic slot 51",
    "image": [
-    252,
-    136
-   ],
-   "crop": [
-    6,
-    6
+    273,
+    187
    ],
    "runtime": "data/buildings/flower_bed.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_flower_bed"
+   "shadow": "data/building-shadows/flower_bed.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#flower_bed"
   },
   {
    "id": 52,
@@ -1521,24 +1368,21 @@
     2
    ],
    "pivot": [
-    121,
-    72
+    131.308,
+    91.609
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 180,
    "stars": 5,
    "note": "Relic slot 52",
    "image": [
-    242,
-    132
-   ],
-   "crop": [
-    11,
-    4
+    262,
+    175
    ],
    "runtime": "data/buildings/pattern_bed.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pattern_bed"
+   "shadow": "data/building-shadows/pattern_bed.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#pattern_bed"
   },
   {
    "id": 53,
@@ -1550,24 +1394,21 @@
     1
    ],
    "pivot": [
-    80,
-    134
+    51.665,
+    81.667
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.131345510482788,
    "coins": 30,
    "stars": 1,
    "note": "Relic slot 53",
    "image": [
-    143,
-    191
-   ],
-   "crop": [
-    3,
-    5
+    92,
+    125
    ],
    "runtime": "data/buildings/broken_column.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_broken_column"
+   "shadow": "data/building-shadows/broken_column.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#broken_column"
   },
   {
    "id": 54,
@@ -1579,24 +1420,21 @@
     1
    ],
    "pivot": [
-    69,
-    150
+    59.592,
+    119.303
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.538461685180664,
    "coins": 45,
    "stars": 1,
    "note": "Relic slot 54",
    "image": [
-    138,
-    182
-   ],
-   "crop": [
-    7,
-    4
+    119,
+    156
    ],
    "runtime": "data/buildings/pharaoh_head.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pharaoh_head"
+   "shadow": "data/building-shadows/pharaoh_head.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#pharaoh_head"
   },
   {
    "id": 55,
@@ -1608,24 +1446,21 @@
     1
    ],
    "pivot": [
-    60,
-    167
+    66.569,
+    167.305
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 60,
    "stars": 2,
    "note": "Relic slot 55",
    "image": [
-    120,
-    192
-   ],
-   "crop": [
-    8,
-    4
+    133,
+    204
    ],
    "runtime": "data/buildings/bastet_cat.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bastet_cat"
+   "shadow": "data/building-shadows/bastet_cat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#bastet_cat"
   },
   {
    "id": 56,
@@ -1637,24 +1472,21 @@
     1
    ],
    "pivot": [
-    54,
-    236
+    60.177,
+    231.882
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 60,
    "stars": 3,
    "note": "Relic slot 56",
    "image": [
-    108,
-    261
-   ],
-   "crop": [
-    14,
-    4
+    120,
+    268
    ],
    "runtime": "data/buildings/obelisk.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_obelisk"
+   "shadow": "data/building-shadows/obelisk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#obelisk"
   },
   {
    "id": 57,
@@ -1666,24 +1498,21 @@
     1
    ],
    "pivot": [
-    48,
-    130
+    50.271,
+    119.744
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.8461538553237915,
    "coins": 60,
    "stars": 3,
    "note": "Relic slot 57",
    "image": [
-    96,
-    150
-   ],
-   "crop": [
-    20,
-    5
+    100,
+    149
    ],
    "runtime": "data/buildings/sundial.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sundial"
+   "shadow": "data/building-shadows/sundial.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#sundial"
   },
   {
    "id": 58,
@@ -1695,24 +1524,21 @@
     1
    ],
    "pivot": [
-    62,
-    130
+    65.758,
+    127.397
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.9199999570846558,
    "coins": 90,
    "stars": 4,
    "note": "Relic slot 58",
    "image": [
-    124,
-    158
-   ],
-   "crop": [
-    6,
-    4
+    131,
+    167
    ],
    "runtime": "data/buildings/scribe_statue.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_scribe_statue"
+   "shadow": "data/building-shadows/scribe_statue.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#scribe_statue"
   },
   {
    "id": 59,
@@ -1724,24 +1550,21 @@
     1
    ],
    "pivot": [
-    69,
-    115
+    67.858,
+    104.456
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.7777776718139648,
    "coins": 150,
    "stars": 5,
    "note": "Relic slot 59",
    "image": [
-    138,
-    143
-   ],
-   "crop": [
-    5,
-    4
+    135,
+    141
    ],
    "runtime": "data/buildings/golden_scarab.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_golden_scarab"
+   "shadow": "data/building-shadows/golden_scarab.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#golden_scarab"
   },
   {
    "id": 60,
@@ -1753,24 +1576,21 @@
     2
    ],
    "pivot": [
-    86,
-    149
+    95.537,
+    150.103
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 180,
    "stars": 4,
    "note": "Relic slot 60 · seated king",
    "image": [
-    172,
-    189
-   ],
-   "crop": [
-    46,
-    4
+    191,
+    206
    ],
    "runtime": "data/buildings/colossus.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_colossus"
+   "shadow": "data/building-shadows/colossus.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#colossus"
   },
   {
    "id": 61,
@@ -1782,24 +1602,21 @@
     2
    ],
    "pivot": [
-    80,
-    85
+    93.902,
+    90.535
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 240,
    "stars": 5,
    "note": "Relic slot 61 · reclining jackal on a chest",
    "image": [
-    160,
-    124
-   ],
-   "crop": [
-    52,
-    4
+    187,
+    142
    ],
    "runtime": "data/buildings/anubis.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_anubis"
+   "shadow": "data/building-shadows/anubis.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#anubis"
   },
   {
    "id": 62,
@@ -1811,24 +1628,21 @@
     1
    ],
    "pivot": [
-    57,
-    116
+    49.2,
+    96.535
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.5,
    "coins": 45,
    "stars": 1,
    "note": "Relic slot 62",
    "image": [
-    114,
-    133
-   ],
-   "crop": [
-    11,
-    5
+    98,
+    117
    ],
    "runtime": "data/buildings/birdbath.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_birdbath"
+   "shadow": "data/building-shadows/birdbath.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#birdbath"
   },
   {
    "id": 63,
@@ -1840,24 +1654,21 @@
     1
    ],
    "pivot": [
-    77,
-    130
+    50.945,
+    76.742
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.1428571939468384,
    "coins": 90,
    "stars": 3,
    "note": "Relic slot 63",
    "image": [
-    154,
-    168
-   ],
-   "crop": [
-    3,
-    4
+    102,
+    109
    ],
    "runtime": "data/buildings/small_fountain.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_small_fountain"
+   "shadow": "data/building-shadows/small_fountain.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#small_fountain"
   },
   {
    "id": 64,
@@ -1869,24 +1680,21 @@
     2
    ],
    "pivot": [
-    82,
-    54
+    92.748,
+    71.522
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 120,
    "stars": 2,
    "note": "Relic slot 64",
    "image": [
-    185,
-    94
-   ],
-   "crop": [
-    50,
-    14
+    207,
+    130
    ],
    "runtime": "data/buildings/lotus_pond.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_lotus_pond"
+   "shadow": "data/building-shadows/lotus_pond.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#lotus_pond"
   },
   {
    "id": 65,
@@ -1898,24 +1706,21 @@
     2
    ],
    "pivot": [
-    85,
-    52
+    96.05,
+    66.824
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 150,
    "stars": 3,
    "note": "Relic slot 65",
    "image": [
-    169,
-    93
-   ],
-   "crop": [
-    47,
-    16
+    191,
+    127
    ],
    "runtime": "data/buildings/ibis_pond.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_ibis_pond"
+   "shadow": "data/building-shadows/ibis_pond.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#ibis_pond"
   },
   {
    "id": 66,
@@ -1927,24 +1732,21 @@
     2
    ],
    "pivot": [
-    108,
-    116
+    115.65,
+    112.16
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 240,
    "stars": 5,
    "note": "Relic slot 66 · counterweighted water lift",
    "image": [
-    203,
-    146
-   ],
-   "crop": [
-    24,
-    4
+    221,
+    156
    ],
    "runtime": "data/buildings/shaduf.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_shaduf"
+   "shadow": "data/building-shadows/shaduf.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#shaduf"
   },
   {
    "id": 67,
@@ -1956,24 +1758,21 @@
     1
    ],
    "pivot": [
-    73,
-    92
+    54.212,
+    59.375
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.1999999284744263,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 67",
    "image": [
-    146,
-    122
-   ],
-   "crop": [
-    7,
-    7
+    108,
+    84
    ],
    "runtime": "data/buildings/bench.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bench"
+   "shadow": "data/building-shadows/bench.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#bench"
   },
   {
    "id": 68,
@@ -1985,24 +1784,21 @@
     1
    ],
    "pivot": [
-    37,
-    191
+    42.224,
+    188.124
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 68",
    "image": [
-    74,
-    208
-   ],
-   "crop": [
-    31,
-    4
+    84,
+    214
    ],
    "runtime": "data/buildings/lamp_post.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_lamp_post"
+   "shadow": "data/building-shadows/lamp_post.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#lamp_post"
   },
   {
    "id": 69,
@@ -2014,24 +1810,21 @@
     1
    ],
    "pivot": [
-    19,
-    182
+    22.89,
+    179.544
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 30,
    "stars": 1,
    "note": "Relic slot 69",
    "image": [
-    38,
+    46,
     185
    ],
-   "crop": [
-    49,
-    4
-   ],
    "runtime": "data/buildings/torch.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_torch"
+   "shadow": "data/building-shadows/torch.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#torch"
   },
   {
    "id": 70,
@@ -2043,24 +1836,21 @@
     1
    ],
    "pivot": [
-    42,
-    154
+    34.081,
+    127.42
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.6518418788909912,
    "coins": 30,
    "stars": 1,
    "note": "Relic slot 70",
    "image": [
-    77,
-    157
-   ],
-   "crop": [
-    26,
-    4
+    76,
+    133
    ],
    "runtime": "data/buildings/signpost.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_signpost"
+   "shadow": "data/building-shadows/signpost.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#signpost"
   },
   {
    "id": 71,
@@ -2072,24 +1862,21 @@
     1
    ],
    "pivot": [
-    36,
-    218
+    41.053,
+    215.948
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 45,
    "stars": 2,
    "note": "Relic slot 71",
    "image": [
-    72,
-    233
-   ],
-   "crop": [
-    32,
-    4
+    82,
+    240
    ],
    "runtime": "data/buildings/standard.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_standard"
+   "shadow": "data/building-shadows/standard.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#standard"
   },
   {
    "id": 72,
@@ -2101,24 +1888,21 @@
     1
    ],
    "pivot": [
-    70,
-    66
+    38.791,
+    38.847
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.0084278583526611,
    "coins": 45,
    "stars": 3,
    "note": "Relic slot 72",
    "image": [
-    134,
-    99
-   ],
-   "crop": [
-    4,
-    5
+    77,
+    68
    ],
    "runtime": "data/buildings/grain_mill.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_grain_mill"
+   "shadow": "data/building-shadows/grain_mill.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#grain_mill"
   },
   {
    "id": 73,
@@ -2130,24 +1914,21 @@
     2
    ],
    "pivot": [
-    93,
-    56
+    104.582,
+    67.649
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 120,
    "stars": 2,
    "note": "Relic slot 73",
    "image": [
-    186,
-    103
-   ],
-   "crop": [
-    39,
-    12
+    209,
+    132
    ],
    "runtime": "data/buildings/feast_mat.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_feast_mat"
+   "shadow": "data/building-shadows/feast_mat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#feast_mat"
   },
   {
    "id": 74,
@@ -2159,24 +1940,21 @@
     2
    ],
    "pivot": [
-    103,
-    133
+    110.742,
+    151.492
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 150,
    "stars": 2,
    "note": "Relic slot 74",
    "image": [
-    203,
-    180
-   ],
-   "crop": [
-    29,
-    5
+    219,
+    217
    ],
    "runtime": "data/buildings/shade_canopy.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_shade_canopy"
+   "shadow": "data/building-shadows/shade_canopy.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#shade_canopy"
   },
   {
    "id": 75,
@@ -2188,24 +1966,21 @@
     2
    ],
    "pivot": [
-    98,
-    131
+    109.812,
+    148.606
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 180,
    "stars": 3,
    "note": "Relic slot 75",
    "image": [
-    196,
-    175
-   ],
-   "crop": [
-    34,
-    5
+    220,
+    212
    ],
    "runtime": "data/buildings/vine_pergola.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_vine_pergola"
+   "shadow": "data/building-shadows/vine_pergola.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#vine_pergola"
   },
   {
    "id": 76,
@@ -2217,24 +1992,21 @@
     2
    ],
    "pivot": [
-    83,
-    133
+    97.912,
+    142.337
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 240,
    "stars": 4,
    "note": "Relic slot 76",
    "image": [
-    166,
-    157
-   ],
-   "crop": [
-    49,
-    6
+    195,
+    176
    ],
    "runtime": "data/buildings/palanquin.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_palanquin"
+   "shadow": "data/building-shadows/palanquin.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#palanquin"
   },
   {
    "id": 77,
@@ -2246,24 +2018,21 @@
     2
    ],
    "pivot": [
-    102,
-    160
+    111.184,
+    177.409
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 300,
    "stars": 4,
    "note": "Relic slot 77",
    "image": [
-    204,
-    210
-   ],
-   "crop": [
-    30,
-    5
+    222,
+    248
    ],
    "runtime": "data/buildings/kiosk.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_kiosk"
+   "shadow": "data/building-shadows/kiosk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#kiosk"
   },
   {
    "id": 78,
@@ -2275,24 +2044,21 @@
     1
    ],
    "pivot": [
-    61,
-    149
+    48.987,
+    102.925
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.2799999713897705,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 78",
    "image": [
-    112,
-    190
-   ],
-   "crop": [
-    7,
-    8
+    91,
+    141
    ],
    "runtime": "data/buildings/crates.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_crates"
+   "shadow": "data/building-shadows/crates.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#crates"
   },
   {
    "id": 79,
@@ -2304,24 +2070,21 @@
     1
    ],
    "pivot": [
-    67,
-    84
+    46.327,
+    61.77
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.307932734489441,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 79",
    "image": [
-    106,
-    106
-   ],
-   "crop": [
-    4,
-    4
+    83,
+    83
    ],
    "runtime": "data/buildings/amphorae.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_amphorae"
+   "shadow": "data/building-shadows/amphorae.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#amphorae"
   },
   {
    "id": 80,
@@ -2333,24 +2096,21 @@
     1
    ],
    "pivot": [
-    68,
-    64
+    48.128,
+    43.301
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.2867878675460815,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 80",
    "image": [
-    135,
-    94
-   ],
-   "crop": [
-    3,
-    5
+    97,
+    73
    ],
    "runtime": "data/buildings/campfire.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_campfire"
+   "shadow": "data/building-shadows/campfire.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#campfire"
   },
   {
    "id": 81,
@@ -2362,24 +2122,21 @@
     1
    ],
    "pivot": [
-    64,
-    103
+    62.569,
+    96.492
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.7142857313156128,
    "coins": 60,
    "stars": 3,
    "note": "Relic slot 81",
    "image": [
-    128,
+    125,
     129
    ],
-   "crop": [
-    6,
-    5
-   ],
    "runtime": "data/buildings/scribe_desk.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_scribe_desk"
+   "shadow": "data/building-shadows/scribe_desk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#scribe_desk"
   },
   {
    "id": 82,
@@ -2391,24 +2148,21 @@
     1
    ],
    "pivot": [
-    67,
-    70
+    46.327,
+    54.996
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.307932734489441,
    "coins": 90,
    "stars": 5,
    "note": "Relic slot 82",
    "image": [
-    108,
-    97
-   ],
-   "crop": [
-    4,
-    3
+    84,
+    80
    ],
    "runtime": "data/buildings/grain_baskets.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_grain_baskets"
+   "shadow": "data/building-shadows/grain_baskets.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#grain_baskets"
   },
   {
    "id": 83,
@@ -2420,24 +2174,21 @@
     1
    ],
    "pivot": [
-    64,
-    91
+    39.031,
+    50.821
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.021276593208313,
    "coins": 120,
    "stars": 5,
    "note": "Relic slot 83",
    "image": [
-    128,
-    135
-   ],
-   "crop": [
-    6,
-    7
+    81,
+    84
    ],
    "runtime": "data/buildings/treasure_chest.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_treasure_chest"
+   "shadow": "data/building-shadows/treasure_chest.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#treasure_chest"
   },
   {
    "id": 84,
@@ -2449,24 +2200,21 @@
     2
    ],
    "pivot": [
-    88,
-    125
+    95.657,
+    125.372
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 120,
    "stars": 1,
    "note": "Relic slot 84",
    "image": [
-    175,
-    177
-   ],
-   "crop": [
-    44,
-    3
+    195,
+    198
    ],
    "runtime": "data/buildings/tent.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_tent"
+   "shadow": "data/building-shadows/tent.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#tent"
   },
   {
    "id": 85,
@@ -2478,24 +2226,21 @@
     2
    ],
    "pivot": [
-    95,
-    66
+    100.623,
+    83.892
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 120,
    "stars": 2,
    "note": "Relic slot 85",
    "image": [
-    185,
-    112
-   ],
-   "crop": [
-    37,
-    5
+    199,
+    148
    ],
    "runtime": "data/buildings/dig_site.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_dig_site"
+   "shadow": "data/building-shadows/dig_site.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#dig_site"
   },
   {
    "id": 86,
@@ -2507,24 +2252,21 @@
     2
    ],
    "pivot": [
-    62,
-    71
+    84.265,
+    73.019
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 150,
    "stars": 3,
    "note": "Relic slot 86",
    "image": [
-    124,
-    86
-   ],
-   "crop": [
-    70,
-    4
+    168,
+    95
    ],
    "runtime": "data/buildings/reed_boat.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_reed_boat"
+   "shadow": "data/building-shadows/reed_boat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#reed_boat"
   },
   {
    "id": 87,
@@ -2536,24 +2278,21 @@
     2
    ],
    "pivot": [
-    64,
-    76
+    74.411,
+    86.337
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 180,
    "stars": 3,
    "note": "Relic slot 87",
    "image": [
-    139,
-    105
-   ],
-   "crop": [
-    68,
-    5
+    170,
+    122
    ],
    "runtime": "data/buildings/cart.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cart"
+   "shadow": "data/building-shadows/cart.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#cart"
   },
   {
    "id": 88,
@@ -2565,24 +2304,21 @@
     1
    ],
    "pivot": [
-    50,
-    60
+    38.118,
+    43.43
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.0752114057540894,
    "coins": 60,
    "stars": 2,
    "note": "Relic slot 88",
    "image": [
-    115,
-    76
-   ],
-   "crop": [
-    18,
-    3
+    79,
+    57
    ],
    "runtime": "data/buildings/crocodile.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_crocodile"
+   "shadow": "data/building-shadows/crocodile.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#crocodile"
   },
   {
    "id": 89,
@@ -2594,24 +2330,21 @@
     1
    ],
    "pivot": [
-    47,
-    126
+    40.097,
+    81.18
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.2655887603759766,
    "coins": 60,
    "stars": 2,
    "note": "Relic slot 89",
    "image": [
-    97,
-    143
-   ],
-   "crop": [
-    21,
-    4
+    84,
+    98
    ],
    "runtime": "data/buildings/ibis.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_ibis"
+   "shadow": "data/building-shadows/ibis.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#ibis"
   },
   {
    "id": 90,
@@ -2623,24 +2356,21 @@
     1
    ],
    "pivot": [
-    36,
-    166
+    41.053,
+    166.01
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 60,
    "stars": 3,
    "note": "Relic slot 90",
    "image": [
-    72,
-    181
-   ],
-   "crop": [
-    32,
-    4
+    82,
+    190
    ],
    "runtime": "data/buildings/falcon.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_falcon"
+   "shadow": "data/building-shadows/falcon.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#falcon"
   },
   {
    "id": 91,
@@ -2652,24 +2382,21 @@
     1
    ],
    "pivot": [
-    41,
-    115
+    46.517,
+    115.276
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "scale": 2.0,
    "coins": 90,
    "stars": 4,
    "note": "Relic slot 91",
    "image": [
-    82,
-    133
-   ],
-   "crop": [
-    27,
-    4
+    93,
+    143
    ],
    "runtime": "data/buildings/cat.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cat"
+   "shadow": "data/building-shadows/cat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#cat"
   },
   {
    "id": 92,
@@ -2681,24 +2408,21 @@
     1
    ],
    "pivot": [
-    52,
-    70
+    37.391,
+    43.058
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.09590482711792,
    "coins": 90,
    "stars": 4,
    "note": "Relic slot 92",
    "image": [
-    114,
-    89
-   ],
-   "crop": [
-    16,
-    4
+    83,
+    60
    ],
    "runtime": "data/buildings/hippo.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_hippo"
+   "shadow": "data/building-shadows/hippo.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#hippo"
   },
   {
    "id": 93,
@@ -2710,24 +2434,21 @@
     1
    ],
    "pivot": [
-    61,
-    98
+    42.363,
+    65.544
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.1592373847961426,
    "coins": 15,
    "stars": 0,
    "note": "Relic slot 93",
    "image": [
-    129,
-    136
-   ],
-   "crop": [
-    7,
-    4
+    84,
+    98
    ],
    "runtime": "data/buildings/boulder.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_boulder"
+   "shadow": "data/building-shadows/boulder.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#boulder"
   },
   {
    "id": 94,
@@ -2739,24 +2460,21 @@
     1
    ],
    "pivot": [
-    49,
-    135
+    40.695,
+    93.948
    ],
-   "base_width": 128.0,
-   "scale": 2.0,
+   "base_width": 136.603,
+   "scale": 1.3791717290878296,
    "coins": 120,
    "stars": 5,
    "note": "Relic slot 94",
    "image": [
-    110,
-    148
-   ],
-   "crop": [
-    19,
-    4
+    89,
+    109
    ],
    "runtime": "data/buildings/turquoise.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_turquoise"
+   "shadow": "data/building-shadows/turquoise.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#turquoise"
   },
   {
    "id": 95,
@@ -2768,24 +2486,21 @@
     2
    ],
    "pivot": [
-    83,
-    92
+    92.362,
+    106.835
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "scale": 1.0,
    "coins": 60,
    "stars": 1,
    "note": "Relic slot 95",
    "image": [
-    158,
-    137
-   ],
-   "crop": [
-    49,
-    3
+    178,
+    173
    ],
    "runtime": "data/buildings/desert_rocks.png",
-   "source": "art/building-catalogue/nile_archive_buildings.blend#na_desert_rocks"
+   "shadow": "data/building-shadows/desert_rocks.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#desert_rocks"
   }
  ]
 }

@@ -180,7 +180,8 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   staircases) become soft cloud banks. The mask is rebuilt only when a zone
   opens; a frame draws only the visible, foggy cells.
 - **Placement.** A building's `size` is its footprint in whole tiles of
-  `city.tile`; its `pivot` (the sprite pixel of the footprint's ground
+  `city.tile`, a tile's side on the ground, projected by the city camera
+  (`CITY_CAMERA_YAW`, `CITY_CAMERA_ELEVATION`); its `pivot` (the sprite pixel of the footprint's ground
   centre) and `base_width` (sprite pixels between the base's left and right
   corners) place and scale the sprite on it ([BUILDINGS.md](BUILDINGS.md)).
   `city_snap` puts a footprint on whole tiles, footprints may share an edge

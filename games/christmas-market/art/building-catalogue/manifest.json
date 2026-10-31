@@ -1,7 +1,10 @@
 {
  "source": "art/building-catalogue/christmas_market_buildings.blend",
  "registration": "art/building-catalogue/registration.json",
- "tile_px": 128,
+ "camera": {
+  "yaw": 30.0,
+  "elevation": 40.0
+ },
  "items": [
   {
    "id": 0,
@@ -13,10 +16,10 @@
     3
    ],
    "pivot": [
-    193,
-    262
+    207.904,
+    291.4
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     60,
     10,
@@ -25,15 +28,12 @@
    "stars": 0,
    "about": "A warm welcome for every winter visitor.",
    "image": [
-    386,
-    359
-   ],
-   "crop": [
-    3,
-    3
+    416,
+    426
    ],
    "runtime": "data/buildings/arch.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_arch"
+   "shadow": "data/building-shadows/arch.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#arch"
   },
   {
    "id": 1,
@@ -45,10 +45,10 @@
     3
    ],
    "pivot": [
-    193,
-    251
+    207.904,
+    255.067
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     80,
     15,
@@ -57,15 +57,12 @@
    "stars": 0,
    "about": "Fresh timber for a market full of wishes.",
    "image": [
-    386,
-    348
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    389
    ],
    "runtime": "data/buildings/lumber.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_lumber"
+   "shadow": "data/building-shadows/lumber.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#lumber"
   },
   {
    "id": 2,
@@ -77,10 +74,10 @@
     3
    ],
    "pivot": [
-    193,
-    249
+    207.904,
+    267.262
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     100,
     25,
@@ -89,15 +86,12 @@
    "stars": 0,
    "about": "Follow the smell of cinnamon and warm gingerbread.",
    "image": [
-    386,
-    346
-   ],
-   "crop": [
-    3,
-    3
+    416,
+    402
    ],
    "runtime": "data/buildings/bakery.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_bakery"
+   "shadow": "data/building-shadows/bakery.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#bakery"
   },
   {
    "id": 3,
@@ -109,10 +103,10 @@
     3
    ],
    "pivot": [
-    193,
-    228
+    207.904,
+    231.253
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     120,
     25,
@@ -121,15 +115,12 @@
    "stars": 0,
    "about": "A warm cup and a sweet candy cane for cold hands.",
    "image": [
-    386,
-    325
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    365
    ],
    "runtime": "data/buildings/cocoa.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_cocoa"
+   "shadow": "data/building-shadows/cocoa.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#cocoa"
   },
   {
    "id": 4,
@@ -141,10 +132,10 @@
     3
    ],
    "pivot": [
-    193,
-    262
+    207.904,
+    281.33
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     140,
     30,
@@ -153,15 +144,12 @@
    "stars": 0,
    "about": "Little wooden toys, made with Christmas care.",
    "image": [
-    386,
-    359
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    416
    ],
    "runtime": "data/buildings/toys.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_toys"
+   "shadow": "data/building-shadows/toys.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#toys"
   },
   {
    "id": 5,
@@ -173,10 +161,10 @@
     3
    ],
    "pivot": [
-    193,
-    193
+    207.904,
+    200.422
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     160,
     35,
@@ -185,15 +173,12 @@
    "stars": 0,
    "about": "Tie every winter wish with a bright red ribbon.",
    "image": [
-    386,
-    290
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    335
    ],
    "runtime": "data/buildings/gifts.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_gifts"
+   "shadow": "data/building-shadows/gifts.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#gifts"
   },
   {
    "id": 6,
@@ -205,10 +190,10 @@
     3
    ],
    "pivot": [
-    193,
-    248
+    207.904,
+    267.238
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     180,
     35,
@@ -217,15 +202,12 @@
    "stars": 0,
    "about": "Let a hundred little candles light the snowy evening.",
    "image": [
-    386,
-    345
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    401
    ],
    "runtime": "data/buildings/candles.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_candles"
+   "shadow": "data/building-shadows/candles.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#candles"
   },
   {
    "id": 7,
@@ -237,10 +219,10 @@
     3
    ],
    "pivot": [
-    193,
-    207
+    207.904,
+    205.479
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     200,
     40,
@@ -249,15 +231,12 @@
    "stars": 0,
    "about": "Take a magical ride beneath the fairy lights.",
    "image": [
-    386,
-    304
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    340
    ],
    "runtime": "data/buildings/carousel.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_carousel"
+   "shadow": "data/building-shadows/carousel.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#carousel"
   },
   {
    "id": 8,
@@ -269,10 +248,10 @@
     3
    ],
    "pivot": [
-    193,
-    164
+    207.904,
+    195.508
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     220,
     45,
@@ -281,15 +260,12 @@
    "stars": 0,
    "about": "A place to skate, laugh and make winter memories.",
    "image": [
-    386,
-    261
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    330
    ],
    "runtime": "data/buildings/rink.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_rink"
+   "shadow": "data/building-shadows/rink.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#rink"
   },
   {
    "id": 9,
@@ -301,10 +277,10 @@
     3
    ],
    "pivot": [
-    193,
-    280
+    207.904,
+    275.746
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     250,
     50,
@@ -313,15 +289,12 @@
    "stars": 0,
    "about": "The star on top lights up our Christmas square.",
    "image": [
-    386,
-    377
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    410
    ],
    "runtime": "data/buildings/tree.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_tree"
+   "shadow": "data/building-shadows/tree.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#tree"
   },
   {
    "id": 10,
@@ -333,25 +306,22 @@
     2
    ],
    "pivot": [
-    129,
-    159
+    139.603,
+    167.73
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     45
    ],
    "stars": 0,
    "about": "Snowy firs and a lantern make the paths feel like home.",
    "image": [
-    258,
-    224
-   ],
-   "crop": [
-    3,
-    3
+    279,
+    258
    ],
    "runtime": "data/buildings/firs.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_firs"
+   "shadow": "data/building-shadows/firs.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#firs"
   },
   {
    "id": 11,
@@ -363,25 +333,22 @@
     2
    ],
    "pivot": [
-    129,
-    125
+    139.603,
+    141.966
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     60
    ],
    "stars": 0,
    "about": "A friendly snowman is saving you a seat.",
    "image": [
-    258,
-    190
-   ],
-   "crop": [
-    3,
-    3
+    279,
+    232
    ],
    "runtime": "data/buildings/bench.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_bench"
+   "shadow": "data/building-shadows/bench.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#bench"
   },
   {
    "id": 12,
@@ -393,25 +360,22 @@
     1
    ],
    "pivot": [
-    36,
-    92
+    39.907,
+    93.382
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     35
    ],
    "stars": 0,
    "about": "Carrot nose, coal buttons, red scarf.",
    "image": [
-    72,
-    98
-   ],
-   "crop": [
-    32,
-    3
+    79,
+    104
    ],
    "runtime": "data/buildings/snowman.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_snowman"
+   "shadow": "data/building-shadows/snowman.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#snowman"
   },
   {
    "id": 13,
@@ -423,25 +387,22 @@
     1
    ],
    "pivot": [
-    43,
-    50
+    46.173,
+    56.096
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     40
    ],
    "stars": 0,
    "about": "No peeking before Christmas morning.",
    "image": [
-    88,
-    68
-   ],
-   "crop": [
-    25,
-    4
+    95,
+    83
    ],
    "runtime": "data/buildings/presents.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_presents"
+   "shadow": "data/building-shadows/presents.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#presents"
   },
   {
    "id": 14,
@@ -453,25 +414,22 @@
     1
    ],
    "pivot": [
-    27,
-    80
+    32.166,
+    80.958
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     30
    ],
    "stars": 0,
    "about": "Peppermint stripes in a snow drift.",
    "image": [
-    54,
-    97
-   ],
-   "crop": [
-    41,
-    3
+    64,
+    104
    ],
    "runtime": "data/buildings/candy_canes.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_candy_canes"
+   "shadow": "data/building-shadows/candy_canes.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#candy_canes"
   },
   {
    "id": 15,
@@ -483,25 +441,22 @@
     1
    ],
    "pivot": [
-    11,
-    119
+    12.625,
+    118.702
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     35
    ],
    "stars": 0,
    "about": "A warm light with a wreath on its post.",
    "image": [
-    22,
-    123
-   ],
-   "crop": [
-    57,
-    3
+    27,
+    126
    ],
    "runtime": "data/buildings/lamp_post.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_lamp_post"
+   "shadow": "data/building-shadows/lamp_post.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#lamp_post"
   },
   {
    "id": 16,
@@ -513,25 +468,22 @@
     1
    ],
    "pivot": [
-    35,
-    63
+    44.207,
+    68.568
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     30
    ],
    "stars": 0,
    "about": "A seat for watching the snow fall.",
    "image": [
-    73,
-    80
-   ],
-   "crop": [
-    33,
-    5
+    90,
+    90
    ],
    "runtime": "data/buildings/snowy_bench.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_snowy_bench"
+   "shadow": "data/building-shadows/snowy_bench.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#snowy_bench"
   },
   {
    "id": 17,
@@ -543,25 +495,22 @@
     1
    ],
    "pivot": [
-    24,
-    95
+    29.887,
+    98.591
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     40
    ],
    "stars": 3,
    "about": "Post your wish list here.",
    "image": [
-    48,
-    106
-   ],
-   "crop": [
-    44,
-    3
+    60,
+    114
    ],
    "runtime": "data/buildings/mailbox.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_mailbox"
+   "shadow": "data/building-shadows/mailbox.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#mailbox"
   },
   {
    "id": 18,
@@ -573,25 +522,22 @@
     1
    ],
    "pivot": [
-    49,
-    48
+    52.608,
+    56.669
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     20
    ],
    "stars": 0,
    "about": "Granite under a soft white cap.",
    "image": [
-    78,
-    69
-   ],
-   "crop": [
-    19,
-    4
+    92,
+    85
    ],
    "runtime": "data/buildings/snow_rocks.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_snow_rocks"
+   "shadow": "data/building-shadows/snow_rocks.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#snow_rocks"
   },
   {
    "id": 19,
@@ -603,25 +549,22 @@
     1
    ],
    "pivot": [
-    36,
-    89
+    42.038,
+    89.187
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     60
    ],
    "stars": 3,
    "about": "One bauble too big for any tree.",
    "image": [
-    72,
-    101
-   ],
-   "crop": [
-    32,
-    4
+    83,
+    107
    ],
    "runtime": "data/buildings/giant_ornament.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_giant_ornament"
+   "shadow": "data/building-shadows/giant_ornament.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#giant_ornament"
   },
   {
    "id": 20,
@@ -633,25 +576,22 @@
     1
    ],
    "pivot": [
-    37,
-    95
+    41.301,
+    95.905
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     70
    ],
    "stars": 6,
    "about": "Carved from the frozen lake.",
    "image": [
-    73,
-    107
-   ],
-   "crop": [
-    31,
-    6
+    82,
+    115
    ],
    "runtime": "data/buildings/ice_star.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_ice_star"
+   "shadow": "data/building-shadows/ice_star.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#ice_star"
   },
   {
    "id": 21,
@@ -663,25 +603,22 @@
     1
    ],
    "pivot": [
-    22,
-    90
+    25.222,
+    92.156
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     80
    ],
    "stars": 6,
    "about": "Standing to attention all season.",
    "image": [
-    44,
-    100
-   ],
-   "crop": [
-    46,
-    4
+    50,
+    108
    ],
    "runtime": "data/buildings/nutcracker.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_nutcracker"
+   "shadow": "data/building-shadows/nutcracker.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#nutcracker"
   },
   {
    "id": 22,
@@ -693,25 +630,22 @@
     1
    ],
    "pivot": [
-    31,
-    93
+    28.453,
+    84.033
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     90
    ],
    "stars": 9,
    "about": "Ready for the long flight.",
    "image": [
-    48,
-    105
-   ],
-   "crop": [
-    37,
-    4
+    56,
+    101
    ],
    "runtime": "data/buildings/reindeer.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_reindeer"
+   "shadow": "data/building-shadows/reindeer.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#reindeer"
   },
   {
    "id": 23,
@@ -723,25 +657,22 @@
     1
    ],
    "pivot": [
-    20,
-    68
+    29.257,
+    72.757
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     80
    ],
    "stars": 9,
    "about": "Visitors from the other pole, in scarves.",
    "image": [
-    37,
-    84
-   ],
-   "crop": [
-    48,
-    4
+    55,
+    95
    ],
    "runtime": "data/buildings/penguins.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_penguins"
+   "shadow": "data/building-shadows/penguins.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#penguins"
   },
   {
    "id": 24,
@@ -753,25 +684,22 @@
     1
    ],
    "pivot": [
-    66,
-    139
+    85.891,
+    139.404
    ],
-   "base_width": 192.0,
+   "base_width": 223.205,
    "cost": [
     90
    ],
    "stars": 6,
    "about": "Walk under the evergreen and bells.",
    "image": [
-    128,
-    167
-   ],
-   "crop": [
-    34,
-    3
+    169,
+    171
    ],
    "runtime": "data/buildings/wreath_arch.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_wreath_arch"
+   "shadow": "data/building-shadows/wreath_arch.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#wreath_arch"
   },
   {
    "id": 25,
@@ -783,25 +711,22 @@
     1
    ],
    "pivot": [
-    65,
-    85
+    80.952,
+    92.137
    ],
-   "base_width": 192.0,
+   "base_width": 223.205,
    "cost": [
     150
    ],
    "stars": 12,
    "about": "Polished runners, a sack of toys and room for one more.",
    "image": [
-    124,
-    109
-   ],
-   "crop": [
-    35,
-    4
+    154,
+    123
    ],
    "runtime": "data/buildings/sleigh.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_sleigh"
+   "shadow": "data/building-shadows/sleigh.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#sleigh"
   },
   {
    "id": 26,
@@ -813,25 +738,22 @@
     2
    ],
    "pivot": [
-    84,
-    83
+    93.536,
+    94.36
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     120
    ],
    "stars": 9,
    "about": "Snow blocks outside, a warm glow within.",
    "image": [
-    167,
-    127
-   ],
-   "crop": [
-    48,
-    4
+    187,
+    154
    ],
    "runtime": "data/buildings/igloo.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_igloo"
+   "shadow": "data/building-shadows/igloo.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#igloo"
   },
   {
    "id": 27,
@@ -843,25 +765,22 @@
     1
    ],
    "pivot": [
-    35,
-    104
+    40.792,
+    104.509
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     25
    ],
    "stars": 0,
    "about": "A fir heavy with fresh snow.",
    "image": [
-    70,
-    107
-   ],
-   "crop": [
-    33,
-    4
+    81,
+    116
    ],
    "runtime": "data/buildings/fir_snowy.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_fir_snowy"
+   "shadow": "data/building-shadows/fir_snowy.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#fir_snowy"
   },
   {
    "id": 28,
@@ -873,25 +792,22 @@
     1
    ],
    "pivot": [
-    27,
-    96
+    33.256,
+    96.982
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     30
    ],
    "stars": 0,
    "about": "White bark and snow on every twig.",
    "image": [
-    59,
-    107
-   ],
-   "crop": [
-    41,
-    4
+    74,
+    112
    ],
    "runtime": "data/buildings/birch.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_birch"
+   "shadow": "data/building-shadows/birch.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#birch"
   },
   {
    "id": 29,
@@ -903,25 +819,22 @@
     1
    ],
    "pivot": [
-    37,
-    120
+    42.781,
+    119.078
    ],
-   "base_width": 128.0,
+   "base_width": 136.603,
    "cost": [
     50
    ],
    "stars": 3,
    "about": "Baubles, a golden star and twinkling lights.",
    "image": [
-    75,
-    123
-   ],
-   "crop": [
-    31,
-    5
+    85,
+    131
    ],
    "runtime": "data/buildings/fir_decorated.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_fir_decorated"
+   "shadow": "data/building-shadows/fir_decorated.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#fir_decorated"
   },
   {
    "id": 30,
@@ -933,25 +846,22 @@
     2
    ],
    "pivot": [
-    86,
-    162
+    93.818,
+    170.764
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     80
    ],
    "stars": 6,
    "about": "Four firs keep each other warm.",
    "image": [
-    180,
-    192
-   ],
-   "crop": [
-    46,
-    3
+    197,
+    218
    ],
    "runtime": "data/buildings/pine_grove.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_pine_grove"
+   "shadow": "data/building-shadows/pine_grove.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#pine_grove"
   },
   {
    "id": 31,
@@ -963,25 +873,22 @@
     2
    ],
    "pivot": [
-    129,
-    197
+    139.603,
+    204.138
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     180
    ],
    "stars": 6,
    "about": "A crackling fire and boots drying by the door.",
    "image": [
-    258,
-    262
-   ],
-   "crop": [
-    3,
-    3
+    279,
+    294
    ],
    "runtime": "data/buildings/log_cabin.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_log_cabin"
+   "shadow": "data/building-shadows/log_cabin.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#log_cabin"
   },
   {
    "id": 32,
@@ -993,25 +900,22 @@
     2
    ],
    "pivot": [
-    129,
-    172
+    139.603,
+    182.118
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     200
    ],
    "stars": 9,
    "about": "Sweet enough to eat, if the icing holds.",
    "image": [
-    258,
-    237
-   ],
-   "crop": [
-    3,
-    4
+    279,
+    272
    ],
    "runtime": "data/buildings/gingerbread_house.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_gingerbread_house"
+   "shadow": "data/building-shadows/gingerbread_house.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#gingerbread_house"
   },
   {
    "id": 33,
@@ -1023,25 +927,22 @@
     2
    ],
    "pivot": [
-    129,
-    177
+    139.603,
+    192.666
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     220
    ],
    "stars": 12,
    "about": "Every letter finds its way north.",
    "image": [
-    258,
-    242
-   ],
-   "crop": [
-    3,
-    3
+    279,
+    283
    ],
    "runtime": "data/buildings/post_office.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_post_office"
+   "shadow": "data/building-shadows/post_office.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#post_office"
   },
   {
    "id": 34,
@@ -1053,25 +954,22 @@
     2
    ],
    "pivot": [
-    129,
-    210
+    139.603,
+    208.266
    ],
-   "base_width": 256.0,
+   "base_width": 273.205,
    "cost": [
     260
    ],
    "stars": 15,
    "about": "Its bell rings the carols in.",
    "image": [
-    258,
-    275
-   ],
-   "crop": [
-    3,
-    4
+    279,
+    299
    ],
    "runtime": "data/buildings/chapel.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_chapel"
+   "shadow": "data/building-shadows/chapel.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#chapel"
   },
   {
    "id": 35,
@@ -1083,25 +981,22 @@
     2
    ],
    "pivot": [
-    161,
-    205
+    182.904,
+    205.103
    ],
-   "base_width": 320.0,
+   "base_width": 359.808,
    "cost": [
     280
    ],
    "stars": 18,
    "about": "Hay, harness bells and nine sleepy reindeer.",
    "image": [
-    322,
-    286
-   ],
-   "crop": [
-    3,
-    4
+    366,
+    312
    ],
    "runtime": "data/buildings/reindeer_stable.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_reindeer_stable"
+   "shadow": "data/building-shadows/reindeer_stable.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#reindeer_stable"
   },
   {
    "id": 36,
@@ -1113,25 +1008,22 @@
     3
    ],
    "pivot": [
-    193,
-    279
+    207.904,
+    302.283
    ],
-   "base_width": 384.0,
+   "base_width": 409.808,
    "cost": [
     320
    ],
    "stars": 21,
    "about": "Hammers, ribbons and cocoa until the last toy is wrapped.",
    "image": [
-    386,
-    376
-   ],
-   "crop": [
-    3,
-    4
+    416,
+    437
    ],
    "runtime": "data/buildings/santa_workshop.png",
-   "source": "art/building-catalogue/christmas_market_buildings.blend#cm_santa_workshop"
+   "shadow": "data/building-shadows/santa_workshop.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#santa_workshop"
   }
  ]
 }

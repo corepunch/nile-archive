@@ -102,9 +102,6 @@ static inline float vec3_len(vec3 a) { return sqrtf(vec3_dot(a, a)); }
 static inline vec3 vec3_norm(vec3 a) { float l = vec3_len(a); return l > 0 ? vec3_scale(a, 1 / l) : a; }
 static inline vec3 vec3_lerp(vec3 a, vec3 b, float t) { return v3(lerpf(a.x, b.x, t), lerpf(a.y, b.y, t), lerpf(a.z, b.z, t)); }
 static inline vec2 vec3_xy(vec3 a) { return v2(a.x, a.y); }
-/* Isometric projection: world (x, y on the ground, z up) to screen offset. */
-static inline vec2 vec3_iso(vec3 a, size2 tile) { return v2((a.x - a.y) * tile.w * .5f, (a.x + a.y) * tile.h * .5f - a.z); }
-static inline vec2 iso2(float x, float y, float z, size2 tile) { return vec3_iso(v3(x, y, z), tile); }
 
 /* --- ivec2: integer grid coordinates --- */
 typedef struct { int x, y; } ivec2;
@@ -576,6 +573,12 @@ rect speech_bubble(vec2 tip, const char *utf8, text_style s, color fill, color e
 /* ===================================================================== */
 
 #define PURSE_MAX 6
+/* The city camera, in degrees: orthographic, turned CITY_CAMERA_YAW from the
+ * tile axes and looking down at CITY_CAMERA_ELEVATION. Every building sprite is
+ * rendered with it (docs/BUILDINGS.md); tools/city_camera.py reads these lines,
+ * so change the art with them. */
+#define CITY_CAMERA_YAW 30.f
+#define CITY_CAMERA_ELEVATION 40.f
 #define CITY_MAX 160
 #define CITY_ZONES 16
 
@@ -596,6 +599,7 @@ typedef struct {
     const char *shadow_path;
     texture shadow;      /* optional ground shadow; same pixel scale as sprite */
     vec2 shadow_pivot;    /* ground centre in the shadow image's own pixel canvas */
+    float shadow_base_width;  /* footprint's width in shadow pixels; zero = the sprite's pixel scale */
     size2 size;          /* footprint in whole tiles: w along the front-left side, h along the front-right */
     vec2 pivot;          /* sprite pixel of the footprint's ground centre; zero = bottom centre */
     float base_width;    /* sprite pixels from the footprint's left corner to its right one */
@@ -644,7 +648,7 @@ typedef struct city {
     int zone_count;
     unsigned open;                          /* bit per opened zone; zone 0 starts open */
     float spacing;                          /* minimum distance between buildings without footprints */
-    size2 tile;                             /* isometric tile half extents; default 32 x 16 */
+    float tile;                             /* a tile's side on the ground, in world units; default 45 */
     size2 clearance;                        /* tiles added to every sized footprint, around the base */
     bool (*buildable)(const struct city *c, vec2 world);   /* terrain test supplied by the game */
     int (*zone_at)(const struct city *c, vec2 world);      /* region lookup (default: zone rects); -1 = none */
@@ -677,6 +681,9 @@ typedef struct city {
 
 void city_init(city *c, const char *ground_path);
 vec2 city_snap(const city *c, vec2 world, int type);                    /* where a building of type lands on the grid */
+vec2 city_tile_to_world(const city *c, vec2 tile);                      /* tile coordinates (u down-right, v down-left) to world */
+vec2 city_world_to_tile(const city *c, vec2 world);
+float city_base_span(const city *c, size2 size);                        /* world width of a size's base, left corner to right */
 bool city_can_place(const city *c, vec2 world, int type, int ignore);   /* ignore: index to skip, or -1 */
 bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out);     /* nearest free spot to hint */
 int city_add(city *c, vec2 world, int type, double now);                /* no checks; returns index or -1 */

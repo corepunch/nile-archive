@@ -58,45 +58,39 @@ pivot is its footprint's ground centre. Buildings stand on a paved slab that is
 exactly their footprint. Decorations stand on the grass, and their footprint is
 a virtual base, as in Relic Rush.
 
-The 49 one-tile decorations (`DECOR_SCALE` in `build_scene.py`) are modelled at
-1× and then scaled **×2** about their ground pivot, with the bevels and lights
-scaled too. Nile Archive's tile is small next to its island painting, and at
-true scale a one-tile palm or statue was a speck beside the painted plants. At
-×2 a one-tile object fills its tile plus the half tile of clear ground that
-`city.clearance = size2(1, 1)` reserves on every side, so it can reach the edge
-of that ring but never another object's base. Its footprint, `base_width`
-(still `(w + h) × 64`), price and placement rules stay those of one tile.
-Because it is rendered at the same 128 px per tile, the larger sprite keeps its
-detail. `registration.json` and `manifest.json` record each object's `scale`.
-The 2×2 decorations and all buildings stay at ×1.
+The 49 one-tile decorations grow to fill their tile (`model_scale` in `build_scene.py`).
+Nile Archive's tile is small next to its island painting, and at true scale a one-tile
+palm or statue was a speck beside the painted plants. Each is scaled about its ground
+pivot, with its bevels and lights, until it reaches just inside the tile's edge, at most
+×2 so slim props don't tower over the scene. The median is about ×1.35; `acacia` and
+`hedge` already fill their tile and stay at ×1. Every object fits its one-tile footprint,
+so what the player sees is what they place. `base_width`, price and placement rules are
+unchanged, `registration.json` and `manifest.json` record each object's `scale`, and the
+larger objects stay at their modelled size.
 
-| Before (×1) | After (×2) |
+| Before (true scale) | After (fitted to the tile) |
 | --- | --- |
 | ![Page 7 before](review/building-catalogue/decoration-scale/before-07.jpg) | ![Page 7 after](review/building-catalogue/footprints-07.jpg) |
 | ![Page 12 before](review/building-catalogue/decoration-scale/before-12.jpg) | ![Page 12 after](review/building-catalogue/footprints-12.jpg) | `catalogue.json` lists each object's key,
 Russian name, category, footprint, coins, Stars and Relic slot. The master is
-`nile_archive_buildings.blend`, with the layout report `scene_layout.json`.
+`nile_archive_buildings.blend`. The five story restorations are modelled alongside them in
+`restorations.py`, after the paintings `art/building-0.png` to `building-4.png`, which
+stay as design references because a painting can't be turned to the
+[city camera](../../../docs/BUILDINGS.md#the-camera).
 
-`tools/render_buildings.py` renders each object on its own with Cycles, using a
-transparent film. It moves the master's camera over the object at one fixed
-scale, **128 sprite pixels per tile**, so all sprites share the same detail.
-Because of that fixed scale, `base_width` is exactly `(w + h) × 64` and the
-pivot is projected analytically into `registration.json`; nothing is guessed
-from the silhouette. `tools/prepare_catalogue.py` crops each render to its
-visible pixels, keeping the rendered RGBA and moving the pivot with the crop.
-It then writes `lua/archive_catalogue.lua`, `art/building-catalogue/manifest.json` and
-the 12 × 8 `geometry-atlas.png` contact sheet, laid out like Relic Rush's. On
-slab buildings, `tools/footprint.py` agrees with the registration to within
-1–5 px. The bevels round the corners it measures.
+`make buildings GAME=nile-archive` renders each of the 101 objects on its own, with its
+ground shadow, at one fixed scale of 100 sprite pixels per tile side, so all sprites share
+the same detail and registration is exact; nothing is guessed from the silhouette.
+`tools/prepare_catalogue.py` then writes `lua/archive_catalogue.lua` and
+`art/building-catalogue/manifest.json`. The [review sheet](screenshots/buildings.jpg) shows
+all of them on the tile grid.
 
 These are the Blender renders themselves; there has been no ImageGen paint-over
 like Relic Rush's runtime sprites. The renders are a finished, consistent toy
 style, but they are less painterly than the five restorations and the island
 painting. The paint-over pass is tracked in
 [issue #32](https://github.com/corepunch/nile-archive/issues/32), and so is
-whether the 2×2 decorations should grow too. A scaled one-tile shrub now
-stands as tall as the unscaled 2×2 groves; see
-[the trees page](review/building-catalogue/decoration-scale/after-trees.jpg).
+whether the 2×2 decorations should grow too.
 
 ## Supported presentation and interactions
 
@@ -112,11 +106,8 @@ The full procedure and its requirements, from a new catalogue row to the
 reviewed pull request, are in [docs/BUILDING_ART.md](../../../docs/BUILDING_ART.md).
 
 ```sh
-cd games/nile-archive/art/building-catalogue && blender -b --python build_scene.py && cd -
-blender -b games/nile-archive/art/building-catalogue/nile_archive_buildings.blend \
-    --python games/nile-archive/tools/render_buildings.py      # add "-- key ..." to render a few
+make buildings GAME=nile-archive REBUILD=1      # add KEYS="a b" to render a few
 python3 games/nile-archive/tools/prepare_catalogue.py --inventory   # prints the inventory rows below
-python3 tools/footprint.py games/nile-archive/data/buildings/great_pyramid.png --overlay /tmp/pyramid.png
 make CFLAGS="-O2 -g -Werror" && make test
 ./build/nile-archive --headless --mute --fresh --size 1200x900 --screen build --catalogue wonder --shot /tmp/shop.png
 ./build/nile-archive --headless --mute --fresh --size 1200x900 --building-review 12 --footprints --shot /tmp/fp.png
@@ -139,104 +130,106 @@ charges 30 coins once and grants no Influence.
 
 ## Runtime inventory
 
-Pivots are in cropped-sprite pixels and base widths in sprite pixels. Every
-entry supports the presentation and interaction contract above.
+`art/building-catalogue/registration.json` holds each sprite's pivot and base width.
+Every entry supports the presentation and interaction contract above. The five
+restorations are types 0 to 4: `gardener_house`, `isis_temple`, `archive`, `fountain`
+and `workshop`.
 
-| Type / key | Name | Category | Tiles | Pivot px | Base px | Coins | Stars | Reviewed city capture |
-| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- |
-| 5 / `small_pyramid` | Малая пирамида | wonder | 2 x 2 | 127, 123 | 256 | 240 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 6 / `nilometer` | Ниломер | wonder | 2 x 2 | 127, 125 | 256 | 260 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 7 / `sphinx` | Сфинкс | wonder | 3 x 2 | 159, 111 | 320 | 300 | 1 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 8 / `barque_shrine` | Святилище ладьи | wonder | 3 x 2 | 159, 185 | 320 | 320 | 1 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 9 / `pylon_gate` | Пилон | wonder | 3 x 2 | 159, 225 | 320 | 340 | 2 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 10 / `hypostyle` | Колонный зал | wonder | 3 x 3 | 191, 231 | 384 | 380 | 3 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 11 / `sun_temple` | Храм солнца | wonder | 3 x 3 | 191, 238 | 384 | 420 | 4 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 12 / `lighthouse` | Маяк | wonder | 2 x 2 | 127, 242 | 256 | 450 | 5 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 13 / `sacred_lake` | Священное озеро | wonder | 3 x 3 | 191, 117 | 384 | 500 | 6 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 14 / `great_pyramid` | Великая пирамида | wonder | 4 x 4 | 255, 243 | 512 | 750 | 9 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 15 / `mud_house` | Глинобитный дом | building | 2 x 2 | 127, 173 | 256 | 200 | 2 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 16 / `pottery` | Гончарня | building | 2 x 2 | 127, 124 | 256 | 220 | 2 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 17 / `bakery` | Пекарня | building | 3 x 2 | 159, 155 | 320 | 240 | 3 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 18 / `weaver` | Ткацкая мастерская | building | 3 x 2 | 159, 150 | 320 | 260 | 3 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 19 / `scribe_school` | Школа писцов | building | 3 x 2 | 159, 171 | 320 | 280 | 4 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 20 / `granary` | Зернохранилище | building | 3 x 2 | 159, 134 | 320 | 300 | 4 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 21 / `bazaar` | Базар | building | 3 x 3 | 191, 164 | 384 | 320 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 22 / `villa` | Вилла вельможи | building | 3 x 3 | 191, 237 | 384 | 340 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 23 / `dovecote` | Голубятня | building | 2 x 2 | 127, 196 | 256 | 360 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 24 / `watchtower` | Сторожевая башня | building | 2 x 2 | 127, 236 | 256 | 380 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 25 / `winery` | Винодельня | building | 3 x 3 | 191, 178 | 384 | 400 | 6 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 26 / `bastet_shrine` | Святилище Бастет | building | 3 x 3 | 191, 187 | 384 | 420 | 6 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 27 / `felucca_dock` | Причал с фелюкой | building | 4 x 2 | 191, 105 | 384 | 440 | 7 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 28 / `chariot_stable` | Конюшня колесниц | building | 4 x 3 | 223, 195 | 448 | 460 | 7 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 29 / `sculptor_yard` | Двор скульптора | building | 4 x 3 | 223, 181 | 448 | 500 | 8 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 30 / `pharaoh_garden` | Сад фараона | building | 4 x 4 | 255, 238 | 512 | 550 | 9 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 31 / `date_palm` | Финиковая пальма | tree | 1 x 1 | 75, 166 | 128 | 30 | 0 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 32 / `doum_palm` | Пальма дум | tree | 1 x 1 | 79, 153 | 128 | 30 | 0 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 33 / `cypress` | Кипарис | tree | 1 x 1 | 48, 223 | 128 | 45 | 1 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 34 / `acacia` | Акация | tree | 1 x 1 | 73, 165 | 128 | 45 | 1 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 35 / `fig` | Смоковница | tree | 1 x 1 | 57, 179 | 128 | 45 | 2 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 36 / `pomegranate` | Гранатовое дерево | tree | 1 x 1 | 59, 163 | 128 | 60 | 3 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 37 / `olive` | Олива | tree | 1 x 1 | 52, 164 | 128 | 75 | 4 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 38 / `palm_grove` | Пальмовая роща | tree | 2 x 2 | 65, 132 | 256 | 120 | 2 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 39 / `twin_palms` | Двойная пальма | tree | 2 x 2 | 54, 132 | 256 | 150 | 2 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 40 / `sycamore` | Сикомор | tree | 2 x 2 | 54, 134 | 256 | 180 | 3 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 41 / `tamarisk` | Тамариск | tree | 2 x 2 | 55, 116 | 256 | 300 | 5 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 42 / `shrub` | Круглый куст | bush | 1 x 1 | 62, 106 | 128 | 15 | 0 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 43 / `papyrus` | Папирус | bush | 1 x 1 | 76, 164 | 128 | 15 | 0 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 44 / `aloe` | Алоэ | bush | 1 x 1 | 63, 133 | 128 | 30 | 1 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 45 / `oleander` | Олеандр | bush | 1 x 1 | 71, 119 | 128 | 30 | 1 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 46 / `henna` | Куст хны | bush | 1 x 1 | 70, 98 | 128 | 30 | 2 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 47 / `reeds` | Нильский тростник | bush | 1 x 1 | 64, 185 | 128 | 30 | 2 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 48 / `potted_tree` | Деревце в кадке | bush | 1 x 1 | 49, 156 | 128 | 45 | 3 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 49 / `hedge` | Живая изгородь | bush | 1 x 1 | 105, 126 | 128 | 30 | 3 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 50 / `blue_lotus` | Голубой лотос | flower | 1 x 1 | 63, 56 | 128 | 15 | 0 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 51 / `poppies` | Маки | flower | 1 x 1 | 54, 88 | 128 | 15 | 0 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 52 / `chamomile` | Ромашки | flower | 1 x 1 | 64, 81 | 128 | 15 | 1 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 53 / `cornflowers` | Васильки | flower | 1 x 1 | 52, 100 | 128 | 30 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 54 / `flower_box` | Цветочный ящик | flower | 1 x 1 | 74, 80 | 128 | 30 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 55 / `irises` | Ирисы | flower | 1 x 1 | 58, 122 | 128 | 30 | 3 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 56 / `flower_bed` | Клумба | flower | 2 x 2 | 126, 74 | 256 | 90 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 57 / `pattern_bed` | Узорный цветник | flower | 2 x 2 | 121, 72 | 256 | 180 | 5 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 58 / `broken_column` | Упавшая колонна | statue | 1 x 1 | 80, 134 | 128 | 30 | 1 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 59 / `pharaoh_head` | Голова фараона | statue | 1 x 1 | 69, 150 | 128 | 45 | 1 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 60 / `bastet_cat` | Кошка Бастет | statue | 1 x 1 | 60, 167 | 128 | 60 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 61 / `obelisk` | Обелиск | statue | 1 x 1 | 54, 236 | 128 | 60 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 62 / `sundial` | Солнечные часы | statue | 1 x 1 | 48, 130 | 128 | 60 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 63 / `scribe_statue` | Статуя писца | statue | 1 x 1 | 62, 130 | 128 | 90 | 4 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 64 / `golden_scarab` | Золотой скарабей | statue | 1 x 1 | 69, 115 | 128 | 150 | 5 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 65 / `colossus` | Колосс | statue | 2 x 2 | 86, 149 | 256 | 180 | 4 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 66 / `anubis` | Анубис | statue | 2 x 2 | 80, 85 | 256 | 240 | 5 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 67 / `birdbath` | Чаша для птиц | water | 1 x 1 | 57, 116 | 128 | 45 | 1 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 68 / `small_fountain` | Фонтанчик | water | 1 x 1 | 77, 130 | 128 | 90 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 69 / `lotus_pond` | Пруд с лотосами | water | 2 x 2 | 82, 54 | 256 | 120 | 2 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 70 / `ibis_pond` | Пруд с ибисами | water | 2 x 2 | 85, 52 | 256 | 150 | 3 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 71 / `shaduf` | Шадуф | water | 2 x 2 | 108, 116 | 256 | 240 | 5 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 72 / `bench` | Каменная скамья | garden | 1 x 1 | 73, 92 | 128 | 30 | 0 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 73 / `lamp_post` | Светильник | garden | 1 x 1 | 37, 191 | 128 | 30 | 0 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 74 / `torch` | Факел | garden | 1 x 1 | 19, 182 | 128 | 30 | 1 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 75 / `signpost` | Указатель | garden | 1 x 1 | 42, 154 | 128 | 30 | 1 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 76 / `standard` | Штандарт | garden | 1 x 1 | 36, 218 | 128 | 45 | 2 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 77 / `grain_mill` | Ручная мельница | garden | 1 x 1 | 70, 66 | 128 | 45 | 3 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 78 / `feast_mat` | Пир на циновке | garden | 2 x 2 | 93, 56 | 256 | 120 | 2 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 79 / `shade_canopy` | Навес с подушками | garden | 2 x 2 | 103, 133 | 256 | 150 | 2 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 80 / `vine_pergola` | Виноградная пергола | garden | 2 x 2 | 98, 131 | 256 | 180 | 3 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 81 / `palanquin` | Паланкин | garden | 2 x 2 | 83, 133 | 256 | 240 | 4 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 82 / `kiosk` | Беседка-киоск | garden | 2 x 2 | 102, 160 | 256 | 300 | 4 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 83 / `crates` | Ящики | camp | 1 x 1 | 61, 149 | 128 | 15 | 0 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 84 / `amphorae` | Амфоры | camp | 1 x 1 | 67, 84 | 128 | 15 | 0 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 85 / `campfire` | Костёр | camp | 1 x 1 | 68, 64 | 128 | 30 | 0 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 86 / `scribe_desk` | Пюпитр писца | camp | 1 x 1 | 64, 103 | 128 | 60 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 87 / `grain_baskets` | Корзины с зерном | camp | 1 x 1 | 67, 70 | 128 | 90 | 5 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 88 / `treasure_chest` | Сундук сокровищ | camp | 1 x 1 | 64, 91 | 128 | 120 | 5 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 89 / `tent` | Шатёр | camp | 2 x 2 | 88, 125 | 256 | 120 | 1 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 90 / `dig_site` | Раскопки | camp | 2 x 2 | 95, 66 | 256 | 120 | 2 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 91 / `reed_boat` | Тростниковая лодка | camp | 2 x 2 | 62, 71 | 256 | 150 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 92 / `cart` | Повозка | camp | 2 x 2 | 64, 76 | 256 | 180 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 93 / `crocodile` | Крокодил | animal | 1 x 1 | 50, 60 | 128 | 60 | 2 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 94 / `ibis` | Ибис | animal | 1 x 1 | 47, 126 | 128 | 60 | 2 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 95 / `falcon` | Сокол | animal | 1 x 1 | 36, 166 | 128 | 60 | 3 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 96 / `cat` | Кошка | animal | 1 x 1 | 41, 115 | 128 | 90 | 4 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 97 / `hippo` | Бегемотик | animal | 1 x 1 | 52, 70 | 128 | 90 | 4 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 98 / `boulder` | Песчаный валун | rock | 1 x 1 | 61, 98 | 128 | 15 | 0 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 99 / `turquoise` | Бирюза | rock | 1 x 1 | 49, 135 | 128 | 120 | 5 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 100 / `desert_rocks` | Скалы пустыни | rock | 2 x 2 | 83, 92 | 256 | 60 | 1 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| Type / key | Name | Category | Tiles | Coins | Stars | Reviewed city capture |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| 5 / `small_pyramid` | Малая пирамида | wonder | 2 x 2 | 240 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 6 / `nilometer` | Ниломер | wonder | 2 x 2 | 260 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 7 / `sphinx` | Сфинкс | wonder | 3 x 2 | 300 | 1 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 8 / `barque_shrine` | Святилище ладьи | wonder | 3 x 2 | 320 | 1 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 9 / `pylon_gate` | Пилон | wonder | 3 x 2 | 340 | 2 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 10 / `hypostyle` | Колонный зал | wonder | 3 x 3 | 380 | 3 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 11 / `sun_temple` | Храм солнца | wonder | 3 x 3 | 420 | 4 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 12 / `lighthouse` | Маяк | wonder | 2 x 2 | 450 | 5 | [Page 1](review/building-catalogue/footprints-01.jpg) |
+| 13 / `sacred_lake` | Священное озеро | wonder | 3 x 3 | 500 | 6 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 14 / `great_pyramid` | Великая пирамида | wonder | 4 x 4 | 750 | 9 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 15 / `mud_house` | Глинобитный дом | building | 2 x 2 | 200 | 2 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 16 / `pottery` | Гончарня | building | 2 x 2 | 220 | 2 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 17 / `bakery` | Пекарня | building | 3 x 2 | 240 | 3 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 18 / `weaver` | Ткацкая мастерская | building | 3 x 2 | 260 | 3 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 19 / `scribe_school` | Школа писцов | building | 3 x 2 | 280 | 4 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 20 / `granary` | Зернохранилище | building | 3 x 2 | 300 | 4 | [Page 2](review/building-catalogue/footprints-02.jpg) |
+| 21 / `bazaar` | Базар | building | 3 x 3 | 320 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 22 / `villa` | Вилла вельможи | building | 3 x 3 | 340 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 23 / `dovecote` | Голубятня | building | 2 x 2 | 360 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 24 / `watchtower` | Сторожевая башня | building | 2 x 2 | 380 | 5 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 25 / `winery` | Винодельня | building | 3 x 3 | 400 | 6 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 26 / `bastet_shrine` | Святилище Бастет | building | 3 x 3 | 420 | 6 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 27 / `felucca_dock` | Причал с фелюкой | building | 4 x 2 | 440 | 7 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 28 / `chariot_stable` | Конюшня колесниц | building | 4 x 3 | 460 | 7 | [Page 3](review/building-catalogue/footprints-03.jpg) |
+| 29 / `sculptor_yard` | Двор скульптора | building | 4 x 3 | 500 | 8 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 30 / `pharaoh_garden` | Сад фараона | building | 4 x 4 | 550 | 9 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 31 / `date_palm` | Финиковая пальма | tree | 1 x 1 | 30 | 0 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 32 / `doum_palm` | Пальма дум | tree | 1 x 1 | 30 | 0 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 33 / `cypress` | Кипарис | tree | 1 x 1 | 45 | 1 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 34 / `acacia` | Акация | tree | 1 x 1 | 45 | 1 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 35 / `fig` | Смоковница | tree | 1 x 1 | 45 | 2 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 36 / `pomegranate` | Гранатовое дерево | tree | 1 x 1 | 60 | 3 | [Page 4](review/building-catalogue/footprints-04.jpg) |
+| 37 / `olive` | Олива | tree | 1 x 1 | 75 | 4 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 38 / `palm_grove` | Пальмовая роща | tree | 2 x 2 | 120 | 2 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 39 / `twin_palms` | Двойная пальма | tree | 2 x 2 | 150 | 2 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 40 / `sycamore` | Сикомор | tree | 2 x 2 | 180 | 3 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 41 / `tamarisk` | Тамариск | tree | 2 x 2 | 300 | 5 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 42 / `shrub` | Круглый куст | bush | 1 x 1 | 15 | 0 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 43 / `papyrus` | Папирус | bush | 1 x 1 | 15 | 0 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 44 / `aloe` | Алоэ | bush | 1 x 1 | 30 | 1 | [Page 5](review/building-catalogue/footprints-05.jpg) |
+| 45 / `oleander` | Олеандр | bush | 1 x 1 | 30 | 1 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 46 / `henna` | Куст хны | bush | 1 x 1 | 30 | 2 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 47 / `reeds` | Нильский тростник | bush | 1 x 1 | 30 | 2 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 48 / `potted_tree` | Деревце в кадке | bush | 1 x 1 | 45 | 3 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 49 / `hedge` | Живая изгородь | bush | 1 x 1 | 30 | 3 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 50 / `blue_lotus` | Голубой лотос | flower | 1 x 1 | 15 | 0 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 51 / `poppies` | Маки | flower | 1 x 1 | 15 | 0 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 52 / `chamomile` | Ромашки | flower | 1 x 1 | 15 | 1 | [Page 6](review/building-catalogue/footprints-06.jpg) |
+| 53 / `cornflowers` | Васильки | flower | 1 x 1 | 30 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 54 / `flower_box` | Цветочный ящик | flower | 1 x 1 | 30 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 55 / `irises` | Ирисы | flower | 1 x 1 | 30 | 3 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 56 / `flower_bed` | Клумба | flower | 2 x 2 | 90 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 57 / `pattern_bed` | Узорный цветник | flower | 2 x 2 | 180 | 5 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 58 / `broken_column` | Упавшая колонна | statue | 1 x 1 | 30 | 1 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 59 / `pharaoh_head` | Голова фараона | statue | 1 x 1 | 45 | 1 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 60 / `bastet_cat` | Кошка Бастет | statue | 1 x 1 | 60 | 2 | [Page 7](review/building-catalogue/footprints-07.jpg) |
+| 61 / `obelisk` | Обелиск | statue | 1 x 1 | 60 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 62 / `sundial` | Солнечные часы | statue | 1 x 1 | 60 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 63 / `scribe_statue` | Статуя писца | statue | 1 x 1 | 90 | 4 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 64 / `golden_scarab` | Золотой скарабей | statue | 1 x 1 | 150 | 5 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 65 / `colossus` | Колосс | statue | 2 x 2 | 180 | 4 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 66 / `anubis` | Анубис | statue | 2 x 2 | 240 | 5 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 67 / `birdbath` | Чаша для птиц | water | 1 x 1 | 45 | 1 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 68 / `small_fountain` | Фонтанчик | water | 1 x 1 | 90 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
+| 69 / `lotus_pond` | Пруд с лотосами | water | 2 x 2 | 120 | 2 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 70 / `ibis_pond` | Пруд с ибисами | water | 2 x 2 | 150 | 3 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 71 / `shaduf` | Шадуф | water | 2 x 2 | 240 | 5 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 72 / `bench` | Каменная скамья | garden | 1 x 1 | 30 | 0 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 73 / `lamp_post` | Светильник | garden | 1 x 1 | 30 | 0 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 74 / `torch` | Факел | garden | 1 x 1 | 30 | 1 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 75 / `signpost` | Указатель | garden | 1 x 1 | 30 | 1 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 76 / `standard` | Штандарт | garden | 1 x 1 | 45 | 2 | [Page 9](review/building-catalogue/footprints-09.jpg) |
+| 77 / `grain_mill` | Ручная мельница | garden | 1 x 1 | 45 | 3 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 78 / `feast_mat` | Пир на циновке | garden | 2 x 2 | 120 | 2 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 79 / `shade_canopy` | Навес с подушками | garden | 2 x 2 | 150 | 2 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 80 / `vine_pergola` | Виноградная пергола | garden | 2 x 2 | 180 | 3 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 81 / `palanquin` | Паланкин | garden | 2 x 2 | 240 | 4 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 82 / `kiosk` | Беседка-киоск | garden | 2 x 2 | 300 | 4 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 83 / `crates` | Ящики | camp | 1 x 1 | 15 | 0 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 84 / `amphorae` | Амфоры | camp | 1 x 1 | 15 | 0 | [Page 10](review/building-catalogue/footprints-10.jpg) |
+| 85 / `campfire` | Костёр | camp | 1 x 1 | 30 | 0 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 86 / `scribe_desk` | Пюпитр писца | camp | 1 x 1 | 60 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 87 / `grain_baskets` | Корзины с зерном | camp | 1 x 1 | 90 | 5 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 88 / `treasure_chest` | Сундук сокровищ | camp | 1 x 1 | 120 | 5 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 89 / `tent` | Шатёр | camp | 2 x 2 | 120 | 1 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 90 / `dig_site` | Раскопки | camp | 2 x 2 | 120 | 2 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 91 / `reed_boat` | Тростниковая лодка | camp | 2 x 2 | 150 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 92 / `cart` | Повозка | camp | 2 x 2 | 180 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
+| 93 / `crocodile` | Крокодил | animal | 1 x 1 | 60 | 2 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 94 / `ibis` | Ибис | animal | 1 x 1 | 60 | 2 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 95 / `falcon` | Сокол | animal | 1 x 1 | 60 | 3 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 96 / `cat` | Кошка | animal | 1 x 1 | 90 | 4 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 97 / `hippo` | Бегемотик | animal | 1 x 1 | 90 | 4 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 98 / `boulder` | Песчаный валун | rock | 1 x 1 | 15 | 0 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 99 / `turquoise` | Бирюза | rock | 1 x 1 | 120 | 5 | [Page 12](review/building-catalogue/footprints-12.jpg) |
+| 100 / `desert_rocks` | Скалы пустыни | rock | 2 x 2 | 60 | 1 | [Page 12](review/building-catalogue/footprints-12.jpg) |

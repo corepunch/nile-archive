@@ -1,5 +1,7 @@
 # Painted buildings and independent ground shadows
 
+> These captures show the earlier 2:1 paint-overs. Current art uses the [city camera](../../../../../docs/BUILDINGS.md#the-camera) and is on the [review sheet](../../screenshots/buildings.jpg).
+
 All 34 real-game captures were visually inspected. Captured with the native renderer at logical 480×900 and 390×844 (the latter with 0,47,0,34 phone safe areas). Retina image dimensions are twice the logical size.
 
 The before captures use main `6a56346` with the current 96-entry catalogue and

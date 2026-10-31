@@ -16,17 +16,30 @@
 /* ------------------------------------------------------------------- tiles */
 
 /* Tile coordinates: u runs down-right, v down-left, one unit per tile; tile
- * centres are whole numbers. */
-static float tile_w(const city *c) { return c->tile.w > 0 ? c->tile.w : 32; }
-static float tile_h(const city *c) { return c->tile.h > 0 ? c->tile.h : 16; }
+ * centres are whole numbers. The ground is seen by the orthographic city camera:
+ * the tile axes turn by its yaw, then y shrinks by the sine of its elevation. */
+static float tile_side(const city *c) { return c->tile > 0 ? c->tile : 45; }
+static float yaw_cos(void) { return cosf(CITY_CAMERA_YAW * ENGINE_PI / 180); }
+static float yaw_sin(void) { return sinf(CITY_CAMERA_YAW * ENGINE_PI / 180); }
+static float ground_y(void) { return sinf(CITY_CAMERA_ELEVATION * ENGINE_PI / 180); }
 
 static vec2 to_tile(const city *c, vec2 p)
 {
-    float x = p.x / tile_w(c), y = p.y / tile_h(c);
-    return v2((x + y) * .5f, (y - x) * .5f);
+    float x = p.x / tile_side(c), y = p.y / (tile_side(c) * ground_y());
+    return v2(x * yaw_cos() + y * yaw_sin(), y * yaw_cos() - x * yaw_sin());
 }
 
-static vec2 from_tile(const city *c, vec2 t) { return v2((t.x - t.y) * tile_w(c), (t.x + t.y) * tile_h(c)); }
+static vec2 from_tile(const city *c, vec2 t)
+{
+    return v2((t.x * yaw_cos() - t.y * yaw_sin()) * tile_side(c),
+              (t.x * yaw_sin() + t.y * yaw_cos()) * ground_y() * tile_side(c));
+}
+
+vec2 city_tile_to_world(const city *c, vec2 tile) { return from_tile(c, tile); }
+vec2 city_world_to_tile(const city *c, vec2 world) { return to_tile(c, world); }
+
+/* The base's left and right corners, w along u and h along v. */
+float city_base_span(const city *c, size2 size) { return (size.w * yaw_cos() + size.h * yaw_sin()) * tile_side(c); }
 
 /* Footprint in tiles: the base plus the city's clearance; a building without
  * a size counts as one tile. */
@@ -65,8 +78,7 @@ void city_init(city *c, const char *ground_path)
         if (tex.h <= 0) continue;
         if (d->pivot.x == 0 && d->pivot.y == 0) d->pivot = v2(tex.w * .5f, tex.h);
         if (d->shadow_pivot.x == 0 && d->shadow_pivot.y == 0) d->shadow_pivot = d->pivot;
-        /* the footprint's left-to-right corners span size.w + size.h tile half widths */
-        if (d->base_width > 0 && d->size.w > 0) d->height = tex.h * (d->size.w + d->size.h) * tile_w(c) / d->base_width;
+        if (d->base_width > 0 && d->size.w > 0) d->height = tex.h * city_base_span(c, d->size) / d->base_width;
     }
 }
 
@@ -85,7 +97,9 @@ rect city_sprite_rect(const city *c, building b)
 rect city_shadow_rect(const city *c, building b)
 {
     const building_def *d = &c->defs[b.type];
-    float k = d->sprite.size.h > 0 ? d->height / d->sprite.size.h : 0;
+    /* its own measured width, or the sprite's pixel scale */
+    float k = d->shadow_base_width > 0 ? city_base_span(c, d->size) / d->shadow_base_width
+            : d->sprite.size.h > 0 ? d->height / d->sprite.size.h : 0;
     return rect_make(vec2_sub(b.pos, vec2_scale(d->shadow_pivot, k)), size2_scale(d->shadow.size, k));
 }
 
@@ -150,7 +164,7 @@ bool city_can_place(const city *c, vec2 p, int type, int ignore)
 bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out)
 {
     vec2 t = to_tile(c, city_snap(c, hint, type));
-    int rings = (int)((c->cam.world.w / tile_w(c) + c->cam.world.h / tile_h(c)) * .5f) + 1;
+    int rings = (int)((c->cam.world.w + c->cam.world.h / ground_y()) / tile_side(c)) + 1;
     for (int ring = 0; ring <= rings; ring++)
         for (int y = -ring; y <= ring; y++)
             for (int x = -ring; x <= ring; x++) {
@@ -554,6 +568,52 @@ static void draw_footprint(const city *c, vec2 at, int type, bool ok)
     for (int i = 0; i < 4; i++) draw_line(pts[i], pts[(i + 1) % 4], 1.5f, line);
 }
 
+/* Painter's order. Tiles skew under the camera, so a footprint's y says little
+ * about a long neighbour's: B is behind A when A lies past it along one tile
+ * axis and not before it along the other. Unrelated pairs keep y order. */
+static struct { float u0, v0, u1, v1; } depth_box[CITY_MAX];
+
+static bool draws_behind(int a, int b)
+{
+    float e = 1e-3f;
+    bool u_past = depth_box[b].u0 >= depth_box[a].u1 - e, v_past = depth_box[b].v0 >= depth_box[a].v1 - e;
+    bool u_before = depth_box[a].u0 >= depth_box[b].u1 - e, v_before = depth_box[a].v0 >= depth_box[b].v1 - e;
+    return (u_past && !v_before) || (v_past && !u_before);
+}
+
+static void depth_visit(int i, const int *by_y, int n, bool *seen, int *order, int *m)
+{
+    seen[i] = true;
+    for (int k = 0; k < n; k++)
+        if (!seen[by_y[k]] && draws_behind(by_y[k], i)) depth_visit(by_y[k], by_y, n, seen, order, m);
+    order[(*m)++] = i;
+}
+
+static int depth_order(const city *c, int *order)
+{
+    int by_y[CITY_MAX], n = 0, m = 0;
+    bool seen[CITY_MAX] = {0};
+    for (int i = 0; i < c->count; i++) {
+        if (c->placing >= 0 && i == c->moving) continue;
+        size2 s = c->defs[c->items[i].type].size;
+        if (s.w <= 0 || s.h <= 0) s = sz2(1, 1);
+        vec2 t = to_tile(c, c->items[i].pos);
+        depth_box[i].u0 = t.x - s.w * .5f, depth_box[i].u1 = t.x + s.w * .5f;
+        depth_box[i].v0 = t.y - s.h * .5f, depth_box[i].v1 = t.y + s.h * .5f;
+        int j = n++;
+        by_y[j] = i;
+        while (j > 0 && c->items[by_y[j - 1]].pos.y > c->items[by_y[j]].pos.y) {
+            int t2 = by_y[j - 1];
+            by_y[j - 1] = by_y[j];
+            by_y[j] = t2;
+            j--;
+        }
+    }
+    for (int k = 0; k < n; k++)
+        if (!seen[by_y[k]]) depth_visit(by_y[k], by_y, n, seen, order, &m);
+    return m;
+}
+
 void city_draw(const city *c, input in, double now)
 {
     camera cam = c->cam;
@@ -574,19 +634,7 @@ void city_draw(const city *c, input in, double now)
         draw_building_shadow(c, (building){p, c->selected, 0}, .5f);
     }
 
-    /* painter's order: buildings further down the map are in front */
-    int order[CITY_MAX], n = 0;
-    for (int i = 0; i < c->count; i++) {
-        if (c->placing >= 0 && i == c->moving) continue;
-        int j = n++;
-        order[j] = i;
-        while (j > 0 && c->items[order[j - 1]].pos.y > c->items[order[j]].pos.y) {
-            int t = order[j - 1];
-            order[j - 1] = order[j];
-            order[j] = t;
-            j--;
-        }
-    }
+    int order[CITY_MAX], n = depth_order(c, order);
     for (int k = 0; k < n; k++) {
         int i = order[k];
         float lift = i == c->pop_index && c->pop_time > 0 ? sinf((1 - c->pop_time) * ENGINE_PI) * 8 : 0;

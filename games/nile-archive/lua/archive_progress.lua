@@ -30,7 +30,22 @@ local function serialize(s)
 end
 
 function M.save() save.write("progress", serialize) end
-function M.read() save.read("progress", serialize) end
+-- Land saved buildings on the grid, whichever tile projection they were saved under.
+local function rehome_saved()
+    local c = G.island
+    local items = c.items
+    c.count = 0
+    for _, b in ipairs(items) do
+        local spot = c:snap(b.pos, b.type)
+        local ok = c:can_place(spot, b.type, -1)
+        if not ok then ok, spot = c:find_spot(b.type, spot) end
+        c:add(ok and spot or b.pos, b.type, b.stamp)
+    end
+end
+
+function M.read()
+    if save.read("progress", serialize) then rehome_saved() end
+end
 
 -- Progress of the old HTML version lived in localStorage["nile-v1"] as JSON.
 function M.import_legacy()

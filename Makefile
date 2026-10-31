@@ -9,6 +9,8 @@
 #   make lint            luacheck over every game, the engine's Lua and the tests (apt: lua-check)
 #   make gen             regenerate the Lua glue, docs/LUA_API.md and engine.d.lua from engine/api.xml
 #   make xcode           regenerate games/<name>/<name>.xcodeproj (tools/xcode/generate.py)
+#   make buildings GAME=relic-rush [KEYS="lodge well"] [REBUILD=1]
+#                        render city buildings by name from the game's Blender master
 #   make shots           regenerate docs/screenshots (headless, software renderer)
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
@@ -54,7 +56,7 @@ ENGINE_DEPS := $(UNITY) $(wildcard engine/*.c engine/*.h)
 PLATFORM_DEPS := $(shell find $(PLATFORM_DIR) -type f \( -name '*.c' -o -name '*.m' -o -name '*.h' \) 2>/dev/null)
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 
-.PHONY: all test gen gen-check lint xcode xcode-check shots web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
+.PHONY: all test gen gen-check lint xcode xcode-check shots buildings web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: $(ENGINE_DEPS)
@@ -130,13 +132,16 @@ test: gen-check xcode-check build/tests build/test-audio test-clayfight
 	python3 games/christmas-market/tools/prepare_catalogue.py --check
 	python3 games/christmas-market/tools/check_assets.py
 	python3 games/relic-rush/tools/prepare_hud.py --check
-	python3 games/relic-rush/tools/building_assets.py --check
+	python3 tools/buildings.py --check
 	@mkdir -p build/test-home
 	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests $(filter-out tests/lua/christmas.lua,$(wildcard tests/lua/*.lua))
 	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests --lua-dir games/christmas-market/lua tests/lua/christmas.lua
 
 shots: all
 	./tools/screenshots.sh
+
+buildings:
+	python3 tools/buildings.py $(GAME) $(KEYS) $(if $(REBUILD),--rebuild)
 
 # --- WebAssembly (Emscripten) ------------------------------------------------
 # gnu11 rather than c11: Emscripten's EM_JS/EM_ASM macros need GNU extensions.
@@ -176,8 +181,11 @@ build/test-story: tests/test_story.c $(ENGINE_OBJ) engine/render.h
 	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
 build/city-gesture: tools/capture_city_gesture.c $(ENGINE_OBJ) engine/render.h
 	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
-test-platform: build/test-platform build/test-backdrop build/test-story
+build/test-city-render: tests/test_city_render.c $(ENGINE_OBJ) engine/render.h
+	$(CC) $(ALL_CFLAGS) -o $@ $< $(ENGINE_OBJ) $(LIBS)
+test-platform: build/test-platform build/test-backdrop build/test-story build/test-city-render
 	./build/test-platform
 	./build/test-platform --safe-area-test
 	./build/test-backdrop
 	./build/test-story
+	./build/test-city-render

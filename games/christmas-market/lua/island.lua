@@ -14,7 +14,7 @@ local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
 -- its own pixels (see docs/BUILDINGS.md): the ground centre it stands on
 -- (pivot), the width from its left corner to its right one, and its size in
 -- whole TILE tiles.
-M.TILE = size2(40, 20)   -- half extents: a tile is 80 x 40 world units
+M.TILE = 56   -- a tile's side on the ground, in world units
 
 -- The catalogue owns sprite registration, prices, descriptions and unlocks.
 M.catalogue = require("buildings")

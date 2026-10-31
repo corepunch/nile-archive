@@ -1,0 +1,8 @@
+{
+ "blend": "art/building-catalogue/relic_rush_buildings.blend",
+ "generator": "art/building-catalogue/build_scene.py",
+ "registry": "art/building-catalogue/registration.json",
+ "after": "tools/prepare_buildings.py",
+ "ppt": 100,
+ "samples": 64
+}

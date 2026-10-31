@@ -2,6 +2,7 @@
 -- chapters, the island's buildings, the cast and the scripted dialogue.
 local economy = require("archive_economy")
 local catalogue = require("archive_catalogue")
+local sprites = require("building_sprites")
 local rgba = color
 
 local M = {}
@@ -30,23 +31,23 @@ M.scenes = {
 for i, scene in ipairs(M.scenes) do scene.gate = economy.gates[i] end
 M.SCENES = #M.scenes
 
--- Each sprite's footprint is measured in its own pixels (docs/BUILDINGS.md):
--- the ground centre it stands on (pivot), the width from its left corner to
--- its right one, and its size in whole TILE tiles.
-M.TILE = size2(24, 12)   -- half extents: a tile is 48 x 24 world units
+-- Sprites are rendered by name from the Blender master, which registers each
+-- one's pivot, base width and size (docs/BUILDINGS.md); this adds the economy.
+M.TILE = 34   -- a tile's side on the ground, in world units
 
-local function building(id, title, w, h, pivot, base, path)
+local function building(id, title, key)
     local balance = economy.buildings[id]
-    return {name = title, sprite_path = path, size = size2(w, h), pivot = pivot, base_width = base,
-            cost = purse(balance.coins), reward = purse(0, balance.influence), needs = purse(0, 0, balance.chapters)}
+    local def = {name = title, cost = purse(balance.coins), reward = purse(0, balance.influence), needs = purse(0, 0, balance.chapters)}
+    for field, value in pairs(sprites[key]) do def[field] = value end
+    return def
 end
 
 M.buildings = {
-    building(1, "Дом садовника", 2, 2, vec2(81, 200), 150, "buildings/0.png"),
-    building(2, "Храм Исиды", 3, 2, vec2(86, 198), 171, "buildings/1.png"),
-    building(3, "Архив", 3, 2, vec2(76, 187), 151, "buildings/2.png"),
-    building(4, "Фонтан", 2, 2, vec2(80, 192), 151, "buildings/3.png"),
-    building(5, "Мастерская", 2, 2, vec2(76, 187), 143, "buildings/4.png"),
+    building(1, "Дом садовника", "gardener_house"),
+    building(2, "Храм Исиды", "isis_temple"),
+    building(3, "Архив", "archive"),
+    building(4, "Фонтан", "fountain"),
+    building(5, "Мастерская", "workshop"),
 }
 
 -- The five restorations above grant Influence. The 96 catalogue objects after
@@ -58,7 +59,8 @@ M.kinds = {}   -- per type: category, Star unlock and key (the engine's defs kee
 for i = 1, M.RESTORATIONS do M.kinds[i] = {category = "story", stars = 0} end
 for _, e in ipairs(catalogue) do
     M.buildings[#M.buildings + 1] = {name = e.name, sprite_path = e.sprite_path, size = e.size, pivot = e.pivot,
-        base_width = e.base_width, cost = purse(e.coins), reward = purse(), needs = purse(0, 0, 0, e.stars)}
+        base_width = e.base_width, shadow_path = e.shadow_path, shadow_pivot = e.shadow_pivot, shadow_base_width = e.shadow_base_width,
+        cost = purse(e.coins), reward = purse(), needs = purse(0, 0, 0, e.stars)}
     M.kinds[#M.buildings] = {category = e.category, stars = e.stars, key = e.key}
 end
 
