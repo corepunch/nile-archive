@@ -14,7 +14,9 @@ jobs:
         with:
           submodules: true
       - name: Install platform build and headless display dependencies
-        run: sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb lua-check
+        run: |
+          sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb lua-check
+          pip install pillow   # make test checks the Relic Rush HUD atlas; make shots writes JPEGs
       - name: Build games
         run: make CFLAGS="-O2 -g -Werror"
       - name: Renderer and platform input tests
@@ -24,13 +26,9 @@ jobs:
       - name: Lua lint
         run: make lint
       - name: Verify authored Relic Rush atlas crops
-        run: |
-          pip install pillow
-          python3 games/relic-rush/tools/board_assets.py --check
+        run: python3 games/relic-rush/tools/board_assets.py --check
       - name: Smoke test (headless screenshot of every screen)
-        run: |
-          pip install pillow
-          xvfb-run -a ./tools/screenshots.sh
+        run: xvfb-run -a ./tools/screenshots.sh
       - name: Relic Rush smoke test (level one to level two through injected clicks)
         run: xvfb-run -a timeout 600 ./build/relic-rush --headless --fresh --smoke --mute
       - name: Shared UI skins, bindings and nested modal input smoke test
