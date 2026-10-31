@@ -216,6 +216,24 @@ gra_t *W_TryLoadGra(const char *name)
     for(int i=0;i<bank_count;i++)if(!strcasecmp(banks[i].name,name))return &banks[i];
     if(!strcasecmp(name,"select"))return Select();
     if(!strcasecmp(name,"hud"))return Hud();
+    if(!strcasecmp(name,"large-font")){
+        gra_t *g=Bank(name,128,1);Palette(g->palettes,0x61442,16);
+        // Native alpha font 3 (VERSION text): ASCII lookup at c510, four
+        // column-major tiles per glyph at c370, character-bank offset 80.
+        for(int c=32;c<128;c++){
+            int glyph=X_U8(0xc510+c);if(glyph>=52)continue;
+            uint32_t entry=0xc370+glyph*8;
+            int w=X_U16(entry+4)?16:8;
+            patch_t *p=Patch(w,16);
+            for(int y=0;y<16;y++)for(int x=0;x<w;x++){
+                int code=X_U16(entry+2*(x/8*2+y/8))+(glyph>=50?0:128);
+                int v=characters[(code&4095)*32+y%8*4+x%8/2];
+                p->pixels[y*w+x]=(v>>(x%2?0:4))&15;
+            }
+            Bounds(p);g->frames[c]=(frame_t){.w=w,.h=16,.decoded=true,.patch=p};
+        }
+        return g;
+    }
     if(!strcasecmp(name,"stone-font")){
         gra_t *g=Bank(name,128,1);Palette(g->palettes,0x68e3a,16);
         for(int c='A';c<='Z';c++)Frame(g,c,391+c-'A',0);
@@ -245,8 +263,10 @@ gra_t *W_TryLoadGra(const char *name)
         return g;
     }
     if(!strcasecmp(name,"fonts")){
-        gra_t *g=Bank(name,128,1);g->palettes[0].count=15;
-        for(int v=0;v<16;v++)g->palettes[0].colors[v]=W_RGB(v*17,v*17,v*17);
+        gra_t *g=Bank(name,128,1);
+        // The authored bevel ramps run from light fill to dark edges.
+        // Increasing greys inverted that shading and produced a bright rim.
+        Palette(g->palettes,0x61802,16);
         for(int c=0;c<128;c++){
             patch_t *p=Patch(8,8);for(int k=0;k<32;k++){int v=characters[c*32+k];p->pixels[k*2]=v>>4;p->pixels[k*2+1]=v&15;}
             Bounds(p);

@@ -15,26 +15,25 @@ void V_DrawPatchScaled(int x,int y,const patch_t *p,const palette_t *pal,int fla
 }
 void V_DrawPatch(int x,int y,const patch_t *p,const palette_t *pal,int flags) { V_DrawPatchScaled(x,y,p,pal,flags,1,1); }
 
-// --- text, using the two complete alphabets in fonts ------------------
+// --- original compact, intro and timer alphabets ----------------------
 
-static gra_t *fonts, *stone;
-static short smallmap[128], bigmap[128];
+static gra_t *fonts,*large,*stone;
+static gra_t *Font(font_t font) {return font==FONT_BIG?large:font==FONT_TIMER?stone:fonts;}
 
 void V_Init(void)
 {
-    fonts = W_LoadGra("fonts");
-    stone = W_LoadGra("stone-font");
-    for (int i = 0; i < 128; i++)
-        smallmap[i] = bigmap[i] = -1;
-    for (int c=33;c<91;c++) smallmap[c]=bigmap[c]=c;
-
+    fonts=W_LoadGra("fonts");large=W_LoadGra("large-font");stone=W_LoadGra("stone-font");
 }
-
-static const patch_t *glyph(font_t font, char ch)
+static const patch_t *glyph(font_t font,char ch)
 {
-    int c = toupper((byte)ch) & 127;
-    int i = font == FONT_BIG ? bigmap[c] : smallmap[c];
-    return i >= 0 ? W_Frame(font==FONT_BIG?stone:fonts, i) : NULL;
+    int c=toupper((byte)ch)&127;
+    if(c<32 || (c==32 && font!=FONT_BIG))return NULL;
+    return W_Frame(Font(font),c);
+}
+static int Advance(font_t font,const patch_t *p)
+{
+    if(font==FONT_BIG)return p?p->w:8; // native one/two 8-pixel alpha cells
+    return p?p->w+1:font==FONT_SMALL?4:8;
 }
 
 int V_TextWidth(font_t font, const char *text)
@@ -42,7 +41,7 @@ int V_TextWidth(font_t font, const char *text)
     int w = 0;
     for (; *text; text++) {
         const patch_t *p = glyph(font, *text);
-        w += p ? p->w + 1 : (font == FONT_BIG ? 8 : 4);
+        w += Advance(font,p);
     }
     return w;
 }
@@ -53,17 +52,17 @@ static void DrawText(font_t font, int x, int y, const char *text, const palette_
     for (; *text; text++) {
         const patch_t *p = glyph(font, *text);
         if (!p) {
-            pen += (font == FONT_BIG ? 8 : 4) * sx;
+            pen += Advance(font,p)*sx;
             continue;
         }
         V_DrawPatchScaled((int)lroundf(pen + p->x * sx), y + (int)lroundf(p->y * sy), p, pal, 0, sx, sy);
-        pen += (p->w + 1) * sx;
+        pen += Advance(font,p)*sx;
     }
 }
 
 void V_DrawText(font_t font, int x, int y, const char *text)
 {
-    DrawText(font, x, y, text, &(font==FONT_BIG?stone:fonts)->palettes[0], 1, 1);
+    DrawText(font, x, y, text, &Font(font)->palettes[0], 1, 1);
 }
 
 void V_DrawTextColor(font_t font, int x, int y, const char *text, pixel_t color)
@@ -73,7 +72,7 @@ void V_DrawTextColor(font_t font, int x, int y, const char *text, pixel_t color)
 
 void V_DrawTextScaled(font_t font, int x, int y, const char *text, pixel_t color, float sx, float sy)
 {
-    palette_t pal = (font==FONT_BIG?stone:fonts)->palettes[0];
+    palette_t pal = Font(font)->palettes[0];
     for (int i = 1; i <= pal.count; i++) {
         pixel_t c = pal.colors[i];
         pal.colors[i] = W_RGB(((color >> 16) & 255) * ((c >> 16) & 255) / 255,
@@ -88,5 +87,5 @@ void V_DrawTextCentered(font_t font, int cx, int y, const char *text)
     int width=V_TextWidth(font,text);
     float scale=MIN(1.f,(VIEWWIDTH-12.f)/MAX(1,width));
     DrawText(font,cx-(int)lroundf(width*scale)/2,y,text,
-             &(font==FONT_BIG?stone:fonts)->palettes[0],scale,scale);
+             &Font(font)->palettes[0],scale,scale);
 }

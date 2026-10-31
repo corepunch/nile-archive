@@ -53,6 +53,40 @@ static void hud_checks(void)
     memcpy(roster[7]->name,saved,sizeof saved);
     puts("arcade HUD: authored bar states, mirrored 2x heart, stone digits and custom-name capture passed");
 }
+static void font_checks(void)
+{
+    byte *chip=I_Malloc(0x20000);
+    FILE *rom=fopen("data/primrage/136102-1045b.23p","rb");assert(rom);
+    assert(fread(chip,1,0x20000,rom)==0x20000);fclose(rom);
+    const char *text="VERSION 2.3";int pen=16;
+    const pixel_t bg=0xff172131;V_Clear(bg);V_DrawText(FONT_BIG,pen,16,text);
+    for(const char *c=text;*c;c++){
+        int glyph=X_U8(0xc510+*c);uint32_t entry=0xc370+glyph*8;
+        int width=X_U16(entry+4)?16:8;
+        for(int y=0;y<16;y++)for(int x=0;x<width;x++){
+            int tile=X_U16(entry+2*(x/8*2+y/8))+(glyph>=50?0:128);
+            int packed=chip[(tile&4095)*32+y%8*4+x%8/2];
+            int value=(packed>>(x%2?0:4))&15,rgb=X_U16(0x61442+value*2);
+            pixel_t expected=value?W_RGB((rgb>>10&31)*255/31,(rgb>>5&31)*255/31,(rgb&31)*255/31):bg;
+            for(int dy=0;dy<2;dy++)for(int dx=0;dx<2;dx++)
+                assert(screen[((16+y)*2+dy)*SCREENWIDTH+(pen+x)*2+dx]==expected);
+        }
+        pen+=width;
+    }
+    assert(V_TextWidth(FONT_BIG,text)==pen-16); // native 8/16-pixel advances, including I and space
+    V_Clear(bg);V_DrawText(FONT_SMALL,16,16,"A");
+    const patch_t *small=W_Frame(W_LoadGra("fonts"),'A');
+    for(int y=0;y<8;y++)for(int x=0;x<small->w;x++){
+        int packed=chip['A'*32+y*4+x/2],value=(packed>>(x%2?0:4))&15;
+        int rgb=X_U16(0x61802+value*2);
+        pixel_t expected=value?W_RGB((rgb>>10&31)*255/31,(rgb>>5&31)*255/31,(rgb&31)*255/31):bg;
+        assert(screen[(16+y)*2*SCREENWIDTH+(16+x)*2]==expected);
+    }
+    assert(W_LoadGra("fonts")->palettes[0].colors[1]>W_LoadGra("fonts")->palettes[0].colors[15]);
+    assert(V_TextWidth(FONT_TIMER,"57")>V_TextWidth(FONT_BIG,"57"));
+    free(chip);
+    puts("arcade fonts: intro alpha glyphs, column-major tile assembly, native cell spacing, exact 2x RGB and descending compact-font bevel passed");
+}
 static void title_palette_checks(void)
 {
     gra_t *g=W_LoadGra("title");
@@ -204,6 +238,6 @@ int main(int argc,char **argv)
     }
     puts("arcade sound: original DSP effects and all seven voice tables decoded");
     assert(P_CheckAnims()==0);
-    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();title_palette_checks();I_Shutdown();
+    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();title_palette_checks();font_checks();I_Shutdown();
     printf("arcade: all checks passed, CPU %.3f seconds\n",(double)(clock()-start)/CLOCKS_PER_SEC);return 0;
 }

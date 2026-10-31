@@ -135,7 +135,7 @@ enum {
     V_FADE = 8, // 50% blend
 };
 
-typedef enum { FONT_SMALL, FONT_BIG } font_t;
+typedef enum { FONT_SMALL, FONT_BIG, FONT_TIMER } font_t;
 
 void V_Init(void); // decodes the arcade character chip
 void V_Clear(pixel_t color);

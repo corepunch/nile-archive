@@ -109,6 +109,8 @@ def audit(roms):
     return dict(revision='primrageo 2.3 Dec 1994', framebuffer=[672, 480],
                 character_home_stages=list(cpu[0x69a40:0x69a47]),
                 arena_width=336 + 2 * (u16(0x6ba36) // 64), stages=stages,
+                fonts=dict(intro_ascii='0xc510', intro_tiles='0xc370', intro_palette='0x61442',
+                           intro_cells=[8, 16], compact_palette='0x61802', timer='RLE 417–426, palette 0x68e3a'),
                 shadows=dict(pointer_table='0x6b068', descriptors='0x6d5e0', palette='0x61702'),
                 contacts=dict(hit_script='0x56e28', block_script='0x56e36', block_palette='0x61802',
                               hit_palette='0x61822 (descriptor 0x6cf50, colour 0x190)', frame_ticks=3),

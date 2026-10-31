@@ -26,10 +26,11 @@ from active data. Custom clay photographs remain in `data/creatures/`.
 | Original selection states | Reliefs 788–794 and original body palettes | Unselected stone reliefs in background; coloured source heads under P1/P2 cursors; procedural red/yellow focus outlines retained |
 | Original close-up portraits | Objects 852–886, five frames per fighter; palette pointers at `0x676fa` | Source palettes; clay pages retain authored photo portraits, selected/unselected tile backgrounds and shared cursors |
 | Conquest globe | Object 491 with `0x65cfa`; continents 503/516/529 with `0x65d7a` | Shared source hotspots retained; uniformly scaled to fit campaign list |
-| Compact character glyphs | `136102-1045b.23p`, packed 4-bit 8×8 glyphs | Small labels and hints; trimmed transparent right columns |
-| Large stone alphabet and timer | RLE 391–441; original gold palette `0x68e3a` | `FONT_BIG` uses native 16-pixel glyphs, including timer digits; long centred headings fit within the view |
+| Compact character glyphs | `136102-1045b.23p`, packed 4-bit 8×8 glyphs; descending neutral palette `0x61802` | Small labels and hints; light fill and dark bevel, trimmed transparent right columns |
+| Intro/UI alpha typeface | ASCII lookup `0xc510`, column-major tile descriptors `0xc370`, character-bank offset `0x80`, gold palette `0x61442` | `FONT_BIG` uses the arcade VERSION typeface, 16 pixels high with native 8/16-pixel cell advances |
+| Stone timer digits | RLE 417–426; original gold palette `0x68e3a` | Separate `FONT_TIMER`; HUD timer retains its existing artwork and registration |
 | Anatomical HUD | Alpha-map tables `0x1ff43e`/`0x1ff622` (health), `0x1ff806`/`0x1ff91a` (stun); RLE 1767–1794 | Authored left/right bar states, pulsing/burst heart and brain icon; see the HUD contract below |
-| Fighter HUD names | RLE nameplates 314–320; descriptor pointers `0x73e74`, palettes `0x64d02 + character×128` | Original name artwork; custom names use the stone alphabet, fitted to the same HUD slots |
+| Fighter HUD names | RLE nameplates 314–320; descriptor pointers `0x73e74`, palettes `0x64d02 + character×128` | Original name artwork; custom names use the intro typeface, fitted to the same HUD slots |
 | Effects and seven voice tables | CAGE boot chip 1078a and sound chips 0075/0077 | Standalone BSD-licensed TMS320C3x interpreter, native ROM driver, four DAC channels mixed into cached 11025 Hz mono PCM; shared stereo panning |
 
 The sound adapter reads victory, attack and pain command tables at `0x6b0b0`,
@@ -68,7 +69,7 @@ show round wins. All native pixels render through the same 2× framebuffer.
 The port's existing hit/block stun timer selects the stun artwork; this change
 does not add the original machine's separate dizziness or fatality rules.
 Original fighters use their individual illustrated nameplates and palettes.
-Photo fighters use the stone alphabet, preserving its colour shading and fitting
+Photo fighters use the intro typeface, preserving its colour shading and fitting
 up to 16-character names. Training and final battles retain the compact “--”
 unlimited timer. Tug of War displays each side's complementary health through
 the two original bar sets.
@@ -79,6 +80,25 @@ empty health, stun, unlimited time, Tug of War and a maximum-length custom name.
 Captures are `after/hud-full.png`, `hud-damaged.png`, `hud-empty.png`,
 `hud-training.png`, `hud-tug.png` and `hud-custom.png` under the review folder.
 The pre-correction fight/menu frames are in `docs/review/arcade-hud/before/`.
+
+## Intro and menu typography
+
+The small font previously mapped increasing pixel indices to increasing greys,
+reversing the authored bevel and lighting its outer rim. It now uses the original
+descending neutral ramp. Larger UI labels previously used the decorative RLE
+alphabet instead of the intro's alpha typeface. Native print setup `0x35e76`
+selects font 3 (`0x4003`) for “VERSION 2.3”; the loader now assembles that same
+typeface from its original four-tile descriptors and gold palette. Wording stays
+specific to this port. The timer uses its separate stone digits.
+
+The combined arcade test compares “VERSION 2.3” directly against raw character
+chip pixels, RGB555 colours and native cell advances at exact 2× resolution,
+including narrow letters, spaces and punctuation. It also checks the compact
+font's original pixels and descending bevel. Reviewed captures are
+`review/arcade/after/menu.png`, `title.png`, `options.png`, `select.png`,
+`ending.png` and `hud-custom.png`; the longest heading and maximum custom name
+fit their existing layouts. The timer crop is pixel-identical to the preceding
+revision. Reproduce these captures with the combined screenshot command below.
 
 ## Stage and graphics audit
 

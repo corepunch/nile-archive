@@ -44,7 +44,7 @@ Place the supported Primal Rage 2.3 December 1994 arcade chips (MAME
 `primrageo`) in `data/primrage/`, or import an external directory with
 `python3 games/clayfight/tools/import_resources.py /path/to/primrage`.
 Fighters, animation scripts, moves, hit boxes, palettes, menus, title, stages,
-compact glyphs, stone lettering, anatomical health/stun HUD, effects and voices
+compact glyphs, native intro typeface, stone timer digits, anatomical health/stun HUD, effects and voices
 load directly from those ROMs. DOS data, converted
 retail creature files and an emulator installation are unnecessary. The original
 ROMs remain ignored by Git. Native/iOS/web builds bundle the arcade chips and

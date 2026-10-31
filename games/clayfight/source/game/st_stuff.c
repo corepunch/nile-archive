@@ -50,7 +50,7 @@ void ST_Drawer(const int wins[2])
     if(level.time<0)V_DrawTextCentered(FONT_SMALL,VIEWWIDTH/2,12,"--");
     else{
         snprintf(clock,sizeof clock,"%02d",CLAMP((level.time+TICRATE-1)/TICRATE,0,99));
-        V_DrawTextCentered(FONT_BIG,VIEWWIDTH/2,8,clock);
+        V_DrawTextCentered(FONT_TIMER,VIEWWIDTH/2,8,clock);
     }
 }
 
