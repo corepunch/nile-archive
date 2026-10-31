@@ -1,0 +1,2 @@
+# Atlas registration/resampling is part of the authored pixel contract.
+Pillow==11.3.0
