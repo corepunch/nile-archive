@@ -142,8 +142,8 @@ build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
 	@mkdir -p build
 	$(CC) $(ALL_CFLAGS) -o $@ tests/test_audio.c engine/audio.c -lm
 
-test: gen-check xcode-check $(TEST_BINS) build/test-audio test-clayfight
-	./build/test-audio
+.PHONY: test-assets
+test-assets:
 	python3 games/volcano/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
 	python3 games/christmas-market/tools/prepare_catalogue.py --check
@@ -151,6 +151,8 @@ test: gen-check xcode-check $(TEST_BINS) build/test-audio test-clayfight
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 tools/buildings.py --check
 	python3 tools/match3_atlas.py --check
+test: gen-check xcode-check test-assets $(TEST_BINS) build/test-audio test-clayfight
+	./build/test-audio
 	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) $(TEST_ARGS) || status=1; done; exit $$status
 
 # Fast mode uses the same per-game binaries/manifests, with no rendering or sleeps.

@@ -7,7 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Install asset and lint tools
+        run: |
+          sudo apt-get update && sudo apt-get install -y lua-check
+          pip install -r tools/requirements-assets.txt
+      - name: Validate generated code, projects, artwork and Lua before platform builds
+        run: make gen-check xcode-check test-assets lint
+
   native:
+    needs: preflight
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,7 +30,7 @@ jobs:
       - name: Install platform build and headless display dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb lua-check
-          pip install -r tools/requirements-assets.txt   # reproduce authored atlas resampling
+          pip install -r tools/requirements-assets.txt   # atlas inspection
       - name: Build games
         run: make CFLAGS="-O2 -g -Werror"
       - name: Every test, in one start per game
@@ -33,6 +47,7 @@ jobs:
           path: games/*/docs/screenshots/
 
   xcode:
+    needs: preflight
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
@@ -56,6 +71,7 @@ jobs:
           path: build/ios-smoke/
 
   web:
+    needs: preflight
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

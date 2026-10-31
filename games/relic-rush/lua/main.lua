@@ -150,6 +150,7 @@ local function init()
     -- match pieces: the Relics pack, or an optional art pack (--tiles / ?tiles=jewels|resources)
     local tiles = app.arg("tiles")
     if tiles ~= "jewels" and tiles ~= "resources" then tiles = "relics" end
+    R.hex_piece_kind = not app.arg("default-match3") and tiles ~= "resources" and 0 or nil
     for i = 0, rules.COLORS - 1 do R.relics[i + 1] = board_skin[(app.arg("default-match3") and "kind-" or tiles .. "-") .. i] end
     R.board_art = require("art").load()
     R.hud_art = require("art").load_hud()

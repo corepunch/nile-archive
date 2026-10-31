@@ -66,6 +66,24 @@ static inline float ease_out_bounce(float t)
     return 7.5625f * t * t + .984375f;
 }
 
+/* Finite cubic tween. Retarget from the current value; identical targets do
+ * not restart it. No global clock or manager, and a finished tween is exact. */
+typedef struct { float from, to, elapsed, duration; } tween;
+static inline float tween_value(tween t)
+{
+    return t.duration <= 0 || t.elapsed >= t.duration ? t.to
+         : lerpf(t.from, t.to, ease_out_cubic(t.elapsed / t.duration));
+}
+static inline void tween_to(tween *t, float target, float duration)
+{
+    if (t->to == target) return;
+    *t = (tween){.from=tween_value(*t), .to=target, .duration=maxf(0, duration)};
+}
+static inline void tween_step(tween *t, float dt)
+{
+    t->elapsed = minf(t->duration, t->elapsed + maxf(0, dt));
+}
+
 /* --- vec2 --- */
 static inline vec2 v2(float x, float y) { return (vec2){x, y}; }
 static inline vec2 v2s(float s) { return (vec2){s, s}; }

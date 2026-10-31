@@ -7,6 +7,7 @@ control states are recolored or derived. --check never writes runtime assets.
 """
 import argparse
 import importlib.util
+import hashlib
 import io
 import json
 import math
@@ -35,22 +36,11 @@ def lua_table(frames, path=None):
     return header + ('    },\n' if path else '') + '}\n'
 
 
-def write_or_check(path, value, check):
+def write_asset(path, value):
     if isinstance(value, str):
         value = value.encode()
-    if check:
-        current = path.read_bytes() if path.exists() else None
-        if current is not None and path.suffix == '.png':
-            # Compression bytes can vary between Pillow/zlib versions. The
-            # authored RGBA pixels and registration are the runtime contract.
-            actual, expected = Image.open(io.BytesIO(current)), Image.open(io.BytesIO(value))
-            matches = actual.mode == expected.mode and actual.size == expected.size and actual.tobytes() == expected.tobytes()
-        else:
-            matches = current == value
-        assert matches, f'Stale {path.relative_to(ROOT)}: run python3 tools/match3_atlas.py'
-    else:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(value)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(value)
 
 
 def png(image):
@@ -59,7 +49,35 @@ def png(image):
     return result.getvalue()
 
 
+def fingerprint(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def provenance(inputs, outputs):
+    # Registration and JPEG decoding are authoring steps. Verify the exact
+    # recipe, inputs AND registered deliverables without reauthoring artwork
+    # through a different platform's resampling/decoder implementation.
+    return {'recipe': fingerprint(Path(__file__)),
+            'inputs': {str(p.relative_to(ROOT)): fingerprint(p) for p in sorted(set(inputs))},
+            'outputs': {str(p.relative_to(ROOT)): fingerprint(p) for p in sorted(set(outputs))}}
+
+
+def verify_provenance(manifest_path):
+    manifest = json.loads(manifest_path.read_text())
+    recorded = manifest['provenance']
+    assert recorded['recipe'] == fingerprint(Path(__file__)), 'Atlas recipe changed: run python3 tools/match3_atlas.py'
+    for group in ['inputs', 'outputs']:
+        for name, digest in recorded[group].items():
+            assert fingerprint(ROOT / name) == digest, f'Stale {name}: run python3 tools/match3_atlas.py'
+    print(f'{manifest_path.relative_to(ROOT)}: recipe, {len(recorded["inputs"])} inputs and {len(recorded["outputs"])} outputs verified')
+    return manifest
+
+
 def build_default(check):
+    manifest_path = ROOT / 'engine/art/match3/manifest.json'
+    if check:
+        verify_provenance(manifest_path)
+        return (ROOT / 'engine/data/match3.png').read_bytes()
     source = Image.open(ROOT / 'engine/art/match3/source.png').convert('RGBA')
     brick = Image.open(ROOT / 'engine/art/match3/source-brick.png').convert('RGBA')
     rows = [0, 167, 338, 499, 644, 795, 947, 1103, 1254]
@@ -86,28 +104,34 @@ def build_default(check):
             registration[name]['prompt'] = 'engine/art/match3/brick.prompt.txt'
     frames["glow"] = frames["spark-0"]
     raw = png(image)
-    write_or_check(ROOT / 'engine/data/match3.png', raw, check)
-    write_or_check(ROOT / 'engine/match3_frames.lua', lua_table(frames), check)
+    write_asset(ROOT / 'engine/data/match3.png', raw)
+    write_asset(ROOT / 'engine/match3_frames.lua', lua_table(frames))
     manifest = {'generator': 'built-in image_gen; one atlas, all icon/control states together',
                 'source': 'engine/art/match3/source.png', 'prompt': 'engine/art/match3/prompt.txt',
                 'kinds': ['gold', 'brick', 'timber', 'grain', 'stone', 'water', 'apple', 'fish'],
                 'reference': 'https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/',
                 'runtime': 'engine/data/match3.png', 'registration': registration,
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
-    write_or_check(ROOT / 'engine/art/match3/manifest.json', json.dumps(manifest, indent=2) + '\n', check)
+    manifest['provenance'] = provenance(
+        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']],
+        [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
+    write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
     return raw
 
 
 def build_game(game, check):
     root = ROOT / 'games' / game
+    if check:
+        verify_provenance(root / 'art/match3-atlas.json')
+        return
     if game == 'relic-rush':
         spec = importlib.util.spec_from_file_location('relic_assets', root / 'tools/prepare_assets.py')
         assets = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(assets)
         # Keep Relic Rush's original flame, independently of the engine default.
-        write_or_check(root / 'data/tile-sets/relics/1.png', png(assets.original_tile(0, 1)), check)
+        write_asset(root / 'data/tile-sets/relics/1.png', png(assets.original_tile(0, 1)))
         for (pack, kind), image in assets.hex_replacements().items():
-            write_or_check(root / f'data/tile-sets/{pack}/{kind}.png', png(image), check)
+            write_asset(root / f'data/tile-sets/{pack}/{kind}.png', png(image))
     sources = {}
     packs = ['relics', 'jewels', 'resources'] if game == 'relic-rush' else ['festive']
     for pack in packs:
@@ -146,14 +170,20 @@ def build_game(game, check):
     if game == 'christmas-market':
         frames['scene-1'] = frames['scene-2'] = frames['background']
         frames['score'] = frames['complete']
-    write_or_check(root / 'data/match3.png', png(image), check)
-    write_or_check(root / 'lua/match3_skin.lua', lua_table(frames, 'match3.png'), check)
+    write_asset(root / 'data/match3.png', png(image))
+    write_asset(root / 'lua/match3_skin.lua', lua_table(frames, 'match3.png'))
     manifest = {'runtime': 'data/match3.png', 'size': [width, height], 'frames': frames,
                 'sources': {name: str(path.relative_to(root)) for name, path in sources.items()},
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    write_or_check(root / 'art/match3-atlas.json', json.dumps(manifest, indent=2) + '\n', check)
+    inputs = list(sources.values())
+    outputs = [root / 'data/match3.png', root / 'lua/match3_skin.lua']
+    if game == 'relic-rush':
+        inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]
+        outputs += [root / 'data/tile-sets' / pack / f'{kind}.png' for pack, kind in [('relics', 0), ('relics', 1), ('jewels', 0)]]
+    manifest['provenance'] = provenance(inputs, outputs)
+    write_asset(root / 'art/match3-atlas.json', json.dumps(manifest, indent=2) + '\n')
     # Compare each packed canvas with its source, including RGB beneath alpha.
     for name, original in loaded.items():
         xx, yy, ww, hh = frames[name]

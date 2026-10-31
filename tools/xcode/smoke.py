@@ -3,12 +3,10 @@
 
 Run on the macOS CI runner; Simulator caches stay in the cloud.
 
-Every simulator this script needs is booted at the start, so a device has
-settled by the time its first game launches. `simctl launch` blocks until the
-simulator accepts the launch; on a just-booted device on a busy runner it can
-stall, before any game code runs (games start in viewDidAppear). Each launch is
-bounded: a stall prints the simulator's launch logs, terminates the app and
-tries once more. The test still requires a complete rendered screenshot.
+Only one simulator runs at a time: two cold devices compete for CPU, memory and
+installation services on the runner. Log each slow simctl operation so install,
+boot and launch time are distinguishable from time spent in game code. Launches
+remain bounded, with logs and one retry on a stall.
 """
 import json
 from pathlib import Path
@@ -21,7 +19,12 @@ LAUNCH_ATTEMPTS = 2
 
 
 def sim(*args, timeout=300):
-    return subprocess.check_output(['xcrun', 'simctl', *args], text=True, timeout=timeout).strip()
+    started = time.monotonic()
+    try:
+        return subprocess.check_output(['xcrun', 'simctl', *args], text=True, timeout=timeout).strip()
+    finally:
+        elapsed = time.monotonic() - started
+        print(f'simctl {args[0]}: {elapsed:.1f}s', flush=True)
 
 
 def quiet(*args, timeout=60):
@@ -78,14 +81,10 @@ def main():
         plan.append((family, games, device['udid'], device['state'] != 'Booted'))
     booted_here = []
     try:
-        # Boot every device now; the later families settle while the first runs.
-        for family, _, udid, cold in plan:
+        for family, games, udid, cold in plan:
             if cold:
-                started = time.monotonic()
                 sim('boot', udid)
                 booted_here.append(udid)
-                print(f'{family}: boot requested in {time.monotonic() - started:.0f}s', flush=True)
-        for family, games, udid, _ in plan:
             started = time.monotonic()
             sim('bootstatus', udid, '-b')
             print(f'{family}: booted, waited {time.monotonic() - started:.0f}s', flush=True)
@@ -114,6 +113,10 @@ def main():
                     print(f'{game}: iOS launch and rendering passed on {family}', flush=True)
                 finally:
                     quiet('terminate', udid, bundle)
+            # Release this family's resources before booting the next one.
+            if udid in booted_here:
+                quiet('shutdown', udid, timeout=120)
+                booted_here.remove(udid)
     finally:
         for udid in booted_here:
             quiet('shutdown', udid, timeout=120)

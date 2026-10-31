@@ -23,6 +23,32 @@ TEST(math)
     NEAR(ease_out_back(0), 0);
 }
 
+TEST(tween_retarget)
+{
+    tween t = {0};
+    tween_to(&t, 1, .2f);
+    tween_step(&t, .08f);
+    float moving = tween_value(t);
+    CHECK(moving > 0 && moving < 1);
+    tween_to(&t, 1, .2f);
+    NEAR(tween_value(t), moving); /* an unchanged target must not restart */
+    tween_to(&t, 0, .2f);
+    NEAR(tween_value(t), moving); /* interruption preserves the visible value */
+    tween_step(&t, .2f);
+    CHECK(tween_value(t) == 0);
+    tween_step(&t, 1000);
+    CHECK(tween_value(t) == 0);
+    tween_to(&t, 5, 0);
+    CHECK(tween_value(t) == 5);
+    tween_to(&t, 1, .2f);
+    tween_step(&t, -.1f);
+    CHECK(tween_value(t) == 5);
+    tween whole = t, split = t;
+    tween_step(&whole, .1f);
+    for (int i = 0; i < 10; i++) tween_step(&split, .01f);
+    NEAR(tween_value(whole), tween_value(split));
+}
+
 TEST(rect)
 {
     rect r = rc(0, 0, 100, 50);

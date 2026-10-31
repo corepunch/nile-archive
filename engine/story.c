@@ -20,6 +20,15 @@
 #define MAX_SEEN 256
 #define TYPE_SPEED 40.0f   /* codepoints per second (25 ms each, the usual 20-50 ms) */
 #define POP_TIME .22f      /* a new speaker's bubble springs out of its tail */
+#define PORTRAIT_TIME .2f /* entrance, exit, and active/listener transitions */
+
+typedef struct {
+    const character *who;
+    rect from, to;
+    color from_tint, to_tint;
+    tween blend;
+    bool wanted, active;
+} portrait_track;
 
 static struct {
     character *cast;
@@ -31,6 +40,7 @@ static struct {
     const character *last, *listener;
     int seen[MAX_SEEN];
     int seen_count;
+    portrait_track portraits[QUEUE];
 } S;
 
 #ifdef ENGINE_TEST
@@ -379,12 +389,78 @@ static void draw_portrait(const character *c, rect r, color tint)
         draw_image(c->portrait, r, tint);
         return;
     }
-    draw_shadow(rect_offset(r, v2(0, 6)), 22, 16, rgba(0, 0, 0, 110));
-    draw_round_rect(rect_inflate(r, 5), 22, color_lerp(S.style.edge, BLACK, 1 - tint.r / 255.f));
-    draw_round_rect(r, 18, color_lerp(color_shade(c->color, .55f), BLACK, 1 - tint.r / 255.f));
+    float alpha = tint.a / 255.f;
+    draw_shadow(rect_offset(r, v2(0, 6)), 22, 16, color_alpha(rgba(0, 0, 0, 110), alpha));
+    draw_round_rect(rect_inflate(r, 5), 22, color_alpha(color_lerp(S.style.edge, BLACK, 1 - tint.r / 255.f), alpha));
+    draw_round_rect(r, 18, color_alpha(color_lerp(color_shade(c->color, .55f), BLACK, 1 - tint.r / 255.f), alpha));
     draw_image(c->portrait, rect_inflate(r, -3), tint);
-    draw_round_rect_line(rect_inflate(r, 1), 19, 4, S.style.edge);
+    draw_round_rect_line(rect_inflate(r, 1), 19, 4, color_alpha(S.style.edge, alpha));
 }
+
+static rect portrait_pose(const portrait_track *p)
+{
+    float t = tween_value(p->blend);
+    return rect_make(vec2_lerp(p->from.pos, p->to.pos, t),
+                     sz2(lerpf(p->from.size.w, p->to.size.w, t), lerpf(p->from.size.h, p->to.size.h, t)));
+}
+
+/* Retarget only when staging changes, starting at the currently drawn pose.
+ * Typing, waiting and consecutive lines from one speaker never restart motion. */
+static void portrait_target(portrait_track *p, rect r, color tint)
+{
+    if (!memcmp(&p->to, &r, sizeof r) && !memcmp(&p->to_tint, &tint, sizeof tint)) return;
+    p->from = portrait_pose(p);
+    p->from_tint = color_lerp(p->from_tint, p->to_tint, tween_value(p->blend));
+    p->to = r;
+    p->to_tint = tint;
+    p->blend = (tween){.to=1, .duration=PORTRAIT_TIME};
+}
+
+static void portrait_stage(const character *who, rect r, bool active)
+{
+    portrait_track *p = NULL;
+    for (int i = 0; i < QUEUE; i++) if (S.portraits[i].who == who) { p = &S.portraits[i]; break; }
+    if (!p) {
+        for (int i = 0; i < QUEUE; i++) if (!S.portraits[i].who) { p = &S.portraits[i]; break; }
+        if (!p) return;
+        rect outside = rect_offset(r, v2((who->right ? 1 : -1) * r.size.w * .3f, 0));
+        *p = (portrait_track){.who=who, .from=outside, .to=outside};
+    }
+    p->wanted = true;
+    p->active = active;
+    portrait_target(p, r, active ? WHITE : rgba(120, 124, 132, 235));
+}
+
+static void portraits_frame(float dt)
+{
+    for (int pass = 0; pass < 2; pass++) for (int i = 0; i < QUEUE; i++) {
+        portrait_track *p = &S.portraits[i];
+        if (!p->who || p->active != (pass == 1)) continue;
+        if (!p->wanted && p->to_tint.a) {
+            rect outside = rect_offset(p->to, v2((p->who->right ? 1 : -1) * p->to.size.w * .3f, 0));
+            color tint = p->to_tint;
+            tint.a = 0;
+            portrait_target(p, outside, tint);
+        }
+        tween_step(&p->blend, dt);
+        color tint = color_lerp(p->from_tint, p->to_tint, tween_value(p->blend));
+        if (tint.a) draw_portrait(p->who, portrait_pose(p), tint);
+        if (!p->wanted && p->blend.elapsed >= p->blend.duration) *p = (portrait_track){0};
+    }
+}
+
+#ifdef ENGINE_TEST
+bool story_test_portrait(const character *who, rect *r, color *tint)
+{
+    for (int i = 0; i < QUEUE; i++) if (S.portraits[i].who == who) {
+        portrait_track *p = &S.portraits[i];
+        *r = portrait_pose(p);
+        *tint = color_lerp(p->from_tint, p->to_tint, tween_value(p->blend));
+        return true;
+    }
+    return false;
+}
+#endif
 
 /* A name tag: a pill in the speaker's colour with the edge colour as its rim. */
 static void name_tag(const character *who, vec2 at, vec2 pivot, float tag)
@@ -406,7 +482,9 @@ static rect scale_about(rect r, vec2 at, float k)
 
 void story_frame(float dt)
 {
+    for (int i = 0; i < QUEUE; i++) S.portraits[i].wanted = false;
     if (!S.lines) {
+        portraits_frame(dt);
         S.enter = 0;
         S.last = S.listener = NULL;
         return;
@@ -523,15 +601,12 @@ void story_frame(float dt)
         grow_from = vec2_add(grow_from, offset);
         group = rect_offset(group, offset);
     }
-    if (listening)
-        draw_portrait(listener, rect_offset(listener_portrait, v2(0, framed_narrow ? 0 : h * .02f)), rgba(120, 124, 132, 235));
-
-    float slide = (1 - ease_out_cubic(S.arrive * 5)) * face.w * .3f;
-    rect shown_portrait = rect_offset(portrait, v2((who && who->right ? 1 : -1) * slide, 0));
-    if (has_face) draw_portrait(who, shown_portrait, WHITE);
+    if (listening) portrait_stage(listener, rect_offset(listener_portrait, v2(0, framed_narrow ? 0 : h * .02f)), false);
+    if (has_face) portrait_stage(who, portrait, true);
+    portraits_frame(dt);
 
     /* the bubble springs out of its tail when a speaker arrives */
-    float pop = lerpf(.55f, 1, ease_out_back(S.arrive / POP_TIME));
+    float pop = lerpf(.55f, 1, ease_out_cubic(S.arrive / POP_TIME));
     rect drawn = scale_about(bubble, grow_from, pop);
     speech_bubble_shape(drawn, tip, S.style.bubble, S.style.edge, kind);
 
