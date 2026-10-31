@@ -1685,6 +1685,16 @@ BUILDERS = {"date_palm": date_palm_1, "cypress": cypress_t, "obelisk": obelisk_1
 with open(os.path.join(HERE, "catalogue.json")) as f:
     CATALOGUE = [dict(zip(("key", "title", "cat", "w", "h", "gold", "stars", "like"), row)) for row in json.load(f)]
 BASED = ("wonder", "building")   # these stand on a slab; decorations stand on the grass
+# One-tile decorations are modelled at 1x and then scaled about their ground
+# pivot, bevels and lights included, so they read beside the island painting.
+# At 2x a 1 x 1 object fills its tile plus Nile Archive's clearance ring
+# (city.clearance = size2(1, 1): half a tile of reserved ground on each side),
+# so it reaches the ring's edge but never a neighbour's base. Its footprint,
+# base_width and price stay those of one tile.
+DECOR_SCALE = 2.0
+
+def model_scale(it):
+    return DECOR_SCALE if it["cat"] not in BASED and it["w"] == it["h"] == 1 else 1.0
 ROW_PX = 3840                    # image width the rows wrap at
 SECTION_PAD = 2                  # image margin around everything, in tiles
 
@@ -1833,7 +1843,8 @@ def build(tile_w=TILE_W):
         for b in k.buckets.values():
             b["v"] = [(max(-it["w"] / 2, min(it["w"] / 2, v[0])), max(-it["h"] / 2, min(it["h"] / 2, v[1])), v[2]) for v in b["v"]]
         it["kit"] = k
-        it["top"] = max(v[2] for b in k.buckets.values() for v in b["v"])
+        it["scale"] = model_scale(it)
+        it["top"] = max(v[2] for b in k.buckets.values() for v in b["v"]) * it["scale"]
     layout(items)
 
     # image bounds from the real geometry, on whole half tiles from the grid origin
@@ -1866,6 +1877,7 @@ def build(tile_w=TILE_W):
         root.children.link(coll)
         pivot = bpy.data.objects.new(it["key"] + ".pivot", None)
         pivot.location = loc
+        pivot.scale = (it["scale"],) * 3   # children (meshes, lights) inherit it
         pivot.empty_display_size = .25
         coll.objects.link(pivot)
         over = {"solid": 0., "plants": 0.}
@@ -1876,7 +1888,7 @@ def build(tile_w=TILE_W):
                 over[kind] = max(over[kind], abs(v[0]) - it["w"] / 2, abs(v[1]) - it["h"] / 2)
         for p, watts in k.lights:
             li = bpy.data.lights.new("na_" + it["key"] + "_light", "POINT")
-            li.energy = watts
+            li.energy = watts * it["scale"] ** 2   # the same light on the surfaces at the scaled distance
             li.color = (1, .62, .28)
             li.shadow_soft_size = .06
             lo = bpy.data.objects.new(it["key"] + ".light", li)
@@ -1884,7 +1896,7 @@ def build(tile_w=TILE_W):
             lo.parent = pivot
             coll.objects.link(lo)
         report["buildings"].append(dict(key=it["key"], title=it["title"], cat=it["cat"], w=it["w"], h=it["h"],
-                                        u0=it["u0"], v0=it["v0"], overhang=over, top=round(it["top"], 3),
+                                        u0=it["u0"], v0=it["v0"], scale=it["scale"], overhang=over, top=round(it["top"], 3),
                                         verts=sum(len(b["v"]) for b in k.buckets.values())))
 
     # camera: orthographic, 30 degrees above the ground, so tiles land on exact 2:1 diamonds

@@ -47,7 +47,7 @@ for i, (key, name, category, w, h, coins, stars, note) in enumerate(catalogue):
     pivot = [reg['pivot'][0] - crop[0], reg['pivot'][1] - crop[1]]
     base = reg['base_width']
     entries.append(dict(id=i, key=key, name=name, category=category, size=[w, h], pivot=pivot,
-                        base_width=base, coins=coins, stars=stars, note=note, image=list(image.size), crop=list(crop),
+                        base_width=base, scale=reg.get('scale', 1.0), coins=coins, stars=stars, note=note, image=list(image.size), crop=list(crop),
                         runtime='data/buildings/' + key + '.png',
                         source='art/building-catalogue/nile_archive_buildings.blend#na_' + key))
     lua.append('    {key=%s, name=%s, category=%s, stars=%d, sprite_path=%s, size=size2(%d,%d), pivot=vec2(%g,%g), base_width=%g, coins=%d},' %

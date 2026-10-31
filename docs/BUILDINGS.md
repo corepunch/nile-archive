@@ -126,4 +126,8 @@ Nile Archive's [96-object catalogue](../games/nile-archive/docs/building-catalog
 mirrors Relic Rush's slots and footprints. It renders the Blender objects
 directly at a fixed 128 pixels per tile, so its pivots and base widths are
 projected analytically (`base_width = (w + h) × 64`). `tools/footprint.py`
-confirms them to within a few pixels on slab buildings.
+confirms them to within a few pixels on slab buildings. Its one-tile
+decorations are modelled at twice their true scale while keeping a one-tile
+footprint and base width. They reach into the half tile of clearance around
+their base, never a neighbour's base, so they stay legible beside the island
+painting.

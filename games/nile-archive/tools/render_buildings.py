@@ -74,7 +74,7 @@ for item in items:
     bpy.ops.render.render(write_still=True, scene=scene.name)
     coll.hide_render = True
     registration['items'][key] = dict(size=[w, h], image=[width, height], pivot=[-x0, y1],
-                                      base_width=(w + h) * TILE_PX / 2)
+                                      base_width=(w + h) * TILE_PX / 2, scale=item.get('scale', 1.0))
     print('rendered', key, width, height, flush=True)
 
 registration['items'] = {it['key']: registration['items'][it['key']] for it in items if it['key'] in registration['items']}
