@@ -1,8 +1,8 @@
 # Menus, conquest and the capture workshop
 
-Clayfight targets **native iPhone and iPad**. Open `ios/Clayfight.xcodeproj`
-and run the Clayfight scheme. The shared C engine renders at 640×400, exactly
-2× the DOS 320×200 frame. UIKit presents the game and touch controls;
+Clayfight targets **native iPhone and iPad**. Open `clayfight.xcodeproj`
+and run the `clayfight-ipad` scheme. The shared C engine renders at 672×480, exactly
+2× the arcade 336×240 frame. UIKit presents the game and touch controls;
 AVFoundation captures photographs and video inside the app. The native target
 does not link SDL and does not run a browser, web server, Python or subprocess.
 
@@ -13,11 +13,12 @@ team in Xcode and run on that device. See `ios/README.md` for the native layout.
 
 ## Original reference
 
-The reference is the installed **Primal Rage PC 1.0** data, not another port.
-`python3 tools/menu_reference.py` extracts the original menu vocabulary from
-`ENGLISH.TXT`, the title layers, temple, stone frame, globe and continent
-patches into `build/menu-reference/`. Its JSON records archive/frame/hotspot
-information. These derived files, like the original game data, stay out of Git.
+The active source is the supplied **Primal Rage arcade 2.3** ROM set.
+Title, temple, podiums, globe and their original RGB555 palettes decode directly
+from the motion-object chips and program ROM. Character glyphs use the original
+character chip. [The arcade catalogue](primal-rage-arcade.md) records IDs,
+palette addresses and reproduction commands. Historical DOS extraction tools
+accept an external installation; they are unused by the runtime or packaging.
 
 The working menu tree is:
 
@@ -30,9 +31,9 @@ The working menu tree is:
 Settings are saved in `build/options.cfg`. Modify Controls currently displays
 the working keyboard/controller bindings; rebinding is not implemented.
 Music playback/test, gore controls, high scores and statistics are not yet
-ported. Layout, unmapped artwork palettes, CPU logic, arena composition, territory
+ported. Menu layout, CPU logic, arena composition, territory
 pins and transitions are reconstructed; this is not a binary-exact port of
-the PC menus or the complete original game. Original specials, fatalities,
+the arcade menus or the complete original game. Original specials, fatalities,
 followers, the refuelling bonus and character ending cinematics remain outside
 this implementation. The ending screen currently celebrates the chosen fighter.
 
@@ -63,8 +64,8 @@ Esc pauses a fight; Q while paused abandons it and returns to the main menu.
 
 Character select uses the retail temple composition: four stone heads above
 three, red/yellow cursors and animated fighters standing on the two original
-stone podiums. The full 272×170 temple is centred in the 320×200 view with no
-zoom, nonuniform stretch or cropping, so its source pixels appear exactly 2×.
+stone podiums. The full 336×240 arcade temple fills the native view at exactly
+2× source pixels, including its sky and floor.
 The original tile order is Sauron, Talon, Armadon, Blizzard above Chaos,
 Vertigo, Diablo. Original
 fighters keep their seven tiles; clay fighters occupy separate seven-tile
@@ -73,7 +74,7 @@ rows, and desktop Tab jumps to the next page. C opens Create Fighter. Palette
 bindings for the temple and original large portraits come from the installed
 game's data; the small heads retain their fighter palettes and background
 colours. Additional creation/page hints occupy the lower margin below the
-complete scene. The desktop window starts at 640×400 and cannot shrink below
+complete scene. The desktop window starts at 672×480 and cannot shrink below
 that size; larger windows letterbox the complete framebuffer.
 
 ## Photographing a fighter

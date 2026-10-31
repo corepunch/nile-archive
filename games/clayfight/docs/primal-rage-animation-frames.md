@@ -1,5 +1,8 @@
 # Primal Rage animation frame counts and clay capture targets
 
+> Historical DOS catalogue. The active game reads arcade ROM scripts and
+> motion objects directly; see [the arcade catalogue](primal-rage-arcade.md).
+
 For a first fighter, the current capture workshop uses **15 body photos plus
 one portrait**. For a fuller animation set, the suggested shot list below uses
 **132 body photos before reuse**. To approach the amount of art in Clayfight's

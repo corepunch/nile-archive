@@ -1,5 +1,10 @@
 # Clayfight port — completion record
 
+The active resource source is now the arcade 2.3 ROM set, at **672×480**
+(2×336×240). See [the arcade runtime and catalogue](primal-rage-arcade.md).
+The verification record below describes the earlier DOS integration; its
+pixel parity and converted-script counts are historical, not current claims.
+
 The original C simulation runs as game-local modules on the shared engine.
 Lua owns the app descriptor and fixed-tick scheduling. The shared engine owns
 the window, event polling, texture presentation, indexed CPU rasterisation,

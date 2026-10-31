@@ -15,39 +15,18 @@ void V_DrawPatchScaled(int x,int y,const patch_t *p,const palette_t *pal,int fla
 }
 void V_DrawPatch(int x,int y,const patch_t *p,const palette_t *pal,int flags) { V_DrawPatchScaled(x,y,p,pal,flags,1,1); }
 
-// --- text, using the two complete alphabets in S04FONTS.GRA ------------------
+// --- text, using the two complete alphabets in fonts ------------------
 
 static gra_t *fonts;
 static short smallmap[128], bigmap[128];
 
-static void map_run(short *map, const char *chars, int first)
-{
-    for (int i = 0; chars[i]; i++)
-        map[(byte)chars[i]] = (short)(first + i);
-}
-
 void V_Init(void)
 {
-    fonts = W_LoadGra("S04FONTS.GRA");
+    fonts = W_LoadGra("fonts");
     for (int i = 0; i < 128; i++)
         smallmap[i] = bigmap[i] = -1;
-    // small 6px font: ASCII, with placeholder glyphs at a few slots
-    map_run(smallmap, "!\"#$%&'", 111);
-    map_run(smallmap, "()*+,-./", 119);
-    map_run(smallmap, "01", 127);
-    map_run(smallmap, "23456789:", 130);
-    map_run(smallmap, "<", 139);
-    map_run(smallmap, "=>?@", 142);
-    map_run(smallmap, "ABCDE", 146);
-    map_run(smallmap, "FGHIJKLMNO", 152);
-    map_run(smallmap, "PQRSTUVWXY", 163);
-    map_run(smallmap, "Z", 174);
-    // big gold 11px font
-    map_run(bigmap, "BCDEFGHIJKLMNOPQRSTUVWXYZ", 181);
-    map_run(bigmap, "123456789", 206);
-    map_run(bigmap, "0", 215);
-    map_run(bigmap, "!.?", 217);
-    map_run(bigmap, "A", 230);
+    for (int c=33;c<91;c++) smallmap[c]=bigmap[c]=c;
+
 }
 
 static const patch_t *glyph(font_t font, char ch)

@@ -7,8 +7,8 @@
 #include "platform/platform.h"
 #include "../../../../engine/engine.h"
 
-// Drawing and gameplay use the DOS 320x200 space; the framebuffer has
-// two square pixels per unit. Legacy patches scale up; photos retain detail.
+// Arcade-native 336x240 coordinates, presented at exactly 2x (672x480).
+// Sprites keep their original resolution; photos can supply native detail.
 #define VIEWWIDTH (SCREENWIDTH / 2)
 #define VIEWHEIGHT (SCREENHEIGHT / 2)
 #define PIXELS_PER_UNIT 2
@@ -27,7 +27,7 @@ int P_Random(void); // play simulation only: 0..255
 int M_Random(void); // menus and cosmetics: 0..255
 void M_ClearRandom(void);
 
-// --- w_gra.c: Primal Rage .GRA archive access (cf. w_wad.h) ----------------
+// --- w_gra.c: arcade motion-object and virtual art-bank access (cf. w_wad.h) ----------------
 // A decoded frame. Coordinates of the bounding box are relative to the
 // hotspot, y down.
 typedef struct {
@@ -71,24 +71,23 @@ typedef struct {
     int size;
 } lumpinfo_t;
 
-extern lumpinfo_t *lumpinfo; // INDEX directory, in file-id order
+extern lumpinfo_t *lumpinfo; // legacy directory interface; native ROM banks need no directory
 extern int numlumps;
 
 void W_Init(const char *datadir);
+void W_DrawArcadeStage(int stage, int camx);
 gra_t *W_LoadGra(const char *name); // cached; fatal if missing
 gra_t *W_TryLoadGra(const char *name); // NULL if missing
-gra_t *W_GraById(int id); // by INDEX position (the file ids used in PRAGE.EXE)
+gra_t *W_GraById(int id); // compatibility access to the arcade object bank
 patch_t *W_Frame(gra_t *gra, int index);
-int W_LoadSounds(const char *name, sfxdata_t **out);
+void W_SoundDirectory(const char *directory);
+const sfxdata_t *W_ArcadeSound(int command);
 int W_GuessPalette(const patch_t *patch, const gra_t *gra);
 int W_FramePalette(gra_t *gra, int frame); // recorded menu mappings, otherwise guessed
 pixel_t W_RGB(int r, int g, int b);
 
-// --- w_exe.c: data tables straight out of PRAGE.EXE (cf. w_wad.h) ---------
-// The move scripts, frame tables, hit boxes and special-move inputs of
-// Primal Rage are compiled into its executable. Like Doom reading lumps out
-// of a WAD, we load the executable's two LE objects at their link addresses,
-// apply the relocations, and then read tables by their linear address.
+// --- w_exe.c: big-endian 68020 ROM tables (cf. w_wad.h) ---------
+// Four interleaved CPU chips provide scripts, moves, boxes and palettes.
 
 bool X_Init(const char *path); // false if missing or not the expected build
 bool X_Loaded(void);
@@ -129,7 +128,7 @@ enum {
 
 typedef enum { FONT_SMALL, FONT_BIG } font_t;
 
-void V_Init(void); // needs S04FONTS.GRA
+void V_Init(void); // decodes the arcade character chip
 void V_Clear(pixel_t color);
 void V_FillRect(int x, int y, int w, int h, pixel_t color);
 void V_VGradient(int y, int h, pixel_t top, pixel_t bottom);

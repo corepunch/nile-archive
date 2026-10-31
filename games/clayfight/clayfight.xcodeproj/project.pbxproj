@@ -481,6 +481,21 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.objc";
 };
+"0A8E55E768976887E7DE52AB" = {"isa" = "PBXFileReference";
+"path" = "source/sound/cage_board.cpp";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.cpp.cpp";
+};
+"28A98E87899AFE1444B70E29" = {"isa" = "PBXFileReference";
+"path" = "source/sound/cage_dsp.cpp";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.cpp.cpp";
+};
+"58171874A54D73225C2A9F50" = {"isa" = "PBXFileReference";
+"path" = "source/sound/w_sound.cpp";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.cpp.cpp";
+};
 "D20ADA84B682F079A05DF86A" = {"isa" = "PBXGroup";
 "name" = "Game native modules";
 "children" = ("3FD04BE9791A212CBDDDB4CC",
@@ -524,6 +539,9 @@
 "A3A331891A15420B65055FE7",
 "158969E44451AAD847DDFBAE",
 "A2CC0516B67A3F69EB3DAB3D",
+"0A8E55E768976887E7DE52AB",
+"28A98E87899AFE1444B70E29",
+"58171874A54D73225C2A9F50",
 );
 "sourceTree" = "<group>";
 };
@@ -554,6 +572,7 @@
 "CODE_SIGN_IDENTITY" = "-";
 "ENABLE_APP_SANDBOX" = "YES";
 "CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/macos.entitlements";
+"CLANG_CXX_LANGUAGE_STANDARD" = "c++20";
 "HEADER_SEARCH_PATHS" = ("$(inherited)",
 "$(SRCROOT)/source",
 );
@@ -592,6 +611,7 @@
 "CODE_SIGN_IDENTITY" = "-";
 "ENABLE_APP_SANDBOX" = "YES";
 "CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/macos.entitlements";
+"CLANG_CXX_LANGUAGE_STANDARD" = "c++20";
 "HEADER_SEARCH_PATHS" = ("$(inherited)",
 "$(SRCROOT)/source",
 );
@@ -749,6 +769,15 @@
 "settings" = {"COMPILER_FLAGS" = "-fobjc-arc";
 };
 };
+"07048C261ACF51D6D46A9790" = {"isa" = "PBXBuildFile";
+"fileRef" = "0A8E55E768976887E7DE52AB";
+};
+"C95BD7E50AD8F92BA3867AD0" = {"isa" = "PBXBuildFile";
+"fileRef" = "28A98E87899AFE1444B70E29";
+};
+"AB12AA0C8FC45E41E831EAE2" = {"isa" = "PBXBuildFile";
+"fileRef" = "58171874A54D73225C2A9F50";
+};
 "5A6E465B3835FA0C72A76603" = {"isa" = "PBXSourcesBuildPhase";
 "buildActionMask" = 2147483647;
 "files" = ("54189DC1371C0E6F65019B71",
@@ -791,6 +820,9 @@
 "8CC56FB6FFB4843EAC9D315B",
 "403BC5A8263747AC71FF61D6",
 "AD707A65900DF88A2A4C949B",
+"07048C261ACF51D6D46A9790",
+"C95BD7E50AD8F92BA3867AD0",
+"AB12AA0C8FC45E41E831EAE2",
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };
@@ -880,6 +912,7 @@
 "IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
 "TARGETED_DEVICE_FAMILY" = "1,2";
 "SUPPORTS_MACCATALYST" = "NO";
+"CLANG_CXX_LANGUAGE_STANDARD" = "c++20";
 "HEADER_SEARCH_PATHS" = ("$(inherited)",
 "$(SRCROOT)/source",
 );
@@ -937,6 +970,7 @@
 "IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
 "TARGETED_DEVICE_FAMILY" = "1,2";
 "SUPPORTS_MACCATALYST" = "NO";
+"CLANG_CXX_LANGUAGE_STANDARD" = "c++20";
 "HEADER_SEARCH_PATHS" = ("$(inherited)",
 "$(SRCROOT)/source",
 );
@@ -1120,6 +1154,15 @@
 "settings" = {"COMPILER_FLAGS" = "-fobjc-arc";
 };
 };
+"2B22C41B9F0BA697FBDD38FD" = {"isa" = "PBXBuildFile";
+"fileRef" = "0A8E55E768976887E7DE52AB";
+};
+"F02D3E18D43787704D9426C2" = {"isa" = "PBXBuildFile";
+"fileRef" = "28A98E87899AFE1444B70E29";
+};
+"456254C1B4B499B0DA4A4F45" = {"isa" = "PBXBuildFile";
+"fileRef" = "58171874A54D73225C2A9F50";
+};
 "AAF96C6E23B0E5E7FFD48FFF" = {"isa" = "PBXSourcesBuildPhase";
 "buildActionMask" = 2147483647;
 "files" = ("F0AC0D11B33547F71CAFB347",
@@ -1167,6 +1210,9 @@
 "0CDF6D5974CC4DD23F079AA4",
 "D902AC220DDE3317838BF32A",
 "87CF27F140F82D3B433AE30A",
+"2B22C41B9F0BA697FBDD38FD",
+"F02D3E18D43787704D9426C2",
+"456254C1B4B499B0DA4A4F45",
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };

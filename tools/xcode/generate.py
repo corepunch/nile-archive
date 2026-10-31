@@ -237,11 +237,12 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     if game == 'clayfight':
         game_sources = sorted((ROOT / 'games/clayfight/source').glob('*/*.c')) + [ROOT / 'games/clayfight/source/runtime.c', ROOT / 'games/clayfight/host.c', ROOT / 'games/clayfight/controllers.m']
         game_sources += sorted((ROOT / 'games/clayfight/ios').glob('*.m'))
+        game_sources += sorted((ROOT / 'games/clayfight/source/sound').glob('*.cpp'))
     game_refs = {}
     for source in game_sources:
         path = source.relative_to(ROOT / 'games' / game).as_posix()
         game_refs[path] = project.add('game/' + path, 'PBXFileReference', path=path, sourceTree='SOURCE_ROOT',
-                                     lastKnownFileType='sourcecode.c.objc' if source.suffix == '.m' else 'sourcecode.c.c')
+                                     lastKnownFileType='sourcecode.c.objc' if source.suffix == '.m' else 'sourcecode.cpp.cpp' if source.suffix == '.cpp' else 'sourcecode.c.c')
     if game_refs:
         browse.append(project.add('group/native', 'PBXGroup', name='Game native modules', children=list(game_refs.values()), sourceTree='<group>'))
 
@@ -268,6 +269,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         if team:
             settings['DEVELOPMENT_TEAM'] = team
         if game == 'clayfight':
+            settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
             settings['HEADER_SEARCH_PATHS'] = ['$(inherited)', '$(SRCROOT)/source']
             settings['GCC_PREPROCESSOR_DEFINITIONS'] = ['$(inherited)', 'CLAY_HOST=1'] + (['CLAY_IOS=1'] if ipad else [])
         configs = project.configurations(name, settings)

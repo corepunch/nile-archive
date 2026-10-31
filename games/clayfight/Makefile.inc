@@ -1,7 +1,13 @@
 CLAY_SRC := $(wildcard games/clayfight/source/game/*.c games/clayfight/source/platform/*.c) games/clayfight/source/runtime.c
-CLAY_OBJ := $(CLAY_SRC:%.c=build/%.o)
+CLAY_CPP := $(wildcard games/clayfight/source/sound/*.cpp)
+CLAY_OBJ := $(CLAY_SRC:%.c=build/%.o) $(CLAY_CPP:%.cpp=build/%.o)
+CLAY_CXXLIB := $(if $(filter Darwin,$(shell uname -s)),-lc++,-lstdc++)
+$(CLAY_CPP:%.cpp=build/%.o): build/%.o: %.cpp $(wildcard games/clayfight/source/sound/*.hpp games/clayfight/source/sound/*.ipp)
+	@mkdir -p $(dir $@)
+	$(CXX) $(filter-out -std=c11,$(ALL_CFLAGS)) -std=c++20 $(CLAY_FLAGS) -c $< -o $@
+
 CLAY_FLAGS := -Igames/clayfight/source -DCLAY_HOST
-$(CLAY_OBJ): build/%.o: %.c $(wildcard games/clayfight/source/*/*.h) engine/engine.h
+$(CLAY_SRC:%.c=build/%.o): build/%.o: %.c $(wildcard games/clayfight/source/*/*.h) engine/engine.h
 	@mkdir -p $(dir $@)
 	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -c $< -o $@
 ifeq ($(shell uname -s),Darwin)
@@ -13,7 +19,7 @@ build/games/clayfight/controllers.o: games/clayfight/controllers.m
 endif
 clayfight: build/clayfight
 build/clayfight: games/clayfight/host.c $(CLAY_OBJ) $(ENGINE_OBJ)
-	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -o $@ $< $(CLAY_OBJ) $(ENGINE_OBJ) $(LIBS)
+	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -o $@ $< $(CLAY_OBJ) $(ENGINE_OBJ) $(LIBS) $(CLAY_CXXLIB)
 run-clayfight: build/clayfight
 	./build/clayfight $(ARGS)
 build/clayfight-video: games/clayfight/tests/video.c games/clayfight/source/game/v_video.c engine/raster.c
@@ -26,7 +32,9 @@ build/clayfight-input: games/clayfight/tests/input.c games/clayfight/source/plat
 	@mkdir -p $(dir $@)
 	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -DCLAY_TEST_JOYSTICK -o $@ $^ -lm
 build/clayfight-%: games/clayfight/tests/%.c $(CLAY_OBJ) $(ENGINE_OBJ)
-	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -o $@ $^ $(LIBS)
+	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -o $@ $^ $(LIBS) $(CLAY_CXXLIB)
+build/clayfight-arcade: games/clayfight/tests/arcade.c games/clayfight/tests/flow.c games/clayfight/tests/retail.c $(CLAY_OBJ) $(ENGINE_OBJ)
+	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -DCLAY_COMBINED -o $@ $^ $(LIBS) $(CLAY_CXXLIB)
 .PHONY: test-clayfight test-clayfight-retail
 # The first pair is suitable for clean CI, without proprietary data.
 test-clayfight: build/test/engine build/clayfight-video build/clayfight-photo build/clayfight-input
@@ -35,15 +43,17 @@ test-clayfight: build/test/engine build/clayfight-video build/clayfight-photo bu
 	./build/clayfight-photo
 	./build/clayfight-input
 	node --test games/clayfight/tests/capture-processing.mjs
-test-clayfight-retail: clayfight test-clayfight build/clayfight-flow build/clayfight-retail
-	@mkdir -p games/clayfight/build
-	cd games/clayfight && ../../build/clayfight-flow -checkflow -data data/primalrage -creatures data/creatures
-	cd games/clayfight && ../../build/clayfight-retail -data data/primalrage -creatures data/creatures
-	./build/clayfight -data games/clayfight/data/primalrage -creatures games/clayfight/data/creatures -checkanims
+test-clayfight-retail: clayfight build/clayfight-arcade
+	@mkdir -p games/clayfight/build games/clayfight/build/arcade-review
+	cd games/clayfight && ../../build/clayfight-arcade -nosound -creatures data/creatures
 	python3 -B games/clayfight/tests/capture.py
-dist/clayfight/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h $(CLAY_SRC) games/clayfight/host.c $(wildcard games/clayfight/source/*/*.h games/clayfight/lua/*.lua) $(shell find games/clayfight/data -type f 2>/dev/null) web/shell.html
+CLAY_WEB_CPP := $(CLAY_CPP:%.cpp=build/web/%.o)
+$(CLAY_WEB_CPP): build/web/%.o: %.cpp $(wildcard games/clayfight/source/sound/*.hpp games/clayfight/source/sound/*.ipp)
+	@mkdir -p $(dir $@)
+	$(EMCC) -std=c++20 -O2 -Iengine $(CLAY_FLAGS) -c $< -o $@
+dist/clayfight/index.html: $(CLAY_WEB_CPP) $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h $(CLAY_SRC) games/clayfight/host.c $(wildcard games/clayfight/source/*/*.h games/clayfight/lua/*.lua) $(shell find games/clayfight/data -type f 2>/dev/null) web/shell.html
 	@mkdir -p dist/clayfight
-	$(EMCC) $(WEB_FLAGS) $(LUA_FLAGS) $(CLAY_FLAGS) -o $@ games/clayfight/host.c $(CLAY_SRC) \
+	$(EMCC) $(WEB_FLAGS) $(LUA_FLAGS) $(CLAY_FLAGS) -o $@ games/clayfight/host.c $(CLAY_SRC) $(CLAY_WEB_CPP) -lc++ \
 	    $(WEB_OBJ) \
 	    --preload-file games/clayfight/data@/data --preload-file games/clayfight/lua@/lua
 .PHONY: clayfight-resources

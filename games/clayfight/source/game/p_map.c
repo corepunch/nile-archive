@@ -42,9 +42,9 @@ static void P_ArtBox(const fighter_t *f, float x0, float y0, float x1, float y1,
 
 bool P_AttackBox(const fighter_t *f, box_t *out)
 {
-    if (!f->attack || !f->attacklive || (f->curbox < 0 && p_scripted))
+    if (!f->attack || !f->attacklive || (f->curbox < 0 && p_scripted && f->def->codeindex >= 0))
         return false;
-    if (p_scripted) {
+    if (p_scripted && f->def->codeindex >= 0) {
         // the move table's box: 3 px units placed from the frame anchor
         // (arcade units, scaled to the PC art)
         const psbox_t *b = &f->smove.boxes[f->curbox];
