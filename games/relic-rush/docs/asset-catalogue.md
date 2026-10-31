@@ -450,11 +450,16 @@ by this game's overrides. Reproduce with `python3 tools/match3_atlas.py` and
 
 ### Cell registration and dialogue motion
 
-Board state canvases now span the complete hex diameter. The authored 112px
-piece interior on a 128px canvas is registered explicitly: hex silhouettes fill
-the hex, other objects fit its inscribed square. Guide and HUD sizes retain their
-own registration. Artwork and its alpha remain unchanged. Reproduce the reviewed
-boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters.
+The board retains its enlarged 32-unit radius and 16-unit side margins. Pieces
+and state panels scale together by `32 / 26.5` from the authored registration:
+the 43.7-unit piece canvas becomes about 52.77 units, while the inset 51.4-unit
+cell/state canvas becomes about 62.07 units. This preserves piece padding and
+keeps neighbouring cell faces, selection/hint frames and special panels apart.
+Filling the entire cell diameter had removed that inset; reducing the board
+radius then lost the deliberate wide layout without repairing the proportions.
+The guide and HUD retain their own sizes. Artwork and alpha are unchanged. See
+the [wide-board and cell-fit review](review/gem-cell-fit/README.md) for both phone
+sizes, the selected/special cell view and existing capture commands.
 
 Portraits retain finite entrance/exit slides and fades. An independent colour
 tween brightens/dims active/listener states without replaying the slide. Size is
