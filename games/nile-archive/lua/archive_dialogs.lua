@@ -19,7 +19,7 @@ local M = {}
 local function popup(w, h, t, title)
     local s = app.screen()
     local box = rect.centered(s:center() + vec2(0, 14), size2(math.min(w, s.w - 40), math.min(h, s.h - 70)))
-    local k = .9 + .1 * ease.out_back(num.saturate(t * 4))
+    local k = G.reduced_motion and 1 or .9 + .1 * ease.out_back(num.saturate(t * 4))
     box = box:scale(k)
     local inner = K.frame(box, false, 24)
     K.ribbon(vec2(box:center().x, box.y + 2), math.min(420, box.w * .6), title)
@@ -38,7 +38,7 @@ local function win_dialog(t)
     local payout = res.payout or economy.reward(G.wins[G.scene], G.stars[G.scene], res.stars, false)
     local _, r = popup(640, 470 + clue_h, t, "Глава пройдена!")
     r:cut_top(44)
-    K.star_row(r:point(vec2(.5, 0)) + vec2(0, 34), 26, res.stars, t)
+    K.star_row(r:point(vec2(.5, 0)) + vec2(0, 34), 26, res.stars, not G.reduced_motion and t or nil)
     r:cut_top(84)
     local stats = r:cut_top(56)
     local half = stats:col(2, 0, 0)
@@ -107,14 +107,24 @@ local function chapter_card(r, i)
     end
 end
 
+local MOTION = "Меньше анимации"
 local function pause_dialog(t)
-    local _, r = popup(560, 216, t, "Пауза")
+    local _, r = popup(560, 282, t, "Пауза")
     r:cut_top(44)
     text.box(S.body:sized(19), r:cut_top(40):inflate2(vec2(-30, 0)), vec2(.5, .5),
              ("%s · найдено %d из %d"):format(scenes[G.scene].title, scene.found_count(), ITEMS))
-    r:cut_top(18)
+    r:cut_top(10)
+    -- The setting: no pops, pulses, sparkles or floating text; saved with progress.
+    local row = r:cut_top(56)
+    local w = K.skin:checkbox_size({kind = "checkbox"}, MOTION)
+    local box = rect.centered(row:center(), size2(w, 48))
+    G.spots.motion = box:center()
+    local reduced = K.skin:draw_checkbox(box, MOTION, G.reduced_motion)
+    if reduced ~= G.reduced_motion then G.reduced_motion = reduced; progress.save() end
+    r:cut_top(10)
     local buttons = r:cut_top(56):inflate2(vec2(-40, 0))
     if K.button(buttons:col(2, 0, 20), "На остров", "blue") then scene.go_home() end
+    G.spots.resume = buttons:col(2, 1, 20):center()
     if K.button(buttons:col(2, 1, 20), "Продолжить", "green") then G.modal = MODAL_NONE end
 end
 

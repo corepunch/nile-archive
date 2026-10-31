@@ -119,6 +119,31 @@ return ui.skin{
             },
         },
 
+        -- A gold-rimmed teal well that shows a cream tick when checked, like a
+        -- small frame. Hover brightens the rim, pressing sinks it, disabled greys it.
+        checkbox = {
+            size = 34, gap = 14, text = "body", em = 19,
+            box = {
+                normal = {layers = {
+                    {name = "shadow", shadow = "#00000064", radius = 10, blur = 8, offset = {0, 3}, fixed = true},
+                    {name = "rim", fill = "gold_hi", fill2 = "gold_lo", radius = 9},
+                    {name = "seam", fill = "gold_seam", radius = 7, inset = 2},
+                    {name = "well", fill = "teal_lo", fill2 = "teal_hi", radius = 6, inset = 3},
+                }},
+                hover = {set = {rim = {fill = "#FFF1C4"}}},
+                pressed = {offset = {0, 2}},
+                disabled = {set = {rim = {fill = "#9AA3A0", fill2 = "#66706E"}, well = {fill = "#2B3A3A", fill2 = "#3B4443"}}},
+            },
+            mark = {
+                normal = {layers = {
+                    {name = "tick_rim", check = "ink", width = 6.5, inset = 3},
+                    {name = "tick", check = "#FFF6DC", width = 3.8, inset = 3},
+                }},
+                pressed = {offset = {0, 2}},
+                disabled = {set = {tick = {check = "#C9C2B2"}}},
+            },
+        },
+
         -- Form text: the build tray's cards and buttons (native button paint).
         label = {text = "card_title", em = 17},
         button = {text = "button", em = 17},

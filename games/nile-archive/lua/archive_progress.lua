@@ -23,6 +23,7 @@ local function serialize(s)
     G.wallet[INFLUENCE] = s:int("influence", G.wallet[INFLUENCE])
     G.wins = s:ints("wins", G.wins)
     G.stars = s:ints("stars", G.stars)
+    G.reduced_motion = s:int("reduced_motion", G.reduced_motion and 1 or 0) ~= 0
     G.wallet[CHAPTERS] = economy.completed(G.wins)   -- non-spendable requirements, rebuilt from saved records
     G.wallet[STARS] = economy.stars(G.stars)
     G.island:serialize(s)

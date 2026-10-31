@@ -1,5 +1,5 @@
 -- archive_smoke.lua — the --smoke run: plays chapter one through injected
--- clicks, runs the engine's pickup-and-move check on the island, cancels and
+-- clicks (toggling Pause's reduced-motion checkbox on and off), runs the engine's pickup-and-move check on the island, cancels and
 -- confirms a purchase, then reaches chapter three by finding the second clue,
 -- building the temple and browsing the decoration catalogue (categories, pages
 -- and a purchase) through real form input. Every step asserts what it expects.
@@ -70,6 +70,19 @@ function M.step()
         app.inject_click(G.cam:to_screen(vec2(640, 470))); step = 3   -- open floor: a miss
     elseif step == 3 then
         assert(scene.found_count() == 0, "a miss found an item")
+        app.inject_click(G.spots.pause); step = 30
+    -- Pause > Меньше анимации: on, then off again, then back to the scene.
+    elseif step == 30 then
+        assert(G.modal == G.MODAL_PAUSE, "pause button failed")
+        app.inject_click(G.spots.motion); step = 31
+    elseif step == 31 then
+        assert(G.reduced_motion, "the motion checkbox did not turn reduced motion on")
+        app.inject_click(G.spots.motion); step = 32
+    elseif step == 32 then
+        assert(not G.reduced_motion, "the motion checkbox did not turn reduced motion off")
+        app.inject_click(G.spots.resume); step = 33
+    elseif step == 33 then
+        assert(G.modal == MODAL_NONE and G.scene == 1, "Продолжить did not resume the scene")
         step = 4
     elseif step == 4 then
         if not find_next(1) then step = 5 end
@@ -147,7 +160,7 @@ function M.step()
     elseif step == 26 then app.inject_click(G.spots.play3); step = 27
     elseif step == 27 then
         assert(G.scene == 3, "final chapter did not open")
-        print("Nile smoke: scene rewards -> free move -> purchase cancel/confirm -> fountain -> chapter two -> temple -> decoration catalogue -> chapter three passed")
+        print("Nile smoke: motion checkbox -> scene rewards -> free move -> purchase cancel/confirm -> fountain -> chapter two -> temple -> decoration catalogue -> chapter three passed")
         app.quit()
     end
 end

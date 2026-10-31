@@ -39,6 +39,7 @@ local G = {
 
     -- screens
     modal = 0, modal_time = 0,
+    reduced_motion = false,   -- Pause > Меньше анимации: no pops, pulses, sparkles or floating text
     tray = false,                 -- the building tray is open
     spots = {},                   -- where key controls were drawn this frame (smoke test)
     smoke = false,

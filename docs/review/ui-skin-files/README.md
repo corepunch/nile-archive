@@ -130,3 +130,16 @@ Hover lifts the box, pressing sinks box and tick, disabled fades both.
 | Clicked off | Held (pressed) |
 | --- | --- |
 | ![Off](after-volcano-sound-off.jpg) | ![Pressed](after-volcano-sound-pressed.jpg) |
+
+## Nile Archive: reduced-motion checkbox in Pause
+
+Nile Archive had no settings. Pause now has a «Меньше анимации» checkbox: a
+gold-rimmed teal well with a cream tick, drawn by `archive_skin.lua`. When it is
+on, dialogs and the backdrop appear without the pop-in, reward stars without
+their pop, found-item rings, the hint pulse and name pills without movement, and
+no sparkles, building bursts or floating score text play. The setting is saved
+with progress. `--smoke` ticks and unticks it, then resumes the scene.
+
+| Before | After, 1200×900 | After, 1368×1026 | Checked |
+| --- | --- | --- | --- |
+| ![Before](before-nile-pause.jpg) | ![After](after-nile-pause.jpg) | ![iPad](after-nile-pause-1368x1026.jpg) | ![Checked](after-nile-pause-checked.jpg) |
