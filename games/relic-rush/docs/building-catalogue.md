@@ -1,7 +1,7 @@
 # Buildings and decorations
 
 Relic Rush has **96 registered sprites**: ten unique story restorations and 86
-repeatable buildings and decorations. Open **BUILD SHOP** on the island. Browse
+repeatable buildings and decorations. Open **SHOP** on the island. Browse
 categories with the arrows and pages with Prev/Next. Each measured row shows its
 sprite, tile footprint, owned count, price and unlock requirement. Choose a
 location, move the preview to open grass and confirm. Gold is paid once on

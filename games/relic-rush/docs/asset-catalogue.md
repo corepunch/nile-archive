@@ -316,7 +316,17 @@ captures and reproduction commands are in
 [the shared gesture review](../../../docs/review/city-long-press/README.md).
 No bitmap or atlas mapping is added.
 
-Resource capsules, island HUD panels, progress bars, menu buttons, result stars, placement outlines, land
+The island HUD has no sheet or panel over the map: one row of slim resource
+pills, the shared pause medallion, and a bottom row of a large Play/Build button
+between round Expeditions and Shop buttons. The round buttons are engine geometry
+(gold rim, jade face) around existing artwork: the procedural compass icon and the
+Jungle market sprite (`data/buildings/3.png`). Their pressed state shifts the face
+2 units, as menu buttons do; there is no hover, selected or disabled state because
+they are always available. The EXPAND pill is gone: a region that can open now
+shows "+" and a glow on its fog marker, and its name is outlined text without a
+plate. [Island HUD captures](review/island-hud/README.md).
+
+Resource capsules, island HUD buttons, progress bars, menu buttons, result stars, placement outlines, land
 fog and dialogue chrome are intentional engine geometry/text; they are not gem
 or tool artwork states. Existing island, dialogue and result captures are linked
 from the [README](../README.md). App icons live in `Assets.xcassets/`, outside the
