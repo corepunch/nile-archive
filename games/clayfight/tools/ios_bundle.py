@@ -3,7 +3,6 @@
 from pathlib import Path
 import argparse
 import shutil
-import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 def main():
@@ -11,12 +10,10 @@ def main():
     parser.add_argument('destination',type=Path)
     args=parser.parse_args()
     data=args.destination/'GameData'
-    original=ROOT/'data/primalrage'
-    if not (original/'INDEX').exists():raise SystemExit('Put your original Primal Rage PC data in data/primalrage/ first')
-    subprocess.run(['/usr/bin/python3','-I',str(ROOT/'tools/pr2creature.py'),str(original),str(ROOT/'data/creatures/primalrage')],check=True)
+    original=ROOT/'data/primrage'
+    if not (original/'136102-1044b.29l').exists():raise SystemExit('Supply the primrageo arcade ROMs in data/primrage/')
     if data.exists(): shutil.rmtree(data)
-    (data/'primalrage').mkdir(parents=True,exist_ok=True)
-    for file in original.iterdir():
-        if file.suffix.upper()=='.GRA' or file.name=='INDEX':shutil.copy2(file,data/'primalrage'/file.name)
+    shutil.copytree(original,data/'primrage',ignore=shutil.ignore_patterns('.*'))
+    shutil.copy2(ROOT/'data/cage-BSD.txt',data/'cage-BSD.txt')
     shutil.copytree(ROOT/'data/creatures',data/'creatures',dirs_exist_ok=True,ignore=shutil.ignore_patterns('.*','sources','*.bmp','capture.json','capture.plist'))
 if __name__=='__main__':main()

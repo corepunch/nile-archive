@@ -251,7 +251,7 @@ def main():
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--creatures", default=str(ROOT / "data/creatures"))
     parser.add_argument("--executable", type=Path, default=ROOT / "../../build/clayfight")
-    parser.add_argument("--data", default=str(ROOT / "data/primalrage"))
+    parser.add_argument("--data", default=str(ROOT / "data/primrage"))
     parser.add_argument("--ready", type=Path)
     parser.add_argument("--cert")
     parser.add_argument("--key")

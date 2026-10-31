@@ -1,11 +1,19 @@
 # How Primal Rage drives its fighters, and what Clayfight takes from it
 
-Status: done the recommended way. `tools/pr2creature.py` converts the game's
-move scripts and tables into creature files ([creature-format.md](creature-format.md)),
-and those files are what Clayfight plays. The game's bytecode still runs
-directly with `-script` (`source/game/w_exe.c`, `source/game/p_script.c`) as a reference.
-`make check` plays all 266 animations and moves both ways and compares
-pictures, timing, root motion and attack boxes tic by tic: they match.
+The active implementation runs **arcade 2.3 bytecode directly** for the seven
+retail fighters. The 65×10 source table is at program address `0x6d964`;
+the existing 62 logical rows skip three arcade-only entries. Move tables live
+at `0xfbba0`, `0x6fca4`, `0x72ea4`; boxes at `0x7d328` and `0x49f7c`.
+Native breathing and crouch cycles have 30 and 20 source frames respectively.
+`p_script.c` reads big-endian ROM data, uses original RLE pivots and native
+combat units, and maps relevant native routines to the port's simulation.
+Photo creatures continue to use authored creature states.
+
+`make test-clayfight-retail` validates 280 standard animations and move slots,
+their rendered frames and palettes, plus airborne registration and game flow.
+The following DOS reverse-engineering notes and addresses are historical.
+The old converter and comparison tools require an external DOS installation;
+neither converted definitions nor `PRAGE.EXE` are runtime inputs.
 
 ## What the original does
 

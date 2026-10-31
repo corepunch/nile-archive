@@ -43,9 +43,9 @@ typedef struct {
 } ticcmd_t;
 
 // Arena geometry, in world pixels. z grows upward from the floor (0).
-#define ARENA_WIDTH 480
+#define ARENA_WIDTH 592
 #define FLOOR_Y (VIEWHEIGHT - 18) // screen row of the floor line
-#define GRAVITY 0.42f
+#define GRAVITY 0.593f
 
 #define ROUND_TIME 60 // seconds
 #define ROUNDS_TO_WIN 2
@@ -156,9 +156,9 @@ typedef struct {
 // fighterdef_t: one per creature file (cf. mobjinfo_t)
 typedef struct {
     char name[32];
-    char prefix[8]; // art files S04<prefix>*.GRA, voice S04<prefix>SD.GRA
-    int codeindex; // character number in PRAGE.EXE (-script mode), -1 none
-    int portrait, label; // S04SELMO.GRA frames: 5-frame portrait, name plate
+    char prefix[8]; // original character identifier or custom photo prefix
+    int codeindex; // arcade character index; -1 for custom fighters
+    int portrait, label; // virtual selection bank slots: portrait and label
     gra_t *photoport; // photographed close-up, separate from the animation scale
     int palette, altpalette; // sub-palettes of the base art file
     bool facesleft; // which way the art faces
@@ -194,13 +194,13 @@ extern const char *const stdanimnames[NUMSTDANIMS];
 
 // --- p_script.c: Primal Rage's own animation scripts and move tables -------
 //
-// Run straight out of PRAGE.EXE (see w_exe.c).
+// Run directly from the big-endian arcade CPU ROM (see w_exe.c).
 // An animation is a stream of 16-bit words. A word below 0x8000 shows a
 // "frame id" (bit 15 of a frame word mirrors it); anything else is an
 // opcode: number = (w >> 8) & 0x1F, operand mode = w & 0x6000, selector =
 // low byte (opcode 0x1F: the real opcode is the low byte and the selector is
-// the next word). Frame ids index a global table of (GRA file id << 23 |
-// frame record offset). Each script runs with a frame timer: every tic the
+// the next word). Frame ids address RLE motion objects. Each script runs
+// with a frame timer: every tic the
 // timer drops by one; at zero the script advances to its next frame and the
 // timer gains that frame's duration.
 //
@@ -212,9 +212,9 @@ extern const char *const stdanimnames[NUMSTDANIMS];
 #define PS_NUMVARS 6
 #define PS_EPSILON 1e-3f // frame timers are floats; fractional durations must not drift a tic
 
-// PC pixels per arcade unit: the PC art is the arcade art scaled down.
-#define ARCADE_XSCALE 0.81f
-#define ARCADE_YSCALE 0.708f
+// Native arcade units; presentation applies the sole 2x enlargement.
+#define ARCADE_XSCALE 1.f
+#define ARCADE_YSCALE 1.f
 
 // the 62 core rows, named from what they show (the game names none of them)
 enum {
@@ -391,7 +391,7 @@ void P_SetupRound(fighterdef_t *defs[2], const int palettes[2], stage_t *stage, 
 void P_Ticker(void);
 
 // p_mobj.c
-extern bool p_scripted; // -script: run PRAGE.EXE's bytecode instead of creature files
+extern bool p_scripted; // original fighters run ROM scripts; photos use authored states
 void P_SpawnFighter(fighter_t *f, fighterdef_t *def, int player, float x, int palette);
 bool P_SetAnim(fighter_t *f, animnum_t anim);
 bool P_StartMove(fighter_t *f, int slot, animnum_t next);
@@ -538,6 +538,7 @@ void D_Display(void);
 
 // --- sel_main.c: character select screen (cf. wi_stuff.h) ------------------
 void SEL_Start(void);
+void SEL_Reset(void);
 bool SEL_Responder(const event_t *ev);
 void SEL_Ticker(void);
 void SEL_Drawer(void);

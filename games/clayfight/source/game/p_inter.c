@@ -66,7 +66,7 @@ bool P_AttackLands(const fighter_t *att, const fighter_t *vic, hit_t *out)
     if (!P_AttackBox(att, &hit) || !P_HurtBox(vic, &hurt) || !P_BoxesTouch(&hit, &hurt))
         return false;
     out->atk = att->attack;
-    out->stun = p_scripted ? att->smove.stun : att->move >= 0 ? att->def->moves[att->move].stun : 0;
+    out->stun = p_scripted && att->def->codeindex >= 0 ? att->smove.stun : att->move >= 0 ? att->def->moves[att->move].stun : 0;
     out->blocked = P_CanBlock(vic, out->atk);
     out->crouch = (vic->cmd.buttons & BT_DOWN) && (out->blocked || vic->state->kind == K_FREE);
     out->x = att->facing > 0 ? MAX(hit.x0, hurt.x0) : MIN(hit.x1, hurt.x1);

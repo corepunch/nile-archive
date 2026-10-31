@@ -35,18 +35,18 @@ void ST_Drawer(const int wins[2])
         }
     }
     if (gamemode == GM_TUG) {
-        V_FillRect(8, 7, 304, 10, 0xff000000);
-        V_FillRect(9, 8, 302, 8, 0xff3070c0);
-        V_FillRect(9, 8, level.fighters[0].health * 302 / MAX_HEALTH, 8, 0xffdf8041);
-        V_FillRect(159, 7, 2, 10, 0xfff2dfbc);
+        V_FillRect(8, 7, VIEWWIDTH-16, 10, 0xff000000);
+        V_FillRect(9, 8, VIEWWIDTH-18, 8, 0xff3070c0);
+        V_FillRect(9, 8, level.fighters[0].health * (VIEWWIDTH-18) / MAX_HEALTH, 8, 0xffdf8041);
+        V_FillRect(VIEWWIDTH/2-1, 7, 2, 10, 0xfff2dfbc);
     }
-    if (gamemode == GM_TRAINING) V_DrawTextCentered(FONT_SMALL, 160, VIEWHEIGHT - 7, "TRAINING  /  ESC THEN Q TO LEAVE");
-    if (gamemode == GM_ENDURANCE) V_DrawTextCentered(FONT_SMALL, 160, VIEWHEIGHT - 7, "ENDURANCE  /  FOUR FIGHTERS PER TEAM");
+    if (gamemode == GM_TRAINING) V_DrawTextCentered(FONT_SMALL, VIEWWIDTH/2, VIEWHEIGHT - 7, "TRAINING  /  ESC THEN Q TO LEAVE");
+    if (gamemode == GM_ENDURANCE) V_DrawTextCentered(FONT_SMALL, VIEWWIDTH/2, VIEWHEIGHT - 7, "ENDURANCE  /  FOUR FIGHTERS PER TEAM");
     char clock[12];   /* room for any int, so -Wformat-truncation stays quiet */
     if (level.time < 0) snprintf(clock, sizeof clock, "--");
     else snprintf(clock, sizeof clock, "%02d", (level.time + TICRATE - 1) / TICRATE);
     if (gamemode != GM_TUG) V_DrawTextCentered(FONT_BIG, VIEWWIDTH / 2, 5, clock);
-    else V_DrawTextCentered(FONT_SMALL, 160, 30, clock);
+    else V_DrawTextCentered(FONT_SMALL, VIEWWIDTH/2, 30, clock);
 }
 
 // --- centre-screen announcements (cf. hu_stuff.c) ---------------------------

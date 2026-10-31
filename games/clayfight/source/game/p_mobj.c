@@ -104,7 +104,7 @@ static void P_EnterState(fighter_t *f, int index, bool carry)
 
 bool P_SetAnim(fighter_t *f, animnum_t anim)
 {
-    if (p_scripted)
+    if (p_scripted && f->def->codeindex >= 0)
         return P_ScriptAnim(f, anim);
     if (anim < 0 || anim >= f->def->numanims || !f->def->anims[anim].count)
         return false;
@@ -124,7 +124,7 @@ bool P_SetAnim(fighter_t *f, animnum_t anim)
 // Start the move in `slot` (see game.h); `next` follows when it ends.
 bool P_StartMove(fighter_t *f, int slot, animnum_t next)
 {
-    if (p_scripted)
+    if (p_scripted && f->def->codeindex >= 0)
         return P_ScriptMove(f, slot, next);
     const movedef_t *mv = &f->def->moves[slot];
     if (!mv->valid || !P_SetAnim(f, mv->anim))
@@ -313,7 +313,7 @@ static void P_ScriptThink(fighter_t *f)
 
 void P_AnimTick(fighter_t *f)
 {
-    if (p_scripted)
+    if (p_scripted && f->def->codeindex >= 0)
         P_ScriptThink(f);
     else
         P_AnimateCreature(f);
