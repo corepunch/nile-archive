@@ -96,3 +96,5 @@ reel("portrait-transitions", 42, 2, "390x844", "--lua tests/fixtures/dialogue;ga
 reel("relic-rush-board-intro", 18, 6, "480x900", "--level 5 --present --reel")
 reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --reel --safe-area 0,47,0,34")
 reel("dialogue-to-board", 30, 8, "480x900", "--dialog intro --talk-through 45 --reel")
+frame("entrance-settled-relic-rush-480x900", "480x900", "--level 5 --present --frames 180")
+frame("entrance-settled-relic-rush-390x844", "390x844", "--level 5 --present --frames 180 --safe-area 0,47,0,34")

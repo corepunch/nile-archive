@@ -31,3 +31,8 @@ A tap skips without selecting a piece or spending a move. Dialogue, modals and
 the island pause the clock; reduced motion uses a quarter-second fade.
 Tests cover those lifecycle transitions and board reset, alongside the games'
 real input smoke runs and all existing atlas/state checks.
+
+Settled frames are also tested with `build/test/relic-rush entrance-settled`,
+using frame 180 at the comparison level.
+The phone animation additionally demonstrates level 9; its before/after and
+settled still comparisons use level 5 at both sizes.

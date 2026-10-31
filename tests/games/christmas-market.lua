@@ -45,3 +45,5 @@ frame("atlas-christmas-market-hud", "480x900", "--level 7 --hud-states")
 frame("atlas-christmas-market-effects", "480x900", "--fx bomb --frames 8")
 
 reel("christmas-market-phone-board-intro", 12, 8, "390x844", "--level 4 --present --reel --safe-area 0,47,0,34")
+frame("entrance-settled-christmas-market-480x900", "480x900", "--level 4 --present --frames 180")
+frame("entrance-settled-christmas-market-390x844", "390x844", "--level 4 --present --frames 180 --safe-area 0,47,0,34")
