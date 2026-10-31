@@ -4,14 +4,18 @@ A portrait mobile-first hex match-4 / island-restoration prototype, written in C
 
 Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Ten redesigned hex stages and ten buildings end in a restored sun temple. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
+Building popup images and resource icons follow the panel’s entrance scale,
+position and opacity through the shared form skin. See the
+[popup and refill comparisons](docs/review/popup-refill/README.md).
+
 ## Shared match engine and atlas
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
 input/timing. This game provides campaign data, graphics and integer behavior
-flags. Empty cells prefer reachable upper diagonals; direct downward refill
-is the fallback. New pieces enter at upstream inlets instead of appearing
-beneath a hole that can receive a gem from the side.
+flags. Every exposed column top (no active cell directly above) spawns gems
+vertically. Interior empty cells prefer reachable upper diagonals, with direct
+downward refill as the fallback. Locks still route gems around their sides.
 
 All board imagery uses one `data/match3.png` override atlas. The engine embeds
 a neutral resource atlas for games without an override; `--default-match3`

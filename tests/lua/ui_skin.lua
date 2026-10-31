@@ -83,6 +83,32 @@ check(math.abs(skin:text("body").size-40)<.01 and math.abs(skin:text("body").fad
 check(math.abs(skin.style({kind="label"}).size-28)<.01,"measurement ignores the transform")
 skin.transform=nil
 
+-- Bound form images share the skin transform, fitting before painting while
+-- their logical layout stays fixed (building cards and resource icons).
+local image_draw, images=gfx.image,{}
+gfx.image=function(im,bounds,tint) images[#images+1]={image=im,box=bounds,tint=tint} end -- luacheck: ignore 122
+local im={tex=true,w=80,h=40}
+local image_form=ui.form{kind="image",id="art",image=im}
+skin.transform=function() return .5,vec2(5,7),.25 end
+image_form:draw(rect(10,20,100,100),skin,{input={}})
+image_form.root.cover=true
+image_form:draw(rect(10,20,100,100),skin,{input={}})
+skin.transform=nil
+image_form:draw(rect(10,20,100,100),skin,{input={}})
+image_form:draw(rect(10,20,100,100),{},{input={}})
+gfx.image=image_draw -- luacheck: ignore 122
+check(#images==4 and images[1].image==im,"all image paint paths preserve the bound texture")
+local fitted=images[1].box
+near(fitted.x,10,"fitted image follows popup x")
+near(fitted.y,29.5,"fitted image follows popup y")
+near(fitted.w,50,"fitted image follows popup scale")
+near(fitted.h,25,"image retains its aspect ratio")
+check(images[1].tint.a==64 and images[2].tint.a==64,"images share popup opacity")
+near(images[2].box.h,50,"cover image scales its allocated bounds")
+near(image_form.boxes.art.w,100,"paint transform does not change logical bounds")
+check(images[3].box.h==100 and images[3].tint.a==255,"settled skin restores full size and opacity")
+check(images[4].box.h==100 and images[4].tint.a==255,"native image fallback stays available")
+
 -- Checkbox: an engine control, bound like a toggle, painted by the skin.
 local form=ui.form{root={kind="column",gap=4,children={
     {kind="checkbox",id="hints",text="Hints",height=30},

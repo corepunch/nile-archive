@@ -55,7 +55,7 @@ The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
 registrations, and `make gen` embeds the default. No new game icon designs were
 generated. FALL uses engine-authored simultaneous one-edge movement steps,
-diagonal priority, upstream inlets and a short landing squash; static states
+vertical spawning at every exposed column top, interior diagonal priority and a short landing squash; static states
 continue to use the existing artwork. Input and animation timing are shared.
 
 See [checked in-game captures and commands](review/trickling/README.md) and the

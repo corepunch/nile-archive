@@ -12,14 +12,17 @@ The original transparent building atlas and the labeled reference sheet are pres
 
 The supplied portrait is now the identity reference for Noelle, the main character (`art/noelle-reference.jpg`). Her transparent cutout is used in dialogue and the puzzle header. Her [portrait app icon](art/app-icon-1024.png) is installed in the iOS/macOS `AppIcon` catalogue; its opaque square master leaves corner masking to the OS. `python3 games/christmas-market/tools/prepare_character.py` reproduces the portrait resize and all icon sizes. Built-in ImageGen prompts are in `art/character-and-icon-prompts.json`.
 
+Building popup images and resource icons follow the panel’s entrance scale,
+position and opacity through the shared form skin.
+
 ## Shared match engine and atlas
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
 input/timing. This game provides campaign data, graphics and integer behavior
-flags. Empty cells prefer reachable upper diagonals; direct downward refill
-is the fallback. New pieces enter at upstream inlets instead of appearing
-beneath a hole that can receive a gem from the side.
+flags. Every exposed column top (no active cell directly above) spawns gems
+vertically. Interior empty cells prefer reachable upper diagonals, with direct
+downward refill as the fallback. Locks still route gems around their sides.
 
 All board imagery uses one `data/match3.png` override atlas. The engine embeds
 a neutral resource atlas for games without an override; `--default-match3`
