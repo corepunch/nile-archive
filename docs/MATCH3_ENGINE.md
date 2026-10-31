@@ -58,12 +58,14 @@ restoration economy. Matching and input do not live in either game.
 
 ## Diagonal refill
 
-A gravity step moves each gem at most one downward hex edge. For each empty
-interior cell, either upper diagonal takes priority over the cell directly above.
-If a diagonal path has empty cells but a reachable existing gem farther up,
-the destination waits for it. Equal side choices alternate deterministically
-by position without spending RNG. Two destinations cannot consume the same
-gem in one step.
+A gravity step moves each gem at most one downward hex edge. A gem falls
+straight down whenever its cell below is empty and movable. Only when that
+cell is occupied, locked or missing may the gem slide diagonally. Each empty
+destination takes the gem directly above before considering eligible side
+donors; it never waits for a distant side donor instead of falling straight.
+Eligibility uses the board at the start of the simultaneous step. Equal side
+choices alternate deterministically by position without spending RNG. Two
+destinations cannot consume the same gem in one step.
 
 Every active cell with no active cell directly above it is an inlet: it
 spawns vertically before considering side donors. All exposed column tops,

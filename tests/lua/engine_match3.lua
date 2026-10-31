@@ -82,7 +82,12 @@ for flags=0,63 do
         g.active[center],g.active[side],g.active[above]=true,true,true
         g.tiles[side],g.tiles[above]=R.tile(2,R.BOMB),R.tile(4,R.ROW)
         local from=R.game_collapse(g)
-        t:check(from[center]==(flags&E.NO_TRICKLE~=0 and above or side),'NO_TRICKLE selects the expected original donor')
+        t:check(from[center]==above,'straight down wins with every flag combination')
+        g.chain[above]=1
+        g.tiles[center]=R.tile(-1);g.tiles[side]=R.tile(2,R.BOMB)
+        from=R.game_collapse(g)
+        t:check(flags&E.NO_TRICKLE~=0 and from[center]<0 or flags&E.NO_TRICKLE==0 and from[center]==side,
+            'NO_TRICKLE controls diagonal fallback around a lock')
     end)
     t:case('flags='..flags..' exposed top inlets',function()
         local g=H.board(R)

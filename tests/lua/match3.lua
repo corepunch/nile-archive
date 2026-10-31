@@ -26,7 +26,11 @@ for _, flags in ipairs({0, match3.NO_TRICKLE}) do
     g.active[center],g.active[left],g.active[above]=true,true,true
     g.tiles[left],g.tiles[above]=r.tile(4),r.tile(2)
     local _, steps = r.game_collapse(g)
-    check(steps[1].from[center]==(flags==0 and left or above), "integer flag selects refill behavior")
+    check(steps[1].from[center]==above, "straight fall has priority with either flag")
+    g.chain[above],g.tiles[center]=1,r.tile(-1)
+    _, steps = r.game_collapse(g)
+    check(flags==0 and steps[1].from[center]==left or flags~=0 and steps[1].from[center]<0,
+          "integer flag controls diagonal fallback")
 end
 do
     local g,m=empty(b),b.new_match()

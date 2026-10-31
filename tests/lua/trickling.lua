@@ -13,20 +13,43 @@ local function board(cells)
     return g
 end
 local center, left, right, above = index(0, 0), index(-1, 0), index(1, -1), index(0, -1)
--- Either upper diagonal wins over an occupied cell directly above.
+-- A gem directly above falls before either diagonal donor.
 for _, side in ipairs({{-1, 0}, {1, -1}}) do
     local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4, rules.BOMB}})
     local _, steps = rules.game_collapse(g)
     local source = index(side[1], side[2])
-    check(steps[1].from[center] == source, "diagonal beats direct vertical")
-    check(g.tiles[center].kind == 4 and g.tiles[center].special == rules.BOMB, "special survives trickling")
+    check(steps[1].from[center] == above, "straight down beats either diagonal")
+    check(g.tiles[center].kind == 2 and g.tiles[source].special == rules.BOMB, "side special stays put")
 end
--- Interior cells still wait for an existing gem up an empty diagonal route.
+-- A distant diagonal donor must not delay an available straight fall.
 do
     local g = board({{0, 0}, {0, -1, 2}, {-1, 0}, {-1, -1}, {-2, 0, 5}})
     local _, steps = rules.game_collapse(g)
-    check(steps[1].tiles[center].kind == -1, "wait for a reachable diagonal gem")
-    check(steps[2].from[center] == left and g.tiles[center].kind == 5, "feed through empty diagonal cells")
+    check(steps[1].from[center] == above, "do not wait for a distant diagonal gem")
+    check(steps[1].from[left] == index(-2, 0) and g.tiles[center].kind == 2, "side route fills independently")
+end
+-- A diagonal destination must not steal a donor with an empty cell below it,
+-- even when that destination is visited before the straight destination.
+for _, side in ipairs({{-1, 0}, {1, -1}}) do
+    local source = index(side[1], side[2])
+    local down = rules.hex_neighbor(source, 1)
+    local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4, rules.BOMB},
+                     {rules.hex_q(down), rules.hex_r(down)}})
+    g.chain[above] = 1
+    local _, steps = rules.game_collapse(g)
+    check(steps[1].from[down] == source, "donor takes its own empty cell below")
+    check(steps[1].tiles[center].kind < 0, "diagonal waits while donor can fall straight")
+    check(steps[1].tiles[down].special == rules.BOMB, "fall preserves special")
+    -- Occupied and locked cells below both allow the donor to slide sideways.
+    for _, blocker in ipairs({"gem", "chain", "ice"}) do
+        g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4, rules.BOMB},
+                   {rules.hex_q(down), rules.hex_r(down), 1}})
+        g.chain[above] = 1
+        if blocker ~= "gem" then g[blocker][down] = 1 end
+        _, steps = rules.game_collapse(g)
+        check(steps[1].from[center] == source, blocker .. " below allows diagonal")
+        check(steps[1].tiles[center].special == rules.BOMB, "slide preserves special")
+    end
 end
 -- Every exposed column top spawns vertically, even beside an occupied diagonal.
 do
@@ -91,6 +114,12 @@ for level = 0, rules.LEVELS - 1 do
                         used[source] = true
                         check(source == rules.hex_neighbor(i, 3) or source == rules.hex_neighbor(i, 4)
                               or source == rules.hex_neighbor(i, 5), "one downward edge, never across voids")
+                        if source ~= rules.hex_neighbor(i, 4) then
+                            local down = rules.hex_neighbor(source, 1)
+                            check(not rules.game_cell_active(old, down) or old.chain[down] > 0
+                                  or old.ice[down] > 0 or previous[down].kind >= 0,
+                                  "diagonal only when the donor cannot fall straight down")
+                        end
                         check(old.active[source] and old.chain[source] == 0 and old.ice[source] == 0, "donor is movable")
                     else
                         if rules.game_cell_active(old, rules.hex_neighbor(i, 4)) then

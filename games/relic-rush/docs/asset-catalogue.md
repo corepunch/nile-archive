@@ -243,7 +243,7 @@ pause, guide and the island.
 | SWAP | Existing piece artwork moves to neighbour |
 | REJECT | Same artwork returns; no move spent |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
-| FALL | Engine one-edge gravity steps prefer diagonals, wait for reachable side donors, then land with a short squash; all exposed column tops spawn vertically; interior cells spawn only with blocked donors |
+| FALL | Engine one-edge gravity steps prefer straight down; diagonals require a blocked or missing cell below the donor, then land with a short squash; all exposed column tops spawn vertically; interior cells spawn only with blocked donors |
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
 | Collection | Existing base-kind image flies to resource HUD with a trail |
@@ -431,7 +431,7 @@ effect, packed in the same atlas and drawn with a per-view additive flag.
 The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
 registrations, and `make gen` embeds the default. FALL uses engine-owned
-simultaneous one-edge movement steps, diagonal priority, upstream inlets and
+simultaneous one-edge movement steps, straight-down priority with blocked-down diagonal fallback, vertical spawning at every exposed column top and
 a short landing squash; static states continue to use the existing artwork.
 Input and animation timing are shared.
 
