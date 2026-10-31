@@ -231,6 +231,11 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Art and text pipeline
 
+Nine matching landmarks have independently registered ground shadows below the
+current painted sprites. The courtyard and all 86 repeatable catalogue entries
+are preserved. See [building registration](docs/BUILDINGS.md) and the
+[reviewed captures](docs/review/painted-buildings/README.md).
+
 Original generated environment paintings, the legacy 10-building sprite sheet and the 6 × 3 tile sheet (`art/tile-sets/source.png`: the Relics, Jewels and Resources packs) are kept as editable sources in `art/`. The 96 current building sprites use the Blender-guided ImageGen atlas and `tools/prepare_buildings.py` (see the building catalogue). `tools/prepare_assets.py` cuts the other sprites out of their sheets (largest opaque component, so neighbouring paintings never leak in), scales backgrounds to what the screen needs and writes PNG/JPG files the engine loads directly. `docs/references.md` records reference research and provenance. Generated art is a prototype asset set and needs an art consistency / IP review before a commercial release.
 
 Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueType with outline, gradient and drop shadow, any Unicode — Cyrillic localisation no longer needs a new atlas); **Lobster** made the gold `title.png` logo and stays in `art/fonts`. Both are unmodified SIL OFL 1.1 fonts with their license text.

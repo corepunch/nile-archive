@@ -6,6 +6,7 @@ local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
+A.buildings = {catalogue="buildings", shadows="building_art", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.tool_size = 76   -- square authored artwork and matching square touch targets
 A.hud_icons = {"score", "complete"}

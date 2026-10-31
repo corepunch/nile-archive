@@ -1,19 +1,10 @@
 {
-  "source": "buildings-transparent.png",
   "shadow_source": "shadows/0..9.png",
-  "atlas_size": [
-    2134,
-    737
-  ],
-  "source_camera_size": [
-    2520,
-    870
-  ],
-  "shadow_registration_scale": [
-    0.8468253968253968,
-    0.8471264367816091
-  ],
-  "pixel_operations": "painted sprite crop only; Lanczos resize and crop of rendered shadows",
+  "sprite_registration": "../building-catalogue/manifest.json",
+  "excluded": {
+    "4": "Sunstone courtyard supersedes the bridge; no compatible independent shadow"
+  },
+  "pixel_operations": "Lanczos resize and spatial crop of rendered shadows; no sprite changes",
   "assets": [
     {
       "id": 0,
@@ -22,29 +13,26 @@
         2,
         2
       ],
-      "sprite": "data/buildings/0.png",
       "shadow": "data/building-shadows/0.png",
-      "sprite_crop": [
-        97,
-        127,
-        310,
-        310
-      ],
       "shadow_crop": [
-        52,
-        156,
-        344,
-        396
+        60,
+        70,
+        632,
+        372
       ],
-      "pivot": [
-        106.2381,
-        127.1379
+      "canvas": [
+        2457,
+        848
+      ],
+      "registration_scale": [
+        0.975,
+        0.9747126436781609
       ],
       "shadow_pivot": [
-        151.2381,
-        98.1379
+        174.0,
+        222.4138
       ],
-      "base_width": 203.2381
+      "base_width": 234
     },
     {
       "id": 1,
@@ -53,29 +41,26 @@
         2,
         2
       ],
-      "sprite": "data/buildings/1.png",
       "shadow": "data/building-shadows/1.png",
-      "sprite_crop": [
-        403,
-        106,
-        615,
-        310
-      ],
       "shadow_crop": [
-        357,
-        61,
-        679,
-        317
+        409,
+        71,
+        777,
+        455
       ],
-      "pivot": [
-        105.0952,
-        148.1379
+      "canvas": [
+        2446,
+        845
+      ],
+      "registration_scale": [
+        0.9706349206349206,
+        0.9712643678160919
       ],
       "shadow_pivot": [
-        151.0952,
-        193.1379
+        173.381,
+        220.3793
       ],
-      "base_width": 203.2381
+      "base_width": 233
     },
     {
       "id": 2,
@@ -84,29 +69,26 @@
         3,
         2
       ],
-      "sprite": "data/buildings/2.png",
       "shadow": "data/building-shadows/2.png",
-      "sprite_crop": [
-        704,
-        78,
-        977,
-        335
-      ],
       "shadow_crop": [
-        661,
-        60,
-        1211,
-        423
+        724,
+        66,
+        1324,
+        462
       ],
-      "pivot": [
-        134.3571,
-        188.8448
+      "canvas": [
+        2335,
+        806
+      ],
+      "registration_scale": [
+        0.9265873015873016,
+        0.9264367816091954
       ],
       "shadow_pivot": [
-        177.3571,
-        206.8448
+        193.3214,
+        225.8276
       ],
-      "base_width": 254.0476
+      "base_width": 278
     },
     {
       "id": 3,
@@ -115,60 +97,26 @@
         3,
         2
       ],
-      "sprite": "data/buildings/3.png",
       "shadow": "data/building-shadows/3.png",
-      "sprite_crop": [
-        1114,
-        94,
-        1380,
-        335
-      ],
       "shadow_crop": [
-        1067,
-        60,
-        1617,
-        361
+        1084,
+        62,
+        1642,
+        367
       ],
-      "pivot": [
-        130.8333,
-        172.8448
+      "canvas": [
+        2167,
+        748
+      ],
+      "registration_scale": [
+        0.859920634920635,
+        0.8597701149425288
       ],
       "shadow_pivot": [
-        177.8333,
-        206.8448
+        180.0833,
+        208.8276
       ],
-      "base_width": 254.0476
-    },
-    {
-      "id": 4,
-      "key": "gateway",
-      "size": [
-        4,
-        2
-      ],
-      "sprite": "data/buildings/4.png",
-      "shadow": "data/building-shadows/4.png",
-      "sprite_crop": [
-        1573,
-        89,
-        1889,
-        335
-      ],
-      "shadow_crop": [
-        1525,
-        35,
-        1956,
-        351
-      ],
-      "pivot": [
-        154.5238,
-        165.1379
-      ],
-      "shadow_pivot": [
-        202.5238,
-        219.1379
-      ],
-      "base_width": 304.8571
+      "base_width": 258
     },
     {
       "id": 5,
@@ -177,29 +125,26 @@
         3,
         3
       ],
-      "sprite": "data/buildings/5.png",
       "shadow": "data/building-shadows/5.png",
-      "sprite_crop": [
-        86,
-        312,
-        411,
-        643
-      ],
       "shadow_crop": [
-        51,
-        339,
-        652,
-        726
+        48,
+        322,
+        620,
+        691
       ],
-      "pivot": [
-        168.0476,
-        247.1034
+      "canvas": [
+        2030,
+        701
+      ],
+      "registration_scale": [
+        0.8055555555555556,
+        0.8057471264367816
       ],
       "shadow_pivot": [
-        203.0476,
-        220.1034
+        193.6667,
+        209.7931
       ],
-      "base_width": 304.8571
+      "base_width": 290
     },
     {
       "id": 6,
@@ -208,29 +153,26 @@
         3,
         3
       ],
-      "sprite": "data/buildings/6.png",
       "shadow": "data/building-shadows/6.png",
-      "sprite_crop": [
-        505,
-        366,
-        818,
-        643
-      ],
       "shadow_crop": [
-        458,
-        339,
-        1058,
-        726
+        444,
+        329,
+        1028,
+        705
       ],
-      "pivot": [
-        155.5238,
-        193.1034
+      "canvas": [
+        2072,
+        715
+      ],
+      "registration_scale": [
+        0.8222222222222222,
+        0.8218390804597702
       ],
       "shadow_pivot": [
-        202.5238,
-        220.1034
+        197.3333,
+        213.4138
       ],
-      "base_width": 304.8571
+      "base_width": 296
     },
     {
       "id": 7,
@@ -239,29 +181,26 @@
         2,
         2
       ],
-      "sprite": "data/buildings/7.png",
       "shadow": "data/building-shadows/7.png",
-      "sprite_crop": [
-        910,
-        348,
-        1122,
-        618
-      ],
       "shadow_crop": [
-        864,
-        365,
-        1271,
-        619
+        837,
+        353,
+        1232,
+        600
       ],
-      "pivot": [
-        106.1905,
-        211.1034
+      "canvas": [
+        2068,
+        714
+      ],
+      "registration_scale": [
+        0.8206349206349206,
+        0.8206896551724138
       ],
       "shadow_pivot": [
-        152.1905,
-        194.1034
+        147.7619,
+        188.6552
       ],
-      "base_width": 203.2381
+      "base_width": 197
     },
     {
       "id": 8,
@@ -270,29 +209,26 @@
         3,
         3
       ],
-      "sprite": "data/buildings/8.png",
       "shadow": "data/building-shadows/8.png",
-      "sprite_crop": [
-        1216,
-        372,
-        1529,
-        643
-      ],
       "shadow_crop": [
-        1169,
-        339,
-        1769,
-        726
+        1023,
+        296,
+        1551,
+        566
       ],
-      "pivot": [
-        155.8571,
-        187.1034
+      "canvas": [
+        1869,
+        645
+      ],
+      "registration_scale": [
+        0.7416666666666667,
+        0.7413793103448276
       ],
       "shadow_pivot": [
-        202.8571,
-        220.1034
+        178.5,
+        193.3103
       ],
-      "base_width": 304.8571
+      "base_width": 267
     },
     {
       "id": 9,
@@ -301,29 +237,26 @@
         4,
         4
       ],
-      "sprite": "data/buildings/9.png",
       "shadow": "data/building-shadows/9.png",
-      "sprite_crop": [
-        1622,
-        337,
-        2037,
-        669
-      ],
       "shadow_crop": [
-        1575,
-        314,
-        2134,
-        673
+        1288,
+        256,
+        1748,
+        553
       ],
-      "pivot": [
-        207.1429,
-        222.1034
+      "canvas": [
+        1748,
+        604
+      ],
+      "registration_scale": [
+        0.6936507936507936,
+        0.6942528735632184
       ],
       "shadow_pivot": [
-        254.1429,
-        245.1034
+        210.2857,
+        202.2069
       ],
-      "base_width": 406.4762
+      "base_width": 333
     }
   ]
 }

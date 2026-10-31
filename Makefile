@@ -128,6 +128,7 @@ test: gen-check xcode-check build/tests build/test-audio test-clayfight
 	python3 games/volcano/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
 	python3 games/relic-rush/tools/prepare_hud.py --check
+	python3 games/relic-rush/tools/building_assets.py --check
 	@mkdir -p build/test-home
 	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests tests/lua/*.lua
 
