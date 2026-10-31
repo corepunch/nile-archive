@@ -1,4 +1,4 @@
-"""Register the authored expedition HUD atlas and investigating portrait.
+"""Register the authored expedition HUD atlas.
 
 python3 games/relic-rush/tools/prepare_hud.py [--check]
 """
@@ -21,10 +21,6 @@ for name, asset in manifest["icons"].items():
     canvas = Image.new("RGBA", (128, 128))
     canvas.alpha_composite(image, ((128 - image.width) // 2, (128 - image.height) // 2))
     exports[asset["runtime"]] = canvas
-portrait = manifest["portrait"]
-image = Image.open(ROOT / portrait["source"]).convert("RGBA").crop(portrait["box"])
-image.thumbnail(tuple(portrait["max_size"]), Image.Resampling.LANCZOS)
-exports[portrait["runtime"]] = image
 for path, image in exports.items():
     path = ROOT / path
     if args.check:
@@ -33,4 +29,4 @@ for path, image in exports.items():
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
         image.save(path, optimize=True)
-print("Expedition HUD: seven authored icons and investigating portrait " + ("verified" if args.check else "imported"))
+print("Expedition HUD: seven authored icons " + ("verified" if args.check else "imported"))

@@ -61,3 +61,22 @@ For the Settlers II comparison, inspected the primary source of Return to the Ro
 - https://github.com/Return-To-The-Roots/s25client/blob/master/libs/s25main/world/TerritoryRegion.h
 
 Our original model: a hidden axial land graph, terrain membership, regionId, open-region bitset, independent building world coordinates and footprints. Multi-source flood fill creates six connected natural regions. A new region must touch open land, meet its cumulative Star requirement and be affordable in Compasses. Confirmation consumes Compasses, never Stars. Winning each prototype level awards three of each; region Star gates are 6 / 9 / 15 / 21 / 27 and Compass costs are 2 / 3 / 4 / 5 / 6. These are prototype balancing values, not copied June's Journey prices. The puzzle board has its own separate 61-cell radius-four hex graph; the island and puzzle coordinate systems are not shared. Expansion is immediate after confirmation; no waiting timer or paid bypass exists in this prototype.
+
+## Match-3 level HUD
+
+Reviewed 31 October 2026 against the portrait match-3 games players compare us
+with: Royal Match, Toon Blast, Homescapes/Gardenscapes, Candy Crush Saga and
+Tropicats. Their level screens share one layout, which the expedition HUD now follows:
+
+- One band fixed to the top edge, under the status bar, rather than cards floating over the scenery.
+- A large Moves counter is the strongest element of the band.
+- Goals are icons with the remaining count beneath. A met goal shows a check instead of a number, without a "DONE" label.
+- Pause/settings is a small corner button. No character art or level title sits in the HUD during play. Characters speak in story scenes and dialogue.
+- Boosters sit in a tray along the bottom edge, without captions. Choosing one explains it.
+- No standing hint text. The board fills the space between the band and the tray, with the scenery showing around it.
+- The last few moves turn the counter red.
+
+Background reading on HUD clutter and Royal Match's text-light UI:
+- https://www.funovus.com/blogs/royal-match-dominates-match-3-what-can-all-designers-learn/
+- https://thisweekinliveops.substack.com/p/5-simple-ux-lessons-from-royal-match
+- https://www.andacademy.com/resources/blog/ui-ux-design/game-ui-design/
