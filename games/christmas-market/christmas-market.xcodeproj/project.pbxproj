@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{"archiveVersion" = 1;
+"classes" = {};
+"objectVersion" = 56;
+"objects" = {"09AA38CEF3EA53936A20C858" = {"isa" = "XCBuildConfiguration";
+"name" = "Debug";
+"buildSettings" = {"ENGINE_ROOT" = "$(SRCROOT)/../..";
+"SDKROOT" = "macosx";
+"GCC_C_LANGUAGE_STANDARD" = "c11";
+"CLANG_ENABLE_OBJC_ARC" = "NO";
+"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+"ALWAYS_SEARCH_USER_PATHS" = "NO";
+"GCC_WARN_INHIBIT_ALL_WARNINGS" = "NO";
+"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+"HEADER_SEARCH_PATHS" = ("$(ENGINE_ROOT)/engine",
+);
+"GCC_PREPROCESSOR_DEFINITIONS" = ("$(inherited)",
+"GAME_IN_BUNDLE=1",
+"GAME_DIR=\\\"games/christmas-market\\\"",
+);
+"OTHER_CFLAGS" = ("$(inherited)",
+"-Wall",
+"-Wextra",
+"-Wno-unused-parameter",
+"-Wno-missing-field-initializers",
+"-Wno-deprecated-declarations",
+);
+"PRODUCT_NAME" = "christmas-market";
+"PRODUCT_BUNDLE_IDENTIFIER" = "com.corepunch.christmasmarket";
+"MARKETING_VERSION" = "1.0";
+"CURRENT_PROJECT_VERSION" = "1";
+"ENABLE_HARDENED_RUNTIME" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "0";
+"DEBUG_INFORMATION_FORMAT" = "dwarf";
+"ONLY_ACTIVE_ARCH" = "YES";
+};
+};
+"2C51B24F1BD0E37CCD3A85CD" = {"isa" = "XCBuildConfiguration";
+"name" = "Release";
+"buildSettings" = {"ENGINE_ROOT" = "$(SRCROOT)/../..";
+"SDKROOT" = "macosx";
+"GCC_C_LANGUAGE_STANDARD" = "c11";
+"CLANG_ENABLE_OBJC_ARC" = "NO";
+"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+"ALWAYS_SEARCH_USER_PATHS" = "NO";
+"GCC_WARN_INHIBIT_ALL_WARNINGS" = "NO";
+"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+"HEADER_SEARCH_PATHS" = ("$(ENGINE_ROOT)/engine",
+);
+"GCC_PREPROCESSOR_DEFINITIONS" = ("$(inherited)",
+"GAME_IN_BUNDLE=1",
+"GAME_DIR=\\\"games/christmas-market\\\"",
+);
+"OTHER_CFLAGS" = ("$(inherited)",
+"-Wall",
+"-Wextra",
+"-Wno-unused-parameter",
+"-Wno-missing-field-initializers",
+"-Wno-deprecated-declarations",
+);
+"PRODUCT_NAME" = "christmas-market";
+"PRODUCT_BUNDLE_IDENTIFIER" = "com.corepunch.christmasmarket";
+"MARKETING_VERSION" = "1.0";
+"CURRENT_PROJECT_VERSION" = "1";
+"ENABLE_HARDENED_RUNTIME" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "s";
+"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+"ONLY_ACTIVE_ARCH" = "NO";
+};
+};
+"1E4B6209DBC7689E3E7CF89C" = {"isa" = "XCConfigurationList";
+"buildConfigurations" = ("09AA38CEF3EA53936A20C858",
+"2C51B24F1BD0E37CCD3A85CD",
+);
+"defaultConfigurationIsVisible" = 0;
+"defaultConfigurationName" = "Debug";
+};
+"03CCB44CBD5B6AA80E5680F5" = {"isa" = "PBXFileReference";
+"path" = "u_engine.c";
+"name" = "u_engine.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"7639A619D9D273EE5E063BE3" = {"isa" = "PBXFileReference";
+"path" = "u_script.c";
+"name" = "u_script.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"0539F83D58675373B1BBEF96" = {"isa" = "PBXFileReference";
+"path" = "u_lua.c";
+"name" = "u_lua.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"93AABD575BE4735D7E53DA97" = {"isa" = "PBXFileReference";
+"path" = "u_platform.c";
+"name" = "u_platform.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.objc";
+};
+"2FD0038054919877206EA9E2" = {"isa" = "PBXFileReference";
+"path" = "u_launcher.c";
+"name" = "u_launcher.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"8C7BBF5CEC333F89C39F4DD3" = {"isa" = "PBXFileReference";
+"path" = "../../engine/core.c";
+"name" = "core.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"6C93BD11F9AA66A9F00EC3BD" = {"isa" = "PBXFileReference";
+"path" = "../../engine/render.c";
+"name" = "render.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"DB3AB349C060C5F6876F6B06" = {"isa" = "PBXFileReference";
+"path" = "../../engine/gfx.c";
+"name" = "gfx.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"1307E1D3B0F32989778C78F4" = {"isa" = "PBXFileReference";
+"path" = "../../engine/font.c";
+"name" = "font.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"E48481DFBF7C633F32885C82" = {"isa" = "PBXFileReference";
+"path" = "../../engine/ui.c";
+"name" = "ui.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"ADBE7599AFC06409EDF9F7DA" = {"isa" = "PBXFileReference";
+"path" = "../../engine/save.c";
+"name" = "save.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"744E0DC332E76F47A555E499" = {"isa" = "PBXFileReference";
+"path" = "../../engine/city.c";
+"name" = "city.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"2C6345C1907FD24B6EEFEC5A" = {"isa" = "PBXFileReference";
+"path" = "../../engine/audio.c";
+"name" = "audio.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"67B17D0959CAEF090C77BD01" = {"isa" = "PBXFileReference";
+"path" = "../../engine/raster.c";
+"name" = "raster.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"2E3DCDD6520A0EBC2CD112A7" = {"isa" = "PBXFileReference";
+"path" = "../../engine/photo.c";
+"name" = "photo.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"45B4B9CF2B44A145D927FBC6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/story.c";
+"name" = "story.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"8A8386A2CEEEFE289DA8945E" = {"isa" = "PBXFileReference";
+"path" = "../../engine/sprite.c";
+"name" = "sprite.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"4F62C834EFF9537C0E92FC7C" = {"isa" = "PBXFileReference";
+"path" = "../../engine/nav.c";
+"name" = "nav.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"3844D74B4527AE195536A1E2" = {"isa" = "PBXFileReference";
+"path" = "../../engine/script.c";
+"name" = "script.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"5A3E88961896E4AB82DE84B5" = {"isa" = "PBXFileReference";
+"path" = "../../engine/api_lua.c";
+"name" = "api_lua.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"332638782EE028D2FCDBBFAB" = {"isa" = "PBXFileReference";
+"path" = "../../engine/lua_lib.c";
+"name" = "lua_lib.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"06369032B38F99A704630800" = {"isa" = "PBXFileReference";
+"path" = "../../engine/launcher.c";
+"name" = "launcher.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"EB5CBE17182664B6DBD76360" = {"isa" = "PBXFileReference";
+"path" = "../../engine/engine.h";
+"name" = "engine.h";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.h";
+};
+"541B66CD1C747C1DB8B77446" = {"isa" = "PBXFileReference";
+"path" = "../../engine/api.xml";
+"name" = "api.xml";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text.xml";
+};
+"A94DFF8DF82F942C6612D358" = {"isa" = "PBXFileReference";
+"path" = "lua";
+"sourceTree" = "<group>";
+"lastKnownFileType" = "folder";
+};
+"AC62430F2EB96CEE6ABDEFFF" = {"isa" = "PBXFileReference";
+"path" = "data";
+"sourceTree" = "<group>";
+"lastKnownFileType" = "folder";
+};
+"9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
+"path" = "Assets.xcassets";
+"sourceTree" = "<group>";
+"lastKnownFileType" = "folder.assetcatalog";
+};
+"3F1DC9CC1C3A830C738C48D7" = {"isa" = "PBXGroup";
+"name" = "Game";
+"children" = ("A94DFF8DF82F942C6612D358",
+"AC62430F2EB96CEE6ABDEFFF",
+"9F943A6EE595432EA31BD78A",
+);
+"sourceTree" = "<group>";
+};
+"2D25A9B56DCCB8131EBB5456" = {"isa" = "PBXGroup";
+"name" = "Engine";
+"children" = ("EB5CBE17182664B6DBD76360",
+"541B66CD1C747C1DB8B77446",
+"8C7BBF5CEC333F89C39F4DD3",
+"6C93BD11F9AA66A9F00EC3BD",
+"DB3AB349C060C5F6876F6B06",
+"1307E1D3B0F32989778C78F4",
+"E48481DFBF7C633F32885C82",
+"ADBE7599AFC06409EDF9F7DA",
+"744E0DC332E76F47A555E499",
+"2C6345C1907FD24B6EEFEC5A",
+"67B17D0959CAEF090C77BD01",
+"2E3DCDD6520A0EBC2CD112A7",
+"45B4B9CF2B44A145D927FBC6",
+"8A8386A2CEEEFE289DA8945E",
+"4F62C834EFF9537C0E92FC7C",
+"3844D74B4527AE195536A1E2",
+"5A3E88961896E4AB82DE84B5",
+"332638782EE028D2FCDBBFAB",
+"06369032B38F99A704630800",
+);
+"sourceTree" = "<group>";
+};
+"DEDC912316C3B5051B5130F9" = {"isa" = "PBXGroup";
+"name" = "Build unity sources";
+"children" = ("03CCB44CBD5B6AA80E5680F5",
+"7639A619D9D273EE5E063BE3",
+"0539F83D58675373B1BBEF96",
+"93AABD575BE4735D7E53DA97",
+"2FD0038054919877206EA9E2",
+);
+"sourceTree" = "<group>";
+};
+"00EDFB30983F33829AA59B8E" = {"isa" = "XCBuildConfiguration";
+"name" = "Debug";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/macos-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"AppKit",
+"-framework",
+"OpenGL",
+"-framework",
+"IOSurface",
+"-framework",
+"Security",
+"-framework",
+"AudioToolbox",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/../Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"SUPPORTED_PLATFORMS" = "macosx";
+"MACOSX_DEPLOYMENT_TARGET" = "12.0";
+"CODE_SIGN_STYLE" = "Automatic";
+"CODE_SIGN_IDENTITY" = "-";
+"ENABLE_APP_SANDBOX" = "YES";
+"CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/macos.entitlements";
+"GCC_OPTIMIZATION_LEVEL" = "0";
+"DEBUG_INFORMATION_FORMAT" = "dwarf";
+"ONLY_ACTIVE_ARCH" = "YES";
+};
+};
+"38F7CA22F130A28C2DF03B7B" = {"isa" = "XCBuildConfiguration";
+"name" = "Release";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/macos-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"AppKit",
+"-framework",
+"OpenGL",
+"-framework",
+"IOSurface",
+"-framework",
+"Security",
+"-framework",
+"AudioToolbox",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/../Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"SUPPORTED_PLATFORMS" = "macosx";
+"MACOSX_DEPLOYMENT_TARGET" = "12.0";
+"CODE_SIGN_STYLE" = "Automatic";
+"CODE_SIGN_IDENTITY" = "-";
+"ENABLE_APP_SANDBOX" = "YES";
+"CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/macos.entitlements";
+"GCC_OPTIMIZATION_LEVEL" = "s";
+"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+"ONLY_ACTIVE_ARCH" = "NO";
+};
+};
+"EF1411E7327CC9450D1DEB90" = {"isa" = "XCConfigurationList";
+"buildConfigurations" = ("00EDFB30983F33829AA59B8E",
+"38F7CA22F130A28C2DF03B7B",
+);
+"defaultConfigurationIsVisible" = 0;
+"defaultConfigurationName" = "Debug";
+};
+"889C3BB45D33C50BB459838C" = {"isa" = "PBXShellScriptBuildPhase";
+"name" = "Generate unity sources";
+"buildActionMask" = 2147483647;
+"files" = ();
+"inputPaths" = ("$(ENGINE_ROOT)/tools/unity.sh",
+);
+"outputPaths" = ("$(DERIVED_FILE_DIR)/u_engine.c",
+"$(DERIVED_FILE_DIR)/u_script.c",
+"$(DERIVED_FILE_DIR)/u_lua.c",
+"$(DERIVED_FILE_DIR)/u_platform.c",
+"$(DERIVED_FILE_DIR)/u_launcher.c",
+);
+"shellPath" = "/bin/sh";
+"runOnlyForDeploymentPostprocessing" = 0;
+"shellScript" = "set -eu\nmkdir -p \"$DERIVED_FILE_DIR\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" engine > \"$DERIVED_FILE_DIR/u_engine.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" script > \"$DERIVED_FILE_DIR/u_script.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" lua > \"$DERIVED_FILE_DIR/u_lua.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" platform > \"$DERIVED_FILE_DIR/u_platform.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" launcher > \"$DERIVED_FILE_DIR/u_launcher.c\"\n";
+};
+"319B8C8C571285EEF6C5F297" = {"isa" = "PBXBuildFile";
+"fileRef" = "03CCB44CBD5B6AA80E5680F5";
+};
+"74B2D74F0E3EDEBA8CB88CBF" = {"isa" = "PBXBuildFile";
+"fileRef" = "7639A619D9D273EE5E063BE3";
+};
+"1BCD2467EC15A96D7C3A2D8A" = {"isa" = "PBXBuildFile";
+"fileRef" = "0539F83D58675373B1BBEF96";
+"settings" = {"COMPILER_FLAGS" = "-Wno-unused-function";
+};
+};
+"4CCBA041F8C02B224E2F167F" = {"isa" = "PBXBuildFile";
+"fileRef" = "93AABD575BE4735D7E53DA97";
+};
+"7AC183C96E1A80BB937C4546" = {"isa" = "PBXBuildFile";
+"fileRef" = "2FD0038054919877206EA9E2";
+};
+"2D79DA26A49EF3CDDF2903ED" = {"isa" = "PBXSourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("319B8C8C571285EEF6C5F297",
+"74B2D74F0E3EDEBA8CB88CBF",
+"1BCD2467EC15A96D7C3A2D8A",
+"4CCBA041F8C02B224E2F167F",
+"7AC183C96E1A80BB937C4546",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"4EA5922F387339F56F5E5989" = {"isa" = "PBXFrameworksBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ();
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"1E6E0CF175A3A713BB9B2044" = {"isa" = "PBXBuildFile";
+"fileRef" = "A94DFF8DF82F942C6612D358";
+};
+"215C82499ACA58595B078D7B" = {"isa" = "PBXBuildFile";
+"fileRef" = "AC62430F2EB96CEE6ABDEFFF";
+};
+"FED88458738FB8B68992AFCC" = {"isa" = "PBXBuildFile";
+"fileRef" = "9F943A6EE595432EA31BD78A";
+};
+"71C7B6DBDDD3D80091331D66" = {"isa" = "PBXResourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("1E6E0CF175A3A713BB9B2044",
+"215C82499ACA58595B078D7B",
+"FED88458738FB8B68992AFCC",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"5CAD9F9A00DAA543B258AA64" = {"isa" = "PBXFileReference";
+"path" = "christmas-market.app";
+"sourceTree" = "BUILT_PRODUCTS_DIR";
+"explicitFileType" = "wrapper.application";
+};
+"B0F40502967D16C217D285B5" = {"isa" = "PBXNativeTarget";
+"name" = "christmas-market-macos";
+"productName" = "christmas-market";
+"productReference" = "5CAD9F9A00DAA543B258AA64";
+"productType" = "com.apple.product-type.application";
+"buildConfigurationList" = "EF1411E7327CC9450D1DEB90";
+"buildPhases" = ("889C3BB45D33C50BB459838C",
+"2D79DA26A49EF3CDDF2903ED",
+"4EA5922F387339F56F5E5989",
+"71C7B6DBDDD3D80091331D66",
+);
+"buildRules" = ();
+"dependencies" = ();
+};
+"AB435CAEC3ED17F8B233C8BE" = {"isa" = "XCBuildConfiguration";
+"name" = "Debug";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ios-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"UIKit",
+"-framework",
+"Foundation",
+"-framework",
+"CoreGraphics",
+"-framework",
+"QuartzCore",
+"-framework",
+"OpenGLES",
+"-framework",
+"Security",
+"-framework",
+"UniformTypeIdentifiers",
+"-framework",
+"AudioToolbox",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"CODE_SIGN_STYLE" = "Automatic";
+"SDKROOT" = "iphoneos";
+"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+"TARGETED_DEVICE_FAMILY" = "1,2";
+"SUPPORTS_MACCATALYST" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "0";
+"DEBUG_INFORMATION_FORMAT" = "dwarf";
+"ONLY_ACTIVE_ARCH" = "YES";
+};
+};
+"1F8CA2F2925B319DD090300E" = {"isa" = "XCBuildConfiguration";
+"name" = "Release";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ios-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"UIKit",
+"-framework",
+"Foundation",
+"-framework",
+"CoreGraphics",
+"-framework",
+"QuartzCore",
+"-framework",
+"OpenGLES",
+"-framework",
+"Security",
+"-framework",
+"UniformTypeIdentifiers",
+"-framework",
+"AudioToolbox",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"CODE_SIGN_STYLE" = "Automatic";
+"SDKROOT" = "iphoneos";
+"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+"TARGETED_DEVICE_FAMILY" = "1,2";
+"SUPPORTS_MACCATALYST" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "s";
+"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+"ONLY_ACTIVE_ARCH" = "NO";
+};
+};
+"8BFACE4ADF117A6D56F10E8E" = {"isa" = "XCConfigurationList";
+"buildConfigurations" = ("AB435CAEC3ED17F8B233C8BE",
+"1F8CA2F2925B319DD090300E",
+);
+"defaultConfigurationIsVisible" = 0;
+"defaultConfigurationName" = "Debug";
+};
+"A597F1F37BB63B86C845B911" = {"isa" = "PBXShellScriptBuildPhase";
+"name" = "Generate unity sources";
+"buildActionMask" = 2147483647;
+"files" = ();
+"inputPaths" = ("$(ENGINE_ROOT)/tools/unity.sh",
+);
+"outputPaths" = ("$(DERIVED_FILE_DIR)/u_engine.c",
+"$(DERIVED_FILE_DIR)/u_script.c",
+"$(DERIVED_FILE_DIR)/u_lua.c",
+"$(DERIVED_FILE_DIR)/u_platform.c",
+"$(DERIVED_FILE_DIR)/u_launcher.c",
+);
+"shellPath" = "/bin/sh";
+"runOnlyForDeploymentPostprocessing" = 0;
+"shellScript" = "set -eu\nmkdir -p \"$DERIVED_FILE_DIR\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" engine > \"$DERIVED_FILE_DIR/u_engine.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" script > \"$DERIVED_FILE_DIR/u_script.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" lua > \"$DERIVED_FILE_DIR/u_lua.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" platform > \"$DERIVED_FILE_DIR/u_platform.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" launcher > \"$DERIVED_FILE_DIR/u_launcher.c\"\n";
+};
+"B037063039A935F901458178" = {"isa" = "PBXBuildFile";
+"fileRef" = "03CCB44CBD5B6AA80E5680F5";
+};
+"49C2052B8FC43162C3E92ECE" = {"isa" = "PBXBuildFile";
+"fileRef" = "7639A619D9D273EE5E063BE3";
+};
+"D867B04DE37DD060C28B9683" = {"isa" = "PBXBuildFile";
+"fileRef" = "0539F83D58675373B1BBEF96";
+"settings" = {"COMPILER_FLAGS" = "-Wno-unused-function";
+};
+};
+"C592F94E33911C9CDCEC4885" = {"isa" = "PBXBuildFile";
+"fileRef" = "93AABD575BE4735D7E53DA97";
+};
+"289782ED054FDF225AFDE820" = {"isa" = "PBXBuildFile";
+"fileRef" = "2FD0038054919877206EA9E2";
+};
+"835CF58854A93CB551CC294F" = {"isa" = "PBXSourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("B037063039A935F901458178",
+"49C2052B8FC43162C3E92ECE",
+"D867B04DE37DD060C28B9683",
+"C592F94E33911C9CDCEC4885",
+"289782ED054FDF225AFDE820",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"7BC8D516F83547204E1252D4" = {"isa" = "PBXFrameworksBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ();
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"9106156FF7A75DFF1039D013" = {"isa" = "PBXBuildFile";
+"fileRef" = "A94DFF8DF82F942C6612D358";
+};
+"6C241A76CE24FFF0DE7F105F" = {"isa" = "PBXBuildFile";
+"fileRef" = "AC62430F2EB96CEE6ABDEFFF";
+};
+"9705C4A9252F07C70958C8FC" = {"isa" = "PBXBuildFile";
+"fileRef" = "9F943A6EE595432EA31BD78A";
+};
+"98C0A0E411A6808AEFC67A10" = {"isa" = "PBXResourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("9106156FF7A75DFF1039D013",
+"6C241A76CE24FFF0DE7F105F",
+"9705C4A9252F07C70958C8FC",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"1BC0FE305D205A886D72E48F" = {"isa" = "PBXFileReference";
+"path" = "christmas-market.app";
+"sourceTree" = "BUILT_PRODUCTS_DIR";
+"explicitFileType" = "wrapper.application";
+};
+"1FD529D75F86268853B182DB" = {"isa" = "PBXNativeTarget";
+"name" = "christmas-market-iphone";
+"productName" = "christmas-market";
+"productReference" = "1BC0FE305D205A886D72E48F";
+"productType" = "com.apple.product-type.application";
+"buildConfigurationList" = "8BFACE4ADF117A6D56F10E8E";
+"buildPhases" = ("A597F1F37BB63B86C845B911",
+"835CF58854A93CB551CC294F",
+"7BC8D516F83547204E1252D4",
+"98C0A0E411A6808AEFC67A10",
+);
+"buildRules" = ();
+"dependencies" = ();
+};
+"BEAD8915881B60FC177E63AB" = {"isa" = "PBXGroup";
+"name" = "Products";
+"children" = ("5CAD9F9A00DAA543B258AA64",
+"1BC0FE305D205A886D72E48F",
+);
+"sourceTree" = "<group>";
+};
+"664F835B1ED89846DAB355B5" = {"isa" = "PBXGroup";
+"children" = ("3F1DC9CC1C3A830C738C48D7",
+"2D25A9B56DCCB8131EBB5456",
+"DEDC912316C3B5051B5130F9",
+"BEAD8915881B60FC177E63AB",
+);
+"sourceTree" = "<group>";
+};
+"244210E48437B6556980A702" = {"isa" = "PBXProject";
+"buildConfigurationList" = "1E4B6209DBC7689E3E7CF89C";
+"compatibilityVersion" = "Xcode 14.0";
+"developmentRegion" = "en";
+"knownRegions" = ("en",
+"Base",
+);
+"mainGroup" = "664F835B1ED89846DAB355B5";
+"productRefGroup" = "BEAD8915881B60FC177E63AB";
+"projectDirPath" = "";
+"projectRoot" = "";
+"targets" = ("B0F40502967D16C217D285B5",
+"1FD529D75F86268853B182DB",
+);
+};
+};
+"rootObject" = "244210E48437B6556980A702";
+}

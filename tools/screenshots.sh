@@ -37,6 +37,8 @@ shot nile-archive dialogue-horem 1200x900 --screen horem --frames 200
 shot nile-archive dialogue-merit 1600x900 --screen merit --frames 200
 
 # Relic Rush: portrait 480 x 900, stills plus two short animated reels
+python3 games/christmas-market/tools/capture_screenshots.py
+
 shot relic-rush hex-first 480x900
 shot relic-rush hex-late 480x900 --level 8
 shot relic-rush floating-hud 480x900 --level 9

@@ -6,6 +6,7 @@ One repository, one small **C11 + platform** engine, games driven by **Lua** on 
 | --- | --- | --- | --- |
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
 | ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 on ten shaped boards with sand, chains, ice, rays, bombs and prisms | Restore an island: ten wonders placed freely, six regions opened with stars and compasses |
+| ![](games/christmas-market/docs/screenshots/market.jpg) | **[Christmas Market](games/christmas-market/README.md)** (English, prototype) | Ten festive hex match-4 puzzles | Build a snowy Christmas market with ten stalls and attractions, two repeatable decorations and Noelle as the market keeper |
 | ![](games/volcano/docs/screenshots/outskirts.jpg) | **[Volcano · After the Eruption](games/volcano/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
 
 [Clayfight](games/clayfight/README.md) runs its complete original C fighting game on the shared engine, with Lua frame scheduling, custom clay fighters, conquest, training, tug-of-war, endurance, and native iOS photo/video capture. Its original PC reference data is supplied locally and ignored by Git.

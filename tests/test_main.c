@@ -423,8 +423,11 @@ int main(int argc, char **argv)
     printf("engine: %d checks, %d failures\n", checks, failures);
 
     /* Lua tests: each file returns its failure count (and prints its own summary). */
-    script_open("tests/lua;games/clayfight/lua;games/relic-rush/lua;games/nile-archive/lua;games/volcano/lua");
-    for (int i = 1; i < argc; i++) {
+    const char *roots = "tests/lua;games/clayfight/lua;games/relic-rush/lua;games/nile-archive/lua;games/volcano/lua";
+    int first = 1;
+    if (argc > 2 && !strcmp(argv[1], "--lua-dir")) roots = argv[2], first = 3;
+    script_open(roots);
+    for (int i = first; i < argc; i++) {
         int r = script_dofile(argv[i]);
         if (r) fprintf(stderr, "%s: %s\n", argv[i], r < 0 ? "error" : "failed");
         failures += r < 0 ? 1 : r;
