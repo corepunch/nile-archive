@@ -76,6 +76,11 @@ extern int numlumps;
 
 void W_Init(const char *datadir);
 void W_DrawArcadeStage(int stage, int camx);
+int W_ArcadeStageScroll(int stage, int camx, int y);
+const palette_t *W_ArcadeStagePalette(int stage, int color);
+patch_t *W_ArcadeShadow(int character, int frame);
+const palette_t *W_ArcadeImpactPalette(bool blocked);
+const palette_t *W_ArcadeTribePalette(int character);
 // Virtual HUD slots preserve the original authored health/stun tile maps.
 enum { HUD_HEALTH_LEFT=0, HUD_HEALTH_RIGHT=121, HUD_STUN_LEFT=242,
        HUD_STUN_RIGHT=311, HUD_HEART=380, HUD_BRAIN=390, HUD_NAME=408,

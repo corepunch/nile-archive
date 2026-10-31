@@ -230,7 +230,9 @@ gra_t *W_TryLoadGra(const char *name)
     }
     if(!strcasecmp(name,"title")){
         gra_t *g=Bank(name,46,3);Palette(&g->palettes[0],0x68d7a,64);Palette(&g->palettes[1],0x650e2,64);Palette(&g->palettes[2],0x652c2,64);
-        Frame(g,37,460,2);Frame(g,19,480,2);for(int i=39;i<=45;i++)Frame(g,i,446,0);return g;
+        for(int i=0;i<14;i++)Frame(g,i,447+i,2);
+        for(int i=0;i<6;i++)Frame(g,14+i,475+i,2);
+        Frame(g,45,446,0);return g;
     }
     if(!strcasecmp(name,"globe")){
         gra_t *g=Bank(name,47,4);Palette(&g->palettes[0],0x65cfa,64);Palette(&g->palettes[1],0x65d7a,64);Palette(&g->palettes[2],0x65dfa,64);Palette(&g->palettes[3],0x65e7a,64);
@@ -271,46 +273,118 @@ static int TilePixel(unsigned code,int x,int y)
     int lo=tiles[x%4<2?1:0][at],hi=tiles[2][at];
     return ((lo>>(x%2?0:4))&15)|((hi>>(4+x%4)&1)<<5)|((hi>>(x%4)&1)<<4);
 }
-static pixel_t *TileMap(uint32_t map,int bank,const palette_t *palette,int *width,int *height)
+// The hardware has two 64-column halves. Some source skies have 72
+// columns; the native copier's 64-column row stride overwrites their overhang.
+static byte *StageMap(uint32_t table,int stage,int bank,int flags,int *height)
 {
-    int w=X_U8(map),h=X_U8(map+1);*width=w*8;*height=h*8;
-    if(!w || w>128 || !h || h>64)I_Error("Invalid arcade tilemap %#x",map);
-    pixel_t *p=I_Malloc(w*h*64*sizeof *p);
-    for(int y=0;y<h*8;y++)for(int x=0;x<w*8;x++){
-        int word=X_U16(map+2+2*(y/8*w+x/8));int px=word&0x8000?7-x%8:x%8;
-        int value=TilePixel(bank*4096+(word&4095),px,y%8)+((word>>12)&7)*32;
-        p[y*w*8+x]=palette->colors[value&255];
+    uint32_t left=X_U32(table+stage*4),right=X_U32(table+32+stage*4);
+    int w=X_U8(left),h=X_U8(left+1),rw=X_U8(right);
+    if(w<64 || rw<64 || h<1 || h>64 || X_U8(right+1)!=h
+       || !X_Valid(left,2+w*h*2) || !X_Valid(right,2+rw*h*2))
+        I_Error("Invalid arcade stage map %#x",left);
+    *height=h*8;
+    byte *p=I_Malloc(1024*h*8);
+    for(int side=0;side<2;side++)for(int y=0;y<h*8;y++)for(int x=0;x<512;x++){
+        uint32_t map=side?right:left;int stride=side?rw:w;
+        int word=X_U16(map+2+2*(y/8*stride+x/8))|flags;
+        int v=TilePixel(bank*4096+(word&4095),word&0x8000?7-x%8:x%8,y%8);
+        p[y*1024+side*512+x]=(v+((word>>12)&7)*32)&255;
     }
     return p;
 }
+// Original scanline routine 23c74: signed 26.6 camera positions and a
+// per-arena perspective denominator. The distant layer uses the last floor
+// scroll, plus the arena's explicit depth offset; never a guessed width ratio.
+int W_ArcadeStageScroll(int stage,int camx,int y)
+{
+    int horizon=X_U16(0x6ba0c+stage*2),rows=248-horizon;
+    int camera=(camx-(ARENA_WIDTH-VIEWWIDTH)/2)*64;
+    int step=camera*256/X_U16(0x6b9ec+stage*2);
+    int depth=y<horizon?rows+X_U16(0x6ba1c+stage*2):rows-1-(y-horizon);
+    return (camera*256-step*depth)/256;
+}
+const palette_t *W_ArcadeStagePalette(int stage,int color)
+{
+    static palette_t palettes[8][64];static bool ready[8][64];
+    if(stage<0 || stage>=8 || color<0 || color>=0x800 || (color>=0x400 && color<0x480) || color%32)
+        I_Error("Invalid arcade scenery palette %d:%#x",stage,color);
+    int slot=color/32;
+    if(!ready[stage][slot]){
+        uint32_t base=color<0x200?0x61502+color*2:color<0x400?
+                      X_U32(0x614e2+stage*4)+(color-0x200)*2:0x63a82+(color-0x480)*2;
+        Palette(&palettes[stage][slot],base,64);ready[stage][slot]=true;
+    }
+    return &palettes[stage][slot];
+}
+patch_t *W_ArcadeShadow(int character,int frame)
+{
+    static const uint32_t bases[]={0x57110,0x5b186,0x59e38,0x5cb90,0x58b02,0x57110,0x5b186};
+    if(character<0 || character>=7)return NULL;
+    int index=frame-X_U16(bases[character]);
+    if(index<0 || index>1100)return NULL; // native shadow updater 341fa
+    int id=X_U16(X_U32(0x6b068+character*4)+index*2);
+    return id<12000?Decode(id):NULL;
+}
+const palette_t *W_ArcadeImpactPalette(bool blocked)
+{
+    static palette_t palettes[2];static bool ready;
+    if(!ready){
+        // Native contact object 6cf50 starts in colour bank 190; the block
+        // script's SET_ATTR 18 switches to 180. Both use all 64 RLE colours.
+        Palette(&palettes[0],0x61502+X_U16(0x6cf56)*2,64);
+        Palette(&palettes[1],0x61802,64);ready=true;
+    }
+    return &palettes[blocked?1:0];
+}
+const palette_t *W_ArcadeTribePalette(int character)
+{
+    static palette_t palettes[7];static bool ready;
+    if(!ready){
+        for(int c=0;c<7;c++)Palette(&palettes[c],0x63382+c*128,64);
+        ready=true;
+    }
+    return &palettes[CLAMP(character,0,6)];
+}
+static void StageCycles(int stage,palette_t *palette,int time)
+{
+    // PEA argument blocks for the original 349f8 colour-cycle registrations.
+    // Each contains length, period, signed first colour, colour group, PF base.
+    static const uint32_t calls[8][3]={
+        {0x2478c,0x247a2,0x247bc},{0x24736,0x2474c,0x24766},
+        {0x247fa},{0},{0},{0x247da},{0},{0},
+    };
+    for(int i=0;i<3 && calls[stage][i];i++){
+        uint32_t p=calls[stage][i];int length=X_S16(p+2),period=X_S16(p+6),offset=X_S16(p+10);
+        int start=X_S16(p+14)*64+(offset==-128?0:abs(offset));
+        if(length<2 || length>16 || period<1 || start+length>256 || X_U16(p+18)!=0x100)
+            I_Error("Invalid arcade palette cycle %#x",p);
+        int shift=time>0?(1+(time-1)/period)%length:0;
+        pixel_t colors[16];memcpy(colors,palette->colors+start,length*sizeof *colors);
+        for(int j=0;j<length;j++)palette->colors[start+j]=colors[(j+(offset<0?-shift:shift)+length)%length];
+    }
+}
 void W_DrawArcadeStage(int stage,int camx)
 {
-    static struct {pixel_t *far,*floor;int w,h,fw,fh;} cache[8];
+    static struct {byte *far,*floor;int h,fh;palette_t palette;} cache[8];
     if(stage<0 || stage>=8)I_Error("Invalid arcade stage %d",stage);
     if(!cache[stage].far){
-        palette_t pal;Palette(&pal,X_U32(0x5fea2+stage*4),256);
-        int bank=X_U8(0x1e5944+stage);
-        cache[stage].far=TileMap(X_U32(0x1e58c4+stage*4),bank,&pal,&cache[stage].w,&cache[stage].h);
-        // The two source floor strips are adjacent in VRAM, coloured in bank 4.
-        uint32_t map=X_U32(0x1e5904+stage*4);int w=X_U8(map),h=X_U8(map+1);
-        cache[stage].floor=I_Malloc(w*h*64*sizeof(pixel_t));cache[stage].fw=w*8;cache[stage].fh=h*8;
-        for(int y=0;y<h*8;y++)for(int x=0;x<w*8;x++){
-            int word=X_U16(map+2+2*(y/8*w+x/8))|0x4000;
-            int v=TilePixel(bank*4096+(word&4095),word&0x8000?7-x%8:x%8,y%8)+((word>>12)&7)*32;
-            cache[stage].floor[y*w*8+x]=pal.colors[v&255];
-        }
+        Palette(&cache[stage].palette,X_U32(0x5fea2+stage*4),256);
+        cache[stage].far=StageMap(0x1e58c4,stage,X_U8(0x1e5944+stage),0,&cache[stage].h);
+        cache[stage].floor=StageMap(0x1e5904,stage,X_U8(0x1e594c+stage),0x4000,&cache[stage].fh);
     }
-    int far_y=cache[stage].h-240;int horizon=HORIZON_Y;
-    for(int y=0;y<VIEWHEIGHT;y++)for(int x=0;x<VIEWWIDTH;x++){
-        pixel_t c;
-        if(y<horizon){
-            int px=x+camx*(cache[stage].w-VIEWWIDTH)/MAX(1,ARENA_WIDTH-VIEWWIDTH);px=CLAMP(px,0,cache[stage].w-1);
-            int py=CLAMP(y+far_y,0,cache[stage].h-1);c=cache[stage].far[py*cache[stage].w+px];
-        }else{
-            int py=(y-horizon)*cache[stage].fh/MAX(1,VIEWHEIGHT-horizon);py=MIN(py,cache[stage].fh-1);
-            int px=(x+camx)%cache[stage].fw;c=cache[stage].floor[py*cache[stage].fw+px];
+    palette_t palette=cache[stage].palette;StageCycles(stage,&palette,level.leveltime);
+    int horizon=X_U16(0x6ba0c+stage*2);
+    for(int y=0;y<VIEWHEIGHT;y++){
+        bool far=y<horizon;
+        int py=far?y+cache[stage].h-horizon:y-horizon;
+        py=CLAMP(py,0,(far?cache[stage].h:cache[stage].fh)-1);
+        int scroll=(far?X_U16(0x6b9fc+stage*2)/32:344)+W_ArcadeStageScroll(stage,camx,y)/64;
+        const byte *row=(far?cache[stage].far:cache[stage].floor)+py*1024;
+        for(int x=0;x<VIEWWIDTH;x++){
+            pixel_t c=palette.colors[row[(x+scroll)&1023]];
+            int at=y*2*SCREENWIDTH+x*2;
+            screen[at]=screen[at+1]=screen[at+SCREENWIDTH]=screen[at+SCREENWIDTH+1]=c;
         }
-        int at=y*2*SCREENWIDTH+x*2;screen[at]=screen[at+1]=screen[at+SCREENWIDTH]=screen[at+SCREENWIDTH+1]=c;
     }
 }
 // Audio registry is implemented by the CAGE decoder in w_sound.c.

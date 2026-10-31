@@ -4,6 +4,7 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <stdlib.h>
 #include "game/game.h"
 void CF_FlowChecks(void);void CF_RetailChecks(void);
 static void shot(const char *name)
@@ -52,6 +53,86 @@ static void hud_checks(void)
     memcpy(roster[7]->name,saved,sizeof saved);
     puts("arcade HUD: authored bar states, mirrored 2x heart, stone digits and custom-name capture passed");
 }
+static void scenery_checks(void)
+{
+    // Independently decoded source samples at native (168,100)/(168,230),
+    // centred camera and time zero. Catch wrong banks, floor halves and crop.
+    const pixel_t pixels[8][2]={
+        {0xff731041,0xff6a3900},
+        {0xffc54a10,0xff621810},
+        {0xffc5e6ee,0xff626a5a},
+        {0xffcd5252,0xff003900},
+        {0xffb4bdcd,0xff8394c5},
+        {0xffc5bdb4,0xff52524a},
+        {0xff94948b,0xff4a3110},
+        {0xff182039,0xff524139}
+    };
+    pixel_t *saved=I_Malloc(sizeof screen);bool cpu[2]={false,false};
+    int middle=(ARENA_WIDTH-VIEWWIDTH)/2;
+    assert(ARENA_WIDTH==1080); // native camera bounds: signed 26.6 value 5d00
+    for(int kind=0;kind<2;kind++)for(int i=0;i<10;i++){
+        const patch_t *p=W_Frame(W_LoadGra("arcade"),(kind?33:62)+i);
+        assert(p->maxval<=W_ArcadeImpactPalette(kind!=0)->count);
+    }
+    assert(W_ArcadeImpactPalette(true)->colors[51]==W_RGB(0,0,255));
+    M_ClearRandom();int expected_random=P_Random();M_ClearRandom();
+    for(int stage=0;stage<8;stage++){
+        G_InitNew(roster[stage%7],roster[(stage+5)%7],cpu,&stages[stage]);
+        level.leveltime=0;W_DrawArcadeStage(stage,middle);
+        assert(screen[100*2*SCREENWIDTH+168*2]==pixels[stage][0]);
+        assert(screen[230*2*SCREENWIDTH+168*2]==pixels[stage][1]);
+        for(int y=0;y<SCREENHEIGHT;y+=2)for(int x=0;x<SCREENWIDTH;x+=2){
+            int at=y*SCREENWIDTH+x;
+            assert(screen[at]==screen[at+1] && screen[at]==screen[at+SCREENWIDTH] && screen[at]==screen[at+SCREENWIDTH+1]);
+        }
+        level.leveltime=120;
+        for(int cam=0;cam<=ARENA_WIDTH-VIEWWIDTH;cam+=middle){
+            R_DrawStage(level.stage,cam);R_DrawStageForeground(level.stage,cam);
+            memcpy(saved,screen,sizeof screen);
+            R_DrawStage(level.stage,cam);R_DrawStageForeground(level.stage,cam);
+            assert(!memcmp(saved,screen,sizeof screen));
+        }
+    }
+    assert(P_Random()==expected_random); // rendering never consumes combat RNG
+    G_InitNew(roster[0],roster[5],cpu,&stages[7]);level.leveltime=120;
+    R_DrawStage(level.stage,middle);R_DrawStageForeground(level.stage,middle);memcpy(saved,screen,sizeof screen);
+    level.leveltime=0;R_DrawStage(level.stage,middle);R_DrawStageForeground(level.stage,middle);
+    level.leveltime=120;R_DrawStage(level.stage,middle);R_DrawStageForeground(level.stage,middle);
+    assert(!memcmp(saved,screen,sizeof screen)); // deterministic rewind/round reset
+    level.leveltime=0;W_DrawArcadeStage(1,middle);memcpy(saved,screen,sizeof screen);
+    level.leveltime=20;W_DrawArcadeStage(1,middle);assert(memcmp(saved,screen,sizeof screen));
+    free(saved);
+    assert(W_ArcadeShadow(0,3818)==W_Frame(W_LoadGra("arcade"),7152));
+    assert(W_ArcadeShadow(1,5126)==W_Frame(W_LoadGra("arcade"),10578));
+    for(int c=0;c<7;c++){
+        const state_t *stand=&roster[c]->states[roster[c]->anims[ANIM_STAND].first];
+        assert(W_ArcadeShadow(c,stand->frame));
+        assert(C_Start(roster[0]));campaign.order[0]=c;C_StartFight();
+        assert(level.stage==&stages[X_U8(0x69a40+c)]);C_Abandon();
+    }
+    G_InitNew(roster[5],roster[2],cpu,&stages[2]);level.phase=PH_FIGHT;
+    P_SpawnSpark(middle+158,90,SPARK_HIT);P_SpawnSpark(middle+196,90,SPARK_BLOCK);
+    assert(level.particles[0].animation.frameid==62 && level.particles[1].animation.frameid==33);
+    for(int t=0;t<9;t++)P_RunParticles();shot("impacts");
+    for(int t=0;t<40;t++)P_RunParticles();assert(level.numparticles==0);
+    const int clips[]={0,1,2,7};
+    for(int c=0;c<4;c++){
+        G_InitNew(roster[0],roster[5],cpu,&stages[clips[c]]);level.phase=PH_FIGHT;
+        for(int t=0;t<12;t++){
+            level.leveltime=60+t*4;level.camx=middle-20+t*4;
+            char name[64];snprintf(name,sizeof name,"scene-reel-%03d",c*12+t);shot(name);
+        }
+    }
+    G_InitNew(roster[0],roster[5],cpu,&stages[0]);level.phase=PH_FIGHT;
+    level.camx=0;level.fighters[0].x=98;level.fighters[1].x=238;shot("stage-left");
+    level.camx=ARENA_WIDTH-VIEWWIDTH;level.fighters[0].x=level.camx+98;level.fighters[1].x=level.camx+238;shot("stage-right");
+    M_StartTitle();
+    for(int t=0;t<=110;t++){
+        M_Ticker();
+        if(t>=32 && (t-32)%6==0){char name[64];snprintf(name,sizeof name,"title-reel-%03d",t);shot(name);}
+    }
+    puts("arcade scenery: eight source banks/crops, both floor halves, 2x pixels, camera extremes, deterministic animations, shadows, impacts and campaign mapping passed");
+}
 static void capture_checks(void)
 {
     M_StartTitle();for(int i=0;i<120;i++)M_Ticker();shot("title");
@@ -92,6 +173,6 @@ int main(int argc,char **argv)
     }
     puts("arcade sound: original DSP effects and all seven voice tables decoded");
     assert(P_CheckAnims()==0);
-    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();I_Shutdown();
+    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();I_Shutdown();
     printf("arcade: all checks passed, CPU %.3f seconds\n",(double)(clock()-start)/CLOCKS_PER_SEC);return 0;
 }

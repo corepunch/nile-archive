@@ -31,7 +31,9 @@ The working menu tree is:
 Settings are saved in `build/options.cfg`. Modify Controls currently displays
 the working keyboard/controller bindings; rebinding is not implemented.
 Music playback/test, gore controls, high scores and statistics are not yet
-ported. Menu layout, CPU logic, arena composition, territory
+ported. Arena maps, foreground scenery, palette cycles and camera limits now
+come from the original ROM tables; see the [graphics catalogue](primal-rage-arcade.md).
+Menu layout, CPU logic, territory
 pins and transitions are reconstructed; this is not a binary-exact port of
 the arcade menus or the complete original game. Original specials, fatalities,
 followers, the refuelling bonus and character ending cinematics remain outside

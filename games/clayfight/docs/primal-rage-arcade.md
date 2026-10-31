@@ -15,8 +15,12 @@ from active data. Custom clay photographs remain in `data/creatures/`.
 | Fighter colours | CPU palette pointer table `0x6e38c` | Seven characters × four original 64-colour palettes; no recolouring |
 | Animations and moves | CPU script table `0x6d964`, 65 rows × 10 slots | `p_script.c` executes big-endian ROM bytecode; native units, 30-frame breathing and 20-frame crouch cycles |
 | Damage, stun, hit class and attack boxes | `0xfbba0`, `0x6fca4`, `0x72ea4`, `0x7d328`, `0x49f7c` | `PS_Move`; native sprite anchors; no DOS art scale |
-| Eight arena skies and floors | Three tile-plane chips; map tables `0x1e58c4`, `0x1e5904`; palette pointers `0x5fea2` | `W_DrawArcadeStage`; original tile planes and source colours, camera scroll and floor-strip projection |
-| Title and menu panel | Motion objects 446, 460, 480; palettes `0x68d7a`, `0x652c2` | Native title layers; original stone art resized to the menu panel |
+| Eight complete arena playfields | Three tile-plane chips; sky halves `0x1e58c4`/`0x1e58e4`, floor halves `0x1e5904`/`0x1e5924`; palette pointers `0x5fea2` | Separate sky/floor tile banks, per-arena horizon/crop, native scanline floor scrolling, original palette cycling |
+| 115 scenery objects, including linked parts | Placements `0x6c418`, extras `0xf2648`, type descriptors `0x6d724`; stage palettes `0x614e2` | `r_stage.c`; original RLE frames, 26.6 positions, signed pivots, scale, mirror, depth/bias and source animation scripts |
+| Fighter ground shadows | Per-character pose lookup `0x6b068`; descriptors `0x6d5e0`; palette `0x61702` | Original per-pose shadow sprite and mirror; native Diablo scale; custom photo fighters retain their own procedural contact shadow |
+| Hit and blocked contacts | Scripts `0x56e28`/`0x56e36`, descriptor `0x6cf50`; palettes `0x61822`/`0x61802` | Source 10-frame contact cycles, three ticks per frame, all 64 colours; replaces square-particle art |
+| Ambient tribespeople | Six idle descriptors `0x6d270 + variant×16`; team palettes `0x63382 + character×128` | Four original animated people behind the fighters, port-specific placement at 0.75 scale; interactions remain outside this port |
+| Title and menu panel | Motion object 446, PRIMAL animation 447–460, RAGE animation 475–480; palettes `0x68d7a`, `0x652c2` | Source lettering frames keep their authored pivots; original stone art resized only for the menu panel |
 | Character-selection temple | Objects 784/785; palettes `0x6717a`/`0x671fa` | Complete 336×240 background at 2×, sky plus temple |
 | Podiums | Objects 786/787; palette `0x6727a` | Both source podiums; inward-facing animated previews above their surfaces |
 | Original selection states | Reliefs 788–794 and original body palettes | Unselected stone reliefs in background; coloured source heads under P1/P2 cursors; procedural red/yellow focus outlines retained |
@@ -39,7 +43,7 @@ There is no runtime SDL or MAME executable dependency.
 The port retains its existing campaign, training, tug, endurance and photo
 capture rules. This migration does not implement the original machine's full
 special-move, projectile, fatality, follower or cinematic systems; those were
-already outside the port's supported rules. It does not claim hardware-exact
+already outside the port's supported rules. Ambient tribespeople now render with original art; interaction and worship/eating AI remain unimplemented. It does not claim hardware-exact
 arcade emulation. See [menus and capture](menu-and-capture.md).
 
 ## HUD contract and reviewed states
@@ -75,6 +79,89 @@ empty health, stun, unlimited time, Tug of War and a maximum-length custom name.
 Captures are `after/hud-full.png`, `hud-damaged.png`, `hud-empty.png`,
 `hud-training.png`, `hud-tug.png` and `hud-custom.png` under the review folder.
 The pre-correction fight/menu frames are in `docs/review/arcade-hud/before/`.
+
+## Stage and graphics audit
+
+The first migration omitted foreground scenery, used the sky tile bank for the
+floor, drew one of the two floor halves, stretched the floor vertically and
+cropped every sky against the full 240-pixel view. The corrected renderer reads
+all four map tables, the independent bank tables at `0x1e5944`/`0x1e594c`, and
+the source horizons at `0x6ba0c`. Each floor half occupies 512 pixels; the two
+halves form the hardware's 1024-pixel wrapped surface. The sky's native copier
+has a 64-column stride, including the overhang overwrite of 72-column maps.
+Sky crop is `map_height - horizon`; floor scanlines retain their native rows.
+
+Horizontal scroll follows native routine `0x23c74`, including per-stage depth
+denominators at `0x6b9ec`, sky scroll bases at `0x6b9fc` and depth offsets at
+`0x6ba1c`. The original camera limit at `0x6ba36` is 372 pixels per side; the
+arena is consequently 1080 native pixels wide, rather than the DOS-era 592.
+The viewport remains **336×240 presented at 2×**. Both camera extremes are
+captured and the source terrain stays registered while panning.
+
+Scenery expands the original placement and extra-object tables, including
+linked parts spawned before an object's first frame. A zero-duration script
+holds that first frame; reading farther would incorrectly execute the adjacent
+script. Animated water, waves, lava, smoke and fire run their original frame
+scripts. Source cycle registrations in `0x2472e`–`0x24818` rotate authored
+palette ranges at their original intervals. Cached tile indices preserve those
+cycles without generating replacement artwork. Scenery uses a private seeded
+random stream; repeated drawing and animation rewind cannot change combat RNG.
+Objects retain source positions, alpha, RGB555 colours, mirror, source scales
+(including half-size Graveyard art), and front/behind-fighter depth ordering.
+
+| Arena index | Source name | Scenery objects, including linked parts |
+|---|---|---:|
+| 0 | The Cove | 10 |
+| 1 | The Inferno | 9 |
+| 2 | The Strip | 8 |
+| 3 | The Tomb | 32 |
+| 4 | The Cliff | 8 |
+| 5 | The Ruins | 10 |
+| 6 | The Hollows | 21 |
+| 7 | Dinosaur Graveyard | 17 |
+
+Campaign homes now read the original character-to-arena table at `0x69a40`:
+Sauron 0, Blizzard 4, Talon 2, Vertigo 3, Armadon 6, Diablo 1 and Chaos 5.
+The prior guessed associations for Talon, Armadon and Chaos were incorrect.
+
+The broader audit also replaced generic ellipse shadows for original fighters
+with the native pose lookup, restored the original hit/block contact sprites
+and all their palette colours, and replaced repeated title-patch aliases with
+the original PRIMAL/RAGE lettering animation. Contact timing follows the native
+three-tick setup in `0x15b1a`. Team-coloured ambient tribespeople use six source
+idle scripts. Their port-specific world x offsets are −58/−36/76/98 from the
+arena centre, y is the port's foot plane minus 7/4 pixels, and scale is 0.75;
+the right group mirrors inward. They do not participate in combat.
+
+[`arcade-graphics.json`](arcade-graphics.json) inventories every scene descriptor,
+map/bank, horizon, palette cycle and reference pixel. Regenerate or validate it
+without an emulator or an extraction archive:
+
+```sh
+python3 games/clayfight/tools/audit_arcade_graphics.py
+python3 games/clayfight/tools/audit_arcade_graphics.py --check
+```
+
+Reviewed in-game captures: `review/arcade/after/stage-0.png` through `stage-7.png`,
+`stage-left.png`, `stage-right.png` and `impacts.png`. `scenery.gif` shows four
+arenas' animation and scrolling; `title.gif` shows the lettering sequence;
+`fight.gif` shows the restored combat scene. The combined suite also checks
+independently decoded background pixels, all eight exact 2× tile surfaces,
+both camera extremes, deterministic rendering/rewind, pose-specific shadows,
+contact palette bounds/lifetime and all seven campaign stage associations.
+
+### Remaining original presentation, explicitly tracked
+
+[Issue #55](https://github.com/corepunch/nile-archive/issues/55) tracks the original
+intro/seven ending cinematics, full title-ray/lightning choreography, graphics
+triggered by unsupported special/projectile/fatality rules, and full follower
+interaction. The port's ending screen is a campaign summary, not an extracted
+original ending. The restored people are ambient scenery. These sequences must
+have source scripts/palettes, transitions and reviewed reels before being marked
+complete. Current port-only menu controls, territory pins, photo-fighter contact
+shadows and debug overlays are intentional UI/rendering, not replacement arcade
+art. No DOS art, generated scene painting or flattened stage screenshot is used
+by the runtime.
 
 ## Reproduction and review
 

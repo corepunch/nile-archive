@@ -6,7 +6,7 @@ campaign_t campaign;
 // Arcade character indices: Sauron, Blizzard, Talon, Vertigo, Armadon,
 // Diablo, Chaos. Home arenas and globe pins are explicitly associated with
 // opponents so a victory conquers the land the map actually announced.
-static const int home[7] = {0, 4, 5, 3, 2, 1, 6};
+static int Home(int character) { return X_U8(0x69a40+character); }
 static const int pins[7][2] = {{65, 69}, {114, 38}, {134, 64}, {144, 110}, {88, 113}, {48, 52}, {97, 83}};
 
 void C_Abandon(void) { campaign.active = false; }
@@ -42,7 +42,7 @@ void C_StartFight(void)
 {
     int id = campaign.finalbattle ? campaign.order[campaign.finalindex] : campaign.order[campaign.conquered];
     bool cpu[2] = {false, true};
-    G_InitNew(campaign.hero, campaign.opponents[id], cpu, &stages[campaign.finalbattle ? 7 : home[id]]);
+    G_InitNew(campaign.hero, campaign.opponents[id], cpu, &stages[campaign.finalbattle ? 7 : Home(id)]);
     C_SetupFinal();
 }
 
@@ -147,7 +147,7 @@ void C_Drawer(void)
     else snprintf(text, sizeof text, "LANDS CONQUERED: %d / 7", campaign.conquered);
     V_DrawTextCentered(FONT_SMALL, 168, 198, text);
     snprintf(text, sizeof text, "%s  /  %s", campaign.opponents[current]->name,
-             campaign.finalbattle ? "DINOSAUR GRAVEYARD" : stages[home[current]].name);
+             campaign.finalbattle ? "DINOSAUR GRAVEYARD" : stages[Home(current)].name);
     V_DrawTextCentered(FONT_SMALL, 168, 210, text);
 #ifdef CLAY_IOS
     V_DrawTextCentered(FONT_SMALL, 168, VIEWHEIGHT - 10, "SELECT: FIGHT    BACK: MAIN MENU");
