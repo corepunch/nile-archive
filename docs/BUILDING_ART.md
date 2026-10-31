@@ -83,6 +83,13 @@ receives a `Kit` and adds geometry to it in **pivot-local coordinates**:
   paved slab that `build()` adds automatically. It is exactly the footprint and
   `G = .1` high, so build from `z = G`. Decorations stand on the grass at
   `z = 0` with no slab; their footprint is a virtual base.
+- **One-tile decorations are scaled ×2.** Model them at true scale. `build()`
+  scales every 1 × 1 decoration about its pivot by `DECOR_SCALE` (2.0), with
+  the bevels and lights. The scaled object fills the tile plus the half tile
+  that `city.clearance` reserves around it, so `DECOR_SCALE` must not exceed
+  `1 + clearance` (in tiles). The footprint, `base_width` and price stay one
+  tile's. The vertex clamp works at model scale: a one-tile builder still
+  keeps its geometry within ±0.5.
 - **Stay inside the footprint.** `build()` clamps every vertex to the footprint
   rectangle, so anything that overhangs is squashed flat. Use `k.fit(x, y,
   reach)` (as `k.palm` and `k.puff` do) to move plants inward. Keep props on the
@@ -225,8 +232,9 @@ Everything below belongs in the same pull request as the art:
 - **Gaps get issues.** A placeholder, a missing state or a known visual defect
   that will remain gets a GitHub issue before handoff, with the concrete states
   and acceptance criteria, linked from the catalogue doc. Close it from the
-  pull request that fixes it. The open Nile Archive gaps (the paint-over pass
-  and decoration scale) are [issue #32](https://github.com/corepunch/nile-archive/issues/32).
+  pull request that fixes it. The open Nile Archive gaps (the paint-over pass,
+  and whether 2×2 decorations should grow like one-tile ones) are in
+  [issue #32](https://github.com/corepunch/nile-archive/issues/32).
 - **Pull request.** Embed before/after tray shots, the contact sheet and
   footprint pages, with image URLs pinned to the pushed commit (see
   [AGENTS.md](../AGENTS.md)).
