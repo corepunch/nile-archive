@@ -140,23 +140,22 @@ local star_icon, compass_icon = R.star_icon, R.compass_icon
 
 --------------------------------------------------------------------- header
 
--- On the island the picture runs up to the status bar with a small medallion
--- in the corner; on the board the medallion sits in the HUD band beside the goals.
-local function pause_button(island)
-    local bounds=island and rect(414,12,52,52) or rect(418,8,44,44)
+-- The same small medallion in the corner of the island and of the board's band.
+local function pause_button()
+    local bounds=rect(418,8,44,44)
     local st=ui.hit(bounds,0)
     local state=st.held and "pressed" or st.hot and "hover" or "normal"
     picture(R.hud_art["pause-"..state],bounds,255)
     return st.clicked
 end
 
--- A resource readout: a dark pill with a gold seam, its icon overhanging the left end.
+-- A resource readout: a slim dark pill with a gold seam, its icon at the left end.
 function R.capsule(r, icon, value)
-    gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
-    gfx.round_rect(r, r.h * .5, rgba(13, 47, 41, 225))
-    gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
-    icon(vec2(r.x + 6, r:center().y), r.h * .5 + 6)
-    say(value, rect(r.x + r.h * .5 + 10, r.y, r.w - r.h * .5 - 18, r.h), 18, PAL_CREAM)
+    gfx.shadow(r:offset(vec2(0, 2)), r.h * .5, 5, rgba(0, 0, 0, 80))
+    gfx.round_rect(r, r.h * .5, rgba(13, 47, 41, 215))
+    gfx.round_rect_line(r, r.h * .5, 1.4, rgba(233, 199, 123, 170))
+    icon(vec2(r.x + r.h * .5, r:center().y), r.h * .5 + 1)
+    say(value, rect(r.x + r.h + 1, r.y, r.w - r.h - 6, r.h), 15, PAL_CREAM)
     return tapped(r)
 end
 local capsule = R.capsule
@@ -170,29 +169,22 @@ local capsule_notes = {"Gold buys buildings. Replay expeditions to earn more.", 
                        "Stone funds restorations. First wins grant the full cost.", "Discovery Stars unlock stock and land. First clears only; never spent.",
                        "Compasses are spent to open new land."}
 
--- The island shows its purse in two rows of capsules; tapping EXPAND opens the
--- next region. An unfinished expedition exposes only pause, never island access.
+-- One slim currency row; new land opens from its fog marker.
 function R.draw_header(on_island)
     if on_island then
         for k = 1, 5 do
-            local r = rect(34 + (k - 1) % 3 * 120, k <= 3 and 14 or 58, 96, 34)
+            local r = rect(12 + (k - 1) * 80, 15, 74, 30)
             if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end
         end
-        local r = rect(274, 58, 96, 34)
-        gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
-        gfx.round_rect(r, r.h * .5, rgba(47, 105, 67, 240))
-        gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
-        say("EXPAND +", r:inflate2(vec2(-10, 0)), 15, PAL_CREAM)
-        if tapped(r) then R.expand() end
     end
-    if pause_button(island) then R.overlay = R.OV_PAUSE end
+    if pause_button() then R.overlay = R.OV_PAUSE end
 end
 
 function R.draw_toast()
     if R.toast_time <= 0 or R.overlay ~= R.OV_NONE then return end
     if R.on_island then   -- above the map buttons
-        rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
+        rrect(rect(18, 760 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 774 + R.drop), 14, PAL_CREAM, 424)
     else   -- just below the HUD band, above the board
         rrect(rect(38, 78, 404, 28), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 92), 14, PAL_CREAM, 388)

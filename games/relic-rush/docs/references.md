@@ -80,3 +80,22 @@ Background reading on HUD clutter and Royal Match's text-light UI:
 - https://www.funovus.com/blogs/royal-match-dominates-match-3-what-can-all-designers-learn/
 - https://thisweekinliveops.substack.com/p/5-simple-ux-lessons-from-royal-match
 - https://www.andacademy.com/resources/blog/ui-ux-design/game-ui-design/
+
+## Island (home) screen HUD
+
+Same review, for the meta screen between levels. Royal Match's castle, Homescapes'
+house, Gardenscapes' garden and June's Journey's Orchid Island all leave the
+decorated world almost uncovered:
+
+- One row of currency pills along the top, with settings/pause in the corner.
+- One dominant Play button at the bottom, labelled with the level number. Side
+  features (shop, tasks, events) are round icon buttons with short captions,
+  flanking it or along the edge.
+- No status sheet or instructional text over the world. Gestures are explained
+  once, in a toast, when they become relevant.
+- Expandable land is marked in the world itself (a badge on the locked area),
+  not with a separate HUD button.
+
+- Homescapes UI overview (lives/coins top, tasks bottom-left): https://www.blog.udonis.co/mobile-marketing/mobile-games/homescapes-monetization
+- June's Journey: shop button at the bottom of the island screen, flower counter top right: https://junes-journey.fandom.com/wiki/Orchid_Island
+- Royal Match navigation through tabs and in-world items: https://www.appspy.com/news/essential-intel-royal-match/
