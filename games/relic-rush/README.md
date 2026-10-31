@@ -301,3 +301,5 @@ Current scope is an offline prototype: ten hex levels, ten story wonders plus 86
 ## Fast rule tests
 
 Run `make test-relic-rush` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.
+
+Board artwork fills its registered hex slots. Dialogue portraits animate on entrance, exit and speaker changes, then remain still; the engine owns those transitions. See [motion review](../../docs/review/motion/README.md).

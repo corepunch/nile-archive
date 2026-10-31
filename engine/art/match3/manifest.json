@@ -1235,5 +1235,18 @@
     }
   },
   "reproduction": "python3 tools/match3_atlas.py",
-  "review": "docs/review/match3/README.md"
+  "review": "docs/review/match3/README.md",
+  "provenance": {
+    "recipe": "bdf0b6e000cf154182e0070d6de4c76bdf5a57f6adee3d18df061265b2b28e89",
+    "inputs": {
+      "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",
+      "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
+      "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
+      "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee"
+    },
+    "outputs": {
+      "engine/data/match3.png": "1f4409258eb59581a1bc0d27027ad58c62c433bcc02520821bfbc2ae7c5d7e54",
+      "engine/match3_frames.lua": "0f5a3ea5ad99d3135e39e5e64215a6977777c282e6b103a630b0cbf5e4e4ef68"
+    }
+  }
 }

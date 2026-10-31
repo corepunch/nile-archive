@@ -3,6 +3,7 @@
 #include "render.h"
 #include "test.h"
 #include <stdio.h>
+#include <string.h>
 
 static int sample_index, settling, skip_wait;
 static bool testing_skip;
@@ -94,6 +95,22 @@ static void frame(float dt)
         CHECK(fabsf((y0+y1+1)*.5f-expected.y)<3*scale+1);
         CHECK(x0>0 && y0>0 && x1<w-1 && y1<h-1);
         if (test_failures()) fprintf(stderr,"  framed %d,%d..%d,%d expected %.2f,%.2f scale %.2f\n",x0,y0,x1,y1,expected.x,expected.y,scale);
+        /* Check actual portrait pixels after different idle times. Text and
+         * the continue arrow may animate; a settled face must stay identical. */
+        unsigned char *idle=malloc((size_t)w*h*4);
+        CHECK(idle != NULL);
+        if (idle) {
+            draw_rect(app_bleed(),rgba(10,20,70,255));story_frame(.137f);
+            CHECK(render_read_pixels(idle,w,h));
+            bool still=true;
+            for (int i=0;i<w*h;i++) {
+                unsigned char *a=pixels+i*4,*b=idle+i*4;
+                if ((a[2]>90 && a[0]<40 && a[1]<90) || (b[2]>90 && b[0]<40 && b[1]<90))
+                    if (memcmp(a,b,4)) { still=false;break; }
+            }
+            CHECK(still);
+            free(idle);
+        }
         if (sample_index==TOTAL_CASES-1) {
             /* Find the real rendered Skip pill above a two-portrait unit,
              * then activate it through the platform's input queue. */
@@ -151,4 +168,44 @@ TEST(story_layouts)
         .data_dir="games/relic-rush/data",.init=init,.frame=frame,.quit=quit};
     CHECK(app_run(desc,7,args)==0);
     CHECK(sample_index==TOTAL_CASES);
+}
+
+static void motion_frame(float dt)
+{
+    (void)dt;
+    cast[0].portrait=cast[1].portrait=portrait;
+    cast[0].right=false;cast[1].right=true;
+    test_style.framed=true;test_style.portrait_height=.27f;
+    story_setup(cast,2,&test_style);
+    rect r, settled;
+    color tint;
+    story_say("ann","The same line.");
+    story_frame(.05f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && tint.a>0 && tint.a<255);
+    story_frame(.2f);
+    CHECK(story_test_portrait(&cast[0],&settled,&tint) && tint.a==255);
+    story_say("ann","The same line.");story_next();story_frame(.01f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && !memcmp(&r,&settled,sizeof r) && tint.r==255);
+    story_say("other","The same line.");story_next();story_frame(.05f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && tint.r>120 && tint.r<255);
+    story_frame(.2f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && tint.r==120);
+    story_say("ann","The same line.");story_next();story_frame(.05f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && tint.r>120 && tint.r<255 && tint.a>235);
+    story_frame(.2f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && tint.r==255);
+    story_next();story_frame(.05f);
+    CHECK(story_test_portrait(&cast[0],&r,&tint) && tint.a>0 && tint.a<255);
+    story_frame(.2f);
+    CHECK(!story_test_portrait(&cast[0],&r,&tint));
+    CHECK(!story_test_portrait(&cast[1],&r,&tint));
+    app_quit();
+}
+
+TEST(story_portrait_motion)
+{
+    char *args[]={"test-story","--headless","--mute","--size","480x900"};
+    app_desc desc={.design={480,900},.fixed=true,.data_dir="games/relic-rush/data",
+        .init=init,.frame=motion_frame,.quit=quit};
+    CHECK(app_run(desc,5,args)==0);
 }

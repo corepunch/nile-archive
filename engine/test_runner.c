@@ -298,7 +298,8 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         const char *kind = j ? j->kind : "", *name = j ? j->name : c_tests[i].name;
         if (fast && (j ? strcmp(kind, "rules") != 0 :
             !strcmp(name, "platform") || !strcmp(name, "platform_safe_area") ||
-            !strcmp(name, "backdrop") || !strcmp(name, "story_layouts") || !strcmp(name, "city_render"))) continue;
+            !strcmp(name, "backdrop") || !strcmp(name, "story_layouts") ||
+            !strcmp(name, "story_portrait_motion") || !strcmp(name, "city_render"))) continue;
         char label[100];
         snprintf(label, sizeof label, "%s%s%s", kind, kind[0] ? " " : "", name);
         if (!wanted(label, argc, argv)) continue;

@@ -165,3 +165,22 @@ migration checkout. It loads no game modules or artwork.
 
 This change adds test coverage and test-only hooks; no player-visible screenshots
 are required for its pull request.
+
+
+## Fail early and measure slow steps
+
+`make test-assets` checks artwork without compiling or launching a game. CI runs
+it with generated-code/project checks and Lua lint in a preflight job before
+native, WebAssembly or iOS builds. Atlas validation verifies SHA-256 fingerprints
+of the authoring recipe, every input and each registered output. The registered
+RGBA assets are the authored deliverables; CI does not resample them again on a
+different CPU or JPEG decoder. Run `python3 tools/match3_atlas.py` to deliberately
+reauthor registration, then `make gen` and inspect the game captures.
+
+The measured previous iOS run spent about 96 seconds building and 7m 20s in
+simulator smoke; approximately four minutes elapsed between boot completion and
+the first launch. The new smoke script reports each simctl operation and boots
+one device family at a time to reduce contention. Fast local rules take about
+5–6 seconds; the full native renderer/smoke suite took about 2m 20s. A complete
+native run writes many review/reel frames; prefer targeted local runs and cloud
+CI for the full output set, then discard regenerable intermediates.

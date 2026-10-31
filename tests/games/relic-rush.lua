@@ -85,3 +85,11 @@ end
 frame("resource-icons-guide","480x900","--level 7 --dialog guide")
 frame("resource-icons-default-board-states","480x900","--default-match3 --level 7 --art-states")
 frame("resource-icons-default-hud-states","480x900","--default-match3 --level 7 --hud-states")
+
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    local opts = "--lua tests/fixtures/dialogue;games/relic-rush/lua;."..safe
+    frame("portrait-speaker-"..size,size,opts.." --frames 20")
+    frame("portrait-listener-"..size,size,opts.." --frames 45")
+end
+reel("portrait-transitions", 42, 2, "390x844", "--lua tests/fixtures/dialogue;games/relic-rush/lua;. --safe-area 0,47,0,34")

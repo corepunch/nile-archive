@@ -379,3 +379,26 @@ boxes, scrolling containers, screen-reader integration and a visual resource
 editor are not implemented here. Add those behaviours to the engine and extend
 its tests/skin contract when needed. This is an adoption path for the existing
 immediate-mode games, rather than a port of Orion's native window/message system.
+
+
+## Finite motion and dialogue portraits
+
+`engine.h` provides a small value-type `tween`: `tween_to(&value, target,
+seconds)`, `tween_step(&value, dt)`, and `tween_value(value)`. Retargeting starts
+at the sampled value, repeating a target does not restart it, negative time is
+ignored, and completion returns the exact target. The default curve is monotonic
+cubic out. There is no global animation manager or implicit wall clock.
+
+Dialogue staging in `engine/story.c` keeps one track per visible character.
+Layout computes target rectangles; staging snapshots the current rectangle and
+colour only when the target changes; rendering samples the tween. New characters
+slide/fade in, departing characters slide/fade out, and returning speakers blend
+from their listener pose instead of entering again. Frame, outline and shadow
+share the portrait's opacity. A settled track stays still while text types or
+waits for input. Bubble arrival uses a monotonic cubic curve, too.
+
+C tests cover interruption, repeated targets, frame subdivision, entrance,
+active/inactive switching, return and exit. Real-renderer tests compare portrait
+pixels during idle across phone, safe-area and landscape layouts. `story_restart`
+clears tracks between test/game runs. [Reviewed game captures](review/motion/README.md)
+include the full transition sequence and both phone sizes.

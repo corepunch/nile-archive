@@ -6,7 +6,7 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
-R.piece_width = 46 * R.HEX_R / 26.5   -- authored sprite registration
+R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
 local PH_IDLE = R.PH_IDLE
@@ -21,7 +21,7 @@ local PI = math.pi
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
-local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
+local STATE_SIZE = 2 * HEX_R
 local HEX_DY = 1.732050808 * HEX_R
 R.board_origin = vec2(240, 434)
 local TOOLS_Y, TOOL_SIZE = 808, art.tool_size
@@ -40,10 +40,13 @@ local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
 
-function R.draw_relic(t, at, scale, alpha, aspect)
+function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.kind < 0 then return end
-    local s = ART_CELL_SIZE * .95 * scale
-    local frame = ART_STATE_SIZE * scale
+    -- Hex silhouettes meet all six neighboring edges; other silhouettes fit
+    -- the cell's inscribed square. Account for the authored 8px canvas gutter.
+    local span = t.kind == R.hex_piece_kind and 2 or 1.732050808
+    local s = (board and span * ART_HEX_R * 128 / 112 or ART_CELL_SIZE * .95) * scale
+    local frame = (board and 2 * ART_HEX_R or ART_STATE_SIZE) * scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
     -- Authored frames leave the matching kind visible in every optional pack.
@@ -217,7 +220,7 @@ local function draw_relics(sx)
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
             if clip then gfx.clip(clip) end
-            draw_relic(t, at, scale * BOARD_SCALE, alpha, aspect)
+            draw_relic(t, at, scale * BOARD_SCALE, alpha, aspect, true)
             if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end

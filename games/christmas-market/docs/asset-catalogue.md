@@ -62,3 +62,15 @@ See [checked in-game captures and commands](review/trickling/README.md) and the
 [engine contract](../../../docs/MATCH3_ENGINE.md). The default atlas's source,
 prompt, all supported states and crop/rotation registration are catalogued in
 `engine/art/match3/manifest.json` at repository root.
+
+
+### Cell registration and dialogue motion
+
+Board state canvases now span the complete hex diameter. The authored 112px
+piece interior on a 128px canvas is registered explicitly: hex silhouettes fill
+the hex, other objects fit its inscribed square. Guide and HUD sizes retain their
+own registration. Artwork and its alpha remain unchanged. Reproduce the reviewed
+boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters.
+
+Portraits use finite engine tweens for entrance/exit and active/listener changes;
+settled portraits have no idle motion. See [motion, captures and timing review](../../../docs/review/motion/README.md).

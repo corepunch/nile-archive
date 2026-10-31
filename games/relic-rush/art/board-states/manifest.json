@@ -801,5 +801,25 @@
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "../../docs/review/resource-icons/README.md"
     }
+  },
+  "cell_registration": {
+    "canvas": 128,
+    "piece_interior": 112,
+    "hex": "full cell diameter",
+    "other_pieces": "inscribed square",
+    "states": "full cell diameter",
+    "review": "../../../docs/review/motion/README.md"
+  },
+  "dialogue_motion": {
+    "engine": "engine/story.c",
+    "states": [
+      "entering",
+      "active",
+      "inactive",
+      "exiting",
+      "settled"
+    ],
+    "curve": "finite cubic tween; no idle loops",
+    "review": "../../../docs/review/motion/README.md"
   }
 }

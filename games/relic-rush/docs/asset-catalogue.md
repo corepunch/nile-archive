@@ -443,3 +443,15 @@ pieces, including the flame, match the original runtime pixels exactly.
 The clay brick belongs to the independent engine default atlas and is not used
 by this game's overrides. Reproduce with `python3 tools/match3_atlas.py` and
 `make gen`. Review [actual boards and guide](../../../docs/review/resource-icons/README.md).
+
+
+### Cell registration and dialogue motion
+
+Board state canvases now span the complete hex diameter. The authored 112px
+piece interior on a 128px canvas is registered explicitly: hex silhouettes fill
+the hex, other objects fit its inscribed square. Guide and HUD sizes retain their
+own registration. Artwork and its alpha remain unchanged. Reproduce the reviewed
+boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters.
+
+Portraits use finite engine tweens for entrance/exit and active/listener changes;
+settled portraits have no idle motion. See [motion, captures and timing review](../../../docs/review/motion/README.md).
