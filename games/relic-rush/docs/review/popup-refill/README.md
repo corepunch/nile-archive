@@ -34,10 +34,12 @@ Regression coverage lives in `tests/lua/ui_skin.lua`,
 `tests/lua/trickling.lua` (all ten silhouettes in each game, plus identity,
 conservation, determinism and lock routing).
 
-Validation: final incremental `make -j4 CFLAGS="-O2 -g -Werror" all`
-plus the engine/portrait test binaries passed (6.76 seconds). The full
-`make -j4 CFLAGS="-O2 -g -Werror" test` passed in 215.16 seconds, including
-generated-code checks, asset checks, every engine/game suite, audio and
-Clayfight checks. `make lint` passed in 1.23 seconds with no warnings or
-errors. These are measured wall times; the full test target includes its
-remaining test-binary builds and asset preflight.
+Validation after integrating straight-down priority: final incremental
+`make -j4 CFLAGS="-O2 -g -Werror" all` plus the engine/portrait test binaries
+passed in 5.32 seconds. The full `make -j4 CFLAGS="-O2 -g -Werror" test`
+passed in 190.73 seconds, including generated-code checks, asset checks,
+every engine/game suite, audio and Clayfight checks. `make lint` passed in
+0.94 seconds with no warnings or errors. These are measured wall times;
+the full test target includes its remaining test-binary builds and asset
+preflight. Temporary full-suite frames were removed after retaining these
+review clips.
