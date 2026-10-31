@@ -30,7 +30,7 @@ SHOTS = [
     ('hud-states', '480x900', ['--hud-states']),
     ('specials-board', '480x900', ['--art-board']),
     ('building-card', '480x900', ['--card','2']),
-] + [(f'building-review-{page}', '480x900', ['--building-review',str(page),'--footprints']) for page in range(1,4)]
+] + [(f'building-review-{page}', '480x900', ['--building-review',str(page),'--footprints']) for page in range(1,11)]
 
 def main():
     output = GAME/'docs/screenshots'
