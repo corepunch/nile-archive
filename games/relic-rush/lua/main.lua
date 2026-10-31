@@ -29,7 +29,7 @@ local cast = {
      color = rgba(104, 48, 92), right = true, mouth = vec2(.46, .52)},
 }
 
-R.intro = {
+R.intro_lines = {
     {"elena", "The Lost Valley at last. Broken sunstones, silent terraces... someone lived here once.", story.THOUGHT},
     {"mara", "And now we do. I'll keep the plane ready. You find out who they were."},
     {"elena", "Every puzzle is an excavation. Let's start digging."},
@@ -80,16 +80,21 @@ function R.start_level(chosen)
     R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
     R.on_island = false
     R.overlay = R.OV_NONE
+    R.intro = nil
     R.vfx_reset()
     -- Elena explains a level's twist once; repeat visits keep the header quiet.
     local lesson = rules.level_of(R.g).lesson
-    if not R.quiet then story.play(("level-%d"):format(R.g.level), {{"elena", lesson}}) end
+    if not R.quiet then
+        story.play(("level-%d"):format(R.g.level), {{"elena", lesson}})
+        R.present_board()
+    end
     return true
 end
 
 function R.play_level(level)
     if R.g and R.g.level==level and not R.g.won and not R.g.lost then
         R.on_island=false;R.overlay=R.OV_NONE
+        if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end
         return true
     end
     return R.start_level(level)
@@ -119,6 +124,7 @@ local function frame(dt)
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
     R.layout()
     if app.arg("smoke") then R.smoke() end
+    R.debug_frame()
     R.now = R.now + dt
     R.toast_time = R.toast_time - dt
     if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
@@ -176,7 +182,7 @@ local function init()
     R.bubble_wonder = -1
     R.prog = {level = 0, seed = 782341, wallet = purse()}
     if not app.arg("smoke") then save.read("progress", serialize) end
-    if not R.quiet then story.play("intro", R.intro) end
+    if not R.quiet then story.play("intro", R.intro_lines) end
     R.layout()
     R.start_level()
     if R.prog.level>=LEVELS then R.g.won=true end -- no unfinished attempt is created at campaign completion

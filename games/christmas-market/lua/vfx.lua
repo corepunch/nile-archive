@@ -70,9 +70,9 @@ local function spark(at, radius, angle, c) gfx.star(at, radius, .24, 4, angle, c
 ------------------------------------------------------------------ particles
 
 
-function R.vfx_emit(at, kind, flying)
+function R.vfx_emit(at, kind, flying, count)
     if R.reduced_motion then return end
-    for _ = 1, flying and 1 or 7 do
+    for _ = 1, flying and 1 or count or 7 do
         local p = parts[part_next % PARTICLES + 1]
         part_next = part_next + 1
         local a, speed = rng_float() * 2 * PI, 55 + rng_float() * 125
@@ -121,6 +121,12 @@ function R.vfx_particles()
             end
         end
     end
+end
+
+-- A blocker hitting its cell in the board's entrance.
+function R.vfx_slam(at, kind)
+    add(FX_IMPACT, at, vec2(0, 0), kind, .3, 0, 0)
+    vfx_emit(at, kind, false, 4)
 end
 
 ---------------------------------------------------------------------- waves

@@ -9,6 +9,8 @@ local R = require("match3").view{
     drop = 0,            -- extra screen height on tall phones (see R.layout)
     hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
+    intro = nil,
+
     -- overlays and board phases
     OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10,
     PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white",   -- text styles in skin.lua

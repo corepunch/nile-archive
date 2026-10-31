@@ -8,8 +8,9 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
+board_intro.bind(R, rules)
 local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
-local PH_IDLE = R.PH_IDLE
+local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT
 local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
 local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.game_cell_active
@@ -152,8 +153,8 @@ end
 
 -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
 -- remaining moves large inside. It warms to red over the last five moves.
-local function draw_moves()
-    local c, r, a = MOVES_AT, MOVES_R, 0   -- flat-top, like the cells
+local function draw_moves(arrive)
+    local c, r, a = MOVES_AT, MOVES_R * arrive, (1 - arrive) * -PI / 3   -- flat-top, like the cells
     local moves = R.g.moves
     local urgent = moves <= 5 and not R.g.won
     if urgent and not R.reduced_motion then
@@ -167,43 +168,57 @@ local function draw_moves()
     gfx.ngon(c + vec2(0, 2), r - 5, 6, a, rgba(176, 120, 48))
     gfx.ngon(c, r - 7, 6, a, urgent and rgba(112, 34, 24) or rgba(12, 62, 52))
     gfx.glow(c + vec2(0, -4), r - 12, urgent and rgba(178, 64, 40) or rgba(36, 124, 96), urgent and rgba(112, 34, 24, 0) or rgba(12, 62, 52, 0))
-    text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17), size2(56, 12)), vec2(.5, .5), "MOVES")
-    local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29)
-    text.inside(s, rect.centered(c + vec2(0, 5), size2(62, 34)), vec2(.5, .5), tostring(moves))
+    if arrive < .8 then return end   -- the numbers come with the settled medallion
+    text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17 * arrive), size2(56, 12)), vec2(.5, .5), "MOVES")
+    local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29 * arrive)
+    text.inside(s, rect.centered(c + vec2(0, 5 * arrive), size2(62, 34)), vec2(.5, .5), tostring(moves))
 end
 
 function R.goal_target(kind)
     -- Collection flights land on the goal they advance.
     return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, 30)
 end
-local function draw_hud()
-    draw_band(HUD_BOTTOM, true)
-    draw_band(TRAY_TOP + R.drop, false)
+local function draw_hud(top, tray)
+    if top <= 0 then return end
+    draw_band(HUD_BOTTOM + (top - 1) * 110, true)
+    draw_band(TRAY_TOP + R.drop + (1 - tray) * 130, false)
     assert(hud_form:set_items("goals",R.goal_entries()))
-    hud_form:draw(rect(14,8,452,44),hud_skin,{interactive=false})
-    draw_moves()
+    hud_form:draw(rect(14,8 + (top - 1) * 110,452,44),hud_skin,{interactive=false})
+    local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
+    if medallion > .05 then draw_moves(medallion) end
 end
 R.hud_form=hud_form
 
 local function draw_cells(sx)
     local g = R.g
+    local intro = R.intro
+    local fade = intro and intro:fade() or 1
     for i = 0, CELLS - 1 do
-        if cell_active(g, i) then
-            local at = cell_pos(i) + vec2(sx, 0)
-            gfx.ngon(at + vec2(0, 2), HEX_R + .7, 6, 0, rgba(7, 37, 34))
+        local active, scale, turn, lift, flash = cell_active(g, i), 1, 0, 0, 0
+        if intro and active then scale, turn, lift, flash = intro:cell(i) end
+        if active and scale > .02 then
+            local at = cell_pos(i) + vec2(sx, lift)
+            gfx.ngon(at + vec2(0, 2), (HEX_R + .7) * scale, 6, turn, rgba(7, 37, 34, 255 * fade))
             for d = 0, 5 do   -- a gold rim where the board ends
                 if not cell_active(g, hex_neighbor(i, d)) then
-                    local a, b = d * PI / 3, (d + 1) * PI / 3
-                    gfx.line(at + vec2.polar(a, HEX_R - .5), at + vec2.polar(b, HEX_R - .5), 2, rgba(212, 175, 95))
+                    local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
+                    gfx.line(at + vec2.polar(a, (HEX_R - .5) * scale), at + vec2.polar(b, (HEX_R - .5) * scale), 2, rgba(212, 175, 95, 255 * fade))
                 end
             end
-            local dst = rect.centered(at, size2.splat(STATE_SIZE))
+            local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
             local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
                               or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
             -- State panels replace the old green face/rim; no cell sticks out.
-            gfx.image(R.board_art["cell-mask"], dst, has_state and rgba(13, 47, 41)
-                      or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73))
-            if g.soil[i] > 0 then gfx.image(R.board_art.sand, dst, color.WHITE) end
+            local tile = has_state and rgba(13, 47, 41)
+                      or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73)
+            gfx.image_rot(R.board_art["cell-mask"], dst, turn, color.alpha(tile, fade))
+            if g.soil[i] > 0 then gfx.image_rot(R.board_art.sand, dst, turn, rgba(255, 255, 255, 255 * fade)) end
+            if flash > 0 then   -- it opens glowing
+                R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
+                gfx.additive(true)
+                gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
+                gfx.additive(false)
+            end
             if i == R.selected then
                 gfx.image(R.board_art.selected, dst, color.WHITE)
             elseif (i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE then
@@ -232,10 +247,23 @@ local function draw_blockers(sx)
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
             local at = cell_pos(i) + vec2(sx, 0)
-            local dst = rect.centered(at, size2.splat(STATE_SIZE))
-            if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, color.WHITE) end
-            if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, color.WHITE) end
+            local visible, scale, alpha = true, 1, 1
+            if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
+            if visible then
+                local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
+                local tint = rgba(255, 255, 255, 255 * alpha)
+                if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, tint) end
+                if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, tint) end
+            end
         end
+    end
+end
+
+-- The light running across the board as it goes live.
+local function draw_sheen(sx)
+    for i = 0, CELLS - 1 do
+        local s = cell_active(R.g, i) and R.intro:sheen(i) or 0
+        if s > .02 then R.vfx_halo(cell_pos(i) + vec2(sx, 0), HEX_R * 1.9, rgba(255, 238, 186, 150 * s)) end
     end
 end
 
@@ -250,27 +278,39 @@ local function draw_tools(inp)
         local x = 240 + (k - 1) * 120
         local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
         local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
-                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE)
-        gfx.round_rect(r:inflate(7):offset(vec2(0, 2)), 22, rgba(4, 24, 22, 150))   -- a socket in the tray
-        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], r:inflate(5), color.WHITE)
-        gfx.circle(vec2(x + 31, y + 4), 14, rgba(116, 74, 33))
-        gfx.circle(vec2(x + 31, y + 4), 12, R.g.tools[k + 1] > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
-        R.say(tostring(R.g.tools[k + 1]), rect(x + 18, y - 9, 26, 26), 16, PAL_CREAM)
-        if R.tapped(r) and R.phase == PH_IDLE then
-            R.select_tool(k)
-        end
+                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE or R.phase == PH_PRESENT)
+        -- The tools spring up out of the tray one by one; they take taps at rest.
+        local rise = R.intro and R.intro:arrive(.14 + k * .07, 3, .48) or 1
+        local up = vec2(0, (1 - rise) * 120)
+        local drawn = r:offset(up)
+        gfx.round_rect(drawn:inflate(7):offset(vec2(0, 2)), 22, rgba(4, 24, 22, 150))   -- a socket in the tray
+        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], drawn:inflate(5), color.WHITE)
+        gfx.circle(vec2(x + 31, y + 4) + up, 14, rgba(116, 74, 33))
+        gfx.circle(vec2(x + 31, y + 4) + up, 12, R.g.tools[k + 1] > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
+        R.say(tostring(R.g.tools[k + 1]), rect(x + 18, y - 9, 26, 26):offset(up), 16, PAL_CREAM)
+        if R.tapped(r) and R.phase == PH_IDLE then R.select_tool(k) end
     end
 end
 
+---------------------------------------------------------------------- input
+
 function R.board_screen(inp, dt)
     draw_backdrop()
-    draw_hud()
-    R.draw_header(false)
+    local intro = R.intro
+    local top, tray = 1, 1
+    if intro then top, tray = intro:arrive(0, 2.8, .58), intro:arrive(.05, 2.8, .58) end
+    draw_hud(top, tray)
+    if top > 0 then
+        R.P.offset = vec2(0, (top - 1) * 110)   -- the pause medallion rides in on the band
+        R.draw_header(false)
+        R.P.offset = vec2(0, 0)
+    end
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx)
     draw_relics(sx)
     draw_blockers(sx)
-    draw_tools(inp)
+    if intro then draw_sheen(sx) end
+    if tray > 0 then draw_tools(inp) end
     if app.arg("art-states") then art.draw_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)

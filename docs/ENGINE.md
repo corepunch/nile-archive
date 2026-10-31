@@ -376,3 +376,21 @@ owns its worker jobs and campaign rules. See [the port assessment](../games/volc
 
 Native verification can isolate save files with `SPRITE_SAVE_DIR`, an existing
 writable directory. Normal play continues to use the existing per-game save directories.
+
+## Board entrance
+
+`engine/board_intro.lua` owns the shared match-board entrance clock and its
+`bind(view, rules)` adapter. Relic Rush and Christmas Market keep their skins
+and draw the poses; the existing match engine keeps matching, refill and input.
+The HUD arrives first, cells ripple from the centre, pieces drop in column
+order, blockers land, and a light sweep finishes the entrance. Existing artwork
+is translated, rotated and scaled; transient glows and sparks are procedural.
+
+The clock waits for dialogue, pauses under modals and while on the island, and
+returns to IDLE before matching resumes. A release skips the entrance without
+selecting a piece or spending a move. Reduced motion uses a quarter-second fade,
+with no landing callbacks or travel. Resetting a board clears its entrance.
+
+Reproduce both phone sizes with `build/test/relic-rush board-intro` and
+`build/test/christmas-market board-intro`. The manifests own all frames, so each
+game starts once. Reviewed captures live in each game's `docs/review/entrance/`.

@@ -822,5 +822,22 @@
     "curve": "finite cubic entrance/exit slide and fade; independent active/listener colour tween",
     "review": "../../../docs/review/motion/README.md",
     "geometry": "speaker/listener share size and side anchors; entrance/exit slide only; no resizing, rotation or idle bobbing"
+  },
+  "board_entrance": {
+    "engine": "engine/board_intro.lua",
+    "states": [
+      "waiting-for-dialogue",
+      "hud-arrival",
+      "cell-ripple",
+      "piece-drop",
+      "blocker-landing",
+      "sheen",
+      "skipped",
+      "reduced-motion",
+      "paused"
+    ],
+    "art": "existing data/match3.png regions, authored alpha preserved; animation transforms and transient glows/sparks only",
+    "reproduction": "build/test/relic-rush board-intro",
+    "review": "docs/review/entrance/README.md"
   }
 }

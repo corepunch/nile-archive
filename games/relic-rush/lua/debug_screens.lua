@@ -1,7 +1,7 @@
 -- debug_screens.lua — the entry points tools/screenshots.sh and reviewers use
 -- to open a screen directly: --level, --city, --showcase, --placing, --zone,
--- --victory, --card, --fx, --catalogue, --expeditions, --dialog and the art
--- reviews. Nothing here runs in a normal game.
+-- --victory, --card, --fx, --catalogue, --expeditions, --dialog, --present,
+-- --talk-through and the art reviews. Nothing here runs in a normal game.
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
@@ -27,6 +27,15 @@ local function island_with(n)
     end
     local spend = purse(100000, 100000, 100000)
     for _ = 1, n do island.island_place_next(R.island, spend, n, 0) end
+end
+
+-- --talk-through N: move the dialogue on every N frames, to film it.
+local talk_frames = 0
+function R.debug_frame()
+    local every = tonumber(app.arg("talk-through"))
+    if not every then return end
+    talk_frames = talk_frames + 1
+    if talk_frames % every == 0 then story.next() end
 end
 
 function R.debug_screens()
@@ -188,7 +197,7 @@ function R.debug_screens()
     a = app.arg("dialog")
     if a then   -- guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble
         R.toast_time = 0
-        if a == "intro" then story.play("intro", R.intro)
+        if a == "intro" then story.play("intro", R.intro_lines); R.present_board()   -- no board behind the talk yet
         elseif a == "adrian" then island_with(WONDERS); R.on_island = true; story.play("finale", R.finale)
         elseif a == "mara" then island_with(3); R.on_island = true; story.add({"mara", "New land is yours. Make it your own!", story.SHOUT})
         elseif a == "tomas" then island_with(2); R.on_island = true; story.say("tomas", R.wonders[2].about)
@@ -200,6 +209,15 @@ function R.debug_screens()
             R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED
                 or a == "confirm" and R.OV_CONFIRM or R.OV_FINALE
             if R.overlay == R.OV_FINALE then island_with(WONDERS); R.on_island = true end
+        end
+    end
+    if app.arg("present") then R.present_board() end
+    -- A debug screen may have replaced the board, or shown something else instead.
+    if R.intro then
+        if R.phase == R.PH_PRESENT and R.overlay == R.OV_NONE and not R.art_review then R.present_board()
+        else
+            R.intro = nil
+            if R.phase == R.PH_PRESENT then R.phase = R.PH_IDLE end
         end
     end
     if R.overlay ~= R.OV_NONE and not app.arg("reel") then R.modal_for, R.modal_clock = R.overlay, 1.6 end   -- stills show dialogs settled

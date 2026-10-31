@@ -8,9 +8,10 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
+board_intro.bind(R, rules)
 R.locked_notice = "Ice and tinsel must be cleared first."
 local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
-local PH_IDLE = R.PH_IDLE
+local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT
 local PAL_CREAM, PAL_WHITE = R.PAL_CREAM, R.PAL_WHITE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
 local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.game_cell_active
@@ -137,7 +138,8 @@ function R.goal_target(kind)
     local entries=R.goal_entries()
     return #entries==2 and vec2(50,122+column*40) or vec2(50+column*104,122)
 end
-local function draw_hud()
+local function draw_hud(top)
+    if top <= 0 then return end
     local entries, rows=R.goal_entries(),{}
     local per_row=#entries==2 and 1 or 2
     for i=1,#entries,per_row do
@@ -148,30 +150,45 @@ local function draw_hud()
     assert(hud_form:set_items("goals",rows))
     hud_form:set("moves",tostring(R.g.moves))
     -- Separate portrait texture/anchor will also work for later animated poses.
-    if R.hud_art.elena then gfx.image(R.hud_art.elena,rect(242,18,132,174):fit(texture.size(R.hud_art.elena)),color.WHITE) end
-    hud_form:draw(rect(24,74,432,116),hud_skin,{interactive=false})
+    local cutout = R.intro and R.intro:arrive(.2, 3, .45) or 1
+    if R.hud_art.elena and cutout > 0 then   -- she springs up from her feet
+        local box = rect(242,18,132,174):fit(texture.size(R.hud_art.elena))
+        gfx.image(R.hud_art.elena,box:resize(box:size():scale(cutout),vec2(.5,1)),color.WHITE)
+    end
+    hud_form:draw(rect(24,74 + (top - 1) * 210,432,116),hud_skin,{interactive=false})
 end
 R.hud_form=hud_form
 
 local function draw_cells(sx)
     local g = R.g
+    local intro = R.intro
+    local fade = intro and intro:fade() or 1
     for i = 0, CELLS - 1 do
-        if cell_active(g, i) then
-            local at = cell_pos(i) + vec2(sx, 0)
-            gfx.ngon(at + vec2(0, 2), HEX_R + .7, 6, 0, rgba(7, 37, 34))
+        local active, scale, turn, lift, flash = cell_active(g, i), 1, 0, 0, 0
+        if intro and active then scale, turn, lift, flash = intro:cell(i) end
+        if active and scale > .02 then
+            local at = cell_pos(i) + vec2(sx, lift)
+            gfx.ngon(at + vec2(0, 2), (HEX_R + .7) * scale, 6, turn, rgba(7, 37, 34, 255 * fade))
             for d = 0, 5 do   -- a gold rim where the board ends
                 if not cell_active(g, hex_neighbor(i, d)) then
-                    local a, b = d * PI / 3, (d + 1) * PI / 3
-                    gfx.line(at + vec2.polar(a, HEX_R - .5), at + vec2.polar(b, HEX_R - .5), 2, rgba(212, 175, 95))
+                    local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
+                    gfx.line(at + vec2.polar(a, (HEX_R - .5) * scale), at + vec2.polar(b, (HEX_R - .5) * scale), 2, rgba(212, 175, 95, 255 * fade))
                 end
             end
-            local dst = rect.centered(at, size2.splat(STATE_SIZE))
+            local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
             local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
                               or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
             -- State panels replace the old green face/rim; no cell sticks out.
-            gfx.image(R.board_art["cell-mask"], dst, has_state and rgba(13, 47, 41)
-                      or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73))
-            if g.soil[i] > 0 then gfx.image(R.board_art.sand, dst, color.WHITE) end
+            local tile = has_state and rgba(13, 47, 41)
+                      or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73)
+            gfx.image_rot(R.board_art["cell-mask"], dst, turn, color.alpha(tile, fade))
+            if g.soil[i] > 0 then gfx.image_rot(R.board_art.sand, dst, turn, rgba(255, 255, 255, 255 * fade)) end
+            if flash > 0 then   -- it opens glowing
+                R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
+                gfx.additive(true)
+                gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
+                gfx.additive(false)
+            end
             if i == R.selected then
                 gfx.image(R.board_art.selected, dst, color.WHITE)
             elseif (i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE then
@@ -200,17 +217,30 @@ local function draw_blockers(sx)
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
             local at = cell_pos(i) + vec2(sx, 0)
-            local dst = rect.centered(at, size2.splat(STATE_SIZE))
-            if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, color.WHITE) end
-            if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, color.WHITE) end
+            local visible, scale, alpha = true, 1, 1
+            if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
+            if visible then
+                local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
+                local tint = rgba(255, 255, 255, 255 * alpha)
+                if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, tint) end
+                if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, tint) end
+            end
         end
+    end
+end
+
+-- The light running across the board as it goes live.
+local function draw_sheen(sx)
+    for i = 0, CELLS - 1 do
+        local s = cell_active(R.g, i) and R.intro:sheen(i) or 0
+        if s > .02 then R.vfx_halo(cell_pos(i) + vec2(sx, 0), HEX_R * 1.9, rgba(255, 238, 186, 150 * s)) end
     end
 end
 
 local tool_names = {"Hammer", "Firecracker", "Star wand"}
 
 local function draw_tools(inp)
-    if R.word_time <= 0 or R.reduced_motion then
+    if (R.word_time <= 0 or R.reduced_motion) and not R.intro then
         R.say_at(R.tool >= 0 and "TAP A TREAT TO USE YOUR TOOL" or "CONNECT 4+ MATCHING NEIGHBORS.", vec2(240, 766 + R.drop), 13, PAL_WHITE, 0)
     end
     local y = TOOLS_Y + R.drop
@@ -218,30 +248,42 @@ local function draw_tools(inp)
         local x = 63 + k * 112
         local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
         local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
-                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE)
-        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], r:inflate(5), color.WHITE)
-        gfx.circle(vec2(x + 29, y + 6), 13, rgba(44, 88, 61))
-        R.say(tostring(R.g.tools[k + 1]), rect(x + 16, y - 7, 26, 26), 16, PAL_CREAM)
-        R.say_at(tool_names[k + 1], vec2(x, y + TOOL_SIZE + 12), 15, PAL_CREAM, 0)
-        if R.tapped(r) and R.phase == PH_IDLE then
-            R.select_tool(k)
-        end
+                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE or R.phase == PH_PRESENT)
+        -- The tools spring up from below one by one; they take taps at rest.
+        local rise = R.intro and R.intro:arrive(.14 + k * .07, 3, .48) or 1
+        local up = vec2(0, (1 - rise) * 170)
+        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], r:offset(up):inflate(5), color.WHITE)
+        gfx.circle(vec2(x + 29, y + 6) + up, 13, rgba(44, 88, 61))
+        R.say(tostring(R.g.tools[k + 1]), rect(x + 16, y - 7, 26, 26):offset(up), 16, PAL_CREAM)
+        R.say_at(tool_names[k + 1], vec2(x, y + TOOL_SIZE + 12) + up, 15, PAL_CREAM, 0)
+        if R.tapped(r) and R.phase == PH_IDLE then R.select_tool(k) end
     end
     local guide = rect(387, y + 14, 63, 55)
-    gfx.image(R.board_art.guide, guide, color.WHITE)
-    R.say_at("GUIDE", vec2(419, y + TOOL_SIZE + 11), 12, PAL_WHITE, 0)
-    if R.tapped(guide) then R.overlay = R.OV_GUIDE end
+    local rise = R.intro and R.intro:arrive(.35, 3, .48) or 1
+    local up = vec2(0, (1 - rise) * 170)
+    gfx.image(R.board_art.guide, guide:offset(up), color.WHITE)
+    R.say_at("GUIDE", vec2(419, y + TOOL_SIZE + 11) + up, 12, PAL_WHITE, 0)
+    if R.phase == PH_IDLE and R.tapped(guide) then R.overlay = R.OV_GUIDE end
 end
+
+---------------------------------------------------------------------- input
 
 function R.board_screen(inp, dt)
     draw_backdrop()
-    R.draw_header(false)
-    draw_hud()
+    local intro = R.intro
+    local top = intro and intro:arrive(0, 2.8, .58) or 1
+    if top > 0 then
+        R.P.offset = vec2(0, (top - 1) * 110)   -- the pause button rides in with the card
+        R.draw_header(false)
+        R.P.offset = vec2(0, 0)
+    end
+    draw_hud(top)
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx)
     draw_relics(sx)
     draw_blockers(sx)
-    draw_tools(inp)
+    if intro then draw_sheen(sx) end
+    if top > 0 then draw_tools(inp) end
     if app.arg("art-states") then art.draw_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)

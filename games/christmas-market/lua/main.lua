@@ -69,19 +69,23 @@ function R.start_level(chosen)
     R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
     R.on_island = false
     R.overlay = R.OV_NONE
-    R.phase = R.PH_IDLE
+    R.phase, R.intro = R.PH_IDLE, nil
     R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
     R.idle_time = 0
     R.vfx_reset()
     -- Elena explains a level's twist once; repeat visits keep the header quiet.
     local lesson = rules.level_of(R.g).lesson
-    if not R.quiet then story.play(("level-%d"):format(R.g.level), {{"noelle", lesson}}) end
+    if not R.quiet then
+        story.play(("level-%d"):format(R.g.level), {{"noelle", lesson}})
+        R.present_board()
+    end
     return true
 end
 
 function R.play_level(level)
     if R.g and R.g.level==level and not R.g.won and not R.g.lost then
         R.on_island=false;R.overlay=R.OV_NONE
+        if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end
         return true
     end
     return R.start_level(level)
@@ -116,7 +120,15 @@ local function smoke()
     end
     smoke_wait = 3
     if story.active() then   -- tap through the dialogue
+        assert(R.phase ~= R.PH_PRESENT or R.intro.t == 0, "smoke: the board fills only after the dialogue")
         app.inject_click(vec2(240, 300))
+        return
+    end
+    -- The board's entrance takes no moves. A tap skips the first; the rest play out.
+    if R.phase == R.PH_PRESENT and R.overlay == R.OV_NONE and not R.on_island then
+        if not smoke_move.skipped and R.intro.t > 0 then
+            app.inject_click(R.cell_pos(rules.hex_center())); smoke_move.skipped = true
+        end
         return
     end
     if smoke_stage == -2 and R.overlay==R.OV_NONE then
@@ -443,10 +455,11 @@ local function debug_screens()
         R.tool, R.toast_time, R.on_island = 1, 0, false
         R.art_review = true
     end
+    if app.arg("present") then R.present_board() end
     a = app.arg("dialog")
     if a then   -- guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble
         R.toast_time = 0
-        if a == "intro" then story.play("intro", intro)
+        if a == "intro" then story.play("intro", intro); R.present_board()   -- no board behind the talk yet
         elseif a == "adrian" then island_with(WONDERS); R.on_island = true; story.play("finale", R.finale)
         elseif a == "mara" then island_with(3); R.on_island = true; story.add({"noelle", "More room for lights, stalls and winter wishes!", story.SHOUT})
         elseif a == "tomas" then island_with(2); R.on_island = true; story.say("noelle", R.wonders[2].about)
@@ -457,6 +470,14 @@ local function debug_screens()
         else
             R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED or R.OV_FINALE
             if R.overlay == R.OV_FINALE then island_with(WONDERS); R.on_island = true end
+        end
+    end
+    -- A debug screen may have replaced the board, or shown something else instead.
+    if R.intro then
+        if R.phase == R.PH_PRESENT and R.overlay == R.OV_NONE and not R.art_review then R.present_board()
+        else
+            R.intro = nil
+            if R.phase == R.PH_PRESENT then R.phase = R.PH_IDLE end
         end
     end
     if R.overlay ~= R.OV_NONE and not app.arg("reel") then R.modal_for, R.modal_clock = R.overlay, 1.6 end   -- stills show dialogs settled

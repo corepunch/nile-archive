@@ -9,7 +9,7 @@ unused_args = false
 read_globals = {
     -- modules
     "app", "input", "gfx", "texture", "camera", "fx", "font", "style", "text", "sfx", "ui", "save", "story", "city",
-    "sprite", "nav",
+    "sprite", "nav", "board_intro",
     -- value types
     "vec2", "size2", "rect", "color", "purse", "num", "ease",
     -- descriptors
@@ -27,3 +27,5 @@ files["tests/games"] = {read_globals = {"rules", "smoke", "shot", "frame", "reel
 files["tests/lua/injections.lua"] = {read_globals = {"check", "near", "testing"}, globals = {"print"}}
 
 files["tests/fixtures/trickling"] = {read_globals = {"testing"}} -- test-build presentation fixture
+
+files["engine/board_intro.lua"] = {globals = {"board_intro"}}

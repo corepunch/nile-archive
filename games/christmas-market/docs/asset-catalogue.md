@@ -75,3 +75,14 @@ boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters
 Portraits retain finite entrance/exit slides and fades. An independent colour
 tween brightens/dims active/listener states without replaying the slide. Size is
 constant for speaker/listener, with no scale/rotation animation or idle wobble. See [motion, captures and timing review](../../../docs/review/motion/README.md).
+
+## Board entrance
+
+After any dialogue the board presents itself on the engine's shared timeline
+(`engine/board_intro.lua`, see [the engine guide](../../../docs/ENGINE.md#board-entrance)):
+the goal card and tools land, Noelle springs up behind the card, cells ripple
+out, treats rain down their columns, ice and tinsel slam on and a sheen runs
+across. It moves existing artwork with transient glows and sparks, so it adds no
+new assets. A tap skips it and reduced motion makes it a short fade. Capture:
+`build/test/christmas-market board-intro` (`--level 4 --present --reel`), frames
+in `build/shots/frames/`.
