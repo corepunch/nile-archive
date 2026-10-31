@@ -231,8 +231,13 @@
     <field name="tex" type="ptr" ctype="struct render_texture *" doc="The renderer's texture (opaque)."/>
     <field name="w" type="float" c="size.w"/>
     <field name="h" type="float" c="size.h"/>
+    <field name="uv" type="rect" doc="Normalized atlas view bounds; zero means the whole backing texture."/>
+    <field name="additive" type="bool" doc="Additive blend for this image/view only; does not change the owning atlas."/>
+    <field name="borrowed" type="bool" doc="Atlas views borrow storage; freeing a view leaves its atlas alive."/>
   </struct>
   <module name="texture" type="texture">
+    <function name="region" c="tex_region" doc="Borrow a pixel rectangle of an atlas as a normal texture. Supports nested regions; invalid bounds return an empty texture. Keep the atlas alive while views are used."><arg name="atlas" type="texture"/><arg name="source" type="rect"/><returns type="texture"/></function>
+    <function name="match3_default" c="tex_match3_default" doc="Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web."><returns type="texture"/></function>
     <function name="load" c="tex_load" doc="PNG, JPG or BMP relative to the data root. A missing file gives a texture with tex = nil and size 0."><arg name="path" type="string"/><returns type="texture"/></function>
     <function name="from_pixels" c="tex_from_pixels" doc="From raw RGBA bytes, w * h * 4 of them."><arg name="rgba" type="bytes" minlen="w * h * 4"/><arg name="w" type="int"/><arg name="h" type="int"/><returns type="texture"/></function>
     <function name="free" c="tex_free"><arg name="t" type="texture"/></function>

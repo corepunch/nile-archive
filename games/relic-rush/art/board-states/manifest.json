@@ -562,6 +562,7 @@
     "data/fonts/lilitaone-OFL.txt",
     "data/island.jpg",
     "data/jungle.jpg",
+    "data/match3.png",
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/tile-sets/jewels/0.png",
@@ -758,6 +759,47 @@
         "cancel"
       ],
       "reproduction": "make buildings GAME=relic-rush"
+    }
+  },
+  "match3_atlas": {
+    "source": "art/match3-atlas.json",
+    "runtime": "data/match3.png",
+    "contract": "lua/match3_skin.lua",
+    "behavior": "engine/match3.lua",
+    "states": "all existing authored pieces, terrain, controls and HUD; packed without alpha changes",
+    "reproduction": "python3 tools/match3_atlas.py",
+    "review": "docs/review/trickling/README.md"
+  },
+  "piece_replacements": {
+    "sun-idol": {
+      "source": "art/tile-sets/source-flat-hex.png",
+      "prompt": "art/tile-sets/flat-hex.prompt.txt",
+      "crop": [
+        10,
+        50,
+        316,
+        289
+      ],
+      "runtime": "data/tile-sets/relics/0.png",
+      "orientation": "flat-top, six-sided; centre artwork stays upright",
+      "transform": "crop and fit to the renderer-authored cell mask aspect; 112px inner width",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "../../docs/review/resource-icons/README.md"
+    },
+    "yellow-hex": {
+      "source": "art/tile-sets/source-flat-hex.png",
+      "prompt": "art/tile-sets/flat-hex.prompt.txt",
+      "crop": [
+        12,
+        340,
+        315,
+        570
+      ],
+      "runtime": "data/tile-sets/jewels/0.png",
+      "orientation": "flat-top, six-sided; centre artwork stays upright",
+      "transform": "crop and fit to the renderer-authored cell mask aspect; 112px inner width",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "../../docs/review/resource-icons/README.md"
     }
   }
 }

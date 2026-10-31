@@ -436,10 +436,13 @@ static int l_input_new(lua_State *L)
 
 void api_push_texture(lua_State *L, texture v)
 {
-    lua_createtable(L, 0, 3);
+    lua_createtable(L, 0, 6);
     api_push_ptr(L, v.tex); lua_setfield(L, -2, "tex");
     lua_pushnumber(L, v.size.w); lua_setfield(L, -2, "w");
     lua_pushnumber(L, v.size.h); lua_setfield(L, -2, "h");
+    api_push_rect(L, v.uv); lua_setfield(L, -2, "uv");
+    lua_pushboolean(L, v.additive); lua_setfield(L, -2, "additive");
+    lua_pushboolean(L, v.borrowed); lua_setfield(L, -2, "borrowed");
     luaL_setmetatable(L, "engine.texture");
 }
 
@@ -458,6 +461,15 @@ texture api_get_texture(lua_State *L, int i)
     lua_getfield(L, i, "h");
     v.size.h = (float)lua_tonumber(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "uv");
+    v.uv = api_get_rect(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "additive");
+    v.additive = lua_toboolean(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "borrowed");
+    v.borrowed = lua_toboolean(L, -1);
+    lua_pop(L, 1);
     return v;
 }
 
@@ -467,6 +479,9 @@ void api_store_texture(lua_State *L, int i, texture v)
     api_push_ptr(L, v.tex); lua_setfield(L, i, "tex");
     lua_pushnumber(L, v.size.w); lua_setfield(L, i, "w");
     lua_pushnumber(L, v.size.h); lua_setfield(L, i, "h");
+    api_push_rect(L, v.uv); lua_setfield(L, i, "uv");
+    lua_pushboolean(L, v.additive); lua_setfield(L, i, "additive");
+    lua_pushboolean(L, v.borrowed); lua_setfield(L, i, "borrowed");
 }
 
 texture api_check_texture(lua_State *L, int i)
@@ -2642,6 +2657,24 @@ static int l_input_world(lua_State *L)
     return 1;
 }
 
+/* texture.region(atlas, source) */
+static int l_texture_region(lua_State *L)
+{
+    texture a_atlas = api_check_texture(L, 1);
+    rect a_source = api_check_rect(L, 2);
+    texture r = tex_region(a_atlas, a_source);
+    api_push_texture(L, r);
+    return 1;
+}
+
+/* texture.match3_default() */
+static int l_texture_match3_default(lua_State *L)
+{
+    texture r = tex_match3_default();
+    api_push_texture(L, r);
+    return 1;
+}
+
 /* texture.load(path) */
 static int l_texture_load(lua_State *L)
 {
@@ -4136,6 +4169,8 @@ static void open_input(lua_State *L)
 static void open_texture(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
+        {"region", l_texture_region},
+        {"match3_default", l_texture_match3_default},
         {"load", l_texture_load},
         {"from_pixels", l_texture_from_pixels},
         {"free", l_texture_free},

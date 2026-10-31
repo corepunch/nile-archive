@@ -38,11 +38,14 @@ where the ideas come from.
    what differs, in the spirit of the sokol headers.
 4. **Immediate mode.** Screens are functions that lay out, react and draw in
    one pass every frame. There is no retained widget tree to keep in sync.
-5. **Engine knows mechanics, games know content and rules.** The city module
+5. **Engine knows mechanics, games provide content, graphics and flags.** The city module
    knows how to place, sort, draw, pay for and collect from buildings; it does
    not know what "coins" or "influence" are. Resources are just slots in a
-   `purse`. Since the games moved to Lua this is a hard boundary: no game
-   logic is compiled into the engine, and the engine reaches a game only
+   `purse`. Since the games moved to Lua this is a hard boundary: no
+   story-specific logic is compiled into the engine. The shared match-3 module
+   owns board rules, input, gravity, timing and a neutral atlas; games choose
+   integer behavior flags and graphics overrides (see [MATCH3_ENGINE.md](MATCH3_ENGINE.md)).
+   The engine reaches a game only
    through the descriptor `main.lua` returns and the callbacks it registers.
 
 ## The screen model

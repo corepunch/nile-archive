@@ -235,7 +235,7 @@ pause, guide and the island.
 | SWAP | Existing piece artwork moves to neighbour |
 | REJECT | Same artwork returns; no move spent |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
-| FALL | Existing artwork follows gravity, eased position and landing squash/stretch |
+| FALL | Engine one-edge gravity steps prefer diagonals, wait for reachable side donors, then land with a short squash; only upstream inlets spawn |
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
 | Collection | Existing base-kind image flies to resource HUD with a trail |
@@ -407,3 +407,39 @@ placeholder board/control states remain from issue #11.
 with a transparent `city.path`. Building sprites, shadows and terrain assets
 keep their existing registrations. Reviewed 480×900 and 390×844 captures are
 in [the road removal comparison](review/no-auto-roads/README.md).
+
+## Engine match-3 atlas and trickling
+
+`data/match3.png`, registered by `lua/match3_skin.lua` and
+`art/match3-atlas.json`, contains all match-board backgrounds, pieces, special
+axes, blockers, selection/hint/guide frames, HUD icons and all five authored
+states of each tool and Pause. Relic Rush includes all three piece packs and
+both scenes. Existing source artwork and alpha are copied without modifying
+states. The 64px cubic radial light is the existing procedural transient
+effect, packed in the same atlas and drawn with a per-view additive flag.
+
+The engine's default resource skin is independent and embedded; both games
+normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
+registrations, and `make gen` embeds the default. FALL uses engine-owned
+simultaneous one-edge movement steps, diagonal priority, upstream inlets and
+a short landing squash; static states continue to use the existing artwork.
+Input and animation timing are shared.
+
+See [checked in-game captures and commands](review/trickling/README.md) and the
+[engine contract](../../../docs/MATCH3_ENGINE.md). The default atlas's source,
+prompt, all supported states and crop/rotation registration are catalogued in
+`engine/art/match3/manifest.json` at repository root.
+
+### Flat-top hex pieces; original gem set retained
+
+Relic Rush retains its original flame and the other original piece identities.
+Only the sun idol and yellow hex gem contours were reauthored to match the
+board's six-sided flat-top orientation; the sun face remains upright.
+`art/tile-sets/source-flat-hex.png` and `flat-hex.prompt.txt` preserve the whole
+set edit. `piece_replacements` in the state manifest records both crops and
+their spatial fit to the renderer-authored cell aspect. The other sixteen
+pieces, including the flame, match the original runtime pixels exactly.
+
+The clay brick belongs to the independent engine default atlas and is not used
+by this game's overrides. Reproduce with `python3 tools/match3_atlas.py` and
+`make gen`. Review [actual boards and guide](../../../docs/review/resource-icons/README.md).

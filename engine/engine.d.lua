@@ -46,6 +46,9 @@
 ---@field tex userdata The renderer's texture (opaque).
 ---@field w number
 ---@field h number
+---@field uv rect Normalized atlas view bounds; zero means the whole backing texture.
+---@field additive boolean Additive blend for this image/view only; does not change the owning atlas.
+---@field borrowed boolean Atlas views borrow storage; freeing a view leaves its atlas alive.
 
 ---@class camera A view rect on screen looking at a world of `world` size. Functions return a new camera: `cam = cam:input(in):clamp()`.
 ---@field center vec2 World point at the middle of the view.
@@ -782,6 +785,16 @@ function input.world() end
 ---@class texturelib
 ---@overload fun(t?: table): texture
 texture = {}
+
+---Borrow a pixel rectangle of an atlas as a normal texture. Supports nested regions; invalid bounds return an empty texture. Keep the atlas alive while views are used.
+---@param atlas texture
+---@param source rect
+---@return texture
+function texture.region(atlas, source) end
+
+---Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web.
+---@return texture
+function texture.match3_default() end
 
 ---PNG, JPG or BMP relative to the data root. A missing file gives a texture with tex = nil and size 0.
 ---@param path string

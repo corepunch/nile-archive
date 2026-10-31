@@ -4,6 +4,21 @@ A portrait mobile-first hex match-4 / island-restoration prototype, written in C
 
 Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Ten redesigned hex stages and ten buildings end in a restored sun temple. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
+## Shared match engine and atlas
+
+The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
+swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
+input/timing. This game provides campaign data, graphics and integer behavior
+flags. Empty cells prefer reachable upper diagonals; direct downward refill
+is the fallback. New pieces enter at upstream inlets instead of appearing
+beneath a hole that can receive a gem from the side.
+
+All board imagery uses one `data/match3.png` override atlas. The engine embeds
+a neutral resource atlas for games without an override; `--default-match3`
+previews it. `python3 tools/match3_atlas.py` reproduces both skins while
+preserving authored alpha and every control state. See the
+[review captures](docs/review/trickling/README.md).
+
 ## Screenshots
 
 Captured from the engine build with `make shots` (headless, software renderer). Island images use demonstration progress to show the settlement and placement tools.
@@ -41,7 +56,7 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 
 The widest nine-cell board now spans 448 of the 480 logical screen units (about 93%), with 16-unit side margins. Cells and their gems/state artwork are about 21% larger; the board remains centred between the goals and tools on both phone sizes. See the [before/after scale review](docs/review/larger-board/README.md).
 
-The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and separate refill segments. The gold idol now has a six-sided silhouette.
+The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
@@ -228,7 +243,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Verification
 
-- `make test` runs the original rule regressions, ported: grid invariants, four-of-a-kind and bent/diamond groups, rejection of triples, five/six special creation, holes and segmented gravity, chain and ice locks, fire thawing, tools, prism colour clears, ten distinct connected board masks, 1,000 opening boards (100 seeds × 10 levels) without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 300 greedy campaign trials — 298 wins, identical to the standalone build.
+- `make test` runs the original rule regressions, ported: grid invariants, four-of-a-kind and bent/diamond groups, rejection of triples, five/six special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, ten distinct connected board masks, 1,000 opening boards (100 seeds × 10 levels) without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 40 greedy campaign trials — 40 wins in the current shared-engine regression.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.

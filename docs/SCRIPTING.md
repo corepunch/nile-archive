@@ -9,7 +9,7 @@ written against is [LUA_API.md](LUA_API.md), generated from
 
 ## The split
 
-**The engine knows mechanics, the games know content and rules.** That was
+**The engine knows mechanics, the games provide content, graphics and behavior flags.** That was
 already the principle in C; moving the games to Lua makes it a hard boundary:
 
 | Engine (C, `engine/`) | Game (Lua, `games/<name>/lua/`) |
@@ -20,12 +20,13 @@ already the principle in C; moving the games to Lua makes it a hard boundary:
 | Save files (key=value, native and web) | What is saved and how it is migrated |
 | The city meta-game: placement, zones, fog, income, moving, drawing | The map, the buildings, the regions, what resources mean |
 | Characters and dialogue staging, speech bubbles | The cast, the lines, when a beat plays |
+| Match-3 board rules, input, cascades, gravity and a default resource atlas | Campaign data, an optional atlas override and integer behavior flags |
 | The tone synthesiser | When to play what |
 
-Relic Rush's match-4 rules, its island map, its effects and its dialogs are
-all Lua; the engine has no idea what a hex is. Nile Archive's hidden-object
-rules and chapters are Lua. Nothing game-specific remains in C: the two
-binaries differ only in the folder the launcher points at.
+Relic Rush and Christmas Market use the embedded [match-3 engine](MATCH3_ENGINE.md).
+Their Lua files contain campaign data, graphics and restoration economy; the
+engine owns matching and board interaction. Nile Archive's hidden-object
+chapters are game content. The game binaries select their script/data folder.
 
 ## A game
 

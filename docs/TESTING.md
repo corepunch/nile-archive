@@ -151,14 +151,13 @@ and confirm paths, all resource slots together, full cities, blocked terrain,
 region unlocks, the income boundary and injected hold/move/cancel input. Volcano
 checks all job costs, duplicate dispatch and blocked/paused/busy/unreachable work.
 
-The parallel shared-engine migration exposes `match3.new(config)`. Its direct
+The embedded shared-engine module exposes `match3.new(config)`. Its direct
 suite tests all 64 behavior-flag combinations, default match-3, configurable
 thresholds/colours, multiple radii and the same board contract. The engine manifest
-includes it automatically when `engine/match3.lua` is present. Until that change
-lands, test its source without copying it into this branch:
+includes it automatically when `engine/match3.lua` is present. Use its direct suite:
 
 ```sh
-make test-match3 MATCH3_LUA_DIR=/path/to/engine
+make test-match3
 ```
 
 The direct suite has also passed against a snapshot of the referenced engine

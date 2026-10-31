@@ -2,6 +2,7 @@
 rules("relic_board")
 rules("progression")
 rules("match_matrix")
+rules("trickling")
 rules("building_economy")
 default_frames = 3
 rules("christmas")
@@ -29,3 +30,15 @@ shot("hud-states", "480x900", "--hud-states")
 shot("specials-board", "480x900", "--art-board")
 shot("building-card", "480x900", "--card 2")
 for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
+
+-- Shared-engine atlas and refill captures: all runs share this test process.
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    for _, mode in ipairs{"vertical", "diagonal"} do
+        frame("trickling-christmas-market-"..mode.."-"..size, size,
+            "--lua tests/fixtures/trickling;games/christmas-market/lua;. --review-game christmas-market --review-gravity "..mode.." --fall-time .04"..safe)
+    end
+end
+frame("atlas-christmas-market-board", "480x900", "--level 7 --art-states")
+frame("atlas-christmas-market-hud", "480x900", "--level 7 --hud-states")
+frame("atlas-christmas-market-effects", "480x900", "--fx bomb --frames 8")

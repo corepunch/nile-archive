@@ -39,3 +39,26 @@ Actual game captures cover both portrait uses: [480×900 puzzle header](screensh
 - [Valid placement](screenshots/placement.jpg), [blocked placement](screenshots/blocked-placement.jpg), [shop](screenshots/shop.jpg), [building card](screenshots/building-card.jpg), and [reward](screenshots/reward.jpg).
 
 `art/manifest.json` records hashes for every runtime file. Update it with `python3 games/christmas-market/tools/check_assets.py --update` only alongside the corresponding catalogue/source changes. The full native build with `-Werror`, rule tests, Lua lint (59 files, zero warnings), inventory checks and real-input game smoke pass on macOS. Linux Xvfb, WebAssembly and iOS Simulator coverage run in CI.
+
+## Engine match-3 atlas and trickling
+
+`data/match3.png`, registered by `lua/match3_skin.lua` and
+`art/match3-atlas.json`, contains all match-board backgrounds, pieces, special
+axes, blockers, selection/hint/guide frames, HUD icons and all five authored
+states of each tool and Pause. The Christmas override additionally contains
+its board portrait; Relic Rush includes all three piece packs and both scenes.
+Existing source artwork and alpha are copied without modifying states. The
+64px cubic radial light is the existing procedural transient effect, packed
+in the same atlas and drawn with a per-view additive flag.
+
+The engine's default resource skin is independent and embedded; both games
+normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
+registrations, and `make gen` embeds the default. No new game icon designs were
+generated. FALL uses engine-authored simultaneous one-edge movement steps,
+diagonal priority, upstream inlets and a short landing squash; static states
+continue to use the existing artwork. Input and animation timing are shared.
+
+See [checked in-game captures and commands](review/trickling/README.md) and the
+[engine contract](../../../docs/MATCH3_ENGINE.md). The default atlas's source,
+prompt, all supported states and crop/rotation registration are catalogued in
+`engine/art/match3/manifest.json` at repository root.

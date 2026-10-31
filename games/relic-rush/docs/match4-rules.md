@@ -32,21 +32,23 @@ The old detector considered only straight runs. Visually connected bent/compact 
 
 ![All ten actual SDL boards](screenshots/level-shapes-overview.jpg)
 
-Each mask is a distinct connected graph within the common axial-coordinate envelope. Missing cells are excluded from rendering, matching, tile selection, swapping, booster targeting, obstacle placement and refill. Matching never crosses a gap. Gravity refills each contiguous column segment independently; it does not pull tiles across a hole or an immovable blocker. Directional special attacks may travel across gaps but only affect actual cells. The silhouette follows the active cells rather than a permanently painted large hexagonal frame.
+Each mask is a distinct connected graph within the common axial-coordinate envelope. Missing cells are excluded from rendering, matching, tile selection, swapping, booster targeting, obstacle placement and refill. Matching never crosses a gap. Gravity prefers the two upper diagonals, waiting for existing gems along empty side routes before taking a gem directly above. New gems enter only at upstream inlets. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Directional special attacks may travel across gaps but only affect actual cells. The silhouette follows the active cells rather than a permanently painted large hexagonal frame.
 
 ## Idol
 
 The gold idol is six-sided, like the board. Since the tile-set update the match pieces come from `art/tile-sets/source.png` (see [tile-sets.md](tile-sets.md)); the selected Relics pack keeps the hexagonal sun idol.
 
+See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [before/after trickling captures](review/trickling/README.md).
+
 ## Validation
 
 - 1,000 seeded startup boards across all ten masks: no pre-existing four-plus component and at least one legal opening move.
 - Hand-authored triples, bent fours in all six rotations, compact diamonds, five/six specials and hole-separated groups.
-- Mask connectivity/uniqueness, absence of tiles/blockers in holes, gravity segmented at holes and locks, and invalid targeting of missing cells.
+- Mask connectivity/uniqueness, absence of tiles/blockers in holes, diagonal priority, reachable-donor waiting, inlet refill and lock/void boundaries, and invalid targeting of missing cells.
 - Actual SDL update-loop regression: a three-cell group remains; adding its fourth cell triggers automatically without spending a move; after refill no ready group remains. A ready cascade discovered after falling also resolves automatically.
 - Dead-board update-loop regression across all ten masks, with zero tool charges: idle and post-fall recovery, preserved terrain/progress, playable-board hints, pause/island suspension, ready-group and result precedence. The reported level-seven photo's five-amphora swap is covered separately. See [before/after game captures](review/dead-board/README.md).
 - Scaled mouse/touch regressions and hole-selection checks.
-- 298/300 deterministic greedy campaign trials win without tools. This is a diagnostic, not a human difficulty rating or guarantee for every play strategy.
+- 40/40 deterministic greedy campaign trials in the current rule test win without tools. This is a diagnostic, not a human difficulty rating or guarantee for every play strategy.
 
 ## Reference research
 

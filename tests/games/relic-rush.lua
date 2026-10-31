@@ -1,5 +1,6 @@
 -- Relic Rush: every test, in one start of build/test/relic-rush. See docs/TESTING.md.
 rules("match_matrix")
+rules("trickling")
 rules("building_economy")
 rules("relic")
 rules("relic_board")
@@ -61,3 +62,26 @@ frame("ui-layers", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/d
 
 hold("relic-long-press", "480x900", "240,440", "--city 3 --look 760,1980")
 hold("relic-phone-long-press", "390x844", "240,440", "--city 3 --look 760,1980 --safe-area 0,47,0,34")
+
+-- Shared-engine atlas and refill captures: all runs share this test process.
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    for _, mode in ipairs{"vertical", "diagonal"} do
+        frame("trickling-relic-rush-"..mode.."-"..size, size,
+            "--lua tests/fixtures/trickling;games/relic-rush/lua;. --review-game relic-rush --review-gravity "..mode.." --fall-time .04"..safe)
+    end
+end
+frame("atlas-relic-rush-board", "480x900", "--level 7 --art-states")
+frame("atlas-relic-rush-hud", "480x900", "--level 7 --hud-states")
+frame("atlas-relic-rush-effects", "480x900", "--fx bomb --frames 8")
+
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    frame("resource-icons-default-"..size,size,"--default-match3 --level 7"..safe)
+    for _, pack in ipairs{"relics", "jewels", "resources"} do
+        frame("resource-icons-"..pack.."-"..size,size,"--level 7 --tiles "..pack..safe)
+    end
+end
+frame("resource-icons-guide","480x900","--level 7 --dialog guide")
+frame("resource-icons-default-board-states","480x900","--default-match3 --level 7 --art-states")
+frame("resource-icons-default-hud-states","480x900","--default-match3 --level 7 --hud-states")

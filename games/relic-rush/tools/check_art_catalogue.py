@@ -2,6 +2,7 @@
 import json
 import re
 import struct
+from PIL import Image
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,7 +15,7 @@ for field, key in [("tools", "tools"), ("states", "tool_states")]:
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
-special_line = re.search(r"M\.NORMAL[^\n]+", rules).group()
+special_line = re.search(r"M\.NORMAL[^\n]+", (ROOT.parent.parent / "engine/match3.lua").read_text()).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)
 assert specials == list(manifest["specials"]), "Rule specials need artwork and catalogue entries"
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
@@ -80,3 +81,25 @@ assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
 print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 board states, 7 HUD icons, 96 buildings covered")
+
+# Compare actual piece silhouettes with the renderer-authored cell. The sun
+# face remains upright: geometry is authored, not a runtime sprite rotation.
+mask = Image.open(ROOT / manifest['cell_mask']['runtime']).getchannel('A')
+def silhouette(alpha):
+    bounds = alpha.point(lambda value: 255 if value > 128 else 0).getbbox()
+    left, top, right, bottom = bounds
+    width, height = right - left, bottom - top
+    spans = []
+    for fraction in [.1, .25, .4, .5, .6, .75, .9]:
+        y = min(bottom - 1, top + round(height * fraction))
+        xs = [x for x in range(left, right) if alpha.getpixel((x, y)) > 128]
+        spans.append((max(xs) - min(xs) + 1) / width)
+    return width / height, spans
+board_ratio, board_spans = silhouette(mask)
+for pack in ['relics', 'jewels']:
+    image = Image.open(ROOT / f'data/tile-sets/{pack}/0.png').convert('RGBA')
+    ratio, spans = silhouette(image.getchannel('A'))
+    assert abs(ratio / board_ratio - 1) < .08, f'{pack}: hex must match board aspect'
+    assert all(abs(a - b) < .14 for a, b in zip(spans, board_spans)), f'{pack}: six-sided flat-top contour must match board'
+    assert spans[3] - spans[2] > .04 and spans[3] - spans[4] > .04, f'{pack}: side vertices must be points, not octagon edges'
+print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board mask')

@@ -12,12 +12,20 @@ A.hud_icons = {"complete"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
 
+-- Nil override uses the engine's neutral resource skin. A game skin supplies
+-- graphics only; behavior is the integer flags field in rules.lua.
+function A.skin()
+    local match3 = require("match3")
+    if app.arg("default-match3") then return match3.skin() end
+    return match3.skin(require("match3_skin"))
+end
+
 function A.load_hud()
     local textures = {}
-    for _, state in ipairs(A.states) do textures["pause-" .. state] = texture.load("expedition-hud/pause-" .. state .. ".png") end
-    for _, name in ipairs(A.hud_icons) do textures[name] = texture.load("expedition-hud/" .. name .. ".png") end
+    for _, state in ipairs(A.states) do textures["pause-" .. state] = A.skin()["pause-" .. state] end
+    for _, name in ipairs(A.hud_icons) do textures[name] = A.skin()[name] end
     textures.score = textures.complete
-    textures.elena = texture.load("characters/noelle.png")
+    textures.elena = A.skin().character
     return textures
 end
 
@@ -33,7 +41,7 @@ function A.draw_hud_catalogue(R)
     gfx.image(R.hud_art.complete,rect(148,414,66,66),color.WHITE)
     R.say_at("score",vec2(89,502),14,R.PAL_CREAM,90)
     R.say_at("complete",vec2(181,502),14,R.PAL_CREAM,90)
-    gfx.image(R.hud_art.elena,rect(258,398,174,268):fit(texture.size(R.hud_art.elena)),color.WHITE)
+    if R.hud_art.elena then gfx.image(R.hud_art.elena,rect(258,398,174,268):fit(texture.size(R.hud_art.elena)),color.WHITE) end
     R.say_at("Noelle, market keeper",vec2(240,683),17,R.PAL_CREAM,400)
 end
 
@@ -47,7 +55,7 @@ end
 
 function A.load()
     local textures = {}
-    local function load(name) textures[name] = texture.load("board-states/" .. name .. ".png") end
+    local function load(name) textures[name] = A.skin()[name] end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     load("cell-mask")
