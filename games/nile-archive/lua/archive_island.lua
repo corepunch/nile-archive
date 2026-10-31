@@ -102,7 +102,7 @@ local function draw_goal(c)
     local arrow = vec2(inner:max().x - 18, inner:center().y)
     gfx.poly({arrow + vec2(-6, -9), arrow + vec2(6, 0), arrow + vec2(-6, 9)}, INK_SOFT)
     if st.clicked then
-        if i and not ready then M.open_tray("story") else G.modal, G.modal_time = MODAL_CHAPTERS, 0 end
+        if i and not ready then M.open_tray("story") else G.open_modal(MODAL_CHAPTERS) end
     end
 end
 
@@ -317,7 +317,7 @@ function M.frame(screen, world)
 
     -- the left column: people and the next shore
     local x = area.x + 39
-    if K.round_button(vec2(x, area.y + 150), 32, K.icon_people, "Герои") then G.modal, G.modal_time = MODAL_CAST, 0 end
+    if K.round_button(vec2(x, area.y + 150), 32, K.icon_people, "Герои") then G.open_modal(MODAL_CAST) end
     local nxt = island:next_zone(G.wallet)
     if nxt >= 0 then
         local zone = island.zones[nxt + 1]
@@ -345,7 +345,7 @@ function M.frame(screen, world)
     draw_goal(vec2(screen:center().x, area:max().y))
     local play = vec2(area:max().x - 62, area:max().y - 66)
     G.spots.chapters = play
-    if K.round_button(play, 54, K.icon_glass, "Главы", true) then G.modal, G.modal_time = MODAL_CHAPTERS, 0 end
+    if K.round_button(play, 54, K.icon_glass, "Главы", true) then G.open_modal(MODAL_CHAPTERS) end
     local i, ready = progress.chapter_goal()
     if i and ready then K.notify_dot(play + vec2(40, -40)) end
 end

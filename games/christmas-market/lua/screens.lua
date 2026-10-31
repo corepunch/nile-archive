@@ -160,13 +160,75 @@ local function result_rects()
 end
 
 
+-- The open dialog's motion, on the engine's tween module: `entry` and `exit`
+-- run 0..1, and the parts of a dialog arrive on one timeline, so a tap can
+-- skip to its end and reduced motion (tween.instant) settles everything at once.
+local function new_dialog()
+    return {entry = 0, exit = 0, parts = {}, n = 0, tl = nil, fresh = true}
+end
+
+-- Start a dialog's entrance; `settled` opens it at rest (stills).
+function R.open_dialog(settled)
+    local old = R.dialog
+    if old then
+        tween.kill(old)
+        if old.tl then old.tl:kill() end
+    end
+    local d = new_dialog()
+    R.dialog = d
+    R.modal_closing = false
+    d.settled = settled
+    if settled then d.entry = 1 else tween.to(d, .28, {entry = 1}) end
+end
+
+-- Play the exit, then bank the reward.
+function R.close_dialog()
+    R.modal_closing = true
+    tween.to(R.dialog, .2, {exit = 1}):on_complete(function()
+        R.modal_closing = false
+        R.claim_reward()
+        R.modal_for = R.overlay
+    end)
+end
+
+-- Has the entrance, parts included, finished?
+function R.dialog_settled()
+    local d = R.dialog
+    return d ~= nil and d.entry >= 1 and (d.tl == nil or d.tl:is_done())
+end
+
+-- Jump the parts to their places, as the first tap on a result does.
+function R.dialog_skip()
+    local d = R.dialog
+    if d.tl and not d.tl:is_done() then d.tl:complete() end
+end
+
+-- A part of the dialog arriving `delay` seconds after it opened: `f` is its eased
+-- progress and `u` its linear one. Parts are keyed by draw order, like controls,
+-- and join the dialog's timeline the first time they are drawn.
+function R.dialog_part(delay, duration)
+    local d = R.dialog
+    d.n = d.n + 1
+    local part = d.parts[d.n]
+    if not part then
+        part = {f = 0, u = 0}
+        d.parts[d.n] = part
+        d.tl = d.tl or tween.timeline()
+        d.tl:to(part, duration, {f = 1}, delay)
+        d.tl:to(part, duration, {u = 1}, delay):ease("linear")
+        if d.settled then d.tl:complete() end
+    end
+    return part
+end
+
 -- Fade and lift a part of a dialog in after `delay`; returns the paint to restore.
 local function section(delay, duration, rise)
     local old = copy_paint()
-    local f = R.reduced_motion and 1 or ease.out_cubic((R.modal_clock - delay) / duration)
+    local part = R.dialog_part(delay, duration)
+    local f = part.f
     P.alpha = P.alpha * f
     P.offset = P.offset + vec2(0, rise * (1 - f) * P.scale)
-    return old
+    return old, part
 end
 
 local function result_screen()
@@ -183,9 +245,9 @@ local function result_screen()
     say(("WINTER WISH %d  -  COMPLETE"):format(R.g.level + 1), rect(l.header.x + 12, l.header.y + 48, l.header.w - 24, 15), 14, PAL_GOLD)
     for k = 0, breakdown.first and 2 or -1 do
         local slot = l.stars:col(3, k, 8)
-        s = section(.24 + k * .13, .32, 13)
-        local t = R.reduced_motion and 1 or num.saturate((R.modal_clock - .24 - k * .13) / .32)
-        local pop = 1 + math.sin(t * math.pi) * .14
+        local part
+        s, part = section(.24 + k * .13, .32, 13)
+        local pop = 1 + math.sin(part.u * math.pi) * .14
         R.vfx_halo(pp(slot:center()), 45 * P.scale, rgba(255, 201, 77, 65 * P.alpha))
         star_icon(slot:center(), (k == 1 and 29 or 24) * pop)
         set_paint(s)
@@ -193,7 +255,7 @@ local function result_screen()
     if not breakdown.first then say("GOLD FOR YOUR MARKET",l.stars,23,PAL_GOLD) end
     s = section(.43, .3, 9)
     say("PUZZLE SCORE", l.score_label, 12, PAL_CREAM)
-    local count = R.reduced_motion and 1 or ease.out_cubic((R.modal_clock - .43) / .65)
+    local count = R.dialog_part(.43, .65).f   -- the score counts up
     say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
     set_paint(s)
     s = section(.62, .25, 8)
@@ -232,8 +294,8 @@ local function result_screen()
     set_paint(s)
     s = section(1.12, .22, 8)
     if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
-        if not R.reduced_motion and R.modal_clock < 1.25 then R.modal_clock = 1.5   -- first tap fast-forwards
-        else R.modal_closing, R.modal_exit = true, 0 end
+        if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
+        else R.close_dialog() end
     end
     set_paint(s)
 end
@@ -411,24 +473,14 @@ local dialogs = {[R.OV_GUIDE] = guide_screen, [R.OV_PAUSE] = pause_screen, [R.OV
 function R.overlays(dt)
     if R.overlay ~= R.modal_for then   -- a new dialog starts its entrance
         R.modal_for = R.overlay
-        R.modal_clock, R.modal_exit = 0, 0
-        R.modal_closing = false
+        R.open_dialog()
     end
     if R.overlay == R.OV_NONE then return end
     if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
     if R.overlay == R.OV_EXPEDITIONS then R.draw_expeditions(dt); return end
-    R.modal_clock = R.modal_clock + dt
-    if R.modal_closing then
-        R.modal_exit = R.modal_exit + dt
-        if R.modal_exit >= .2 or R.reduced_motion then
-            R.modal_closing = false
-            R.claim_reward()
-            R.modal_for = R.overlay
-            return
-        end
-    end
-    local entry = R.reduced_motion and 1 or ease.out_cubic(R.modal_clock / .28)
-    local exit = R.modal_closing and ease.out_cubic(R.modal_exit / .2) or 0
+    local d = R.dialog
+    d.n = 0
+    local entry, exit = d.entry, d.exit
     ui.modal_layer(7 * entry * (1 - exit), rgba(5, 22, 22, 185 * entry * (1 - exit)))
     local scale = .96 + .04 * entry
     -- dialogs are laid out on the 900-tall design: centre them on a taller screen
@@ -439,7 +491,8 @@ function R.overlays(dt)
     local draw = dialogs[R.overlay]
     if draw then draw() end
     if R.overlay==before and R.modal_bounds and not R.modal_closing
-            and ui.modal_dismiss(R.modal_bounds,{fresh=R.modal_clock<=dt}) then R.overlay=R.OV_NONE end
+            and ui.modal_dismiss(R.modal_bounds,{fresh=d.fresh}) then R.overlay=R.OV_NONE end
+    d.fresh = false
     reset_paint()
     R.hit_dy = 0
 end

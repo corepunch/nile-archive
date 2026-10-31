@@ -123,6 +123,7 @@ local function frame(dt)
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
     R.layout()
+    tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
     if app.arg("smoke") then R.smoke() end
     R.debug_frame()
     R.now = R.now + dt

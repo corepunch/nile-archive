@@ -15,11 +15,11 @@ local WHITE, GOLD, GOLD_LO, GOLD_SEAM = K.WHITE, K.GOLD, K.GOLD_LO, K.GOLD_SEAM
 
 local M = {}
 
--- A framed box with a ribbon title, popping in over `t` seconds.
-local function popup(w, h, t, title)
+-- A framed box with a ribbon title, popping in as G.dialog arrives.
+local function popup(w, h, title)
     local s = app.screen()
     local box = rect.centered(s:center() + vec2(0, 14), size2(math.min(w, s.w - 40), math.min(h, s.h - 70)))
-    local k = G.reduced_motion and 1 or .9 + .1 * ease.out_back(num.saturate(t * 4))
+    local k = .9 + .1 * G.dialog.pop
     box = box:scale(k)
     local inner = K.frame(box, false, 24)
     K.ribbon(vec2(box:center().x, box.y + 2), math.min(420, box.w * .6), title)
@@ -30,15 +30,15 @@ local function close_button(box)
     if K.round_button(box:point(vec2(1, 0)) + vec2(-6, 6), 22, K.icon_close) then G.modal = MODAL_NONE end
 end
 
-local function win_dialog(t)
+local function win_dialog()
     local sc = scenes[G.scene]
     local res = G.result or {score = G.score, time = G.clock, stars = 1}
     local clue = #sc.clue > 1 and ("%s «%s»"):format(sc.clue[1][2], sc.clue[2][2]) or sc.clue[1][2]
     local clue_h = text.box_size(S.ink_body, 560 - 80, clue).h
     local payout = res.payout or economy.reward(G.wins[G.scene], G.stars[G.scene], res.stars, false)
-    local _, r = popup(640, 470 + clue_h, t, "Глава пройдена!")
+    local _, r = popup(640, 470 + clue_h, "Глава пройдена!")
     r:cut_top(44)
-    K.star_row(r:point(vec2(.5, 0)) + vec2(0, 34), 26, res.stars, not G.reduced_motion and t or nil)
+    K.star_row(r:point(vec2(.5, 0)) + vec2(0, 34), 26, res.stars, G.dialog.stars)
     r:cut_top(84)
     local stats = r:cut_top(56)
     local half = stats:col(2, 0, 0)
@@ -108,8 +108,8 @@ local function chapter_card(r, i)
 end
 
 local MOTION = "Меньше анимации"
-local function pause_dialog(t)
-    local _, r = popup(560, 282, t, "Пауза")
+local function pause_dialog()
+    local _, r = popup(560, 282, "Пауза")
     r:cut_top(44)
     text.box(S.body:sized(19), r:cut_top(40):inflate2(vec2(-30, 0)), vec2(.5, .5),
              ("%s · найдено %d из %d"):format(scenes[G.scene].title, scene.found_count(), ITEMS))
@@ -128,19 +128,19 @@ local function pause_dialog(t)
     if K.button(buttons:col(2, 1, 20), "Продолжить", "green") then G.modal = MODAL_NONE end
 end
 
-local function chapters_dialog(t)
+local function chapters_dialog()
     local w = math.min(1040, app.screen().w - 40)
     local card_w = (w - 10 - 44 - 40) / SCENES
     local card_h = (card_w - 26) * 2 / 3 + 8 + 10 + 30 + 36 + 108 + 74
-    local box, r = popup(1040, card_h + 10 + 28 + 40 + 6, t, "Главы архива")
+    local box, r = popup(1040, card_h + 10 + 28 + 40 + 6, "Главы архива")
     close_button(box)
     r = r:inflate2(vec2(-22, -14))
     r:cut_top(40)
     for i = 1, SCENES do chapter_card(r:col(SCENES, i - 1, 20), i) end
 end
 
-local function cast_dialog(t)
-    local box, r = popup(1000, 640, t, "Люди острова")
+local function cast_dialog()
+    local box, r = popup(1000, 640, "Люди острова")
     close_button(box)
     r = r:inflate2(vec2(-24, -16))
     r:cut_top(40)
@@ -160,9 +160,9 @@ end
 
 local dialogs = {[MODAL_WIN] = win_dialog, [MODAL_CHAPTERS] = chapters_dialog, [MODAL_PAUSE] = pause_dialog}
 
--- Draws the open dialog `t` seconds after it opened; the cast gallery otherwise.
-function M.draw(modal, t)
-    (dialogs[modal] or cast_dialog)(t)
+-- Draws the open dialog; the cast gallery otherwise.
+function M.draw(modal)
+    (dialogs[modal] or cast_dialog)()
 end
 
 return M

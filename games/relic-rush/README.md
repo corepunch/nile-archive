@@ -42,6 +42,8 @@ Text is aligned by its visible ink bounds (the engine's `text_in`), shared by bu
 
 ![Result UI and building card animation](docs/screenshots/ui-result-reel.gif)
 
+Dialogs arrive and leave on the engine's motion module ([docs/MOTION.md](../../docs/MOTION.md)): the card eases in and the parts of the result settle on one timeline, which the first tap skips.
+
 See [UI architecture, Playrix/Candy Crush references and regression checks](docs/ui-results-and-type.md).
 
 ## Effects and motion

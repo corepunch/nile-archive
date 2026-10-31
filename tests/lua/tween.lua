@@ -30,6 +30,12 @@ suite:case("the historic curves keep their values", function()
     near(ease.out_back(.5), 1 + c3 * (-.5) ^ 3 + c1 * .25, "out_back overshoots as before")
     near(ease.out_bounce(.5), 7.5625 * (.5 - 1.5 / 2.75) ^ 2 + .75, "out_bounce")
     near(ease.in_out_cubic(.25), ease.in_out(.25), "in_out_cubic is the same curve")
+    suite:check(ease.in_back(1) == 1 and ease.out_back(0) == 0 and ease.in_out_back(1) == 1, "back's ends are exact, not rounding noise")
+    local stars = {{s = 0}, {s = 0}}
+    tween.to(stars, .3, {s = 1}):ease("out_back"):stagger(.2)
+    tween.update(.1)
+    suite:check(stars[1].s > 0 and stars[2].s == 0, "a target waiting for its stagger sits exactly at its start")
+    testing.reset()
 end)
 
 suite:case("families derive out and in-out from in", function()

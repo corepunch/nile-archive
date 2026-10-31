@@ -20,6 +20,8 @@ shot("region", "480x900", "--city 3 --zone 1")
 shot("shop", "480x900", "--catalogue building")
 shot("winter-wishes", "480x900", "--expeditions")
 shot("reward", "480x900", "--victory")
+-- the result dialog arriving on the motion module: 16 pictures, 6 frames apart
+reel("christmas-market-reward-entrance", 16, 6, "480x900", "--victory --reel")
 shot("pause", "480x900", "--level 4 --dialog pause")
 shot("guide", "480x900", "--level 4 --dialog guide")
 shot("failed", "480x900", "--level 4 --dialog failed")

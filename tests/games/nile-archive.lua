@@ -1,6 +1,7 @@
 -- Nile Archive: every test, in one start of build/test/nile-archive. See docs/TESTING.md.
 rules("archive_rewards")
 rules("building_economy")
+rules("archive_motion")
 smoke()
 
 shot("island", "1200x900", "--screen island")
@@ -13,6 +14,8 @@ shot("build", "1200x900", "--screen build")
 shot("catalogue", "1200x900", "--screen build --catalogue wonder")
 shot("footprints", "1200x900", "--screen island --footprints")
 shot("reward", "1200x900", "--screen win --frames 60")
+-- the chapter-won popup arriving on the motion module: 16 pictures, 6 frames apart
+reel("nile-reward-entrance", 16, 6, "1200x900", "--screen win --reel")
 -- the engine's motion module (tests/fixtures/motion): 16 pictures, 6 frames apart, into docs/screenshots/motion-reel.gif
 reel("motion", 16, 6, "1200x900", "--lua tests/fixtures/motion")
 shot("widescreen", "1600x900", "--screen island")

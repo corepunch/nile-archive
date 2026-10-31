@@ -23,7 +23,7 @@ local R = require("match3").view{
     -- screens
     on_island = false,
     overlay = 0, modal_for = 0,   -- modal_for: the dialog whose entrance is playing
-    modal_clock = 0, modal_exit = 0,
+    dialog = nil,        -- the open dialog's motion (screens.lua: R.open_dialog)
     modal_closing = false,
     inspect = -1, inspect_item = -1, zone_card = -1,
     reduced_motion = false, sound = true, test_mode = false,

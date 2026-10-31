@@ -28,6 +28,14 @@ local function in_slots(i)
     return false
 end
 
+-- The item bar's motion, on the engine's tween module: a pill's name slides up
+-- as it arrives, is struck through when found, and the pill drops away.
+local function pill(k)
+    local p = G.pills[k]
+    if not p then p = {arrive = 1, leave = 0, strike = 0}; G.pills[k] = p end
+    return p
+end
+
 -- Fill empty slots (and slots whose item was found a moment ago) from the list.
 function M.refill_slots(now, linger)
     for k = 1, SLOTS do
@@ -36,10 +44,36 @@ function M.refill_slots(now, linger)
             G.slots[k] = nil
             for j = 1, ITEMS do
                 if not G.found[j] and not in_slots(j) then
-                    G.slots[k], G.slot_time[k] = j, now
+                    G.slots[k] = j
+                    local p = pill(k)
+                    tween.kill(p)
+                    p.arrive, p.leave, p.strike = 1, 0, 0
+                    tween.from(p, .25, {arrive = 0}):ease("out_back")
                     break
                 end
             end
+        end
+    end
+end
+
+-- The opening list is simply there; later refills slide in.
+function M.settle_slots()
+    for k = 1, SLOTS do
+        local p = pill(k)
+        tween.kill(p)
+        p.arrive, p.leave, p.strike = 1, 0, 0
+    end
+end
+
+-- A find: a ring grows on the item, its name is struck through, then its box
+-- leaves (and refill_slots replaces it once the strike and the drop are over).
+function M.show_found(i)
+    local mark = {r = 0}
+    G.marks[i] = mark
+    tween.to(mark, .33, {r = 1}):ease("out_back")
+    for k = 1, SLOTS do
+        if G.slots[k] == i then
+            tween.to(pill(k), .45, {strike = 1}):ease("linear"):after(.35, {leave = 1}):ease("linear")
         end
     end
 end
@@ -48,7 +82,7 @@ function M.open(i)
     G.scene = i
     G.found = {}
     G.hint, G.hint_ready = nil, 0
-    G.slots, G.slot_time = {}, {}
+    G.slots, G.pills, G.marks = {}, {}, {}
     G.score, G.combo, G.combo_left, G.clock, G.result = 0, 0, 0, 0, nil
     G.misses, G.hints = 0, 0
     G.island.selected = -1
@@ -56,7 +90,7 @@ function M.open(i)
     G.modal = MODAL_NONE
     G.cam = camera{center = vec2(600, 400), zoom = 0, world = size2(1200, 800), cover = true}
     M.refill_slots(app.time(), 0)
-    for k = 1, SLOTS do G.slot_time[k] = app.time() - 10 end   -- the opening list is simply there; refills slide in
+    M.settle_slots()
     fx.clear()
 end
 
@@ -92,6 +126,7 @@ local function tap(screen)
     for i = 1, ITEMS do
         if not G.found[i] and (p - sc.at[i]):ellipse(sc.radius[i]) <= 1 then
             G.found[i] = app.time()
+            M.show_found(i)
             if G.hint == i then G.hint = nil end
             G.combo = G.combo_left > 0 and math.min(G.combo + 1, COMBO_MAX) or 1
             G.combo_left = COMBO_WINDOW
@@ -108,8 +143,7 @@ local function tap(screen)
                 assert(economy.claim(G, G.scene, G.result), "completed scene must pay once")
                 story.play(("chapter-%d"):format(G.scene - 1), sc.clue)   -- the clue, the first time
                 progress.save()
-                G.modal = MODAL_WIN
-                G.modal_time = 0
+                G.open_modal(MODAL_WIN)   -- pops in once the clue has been read
             end
             return
         end
@@ -157,7 +191,7 @@ function M.frame(screen, world, dt)
     for i = 1, ITEMS do
         local p = G.cam:to_screen(sc.at[i])
         if G.found[i] then
-            local t = G.reduced_motion and 1 or ease.out_back(num.saturate((now - G.found[i]) * 3))
+            local t = G.marks[i] and G.marks[i].r or 1
             gfx.ring(p, 15 * t, 2.5, rgba(172, 239, 195, 230))
             gfx.ring(p, 21 * t, 1.5, rgba(172, 239, 195, 120))
         elseif G.hint == i then
@@ -184,11 +218,14 @@ function M.frame(screen, world, dt)
     gfx.circle(pp, 29, rgba(20, 16, 12, pause.hot and 150 or 110))
     gfx.ring(pp, 28, 3, rgba(255, 248, 230, 235))
     for k = -1, 1, 2 do gfx.round_rect(rect.centered(pp + vec2(k * 6.5, 0), size2(7, 22)), 2.5, rgba(255, 248, 230, 245)) end
-    if pause.clicked then G.modal, G.modal_time = MODAL_PAUSE, 0 end
+    if pause.clicked then G.open_modal(MODAL_PAUSE) end
 
     -- the bonus bar: it fills on each find and drains; the badge counts the chain
     local shown = G.combo >= 2 and 1 or 0
-    G.bonus_in = G.bonus_in + (shown - G.bonus_in) * math.min(1, dt * 10)
+    if shown ~= G.bonus_goal then   -- the bar slides in with a combo and out after it
+        G.bonus_goal = shown
+        tween.to(G, .3, {bonus_in = shown})
+    end
     if G.bonus_in > .02 then
         local a = G.bonus_in
         local bar = rect.anchor(vec2(screen:center().x - 30, area.y + 30), size2(330, 40), vec2(.5, .5))
@@ -235,21 +272,18 @@ function M.frame(screen, world, dt)
         local slot = row:col(SLOTS, k - 1, 14)
         local i = G.slots[k]
         if i then
-            local arrive = G.reduced_motion and 1 or ease.out_back(num.saturate((now - (G.slot_time[k] or 0)) * 4))
-            local leave = G.found[i] and num.saturate((now - G.found[i] - .45) / .35) or 0
+            local p = pill(k)
+            local arrive, leave = p.arrive, p.leave
             local a = num.saturate(arrive) * (1 - leave)
-            local pill = G.reduced_motion and slot or slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
+            local box = slot:offset(vec2(0, (1 - arrive) * 30 + leave * 24))
             local hinted = G.hint == i and not G.found[i]
-            gfx.round_rect(pill:inflate(2.5), pill.h * .5 + 2.5, (hinted and hex(0xFFE08A) or hex(0xE2BC6E)):alpha(a))
+            gfx.round_rect(box:inflate(2.5), box.h * .5 + 2.5, (hinted and hex(0xFFE08A) or hex(0xE2BC6E)):alpha(a))
             local fill = hinted and rgba(176, 118, 36, 215) or rgba(48, 28, 12, 168)
-            gfx.round_rect(pill, pill.h * .5, fill:alpha(a))
-            gfx.round_rect(rect(pill.x + pill.h * .4, pill.y + 3, pill.w - pill.h * .8, pill.h * .3), pill.h * .15, rgba(255, 236, 200, 16 * a))
-            local ink = text.fit(S.pill_text:faded(1 - a), pill:inflate2(vec2(-pill.h * .5, -8)), vec2(.5, .54), sc.names[i])
-            if G.found[i] then
-                local t = num.saturate((now - G.found[i]) / .45)
-                gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(t, .55)), 3, rgba(150, 235, 140, 240 * a))
-            end
-            ui.block(pill)
+            gfx.round_rect(box, box.h * .5, fill:alpha(a))
+            gfx.round_rect(rect(box.x + box.h * .4, box.y + 3, box.w - box.h * .8, box.h * .3), box.h * .15, rgba(255, 236, 200, 16 * a))
+            local ink = text.fit(S.pill_text:faded(1 - a), box:inflate2(vec2(-box.h * .5, -8)), vec2(.5, .54), sc.names[i])
+            if G.found[i] then gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(p.strike, .55)), 3, rgba(150, 235, 140, 240 * a)) end
+            ui.block(box)
         end
     end
 end

@@ -184,6 +184,38 @@ tween.count()  tween.kill_all()
 first update and callbacks still fire, so a settings toggle for reduced motion
 needs no second code path.
 
+## In the games
+
+- **Christmas Market and Relic Rush** (`screens.lua`): a dialog's entrance and
+  exit are two tweens on `R.dialog` (`entry`, `exit`), started by `R.open_dialog()`
+  and `R.close_dialog()`. The parts of the result screen (stars, score, rewards,
+  buttons) join one timeline through `R.dialog_part(delay, duration)`, keyed by
+  draw order like controls; the first tap calls `R.dialog_skip()`, which completes
+  the timeline, and the smoke runs wait on `R.dialog_settled()`. `R.open_dialog(true)`
+  opens a dialog at rest, for stills.
+- **Nile Archive**: `G.open_modal(kind)` builds a paused timeline for a popup's
+  pop (`out_back`), its backdrop and the staggered stars; `main.lua` plays it once
+  any dialogue is over. In a scene, each name pill's arrival, strike-through and
+  drop, the ring on a found item and the combo bar are tweens on records in
+  `G.pills`, `G.marks` and `G` (`archive_scene.lua`).
+- **The engine's modal stack** (`ui.modals`): a layer's backdrop fade is a tween
+  on the layer.
+- **Reduced motion**: each game calls `tween.instant(R.reduced_motion)` every
+  frame, so every tween settles on its next update and no code path checks the
+  flag for itself.
+
+![Christmas Market's result dialog arriving](../games/christmas-market/docs/screenshots/reward-entrance-reel.gif)
+![Nile Archive's chapter-won popup arriving](../games/nile-archive/docs/screenshots/reward-entrance-reel.gif)
+
+### What stays on its own clock
+
+The match board's entrance (`engine/board_intro.lua`) is a small simulation
+rather than a set of lerps: gravity falls, damped springs and a sweep computed
+per cell from one clock, with callbacks at the landing times, and its tests
+drive that clock (`intro:update(dt)`, `intro.t`). As tweens it would be one
+custom-eased tween per cell per effect, so it keeps its clock. The particle
+pools in `vfx.lua` and the continuous hint pulse are likewise not tweens.
+
 ## Writing juice with it
 
 - **Arrivals**: `tween.from(panel, .25, {y = panel.y + 40, alpha = 0}):ease("out_cubic")`.

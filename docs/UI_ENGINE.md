@@ -303,6 +303,8 @@ if action and action.id == "accept" then
 elseif action and action.kind == "cancel" then modals:close(action.modal) end
 ```
 
+Each layer's backdrop fades in over 0.2 s on the engine's tween module
+([MOTION.md](MOTION.md)); `reduced_motion` shows it at once.
 `open(id,form,model,options)` pushes model values and a layer. Options include
 `bounds`, `width`, `height`, `blur`, `dim`, `close_on_background` (default true), and a `cancel` command ID (default
 `cancel`). Automatic bounds centre the measured form within the logical screen.
