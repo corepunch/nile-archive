@@ -50,7 +50,7 @@ games/
   clayfight/      native game rules/resources + Lua scheduling + data/ + capture tools
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
 tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.py, make_reels.py, artkit.py
-docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), LINEAGE.md
+docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), MOTION.md, LINEAGE.md
 web/               shell.html: a bare fullscreen canvas for the web preview
 ```
 
@@ -108,6 +108,8 @@ end
 ```
 
 The [shared UI engine](docs/UI_ENGINE.md) adds declarative forms, reusable skins, typed model bindings, keyboard focus and nested modal layers with GPU Gaussian blur. Relic Rush’s pause and building dialogs use these resources.
+
+The [motion module](docs/MOTION.md) gives every game tweens, timelines, staggers, punch and shake over a full easing catalogue, modelled on GSAP, flux, DOTween and Godot's Tween: `tween.to(card, .3, {y = 0}):ease("out_back")`, and the engine does the rest.
 
 Styled text is a value you tweak per call:
 

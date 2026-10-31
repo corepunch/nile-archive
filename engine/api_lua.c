@@ -1741,51 +1741,6 @@ static int l_num_approach(lua_State *L)
     return 1;
 }
 
-/* ease.out_cubic(t) */
-static int l_ease_out_cubic(lua_State *L)
-{
-    float a_t = (float)luaL_checknumber(L, 1);
-    float r = ease_out_cubic(a_t);
-    lua_pushnumber(L, r);
-    return 1;
-}
-
-/* ease.in_cubic(t) */
-static int l_ease_in_cubic(lua_State *L)
-{
-    float a_t = (float)luaL_checknumber(L, 1);
-    float r = ease_in_cubic(a_t);
-    lua_pushnumber(L, r);
-    return 1;
-}
-
-/* ease.in_out(t) */
-static int l_ease_in_out(lua_State *L)
-{
-    float a_t = (float)luaL_checknumber(L, 1);
-    float r = ease_in_out(a_t);
-    lua_pushnumber(L, r);
-    return 1;
-}
-
-/* ease.out_back(t) */
-static int l_ease_out_back(lua_State *L)
-{
-    float a_t = (float)luaL_checknumber(L, 1);
-    float r = ease_out_back(a_t);
-    lua_pushnumber(L, r);
-    return 1;
-}
-
-/* ease.out_bounce(t) */
-static int l_ease_out_bounce(lua_State *L)
-{
-    float a_t = (float)luaL_checknumber(L, 1);
-    float r = ease_out_bounce(a_t);
-    lua_pushnumber(L, r);
-    return 1;
-}
-
 /* vec2.splat(s) */
 static int l_vec2_splat(lua_State *L)
 {
@@ -3947,20 +3902,6 @@ static void open_num(lua_State *L)
     lua_setglobal(L, "num");
 }
 
-static void open_ease(lua_State *L)
-{
-    static const luaL_Reg funcs[] = {
-        {"out_cubic", l_ease_out_cubic},
-        {"in_cubic", l_ease_in_cubic},
-        {"in_out", l_ease_in_out},
-        {"out_back", l_ease_out_back},
-        {"out_bounce", l_ease_out_bounce},
-        {NULL, NULL}
-    };
-    luaL_newlib(L, funcs);
-    lua_setglobal(L, "ease");
-}
-
 static void open_vec2(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
@@ -4517,7 +4458,6 @@ void api_open(lua_State *L)
     lua_newtable(L); lua_newtable(L); lua_pushcfunction(L, l_city_event_new); lua_setfield(L, -2, "__call"); lua_setmetatable(L, -2);
     lua_setglobal(L, "city_event");
     open_num(L);
-    open_ease(L);
     open_vec2(L);
     open_size2(L);
     open_rect(L);

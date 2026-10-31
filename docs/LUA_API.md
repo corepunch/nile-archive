@@ -9,7 +9,6 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 ## Modules
 
 - [`num`](#num) - Scalar helpers the engine uses everywhere; `math` has the rest.
-- [`ease`](#ease) - Easing curves, t in [0, 1].
 - [`vec2`](#vec2) - Constructor `vec2(x, y)`; operators + - * (by a number or component-wise) and unary minus; every function is also a method.
 - [`size2`](#size2) - Constructor `size2(w, h)`.
 - [`rect`](#rect) - Constructor `rect(x, y, w, h)`. Layout is RectCut: `rect.cut_top(r, 66)` slices 66 units off the top of r (changing r) and returns the slice.
@@ -104,52 +103,6 @@ Frame-rate independent exponential approach of cur towards target.
 | `target` | `number` |  |
 | `rate` | `number` |  |
 | `dt` | `number` |  |
-
-**Returns:** `number`
-
-## ease
-
-Easing curves, t in [0, 1].
-
-### `ease.out_cubic(t)`
-
-| Argument | Type | |
-|---|---|---|
-| `t` | `number` |  |
-
-**Returns:** `number`
-
-### `ease.in_cubic(t)`
-
-| Argument | Type | |
-|---|---|---|
-| `t` | `number` |  |
-
-**Returns:** `number`
-
-### `ease.in_out(t)`
-
-| Argument | Type | |
-|---|---|---|
-| `t` | `number` |  |
-
-**Returns:** `number`
-
-### `ease.out_back(t)`
-
-Overshoots a little before settling.
-
-| Argument | Type | |
-|---|---|---|
-| `t` | `number` |  |
-
-**Returns:** `number`
-
-### `ease.out_bounce(t)`
-
-| Argument | Type | |
-|---|---|---|
-| `t` | `number` |  |
 
 **Returns:** `number`
 
@@ -2650,3 +2603,7 @@ What a city update or confirm did.
 ## Shared Lua forms
 
 The embedded UI framework extends ui with ui.form(template) and ui.modals(skin). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).
+
+## Motion: ease and tween
+
+The embedded motion module (engine/tween.lua) defines the easing catalogue `ease` and the tween, timeline, stagger, punch and shake API `tween`. See [Motion](MOTION.md).

@@ -11,11 +11,12 @@ read_globals = {
     "app", "input", "gfx", "texture", "camera", "fx", "font", "style", "text", "sfx", "ui", "save", "story", "city",
     "sprite", "nav", "board_intro",
     -- value types
-    "vec2", "size2", "rect", "color", "purse", "num", "ease",
+    "vec2", "size2", "rect", "color", "purse", "num", "ease", "tween",
     -- descriptors
     "story_style", "ui_theme", "building", "building_def", "character", "city_event", "city_zone", "nav_blocker",
     "sprite_frame", "story_line", "ui_state",
 }
+files["engine/tween.lua"] = {globals = {"ease", "tween"}}         -- defines the easing catalogue and the tween module
 files["engine/ui_forms.lua"] = {globals = {"ui"}}            -- defines ui.form, ui.modals and ui.modal_dismiss
 files["engine/ui_skin.lua"] = {globals = {"ui"}}             -- defines ui.skin
 files["games/clayfight/lua"] = {read_globals = {"clay"}}     -- Clayfight's host extension

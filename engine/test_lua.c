@@ -32,7 +32,15 @@ static int l_test_input(lua_State *S)
     app_test_input(api_get_input(S, 1));
     return 0;
 }
-static int l_test_reset(lua_State *S) { app_test_reset(); return 0; }
+static int l_test_reset(lua_State *S)
+{
+    app_test_reset();
+    lua_getglobal(S, "tween");
+    lua_getfield(S, -1, "reset");
+    lua_call(S, 0, 0);
+    lua_pop(S, 1);
+    return 0;
+}
 
 static void test_lua_open(lua_State *S)
 {

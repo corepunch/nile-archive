@@ -255,30 +255,6 @@ function num.smoothstep(a, b, v) end
 ---@return number
 function num.approach(cur, target, rate, dt) end
 
----@class easelib
-ease = {}
-
----@param t number
----@return number
-function ease.out_cubic(t) end
-
----@param t number
----@return number
-function ease.in_cubic(t) end
-
----@param t number
----@return number
-function ease.in_out(t) end
-
----Overshoots a little before settling.
----@param t number
----@return number
-function ease.out_back(t) end
-
----@param t number
----@return number
-function ease.out_bounce(t) end
-
 ---@class vec2lib
 ---@overload fun(x?: number, y?: number): vec2
 ---@overload fun(t?: table): vec2
@@ -1638,6 +1614,223 @@ function ui_modal_stack:draw(dt, options) end
 ---@param opts {look: fun(at: vec2), wallet: fun(): number, cancel: fun(), confirm: fun(), offset: vec2?}
 ---@return fun(): boolean
 function city.move_test(c, opts) end
+---Easing curves, t in [0, 1] (engine/tween.lua): in_, out_ and in_out_ of sine, quad, cubic, quart, quint, expo, circ, back, elastic and bounce, plus linear, none, steps and the historic in_out; see docs/MOTION.md
+---@class easelib
+---@field linear fun(t: number): number
+---@field none fun(t: number): number
+---@field in_out fun(t: number): number
+---@field out_cubic fun(t: number): number
+---@field in_cubic fun(t: number): number
+---@field in_out_cubic fun(t: number): number
+---@field out_back fun(t: number, overshoot: number?): number
+---@field in_back fun(t: number, overshoot: number?): number
+---@field in_out_back fun(t: number, overshoot: number?): number
+---@field out_elastic fun(t: number, amplitude: number?, period: number?): number
+---@field in_elastic fun(t: number, amplitude: number?, period: number?): number
+---@field in_out_elastic fun(t: number, amplitude: number?, period: number?): number
+---@field out_bounce fun(t: number): number
+---@field in_bounce fun(t: number): number
+---@field in_out_bounce fun(t: number): number
+---@field [string] fun(t: number, a: number?, b: number?): number
+ease = {}
+---n equal steps, holding each value until the next
+---@param t number
+---@param n integer?
+---@return number
+function ease.steps(t, n) end
+---A curve by name or function; nil is the default, out_cubic
+---@param spec string|fun(t: number, a: number?, b: number?): number|nil
+---@return fun(t: number, a: number?, b: number?): number
+function ease.get(spec) end
+---A tween, timeline, interval or callback with a playhead (engine/tween.lua); see docs/MOTION.md
+---@class tween_clip
+local tween_clip = {}
+---@param s number
+---@return self
+function tween_clip:delay(s) end
+---@param n integer -1 forever
+---@param mode ("restart"|"yoyo"|"incremental")?
+---@return self
+function tween_clip:loops(n, mode) end
+---@param s number?
+---@return self|number
+function tween_clip:time_scale(s) end
+---@param fn fun(clip: tween_clip)?
+---@return self
+function tween_clip:on_start(fn) end
+---@param fn fun(clip: tween_clip)?
+---@return self
+function tween_clip:on_update(fn) end
+---@param fn fun(clip: tween_clip)?
+---@return self
+function tween_clip:on_complete(fn) end
+---@param fn fun(clip: tween_clip, iteration: integer)?
+---@return self
+function tween_clip:on_loop(fn) end
+---@param fn fun(clip: tween_clip)?
+---@return self
+function tween_clip:on_reverse_complete(fn) end
+---@param opts table?
+---@return self
+function tween_clip:configure(opts) end
+---@return self
+function tween_clip:pause() end
+---@return self
+function tween_clip:resume() end
+---@return self
+function tween_clip:play() end
+---@return self
+function tween_clip:reverse() end
+---@return self
+function tween_clip:restart() end
+---@param t number
+---@return self
+function tween_clip:seek(t) end
+---@param p number?
+---@return self|number
+function tween_clip:progress(p) end
+---@return self
+function tween_clip:complete() end
+---@return self
+function tween_clip:kill() end
+---@return self
+function tween_clip:stop() end
+---@return boolean
+function tween_clip:is_active() end
+---@return boolean
+function tween_clip:is_done() end
+---@return number
+function tween_clip:total() end
+---A tween of fields on one target or a list of targets
+---@class tween_tween: tween_clip
+local tween_tween = {}
+---@param spec string|fun(t: number, a: number?, b: number?): number|nil
+---@param a number?
+---@param b number?
+---@return self
+function tween_tween:ease(spec, a, b) end
+---@param vars table
+---@return self
+function tween_tween:from(vars) end
+---@param flag boolean?
+---@return self
+function tween_tween:relative(flag) end
+---@param opts number|{each: number?, amount: number?, from: (string|integer)?, ease: (string|function)?}
+---@return self
+function tween_tween:stagger(opts) end
+---@param target table|table[]|number
+---@param dur number|table
+---@param vars table?
+---@return tween_tween
+function tween_tween:after(target, dur, vars) end
+---A timeline: children at positions (number, "+=x", "-=x", "<", ">", "label", "label+=x")
+---@class tween_timeline: tween_clip
+---@field defaults table?
+local tween_timeline = {}
+---@return tween_tween
+function tween_timeline:to(target, dur, vars, pos) end
+---@return tween_tween
+function tween_timeline:from(target, dur, vars, pos) end
+---@return tween_tween
+function tween_timeline:set(target, vars, pos) end
+---@return tween_tween
+function tween_timeline:punch(target, dur, vars, opts, pos) end
+---@return tween_tween
+function tween_timeline:shake(target, dur, vars, opts, pos) end
+---@param clip tween_tween|tween_timeline
+---@return tween_tween|tween_timeline
+function tween_timeline:add(clip, pos) end
+---@param fn fun(clip: tween_clip)
+---@return self
+function tween_timeline:call(fn, pos) end
+---@param dur number
+---@return self
+function tween_timeline:wait(dur) end
+---@param name string
+---@return self
+function tween_timeline:label(name, pos) end
+---A group ticks its own clips with update(dt); `tween` is the default group, ticked by the engine
+---@class tween_group
+---@field instant boolean
+local tween_group = {}
+---@param dt number?
+function tween_group:update(dt) end
+---@return tween_tween
+function tween_group:to(target, dur, vars, opts) end
+---@return tween_tween
+function tween_group:from(target, dur, vars, opts) end
+---@return tween_tween
+function tween_group:set(target, vars) end
+---@return tween_tween
+function tween_group:value(from, to, dur, fn, opts) end
+---@param opts table?
+---@return tween_timeline
+function tween_group:timeline(opts) end
+---@param opts {vibrato: number?, elasticity: number?}?
+---@return tween_tween
+function tween_group:punch(target, dur, vars, opts) end
+---@param opts {vibrato: number?, randomness: number?, fade_out: boolean?}?
+---@return tween_tween
+function tween_group:shake(target, dur, vars, opts) end
+---@return tween_tween[]
+function tween_group:of(target) end
+---@return boolean
+function tween_group:is_tweening(target) end
+---@return self
+function tween_group:kill(target, ...) end
+---@return self
+function tween_group:kill_all() end
+---@return integer
+function tween_group:count() end
+---@return self
+function tween_group:pause() end
+---@return self
+function tween_group:play() end
+---@param s number?
+---@return self|number
+function tween_group:time_scale(s) end
+---@param flag boolean?
+---@return self
+function tween_group:set_instant(flag) end
+---The motion module (engine/tween.lua): the default group's functions, plus group(), instant() and reset(); see docs/MOTION.md
+---@class tweenlib
+tween = {}
+---@param dt number?
+function tween.update(dt) end
+---@return tween_tween
+function tween.to(target, dur, vars, opts) end
+---@return tween_tween
+function tween.from(target, dur, vars, opts) end
+---@return tween_tween
+function tween.set(target, vars) end
+---@return tween_tween
+function tween.value(from, to, dur, fn, opts) end
+---@param opts table?
+---@return tween_timeline
+function tween.timeline(opts) end
+---@return tween_tween
+function tween.punch(target, dur, vars, opts) end
+---@return tween_tween
+function tween.shake(target, dur, vars, opts) end
+---@return tween_tween[]
+function tween.of(target) end
+---@return boolean
+function tween.is_tweening(target) end
+function tween.kill(target, ...) end
+function tween.kill_all() end
+---@return integer
+function tween.count() end
+function tween.pause() end
+function tween.play() end
+---@param s number?
+---@return number?
+function tween.time_scale(s) end
+---@return tween_group
+function tween.group() end
+---@param flag boolean?
+---@return boolean?
+function tween.instant(flag) end
+function tween.reset() end
 
 ---A match board's entrance as pure functions of one clock (engine/board_intro.lua): the HUD lands, cells ripple out, pieces rain down, blockers slam, a sheen runs across
 ---@class board_intro

@@ -78,14 +78,6 @@
     </function>
   </module>
 
-  <module name="ease" doc="Easing curves, t in [0, 1].">
-    <function name="out_cubic" c="ease_out_cubic"><arg name="t" type="float"/><returns type="float"/></function>
-    <function name="in_cubic" c="ease_in_cubic"><arg name="t" type="float"/><returns type="float"/></function>
-    <function name="in_out" c="ease_in_out"><arg name="t" type="float"/><returns type="float"/></function>
-    <function name="out_back" c="ease_out_back" doc="Overshoots a little before settling."><arg name="t" type="float"/><returns type="float"/></function>
-    <function name="out_bounce" c="ease_out_bounce"><arg name="t" type="float"/><returns type="float"/></function>
-  </module>
-
   <module name="vec2" type="vec2" doc="Constructor `vec2(x, y)`; operators + - * (by a number or component-wise) and unary minus; every function is also a method.">
     <function name="splat" c="v2s" doc="(s, s)."><arg name="s" type="float"/><returns type="vec2"/></function>
     <function name="add" c="vec2_add" op="__add"><arg name="a" type="vec2"/><arg name="b" type="vec2"/><returns type="vec2"/></function>

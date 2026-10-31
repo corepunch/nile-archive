@@ -151,8 +151,9 @@ and greedy campaign simulation alongside the added coverage.
 
 Under `#ifdef ENGINE_TEST`, the private `testing` table provides
 `testing.reset()`, `testing.advance(seconds)` and `testing.input{...}`. Reset
-clears frame time, input and engine UI/story/effect/city state and selects a fixed
-wall-clock epoch. Advance changes frame/wall clocks and `app.dt()` instantly;
+clears frame time, input, engine UI/story/effect/city state and every tween
+(`tween.reset()`), and selects a fixed wall-clock epoch. Tweens advance only
+through `tween.update(dt)`, since no frame runs. Advance changes frame/wall clocks and `app.dt()` instantly;
 tests explicitly call updates. Input reaches the real `input.get()` without a
 window. Negative and nonfinite durations are rejected. Real game runs switch
 back to their normal clock. `testing.game` identifies the manifest's suite and

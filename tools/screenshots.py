@@ -42,6 +42,9 @@ def main():
             im.thumbnail((1200, 1000))
             im.save(ROOT / f'docs/screenshots/ui-{mode}.jpg', quality=86)
         subprocess.run([sys.executable, str(ROOT / 'tools/make_reels.py'), str(frames), str(ROOT / 'games/relic-rush/docs/screenshots')], check=True)
+        motion = [Image.open(frames / f'motion-{i}.png').convert('RGB').resize((600, 450), Image.Resampling.LANCZOS) for i in range(16)]
+        motion = [im.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for im in motion]
+        motion[0].save(ROOT / 'docs/screenshots/motion-reel.gif', save_all=True, append_images=motion[1:], duration=100, loop=0, optimize=True)
     print('documentation images written')
 
 
