@@ -147,12 +147,12 @@ local function building_review(page)
     c.count = 0
     c.open = 15
     local first = content.RESTORATIONS + (page - 1) * REVIEW_PAGE
-    local span = 0   -- the widest footprint on the page, in tile half widths
+    local span = 0   -- the widest footprint on the page, in tiles
     for kind = first, math.min(first + REVIEW_PAGE, #G.buildings) - 1 do
         local d = G.buildings[kind + 1]
         span = math.max(span, d.size.w + d.size.h + 2)
     end
-    local step = span * content.TILE.w + 30
+    local step = span * content.TILE * .71 + 30
     local centre = vec2(1190, 680)
     for k = 1, REVIEW_PAGE do
         local kind = first + k - 1

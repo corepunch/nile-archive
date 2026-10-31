@@ -108,7 +108,6 @@
     <function name="rotate" c="vec2_rotate"><arg name="a" type="vec2"/><arg name="angle" type="float"/><returns type="vec2"/></function>
     <function name="approach" c="vec2_approach" doc="Exponential approach of cur towards target."><arg name="cur" type="vec2"/><arg name="target" type="vec2"/><arg name="rate" type="float"/><arg name="dt" type="float"/><returns type="vec2"/></function>
     <function name="ellipse" c="vec2_ellipse" doc="Squared length of a in units of the ellipse radii r: at most 1 means inside."><arg name="a" type="vec2"/><arg name="r" type="vec2"/><returns type="float"/></function>
-    <function name="iso" c="iso2" doc="Isometric projection of a ground point (x, y) with height z to a screen offset."><arg name="x" type="float"/><arg name="y" type="float"/><arg name="z" type="float"/><arg name="tile" type="size2"/><returns type="vec2"/></function>
   </module>
 
   <module name="size2" type="size2" doc="Constructor `size2(w, h)`.">
@@ -477,9 +476,10 @@
     <field name="about" type="string"/>
     <field name="sprite_path" type="string"/>
     <field name="sprite" type="texture" doc="Loaded by city:init from sprite_path."/>
-    <field name="shadow_path" type="string" doc="Optional separate ground-shadow image; same pixel scale as sprite, with its own crop and pivot."/>
+    <field name="shadow_path" type="string" doc="Optional separate ground-shadow image; with its own crop and pivot."/>
     <field name="shadow" type="texture" doc="Loaded by city:init from shadow_path; drawn beneath all buildings and stays grounded during lift animations."/>
     <field name="shadow_pivot" type="vec2" doc="Ground centre in shadow-image pixels; zero defaults to the sprite pivot for matching canvases."/>
+    <field name="shadow_base_width" type="float" doc="Footprint's width in shadow-image pixels, so a low-resolution layer stays registered; zero uses the sprite's pixel scale."/>
     <field name="size" type="size2" doc="Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing."/>
     <field name="pivot" type="vec2" doc="Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre."/>
     <field name="base_width" type="float" doc="Sprite pixels from the footprint's left corner to its right one; sets the drawing scale."/>
@@ -515,7 +515,7 @@
     <field name="zone_count" type="int"/>
     <field name="open" type="uint" access="rw" doc="Bit per opened zone (bit 0 = zone 0, which starts open)."/>
     <field name="spacing" type="float" access="rw" doc="Minimum distance between buildings without footprints."/>
-    <field name="tile" type="size2" access="rw" doc="Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles."/>
+    <field name="tile" type="float" access="rw" doc="A tile's side on the ground in world units; defaults to 45. Set it before init: building sizes are in tiles, projected by the engine's city camera."/>
     <field name="clearance" type="size2" access="rw" doc="Tiles added to every sized footprint (w, h), so bases keep apart: size2(1, 1) leaves half a tile of ground on each side. Sprites keep their size."/>
     <field name="buildable" type="callback" tramp="lcity_buildable" decl="bool lcity_buildable(const struct city *c, vec2 world)" doc="function(c, world) -> bool: terrain test."/>
     <field name="zone_at" type="callback" tramp="lcity_zone_at" decl="int lcity_zone_at(const struct city *c, vec2 world)" doc="function(c, world) -> zone (0-based) or -1; default: zone rects."/>
@@ -549,7 +549,7 @@
     <function name="building_at" c="city_building_at"><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
     <function name="ready" c="city_ready" doc="Whether building index has income to collect."><arg name="c" type="city"/><arg name="index" type="int"/><arg name="now" type="double"/><returns type="bool"/></function>
     <function name="sprite_rect" c="city_sprite_rect" doc="World rect of a building's sprite."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
-    <function name="shadow_rect" c="city_shadow_rect" doc="World rect of the separately cropped ground shadow, at the sprite pixel scale."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
+    <function name="shadow_rect" c="city_shadow_rect" doc="World rect of the separately cropped ground shadow, registered to the same ground point."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
     <function name="zone_at" c="city_zone_at" lua="zone_of" doc="The zone containing a world point, or -1."><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
     <function name="zone_open" c="city_zone_open"><arg name="c" type="city"/><arg name="zone" type="int"/><returns type="bool"/></function>
     <function name="open_count" c="city_open_count"><arg name="c" type="city"/><returns type="int"/></function>

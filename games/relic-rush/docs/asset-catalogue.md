@@ -248,35 +248,22 @@ for burning, charging, cracked gems or tool upgrades.
 
 ## Remaining runtime asset families
 
-The current [96-entry catalogue](building-catalogue.md), including the dry
-Sunstone courtyard, remains the sprite source. The earlier full-atlas
-[ImageGen paint-over](../art/isometric-paintover/README.md) is preserved as
-source history. Its nine matching Blender shadow passes are spatially resized
-and registered to the current measured base widths by `tools/building_assets.py`.
-The retired bridge's shadow is excluded. See [registration](BUILDINGS.md) and
-[review captures](review/painted-buildings/README.md).
-The wider projection audit remains tracked in
-[issue #15](https://github.com/corepunch/nile-archive/issues/15).
-
-The [2:1 building-art trial](../art/isometric-trial/README.md) contains two
-review-only full-atlas generations, exact geometry references, saved prompts,
-edge measurements and inspected before/trial game captures. It is not runtime
-artwork: projection and authored pivot registration still fail acceptance and
-are tracked in [issue #15](https://github.com/corepunch/nile-archive/issues/15).
-No runtime inventory or interaction-state mapping changed in this experiment.
-
-The [Blender projection study](../art/isometric-blender/README.md) preserves
-editable geometry, its procedural source, a measured 2:1 camera report and two
-reviewed render previews for all ten buildings. The runtime adopts its `w`/`h`
-footprints. Its `game` column records earlier sizes for provenance.
+The current [96-entry catalogue](building-catalogue.md), including the dry Sunstone
+courtyard, is rendered directly from its Blender master with the shared
+[city camera](../../../docs/BUILDINGS.md#the-camera). The earlier
+[ImageGen paint-over](../art/isometric-paintover/README.md), the
+[2:1 building-art trial](../art/isometric-trial/README.md) and the
+[Blender projection study](../art/isometric-blender/README.md) are preserved as source
+history; all of them use the old 2:1 view, and none is runtime artwork. Painted detail is
+the known gap recorded in the [building catalogue](building-catalogue.md#known-gap-no-paint-over) and [tracked here](https://github.com/corepunch/nile-archive/issues/41).
 
 These families plus the board assets above cover every file in `data/`;
 `runtime_inventory` is checked against disk by `make test`.
 
 | Runtime files | Source / ownership | Supported states |
 | --- | --- | --- |
-| `data/buildings/0..9.png` | Current `art/building-catalogue/manifest.json`; `tools/prepare_buildings.py` | Authored restored sprite; valid placement reuses it, blocked placement uses the existing engine red ghost, held placement lifts it; cards/rewards use it alone |
-| `data/building-shadows/{0,1,2,3,5,6,7,8,9}.png` | Original Blender master; `art/isometric-paintover/render_shadows.py` and persistent `shadows/0..9.png`; same importer | Separate grounded shadow for restored/valid/blocked/held states; own crop/pivot and shared pixel scale; all shadows below all buildings; omitted in cards/rewards |
+| `data/buildings/<key>.png` | Blender master; `make buildings GAME=relic-rush` | Authored restored sprite; valid placement reuses it, blocked placement uses the existing engine red ghost, held placement lifts it; cards/rewards use it alone |
+| `data/building-shadows/<key>.png` | Blender master; `make buildings GAME=relic-rush` | Separate grounded shadow for restored/valid/blocked/held states; own crop/pivot and shared pixel scale; all shadows below all buildings; omitted in cards/rewards |
 | `data/characters/{elena,mara,tomas,adrian}.png` | `art/art-direction/expedition-cast.png`; prepare_assets.py | One authored bust each; engine supplies speech/thought/shout bubbles |
 | `data/{island,jungle,scene-lagoon,scene-temple}.jpg` | Corresponding paintings in `art/` | Island, fallback jungle, levels 1–5 lagoon, levels 6–10 temple |
 | `data/board-states/cell-mask.png` | Actual `gfx.ngon` capture in `art/board-states/cell-mask.png` | Shared flat-top slot silhouette; clip mask, not an icon/state |

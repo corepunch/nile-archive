@@ -1119,7 +1119,7 @@ static int l_story_style_new(lua_State *L)
 
 void api_push_building_def(lua_State *L, building_def v)
 {
-    lua_createtable(L, 0, 16);
+    lua_createtable(L, 0, 17);
     lua_pushstring(L, v.name); lua_setfield(L, -2, "name");
     lua_pushstring(L, v.about); lua_setfield(L, -2, "about");
     lua_pushstring(L, v.sprite_path); lua_setfield(L, -2, "sprite_path");
@@ -1127,6 +1127,7 @@ void api_push_building_def(lua_State *L, building_def v)
     lua_pushstring(L, v.shadow_path); lua_setfield(L, -2, "shadow_path");
     api_push_texture(L, v.shadow); lua_setfield(L, -2, "shadow");
     api_push_vec2(L, v.shadow_pivot); lua_setfield(L, -2, "shadow_pivot");
+    lua_pushnumber(L, v.shadow_base_width); lua_setfield(L, -2, "shadow_base_width");
     api_push_size2(L, v.size); lua_setfield(L, -2, "size");
     api_push_vec2(L, v.pivot); lua_setfield(L, -2, "pivot");
     lua_pushnumber(L, v.base_width); lua_setfield(L, -2, "base_width");
@@ -1165,6 +1166,9 @@ building_def api_get_building_def(lua_State *L, int i)
     lua_pop(L, 1);
     lua_getfield(L, i, "shadow_pivot");
     v.shadow_pivot = api_get_vec2(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "shadow_base_width");
+    v.shadow_base_width = (float)lua_tonumber(L, -1);
     lua_pop(L, 1);
     lua_getfield(L, i, "size");
     v.size = api_get_size2(L, -1);
@@ -1206,6 +1210,7 @@ void api_store_building_def(lua_State *L, int i, building_def v)
     lua_pushstring(L, v.shadow_path); lua_setfield(L, i, "shadow_path");
     api_push_texture(L, v.shadow); lua_setfield(L, i, "shadow");
     api_push_vec2(L, v.shadow_pivot); lua_setfield(L, i, "shadow_pivot");
+    lua_pushnumber(L, v.shadow_base_width); lua_setfield(L, i, "shadow_base_width");
     api_push_size2(L, v.size); lua_setfield(L, i, "size");
     api_push_vec2(L, v.pivot); lua_setfield(L, i, "pivot");
     lua_pushnumber(L, v.base_width); lua_setfield(L, i, "base_width");
@@ -1557,7 +1562,7 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "zone_count")) { lua_pushinteger(L, p->zone_count); return 1; }
     if (!strcmp(k, "open")) { lua_pushinteger(L, (lua_Integer)p->open); return 1; }
     if (!strcmp(k, "spacing")) { lua_pushnumber(L, p->spacing); return 1; }
-    if (!strcmp(k, "tile")) { api_push_size2(L, p->tile); return 1; }
+    if (!strcmp(k, "tile")) { lua_pushnumber(L, p->tile); return 1; }
     if (!strcmp(k, "clearance")) { api_push_size2(L, p->clearance); return 1; }
     if (!strcmp(k, "buildable")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "buildable"); return 1; }
     if (!strcmp(k, "zone_at")) { lua_getiuservalue(L, 1, 1); lua_getfield(L, -1, "zone_at"); return 1; }
@@ -1613,7 +1618,7 @@ static int l_city_newindex(lua_State *L)
     }
     if (!strcmp(k, "open")) { p->open = (unsigned)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "spacing")) { p->spacing = (float)lua_tonumber(L, 3); return 0; }
-    if (!strcmp(k, "tile")) { p->tile = api_get_size2(L, 3); return 0; }
+    if (!strcmp(k, "tile")) { p->tile = (float)lua_tonumber(L, 3); return 0; }
     if (!strcmp(k, "clearance")) { p->clearance = api_get_size2(L, 3); return 0; }
     if (!strcmp(k, "buildable")) {
         if (!lua_isnoneornil(L, 3)) luaL_checktype(L, 3, LUA_TFUNCTION);
@@ -1969,18 +1974,6 @@ static int l_vec2_ellipse(lua_State *L)
     vec2 a_r = api_check_vec2(L, 2);
     float r = vec2_ellipse(a_a, a_r);
     lua_pushnumber(L, r);
-    return 1;
-}
-
-/* vec2.iso(x, y, z, tile) */
-static int l_vec2_iso(lua_State *L)
-{
-    float a_x = (float)luaL_checknumber(L, 1);
-    float a_y = (float)luaL_checknumber(L, 2);
-    float a_z = (float)luaL_checknumber(L, 3);
-    size2 a_tile = api_check_size2(L, 4);
-    vec2 r = iso2(a_x, a_y, a_z, a_tile);
-    api_push_vec2(L, r);
     return 1;
 }
 
@@ -3957,7 +3950,6 @@ static void open_vec2(lua_State *L)
         {"rotate", l_vec2_rotate},
         {"approach", l_vec2_approach},
         {"ellipse", l_vec2_ellipse},
-        {"iso", l_vec2_iso},
         {NULL, NULL}
     };
     luaL_newlib(L, funcs);

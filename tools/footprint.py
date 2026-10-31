@@ -3,17 +3,26 @@
 
     python3 tools/footprint.py sprite.png [--bottom X,Y] [--left X] [--right X] [--overlay out.png]
 
-An isometric base's lower edge is a V with slopes of +-1/2 (2:1 tiles). With no
-hints the script fits that V to the lowest opaque pixel of every column; plants
-or props hanging below the base can fool it, so read the corners off the sprite
-and pass them instead: --bottom is the base's front corner, --left and --right
-the x of its side corners. It prints the pivot (the footprint's ground centre),
-base_width and the front-left : front-right ratio to round to whole tiles, and
-can draw the measured base over the sprite. Check the result in the game with
---footprints (see docs/BUILDINGS.md).
+Rendered buildings carry exact registration; this is for art drawn by hand. A
+base's lower edge is a V whose two slopes come from the city camera (see
+tools/city_camera.py). With no hints the script fits that V to the lowest opaque
+pixel of every column; plants or props hanging below the base can fool it, so
+read the corners off the sprite and pass them instead: --bottom is the base's
+front corner, --left and --right the x of its side corners. It prints the pivot
+(the footprint's ground centre), base_width and the w : h ratio to round to whole
+tiles, and can draw the measured base over the sprite. Check the result in the
+game with --footprints (see docs/BUILDINGS.md).
 """
 import argparse
 from PIL import Image, ImageDraw
+from city_camera import U, V
+
+LEFT_SLOPE, RIGHT_SLOPE = U[1] / U[0], V[1] / -V[0]
+
+
+def drop(x, xb):
+    """How far above the front corner the base's edge is at column x."""
+    return (xb - x) * LEFT_SLOPE if x < xb else (x - xb) * RIGHT_SLOPE
 
 
 def fit(alpha, w, h):
@@ -24,11 +33,11 @@ def fit(alpha, w, h):
     best = None
     for xb in range(w):
         for yb in range(int(h * .6), h):
-            score = sum(1 for x in range(w) if low[x] is not None and abs(low[x] - (yb - abs(x - xb) / 2)) <= 3)
+            score = sum(1 for x in range(w) if low[x] is not None and abs(low[x] - (yb - drop(x, xb))) <= 3)
             if best is None or score > best[0]:
                 best = (score, xb, yb)
     _, xb, yb = best
-    on = [x for x in range(w) if low[x] is not None and abs(low[x] - (yb - abs(x - xb) / 2)) <= 4]
+    on = [x for x in range(w) if low[x] is not None and abs(low[x] - (yb - drop(x, xb))) <= 4]
     return (xb, yb), min(on), max(on)
 
 
@@ -49,13 +58,13 @@ def main():
     xl = a.left if a.left is not None else xl
     xr = a.right if a.right is not None else xr
 
-    left, right = (xl, yb - (xb - xl) / 2), (xr, yb - (xr - xb) / 2)
+    left, right = (xl, yb - drop(xl, xb)), (xr, yb - drop(xr, xb))
     pivot = ((left[0] + right[0]) / 2, (left[1] + right[1]) / 2)
     print(f'{a.sprite}: {w}x{h} px')
     print(f'  front corner ({xb:g}, {yb:g}), left corner {left}, right corner {right}')
     print(f'  pivot = vec2({pivot[0]:.0f}, {pivot[1]:.0f}), base_width = {xr - xl:.0f}')
-    print(f'  front-left : front-right = {xb - xl:.0f} : {xr - xb:.0f} = {(xb - xl) / max(1, xr - xb):.2f}'
-          ' (size w : h, in whole tiles)')
+    ratio = ((xb - xl) / U[0]) / max(1, (xr - xb) / -V[0])
+    print(f'  size w : h = {ratio:.2f} (round to whole tiles)')
 
     if a.overlay:
         out = im.copy()

@@ -5,7 +5,7 @@
 Every pull request that can change what a player sees must include screenshots in its description. That covers UI, layout, art, text, dialogue, effects and engine drawing code. Add them whenever it is possible at all. When it isn't, for example a pure build or test change, say so in one line.
 
 - **Show the changed screens.** Include every screen the change touches, with before and after shots side by side when something existing changed.
-- **Cover the sizes the change affects.** Nile Archive and Volcano are iPad landscape (1200×900, 1368×1026). Relic Rush is a 480×900 phone portrait. Add a 16:9 or a 390×844 shot when the layout adapts to it.
+- **Cover the sizes the change affects.** Nile Archive and Volcano are iPad landscape (1200×900, 1368×1026). Relic Rush and Christmas Market are 480×900 phone portraits. Add a 16:9 or a 390×844 shot when the layout adapts to it.
 - **Capture the game itself.** Every game renders headlessly with the software renderer:
 
   ```sh
@@ -26,15 +26,33 @@ Every pull request that can change what a player sees must include screenshots i
   A table puts before and after next to each other.
 - **Check them first.** Look at every screenshot before posting it. A half-typed line, an empty frame or a missing texture is a bug to fix, not a picture to post.
 
+## The city camera: never 2:1
+
+Every city game sees its ground through one camera. **It is orthographic, turned 30° from the tile axes (yaw) and looking down at 40° (elevation).** It is not 2:1 isometric and tiles are not symmetric diamonds: one tile side runs 73.5 right and 27.3 down for every 42.4 left and 47.2 down of the other, at 85 px per tile side (slopes of 0.371 and 1.114). World Z shrinks by 0.766. Getting this wrong puts every building beside its footprint.
+
+- **There is one definition.** `CITY_CAMERA_YAW` and `CITY_CAMERA_ELEVATION` in `engine/engine.h` set the engine's projection, and `tools/city_camera.py` reads those two lines for all art tools. Never write the angles or slopes anywhere else in code. `make test` fails when a game's rendered art doesn't match them.
+- **Model for it.** In Blender, X is tile u (the front-left side, `size.w`) and Y is -v (the front-right side, `size.h`). The camera sees faces towards **-Y** best and towards **+X** second, so a building's main facade, door and steps go on -Y.
+- **Sprites come from Blender, not paint.** A painting or paint-over is locked to the angle it was drawn from and can't be turned, so a building needs a model before it has art.
+- **Re-render by name.** A building's Blender collection name is its key and its file name.
+
+  ```sh
+  make buildings GAME=relic-rush                 # every building in the game
+  make buildings GAME=relic-rush KEYS="lodge well"
+  make buildings GAME=relic-rush REBUILD=1       # after editing build_scene.py
+  ```
+
+  Look at the review sheet it writes, `games/<game>/docs/screenshots/buildings.jpg`, then at the game.
+- **Changing the camera means re-rendering every game.** Change the two defines, run `make buildings` for each game, and reshoot.
+
 ## City buildings: tiles, size and pivot
 
-Buildings stand on an isometric grid of whole tiles. [docs/BUILDINGS.md](docs/BUILDINGS.md) is the spec. Read it before you add or change a building, its sprite, `city.tile` or the placement code.
+Buildings stand on a grid of whole tiles. [docs/BUILDINGS.md](docs/BUILDINGS.md) is the spec. Read it before you add or change a building, its sprite, `city.tile` or the placement code.
 
 - **Give every building three measurements.** These are `size`, its footprint in whole tiles (`size2(2, 2)`, `size2(3, 2)`, …), `pivot`, the sprite pixel of the footprint's ground centre, and `base_width`, the base's width in sprite pixels from its left corner to its right one. Don't size a building with `height`, and don't sink or nudge the sprite to fit. Wrong numbers put the building beside its footprint, which is the bug this spec exists to prevent.
-- **Measure, don't guess.** Run `python3 tools/footprint.py <sprite> --overlay out.png` and look at the overlay. Pass `--bottom`, `--left` and `--right` when plants or props fool the automatic fit. Round the side ratio it prints to whole tiles.
-- **Check in the game.** Render the island with `--footprints` (Relic Rush `--showcase --footprints`, Nile Archive `--screen island --footprints`) and look at it. Every diamond must sit on its building's base, with the pivot dot at the base's centre. Post that shot in the pull request whenever building specs change.
-- **Make Blender building art by the guide.** [docs/BUILDING_ART.md](docs/BUILDING_ART.md) covers catalogue rows (append only: the row order is save data), modelling on the grid, the fixed-scale render, import, checks and the review gallery.
-- **Keep one tile per game.** `city.tile` is set before `c:init`, and changing it changes every building's drawn size. When you change it, re-check all the game's buildings.
+- **Let the pipeline measure.** `tools/buildings.py` writes exact registration for every render into `lua/building_sprites.lua`; never edit that file. Only art not rendered from the master needs `python3 tools/footprint.py <sprite> --overlay out.png`, which knows the camera's slopes.
+- **Make Blender building art by the guide.** [docs/BUILDING_ART.md](docs/BUILDING_ART.md) covers catalogue rows (append only: the row order is save data), modelling on the grid, rendering by name, checks and the review gallery.
+- **Check in the game.** Render the island with `--footprints` (Relic Rush and Christmas Market `--showcase --footprints`, Nile Archive `--screen island --footprints`) and look at it. Every parallelogram must sit on its building's base, with the pivot dot at the base's centre. Post that shot in the pull request whenever building specs change.
+- **Keep one tile per game.** `city.tile`, a tile's side in world units, is set before `c:init`, and changing it changes every building's drawn size. When you change it, re-check all the game's buildings.
 - **Space buildings with `city.clearance`, not `size`.** `size` is the base the art shows. To keep buildings further apart, raise `city.clearance`, which adds tiles around every base. Don't inflate `size` for that: it scales the sprite up.
 - **Snap with the type.** Pass the building type to `city_snap` / `c:snap(p, type)` so the footprint lands on whole tiles. Points you hand-place on the island (seed buildings, showcase spots) should go through it too.
 

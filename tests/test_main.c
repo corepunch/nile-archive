@@ -198,10 +198,20 @@ static void test_city(void)
     CHECK(!city_unlock(&c, 1, &wallet) && city_next_zone(&c, wallet) == -1);
     CHECK(city_can_place(&c, v2(700, 300), 0, -1));
 
+    /* the ground is seen by the city camera: yaw 30, elevation 40 */
+#define T(u, v) city_tile_to_world(&c, v2(u, v))
+    NEAR(T(1, 0).x, 45 * .8660254f); NEAR(T(1, 0).y, 45 * .5f * .6427876f);
+    NEAR(T(0, 1).x, 45 * -.5f); NEAR(T(0, 1).y, 45 * .8660254f * .6427876f);
+    vec2 round_trip = city_world_to_tile(&c, T(3.25f, -2));
+    NEAR(round_trip.x, 3.25f); NEAR(round_trip.y, -2);
+
     /* a sprite is scaled so its base spans the footprint's tiles and stands on its pivot */
-    NEAR(defs[3].height, 300);   /* 300 px * (2 + 3) tiles * 32 / 160 px */
+    float span = city_base_span(&c, defs[3].size), k = span / 160;
+    NEAR(span, 45 * (2 * .8660254f + 3 * .5f));
+    NEAR(defs[3].height, 300 * k);
     rect tower = city_sprite_rect(&c, (building){v2(500, 500), 3, 0});
-    NEAR(tower.pos.x, 400); NEAR(tower.pos.y, 250); NEAR(tower.size.w, 200);
+    NEAR(tower.pos.x, 500 - 100 * k); NEAR(tower.pos.y, 500 - 250 * k); NEAR(tower.size.w, 200 * k);
+    defs[3].height = 300;
     /* A separately cropped shadow shares the sprite's pixel scale, not its
      * dimensions or crop origin. Its empty margins never enlarge the sprite. */
     defs[3].shadow.size = sz2(400, 180);
@@ -213,62 +223,73 @@ static void test_city(void)
     shadow = city_shadow_rect(&c, (building){v2(500, 500), 3, 0});
     NEAR(shadow.pos.x, 415); NEAR(shadow.pos.y, 460); NEAR(shadow.size.w, 200);
     NEAR(city_sprite_rect(&c, (building){v2(500, 500), 3, 0}).size.w, 100);
-    defs[3].height = 300;
-    vec2 odd = city_snap(&c, v2(10, 7), 3);   /* 2 x 3: centred on a tile edge one way, a tile centre the other */
-    NEAR(odd.x, 16); NEAR(odd.y, 8);   /* tile (0.5, 0) */
+    defs[3].height = 300 * k;
+    defs[3].shadow_base_width = 40;   /* a low-resolution layer measures its own footprint */
+    shadow = city_shadow_rect(&c, (building){v2(500, 500), 3, 0});
+    NEAR(shadow.size.w, 400 * span / 40); NEAR(shadow.pos.x, 500 - 170 * span / 40);
+    defs[3].shadow_base_width = 0;
+    vec2 odd = city_snap(&c, T(.4f, .1f), 3);   /* 2 x 3: centred on a tile edge one way, a tile centre the other */
+    NEAR(odd.x, T(.5f, 0).x); NEAR(odd.y, T(.5f, 0).y);
 
     /* confirmable placement and moving; footprints may share an edge, not overlap */
     wallet.v[0] = 100;
-    city_begin_place(&c, 2, v2(702, 601));
+    vec2 near_corner = vec2_add(T(20.5f, 5.5f), v2(1, 1));
+    city_begin_place(&c, 2, near_corner);
     vec2 tile_corner = c.ghost;
-    city_begin_place(&c, 2, v2(703, 602));
+    city_begin_place(&c, 2, vec2_add(near_corner, v2(1, 1)));
     NEAR(c.ghost.x, tile_corner.x); NEAR(c.ghost.y, tile_corner.y);
-    CHECK(c.placing == 2 && c.ghost.x == 704 && c.ghost.y == 592);   /* 2 x 2 centres on a tile corner */
+    CHECK(c.placing == 2);
+    NEAR(c.ghost.x, T(20.5f, 5.5f).x); NEAR(c.ghost.y, T(20.5f, 5.5f).y);   /* 2 x 2 centres on a tile corner */
     ev = city_confirm(&c, &wallet, 0);
     CHECK(ev.result == CITY_BUILT && c.placing == -1 && wallet.v[0] == 90);
     int hall = ev.building;
-    NEAR(c.items[hall].pos.x, 704); NEAR(c.items[hall].pos.y, 592);
+    NEAR(c.items[hall].pos.x, T(20.5f, 5.5f).x); NEAR(c.items[hall].pos.y, T(20.5f, 5.5f).y);
     city_begin_move(&c, hall);
     vec2 original = c.items[hall].pos;
-    c.ghost = v2(703, 607);
+    c.ghost = vec2_add(original, v2(1, 7));
     city_cancel(&c);
     NEAR(c.items[hall].pos.x, original.x); NEAR(c.items[hall].pos.y, original.y);
-    city_begin_place(&c, 2, v2(730, 600));
+    city_begin_place(&c, 2, T(21.5f, 5.5f));
     CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED && c.placing == 2);   /* one tile over: overlaps */
-    c.ghost = v2(768, 624);
+    c.ghost = T(22.5f, 5.5f);
     CHECK(city_confirm(&c, &wallet, 0).result == CITY_BUILT);   /* two tiles over: they share an edge */
     city_begin_move(&c, hall);
-    c.ghost = v2(704, 816);
-    CHECK(city_confirm(&c, &wallet, 0).result == CITY_MOVED && c.items[hall].pos.y == 816 && wallet.v[0] == 80);
+    c.ghost = T(20.5f, 12.5f);
+    CHECK(city_confirm(&c, &wallet, 0).result == CITY_MOVED && wallet.v[0] == 80);
+    NEAR(c.items[hall].pos.y, T(20.5f, 12.5f).y);
     city_begin_move(&c, hall);
     c.ghost = v2(704, 50);
     CHECK(city_confirm(&c, &wallet, 0).result == CITY_BLOCKED);
     city_cancel(&c);
-    CHECK(c.placing == -1 && c.items[hall].pos.y == 816);
+    CHECK(c.placing == -1);
+    NEAR(c.items[hall].pos.y, T(20.5f, 12.5f).y);
 
     /* dragging the ghost follows the finger; letting go lands it on the grid */
-    city_begin_place(&c, 2, v2(320, 608));
-    CHECK(c.ghost.x == 320 && c.ghost.y == 624);
-    input drag = {.pressed = true, .down = true, .pos = v2(320, 574), .press_pos = v2(320, 574), .pinch = 1};
+    vec2 start = T(10.5f, 10.5f);
+    city_begin_place(&c, 2, start);
+    NEAR(c.ghost.x, start.x); NEAR(c.ghost.y, start.y);
+    vec2 grab = vec2_add(start, v2(0, -34));
+    input drag = {.pressed = true, .down = true, .pos = grab, .press_pos = grab, .pinch = 1};
     city_update(&c, drag, &wallet, 0, 0);
-    drag = (input){.down = true, .dragging = true, .pos = v2(360, 584), .press_pos = v2(320, 574), .pinch = 1};
+    drag = (input){.down = true, .dragging = true, .pos = vec2_add(grab, v2(40, 10)), .press_pos = grab, .pinch = 1};
     city_update(&c, drag, &wallet, 0, 0);
-    NEAR(c.ghost.x, 360); NEAR(c.ghost.y, 634);   /* not snapped mid-drag */
+    NEAR(c.ghost.x, start.x + 40); NEAR(c.ghost.y, start.y + 10);   /* not snapped mid-drag */
     CHECK(c.held);
-    NEAR(city_snap(&c, c.ghost, 2).x, 352); NEAR(city_snap(&c, c.ghost, 2).y, 640);
+    vec2 land = city_snap(&c, c.ghost, 2);
     drag.down = false, drag.released = true;
     city_update(&c, drag, &wallet, 0, 0);
-    NEAR(c.ghost.x, 352); NEAR(c.ghost.y, 640);
+    NEAR(c.ghost.x, land.x); NEAR(c.ghost.y, land.y);
     CHECK(!c.held);
     city_cancel(&c);
     /* clearance widens every sized footprint without scaling its sprite */
-    CHECK(city_can_place(&c, v2(832, 656), 2, -1));   /* two tiles from the second hall: edges touch */
+    CHECK(city_can_place(&c, T(22.5f, 12.5f), 2, -1));   /* two tiles from the moved hall: edges touch */
     c.clearance = sz2(1, 1);
-    CHECK(!city_can_place(&c, v2(832, 656), 2, -1) && city_can_place(&c, v2(864, 672), 2, -1));
-    NEAR(city_sprite_rect(&c, (building){v2(500, 500), 3, 0}).size.w, 200);
+    CHECK(!city_can_place(&c, T(22.5f, 12.5f), 2, -1) && city_can_place(&c, T(23.5f, 12.5f), 2, -1));
+    NEAR(city_sprite_rect(&c, (building){v2(500, 500), 3, 0}).size.w, 200 * k);
     c.clearance = sz2(0, 0);
     vec2 spot;
-    CHECK(city_find_spot(&c, 2, v2(704, 816), &spot) && city_can_place(&c, spot, 2, -1));
+    CHECK(city_find_spot(&c, 2, T(20.5f, 12.5f), &spot) && city_can_place(&c, spot, 2, -1));
+#undef T
 }
 
 /* Gesture arbitration: a map drag must never turn into a building move. */

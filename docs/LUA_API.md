@@ -365,19 +365,6 @@ Squared length of a in units of the ellipse radii r: at most 1 means inside.
 
 **Returns:** `number`
 
-### `vec2.iso(x, y, z, tile)`
-
-Isometric projection of a ground point (x, y) with height z to a screen offset.
-
-| Argument | Type | |
-|---|---|---|
-| `x` | `number` |  |
-| `y` | `number` |  |
-| `z` | `number` |  |
-| `tile` | `size2` |  |
-
-**Returns:** `vec2`
-
 ## size2
 
 Constructor `size2(w, h)`.
@@ -2213,7 +2200,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `zone_count` | `integer` | read |  |
 | `open` | `integer` | read/write | Bit per opened zone (bit 0 = zone 0, which starts open). |
 | `spacing` | `number` | read/write | Minimum distance between buildings without footprints. |
-| `tile` | `size2` | read/write | Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles. |
+| `tile` | `number` | read/write | A tile's side on the ground in world units; defaults to 45. Set it before init: building sizes are in tiles, projected by the engine's city camera. |
 | `clearance` | `size2` | read/write | Tiles added to every sized footprint (w, h), so bases keep apart: size2(1, 1) leaves half a tile of ground on each side. Sprites keep their size. |
 | `buildable` | `function` | read/write | function(c, world) -> bool: terrain test. |
 | `zone_at` | `function` | read/write | function(c, world) -> zone (0-based) or -1; default: zone rects. |
@@ -2328,7 +2315,7 @@ World rect of a building's sprite.
 
 ### `city.shadow_rect(c, b)  ·  c:shadow_rect(b)`
 
-World rect of the separately cropped ground shadow, at the sprite pixel scale.
+World rect of the separately cropped ground shadow, registered to the same ground point.
 
 | Argument | Type | |
 |---|---|---|
@@ -2590,9 +2577,10 @@ A building type.
 | `about` | `string` |  |
 | `sprite_path` | `string` |  |
 | `sprite` | `texture` | Loaded by city:init from sprite_path. |
-| `shadow_path` | `string` | Optional separate ground-shadow image; same pixel scale as sprite, with its own crop and pivot. |
+| `shadow_path` | `string` | Optional separate ground-shadow image; with its own crop and pivot. |
 | `shadow` | `texture` | Loaded by city:init from shadow_path; drawn beneath all buildings and stays grounded during lift animations. |
 | `shadow_pivot` | `vec2` | Ground centre in shadow-image pixels; zero defaults to the sprite pivot for matching canvases. |
+| `shadow_base_width` | `number` | Footprint's width in shadow-image pixels, so a low-resolution layer stays registered; zero uses the sprite's pixel scale. |
 | `size` | `size2` | Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing. |
 | `pivot` | `vec2` | Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre. |
 | `base_width` | `number` | Sprite pixels from the footprint's left corner to its right one; sets the drawing scale. |

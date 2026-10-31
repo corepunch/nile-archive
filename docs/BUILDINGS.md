@@ -1,21 +1,41 @@
 # Building specs
 
-City buildings stand on an isometric grid of whole tiles. Every building
+City buildings stand on a grid of whole tiles, seen by one camera. Every building
 type says how many tiles it covers, which pixel of its sprite is the ground
 centre it stands on, and how wide its base is in that sprite. The engine
 derives the drawing scale, the snapping, the collision and the green/red
 footprint from those three numbers, so they must match the art.
 
+## The camera
+
+The ground is seen by an orthographic camera turned **30° from the tile axes**
+(yaw) and looking down at **40°** (elevation). This is a trimetric projection,
+measured from June's Journey. It is not 2:1 isometric, and a tile is a skewed
+parallelogram rather than a symmetric diamond.
+
+| Per world unit of | Screen x | Screen y |
+|---|---|---|
+| tile u, the front-left side (`size.w`) | +0.866 | +0.321 |
+| tile v, the front-right side (`size.h`) | −0.500 | +0.557 |
+| height | 0 | −0.766 |
+
+So the front-left edge is shallow (slope 0.371) and the front-right edge steep
+(slope 1.114). `CITY_CAMERA_YAW` and `CITY_CAMERA_ELEVATION` in `engine/engine.h`
+are the only definition: the engine projects with them, and `tools/city_camera.py`
+reads them for the art tools. `make test` fails when a game's rendered art doesn't
+match. Changing them means re-rendering every game.
+
 ## The tile
 
-`city.tile` is a tile's half extents in world units, 2:1 (default
-`size2(32, 16)`, a 64 × 32 diamond). Set it before `c:init`: drawn sizes
-are derived from it. Each game picks one tile for all its buildings:
+`city.tile` is a tile's side on the ground in world units (default 45). Set it
+before `c:init`: drawn sizes are derived from it. Each game picks one tile for all
+its buildings:
 
-| Game | `city.tile` | A tile in world units | `city.clearance` |
-|---|---|---|---|
-| Nile Archive | `size2(24, 12)` | 48 × 24 | `size2(1, 1)` |
-| Relic Rush | `size2(40, 20)` | 80 × 40 | `size2(1, 1)` |
+| Game | `city.tile` | `city.clearance` |
+|---|---|---|
+| Nile Archive | `34` | `size2(1, 1)` |
+| Relic Rush | `56` | `size2(1, 1)` |
+| Christmas Market | `56` | `size2(1, 1)` |
 
 `city.clearance` adds tiles to every footprint around its base, so buildings
 keep apart: with `size2(1, 1)` a 2 × 2 base takes a 3 × 3 footprint, half a
@@ -26,7 +46,7 @@ the base the art shows.
 ## A building
 
 ```lua
-{name = "Artisan workshop", sprite_path = "buildings/2.png",
+{name = "Artisan workshop", sprite_path = "buildings/workshop.png",
  size = size2(3, 2),        -- tiles: 3 along the front-left side, 2 along the front-right
  pivot = vec2(144, 246),    -- sprite pixel of the footprint's ground centre
  base_width = 278,          -- sprite pixels from the footprint's left corner to its right one
@@ -44,9 +64,9 @@ the base the art shows.
   it. It is not the bottom of the image: the front corner and anything in
   front of the base (steps, plants, a rug) hang below it.
 - **`base_width`**, sprite pixels between the base's left and right corners.
-  The engine scales the sprite so that width covers `size.w + size.h` tile
-  half widths, so the drawn base matches the footprint exactly. `height`
-  follows from it; don't set it by hand.
+  The engine scales the sprite so that width covers
+  `city_base_span(c, size)`, `(w·cos yaw + h·sin yaw)·tile`, so the drawn base
+  matches the footprint exactly. `height` follows from it; don't set it by hand.
 
 A building with no `size` falls back to a circle of `city.spacing` and a
 sprite drawn `height` tall, standing on its bottom centre.
@@ -62,6 +82,9 @@ sprite drawn `height` tall, standing on its bottom centre.
   corners must be open, buildable land.
 - **Drawing.** The ghost's footprint is the parallelogram of its tiles with
   the tile lines inside, green when it fits and red when it doesn't.
+- **Depth.** Tiles skew, so a footprint's y says little about a long neighbour's.
+  A building draws in front of another when it lies past it along one tile axis
+  and not before it along the other; pairs that don't relate keep y order.
 
 ## Moving a placed building
 
@@ -80,18 +103,58 @@ placement sheet. Volcano and Clayfight have no city-building relocation mode.
 
 Reviewed native-input comparisons are in [the gesture review](review/city-long-press/README.md).
 
-## Measuring a sprite
+## Rendering buildings
+
+Sprites are rendered from each game's Blender master. A painting can't be turned
+to another camera, so a building needs a model before it has art.
 
 ```sh
-python3 tools/footprint.py games/relic-rush/data/buildings/2.png --overlay /tmp/base.png
+make buildings GAME=relic-rush                     # every building
+make buildings GAME=relic-rush KEYS="lodge well"   # just these
+make buildings GAME=relic-rush REBUILD=1           # rebuild the .blend from build_scene.py first
+python3 tools/buildings.py --list relic-rush       # every key
 ```
 
-The script fits the base's lower V (slopes of ±½ on a 2:1 grid) to the
-sprite's silhouette and prints `pivot`, `base_width` and the side ratio.
-Plants or props below the base can fool the fit; then read the corners off
-the image and pass them: `--bottom X,Y` (the front corner), `--left X`,
-`--right X`. Open the overlay and check that the drawn diamond sits on the
-base.
+**The name is the file.** A building's Blender collection name is its key:
+collection `lodge` becomes `data/buildings/lodge.png` and
+`data/building-shadows/lodge.png`, and `lua/building_sprites.lua` holds its
+registration under `lodge`. Games merge that table into their city defs by key;
+never edit it. Numeric types stay in save files only, as positions in the game's
+own list: append new rows, never reorder.
+
+| File | Role |
+|---|---|
+| `games/<game>/art/buildings.json` | Where the game's master is, sprite resolution, samples, post-render step |
+| `games/<game>/art/building-catalogue/build_scene.py` | The models; saves the `.blend` |
+| `tools/building_kit.py` | The shared toolbox: palette, materials, `Kit`, `assemble()` |
+| `tools/buildings.py` | The command; crops, registers, writes Lua and the review sheet |
+| `tools/render_buildings_blender.py` | Runs inside Blender: one sprite and one shadow per building |
+| `tools/city_camera.py` | The camera for all of them, read from `engine/engine.h` |
+
+To add a building: add a function to the game's `build_scene.py`, add it to the
+game's list, and run `make buildings GAME=<game> REBUILD=1 KEYS=<key>`. Footprints
+are whole tiles and `assemble()` clamps geometry to them. The camera sees faces
+towards -Y best and +X second, so the main facade goes on -Y. Look at the review
+sheet `games/<game>/docs/screenshots/buildings.jpg`, which shows every building on
+the tile grid with its footprint, pivot and name.
+
+`python3 tools/buildings.py --check` needs no Blender and runs in `make test`. It
+fails on art rendered with another camera, a sprite not named after its key, a
+missing or stray file, and stale Lua.
+
+## Measuring a hand-made sprite
+
+Rendered sprites carry exact registration. For anything else:
+
+```sh
+python3 tools/footprint.py path/to/sprite.png --overlay /tmp/base.png
+```
+
+The script fits the base's lower V (the camera's two slopes) to the sprite's
+silhouette and prints `pivot`, `base_width` and the w : h ratio. Plants or props
+below the base can fool the fit; then read the corners off the image and pass them:
+`--bottom X,Y` (the front corner), `--left X`, `--right X`. Open the overlay and
+check that the drawn parallelogram sits on the base.
 
 Then check it in the game. `--footprints` draws every building's footprint
 and pivot over its sprite:
@@ -101,33 +164,36 @@ and pivot over its sprite:
 ./build/nile-archive --headless --mute --fresh --size 1200x900 --screen island --footprints --shot fp.png
 ```
 
-Each diamond should outline the building's base (plus the clearance around
+Each parallelogram should outline the building's base (plus the clearance around
 it), with the pivot dot in the middle.
 
 ## Art for new buildings
 
-[BUILDING_ART.md](BUILDING_ART.md) is the step-by-step guide to modelling,
-rendering, registering and reviewing building art in Blender.
-
-Draw buildings on the same 2:1 isometric grid as the map, the base a clean
-diamond or parallelogram whose sides follow the tile directions, cropped
-tightly with a transparent background. Keep plants and props inside the
-footprint where possible. Anything that hangs outside it overlaps the
-neighbours, because footprints may touch.
+Keep plants and props inside the footprint. Anything that hangs outside it
+overlaps the neighbours, because footprints may touch. [BUILDING_ART.md](BUILDING_ART.md)
+is the modelling guide.
 
 Relic Rush's [96-entry catalogue](../games/relic-rush/docs/building-catalogue.md)
 also includes decorations without a visible slab. Their Blender ground origin
 and projected whole-tile reservation define the virtual base; a small prop's
 `base_width` can exceed its visible sprite width. This keeps trees, flowers and
 furniture at the model's intended scale while reserving at least one whole tile.
-Slab-based buildings use the measured corners of the final painted base.
+Slab-based buildings show that base as a slab of exactly the footprint.
 
 Nile Archive's [96-object catalogue](../games/nile-archive/docs/building-catalogue.md)
 mirrors Relic Rush's slots and footprints. It renders the Blender objects
 directly at a fixed 128 pixels per tile, so its pivots and base widths are
 projected analytically (`base_width = (w + h) × 64`). `tools/footprint.py`
-confirms them to within a few pixels on slab buildings. Its one-tile
-decorations are modelled at twice their true scale while keeping a one-tile
-footprint and base width. They reach into the half tile of clearance around
-their base, never a neighbour's base, so they stay legible beside the island
-painting.
+confirms them to within a few pixels on slab buildings.
+
+## Ground shadows
+
+`building_def.shadow_path` loads a low-resolution ground PNG independently of the
+sprite. `shadow_pivot` is the same ground centre in shadow pixels and
+`shadow_base_width` the footprint's width in shadow pixels, so the engine scales it
+by `city_base_span(c, size) / shadow_base_width` and transparent crop margins, sprite
+resolution and lift animation cannot move its anchor. Without `shadow_base_width`
+a layer uses the sprite's pixel scale. Shadows draw beneath all buildings and stay
+grounded during a lift. `tools/render_buildings_blender.py` renders each layer from
+the building's own geometry: invisible clay casters, direct sun and fill, a
+transparent Cycles catcher.

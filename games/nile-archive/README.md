@@ -149,7 +149,7 @@ python3 -m http.server 8080 --directory dist   # затем http://localhost:808
 | `data/` | Фоны сцен, карта острова, постройки, портреты, значки, шрифты (Philosopher, PT Sans — OFL) |
 | `art/` | Исходные изображения построек и персонажей в полном размере |
 | `art/building-catalogue/` | Blender-мастер 96 украшений (`build_scene.py`, `nile_archive_buildings.blend`), каталог, регистрация, контактный лист |
-| `tools/render_buildings.py`, `tools/prepare_catalogue.py` | Рендер каждого украшения и генерация `lua/archive_catalogue.lua` |
+| `art/building-catalogue/build_scene.py`, `tools/prepare_catalogue.py` | Модели построек и каталог; `make buildings GAME=nile-archive` рендерит их по имени |
 | `tools/import_buildings.py` | Пересборка старого атласа построек (историческое) |
 | `tools/make_icons.py` | Значки монеты и влияния |
 | `docs/` | Описание проекта, художественное направление, референсы, скриншоты |

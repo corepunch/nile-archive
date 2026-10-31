@@ -135,9 +135,10 @@
 ---@field about string
 ---@field sprite_path string
 ---@field sprite texture Loaded by city:init from sprite_path.
----@field shadow_path string Optional separate ground-shadow image; same pixel scale as sprite, with its own crop and pivot.
+---@field shadow_path string Optional separate ground-shadow image; with its own crop and pivot.
 ---@field shadow texture Loaded by city:init from shadow_path; drawn beneath all buildings and stays grounded during lift animations.
 ---@field shadow_pivot vec2 Ground centre in shadow-image pixels; zero defaults to the sprite pivot for matching canvases.
+---@field shadow_base_width number Footprint's width in shadow-image pixels, so a low-resolution layer stays registered; zero uses the sprite's pixel scale.
 ---@field size size2 Footprint in whole tiles: w along the front-left side, h along the front-right; zero = a circle of city.spacing.
 ---@field pivot vec2 Sprite pixel of the footprint's ground centre, where the building stands; zero = bottom centre.
 ---@field base_width number Sprite pixels from the footprint's left corner to its right one; sets the drawing scale.
@@ -187,7 +188,7 @@
 ---@field zone_count integer
 ---@field open integer Bit per opened zone (bit 0 = zone 0, which starts open).
 ---@field spacing number Minimum distance between buildings without footprints.
----@field tile size2 Isometric tile half extents in world units; defaults to 32 x 16. Set it before init: building sizes are in tiles.
+---@field tile number A tile's side on the ground in world units; defaults to 45. Set it before init: building sizes are in tiles, projected by the engine's city camera.
 ---@field clearance size2 Tiles added to every sized footprint (w, h), so bases keep apart: size2(1, 1) leaves half a tile of ground on each side. Sprites keep their size.
 ---@field buildable function function(c, world) -> bool: terrain test.
 ---@field zone_at function function(c, world) -> zone (0-based) or -1; default: zone rects.
@@ -388,14 +389,6 @@ function vec2.approach(cur, target, rate, dt) end
 ---@param r vec2
 ---@return number
 function vec2.ellipse(a, r) end
-
----Isometric projection of a ground point (x, y) with height z to a screen offset.
----@param x number
----@param y number
----@param z number
----@param tile size2
----@return vec2
-function vec2.iso(x, y, z, tile) end
 
 ---@class size2lib
 ---@overload fun(w?: number, h?: number): size2
@@ -1479,7 +1472,7 @@ function city.ready(c, index, now) end
 ---@return rect
 function city.sprite_rect(c, b) end
 
----World rect of the separately cropped ground shadow, at the sprite pixel scale.
+---World rect of the separately cropped ground shadow, registered to the same ground point.
 ---@param c city
 ---@param b building
 ---@return rect

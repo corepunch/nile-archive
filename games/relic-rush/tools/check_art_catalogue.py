@@ -71,8 +71,8 @@ for i, b in enumerate(buildings['items']):
     assert b['base_width'] > 0 and len(b['pivot']) == 2
     data = (ROOT / b['runtime']).read_bytes()
     assert data[:8] == b'\x89PNG\r\n\x1a\n' and data[25] == 6, b['key']
-    width,height = struct.unpack('>II',data[16:24])
-    assert (width,height) == (b['crop'][2]-b['crop'][0],b['crop'][3]-b['crop'][1])
+    assert list(struct.unpack('>II',data[16:24])) == b['image'], b['key']
+    assert (ROOT / b['shadow']['runtime']).is_file(), b['key']
     assert 'key="'+b['key']+'"' in definitions and '`'+b['key']+'`' in building_doc
     assert (ROOT / f'docs/review/building-catalogue/footprints-{i//4+1:02d}.jpg').is_file()
 assert '96' in doc and 'building-catalogue.md' in doc
