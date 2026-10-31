@@ -146,7 +146,7 @@ end
 
 local function init()
     if app.arg("cell-mask") then return end
-    R.font = font.load("fonts/LilitaOne-Regular.ttf")
+    R.font = R.skin:font("lilita")
     story.setup(cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
                                   edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, framed = true, skip = "SKIP"})
     R.backdrop = texture.load("jungle.jpg")

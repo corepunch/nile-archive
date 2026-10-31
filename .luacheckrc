@@ -17,6 +17,7 @@ read_globals = {
     "sprite_frame", "story_line", "ui_state",
 }
 files["engine/ui_forms.lua"] = {globals = {"ui"}}            -- defines ui.form, ui.modals and ui.modal_dismiss
+files["engine/ui_skin.lua"] = {globals = {"ui"}}             -- defines ui.skin
 files["games/clayfight/lua"] = {read_globals = {"clay"}}     -- Clayfight's host extension
 files["tests/lua/clayfight.lua"] = {globals = {"clay", "font", "app", "input", "gfx", "ui"}}   -- stubs the engine
 files["engine/city_smoke.lua"] = {globals = {"city"}}         -- defines city.move_test
