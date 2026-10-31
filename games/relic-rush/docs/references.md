@@ -4,7 +4,7 @@ Research date: 29 October 2026. Original sprites and environment paintings were 
 
 ## Island and building art direction
 
-Pearl's Peril and June's Journey are the primary references for the island and buildings, as requested. Favor a landscaped island with organic shoreline, gardens, trees, scenic paths and coherent building scale. Let individual buildings sit in their own surroundings with breathing room. Keep a calm, detailed painted environment; retain archaeological expedition architecture for our original setting. Candy Crush informs the puzzle board and feedback, not the island composition. Roads remain decorative, without connectivity requirements. The prototype now uses a large scrolling world, explicit neighboring-region unlocks, and freely placed movable buildings with green/red footprint validation.
+Pearl's Peril and June's Journey are the primary references for the island and buildings, as requested. Favor a landscaped island with organic shoreline, gardens, trees, scenic paths and coherent building scale. Let individual buildings sit in their own surroundings with breathing room. Keep a calm, detailed painted environment; retain archaeological expedition architecture for our original setting. Candy Crush informs the puzzle board and feedback, not the island composition. Automatic roads between buildings are disabled; landscape detail comes from the painted terrain. The prototype now uses a large scrolling world, explicit neighboring-region unlocks, and freely placed movable buildings with green/red footprint validation.
 
 ## Core loop
 - Wooga: June's Journey, Orchid Island construction, decoration, landmarks and scene progression: https://wooga.theymes.com/hc/en/junes-journey/articles/how-do-i-play-junes-journey-394
