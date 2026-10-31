@@ -118,3 +118,9 @@ and projected whole-tile reservation define the virtual base; a small prop's
 `base_width` can exceed its visible sprite width. This keeps trees, flowers and
 furniture at the model's intended scale while reserving at least one whole tile.
 Slab-based buildings use the measured corners of the final painted base.
+
+Nile Archive's [96-object catalogue](../games/nile-archive/docs/building-catalogue.md)
+mirrors Relic Rush's slots and footprints. It renders the Blender objects
+directly at a fixed 128 pixels per tile, so its pivots and base widths are
+projected analytically (`base_width = (w + h) × 64`). `tools/footprint.py`
+confirms them to within a few pixels on slab buildings.

@@ -7,7 +7,7 @@ local progress = require("archive_progress")
 local K = require("archive_kit")
 local S = K.styles
 local hex, rgba = color.hex, color
-local COINS, INFLUENCE, CHAPTERS, ZONES = G.COINS, G.INFLUENCE, G.CHAPTERS, G.ZONES
+local COINS, INFLUENCE, CHAPTERS, STARS, ZONES = G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS, G.ZONES
 local MODAL_NONE, MODAL_CAST, MODAL_CHAPTERS = G.MODAL_NONE, G.MODAL_CAST, G.MODAL_CHAPTERS
 local WHITE, GOLD_HI, GOLD_LO, GOLD_SEAM, INK_SOFT = K.WHITE, K.GOLD_HI, K.GOLD_LO, K.GOLD_SEAM, K.INK_SOFT
 
@@ -99,52 +99,115 @@ local function draw_goal(c)
     local arrow = vec2(inner:max().x - 18, inner:center().y)
     gfx.poly({arrow + vec2(-6, -9), arrow + vec2(6, 0), arrow + vec2(-6, 9)}, INK_SOFT)
     if st.clicked then
-        if i and not ready then G.tray = true else G.modal, G.modal_time = MODAL_CHAPTERS, 0 end
+        if i and not ready then M.open_tray("story") else G.modal, G.modal_time = MODAL_CHAPTERS, 0 end
     end
 end
 
 --------------------------------------------------------------------- tray
 
+-- The build tray pages through one category at a time: the five restorations
+-- first, then the decoration catalogue (docs/building-catalogue.md).
+M.TRAY_CATEGORIES = {
+    {"story", "Восстановление"}, {"all", "Все постройки"}, {"wonder", "Памятники"}, {"building", "Дома и мастерские"},
+    {"tree", "Деревья"}, {"bush", "Кусты"}, {"flower", "Цветы"}, {"statue", "Статуи"}, {"water", "Вода"},
+    {"garden", "Сад"}, {"camp", "Припасы"}, {"animal", "Животные"}, {"rock", "Камни"},
+}
+local TRAY_PAGE = 5
+M.tray = {category = 1, page = 1}   -- 1 = the restorations
+
+local function plural(n, one, few, many)
+    local d, h = n % 10, n % 100
+    if d == 1 and h ~= 11 then return one end
+    if d >= 2 and d <= 4 and (h < 12 or h > 14) then return few end
+    return many
+end
+
+local function stars_text(n) return ("%d %s"):format(n, plural(n, "звезда", "звезды", "звёзд")) end
+
 local build_form = ui.form{kind = "column", panel = true, role = "tray", padding = 16, gap = 8, children = {
-    {kind = "row", height = 30, gap = 10, children = {
+    {kind = "row", height = 34, gap = 10, children = {
         {kind = "label", id = "budget", role = "budget", grow = 1, text_align = "start"},
+        {kind = "button", id = "category_prev", text = "<", width = 44},
+        {kind = "label", id = "category", role = "category", width = 230},
+        {kind = "button", id = "category_next", text = ">", width = 44},
         {kind = "button", id = "close", text = "Закрыть", width = 100},
     }},
     {kind = "list", id = "stock", direction = "row", gap = 12, item = function(e)
         return {kind = "column", panel = true, grow = 1, padding = 8, gap = 4, children = {
             {kind = "label", text = e.name, height = 38, wrap = true},
             {kind = "image", image = e.sprite, height = 80},
-            {kind = "label", text = ("+%d влияния"):format(e.influence), height = 22},
+            {kind = "label", text = e.detail, height = 22},
             {kind = "label", text = ("%d монет"):format(e.coins), height = 22},
             {kind = "button", id = "buy", text = e.action, enabled = e.available, height = 36},
         }}
     end},
+    {kind = "row", height = 34, gap = 10, children = {
+        {kind = "button", id = "page_prev", text = "Назад", width = 110},
+        {kind = "label", id = "page", role = "budget", grow = 1},
+        {kind = "button", id = "page_next", text = "Далее", width = 110},
+    }},
 }}
 local build_skin = {
     panel = function(box, n) K.frame(box, n.role ~= "tray", n.role == "tray" and 20 or 12) end,
     style = function(n)
-        return n.role == "budget" and S.body:sized(17) or n.kind == "button" and S.button:sized(16) or S.card_title:sized(17)
+        if n.role == "budget" then return S.body:sized(17) end
+        if n.kind == "button" or n.role == "category" then return S.button:sized(17) end
+        return S.card_title:sized(17)
     end,
 }
 
-local function draw_tray(r)
-    local stock = {}
-    for i, d in ipairs(G.buildings) do
-        local unlocked = G.wallet:covers(d.needs)
-        local afford = G.wallet:covers(d.cost)
-        stock[#stock + 1] = {id = i, name = d.name, sprite = d.sprite, coins = d.cost[COINS], influence = d.reward[INFLUENCE],
-            available = unlocked and afford,
-            action = not unlocked and ("Пройдите главу %d"):format(d.needs[CHAPTERS]) or afford and "Выбрать место" or "Не хватает монет"}
+-- Opens the tray on a category ("story", "tree", ...) and page.
+function M.open_tray(category, page)
+    for i, c in ipairs(M.TRAY_CATEGORIES) do
+        if c[1] == category then M.tray.category = i end
     end
+    M.tray.page = page or 1
+    G.tray = true
+end
+
+-- One tray card: the price, what the building gives and why it can't be bought yet.
+local function card(i)
+    local d, kind = G.buildings[i], content.kinds[i]
+    local unlocked = G.wallet:covers(d.needs)
+    local afford = G.wallet:covers(d.cost)
+    local full = G.island.count >= 160
+    local restoration = i <= content.RESTORATIONS
+    local locked = restoration and ("Пройдите главу %d"):format(d.needs[CHAPTERS]) or "Нужно " .. stars_text(kind.stars)
+    local action = not unlocked and locked or full and "Остров заполнен" or afford and "Выбрать место" or "Не хватает монет"
+    return {id = i, name = d.name, sprite = d.sprite, coins = d.cost[COINS],
+        detail = restoration and ("+%d влияния"):format(d.reward[INFLUENCE]) or ("Украшение · %d×%d"):format(d.size.w, d.size.h),
+        available = unlocked and afford and not full, action = action}
+end
+
+local function draw_tray(r)
+    local tray = M.tray
+    local filter = M.TRAY_CATEGORIES[tray.category][1]
+    local shown = {}
+    for i, kind in ipairs(content.kinds) do
+        if kind.category == filter or filter == "all" and kind.category ~= "story" then shown[#shown + 1] = i end
+    end
+    local pages = math.max(1, math.ceil(#shown / TRAY_PAGE))
+    tray.page = num.clampi(tray.page, 1, pages)
+    local stock = {}
+    for at = (tray.page - 1) * TRAY_PAGE + 1, math.min(tray.page * TRAY_PAGE, #shown) do stock[#stock + 1] = card(shown[at]) end
     assert(build_form:set_items("stock", stock))
-    build_form:set("budget", ("%d монет · Влияние дают только постройки"):format(G.wallet[COINS]))
+    build_form:set("budget", ("%d монет · %s"):format(G.wallet[COINS], stars_text(G.wallet[STARS])))
+    build_form:set("category", M.TRAY_CATEGORIES[tray.category][2])
+    build_form:set("page", ("Страница %d из %d · %d %s"):format(tray.page, pages, #shown, plural(#shown, "постройка", "постройки", "построек")))
+    build_form.nodes.page_prev.enabled, build_form.nodes.page_next.enabled = tray.page > 1, tray.page < pages
     local _, height = build_form:measure(r.w, build_skin)
     r = r:bottom(height)
     ui.block(r)
     local event = build_form:draw(r, build_skin)
     G.spots.build_form = build_form
-    if event and event.id == "close" then G.tray = false
-    elseif event and event.source == "stock" then
+    if not event then return end
+    if event.id == "close" then G.tray = false
+    elseif event.id == "category_prev" or event.id == "category_next" then
+        tray.category = (tray.category - 1 + (event.id == "category_next" and 1 or -1)) % #M.TRAY_CATEGORIES + 1
+        tray.page = 1
+    elseif event.id == "page_prev" or event.id == "page_next" then
+        tray.page = tray.page + (event.id == "page_next" and 1 or -1)
+    elseif event.source == "stock" then
         local kind = event.key - 1
         local ok, spot = G.island:find_spot(kind, G.island.cam.center)
         if ok then
@@ -173,8 +236,10 @@ local function draw_placement(screen)
     local island = G.island
     local def = G.buildings[island.placing + 1]
     move_form:set("name", def.name)
+    local gain = def.reward[INFLUENCE]
     move_form:set("payment", island.moving >= 0 and "Перемещение бесплатно"
-        or ("%d монет · +%d влияния после подтверждения"):format(def.cost[COINS], def.reward[INFLUENCE]))
+        or gain > 0 and ("%d монет · +%d влияния после подтверждения"):format(def.cost[COINS], gain)
+        or ("%d монет после подтверждения"):format(def.cost[COINS]))
     move_form:set("confirm", island.moving >= 0 and "Подтвердить" or "Построить")
     move_form.values.valid = island:can_place(island:snap(island.ghost, island.placing), island.placing, island.moving)
     local width = math.min(620, screen.w - 36)
@@ -190,7 +255,7 @@ local function draw_placement(screen)
             ui.toast("Постройка перемещена")
         elseif confirmed.result == city.BUILT then
             progress.save()
-            ui.toast(("Готово · +%d влияния. Откройте главы, чтобы продолжить."):format(def.reward[INFLUENCE]))
+            ui.toast(gain > 0 and ("Готово · +%d влияния. Откройте главы, чтобы продолжить."):format(gain) or "Украшение на месте")
         elseif confirmed.result == city.CANT_AFFORD then
             ui.toast("Недостаточно монет. Переиграйте открытую главу.")
         end
@@ -209,13 +274,14 @@ function M.frame(screen, world)
         if ev.result == city.BUILT then
             progress.save()
             fx.burst(ev.screen, 26, hex(0xF2D29A), 260, 9)
-            ui.toast(("Постройка готова · +%d влияния"):format(G.buildings[island.items[ev.building + 1].type + 1].reward[INFLUENCE]))
+            local gain = G.buildings[island.items[ev.building + 1].type + 1].reward[INFLUENCE]
+            ui.toast(gain > 0 and ("Постройка готова · +%d влияния"):format(gain) or "Украшение на месте")
         elseif ev.result == city.CANT_AFFORD then
             ui.toast("Недостаточно монет. Пройдите сцену ещё раз.")
         elseif ev.result == city.BLOCKED then
             ui.toast("Нужно свободное место на открытом берегу")
         elseif ev.result == city.LOCKED_TYPE then
-            ui.toast("Сначала пройдите нужную главу")
+            ui.toast("Сначала пройдите нужную главу или соберите больше звёзд")
         end
     end
     local full = app.bleed()

@@ -26,6 +26,7 @@ shot nile-archive scene2 1200x900 --screen scene2
 shot nile-archive characters 1200x900 --screen cast --frames 30
 shot nile-archive chapters 1200x900 --screen chapters --frames 30
 shot nile-archive build 1200x900 --screen build
+shot nile-archive catalogue 1200x900 --screen build --catalogue wonder
 shot nile-archive footprints 1200x900 --screen island --footprints
 shot nile-archive reward 1200x900 --screen win --frames 60
 shot nile-archive widescreen 1600x900 --screen island

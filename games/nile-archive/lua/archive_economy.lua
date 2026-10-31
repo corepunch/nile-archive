@@ -17,6 +17,13 @@ function M.completed(wins)
     return n
 end
 
+-- Best Stars across chapters (at most 9): they unlock catalogue decorations and are never spent.
+function M.stars(best)
+    local n=0
+    for i=1,3 do n=n+(best[i] or 0) end
+    return n
+end
+
 function M.can_play(wins,influence,i)
     if not M.gates[i] then return false end
     -- Already visited scenes remain accessible in legacy, out-of-order saves.
@@ -39,6 +46,7 @@ function M.claim(state,i,result)
     state.wins[i]=state.wins[i]+1
     state.stars[i]=math.max(state.stars[i],result.stars)
     state.wallet[3]=M.completed(state.wins)
+    state.wallet[4]=M.stars(state.stars)
     result.claimed=true
     return true
 end

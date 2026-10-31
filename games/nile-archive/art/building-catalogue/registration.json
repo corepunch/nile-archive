@@ -1,0 +1,1445 @@
+{
+ "tile_px": 128,
+ "items": {
+  "small_pyramid": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    198
+   ],
+   "pivot": [
+    132,
+    130
+   ],
+   "base_width": 256.0
+  },
+  "nilometer": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    197
+   ],
+   "pivot": [
+    132,
+    129
+   ],
+   "base_width": 256.0
+  },
+  "sphinx": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    199
+   ],
+   "pivot": [
+    164,
+    115
+   ],
+   "base_width": 320.0
+  },
+  "barque_shrine": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    274
+   ],
+   "pivot": [
+    164,
+    190
+   ],
+   "base_width": 320.0
+  },
+  "pylon_gate": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    314
+   ],
+   "pivot": [
+    164,
+    230
+   ],
+   "base_width": 320.0
+  },
+  "hypostyle": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    336
+   ],
+   "pivot": [
+    196,
+    236
+   ],
+   "base_width": 384.0
+  },
+  "sun_temple": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    342
+   ],
+   "pivot": [
+    196,
+    242
+   ],
+   "base_width": 384.0
+  },
+  "lighthouse": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    315
+   ],
+   "pivot": [
+    132,
+    247
+   ],
+   "base_width": 256.0
+  },
+  "sacred_lake": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    221
+   ],
+   "pivot": [
+    196,
+    121
+   ],
+   "base_width": 384.0
+  },
+  "great_pyramid": {
+   "size": [
+    4,
+    4
+   ],
+   "image": [
+    520,
+    379
+   ],
+   "pivot": [
+    260,
+    247
+   ],
+   "base_width": 512.0
+  },
+  "mud_house": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    246
+   ],
+   "pivot": [
+    132,
+    178
+   ],
+   "base_width": 256.0
+  },
+  "pottery": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    197
+   ],
+   "pivot": [
+    132,
+    129
+   ],
+   "base_width": 256.0
+  },
+  "bakery": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    244
+   ],
+   "pivot": [
+    164,
+    160
+   ],
+   "base_width": 320.0
+  },
+  "weaver": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    240
+   ],
+   "pivot": [
+    164,
+    156
+   ],
+   "base_width": 320.0
+  },
+  "scribe_school": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    260
+   ],
+   "pivot": [
+    164,
+    176
+   ],
+   "base_width": 320.0
+  },
+  "granary": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    222
+   ],
+   "pivot": [
+    164,
+    138
+   ],
+   "base_width": 320.0
+  },
+  "bazaar": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    268
+   ],
+   "pivot": [
+    196,
+    168
+   ],
+   "base_width": 384.0
+  },
+  "villa": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    342
+   ],
+   "pivot": [
+    196,
+    242
+   ],
+   "base_width": 384.0
+  },
+  "dovecote": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    267
+   ],
+   "pivot": [
+    132,
+    199
+   ],
+   "base_width": 256.0
+  },
+  "watchtower": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    307
+   ],
+   "pivot": [
+    132,
+    239
+   ],
+   "base_width": 256.0
+  },
+  "winery": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    283
+   ],
+   "pivot": [
+    196,
+    183
+   ],
+   "base_width": 384.0
+  },
+  "bastet_shrine": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    292
+   ],
+   "pivot": [
+    196,
+    192
+   ],
+   "base_width": 384.0
+  },
+  "felucca_dock": {
+   "size": [
+    4,
+    2
+   ],
+   "image": [
+    392,
+    209
+   ],
+   "pivot": [
+    196,
+    109
+   ],
+   "base_width": 384.0
+  },
+  "chariot_stable": {
+   "size": [
+    4,
+    3
+   ],
+   "image": [
+    456,
+    317
+   ],
+   "pivot": [
+    228,
+    201
+   ],
+   "base_width": 448.0
+  },
+  "sculptor_yard": {
+   "size": [
+    4,
+    3
+   ],
+   "image": [
+    456,
+    302
+   ],
+   "pivot": [
+    228,
+    186
+   ],
+   "base_width": 448.0
+  },
+  "pharaoh_garden": {
+   "size": [
+    4,
+    4
+   ],
+   "image": [
+    520,
+    374
+   ],
+   "pivot": [
+    260,
+    242
+   ],
+   "base_width": 512.0
+  },
+  "date_palm": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    123
+   ],
+   "pivot": [
+    68,
+    87
+   ],
+   "base_width": 128.0
+  },
+  "doum_palm": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    116
+   ],
+   "pivot": [
+    68,
+    80
+   ],
+   "base_width": 128.0
+  },
+  "cypress": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    152
+   ],
+   "pivot": [
+    68,
+    116
+   ],
+   "base_width": 128.0
+  },
+  "acacia": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    123
+   ],
+   "pivot": [
+    68,
+    87
+   ],
+   "base_width": 128.0
+  },
+  "fig": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    130
+   ],
+   "pivot": [
+    68,
+    94
+   ],
+   "base_width": 128.0
+  },
+  "pomegranate": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    121
+   ],
+   "pivot": [
+    68,
+    85
+   ],
+   "base_width": 128.0
+  },
+  "olive": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    122
+   ],
+   "pivot": [
+    68,
+    86
+   ],
+   "base_width": 128.0
+  },
+  "palm_grove": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    204
+   ],
+   "pivot": [
+    132,
+    136
+   ],
+   "base_width": 256.0
+  },
+  "twin_palms": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    203
+   ],
+   "pivot": [
+    132,
+    135
+   ],
+   "base_width": 256.0
+  },
+  "sycamore": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    205
+   ],
+   "pivot": [
+    132,
+    137
+   ],
+   "base_width": 256.0
+  },
+  "tamarisk": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    188
+   ],
+   "pivot": [
+    132,
+    120
+   ],
+   "base_width": 256.0
+  },
+  "shrub": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    93
+   ],
+   "pivot": [
+    68,
+    57
+   ],
+   "base_width": 128.0
+  },
+  "papyrus": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    122
+   ],
+   "pivot": [
+    68,
+    86
+   ],
+   "base_width": 128.0
+  },
+  "aloe": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    107
+   ],
+   "pivot": [
+    68,
+    71
+   ],
+   "base_width": 128.0
+  },
+  "oleander": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    100
+   ],
+   "pivot": [
+    68,
+    64
+   ],
+   "base_width": 128.0
+  },
+  "henna": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    89
+   ],
+   "pivot": [
+    68,
+    53
+   ],
+   "base_width": 128.0
+  },
+  "reeds": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    133
+   ],
+   "pivot": [
+    68,
+    97
+   ],
+   "base_width": 128.0
+  },
+  "potted_tree": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    118
+   ],
+   "pivot": [
+    68,
+    82
+   ],
+   "base_width": 128.0
+  },
+  "hedge": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    107
+   ],
+   "pivot": [
+    68,
+    71
+   ],
+   "base_width": 128.0
+  },
+  "blue_lotus": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    72
+   ],
+   "pivot": [
+    68,
+    36
+   ],
+   "base_width": 128.0
+  },
+  "poppies": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    84
+   ],
+   "pivot": [
+    68,
+    48
+   ],
+   "base_width": 128.0
+  },
+  "chamomile": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    81
+   ],
+   "pivot": [
+    68,
+    45
+   ],
+   "base_width": 128.0
+  },
+  "cornflowers": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    90
+   ],
+   "pivot": [
+    68,
+    54
+   ],
+   "base_width": 128.0
+  },
+  "flower_box": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    80
+   ],
+   "pivot": [
+    68,
+    44
+   ],
+   "base_width": 128.0
+  },
+  "irises": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    101
+   ],
+   "pivot": [
+    68,
+    65
+   ],
+   "base_width": 128.0
+  },
+  "flower_bed": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    148
+   ],
+   "pivot": [
+    132,
+    80
+   ],
+   "base_width": 256.0
+  },
+  "pattern_bed": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    144
+   ],
+   "pivot": [
+    132,
+    76
+   ],
+   "base_width": 256.0
+  },
+  "broken_column": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    108
+   ],
+   "pivot": [
+    68,
+    72
+   ],
+   "base_width": 128.0
+  },
+  "pharaoh_head": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    115
+   ],
+   "pivot": [
+    68,
+    79
+   ],
+   "base_width": 128.0
+  },
+  "bastet_cat": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    124
+   ],
+   "pivot": [
+    68,
+    88
+   ],
+   "base_width": 128.0
+  },
+  "obelisk": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    158
+   ],
+   "pivot": [
+    68,
+    122
+   ],
+   "base_width": 128.0
+  },
+  "sundial": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    106
+   ],
+   "pivot": [
+    68,
+    70
+   ],
+   "base_width": 128.0
+  },
+  "scribe_statue": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    105
+   ],
+   "pivot": [
+    68,
+    69
+   ],
+   "base_width": 128.0
+  },
+  "golden_scarab": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    98
+   ],
+   "pivot": [
+    68,
+    62
+   ],
+   "base_width": 128.0
+  },
+  "colossus": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    221
+   ],
+   "pivot": [
+    132,
+    153
+   ],
+   "base_width": 256.0
+  },
+  "anubis": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    157
+   ],
+   "pivot": [
+    132,
+    89
+   ],
+   "base_width": 256.0
+  },
+  "birdbath": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    99
+   ],
+   "pivot": [
+    68,
+    63
+   ],
+   "base_width": 128.0
+  },
+  "small_fountain": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    105
+   ],
+   "pivot": [
+    68,
+    69
+   ],
+   "base_width": 128.0
+  },
+  "lotus_pond": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    136
+   ],
+   "pivot": [
+    132,
+    68
+   ],
+   "base_width": 256.0
+  },
+  "ibis_pond": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    136
+   ],
+   "pivot": [
+    132,
+    68
+   ],
+   "base_width": 256.0
+  },
+  "shaduf": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    188
+   ],
+   "pivot": [
+    132,
+    120
+   ],
+   "base_width": 256.0
+  },
+  "bench": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    88
+   ],
+   "pivot": [
+    68,
+    52
+   ],
+   "base_width": 128.0
+  },
+  "lamp_post": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    136
+   ],
+   "pivot": [
+    68,
+    100
+   ],
+   "base_width": 128.0
+  },
+  "torch": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    131
+   ],
+   "pivot": [
+    68,
+    95
+   ],
+   "base_width": 128.0
+  },
+  "signpost": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    117
+   ],
+   "pivot": [
+    68,
+    81
+   ],
+   "base_width": 128.0
+  },
+  "standard": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    149
+   ],
+   "pivot": [
+    68,
+    113
+   ],
+   "base_width": 128.0
+  },
+  "grain_mill": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    74
+   ],
+   "pivot": [
+    68,
+    38
+   ],
+   "base_width": 128.0
+  },
+  "feast_mat": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    136
+   ],
+   "pivot": [
+    132,
+    68
+   ],
+   "base_width": 256.0
+  },
+  "shade_canopy": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    206
+   ],
+   "pivot": [
+    132,
+    138
+   ],
+   "base_width": 256.0
+  },
+  "vine_pergola": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    204
+   ],
+   "pivot": [
+    132,
+    136
+   ],
+   "base_width": 256.0
+  },
+  "palanquin": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    207
+   ],
+   "pivot": [
+    132,
+    139
+   ],
+   "base_width": 256.0
+  },
+  "kiosk": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    233
+   ],
+   "pivot": [
+    132,
+    165
+   ],
+   "base_width": 256.0
+  },
+  "crates": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    117
+   ],
+   "pivot": [
+    68,
+    81
+   ],
+   "base_width": 128.0
+  },
+  "amphorae": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    82
+   ],
+   "pivot": [
+    68,
+    46
+   ],
+   "base_width": 128.0
+  },
+  "campfire": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    73
+   ],
+   "pivot": [
+    68,
+    37
+   ],
+   "base_width": 128.0
+  },
+  "scribe_desk": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    92
+   ],
+   "pivot": [
+    68,
+    56
+   ],
+   "base_width": 128.0
+  },
+  "grain_baskets": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    75
+   ],
+   "pivot": [
+    68,
+    39
+   ],
+   "base_width": 128.0
+  },
+  "treasure_chest": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    87
+   ],
+   "pivot": [
+    68,
+    51
+   ],
+   "base_width": 128.0
+  },
+  "tent": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    196
+   ],
+   "pivot": [
+    132,
+    128
+   ],
+   "base_width": 256.0
+  },
+  "dig_site": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    139
+   ],
+   "pivot": [
+    132,
+    71
+   ],
+   "base_width": 256.0
+  },
+  "reed_boat": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    143
+   ],
+   "pivot": [
+    132,
+    75
+   ],
+   "base_width": 256.0
+  },
+  "cart": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    149
+   ],
+   "pivot": [
+    132,
+    81
+   ],
+   "base_width": 256.0
+  },
+  "crocodile": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    72
+   ],
+   "pivot": [
+    68,
+    36
+   ],
+   "base_width": 128.0
+  },
+  "ibis": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    103
+   ],
+   "pivot": [
+    68,
+    67
+   ],
+   "base_width": 128.0
+  },
+  "falcon": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    123
+   ],
+   "pivot": [
+    68,
+    87
+   ],
+   "base_width": 128.0
+  },
+  "cat": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    98
+   ],
+   "pivot": [
+    68,
+    62
+   ],
+   "base_width": 128.0
+  },
+  "hippo": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    75
+   ],
+   "pivot": [
+    68,
+    39
+   ],
+   "base_width": 128.0
+  },
+  "boulder": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    89
+   ],
+   "pivot": [
+    68,
+    53
+   ],
+   "base_width": 128.0
+  },
+  "turquoise": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    108
+   ],
+   "pivot": [
+    68,
+    72
+   ],
+   "base_width": 128.0
+  },
+  "desert_rocks": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    163
+   ],
+   "pivot": [
+    132,
+    95
+   ],
+   "base_width": 256.0
+  }
+ }
+}

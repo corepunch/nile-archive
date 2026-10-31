@@ -1,0 +1,2695 @@
+{
+ "source": "art/building-catalogue/nile_archive_buildings.blend",
+ "registration": "art/building-catalogue/registration.json",
+ "tile_px": 128,
+ "items": [
+  {
+   "id": 0,
+   "key": "small_pyramid",
+   "name": "Малая пирамида",
+   "category": "wonder",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    123
+   ],
+   "base_width": 256.0,
+   "coins": 240,
+   "stars": 0,
+   "note": "Relic slot 0 · stepped limestone pyramid with a gilded cap",
+   "image": [
+    254,
+    186
+   ],
+   "crop": [
+    5,
+    7
+   ],
+   "runtime": "data/buildings/small_pyramid.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_small_pyramid"
+  },
+  {
+   "id": 1,
+   "key": "nilometer",
+   "name": "Ниломер",
+   "category": "wonder",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    125
+   ],
+   "base_width": 256.0,
+   "coins": 260,
+   "stars": 0,
+   "note": "Relic slot 1 · stepped well that measures the flood",
+   "image": [
+    254,
+    188
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/nilometer.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_nilometer"
+  },
+  {
+   "id": 2,
+   "key": "sphinx",
+   "name": "Сфинкс",
+   "category": "wonder",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    111
+   ],
+   "base_width": 320.0,
+   "coins": 300,
+   "stars": 1,
+   "note": "Relic slot 2 · reclining guardian on a plinth",
+   "image": [
+    318,
+    189
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/sphinx.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sphinx"
+  },
+  {
+   "id": 3,
+   "key": "barque_shrine",
+   "name": "Святилище ладьи",
+   "category": "wonder",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    185
+   ],
+   "base_width": 320.0,
+   "coins": 320,
+   "stars": 1,
+   "note": "Relic slot 3 · sacred boat on a pedestal under a canopy",
+   "image": [
+    318,
+    263
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/barque_shrine.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_barque_shrine"
+  },
+  {
+   "id": 4,
+   "key": "pylon_gate",
+   "name": "Пилон",
+   "category": "wonder",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    225
+   ],
+   "base_width": 320.0,
+   "coins": 340,
+   "stars": 2,
+   "note": "Relic slot 4 · twin battered towers with a gate and flags",
+   "image": [
+    318,
+    303
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/pylon_gate.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pylon_gate"
+  },
+  {
+   "id": 5,
+   "key": "hypostyle",
+   "name": "Колонный зал",
+   "category": "wonder",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    231
+   ],
+   "base_width": 384.0,
+   "coins": 380,
+   "stars": 3,
+   "note": "Relic slot 5 · roofed hall of papyrus columns",
+   "image": [
+    382,
+    325
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/hypostyle.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_hypostyle"
+  },
+  {
+   "id": 6,
+   "key": "sun_temple",
+   "name": "Храм солнца",
+   "category": "wonder",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    238
+   ],
+   "base_width": 384.0,
+   "coins": 420,
+   "stars": 4,
+   "note": "Relic slot 6 · open court with an obelisk and altar",
+   "image": [
+    382,
+    332
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/sun_temple.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sun_temple"
+  },
+  {
+   "id": 7,
+   "key": "lighthouse",
+   "name": "Маяк",
+   "category": "wonder",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    242
+   ],
+   "base_width": 256.0,
+   "coins": 450,
+   "stars": 5,
+   "note": "Relic slot 7 · stepped tower with a fire on top",
+   "image": [
+    254,
+    305
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/lighthouse.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_lighthouse"
+  },
+  {
+   "id": 8,
+   "key": "sacred_lake",
+   "name": "Священное озеро",
+   "category": "wonder",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    117
+   ],
+   "base_width": 384.0,
+   "coins": 500,
+   "stars": 6,
+   "note": "Relic slot 8 · stone-lined pool with lotus and steps",
+   "image": [
+    382,
+    211
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/sacred_lake.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sacred_lake"
+  },
+  {
+   "id": 9,
+   "key": "great_pyramid",
+   "name": "Великая пирамида",
+   "category": "wonder",
+   "size": [
+    4,
+    4
+   ],
+   "pivot": [
+    255,
+    243
+   ],
+   "base_width": 512.0,
+   "coins": 750,
+   "stars": 9,
+   "note": "Relic slot 9 · finale landmark",
+   "image": [
+    510,
+    369
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/great_pyramid.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_great_pyramid"
+  },
+  {
+   "id": 10,
+   "key": "mud_house",
+   "name": "Глинобитный дом",
+   "category": "building",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    173
+   ],
+   "base_width": 256.0,
+   "coins": 200,
+   "stars": 2,
+   "note": "Relic slot 10 · whitewashed house with a roof terrace",
+   "image": [
+    254,
+    236
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/mud_house.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_mud_house"
+  },
+  {
+   "id": 11,
+   "key": "pottery",
+   "name": "Гончарня",
+   "category": "building",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    124
+   ],
+   "base_width": 256.0,
+   "coins": 220,
+   "stars": 2,
+   "note": "Relic slot 11 · kiln, wheel and jars",
+   "image": [
+    254,
+    187
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/pottery.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pottery"
+  },
+  {
+   "id": 12,
+   "key": "bakery",
+   "name": "Пекарня",
+   "category": "building",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    155
+   ],
+   "base_width": 320.0,
+   "coins": 240,
+   "stars": 3,
+   "note": "Relic slot 12 · domed ovens and bread",
+   "image": [
+    318,
+    233
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/bakery.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bakery"
+  },
+  {
+   "id": 13,
+   "key": "weaver",
+   "name": "Ткацкая мастерская",
+   "category": "building",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    150
+   ],
+   "base_width": 320.0,
+   "coins": 260,
+   "stars": 3,
+   "note": "Relic slot 13 · loom under an awning",
+   "image": [
+    318,
+    228
+   ],
+   "crop": [
+    5,
+    6
+   ],
+   "runtime": "data/buildings/weaver.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_weaver"
+  },
+  {
+   "id": 14,
+   "key": "scribe_school",
+   "name": "Школа писцов",
+   "category": "building",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    171
+   ],
+   "base_width": 320.0,
+   "coins": 280,
+   "stars": 4,
+   "note": "Relic slot 14 · columned porch and scroll racks",
+   "image": [
+    318,
+    249
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/scribe_school.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_scribe_school"
+  },
+  {
+   "id": 15,
+   "key": "granary",
+   "name": "Зернохранилище",
+   "category": "building",
+   "size": [
+    3,
+    2
+   ],
+   "pivot": [
+    159,
+    134
+   ],
+   "base_width": 320.0,
+   "coins": 300,
+   "stars": 4,
+   "note": "Relic slot 15 · beehive silos in a walled yard",
+   "image": [
+    318,
+    212
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/granary.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_granary"
+  },
+  {
+   "id": 16,
+   "key": "bazaar",
+   "name": "Базар",
+   "category": "building",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    164
+   ],
+   "base_width": 384.0,
+   "coins": 320,
+   "stars": 5,
+   "note": "Relic slot 16 · striped stalls and baskets",
+   "image": [
+    382,
+    258
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/bazaar.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bazaar"
+  },
+  {
+   "id": 17,
+   "key": "villa",
+   "name": "Вилла вельможи",
+   "category": "building",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    237
+   ],
+   "base_width": 384.0,
+   "coins": 340,
+   "stars": 5,
+   "note": "Relic slot 17 · two-storey house with a garden",
+   "image": [
+    382,
+    331
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/villa.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_villa"
+  },
+  {
+   "id": 18,
+   "key": "dovecote",
+   "name": "Голубятня",
+   "category": "building",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    196
+   ],
+   "base_width": 256.0,
+   "coins": 360,
+   "stars": 5,
+   "note": "Relic slot 18 · tall tower with nest holes",
+   "image": [
+    254,
+    259
+   ],
+   "crop": [
+    5,
+    3
+   ],
+   "runtime": "data/buildings/dovecote.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_dovecote"
+  },
+  {
+   "id": 19,
+   "key": "watchtower",
+   "name": "Сторожевая башня",
+   "category": "building",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    127,
+    236
+   ],
+   "base_width": 256.0,
+   "coins": 380,
+   "stars": 5,
+   "note": "Relic slot 19 · battered tower with banner",
+   "image": [
+    254,
+    299
+   ],
+   "crop": [
+    5,
+    3
+   ],
+   "runtime": "data/buildings/watchtower.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_watchtower"
+  },
+  {
+   "id": 20,
+   "key": "winery",
+   "name": "Винодельня",
+   "category": "building",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    178
+   ],
+   "base_width": 384.0,
+   "coins": 400,
+   "stars": 6,
+   "note": "Relic slot 20 · vine pergola and press",
+   "image": [
+    382,
+    272
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/winery.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_winery"
+  },
+  {
+   "id": 21,
+   "key": "bastet_shrine",
+   "name": "Святилище Бастет",
+   "category": "building",
+   "size": [
+    3,
+    3
+   ],
+   "pivot": [
+    191,
+    187
+   ],
+   "base_width": 384.0,
+   "coins": 420,
+   "stars": 6,
+   "note": "Relic slot 21 · chapel with cat statues",
+   "image": [
+    382,
+    281
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/bastet_shrine.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bastet_shrine"
+  },
+  {
+   "id": 22,
+   "key": "felucca_dock",
+   "name": "Причал с фелюкой",
+   "category": "building",
+   "size": [
+    4,
+    2
+   ],
+   "pivot": [
+    191,
+    105
+   ],
+   "base_width": 384.0,
+   "coins": 440,
+   "stars": 7,
+   "note": "Relic slot 22 · moored sailing boat",
+   "image": [
+    382,
+    199
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/felucca_dock.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_felucca_dock"
+  },
+  {
+   "id": 23,
+   "key": "chariot_stable",
+   "name": "Конюшня колесниц",
+   "category": "building",
+   "size": [
+    4,
+    3
+   ],
+   "pivot": [
+    223,
+    195
+   ],
+   "base_width": 448.0,
+   "coins": 460,
+   "stars": 7,
+   "note": "Relic slot 23 · colonnaded stable and chariot",
+   "image": [
+    446,
+    305
+   ],
+   "crop": [
+    5,
+    6
+   ],
+   "runtime": "data/buildings/chariot_stable.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_chariot_stable"
+  },
+  {
+   "id": 24,
+   "key": "sculptor_yard",
+   "name": "Двор скульптора",
+   "category": "building",
+   "size": [
+    4,
+    3
+   ],
+   "pivot": [
+    223,
+    181
+   ],
+   "base_width": 448.0,
+   "coins": 500,
+   "stars": 8,
+   "note": "Relic slot 24 · workshop with statues in progress",
+   "image": [
+    446,
+    291
+   ],
+   "crop": [
+    5,
+    5
+   ],
+   "runtime": "data/buildings/sculptor_yard.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sculptor_yard"
+  },
+  {
+   "id": 25,
+   "key": "pharaoh_garden",
+   "name": "Сад фараона",
+   "category": "building",
+   "size": [
+    4,
+    4
+   ],
+   "pivot": [
+    255,
+    238
+   ],
+   "base_width": 512.0,
+   "coins": 550,
+   "stars": 9,
+   "note": "Relic slot 25 · terraced garden with pool and kiosk",
+   "image": [
+    510,
+    364
+   ],
+   "crop": [
+    5,
+    4
+   ],
+   "runtime": "data/buildings/pharaoh_garden.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pharaoh_garden"
+  },
+  {
+   "id": 26,
+   "key": "date_palm",
+   "name": "Финиковая пальма",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    38,
+    83
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 0,
+   "note": "Relic slot 26",
+   "image": [
+    78,
+    87
+   ],
+   "crop": [
+    30,
+    4
+   ],
+   "runtime": "data/buildings/date_palm.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_date_palm"
+  },
+  {
+   "id": 27,
+   "key": "doum_palm",
+   "name": "Пальма дум",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    40,
+    77
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 0,
+   "note": "Relic slot 27 · branching palm",
+   "image": [
+    80,
+    80
+   ],
+   "crop": [
+    28,
+    3
+   ],
+   "runtime": "data/buildings/doum_palm.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_doum_palm"
+  },
+  {
+   "id": 28,
+   "key": "cypress",
+   "name": "Кипарис",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    24,
+    112
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 1,
+   "note": "Relic slot 28",
+   "image": [
+    48,
+    115
+   ],
+   "crop": [
+    44,
+    4
+   ],
+   "runtime": "data/buildings/cypress.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cypress"
+  },
+  {
+   "id": 29,
+   "key": "acacia",
+   "name": "Акация",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    37,
+    83
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 1,
+   "note": "Relic slot 29 · flat umbrella crown",
+   "image": [
+    83,
+    86
+   ],
+   "crop": [
+    31,
+    4
+   ],
+   "runtime": "data/buildings/acacia.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_acacia"
+  },
+  {
+   "id": 30,
+   "key": "fig",
+   "name": "Смоковница",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    29,
+    90
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 2,
+   "note": "Relic slot 30",
+   "image": [
+    54,
+    94
+   ],
+   "crop": [
+    39,
+    4
+   ],
+   "runtime": "data/buildings/fig.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_fig"
+  },
+  {
+   "id": 31,
+   "key": "pomegranate",
+   "name": "Гранатовое дерево",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    30,
+    82
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 3,
+   "note": "Relic slot 31",
+   "image": [
+    56,
+    85
+   ],
+   "crop": [
+    38,
+    3
+   ],
+   "runtime": "data/buildings/pomegranate.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pomegranate"
+  },
+  {
+   "id": 32,
+   "key": "olive",
+   "name": "Олива",
+   "category": "tree",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    26,
+    82
+   ],
+   "base_width": 128.0,
+   "coins": 75,
+   "stars": 4,
+   "note": "Relic slot 32",
+   "image": [
+    52,
+    86
+   ],
+   "crop": [
+    42,
+    4
+   ],
+   "runtime": "data/buildings/olive.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_olive"
+  },
+  {
+   "id": 33,
+   "key": "palm_grove",
+   "name": "Пальмовая роща",
+   "category": "tree",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    65,
+    132
+   ],
+   "base_width": 256.0,
+   "coins": 120,
+   "stars": 2,
+   "note": "Relic slot 33",
+   "image": [
+    152,
+    175
+   ],
+   "crop": [
+    67,
+    4
+   ],
+   "runtime": "data/buildings/palm_grove.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_palm_grove"
+  },
+  {
+   "id": 34,
+   "key": "twin_palms",
+   "name": "Двойная пальма",
+   "category": "tree",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    54,
+    132
+   ],
+   "base_width": 256.0,
+   "coins": 150,
+   "stars": 2,
+   "note": "Relic slot 34",
+   "image": [
+    124,
+    154
+   ],
+   "crop": [
+    78,
+    3
+   ],
+   "runtime": "data/buildings/twin_palms.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_twin_palms"
+  },
+  {
+   "id": 35,
+   "key": "sycamore",
+   "name": "Сикомор",
+   "category": "tree",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    54,
+    134
+   ],
+   "base_width": 256.0,
+   "coins": 180,
+   "stars": 3,
+   "note": "Relic slot 35 · broad sacred fig",
+   "image": [
+    109,
+    144
+   ],
+   "crop": [
+    78,
+    3
+   ],
+   "runtime": "data/buildings/sycamore.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sycamore"
+  },
+  {
+   "id": 36,
+   "key": "tamarisk",
+   "name": "Тамариск",
+   "category": "tree",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    55,
+    116
+   ],
+   "base_width": 256.0,
+   "coins": 300,
+   "stars": 5,
+   "note": "Relic slot 36 · feathery pink-flowered tree",
+   "image": [
+    112,
+    122
+   ],
+   "crop": [
+    77,
+    4
+   ],
+   "runtime": "data/buildings/tamarisk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_tamarisk"
+  },
+  {
+   "id": 37,
+   "key": "shrub",
+   "name": "Круглый куст",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    31,
+    53
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 37",
+   "image": [
+    67,
+    67
+   ],
+   "crop": [
+    37,
+    4
+   ],
+   "runtime": "data/buildings/shrub.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_shrub"
+  },
+  {
+   "id": 38,
+   "key": "papyrus",
+   "name": "Папирус",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    38,
+    82
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 38",
+   "image": [
+    77,
+    92
+   ],
+   "crop": [
+    30,
+    4
+   ],
+   "runtime": "data/buildings/papyrus.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_papyrus"
+  },
+  {
+   "id": 39,
+   "key": "aloe",
+   "name": "Алоэ",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    32,
+    67
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 1,
+   "note": "Relic slot 39",
+   "image": [
+    65,
+    88
+   ],
+   "crop": [
+    36,
+    4
+   ],
+   "runtime": "data/buildings/aloe.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_aloe"
+  },
+  {
+   "id": 40,
+   "key": "oleander",
+   "name": "Олеандр",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    36,
+    60
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 1,
+   "note": "Relic slot 40 · flowering shrub",
+   "image": [
+    72,
+    75
+   ],
+   "crop": [
+    32,
+    4
+   ],
+   "runtime": "data/buildings/oleander.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_oleander"
+  },
+  {
+   "id": 41,
+   "key": "henna",
+   "name": "Куст хны",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    35,
+    49
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 2,
+   "note": "Relic slot 41 · white-flowered shrub",
+   "image": [
+    69,
+    62
+   ],
+   "crop": [
+    33,
+    4
+   ],
+   "runtime": "data/buildings/henna.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_henna"
+  },
+  {
+   "id": 42,
+   "key": "reeds",
+   "name": "Нильский тростник",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    32,
+    93
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 2,
+   "note": "Relic slot 42",
+   "image": [
+    64,
+    106
+   ],
+   "crop": [
+    36,
+    4
+   ],
+   "runtime": "data/buildings/reeds.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_reeds"
+  },
+  {
+   "id": 43,
+   "key": "potted_tree",
+   "name": "Деревце в кадке",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    24,
+    78
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 3,
+   "note": "Relic slot 43",
+   "image": [
+    49,
+    84
+   ],
+   "crop": [
+    44,
+    4
+   ],
+   "runtime": "data/buildings/potted_tree.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_potted_tree"
+  },
+  {
+   "id": 44,
+   "key": "hedge",
+   "name": "Живая изгородь",
+   "category": "bush",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    53,
+    64
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 3,
+   "note": "Relic slot 44",
+   "image": [
+    106,
+    88
+   ],
+   "crop": [
+    15,
+    7
+   ],
+   "runtime": "data/buildings/hedge.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_hedge"
+  },
+  {
+   "id": 45,
+   "key": "blue_lotus",
+   "name": "Голубой лотос",
+   "category": "flower",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    32,
+    28
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 45",
+   "image": [
+    64,
+    40
+   ],
+   "crop": [
+    36,
+    8
+   ],
+   "runtime": "data/buildings/blue_lotus.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_blue_lotus"
+  },
+  {
+   "id": 46,
+   "key": "poppies",
+   "name": "Маки",
+   "category": "flower",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    27,
+    44
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 46",
+   "image": [
+    60,
+    62
+   ],
+   "crop": [
+    41,
+    4
+   ],
+   "runtime": "data/buildings/poppies.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_poppies"
+  },
+  {
+   "id": 47,
+   "key": "chamomile",
+   "name": "Ромашки",
+   "category": "flower",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    33,
+    41
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 1,
+   "note": "Relic slot 47",
+   "image": [
+    64,
+    59
+   ],
+   "crop": [
+    35,
+    4
+   ],
+   "runtime": "data/buildings/chamomile.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_chamomile"
+  },
+  {
+   "id": 48,
+   "key": "cornflowers",
+   "name": "Васильки",
+   "category": "flower",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    26,
+    50
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 2,
+   "note": "Relic slot 48",
+   "image": [
+    54,
+    65
+   ],
+   "crop": [
+    42,
+    4
+   ],
+   "runtime": "data/buildings/cornflowers.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cornflowers"
+  },
+  {
+   "id": 49,
+   "key": "flower_box",
+   "name": "Цветочный ящик",
+   "category": "flower",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    38,
+    41
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 2,
+   "note": "Relic slot 49",
+   "image": [
+    76,
+    59
+   ],
+   "crop": [
+    30,
+    3
+   ],
+   "runtime": "data/buildings/flower_box.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_flower_box"
+  },
+  {
+   "id": 50,
+   "key": "irises",
+   "name": "Ирисы",
+   "category": "flower",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    29,
+    61
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 3,
+   "note": "Relic slot 50",
+   "image": [
+    58,
+    69
+   ],
+   "crop": [
+    39,
+    4
+   ],
+   "runtime": "data/buildings/irises.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_irises"
+  },
+  {
+   "id": 51,
+   "key": "flower_bed",
+   "name": "Клумба",
+   "category": "flower",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    126,
+    74
+   ],
+   "base_width": 256.0,
+   "coins": 90,
+   "stars": 2,
+   "note": "Relic slot 51",
+   "image": [
+    252,
+    136
+   ],
+   "crop": [
+    6,
+    6
+   ],
+   "runtime": "data/buildings/flower_bed.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_flower_bed"
+  },
+  {
+   "id": 52,
+   "key": "pattern_bed",
+   "name": "Узорный цветник",
+   "category": "flower",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    121,
+    72
+   ],
+   "base_width": 256.0,
+   "coins": 180,
+   "stars": 5,
+   "note": "Relic slot 52",
+   "image": [
+    242,
+    132
+   ],
+   "crop": [
+    11,
+    4
+   ],
+   "runtime": "data/buildings/pattern_bed.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pattern_bed"
+  },
+  {
+   "id": 53,
+   "key": "broken_column",
+   "name": "Упавшая колонна",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    40,
+    67
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 1,
+   "note": "Relic slot 53",
+   "image": [
+    72,
+    96
+   ],
+   "crop": [
+    28,
+    5
+   ],
+   "runtime": "data/buildings/broken_column.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_broken_column"
+  },
+  {
+   "id": 54,
+   "key": "pharaoh_head",
+   "name": "Голова фараона",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    35,
+    75
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 1,
+   "note": "Relic slot 54",
+   "image": [
+    70,
+    91
+   ],
+   "crop": [
+    33,
+    4
+   ],
+   "runtime": "data/buildings/pharaoh_head.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_pharaoh_head"
+  },
+  {
+   "id": 55,
+   "key": "bastet_cat",
+   "name": "Кошка Бастет",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    30,
+    84
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 2,
+   "note": "Relic slot 55",
+   "image": [
+    60,
+    96
+   ],
+   "crop": [
+    38,
+    4
+   ],
+   "runtime": "data/buildings/bastet_cat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bastet_cat"
+  },
+  {
+   "id": 56,
+   "key": "obelisk",
+   "name": "Обелиск",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    27,
+    118
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 3,
+   "note": "Relic slot 56",
+   "image": [
+    54,
+    130
+   ],
+   "crop": [
+    41,
+    4
+   ],
+   "runtime": "data/buildings/obelisk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_obelisk"
+  },
+  {
+   "id": 57,
+   "key": "sundial",
+   "name": "Солнечные часы",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    24,
+    65
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 3,
+   "note": "Relic slot 57",
+   "image": [
+    48,
+    76
+   ],
+   "crop": [
+    44,
+    5
+   ],
+   "runtime": "data/buildings/sundial.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_sundial"
+  },
+  {
+   "id": 58,
+   "key": "scribe_statue",
+   "name": "Статуя писца",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    31,
+    65
+   ],
+   "base_width": 128.0,
+   "coins": 90,
+   "stars": 4,
+   "note": "Relic slot 58",
+   "image": [
+    62,
+    79
+   ],
+   "crop": [
+    37,
+    4
+   ],
+   "runtime": "data/buildings/scribe_statue.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_scribe_statue"
+  },
+  {
+   "id": 59,
+   "key": "golden_scarab",
+   "name": "Золотой скарабей",
+   "category": "statue",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    35,
+    58
+   ],
+   "base_width": 128.0,
+   "coins": 150,
+   "stars": 5,
+   "note": "Relic slot 59",
+   "image": [
+    70,
+    72
+   ],
+   "crop": [
+    33,
+    4
+   ],
+   "runtime": "data/buildings/golden_scarab.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_golden_scarab"
+  },
+  {
+   "id": 60,
+   "key": "colossus",
+   "name": "Колосс",
+   "category": "statue",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    86,
+    149
+   ],
+   "base_width": 256.0,
+   "coins": 180,
+   "stars": 4,
+   "note": "Relic slot 60 · seated king",
+   "image": [
+    172,
+    189
+   ],
+   "crop": [
+    46,
+    4
+   ],
+   "runtime": "data/buildings/colossus.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_colossus"
+  },
+  {
+   "id": 61,
+   "key": "anubis",
+   "name": "Анубис",
+   "category": "statue",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    80,
+    85
+   ],
+   "base_width": 256.0,
+   "coins": 240,
+   "stars": 5,
+   "note": "Relic slot 61 · reclining jackal on a chest",
+   "image": [
+    160,
+    124
+   ],
+   "crop": [
+    52,
+    4
+   ],
+   "runtime": "data/buildings/anubis.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_anubis"
+  },
+  {
+   "id": 62,
+   "key": "birdbath",
+   "name": "Чаша для птиц",
+   "category": "water",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    29,
+    58
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 1,
+   "note": "Relic slot 62",
+   "image": [
+    58,
+    67
+   ],
+   "crop": [
+    39,
+    5
+   ],
+   "runtime": "data/buildings/birdbath.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_birdbath"
+  },
+  {
+   "id": 63,
+   "key": "small_fountain",
+   "name": "Фонтанчик",
+   "category": "water",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    39,
+    65
+   ],
+   "base_width": 128.0,
+   "coins": 90,
+   "stars": 3,
+   "note": "Relic slot 63",
+   "image": [
+    78,
+    84
+   ],
+   "crop": [
+    29,
+    4
+   ],
+   "runtime": "data/buildings/small_fountain.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_small_fountain"
+  },
+  {
+   "id": 64,
+   "key": "lotus_pond",
+   "name": "Пруд с лотосами",
+   "category": "water",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    82,
+    54
+   ],
+   "base_width": 256.0,
+   "coins": 120,
+   "stars": 2,
+   "note": "Relic slot 64",
+   "image": [
+    185,
+    94
+   ],
+   "crop": [
+    50,
+    14
+   ],
+   "runtime": "data/buildings/lotus_pond.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_lotus_pond"
+  },
+  {
+   "id": 65,
+   "key": "ibis_pond",
+   "name": "Пруд с ибисами",
+   "category": "water",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    85,
+    52
+   ],
+   "base_width": 256.0,
+   "coins": 150,
+   "stars": 3,
+   "note": "Relic slot 65",
+   "image": [
+    169,
+    93
+   ],
+   "crop": [
+    47,
+    16
+   ],
+   "runtime": "data/buildings/ibis_pond.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_ibis_pond"
+  },
+  {
+   "id": 66,
+   "key": "shaduf",
+   "name": "Шадуф",
+   "category": "water",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    108,
+    116
+   ],
+   "base_width": 256.0,
+   "coins": 240,
+   "stars": 5,
+   "note": "Relic slot 66 · counterweighted water lift",
+   "image": [
+    203,
+    146
+   ],
+   "crop": [
+    24,
+    4
+   ],
+   "runtime": "data/buildings/shaduf.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_shaduf"
+  },
+  {
+   "id": 67,
+   "key": "bench",
+   "name": "Каменная скамья",
+   "category": "garden",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    37,
+    46
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 0,
+   "note": "Relic slot 67",
+   "image": [
+    74,
+    61
+   ],
+   "crop": [
+    31,
+    6
+   ],
+   "runtime": "data/buildings/bench.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_bench"
+  },
+  {
+   "id": 68,
+   "key": "lamp_post",
+   "name": "Светильник",
+   "category": "garden",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    19,
+    96
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 0,
+   "note": "Relic slot 68",
+   "image": [
+    38,
+    105
+   ],
+   "crop": [
+    49,
+    4
+   ],
+   "runtime": "data/buildings/lamp_post.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_lamp_post"
+  },
+  {
+   "id": 69,
+   "key": "torch",
+   "name": "Факел",
+   "category": "garden",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    10,
+    91
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 1,
+   "note": "Relic slot 69",
+   "image": [
+    20,
+    93
+   ],
+   "crop": [
+    58,
+    4
+   ],
+   "runtime": "data/buildings/torch.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_torch"
+  },
+  {
+   "id": 70,
+   "key": "signpost",
+   "name": "Указатель",
+   "category": "garden",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    21,
+    77
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 1,
+   "note": "Relic slot 70",
+   "image": [
+    39,
+    79
+   ],
+   "crop": [
+    47,
+    4
+   ],
+   "runtime": "data/buildings/signpost.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_signpost"
+  },
+  {
+   "id": 71,
+   "key": "standard",
+   "name": "Штандарт",
+   "category": "garden",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    18,
+    109
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 2,
+   "note": "Relic slot 71",
+   "image": [
+    36,
+    117
+   ],
+   "crop": [
+    50,
+    4
+   ],
+   "runtime": "data/buildings/standard.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_standard"
+  },
+  {
+   "id": 72,
+   "key": "grain_mill",
+   "name": "Ручная мельница",
+   "category": "garden",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    36,
+    33
+   ],
+   "base_width": 128.0,
+   "coins": 45,
+   "stars": 3,
+   "note": "Relic slot 72",
+   "image": [
+    68,
+    50
+   ],
+   "crop": [
+    32,
+    5
+   ],
+   "runtime": "data/buildings/grain_mill.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_grain_mill"
+  },
+  {
+   "id": 73,
+   "key": "feast_mat",
+   "name": "Пир на циновке",
+   "category": "garden",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    93,
+    56
+   ],
+   "base_width": 256.0,
+   "coins": 120,
+   "stars": 2,
+   "note": "Relic slot 73",
+   "image": [
+    186,
+    103
+   ],
+   "crop": [
+    39,
+    12
+   ],
+   "runtime": "data/buildings/feast_mat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_feast_mat"
+  },
+  {
+   "id": 74,
+   "key": "shade_canopy",
+   "name": "Навес с подушками",
+   "category": "garden",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    103,
+    133
+   ],
+   "base_width": 256.0,
+   "coins": 150,
+   "stars": 2,
+   "note": "Relic slot 74",
+   "image": [
+    203,
+    180
+   ],
+   "crop": [
+    29,
+    5
+   ],
+   "runtime": "data/buildings/shade_canopy.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_shade_canopy"
+  },
+  {
+   "id": 75,
+   "key": "vine_pergola",
+   "name": "Виноградная пергола",
+   "category": "garden",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    98,
+    131
+   ],
+   "base_width": 256.0,
+   "coins": 180,
+   "stars": 3,
+   "note": "Relic slot 75",
+   "image": [
+    196,
+    175
+   ],
+   "crop": [
+    34,
+    5
+   ],
+   "runtime": "data/buildings/vine_pergola.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_vine_pergola"
+  },
+  {
+   "id": 76,
+   "key": "palanquin",
+   "name": "Паланкин",
+   "category": "garden",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    83,
+    133
+   ],
+   "base_width": 256.0,
+   "coins": 240,
+   "stars": 4,
+   "note": "Relic slot 76",
+   "image": [
+    166,
+    157
+   ],
+   "crop": [
+    49,
+    6
+   ],
+   "runtime": "data/buildings/palanquin.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_palanquin"
+  },
+  {
+   "id": 77,
+   "key": "kiosk",
+   "name": "Беседка-киоск",
+   "category": "garden",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    102,
+    160
+   ],
+   "base_width": 256.0,
+   "coins": 300,
+   "stars": 4,
+   "note": "Relic slot 77",
+   "image": [
+    204,
+    210
+   ],
+   "crop": [
+    30,
+    5
+   ],
+   "runtime": "data/buildings/kiosk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_kiosk"
+  },
+  {
+   "id": 78,
+   "key": "crates",
+   "name": "Ящики",
+   "category": "camp",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    31,
+    75
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 78",
+   "image": [
+    57,
+    96
+   ],
+   "crop": [
+    37,
+    6
+   ],
+   "runtime": "data/buildings/crates.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_crates"
+  },
+  {
+   "id": 79,
+   "key": "amphorae",
+   "name": "Амфоры",
+   "category": "camp",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    34,
+    42
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 79",
+   "image": [
+    54,
+    53
+   ],
+   "crop": [
+    34,
+    4
+   ],
+   "runtime": "data/buildings/amphorae.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_amphorae"
+  },
+  {
+   "id": 80,
+   "key": "campfire",
+   "name": "Костёр",
+   "category": "camp",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    34,
+    33
+   ],
+   "base_width": 128.0,
+   "coins": 30,
+   "stars": 0,
+   "note": "Relic slot 80",
+   "image": [
+    68,
+    48
+   ],
+   "crop": [
+    34,
+    4
+   ],
+   "runtime": "data/buildings/campfire.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_campfire"
+  },
+  {
+   "id": 81,
+   "key": "scribe_desk",
+   "name": "Пюпитр писца",
+   "category": "camp",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    32,
+    52
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 3,
+   "note": "Relic slot 81",
+   "image": [
+    64,
+    65
+   ],
+   "crop": [
+    36,
+    4
+   ],
+   "runtime": "data/buildings/scribe_desk.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_scribe_desk"
+  },
+  {
+   "id": 82,
+   "key": "grain_baskets",
+   "name": "Корзины с зерном",
+   "category": "camp",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    34,
+    35
+   ],
+   "base_width": 128.0,
+   "coins": 90,
+   "stars": 5,
+   "note": "Relic slot 82",
+   "image": [
+    55,
+    49
+   ],
+   "crop": [
+    34,
+    4
+   ],
+   "runtime": "data/buildings/grain_baskets.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_grain_baskets"
+  },
+  {
+   "id": 83,
+   "key": "treasure_chest",
+   "name": "Сундук сокровищ",
+   "category": "camp",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    32,
+    46
+   ],
+   "base_width": 128.0,
+   "coins": 120,
+   "stars": 5,
+   "note": "Relic slot 83",
+   "image": [
+    64,
+    69
+   ],
+   "crop": [
+    36,
+    5
+   ],
+   "runtime": "data/buildings/treasure_chest.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_treasure_chest"
+  },
+  {
+   "id": 84,
+   "key": "tent",
+   "name": "Шатёр",
+   "category": "camp",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    88,
+    125
+   ],
+   "base_width": 256.0,
+   "coins": 120,
+   "stars": 1,
+   "note": "Relic slot 84",
+   "image": [
+    175,
+    177
+   ],
+   "crop": [
+    44,
+    3
+   ],
+   "runtime": "data/buildings/tent.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_tent"
+  },
+  {
+   "id": 85,
+   "key": "dig_site",
+   "name": "Раскопки",
+   "category": "camp",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    95,
+    66
+   ],
+   "base_width": 256.0,
+   "coins": 120,
+   "stars": 2,
+   "note": "Relic slot 85",
+   "image": [
+    185,
+    112
+   ],
+   "crop": [
+    37,
+    5
+   ],
+   "runtime": "data/buildings/dig_site.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_dig_site"
+  },
+  {
+   "id": 86,
+   "key": "reed_boat",
+   "name": "Тростниковая лодка",
+   "category": "camp",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    62,
+    71
+   ],
+   "base_width": 256.0,
+   "coins": 150,
+   "stars": 3,
+   "note": "Relic slot 86",
+   "image": [
+    124,
+    86
+   ],
+   "crop": [
+    70,
+    4
+   ],
+   "runtime": "data/buildings/reed_boat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_reed_boat"
+  },
+  {
+   "id": 87,
+   "key": "cart",
+   "name": "Повозка",
+   "category": "camp",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    64,
+    76
+   ],
+   "base_width": 256.0,
+   "coins": 180,
+   "stars": 3,
+   "note": "Relic slot 87",
+   "image": [
+    139,
+    105
+   ],
+   "crop": [
+    68,
+    5
+   ],
+   "runtime": "data/buildings/cart.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cart"
+  },
+  {
+   "id": 88,
+   "key": "crocodile",
+   "name": "Крокодил",
+   "category": "animal",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    25,
+    30
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 2,
+   "note": "Relic slot 88",
+   "image": [
+    58,
+    39
+   ],
+   "crop": [
+    43,
+    6
+   ],
+   "runtime": "data/buildings/crocodile.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_crocodile"
+  },
+  {
+   "id": 89,
+   "key": "ibis",
+   "name": "Ибис",
+   "category": "animal",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    24,
+    64
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 2,
+   "note": "Relic slot 89",
+   "image": [
+    49,
+    73
+   ],
+   "crop": [
+    44,
+    3
+   ],
+   "runtime": "data/buildings/ibis.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_ibis"
+  },
+  {
+   "id": 90,
+   "key": "falcon",
+   "name": "Сокол",
+   "category": "animal",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    18,
+    83
+   ],
+   "base_width": 128.0,
+   "coins": 60,
+   "stars": 3,
+   "note": "Relic slot 90",
+   "image": [
+    36,
+    91
+   ],
+   "crop": [
+    50,
+    4
+   ],
+   "runtime": "data/buildings/falcon.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_falcon"
+  },
+  {
+   "id": 91,
+   "key": "cat",
+   "name": "Кошка",
+   "category": "animal",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    21,
+    58
+   ],
+   "base_width": 128.0,
+   "coins": 90,
+   "stars": 4,
+   "note": "Relic slot 91",
+   "image": [
+    42,
+    67
+   ],
+   "crop": [
+    47,
+    4
+   ],
+   "runtime": "data/buildings/cat.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_cat"
+  },
+  {
+   "id": 92,
+   "key": "hippo",
+   "name": "Бегемотик",
+   "category": "animal",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    26,
+    35
+   ],
+   "base_width": 128.0,
+   "coins": 90,
+   "stars": 4,
+   "note": "Relic slot 92",
+   "image": [
+    57,
+    45
+   ],
+   "crop": [
+    42,
+    4
+   ],
+   "runtime": "data/buildings/hippo.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_hippo"
+  },
+  {
+   "id": 93,
+   "key": "boulder",
+   "name": "Песчаный валун",
+   "category": "rock",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    31,
+    49
+   ],
+   "base_width": 128.0,
+   "coins": 15,
+   "stars": 0,
+   "note": "Relic slot 93",
+   "image": [
+    66,
+    68
+   ],
+   "crop": [
+    37,
+    4
+   ],
+   "runtime": "data/buildings/boulder.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_boulder"
+  },
+  {
+   "id": 94,
+   "key": "turquoise",
+   "name": "Бирюза",
+   "category": "rock",
+   "size": [
+    1,
+    1
+   ],
+   "pivot": [
+    25,
+    68
+   ],
+   "base_width": 128.0,
+   "coins": 120,
+   "stars": 5,
+   "note": "Relic slot 94",
+   "image": [
+    56,
+    75
+   ],
+   "crop": [
+    43,
+    4
+   ],
+   "runtime": "data/buildings/turquoise.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_turquoise"
+  },
+  {
+   "id": 95,
+   "key": "desert_rocks",
+   "name": "Скалы пустыни",
+   "category": "rock",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    83,
+    92
+   ],
+   "base_width": 256.0,
+   "coins": 60,
+   "stars": 1,
+   "note": "Relic slot 95",
+   "image": [
+    158,
+    137
+   ],
+   "crop": [
+    49,
+    3
+   ],
+   "runtime": "data/buildings/desert_rocks.png",
+   "source": "art/building-catalogue/nile_archive_buildings.blend#na_desert_rocks"
+  }
+ ]
+}
