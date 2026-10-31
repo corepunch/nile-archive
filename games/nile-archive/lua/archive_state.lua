@@ -2,9 +2,10 @@
 -- modules. Every module reads and writes the same table, so they can be
 -- required in any order without import cycles.
 local G = {
-    -- purse slots: coins are spent, influence only grows, and the third slot
-    -- counts completed chapters (a requirement, rebuilt from the wins)
-    COINS = 1, INFLUENCE = 2, CHAPTERS = 3,
+    -- purse slots: coins are spent, influence only grows; the third slot
+    -- counts completed chapters and the fourth the best Stars across them
+    -- (requirements, rebuilt from the wins and best stars, never spent)
+    COINS = 1, INFLUENCE = 2, CHAPTERS = 3, STARS = 4,
     ITEMS = 8,                    -- hidden objects per scene
     ZONES = 4,                    -- island regions: the estate and three shores
 

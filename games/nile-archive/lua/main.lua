@@ -23,7 +23,7 @@ local dialogs = require("archive_dialogs")
 local smoke = require("archive_smoke")
 local rgba = color
 local scenes, SCENES = content.scenes, content.SCENES
-local ITEMS, SLOTS, COINS, INFLUENCE, CHAPTERS = G.ITEMS, G.SLOTS, G.COINS, G.INFLUENCE, G.CHAPTERS
+local ITEMS, SLOTS, COINS, INFLUENCE, CHAPTERS, STARS = G.ITEMS, G.SLOTS, G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
 local MODAL_NONE, MODAL_WIN, MODAL_CAST, MODAL_CHAPTERS, MODAL_PAUSE =
     G.MODAL_NONE, G.MODAL_WIN, G.MODAL_CAST, G.MODAL_CHAPTERS, G.MODAL_PAUSE
 
@@ -61,6 +61,7 @@ end
 
 -- Debug/QA entry points used to capture screenshots:
 -- --screen island|build|purchase|opening|first-build|first-win|scene0..2|cast|pause|chapters|win|story|horem|merit,
+-- --catalogue <category> --catalogue-page N with --screen build, --building-review N,
 -- and --footprints to check the buildings' measured footprints and pivots
 local function apply_screen_arg(screen)
     G.wallet[INFLUENCE] = 100
@@ -79,7 +80,13 @@ local function apply_screen_arg(screen)
             G.bonus_in = 1
         end
     elseif screen == "build" then
-        G.tray = true
+        G.wallet[STARS] = economy.stars({3, 3, 1})   -- most of the catalogue unlocked, a few still locked
+        island.open_tray(app.arg("catalogue") or "story", tonumber(app.arg("catalogue-page")))
+    elseif screen == "catalogue-purchase" then
+        local kind = content.RESTORATIONS + 26 -- date palm, the smoke-test purchase
+        local ok, spot = G.island:find_spot(kind, vec2(940,760))
+        assert(ok)
+        G.island:begin_place(kind,spot)
     elseif screen == "purchase" then
         local ok, spot = G.island:find_spot(3, vec2(940, 760))
         assert(ok)
@@ -136,6 +143,36 @@ local function apply_screen_arg(screen)
     end
 end
 
+-- --building-review N places catalogue objects 8(N-1)+1 .. 8N on the open island,
+-- zoomed to fit the page's widest footprint; add --footprints to check each
+-- sprite against its tiles (docs/BUILDINGS.md).
+local REVIEW_PAGE = 8
+local function building_review(page)
+    local c = G.island
+    c.count = 0
+    c.open = 15
+    local first = content.RESTORATIONS + (page - 1) * REVIEW_PAGE
+    local span = 0   -- the widest footprint on the page, in tile half widths
+    for kind = first, math.min(first + REVIEW_PAGE, #G.buildings) - 1 do
+        local d = G.buildings[kind + 1]
+        span = math.max(span, d.size.w + d.size.h + 2)
+    end
+    local step = span * content.TILE.w + 30
+    local centre = vec2(1190, 680)
+    for k = 1, REVIEW_PAGE do
+        local kind = first + k - 1
+        if kind < #G.buildings then
+            local at = centre + vec2(((k - 1) % 4 - 1.5) * step, ((k - 1) // 4 - .5) * step * .8)
+            local ok, spot = c:find_spot(kind, c:snap(at, kind))
+            assert(ok, "building review needs open ground")
+            c:add(spot, kind, 0)
+        end
+    end
+    local cam = c.cam
+    cam.center, cam.zoom = centre - vec2(0, step * .15), math.min(1.9, 1080 / (4 * step))
+    c.cam = cam
+end
+
 local function init()
     K.setup_theme()
     story.setup(content.cast, K.dialogue_style())
@@ -151,7 +188,9 @@ local function init()
     G.smoke = app.arg("smoke") ~= nil
     G.island.show_footprints = app.arg("footprints") ~= nil
     local screen = app.arg("screen")
-    if screen then apply_screen_arg(screen) else story.play("intro", content.intro) end
+    local review = tonumber(app.arg("building-review"))
+    if screen then apply_screen_arg(screen) elseif not review then story.play("intro", content.intro) end
+    if review then building_review(review) end
 end
 
 return {
