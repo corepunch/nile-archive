@@ -7,6 +7,7 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
+A.tool_size = 76   -- square authored artwork and matching square touch targets
 
 function A.tool_state(charges, selected, inside, down, started_inside, hover, idle)
     if charges <= 0 or not idle then return "disabled" end

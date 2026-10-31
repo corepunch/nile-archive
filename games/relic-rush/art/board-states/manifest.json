@@ -129,138 +129,168 @@
     },
     "pickaxe-normal": {
       "box": [
-        15,
-        499,
-        238,
-        689
+        53,
+        45,
+        344,
+        322
       ],
-      "runtime": "data/board-states/pickaxe-normal.png"
+      "runtime": "data/board-states/pickaxe-normal.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "pickaxe-selected": {
       "box": [
-        246,
-        499,
-        470,
-        689
+        361,
+        43,
+        651,
+        322
       ],
-      "runtime": "data/board-states/pickaxe-selected.png"
+      "runtime": "data/board-states/pickaxe-selected.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "pickaxe-pressed": {
       "box": [
-        478,
-        499,
-        694,
-        689
+        666,
+        43,
+        954,
+        322
       ],
-      "runtime": "data/board-states/pickaxe-pressed.png"
+      "runtime": "data/board-states/pickaxe-pressed.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "pickaxe-hover": {
       "box": [
-        706,
-        499,
-        928,
-        689
+        969,
+        43,
+        1260,
+        322
       ],
-      "runtime": "data/board-states/pickaxe-hover.png"
+      "runtime": "data/board-states/pickaxe-hover.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "pickaxe-disabled": {
       "box": [
-        936,
-        499,
-        1156,
-        689
+        1276,
+        43,
+        1566,
+        322
       ],
-      "runtime": "data/board-states/pickaxe-disabled.png"
+      "runtime": "data/board-states/pickaxe-disabled.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "dynamite-normal": {
       "box": [
-        15,
-        699,
-        238,
-        889
+        53,
+        332,
+        344,
+        608
       ],
-      "runtime": "data/board-states/dynamite-normal.png"
+      "runtime": "data/board-states/dynamite-normal.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "dynamite-selected": {
       "box": [
-        246,
-        699,
-        470,
-        889
+        361,
+        332,
+        651,
+        608
       ],
-      "runtime": "data/board-states/dynamite-selected.png"
+      "runtime": "data/board-states/dynamite-selected.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "dynamite-pressed": {
       "box": [
-        478,
-        699,
-        694,
-        889
+        666,
+        332,
+        954,
+        608
       ],
-      "runtime": "data/board-states/dynamite-pressed.png"
+      "runtime": "data/board-states/dynamite-pressed.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "dynamite-hover": {
       "box": [
-        706,
-        699,
-        928,
-        889
+        969,
+        332,
+        1260,
+        608
       ],
-      "runtime": "data/board-states/dynamite-hover.png"
+      "runtime": "data/board-states/dynamite-hover.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "dynamite-disabled": {
       "box": [
-        936,
-        699,
-        1156,
-        889
+        1276,
+        332,
+        1567,
+        608
       ],
-      "runtime": "data/board-states/dynamite-disabled.png"
+      "runtime": "data/board-states/dynamite-disabled.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "sunburst-normal": {
       "box": [
-        15,
-        899,
-        238,
-        1111
+        53,
+        618,
+        344,
+        902
       ],
-      "runtime": "data/board-states/sunburst-normal.png"
+      "runtime": "data/board-states/sunburst-normal.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "sunburst-selected": {
       "box": [
-        246,
-        899,
-        470,
-        1111
+        361,
+        618,
+        651,
+        903
       ],
-      "runtime": "data/board-states/sunburst-selected.png"
+      "runtime": "data/board-states/sunburst-selected.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "sunburst-pressed": {
       "box": [
-        478,
-        899,
-        694,
-        1111
+        666,
+        618,
+        954,
+        903
       ],
-      "runtime": "data/board-states/sunburst-pressed.png"
+      "runtime": "data/board-states/sunburst-pressed.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "sunburst-hover": {
       "box": [
-        706,
-        899,
-        928,
-        1111
+        969,
+        618,
+        1260,
+        902
       ],
-      "runtime": "data/board-states/sunburst-hover.png"
+      "runtime": "data/board-states/sunburst-hover.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     },
     "sunburst-disabled": {
       "box": [
-        936,
-        899,
-        1156,
-        1111
+        1276,
+        618,
+        1566,
+        903
       ],
-      "runtime": "data/board-states/sunburst-disabled.png"
+      "runtime": "data/board-states/sunburst-disabled.png",
+      "source": "art/tool-buttons/source.png",
+      "fit": "square-button"
     }
   },
   "packs": [
@@ -517,5 +547,36 @@
     "placement_valid": "normal sprite over engine valid footprint",
     "placement_invalid": "engine transient red/alpha preview over invalid footprint",
     "hover_pressed_disabled": "no separate world-sprite states; existing form controls own input feedback"
+  },
+  "tool_buttons": {
+    "source": "art/tool-buttons/source.png",
+    "prompt": "art/tool-buttons/prompt.txt",
+    "source_size": [
+      1619,
+      971
+    ],
+    "generator": "built-in image_gen, 2026-10-31; all three tools and five authored states together in one 5x3 atlas",
+    "registration": {
+      "fit": "square-button",
+      "canvas": [
+        128,
+        128
+      ],
+      "art_size": [
+        120,
+        120
+      ],
+      "offset": [
+        4,
+        4
+      ],
+      "transform": "Measured opaque button body plus 8 source pixels padding; spatial resize to 120x120 normalizes the roughly 4% wider authored bodies to square. Original alpha and authored state artwork preserved."
+    },
+    "runtime_button_size": [
+      76,
+      76
+    ],
+    "review": "docs/review/square-tools/README.md",
+    "reproduction": "python3 games/relic-rush/tools/board_assets.py; python3 tests/fixtures/relic-tools/capture.py --before-ref 3120b70"
   }
 }

@@ -37,6 +37,13 @@ for name, asset in manifest["assets"].items():
     assert data[25] == 6, f"Expected RGBA authored state: {name}"
 for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
+buttons = manifest["tool_buttons"]
+assert (ROOT / buttons["source"]).is_file() and (ROOT / buttons["prompt"]).is_file()
+assert buttons["runtime_button_size"] == [int(re.search(r"A\.tool_size = (\d+)", art).group(1))] * 2
+for tool in manifest["tools"]:
+    for state in manifest["tool_states"]:
+        asset = manifest["assets"][tool + "-" + state]
+        assert asset["source"] == buttons["source"] and asset["fit"] == "square-button"
 assert (ROOT / manifest["cell_mask"]["source"]).is_file(), "Missing renderer-authored cell mask"
 assert (ROOT / manifest["cell_mask"]["runtime"]).is_file(), "Missing runtime cell mask"
 for pack in manifest["packs"]:

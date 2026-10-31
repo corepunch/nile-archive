@@ -17,10 +17,15 @@ def main():
     args = parser.parse_args()
     manifest = json.loads((ROOT / "art/board-states/manifest.json").read_text())
     source = Image.open(ROOT / manifest["source"]).convert("RGBA")
+    sources = {manifest["source"]: source}
+    for atlas in (manifest.get("tool_buttons"),):
+        if atlas:
+            sources[atlas["source"]] = Image.open(ROOT / atlas["source"]).convert("RGBA")
+            assert list(sources[atlas["source"]].size) == atlas["source_size"]
     mask = Image.open(ROOT / manifest["cell_mask"]["source"]).convert("L")
     assert list(source.size) == manifest["source_size"]
     for name, asset in manifest["assets"].items():
-        im = source.crop(asset["box"])
+        im = sources[asset.get("source", manifest["source"])].crop(asset["box"])
         if asset.get("rotation_degrees"):
             # User-requested orientation correction: preserve the original
             # six-stud artwork; rotation does not invent a visual state.
@@ -41,6 +46,12 @@ def main():
             margin = (extent - 128) // 2
             out = larger.crop((margin, margin, margin + 128, margin + 128))
             out.putalpha(ImageChops.multiply(out.getchannel("A"), mask))
+        elif asset.get("fit") == "square-button":
+            # Normalize the measured button body to the same square footprint
+            # in every authored state; never manufacture state artwork.
+            registration = manifest["tool_buttons"]["registration"]
+            im = im.resize(tuple(registration["art_size"]), Image.Resampling.LANCZOS)
+            out.alpha_composite(im, tuple(registration["offset"]))
         else:
             im.thumbnail((120, 120), Image.Resampling.LANCZOS)
             out.alpha_composite(im, ((128 - im.width) // 2, (128 - im.height) // 2))
@@ -49,6 +60,9 @@ def main():
             with Image.open(path) as current:
                 assert current.mode == "RGBA" and current.size == out.size, name
                 assert current.tobytes() == out.tobytes(), f"Stale asset: {path}"
+                if asset.get("fit") == "square-button":
+                    body = current.getchannel("A").point(lambda a: 255 if a > 128 else 0).getbbox()
+                    assert abs((body[2] - body[0]) - (body[3] - body[1])) <= 2, f"Non-square button: {name}"
                 if asset.get("fit") == "hex-slot":
                     alpha = current.getchannel("A")
                     assert not ImageChops.subtract(alpha, mask).getbbox(), f"Outside cell mask: {name}"

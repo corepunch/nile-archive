@@ -24,7 +24,7 @@ local CELL_SIZE = ART_CELL_SIZE * BOARD_SCALE
 local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
 local HEX_DY = 1.732050808 * HEX_R
 local board_origin = vec2(240, 492)
-local TOOLS_Y = 790   -- the tool row sits low, near the bottom edge
+local TOOLS_Y, TOOL_SIZE = 784, art.tool_size   -- square buttons leave room for labels below
 
 -- The screen is 480 wide and at least 900 tall; tall phones add height. The
 -- bottom group moves down by all of it (R.drop) and the board by half.
@@ -257,13 +257,13 @@ local function draw_tools(inp)
     local y = TOOLS_Y + R.drop
     for k = 0, 2 do
         local x = 63 + k * 112
-        local r = rect(x - 38, y, 76, 65)
+        local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
         local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
                                      inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE)
         gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], r:inflate(5), color.WHITE)
         gfx.circle(vec2(x + 29, y + 6), 13, rgba(44, 88, 61))
         R.say(tostring(R.g.tools[k + 1]), rect(x + 16, y - 7, 26, 26), 16, PAL_CREAM)
-        R.say_at(tool_names[k + 1], vec2(x, y + 80), 15, PAL_CREAM, 0)
+        R.say_at(tool_names[k + 1], vec2(x, y + TOOL_SIZE + 12), 15, PAL_CREAM, 0)
         if R.tapped(r) and R.phase == PH_IDLE then
             if R.g.tools[k + 1] > 0 then
                 R.tool = R.tool == k and -1 or k
@@ -274,9 +274,9 @@ local function draw_tools(inp)
             end
         end
     end
-    local guide = rect(387, y + 8, 63, 55)
+    local guide = rect(387, y + 14, 63, 55)
     gfx.image(R.board_art.guide, guide, color.WHITE)
-    R.say_at("GUIDE", vec2(419, y + 79), 12, PAL_WHITE, 0)
+    R.say_at("GUIDE", vec2(419, y + TOOL_SIZE + 11), 12, PAL_WHITE, 0)
     if R.tapped(guide) then R.overlay = R.OV_GUIDE end
 end
 

@@ -45,6 +45,8 @@ The minimum match is **four side-connected identical relics**, including bent gr
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
+The three power-up buttons use square artwork and 76×76 touch targets, with all five interaction states redrawn together. See the [square-button review](docs/review/square-tools/README.md).
+
 ![All ten playable level shapes, actual SDL captures](docs/screenshots/level-shapes-overview.jpg)
 
 See [rules, shape list, implementation notes and reference sources](docs/match4-rules.md).
