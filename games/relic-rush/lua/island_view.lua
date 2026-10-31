@@ -4,7 +4,7 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local SCREEN_W = R.SCREEN_W
-local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
+local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local rgba = color
 
 function R.island_focus(world, zoom)
