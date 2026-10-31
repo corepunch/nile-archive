@@ -220,7 +220,7 @@ function R.debug_screens()
             if R.phase == R.PH_PRESENT then R.phase = R.PH_IDLE end
         end
     end
-    if R.overlay ~= R.OV_NONE and not app.arg("reel") then R.modal_for, R.modal_clock = R.overlay, 1.6 end   -- stills show dialogs settled
+    if R.overlay ~= R.OV_NONE and not app.arg("reel") then R.modal_for = R.overlay; R.open_dialog(true) end   -- stills show dialogs settled
 end
 
 return R

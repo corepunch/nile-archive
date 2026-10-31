@@ -362,7 +362,9 @@ end
 function Stack:open(id,form,model,options)
     for _,layer in ipairs(self.layers) do if layer.id==id then fail('modal already open: '..id) end end
     local ok,message=form:push(model or {});if not ok then return false,message end
-    self.layers[#self.layers+1]={id=id,form=form,model=model or {},options=options or {},clock=0,fresh=true}
+    local layer={id=id,form=form,model=model or {},options=options or {},fade=0,fresh=true}
+    self.layers[#self.layers+1]=layer
+    tween.to(layer,.2,{fade=1}):ease('linear')   -- the backdrop fades in on the engine's tween module
     ui.block(app.bleed());return true
 end
 function Stack:close(id)
@@ -374,8 +376,7 @@ function Stack:draw(dt,options)
     options=options or {};local event;local top_fresh=false;local top_bounds
     ui.set_enabled(true)
     for i,layer in ipairs(self.layers) do
-        layer.clock=layer.clock+dt
-        local config=layer.options;local fade=options.reduced_motion and 1 or math.min(1,layer.clock/.2)
+        local config=layer.options;local fade=options.reduced_motion and 1 or layer.fade
         local theme=self.skin.theme or ui.theme()
         ui.modal_layer((config.blur or theme.backdrop_blur or 0)*fade,color.alpha(config.dim or theme.dim,fade))
         local bounds=config.bounds

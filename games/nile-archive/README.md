@@ -76,6 +76,11 @@
 | ![Двор хранителя](docs/screenshots/scene0.jpg) | ![Библиотека](docs/screenshots/scene1.jpg) |
 | **Храм на закате** | **Награда за главу** |
 | ![Храм](docs/screenshots/scene2.jpg) | ![Награда](docs/screenshots/reward.jpg) |
+
+Окно награды, звёзды и подписи предметов движутся на движковом модуле `tween`
+([docs/MOTION.md](../../docs/MOTION.md)):
+
+![Окно награды появляется](docs/screenshots/reward-entrance-reel.gif)
 | **Люди острова** | **Широкий экран 16:9** |
 | ![Персонажи](docs/screenshots/characters.jpg) | ![16:9](docs/screenshots/widescreen.jpg) |
 

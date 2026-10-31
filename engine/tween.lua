@@ -26,8 +26,9 @@ local families = {
     quad = power(2), cubic = power(3), quart = power(4), quint = power(5),
     expo = function(t) return t == 0 and 0 or 2 ^ (10 * t - 10) end,
     circ = function(t) return 1 - sqrt(1 - t * t) end,
-    -- overshoot: how far it pulls back first (1.70158 overshoots by 10%)
-    back = function(t, s) s = s or 1.70158; return (s + 1) * t * t * t - s * t * t end,
+    -- overshoot: how far it pulls back first (1.70158 overshoots by 10%);
+    -- written so that back(1) is exactly 1, and so out_back(0) exactly 0
+    back = function(t, s) s = s or 1.70158; return t * t * (t + s * (t - 1)) end,
     -- amplitude (>= 1) and period of the spring; Penner's formulation
     elastic = function(t, a, p)
         if t == 0 or t == 1 then return t end
@@ -392,7 +393,7 @@ function Tween:apply(p, i)
                 end
             end
         else
-            local e = self.curve(pj, self.a1, self.a2)
+            local e = pj <= 0 and 0 or self.curve(pj, self.a1, self.a2)   -- the start is exact, whatever the curve
             if incr then e = e + i end
             for key, diff in pairs(props.diff) do
                 if not props.dead[key] then

@@ -201,13 +201,14 @@ function K.amount(pos, pivot, icon, str, s)
     return box
 end
 
--- Three stars, the middle one raised; with `t` the earned ones pop in one by one.
-function K.star_row(c, size, earned, t)
+-- Three stars, the middle one raised; `pops` (G.dialog.stars) scales the earned
+-- ones as they arrive one by one.
+function K.star_row(c, size, earned, pops)
     for k = 1, 3 do
         local big = k == 2
         local r = size * (big and 1.2 or 1)
         local p = c + vec2((k - 2) * size * 2.3, big and -size * .35 or 0)
-        local pop = t and ease.out_back(num.saturate((t - .25 - k * .18) * 3)) or 1
+        local pop = pops and pops[k].s or 1
         gfx.star(p + vec2(0, 3), r * 1.08, .48, 5, -math.pi / 2, rgba(0, 0, 0, 90))
         gfx.star(p, r * 1.08, .48, 5, -math.pi / 2, GOLD_SEAM)
         gfx.star(p, r, .48, 5, -math.pi / 2, hex(0x2A3F44))

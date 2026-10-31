@@ -45,6 +45,11 @@ def main():
         motion = [Image.open(frames / f'motion-{i}.png').convert('RGB').resize((600, 450), Image.Resampling.LANCZOS) for i in range(16)]
         motion = [im.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for im in motion]
         motion[0].save(ROOT / 'docs/screenshots/motion-reel.gif', save_all=True, append_images=motion[1:], duration=100, loop=0, optimize=True)
+        # the result dialogs arriving on the motion module, 6 frames apart
+        for game, prefix, size in (('christmas-market', 'christmas-market-reward-entrance', (240, 450)), ('nile-archive', 'nile-reward-entrance', (600, 450))):
+            reel = [Image.open(frames / f'{prefix}-{i}.png').convert('RGB').resize(size, Image.Resampling.LANCZOS) for i in range(16)]
+            reel = [im.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for im in reel]
+            reel[0].save(ROOT / f'games/{game}/docs/screenshots/reward-entrance-reel.gif', save_all=True, append_images=reel[1:], duration=100, loop=0, optimize=True)
     print('documentation images written')
 
 

@@ -23,7 +23,7 @@ local dialogs = require("archive_dialogs")
 local smoke = require("archive_smoke")
 local rgba = color
 local scenes, SCENES = content.scenes, content.SCENES
-local ITEMS, SLOTS, COINS, INFLUENCE, CHAPTERS, STARS = G.ITEMS, G.SLOTS, G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
+local ITEMS, COINS, INFLUENCE, CHAPTERS, STARS = G.ITEMS, G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
 local MODAL_NONE, MODAL_WIN, MODAL_CAST, MODAL_CHAPTERS, MODAL_PAUSE =
     G.MODAL_NONE, G.MODAL_WIN, G.MODAL_CAST, G.MODAL_CHAPTERS, G.MODAL_PAUSE
 
@@ -39,8 +39,9 @@ local function frame(dt)
         elseif G.modal ~= MODAL_NONE then G.modal = MODAL_NONE
         elseif G.island.placing >= 0 then G.island:cancel()
         elseif G.tray then G.tray = false; G.island.selected = -1
-        elseif G.scene then G.modal, G.modal_time = MODAL_PAUSE, 0 end
+        elseif G.scene then G.open_modal(MODAL_PAUSE) end
     end
+    tween.instant(G.reduced_motion)   -- reduced motion: every tween settles on its next frame
     fx.update(dt)
 
     local screen = app.screen()
@@ -49,9 +50,10 @@ local function frame(dt)
     ui.set_enabled(true)
 
     if G.modal ~= MODAL_NONE and not talking then   -- a dialogue goes first: the reward waits for it
-        G.modal_time = G.modal_time + dt
-        ui.modal_backdrop(G.reduced_motion and 1 or G.modal_time * 4)
-        dialogs.draw(G.modal, G.modal_time)
+        local d = G.dialog
+        if d.tl.paused then d.tl:resume() end
+        ui.modal_backdrop(d.backdrop)
+        dialogs.draw(G.modal)
     end
     story.frame(dt)
     if G.smoke then smoke.step() end
@@ -74,10 +76,10 @@ local function apply_screen_arg(screen)
             for _, i in ipairs({1, 3, 4, 6}) do G.found[i] = -10 end
             G.score, G.combo, G.combo_left, G.clock = 1800, 3, 3.2, 47
             scene.refill_slots(app.time(), 0)
-            for k = 1, SLOTS do G.slot_time[k] = app.time() - 10 end
+            scene.settle_slots()
             scene.show_hint()
             G.hint_ready = G.clock + 6
-            G.bonus_in = 1
+            G.bonus_in, G.bonus_goal = 1, 1
         end
     elseif screen == "build" then
         G.wallet[STARS] = economy.stars({3, 3, 1})   -- most of the catalogue unlocked, a few still locked
@@ -97,27 +99,27 @@ local function apply_screen_arg(screen)
         scene.open(1)
         G.wallet = purse(140, 10, 1)
         G.wins, G.stars = {1, 0, 0}, {1, 0, 0}
-        for i = 1, ITEMS do G.found[i] = 0 end
+        for i = 1, ITEMS do G.found[i] = 0; scene.show_found(i) end   -- the last finds are still leaving the bar
         G.result = {score = 2400, time = 180, stars = 1, payout = economy.reward(0, 0, 1, false)}
-        G.modal, G.modal_time = MODAL_WIN, 2
+        G.open_modal(MODAL_WIN, not app.arg("reel"))
     elseif screen == "cast" then
-        G.modal, G.modal_time = MODAL_CAST, 1
+        G.open_modal(MODAL_CAST, true)
     elseif screen == "pause" then
         scene.open(1)
         for _, i in ipairs({2, 5}) do G.found[i] = -10 end
-        G.modal, G.modal_time = MODAL_PAUSE, 1
+        G.open_modal(MODAL_PAUSE, true)
     elseif screen == "chapters" then
         G.wallet[INFLUENCE] = 30
         G.wins, G.stars = {1, 0, 0}, {3, 0, 0}
         G.wallet[CHAPTERS] = economy.completed(G.wins)
-        G.modal, G.modal_time = MODAL_CHAPTERS, 1
+        G.open_modal(MODAL_CHAPTERS, true)
     elseif screen == "win" then
         scene.open(2)
-        for i = 1, ITEMS do G.found[i] = 0 end
+        for i = 1, ITEMS do G.found[i] = 0; scene.show_found(i) end   -- the last finds are still leaving the bar
         G.wins, G.stars = {1, 0, 0}, {3, 0, 0}
         G.wallet[CHAPTERS] = economy.completed(G.wins)
         G.result = {score = 4200, time = 68, stars = 3, payout = economy.reward(0, 0, 3, true)}
-        G.modal, G.modal_time = MODAL_WIN, 2
+        G.open_modal(MODAL_WIN, not app.arg("reel"))
     elseif screen == "story" then
         story.play("intro", content.intro)
     elseif screen == "horem" then

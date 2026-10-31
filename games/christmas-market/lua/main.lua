@@ -133,13 +133,13 @@ local function smoke()
     end
     if smoke_stage == -2 and R.overlay==R.OV_NONE then
         app.inject_click(vec2(419,825+R.drop));smoke_stage=-1
-    elseif smoke_stage == -1 and R.overlay==R.OV_GUIDE and R.modal_clock>.4 then
+    elseif smoke_stage == -1 and R.overlay==R.OV_GUIDE and R.dialog_settled() then
         local done=R.guide_form.boxes.done
         assert(done and #R.guide_form.nodes.topics.children==5,"smoke: guide data source was not laid out")
         app.inject_click(done:center()+vec2(0,R.drop/2));smoke_stage=0
     elseif smoke_stage == 0 then
         if R.overlay == R.OV_RESULT then
-            if R.modal_clock > 1.4 then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1 end
+            if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1 end
             return
         end
         if R.phase == R.PH_IDLE and R.overlay == R.OV_NONE and R.selected < 0 then
@@ -246,7 +246,7 @@ local function smoke()
     elseif smoke_stage==32 then
         assert(not R.on_island and R.overlay==R.OV_NONE,'unfinished expedition must not expose island access')
         app.inject_click(vec2(440,38));smoke_stage=33
-    elseif smoke_stage==33 and R.overlay==R.OV_PAUSE and R.modal_clock>.3 then
+    elseif smoke_stage==33 and R.overlay==R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(vec2(12,220+R.drop/2));smoke_stage=34
     elseif smoke_stage==34 and R.overlay==R.OV_NONE then
         assert(not R.on_island and R.g==smoke_move.resume_game and R.g.moves==smoke_move.resume_moves,
@@ -272,6 +272,7 @@ local function frame(dt)
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
     R.layout()
+    tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
     if app.arg("smoke") then smoke() end
     R.now = R.now + dt
     R.toast_time = R.toast_time - dt
@@ -480,7 +481,7 @@ local function debug_screens()
             if R.phase == R.PH_PRESENT then R.phase = R.PH_IDLE end
         end
     end
-    if R.overlay ~= R.OV_NONE and not app.arg("reel") then R.modal_for, R.modal_clock = R.overlay, 1.6 end   -- stills show dialogs settled
+    if R.overlay ~= R.OV_NONE and not app.arg("reel") then R.modal_for = R.overlay; R.open_dialog(true) end   -- stills show dialogs settled
 end
 
 local function init()

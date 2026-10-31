@@ -1,6 +1,7 @@
 -- Exercise the real expedition update loop, including an idle dead board.
 local rules = require("rules")
 local R = require("board")
+require("screens")   -- the dialogs' motion helpers
 local dead_board = require("fixtures/dead_board")
 
 
@@ -222,4 +223,51 @@ do
         R.present_board(); R.reset_board(g)
         check(not R.intro and R.phase == R.PH_IDLE, "reset clears pending entrance")
     end
+end
+
+-- The dialogs' motion runs on the engine's tween module (docs/MOTION.md): an
+-- entrance settles, the parts of a result arrive on one timeline a tap skips,
+-- a newer dialog interrupts, the exit banks the reward, and reduced motion
+-- settles everything on the next frame.
+do
+    testing.reset()
+    local claimed = 0
+    local claim = R.claim_reward
+    R.claim_reward = function() claimed = claimed + 1 end
+    R.open_dialog()
+    check(R.dialog.entry == 0 and R.dialog.fresh and not R.dialog_settled(), "a dialog opens at the start of its entrance")
+    tween.update(.1)
+    check(R.dialog.entry > 0 and R.dialog.entry < 1, "the entrance eases in")
+    tween.update(.2)
+    check(R.dialog.entry == 1 and R.dialog_settled(), "the entrance settles in .28 s")
+    R.dialog.n = 0
+    local part = R.dialog_part(.2, .3)
+    check(part.f == 0 and part.u == 0 and not R.dialog_settled(), "a part joins the dialog's timeline and holds it back")
+    tween.update(.1)
+    check(part.f == 0, "the part waits for its delay")
+    tween.update(.2)
+    check(part.f > part.u and part.u > 0 and part.f < 1, "then eases in, its linear progress alongside")
+    R.dialog.n = 0
+    check(R.dialog_part(.2, .3) == part, "parts are keyed by draw order")
+    R.dialog_skip()
+    check(part.f == 1 and part.u == 1 and R.dialog_settled(), "a tap skips the parts to their places")
+    R.close_dialog()
+    check(R.modal_closing and R.dialog.exit == 0, "the exit starts")
+    tween.update(.3)
+    check(claimed == 1 and not R.modal_closing and R.dialog.exit == 1, "and banks the reward when it ends")
+    R.open_dialog()
+    tween.update(.1)
+    local was = R.dialog
+    R.open_dialog()
+    check(R.dialog ~= was and R.dialog.entry == 0 and not tween.is_tweening(was), "a newer dialog interrupts the old entrance")
+    R.open_dialog(true)
+    R.dialog.n = 0
+    check(R.dialog.entry == 1 and R.dialog_part(.5, .3).f == 1 and R.dialog_settled(), "stills open a dialog settled")
+    tween.instant(true)
+    R.open_dialog()
+    tween.update(1 / 60)
+    check(R.dialog.entry == 1 and R.dialog_settled(), "reduced motion settles the entrance on the next frame")
+    tween.instant(false)
+    R.claim_reward = claim
+    testing.reset()
 end

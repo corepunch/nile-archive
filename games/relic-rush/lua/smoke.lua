@@ -47,7 +47,7 @@ function R.smoke()
     if stage == -2 and R.overlay == R.OV_NONE then
         assert(R.selected < 0 and R.g.moves == rules.level_of(R.g).moves, "smoke: the tap that skips the entrance must not play")
         app.inject_click(vec2(432, 46)); stage = -3
-    elseif stage == -3 and R.overlay == R.OV_PAUSE and R.modal_clock > .4 then   -- Sound off, then on again
+    elseif stage == -3 and R.overlay == R.OV_PAUSE and R.dialog_settled() then   -- Sound off, then on again
         smoke_sound = R.sound
         app.inject_click(R.pause_form.boxes.sound:center() + vec2(0, R.drop / 2)); stage = -4
     elseif stage == -4 then
@@ -56,13 +56,13 @@ function R.smoke()
     elseif stage == -5 then
         assert(R.sound == smoke_sound, "smoke: the Sound checkbox toggles back")
         app.inject_click(R.pause_form.boxes.guide:center() + vec2(0, R.drop / 2)); stage = -1
-    elseif stage == -1 and R.overlay == R.OV_GUIDE and R.modal_clock > .4 then
+    elseif stage == -1 and R.overlay == R.OV_GUIDE and R.dialog_settled() then
         local done = R.guide_form.boxes.done
         assert(done and #R.guide_form.nodes.topics.children == 5, "smoke: guide data source was not laid out")
         app.inject_click(done:center() + vec2(0, R.drop / 2)); stage = 0
     elseif stage == 0 then
         if R.overlay == R.OV_RESULT then
-            if R.modal_clock > 1.4 then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1 end
+            if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1 end
             return
         end
         if R.phase == R.PH_IDLE and R.overlay == R.OV_NONE and R.selected < 0 then
@@ -150,7 +150,7 @@ function R.smoke()
     elseif stage == 32 then
         assert(not R.on_island and R.overlay == R.OV_NONE, "old header corner must not return to the island")
         app.inject_click(vec2(440, 38)); stage = 33
-    elseif stage == 33 and R.overlay == R.OV_PAUSE and R.modal_clock > .3 then
+    elseif stage == 33 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(vec2(12, 220 + R.drop / 2)); stage = 34
     elseif stage == 34 and R.overlay == R.OV_NONE then
         assert(not R.on_island and R.g == shop.resume_game and R.g.moves == shop.resume_moves,
@@ -165,15 +165,15 @@ function R.smoke()
         assert(R.g.score > 0, "restart smoke must exercise a partly played board")
         app.inject_click(vec2(440, 38)); stage = 35
     -- Pause > Restart asks first: Keep playing returns to Pause, Restart starts over.
-    elseif stage == 35 and R.overlay == R.OV_PAUSE and R.modal_clock > .3 then
+    elseif stage == 35 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(R.pause_form.nodes.sound and R.pause_form.nodes.motion, "pause groups the Sound and Reduce motion checkboxes")
         app.inject_click(R.pause_form.boxes.restart:center() + vec2(0, R.drop / 2)); stage = 36
-    elseif stage == 36 and R.overlay == R.OV_CONFIRM and R.modal_clock > .3 then
+    elseif stage == 36 and R.overlay == R.OV_CONFIRM and R.dialog_settled() then
         app.inject_click(R.confirm_form.boxes.cancel:center() + vec2(0, R.drop / 2)); stage = 37
-    elseif stage == 37 and R.overlay == R.OV_PAUSE and R.modal_clock > .3 then
+    elseif stage == 37 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(R.g == shop.resume_game and R.g.score > 0, "Keep playing must not restart")
         app.inject_click(R.pause_form.boxes.restart:center() + vec2(0, R.drop / 2)); stage = 38
-    elseif stage == 38 and R.overlay == R.OV_CONFIRM and R.modal_clock > .3 then
+    elseif stage == 38 and R.overlay == R.OV_CONFIRM and R.dialog_settled() then
         app.inject_click(R.confirm_form.boxes.confirm:center() + vec2(0, R.drop / 2)); stage = 39
     elseif stage == 39 and R.overlay == R.OV_NONE then
         assert(not R.on_island and R.g ~= shop.resume_game and R.g.level == 0 and R.g.score == 0
@@ -183,7 +183,7 @@ function R.smoke()
         shop.resume_game, shop.resume_moves = R.g, R.g.moves
         app.inject_click(vec2(440, 38)); stage = 40
     -- Pause > Quit to island keeps the board and pays nothing; the browser resumes it.
-    elseif stage == 40 and R.overlay == R.OV_PAUSE and R.modal_clock > .3 then
+    elseif stage == 40 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(R.pause_form.boxes.quit:center() + vec2(0, R.drop / 2)); stage = 41
     elseif stage == 41 and R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and not R.g.won and not R.g.lost, "Quit must keep the unfinished board")
@@ -191,7 +191,7 @@ function R.smoke()
                and R.prog.wallet[4] == 3 and R.prog.wallet[5] == 1 and island.wonder_count(R.island) == 1,
                "restart and quit must not award rewards or change restoration progress")
         app.inject_click(vec2(440, 38)); stage = 42
-    elseif stage == 42 and R.overlay == R.OV_PAUSE and R.modal_clock > .3 then
+    elseif stage == 42 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
