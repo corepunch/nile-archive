@@ -1,0 +1,16 @@
+Create a polished BUILDING ART DIRECTION REFERENCE SHEET for a cozy Christmas market game, using the attached sprite atlas as the reference for all twelve designs. This is concept direction for a future Blender modelling / render / repaint pass, not a final game sprite atlas.
+Landscape 4:3 presentation, very high resolution. Pale warm ivory background, restrained professional editorial layout, clear title "CHRISTMAS MARKET" with small subtitle "Building direction · Blender reference". EXACTLY FOUR COLUMNS by THREE ROWS of roomy equal cells, with delicate pale gray dividers. Each cell includes one COMPLETE and nicely separated building illustration, plenty of breathing room, absolutely no overlap between cells, no clipped roof/star/chimney/base. Retain original coherent painted design: snowy roofs, rich timber, cream plaster, fir garlands, red bows, golden fairy lights, glowing amber windows, cool snow. Three-quarter isometric view, fronts and right faces readable, diamond snowy ground platforms, no people.
+Preserve and show the twelve designs from the reference in exactly this reading order with a small clean dark brown caption under each:
+01  Welcome arch
+02  Lumber workshop
+03  Gingerbread bakery
+04  Hot cocoa kiosk
+05  Toymaker's workshop
+06  Gift wrapping pavilion
+07  Candlelight shop
+08  Reindeer carousel
+09  Winter skating rink
+10  Christmas tree
+11  Lantern firs
+12  Snowman bench
+The row-three tree must have its complete gold star clearly separated from the gift stall above. The skating rink must fit completely inside its own cell. Use only these 12 buildings/decorations, no extra buildings. The buildings are the focus; typography understated and legible. Footer in small type: "Snowy timber · Evergreen garlands · Red ribbons · Warm amber light". Clean useful art handoff sheet, cohesive scale and camera direction, no UI mockup, no resources, no buttons, no map.

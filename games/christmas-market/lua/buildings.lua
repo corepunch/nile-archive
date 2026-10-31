@@ -1,0 +1,15 @@
+-- Authored Christmas atlas; measurements and crops: art/registration.json.
+return {
+    {key="arch",name="Welcome arch",category="wonder",stars=0,about="A warm welcome for every winter visitor.",sprite_path="buildings/0.png",size=size2(3,3),pivot=vec2(179,259.5),base_width=338,cost=purse(60,10,5),needs=purse()},
+    {key="lumber",name="Lumber workshop",category="wonder",stars=0,about="Fresh timber for a market full of wishes.",sprite_path="buildings/1.png",size=size2(3,3),pivot=vec2(180.5,271.75),base_width=341,cost=purse(80,15,15),needs=purse()},
+    {key="bakery",name="Gingerbread bakery",category="wonder",stars=0,about="Follow the smell of cinnamon and warm gingerbread.",sprite_path="buildings/2.png",size=size2(3,3),pivot=vec2(181,271.5),base_width=342,cost=purse(100,25,15),needs=purse()},
+    {key="cocoa",name="Hot cocoa kiosk",category="wonder",stars=0,about="A warm cup and a sweet candy cane for cold hands.",sprite_path="buildings/3.png",size=size2(3,3),pivot=vec2(173.5,275.25),base_width=327,cost=purse(120,25,25),needs=purse()},
+    {key="toys",name="Toymaker’s workshop",category="wonder",stars=0,about="Little wooden toys, made with Christmas care.",sprite_path="buildings/4.png",size=size2(3,3),pivot=vec2(181,269.5),base_width=342,cost=purse(140,30,30),needs=purse()},
+    {key="gifts",name="Gift wrapping pavilion",category="wonder",stars=0,about="Tie every winter wish with a bright red ribbon.",sprite_path="buildings/5.png",size=size2(3,3),pivot=vec2(181,271.5),base_width=342,cost=purse(160,35,35),needs=purse()},
+    {key="candles",name="Candlelight shop",category="wonder",stars=0,about="Let a hundred little candles light the snowy evening.",sprite_path="buildings/6.png",size=size2(3,3),pivot=vec2(181,271.5),base_width=342,cost=purse(180,35,45),needs=purse()},
+    {key="carousel",name="Reindeer carousel",category="wonder",stars=0,about="Take a magical ride beneath the fairy lights.",sprite_path="buildings/7.png",size=size2(3,3),pivot=vec2(177,272.5),base_width=334,cost=purse(200,40,50),needs=purse()},
+    {key="rink",name="Winter skating rink",category="wonder",stars=0,about="A place to skate, laugh and make winter memories.",sprite_path="buildings/8.png",size=size2(3,3),pivot=vec2(181,247.5),base_width=342,cost=purse(220,45,55),needs=purse()},
+    {key="tree",name="Christmas tree",category="wonder",stars=0,about="The star on top lights up our Christmas square.",sprite_path="buildings/9.png",size=size2(3,3),pivot=vec2(181,289.5),base_width=342,cost=purse(250,50,60),needs=purse()},
+    {key="firs",name="Lantern firs",category="building",stars=0,about="Snowy firs and a lantern make the paths feel like home.",sprite_path="buildings/10.png",size=size2(2,2),pivot=vec2(181,249.5),base_width=342,cost=purse(45,0,0),needs=purse()},
+    {key="bench",name="Snowman bench",category="building",stars=0,about="A friendly snowman is saving you a seat.",sprite_path="buildings/11.png",size=size2(2,2),pivot=vec2(175.5,256.25),base_width=331,cost=purse(60,0,0),needs=purse()},
+}

@@ -1,0 +1,1040 @@
+{
+  "buildings": [
+    {
+      "id": 0,
+      "crop": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "trim": [
+        0,
+        13,
+        358,
+        362
+      ],
+      "size": [
+        358,
+        349
+      ],
+      "key": "arch",
+      "name": "Welcome arch",
+      "bottom": [
+        179,
+        344
+      ],
+      "left": 10,
+      "right": 348,
+      "pivot": [
+        179.0,
+        259.5
+      ],
+      "base_width": 338,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 1,
+      "crop": [
+        362,
+        0,
+        724,
+        362
+      ],
+      "trim": [
+        1,
+        0,
+        362,
+        362
+      ],
+      "size": [
+        361,
+        362
+      ],
+      "key": "lumber",
+      "name": "Lumber workshop",
+      "bottom": [
+        180,
+        357
+      ],
+      "left": 10,
+      "right": 351,
+      "pivot": [
+        180.5,
+        271.75
+      ],
+      "base_width": 341,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 2,
+      "crop": [
+        724,
+        0,
+        1086,
+        362
+      ],
+      "trim": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "size": [
+        362,
+        362
+      ],
+      "key": "bakery",
+      "name": "Gingerbread bakery",
+      "bottom": [
+        181,
+        357
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        271.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 3,
+      "crop": [
+        1086,
+        0,
+        1448,
+        362
+      ],
+      "trim": [
+        1,
+        0,
+        348,
+        362
+      ],
+      "size": [
+        347,
+        362
+      ],
+      "key": "cocoa",
+      "name": "Hot cocoa kiosk",
+      "bottom": [
+        174,
+        357
+      ],
+      "left": 10,
+      "right": 337,
+      "pivot": [
+        173.5,
+        275.25
+      ],
+      "base_width": 327,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 4,
+      "crop": [
+        0,
+        362,
+        362,
+        724
+      ],
+      "trim": [
+        0,
+        0,
+        362,
+        360
+      ],
+      "size": [
+        362,
+        360
+      ],
+      "key": "toys",
+      "name": "Toymaker\u2019s workshop",
+      "bottom": [
+        181,
+        355
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        269.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 5,
+      "crop": [
+        362,
+        362,
+        724,
+        712
+      ],
+      "trim": [
+        0,
+        0,
+        362,
+        350
+      ],
+      "size": [
+        362,
+        350
+      ],
+      "key": "gifts",
+      "name": "Gift wrapping pavilion",
+      "bottom": [
+        181,
+        357
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        271.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 6,
+      "crop": [
+        724,
+        362,
+        1086,
+        724
+      ],
+      "trim": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "size": [
+        362,
+        362
+      ],
+      "key": "candles",
+      "name": "Candlelight shop",
+      "bottom": [
+        181,
+        357
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        271.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 7,
+      "crop": [
+        1086,
+        362,
+        1448,
+        724
+      ],
+      "trim": [
+        0,
+        0,
+        354,
+        361
+      ],
+      "size": [
+        354,
+        361
+      ],
+      "key": "carousel",
+      "name": "Reindeer carousel",
+      "bottom": [
+        177,
+        356
+      ],
+      "left": 10,
+      "right": 344,
+      "pivot": [
+        177.0,
+        272.5
+      ],
+      "base_width": 334,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": null
+    },
+    {
+      "id": 8,
+      "crop": [
+        0,
+        724,
+        398,
+        1086
+      ],
+      "trim": [
+        0,
+        0,
+        398,
+        321
+      ],
+      "size": [
+        398,
+        321
+      ],
+      "key": "rink",
+      "name": "Winter skating rink",
+      "bottom": [
+        181,
+        333
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        247.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": [
+        [
+          0,
+          724
+        ],
+        [
+          350,
+          724
+        ],
+        [
+          398,
+          955
+        ],
+        [
+          345,
+          990
+        ],
+        [
+          210,
+          1060
+        ],
+        [
+          0,
+          1060
+        ]
+      ]
+    },
+    {
+      "id": 9,
+      "crop": [
+        362,
+        714,
+        724,
+        1086
+      ],
+      "trim": [
+        20,
+        0,
+        362,
+        372
+      ],
+      "size": [
+        342,
+        372
+      ],
+      "key": "tree",
+      "name": "Christmas tree",
+      "bottom": [
+        181,
+        375
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        289.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        3,
+        3
+      ],
+      "polygon": [
+        [
+          400,
+          1086
+        ],
+        [
+          380,
+          970
+        ],
+        [
+          420,
+          920
+        ],
+        [
+          470,
+          830
+        ],
+        [
+          525,
+          760
+        ],
+        [
+          530,
+          714
+        ],
+        [
+          580,
+          714
+        ],
+        [
+          620,
+          830
+        ],
+        [
+          700,
+          930
+        ],
+        [
+          724,
+          970
+        ],
+        [
+          724,
+          1086
+        ]
+      ]
+    },
+    {
+      "id": 10,
+      "crop": [
+        724,
+        724,
+        1086,
+        1086
+      ],
+      "trim": [
+        0,
+        0,
+        362,
+        340
+      ],
+      "size": [
+        362,
+        340
+      ],
+      "key": "firs",
+      "name": "Lantern firs",
+      "bottom": [
+        181,
+        335
+      ],
+      "left": 10,
+      "right": 352,
+      "pivot": [
+        181.0,
+        249.5
+      ],
+      "base_width": 342,
+      "tiles": [
+        2,
+        2
+      ],
+      "polygon": null
+    },
+    {
+      "id": 11,
+      "crop": [
+        1086,
+        724,
+        1448,
+        1086
+      ],
+      "trim": [
+        1,
+        0,
+        352,
+        344
+      ],
+      "size": [
+        351,
+        344
+      ],
+      "key": "bench",
+      "name": "Snowman bench",
+      "bottom": [
+        176,
+        339
+      ],
+      "left": 10,
+      "right": 341,
+      "pivot": [
+        175.5,
+        256.25
+      ],
+      "base_width": 331,
+      "tiles": [
+        2,
+        2
+      ],
+      "polygon": null
+    }
+  ],
+  "icons": [
+    {
+      "path": "tile-sets/festive/0.png",
+      "crop": [
+        0,
+        0,
+        198,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "tile-sets/festive/1.png",
+      "crop": [
+        198,
+        0,
+        396,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "tile-sets/festive/2.png",
+      "crop": [
+        396,
+        0,
+        595,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "tile-sets/festive/3.png",
+      "crop": [
+        595,
+        0,
+        793,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "tile-sets/festive/4.png",
+      "crop": [
+        793,
+        0,
+        991,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "tile-sets/festive/5.png",
+      "crop": [
+        991,
+        0,
+        1190,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/ray-row.png",
+      "crop": [
+        1190,
+        0,
+        1388,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/ray-column.png",
+      "crop": [
+        1388,
+        0,
+        1586,
+        232
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/ray-diagonal.png",
+      "crop": [
+        0,
+        232,
+        198,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/bomb.png",
+      "crop": [
+        198,
+        232,
+        396,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/prism.png",
+      "crop": [
+        396,
+        232,
+        595,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/sand.png",
+      "crop": [
+        595,
+        232,
+        793,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/chain.png",
+      "crop": [
+        793,
+        232,
+        991,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/ice-2.png",
+      "crop": [
+        991,
+        232,
+        1190,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/ice-1.png",
+      "crop": [
+        1190,
+        232,
+        1388,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/selected.png",
+      "crop": [
+        1388,
+        232,
+        1586,
+        422
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/hint.png",
+      "crop": [
+        0,
+        422,
+        198,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/guide.png",
+      "crop": [
+        198,
+        422,
+        396,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/cell-mask.png",
+      "crop": [
+        396,
+        422,
+        595,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/pickaxe-normal.png",
+      "crop": [
+        595,
+        422,
+        793,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/pickaxe-selected.png",
+      "crop": [
+        793,
+        422,
+        991,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/pickaxe-pressed.png",
+      "crop": [
+        991,
+        422,
+        1190,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/pickaxe-hover.png",
+      "crop": [
+        1190,
+        422,
+        1388,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/pickaxe-disabled.png",
+      "crop": [
+        1388,
+        422,
+        1586,
+        607
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/dynamite-normal.png",
+      "crop": [
+        0,
+        607,
+        198,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/dynamite-selected.png",
+      "crop": [
+        198,
+        607,
+        396,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/dynamite-pressed.png",
+      "crop": [
+        396,
+        607,
+        595,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/dynamite-hover.png",
+      "crop": [
+        595,
+        607,
+        793,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/dynamite-disabled.png",
+      "crop": [
+        793,
+        607,
+        991,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/sunburst-normal.png",
+      "crop": [
+        991,
+        607,
+        1190,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/sunburst-selected.png",
+      "crop": [
+        1190,
+        607,
+        1388,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/sunburst-pressed.png",
+      "crop": [
+        1388,
+        607,
+        1586,
+        786
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/sunburst-hover.png",
+      "crop": [
+        0,
+        786,
+        198,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "board-states/sunburst-disabled.png",
+      "crop": [
+        198,
+        786,
+        396,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "expedition-hud/pause-normal.png",
+      "crop": [
+        396,
+        786,
+        595,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "expedition-hud/pause-selected.png",
+      "crop": [
+        595,
+        786,
+        793,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "expedition-hud/pause-pressed.png",
+      "crop": [
+        793,
+        786,
+        991,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "expedition-hud/pause-hover.png",
+      "crop": [
+        991,
+        786,
+        1190,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "expedition-hud/pause-disabled.png",
+      "crop": [
+        1190,
+        786,
+        1388,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "expedition-hud/complete.png",
+      "crop": [
+        1388,
+        786,
+        1586,
+        992
+      ],
+      "output": [
+        128,
+        128
+      ]
+    }
+  ]
+}

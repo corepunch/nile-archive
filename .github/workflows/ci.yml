@@ -31,6 +31,8 @@ jobs:
         run: xvfb-run -a ./tools/screenshots.sh
       - name: Relic Rush smoke test (level one to level two through injected clicks)
         run: xvfb-run -a timeout 600 ./build/relic-rush --headless --fresh --smoke --mute
+      - name: Christmas Market smoke test (puzzle, construction, move, shop and replay)
+        run: xvfb-run -a timeout 600 ./build/christmas-market --headless --fresh --smoke --mute
       - name: Shared UI skins, bindings and nested modal input smoke test
         run: xvfb-run -a ./build/relic-rush --headless --mute --fresh --lua tests/fixtures/ui --data games/relic-rush/data --size 900x700 --smoke
       - name: Nile Archive smoke test (chapter one through injected clicks)
@@ -50,7 +52,7 @@ jobs:
           submodules: true
       - name: Build all games' iOS targets for the Simulator from the committed Xcode projects
         run: |
-          for s in nile-archive-ipad relic-rush-iphone volcano-ipad clayfight-ipad; do
+          for s in nile-archive-ipad relic-rush-iphone christmas-market-iphone volcano-ipad clayfight-ipad; do
             g=${s%-*}
             xcodebuild -project games/$g/$g.xcodeproj -scheme $s -configuration Debug \
               -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \

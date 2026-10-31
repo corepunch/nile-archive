@@ -22,7 +22,7 @@ def main():
     if not candidates:
         raise SystemExit('No installed iOS Simulator device available')
     groups = [('iPad', [('nile-archive', 'com.corepunch.nilearchive'), ('volcano', 'com.corepunch.volcano'), ('clayfight', 'com.corepunch.clayfight')]),
-              ('iPhone', [('relic-rush', 'com.corepunch.relicrush')])]
+              ('iPhone', [('relic-rush', 'com.corepunch.relicrush'), ('christmas-market', 'com.corepunch.christmasmarket')])]
     for family, games in groups:
         matching = [d for d in candidates if d['name'].startswith(family)]
         if not matching:

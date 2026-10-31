@@ -13,7 +13,7 @@
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
 
-GAMES   := nile-archive relic-rush volcano clayfight
+GAMES   := nile-archive relic-rush christmas-market volcano clayfight
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 ARGS    ?=
@@ -127,10 +127,12 @@ test: gen-check xcode-check build/tests build/test-audio test-clayfight
 	./build/test-audio
 	python3 games/volcano/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
+	python3 games/christmas-market/tools/check_assets.py
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 games/relic-rush/tools/building_assets.py --check
 	@mkdir -p build/test-home
-	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests tests/lua/*.lua
+	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests $(filter-out tests/lua/christmas.lua,$(wildcard tests/lua/*.lua))
+	SPRITE_SAVE_DIR=$(CURDIR)/build/test-home ./build/tests --lua-dir games/christmas-market/lua tests/lua/christmas.lua
 
 shots: all
 	./tools/screenshots.sh

@@ -31,6 +31,7 @@ UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
 ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'raster', 'photo', 'story', 'sprite', 'nav', 'script', 'api_lua', 'lua_lib', 'launcher']
 
 GAMES = {
+    'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),
     'clayfight': dict(name='Clayfight', bundle='com.corepunch.clayfight', device='ipad', families='1,2', orientations=('LandscapeLeft', 'LandscapeRight')),
     'volcano': dict(name='Volcano', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)
