@@ -219,7 +219,7 @@ validation. The real-window fixture checks bound toggles, deferred commit and
 nested modal input.
 
 ```sh
-make gen                         # after API or engine/ui_forms.lua changes
+make gen                         # after API, engine/ui_forms.lua or engine/city_smoke.lua changes
 make CFLAGS="-O2 -g -Werror"
 make test
 make test-platform               # prefix with xvfb-run -a on Linux

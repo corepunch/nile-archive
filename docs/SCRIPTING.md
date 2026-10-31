@@ -240,7 +240,12 @@ the old web save).
   rendered by the C games at the same commit. The rules keep the C random
   stream, so boards, seeds and saves are the same too.
 - `./build/relic-rush --smoke --mute` still plays level one through injected
-  clicks to level two, now driven by `main.lua`.
+  clicks to level two, driven by `smoke.lua`; Nile Archive's `archive_smoke.lua`
+  plays chapter one. Both run the engine's `city.move_test`
+  (`engine/city_smoke.lua`, embedded like `ui_forms.lua`), which drags the first
+  building through real press/move/release events and asserts the deliberate
+  pickup contract: a drag pans, a half-second hold lifts, release leaves an
+  uncommitted preview, Cancel restores it and Confirm moves it for free.
 
 ## Performance notes
 
