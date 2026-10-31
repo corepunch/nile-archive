@@ -387,22 +387,27 @@ local pause_form = ui.form{
         {kind="label",text="Take a breath",height=44,em=34},
         {kind="label",id="level",height=30,em=16,palette=PAL_CREAM},
         {kind="button",id="resume",text="RESUME",height=49},
+        {kind="button",id="restart",text="RESTART",height=49,visible_field="expedition"},
         {kind="toggle",id="sound",on_text="SOUND ON",off_text="SOUND OFF",height=49},
-        {kind="toggle",id="motion",on_text="MOTION REDUCED",off_text="FULL ANIMATION",height=49},
         {kind="button",id="guide",text="EXPLORER'S GUIDE",height=49},
+        {kind="button",id="quit",text="QUIT TO ISLAND",height=49,visible_field="expedition"},
     }},
-    bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
+    bindings={{id="sound",field="sound",type="boolean"}},
 }
 local function pause_screen()
     local ok,message=pause_form:push(R);assert(ok,message)
+    pause_form.values.expedition=not R.on_island
     pause_form:set("level",R.on_island and "Your valley" or ("%d. %s"):format(R.g.level+1,rules.level_of(R.g).name))
-    local bounds=rect(42,227,396,432)
+    local _,height=pause_form:measure(396,form_skin)
+    local bounds=rect.centered(vec2(240,450),size2(396,height))
     R.modal_bounds=pr(bounds)
     local event=pause_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
     if not event then return end
     if event.kind=="change" then
         ok,message=pause_form:pull(R);assert(ok,message);sfx.enable(R.sound)
     elseif event.id=="resume" then R.overlay=R.OV_NONE
+    elseif event.id=="restart" then R.start_level(R.g.level)
+    elseif event.id=="quit" then R.on_island,R.overlay=true,R.OV_NONE
     elseif event.id=="guide" then R.overlay=R.OV_GUIDE end
 end
 R.pause_form=pause_form

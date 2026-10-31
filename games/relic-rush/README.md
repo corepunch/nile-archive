@@ -104,9 +104,13 @@ Discovery Stars measure cumulative progress and are never spent. Compasses pay f
 
 See the [Playrix/Wooga economy study, budgets and automated audit](../../docs/ECONOMY_RESEARCH.md)
 and [reviewed reward, replay and shop screens](docs/review/economy/README.md).
-An expedition stays on its board until it is won or lost; Pause resumes the same
-round, and no island shortcut is available. Closing the application still restarts
-that attempt; persistent saves contain the island and banked progress.
+Pause offers **Resume**, **Restart**, **Sound**, **Explorer's Guide** and
+**Quit to Island**. Restart resets the current puzzle; quitting returns to the
+island without paying rewards. The expedition browser can resume that unfinished
+board during the same session. Island Pause offers Resume, Sound and the guide.
+The animation toggle has been removed. Closing the application still restarts
+the attempt; persistent saves contain the island and banked progress. See the
+[pause menu review](docs/review/pause-actions/README.md).
 
 ## Campaign: ten hex levels
 
@@ -180,11 +184,11 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Ancient sand is excavated by matches above it. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits. Matched flame relics also thaw adjacent ice.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
-- Idle hints, automatic dead-board recovery, restart on failure, pause, sound toggle and reduced motion.
+- Idle hints, automatic dead-board recovery, restart on failure, pause with Restart and Quit to Island, and a sound toggle.
 - First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
-- The island's HUD follows the home screens of Royal Match, Homescapes and June's Journey, leaving the map uncovered. One row of slim pills shows Gold, Wood, Stone, Stars and Compasses beside the pause medallion; tap a pill to learn what it is for. At the bottom one big button plays the next level (or builds the restored wonder, named above it), flanked by round **Expeditions** and **Shop** buttons. Regions open from their markers in the fog; a marker that can open now shows "+" and glows. During expeditions the HUD is the slim Moves/Goals band and the tool tray. Island access returns after win/loss. See the [island HUD review](docs/review/island-hud/README.md).
+- The island's HUD follows the home screens of Royal Match, Homescapes and June's Journey, leaving the map uncovered. One row of slim pills shows Gold, Wood, Stone, Stars and Compasses beside the pause medallion; tap a pill to learn what it is for. At the bottom one big button plays the next level (or builds the restored wonder, named above it), flanked by round **Expeditions** and **Shop** buttons. Regions open from their markers in the fog; a marker that can open now shows "+" and glows. During expeditions the HUD is the slim Moves/Goals band and the tool tray. Return through Quit to Island in Pause or after win/loss. See the [island HUD review](docs/review/island-hud/README.md).
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
@@ -217,7 +221,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Controls and saved progress
 
-- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right medallion pauses (level details, sound, reduced motion, guide); Escape does the same. Finish the round before returning to the island. Tap outside a closable popup to dismiss it; results require an explicit action.
+- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right medallion pauses (level details, resume, restart, sound, guide, quit to island); Escape does the same. Quit to Island keeps the unfinished board available in the expedition browser without paying rewards. Tap outside a closable popup to dismiss it; results require an explicit action.
 - **Island:** drag the map to pan, including from buildings; pinch or use the mouse wheel to zoom. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
 - **Placement:** choose a grassy spot, check the green/red footprint, then confirm or cancel. Buildings cannot overlap, cross the shoreline or occupy closed land. Moving a completed building is free.
 - **Save:** level progress, resources, opened regions and building positions persist; an unfinished puzzle restarts. Saves of the standalone prototype (`progress.txt`, `localStorage["relic-rush-v1"]`) are not imported.

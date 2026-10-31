@@ -81,7 +81,8 @@ function R.start_level(chosen)
     R.pending = rules.new_match()
     R.on_island = false
     R.overlay = R.OV_NONE
-    R.phase = R.PH_IDLE
+    R.phase, R.phase_time, R.shake = R.PH_IDLE, 0, 0
+    R.swap_a, R.swap_b = -1, -1
     R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
     R.idle_time = 0
     R.vfx_reset()
