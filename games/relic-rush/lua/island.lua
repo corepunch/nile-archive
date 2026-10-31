@@ -20,6 +20,13 @@ M.TILE = size2(40, 20)   -- half extents: a tile is 80 x 40 world units
 M.catalogue = require("buildings")
 M.buildings, M.wonders = M.catalogue, {}
 for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
+-- Independent shadows use the same pixel density as the current catalogue.
+-- The retired bridge has no shadow entry: ID 4 remains the Sunstone courtyard.
+for i,a in pairs(require("building_art")) do
+    local d=M.buildings[i]
+    assert(d.base_width==a.base_width, "stale catalogue shadow registration")
+    d.shadow_path,d.shadow_pivot=a.shadow_path,a.shadow_pivot
+end
 
 function M.wonder_count(c)
     local n=0

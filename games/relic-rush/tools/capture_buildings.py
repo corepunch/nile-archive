@@ -20,7 +20,7 @@ scenes = {
     'dragging': ['--city', '6', '--placing', 'dragging', '--frames', '30'],
     'blocked': ['--city', '6', '--placing', 'blocked'],
     'card': ['--card', '6'],
-    'reward': ['--level', '6', '--victory', '--frames', '60'],
+    'reward': ['--level', '6', '--victory', '--frames', '120'],
 }
 if len(sys.argv) > 2:
     scenes = {sys.argv[2]: scenes[sys.argv[2]]}
@@ -37,4 +37,11 @@ for size in ('480x900', '390x844'):
         with Image.open(png) as im:
             im.convert('RGB').save(OUT / f'{label}-{name}-{size}.jpg', quality=88)
         png.unlink()
+for size in ('1200x900', '1368x1026', '1600x900'):
+    png = tmp / f'{label}-nile-registration-{size}.png'
+    subprocess.run([str(ROOT / 'build/nile-archive'), '--headless', '--mute', '--fresh',
+                    '--size', size, '--screen', 'island', '--footprints', '--shot', str(png)], cwd=ROOT, check=True)
+    with Image.open(png) as im:
+        im.convert('RGB').save(OUT / f'{label}-nile-registration-{size}.jpg', quality=88)
+    png.unlink()
 print(OUT)

@@ -77,6 +77,7 @@ def main():
             tile(isolate_sprite(im), inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
 
     subprocess.run([sys.executable, str(ROOT / 'tools/prepare_buildings.py')], check=True)
+    subprocess.run([sys.executable, str(ROOT / 'tools/building_assets.py')], check=True)
     # Busts of the expedition cast for the dialogue, cut from the concept lineup.
     (DATA / 'characters').mkdir(parents=True, exist_ok=True)
     cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')

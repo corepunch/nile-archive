@@ -355,6 +355,15 @@
     "data/board-states/sunburst-normal.png",
     "data/board-states/sunburst-pressed.png",
     "data/board-states/sunburst-selected.png",
+    "data/building-shadows/0.png",
+    "data/building-shadows/1.png",
+    "data/building-shadows/2.png",
+    "data/building-shadows/3.png",
+    "data/building-shadows/5.png",
+    "data/building-shadows/6.png",
+    "data/building-shadows/7.png",
+    "data/building-shadows/8.png",
+    "data/building-shadows/9.png",
     "data/buildings/0.png",
     "data/buildings/1.png",
     "data/buildings/2.png",
@@ -587,5 +596,19 @@
     "review": "docs/review/square-tools/README.md",
     "reproduction": "python3 games/relic-rush/tools/board_assets.py; python3 tests/fixtures/relic-tools/capture.py --before-ref 3120b70"
   },
-  "expedition_hud": "art/expedition-hud/manifest.json"
+  "expedition_hud": "art/expedition-hud/manifest.json",
+  "building_shadows": {
+    "registration": "art/isometric-paintover/registration.json",
+    "exporter": "python3 games/relic-rush/tools/building_assets.py",
+    "runtime": "data/building-shadows/{0,1,2,3,5,6,7,8,9}.png",
+    "states": {
+      "restored": "separate ground pass below all buildings",
+      "valid-placement": "shadow at snapped landing point",
+      "blocked-placement": "neutral shadow and existing red ghost",
+      "held": "sprite lifts; shadow remains grounded",
+      "card-and-reward": "sprite alone"
+    },
+    "excluded": "ID 4 courtyard and 86 catalogue decorations keep their existing authored artwork; no bridge shadow reused",
+    "review": "docs/review/painted-buildings/README.md"
+  }
 }
