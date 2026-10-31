@@ -130,8 +130,9 @@ first-clear surplus covers several small decorative choices immediately. The
 expedition browser exposes completed, current and future stages; the current
 discovery waits for the earned restoration, while completed stages remain
 available for earning. The finale now has a useful play-for-Gold route.
-An unfinished expedition stays on its board until win/loss; Pause resumes the
-same board and moves, with no island shortcut. An unfinished board still restarts after closing the
+Pause resumes the same board and moves, restarts it after a confirmation (a
+free retry, like a failure), or quits to the island keeping the unfinished board
+for the next LEVEL / Expeditions visit; neither pays anything. An unfinished board still restarts after closing the
 application, as in the existing save contract; board persistence is separate work.
 
 ## Nile Archive: implemented budget

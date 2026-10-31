@@ -62,3 +62,40 @@ on Nile pills (green, blue, disabled grey, reward) and 2 on Volcano buttons
 | Nile chapters | ![Before](before-nile-archive-chapters.jpg) | ![After](after-nile-archive-chapters.jpg) |
 | Nile chapters, green pill held | ![Before](before-nile-archive-chapters-press-green.jpg) | ![After](after-nile-archive-chapters-press-green.jpg) |
 | Nile build tray | ![Before](before-nile-archive-build.jpg) | ![After](after-nile-archive-build.jpg) |
+
+## Relic Rush: Pause checkboxes
+
+Sound and Reduce motion were toggle buttons whose captions flipped
+("SOUND ON" / "FULL ANIMATION"). They are now `checkbox` controls with the
+skin's wooden-rimmed well, which fills with jade and a cream tick when checked.
+Only these two rows changed; every other Relic Rush capture is identical.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Before](before-relic-pause-checkbox-480x900.jpg) | ![After](after-relic-pause-checkbox-480x900.jpg) |
+| 390×844 | ![Before](before-relic-pause-checkbox-390x844.jpg) | ![After](after-relic-pause-checkbox-390x844.jpg) |
+
+| Reduce motion on | Sound held (pressed) | Disabled (not used in game) |
+| --- | --- | --- |
+| ![Both checked](after-relic-pause-checkbox-motion.jpg) | ![Pressed](after-relic-pause-checkbox-pressed.jpg) | ![Disabled](after-relic-pause-checkbox-disabled.jpg) |
+
+## Relic Rush: Pause grouped, with Restart and Quit
+
+Pause now follows other match-3 pause menus. Sound and Reduce motion share one
+recessed settings well. Below it come RESUME in jade, then RESTART and QUIT TO
+ISLAND in carved wood; EXPLORER'S GUIDE is a gold text link. RESTART asks first
+and starts the same expedition afresh. QUIT TO ISLAND keeps the unfinished board
+for the island's LEVEL button or the Expeditions browser. From the island, Pause
+shows only Resume. `--smoke` cancels and confirms a restart, quits to the island
+and resumes the board through real input.
+
+| | 480×900 | 390×844 |
+| --- | --- | --- |
+| Before (`main`) | ![Before](before-relic-pause-checkbox-480x900.jpg) | ![Before](before-relic-pause-checkbox-390x844.jpg) |
+| Pause in an expedition | ![Pause](after-relic-pause-grouped-480x900.jpg) | ![Pause](after-relic-pause-grouped-390x844.jpg) |
+| Pause on the island | ![Island](after-relic-pause-island-480x900.jpg) | ![Island](after-relic-pause-island-390x844.jpg) |
+| Restart confirmation | ![Confirm](after-relic-restart-confirm-480x900.jpg) | ![Confirm](after-relic-restart-confirm-390x844.jpg) |
+
+| RESTART held (pressed) |
+| --- |
+| ![Pressed](after-relic-pause-restart-pressed.jpg) |

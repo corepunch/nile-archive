@@ -197,7 +197,8 @@ function R.debug_screens()
             R.bubble_wonder, R.bubble_text, R.bubble_time = 1, "A new wonder, exactly where you wanted it.", 3.5
             R.island_focus(R.island.items[2].pos, .8)
         else
-            R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED or R.OV_FINALE
+            R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED
+                or a == "confirm" and R.OV_CONFIRM or R.OV_FINALE
             if R.overlay == R.OV_FINALE then island_with(WONDERS); R.on_island = true end
         end
     end

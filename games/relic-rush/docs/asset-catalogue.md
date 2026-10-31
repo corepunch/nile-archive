@@ -39,14 +39,16 @@ their existing artwork and state mapping. Reproduce with `--victory`,
 
 ## Pause menu actions
 
-`lua/screens.lua` uses the existing shared form skin for Resume, Restart, Sound,
-Explorer's Guide and Quit to Island. Restart resets the current puzzle; Quit to
-Island suspends it without paying rewards. Island Pause hides Restart and Quit.
-The animation toggle is removed. Both menus measure their content before
-centring, including the taller safe-area phone layout. Existing normal, hover,
-pressed, disabled and keyboard-focus button states are reused; no artwork,
-source prompt, runtime file or sprite transform is added. The menu contract is
-recorded in `art/board-states/manifest.json` under `pause_menu`.
+`lua/screens.lua` lays Pause out in groups, with the look in `lua/skin.lua`: a
+settings well holding the Sound and Reduce motion checkboxes, then Resume, then
+Restart and Quit to Island as secondary wooden buttons, and the guide as a link.
+Restart asks for confirmation and resets the current puzzle; Quit to Island
+suspends it without paying rewards. Island Pause hides Restart and Quit. (The
+motion toggle was removed once and returned as the Reduce motion checkbox.)
+Both menus measure their content before centring, including the taller
+safe-area phone layout. States are listed below with the checkbox and button
+variants; no artwork, source prompt, runtime file or sprite transform is added.
+The menu contract is recorded in `art/board-states/manifest.json` under `pause_menu`.
 
 Reproduce and inspect both contexts at both phone sizes with
 `python3 tests/fixtures/pause-actions/capture.py`; reviewed captures and exact
@@ -187,8 +189,9 @@ red and glows. The band, trim, plate and medallion are drawn with engine shapes
 (gradients, polygons); they are frames, not interaction states of an authored
 control, and the medallion has no pressed/hover states because it is read-only. No score total, level title,
 progress bar or island shortcut is displayed during an expedition. Level details
-are in Pause; results retain score/reward details. An unfinished round cannot
-return to the island. Win/failure screens provide the exit actions.
+are in Pause; results retain score/reward details. Pause's Restart (confirmed)
+and Quit to island (keeps the board) are the in-round exits; win/failure screens
+provide theirs.
 
 `art/expedition-hud/controls.png` contains **all seven new icons together in one
 built-in ImageGen call**. The exact prompt is
@@ -329,6 +332,29 @@ Jungle market sprite (`data/buildings/3.png`). Their pressed state shifts the fa
 they are always available. The EXPAND pill is gone: a region that can open now
 shows "+" and a glow on its fog marker, and its name is outlined text without a
 plate. [Island HUD captures](review/island-hud/README.md).
+
+The Pause menu's Sound and Reduce motion settings are engine `checkbox`
+controls drawn by `lua/skin.lua` (`controls.checkbox`): a 40-unit well in the
+panel's wooden rim on a jade shadow, filled with a jade face, gloss and a cream
+tick with a dark rim when checked. States: unchecked, checked, pressed (box and
+tick sink 2 units) and disabled (rim and fill turn grey; not used by the game).
+Hover looks like normal, as for every Relic Rush control, because touch has no
+hover. All of it is engine geometry, like the menu buttons, with no bitmap.
+Checked = sound on / motion reduced; the binding writes the setting at once.
+[Reviewed captures of every state](../../../docs/review/ui-skin-files/README.md#relic-rush-pause-checkboxes).
+`--smoke` clicks Sound off and on again through real input.
+
+Pause groups its controls, as pause menus in other match-3 games do. The two
+checkboxes sit in a recessed well (`controls.panel.variants.group`: a sand
+gradient with a darker rim). Below it come the jade RESUME and two secondary
+actions in carved wood (`controls.button.variants.secondary`, same layers and
+states as the jade button: pressed sinks 2 units, disabled drains it). EXPLORER'S
+GUIDE is a gold text link (`variants.link`: no layers; pressed moves the text).
+From the island Pause shows only Resume. RESTART opens a confirmation
+(`OV_CONFIRM`): RESTART in jade and KEEP PLAYING as a link, which returns to
+Pause. QUIT TO ISLAND keeps the unfinished board. All are engine geometry
+with no bitmap. Captures at both sizes, in the board and on the island, are in
+[the skin review](../../../docs/review/ui-skin-files/README.md#relic-rush-pause-grouped-with-restart-and-quit).
 
 Resource capsules, island HUD buttons, progress bars, menu buttons, result stars, placement outlines, land
 fog and dialogue chrome are intentional engine geometry/text; they are not gem

@@ -104,13 +104,13 @@ Discovery Stars measure cumulative progress and are never spent. Compasses pay f
 
 See the [Playrix/Wooga economy study, budgets and automated audit](../../docs/ECONOMY_RESEARCH.md)
 and [reviewed reward, replay and shop screens](docs/review/economy/README.md).
-Pause offers **Resume**, **Restart**, **Sound**, **Explorer's Guide** and
-**Quit to Island**. Restart resets the current puzzle; quitting returns to the
-island without paying rewards. The expedition browser can resume that unfinished
-board during the same session. Island Pause offers Resume, Sound and the guide.
-The animation toggle has been removed. Closing the application still restarts
-the attempt; persistent saves contain the island and banked progress. See the
-[pause menu review](docs/review/pause-actions/README.md).
+Pause offers Resume, Restart and Quit to island. Restart asks first and starts
+the same expedition afresh (retrying is free). Quit keeps the unfinished board:
+the island's LEVEL button or the Expeditions browser continues it, until another
+expedition starts. Closing the application still restarts that attempt;
+persistent saves contain the island and banked progress. See the
+[pause menu review](docs/review/pause-actions/README.md) and the
+[grouped Pause review](../../docs/review/ui-skin-files/README.md#relic-rush-pause-grouped-with-restart-and-quit).
 
 ## Campaign: ten hex levels
 
@@ -184,7 +184,7 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Ancient sand is excavated by matches above it. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits. Matched flame relics also thaw adjacent ice.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
-- Idle hints, automatic dead-board recovery, restart on failure, pause with Restart and Quit to Island, and a sound toggle.
+- Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
@@ -221,7 +221,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Controls and saved progress
 
-- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right medallion pauses (level details, resume, restart, sound, guide, quit to island); Escape does the same. Quit to Island keeps the unfinished board available in the expedition browser without paying rewards. Tap outside a closable popup to dismiss it; results require an explicit action.
+- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right medallion pauses: level details, a Sound and Reduce motion group, Resume, Restart (asks first), Quit to island (keeps the board) and the guide; Escape does the same. Tap outside a closable popup to dismiss it; results require an explicit action.
 - **Island:** drag the map to pan, including from buildings; pinch or use the mouse wheel to zoom. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
 - **Placement:** choose a grassy spot, check the green/red footprint, then confirm or cancel. Buildings cannot overlap, cross the shoreline or occupy closed land. Moving a completed building is free.
 - **Save:** level progress, resources, opened regions and building positions persist; an unfinished puzzle restarts. Saves of the standalone prototype (`progress.txt`, `localStorage["relic-rush-v1"]`) are not imported.
