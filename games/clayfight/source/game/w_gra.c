@@ -335,8 +335,8 @@ const palette_t *W_ArcadeStagePalette(int stage,int color)
         I_Error("Invalid arcade scenery palette %d:%#x",stage,color);
     int slot=color/32;
     if(!ready[stage][slot]){
-        uint32_t base=color<0x200?0x61502+color*2:color<0x400?
-                      X_U32(0x614e2+stage*4)+(color-0x200)*2:0x63a82+(color-0x480)*2;
+        uint32_t base=color<0x200?0x61502u+color*2:color<0x400?
+                      X_U32(0x614e2+stage*4)+(color-0x200)*2:0x63a82u+(color-0x480)*2;
         Palette(&palettes[stage][slot],base,64);ready[stage][slot]=true;
     }
     return &palettes[stage][slot];
