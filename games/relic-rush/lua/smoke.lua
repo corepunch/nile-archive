@@ -46,7 +46,7 @@ function R.smoke()
     end
     if stage == -2 and R.overlay == R.OV_NONE then
         assert(R.selected < 0 and R.g.moves == rules.level_of(R.g).moves, "smoke: the tap that skips the entrance must not play")
-        app.inject_click(vec2(432, 46)); stage = -3
+        app.inject_click(vec2(408, 32)); stage = -3   -- enlarged Pause's left edge, outside its old touch area
     elseif stage == -3 and R.overlay == R.OV_PAUSE and R.dialog_settled() then   -- Sound off, then on again
         smoke_sound = R.sound
         app.inject_click(R.pause_form.boxes.sound:center() + vec2(0, R.drop / 2)); stage = -4
@@ -190,7 +190,7 @@ function R.smoke()
         assert(R.prog.wallet[1] == shop.pause_gold and R.prog.level == 1
                and R.prog.wallet[4] == 3 and R.prog.wallet[5] == 1 and island.wonder_count(R.island) == 1,
                "restart and quit must not award rewards or change restoration progress")
-        app.inject_click(vec2(440, 38)); stage = 42
+        app.inject_click(vec2(440, 58)); stage = 42   -- enlarged city Pause's lower edge
     elseif stage == 42 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43

@@ -106,9 +106,9 @@ local star_icon, compass_icon = R.star_icon, R.compass_icon
 
 --------------------------------------------------------------------- header
 
--- The same small medallion in the corner of the island and of the board's band.
+-- One prominent medallion and matching touch area on the island and board.
 local function pause_button()
-    local bounds=rect(418,8,44,44)
+    local bounds=rect(402,0,64,64)
     local st=ui.hit(bounds,0)
     local state=st.held and "pressed" or st.hot and "hover" or "normal"
     picture(R.hud_art["pause-"..state],bounds,255)
@@ -139,7 +139,7 @@ local capsule_notes = {"Gold buys buildings. Replay expeditions to earn more.", 
 function R.draw_header(on_island)
     if on_island then
         for k = 1, 5 do
-            local r = rect(12 + (k - 1) * 80, 15, 74, 30)
+            local r = rect(12 + (k - 1) * 76, 15, 72, 30)
             if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end
         end
     end
