@@ -1,7 +1,8 @@
 -- The engine owns measured rows, focus, hit testing and modal input capture.
 local R = require('state')
 local island = require('island')
-local categories = {{'all','All Christmas magic'}, {'wonder','Market wishes'}, {'building','Decorations'}}
+local categories = {{'all','All Christmas magic'}, {'wonder','Market wishes'}, {'building','Decorations'},
+    {'tree','Snowy trees'}, {'cottage','Cottages'}}
 local category, page, pages = 1, 1, 1
 local stack = ui.modals(R.form_skin)
 local PAGE_SIZE = 4

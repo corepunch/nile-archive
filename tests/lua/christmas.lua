@@ -4,7 +4,7 @@ local island = require('island')
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
-assert(#island.catalogue == 12 and island.WONDERS == 10)
+assert(#island.catalogue == 37 and island.WONDERS == 10)
 for level=0,9 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')

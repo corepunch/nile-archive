@@ -2,19 +2,19 @@
 
 This guide covers how city buildings and decorations are modelled in Blender,
 rendered to sprites, registered on the tile grid, added to the game, checked and
-documented. Nile Archive's 96-object catalogue was made this way, and so were
-the geometry guides for Relic Rush's catalogue. [BUILDINGS.md](BUILDINGS.md)
+documented. Nile Archive's 96-object catalogue and Christmas Market's 37 objects
+were made this way, and so were the geometry guides for Relic Rush's catalogue. [BUILDINGS.md](BUILDINGS.md)
 is the spec for footprints, pivots and base widths. This guide is how to
 produce art that meets it.
 
-| | Nile Archive | Relic Rush |
-|---|---|---|
-| Master scene script | `games/nile-archive/art/building-catalogue/build_scene.py` | `games/relic-rush/art/building-catalogue/build_scene.py` |
-| Catalogue | `…/art/building-catalogue/catalogue.json` | same path in Relic Rush |
-| Render | `games/nile-archive/tools/render_buildings.py` (one sprite per object) | `games/relic-rush/tools/render_building_atlas.py` (a paint-over guide atlas) |
-| Import | `games/nile-archive/tools/prepare_catalogue.py` | `games/relic-rush/tools/prepare_buildings.py` |
-| Runtime sprites | the Blender renders themselves | ImageGen paint-overs of the renders |
-| Inventory doc | [games/nile-archive/docs/building-catalogue.md](../games/nile-archive/docs/building-catalogue.md) | [games/relic-rush/docs/building-catalogue.md](../games/relic-rush/docs/building-catalogue.md) |
+| | Nile Archive | Relic Rush | Christmas Market |
+|---|---|---|---|
+| Master scene script | `games/nile-archive/art/building-catalogue/build_scene.py` | `games/relic-rush/art/building-catalogue/build_scene.py` | `games/christmas-market/art/building-catalogue/build_scene.py` |
+| Catalogue | `…/art/building-catalogue/catalogue.json` | same path in Relic Rush | same path; cost is `[gold]` or `[gold, holly, baubles]` |
+| Render | `games/nile-archive/tools/render_buildings.py` (one sprite per object) | `games/relic-rush/tools/render_building_atlas.py` (a paint-over guide atlas) | `games/christmas-market/tools/render_buildings.py` (one sprite per object) |
+| Import | `games/nile-archive/tools/prepare_catalogue.py` | `games/relic-rush/tools/prepare_buildings.py` | `games/christmas-market/tools/prepare_catalogue.py` (writes `lua/buildings.lua`) |
+| Runtime sprites | the Blender renders themselves | ImageGen paint-overs of the renders | the Blender renders themselves |
+| Inventory doc | [games/nile-archive/docs/building-catalogue.md](../games/nile-archive/docs/building-catalogue.md) | [games/relic-rush/docs/building-catalogue.md](../games/relic-rush/docs/building-catalogue.md) | [games/christmas-market/docs/building-catalogue.md](../games/christmas-market/docs/building-catalogue.md) |
 
 The steps below use Nile Archive's paths. Relic Rush has the same
 layout under `games/relic-rush/`.

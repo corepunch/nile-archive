@@ -1,0 +1,560 @@
+{
+ "tile_px": 128,
+ "items": {
+  "arch": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    365
+   ],
+   "pivot": [
+    196,
+    265
+   ],
+   "base_width": 384.0
+  },
+  "lumber": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    355
+   ],
+   "pivot": [
+    196,
+    255
+   ],
+   "base_width": 384.0
+  },
+  "bakery": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    352
+   ],
+   "pivot": [
+    196,
+    252
+   ],
+   "base_width": 384.0
+  },
+  "cocoa": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    332
+   ],
+   "pivot": [
+    196,
+    232
+   ],
+   "base_width": 384.0
+  },
+  "toys": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    366
+   ],
+   "pivot": [
+    196,
+    266
+   ],
+   "base_width": 384.0
+  },
+  "gifts": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    297
+   ],
+   "pivot": [
+    196,
+    197
+   ],
+   "base_width": 384.0
+  },
+  "candles": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    352
+   ],
+   "pivot": [
+    196,
+    252
+   ],
+   "base_width": 384.0
+  },
+  "carousel": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    311
+   ],
+   "pivot": [
+    196,
+    211
+   ],
+   "base_width": 384.0
+  },
+  "rink": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    268
+   ],
+   "pivot": [
+    196,
+    168
+   ],
+   "base_width": 384.0
+  },
+  "tree": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    384
+   ],
+   "pivot": [
+    196,
+    284
+   ],
+   "base_width": 384.0
+  },
+  "firs": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    230
+   ],
+   "pivot": [
+    132,
+    162
+   ],
+   "base_width": 256.0
+  },
+  "bench": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    196
+   ],
+   "pivot": [
+    132,
+    128
+   ],
+   "base_width": 256.0
+  },
+  "snowman": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    131
+   ],
+   "pivot": [
+    68,
+    95
+   ],
+   "base_width": 128.0
+  },
+  "presents": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    90
+   ],
+   "pivot": [
+    68,
+    54
+   ],
+   "base_width": 128.0
+  },
+  "candy_canes": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    119
+   ],
+   "pivot": [
+    68,
+    83
+   ],
+   "base_width": 128.0
+  },
+  "lamp_post": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    158
+   ],
+   "pivot": [
+    68,
+    122
+   ],
+   "base_width": 128.0
+  },
+  "snowy_bench": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    104
+   ],
+   "pivot": [
+    68,
+    68
+   ],
+   "base_width": 128.0
+  },
+  "mailbox": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    134
+   ],
+   "pivot": [
+    68,
+    98
+   ],
+   "base_width": 128.0
+  },
+  "snow_rocks": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    88
+   ],
+   "pivot": [
+    68,
+    52
+   ],
+   "base_width": 128.0
+  },
+  "giant_ornament": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    129
+   ],
+   "pivot": [
+    68,
+    93
+   ],
+   "base_width": 128.0
+  },
+  "ice_star": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    137
+   ],
+   "pivot": [
+    68,
+    101
+   ],
+   "base_width": 128.0
+  },
+  "nutcracker": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    130
+   ],
+   "pivot": [
+    68,
+    94
+   ],
+   "base_width": 128.0
+  },
+  "reindeer": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    133
+   ],
+   "pivot": [
+    68,
+    97
+   ],
+   "base_width": 128.0
+  },
+  "penguins": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    108
+   ],
+   "pivot": [
+    68,
+    72
+   ],
+   "base_width": 128.0
+  },
+  "wreath_arch": {
+   "size": [
+    2,
+    1
+   ],
+   "image": [
+    200,
+    194
+   ],
+   "pivot": [
+    100,
+    142
+   ],
+   "base_width": 192.0
+  },
+  "sleigh": {
+   "size": [
+    2,
+    1
+   ],
+   "image": [
+    200,
+    141
+   ],
+   "pivot": [
+    100,
+    89
+   ],
+   "base_width": 192.0
+  },
+  "igloo": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    155
+   ],
+   "pivot": [
+    132,
+    87
+   ],
+   "base_width": 256.0
+  },
+  "fir_snowy": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    144
+   ],
+   "pivot": [
+    68,
+    108
+   ],
+   "base_width": 128.0
+  },
+  "birch": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    136
+   ],
+   "pivot": [
+    68,
+    100
+   ],
+   "base_width": 128.0
+  },
+  "fir_decorated": {
+   "size": [
+    1,
+    1
+   ],
+   "image": [
+    136,
+    161
+   ],
+   "pivot": [
+    68,
+    125
+   ],
+   "base_width": 128.0
+  },
+  "pine_grove": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    233
+   ],
+   "pivot": [
+    132,
+    165
+   ],
+   "base_width": 256.0
+  },
+  "log_cabin": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    268
+   ],
+   "pivot": [
+    132,
+    200
+   ],
+   "base_width": 256.0
+  },
+  "gingerbread_house": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    244
+   ],
+   "pivot": [
+    132,
+    176
+   ],
+   "base_width": 256.0
+  },
+  "post_office": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    248
+   ],
+   "pivot": [
+    132,
+    180
+   ],
+   "base_width": 256.0
+  },
+  "chapel": {
+   "size": [
+    2,
+    2
+   ],
+   "image": [
+    264,
+    282
+   ],
+   "pivot": [
+    132,
+    214
+   ],
+   "base_width": 256.0
+  },
+  "reindeer_stable": {
+   "size": [
+    3,
+    2
+   ],
+   "image": [
+    328,
+    293
+   ],
+   "pivot": [
+    164,
+    209
+   ],
+   "base_width": 320.0
+  },
+  "santa_workshop": {
+   "size": [
+    3,
+    3
+   ],
+   "image": [
+    392,
+    383
+   ],
+   "pivot": [
+    196,
+    283
+   ],
+   "base_width": 384.0
+  }
+ }
+}
