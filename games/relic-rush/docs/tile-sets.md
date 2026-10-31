@@ -14,7 +14,7 @@ Three original six-piece sets are available as art packs; **set 1 (Relics) is th
 - Web: open `.../relic-rush/?tiles=jewels`. The engine passes the page's query string to the game as command-line options, so the same code reads it; no loader hooks or repacked data files are needed.
 - Anything else, or nothing, selects Relics.
 
-`tools/screenshots.sh` renders the comparison above from the running game.
+`tools/screenshots.py` renders the comparison above from the running game.
 
 ## Construction research
 

@@ -1,13 +1,13 @@
 /* Real GPU/llvmpipe checks and an inclusive blur+readback timing sample. */
 #include "render.h"
+#include "test.h"
 #include "viewport.h"
 #include <stdio.h>
 
-static int checks, failures, frames, w, h, resizes, settling;
+static int frames, w, h, resizes, settling;
 static bool present_pending = true;
 static unsigned char *pixels;
 static double elapsed;
-#define CHECK(c) do { checks++; if (!(c)) { failures++; fprintf(stderr,"backdrop %d: %s\n",__LINE__,#c); } } while (0)
 static color sample(float x, float y)
 {
     rect view=app_fit_view(sz2(480,900),rc(0,0,w,h));
@@ -69,11 +69,9 @@ static void frame(float dt)
     if (frames == 25) { CHECK(resizes >= 2); app_quit(); }
 }
 static void quit(void) { free(pixels); pixels=NULL; }
-int main(void)
+TEST(backdrop)
 {
     char *args[]={"test-backdrop","--headless","--mute","--size","480x900"};
     app_desc d={.design={480,900},.fixed=true,.frame=frame,.quit=quit};
     CHECK(app_run(d,5,args)==0);
-    printf("backdrop: %d checks, %d failures; Gaussian + synchronized RGBA readback %.2f ms at %dx%d (12 warm frames)\n",checks,failures,elapsed/12,w,h);
-    return failures != 0;
 }

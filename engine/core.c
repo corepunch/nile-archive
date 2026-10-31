@@ -65,6 +65,11 @@ static struct {
     int frame_index;
 } A;
 
+#ifdef ENGINE_TEST
+#include "test.h"
+static bool window_open, in_frame;
+#endif
+
 const char *app_id(void) { return A.desc.id ? A.desc.id : "game"; }
 rect app_screen(void) { return rect_make(v2(0, 0), A.logical); }
 
@@ -291,7 +296,7 @@ static void draw_rotate_prompt(void)
         text_box(t->title, rc(60, c.y + 170, s.size.w - 120, 300), v2(.5f, 0), A.desc.rotate_text);
 }
 
-static void save_screenshot(void)
+static void save_screenshot(const char *path)
 {
     struct AXsize output = {1, 1};
     axGetSize(&output);
@@ -299,13 +304,15 @@ static void save_screenshot(void)
     unsigned char *px = malloc((size_t)w * h * 4);
     if (!px) return;
     if (render_read_pixels(px, w, h)) {
-        if (stbi_write_png(A.shot_path, w, h, 4, px, w * 4)) printf("screenshot: %s (%dx%d)\n", A.shot_path, w, h);
-        else fprintf(stderr, "screenshot: cannot write %s\n", A.shot_path);
+#ifdef ENGINE_TEST
+        test_check_picture(px, w, h);
+#endif
+        if (stbi_write_png(path, w, h, 4, px, w * 4)) printf("screenshot: %s (%dx%d)\n", path, w, h);
+        else fprintf(stderr, "screenshot: cannot write %s\n", path);
     } else {
         fprintf(stderr, "screenshot: cannot read framebuffer\n");
     }
     free(px);
-    A.running = false;
 }
 
 void app_step(void)
@@ -319,6 +326,10 @@ void app_step(void)
     A.dt = dt;
 
     axBeginPaint();
+#ifdef ENGINE_TEST
+    in_frame = true;
+    test_tick();
+#endif
     update_logical_size();
     poll_events();
     if (needs_rotation()) A.in = (input){.pos = A.in.pos, .pinch = 1};   /* the game waits behind the rotate prompt */
@@ -329,7 +340,20 @@ void app_step(void)
     if (A.desc.frame) A.desc.frame(dt);
     ui_end_frame(dt);
     draw_rotate_prompt();
-    if (A.shot_path && ++A.frame_index >= A.shot_frames) save_screenshot();
+#ifdef ENGINE_TEST
+    if (A.shot_path) {
+        bool last = false;
+        const char *due = test_shot_due(++A.frame_index, A.shot_frames, A.shot_path, &last);
+        if (due) save_screenshot(due);
+        if (last) A.running = false;
+    }
+    in_frame = false;
+#else
+    if (A.shot_path && ++A.frame_index >= A.shot_frames) {
+        save_screenshot(A.shot_path);
+        A.running = false;
+    }
+#endif
     axEndPaint();
 
 #ifdef __EMSCRIPTEN__
@@ -346,6 +370,13 @@ int app_run(app_desc desc, int argc, char **argv)
     if (argc <= 1) argc = web_args(&argv);   /* on the web, options come from the URL */
 #endif
     memset(&A, 0, sizeof A);
+#ifdef ENGINE_TEST
+    /* every test shares this process, and each starts clean */
+    ui_restart();
+    story_restart();
+    fx_restart();
+    city_restart();
+#endif
     A.desc = desc;
     A.argc = argc;
     A.argv = argv;
@@ -355,6 +386,9 @@ int app_run(app_desc desc, int argc, char **argv)
     if (A.shot_path && !*A.shot_path) A.shot_path = NULL;
     A.shot_frames = app_arg("frames") ? atoi(app_arg("frames")) : 3;
 
+#ifdef ENGINE_TEST
+    if (!window_open)
+#endif
     axInit();
 
     int w = (int)A.desc.design.w, h = (int)A.desc.design.h;
@@ -368,9 +402,18 @@ int app_run(app_desc desc, int argc, char **argv)
     if (w <= 0 || h <= 0) { fprintf(stderr, "invalid window size\n"); axShutdown(); return 1; }
     uint32_t flags = AX_WINDOW_RESIZABLE | AX_WINDOW_HIGHDPI | AX_WINDOW_DOUBLEBUFFER;
     if (app_arg("headless")) flags |= AX_WINDOW_HIDDEN;
+#ifdef ENGINE_TEST
+    if (window_open) {   /* one window serves every test, resized for each */
+        axClearMessageQueue();
+        axSetSize(w, h, false);
+    } else
+#endif
     if (!axCreateWindow(desc.title ? desc.title : "game", w, h, flags)) {
         fprintf(stderr, "platform: cannot create window\n"); axShutdown(); return 1;
     }
+#ifdef ENGINE_TEST
+    window_open = true;
+#endif
     axSetSwapInterval(app_arg("smoke") || A.shot_path ? 0 : 1);
     if (!render_init()) { axShutdown(); return 1; }
     update_logical_size();
@@ -396,5 +439,28 @@ void app_stop(void)
     sfx_shutdown();
     font_shutdown();
     render_shutdown();
+#ifdef ENGINE_TEST
+    A.argc = 0;   /* the arguments belonged to this test, and later ones may read app_arg */
+#else
     axShutdown();
+#endif
 }
+
+#ifdef ENGINE_TEST
+/* A failed test may stop mid-frame. Finish what it left open; its script is broken,
+ * so its quit hook doesn't run. */
+void app_test_recover(void)
+{
+    if (in_frame) axEndPaint();
+    in_frame = false;
+    A.desc.quit = NULL;
+    if (render_ready()) app_stop();
+    A.running = false;
+}
+
+void app_test_close_window(void)
+{
+    if (window_open) axShutdown();
+    window_open = false;
+}
+#endif

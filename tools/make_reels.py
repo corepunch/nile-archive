@@ -1,4 +1,4 @@
-"""Assemble documentation images from frames rendered by tools/screenshots.sh (needs Pillow)."""
+"""Assemble documentation images from frames rendered by tools/screenshots.py (needs Pillow)."""
 import sys
 from pathlib import Path
 

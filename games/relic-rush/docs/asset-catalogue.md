@@ -387,7 +387,7 @@ make test
 ./build/relic-rush --headless --mute --fresh --tiles jewels --art-board --shot jewels.png
 ```
 
-Use Xvfb on Linux. `tools/screenshots.sh` regenerates the catalogue and special
+Use Xvfb on Linux. `tools/screenshots.py` regenerates the catalogue and special
 board as well as ordinary levels, guide, effect and phone captures. Review at
 480 × 900 and 390 × 844 with phone safe areas. `--art-board` freezes a deterministic
 level-nine board with all five specials, selection/hints and selected/depleted

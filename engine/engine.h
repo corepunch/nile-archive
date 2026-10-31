@@ -733,6 +733,13 @@ void script_close(void);
 /* ===================================================================== */
 
 const char *app_id(void);
+#ifdef ENGINE_TEST
+/* Every test shares a process, and each starts clean. */
+void ui_restart(void);
+void story_restart(void);
+void fx_restart(void);
+void city_restart(void);
+#endif
 void ui_begin_frame(void);
 void ui_end_frame(float dt);
 bool ui_blocks(vec2 p);

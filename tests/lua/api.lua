@@ -1,11 +1,5 @@
 -- The generated Lua API: value types, operators, methods, in/out arguments,
 -- handles. Runs without a window (nothing here draws).
-local failures, checks = 0, 0
-local function check(cond, what)
-    checks = checks + 1
-    if not cond then failures = failures + 1; print("FAIL " .. what) end
-end
-local function near(a, b, what) check(math.abs(a - b) < 1e-3, what .. (" (%s vs %s)"):format(a, b)) end
 
 -- vec2
 check(input{multi_touch=true,pinch=1}.multi_touch,"multi-touch press state round-trips through the generated binding")
@@ -103,5 +97,3 @@ check(not story.play("lua-hello", {{"ann", "Hello."}}), "beat plays once")
 story.next(); story.next()
 check(not story.active(), "lines consumed")
 
-print(("lua api: %d checks, %d failures"):format(checks, failures))
-return failures

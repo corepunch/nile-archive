@@ -49,7 +49,7 @@ games/
   volcano/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + volcano.xcodeproj
   clayfight/      native game rules/resources + Lua scheduling + data/ + capture tools
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
-tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.sh, make_reels.py, artkit.py
+tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.py, make_reels.py, artkit.py
 docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), LINEAGE.md
 web/               shell.html: a bare fullscreen canvas for the web preview
 ```
@@ -64,7 +64,8 @@ Native builds need a C compiler and the pinned [platform](https://github.com/cor
 git submodule update --init   # Lua, once
 make              # builds Nile Archive, Relic Rush, Volcano and Clayfight
 make run-nile     # or: make run-relic / make run-volcano
-make test         # generated-code freshness, engine tests, the games' Lua rule tests (headless)
+make test         # generated-code freshness, then every test, in one start per game (docs/TESTING.md)
+make smoke        # only the games' smoke runs
 make gen          # after editing engine/api.xml
 make shots        # re-render the documentation screenshots (software renderer, no display needed)
 ```

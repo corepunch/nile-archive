@@ -27,11 +27,11 @@ existing ring. This panel has no selected toggle state.
 
 ## Reproduce
 
-Build `make CFLAGS="-O2 -g -Werror"` and `make build/city-gesture`.
+Build `make CFLAGS="-O2 -g -Werror"`.
 Capture the actual game:
 
 ```sh
-./build/city-gesture --game nile-archive --headless --fresh --mute \
+./build/nile-archive --headless --fresh --mute \
   --screen island --size 1200x900 --gesture hold --press 435,345 \
   --frames 100 --shot out.png
 ```

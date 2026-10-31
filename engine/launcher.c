@@ -19,6 +19,10 @@
 #define GAME_LUA_DIR GAME_DIR "/lua"
 #endif
 
+#ifdef ENGINE_TEST
+#include "test_runner.c"
+int main(int argc, char **argv) { return test_main(GAME_NAME, GAME_LUA_DIR, GAME_DATA_DIR, argc, argv); }
+#else
 static int launch(int argc, char **argv)
 {
     const char *lua_dir = GAME_LUA_DIR, *data_dir = GAME_DATA_DIR;
@@ -54,3 +58,4 @@ int main(int argc, char **argv)
     return launch(argc, argv);
 #endif
 }
+#endif

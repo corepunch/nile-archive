@@ -33,6 +33,10 @@ static struct {
     int seen_count;
 } S;
 
+#ifdef ENGINE_TEST
+void story_restart(void) { memset(&S, 0, sizeof S); }
+#endif
+
 static int hash(const char *s)
 {
     uint32_t h = 2166136261u;   /* FNV-1a */

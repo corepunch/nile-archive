@@ -1,6 +1,4 @@
 -- ui.skin: declarative skin files compiled into the form paint contract.
-local checks,failures=0,0
-local function check(c,message) checks=checks+1;if not c then failures=failures+1;print("FAIL UI skin: "..message) end end
 
 -- Layers with a paint callback record where and how they were drawn.
 local drawn={}
@@ -168,5 +166,3 @@ check(not pcall(ui.skin,{controls={button={focused={}}}}),"focus is its own cont
 check(not pcall(function() ui.skin{fonts={f={font=base_font}},text={a={font="f",fill="nope"}}}:text("a") end),"unknown colours are errors")
 check(not pcall(function() ui.skin{theme={dim="#12"}} end),"malformed hex is an error")
 
-print(("UI skin: %d checks, %d failures"):format(checks,failures))
-return failures

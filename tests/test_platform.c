@@ -1,15 +1,15 @@
 /* Real-context integration checks: pixels, logical pointer mapping and gestures.
- * Linux: xvfb-run -a make test-platform. macOS: make test-platform. */
+ * Part of build/test/engine. */
 #include "render.h"
+#include "test.h"
 #include "viewport.h"
 #include <stdio.h>
 #include <string.h>
 
-static int checks, failures, step;
+static int step;
 static texture tile;
 static unsigned char *pixels;
 static int width, height;
-#define CHECK(c) do { checks++; if (!(c)) { failures++; fprintf(stderr, "%d: %s\n", __LINE__, #c); } } while (0)
 
 static void post(uint32_t type, int x, int y)
 {
@@ -136,12 +136,14 @@ static void frame(float dt)
 }
 
 static void quit(void) { tex_free(tile); }
-int main(int argc, char **argv)
+static void run(int argc)
 {
     char *args[] = {"test-platform", "--headless", "--size", "320x200", "--mute", "--safe-area", "35,21,11,7"};
     app_desc desc = {.design = {100, 100}, .fixed = true, .clear = {16, 32, 48, 255}, .init = init, .frame = frame, .quit = quit};
-    CHECK(app_run(desc, argc > 1 ? 7 : 5, args) == 0);
+    step = 0;
+    CHECK(app_run(desc, argc, args) == 0);
     CHECK(step == 8);
-    printf("platform renderer/input: %d checks, %d failures\n", checks, failures);
-    return failures != 0;
 }
+
+TEST(platform) { run(5); }
+TEST(platform_safe_area) { run(7); }

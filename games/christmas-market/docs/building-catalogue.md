@@ -71,8 +71,7 @@ and some need Christmas Stars. Stars unlock them and are never spent.
 make buildings GAME=christmas-market REBUILD=1     # add KEYS="a b" to render a few
 python3 games/christmas-market/tools/prepare_catalogue.py --inventory
 make && make test     # runs prepare_catalogue.py --check and check_assets.py
-xvfb-run -a ./build/christmas-market --headless --fresh --smoke --mute
-xvfb-run -a python3 games/christmas-market/tools/capture_screenshots.py building-review-1 shop market
+xvfb-run -a make test ONLY="building-review shop market"
 ```
 
 Without a Blender binary, use the `bpy` module from PyPI (see BUILDING_ART.md).

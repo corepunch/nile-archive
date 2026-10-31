@@ -14,6 +14,7 @@ Every pull request that can change what a player sees must include screenshots i
   export DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1
   ./build/nile-archive --headless --mute --fresh --size 1200x900 --screen island --shot out.png
   make shots                                   # re-renders every documentation screenshot
+  make smoke                                   # every game's smoke run
   ```
 
   Each game has entry points for its screens: Nile Archive takes `--screen …`, Relic Rush `--level`, `--city`, `--dialog …` and others, and Volcano `--level`, `--pause` and `--preview`. Pass `--frames N` for a later frame, for example once dialogue has finished typing.
@@ -25,6 +26,15 @@ Every pull request that can change what a player sees must include screenshots i
 
   A table puts before and after next to each other.
 - **Check them first.** Look at every screenshot before posting it. A half-typed line, an empty frame or a missing texture is a bug to fix, not a picture to post.
+
+## Tests: one start per game
+
+`make test` compiles a test build (`-DENGINE_TEST`) and runs each suite once: `build/test/engine`, `build/test/relic-rush`, `build/test/nile-archive`, `build/test/christmas-market` and `build/test/volcano`. One start runs that suite's C tests, Lua rules, smoke runs, screens and gestures. [docs/TESTING.md](docs/TESTING.md) is the guide.
+
+- **Never start a game per test or per screen.** Don't loop over `subprocess.run` or a shell `for`. Add a line to `tests/games/<game>.lua`, and run only part of a suite by name: `build/test/relic-rush smoke`.
+- **Tests stay small.** C tests use `TEST`, `CHECK` and `NEAR`. Lua tests use the global `check` and `near`. Anything else a test needs belongs in the test build, as `#ifdef ENGINE_TEST` in the engine or in `engine/test_runner.c`, not as boilerplate in each test.
+- **A failure ends its test, never the run.** Every test reports PASS or FAIL with its file and line, and the summary lists what failed.
+- **New engine state must reset.** Every test shares the process, so a static that outlives a run leaks into the next. Clear it from `app_run` under `ENGINE_TEST`, as `ui_restart` does.
 
 ## The city camera: never 2:1
 
@@ -63,7 +73,7 @@ Buildings stand on a grid of whole tiles. [docs/BUILDINGS.md](docs/BUILDINGS.md)
 - **Track gaps immediately.** If the audit finds placeholder art, a missing state, an uncatalogued asset or a visual defect that will remain, create or link a GitHub issue before handoff. Record the issue in the catalogue with concrete missing states and acceptance criteria; do not silently ship geometry, tinting, or reused artwork as a finished state. When fixed, close the issue through the PR.
 - **Author state artwork together.** Generate an icon set and all required interaction states in one ImageGen atlas. Preserve authored alpha; do not manufacture states with recolouring, tint filters or procedural glyph overlays. Spatial crop/rotation/resize registration may align existing artwork to slots; preserve its design and record the transform. Hex states must match the board slot's size, centre and flat-top orientation. Animation transforms and transient beams/particles may remain procedural when explicitly catalogued.
 
-- **Build and test before pushing.** Run `make CFLAGS="-O2 -g -Werror"`, `make test`, `make lint` (luacheck; `.luacheckrc` declares the engine's globals, so an undefined global is a typo and an unused local is dead code) and each affected game's `--smoke` run under Xvfb. CI runs the same checks.
+- **Build and test before pushing.** Run `make CFLAGS="-O2 -g -Werror"`, `make test` (under Xvfb on Linux) and `make lint` (luacheck; `.luacheckrc` declares the engine's globals, so an undefined global is a typo and an unused local is dead code). CI runs the same checks.
 - **Regenerate generated code.** After editing `engine/api.xml`, run `make gen`, and commit the generated files.
 - **Keep reusable UI in the engine.** Use `ui.form` templates, bindings and `ui.modals` for new reusable dialogs. Games provide skins, data and command handling; a game's look belongs in its skin file (`ui.skin`, see `docs/UI_ENGINE.md#skins`): add a state, variant or text style there instead of new paint code; layout, hit testing, keyboard focus, data exchange and modal layering belong in `engine/ui_forms.lua` / `engine/ui.c`. Extend the engine for missing behaviour instead of cloning it into a game. Skin callbacks paint controls and do not implement their input logic. Document new controls/states in `docs/UI_ENGINE.md`, and cover them in form and renderer/input tests.
 - **Use measured rows for repeated UI.** Populate engine `list` nodes with `form:set_items` and stable keys; keep titles, descriptions and icons in one data source. Icon-and-copy rows left-align both labels; iconless copy may centre. Measure wrapped text after allocating icon width. Check source refresh/reorder/removal and actual input at every affected size. Dialogue badges anchor to `story.bubble_bounds`, and bubble padding includes the decorative outline rather than adding it twice. Centre framed phone portraits and bubbles together using their visible bounds within the safe screen; include any listener and keep Skip attached to the group.

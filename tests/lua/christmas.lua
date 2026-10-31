@@ -36,5 +36,3 @@ for kind=10,11 do
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
 assert(c.count==12 and island.wonder_count(c)==10, 'Decorations cannot advance the campaign')
-print('Christmas Market: 10 funded buildings, 6 regions, replay and both decoration purchases verified')
-return 0

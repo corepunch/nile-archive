@@ -1,5 +1,3 @@
-local checks,failures=0,0
-local function check(c,message) checks=checks+1;if not c then failures=failures+1;print("FAIL UI forms: "..message) end end
 local template={
     root={kind="column",padding=10,gap=5,children={
         {kind="label",id="name",height=20},
@@ -158,5 +156,3 @@ local leaf={kind="list",id="deep",item=function()return {kind="column",children=
 for _=1,30 do leaf={kind="column",children={leaf}} end
 local deep=ui.form(leaf)
 check(not deep:set_items("deep",{{id="x"}}),"data rows obey the whole resource nesting limit")
-print(("UI forms: %d checks, %d failures"):format(checks,failures))
-return failures

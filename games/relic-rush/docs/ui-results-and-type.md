@@ -53,4 +53,4 @@ Building sheet cells can contain a fragment of an adjacent painting. The asset p
 ![Building card](screenshots/building-card.jpg)
 ![Actual SDL UI choreography](screenshots/ui-result-reel.gif)
 
-The captures use demonstration progress, not a recorded player save. Generate them with `--victory --shot file.png` or `--card 1 --shot file.png`; `tools/screenshots.sh` also assembles the reel from `--victory --reel` frames. Stills show the settled state; reel frames run the actual entrance timeline. None writes player progress.
+The captures use demonstration progress, not a recorded player save. Generate them with `--victory --shot file.png` or `--card 1 --shot file.png`; `tools/screenshots.py` also assembles the reel from `--victory --reel` frames. Stills show the settled state; reel frames run the actual entrance timeline. None writes player progress.
