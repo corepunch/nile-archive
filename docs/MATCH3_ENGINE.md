@@ -122,6 +122,7 @@ navigation.
 ## Reproduction and verification
 
 ```sh
+python3 -m pip install -r tools/requirements-assets.txt  # pinned authoring toolchain
 python3 tools/match3_atlas.py       # defaults + both game atlases/frame data
 make gen                          # embeds Lua, frame data and default PNG
 make CFLAGS="-O2 -g -Werror"
