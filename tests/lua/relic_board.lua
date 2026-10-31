@@ -221,21 +221,32 @@ do
         near((pos-at):len(), 0, "finished gem sits at its cell centre")
         check(R.cell_at(pos) == rules.hex_center(), "resting cell input matches its pose")
         if testing.game == "relic-rush" then
+            local left = R.cell_pos(rules.hex_index(-4, 0)).x - R.HEX_R
+            local right = R.SCREEN_W - R.cell_pos(rules.hex_index(4, 0)).x - R.HEX_R
+            check(left >= 12 and left <= 20 and right >= 12 and right <= 20,
+                  "widest board retains narrow phone side margins")
             -- A 1x pose alone misses an enlarged sprite canvas. Check the
             -- rectangles actually submitted for every normal piece, including
             -- the hex idol, against the space between adjacent cell rows.
-            local image, hex_kind, boxes = gfx.image, R.hex_piece_kind, {}
+            local image, hex_kind, board_art, boxes = gfx.image, R.hex_piece_kind, R.board_art, {}
             R.hex_piece_kind = rules.RELIC_IDOL
+            R.board_art = R.board_art or {}
             -- Temporarily record draw calls instead of requiring a renderer.
             gfx.image = function(_, box) boxes[#boxes + 1] = box end -- luacheck: ignore 122
             for kind = 0, 5 do R.draw_relic(rules.tile(kind), pos, scale, 255, aspect, true) end
+            R.draw_relic(rules.tile(0, rules.PRISM), pos, scale, 255, aspect, true)
             gfx.image, R.hex_piece_kind = image, hex_kind -- luacheck: ignore 122
-            check(#boxes == 6, "all six resting pieces are drawn")
-            for _, box in ipairs(boxes) do
-                check(box.w < math.sqrt(3) * R.HEX_R and box.h < math.sqrt(3) * R.HEX_R,
-                      "resting piece canvas leaves a gutter inside its cell")
+            R.board_art = board_art
+            check(#boxes == 7, "all six resting pieces and a state panel are drawn")
+            local pitch = math.sqrt(3) * R.HEX_R
+            for i = 1, 6 do
+                local box = boxes[i]
+                check(box.w > .9 * pitch and box.w < pitch and box.h > .9 * pitch and box.h < pitch,
+                      "resting piece fills its cell while preserving a gutter")
                 near((box:center()-pos):len(), 0, "resting piece artwork stays centred")
             end
+            check(boxes[7].w < 2 * R.HEX_R and boxes[7].h < 2 * R.HEX_R,
+                  "state panel retains an inset from neighbouring cells")
         end
         R.present_board(); R.reset_board(g)
         check(not R.intro and R.phase == R.PH_IDLE, "reset clears pending entrance")
