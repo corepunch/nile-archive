@@ -106,6 +106,9 @@ it), with the pivot dot in the middle.
 
 ## Art for new buildings
 
+[BUILDING_ART.md](BUILDING_ART.md) is the step-by-step guide to modelling,
+rendering, registering and reviewing building art in Blender.
+
 Draw buildings on the same 2:1 isometric grid as the map, the base a clean
 diamond or parallelogram whose sides follow the tile directions, cropped
 tightly with a transparent background. Keep plants and props inside the
