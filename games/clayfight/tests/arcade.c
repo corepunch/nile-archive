@@ -118,6 +118,74 @@ static void title_palette_checks(void)
     }
     puts("arcade title: descriptor palettes and every visible PRIMAL/RAGE texel match the original RGB555 colours at exact 2x");
 }
+static pixel_t source_rgb(uint32_t address)
+{
+    int rgb=X_U16(address);
+    return W_RGB((rgb>>10&31)*255/31,(rgb>>5&31)*255/31,(rgb&31)*255/31);
+}
+static void palette_reference(const palette_t *pal,uint32_t address,int count)
+{
+    assert(pal && pal->count==count-1);
+    for(int i=0;i<count;i++)assert(pal->colors[i]==source_rgb(address+i*2));
+}
+static void art_palette_reference(gra_t *g,int frame,uint32_t address,int count)
+{
+    const patch_t *p=W_Frame(g,frame);assert(p);
+    const palette_t *pal=&g->palettes[W_FramePalette(g,frame)];
+    palette_reference(pal,address,count);assert(p->maxval<count);
+    // Exercise the selected frame's actual palette through the shared draw
+    // path, including zero-index transparency and every visible texel at 2x.
+    const pixel_t bg=0xff172131;V_Clear(bg);V_DrawPatch(p->x,p->y,p,pal,0);
+    for(int y=0;y<MIN(p->h,VIEWHEIGHT);y++)for(int x=0;x<MIN(p->w,VIEWWIDTH);x++){
+        int value=p->pixels[y*p->w+x];pixel_t expected=value?source_rgb(address+value*2):bg;
+        for(int dy=0;dy<2;dy++)for(int dx=0;dx<2;dx++)
+            assert(screen[(y*2+dy)*SCREENWIDTH+x*2+dx]==expected);
+    }
+}
+static void palette_checks(void)
+{
+    gra_t *body=W_LoadGra("arcade"),*select=W_LoadGra("select"),*hud=W_LoadGra("hud"),*globe=W_LoadGra("globe");
+    for(int c=0;c<7;c++){
+        for(int alt=0;alt<4;alt++)palette_reference(&body->palettes[c*4+alt],X_U32(0x6e38c+c*4)+alt*128,64);
+        for(int player=0;player<2;player++)palette_reference(W_ArcadeTribePalette(c,player),X_U32(0x295da)+c*128+player*0x380,64);
+        art_palette_reference(hud,HUD_NAME+c,X_U32(0x351f6)+c*128,64);
+    }
+    const int portraits[]={130,91,141,149,125,113,97},heads[]={140,139,148,147,103,102,111};
+    uint32_t temple=X_U32(0x183b0);
+    for(int c=0;c<7;c++){
+        for(int k=0;k<5;k++)art_palette_reference(select,portraits[c]+k,X_U32(0x676fa+c*4),64);
+        assert(W_Frame(select,heads[c])==W_Frame(body,X_U32(0x6ad00+c*4)));
+        art_palette_reference(select,heads[c],temple+X_U16(0x6ad1c+c*2)*2,64);
+    }
+    art_palette_reference(select,136,temple+X_U16(0x6ac2a)*2,128);
+    for(int i=0;i<2;i++)art_palette_reference(select,105+i,temple+X_U16(0x6ac4a)*2,64);
+    for(int i=0;i<47;i++){
+        int layer=i<20?0:1+(i-20)/13;
+        art_palette_reference(globe,i,X_U32(0x36ca4)+X_U16(0x74174+layer*16+6)*2,64);
+    }
+    palette_reference(&hud->palettes[0],0x613c2+6*32,16);
+    palette_reference(&hud->palettes[1],0x613c2+7*32,16);
+    for(int i=HUD_HEART;i<HUD_NAME;i++)art_palette_reference(hud,i,X_U32(0x2952e)+X_U16(0x6d3d6)*2,32);
+    for(int c='0';c<='9';c++)art_palette_reference(W_LoadGra("stone-font"),c,X_U32(0x44700),16);
+    art_palette_reference(W_LoadGra("slabs"),37,0x61042,64);
+    for(int stage=0;stage<8;stage++){
+        const int colors[]={0x100,0x180,0x200,0x240,0x280,0x2c0,0x300,0x340,0x380,0x5a0};
+        for(unsigned i=0;i<sizeof colors/sizeof *colors;i++){
+            int color=colors[i];uint32_t source=color<0x200?X_U32(0x2952e)+color*2:
+                color<0x400?X_U32(0x614e2+stage*4)+(color-0x200)*2:X_U32(0x2956a)+(color-0x480)*2;
+            palette_reference(W_ArcadeStagePalette(stage,color),source,64);
+        }
+    }
+    palette_reference(W_ArcadeImpactPalette(false),X_U32(0x2952e)+X_U16(0x6cf56)*2,64);
+    palette_reference(W_ArcadeImpactPalette(true),X_U32(0x2952e)+0x180*2,64);
+    // Review all seven selected heads in their real screen, in source order.
+    SEL_Reset();gamemode=GM_TUG;SEL_Start();
+    for(int cell=0;cell<7;cell++){
+        char name[48];snprintf(name,sizeof name,"palette-select-%d",cell);shot(name);
+        event_t right={ev_keydown,'d'};assert(SEL_Responder(&right));
+    }
+    puts("arcade palettes: 28 fighter variants, 14 team banks, all portraits/heads, temple/podiums, globe layers, HUD, timer, shadows, contacts and eight scenery banks match source RGB555; exact 2x art texels passed");
+}
 static void scenery_checks(void)
 {
     // Independently decoded source samples at native (168,100)/(168,230),
@@ -238,6 +306,6 @@ int main(int argc,char **argv)
     }
     puts("arcade sound: original DSP effects and all seven voice tables decoded");
     assert(P_CheckAnims()==0);
-    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();title_palette_checks();font_checks();I_Shutdown();
+    CF_FlowChecks();CF_RetailChecks();capture_checks();hud_checks();scenery_checks();title_palette_checks();font_checks();palette_checks();I_Shutdown();
     printf("arcade: all checks passed, CPU %.3f seconds\n",(double)(clock()-start)/CLOCKS_PER_SEC);return 0;
 }

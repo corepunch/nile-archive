@@ -68,13 +68,13 @@ Character select uses the retail temple composition: four stone heads above
 three, red/yellow cursors and animated fighters standing on the two original
 stone podiums. The full 336×240 arcade temple fills the native view at exactly
 2× source pixels, including its sky and floor.
-The original tile order is Sauron, Talon, Armadon, Blizzard above Chaos,
-Vertigo, Diablo. Original
+The native ROM tile order is Sauron, Talon, Vertigo, Blizzard above Chaos,
+Armadon, Diablo. Original
 fighters keep their seven tiles; clay fighters occupy separate seven-tile
 temple pages. Left/right wraps between pages, up/down follows the staggered
 rows, and desktop Tab jumps to the next page. C opens Create Fighter. Palette
 bindings for the temple and original large portraits come from the installed
-game's data; the small heads retain their fighter palettes and background
+game's data; the small heads retain their own original palettes and background
 colours. Additional creation/page hints occupy the lower margin below the
 complete scene. The desktop window starts at 672×480 and cannot shrink below
 that size; larger windows letterbox the complete framebuffer.

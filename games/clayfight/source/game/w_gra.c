@@ -187,27 +187,26 @@ static gra_t *Hud(void)
 static gra_t *Select(void)
 {
     gra_t *g=Bank("select",155,31);
-    static const uint32_t palettes[]={0x64b02,0x64302,0x64502,0x66efa,0x67796,0x66d7a,0x67a16,0x66ffa};
-    for(int i=0;i<8;i++)Palette(&g->palettes[i],palettes[i],64);
+    uint32_t base=X_U32(0x183b0); // native temple setup copies 13 banks
     const int portrait[]={130,91,141,149,125,113,97};
     const int object[]={852,862,877,882,872,857,867};
     const int pals[]={13,4,16,18,12,11,6};
-    const uint32_t pp[]={0x67716,0x67796,0x67816,0x67896,0x67916,0x67996,0x67a16};
     for(int c=0;c<7;c++){
-        Palette(&g->palettes[pals[c]],pp[c],64);
+        Palette(&g->palettes[pals[c]],X_U32(0x676fa+c*4),64);
         for(int k=0;k<5;k++)Frame(g,portrait[c]+k,object[c]+k,pals[c]);
     }
-    Palette(&g->palettes[14],0x6717a,128);
+    Palette(&g->palettes[14],base+X_U16(0x6ac2a)*2,128);
     patch_t *bg=Patch(336,240);Composite(bg,Decode(785),0,0,64);Composite(bg,Decode(784),0,0,0);Bounds(bg);
     g->frames[136]=(frame_t){.w=336,.h=240,.decoded=true,.patch=bg};
     bank_pals[g-banks][136]=14;
-    Palette(&g->palettes[9],0x6727a,64);Palette(&g->palettes[10],0x6727a,64);
+    Palette(&g->palettes[9],base+X_U16(0x6ac4a)*2,64);g->palettes[10]=g->palettes[9];
     Frame(g,105,786,9);Frame(g,106,787,10);
     static const int heads[]={140,139,148,147,103,102,111};
-    static const int headids[]={788,790,791,789,794,792,793};
     static const int headpal[]={28,30,29,1,2,0,27};
-    static const int headchar[]={0,2,4,1,6,3,5};
-    for(int i=0;i<7;i++){g->palettes[headpal[i]]=body.palettes[headchar[i]*4];Frame(g,heads[i],headids[i],headpal[i]);}
+    for(int i=0;i<7;i++){
+        Palette(&g->palettes[headpal[i]],base+X_U16(0x6ad1c+i*2)*2,64);
+        Frame(g,heads[i],X_U32(0x6ad00+i*4),headpal[i]);
+    }
     return g;
 }
 gra_t *W_TryLoadGra(const char *name)
@@ -258,8 +257,9 @@ gra_t *W_TryLoadGra(const char *name)
         Frame(g,45,446,0);return g;
     }
     if(!strcasecmp(name,"globe")){
-        gra_t *g=Bank(name,47,4);Palette(&g->palettes[0],0x65cfa,64);Palette(&g->palettes[1],0x65d7a,64);Palette(&g->palettes[2],0x65dfa,64);Palette(&g->palettes[3],0x65e7a,64);
-        for(int i=0;i<47;i++)Frame(g,i,MAX(491,491+i-8),i<20?0:1);
+        gra_t *g=Bank(name,47,4);uint32_t base=X_U32(0x36ca4);
+        for(int i=0;i<4;i++)Palette(&g->palettes[i],base+X_U16(0x74174+i*16+6)*2,64);
+        for(int i=0;i<47;i++)Frame(g,i,MAX(491,491+i-8),i<20?0:1+(i-20)/13);
         return g;
     }
     if(!strcasecmp(name,"fonts")){
@@ -361,14 +361,16 @@ const palette_t *W_ArcadeImpactPalette(bool blocked)
     }
     return &palettes[blocked?1:0];
 }
-const palette_t *W_ArcadeTribePalette(int character)
+const palette_t *W_ArcadeTribePalette(int character,int player)
 {
-    static palette_t palettes[7];static bool ready;
+    static palette_t palettes[2][7];static bool ready;
     if(!ready){
-        for(int c=0;c<7;c++)Palette(&palettes[c],0x63382+c*128,64);
+        // Native 295ce selects the second set for player two, independently
+        // of whether the fighters use alternate body colours.
+        for(int p=0;p<2;p++)for(int c=0;c<7;c++)Palette(&palettes[p][c],0x63382+p*0x380+c*128,64);
         ready=true;
     }
-    return &palettes[CLAMP(character,0,6)];
+    return &palettes[CLAMP(player,0,1)][CLAMP(character,0,6)];
 }
 static void StageCycles(int stage,palette_t *palette,int time)
 {

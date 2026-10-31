@@ -118,7 +118,7 @@ static void Tribes(int camx)
         // colours. They are scenery in this port; eating/worship AI is separate.
         V_DrawPatchScaled(ARENA_WIDTH/2+offsets[i]-camx,FLOOR_Y-7+i%2*3,
                          W_Frame(W_LoadGra("arcade"),people[i].animation.frameid),
-                         W_ArcadeTribePalette(character),i/2?V_FLIP:0,0.75f,0.75f);
+                         W_ArcadeTribePalette(character,i/2),i/2?V_FLIP:0,0.75f,0.75f);
     }
 }
 void R_DrawStage(const stage_t *st,int camx)

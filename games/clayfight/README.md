@@ -55,7 +55,9 @@ banks, 115 source scenery objects, foreground depth, animated water/lava/fire,
 and palette cycling. It uses the original camera bounds and campaign arena
 assignments. Original fighters have pose-specific shadows; hits and blocks use
 source contact animations. Ambient tribespeople and the title lettering also
-use their original scripts/art. See the [graphics audit and remaining sequence
+use their original scripts/art. Selected heads, individual globe layers and both
+tribe teams use their dedicated source palette banks; the temple's character
+order comes from the native lookup table. See the [graphics audit and remaining sequence
 gaps](docs/primal-rage-arcade.md#stage-and-graphics-audit) and
 [source inventory](docs/arcade-graphics.json).
 

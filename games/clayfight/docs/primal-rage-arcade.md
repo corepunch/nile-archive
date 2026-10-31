@@ -19,13 +19,13 @@ from active data. Custom clay photographs remain in `data/creatures/`.
 | 115 scenery objects, including linked parts | Placements `0x6c418`, extras `0xf2648`, type descriptors `0x6d724`; stage palettes `0x614e2` | `r_stage.c`; original RLE frames, 26.6 positions, signed pivots, scale, mirror, depth/bias and source animation scripts |
 | Fighter ground shadows | Per-character pose lookup `0x6b068`; descriptors `0x6d5e0`; palette `0x61702` | Original per-pose shadow sprite and mirror; native Diablo scale; custom photo fighters retain their own procedural contact shadow |
 | Hit and blocked contacts | Scripts `0x56e28`/`0x56e36`, descriptor `0x6cf50`; palettes `0x61822`/`0x61802` | Source 10-frame contact cycles, three ticks per frame, all 64 colours; replaces square-particle art |
-| Ambient tribespeople | Six idle descriptors `0x6d270 + variant×16`; team palettes `0x63382 + character×128` | Four original animated people behind the fighters, port-specific placement at 0.75 scale; interactions remain outside this port |
+| Ambient tribespeople | Six idle descriptors `0x6d270 + variant×16`; team palettes `0x63382 + player×0x380 + character×128` | Four original animated people behind the fighters, distinct original P1/P2 colour banks, port-specific placement at 0.75 scale; interactions remain outside this port |
 | Title and menu panel | Motion object 446, PRIMAL animation 447–460, RAGE animation 475–480; native setup `0x35bc0`, descriptors `0x7422c`/`0x7423c`/`0x7425c` | Blue stone `0x650e2`, red PRIMAL `0x65162`, cream/orange RAGE `0x652e2`; source pivots and independent palettes retained |
 | Character-selection temple | Objects 784/785; palettes `0x6717a`/`0x671fa` | Complete 336×240 background at 2×, sky plus temple |
 | Podiums | Objects 786/787; palette `0x6727a` | Both source podiums; inward-facing animated previews above their surfaces |
-| Original selection states | Reliefs 788–794 and original body palettes | Unselected stone reliefs in background; coloured source heads under P1/P2 cursors; procedural red/yellow focus outlines retained |
-| Original close-up portraits | Objects 852–886, five frames per fighter; palette pointers at `0x676fa` | Source palettes; clay pages retain authored photo portraits, selected/unselected tile backgrounds and shared cursors |
-| Conquest globe | Object 491 with `0x65cfa`; continents 503/516/529 with `0x65d7a` | Shared source hotspots retained; uniformly scaled to fit campaign list |
+| Original selection states | Relief lookup `0x6ad00`, character order `0x6aca6`, palette offsets `0x6ad1c` from native `0x6707a` copy | Unselected stone reliefs in background; selected heads retain their own seven palettes; procedural red/yellow focus outlines retained |
+| Original close-up portraits | Objects 852–886, five frames per fighter; palette pointers at `0x676fa` | Source palettes read directly from the pointer table; clay pages retain authored photo portraits, selected/unselected tile backgrounds and shared cursors |
+| Conquest globe | Native setup `0x36c98`, descriptors `0x74174`–`0x741a4`; object 491 with `0x65cfa`, continent cycles 503–515 / 516–528 / 529 with `0x65d7a` / `0x65dfa` / `0x65e7a` | Independent palette per layer; shared source hotspots retained; uniformly scaled to fit campaign list |
 | Compact character glyphs | `136102-1045b.23p`, packed 4-bit 8×8 glyphs; descending neutral palette `0x61802` | Small labels and hints; light fill and dark bevel, trimmed transparent right columns |
 | Intro/UI alpha typeface | ASCII lookup `0xc510`, column-major tile descriptors `0xc370`, character-bank offset `0x80`, gold palette `0x61442` | `FONT_BIG` uses the arcade VERSION typeface, 16 pixels high with native 8/16-pixel cell advances |
 | Stone timer digits | RLE 417–426; original gold palette `0x68e3a` | Separate `FONT_TIMER`; HUD timer retains its existing artwork and registration |
@@ -99,6 +99,44 @@ font's original pixels and descending bevel. Reviewed captures are
 `ending.png` and `hud-custom.png`; the longest heading and maximum custom name
 fit their existing layouts. The timer crop is pixel-identical to the preceding
 revision. Reproduce these captures with the combined screenshot command below.
+
+## Palette audit across the remaining graphics
+
+The audit follows the native ROM palette-copy routines and each object's colour
+offset, rather than matching palettes by appearance. All runtime RGB555 channels
+use the same decoder; sprite index zero stays transparent. The inventory's
+`palette_audit` records the source addresses and native setup for every family.
+
+Three additional mapping errors were corrected:
+
+- The conquest renderer assigned `0x65d7a` to all three continent layers. The
+  second and third need `0x65dfa` and `0x65e7a`; their palettes differ at every
+  used index. Each animation frame now selects its own layer's descriptor bank.
+- Selected temple heads used fighter-body palettes, although their source pixel
+  indices belong to seven dedicated banks at `0x672fa`–`0x675fa`. The native head,
+  palette and character tables now stay together. This also corrects the swapped
+  Vertigo/Armadon choices: Vertigo is the third upper head, Armadon the middle
+  lower head, matching the actual relief artwork.
+- Player two's ambient people reused player one's team bank. Native routine
+  `0x295ce` adds `0x380` for P2, independently of fighter-body alternate colours.
+  All fourteen character/team combinations now use that source selection.
+
+The other mappings were confirmed: 28 fighter/alternate banks, all 35 close-up
+portrait frames, temple/sky/podiums, health/stun bars, heart/brain sequences,
+seven nameplates, gold decorative timer digits, pose shadows, hit/block contact
+palettes, all eight playfield palettes, all used scenery banks and palette-cycle
+registrations. The HUD deliberately uses the decorative gold digit artwork;
+its palette is verified against that artwork's original setup at `0x446f8`.
+It is separate from the intro alpha face. Custom photo palettes, port focus
+outlines/pins and transient combat flashes are intentional port rendering.
+
+The combined suite checks complete source palettes and rendered 2× texels for
+heads, all close-up portraits, globe frames, organs, nameplates, timer and podiums,
+in addition to the existing title/font/playfield checks. It drives real selection
+input and reviews every selected head in `review/arcade/after/palette-select-0.png`
+through `palette-select-6.png`. `campaign.png`, `stage-0.png` through `stage-7.png`
+and `scenery.gif` cover the corrected globe and team colours. Build and reproduce
+the captures with the commands below; validate the inventory with its `--check`.
 
 ## Stage and graphics audit
 

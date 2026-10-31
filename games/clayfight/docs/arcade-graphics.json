@@ -1925,8 +1925,186 @@
   "tribes": {
     "descriptors": "0x6d270 + variant*16",
     "variants": 6,
-    "team_palettes": "0x63382 + character*128",
+    "team_palettes": "0x63382 + player*0x380 + character*128",
     "presentation": "Four ambient spectators; idle ROM scripts, 0.75 scale. No eating/worship AI."
+  },
+  "palette_audit": {
+    "format": "RGB555, descending bevel indices retained; transparent index 0 for sprites",
+    "fighters": {
+      "pointer_table": "0x6e38c",
+      "banks_per_character": 4,
+      "colors_per_bank": 64,
+      "sources": [
+        "0x63f02",
+        "0x64302",
+        "0x64902",
+        "0x64b02",
+        "0x64702",
+        "0x64102",
+        "0x64502"
+      ]
+    },
+    "temple": {
+      "setup": "0x1838c",
+      "palette_source": "0x6707a",
+      "background_palettes": [
+        "0x6717a",
+        "0x671fa"
+      ],
+      "podium_palette": "0x6727a",
+      "heads": [
+        {
+          "cell": 0,
+          "character": 0,
+          "object": 788,
+          "palette": "0x673fa"
+        },
+        {
+          "cell": 1,
+          "character": 2,
+          "object": 790,
+          "palette": "0x6747a"
+        },
+        {
+          "cell": 2,
+          "character": 3,
+          "object": 791,
+          "palette": "0x672fa"
+        },
+        {
+          "cell": 3,
+          "character": 1,
+          "object": 789,
+          "palette": "0x6737a"
+        },
+        {
+          "cell": 4,
+          "character": 6,
+          "object": 794,
+          "palette": "0x674fa"
+        },
+        {
+          "cell": 5,
+          "character": 4,
+          "object": 792,
+          "palette": "0x6757a"
+        },
+        {
+          "cell": 6,
+          "character": 5,
+          "object": 793,
+          "palette": "0x675fa"
+        }
+      ],
+      "portrait_pointer_table": "0x676fa",
+      "portrait_palettes": [
+        "0x67716",
+        "0x67796",
+        "0x67816",
+        "0x67896",
+        "0x67916",
+        "0x67996",
+        "0x67a16"
+      ]
+    },
+    "globe": {
+      "setup": "0x36c98",
+      "palette_source": "0x65cfa",
+      "layers": [
+        {
+          "descriptor": "0x74174",
+          "palette": "0x65cfa"
+        },
+        {
+          "descriptor": "0x74184",
+          "palette": "0x65d7a"
+        },
+        {
+          "descriptor": "0x74194",
+          "palette": "0x65dfa"
+        },
+        {
+          "descriptor": "0x741a4",
+          "palette": "0x65e7a"
+        }
+      ]
+    },
+    "hud": {
+      "alpha_setup": "0x29b7a",
+      "alpha_source": "0x613c2",
+      "health_bank": 6,
+      "stun_bank": 7,
+      "organ_descriptor": "0x6d3d0",
+      "organ_palette": "0x61742",
+      "name_setup": "0x351b2",
+      "name_palettes": [
+        "0x64d02",
+        "0x64d82",
+        "0x64e02",
+        "0x64e82",
+        "0x64f02",
+        "0x64f82",
+        "0x65002"
+      ]
+    },
+    "scenery": {
+      "setup": "0x29512",
+      "common_source": "0x61502",
+      "stage_sources": [
+        "0x61902",
+        "0x61d02",
+        "0x62082",
+        "0x62482",
+        "0x62682",
+        "0x62b02",
+        "0x62f02",
+        "0x63202"
+      ],
+      "extra_source": "0x63a82",
+      "playfield_sources": [
+        "0x5fec2",
+        "0x600c2",
+        "0x603c2",
+        "0x605c2",
+        "0x607c2",
+        "0x609c2",
+        "0x60bc2",
+        "0x60dc2"
+      ]
+    },
+    "tribes": {
+      "setup": "0x295ce",
+      "palettes": [
+        [
+          "0x63382",
+          "0x63402",
+          "0x63482",
+          "0x63502",
+          "0x63582",
+          "0x63602",
+          "0x63682"
+        ],
+        [
+          "0x63702",
+          "0x63782",
+          "0x63802",
+          "0x63882",
+          "0x63902",
+          "0x63982",
+          "0x63a02"
+        ]
+      ]
+    },
+    "timer": {
+      "setup": "0x446f8",
+      "palette": "0x68e3a",
+      "presentation": "Port HUD uses the original gold decorative digits; intro face is separate."
+    },
+    "unused_slab": {
+      "object": 826,
+      "palette": "0x61042"
+    },
+    "excluded": "Custom photo palettes, UI focus outlines/pins, transient combat flashes; no ROM palette mapping."
   },
   "title": {
     "primal_frames": [
