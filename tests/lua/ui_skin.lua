@@ -59,7 +59,7 @@ local function paint(st,node) drawn={};skin:paint(node and node.kind or "button"
 paint({})
 check(names()=="shadow,body,gloss","normal look draws its layers in order")
 local gloss=find("gloss").box
-check(gloss.x==12 and gloss.y==22 and gloss.w==96 and gloss.h==20,"inset and height_ratio place a layer")
+check(gloss.x==12 and gloss.y==22 and gloss.w==96 and gloss.h==18,"height_ratio cuts the top, then inset applies")
 paint({hot=true})
 check(names()=="shadow,body-hover,gloss","hover patches one named layer")
 paint({hot=true,held=true})
@@ -119,6 +119,38 @@ drawn={}
 check(skin:draw_button(rect(0,0,80,30),"Go",{input={}})==false and find("body"),"immediate button paints the button look")
 drawn={}
 check(skin:draw_checkbox(rect(0,0,80,30),"On",true)==true and find("mark"),"immediate checkbox keeps its value and draws the mark")
+
+-- Looks can shrink or fade the whole control; layers can hide; variants that
+-- touch one layer keep the control's patches to the others.
+local native=ui.skin{fonts={f={font=base_font}},text={t={font="f",em=10,shadow="#000000",shadow_offset={0,2},scale_lengths=false},
+        faded={extends="t",fade=.45}},
+    colors={gold="#F4CB78"},
+    controls={
+        button={text="t",
+            normal={layers={{name="shadow",paint=rec("shadow")},{name="body",paint=rec("body")},{name="pin",paint=rec("pin"),fixed=true}}},
+            hover={set={body={paint=rec("body-hot")}}},
+            pressed={inset=2,set={shadow={hidden=true}}},
+            disabled={alpha=.45,text="faded"},
+            variants={accent={normal={set={shadow={paint=rec("shadow-gold")}}},hover={set={body={paint=rec("body-gold")}}}}}},
+        pill={text="t",normal={layers={{paint=rec("pill")}}}},
+    },
+    theme={text={"t",30},accent="gold",radius=9}}
+drawn={};native:paint("button",box,{hot=true,held=true})
+check(names()=="body-hot,pin" and find("body-hot").box.x==12 and find("body-hot").box.w==96,"pressed inset shrinks non-fixed layers and hides one")
+check(find("pin").box.x==10,"fixed layers ignore the look's inset")
+drawn={};native:paint("button",box,{hot=true},{kind="button",accent=true})
+check(names()=="shadow-gold,body-gold,pin","an accent hover patch keeps the accent normal patch")
+check(math.abs(native:text("t",20).shadow_offset.y-2)<.01,"scale_lengths=false pins shadow lengths")
+check(math.abs(native:text("faded").fade-.45)<.01,"text styles can fade")
+check(rawget(native,"theme")==nil,"the theme waits until it is used")
+check(math.abs(native.theme.text.size-30)<.01 and native.theme.accent.r==244 and native.theme.radius==9,"{style, em} theme entries and colours")
+check(native.theme.active.a>0,"unnamed theme fields keep the engine theme")
+check(native:color("gold").g==203,"skin:color resolves palette names")
+drawn={}
+native:draw_button(rect(0,0,80,30),"Go",{kind="pill"})
+check(names()=="pill","draw_button paints any control kind")
+local plain_buttons=ui.skin{fonts={f={font=base_font}},text={t={font="f"}},controls={button={text="t"}}}
+check(plain_buttons.button==nil and plain_buttons.button_text~=nil,"text-only buttons keep the native button paint")
 
 -- Authored images must exist for every state; the audit lists what is missing.
 local art=ui.skin{fonts={f={font=base_font}},text={t={font="f"}},controls={

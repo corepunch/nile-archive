@@ -6,7 +6,8 @@
 -- Colours are "#RRGGBB" or "#RRGGBBAA". Text lengths (outline, shadow) are at
 -- the style's `em` and scale with the size a control asks for. Layer boxes take
 -- `inset` (number or {left, top, right, bottom}), `offset` {x, y} and
--- `height_ratio`; a state's `offset` moves every layer that isn't `fixed`.
+-- `height_ratio` (the top fraction, taken before the inset); a state's
+-- `offset` moves every layer that isn't `fixed`.
 return ui.skin{
     fonts = {
         -- Lilita One measures ascent to descent: 1.17 of its em.
@@ -45,7 +46,7 @@ return ui.skin{
                 {name = "shadow", fill = "#0D362B", radius = 15, offset = {0, 6}, fixed = true},
                 {name = "body", fill = "#2E7046", radius = 15},
                 {name = "face", fill = "#71B953", radius = 12, inset = {3, 3, 3, 4}},
-                {name = "gloss", fill = "#9FD56D", radius = 10, inset = {6, 4, 6, 0}, height_ratio = .4},
+                {name = "gloss", fill = "#9FD56D", radius = 10, height_ratio = .4, inset = {6, 4, 6, -4}},
             }},
             pressed = {offset = {0, 2}},
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},

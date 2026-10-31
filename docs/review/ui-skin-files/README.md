@@ -36,3 +36,29 @@ action and the guide's button.
 | Pressed RESUME (sinks 2 units) | Pause pop-in (transform) |
 | --- | --- |
 | ![Pressed](after-relic-pause-press.jpg) | ![Pop](after-relic-pause-pop.jpg) |
+
+## Nile Archive and Volcano: the same pixels, now from skin files
+
+`games/nile-archive/lua/archive_skin.lua` holds Nile Archive's fonts (with the
+serif's fallback), its 21 text styles, the native theme, the gold-rimmed frame
+in teal or parchment at any corner radius (corner studs as a `paint` layer)
+and the green/blue/red pill buttons, whose disabled state turns grey.
+`games/volcano/lua/volcano_skin.lua` holds Volcano's lettering, theme, and the
+panel, button (hover, pressed, disabled, gold accent) and meters that native
+widgets drew before.
+
+Pixel-identical to the previous commit: 17 Nile Archive captures (island at
+1200×900 and 1600×900, scenes, build tray at 1200×900 and 1368×1026, decoration
+catalogue, purchase, opening, first build/win, cast, pause, chapters, reward at
+two sizes, story) and 13 Volcano captures (menu at two sizes, five districts,
+repaired, complete, pause at two sizes, briefing, help). So are 4 held presses
+on Nile pills (green, blue, disabled grey, reward) and 2 on Volcano buttons
+(gold accent on the menu, Resume in Pause).
+
+| | Before | After |
+| --- | --- | --- |
+| Volcano menu | ![Before](before-volcano-menu.jpg) | ![After](after-volcano-menu.jpg) |
+| Volcano pause, Resume held | ![Before](before-volcano-pause-press.jpg) | ![After](after-volcano-pause-press.jpg) |
+| Nile chapters | ![Before](before-nile-archive-chapters.jpg) | ![After](after-nile-archive-chapters.jpg) |
+| Nile chapters, green pill held | ![Before](before-nile-archive-chapters-press-green.jpg) | ![After](after-nile-archive-chapters-press-green.jpg) |
+| Nile build tray | ![Before](before-nile-archive-build.jpg) | ![After](after-nile-archive-build.jpg) |
