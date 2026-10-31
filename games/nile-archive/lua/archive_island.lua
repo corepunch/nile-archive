@@ -26,6 +26,8 @@ function M.setup()
     local c = city.new()
     c.defs = content.buildings
     c.tile = content.TILE
+    c.fog_clouds = true
+    c.fog = rgba(239, 241, 228, 240)
     c.clearance = size2(1, 1)   -- half a tile of ground around every base
     c.spacing = 120
     c.path = color(0, 0, 0, 0)   -- no automatic roads between buildings

@@ -197,6 +197,7 @@
 ---@field cam camera
 ---@field fog color Locked zones; default dark teal.
 ---@field fog_on_land_only boolean
+---@field fog_clouds boolean Animated world-space cloud density and billow lighting, clipped to the closed-region mask.
 ---@field path color Paths linking buildings; alpha 0 = none.
 ---@field movable boolean Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map.
 ---@field show_footprints boolean Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements.

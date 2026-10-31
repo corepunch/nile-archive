@@ -515,7 +515,33 @@ static void fog_build(const city *c)
     fog.land_only = c->fog_on_land_only, fog.nx = nx, fog.ny = ny, fog.step = step;
 }
 
-static void draw_fog(const city *c)
+/* Smooth value-noise texture, sampled in world space. Two advected banks
+ * produce rolling billows without scrolling the region mask or rebuilding it.
+ * No texture allocation or random state is touched during a frame. */
+static float cloud_hash(int x, int y)
+{
+    uint32_t h = (uint32_t)x * 374761393u + (uint32_t)y * 668265263u;
+    h = (h ^ (h >> 13)) * 1274126177u;
+    return (h ^ (h >> 16)) / 4294967295.f;
+}
+
+static float cloud_noise(float x, float y)
+{
+    int ix = (int)floorf(x), iy = (int)floorf(y);
+    float u = x - ix, v = y - iy;
+    u = u * u * (3 - 2 * u), v = v * v * (3 - 2 * v);
+    float a = lerpf(cloud_hash(ix, iy), cloud_hash(ix + 1, iy), u);
+    float b = lerpf(cloud_hash(ix, iy + 1), cloud_hash(ix + 1, iy + 1), u);
+    return lerpf(a, b, v);
+}
+
+static float cloud_density(float x, float y)
+{
+    return .57f * cloud_noise(x, y) + .29f * cloud_noise(x * 2.03f + 17, y * 2.03f + 9)
+        + .14f * cloud_noise(x * 4.11f + 31, y * 4.11f - 7);
+}
+
+static void draw_fog(const city *c, double now)
 {
     static render_vertex v[FOG_MAX * FOG_MAX];
     static int idx[(FOG_MAX - 1) * (FOG_MAX - 1) * 6];
@@ -537,7 +563,24 @@ static void draw_fog(const city *c)
             float t = smoothstep(.12f, .88f, fog.a[y * fog.nx + x]);
             float cloud = .9f + .1f * sinf(p.x * .006f + 1.7f * sinf(p.y * .004f)) * sinf(p.y * .005f - p.x * .002f);
             vec2 s = camera_to_screen(c->cam, p);
-            v[(y - y0) * w + x - x0] = (render_vertex){{s.x, s.y}, {c->fog.r, c->fog.g, c->fog.b, (uint8_t)(c->fog.a * t * cloud)}, {0, 0}};
+            color col = c->fog;
+            if (c->fog_clouds) {
+                float time = (float)fmod(now, 65536.0);
+                float a = cloud_density((p.x - time * 7) / 175, (p.y + time * 3) / 175);
+                float b = cloud_density((p.x + time * 4) / 95 + 47, (p.y - time * 5) / 95);
+                float density = smoothstep(.22f, .78f, a * .72f + b * .28f);
+                float edge = (density - .5f) * .46f;
+                t = smoothstep(maxf(.015f, .10f - edge), .86f - edge, fog.a[y * fog.nx + x]);
+                /* Blue-grey hollows and warm white sunlit lobes; density also
+                 * feathers the edge, while the closed interior stays opaque. */
+                float light = .72f + .37f * density;
+                col.r = (uint8_t)clampf(c->fog.r * light, 0, 255);
+                col.g = (uint8_t)clampf(c->fog.g * (light + .015f), 0, 255);
+                col.b = (uint8_t)clampf(c->fog.b * (light + .065f), 0, 255);
+                cloud = .94f + .06f * density;
+            }
+            col.a = (uint8_t)(c->fog.a * t * cloud);
+            v[(y - y0) * w + x - x0] = (render_vertex){{s.x, s.y}, col, {0, 0}};
         }
     for (int y = 0; y < y1 - y0; y++)
         for (int x = 0; x < x1 - x0; x++) {
@@ -620,8 +663,6 @@ void city_draw(const city *c, input in, double now)
     gfx_clip(cam.view);
     camera_draw_texture(cam, c->ground);
     if (c->path.a) draw_paths(c);
-    draw_fog(c);   /* over the land, under the buildings: they stand on open ground */
-
     /* A separate ground pass prevents a tall neighbour's shadow from being
      * painted over a building. Omit the old position of the building in hand. */
     for (int i = 0; i < c->count; i++)
@@ -633,6 +674,7 @@ void city_draw(const city *c, input in, double now)
         vec2 p = city_snap(c, camera_to_world(cam, in.pos), c->selected);
         draw_building_shadow(c, (building){p, c->selected, 0}, .5f);
     }
+    draw_fog(c, app_time());   /* over the land and its shadows, under the buildings; frame time stays smooth, income uses wall-clock now */
 
     int order[CITY_MAX], n = depth_order(c, order);
     for (int k = 0; k < n; k++) {

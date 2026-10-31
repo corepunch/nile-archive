@@ -192,6 +192,7 @@ function M.island_setup(c)
     c.clearance = size2(1, 1)   -- half a tile of ground around every base
     c.fog = color(233, 242, 224, 240)
     c.fog_on_land_only = true
+    c.fog_clouds = true
     c.path = color(0, 0, 0, 0)   -- no automatic roads between buildings
     c.movable = true
     c.cam = camera{center = vec2(760, 2010), zoom = .65, min_zoom = .24, max_zoom = 1.05, world = size2(M.ISLAND_W, M.ISLAND_H)}

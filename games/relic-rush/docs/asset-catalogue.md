@@ -251,6 +251,16 @@ for burning, charging, cracked gems or tool upgrades.
 
 ## Remaining runtime asset families
 
+`cloud-fog` covers locked land with rolling cloud banks (`city.fog_clouds`, `engine/city.c`).
+Two world-space density fields of three spatial frequencies each drift on the smooth frame
+clock. Density modulates soft cloud edges, blue-grey hollows and pale sunlit lobes. The cached
+closed-land mask stays fixed, and unlocking clears it immediately. Open land stays clear. This
+is a continuous procedural effect, with no icon or interaction-state atlas. See the
+[review](review/cloud-fog/README.md).
+
+`building-shadows` is a separate Blender-rendered RGBA layer for all 96 objects, drawn below the
+fog and every sprite; see [registration](BUILDINGS.md).
+
 The current [96-entry catalogue](building-catalogue.md), including the dry Sunstone
 courtyard, is rendered directly from its Blender master with the shared
 [city camera](../../../docs/BUILDINGS.md#the-camera). The earlier

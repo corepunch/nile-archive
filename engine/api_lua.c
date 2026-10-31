@@ -1571,6 +1571,7 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "cam")) { api_push_camera(L, p->cam); return 1; }
     if (!strcmp(k, "fog")) { api_push_color(L, p->fog); return 1; }
     if (!strcmp(k, "fog_on_land_only")) { lua_pushboolean(L, p->fog_on_land_only); return 1; }
+    if (!strcmp(k, "fog_clouds")) { lua_pushboolean(L, p->fog_clouds); return 1; }
     if (!strcmp(k, "path")) { api_push_color(L, p->path); return 1; }
     if (!strcmp(k, "movable")) { lua_pushboolean(L, p->movable); return 1; }
     if (!strcmp(k, "show_footprints")) { lua_pushboolean(L, p->show_footprints); return 1; }
@@ -1647,6 +1648,7 @@ static int l_city_newindex(lua_State *L)
     if (!strcmp(k, "cam")) { p->cam = api_get_camera(L, 3); return 0; }
     if (!strcmp(k, "fog")) { p->fog = api_get_color(L, 3); return 0; }
     if (!strcmp(k, "fog_on_land_only")) { p->fog_on_land_only = lua_toboolean(L, 3); return 0; }
+    if (!strcmp(k, "fog_clouds")) { p->fog_clouds = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "path")) { p->path = api_get_color(L, 3); return 0; }
     if (!strcmp(k, "movable")) { p->movable = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "show_footprints")) { p->show_footprints = lua_toboolean(L, 3); return 0; }

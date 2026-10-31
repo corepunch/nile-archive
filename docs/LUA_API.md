@@ -2209,6 +2209,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `cam` | `camera` | read/write |  |
 | `fog` | `color` | read/write | Locked zones; default dark teal. |
 | `fog_on_land_only` | `boolean` | read/write |  |
+| `fog_clouds` | `boolean` | read/write | Animated world-space cloud density and billow lighting, clipped to the closed-region mask. |
 | `path` | `color` | read/write | Paths linking buildings; alpha 0 = none. |
 | `movable` | `boolean` | read/write | Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map. |
 | `show_footprints` | `boolean` | read/write | Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements. |

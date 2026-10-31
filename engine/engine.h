@@ -657,6 +657,7 @@ typedef struct city {
     camera cam;
     color fog;                              /* locked zones; default dark teal */
     bool fog_on_land_only;                  /* fog only where buildable() */
+    bool fog_clouds;                        /* animated, world-anchored cloud density and lighting */
     color path;                             /* paths linking buildings; alpha 0 = none */
     bool movable;                           /* hold a building for .5 seconds to pick it up */
     bool show_footprints;                   /* debug: every building's footprint and pivot over its sprite */

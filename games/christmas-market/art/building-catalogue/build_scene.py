@@ -3,7 +3,7 @@
 # The master scene for games/christmas-market, made as docs/BUILDING_ART.md
 # describes: every object is modelled on the game's grid, one collection each,
 # named after its key, with its pivot at the footprint's ground centre.
-# The first twelve rows follow the building direction sheet
+# The first twelve rows follow the building direction sheet and are modelled in market_wishes.py
 # (art/building-reference-sheet.png); the rest are extra shop objects.
 #
 # Convention: tools/building_kit.py and docs/BUILDINGS.md. 1 Blender unit = 1 tile side.
@@ -23,7 +23,10 @@ from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(globals().get("__file__", "."))) if "__file__" in globals() else "."
 sys.path.insert(0, os.path.join(HERE, "..", "..", "..", "..", "tools"))
+sys.path.insert(0, HERE)
+import building_kit
 import city_camera
+import market_wishes
 SCENE_NAME = "ChristmasMarketIso"
 R = random.Random(12)
 PREFIX = "cm_"
@@ -1714,12 +1717,14 @@ def build():
     clean_previous()
     scn = bpy.data.scenes.new(SCENE_NAME)
     materials = make_materials()
+    kit_materials = building_kit.make_materials()
     root = bpy.data.collections.new("buildings")
     scn.collection.children.link(root)
     u = v = 0
     row_h = 0
     for i, it in enumerate(CATALOGUE):
-        k = model(it, i)
+        wish = it["key"] in market_wishes.KEYS   # these use the shared kit and its materials
+        k = market_wishes.model(it, i) if wish else model(it, i)
         if u + it["w"] > 24:
             u, v = 0, v + row_h + 2
             row_h = 0
@@ -1731,8 +1736,12 @@ def build():
         pivot["title"], pivot["w"], pivot["h"] = it["title"], it["w"], it["h"]
         coll.objects.link(pivot)
         for mat, bucket in k.buckets.items():
-            to_object(it["key"] + "." + mat, bucket, mat, materials, coll, pivot)
-        for n, (p, watts, colour) in enumerate(k.lights):
+            if wish:
+                building_kit.to_object(it["key"] + "." + mat, bucket, mat, kit_materials, coll, pivot)
+            else:
+                to_object(it["key"] + "." + mat, bucket, mat, materials, coll, pivot)
+        for n, light in enumerate(k.lights):
+            p, watts, colour = light if len(light) == 3 else (*light, (1, .62, .28))
             li = bpy.data.lights.new(PREFIX + it["key"] + "_light", "POINT")
             li.energy = watts
             li.color = colour
