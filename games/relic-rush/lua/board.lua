@@ -23,14 +23,14 @@ local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local CELL_SIZE = ART_CELL_SIZE * BOARD_SCALE
 local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
 local HEX_DY = 1.732050808 * HEX_R
-local board_origin = vec2(240, 440)
-local TOOLS_Y, TOOL_SIZE = 796, art.tool_size   -- centred in the bottom tray
+local board_origin = vec2(240, 434)
+local TOOLS_Y, TOOL_SIZE = 808, art.tool_size
 
 -- The screen is 480 wide and at least 900 tall; tall phones add height. The
 -- bottom group moves down by all of it (R.drop) and the board by half.
 function R.layout()
     R.drop = app.screen().h - SCREEN_H
-    board_origin = vec2(240, 440 + R.drop / 2)
+    board_origin = vec2(240, 434 + R.drop / 2)
     local half_w = (1.5 * rules.HEX_RADIUS + 1) * HEX_R + 6
     local half_h = (rules.HEX_RADIUS + .5) * HEX_DY + 6
     R.BOARD_CLIP = rect.centered(board_origin, size2(half_w * 2, half_h * 2))
@@ -93,8 +93,9 @@ end
 -- tools sit in a matching tray along the bottom edge. Nothing else covers the
 -- painting, and the board takes the space between.
 -- Repeated goal cells use the shared measured list, with stable objective keys.
-local HUD_BOTTOM, TRAY_TOP = 92, 772
-local MOVES_AT, MOVES_R = vec2(68, 50), 48
+-- Both bars stay slim so the painting carries the screen.
+local HUD_BOTTOM, TRAY_TOP = 60, 832   -- the tools stand up out of the tray
+local MOVES_AT, MOVES_R = vec2(56, 34), 40
 function R.goal_entries()
     local g, l = R.g, rules.level_of(R.g)
     local entries = {
@@ -118,24 +119,24 @@ local function goal_icon(box, entry)
 end
 local function goal_count(box, entry)
     if entry.remaining==0 then
-        gfx.image(R.hud_art.complete, rect.centered(box:center(), size2(24, 24)), color.WHITE)
+        gfx.image(R.hud_art.complete, rect(box.x, box.y + (box.h - 22) / 2, 22, 22), color.WHITE)
     else
-        text.inside(R.pal(PAL_CREAM, 17), box, vec2(.5, .5), tostring(entry.remaining))
+        text.inside(R.pal(PAL_CREAM, 15), box, vec2(0, .5), tostring(entry.remaining))
     end
 end
 local hud_form=ui.form{kind="row",gap=10,children={
-    {kind="spacer",width=106},   -- the Moves medallion overhangs the band here
-    {kind="row",panel=true,grow=1,padding={4,6,4,4},children={
+    {kind="spacer",width=78},    -- the Moves medallion overhangs the band here
+    {kind="row",panel=true,grow=1,padding={4,4,4,4},children={
         {kind="spacer",grow=1},
         {kind="list",id="goals",direction="row",gap=4,item=function(entry)
-            return {kind="column",width=56,gap=2,align="center",children={
-                {kind="custom",width=40,height=40,paint=function(box) goal_icon(box,entry) end},
-                {kind="custom",width=56,height=20,paint=function(box) goal_count(box,entry) end},
+            return {kind="row",width=72,gap=4,align="center",children={
+                {kind="custom",width=28,height=28,paint=function(box) goal_icon(box,entry) end},
+                {kind="custom",width=40,height=24,paint=function(box) goal_count(box,entry) end},
             }}
         end},
         {kind="spacer",grow=1},
     }},
-    {kind="spacer",width=58},    -- pause, drawn by the shared header
+    {kind="spacer",width=46},    -- pause, drawn by the shared header
 }}
 -- A recessed jade plate inside the band, so the goals read as one group.
 local hud_skin={
@@ -164,34 +165,34 @@ end
 -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
 -- remaining moves large inside. It warms to red over the last five moves.
 local function draw_moves()
-    local c, r, a = MOVES_AT, MOVES_R, PI / 6
+    local c, r, a = MOVES_AT, MOVES_R, 0   -- flat-top, like the cells
     local moves = R.g.moves
     local urgent = moves <= 5 and not R.g.won
     if urgent and not R.reduced_motion then
         gfx.additive(true)
-        gfx.glow(c, r + 18, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
+        gfx.glow(c, r + 14, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
         gfx.additive(false)
     end
     gfx.ngon(c + vec2(0, 5), r, 6, a, rgba(3, 20, 18, 150))
     gfx.ngon(c, r, 6, a, rgba(116, 74, 33))
     gfx.ngon(c, r - 2, 6, a, rgba(236, 196, 112))
-    gfx.ngon(c + vec2(0, 2), r - 6, 6, a, rgba(176, 120, 48))
-    gfx.ngon(c, r - 8, 6, a, urgent and rgba(112, 34, 24) or rgba(12, 62, 52))
-    gfx.glow(c + vec2(0, -6), r - 14, urgent and rgba(178, 64, 40) or rgba(36, 124, 96), urgent and rgba(112, 34, 24, 0) or rgba(12, 62, 52, 0))
-    text.inside(R.pal(PAL_CREAM, 12), rect.centered(c + vec2(0, -22), size2(70, 16)), vec2(.5, .5), "MOVES")
-    local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 40)
-    text.inside(s, rect.centered(c + vec2(0, 8), size2(76, 46)), vec2(.5, .5), tostring(moves))
+    gfx.ngon(c + vec2(0, 2), r - 5, 6, a, rgba(176, 120, 48))
+    gfx.ngon(c, r - 7, 6, a, urgent and rgba(112, 34, 24) or rgba(12, 62, 52))
+    gfx.glow(c + vec2(0, -4), r - 12, urgent and rgba(178, 64, 40) or rgba(36, 124, 96), urgent and rgba(112, 34, 24, 0) or rgba(12, 62, 52, 0))
+    text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17), size2(56, 12)), vec2(.5, .5), "MOVES")
+    local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29)
+    text.inside(s, rect.centered(c + vec2(0, 5), size2(62, 34)), vec2(.5, .5), tostring(moves))
 end
 
 function R.goal_target(kind)
     -- Collection flights land on the goal they advance.
-    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(260, 46)
+    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, 30)
 end
 local function draw_hud()
     draw_band(HUD_BOTTOM, true)
     draw_band(TRAY_TOP + R.drop, false)
     assert(hud_form:set_items("goals",R.goal_entries()))
-    hud_form:draw(rect(14,12,452,68),hud_skin,{interactive=false})
+    hud_form:draw(rect(14,8,452,44),hud_skin,{interactive=false})
     draw_moves()
 end
 R.hud_form=hud_form
