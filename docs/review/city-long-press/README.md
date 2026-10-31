@@ -1,5 +1,7 @@
 # Deliberate building pickup
 
+> The commands on this page used a capture tool that has since been replaced. A press and hold is now `hold()` in `tests/games/<game>.lua`; see [docs/TESTING.md](../../TESTING.md). The captures here are the historical record.
+
 Before: main at `a59e8149e84cbf2254f6195aaa890f21eee7e0ec`. After: this PR.
 Tracked by [issue #21](https://github.com/corepunch/nile-archive/issues/21).
 

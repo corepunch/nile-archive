@@ -1,5 +1,7 @@
 # Placement button typography
 
+> The commands on this page used a capture tool that has since been replaced. A press and hold is now `hold()` in `tests/games/<game>.lua`; see [docs/TESTING.md](../../TESTING.md). The captures here are the historical record.
+
 The form's accent-style routing fix was already present in the working tree:
 Confirm selects `theme.accent_text`, rather than the cream `theme.button` style.
 `before-1200.jpg` records that starting point, which already fixes the cream on
