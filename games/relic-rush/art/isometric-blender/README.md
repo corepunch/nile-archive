@@ -17,8 +17,9 @@ footprints and centre pivots on the saved render.
 
 Every building has one restored presentation. Selected, pressed, hover, disabled
 and blocked-placement states are not new authored states in this study. The
-The runtime paint-over now adopts the study's `w`/`h` footprints; the report's
-`game` column preserves earlier dimensions for provenance. The unchanged master
+current catalogue owns its measured footprints; the nine matching landmarks
+share the study sizes. ID 4 is now the courtyard. The report preserves the
+historical bridge and earlier `game` dimensions for provenance. The unchanged master
 also supplies isolated shadow-catcher renders. See the
 [ImageGen paint-over pipeline](../isometric-paintover/README.md) and
 [issue #15](https://github.com/corepunch/nile-archive/issues/15).
