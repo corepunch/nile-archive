@@ -146,11 +146,16 @@ void M_Drawer(void)
     if (gamestate == GS_TITLE) {
         V_Clear(0xff000000);
         gra_t *g = W_LoadGra("title");
-        int slab = MIN(39 + pagetic / 6, 45);
-        patch_t *p = W_Frame(g, slab);
-        M_DrawArt("title", slab, 168 - p->w / 2, 120 - p->h / 2, 1, 0);
-        if (pagetic > 50) M_DrawArt("title", 37, 98, 82, 1, 0);
-        if (pagetic > 80) M_DrawArt("title", 19, 78, 122, 1, 0);
+        patch_t *p=W_Frame(g,45);
+        M_DrawArt("title",45,168-p->w/2,120-p->h/2,1,0);
+        if(pagetic>=35){
+            int frame=MIN(13,(pagetic-35)/3);
+            V_DrawPatch(14,14,W_Frame(g,frame),&g->palettes[W_FramePalette(g,frame)],0);
+        }
+        if(pagetic>=70){
+            int frame=14+MIN(5,(pagetic-70)/3);
+            V_DrawPatch(15,19,W_Frame(g,frame),&g->palettes[W_FramePalette(g,frame)],0);
+        }
         if (pagetic & 32) V_DrawTextCentered(FONT_SMALL, 168, 190, "PRESS START");
         V_DrawTextCentered(FONT_SMALL, 168, VIEWHEIGHT - 10, "CLAYFIGHT  /  PRIMAL RAGE + YOUR CLAY FIGHTERS");
         return;

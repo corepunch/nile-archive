@@ -187,27 +187,26 @@ static gra_t *Hud(void)
 static gra_t *Select(void)
 {
     gra_t *g=Bank("select",155,31);
-    static const uint32_t palettes[]={0x64b02,0x64302,0x64502,0x66efa,0x67796,0x66d7a,0x67a16,0x66ffa};
-    for(int i=0;i<8;i++)Palette(&g->palettes[i],palettes[i],64);
+    uint32_t base=X_U32(0x183b0); // native temple setup copies 13 banks
     const int portrait[]={130,91,141,149,125,113,97};
     const int object[]={852,862,877,882,872,857,867};
     const int pals[]={13,4,16,18,12,11,6};
-    const uint32_t pp[]={0x67716,0x67796,0x67816,0x67896,0x67916,0x67996,0x67a16};
     for(int c=0;c<7;c++){
-        Palette(&g->palettes[pals[c]],pp[c],64);
+        Palette(&g->palettes[pals[c]],X_U32(0x676fa+c*4),64);
         for(int k=0;k<5;k++)Frame(g,portrait[c]+k,object[c]+k,pals[c]);
     }
-    Palette(&g->palettes[14],0x6717a,128);
+    Palette(&g->palettes[14],base+X_U16(0x6ac2a)*2,128);
     patch_t *bg=Patch(336,240);Composite(bg,Decode(785),0,0,64);Composite(bg,Decode(784),0,0,0);Bounds(bg);
     g->frames[136]=(frame_t){.w=336,.h=240,.decoded=true,.patch=bg};
     bank_pals[g-banks][136]=14;
-    Palette(&g->palettes[9],0x6727a,64);Palette(&g->palettes[10],0x6727a,64);
+    Palette(&g->palettes[9],base+X_U16(0x6ac4a)*2,64);g->palettes[10]=g->palettes[9];
     Frame(g,105,786,9);Frame(g,106,787,10);
     static const int heads[]={140,139,148,147,103,102,111};
-    static const int headids[]={788,790,791,789,794,792,793};
     static const int headpal[]={28,30,29,1,2,0,27};
-    static const int headchar[]={0,2,4,1,6,3,5};
-    for(int i=0;i<7;i++){g->palettes[headpal[i]]=body.palettes[headchar[i]*4];Frame(g,heads[i],headids[i],headpal[i]);}
+    for(int i=0;i<7;i++){
+        Palette(&g->palettes[headpal[i]],base+X_U16(0x6ad1c+i*2)*2,64);
+        Frame(g,heads[i],X_U32(0x6ad00+i*4),headpal[i]);
+    }
     return g;
 }
 gra_t *W_TryLoadGra(const char *name)
@@ -216,6 +215,24 @@ gra_t *W_TryLoadGra(const char *name)
     for(int i=0;i<bank_count;i++)if(!strcasecmp(banks[i].name,name))return &banks[i];
     if(!strcasecmp(name,"select"))return Select();
     if(!strcasecmp(name,"hud"))return Hud();
+    if(!strcasecmp(name,"large-font")){
+        gra_t *g=Bank(name,128,1);Palette(g->palettes,0x61442,16);
+        // Native alpha font 3 (VERSION text): ASCII lookup at c510, four
+        // column-major tiles per glyph at c370, character-bank offset 80.
+        for(int c=32;c<128;c++){
+            int glyph=X_U8(0xc510+c);if(glyph>=52)continue;
+            uint32_t entry=0xc370+glyph*8;
+            int w=X_U16(entry+4)?16:8;
+            patch_t *p=Patch(w,16);
+            for(int y=0;y<16;y++)for(int x=0;x<w;x++){
+                int code=X_U16(entry+2*(x/8*2+y/8))+(glyph>=50?0:128);
+                int v=characters[(code&4095)*32+y%8*4+x%8/2];
+                p->pixels[y*w+x]=(v>>(x%2?0:4))&15;
+            }
+            Bounds(p);g->frames[c]=(frame_t){.w=w,.h=16,.decoded=true,.patch=p};
+        }
+        return g;
+    }
     if(!strcasecmp(name,"stone-font")){
         gra_t *g=Bank(name,128,1);Palette(g->palettes,0x68e3a,16);
         for(int c='A';c<='Z';c++)Frame(g,c,391+c-'A',0);
@@ -229,17 +246,27 @@ gra_t *W_TryLoadGra(const char *name)
         gra_t *g=Bank(name,38,1);Palette(g->palettes,0x61042,64);Frame(g,37,826,0);return g;
     }
     if(!strcasecmp(name,"title")){
-        gra_t *g=Bank(name,46,3);Palette(&g->palettes[0],0x68d7a,64);Palette(&g->palettes[1],0x650e2,64);Palette(&g->palettes[2],0x652c2,64);
-        Frame(g,37,460,2);Frame(g,19,480,2);for(int i=39;i<=45;i++)Frame(g,i,446,0);return g;
+        gra_t *g=Bank(name,46,3);
+        // Native title setup 35bc0 copies seven 64-colour banks from 650e2.
+        // Plaque, PRIMAL and RAGE select different offsets in their descriptors.
+        const uint32_t descriptors[]={0x7422c,0x7423c,0x7425c};
+        uint32_t base=X_U32(0x35bc8);
+        for(int i=0;i<3;i++)Palette(&g->palettes[i],base+X_U16(descriptors[i]+6)*2,64);
+        for(int i=0;i<14;i++)Frame(g,i,447+i,1);
+        for(int i=0;i<6;i++)Frame(g,14+i,475+i,2);
+        Frame(g,45,446,0);return g;
     }
     if(!strcasecmp(name,"globe")){
-        gra_t *g=Bank(name,47,4);Palette(&g->palettes[0],0x65cfa,64);Palette(&g->palettes[1],0x65d7a,64);Palette(&g->palettes[2],0x65dfa,64);Palette(&g->palettes[3],0x65e7a,64);
-        for(int i=0;i<47;i++)Frame(g,i,MAX(491,491+i-8),i<20?0:1);
+        gra_t *g=Bank(name,47,4);uint32_t base=X_U32(0x36ca4);
+        for(int i=0;i<4;i++)Palette(&g->palettes[i],base+X_U16(0x74174+i*16+6)*2,64);
+        for(int i=0;i<47;i++)Frame(g,i,MAX(491,491+i-8),i<20?0:1+(i-20)/13);
         return g;
     }
     if(!strcasecmp(name,"fonts")){
-        gra_t *g=Bank(name,128,1);g->palettes[0].count=15;
-        for(int v=0;v<16;v++)g->palettes[0].colors[v]=W_RGB(v*17,v*17,v*17);
+        gra_t *g=Bank(name,128,1);
+        // The authored bevel ramps run from light fill to dark edges.
+        // Increasing greys inverted that shading and produced a bright rim.
+        Palette(g->palettes,0x61802,16);
         for(int c=0;c<128;c++){
             patch_t *p=Patch(8,8);for(int k=0;k<32;k++){int v=characters[c*32+k];p->pixels[k*2]=v>>4;p->pixels[k*2+1]=v&15;}
             Bounds(p);
@@ -271,46 +298,120 @@ static int TilePixel(unsigned code,int x,int y)
     int lo=tiles[x%4<2?1:0][at],hi=tiles[2][at];
     return ((lo>>(x%2?0:4))&15)|((hi>>(4+x%4)&1)<<5)|((hi>>(x%4)&1)<<4);
 }
-static pixel_t *TileMap(uint32_t map,int bank,const palette_t *palette,int *width,int *height)
+// The hardware has two 64-column halves. Some source skies have 72
+// columns; the native copier's 64-column row stride overwrites their overhang.
+static byte *StageMap(uint32_t table,int stage,int bank,int flags,int *height)
 {
-    int w=X_U8(map),h=X_U8(map+1);*width=w*8;*height=h*8;
-    if(!w || w>128 || !h || h>64)I_Error("Invalid arcade tilemap %#x",map);
-    pixel_t *p=I_Malloc(w*h*64*sizeof *p);
-    for(int y=0;y<h*8;y++)for(int x=0;x<w*8;x++){
-        int word=X_U16(map+2+2*(y/8*w+x/8));int px=word&0x8000?7-x%8:x%8;
-        int value=TilePixel(bank*4096+(word&4095),px,y%8)+((word>>12)&7)*32;
-        p[y*w*8+x]=palette->colors[value&255];
+    uint32_t left=X_U32(table+stage*4),right=X_U32(table+32+stage*4);
+    int w=X_U8(left),h=X_U8(left+1),rw=X_U8(right);
+    if(w<64 || rw<64 || h<1 || h>64 || X_U8(right+1)!=h
+       || !X_Valid(left,2+w*h*2) || !X_Valid(right,2+rw*h*2))
+        I_Error("Invalid arcade stage map %#x",left);
+    *height=h*8;
+    byte *p=I_Malloc(1024*h*8);
+    for(int side=0;side<2;side++)for(int y=0;y<h*8;y++)for(int x=0;x<512;x++){
+        uint32_t map=side?right:left;int stride=side?rw:w;
+        int word=X_U16(map+2+2*(y/8*stride+x/8))|flags;
+        int v=TilePixel(bank*4096+(word&4095),word&0x8000?7-x%8:x%8,y%8);
+        p[y*1024+side*512+x]=(v+((word>>12)&7)*32)&255;
     }
     return p;
 }
+// Original scanline routine 23c74: signed 26.6 camera positions and a
+// per-arena perspective denominator. The distant layer uses the last floor
+// scroll, plus the arena's explicit depth offset; never a guessed width ratio.
+int W_ArcadeStageScroll(int stage,int camx,int y)
+{
+    int horizon=X_U16(0x6ba0c+stage*2),rows=248-horizon;
+    int camera=(camx-(ARENA_WIDTH-VIEWWIDTH)/2)*64;
+    int step=camera*256/X_U16(0x6b9ec+stage*2);
+    int depth=y<horizon?rows+X_U16(0x6ba1c+stage*2):rows-1-(y-horizon);
+    return (camera*256-step*depth)/256;
+}
+const palette_t *W_ArcadeStagePalette(int stage,int color)
+{
+    static palette_t palettes[8][64];static bool ready[8][64];
+    if(stage<0 || stage>=8 || color<0 || color>=0x800 || (color>=0x400 && color<0x480) || color%32)
+        I_Error("Invalid arcade scenery palette %d:%#x",stage,color);
+    int slot=color/32;
+    if(!ready[stage][slot]){
+        uint32_t base=color<0x200?0x61502u+color*2:color<0x400?
+                      X_U32(0x614e2+stage*4)+(color-0x200)*2:0x63a82u+(color-0x480)*2;
+        Palette(&palettes[stage][slot],base,64);ready[stage][slot]=true;
+    }
+    return &palettes[stage][slot];
+}
+patch_t *W_ArcadeShadow(int character,int frame)
+{
+    static const uint32_t bases[]={0x57110,0x5b186,0x59e38,0x5cb90,0x58b02,0x57110,0x5b186};
+    if(character<0 || character>=7)return NULL;
+    int index=frame-X_U16(bases[character]);
+    if(index<0 || index>1100)return NULL; // native shadow updater 341fa
+    int id=X_U16(X_U32(0x6b068+character*4)+index*2);
+    return id<12000?Decode(id):NULL;
+}
+const palette_t *W_ArcadeImpactPalette(bool blocked)
+{
+    static palette_t palettes[2];static bool ready;
+    if(!ready){
+        // Native contact object 6cf50 starts in colour bank 190; the block
+        // script's SET_ATTR 18 switches to 180. Both use all 64 RLE colours.
+        Palette(&palettes[0],0x61502+X_U16(0x6cf56)*2,64);
+        Palette(&palettes[1],0x61802,64);ready=true;
+    }
+    return &palettes[blocked?1:0];
+}
+const palette_t *W_ArcadeTribePalette(int character,int player)
+{
+    static palette_t palettes[2][7];static bool ready;
+    if(!ready){
+        // Native 295ce selects the second set for player two, independently
+        // of whether the fighters use alternate body colours.
+        for(int p=0;p<2;p++)for(int c=0;c<7;c++)Palette(&palettes[p][c],0x63382+p*0x380+c*128,64);
+        ready=true;
+    }
+    return &palettes[CLAMP(player,0,1)][CLAMP(character,0,6)];
+}
+static void StageCycles(int stage,palette_t *palette,int time)
+{
+    // PEA argument blocks for the original 349f8 colour-cycle registrations.
+    // Each contains length, period, signed first colour, colour group, PF base.
+    static const uint32_t calls[8][3]={
+        {0x2478c,0x247a2,0x247bc},{0x24736,0x2474c,0x24766},
+        {0x247fa},{0},{0},{0x247da},{0},{0},
+    };
+    for(int i=0;i<3 && calls[stage][i];i++){
+        uint32_t p=calls[stage][i];int length=X_S16(p+2),period=X_S16(p+6),offset=X_S16(p+10);
+        int start=X_S16(p+14)*64+(offset==-128?0:abs(offset));
+        if(length<2 || length>16 || period<1 || start+length>256 || X_U16(p+18)!=0x100)
+            I_Error("Invalid arcade palette cycle %#x",p);
+        int shift=time>0?(1+(time-1)/period)%length:0;
+        pixel_t colors[16];memcpy(colors,palette->colors+start,length*sizeof *colors);
+        for(int j=0;j<length;j++)palette->colors[start+j]=colors[(j+(offset<0?-shift:shift)+length)%length];
+    }
+}
 void W_DrawArcadeStage(int stage,int camx)
 {
-    static struct {pixel_t *far,*floor;int w,h,fw,fh;} cache[8];
+    static struct {byte *far,*floor;int h,fh;palette_t palette;} cache[8];
     if(stage<0 || stage>=8)I_Error("Invalid arcade stage %d",stage);
     if(!cache[stage].far){
-        palette_t pal;Palette(&pal,X_U32(0x5fea2+stage*4),256);
-        int bank=X_U8(0x1e5944+stage);
-        cache[stage].far=TileMap(X_U32(0x1e58c4+stage*4),bank,&pal,&cache[stage].w,&cache[stage].h);
-        // The two source floor strips are adjacent in VRAM, coloured in bank 4.
-        uint32_t map=X_U32(0x1e5904+stage*4);int w=X_U8(map),h=X_U8(map+1);
-        cache[stage].floor=I_Malloc(w*h*64*sizeof(pixel_t));cache[stage].fw=w*8;cache[stage].fh=h*8;
-        for(int y=0;y<h*8;y++)for(int x=0;x<w*8;x++){
-            int word=X_U16(map+2+2*(y/8*w+x/8))|0x4000;
-            int v=TilePixel(bank*4096+(word&4095),word&0x8000?7-x%8:x%8,y%8)+((word>>12)&7)*32;
-            cache[stage].floor[y*w*8+x]=pal.colors[v&255];
-        }
+        Palette(&cache[stage].palette,X_U32(0x5fea2+stage*4),256);
+        cache[stage].far=StageMap(0x1e58c4,stage,X_U8(0x1e5944+stage),0,&cache[stage].h);
+        cache[stage].floor=StageMap(0x1e5904,stage,X_U8(0x1e594c+stage),0x4000,&cache[stage].fh);
     }
-    int far_y=cache[stage].h-240;int horizon=HORIZON_Y;
-    for(int y=0;y<VIEWHEIGHT;y++)for(int x=0;x<VIEWWIDTH;x++){
-        pixel_t c;
-        if(y<horizon){
-            int px=x+camx*(cache[stage].w-VIEWWIDTH)/MAX(1,ARENA_WIDTH-VIEWWIDTH);px=CLAMP(px,0,cache[stage].w-1);
-            int py=CLAMP(y+far_y,0,cache[stage].h-1);c=cache[stage].far[py*cache[stage].w+px];
-        }else{
-            int py=(y-horizon)*cache[stage].fh/MAX(1,VIEWHEIGHT-horizon);py=MIN(py,cache[stage].fh-1);
-            int px=(x+camx)%cache[stage].fw;c=cache[stage].floor[py*cache[stage].fw+px];
+    palette_t palette=cache[stage].palette;StageCycles(stage,&palette,level.leveltime);
+    int horizon=X_U16(0x6ba0c+stage*2);
+    for(int y=0;y<VIEWHEIGHT;y++){
+        bool far=y<horizon;
+        int py=far?y+cache[stage].h-horizon:y-horizon;
+        py=CLAMP(py,0,(far?cache[stage].h:cache[stage].fh)-1);
+        int scroll=(far?X_U16(0x6b9fc+stage*2)/32:344)+W_ArcadeStageScroll(stage,camx,y)/64;
+        const byte *row=(far?cache[stage].far:cache[stage].floor)+py*1024;
+        for(int x=0;x<VIEWWIDTH;x++){
+            pixel_t c=palette.colors[row[(x+scroll)&1023]];
+            int at=y*2*SCREENWIDTH+x*2;
+            screen[at]=screen[at+1]=screen[at+SCREENWIDTH]=screen[at+SCREENWIDTH+1]=c;
         }
-        int at=y*2*SCREENWIDTH+x*2;screen[at]=screen[at+1]=screen[at+SCREENWIDTH]=screen[at+SCREENWIDTH+1]=c;
     }
 }
 // Audio registry is implemented by the CAGE decoder in w_sound.c.

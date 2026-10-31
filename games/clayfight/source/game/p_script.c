@@ -128,13 +128,20 @@ static void SetVar(psanim_t *a, int sel, int value)
 
 // --- native routines called from scripts (cf. Doom's action functions) ----
 
+static int AnimRandom(psanim_t *a)
+{
+    if(!a->cosmetic_random)return P_Random();
+    uint32_t r=a->cosmetic_random;r^=r<<13;r^=r>>17;r^=r<<5;
+    a->cosmetic_random=r;return r&255;
+}
+
 // 0x1c4c4: the "breathing" idle. Every few tics pick a random direction and
 // drift the frame index v52 through the cycle, wrapping at both ends.
 static void N_Breathe(psanim_t *a)
 {
     int *v52 = &a->vars[0], *v58 = &a->vars[5];
     if (--a->breathtimer < 0) {
-        *v58 = P_Random() & 1 ? 1 : -1;
+        *v58 = AnimRandom(a) & 1 ? 1 : -1;
         a->breathtimer = a->cyclelen / 3 * 3;
     }
     *v52 += *v58;
@@ -191,6 +198,8 @@ static const struct {
 
 static bool N_Call(psanim_t *a, uint32_t addr, int arg)
 {
+    // Native scenery chance routine: select the eruption branch one time in n.
+    if(a->cosmetic_random && addr==0x23336){a->vars[1]=AnimRandom(a)%MAX(1,arg)==0;return false;}
     static uint32_t reported[32];
     static int numreported;
     for (size_t i = 0; i < sizeof natives / sizeof natives[0]; i++) {
@@ -324,7 +333,7 @@ static runresult_t Run(psanim_t *a)
         }
         case 0x07: // DELAY: hold the current frame longer
         case 0x08: // RANDOM_DELAY
-            a->timer += opc == 0x07 ? value : P_Random() % (MAX(value, 0) + 1);
+            a->timer += opc == 0x07 ? value : AnimRandom(a) % (MAX(value, 0) + 1);
             if (a->timer > PS_EPSILON) {
                 a->ip = next;
                 return RUN_PAUSED;
@@ -413,11 +422,16 @@ static runresult_t Run(psanim_t *a)
     return RUN_STOPPED;
 }
 
-void PS_Start(psanim_t *a, uint32_t script, float duration)
+void PS_StartScenery(psanim_t *a, uint32_t script, float duration, uint32_t seed)
 {
-    *a = (psanim_t){.ip = script, .duration = duration, .step = -1, .linkstun = a->linkstun};
+    *a = (psanim_t){.ip = script, .duration = duration, .step = -1, .linkstun = a->linkstun, .cosmetic_random=seed};
     if (Run(a) != RUN_SHOWN && a->step < 0)
         a->done = true;
+}
+
+void PS_Start(psanim_t *a, uint32_t script, float duration)
+{
+    PS_StartScenery(a,script,duration,0);
 }
 
 bool PS_Tick(psanim_t *a)

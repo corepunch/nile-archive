@@ -43,7 +43,8 @@ typedef struct {
 } ticcmd_t;
 
 // Arena geometry, in world pixels. z grows upward from the floor (0).
-#define ARENA_WIDTH 592
+int R_ArenaWidth(void);
+#define ARENA_WIDTH R_ArenaWidth()
 #define FLOOR_Y (VIEWHEIGHT - 18) // screen row of the floor line
 #define GRAVITY 0.593f
 
@@ -242,6 +243,7 @@ enum {
 // A script in progress (the animation part of the game's object struct).
 typedef struct {
     uint32_t ip;
+    uint32_t cosmetic_random; // scenery has its own stream; never changes combat RNG
     float timer, duration;
     uint32_t timing; // per-frame tick table (indexed by v52), 0 = off
     uint32_t table; // MOVE_X/MOVE_Y data table
@@ -286,25 +288,14 @@ bool PS_Move(int character, int id, psmove_t *out);
 bool PS_FrameInfo(int frameid, gra_t **sprite, int *frame, int *ax, int *ay);
 
 void PS_Start(psanim_t *a, uint32_t script, float duration);
+void PS_StartScenery(psanim_t *a, uint32_t script, float duration, uint32_t seed);
 // Advance one tic. Returns true when a new frame came up (a->step grew).
 bool PS_Tick(psanim_t *a);
 
 // --- r_main.c, r_stage.c: arenas and the fight scene (cf. r_local.h) --------
-#define HORIZON_Y (VIEWHEIGHT - 72)
-#define MAXPROPS 3
-
 typedef struct stage_s {
-    const char *file;
     const char *name;
-    // built by R_PrepareStage
-    bool prepared;
-    patch_t *sky;
-    const palette_t *skypal;
-    int numprops;
-    patch_t *props[MAXPROPS];
-    const palette_t *proppal[MAXPROPS];
-    float propx[MAXPROPS];
-    pixel_t floortop, floorbottom, floorline;
+    bool prepared; // immutable ROM scenery expanded on first use
 } stage_t;
 
 extern stage_t stages[];
@@ -313,6 +304,7 @@ extern bool r_showboxes;
 
 void R_PrepareStage(stage_t *stage);
 void R_DrawStage(const stage_t *stage, int camx);
+void R_DrawStageForeground(const stage_t *stage, int camx);
 void R_RenderFight(void);
 
 // --- p_*.c: play simulation: fighters and the level (cf. p_local.h) ---------
@@ -362,9 +354,9 @@ typedef struct fighter_s {
 typedef enum { PH_INTRO, PH_FIGHT, PH_KO, PH_OVER } phase_t;
 
 typedef struct {
-    float x, z, vx, vz;
-    int life;
-    pixel_t color;
+    float x, z;
+    bool blocked;
+    psanim_t animation;
 } particle_t;
 
 #define MAXPARTICLES 256

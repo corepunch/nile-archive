@@ -44,11 +44,22 @@ Place the supported Primal Rage 2.3 December 1994 arcade chips (MAME
 `primrageo`) in `data/primrage/`, or import an external directory with
 `python3 games/clayfight/tools/import_resources.py /path/to/primrage`.
 Fighters, animation scripts, moves, hit boxes, palettes, menus, title, stages,
-compact glyphs, stone lettering, anatomical health/stun HUD, effects and voices
+compact glyphs, native intro typeface, stone timer digits, anatomical health/stun HUD, effects and voices
 load directly from those ROMs. DOS data, converted
 retail creature files and an emulator installation are unnecessary. The original
 ROMs remain ignored by Git. Native/iOS/web builds bundle the arcade chips and
 custom creatures from `data/`; reference extraction ZIPs live outside it.
+
+The arena renderer includes both native floor halves and their correct tile
+banks, 115 source scenery objects, foreground depth, animated water/lava/fire,
+and palette cycling. It uses the original camera bounds and campaign arena
+assignments. Original fighters have pose-specific shadows; hits and blocks use
+source contact animations. Ambient tribespeople and the title lettering also
+use their original scripts/art. Selected heads, individual globe layers and both
+tribe teams use their dedicated source palette banks; the temple's character
+order comes from the native lookup table. See the [graphics audit and remaining sequence
+gaps](docs/primal-rage-arcade.md#stage-and-graphics-audit) and
+[source inventory](docs/arcade-graphics.json).
 
 The CAGE DSP interpreter decodes effects and seven voice tables into the shared
 mixer's PCM format once at startup, caching them in memory. It adds several
@@ -68,7 +79,8 @@ the non-Apple platform joystick backend exposes its first device.
 
 Combat retains the original animation timing, root motion, attack/hurt boxes,
 blocking, crouching, jumping, knockdowns, hitstop, CPU behavior, best-of rounds,
-timer, palettes, particles, stereo samples and voices. Game flow includes the
+timer, palettes, stereo samples and voices. Native contact sprites replace the
+former square particles; the port's combat rules remain in C. Game flow includes the
 conquest campaign, continues, seven-opponent final gauntlet, training, tug of
 war, endurance, options, volume and sound test.
 

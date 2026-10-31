@@ -84,15 +84,15 @@ static void select_checks(void)
     for (int i = 0; i < 6; i++) press('a'); // Diablo -> Sauron
     press('s'); // the lower-left relief is Chaos, below Sauron
     shot("build/retail-chaos.bmp");
-    press('d'); // Vertigo, the lower middle relief
+    press('d'); // Armadon, the lower middle relief in the native temple table
     press(KEY_ENTER); launch();
-    assert(match.defs[0]->codeindex == 3);
+    assert(match.defs[0]->codeindex == X_U8(0x6aca6+5));
 
     SEL_Start();
-    press('w'); press('d'); // Vertigo -> Talon -> Armadon
+    press('w'); press('d'); // Armadon -> Talon -> Vertigo
     press('o'); // P2 joins on its current original tile
     press(KEY_ENTER); press('o'); launch();
-    assert(match.defs[0]->codeindex == 4 && !match.cpu[1]);
+    assert(match.defs[0]->codeindex == X_U8(0x6aca6+2) && !match.cpu[1]);
 
     SEL_Start(); press('\t'); // first clay page
     shot("build/retail-clay.bmp");

@@ -24,7 +24,6 @@ static int palcache[512];
 
 // The temple's stone heads, in visual order (four above three). Keep the
 // original roster on this page; photographs occupy matching pages of tiles.
-static const int templecodes[7] = {0, 2, 4, 1, 6, 3, 5};
 static const int headframes[7] = {140, 139, 148, 147, 103, 102, 111};
 static const int headpalettes[7] = {28, 30, 29, 1, 2, 0, 27};
 static const int tilex[7] = {57, 98, 138, 179, 77, 118, 158};
@@ -94,7 +93,7 @@ void SEL_Start(void)
     for (int j = 0; j < 7; j++) {
         slots[j] = -1;
         for (int i = 0; i < numroster; i++)
-            if (roster[i]->codeindex == templecodes[j]) slots[j] = i;
+            if (roster[i]->codeindex == X_U8(0x6aca6+j)) slots[j] = i;
     }
     for (int i = 0; i < numroster; i++)
         if (roster[i]->codeindex < 0 || roster[i]->codeindex >= 7) slots[numslots++] = i;
