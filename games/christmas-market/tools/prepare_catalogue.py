@@ -43,7 +43,7 @@ for i, (key, name, category, w, h, cost, stars, about) in enumerate(catalogue):
 lua += ['}', 'for _, b in ipairs(items) do', '    for field, value in pairs(sprites[b.key]) do b[field] = value end', 'end', 'return items']
 text = '\n'.join(lua) + '\n'
 doc = json.dumps(dict(source=registry['master'], registration='art/building-catalogue/registration.json',
-                      camera=registry['camera'], items=entries), indent=1, ensure_ascii=False) + '\n'
+                      camera=registry['camera'], paintover=registry.get('paintover'), items=entries), indent=1, ensure_ascii=False) + '\n'
 if check:
     assert LUA.read_text() == text, 'lua/buildings.lua is stale: run tools/prepare_catalogue.py'
     assert manifest.read_text() == doc, 'art/building-catalogue/manifest.json is stale: run tools/prepare_catalogue.py'

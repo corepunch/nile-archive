@@ -211,8 +211,8 @@ Everything below belongs in the same pull request as the art:
 
 A paint-over keeps a render's geometry, lighting and registration and adds a painted
 surface on top. It is locked to the camera it was painted from, so it must be redone
-if the camera changes. No game ships one now; the old 2:1 Relic Rush paint-overs stay
-in its `art/` as references (issue #32 tracks Nile Archive's pass):
+if the camera changes. All three city games now ship the `painted-v1` pass. The old 2:1 Relic Rush
+paint-overs remain in `art/` as style references:
 
 - **Edit the whole set together.** Use one ImageGen atlas per category, with
   an atlas of the current renders as the edit target and the
@@ -226,3 +226,21 @@ in its `art/` as references (issue #32 tracks Nile Archive's pass):
 - **Interaction states belong to the engine.** Don't create states by tinting
   or recolouring. Placement, lift and valid/invalid feedback stay engine
   effects, as documented in each catalogue doc.
+
+### Reproducing the current painted pass
+
+Install `tools/requirements-assets.txt`, then run
+`python3 tools/import_painted_buildings.py <game>`. Each game's
+`art/building-catalogue/painted-v1/` keeps the original render registry, category
+input atlases, ImageGen prompts and raw outputs, cell layouts and `imports.json`.
+The importer crops around substantial opaque components (excluding distant
+floating generation flecks), retaining every pixel and its authored alpha inside
+the crop, then resizes/translates for registration. It fits slab ground edges
+against the original render using the engine camera slopes and footprint ratio.
+Decorations retain their original visual scale and bottom-centre registration.
+`base_width`, tile sizes, whole-tile reservations and shadow registration stay fixed.
+It calls the existing finish step for Lua, manifests and the contact sheet.
+
+`make buildings` still creates raw Blender sprites. Reapply a paint-over only to
+its matching geometry/camera; a model or camera change requires new input renders
+and a new paint pass. The master scenes are unchanged by a surface paint pass.

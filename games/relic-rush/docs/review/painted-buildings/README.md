@@ -1,3 +1,5 @@
+Current camera: see the [234-object repaint review](current-camera/README.md).
+
 # Painted buildings and independent ground shadows
 
 > These captures show the earlier 2:1 paint-overs. Current art uses the [city camera](../../../../../docs/BUILDINGS.md#the-camera) and is on the [review sheet](../../screenshots/buildings.jpg).

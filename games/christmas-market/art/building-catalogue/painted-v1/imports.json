@@ -1,0 +1,890 @@
+{
+  "arch": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      0,
+      0,
+      362,
+      362
+    ],
+    "crop": [
+      27,
+      26,
+      336,
+      345
+    ],
+    "scale": 1.34551495,
+    "pivot": [
+      208.673,
+      298.065
+    ],
+    "image": [
+      416,
+      429
+    ]
+  },
+  "lumber": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      362,
+      0,
+      724,
+      362
+    ],
+    "crop": [
+      31,
+      18,
+      335,
+      349
+    ],
+    "scale": 1.37162162,
+    "pivot": [
+      208.777,
+      321.212
+    ],
+    "image": [
+      417,
+      454
+    ]
+  },
+  "bakery": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      724,
+      0,
+      1086,
+      362
+    ],
+    "crop": [
+      30,
+      19,
+      335,
+      350
+    ],
+    "scale": 1.36241611,
+    "pivot": [
+      207.378,
+      318.065
+    ],
+    "image": [
+      416,
+      451
+    ]
+  },
+  "cocoa": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      1086,
+      0,
+      1448,
+      362
+    ],
+    "crop": [
+      30,
+      12,
+      334,
+      350
+    ],
+    "scale": 1.36363636,
+    "pivot": [
+      207.382,
+      327.243
+    ],
+    "image": [
+      415,
+      461
+    ]
+  },
+  "toys": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      0,
+      362,
+      362,
+      724
+    ],
+    "crop": [
+      27,
+      7,
+      338,
+      355
+    ],
+    "scale": 1.33993399,
+    "pivot": [
+      208.742,
+      333.266
+    ],
+    "image": [
+      417,
+      466
+    ]
+  },
+  "gifts": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      362,
+      362,
+      724,
+      724
+    ],
+    "crop": [
+      29,
+      17,
+      339,
+      348
+    ],
+    "scale": 1.34437086,
+    "pivot": [
+      208.668,
+      310.717
+    ],
+    "image": [
+      417,
+      445
+    ]
+  },
+  "candles": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      724,
+      362,
+      1086,
+      724
+    ],
+    "crop": [
+      29,
+      17,
+      337,
+      353
+    ],
+    "scale": 1.35333333,
+    "pivot": [
+      208.704,
+      321.727
+    ],
+    "image": [
+      417,
+      455
+    ]
+  },
+  "carousel": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      1086,
+      362,
+      1448,
+      724
+    ],
+    "crop": [
+      28,
+      21,
+      337,
+      346
+    ],
+    "scale": 1.34883721,
+    "pivot": [
+      208.686,
+      303.396
+    ],
+    "image": [
+      417,
+      438
+    ]
+  },
+  "rink": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      0,
+      724,
+      362,
+      1086
+    ],
+    "crop": [
+      27,
+      45,
+      339,
+      325
+    ],
+    "scale": 1.36700337,
+    "pivot": [
+      218.328,
+      245.829
+    ],
+    "image": [
+      427,
+      383
+    ]
+  },
+  "tree": {
+    "atlas": "art/building-catalogue/painted-v1/wonder-output.png",
+    "cell": [
+      362,
+      724,
+      724,
+      1086
+    ],
+    "crop": [
+      24,
+      0,
+      340,
+      348
+    ],
+    "scale": 1.33993399,
+    "pivot": [
+      215.35,
+      330.507
+    ],
+    "image": [
+      423,
+      466
+    ]
+  },
+  "firs": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      0,
+      0,
+      280,
+      281
+    ],
+    "crop": [
+      29,
+      20,
+      262,
+      267
+    ],
+    "scale": 1.11740891,
+    "pivot": [
+      130.168,
+      187.149
+    ],
+    "image": [
+      260,
+      276
+    ]
+  },
+  "bench": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      280,
+      0,
+      560,
+      281
+    ],
+    "crop": [
+      21,
+      34,
+      269,
+      265
+    ],
+    "scale": 1.11290323,
+    "pivot": [
+      137.99,
+      169.294
+    ],
+    "image": [
+      276,
+      257
+    ]
+  },
+  "snowman": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      560,
+      0,
+      841,
+      281
+    ],
+    "crop": [
+      51,
+      32,
+      236,
+      263
+    ],
+    "scale": 0.45021645,
+    "pivot": [
+      42.032,
+      93.382
+    ],
+    "image": [
+      83,
+      104
+    ]
+  },
+  "presents": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      841,
+      0,
+      1121,
+      281
+    ],
+    "crop": [
+      17,
+      43,
+      250,
+      253
+    ],
+    "scale": 0.40772532,
+    "pivot": [
+      46.173,
+      58.831
+    ],
+    "image": [
+      95,
+      86
+    ]
+  },
+  "candy_canes": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      0,
+      281,
+      280,
+      561
+    ],
+    "crop": [
+      57,
+      27,
+      213,
+      263
+    ],
+    "scale": 0.44067797,
+    "pivot": [
+      34.559,
+      80.958
+    ],
+    "image": [
+      69,
+      104
+    ]
+  },
+  "lamp_post": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      280,
+      281,
+      560,
+      561
+    ],
+    "crop": [
+      109,
+      22,
+      176,
+      263
+    ],
+    "scale": 0.52282158,
+    "pivot": [
+      16.595,
+      118.702
+    ],
+    "image": [
+      35,
+      126
+    ]
+  },
+  "snowy_bench": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      560,
+      281,
+      841,
+      561
+    ],
+    "crop": [
+      27,
+      43,
+      265,
+      273
+    ],
+    "scale": 0.37815126,
+    "pivot": [
+      44.207,
+      65.543
+    ],
+    "image": [
+      90,
+      87
+    ]
+  },
+  "mailbox": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      841,
+      281,
+      1121,
+      561
+    ],
+    "crop": [
+      85,
+      25,
+      208,
+      265
+    ],
+    "scale": 0.475,
+    "pivot": [
+      29.032,
+      98.591
+    ],
+    "image": [
+      58,
+      114
+    ]
+  },
+  "snow_rocks": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      0,
+      561,
+      280,
+      842
+    ],
+    "crop": [
+      32,
+      63,
+      263,
+      263
+    ],
+    "scale": 0.3982684,
+    "pivot": [
+      52.608,
+      51.223
+    ],
+    "image": [
+      92,
+      80
+    ]
+  },
+  "giant_ornament": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      280,
+      561,
+      560,
+      842
+    ],
+    "crop": [
+      52,
+      33,
+      233,
+      276
+    ],
+    "scale": 0.44032922,
+    "pivot": [
+      40.425,
+      89.187
+    ],
+    "image": [
+      80,
+      107
+    ]
+  },
+  "ice_star": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      560,
+      561,
+      841,
+      842
+    ],
+    "crop": [
+      67,
+      44,
+      238,
+      272
+    ],
+    "scale": 0.50438596,
+    "pivot": [
+      43.457,
+      95.905
+    ],
+    "image": [
+      86,
+      115
+    ]
+  },
+  "nutcracker": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      841,
+      561,
+      1121,
+      842
+    ],
+    "crop": [
+      94,
+      27,
+      205,
+      275
+    ],
+    "scale": 0.43548387,
+    "pivot": [
+      24.416,
+      92.156
+    ],
+    "image": [
+      48,
+      108
+    ]
+  },
+  "reindeer": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      0,
+      842,
+      280,
+      1122
+    ],
+    "crop": [
+      83,
+      21,
+      231,
+      275
+    ],
+    "scale": 0.3976378,
+    "pivot": [
+      29.851,
+      84.033
+    ],
+    "image": [
+      59,
+      101
+    ]
+  },
+  "penguins": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      280,
+      842,
+      560,
+      1122
+    ],
+    "crop": [
+      65,
+      34,
+      231,
+      265
+    ],
+    "scale": 0.41125541,
+    "pivot": [
+      35.841,
+      72.757
+    ],
+    "image": [
+      68,
+      95
+    ]
+  },
+  "wreath_arch": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      560,
+      842,
+      841,
+      1122
+    ],
+    "crop": [
+      26,
+      39,
+      258,
+      264
+    ],
+    "scale": 0.73706897,
+    "pivot": [
+      86.96,
+      134.245
+    ],
+    "image": [
+      171,
+      166
+    ]
+  },
+  "sleigh": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      841,
+      842,
+      1121,
+      1122
+    ],
+    "crop": [
+      9,
+      59,
+      254,
+      264
+    ],
+    "scale": 0.62857143,
+    "pivot": [
+      80.952,
+      98.179
+    ],
+    "image": [
+      154,
+      129
+    ]
+  },
+  "igloo": {
+    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "cell": [
+      0,
+      1122,
+      280,
+      1403
+    ],
+    "crop": [
+      23,
+      48,
+      264,
+      257
+    ],
+    "scale": 0.77593361,
+    "pivot": [
+      93.536,
+      102.723
+    ],
+    "image": [
+      187,
+      162
+    ]
+  },
+  "log_cabin": {
+    "atlas": "art/building-catalogue/painted-v1/cottage-output.png",
+    "cell": [
+      0,
+      0,
+      444,
+      444
+    ],
+    "crop": [
+      72,
+      85,
+      380,
+      405
+    ],
+    "scale": 0.90365449,
+    "pivot": [
+      139.314,
+      200.602
+    ],
+    "image": [
+      278,
+      289
+    ]
+  },
+  "gingerbread_house": {
+    "atlas": "art/building-catalogue/painted-v1/cottage-output.png",
+    "cell": [
+      444,
+      0,
+      887,
+      444
+    ],
+    "crop": [
+      70,
+      90,
+      387,
+      404
+    ],
+    "scale": 0.89768977,
+    "pivot": [
+      139.296,
+      193.646
+    ],
+    "image": [
+      285,
+      282
+    ]
+  },
+  "post_office": {
+    "atlas": "art/building-catalogue/painted-v1/cottage-output.png",
+    "cell": [
+      887,
+      0,
+      1330,
+      444
+    ],
+    "crop": [
+      66,
+      97,
+      382,
+      405
+    ],
+    "scale": 0.88311688,
+    "pivot": [
+      140.135,
+      185.258
+    ],
+    "image": [
+      279,
+      272
+    ]
+  },
+  "chapel": {
+    "atlas": "art/building-catalogue/painted-v1/cottage-output.png",
+    "cell": [
+      1330,
+      0,
+      1774,
+      444
+    ],
+    "crop": [
+      73,
+      71,
+      388,
+      407
+    ],
+    "scale": 0.89473684,
+    "pivot": [
+      139.287,
+      214.202
+    ],
+    "image": [
+      282,
+      301
+    ]
+  },
+  "reindeer_stable": {
+    "atlas": "art/building-catalogue/painted-v1/cottage-output.png",
+    "cell": [
+      0,
+      444,
+      444,
+      887
+    ],
+    "crop": [
+      41,
+      66,
+      404,
+      387
+    ],
+    "scale": 1.03757225,
+    "pivot": [
+      184.054,
+      227.545
+    ],
+    "image": [
+      377,
+      333
+    ]
+  },
+  "santa_workshop": {
+    "atlas": "art/building-catalogue/painted-v1/cottage-output.png",
+    "cell": [
+      444,
+      444,
+      887,
+      887
+    ],
+    "crop": [
+      23,
+      14,
+      418,
+      416
+    ],
+    "scale": 1.08201058,
+    "pivot": [
+      208.15,
+      303.101
+    ],
+    "image": [
+      427,
+      435
+    ]
+  },
+  "fir_snowy": {
+    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "cell": [
+      0,
+      0,
+      543,
+      724
+    ],
+    "crop": [
+      100,
+      155,
+      438,
+      598
+    ],
+    "scale": 0.26185102,
+    "pivot": [
+      44.59,
+      104.509
+    ],
+    "image": [
+      89,
+      116
+    ]
+  },
+  "birch": {
+    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "cell": [
+      543,
+      0,
+      1086,
+      724
+    ],
+    "crop": [
+      130,
+      143,
+      423,
+      586
+    ],
+    "scale": 0.25282167,
+    "pivot": [
+      33.334,
+      96.982
+    ],
+    "image": [
+      74,
+      112
+    ]
+  },
+  "fir_decorated": {
+    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "cell": [
+      1086,
+      0,
+      1629,
+      724
+    ],
+    "crop": [
+      100,
+      124,
+      444,
+      600
+    ],
+    "scale": 0.27521008,
+    "pivot": [
+      47.542,
+      119.078
+    ],
+    "image": [
+      95,
+      131
+    ]
+  },
+  "pine_grove": {
+    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "cell": [
+      1629,
+      0,
+      2172,
+      724
+    ],
+    "crop": [
+      48,
+      152,
+      482,
+      606
+    ],
+    "scale": 0.48017621,
+    "pivot": [
+      99.644,
+      170.764
+    ],
+    "image": [
+      208,
+      218
+    ]
+  }
+}

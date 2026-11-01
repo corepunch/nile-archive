@@ -484,3 +484,10 @@ follow the preview sprite with safe-screen clamping, at 480×900 and 390×844.
 Reproduce with `--city 6 --placing` or `--placing blocked`; reviewed captures are
 in `docs/review/relic-polish/` at the repository root. Existing native-input smoke
 covers both cancel and confirm, including uncommitted moves and wallet changes.
+
+## Current-camera building paint pass
+
+All registered buildings and decorations use the painted-v1 sources, normal sprite
+and unchanged engine placement/lift/validity states documented in the
+[building catalogue](building-catalogue.md) and
+[review gallery](review/painted-buildings/current-camera/README.md).

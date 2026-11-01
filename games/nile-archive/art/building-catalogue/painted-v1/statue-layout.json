@@ -1,0 +1,100 @@
+{
+  "size": [
+    2048,
+    1536
+  ],
+  "cols": 4,
+  "rows": 3,
+  "entries": [
+    {
+      "key": "broken_column",
+      "box": [
+        109,
+        56,
+        403,
+        456
+      ],
+      "display_scale": 3.2
+    },
+    {
+      "key": "pharaoh_head",
+      "box": [
+        615,
+        56,
+        920,
+        456
+      ],
+      "display_scale": 2.5641025641025643
+    },
+    {
+      "key": "bastet_cat",
+      "box": [
+        1149,
+        56,
+        1410,
+        456
+      ],
+      "display_scale": 1.9607843137254901
+    },
+    {
+      "key": "obelisk",
+      "box": [
+        1702,
+        56,
+        1881,
+        456
+      ],
+      "display_scale": 1.492537313432836
+    },
+    {
+      "key": "sundial",
+      "box": [
+        122,
+        568,
+        390,
+        968
+      ],
+      "display_scale": 2.684563758389262
+    },
+    {
+      "key": "scribe_statue",
+      "box": [
+        611,
+        568,
+        925,
+        968
+      ],
+      "display_scale": 2.395209580838323
+    },
+    {
+      "key": "golden_scarab",
+      "box": [
+        1088,
+        568,
+        1471,
+        968
+      ],
+      "display_scale": 2.8368794326241136
+    },
+    {
+      "key": "colossus",
+      "box": [
+        1606,
+        568,
+        1977,
+        968
+      ],
+      "display_scale": 1.941747572815534
+    },
+    {
+      "key": "anubis",
+      "box": [
+        56,
+        1128,
+        456,
+        1432
+      ],
+      "display_scale": 2.1390374331550803
+    }
+  ]
+}

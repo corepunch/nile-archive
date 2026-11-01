@@ -86,3 +86,10 @@ across. It moves existing artwork with transient glows and sparks, so it adds no
 new assets. A tap skips it and reduced motion makes it a short fade. Capture:
 `build/test/christmas-market board-intro` (`--level 4 --present --reel`), frames
 in `build/shots/frames/`.
+
+## Current-camera building paint pass
+
+All registered buildings and decorations use the painted-v1 sources, normal sprite
+and unchanged engine placement/lift/validity states documented in the
+[building catalogue](building-catalogue.md) and
+[review gallery](review/painted-buildings/current-camera/README.md).

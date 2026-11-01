@@ -35,7 +35,8 @@ def main():
     lua += ['}', 'for _, b in ipairs(items) do', '    for field, value in pairs(sprites[b.key]) do b[field] = value end', 'end', 'return items']
     (ROOT / 'lua/buildings.lua').write_text('\n'.join(lua) + '\n')
     (ART / 'manifest.json').write_text(json.dumps(dict(source=registry['master'], generator=registry['scene_generator'],
-        registration='art/building-catalogue/registration.json', camera=registry['camera'], items=entries), indent=2) + '\n')
+        registration='art/building-catalogue/registration.json', camera=registry['camera'],
+        paintover=registry.get('paintover'), items=entries), indent=2) + '\n')
     inventory = ROOT / 'art/board-states/manifest.json'
     board = json.loads(inventory.read_text())
     board['runtime_inventory'] = sorted(str(p.relative_to(ROOT)) for p in (ROOT / 'data').rglob('*') if p.is_file())

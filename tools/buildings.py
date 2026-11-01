@@ -120,7 +120,9 @@ def contact_sheet(root, registry, path, ppt):
     keys = [k for k in registry['order'] if k in registry['items']]
     cols = 8 if len(keys) > 16 else max(4, min(6, len(keys)))
     scale = tile / ppt
-    font = ImageFont.truetype('/System/Library/Fonts/Helvetica.ttc', 15) if Path('/System/Library/Fonts/Helvetica.ttc').exists() else ImageFont.load_default()
+    font_path = next((p for p in ('/System/Library/Fonts/Helvetica.ttc',
+                                 '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf') if Path(p).exists()), None)
+    font = ImageFont.truetype(font_path, 15) if font_path else ImageFont.load_default()
     cells = []
     for key in keys:
         b = registry['items'][key]
@@ -154,7 +156,12 @@ def contact_sheet(root, registry, path, ppt):
             d = ImageDraw.Draw(sheet, 'RGBA')
             d.polygon(corners, outline=(255, 40, 200, 220))
             d.ellipse((cx - 2, cy - 2, cx + 2, cy + 2), fill=(255, 40, 200, 255))
-            d.text((i * cell_w + cell_w / 2, y + height - 26), f"{b['title']}  {b['size'][0]}×{b['size'][1]}", font=font,
+            label = f"{b['title']}  {b['size'][0]}×{b['size'][1]}"
+            label_font = font
+            if font_path:
+                while d.textlength(label, font=label_font) > cell_w - 12 and label_font.size > 8:
+                    label_font = ImageFont.truetype(font_path, label_font.size - 1)
+            d.text((i * cell_w + cell_w / 2, y + height - 26), label, font=label_font,
                    fill='white', anchor='ma', stroke_width=2, stroke_fill=(20, 50, 20))
         y += height
     path.parent.mkdir(parents=True, exist_ok=True)

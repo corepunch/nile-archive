@@ -1,0 +1,2540 @@
+{
+ "tile_px": 128,
+ "items": {
+  "gardener_house": {
+   "title": "Gardener's house",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/gardener_house.png",
+   "image": [
+    276,
+    307
+   ],
+   "pivot": [
+    138.138,
+    218.968
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/gardener_house.png",
+   "shadow_pivot": [
+    85.834,
+    59.084
+   ],
+   "shadow_base_width": 77.273
+  },
+  "isis_temple": {
+   "title": "Temple of Isis",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/isis_temple.png",
+   "image": [
+    363,
+    388
+   ],
+   "pivot": [
+    181.44,
+    284.304
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/isis_temple.png",
+   "shadow_pivot": [
+    112.64,
+    84.564
+   ],
+   "shadow_base_width": 101.768
+  },
+  "archive": {
+   "title": "Archive",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/archive.png",
+   "image": [
+    363,
+    411
+   ],
+   "pivot": [
+    181.44,
+    307.177
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/archive.png",
+   "shadow_pivot": [
+    121.283,
+    83.033
+   ],
+   "shadow_base_width": 101.768
+  },
+  "fountain": {
+   "title": "Fountain",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/fountain.png",
+   "image": [
+    276,
+    228
+   ],
+   "pivot": [
+    138.139,
+    140.7
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/fountain.png",
+   "shadow_pivot": [
+    55.574,
+    39.947
+   ],
+   "shadow_base_width": 77.273
+  },
+  "workshop": {
+   "title": "Workshop",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/workshop.png",
+   "image": [
+    276,
+    312
+   ],
+   "pivot": [
+    138.138,
+    224.53
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/workshop.png",
+   "shadow_pivot": [
+    73.629,
+    57.658
+   ],
+   "shadow_base_width": 77.273
+  },
+  "small_pyramid": {
+   "title": "\u041c\u0430\u043b\u0430\u044f \u043f\u0438\u0440\u0430\u043c\u0438\u0434\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/small_pyramid.png",
+   "image": [
+    276,
+    226
+   ],
+   "pivot": [
+    138.139,
+    137.875
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/small_pyramid.png",
+   "shadow_pivot": [
+    49.815,
+    40.148
+   ],
+   "shadow_base_width": 77.273
+  },
+  "nilometer": {
+   "title": "\u041d\u0438\u043b\u043e\u043c\u0435\u0440",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/nilometer.png",
+   "image": [
+    276,
+    232
+   ],
+   "pivot": [
+    138.138,
+    144.446
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/nilometer.png",
+   "shadow_pivot": [
+    50.937,
+    36.007
+   ],
+   "shadow_base_width": 77.273
+  },
+  "sphinx": {
+   "title": "\u0421\u0444\u0438\u043d\u043a\u0441",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/sphinx.png",
+   "image": [
+    363,
+    221
+   ],
+   "pivot": [
+    181.44,
+    117.265
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/sphinx.png",
+   "shadow_pivot": [
+    55.47,
+    34.319
+   ],
+   "shadow_base_width": 101.768
+  },
+  "barque_shrine": {
+   "title": "\u0421\u0432\u044f\u0442\u0438\u043b\u0438\u0449\u0435 \u043b\u0430\u0434\u044c\u0438",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/barque_shrine.png",
+   "image": [
+    363,
+    302
+   ],
+   "pivot": [
+    181.44,
+    198.247
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/barque_shrine.png",
+   "shadow_pivot": [
+    75.27,
+    53.224
+   ],
+   "shadow_base_width": 101.768
+  },
+  "pylon_gate": {
+   "title": "\u041f\u0438\u043b\u043e\u043d",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/pylon_gate.png",
+   "image": [
+    363,
+    340
+   ],
+   "pivot": [
+    181.44,
+    235.567
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/pylon_gate.png",
+   "shadow_pivot": [
+    98.236,
+    60.779
+   ],
+   "shadow_base_width": 101.768
+  },
+  "hypostyle": {
+   "title": "\u041a\u043e\u043b\u043e\u043d\u043d\u044b\u0439 \u0437\u0430\u043b",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/hypostyle.png",
+   "image": [
+    413,
+    394
+   ],
+   "pivot": [
+    206.44,
+    261.772
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/hypostyle.png",
+   "shadow_pivot": [
+    102.276,
+    75.191
+   ],
+   "shadow_base_width": 115.91
+  },
+  "sun_temple": {
+   "title": "\u0425\u0440\u0430\u043c \u0441\u043e\u043b\u043d\u0446\u0430",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/sun_temple.png",
+   "image": [
+    412,
+    374
+   ],
+   "pivot": [
+    206.44,
+    242.194
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/sun_temple.png",
+   "shadow_pivot": [
+    76.471,
+    55.654
+   ],
+   "shadow_base_width": 115.91
+  },
+  "lighthouse": {
+   "title": "\u041c\u0430\u044f\u043a",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/lighthouse.png",
+   "image": [
+    276,
+    326
+   ],
+   "pivot": [
+    138.138,
+    238.619
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/lighthouse.png",
+   "shadow_pivot": [
+    80.427,
+    52.925
+   ],
+   "shadow_base_width": 77.273
+  },
+  "sacred_lake": {
+   "title": "\u0421\u0432\u044f\u0449\u0435\u043d\u043d\u043e\u0435 \u043e\u0437\u0435\u0440\u043e",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/sacred_lake.png",
+   "image": [
+    413,
+    279
+   ],
+   "pivot": [
+    206.44,
+    146.961
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/sacred_lake.png",
+   "shadow_pivot": [
+    62.713,
+    42.718
+   ],
+   "shadow_base_width": 115.91
+  },
+  "great_pyramid": {
+   "title": "\u0412\u0435\u043b\u0438\u043a\u0430\u044f \u043f\u0438\u0440\u0430\u043c\u0438\u0434\u0430",
+   "size": [
+    4,
+    4
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/great_pyramid.png",
+   "image": [
+    549,
+    415
+   ],
+   "pivot": [
+    274.741,
+    239.407
+   ],
+   "base_width": 546.41,
+   "shadow": "data/building-shadows/great_pyramid.png",
+   "shadow_pivot": [
+    87.066,
+    62.148
+   ],
+   "shadow_base_width": 154.547
+  },
+  "mud_house": {
+   "title": "\u0413\u043b\u0438\u043d\u043e\u0431\u0438\u0442\u043d\u044b\u0439 \u0434\u043e\u043c",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/mud_house.png",
+   "image": [
+    276,
+    277
+   ],
+   "pivot": [
+    138.138,
+    189.522
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/mud_house.png",
+   "shadow_pivot": [
+    57.761,
+    47.756
+   ],
+   "shadow_base_width": 77.273
+  },
+  "pottery": {
+   "title": "\u0413\u043e\u043d\u0447\u0430\u0440\u043d\u044f",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/pottery.png",
+   "image": [
+    276,
+    232
+   ],
+   "pivot": [
+    138.138,
+    143.94
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/pottery.png",
+   "shadow_pivot": [
+    47.473,
+    40.863
+   ],
+   "shadow_base_width": 77.273
+  },
+  "bakery": {
+   "title": "\u041f\u0435\u043a\u0430\u0440\u043d\u044f",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/bakery.png",
+   "image": [
+    363,
+    279
+   ],
+   "pivot": [
+    181.44,
+    174.377
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/bakery.png",
+   "shadow_pivot": [
+    66.911,
+    47.472
+   ],
+   "shadow_base_width": 101.768
+  },
+  "weaver": {
+   "title": "\u0422\u043a\u0430\u0446\u043a\u0430\u044f \u043c\u0430\u0441\u0442\u0435\u0440\u0441\u043a\u0430\u044f",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/weaver.png",
+   "image": [
+    363,
+    275
+   ],
+   "pivot": [
+    181.44,
+    171.108
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/weaver.png",
+   "shadow_pivot": [
+    72.935,
+    46.548
+   ],
+   "shadow_base_width": 101.768
+  },
+  "scribe_school": {
+   "title": "\u0428\u043a\u043e\u043b\u0430 \u043f\u0438\u0441\u0446\u043e\u0432",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/scribe_school.png",
+   "image": [
+    363,
+    298
+   ],
+   "pivot": [
+    181.44,
+    193.602
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/scribe_school.png",
+   "shadow_pivot": [
+    72.86,
+    52.91
+   ],
+   "shadow_base_width": 101.768
+  },
+  "granary": {
+   "title": "\u0417\u0435\u0440\u043d\u043e\u0445\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435",
+   "size": [
+    3,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/granary.png",
+   "image": [
+    363,
+    247
+   ],
+   "pivot": [
+    181.44,
+    143.137
+   ],
+   "base_width": 359.808,
+   "shadow": "data/building-shadows/granary.png",
+   "shadow_pivot": [
+    63.407,
+    41.636
+   ],
+   "shadow_base_width": 101.768
+  },
+  "bazaar": {
+   "title": "\u0411\u0430\u0437\u0430\u0440",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/bazaar.png",
+   "image": [
+    413,
+    318
+   ],
+   "pivot": [
+    206.44,
+    185.697
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/bazaar.png",
+   "shadow_pivot": [
+    64.74,
+    50.674
+   ],
+   "shadow_base_width": 115.91
+  },
+  "villa": {
+   "title": "\u0412\u0438\u043b\u043b\u0430 \u0432\u0435\u043b\u044c\u043c\u043e\u0436\u0438",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/villa.png",
+   "image": [
+    413,
+    397
+   ],
+   "pivot": [
+    206.44,
+    264.82
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/villa.png",
+   "shadow_pivot": [
+    86.872,
+    77.336
+   ],
+   "shadow_base_width": 115.91
+  },
+  "dovecote": {
+   "title": "\u0413\u043e\u043b\u0443\u0431\u044f\u0442\u043d\u044f",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/dovecote.png",
+   "image": [
+    276,
+    290
+   ],
+   "pivot": [
+    138.138,
+    201.912
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/dovecote.png",
+   "shadow_pivot": [
+    69.831,
+    55.26
+   ],
+   "shadow_base_width": 77.273
+  },
+  "watchtower": {
+   "title": "\u0421\u0442\u043e\u0440\u043e\u0436\u0435\u0432\u0430\u044f \u0431\u0430\u0448\u043d\u044f",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/watchtower.png",
+   "image": [
+    276,
+    326
+   ],
+   "pivot": [
+    138.138,
+    237.769
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/watchtower.png",
+   "shadow_pivot": [
+    87.914,
+    55.402
+   ],
+   "shadow_base_width": 77.273
+  },
+  "winery": {
+   "title": "\u0412\u0438\u043d\u043e\u0434\u0435\u043b\u044c\u043d\u044f",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/winery.png",
+   "image": [
+    412,
+    345
+   ],
+   "pivot": [
+    206.44,
+    213.158
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/winery.png",
+   "shadow_pivot": [
+    65.464,
+    58.441
+   ],
+   "shadow_base_width": 115.91
+  },
+  "bastet_shrine": {
+   "title": "\u0421\u0432\u044f\u0442\u0438\u043b\u0438\u0449\u0435 \u0411\u0430\u0441\u0442\u0435\u0442",
+   "size": [
+    3,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/bastet_shrine.png",
+   "image": [
+    412,
+    341
+   ],
+   "pivot": [
+    206.44,
+    209.229
+   ],
+   "base_width": 409.808,
+   "shadow": "data/building-shadows/bastet_shrine.png",
+   "shadow_pivot": [
+    71.939,
+    56.613
+   ],
+   "shadow_base_width": 115.91
+  },
+  "felucca_dock": {
+   "title": "\u041f\u0440\u0438\u0447\u0430\u043b \u0441 \u0444\u0435\u043b\u044e\u043a\u043e\u0439",
+   "size": [
+    4,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/felucca_dock.png",
+   "image": [
+    449,
+    249
+   ],
+   "pivot": [
+    224.741,
+    129.305
+   ],
+   "base_width": 446.41,
+   "shadow": "data/building-shadows/felucca_dock.png",
+   "shadow_pivot": [
+    66.717,
+    38.724
+   ],
+   "shadow_base_width": 126.263
+  },
+  "chariot_stable": {
+   "title": "\u041a\u043e\u043d\u044e\u0448\u043d\u044f \u043a\u043e\u043b\u0435\u0441\u043d\u0438\u0446",
+   "size": [
+    4,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/chariot_stable.png",
+   "image": [
+    499,
+    373
+   ],
+   "pivot": [
+    249.741,
+    225.623
+   ],
+   "base_width": 496.41,
+   "shadow": "data/building-shadows/chariot_stable.png",
+   "shadow_pivot": [
+    81.449,
+    63.967
+   ],
+   "shadow_base_width": 140.405
+  },
+  "sculptor_yard": {
+   "title": "\u0414\u0432\u043e\u0440 \u0441\u043a\u0443\u043b\u044c\u043f\u0442\u043e\u0440\u0430",
+   "size": [
+    4,
+    3
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/sculptor_yard.png",
+   "image": [
+    499,
+    357
+   ],
+   "pivot": [
+    249.741,
+    209.314
+   ],
+   "base_width": 496.41,
+   "shadow": "data/building-shadows/sculptor_yard.png",
+   "shadow_pivot": [
+    74.848,
+    60.354
+   ],
+   "shadow_base_width": 140.405
+  },
+  "pharaoh_garden": {
+   "title": "\u0421\u0430\u0434 \u0444\u0430\u0440\u0430\u043e\u043d\u0430",
+   "size": [
+    4,
+    4
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/pharaoh_garden.png",
+   "image": [
+    549,
+    448
+   ],
+   "pivot": [
+    274.741,
+    272.44
+   ],
+   "base_width": 546.41,
+   "shadow": "data/building-shadows/pharaoh_garden.png",
+   "shadow_pivot": [
+    80.859,
+    73.208
+   ],
+   "shadow_base_width": 154.547
+  },
+  "date_palm": {
+   "title": "\u0424\u0438\u043d\u0438\u043a\u043e\u0432\u0430\u044f \u043f\u0430\u043b\u044c\u043c\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.0918647050857544,
+   "sprite": "data/buildings/date_palm.png",
+   "image": [
+    99,
+    105
+   ],
+   "pivot": [
+    49.944,
+    97.321
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/date_palm.png",
+   "shadow_pivot": [
+    33.38,
+    24.678
+   ],
+   "shadow_base_width": 38.637
+  },
+  "doum_palm": {
+   "title": "\u041f\u0430\u043b\u044c\u043c\u0430 \u0434\u0443\u043c",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.04347825050354,
+   "sprite": "data/buildings/doum_palm.png",
+   "image": [
+    98,
+    89
+   ],
+   "pivot": [
+    48.888,
+    82.194
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/doum_palm.png",
+   "shadow_pivot": [
+    31.177,
+    25.399
+   ],
+   "shadow_base_width": 38.637
+  },
+  "cypress": {
+   "title": "\u041a\u0438\u043f\u0430\u0440\u0438\u0441",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.8461538553237915,
+   "sprite": "data/buildings/cypress.png",
+   "image": [
+    101,
+    213
+   ],
+   "pivot": [
+    50.589,
+    203.939
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/cypress.png",
+   "shadow_pivot": [
+    51.249,
+    50.834
+   ],
+   "shadow_base_width": 38.637
+  },
+  "acacia": {
+   "title": "\u0410\u043a\u0430\u0446\u0438\u044f",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/acacia.png",
+   "image": [
+    92,
+    99
+   ],
+   "pivot": [
+    39.022,
+    92.645
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/acacia.png",
+   "shadow_pivot": [
+    32.372,
+    25.355
+   ],
+   "shadow_base_width": 38.637
+  },
+  "fig": {
+   "title": "\u0421\u043c\u043e\u043a\u043e\u0432\u043d\u0438\u0446\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.354080319404602,
+   "sprite": "data/buildings/fig.png",
+   "image": [
+    88,
+    133
+   ],
+   "pivot": [
+    44.378,
+    123.92
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/fig.png",
+   "shadow_pivot": [
+    39.297,
+    34.201
+   ],
+   "shadow_base_width": 38.637
+  },
+  "pomegranate": {
+   "title": "\u0413\u0440\u0430\u043d\u0430\u0442\u043e\u0432\u043e\u0435 \u0434\u0435\u0440\u0435\u0432\u043e",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.5238792896270752,
+   "sprite": "data/buildings/pomegranate.png",
+   "image": [
+    102,
+    134
+   ],
+   "pivot": [
+    52.351,
+    126.77
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/pomegranate.png",
+   "shadow_pivot": [
+    40.019,
+    34.007
+   ],
+   "shadow_base_width": 38.637
+  },
+  "olive": {
+   "title": "\u041e\u043b\u0438\u0432\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.3521674871444702,
+   "sprite": "data/buildings/olive.png",
+   "image": [
+    89,
+    122
+   ],
+   "pivot": [
+    43.971,
+    114.797
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/olive.png",
+   "shadow_pivot": [
+    32.92,
+    33.621
+   ],
+   "shadow_base_width": 38.637
+  },
+  "palm_grove": {
+   "title": "\u041f\u0430\u043b\u044c\u043c\u043e\u0432\u0430\u044f \u0440\u043e\u0449\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/palm_grove.png",
+   "image": [
+    163,
+    205
+   ],
+   "pivot": [
+    69.728,
+    145.423
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/palm_grove.png",
+   "shadow_pivot": [
+    42.395,
+    38.283
+   ],
+   "shadow_base_width": 77.273
+  },
+  "twin_palms": {
+   "title": "\u0414\u0432\u043e\u0439\u043d\u0430\u044f \u043f\u0430\u043b\u044c\u043c\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/twin_palms.png",
+   "image": [
+    149,
+    177
+   ],
+   "pivot": [
+    75.463,
+    144.88
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/twin_palms.png",
+   "shadow_pivot": [
+    44.401,
+    41.129
+   ],
+   "shadow_base_width": 77.273
+  },
+  "sycamore": {
+   "title": "\u0421\u0438\u043a\u043e\u043c\u043e\u0440",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/sycamore.png",
+   "image": [
+    135,
+    153
+   ],
+   "pivot": [
+    68.243,
+    136.476
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/sycamore.png",
+   "shadow_pivot": [
+    52.834,
+    40.752
+   ],
+   "shadow_base_width": 77.273
+  },
+  "tamarisk": {
+   "title": "\u0422\u0430\u043c\u0430\u0440\u0438\u0441\u043a",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/tamarisk.png",
+   "image": [
+    130,
+    130
+   ],
+   "pivot": [
+    66.242,
+    121.006
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/tamarisk.png",
+   "shadow_pivot": [
+    44.911,
+    35.377
+   ],
+   "shadow_base_width": 77.273
+  },
+  "shrub": {
+   "title": "\u041a\u0440\u0443\u0433\u043b\u044b\u0439 \u043a\u0443\u0441\u0442",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.1915706396102905,
+   "sprite": "data/buildings/shrub.png",
+   "image": [
+    95,
+    90
+   ],
+   "pivot": [
+    45.848,
+    67.069
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/shrub.png",
+   "shadow_pivot": [
+    25.53,
+    19.121
+   ],
+   "shadow_base_width": 38.637
+  },
+  "papyrus": {
+   "title": "\u041f\u0430\u043f\u0438\u0440\u0443\u0441",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.114884614944458,
+   "sprite": "data/buildings/papyrus.png",
+   "image": [
+    98,
+    123
+   ],
+   "pivot": [
+    45.877,
+    107.405
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/papyrus.png",
+   "shadow_pivot": [
+    36.165,
+    32.53
+   ],
+   "shadow_base_width": 38.637
+  },
+  "aloe": {
+   "title": "\u0410\u043b\u043e\u044d",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.3333332538604736,
+   "sprite": "data/buildings/aloe.png",
+   "image": [
+    100,
+    126
+   ],
+   "pivot": [
+    50.271,
+    89.582
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/aloe.png",
+   "shadow_pivot": [
+    17.693,
+    16.489
+   ],
+   "shadow_base_width": 38.637
+  },
+  "oleander": {
+   "title": "\u041e\u043b\u0435\u0430\u043d\u0434\u0440",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.197882056236267,
+   "sprite": "data/buildings/oleander.png",
+   "image": [
+    100,
+    101
+   ],
+   "pivot": [
+    51.217,
+    76.9
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/oleander.png",
+   "shadow_pivot": [
+    26.697,
+    20.902
+   ],
+   "shadow_base_width": 38.637
+  },
+  "henna": {
+   "title": "\u041a\u0443\u0441\u0442 \u0445\u043d\u044b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.219923496246338,
+   "sprite": "data/buildings/henna.png",
+   "image": [
+    98,
+    87
+   ],
+   "pivot": [
+    49.581,
+    63.909
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/henna.png",
+   "shadow_pivot": [
+    24.635,
+    19.227
+   ],
+   "shadow_base_width": 38.637
+  },
+  "reeds": {
+   "title": "\u041d\u0438\u043b\u044c\u0441\u043a\u0438\u0439 \u0442\u0440\u043e\u0441\u0442\u043d\u0438\u043a",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.2113738059997559,
+   "sprite": "data/buildings/reeds.png",
+   "image": [
+    89,
+    131
+   ],
+   "pivot": [
+    40.306,
+    108.892
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/reeds.png",
+   "shadow_pivot": [
+    29.174,
+    27.95
+   ],
+   "shadow_base_width": 38.637
+  },
+  "potted_tree": {
+   "title": "\u0414\u0435\u0440\u0435\u0432\u0446\u0435 \u0432 \u043a\u0430\u0434\u043a\u0435",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.823496699333191,
+   "sprite": "data/buildings/potted_tree.png",
+   "image": [
+    101,
+    162
+   ],
+   "pivot": [
+    50.589,
+    146.034
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/potted_tree.png",
+   "shadow_pivot": [
+    50.987,
+    38.456
+   ],
+   "shadow_base_width": 38.637
+  },
+  "hedge": {
+   "title": "\u0416\u0438\u0432\u0430\u044f \u0438\u0437\u0433\u043e\u0440\u043e\u0434\u044c",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/hedge.png",
+   "image": [
+    118,
+    110
+   ],
+   "pivot": [
+    59.177,
+    74.44
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/hedge.png",
+   "shadow_pivot": [
+    28.648,
+    20.206
+   ],
+   "shadow_base_width": 38.637
+  },
+  "blue_lotus": {
+   "title": "\u0413\u043e\u043b\u0443\u0431\u043e\u0439 \u043b\u043e\u0442\u043e\u0441",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.3333332538604736,
+   "sprite": "data/buildings/blue_lotus.png",
+   "image": [
+    97,
+    72
+   ],
+   "pivot": [
+    48.607,
+    48.317
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/blue_lotus.png",
+   "shadow_pivot": [
+    21.567,
+    15.818
+   ],
+   "shadow_base_width": 38.637
+  },
+  "poppies": {
+   "title": "\u041c\u0430\u043a\u0438",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.5473839044570923,
+   "sprite": "data/buildings/poppies.png",
+   "image": [
+    106,
+    114
+   ],
+   "pivot": [
+    48.292,
+    76.028
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/poppies.png",
+   "shadow_pivot": [
+    23.314,
+    17.655
+   ],
+   "shadow_base_width": 38.637
+  },
+  "chamomile": {
+   "title": "\u0420\u043e\u043c\u0430\u0448\u043a\u0438",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.4203014373779297,
+   "sprite": "data/buildings/chamomile.png",
+   "image": [
+    106,
+    102
+   ],
+   "pivot": [
+    53.643,
+    66.614
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/chamomile.png",
+   "shadow_pivot": [
+    22.351,
+    16.993
+   ],
+   "shadow_base_width": 38.637
+  },
+  "cornflowers": {
+   "title": "\u0412\u0430\u0441\u0438\u043b\u044c\u043a\u0438",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.7268893718719482,
+   "sprite": "data/buildings/cornflowers.png",
+   "image": [
+    108,
+    133
+   ],
+   "pivot": [
+    52.148,
+    96.221
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/cornflowers.png",
+   "shadow_pivot": [
+    27.627,
+    26.367
+   ],
+   "shadow_base_width": 38.637
+  },
+  "flower_box": {
+   "title": "\u0426\u0432\u0435\u0442\u043e\u0447\u043d\u044b\u0439 \u044f\u0449\u0438\u043a",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.2972972393035889,
+   "sprite": "data/buildings/flower_box.png",
+   "image": [
+    115,
+    89
+   ],
+   "pivot": [
+    57.589,
+    58.149
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/flower_box.png",
+   "shadow_pivot": [
+    25.299,
+    16.598
+   ],
+   "shadow_base_width": 38.637
+  },
+  "irises": {
+   "title": "\u0418\u0440\u0438\u0441\u044b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.5,
+   "sprite": "data/buildings/irises.png",
+   "image": [
+    97,
+    114
+   ],
+   "pivot": [
+    48.364,
+    96.216
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/irises.png",
+   "shadow_pivot": [
+    30.627,
+    22.365
+   ],
+   "shadow_base_width": 38.637
+  },
+  "flower_bed": {
+   "title": "\u041a\u043b\u0443\u043c\u0431\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/flower_bed.png",
+   "image": [
+    273,
+    187
+   ],
+   "pivot": [
+    136.406,
+    99.781
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/flower_bed.png",
+   "shadow_pivot": [
+    43.514,
+    30.373
+   ],
+   "shadow_base_width": 77.273
+  },
+  "pattern_bed": {
+   "title": "\u0423\u0437\u043e\u0440\u043d\u044b\u0439 \u0446\u0432\u0435\u0442\u043d\u0438\u043a",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/pattern_bed.png",
+   "image": [
+    262,
+    175
+   ],
+   "pivot": [
+    131.308,
+    91.609
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/pattern_bed.png",
+   "shadow_pivot": [
+    40.387,
+    27.062
+   ],
+   "shadow_base_width": 77.273
+  },
+  "broken_column": {
+   "title": "\u0423\u043f\u0430\u0432\u0448\u0430\u044f \u043a\u043e\u043b\u043e\u043d\u043d\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.131345510482788,
+   "sprite": "data/buildings/broken_column.png",
+   "image": [
+    92,
+    125
+   ],
+   "pivot": [
+    51.665,
+    81.667
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/broken_column.png",
+   "shadow_pivot": [
+    23.328,
+    20.25
+   ],
+   "shadow_base_width": 38.637
+  },
+  "pharaoh_head": {
+   "title": "\u0413\u043e\u043b\u043e\u0432\u0430 \u0444\u0430\u0440\u0430\u043e\u043d\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.538461685180664,
+   "sprite": "data/buildings/pharaoh_head.png",
+   "image": [
+    119,
+    156
+   ],
+   "pivot": [
+    59.592,
+    119.303
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/pharaoh_head.png",
+   "shadow_pivot": [
+    42.067,
+    29.895
+   ],
+   "shadow_base_width": 38.637
+  },
+  "bastet_cat": {
+   "title": "\u041a\u043e\u0448\u043a\u0430 \u0411\u0430\u0441\u0442\u0435\u0442",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/bastet_cat.png",
+   "image": [
+    133,
+    204
+   ],
+   "pivot": [
+    66.569,
+    167.305
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/bastet_cat.png",
+   "shadow_pivot": [
+    48.2,
+    35.755
+   ],
+   "shadow_base_width": 38.637
+  },
+  "obelisk": {
+   "title": "\u041e\u0431\u0435\u043b\u0438\u0441\u043a",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/obelisk.png",
+   "image": [
+    120,
+    268
+   ],
+   "pivot": [
+    60.177,
+    231.882
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/obelisk.png",
+   "shadow_pivot": [
+    44.8,
+    39.02
+   ],
+   "shadow_base_width": 38.637
+  },
+  "sundial": {
+   "title": "\u0421\u043e\u043b\u043d\u0435\u0447\u043d\u044b\u0435 \u0447\u0430\u0441\u044b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.8461538553237915,
+   "sprite": "data/buildings/sundial.png",
+   "image": [
+    100,
+    149
+   ],
+   "pivot": [
+    50.271,
+    119.744
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/sundial.png",
+   "shadow_pivot": [
+    43.563,
+    32.02
+   ],
+   "shadow_base_width": 38.637
+  },
+  "scribe_statue": {
+   "title": "\u0421\u0442\u0430\u0442\u0443\u044f \u043f\u0438\u0441\u0446\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.9199999570846558,
+   "sprite": "data/buildings/scribe_statue.png",
+   "image": [
+    131,
+    167
+   ],
+   "pivot": [
+    65.758,
+    127.397
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/scribe_statue.png",
+   "shadow_pivot": [
+    38.369,
+    29.184
+   ],
+   "shadow_base_width": 38.637
+  },
+  "golden_scarab": {
+   "title": "\u0417\u043e\u043b\u043e\u0442\u043e\u0439 \u0441\u043a\u0430\u0440\u0430\u0431\u0435\u0439",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.7777776718139648,
+   "sprite": "data/buildings/golden_scarab.png",
+   "image": [
+    135,
+    141
+   ],
+   "pivot": [
+    67.858,
+    104.456
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/golden_scarab.png",
+   "shadow_pivot": [
+    32.342,
+    26.696
+   ],
+   "shadow_base_width": 38.637
+  },
+  "colossus": {
+   "title": "\u041a\u043e\u043b\u043e\u0441\u0441",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/colossus.png",
+   "image": [
+    191,
+    206
+   ],
+   "pivot": [
+    95.537,
+    150.103
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/colossus.png",
+   "shadow_pivot": [
+    51.233,
+    37.607
+   ],
+   "shadow_base_width": 77.273
+  },
+  "anubis": {
+   "title": "\u0410\u043d\u0443\u0431\u0438\u0441",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/anubis.png",
+   "image": [
+    187,
+    142
+   ],
+   "pivot": [
+    93.902,
+    90.535
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/anubis.png",
+   "shadow_pivot": [
+    40.301,
+    24.758
+   ],
+   "shadow_base_width": 77.273
+  },
+  "birdbath": {
+   "title": "\u0427\u0430\u0448\u0430 \u0434\u043b\u044f \u043f\u0442\u0438\u0446",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.5,
+   "sprite": "data/buildings/birdbath.png",
+   "image": [
+    98,
+    117
+   ],
+   "pivot": [
+    49.2,
+    96.535
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/birdbath.png",
+   "shadow_pivot": [
+    33.127,
+    30.456
+   ],
+   "shadow_base_width": 38.637
+  },
+  "small_fountain": {
+   "title": "\u0424\u043e\u043d\u0442\u0430\u043d\u0447\u0438\u043a",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.1428571939468384,
+   "sprite": "data/buildings/small_fountain.png",
+   "image": [
+    102,
+    109
+   ],
+   "pivot": [
+    50.945,
+    76.742
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/small_fountain.png",
+   "shadow_pivot": [
+    27.171,
+    17.857
+   ],
+   "shadow_base_width": 38.637
+  },
+  "lotus_pond": {
+   "title": "\u041f\u0440\u0443\u0434 \u0441 \u043b\u043e\u0442\u043e\u0441\u0430\u043c\u0438",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/lotus_pond.png",
+   "image": [
+    207,
+    130
+   ],
+   "pivot": [
+    92.748,
+    71.522
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/lotus_pond.png",
+   "shadow_pivot": [
+    30.384,
+    20.381
+   ],
+   "shadow_base_width": 77.273
+  },
+  "ibis_pond": {
+   "title": "\u041f\u0440\u0443\u0434 \u0441 \u0438\u0431\u0438\u0441\u0430\u043c\u0438",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/ibis_pond.png",
+   "image": [
+    191,
+    127
+   ],
+   "pivot": [
+    96.05,
+    66.824
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/ibis_pond.png",
+   "shadow_pivot": [
+    36.766,
+    21.052
+   ],
+   "shadow_base_width": 77.273
+  },
+  "shaduf": {
+   "title": "\u0428\u0430\u0434\u0443\u0444",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/shaduf.png",
+   "image": [
+    221,
+    156
+   ],
+   "pivot": [
+    115.65,
+    112.16
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/shaduf.png",
+   "shadow_pivot": [
+    39.187,
+    23.158
+   ],
+   "shadow_base_width": 77.273
+  },
+  "bench": {
+   "title": "\u041a\u0430\u043c\u0435\u043d\u043d\u0430\u044f \u0441\u043a\u0430\u043c\u044c\u044f",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.1999999284744263,
+   "sprite": "data/buildings/bench.png",
+   "image": [
+    108,
+    84
+   ],
+   "pivot": [
+    54.212,
+    59.375
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/bench.png",
+   "shadow_pivot": [
+    25.053,
+    16.945
+   ],
+   "shadow_base_width": 38.637
+  },
+  "lamp_post": {
+   "title": "\u0421\u0432\u0435\u0442\u0438\u043b\u044c\u043d\u0438\u043a",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/lamp_post.png",
+   "image": [
+    84,
+    214
+   ],
+   "pivot": [
+    42.224,
+    188.124
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/lamp_post.png",
+   "shadow_pivot": [
+    36.85,
+    29.643
+   ],
+   "shadow_base_width": 38.637
+  },
+  "torch": {
+   "title": "\u0424\u0430\u043a\u0435\u043b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/torch.png",
+   "image": [
+    46,
+    185
+   ],
+   "pivot": [
+    22.89,
+    179.544
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/torch.png",
+   "shadow_pivot": [
+    34.722,
+    31.217
+   ],
+   "shadow_base_width": 38.637
+  },
+  "signpost": {
+   "title": "\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.6518418788909912,
+   "sprite": "data/buildings/signpost.png",
+   "image": [
+    76,
+    133
+   ],
+   "pivot": [
+    34.081,
+    127.42
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/signpost.png",
+   "shadow_pivot": [
+    31.686,
+    29.191
+   ],
+   "shadow_base_width": 38.637
+  },
+  "standard": {
+   "title": "\u0428\u0442\u0430\u043d\u0434\u0430\u0440\u0442",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/standard.png",
+   "image": [
+    82,
+    240
+   ],
+   "pivot": [
+    41.053,
+    215.948
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/standard.png",
+   "shadow_pivot": [
+    43.79,
+    34.23
+   ],
+   "shadow_base_width": 38.637
+  },
+  "grain_mill": {
+   "title": "\u0420\u0443\u0447\u043d\u0430\u044f \u043c\u0435\u043b\u044c\u043d\u0438\u0446\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.0084278583526611,
+   "sprite": "data/buildings/grain_mill.png",
+   "image": [
+    77,
+    68
+   ],
+   "pivot": [
+    38.791,
+    38.847
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/grain_mill.png",
+   "shadow_pivot": [
+    18.014,
+    11.139
+   ],
+   "shadow_base_width": 38.637
+  },
+  "feast_mat": {
+   "title": "\u041f\u0438\u0440 \u043d\u0430 \u0446\u0438\u043d\u043e\u0432\u043a\u0435",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/feast_mat.png",
+   "image": [
+    209,
+    132
+   ],
+   "pivot": [
+    104.582,
+    67.649
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/feast_mat.png",
+   "shadow_pivot": [
+    31.731,
+    21.285
+   ],
+   "shadow_base_width": 77.273
+  },
+  "shade_canopy": {
+   "title": "\u041d\u0430\u0432\u0435\u0441 \u0441 \u043f\u043e\u0434\u0443\u0448\u043a\u0430\u043c\u0438",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/shade_canopy.png",
+   "image": [
+    219,
+    217
+   ],
+   "pivot": [
+    110.742,
+    151.492
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/shade_canopy.png",
+   "shadow_pivot": [
+    56.409,
+    39.999
+   ],
+   "shadow_base_width": 77.273
+  },
+  "vine_pergola": {
+   "title": "\u0412\u0438\u043d\u043e\u0433\u0440\u0430\u0434\u043d\u0430\u044f \u043f\u0435\u0440\u0433\u043e\u043b\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/vine_pergola.png",
+   "image": [
+    220,
+    212
+   ],
+   "pivot": [
+    109.812,
+    148.606
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/vine_pergola.png",
+   "shadow_pivot": [
+    59.523,
+    38.183
+   ],
+   "shadow_base_width": 77.273
+  },
+  "palanquin": {
+   "title": "\u041f\u0430\u043b\u0430\u043d\u043a\u0438\u043d",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/palanquin.png",
+   "image": [
+    195,
+    176
+   ],
+   "pivot": [
+    97.912,
+    142.337
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/palanquin.png",
+   "shadow_pivot": [
+    50.712,
+    42.41
+   ],
+   "shadow_base_width": 77.273
+  },
+  "kiosk": {
+   "title": "\u0411\u0435\u0441\u0435\u0434\u043a\u0430-\u043a\u0438\u043e\u0441\u043a",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/kiosk.png",
+   "image": [
+    222,
+    248
+   ],
+   "pivot": [
+    111.184,
+    177.409
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/kiosk.png",
+   "shadow_pivot": [
+    61.573,
+    50.33
+   ],
+   "shadow_base_width": 77.273
+  },
+  "crates": {
+   "title": "\u042f\u0449\u0438\u043a\u0438",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.2799999713897705,
+   "sprite": "data/buildings/crates.png",
+   "image": [
+    91,
+    141
+   ],
+   "pivot": [
+    48.987,
+    102.925
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/crates.png",
+   "shadow_pivot": [
+    33.379,
+    28.263
+   ],
+   "shadow_base_width": 38.637
+  },
+  "amphorae": {
+   "title": "\u0410\u043c\u0444\u043e\u0440\u044b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.307932734489441,
+   "sprite": "data/buildings/amphorae.png",
+   "image": [
+    83,
+    83
+   ],
+   "pivot": [
+    46.327,
+    61.77
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/amphorae.png",
+   "shadow_pivot": [
+    23.056,
+    17.623
+   ],
+   "shadow_base_width": 38.637
+  },
+  "campfire": {
+   "title": "\u041a\u043e\u0441\u0442\u0451\u0440",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.2867878675460815,
+   "sprite": "data/buildings/campfire.png",
+   "image": [
+    97,
+    73
+   ],
+   "pivot": [
+    48.128,
+    43.301
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/campfire.png",
+   "shadow_pivot": [
+    17.695,
+    13.399
+   ],
+   "shadow_base_width": 38.637
+  },
+  "scribe_desk": {
+   "title": "\u041f\u044e\u043f\u0438\u0442\u0440 \u043f\u0438\u0441\u0446\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.7142857313156128,
+   "sprite": "data/buildings/scribe_desk.png",
+   "image": [
+    125,
+    129
+   ],
+   "pivot": [
+    62.569,
+    96.492
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/scribe_desk.png",
+   "shadow_pivot": [
+    35.667,
+    27.443
+   ],
+   "shadow_base_width": 38.637
+  },
+  "grain_baskets": {
+   "title": "\u041a\u043e\u0440\u0437\u0438\u043d\u044b \u0441 \u0437\u0435\u0440\u043d\u043e\u043c",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.307932734489441,
+   "sprite": "data/buildings/grain_baskets.png",
+   "image": [
+    84,
+    80
+   ],
+   "pivot": [
+    46.327,
+    54.996
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/grain_baskets.png",
+   "shadow_pivot": [
+    21.142,
+    18.706
+   ],
+   "shadow_base_width": 38.637
+  },
+  "treasure_chest": {
+   "title": "\u0421\u0443\u043d\u0434\u0443\u043a \u0441\u043e\u043a\u0440\u043e\u0432\u0438\u0449",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.021276593208313,
+   "sprite": "data/buildings/treasure_chest.png",
+   "image": [
+    81,
+    84
+   ],
+   "pivot": [
+    39.031,
+    50.821
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/treasure_chest.png",
+   "shadow_pivot": [
+    20.091,
+    15.526
+   ],
+   "shadow_base_width": 38.637
+  },
+  "tent": {
+   "title": "\u0428\u0430\u0442\u0451\u0440",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/tent.png",
+   "image": [
+    195,
+    198
+   ],
+   "pivot": [
+    95.657,
+    125.372
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/tent.png",
+   "shadow_pivot": [
+    42.943,
+    32.612
+   ],
+   "shadow_base_width": 77.273
+  },
+  "dig_site": {
+   "title": "\u0420\u0430\u0441\u043a\u043e\u043f\u043a\u0438",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/dig_site.png",
+   "image": [
+    199,
+    148
+   ],
+   "pivot": [
+    100.623,
+    83.892
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/dig_site.png",
+   "shadow_pivot": [
+    32.887,
+    22.88
+   ],
+   "shadow_base_width": 77.273
+  },
+  "reed_boat": {
+   "title": "\u0422\u0440\u043e\u0441\u0442\u043d\u0438\u043a\u043e\u0432\u0430\u044f \u043b\u043e\u0434\u043a\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/reed_boat.png",
+   "image": [
+    168,
+    95
+   ],
+   "pivot": [
+    84.265,
+    73.019
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/reed_boat.png",
+   "shadow_pivot": [
+    32.67,
+    18.804
+   ],
+   "shadow_base_width": 77.273
+  },
+  "cart": {
+   "title": "\u041f\u043e\u0432\u043e\u0437\u043a\u0430",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/cart.png",
+   "image": [
+    170,
+    122
+   ],
+   "pivot": [
+    74.411,
+    86.337
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/cart.png",
+   "shadow_pivot": [
+    30.498,
+    23.571
+   ],
+   "shadow_base_width": 77.273
+  },
+  "crocodile": {
+   "title": "\u041a\u0440\u043e\u043a\u043e\u0434\u0438\u043b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.0752114057540894,
+   "sprite": "data/buildings/crocodile.png",
+   "image": [
+    79,
+    57
+   ],
+   "pivot": [
+    38.118,
+    43.43
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/crocodile.png",
+   "shadow_pivot": [
+    16.426,
+    14.435
+   ],
+   "shadow_base_width": 38.637
+  },
+  "ibis": {
+   "title": "\u0418\u0431\u0438\u0441",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.2655887603759766,
+   "sprite": "data/buildings/ibis.png",
+   "image": [
+    84,
+    98
+   ],
+   "pivot": [
+    40.097,
+    81.18
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/ibis.png",
+   "shadow_pivot": [
+    28.537,
+    19.112
+   ],
+   "shadow_base_width": 38.637
+  },
+  "falcon": {
+   "title": "\u0421\u043e\u043a\u043e\u043b",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/falcon.png",
+   "image": [
+    82,
+    190
+   ],
+   "pivot": [
+    41.053,
+    166.01
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/falcon.png",
+   "shadow_pivot": [
+    40.511,
+    31.106
+   ],
+   "shadow_base_width": 38.637
+  },
+  "cat": {
+   "title": "\u041a\u043e\u0448\u043a\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 2.0,
+   "sprite": "data/buildings/cat.png",
+   "image": [
+    93,
+    143
+   ],
+   "pivot": [
+    46.517,
+    115.276
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/cat.png",
+   "shadow_pivot": [
+    34.247,
+    29.039
+   ],
+   "shadow_base_width": 38.637
+  },
+  "hippo": {
+   "title": "\u0411\u0435\u0433\u0435\u043c\u043e\u0442\u0438\u043a",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.09590482711792,
+   "sprite": "data/buildings/hippo.png",
+   "image": [
+    83,
+    60
+   ],
+   "pivot": [
+    37.391,
+    43.058
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/hippo.png",
+   "shadow_pivot": [
+    18.429,
+    13.33
+   ],
+   "shadow_base_width": 38.637
+  },
+  "boulder": {
+   "title": "\u041f\u0435\u0441\u0447\u0430\u043d\u044b\u0439 \u0432\u0430\u043b\u0443\u043d",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.1592373847961426,
+   "sprite": "data/buildings/boulder.png",
+   "image": [
+    84,
+    98
+   ],
+   "pivot": [
+    42.363,
+    65.544
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/boulder.png",
+   "shadow_pivot": [
+    22.228,
+    20.69
+   ],
+   "shadow_base_width": 38.637
+  },
+  "turquoise": {
+   "title": "\u0411\u0438\u0440\u044e\u0437\u0430",
+   "size": [
+    1,
+    1
+   ],
+   "scale": 1.3791717290878296,
+   "sprite": "data/buildings/turquoise.png",
+   "image": [
+    89,
+    109
+   ],
+   "pivot": [
+    40.695,
+    93.948
+   ],
+   "base_width": 136.603,
+   "shadow": "data/building-shadows/turquoise.png",
+   "shadow_pivot": [
+    30.237,
+    22.724
+   ],
+   "shadow_base_width": 38.637
+  },
+  "desert_rocks": {
+   "title": "\u0421\u043a\u0430\u043b\u044b \u043f\u0443\u0441\u0442\u044b\u043d\u0438",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/buildings/desert_rocks.png",
+   "image": [
+    178,
+    173
+   ],
+   "pivot": [
+    92.362,
+    106.835
+   ],
+   "base_width": 273.205,
+   "shadow": "data/building-shadows/desert_rocks.png",
+   "shadow_pivot": [
+    37.708,
+    30.369
+   ],
+   "shadow_base_width": 77.273
+  }
+ },
+ "generator": "tools/buildings.py",
+ "master": "art/building-catalogue/nile_archive_buildings.blend",
+ "scene_generator": "art/building-catalogue/build_scene.py",
+ "camera": {
+  "yaw": 30.0,
+  "elevation": 40.0
+ },
+ "ppt": 100,
+ "order": [
+  "gardener_house",
+  "isis_temple",
+  "archive",
+  "fountain",
+  "workshop",
+  "small_pyramid",
+  "nilometer",
+  "sphinx",
+  "barque_shrine",
+  "pylon_gate",
+  "hypostyle",
+  "sun_temple",
+  "lighthouse",
+  "sacred_lake",
+  "great_pyramid",
+  "mud_house",
+  "pottery",
+  "bakery",
+  "weaver",
+  "scribe_school",
+  "granary",
+  "bazaar",
+  "villa",
+  "dovecote",
+  "watchtower",
+  "winery",
+  "bastet_shrine",
+  "felucca_dock",
+  "chariot_stable",
+  "sculptor_yard",
+  "pharaoh_garden",
+  "date_palm",
+  "doum_palm",
+  "cypress",
+  "acacia",
+  "fig",
+  "pomegranate",
+  "olive",
+  "palm_grove",
+  "twin_palms",
+  "sycamore",
+  "tamarisk",
+  "shrub",
+  "papyrus",
+  "aloe",
+  "oleander",
+  "henna",
+  "reeds",
+  "potted_tree",
+  "hedge",
+  "blue_lotus",
+  "poppies",
+  "chamomile",
+  "cornflowers",
+  "flower_box",
+  "irises",
+  "flower_bed",
+  "pattern_bed",
+  "broken_column",
+  "pharaoh_head",
+  "bastet_cat",
+  "obelisk",
+  "sundial",
+  "scribe_statue",
+  "golden_scarab",
+  "colossus",
+  "anubis",
+  "birdbath",
+  "small_fountain",
+  "lotus_pond",
+  "ibis_pond",
+  "shaduf",
+  "bench",
+  "lamp_post",
+  "torch",
+  "signpost",
+  "standard",
+  "grain_mill",
+  "feast_mat",
+  "shade_canopy",
+  "vine_pergola",
+  "palanquin",
+  "kiosk",
+  "crates",
+  "amphorae",
+  "campfire",
+  "scribe_desk",
+  "grain_baskets",
+  "treasure_chest",
+  "tent",
+  "dig_site",
+  "reed_boat",
+  "cart",
+  "crocodile",
+  "ibis",
+  "falcon",
+  "cat",
+  "hippo",
+  "boulder",
+  "turquoise",
+  "desert_rocks"
+ ]
+}

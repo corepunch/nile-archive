@@ -28,6 +28,8 @@ shot("phone-card", "390x844", "--card 1 --safe-area 0,47,0,34")
 shot("island-village", "480x900", "--showcase")
 shot("footprints", "480x900", "--showcase --footprints")
 shot("phone-island-placement", "390x844", "--city 6 --placing --safe-area 0,47,0,34")
+
+for page = 1, 24 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
 shot("island-placement", "480x900", "--city 6 --placing")
 shot("island-blocked", "480x900", "--city 6 --placing blocked")
 shot("island-dragging", "480x900", "--city 6 --placing dragging --frames 30")
