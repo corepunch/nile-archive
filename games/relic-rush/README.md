@@ -8,6 +8,10 @@ Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
 [popup and refill comparisons](docs/review/popup-refill/README.md).
 
+Haptics accompany matches, special activations, cascades, trickling landings,
+results, income collection and confirmed building placement/relocation. Dragging
+and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
+
 ## Shared match engine and atlas
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,

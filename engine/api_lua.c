@@ -3256,6 +3256,39 @@ static int l_text_fit(lua_State *L)
     return 1;
 }
 
+/* haptic.play(effect, strength?) */
+static int l_haptic_play(lua_State *L)
+{
+    int a_effect = (int)luaL_checkinteger(L, 1);
+    float a_strength = (float)luaL_optnumber(L, 2, 1);
+    haptic_play(a_effect, a_strength);
+    return 0;
+}
+
+/* haptic.enable(on) */
+static int l_haptic_enable(lua_State *L)
+{
+    bool a_on = lua_toboolean(L, 1);
+    haptic_enable(a_on);
+    return 0;
+}
+
+/* haptic.enabled() */
+static int l_haptic_enabled(lua_State *L)
+{
+    bool r = haptic_enabled();
+    lua_pushboolean(L, r);
+    return 1;
+}
+
+/* haptic.available() */
+static int l_haptic_available(lua_State *L)
+{
+    bool r = haptic_available();
+    lua_pushboolean(L, r);
+    return 1;
+}
+
 /* sfx.tone(hz, seconds) */
 static int l_sfx_tone(lua_State *L)
 {
@@ -4252,6 +4285,26 @@ static void open_text(lua_State *L)
     lua_setglobal(L, "text");
 }
 
+static void open_haptic(lua_State *L)
+{
+    static const luaL_Reg funcs[] = {
+        {"play", l_haptic_play},
+        {"enable", l_haptic_enable},
+        {"enabled", l_haptic_enabled},
+        {"available", l_haptic_available},
+        {NULL, NULL}
+    };
+    luaL_newlib(L, funcs);
+    lua_pushinteger(L, HAPTIC_TICK); lua_setfield(L, -2, "TICK");
+    lua_pushinteger(L, HAPTIC_MATCH); lua_setfield(L, -2, "MATCH");
+    lua_pushinteger(L, HAPTIC_COMBO); lua_setfield(L, -2, "COMBO");
+    lua_pushinteger(L, HAPTIC_PLACE); lua_setfield(L, -2, "PLACE");
+    lua_pushinteger(L, HAPTIC_COLLECT); lua_setfield(L, -2, "COLLECT");
+    lua_pushinteger(L, HAPTIC_SUCCESS); lua_setfield(L, -2, "SUCCESS");
+    lua_pushinteger(L, HAPTIC_ERROR); lua_setfield(L, -2, "ERROR");
+    lua_setglobal(L, "haptic");
+}
+
 static void open_sfx(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
@@ -4472,6 +4525,7 @@ void api_open(lua_State *L)
     open_font(L);
     open_style(L);
     open_text(L);
+    open_haptic(L);
     open_sfx(L);
     open_ui(L);
     open_sprite(L);

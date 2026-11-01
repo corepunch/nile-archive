@@ -12,6 +12,7 @@ case "${1:-}" in
 #include "save.c"
 #include "city.c"
 #include "audio.c"
+#include "haptic.c"
 #include "story.c"
 #include "sprite.c"
 #include "nav.c"
@@ -34,6 +35,7 @@ UNITY
 #define HAVE_WINDOWING 1
 #define GL_SILENCE_DEPRECATION
 #include "third_party/platform/platform.h"
+#include "haptic_platform.c"
 #if defined(__APPLE__)
 #ifdef AX_PLATFORM_IOS
 #include "third_party/platform/ios/ios_message_queue.m"

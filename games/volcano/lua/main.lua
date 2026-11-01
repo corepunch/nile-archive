@@ -2,6 +2,7 @@
 local sim=require('volcano_sim')
 local levels=require('volcano_levels')
 local art=require('volcano_art')
+local feedback=require('volcano_feedback')
 local S={chapter=1,unlocked=1,completed=0,sound=true,screen='menu',textures={},backs={},best={0,0,0,0,0}}
 local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB78),teal=color.hex(0x234F55)}
 local white=color.WHITE
@@ -238,9 +239,10 @@ local function frame(dt)
         if S.g.won and not S.banked then
             S.banked=true;S.completed=S.completed|(1<<(S.chapter-1));S.unlocked=math.max(S.unlocked,math.min(S.chapter+1,#levels))
             if S.best[S.chapter]==0 or S.g.time<S.best[S.chapter] then S.best[S.chapter]=math.floor(S.g.time) end
-            persist();S.modal='win';sfx.tone(880,.4)
+            persist();S.modal='win';sfx.tone(880,.4);feedback.win()
         end
         for _,ev in ipairs(S.g.events) do
+            feedback.event(ev)
             local p=S.cam:to_screen(vec2(ev.x,ev.y))
             if ev.kind=='income' then fx.text(p,lettering(18,'green'),'+ supplies')
             else fx.burst(p,12,C.gold,70,3);sfx.tone(ev.kind=='rescue' and 660 or 440,.12) end

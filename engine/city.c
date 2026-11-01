@@ -296,6 +296,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
     }
     c->pop_index = ev.building;
     c->pop_time = 1;
+    haptic_play(HAPTIC_PLACE, 1);
     city_cancel(c);
     return ev;
 }
@@ -316,6 +317,7 @@ static city_event quick_build(city *c, vec2 p, purse *wallet, double now, vec2 s
         c->pop_index = ev.building;
         c->pop_time = 1;
         ev.result = CITY_BUILT;
+        haptic_play(HAPTIC_PLACE, 1);
     }
     return ev;
 }
@@ -404,6 +406,7 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
             c->items[i].stamp = now;
             ev.amount = d->income;
             ev.result = CITY_COLLECTED;
+            haptic_play(HAPTIC_COLLECT, .55f);
         }
         return ev;
     }

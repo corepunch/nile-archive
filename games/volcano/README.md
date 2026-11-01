@@ -21,6 +21,10 @@ Residents and stranded workers return automatically when their route opens.
 Pets need a worker to escort them. Every damaged road is an objective.
 Drag to pan; scroll or pinch to zoom. Pause freezes work and production.
 
+Completed repairs/jobs, resource income, rescues and district victory request
+shared haptics. Worker travel and queued jobs stay silent. See the
+[haptics contract](../../docs/HAPTICS.md) for platforms, Lua API and checks.
+
 | District | Roads | Stations | People, including recruits | Pets |
 |---|---:|---:|---:|---:|
 | Outskirts | 7 | 2 | 4 | 0 |

@@ -339,6 +339,22 @@
 
   <!-- =============================================================== audio -->
 
+  <module name="haptic" doc="Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.">
+    <function name="play" c="haptic_play" doc="Request a semantic one-shot effect, with strength clamped to [0,1] (default 1). Zero/nonfinite strength and unknown effects are ignored. Success/error use native notification patterns; macOS ignores strength. Call from gameplay events, never from drawing or speculative rules.">
+      <arg name="effect" type="int"/><arg name="strength" type="float" default="1"/>
+    </function>
+    <function name="enable" c="haptic_enable" doc="Enable independently of sfx; disabling drops pending feedback. Defaults on at app start."><arg name="on" type="bool"/></function>
+    <function name="enabled" c="haptic_enabled"><returns type="bool"/></function>
+    <function name="available" c="haptic_available" doc="Whether the backend supports requests (iOS checks hardware). macOS trackpad and browser hardware/policy may still decline. Independent of enabled."><returns type="bool"/></function>
+    <const name="TICK" c="HAPTIC_TICK" type="int" doc="Very light trickle/landing tick."/>
+    <const name="MATCH" c="HAPTIC_MATCH" type="int" doc="Matched pieces or a hidden-object find."/>
+    <const name="COMBO" c="HAPTIC_COMBO" type="int" doc="Cascade, special activation or chained finds."/>
+    <const name="PLACE" c="HAPTIC_PLACE" type="int" doc="Committed building placement or relocation, or completed construction."/>
+    <const name="COLLECT" c="HAPTIC_COLLECT" type="int" doc="Resource collection."/>
+    <const name="SUCCESS" c="HAPTIC_SUCCESS" type="int" doc="Level completion or rescue; highest priority."/>
+    <const name="ERROR" c="HAPTIC_ERROR" type="int" doc="Rejected swap or hidden-object miss."/>
+  </module>
+
   <module name="sfx" doc="A tiny synthesiser for feedback tones.">
     <function name="tone" c="sfx_tone" doc="A soft bell-like note."><arg name="hz" type="float"/><arg name="seconds" type="float"/></function>
     <function name="enable" c="sfx_enable"><arg name="on" type="bool"/></function>

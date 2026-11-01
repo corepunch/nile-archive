@@ -558,7 +558,7 @@ function E.new(config)
     end
 
 
-    -- Presentation adapter: callbacks below only emit graphics, sound and notices.
+    -- Presentation adapter: callbacks below emit graphics, sound, haptics and notices.
     -- The engine owns selection, gestures, phase timing and all piece poses.
     function M.bind_view(R)
     local function noop() end
@@ -666,6 +666,12 @@ function E.new(config)
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
         R.vfx_wave(old_score)
         R.tone(notes[num.clampi(R.g.combo - 1, 0, 4) + 1])
+        local special = false
+        for i = 0, CELLS - 1 do
+            if R.pending.mask[i] and R.old_tiles[i].special ~= NORMAL then special = true; break end
+        end
+        haptic.play((R.g.combo > 1 or special) and haptic.COMBO or haptic.MATCH,
+            math.min(1, .6 + .1 * R.g.combo))
     end
 
     function R.attempt_swap(a, b)
@@ -685,6 +691,7 @@ function E.new(config)
             R.phase = PH_REJECT
             R.phase_time = 0
             R.tone(170)
+            haptic.play(haptic.ERROR, .5)
         else
             R.notice(R.locked_notice or "Ice and chains must be broken first.")
         end
@@ -701,8 +708,8 @@ function E.new(config)
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
             R.notice("No moves. Board reshuffled.")
         end
-        if R.g.won then R.overlay = R.OV_RESULT; R.tone(880)
-        elseif R.g.lost then R.overlay = R.OV_FAILED; R.tone(165) end
+        if R.g.won then R.overlay = R.OV_RESULT; R.tone(880); haptic.play(haptic.SUCCESS)
+        elseif R.g.lost then R.overlay = R.OV_FAILED; R.tone(165); haptic.play(haptic.ERROR) end
         R.idle_time = 0
     end
 
@@ -732,8 +739,17 @@ function E.new(config)
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
             R.phase = PH_FALL
             R.phase_time = 0
-        elseif R.phase == PH_FALL and R.phase_time > ((R.fall_steps and #R.fall_steps * rules.FALL_STEP or .27) + .08) * speed then
-            settle()
+            R.fall_landed = 0
+        elseif R.phase == PH_FALL then
+            -- One tick per completed simultaneous step, never per tile or draw.
+            -- A slow frame coalesces skipped steps into one current landing.
+            local landed = math.min(R.fall_steps and #R.fall_steps or 0,
+                math.floor(R.phase_time / (rules.FALL_STEP * speed)))
+            if landed > (R.fall_landed or 0) then
+                R.fall_landed = landed
+                haptic.play(haptic.TICK, .35)
+            end
+            if R.phase_time > ((R.fall_steps and #R.fall_steps * rules.FALL_STEP or .27) + .08) * speed then settle() end
         end
     end
 

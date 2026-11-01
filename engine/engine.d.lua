@@ -1141,6 +1141,32 @@ function text.inside(s, box, align, utf8) end
 ---@return rect
 function text.fit(s, box, align, utf8) end
 
+---@class hapticlib
+---@field TICK integer Very light trickle/landing tick.
+---@field MATCH integer Matched pieces or a hidden-object find.
+---@field COMBO integer Cascade, special activation or chained finds.
+---@field PLACE integer Committed building placement or relocation, or completed construction.
+---@field COLLECT integer Resource collection.
+---@field SUCCESS integer Level completion or rescue; highest priority.
+---@field ERROR integer Rejected swap or hidden-object miss.
+haptic = {}
+
+---Request a semantic one-shot effect, with strength clamped to [0,1] (default 1). Zero/nonfinite strength and unknown effects are ignored. Success/error use native notification patterns; macOS ignores strength. Call from gameplay events, never from drawing or speculative rules.
+---@param effect integer
+---@param strength? number
+function haptic.play(effect, strength) end
+
+---Enable independently of sfx; disabling drops pending feedback. Defaults on at app start.
+---@param on boolean
+function haptic.enable(on) end
+
+---@return boolean
+function haptic.enabled() end
+
+---Whether the backend supports requests (iOS checks hardware). macOS trackpad and browser hardware/policy may still decline. Independent of enabled.
+---@return boolean
+function haptic.available() end
+
 ---@class sfxlib
 sfx = {}
 

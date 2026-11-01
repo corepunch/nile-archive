@@ -1,6 +1,7 @@
 -- Relic Rush: every test, in one start of build/test/relic-rush. See docs/TESTING.md.
 rules("match_matrix")
 rules("trickling")
+rules("haptics_board")
 rules("building_economy")
 rules("relic")
 rules("relic_board")

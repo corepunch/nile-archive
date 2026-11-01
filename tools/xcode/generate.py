@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 IOS_MINIMUM = '16.0'
 UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
-ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
+ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'haptic', 'haptic_platform', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
 
 GAMES = {
     'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),
@@ -286,7 +286,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             build_files.append(project.add(f'{name}/{filename}.c', 'PBXBuildFile', **fields))
         compile_phase = project.add(name + '/sources', 'PBXSourcesBuildPhase', buildActionMask=2147483647,
                                     files=build_files, runOnlyForDeploymentPostprocessing=0)
-        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox']
+        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox', 'CoreHaptics']
                       if ipad else ['AppKit', 'OpenGL', 'IOSurface', 'Security', 'AudioToolbox'])
         settings['OTHER_LDFLAGS'] += [flag for framework in frameworks for flag in ('-framework', framework)]
         link_phase = project.add(name + '/frameworks', 'PBXFrameworksBuildPhase', buildActionMask=2147483647,

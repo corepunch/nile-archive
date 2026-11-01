@@ -71,7 +71,7 @@ build/engine/lua.o: $(UNITY) engine/lua_lib.c $(LUA_DIR)/lua.h $(wildcard $(LUA_
 	@mkdir -p $(dir $@)
 	sh $(UNITY) lua | $(CC) $(CFLAGS) -std=c11 -Wall $(LUA_FLAGS) -Iengine -x c -c -o $@ -
 
-build/engine/platform.o: $(UNITY) engine/web_audio.c $(PLATFORM_DEPS)
+build/engine/platform.o: $(UNITY) engine/web_audio.c engine/haptic_platform.c engine/haptic.h engine/engine.h $(PLATFORM_DEPS)
 	@mkdir -p $(dir $@)
 	sh $(UNITY) platform | $(CC) $(CFLAGS) -std=gnu11 -Wall -Iengine -x c $(PLATFORM_FLAGS) -c -o $@ -
 
@@ -132,7 +132,7 @@ build/test/$(1): $(TEST_OBJ) engine/launcher.c $(TEST_DEPS)
 	$$(CC) $$(ALL_CFLAGS) -DENGINE_TEST -DGAME_NAME='"$(1)"' -DGAME_DIR='"games/$(1)"' -o $$@ engine/launcher.c $(TEST_OBJ) $$(LIBS)
 endef
 $(foreach g,$(TEST_GAMES),$(eval $(call TEST_GAME_RULES,$(g))))
-ENGINE_TEST_SRC := tests/test_main.c tests/test_platform.c tests/test_backdrop.c tests/test_story.c tests/test_city_render.c
+ENGINE_TEST_SRC := tests/test_main.c tests/test_platform.c tests/test_backdrop.c tests/test_story.c tests/test_city_render.c tests/test_haptic.c
 build/test/engine: $(ENGINE_TEST_SRC) $(TEST_OBJ) $(TEST_DEPS)
 	@mkdir -p build/test
 	$(CC) $(ALL_CFLAGS) -DENGINE_TEST -o $@ $(ENGINE_TEST_SRC) $(TEST_OBJ) $(LIBS)

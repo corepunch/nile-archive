@@ -3,6 +3,7 @@ rules("relic_board")
 rules("progression")
 rules("match_matrix")
 rules("trickling")
+rules("haptics_board")
 rules("building_economy")
 default_frames = 3
 rules("christmas")

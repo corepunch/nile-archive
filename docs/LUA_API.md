@@ -23,6 +23,7 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`font`](#font)
 - [`style`](#style) - Constructor `style{...}`; the methods return a tweaked copy.
 - [`text`](#text) - Styled TrueType text. Every function returns the rect it drew.
+- [`haptic`](#haptic) - Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.
 - [`sfx`](#sfx) - A tiny synthesiser for feedback tones.
 - [`ui`](#ui) - Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.
 - [`sprite`](#sprite) - Authored atlas frames, pivot-aware bounds and animation timing.
@@ -1708,6 +1709,51 @@ A single line that shrinks to fit the box width.
 | `utf8` | `string` |  |
 
 **Returns:** `rect`
+
+## haptic
+
+Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.
+
+- `haptic.TICK` (integer) Very light trickle/landing tick.
+
+- `haptic.MATCH` (integer) Matched pieces or a hidden-object find.
+
+- `haptic.COMBO` (integer) Cascade, special activation or chained finds.
+
+- `haptic.PLACE` (integer) Committed building placement or relocation, or completed construction.
+
+- `haptic.COLLECT` (integer) Resource collection.
+
+- `haptic.SUCCESS` (integer) Level completion or rescue; highest priority.
+
+- `haptic.ERROR` (integer) Rejected swap or hidden-object miss.
+
+### `haptic.play(effect, strength?)`
+
+Request a semantic one-shot effect, with strength clamped to [0,1] (default 1). Zero/nonfinite strength and unknown effects are ignored. Success/error use native notification patterns; macOS ignores strength. Call from gameplay events, never from drawing or speculative rules.
+
+| Argument | Type | |
+|---|---|---|
+| `effect` | `integer` |  |
+| `strength` | `number?` | Default 1. |
+
+### `haptic.enable(on)`
+
+Enable independently of sfx; disabling drops pending feedback. Defaults on at app start.
+
+| Argument | Type | |
+|---|---|---|
+| `on` | `boolean` |  |
+
+### `haptic.enabled()`
+
+**Returns:** `boolean`
+
+### `haptic.available()`
+
+Whether the backend supports requests (iOS checks hardware). macOS trackpad and browser hardware/policy may still decline. Independent of enabled.
+
+**Returns:** `boolean`
 
 ## sfx
 

@@ -1,6 +1,7 @@
 /* core.c — window, logical screen, main loop, input gestures, screenshots. */
 #include "render.h"
 #include "viewport.h"
+#include "haptic.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,7 +98,7 @@ void app_test_reset(void)
     A.in.pinch = 1;
     test_clock = 1700000000;
     test_clock_active = true;
-    ui_restart(); story_restart(); fx_restart(); city_restart();
+    ui_restart(); story_restart(); fx_restart(); city_restart(); haptic_restart();
 }
 void app_test_advance(double dt) { A.dt = (float)dt; A.time += dt; test_clock += dt; }
 void app_test_input(input in) { A.in = in; }
@@ -278,8 +279,9 @@ static void poll_events(void)
                 in->pinch_center = window_to_logical(v2(e.gesture.x, e.gesture.y));
             }
             break;
+        case kEventSetFocus: haptic_focus(true); break;
+        case kEventKillFocus: haptic_focus(false); /* fall through */
         case kEventPointerCancel:
-        case kEventKillFocus:
             in->down = in->pressed = in->released = in->dragging = in->hover = in->tap = false;
             in->captured = false;
             in->multi_touch = false;
@@ -357,6 +359,7 @@ void app_step(void)
     render_begin(sz2(roundf(output.width * axGetScaling()), roundf(output.height * axGetScaling())), A.logical, rect_make(vec2_scale(A.view.pos, axGetScaling()), size2_scale(A.view.size, axGetScaling())), A.desc.clear);
     ui_begin_frame();
     if (A.desc.frame) A.desc.frame(dt);
+    haptic_flush();
     ui_end_frame(dt);
     draw_rotate_prompt();
 #ifdef ENGINE_TEST
@@ -400,6 +403,7 @@ int app_run(app_desc desc, int argc, char **argv)
     A.desc = desc;
     A.argc = argc;
     A.argv = argv;
+    haptic_restart();
     if (A.desc.design.w <= 0) A.desc.design = sz2(1200, 900);
     if (A.desc.clear.a == 0) A.desc.clear = hex(0x102F32);
     A.shot_path = app_arg("shot");
@@ -460,6 +464,7 @@ void app_stop(void)
     if (!render_ready()) return;
     A.running = false;
     if (A.desc.quit) A.desc.quit();
+    haptic_focus(false);
     sfx_shutdown();
     font_shutdown();
     render_shutdown();

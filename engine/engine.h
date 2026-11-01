@@ -420,9 +420,21 @@ rect text_fit(text_style s, rect box, vec2 align, const char *utf8);
 const char *fmt(const char *f, ...);
 
 /* ===================================================================== */
-/* Audio: a tiny synthesiser for UI and game sounds                       */
+/* Haptics: optional semantic feedback                                    */
 /* ===================================================================== */
 
+/* Semantic effects; haptic_play queues one strongest request per frame.
+ * Native hardware is optional. Enablement is independent of sound. */
+enum {
+    HAPTIC_TICK = 1, HAPTIC_MATCH, HAPTIC_COMBO, HAPTIC_PLACE,
+    HAPTIC_COLLECT, HAPTIC_SUCCESS, HAPTIC_ERROR
+};
+void haptic_play(int effect, float strength);
+void haptic_enable(bool on);
+bool haptic_enabled(void);
+bool haptic_available(void);
+
+/* Audio: a tiny synthesiser for UI and game sounds. */
 void sfx_tone(float hz, float seconds);   /* a soft bell-like note */
 void sfx_enable(bool on);
 bool sfx_enabled(void);

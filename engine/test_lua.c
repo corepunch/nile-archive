@@ -1,6 +1,7 @@
 /* test_lua.c — Lua's side of the test build, included by script.c under ENGINE_TEST:
  * check() and near() for tests, and the reader for tests/games/<suite>.lua. */
 #include <unistd.h>
+#include "haptic.h"
 
 static int l_test_check(lua_State *S)
 {
@@ -42,13 +43,23 @@ static int l_test_reset(lua_State *S)
     return 0;
 }
 
+static int l_test_haptics(lua_State *S)
+{
+    haptic_flush();
+    lua_pushinteger(S, haptic_test_count());
+    lua_pushinteger(S, haptic_test_effect());
+    lua_pushnumber(S, haptic_test_strength());
+    return 3;
+}
+
 static void test_lua_open(lua_State *S)
 {
     lua_register(S, "check", l_test_check);
     lua_register(S, "near", l_test_near);
     app_test_reset();
     static const luaL_Reg hooks[] = {
-        {"advance", l_test_advance}, {"input", l_test_input}, {"reset", l_test_reset}, {NULL, NULL}
+        {"advance", l_test_advance}, {"input", l_test_input}, {"reset", l_test_reset},
+        {"haptics", l_test_haptics}, {NULL, NULL}
     };
     luaL_newlib(S, hooks);
     lua_pushstring(S, test_suite()); lua_setfield(S, -2, "game");

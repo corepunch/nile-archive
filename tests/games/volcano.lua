@@ -1,6 +1,7 @@
 -- Volcano: every test, in one start of build/test/volcano. See docs/TESTING.md.
 rules("volcano_transactions")
 rules("volcano")
+rules("haptics_volcano")
 smoke("--size 456x342")
 
 shot("menu", "1368x1026")

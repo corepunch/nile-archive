@@ -2,6 +2,7 @@
 rules("archive_rewards")
 rules("building_economy")
 rules("archive_motion")
+rules("haptics_archive")
 smoke()
 
 shot("island", "1200x900", "--screen island")

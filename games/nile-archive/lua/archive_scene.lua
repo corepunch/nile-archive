@@ -113,6 +113,7 @@ function M.show_hint()
     G.hint_ready = G.clock + HINT_RECHARGE
     G.focus = scenes[G.scene].at[pick]
     G.focus_time = .6
+    haptic.play(haptic.TICK, .5)
 end
 
 local function stars_for(seconds)
@@ -120,7 +121,7 @@ local function stars_for(seconds)
     return 1
 end
 
-local function tap(screen)
+function M.tap(screen)
     local sc = scenes[G.scene]
     local p = G.cam:to_world(screen)
     for i = 1, ITEMS do
@@ -130,6 +131,7 @@ local function tap(screen)
             if G.hint == i then G.hint = nil end
             G.combo = G.combo_left > 0 and math.min(G.combo + 1, COMBO_MAX) or 1
             G.combo_left = COMBO_WINDOW
+            haptic.play(G.combo > 1 and haptic.COMBO or haptic.MATCH, math.min(1, .5 + .1 * G.combo))
             local gain = FIND_POINTS * G.combo
             G.score = G.score + gain
             local at = G.cam:to_screen(sc.at[i])
@@ -141,6 +143,7 @@ local function tap(screen)
                 local stars = stars_for(G.clock)
                 G.result = {score = G.score, time = G.clock, stars = stars, complete = true, perfect = G.misses == 0 and G.hints == 0}
                 assert(economy.claim(G, G.scene, G.result), "completed scene must pay once")
+                haptic.play(haptic.SUCCESS)
                 story.play(("chapter-%d"):format(G.scene - 1), sc.clue)   -- the clue, the first time
                 progress.save()
                 G.open_modal(MODAL_WIN)   -- pops in once the clue has been read
@@ -152,6 +155,7 @@ local function tap(screen)
     G.score = math.max(0, G.score - MISS_POINTS)
     G.misses = G.misses + 1
     G.combo, G.combo_left = 0, 0
+    haptic.play(haptic.ERROR, .5)
     if not G.reduced_motion then fx.text(screen - vec2(0, 20), S.float_miss, ("−%d"):format(MISS_POINTS)) end
 end
 
@@ -176,7 +180,7 @@ function M.frame(screen, world, dt)
     G.cam = G.cam:clamp()
     if G.modal == MODAL_NONE then
         G.cam = G.cam:input(world):clamp()
-        if world.tap and view:contains(world.pos) then tap(world.pos) end
+        if world.tap and view:contains(world.pos) then M.tap(world.pos) end
     end
     if G.focus_time > 0 then
         G.focus_time = G.focus_time - dt

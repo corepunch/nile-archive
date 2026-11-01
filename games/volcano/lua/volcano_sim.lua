@@ -114,7 +114,7 @@ local function return_home(g,w)
     w.path=path;w.step=2;w.phase='returning'
 end
 local function event(g,e,kind)
-    g.events[#g.events+1]={x=e.x,y=e.y,kind=kind}
+    g.events[#g.events+1]={x=e.x,y=e.y,kind=kind,building=e.def.kind=='station'}
 end
 local function tick(g,dt)
     g.time=g.time+dt

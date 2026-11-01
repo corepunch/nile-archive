@@ -153,6 +153,18 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
+"6FDD5359139C57B8D6DD06E2" = {"isa" = "PBXFileReference";
+"path" = "../../engine/haptic.c";
+"name" = "haptic.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"2175584D517BBE7031C823AB" = {"isa" = "PBXFileReference";
+"path" = "../../engine/haptic_platform.c";
+"name" = "haptic_platform.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
 "45B4B9CF2B44A145D927FBC6" = {"isa" = "PBXFileReference";
 "path" = "../../engine/story.c";
 "name" = "story.c";
@@ -248,6 +260,8 @@
 "ADBE7599AFC06409EDF9F7DA",
 "744E0DC332E76F47A555E499",
 "2C6345C1907FD24B6EEFEC5A",
+"6FDD5359139C57B8D6DD06E2",
+"2175584D517BBE7031C823AB",
 "45B4B9CF2B44A145D927FBC6",
 "8A8386A2CEEEFE289DA8945E",
 "4F62C834EFF9537C0E92FC7C",
@@ -447,6 +461,8 @@
 "UniformTypeIdentifiers",
 "-framework",
 "AudioToolbox",
+"-framework",
+"CoreHaptics",
 );
 "LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
 "@executable_path/Frameworks",
@@ -485,6 +501,8 @@
 "UniformTypeIdentifiers",
 "-framework",
 "AudioToolbox",
+"-framework",
+"CoreHaptics",
 );
 "LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
 "@executable_path/Frameworks",
