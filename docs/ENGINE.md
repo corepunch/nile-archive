@@ -350,7 +350,7 @@ the C and the Lua games and comparing them pixel for pixel.
 
 ## Possible next steps
 
-- Music streaming alongside the sampled-sound mixer.
+- Sampled sounds and music alongside the tone synthesiser.
 - Texture atlases / sprite sheets and frame animation for characters.
 - A tween helper for UI transitions (games currently use `ease_*` directly).
 - Removing placed buildings, and building upgrades.
