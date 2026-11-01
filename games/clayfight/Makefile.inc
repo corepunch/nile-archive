@@ -37,8 +37,9 @@ build/clayfight-arcade: games/clayfight/tests/arcade.c games/clayfight/tests/flo
 	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -DCLAY_COMBINED -o $@ $^ $(LIBS) $(CLAY_CXXLIB)
 .PHONY: test-clayfight test-clayfight-native test-clayfight-retail
 # The first pair is suitable for clean CI, without proprietary data.
-test-clayfight: build/test/engine test-clayfight-native
+test-clayfight: build/test/engine build/test/clayfight test-clayfight-native
 	./build/test/engine --fast "rules clayfight" $(TEST_ARGS)
+	./build/test/clayfight $(TEST_ARGS)
 test-clayfight-native: build/clayfight-video build/clayfight-photo build/clayfight-input
 	./build/clayfight-video
 	./build/clayfight-photo
@@ -60,3 +61,9 @@ dist/clayfight/index.html: $(CLAY_WEB_CPP) $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_
 .PHONY: clayfight-resources
 clayfight-resources:
 	python3 games/clayfight/tools/import_resources.py
+
+# Controller/AI rules use a tiny creature fixture; --retail adds ROM integration.
+# Test engine objects are listed here because TEST_OBJ is defined later.
+build/test/clayfight: games/clayfight/tests/combat.c $(CLAY_OBJ) build/test-obj/engine.o build/test-obj/script.o build/engine/lua.o build/engine/platform.o
+	@mkdir -p build/test
+	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -DENGINE_TEST -o $@ $< $(CLAY_OBJ) $(TEST_OBJ) $(LIBS) $(CLAY_CXXLIB)

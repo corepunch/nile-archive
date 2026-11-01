@@ -38,8 +38,8 @@ static void hud_checks(void)
             assert(screen[(sy*2+dy)*SCREENWIDTH+sx*2+dx]==pal->colors[value]);
     }
     level.fighters[0].health=37;level.fighters[0].shownhealth=46;level.fighters[0].flash=8;
-    level.fighters[0].stun=22;level.fighters[1].health=level.fighters[1].shownhealth=68;
-    level.fighters[1].stun=48;shot("hud-damaged");
+    level.fighters[0].brain=32;level.fighters[1].health=level.fighters[1].shownhealth=68;
+    level.fighters[1].brain=70;shot("hud-damaged");
     level.fighters[0].health=0;level.fighters[0].shownhealth=0;level.fighters[0].flash=0;
     level.fighters[0].dead=true;level.phase=PH_KO;level.phasetime=40;level.time=0;shot("hud-empty");
     gamemode=GM_TRAINING;G_InitNew(roster[5],roster[2],cpu,&stages[2]);

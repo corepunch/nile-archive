@@ -14,7 +14,7 @@ from active data. Custom clay photographs remain in `data/creatures/`.
 | Seven fighter bodies and effects | 12,000-slot Atari RLE motion-object table; 11,206 nonempty objects | `w_gra.c`, lazy decoding; source signed x/y pivots; index 0 transparent |
 | Fighter colours | CPU palette pointer table `0x6e38c` | Seven characters × four original 64-colour palettes; no recolouring |
 | Animations and moves | CPU script table `0x6d964`, 65 rows × 10 slots | `p_script.c` executes big-endian ROM bytecode; native units, 30-frame breathing and 20-frame crouch cycles |
-| Damage, stun, hit class and attack boxes | `0xfbba0`, `0x6fca4`, `0x72ea4`, `0x7d328`, `0x49f7c` | `PS_Move`; native sprite anchors; no DOS art scale |
+| Damage, stun, hit class and attack boxes | `0xfbba0`, `0x6fca4`, `0x72ea4`, `0x7d328`, `0x49f7c` | `PS_Move`; C byte 3 guard class; collision anchors `0xfd148`, four-pixel shape units; no DOS art scale |
 | Eight complete arena playfields | Three tile-plane chips; sky halves `0x1e58c4`/`0x1e58e4`, floor halves `0x1e5904`/`0x1e5924`; palette pointers `0x5fea2` | Separate sky/floor tile banks, per-arena horizon/crop, native scanline floor scrolling, original palette cycling |
 | 115 scenery objects, including linked parts | Placements `0x6c418`, extras `0xf2648`, type descriptors `0x6d724`; stage palettes `0x614e2` | `r_stage.c`; original RLE frames, 26.6 positions, signed pivots, scale, mirror, depth/bias and source animation scripts |
 | Fighter ground shadows | Per-character pose lookup `0x6b068`; descriptors `0x6d5e0`; palette `0x61702` | Original per-pose shadow sprite and mirror; native Diablo scale; custom photo fighters retain their own procedural contact shadow |
@@ -66,8 +66,10 @@ Right-hand organs use the original mirror registration. Nameplates start at
 y=38; timer digits use the gold stone alphabet. Compact character-chip digits
 show round wins. All native pixels render through the same 2× framebuffer.
 
-The port's existing hit/block stun timer selects the stun artwork; this change
-does not add the original machine's separate dizziness or fatality rules.
+The separate brain-damage value selects the 69 stun-bar states: zero damage
+is the full gauge, 100 damage is depleted. It no longer shows the hit/block
+recovery timer. Dizziness is deferred until recovery; see the combat contract
+below. Fatality rules remain outside this port.
 Original fighters use their individual illustrated nameplates and palettes.
 Photo fighters use the intro typeface, preserving its colour shading and fitting
 up to 16-character names. Training and final battles retain the compact “--”
@@ -80,6 +82,28 @@ empty health, stun, unlimited time, Tug of War and a maximum-length custom name.
 Captures are `after/hud-full.png`, `hud-damaged.png`, `hud-empty.png`,
 `hud-training.png`, `hud-tug.png` and `hud-custom.png` under the review folder.
 The pre-correction fight/menu frames are in `docs/review/arcade-hud/before/`.
+
+## Combat state mapping
+
+The [combat contract](primal-rage-combat.md) corrects state selection and
+collision registration using the existing ROM artwork; no bitmap assets,
+alpha, palettes or control-state art were modified or generated.
+
+| State / rule meaning | Authored source and runtime | Reviewed capture / gap |
+|---|---|---|
+| Four normal buttons in air | Move slots 12–15; `p_user.c` and `p_mobj.c` | `review/combat/after.gif`; traveling jumps use these slots too |
+| High/low power: standing, close, crouching, air | Slots 16–23; native rows 19/20, 37/38, 25/26, 31/32; existing body palettes and RLE pivots | `review/combat/power.png`; `review/combat/powers.jpg`: all seven fighters × eight power choices reviewed in actual renderer captures |
+| High and low guard, hit, crouched hit, fall/get-up | Existing named ROM rows; C byte 3 controls lows; `p_inter.c` / `p_map.c` | `review/combat/after.gif`; actual low-vs-guard collision test |
+| Accumulated brain damage and recovery | Existing 69 authored gold vein levels per side; `st_stuff.c` maps `brain × 68 / 100` | `review/combat/dizzy.png` |
+| Original fighter dizzy | Existing `ROW_DIZZY`, original body frames and palette; `p_user.c` delays entry until reaction/get-up finishes | `review/combat/dizzy.png` |
+| Photo fighter dizzy, temporary fallback | Existing photographed `hit` animation while input is disabled; no recolouring or glyph overlay | [#60](https://github.com/corepunch/nile-archive/issues/60): `review/combat/clay-dizzy.png` records the fallback; author distinct dizzy poses for BOXER, LIZARD, CYCLOPS, CRAB and GLOOP; verify entry, knockdown, recovery, interruption and neutral return |
+
+Reproduce with `build/test/clayfight --retail --captures games/clayfight/build/combat-after`
+from the root (create the output directory first). This exports the deterministic fight, representative power/dizzy states,
+and all 56 original-fighter power/posture views in one game process. The prompt
+is not applicable: every newly reachable original pose comes from the supplied
+ROM, and photo poses retain their sources in `data/creatures/*/photos/` and
+`assets/concepts/clay-kids-actions-2026-10-23/prompts.json`.
 
 ## Intro and menu typography
 

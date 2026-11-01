@@ -51,6 +51,8 @@ int R_ArenaWidth(void);
 #define ROUND_TIME 60 // seconds
 #define ROUNDS_TO_WIN 2
 #define MAX_HEALTH 100
+#define MAX_BRAIN 100
+#define BRAIN_RECOVERY_DELAY TICRATE
 
 // --- info.c: fighter definitions and state tables (cf. info.h) -------------
 //
@@ -98,10 +100,15 @@ typedef enum {
 
 #define MAXANIMS 64
 
-// Moves: 6 groups x 4 buttons (the same numbering as Primal Rage's move
-// table): stand, close, crouch, jump, power, air -- each HQ HF LQ LF.
+// First 16 slots: stand, close, crouch, jump, each HQ HF LQ LF.
+// Slots 16..23: high/low power pairs for stand, close, crouch, jump.
+// MG_POWER/MG_AIR retain the old file aliases for these last eight slots.
 enum { MG_STAND, MG_CLOSE, MG_CROUCH, MG_JUMP, MG_POWER, MG_AIR, NUMMOVEGROUPS };
 #define NUMMOVES (NUMMOVEGROUPS * 4)
+#define MP_STAND 16
+#define MP_CLOSE 18
+#define MP_CROUCH 20
+#define MP_JUMP 22
 #define MAXBOXES 32
 
 typedef enum { HIGH, LOW } attacklevel_t;
@@ -266,7 +273,7 @@ typedef struct {
 
 typedef struct {
     int step, ticks; // starts when `step` frames have played, lasts `ticks`
-    int x, y, w, h; // in 3-pixel units, anchor-relative
+    int x, y, w, h; // in 4-pixel arcade units, combat-anchor-relative
 } psbox_t;
 
 typedef struct {
@@ -275,7 +282,7 @@ typedef struct {
     int damage;
     int strength; // 1 light .. 3 heavy
     int stun; // A[1]: hit reactions stretch to this many tics
-    int hitclass; // raw C[2]
+    int hitclass; // C[3] low three bits; C[2] contains separate flags
     int numboxes;
     psbox_t boxes[5];
 } psmove_t;
@@ -321,6 +328,9 @@ typedef struct fighter_s {
     int health;
     float shownhealth; // HUD drains towards health
     int stun; // tics of hit/block stun left
+    int brain, braindelay; // accumulated brain damage, independent of hitstun
+    bool dizzypending, dizzy;
+    int mashdir; // last non-neutral left/right direction during dizziness
     int flash;
     bool attackhit; // current attack already connected
     bool airattackused;
@@ -330,7 +340,7 @@ typedef struct fighter_s {
     ticcmd_t cmd;
     int oldbuttons;
     // CPU brain (p_enemy.c)
-    int aiwait, aihold, aiplan;
+    int aiwait, aihold, aiplan; // reaction cooldown, committed macro duration/input
     // the move in progress
     int move; // slot in def->moves, -1 none
     const attackinfo_t *attack; // NULL when not attacking
@@ -403,6 +413,8 @@ void A_Thud(fighter_t *f, const state_t *st);
 // p_user.c
 void P_PlayerThink(fighter_t *f, const fighter_t *opp);
 int P_ForwardInput(const fighter_t *f, int buttons);
+int P_InputMove(const fighter_t *f, const fighter_t *opp, int buttons);
+bool P_MoveIsAir(int slot);
 
 // p_map.c
 typedef struct {

@@ -287,14 +287,15 @@ class Converter:
             if not X.SCRIPTTAB <= rowptr < X.SCRIPTTAB + 62 * 40:
                 continue
             row = (rowptr - X.SCRIPTTAB) // 40
-            slot = '%s.%s' % (GROUPS[mid // 4], BUTTONS[mid % 4])
+            slot = ('%s.%s' % (GROUPS[mid // 4], BUTTONS[mid % 4]) if mid < 16 else
+                    '%s.%s' % (GROUPS[(mid - 16) // 2], 'lp' if mid % 2 else 'hp'))
             if row not in rownames:
                 rownames[row] = slot.replace('.', '_')
                 lines, rawframes[row] = self.anim(rownames[row], self.mem.u32(X.SCRIPTTAB + 4 * (row * 10 + ci)), 2)
                 out += lines + ['']
             A = self.mem.rd(0x12D78C + 11 * k, 11)
             C = self.mem.rd(0xF6688 + 6 * k, 6)
-            level = 'low' if C[2] in (4, 5) else 'high'
+            level = 'low' if (C[3] & 7) in (4, 5) else 'high'
             head = 'move %s %s damage %d stun %d strength %d level %s%s' % (
                 slot, rownames[row], A[0], A[1], A[4], level, ' knockdown' if A[4] >= 3 else '')
             pieces = []
@@ -331,7 +332,7 @@ class Converter:
                     k += 1
             body = ['  box %s %s  %d %d %d %d' % (num(t0), num(span), *rect) for t0, span, rect in pieces]
             moves += [head] + body + ['end', '']
-        out += ['# moves: <group>.<button>; groups stand, close, crouch, jump, power, air', ''] + moves
+        out += ['# moves: stand/close/crouch/jump.hq/hf/lq/lf/hp/lp', ''] + moves
         return meta['file'], out
 
 

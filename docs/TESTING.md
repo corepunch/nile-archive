@@ -165,7 +165,8 @@ The same binaries and manifests support a window-free pass:
 make test-fast
 make test-relic-rush             # substitute nile-archive, christmas-market or volcano
 make test-engine
-make test-clayfight              # includes its Lua scheduler and native/JS checks
+make test-clayfight              # controller/AI, Lua scheduler and native/JS checks
+./build/test/clayfight --retail   # optional local ROM combat integration
 make test-extended               # CPU/rules, larger deterministic sample
 build/test/relic-rush --fast     # same executable used for full screenshots and smoke
 ```
