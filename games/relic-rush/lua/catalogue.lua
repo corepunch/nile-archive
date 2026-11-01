@@ -80,7 +80,7 @@ function R.open_catalogue(filter, selected_page)
     end
     if stack:active() then stack:close() end
     refresh()
-    assert(stack:open('catalogue',form,{}, {width=448,blur=7,dim=color(5,22,22,185),cancel='close'}))
+    assert(stack:open('catalogue',form,{}, {width=448,snap_backdrop=true,blur=7,dim=color(5,22,22,185),cancel='close'}))
     R.overlay=R.OV_SHOP
 end
 

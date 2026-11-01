@@ -381,7 +381,8 @@ function Stack:draw(dt,options)
     for i,layer in ipairs(self.layers) do
         local config=layer.options;local fade=options.reduced_motion and 1 or layer.fade
         local theme=self.skin.theme or ui.theme()
-        ui.modal_layer((config.blur or theme.backdrop_blur or 0)*fade,color.alpha(config.dim or theme.dim,fade))
+        local backdrop=config.snap_backdrop and 1 or fade
+        ui.modal_layer((config.blur or theme.backdrop_blur or 0)*backdrop,color.alpha(config.dim or theme.dim,backdrop))
         local bounds=config.bounds
         if not bounds then
             local screen=app.screen();local width=math.min(config.width or 400,screen.w-32)

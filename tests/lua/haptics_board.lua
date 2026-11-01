@@ -58,3 +58,33 @@ R.board_update(.04)
 local count, effect = testing.haptics()
 check(count == 2 and effect == haptic.TICK, 'reduced motion keeps tactile landings')
 testing.reset()
+
+if R.intro_haptics then
+    setup()
+    R.vfx_emit, R.vfx_slam = function() end, function() end
+    R.present_board()
+    R.overlay = R.OV_PAUSE
+    R.board_update(2)
+    check(testing.haptics()==0, 'paused entrance stays silent')
+    R.overlay = R.OV_NONE
+    R.board_update(1)
+    pulse(haptic.TICK, 'entrance coalesces simultaneous gem landings')
+    testing.reset()
+    R.board_update(.001)
+    check(testing.haptics()==0, 'entrance does not repeat landed gems')
+    setup()
+    R.g.ice[rules.hex_center()] = 1
+    R.present_board()
+    R.board_update(3)
+    pulse(haptic.MATCH, 'blocker landing takes precedence over gem ticks')
+    setup()
+    R.reduced_motion = true
+    R.present_board()
+    R.board_update(1)
+    check(testing.haptics()==0, 'reduced entrance omits landing effects')
+    setup()
+    R.present_board()
+    R.intro:skip()
+    R.board_update(.01)
+    check(testing.haptics()==0, 'skipping an entrance emits no delayed pulses')
+end

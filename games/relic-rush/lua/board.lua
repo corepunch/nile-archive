@@ -8,6 +8,7 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
+R.intro_haptics = true
 board_intro.bind(R, rules)
 local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
 local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT

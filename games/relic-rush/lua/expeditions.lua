@@ -46,7 +46,7 @@ function R.open_expeditions(selected_page)
     page=selected_page and num.clampi(selected_page,1,4) or math.min(4,math.floor(math.min(R.prog.level,9)/3)+1)
     refresh()
     if stack:active() then stack:close() end
-    assert(stack:open('expeditions',form,{}, {width=448,blur=7,dim=color(5,22,22,185),cancel='close'}))
+    assert(stack:open('expeditions',form,{}, {width=448,snap_backdrop=true,blur=7,dim=color(5,22,22,185),cancel='close'}))
     R.overlay=R.OV_EXPEDITIONS
 end
 

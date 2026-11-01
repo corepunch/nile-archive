@@ -17,13 +17,58 @@ local function setup(g)
     R.fall_steps = nil
 end
 
+local function inventory(g)
+    local counts = {}
+    for i=0,rules.CELLS-1 do
+        local t = g.tiles[i]
+        local key = t.kind .. ":" .. t.special
+        counts[key] = (counts[key] or 0) + 1
+    end
+    return counts
+end
+local function same_inventory(g, before)
+    local after = inventory(g)
+    for key, count in pairs(before) do check(after[key] == count, "reshuffle retains every gem and special: "..key) end
+    for key, count in pairs(after) do check(before[key] == count, "reshuffle creates no gems: "..key) end
+end
+
+-- Every special, including each ray axis, survives recovery as a whole piece.
+for seed=1,12 do
+    local g = dead_board(seed % rules.LEVELS)
+    g.rng = seed
+    local sp = 1
+    for i=0,rules.CELLS-1 do
+        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and sp<=rules.PRISM then
+            g.tiles[i].special = sp
+            sp = sp+1
+        end
+    end
+    local before = inventory(g)
+    check(rules.game_shuffle(g), "special inventory can be rearranged into a playable board")
+    same_inventory(g,before)
+    local m = rules.new_match()
+    rules.game_matches(g,m,-1)
+    check(m.hits==0 and rules.game_hint(g), "special reshuffle has a move and no free match")
+end
+
+-- If the inventory cannot form a match-free playable board, never replace it.
+do
+    local g = rules.game_start(0,123)
+    for i=0,rules.CELLS-1 do if g.active[i] then g.tiles[i]=rules.tile(0) end end
+    local before = rules.game_copy(g)
+    check(not rules.game_shuffle(g), "impossible reshuffle reports failure")
+    for i=0,rules.CELLS-1 do check(g.tiles[i].kind==before.tiles[i].kind, "failed shuffle restores the board") end
+end
+
 for level = 0, rules.LEVELS - 1 do
     local g = dead_board(level)
     setup(g)
     rules.game_matches(g, R.pending, -1)
     check(R.pending.hits == 0 and not rules.game_hint(g), "fixture has no match or move")
     local before = rules.game_copy(g)
+    local gems = inventory(g)
     R.board_update(.02)
+    same_inventory(g,gems)
     check(rules.game_hint(g), "idle board recovers without a tool or player move")
     rules.game_matches(g, R.pending, -1)
     check(R.pending.hits == 0, "recovered board has no free matches")

@@ -471,3 +471,15 @@ sizes, the selected/special cell view and existing capture commands.
 Portraits retain finite entrance/exit slides and fades. An independent colour
 tween brightens/dims active/listener states without replaying the slide. Size is
 constant for speaker/listener, with no scale/rotation animation or idle wobble. See [motion, captures and timing review](../../../docs/review/motion/README.md).
+
+### Placement confirmation controls
+
+`lua/island_view.lua` uses an engine form with `placement_cancel` and
+`placement_confirm` variants from `lua/skin.lua`. These are procedural UI skin
+controls like the existing checkbox: red round × (cancel) and jade round ✓
+(commit build/move), normal/hover/pressed/focused states; confirmation fades when
+invalid. No texture substitution or gem-art tint is used. Their screen positions
+follow the preview sprite with safe-screen clamping, at 480×900 and 390×844.
+Reproduce with `--city 6 --placing` or `--placing blocked`; reviewed captures are
+in `docs/review/relic-polish/` at the repository root. Existing native-input smoke
+covers both cancel and confirm, including uncommitted moves and wallet changes.

@@ -75,7 +75,7 @@ The widest nine-cell board spans 448 of the 480 logical screen units, using a 32
 
 The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
-After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
+After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the same gems are rearranged with all earned special powers intact; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
 The three power-up buttons use square artwork and 76×76 touch targets, with all five interaction states redrawn together. See the [square-button review](docs/review/square-tools/README.md).
 
@@ -320,3 +320,11 @@ Current scope is an offline prototype: ten hex levels, ten story wonders plus 86
 Run `make test-relic-rush` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.
 
 Board artwork fills its registered hex slots. Dialogue portraits slide/fade in and out, and only brighten/dim on speaker changes; no resizing, rotation or idle wobble; the engine owns those transitions. See [motion review](../../docs/review/motion/README.md).
+
+Level entrances provide grouped haptic ticks as gems land and a stronger pulse for
+blockers. Reduced motion and skipped entrances omit these landing effects.
+Building previews show a round × on the lower left and ✓ on the lower right of
+the building. Dragging, panning and zooming keep these controls with the preview;
+✓ is disabled on blocked land. Cancel preserves the original building and wallet.
+Popup backdrops snap to their full blur immediately; the popup entrance and exit
+continue animating independently.

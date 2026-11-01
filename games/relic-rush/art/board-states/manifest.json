@@ -839,5 +839,22 @@
     "art": "existing data/match3.png regions, authored alpha preserved; animation transforms and transient glows/sparks only",
     "reproduction": "build/test/relic-rush board-intro",
     "review": "docs/review/entrance/README.md"
+  },
+  "placement_controls": {
+    "source": "lua/skin.lua controls.button.variants",
+    "runtime": "lua/island_view.lua placement_form",
+    "states": [
+      "normal",
+      "hover",
+      "pressed",
+      "focused",
+      "disabled-confirm"
+    ],
+    "meaning": {
+      "placement_cancel": "cancel preview without charging or moving",
+      "placement_confirm": "commit valid preview; disabled on blocked land"
+    },
+    "capture": "--city 6 --placing; --city 6 --placing blocked",
+    "review": "docs/review/relic-polish/"
   }
 }

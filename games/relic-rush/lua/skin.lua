@@ -63,6 +63,21 @@ return ui.skin{
                 secondary = {normal = {set = {shadow = {fill = "#4A2C12"}, body = {fill = "#7A4C22"},
                                               face = {fill = "#B98446"}, gloss = {fill = "#D9A865"}}}},
                 link = {text = "gold", normal = {layers = {}}},   -- a text link, such as the guide
+                placement_confirm = {normal = {layers = {
+                    {fill="#0D362B",radius=28,offset={0,4},fixed=true},
+                    {fill="#2E7046",radius=28},
+                    {fill="#71B953",radius=25,inset=3},
+                    {check="#FFF9E2",width=5,inset=10},
+                }}, disabled={alpha=.45}},
+                placement_cancel = {normal = {layers = {
+                    {fill="#4A2C12",radius=28,offset={0,4},fixed=true},
+                    {fill="#8B352C",radius=28},
+                    {fill="#CC6250",radius=25,inset=3},
+                    {inset=18,paint=function(box, _, _, _skin)
+                        gfx.line(box:point(vec2(0,0)),box:point(vec2(1,1)),5,color(255,249,226))
+                        gfx.line(box:point(vec2(1,0)),box:point(vec2(0,1)),5,color(255,249,226))
+                    end},
+                }}},
             },
         },
         toggle = {extends = "button"},

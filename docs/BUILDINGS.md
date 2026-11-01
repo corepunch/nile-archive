@@ -98,8 +98,7 @@ Release snaps the preview to the grid. Confirm commits a valid move at no cost;
 Cancel keeps the original position. No layout or wallet change is saved while
 previewing. Existing explicit `begin_move` commands still enter a preview;
 programmatic placement and short-tap income/details retain their own behavior.
-Nile Archive uses an engine form for Confirm/Cancel; Relic Rush uses its existing
-placement sheet. Emergency has no city-building relocation mode.
+Nile Archive uses an engine form for Confirm/Cancel; Relic Rush anchors round ×/✓ controls below the preview sprite’s left/right edges. Emergency has no city-building relocation mode.
 
 Reviewed native-input comparisons are in [the gesture review](review/city-long-press/README.md).
 
