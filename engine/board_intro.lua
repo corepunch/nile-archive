@@ -234,7 +234,12 @@ function board_intro.bind(R, rules)
     end
     function R.board_input(inp)
         if R.phase ~= R.PH_PRESENT then return input_board(inp) end
-        if inp.released and R.overlay == R.OV_NONE and not story.active() and R.intro.t > 0 then R.intro:skip() end
+        if R.overlay ~= R.OV_NONE or story.active() or inp.captured then R.intro.skip_press = false; return end
+        if inp.pressed and R.intro.t > 0 then R.intro.skip_press = true end
+        if inp.released then
+            if R.intro.skip_press then R.intro:skip() end
+            R.intro.skip_press = false
+        elseif not inp.down then R.intro.skip_press = false end
     end
     function R.piece_pose(i, sx)
         if R.phase ~= R.PH_PRESENT then return pose(i,sx) end

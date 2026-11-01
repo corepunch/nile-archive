@@ -296,7 +296,6 @@ city_event city_confirm(city *c, purse *wallet, double now)
     }
     c->pop_index = ev.building;
     c->pop_time = 1;
-    haptic_play(HAPTIC_PLACE, 1);
     city_cancel(c);
     return ev;
 }
@@ -360,15 +359,18 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
                 city_begin_move(c, c->press_target - 2);
                 c->press_target = 1;
                 c->press_consumed = c->held = true;
+                haptic_play(HAPTIC_MATCH, .6f);
             }
         }
     }
     /* the ghost follows the finger freely and lands on the grid when let go */
     if ((in.dragging || c->held) && (in.down || in.released) && !interrupted && c->press_target == 1 && c->placing >= 0) {
         c->ghost = vec2_add(camera_to_world(c->cam, in.pos), c->grab);
+        if (!c->held) haptic_play(HAPTIC_MATCH, .6f);
         c->held = true;
     }
     if (c->held && (interrupted || !in.down || c->press_target != 1)) {
+        if (in.released && !interrupted && c->press_target == 1) haptic_play(HAPTIC_PLACE, 1);
         c->ghost = city_snap(c, c->ghost, c->placing);
         c->held = false;
     }
@@ -386,13 +388,9 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         return ev;
     }
     vec2 p = camera_to_world(c->cam, in.pos);
-    int press_target = c->press_target;
     c->press_target = 0;
 
-    if (c->placing >= 0) {
-        if (press_target != 1) c->ghost = city_snap(c, p, c->placing);   /* tap the land to put the ghost there */
-        return ev;
-    }
+    if (c->placing >= 0) return ev;   /* previews move only by dragging the sprite */
     if (c->selected >= 0 && c->selected < c->def_count) return quick_build(c, p, wallet, now, in.pos);
 
     int i = city_building_at(c, p);

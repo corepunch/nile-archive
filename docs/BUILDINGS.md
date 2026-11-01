@@ -75,7 +75,7 @@ sprite drawn `height` tall, standing on its bottom centre.
 
 - **Snapping.** `c:snap(p, type)` puts the footprint on whole tiles: a side
   with an odd number of tiles centres on a tile, an even one on a tile edge.
-  Taps, drops and confirmations all snap; a dragged ghost follows the finger
+  Drops and confirmations snap; a dragged ghost follows the finger
   and snaps when let go.
 - **Collision.** Footprints (`size` plus `city.clearance`) are rectangles in
   tile space: they may share an edge but not overlap. Every covered tile's centre and the footprint's
@@ -94,7 +94,9 @@ when it begins on a building. Moving before the threshold permanently cancels
 that press's pickup; stopping the pan does not re-arm it. UI presses, two-finger
 gestures, wheel zoom, release and pointer/focus cancellation cannot trigger it.
 
-Release snaps the preview to the grid. Confirm commits a valid move at no cost;
+Release snaps the preview to the grid. Tapping land never repositions the preview;
+drag the building to move it again. Pickup and drop request haptic feedback;
+Confirm/Cancel stay silent. Confirm commits a valid move at no cost;
 Cancel keeps the original position. No layout or wallet change is saved while
 previewing. Existing explicit `begin_move` commands still enter a preview;
 programmatic placement and short-tap income/details retain their own behavior.

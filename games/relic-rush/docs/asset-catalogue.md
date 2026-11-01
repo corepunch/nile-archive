@@ -478,7 +478,7 @@ constant for speaker/listener, with no scale/rotation animation or idle wobble. 
 `lua/island_view.lua` uses an engine form with `placement_cancel` and
 `placement_confirm` variants from `lua/skin.lua`. These are procedural UI skin
 controls like the existing checkbox: red round × (cancel) and jade round ✓
-(commit build/move), normal/hover/pressed/focused states; confirmation fades when
+(commit build/move), normal/hover/pressed states with a keyboard-only focus ring; confirmation fades when
 invalid. No texture substitution or gem-art tint is used. Their screen positions
 follow the preview sprite with safe-screen clamping, at 480×900 and 390×844.
 Reproduce with `--city 6 --placing` or `--placing blocked`; reviewed captures are
@@ -491,3 +491,17 @@ All registered buildings and decorations use the painted-v1 sources, normal spri
 and unchanged engine placement/lift/validity states documented in the
 [building catalogue](building-catalogue.md) and
 [review gallery](review/painted-buildings/current-camera/README.md).
+
+## Centred board indicators and placement input
+
+Special lightning/bomb symbols are centred on their moving gem pose in a final
+overlay pass above gems, chains and ice. Ice **1**/**2** counters are centred on
+their cell and drawn last, above every board layer. The guide uses the same
+centred registration. Existing authored PNGs and alpha are unchanged; the former
+(11,12) special and (12,-12) counter offsets are removed. No new assets or states.
+
+Touch/mouse use removes the placement button's keyboard focus outline; Tab
+restores keyboard focus. Preview movement requires dragging the building.
+Pickup and release/drop emit feedback; Confirm and Cancel add none. See the
+[review and reproduction commands](../../../docs/review/relic-input-feedback/README.md)
+for both phone sizes and the dense special/blocker state board.

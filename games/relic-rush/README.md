@@ -13,8 +13,9 @@ position and opacity through the shared form skin. See the
 [popup and refill comparisons](docs/review/popup-refill/README.md).
 
 Haptics accompany matches, special activations, cascades, trickling landings,
-results, income collection and confirmed building placement/relocation. Dragging
-and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
+results, income collection, building pickup and release/drop. Moving a preview
+requires dragging the building; tapping land does not move it. Confirm and Cancel
+add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 ## Shared match engine and atlas
 
@@ -322,7 +323,8 @@ Run `make test-relic-rush` from the repository root for this game's tests in one
 Board artwork fills its registered hex slots. Dialogue portraits slide/fade in and out, and only brighten/dim on speaker changes; no resizing, rotation or idle wobble; the engine owns those transitions. See [motion review](../../docs/review/motion/README.md).
 
 Level entrances provide grouped haptic ticks as gems land and a stronger pulse for
-blockers. Reduced motion and skipped entrances omit these landing effects.
+blockers. The touch opening a level cannot skip its entrance; a new tap during
+the entrance can. Reduced motion and skipped entrances omit these landing effects.
 Building previews show a round × on the lower left and ✓ on the lower right of
 the building. Dragging, panning and zooming keep these controls with the preview;
 ✓ is disabled on blocked land. Cancel preserves the original building and wallet.
@@ -330,8 +332,8 @@ Popup backdrops snap to their full blur immediately; the popup entrance and exit
 continue animating independently.
 
 Special gems keep their full-size matching artwork with a compact lightning-arrow
-or bomb symbol; a rainbow prism remains a whole crystal. No hexagonal special,
+or bomb symbol centred over the gem and blockers; a rainbow prism remains a whole crystal. No hexagonal special,
 selection or hint frames are used. Frozen tiles have a translucent ice sheet
-across the whole gem and a **1**/**2** counter for remaining hits. Selection uses
+across the whole gem and a centred **1**/**2** counter above every board layer for remaining hits. Selection uses
 a soft mint glow; hints use gold light and sparkles. See the updated Explorer’s
 guide and [visual review](../../docs/review/relic-tile-indicators/README.md).

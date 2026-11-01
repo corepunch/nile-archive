@@ -12,7 +12,7 @@ haptic.play(haptic.SUCCESS)
 check(testing.haptics() == 1, 'disabled feedback is silent')
 testing.reset()
 
--- Both immediate and confirmable purchases produce a single committed pulse.
+-- Quick purchases pulse on placement; the green confirmation button stays silent.
 for _, mode in ipairs({'quick', 'confirm'}) do
     testing.reset()
     local c = H.city({{cost=purse(5), height=100}})
@@ -30,11 +30,12 @@ for _, mode in ipairs({'quick', 'confirm'}) do
         check(c:update(input{tap=true,pos=spot,press_pos=spot,pinch=1},wallet,0,0).result == city.BUILT, 'quick purchase')
     end
     count, effect = testing.haptics()
-    check(count == 1 and effect == haptic.PLACE, 'one pulse for committed '..mode..' placement')
+    local expected = mode == 'quick' and 1 or 0
+    check(count == expected and (expected == 0 or effect == haptic.PLACE), 'feedback belongs to the placement gesture, not Confirm')
     testing.advance(1)
     c:begin_place(0, spot)
     check(c:confirm(wallet, 0).result == city.BLOCKED, 'occupied site rejected')
-    check(testing.haptics() == 1, 'rejected placement stays silent')
+    check(testing.haptics() == expected, 'rejected placement stays silent')
 end
 
 testing.reset()
@@ -46,14 +47,26 @@ local finger = spot - vec2(0,20)
 c:update(input{pressed=true,down=true,pos=finger,press_pos=finger,pinch=1},wallet,0,0)
 c:update(input{down=true,pos=finger,press_pos=finger,pinch=1},wallet,0,.51)
 check(c.moving == 0, 'real hold enters move preview')
+count, effect = testing.haptics()
+check(count == 1 and effect == haptic.MATCH, 'pickup pulses as the building lifts')
 c:update(input{down=true,dragging=true,pos=finger+vec2(200,0),press_pos=finger,pinch=1},wallet,0,.01)
 c:update(input{released=true,tap=true,pos=finger+vec2(200,0),press_pos=finger,pinch=1},wallet,0,.01)
-check(testing.haptics() == 0, 'pickup, drag and drop preview stay silent')
+count, effect = testing.haptics()
+check(count == 2 and effect == haptic.PLACE, 'drop pulses immediately, even just after pickup')
 c:cancel()
-check(testing.haptics() == 0, 'cancelled relocation stays silent')
+check(testing.haptics() == 2, 'cancelled relocation adds no feedback')
 c:begin_move(0)
 c.ghost = spot + vec2(200,0)
 check(c:confirm(wallet,0).result == city.MOVED, 'relocation committed')
-count, effect = testing.haptics()
-check(count == 1 and effect == haptic.PLACE, 'relocation pulses only on Confirm')
+count = testing.haptics()
+check(count == 2, 'Confirm adds no feedback')
 testing.reset()
+
+-- A cancelled held gesture never supplies the drop pulse.
+c:begin_move(0)
+finger = c.ghost - vec2(0,20)
+c:update(input{pressed=true,down=true,pos=finger,press_pos=finger,pinch=1},wallet,0,0)
+c:update(input{down=true,dragging=true,pos=finger+vec2(20,0),press_pos=finger,pinch=1},wallet,0,.1)
+check(testing.haptics() == 1, 'dragging a preview lifts it once')
+c:update(input{released=true,captured=true,pos=finger,press_pos=finger,pinch=1},wallet,0,.1)
+check(testing.haptics() == 1, 'interrupted drag has no drop feedback')

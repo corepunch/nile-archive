@@ -55,9 +55,9 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.special ~= PRISM then
         gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect, s / aspect)), tint)
     end
-    if t.special ~= NORMAL then
+    if t.special ~= NORMAL and not board then
         if t.special ~= PRISM then
-            dst = rect.centered(at + vec2(11, 12):scale(draw_scale), size2.splat(frame * art.indicators.badge_scale))
+            dst = rect.centered(at, size2.splat(frame * art.indicators.badge_scale))
         end
         gfx.image(R.board_art[art.specials[t.special]], dst, tint)
     end
@@ -66,11 +66,16 @@ local draw_relic = R.draw_relic
 
 -- Filled ice remains translucent enough to identify the matching gem beneath it.
 -- Reuse this in the guide so the remaining-hit indicator is explained visually.
-function R.draw_ice(hits, at, scale, alpha)
+function R.draw_ice(hits, at, scale, alpha, material_only)
     local dst = rect.centered(at,size2.splat(ART_STATE_SIZE * scale))
     gfx.image(R.board_art[hits > 1 and "ice-2" or "ice-1"],dst,
         rgba(255,255,255,art.indicators.ice_opacity * alpha))
-    local badge = at + vec2(12,-12):scale(scale)
+    if material_only then return end
+    R.draw_ice_count(hits,at,scale,alpha)
+end
+
+function R.draw_ice_count(hits,at,scale,alpha)
+    local badge = at
     gfx.circle(badge,8 * scale,rgba(15,57,81,230 * alpha))
     local style = R.pal(PAL_WHITE,12 * scale)
     for _, key in ipairs{"fill","fill2","outline","shadow"} do
@@ -273,12 +278,28 @@ local function draw_blockers(sx)
                 local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
                 if g.ice[i] > 0 then
-                    R.draw_ice(g.ice[i],at,BOARD_SCALE * scale,alpha)
+                    R.draw_ice(g.ice[i],at,BOARD_SCALE * scale,alpha,true)
                 end
                 if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, tint) end
             end
         end
     end
+end
+
+local function draw_specials(sx)
+    gfx.clip(R.BOARD_CLIP)
+    for i = 0, CELLS - 1 do
+        if cell_active(R.g, i) then
+            local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
+            if t.kind >= 0 and t.special ~= NORMAL then
+                if clip then gfx.clip(clip) end
+                local frame = STATE_SIZE * scale * (t.special == PRISM and 1 or art.indicators.badge_scale)
+                gfx.image(R.board_art[art.specials[t.special]], rect.centered(at, size2(frame * aspect, frame / aspect)), rgba(255,255,255,alpha))
+                if clip then gfx.clip(R.BOARD_CLIP) end
+            end
+        end
+    end
+    gfx.unclip()
 end
 
 -- The light running across the board as it goes live.
@@ -332,6 +353,14 @@ function R.board_screen(inp, dt)
     draw_relics(sx)
     draw_blockers(sx)
     if intro then draw_sheen(sx) end
+    draw_specials(sx)
+    for i = 0, CELLS - 1 do
+        if cell_active(R.g,i) and R.g.ice[i] > 0 then
+            local visible, scale, alpha = true, 1, 1
+            if intro then visible, scale, alpha = intro:blocker(i); alpha = alpha * intro:fade() end
+            if visible then R.draw_ice_count(R.g.ice[i],cell_pos(i)+vec2(sx,0),BOARD_SCALE*scale,alpha) end
+        end
+    end
     if tray > 0 then draw_tools(inp) end
     if app.arg("art-states") then art.draw_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end

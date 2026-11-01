@@ -255,6 +255,9 @@ do
         check(R.intro.t > 0, "entrance advances when visible")
         local at = R.cell_pos(rules.hex_center())
         R.board_input{released=true,pos=at,press_pos=at}
+        check(not R.intro:done(), "opening release cannot skip the entrance")
+        R.board_input{pressed=true,down=true,pos=at,press_pos=at}
+        R.board_input{released=true,pos=at,press_pos=at}
         check(g.moves == moves and g.rng == rng and R.selected < 0 and R.intro:done(), "skip release consumes no move or selection")
         R.board_update(.01)
         check(R.phase == R.PH_IDLE and not R.intro, "completed entrance returns to idle")
@@ -279,7 +282,7 @@ do
             -- Temporarily record draw calls instead of requiring a renderer.
             gfx.image = function(_, box) boxes[#boxes + 1] = box end -- luacheck: ignore 122
             for kind = 0, 5 do R.draw_relic(rules.tile(kind), pos, scale, 255, aspect, true) end
-            R.draw_relic(rules.tile(0, rules.PRISM), pos, scale, 255, aspect, true)
+            R.draw_relic(rules.tile(0, rules.PRISM), pos, scale, 255, aspect, false)
             gfx.image, R.hex_piece_kind = image, hex_kind -- luacheck: ignore 122
             R.board_art = board_art
             check(#boxes == 7, "all six resting pieces and a state panel are drawn")

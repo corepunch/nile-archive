@@ -856,7 +856,7 @@
       "normal",
       "hover",
       "pressed",
-      "focused",
+      "keyboard-focused",
       "disabled-confirm"
     ],
     "meaning": {
@@ -864,7 +864,7 @@
       "placement_confirm": "commit valid preview; disabled on blocked land"
     },
     "capture": "--city 6 --placing; --city 6 --placing blocked",
-    "review": "docs/review/relic-polish/"
+    "review": "docs/review/relic-input-feedback/README.md"
   },
   "clear_indicators": {
     "source": "art/board-states/clear-indicators.png",
@@ -874,9 +874,9 @@
     ],
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
-    "review": "docs/review/relic-tile-indicators/README.md",
-    "specials": "full-size base gems with compact lightning or bomb badges; full rainbow prism; no enclosing hex frames",
-    "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; 1/2 hit counter",
+    "review": "docs/review/relic-input-feedback/README.md",
+    "specials": "full-size base gems with centred compact lightning or bomb symbols above all gems and blockers; full rainbow prism; no enclosing hex frames",
+    "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; centred 1/2 hit counter above every board layer",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },
   "building_paintover": {

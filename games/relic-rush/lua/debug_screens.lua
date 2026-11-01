@@ -80,6 +80,7 @@ function R.debug_screens()
             c.ghost = c.ghost + vec2(30, 26)
             c.held = true
         end
+        if app.arg("placing") == "focused" then R.placement_form.focus = "confirm" end
         R.toast_time = 0
     end
     a = app.arg("zone")

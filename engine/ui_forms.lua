@@ -306,7 +306,7 @@ local function paint(n,skin,form,options,event)
             if skin.button_text then skin.button_text(box,caption(n,form.values),n,st)
             else text.inside(style_for(n,skin),box:inflate(-8),vec2(.5,.5),caption(n,form.values)) end
         end
-        if st.focused and options.interactive~=false then
+        if st.focused and form.focus_visible and options.interactive~=false then
             if skin.focus then skin.focus(box,n) else gfx.round_rect_line(box:inflate(3),theme.radius or 8,2,theme.active) end
         end
         local keyboard=options.interactive~=false and form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
@@ -330,7 +330,9 @@ function Form:draw(box,skin,options)
         for _,child in ipairs(n.children) do collect(child) end
     end
     collect(self.root)
+    if options.input.pressed then self.focus_visible=false end
     if options.interactive~=false and options.input.key==input.KEY_TAB then
+        self.focus_visible=true
         local current=0; for i,id in ipairs(focusable) do if id==self.focus then current=i end end
         self.focus=focusable[current%math.max(1,#focusable)+1]
     end

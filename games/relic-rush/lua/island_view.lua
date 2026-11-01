@@ -30,7 +30,7 @@ function R.island_begin(kind, focus, item)
     end
     R.overlay, R.inspect = R.OV_NONE, -1
     if focus then R.island_focus(c.ghost-vec2(0,90),math.max(.65,c.cam.zoom)) end
-    R.notice("Tap to choose a spot. Drag the building or scroll the land.")
+    R.notice("Drag the building to choose a spot, or scroll the land.")
 end
 
 local function confirm_place()
