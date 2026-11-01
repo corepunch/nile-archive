@@ -362,13 +362,13 @@ R.wonder_form=wonder_form
 local guide_entries = {
     {id="neighbors", title="Connect 4+ neighbors", description="Bends and diamonds count. Three do not.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Group 5: lightning", description="A sun ray follows the longest axis.",
+    {id="lightning", title="Group 5: lightning", description="The gold arrow shows the line it clears.",
      icon={tiles={{kind=1,special=rules.ROW}}}},
     {id="specials", title="Group 6+: bomb or prism", description="Six in a line: prism. Other shapes: bomb.",
      icon={tiles={{kind=2,special=rules.BOMB,x=-16,scale=.7},{kind=2,special=rules.PRISM,x=16,scale=.7}}}},
     {id="blockers", title="Chains & ancient sand", description="Match on them to break or excavate.",
      icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Ice & fire", description="Match on ice; nearby flames also thaw it.",
+    {id="ice", title="Frozen gems", description="Ice covers the gem. The number shows hits left; matches and nearby fire thaw it.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
 }
 local function guide_icon(box, icon)
@@ -378,7 +378,9 @@ local function guide_icon(box, icon)
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
-    if icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
+    if icon.front and icon.front:sub(1,4)=="ice-" then
+        R.draw_ice(tonumber(icon.front:sub(5)),pp(at),P.scale,P.alpha)
+    elseif icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
 end
 local guide_form=ui.form{kind="column",panel=true,padding=20,children={
     {kind="label",text="Explorer's guide",height=44,em=34},

@@ -328,3 +328,10 @@ the building. Dragging, panning and zooming keep these controls with the preview
 ✓ is disabled on blocked land. Cancel preserves the original building and wallet.
 Popup backdrops snap to their full blur immediately; the popup entrance and exit
 continue animating independently.
+
+Special gems keep their full-size matching artwork with a compact lightning-arrow
+or bomb symbol; a rainbow prism remains a whole crystal. No hexagonal special,
+selection or hint frames are used. Frozen tiles have a translucent ice sheet
+across the whole gem and a **1**/**2** counter for remaining hits. Selection uses
+a soft mint glow; hints use gold light and sparkles. See the updated Explorer’s
+guide and [visual review](../../docs/review/relic-tile-indicators/README.md).
