@@ -8,6 +8,7 @@ rules("relic_board")
 rules("progression")
 rules("relic_wallet")
 smoke()
+smoke("--empty-lives","empty-lives")
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 
 shot("hex-first", "480x900")
