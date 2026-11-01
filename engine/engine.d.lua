@@ -829,6 +829,16 @@ function gfx.image_part(t, src, dst, tint) end
 ---@param tint color
 function gfx.image_rot(t, dst, angle, tint) end
 
+---Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
+---@param t texture
+---@param dst rect
+---@param angle number
+---@param repeats number
+---@param width number
+---@param ink color
+---@param tint color
+function gfx.image_striped(t, dst, angle, repeats, width, ink, tint) end
+
 ---@param r rect
 ---@param c color
 function gfx.rect(r, c) end

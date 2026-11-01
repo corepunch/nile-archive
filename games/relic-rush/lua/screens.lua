@@ -362,7 +362,7 @@ R.wonder_form=wonder_form
 local guide_entries = {
     {id="neighbors", title="Connect 4+ neighbors", description="Bends and diamonds count. Three do not.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Group 5: lightning", description="The gold arrow shows the line it clears.",
+    {id="lightning", title="Group 5: lightning", description="Stripes show the line it clears.",
      icon={tiles={{kind=1,special=rules.ROW}}}},
     {id="specials", title="Group 6+: bomb or prism", description="Six in a line: prism. Other shapes: bomb.",
      icon={tiles={{kind=2,special=rules.BOMB,x=-16,scale=.7},{kind=2,special=rules.PRISM,x=16,scale=.7}}}},

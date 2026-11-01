@@ -22,5 +22,6 @@ void render_clip(const rect *r);   /* NULL: the logical screen, or the display w
 void render_bleed(bool on);
 void render_backdrop(float radius, color dim);
 void render_image(texture tex, rect src, rect dst, float angle, color tint);
+void render_image_striped(texture tex, rect dst, float angle, float repeats, float width, color ink, color tint);
 bool render_read_pixels(void *rgba, int w, int h);
 #endif

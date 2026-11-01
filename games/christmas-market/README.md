@@ -70,3 +70,8 @@ The board enters after dialogue with a cell ripple, falling treats, blocker land
 Dialogs arrive and leave on the engine's motion module: the card eases in while the parts of a result settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
 
 ![The result dialog arriving](docs/screenshots/reward-entrance-reel.gif)
+
+Placement and move previews show cream ground-footprint guides around the other
+buildings, including clearance. Dark contrast edges remain readable on snow.
+Guides hide after Confirm/Cancel; the mover's old spot is omitted. See the
+[shared review](../../docs/review/city-placement-guides/README.md).

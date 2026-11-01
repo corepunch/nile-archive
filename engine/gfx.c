@@ -93,6 +93,11 @@ void draw_image_rot(texture t, rect dst, float angle, color c)
     render_image(t, tex_rect(t), dst, angle, c);
 }
 
+void draw_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint)
+{
+    render_image_striped(t, dst, angle, repeats, width, ink, tint);
+}
+
 /* ------------------------------------------------------------------ shapes */
 
 /* Shapes are triangle meshes drawn with render_geometry. Every outline gets

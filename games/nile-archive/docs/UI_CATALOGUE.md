@@ -78,3 +78,15 @@ no ImageGen prompt or added runtime texture.
 a transparent `city.path` (matching the previous default). Paths painted into
 `data/island.png` remain part of the terrain. Reviewed iPad and 16:9 captures
 are in [the road removal comparison](review/no-auto-roads/README.md).
+
+## Placement alignment guides
+
+`placement-guides` uses the shared `engine/city.c` renderer. While moving or
+placing a building, other buildings show neutral cream outlines with dark
+contrast edges around their occupied ground, including placement clearance.
+The building in hand retains its green/red footprint; its original location
+is omitted. Guides stay visible after release until Confirm/Cancel, then hide.
+The guides use the existing camera and tile measurements; artwork, alpha,
+footprints and collision rules are unchanged. No bitmap or ImageGen source is
+added. Reproduce with the existing native-input hold/placement captures in the
+[review](../../../docs/review/city-placement-guides/README.md).

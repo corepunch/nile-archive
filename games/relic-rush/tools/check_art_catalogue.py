@@ -82,7 +82,7 @@ for i, b in enumerate(buildings['items']):
     assert 'key="'+b['key']+'"' in definitions and '`'+b['key']+'`' in building_doc
     assert (ROOT / f'docs/review/building-catalogue/footprints-{i//4+1:02d}.jpg').is_file()
 assert '96' in doc and 'building-catalogue.md' in doc
-assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows'}
+assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows', 'placement-guides'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
 print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 board states, 7 HUD icons, 96 buildings covered")

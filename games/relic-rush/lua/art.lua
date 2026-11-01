@@ -4,13 +4,15 @@
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
--- Effect badges are centred above full-size matching gems/blockers; prism is the whole gem.
+-- Ray powers use engine-rendered stripes masked to the original gem alpha.
+-- Bomb and prism replace the gem with their full-size authored sprite.
 -- Ice is filled material at 0.52 opacity with a centred remaining-hit count above all board layers.
-A.indicators = {source="art/board-states/clear-indicators.png", badge_scale=.55, ice_opacity=133}
+A.indicators = {source="art/board-states/clear-indicators.png", ice_opacity=133}
+A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
-A.island_layers = {"cloud-fog", "building-shadows"}
+A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
@@ -81,8 +83,9 @@ function A.draw_catalogue(R)
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85
-        if i <= 4 then gfx.image(R.relics[i], rect(x + 9, y + 9, 30, 30), color.WHITE) end
-        gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
+        if i <= 5 then
+            R.draw_relic({kind=i-1,special=i},vec2(x+24,y+24),1,255,1)
+        else gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE) end
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end
     for col, state in ipairs(A.states) do
@@ -94,6 +97,17 @@ function A.draw_catalogue(R)
         end
     end
     R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)
+end
+
+-- Actual game rendering, all kinds and axes at board size; no replacement art.
+function A.draw_stripe_catalogue(R)
+    gfx.round_rect(rect(16,130,448,640),18,color(12,47,41,250))
+    R.say_at("SPECIAL PIECES",vec2(240,160),25,R.PAL_GOLD,420)
+    local labels={"NORMAL","30 DEGREE STRIPES","VERTICAL STRIPES","150 DEGREE STRIPES","FULL BOMB"}
+    for row=0,4 do
+        R.say_at(labels[row+1],vec2(240,205+row*106),13,R.PAL_CREAM,420)
+        for kind=0,5 do R.draw_relic({kind=kind,special=row},vec2(62+kind*71,252+row*106),1,255,1,true) end
+    end
 end
 
 return A

@@ -81,7 +81,12 @@ sprite drawn `height` tall, standing on its bottom centre.
   tile space: they may share an edge but not overlap. Every covered tile's centre and the footprint's
   corners must be open, buildable land.
 - **Drawing.** The ghost's footprint is the parallelogram of its tiles with
-  the tile lines inside, green when it fits and red when it doesn't.
+  the tile lines inside, green when it fits and red when it doesn't. During
+  placement or relocation, all other buildings show cream perimeter guides
+  around their collision footprints, including clearance. A dark edge keeps
+  them readable over grass, snow and building art. The mover's old footprint
+  is omitted; guides disappear on Confirm/Cancel. See the
+  [placement-guide review](review/city-placement-guides/README.md).
 - **Depth.** Tiles skew, so a footprint's y says little about a long neighbour's.
   A building draws in front of another when it lies past it along one tile axis
   and not before it along the other; pairs that don't relate keep y order.

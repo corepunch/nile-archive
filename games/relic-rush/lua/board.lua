@@ -51,15 +51,14 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local frame = ART_STATE_SIZE * draw_scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
-    -- Keep the match kind full size; a compact effect symbol names the power.
-    if t.special ~= PRISM then
-        gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect, s / aspect)), tint)
-    end
-    if t.special ~= NORMAL and not board then
-        if t.special ~= PRISM then
-            dst = rect.centered(at, size2.splat(frame * art.indicators.badge_scale))
-        end
+    if t.special >= rules.ROW and t.special <= rules.DIAGONAL then
+        local angle = math.pi / 6 + (t.special - rules.ROW) * math.pi / 3
+        gfx.image_striped(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect, s / aspect)),
+            angle, art.stripes.repeats, art.stripes.width, art.stripes.ink, tint)
+    elseif t.special == rules.BOMB or t.special == PRISM then
         gfx.image(R.board_art[art.specials[t.special]], dst, tint)
+    else
+        gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect, s / aspect)), tint)
     end
 end
 local draw_relic = R.draw_relic
@@ -286,22 +285,6 @@ local function draw_blockers(sx)
     end
 end
 
-local function draw_specials(sx)
-    gfx.clip(R.BOARD_CLIP)
-    for i = 0, CELLS - 1 do
-        if cell_active(R.g, i) then
-            local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
-            if t.kind >= 0 and t.special ~= NORMAL then
-                if clip then gfx.clip(clip) end
-                local frame = STATE_SIZE * scale * (t.special == PRISM and 1 or art.indicators.badge_scale)
-                gfx.image(R.board_art[art.specials[t.special]], rect.centered(at, size2(frame * aspect, frame / aspect)), rgba(255,255,255,alpha))
-                if clip then gfx.clip(R.BOARD_CLIP) end
-            end
-        end
-    end
-    gfx.unclip()
-end
-
 -- The light running across the board as it goes live.
 local function draw_sheen(sx)
     for i = 0, CELLS - 1 do
@@ -353,7 +336,6 @@ function R.board_screen(inp, dt)
     draw_relics(sx)
     draw_blockers(sx)
     if intro then draw_sheen(sx) end
-    draw_specials(sx)
     for i = 0, CELLS - 1 do
         if cell_active(R.g,i) and R.g.ice[i] > 0 then
             local visible, scale, alpha = true, 1, 1
@@ -363,6 +345,7 @@ function R.board_screen(inp, dt)
     end
     if tray > 0 then draw_tools(inp) end
     if app.arg("art-states") then art.draw_catalogue(R) end
+    if app.arg("stripe-states") then art.draw_stripe_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)
 end

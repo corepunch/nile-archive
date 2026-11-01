@@ -408,3 +408,15 @@ active/inactive switching, return and exit. Real-renderer tests compare portrait
 pixels during idle across phone, safe-area and landscape layouts. `story_restart`
 clears tracks between test/game runs. [Reviewed game captures](review/motion/README.md)
 include the full transition sequence and both phone sizes.
+
+## Alpha-masked image stripes
+
+`gfx.image_striped(t, dst, angle, repeats, width, ink, tint)` draws the existing
+texture in one pass, mixing broad directional bands into its RGB while retaining
+its alpha and surface shading. `angle` is the stripe direction in radians;
+`repeats` counts periods across the unit image and `width` is the filled fraction.
+Ink alpha controls band strength; tint still controls the whole image. Pattern
+coordinates follow the destination, so squash and translation keep the stripe
+registration. Atlas views, clipping and safe areas use the normal image path.
+No intermediate texture or persistent shader mode is retained. Relic Rush uses
+this explicitly requested procedural treatment for its three ray powers.

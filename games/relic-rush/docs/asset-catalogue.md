@@ -99,19 +99,24 @@ live pieces, collection flights, clearing animations and the guide.
 | Rule state | Authored name | Creation / behaviour |
 | --- | --- | --- |
 | NORMAL (0) | Base kind image | Four connected equal kinds clear normally |
-| ROW (1) | `ray-row` | Group of five; two gold arrowheads along the 30° board axis |
-| COLUMN (2) | `ray-column` | Group of five; two arrowheads along the vertical 90° axis |
-| DIAGONAL (3) | `ray-diagonal` | Group of five; two arrowheads along the 150° axis |
+| ROW (1) | `ray-row` | Group of five; full-gem stripes along the 30° board axis |
+| COLUMN (2) | `ray-column` | Group of five; full-gem vertical stripes |
+| DIAGONAL (3) | `ray-diagonal` | Group of five; full-gem stripes along the 150° axis |
 | BOMB (4) | `bomb` | Six or more in a non-line group; radius-one hex blast (cell plus six neighbours) |
 | PRISM (5) | `prism` | Six in a straight line; clears the swapped kind |
 
-Rays and bombs keep the matching gem at full size and add a compact symbol at
-its lower right: an ivory/gold two-way lightning arrow showing the clearing axis,
-or a navy bomb with a lit fuse. Prism uses a full rainbow crystal. The three
-axes are separately authored and spatially registered to their board directions.
-The same symbols appear in every pack and the guide. Review captures at both
-phone sizes, optional packs, ice strengths and the guide are in
-[the indicator review](../../../docs/review/relic-tile-indicators/README.md).
+Rays use `gfx.image_striped` on the matching gem at full size. Broad cream bands
+follow the 30°, 90° or 150° clear axis, masked to the gem's authored alpha and
+modulated by its surface shading. Bomb and prism sprites replace the gem at full
+piece size. The old `ray-row`, `ray-column`, `ray-diagonal` images remain canonical
+skin compatibility regions and no longer appear as tiny board/guide badges.
+
+The user explicitly requested engine-drawn masked stripes on 2026-11-01; this
+supersedes the usual authored-state requirement for this pattern. No generated
+stripe atlas is used, and existing textures/alpha remain unchanged. Relics,
+Jewels, Resources and the guide share the same renderer. The
+[striped-special review](../../../docs/review/striped-specials/README.md) covers
+all six kinds, all axes, the full bomb, both phone sizes and blockers.
 See [match rules](match4-rules.md) for special-combination resolution.
 
 ## Terrain, blockers and board interaction
@@ -494,14 +499,25 @@ and unchanged engine placement/lift/validity states documented in the
 
 ## Centred board indicators and placement input
 
-Special lightning/bomb symbols are centred on their moving gem pose in a final
-overlay pass above gems, chains and ice. Ice **1**/**2** counters are centred on
-their cell and drawn last, above every board layer. The guide uses the same
-centred registration. Existing authored PNGs and alpha are unchanged; the former
-(11,12) special and (12,-12) counter offsets are removed. No new assets or states.
+The former centred lightning/bomb overlay was replaced by the engine-masked
+stripes and full-size bomb described above. Ice **1**/**2** counters are centred on
+their cell and drawn last, above every board layer. The guide shares the current piece rendering. Authored PNGs and alpha are unchanged;
+the former corner offsets remain removed. No new bitmap assets.
 
 Touch/mouse use removes the placement button's keyboard focus outline; Tab
 restores keyboard focus. Preview movement requires dragging the building.
 Pickup and release/drop emit feedback; Confirm and Cancel add none. See the
 [review and reproduction commands](../../../docs/review/relic-input-feedback/README.md)
 for both phone sizes and the dense special/blocker state board.
+
+## Placement alignment guides
+
+`placement-guides` uses the shared `engine/city.c` renderer. While moving or
+placing a building, other buildings show neutral cream outlines with dark
+contrast edges around their occupied ground, including placement clearance.
+The building in hand retains its green/red footprint; its original location
+is omitted. Guides stay visible after release until Confirm/Cancel, then hide.
+The guides use the existing camera and tile measurements; artwork, alpha,
+footprints and collision rules are unchanged. No bitmap or ImageGen source is
+added. Reproduce with the existing native-input hold/placement captures in the
+[review](../../../docs/review/city-placement-guides/README.md).
