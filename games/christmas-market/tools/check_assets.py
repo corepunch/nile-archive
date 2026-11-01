@@ -21,8 +21,9 @@ def png(path):
 def main():
     inventory = {str(p.relative_to(ROOT)): digest(p) for p in sorted((ROOT/'data').rglob('*')) if p.is_file()}
     if '--update' in sys.argv:
-        MANIFEST.write_text(json.dumps({'status': 'Blender-rendered buildings (art/building-catalogue); repaint pending in #34',
-            'generator': 'built-in image_gen', 'prompts': ['art/prompts.json', 'art/character-and-icon-prompts.json', 'art/reference-sheet-prompt.txt'],
+        MANIFEST.write_text(json.dumps({'status': 'Painted current-camera buildings (art/building-catalogue/painted-v1)',
+            'generator': 'built-in image_gen', 'prompts': ['art/prompts.json', 'art/character-and-icon-prompts.json', 'art/reference-sheet-prompt.txt'] +
+            [str(p.relative_to(ROOT)) for p in sorted((ROOT/'art/building-catalogue/painted-v1').glob('*-prompt.txt'))],
             'states': STATES, 'runtime': inventory}, indent=2) + '\n')
     manifest = json.loads(MANIFEST.read_text())
     assert manifest['runtime'] == inventory, 'Runtime changed: update the asset catalogue and manifest'

@@ -33,7 +33,7 @@ for i, (key, name, category, w, h, coins, stars, note) in enumerate(catalogue):
 lua += ['}', 'for _, b in ipairs(items) do', '    for field, value in pairs(sprites[b.key]) do b[field] = value end', 'end', 'return items']
 (ROOT / 'lua/archive_catalogue.lua').write_text('\n'.join(lua) + '\n')
 (ART / 'manifest.json').write_text(json.dumps(dict(source=registry['master'], registration='art/building-catalogue/registration.json',
-    camera=registry['camera'], items=entries), indent=1, ensure_ascii=False) + '\n')
+    camera=registry['camera'], paintover=registry.get('paintover'), items=entries), indent=1, ensure_ascii=False) + '\n')
 print('prepared', len(entries), 'objects')
 if '--inventory' in sys.argv:
     for e in entries:

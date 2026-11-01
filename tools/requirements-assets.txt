@@ -1,2 +1,5 @@
 # Atlas registration/resampling is part of the authored pixel contract.
 Pillow==11.3.0
+# Optional painted-building atlas import / footprint fitting.
+numpy==2.3.5
+scipy==1.16.3

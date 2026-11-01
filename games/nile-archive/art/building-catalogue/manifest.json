@@ -5,6 +5,11 @@
   "yaw": 30.0,
   "elevation": 40.0
  },
+ "paintover": {
+  "version": "painted-v1",
+  "importer": "tools/import_painted_buildings.py",
+  "sources": "art/building-catalogue/painted-v1"
+ },
  "items": [
   {
    "id": 0,
@@ -16,8 +21,8 @@
     2
    ],
    "pivot": [
-    138.139,
-    137.875
+    138.267,
+    130.5
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -26,7 +31,7 @@
    "note": "Relic slot 0 · stepped limestone pyramid with a gilded cap",
    "image": [
     276,
-    226
+    215
    ],
    "runtime": "data/buildings/small_pyramid.png",
    "shadow": "data/building-shadows/small_pyramid.png",
@@ -42,8 +47,8 @@
     2
    ],
    "pivot": [
-    138.138,
-    144.446
+    138.379,
+    174.27
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -51,8 +56,8 @@
    "stars": 0,
    "note": "Relic slot 1 · stepped well that measures the flood",
    "image": [
-    276,
-    232
+    277,
+    260
    ],
    "runtime": "data/buildings/nilometer.png",
    "shadow": "data/building-shadows/nilometer.png",
@@ -68,8 +73,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    117.265
+    181.841,
+    134.245
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -77,8 +82,8 @@
    "stars": 1,
    "note": "Relic slot 2 · reclining guardian on a plinth",
    "image": [
-    363,
-    221
+    361,
+    237
    ],
    "runtime": "data/buildings/sphinx.png",
    "shadow": "data/building-shadows/sphinx.png",
@@ -94,8 +99,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    198.247
+    182.268,
+    208.109
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -103,8 +108,8 @@
    "stars": 1,
    "note": "Relic slot 3 · sacred boat on a pedestal under a canopy",
    "image": [
-    363,
-    302
+    365,
+    311
    ],
    "runtime": "data/buildings/barque_shrine.png",
    "shadow": "data/building-shadows/barque_shrine.png",
@@ -120,8 +125,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    235.567
+    182.085,
+    225.388
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -129,8 +134,8 @@
    "stars": 2,
    "note": "Relic slot 4 · twin battered towers with a gate and flags",
    "image": [
-    363,
-    340
+    373,
+    324
    ],
    "runtime": "data/buildings/pylon_gate.png",
    "shadow": "data/building-shadows/pylon_gate.png",
@@ -146,8 +151,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    261.772
+    207.282,
+    277.159
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -155,8 +160,8 @@
    "stars": 3,
    "note": "Relic slot 5 · roofed hall of papyrus columns",
    "image": [
-    413,
-    394
+    425,
+    409
    ],
    "runtime": "data/buildings/hypostyle.png",
    "shadow": "data/building-shadows/hypostyle.png",
@@ -172,8 +177,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    242.194
+    207.282,
+    284.566
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -181,8 +186,8 @@
    "stars": 4,
    "note": "Relic slot 6 · open court with an obelisk and altar",
    "image": [
-    412,
-    374
+    420,
+    407
    ],
    "runtime": "data/buildings/sun_temple.png",
    "shadow": "data/building-shadows/sun_temple.png",
@@ -198,8 +203,8 @@
     2
    ],
    "pivot": [
-    138.138,
-    238.619
+    145.484,
+    168.789
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -207,8 +212,8 @@
    "stars": 5,
    "note": "Relic slot 7 · stepped tower with a fire on top",
    "image": [
-    276,
-    326
+    290,
+    253
    ],
    "runtime": "data/buildings/lighthouse.png",
    "shadow": "data/building-shadows/lighthouse.png",
@@ -224,8 +229,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    146.961
+    207.109,
+    157.927
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -233,8 +238,8 @@
    "stars": 6,
    "note": "Relic slot 8 · stone-lined pool with lotus and steps",
    "image": [
-    413,
-    279
+    424,
+    293
    ],
    "runtime": "data/buildings/sacred_lake.png",
    "shadow": "data/building-shadows/sacred_lake.png",
@@ -250,8 +255,8 @@
     4
    ],
    "pivot": [
-    274.741,
-    239.407
+    277.814,
+    324.115
    ],
    "base_width": 546.41,
    "scale": 1.0,
@@ -259,8 +264,8 @@
    "stars": 9,
    "note": "Relic slot 9 · finale landmark",
    "image": [
-    549,
-    415
+    550,
+    499
    ],
    "runtime": "data/buildings/great_pyramid.png",
    "shadow": "data/building-shadows/great_pyramid.png",
@@ -276,8 +281,8 @@
     2
    ],
    "pivot": [
-    138.138,
-    189.522
+    138.79,
+    192.347
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -285,8 +290,8 @@
    "stars": 2,
    "note": "Relic slot 10 · whitewashed house with a roof terrace",
    "image": [
-    276,
-    277
+    282,
+    280
    ],
    "runtime": "data/buildings/mud_house.png",
    "shadow": "data/building-shadows/mud_house.png",
@@ -302,8 +307,8 @@
     2
    ],
    "pivot": [
-    138.138,
-    143.94
+    138.587,
+    146.537
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -311,8 +316,8 @@
    "stars": 2,
    "note": "Relic slot 11 · kiln, wheel and jars",
    "image": [
-    276,
-    232
+    280,
+    230
    ],
    "runtime": "data/buildings/pottery.png",
    "shadow": "data/building-shadows/pottery.png",
@@ -328,8 +333,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    174.377
+    182.338,
+    197.082
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -337,8 +342,8 @@
    "stars": 3,
    "note": "Relic slot 12 · domed ovens and bread",
    "image": [
-    363,
-    279
+    373,
+    301
    ],
    "runtime": "data/buildings/bakery.png",
    "shadow": "data/building-shadows/bakery.png",
@@ -354,8 +359,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    171.108
+    182.44,
+    179.177
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -363,8 +368,8 @@
    "stars": 3,
    "note": "Relic slot 13 · loom under an awning",
    "image": [
-    363,
-    275
+    365,
+    288
    ],
    "runtime": "data/buildings/weaver.png",
    "shadow": "data/building-shadows/weaver.png",
@@ -380,8 +385,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    193.602
+    191.528,
+    199.376
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -389,8 +394,8 @@
    "stars": 4,
    "note": "Relic slot 14 · columned porch and scroll racks",
    "image": [
-    363,
-    298
+    374,
+    306
    ],
    "runtime": "data/buildings/scribe_school.png",
    "shadow": "data/building-shadows/scribe_school.png",
@@ -406,8 +411,8 @@
     2
    ],
    "pivot": [
-    181.44,
-    143.137
+    191.625,
+    158.5
    ],
    "base_width": 359.808,
    "scale": 1.0,
@@ -415,8 +420,8 @@
    "stars": 4,
    "note": "Relic slot 15 · beehive silos in a walled yard",
    "image": [
-    363,
-    247
+    374,
+    264
    ],
    "runtime": "data/buildings/granary.png",
    "shadow": "data/building-shadows/granary.png",
@@ -432,8 +437,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    185.697
+    207.699,
+    208.386
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -441,8 +446,8 @@
    "stars": 5,
    "note": "Relic slot 16 · striped stalls and baskets",
    "image": [
-    413,
-    318
+    416,
+    342
    ],
    "runtime": "data/buildings/bazaar.png",
    "shadow": "data/building-shadows/bazaar.png",
@@ -458,8 +463,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    264.82
+    218.044,
+    278.66
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -467,8 +472,8 @@
    "stars": 5,
    "note": "Relic slot 17 · two-storey house with a garden",
    "image": [
-    413,
-    397
+    426,
+    412
    ],
    "runtime": "data/buildings/villa.png",
    "shadow": "data/building-shadows/villa.png",
@@ -484,8 +489,8 @@
     2
    ],
    "pivot": [
-    138.138,
-    201.912
+    138.857,
+    201.626
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -493,8 +498,8 @@
    "stars": 5,
    "note": "Relic slot 18 · tall tower with nest holes",
    "image": [
-    276,
-    290
+    278,
+    288
    ],
    "runtime": "data/buildings/dovecote.png",
    "shadow": "data/building-shadows/dovecote.png",
@@ -510,8 +515,8 @@
     2
    ],
    "pivot": [
-    138.138,
-    237.769
+    140.387,
+    243.926
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -519,8 +524,8 @@
    "stars": 5,
    "note": "Relic slot 19 · battered tower with banner",
    "image": [
-    276,
-    326
+    285,
+    332
    ],
    "runtime": "data/buildings/watchtower.png",
    "shadow": "data/building-shadows/watchtower.png",
@@ -536,8 +541,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    213.158
+    218.646,
+    246.353
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -545,8 +550,8 @@
    "stars": 6,
    "note": "Relic slot 20 · vine pergola and press",
    "image": [
-    412,
-    345
+    436,
+    383
    ],
    "runtime": "data/buildings/winery.png",
    "shadow": "data/building-shadows/winery.png",
@@ -562,8 +567,8 @@
     3
    ],
    "pivot": [
-    206.44,
-    209.229
+    210.716,
+    226.711
    ],
    "base_width": 409.808,
    "scale": 1.0,
@@ -571,8 +576,8 @@
    "stars": 6,
    "note": "Relic slot 21 · chapel with cat statues",
    "image": [
-    412,
-    341
+    428,
+    426
    ],
    "runtime": "data/buildings/bastet_shrine.png",
    "shadow": "data/building-shadows/bastet_shrine.png",
@@ -588,8 +593,8 @@
     2
    ],
    "pivot": [
-    224.741,
-    129.305
+    238.507,
+    157.068
    ],
    "base_width": 446.41,
    "scale": 1.0,
@@ -597,8 +602,8 @@
    "stars": 7,
    "note": "Relic slot 22 · moored sailing boat",
    "image": [
-    449,
-    249
+    466,
+    303
    ],
    "runtime": "data/buildings/felucca_dock.png",
    "shadow": "data/building-shadows/felucca_dock.png",
@@ -614,8 +619,8 @@
     3
    ],
    "pivot": [
-    249.741,
-    225.623
+    265.149,
+    276.533
    ],
    "base_width": 496.41,
    "scale": 1.0,
@@ -623,8 +628,8 @@
    "stars": 7,
    "note": "Relic slot 23 · colonnaded stable and chariot",
    "image": [
-    499,
-    373
+    517,
+    437
    ],
    "runtime": "data/buildings/chariot_stable.png",
    "shadow": "data/building-shadows/chariot_stable.png",
@@ -640,8 +645,8 @@
     3
    ],
    "pivot": [
-    249.741,
-    209.314
+    265.062,
+    246.918
    ],
    "base_width": 496.41,
    "scale": 1.0,
@@ -649,8 +654,8 @@
    "stars": 8,
    "note": "Relic slot 24 · workshop with statues in progress",
    "image": [
-    499,
-    357
+    516,
+    411
    ],
    "runtime": "data/buildings/sculptor_yard.png",
    "shadow": "data/building-shadows/sculptor_yard.png",
@@ -666,8 +671,8 @@
     4
    ],
    "pivot": [
-    274.741,
-    272.44
+    291.26,
+    332.745
    ],
    "base_width": 546.41,
    "scale": 1.0,
@@ -675,8 +680,8 @@
    "stars": 9,
    "note": "Relic slot 25 · terraced garden with pool and kiosk",
    "image": [
-    549,
-    448
+    554,
+    520
    ],
    "runtime": "data/buildings/pharaoh_garden.png",
    "shadow": "data/building-shadows/pharaoh_garden.png",
@@ -692,7 +697,7 @@
     1
    ],
    "pivot": [
-    49.944,
+    47.746,
     97.321
    ],
    "base_width": 136.603,
@@ -701,7 +706,7 @@
    "stars": 0,
    "note": "Relic slot 26",
    "image": [
-    99,
+    95,
     105
    ],
    "runtime": "data/buildings/date_palm.png",
@@ -719,7 +724,7 @@
    ],
    "pivot": [
     48.888,
-    82.194
+    75.265
    ],
    "base_width": 136.603,
    "scale": 1.04347825050354,
@@ -728,7 +733,7 @@
    "note": "Relic slot 27 · branching palm",
    "image": [
     98,
-    89
+    82
    ],
    "runtime": "data/buildings/doum_palm.png",
    "shadow": "data/building-shadows/doum_palm.png",
@@ -744,7 +749,7 @@
     1
    ],
    "pivot": [
-    50.589,
+    53.597,
     203.939
    ],
    "base_width": 136.603,
@@ -753,7 +758,7 @@
    "stars": 1,
    "note": "Relic slot 28",
    "image": [
-    101,
+    107,
     213
    ],
    "runtime": "data/buildings/cypress.png",
@@ -770,7 +775,7 @@
     1
    ],
    "pivot": [
-    39.022,
+    39.775,
     92.645
    ],
    "base_width": 136.603,
@@ -779,7 +784,7 @@
    "stars": 1,
    "note": "Relic slot 29 · flat umbrella crown",
    "image": [
-    92,
+    94,
     99
    ],
    "runtime": "data/buildings/acacia.png",
@@ -796,7 +801,7 @@
     1
    ],
    "pivot": [
-    44.378,
+    51.509,
     123.92
    ],
    "base_width": 136.603,
@@ -805,7 +810,7 @@
    "stars": 2,
    "note": "Relic slot 30",
    "image": [
-    88,
+    102,
     133
    ],
    "runtime": "data/buildings/fig.png",
@@ -822,7 +827,7 @@
     1
    ],
    "pivot": [
-    52.351,
+    58.92,
     126.77
    ],
    "base_width": 136.603,
@@ -831,7 +836,7 @@
    "stars": 3,
    "note": "Relic slot 31",
    "image": [
-    102,
+    115,
     134
    ],
    "runtime": "data/buildings/pomegranate.png",
@@ -848,7 +853,7 @@
     1
    ],
    "pivot": [
-    43.971,
+    49.527,
     114.797
    ],
    "base_width": 136.603,
@@ -857,7 +862,7 @@
    "stars": 4,
    "note": "Relic slot 32",
    "image": [
-    89,
+    100,
     122
    ],
    "runtime": "data/buildings/olive.png",
@@ -874,7 +879,7 @@
     2
    ],
    "pivot": [
-    69.728,
+    74.745,
     145.423
    ],
    "base_width": 273.205,
@@ -883,7 +888,7 @@
    "stars": 2,
    "note": "Relic slot 33",
    "image": [
-    163,
+    173,
     205
    ],
    "runtime": "data/buildings/palm_grove.png",
@@ -900,7 +905,7 @@
     2
    ],
    "pivot": [
-    75.463,
+    70.267,
     144.88
    ],
    "base_width": 273.205,
@@ -909,7 +914,7 @@
    "stars": 2,
    "note": "Relic slot 34",
    "image": [
-    149,
+    139,
     177
    ],
    "runtime": "data/buildings/twin_palms.png",
@@ -926,7 +931,7 @@
     2
    ],
    "pivot": [
-    68.243,
+    72.344,
     136.476
    ],
    "base_width": 273.205,
@@ -935,7 +940,7 @@
    "stars": 3,
    "note": "Relic slot 35 · broad sacred fig",
    "image": [
-    135,
+    143,
     153
    ],
    "runtime": "data/buildings/sycamore.png",
@@ -953,7 +958,7 @@
    ],
    "pivot": [
     66.242,
-    121.006
+    116.022
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -962,7 +967,7 @@
    "note": "Relic slot 36 · feathery pink-flowered tree",
    "image": [
     130,
-    130
+    125
    ],
    "runtime": "data/buildings/tamarisk.png",
    "shadow": "data/building-shadows/tamarisk.png",
@@ -979,7 +984,7 @@
    ],
    "pivot": [
     45.848,
-    67.069
+    63.879
    ],
    "base_width": 136.603,
    "scale": 1.1915706396102905,
@@ -988,7 +993,7 @@
    "note": "Relic slot 37",
    "image": [
     95,
-    90
+    87
    ],
    "runtime": "data/buildings/shrub.png",
    "shadow": "data/building-shadows/shrub.png",
@@ -1004,7 +1009,7 @@
     1
    ],
    "pivot": [
-    45.877,
+    48.587,
     107.405
    ],
    "base_width": 136.603,
@@ -1013,7 +1018,7 @@
    "stars": 0,
    "note": "Relic slot 38",
    "image": [
-    98,
+    104,
     123
    ],
    "runtime": "data/buildings/papyrus.png",
@@ -1030,7 +1035,7 @@
     1
    ],
    "pivot": [
-    50.271,
+    53.639,
     89.582
    ],
    "base_width": 136.603,
@@ -1039,7 +1044,7 @@
    "stars": 1,
    "note": "Relic slot 39",
    "image": [
-    100,
+    107,
     126
    ],
    "runtime": "data/buildings/aloe.png",
@@ -1056,8 +1061,8 @@
     1
    ],
    "pivot": [
-    51.217,
-    76.9
+    51.722,
+    76.624
    ],
    "base_width": 136.603,
    "scale": 1.197882056236267,
@@ -1065,7 +1070,7 @@
    "stars": 1,
    "note": "Relic slot 40 · flowering shrub",
    "image": [
-    100,
+    101,
     101
    ],
    "runtime": "data/buildings/oleander.png",
@@ -1083,7 +1088,7 @@
    ],
    "pivot": [
     49.581,
-    63.909
+    68.842
    ],
    "base_width": 136.603,
    "scale": 1.219923496246338,
@@ -1092,7 +1097,7 @@
    "note": "Relic slot 41 · white-flowered shrub",
    "image": [
     98,
-    87
+    92
    ],
    "runtime": "data/buildings/henna.png",
    "shadow": "data/building-shadows/henna.png",
@@ -1108,7 +1113,7 @@
     1
    ],
    "pivot": [
-    40.306,
+    43.015,
     108.892
    ],
    "base_width": 136.603,
@@ -1117,7 +1122,7 @@
    "stars": 2,
    "note": "Relic slot 42",
    "image": [
-    89,
+    94,
     131
    ],
    "runtime": "data/buildings/reeds.png",
@@ -1134,7 +1139,7 @@
     1
    ],
    "pivot": [
-    50.589,
+    55.746,
     146.034
    ],
    "base_width": 136.603,
@@ -1143,7 +1148,7 @@
    "stars": 3,
    "note": "Relic slot 43",
    "image": [
-    101,
+    111,
     162
    ],
    "runtime": "data/buildings/potted_tree.png",
@@ -1161,7 +1166,7 @@
    ],
    "pivot": [
     59.177,
-    74.44
+    73.447
    ],
    "base_width": 136.603,
    "scale": 1.0,
@@ -1170,7 +1175,7 @@
    "note": "Relic slot 44",
    "image": [
     118,
-    110
+    109
    ],
    "runtime": "data/buildings/hedge.png",
    "shadow": "data/building-shadows/hedge.png",
@@ -1187,7 +1192,7 @@
    ],
    "pivot": [
     48.607,
-    48.317
+    49.831
    ],
    "base_width": 136.603,
    "scale": 1.3333332538604736,
@@ -1196,7 +1201,7 @@
    "note": "Relic slot 45",
    "image": [
     97,
-    72
+    74
    ],
    "runtime": "data/buildings/blue_lotus.png",
    "shadow": "data/building-shadows/blue_lotus.png",
@@ -1212,7 +1217,7 @@
     1
    ],
    "pivot": [
-    48.292,
+    48.376,
     76.028
    ],
    "base_width": 136.603,
@@ -1238,8 +1243,8 @@
     1
    ],
    "pivot": [
-    53.643,
-    66.614
+    52.414,
+    70.589
    ],
    "base_width": 136.603,
    "scale": 1.4203014373779297,
@@ -1247,8 +1252,8 @@
    "stars": 1,
    "note": "Relic slot 47",
    "image": [
-    106,
-    102
+    104,
+    106
    ],
    "runtime": "data/buildings/chamomile.png",
    "shadow": "data/building-shadows/chamomile.png",
@@ -1264,7 +1269,7 @@
     1
    ],
    "pivot": [
-    52.148,
+    53.151,
     96.221
    ],
    "base_width": 136.603,
@@ -1273,7 +1278,7 @@
    "stars": 2,
    "note": "Relic slot 48",
    "image": [
-    108,
+    110,
     133
    ],
    "runtime": "data/buildings/cornflowers.png",
@@ -1291,7 +1296,7 @@
    ],
    "pivot": [
     57.589,
-    58.149
+    63.52
    ],
    "base_width": 136.603,
    "scale": 1.2972972393035889,
@@ -1300,7 +1305,7 @@
    "note": "Relic slot 49",
    "image": [
     115,
-    89
+    94
    ],
    "runtime": "data/buildings/flower_box.png",
    "shadow": "data/building-shadows/flower_box.png",
@@ -1316,7 +1321,7 @@
     1
    ],
    "pivot": [
-    48.364,
+    53.821,
     96.216
    ],
    "base_width": 136.603,
@@ -1325,7 +1330,7 @@
    "stars": 3,
    "note": "Relic slot 50",
    "image": [
-    97,
+    108,
     114
    ],
    "runtime": "data/buildings/irises.png",
@@ -1343,7 +1348,7 @@
    ],
    "pivot": [
     136.406,
-    99.781
+    105.176
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1352,7 +1357,7 @@
    "note": "Relic slot 51",
    "image": [
     273,
-    187
+    192
    ],
    "runtime": "data/buildings/flower_bed.png",
    "shadow": "data/building-shadows/flower_bed.png",
@@ -1369,7 +1374,7 @@
    ],
    "pivot": [
     131.308,
-    91.609
+    102.882
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1378,7 +1383,7 @@
    "note": "Relic slot 52",
    "image": [
     262,
-    175
+    186
    ],
    "runtime": "data/buildings/pattern_bed.png",
    "shadow": "data/building-shadows/pattern_bed.png",
@@ -1394,7 +1399,7 @@
     1
    ],
    "pivot": [
-    51.665,
+    52.656,
     81.667
    ],
    "base_width": 136.603,
@@ -1403,7 +1408,7 @@
    "stars": 1,
    "note": "Relic slot 53",
    "image": [
-    92,
+    94,
     125
    ],
    "runtime": "data/buildings/broken_column.png",
@@ -1420,7 +1425,7 @@
     1
    ],
    "pivot": [
-    59.592,
+    57.266,
     119.303
    ],
    "base_width": 136.603,
@@ -1429,7 +1434,7 @@
    "stars": 1,
    "note": "Relic slot 54",
    "image": [
-    119,
+    114,
     156
    ],
    "runtime": "data/buildings/pharaoh_head.png",
@@ -1446,7 +1451,7 @@
     1
    ],
    "pivot": [
-    66.569,
+    63.523,
     167.305
    ],
    "base_width": 136.603,
@@ -1455,7 +1460,7 @@
    "stars": 2,
    "note": "Relic slot 55",
    "image": [
-    133,
+    127,
     204
    ],
    "runtime": "data/buildings/bastet_cat.png",
@@ -1472,7 +1477,7 @@
     1
    ],
    "pivot": [
-    60.177,
+    62.225,
     231.882
    ],
    "base_width": 136.603,
@@ -1481,7 +1486,7 @@
    "stars": 3,
    "note": "Relic slot 56",
    "image": [
-    120,
+    124,
     268
    ],
    "runtime": "data/buildings/obelisk.png",
@@ -1498,7 +1503,7 @@
     1
    ],
    "pivot": [
-    50.271,
+    51.785,
     119.744
    ],
    "base_width": 136.603,
@@ -1507,7 +1512,7 @@
    "stars": 3,
    "note": "Relic slot 57",
    "image": [
-    100,
+    103,
     149
    ],
    "runtime": "data/buildings/sundial.png",
@@ -1524,7 +1529,7 @@
     1
    ],
    "pivot": [
-    65.758,
+    64.236,
     127.397
    ],
    "base_width": 136.603,
@@ -1533,7 +1538,7 @@
    "stars": 4,
    "note": "Relic slot 58",
    "image": [
-    131,
+    128,
     167
    ],
    "runtime": "data/buildings/scribe_statue.png",
@@ -1550,7 +1555,7 @@
     1
    ],
    "pivot": [
-    67.858,
+    61.743,
     104.456
    ],
    "base_width": 136.603,
@@ -1559,7 +1564,7 @@
    "stars": 5,
    "note": "Relic slot 59",
    "image": [
-    135,
+    123,
     141
    ],
    "runtime": "data/buildings/golden_scarab.png",
@@ -1576,7 +1581,7 @@
     2
    ],
    "pivot": [
-    95.537,
+    92.995,
     150.103
    ],
    "base_width": 273.205,
@@ -1585,7 +1590,7 @@
    "stars": 4,
    "note": "Relic slot 60 · seated king",
    "image": [
-    191,
+    186,
     206
    ],
    "runtime": "data/buildings/colossus.png",
@@ -1603,7 +1608,7 @@
    ],
    "pivot": [
     93.902,
-    90.535
+    94.437
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1612,7 +1617,7 @@
    "note": "Relic slot 61 · reclining jackal on a chest",
    "image": [
     187,
-    142
+    146
    ],
    "runtime": "data/buildings/anubis.png",
    "shadow": "data/building-shadows/anubis.png",
@@ -1628,7 +1633,7 @@
     1
    ],
    "pivot": [
-    49.2,
+    47.394,
     96.535
    ],
    "base_width": 136.603,
@@ -1637,7 +1642,7 @@
    "stars": 1,
    "note": "Relic slot 62",
    "image": [
-    98,
+    94,
     117
    ],
    "runtime": "data/buildings/birdbath.png",
@@ -1654,7 +1659,7 @@
     1
    ],
    "pivot": [
-    50.945,
+    48.356,
     76.742
    ],
    "base_width": 136.603,
@@ -1663,7 +1668,7 @@
    "stars": 3,
    "note": "Relic slot 63",
    "image": [
-    102,
+    97,
     109
    ],
    "runtime": "data/buildings/small_fountain.png",
@@ -1681,7 +1686,7 @@
    ],
    "pivot": [
     92.748,
-    71.522
+    94.675
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1690,7 +1695,7 @@
    "note": "Relic slot 64",
    "image": [
     207,
-    130
+    153
    ],
    "runtime": "data/buildings/lotus_pond.png",
    "shadow": "data/building-shadows/lotus_pond.png",
@@ -1707,7 +1712,7 @@
    ],
    "pivot": [
     96.05,
-    66.824
+    76.308
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1716,7 +1721,7 @@
    "note": "Relic slot 65",
    "image": [
     191,
-    127
+    136
    ],
    "runtime": "data/buildings/ibis_pond.png",
    "shadow": "data/building-shadows/ibis_pond.png",
@@ -1733,7 +1738,7 @@
    ],
    "pivot": [
     115.65,
-    112.16
+    156.44
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1742,7 +1747,7 @@
    "note": "Relic slot 66 · counterweighted water lift",
    "image": [
     221,
-    156
+    200
    ],
    "runtime": "data/buildings/shaduf.png",
    "shadow": "data/building-shadows/shaduf.png",
@@ -1759,7 +1764,7 @@
    ],
    "pivot": [
     54.212,
-    59.375
+    59.446
    ],
    "base_width": 136.603,
    "scale": 1.1999999284744263,
@@ -1784,7 +1789,7 @@
     1
    ],
    "pivot": [
-    42.224,
+    40.102,
     188.124
    ],
    "base_width": 136.603,
@@ -1793,7 +1798,7 @@
    "stars": 0,
    "note": "Relic slot 68",
    "image": [
-    84,
+    80,
     214
    ],
    "runtime": "data/buildings/lamp_post.png",
@@ -1810,7 +1815,7 @@
     1
    ],
    "pivot": [
-    22.89,
+    24.215,
     179.544
    ],
    "base_width": 136.603,
@@ -1819,7 +1824,7 @@
    "stars": 1,
    "note": "Relic slot 69",
    "image": [
-    46,
+    48,
     185
    ],
    "runtime": "data/buildings/torch.png",
@@ -1836,7 +1841,7 @@
     1
    ],
    "pivot": [
-    34.081,
+    34.712,
     127.42
    ],
    "base_width": 136.603,
@@ -1845,7 +1850,7 @@
    "stars": 1,
    "note": "Relic slot 70",
    "image": [
-    76,
+    77,
     133
    ],
    "runtime": "data/buildings/signpost.png",
@@ -1862,7 +1867,7 @@
     1
    ],
    "pivot": [
-    41.053,
+    41.933,
     215.948
    ],
    "base_width": 136.603,
@@ -1871,7 +1876,7 @@
    "stars": 2,
    "note": "Relic slot 71",
    "image": [
-    82,
+    84,
     240
    ],
    "runtime": "data/buildings/standard.png",
@@ -1889,7 +1894,7 @@
    ],
    "pivot": [
     38.791,
-    38.847
+    40.143
    ],
    "base_width": 136.603,
    "scale": 1.0084278583526611,
@@ -1898,7 +1903,7 @@
    "note": "Relic slot 72",
    "image": [
     77,
-    68
+    69
    ],
    "runtime": "data/buildings/grain_mill.png",
    "shadow": "data/building-shadows/grain_mill.png",
@@ -1915,7 +1920,7 @@
    ],
    "pivot": [
     104.582,
-    67.649
+    66.157
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1924,7 +1929,7 @@
    "note": "Relic slot 73",
    "image": [
     209,
-    132
+    131
    ],
    "runtime": "data/buildings/feast_mat.png",
    "shadow": "data/building-shadows/feast_mat.png",
@@ -1940,8 +1945,8 @@
     2
    ],
    "pivot": [
-    110.742,
-    151.492
+    106.711,
+    153.682
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1949,8 +1954,8 @@
    "stars": 2,
    "note": "Relic slot 74",
    "image": [
-    219,
-    217
+    211,
+    219
    ],
    "runtime": "data/buildings/shade_canopy.png",
    "shadow": "data/building-shadows/shade_canopy.png",
@@ -1967,7 +1972,7 @@
    ],
    "pivot": [
     109.812,
-    148.606
+    144.266
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -1976,7 +1981,7 @@
    "note": "Relic slot 75",
    "image": [
     220,
-    212
+    207
    ],
    "runtime": "data/buildings/vine_pergola.png",
    "shadow": "data/building-shadows/vine_pergola.png",
@@ -1993,7 +1998,7 @@
    ],
    "pivot": [
     97.912,
-    142.337
+    135.47
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -2002,7 +2007,7 @@
    "note": "Relic slot 76",
    "image": [
     195,
-    176
+    169
    ],
    "runtime": "data/buildings/palanquin.png",
    "shadow": "data/building-shadows/palanquin.png",
@@ -2018,7 +2023,7 @@
     2
    ],
    "pivot": [
-    111.184,
+    108.942,
     177.409
    ],
    "base_width": 273.205,
@@ -2027,7 +2032,7 @@
    "stars": 4,
    "note": "Relic slot 77",
    "image": [
-    222,
+    217,
     248
    ],
    "runtime": "data/buildings/kiosk.png",
@@ -2044,7 +2049,7 @@
     1
    ],
    "pivot": [
-    48.987,
+    49.975,
     102.925
    ],
    "base_width": 136.603,
@@ -2053,7 +2058,7 @@
    "stars": 0,
    "note": "Relic slot 78",
    "image": [
-    91,
+    93,
     141
    ],
    "runtime": "data/buildings/crates.png",
@@ -2070,7 +2075,7 @@
     1
    ],
    "pivot": [
-    46.327,
+    46.187,
     61.77
    ],
    "base_width": 136.603,
@@ -2097,7 +2102,7 @@
    ],
    "pivot": [
     48.128,
-    43.301
+    41.4
    ],
    "base_width": 136.603,
    "scale": 1.2867878675460815,
@@ -2106,7 +2111,7 @@
    "note": "Relic slot 80",
    "image": [
     97,
-    73
+    71
    ],
    "runtime": "data/buildings/campfire.png",
    "shadow": "data/building-shadows/campfire.png",
@@ -2122,7 +2127,7 @@
     1
    ],
    "pivot": [
-    62.569,
+    62.594,
     96.492
    ],
    "base_width": 136.603,
@@ -2149,7 +2154,7 @@
    ],
    "pivot": [
     46.327,
-    54.996
+    51.941
    ],
    "base_width": 136.603,
    "scale": 1.307932734489441,
@@ -2158,7 +2163,7 @@
    "note": "Relic slot 82",
    "image": [
     84,
-    80
+    77
    ],
    "runtime": "data/buildings/grain_baskets.png",
    "shadow": "data/building-shadows/grain_baskets.png",
@@ -2174,7 +2179,7 @@
     1
    ],
    "pivot": [
-    39.031,
+    39.918,
     50.821
    ],
    "base_width": 136.603,
@@ -2183,7 +2188,7 @@
    "stars": 5,
    "note": "Relic slot 83",
    "image": [
-    81,
+    83,
     84
    ],
    "runtime": "data/buildings/treasure_chest.png",
@@ -2200,7 +2205,7 @@
     2
    ],
    "pivot": [
-    95.657,
+    96.523,
     125.372
    ],
    "base_width": 273.205,
@@ -2209,7 +2214,7 @@
    "stars": 1,
    "note": "Relic slot 84",
    "image": [
-    195,
+    197,
     198
    ],
    "runtime": "data/buildings/tent.png",
@@ -2227,7 +2232,7 @@
    ],
    "pivot": [
     100.623,
-    83.892
+    95.71
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -2236,7 +2241,7 @@
    "note": "Relic slot 85",
    "image": [
     199,
-    148
+    160
    ],
    "runtime": "data/buildings/dig_site.png",
    "shadow": "data/building-shadows/dig_site.png",
@@ -2253,7 +2258,7 @@
    ],
    "pivot": [
     84.265,
-    73.019
+    67.901
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -2262,7 +2267,7 @@
    "note": "Relic slot 86",
    "image": [
     168,
-    95
+    90
    ],
    "runtime": "data/buildings/reed_boat.png",
    "shadow": "data/building-shadows/reed_boat.png",
@@ -2279,7 +2284,7 @@
    ],
    "pivot": [
     74.411,
-    86.337
+    86.633
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -2305,7 +2310,7 @@
    ],
    "pivot": [
     38.118,
-    43.43
+    41.43
    ],
    "base_width": 136.603,
    "scale": 1.0752114057540894,
@@ -2314,7 +2319,7 @@
    "note": "Relic slot 88",
    "image": [
     79,
-    57
+    55
    ],
    "runtime": "data/buildings/crocodile.png",
    "shadow": "data/building-shadows/crocodile.png",
@@ -2330,7 +2335,7 @@
     1
    ],
    "pivot": [
-    40.097,
+    40.132,
     81.18
    ],
    "base_width": 136.603,
@@ -2356,7 +2361,7 @@
     1
    ],
    "pivot": [
-    41.053,
+    44.03,
     166.01
    ],
    "base_width": 136.603,
@@ -2365,7 +2370,7 @@
    "stars": 3,
    "note": "Relic slot 90",
    "image": [
-    82,
+    88,
     190
    ],
    "runtime": "data/buildings/falcon.png",
@@ -2382,7 +2387,7 @@
     1
    ],
    "pivot": [
-    46.517,
+    45.589,
     115.276
    ],
    "base_width": 136.603,
@@ -2391,7 +2396,7 @@
    "stars": 4,
    "note": "Relic slot 91",
    "image": [
-    93,
+    91,
     143
    ],
    "runtime": "data/buildings/cat.png",
@@ -2409,7 +2414,7 @@
    ],
    "pivot": [
     37.391,
-    43.058
+    42.235
    ],
    "base_width": 136.603,
    "scale": 1.09590482711792,
@@ -2418,7 +2423,7 @@
    "note": "Relic slot 92",
    "image": [
     83,
-    60
+    59
    ],
    "runtime": "data/buildings/hippo.png",
    "shadow": "data/building-shadows/hippo.png",
@@ -2434,7 +2439,7 @@
     1
    ],
    "pivot": [
-    42.363,
+    47.155,
     65.544
    ],
    "base_width": 136.603,
@@ -2443,7 +2448,7 @@
    "stars": 0,
    "note": "Relic slot 93",
    "image": [
-    84,
+    94,
     98
    ],
    "runtime": "data/buildings/boulder.png",
@@ -2460,7 +2465,7 @@
     1
    ],
    "pivot": [
-    40.695,
+    38.782,
     93.948
    ],
    "base_width": 136.603,
@@ -2469,7 +2474,7 @@
    "stars": 5,
    "note": "Relic slot 94",
    "image": [
-    89,
+    85,
     109
    ],
    "runtime": "data/buildings/turquoise.png",
@@ -2487,7 +2492,7 @@
    ],
    "pivot": [
     92.362,
-    106.835
+    95.601
    ],
    "base_width": 273.205,
    "scale": 1.0,
@@ -2496,7 +2501,7 @@
    "note": "Relic slot 95",
    "image": [
     178,
-    173
+    162
    ],
    "runtime": "data/buildings/desert_rocks.png",
    "shadow": "data/building-shadows/desert_rocks.png",

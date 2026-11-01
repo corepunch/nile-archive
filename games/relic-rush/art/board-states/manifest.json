@@ -878,5 +878,14 @@
     "specials": "full-size base gems with compact lightning or bomb badges; full rainbow prism; no enclosing hex frames",
     "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; 1/2 hit counter",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
+  },
+  "building_paintover": {
+    "source": "art/building-catalogue/painted-v1",
+    "registration": "art/building-catalogue/registration.json",
+    "runtime": "data/buildings/<key>.png",
+    "normal": "authored ImageGen paint-over of the current-camera Blender render",
+    "interaction_states": "unchanged engine placement, lift, valid/invalid footprint and shop controls",
+    "reproduction": "python3 tools/import_painted_buildings.py relic-rush",
+    "review": "docs/review/painted-buildings/current-camera/README.md"
   }
 }

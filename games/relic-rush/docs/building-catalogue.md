@@ -44,17 +44,24 @@ two lantern steles, curved benches and planters. The legacy key `gateway` and nu
 ID 4 stay stable for saves and story order. Restoration costs remain 140 gold, 30 wood
 and 30 stone.
 
-### Known gap: no paint-over
+### Painted current-camera sprites
 
-Runtime sprites are direct Blender renders. The earlier hand-directed ImageGen
-paint-overs were drawn from the old 2:1 view and can't be turned to the new camera,
-so they are no longer used. They remain in `art/building-catalogue/` as references:
-`paintover-atlas*.png`, `paintover-buildings.png`, `paintover-wonders*.png`,
-`detail-reference.png`, their prompts, and `geometry-atlas*.png` (old camera). A new
-paint pass would use the new renders as its guide, keep the registry's footprints,
-and pass the checks below. Acceptance: all 96 painted together, per-category atlas,
-base corners on the footprint in `--footprints` captures. Tracked in
-[this issue](https://github.com/corepunch/nile-archive/issues/41).
+All 96 sprites now have a category ImageGen paint-over on the current Blender
+renders. The earlier `paintover-*.png` and `detail-reference.png` supplied the
+painted masonry, carved teal/gold ornament, roof tiles, cloth, foliage and warm
+lighting direction. The Sunstone courtyard keeps its current sun-mosaic design.
+
+`art/building-catalogue/painted-v1/` retains every input atlas, generated output,
+prompt, cell layout, original render registration and `imports.json` mapping each
+runtime key to its source and crop/scale/translation. `hedge` overrides the final
+`bush` cell: the first pass mistakenly painted it as a stone block. The first
+wonder pass is retained in `versions/first/`; the accepted atlas gives the temple
+more gutter space. No colour filters, procedural detail or replacement alpha masks
+are used. Sources remain locked to the current camera.
+
+Reproduce with `python3 tools/import_painted_buildings.py relic-rush`. See the
+[before/after and complete footprint review](review/painted-buildings/current-camera/README.md).
+This completes the building paint pass tracked in [#41](https://github.com/corepunch/nile-archive/issues/41).
 
 ## Separate ground shadows
 
@@ -108,99 +115,99 @@ sprite file is always `data/buildings/<key>.png`.
 
 | ID / key | Name | Category | Tiles | Gold | Stars | Reviewed city capture |
 | --- | --- | --- | --- | ---: | ---: | --- |
-| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 60 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 1 / `well` | Spring well | wonder | 2 x 2 | 80 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 100 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 3 / `market` | Jungle market | wonder | 3 x 2 | 120 | 0 | [Page 1](review/building-catalogue/footprints-01.jpg) |
-| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 140 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 160 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 180 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 7 / `observatory` | Star observatory | wonder | 2 x 2 | 200 | 0 | [Page 2](review/building-catalogue/footprints-02.jpg) |
-| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 220 | 0 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 250 | 0 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 10 / `log_cabin` | Trapper's cabin | building | 2 x 2 | 200 | 6 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 11 / `apothecary` | Herbalist's hut | building | 2 x 2 | 220 | 6 | [Page 3](review/building-catalogue/footprints-03.jpg) |
-| 12 / `mess_hall` | Mess hall | building | 3 x 2 | 240 | 9 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 13 / `stilt_house` | Stilt house | building | 3 x 2 | 260 | 9 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 14 / `map_room` | Cartographer's house | building | 3 x 2 | 280 | 12 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 15 / `greenhouse` | Glass greenhouse | building | 3 x 2 | 300 | 12 | [Page 4](review/building-catalogue/footprints-04.jpg) |
-| 16 / `trading_post` | Trading post | building | 3 x 3 | 320 | 15 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 17 / `water_mill` | Water mill | building | 3 x 3 | 340 | 15 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 18 / `clock_tower` | Clock tower | building | 2 x 2 | 360 | 18 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 19 / `lighthouse` | Valley lighthouse | building | 2 x 2 | 380 | 18 | [Page 5](review/building-catalogue/footprints-05.jpg) |
-| 20 / `treehouse` | Canopy treehouse | building | 3 x 3 | 400 | 21 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 21 / `aviary` | Great aviary | building | 3 x 3 | 420 | 21 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 22 / `beached_ship` | Beached schooner | building | 4 x 2 | 440 | 24 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 23 / `amphitheater` | Stone amphitheatre | building | 4 x 3 | 460 | 24 | [Page 6](review/building-catalogue/footprints-06.jpg) |
-| 24 / `museum` | Relic museum | building | 4 x 3 | 500 | 27 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 25 / `hanging_gardens` | Hanging gardens | building | 4 x 4 | 550 | 30 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 26 / `palm_young` | Young palm | tree | 1 x 1 | 30 | 0 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 27 / `jungle_tree` | Round jungle tree | tree | 1 x 1 | 30 | 0 | [Page 7](review/building-catalogue/footprints-07.jpg) |
-| 28 / `cypress` | Temple cypress | tree | 1 x 1 | 45 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 29 / `banana` | Banana plant | tree | 1 x 1 | 45 | 3 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 30 / `fan_palm` | Fan palm | tree | 1 x 1 | 45 | 6 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 31 / `papaya` | Papaya tree | tree | 1 x 1 | 60 | 9 | [Page 8](review/building-catalogue/footprints-08.jpg) |
-| 32 / `frangipani` | Frangipani | tree | 1 x 1 | 75 | 12 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 33 / `bamboo` | Bamboo grove | tree | 2 x 2 | 120 | 6 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 34 / `twin_palms` | Twin palms | tree | 2 x 2 | 150 | 6 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 35 / `mango` | Mango tree | tree | 2 x 2 | 180 | 9 | [Page 9](review/building-catalogue/footprints-09.jpg) |
-| 36 / `kapok` | Giant kapok | tree | 2 x 2 | 300 | 18 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 37 / `shrub` | Round shrub | bush | 1 x 1 | 15 | 0 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 38 / `fern` | Forest fern | bush | 1 x 1 | 15 | 0 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 39 / `monstera` | Big-leaf monstera | bush | 1 x 1 | 30 | 3 | [Page 10](review/building-catalogue/footprints-10.jpg) |
-| 40 / `flower_shrub` | Flowering shrub | bush | 1 x 1 | 30 | 3 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 41 / `berry` | Berry bush | bush | 1 x 1 | 30 | 6 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 42 / `reeds` | Riverside reeds | bush | 1 x 1 | 30 | 6 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 43 / `topiary` | Topiary ball | bush | 1 x 1 | 45 | 9 | [Page 11](review/building-catalogue/footprints-11.jpg) |
-| 44 / `hedge` | Clipped hedge block | bush | 1 x 1 | 30 | 9 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 45 / `orchid` | Wild orchids | flower | 1 x 1 | 15 | 0 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 46 / `hibiscus` | Red hibiscus | flower | 1 x 1 | 15 | 0 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 47 / `daisies` | Sunny daisies | flower | 1 x 1 | 15 | 3 | [Page 12](review/building-catalogue/footprints-12.jpg) |
-| 48 / `blue_lily` | Blue lilies | flower | 1 x 1 | 30 | 6 | [Page 13](review/building-catalogue/footprints-13.jpg) |
-| 49 / `flower_box` | Flower planter | flower | 1 x 1 | 30 | 6 | [Page 13](review/building-catalogue/footprints-13.jpg) |
-| 50 / `bromeliad` | Blooming bromeliad | flower | 1 x 1 | 30 | 9 | [Page 13](review/building-catalogue/footprints-13.jpg) |
-| 51 / `flower_bed` | Flower bed | flower | 2 x 2 | 90 | 6 | [Page 13](review/building-catalogue/footprints-13.jpg) |
-| 52 / `rainbow_bed` | Rainbow garden | flower | 2 x 2 | 180 | 15 | [Page 14](review/building-catalogue/footprints-14.jpg) |
-| 53 / `broken_column` | Broken column | statue | 1 x 1 | 30 | 3 | [Page 14](review/building-catalogue/footprints-14.jpg) |
-| 54 / `idol_head` | Stone idol | statue | 1 x 1 | 45 | 3 | [Page 14](review/building-catalogue/footprints-14.jpg) |
-| 55 / `jaguar` | Jaguar guardian | statue | 1 x 1 | 60 | 6 | [Page 14](review/building-catalogue/footprints-14.jpg) |
-| 56 / `obelisk` | Sun obelisk | statue | 1 x 1 | 60 | 9 | [Page 15](review/building-catalogue/footprints-15.jpg) |
-| 57 / `sundial` | Sundial | statue | 1 x 1 | 60 | 9 | [Page 15](review/building-catalogue/footprints-15.jpg) |
-| 58 / `explorer` | Explorer statue | statue | 1 x 1 | 90 | 12 | [Page 15](review/building-catalogue/footprints-15.jpg) |
-| 59 / `gold_idol` | Golden idol | statue | 1 x 1 | 150 | 18 | [Page 15](review/building-catalogue/footprints-15.jpg) |
-| 60 / `stone_arch` | Ruined arch | statue | 2 x 2 | 180 | 12 | [Page 16](review/building-catalogue/footprints-16.jpg) |
-| 61 / `giant_head` | Giant stone head | statue | 2 x 2 | 240 | 15 | [Page 16](review/building-catalogue/footprints-16.jpg) |
-| 62 / `birdbath` | Birdbath | water | 1 x 1 | 45 | 3 | [Page 16](review/building-catalogue/footprints-16.jpg) |
-| 63 / `small_fountain` | Little fountain | water | 1 x 1 | 90 | 9 | [Page 16](review/building-catalogue/footprints-16.jpg) |
-| 64 / `lily_pond` | Lily pond | water | 2 x 2 | 120 | 6 | [Page 17](review/building-catalogue/footprints-17.jpg) |
-| 65 / `duck_pond` | Duck pond | water | 2 x 2 | 150 | 9 | [Page 17](review/building-catalogue/footprints-17.jpg) |
-| 66 / `spring_rocks` | Rock spring | water | 2 x 2 | 240 | 15 | [Page 17](review/building-catalogue/footprints-17.jpg) |
-| 67 / `bench` | Garden bench | garden | 1 x 1 | 30 | 0 | [Page 17](review/building-catalogue/footprints-17.jpg) |
-| 68 / `lantern` | Lantern post | garden | 1 x 1 | 30 | 0 | [Page 18](review/building-catalogue/footprints-18.jpg) |
-| 69 / `tiki` | Tiki torch | garden | 1 x 1 | 30 | 3 | [Page 18](review/building-catalogue/footprints-18.jpg) |
-| 70 / `signpost` | Signpost | garden | 1 x 1 | 30 | 3 | [Page 18](review/building-catalogue/footprints-18.jpg) |
-| 71 / `flagpole` | Expedition flag | garden | 1 x 1 | 45 | 6 | [Page 18](review/building-catalogue/footprints-18.jpg) |
-| 72 / `pump` | Water pump | garden | 1 x 1 | 45 | 9 | [Page 19](review/building-catalogue/footprints-19.jpg) |
-| 73 / `picnic` | Picnic rug | garden | 2 x 2 | 120 | 6 | [Page 19](review/building-catalogue/footprints-19.jpg) |
-| 74 / `hammock` | Palm hammock | garden | 2 x 2 | 150 | 6 | [Page 19](review/building-catalogue/footprints-19.jpg) |
-| 75 / `pergola` | Vine pergola | garden | 2 x 2 | 180 | 9 | [Page 19](review/building-catalogue/footprints-19.jpg) |
-| 76 / `swing` | Garden swing | garden | 2 x 2 | 240 | 12 | [Page 20](review/building-catalogue/footprints-20.jpg) |
-| 77 / `gazebo` | Jade gazebo | garden | 2 x 2 | 300 | 12 | [Page 20](review/building-catalogue/footprints-20.jpg) |
-| 78 / `crates` | Supply crates | camp | 1 x 1 | 15 | 0 | [Page 20](review/building-catalogue/footprints-20.jpg) |
-| 79 / `barrels` | Barrels | camp | 1 x 1 | 15 | 0 | [Page 20](review/building-catalogue/footprints-20.jpg) |
-| 80 / `campfire` | Campfire | camp | 1 x 1 | 30 | 0 | [Page 21](review/building-catalogue/footprints-21.jpg) |
-| 81 / `field_scope` | Field telescope | camp | 1 x 1 | 60 | 9 | [Page 21](review/building-catalogue/footprints-21.jpg) |
-| 82 / `globe` | Explorer's globe | camp | 1 x 1 | 90 | 15 | [Page 21](review/building-catalogue/footprints-21.jpg) |
-| 83 / `chest` | Treasure chest | camp | 1 x 1 | 120 | 15 | [Page 21](review/building-catalogue/footprints-21.jpg) |
-| 84 / `supply_tent` | Supply tent | camp | 2 x 2 | 120 | 3 | [Page 22](review/building-catalogue/footprints-22.jpg) |
-| 85 / `dig_site` | Dig site | camp | 2 x 2 | 120 | 6 | [Page 22](review/building-catalogue/footprints-22.jpg) |
-| 86 / `rowboat` | Rowboat | camp | 2 x 2 | 150 | 9 | [Page 22](review/building-catalogue/footprints-22.jpg) |
-| 87 / `cart` | Market cart | camp | 2 x 2 | 180 | 9 | [Page 22](review/building-catalogue/footprints-22.jpg) |
-| 88 / `turtle` | Sunning turtle | animal | 1 x 1 | 60 | 6 | [Page 23](review/building-catalogue/footprints-23.jpg) |
-| 89 / `toucan` | Toucan perch | animal | 1 x 1 | 60 | 6 | [Page 23](review/building-catalogue/footprints-23.jpg) |
-| 90 / `parrot` | Parrot perch | animal | 1 x 1 | 60 | 9 | [Page 23](review/building-catalogue/footprints-23.jpg) |
-| 91 / `monkey` | Curious monkey | animal | 1 x 1 | 90 | 12 | [Page 23](review/building-catalogue/footprints-23.jpg) |
-| 92 / `capybara` | Capybara | animal | 1 x 1 | 90 | 12 | [Page 24](review/building-catalogue/footprints-24.jpg) |
-| 93 / `boulder` | Boulder | rock | 1 x 1 | 15 | 0 | [Page 24](review/building-catalogue/footprints-24.jpg) |
-| 94 / `crystal` | Crystal cluster | rock | 1 x 1 | 120 | 18 | [Page 24](review/building-catalogue/footprints-24.jpg) |
-| 95 / `mossy_rocks` | Mossy boulders | rock | 2 x 2 | 60 | 3 | [Page 24](review/building-catalogue/footprints-24.jpg) |
+| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 60 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `well` | Spring well | wonder | 2 x 2 | 80 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 100 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `market` | Jungle market | wonder | 3 x 2 | 120 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 140 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 160 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 180 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 7 / `observatory` | Star observatory | wonder | 2 x 2 | 200 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 220 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 250 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 10 / `log_cabin` | Trapper's cabin | building | 2 x 2 | 200 | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 11 / `apothecary` | Herbalist's hut | building | 2 x 2 | 220 | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 12 / `mess_hall` | Mess hall | building | 3 x 2 | 240 | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 13 / `stilt_house` | Stilt house | building | 3 x 2 | 260 | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 14 / `map_room` | Cartographer's house | building | 3 x 2 | 280 | 12 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 15 / `greenhouse` | Glass greenhouse | building | 3 x 2 | 300 | 12 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 16 / `trading_post` | Trading post | building | 3 x 3 | 320 | 15 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 17 / `water_mill` | Water mill | building | 3 x 3 | 340 | 15 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 18 / `clock_tower` | Clock tower | building | 2 x 2 | 360 | 18 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 19 / `lighthouse` | Valley lighthouse | building | 2 x 2 | 380 | 18 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 20 / `treehouse` | Canopy treehouse | building | 3 x 3 | 400 | 21 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 21 / `aviary` | Great aviary | building | 3 x 3 | 420 | 21 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 22 / `beached_ship` | Beached schooner | building | 4 x 2 | 440 | 24 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 23 / `amphitheater` | Stone amphitheatre | building | 4 x 3 | 460 | 24 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 24 / `museum` | Relic museum | building | 4 x 3 | 500 | 27 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 25 / `hanging_gardens` | Hanging gardens | building | 4 x 4 | 550 | 30 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 26 / `palm_young` | Young palm | tree | 1 x 1 | 30 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 27 / `jungle_tree` | Round jungle tree | tree | 1 x 1 | 30 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 28 / `cypress` | Temple cypress | tree | 1 x 1 | 45 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 29 / `banana` | Banana plant | tree | 1 x 1 | 45 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 30 / `fan_palm` | Fan palm | tree | 1 x 1 | 45 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 31 / `papaya` | Papaya tree | tree | 1 x 1 | 60 | 9 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 32 / `frangipani` | Frangipani | tree | 1 x 1 | 75 | 12 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 33 / `bamboo` | Bamboo grove | tree | 2 x 2 | 120 | 6 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 34 / `twin_palms` | Twin palms | tree | 2 x 2 | 150 | 6 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 35 / `mango` | Mango tree | tree | 2 x 2 | 180 | 9 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 36 / `kapok` | Giant kapok | tree | 2 x 2 | 300 | 18 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 37 / `shrub` | Round shrub | bush | 1 x 1 | 15 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 38 / `fern` | Forest fern | bush | 1 x 1 | 15 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 39 / `monstera` | Big-leaf monstera | bush | 1 x 1 | 30 | 3 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 40 / `flower_shrub` | Flowering shrub | bush | 1 x 1 | 30 | 3 | [Page 11](review/painted-buildings/current-camera/after-building-review-11.jpg) |
+| 41 / `berry` | Berry bush | bush | 1 x 1 | 30 | 6 | [Page 11](review/painted-buildings/current-camera/after-building-review-11.jpg) |
+| 42 / `reeds` | Riverside reeds | bush | 1 x 1 | 30 | 6 | [Page 11](review/painted-buildings/current-camera/after-building-review-11.jpg) |
+| 43 / `topiary` | Topiary ball | bush | 1 x 1 | 45 | 9 | [Page 11](review/painted-buildings/current-camera/after-building-review-11.jpg) |
+| 44 / `hedge` | Clipped hedge block | bush | 1 x 1 | 30 | 9 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
+| 45 / `orchid` | Wild orchids | flower | 1 x 1 | 15 | 0 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
+| 46 / `hibiscus` | Red hibiscus | flower | 1 x 1 | 15 | 0 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
+| 47 / `daisies` | Sunny daisies | flower | 1 x 1 | 15 | 3 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
+| 48 / `blue_lily` | Blue lilies | flower | 1 x 1 | 30 | 6 | [Page 13](review/painted-buildings/current-camera/after-building-review-13.jpg) |
+| 49 / `flower_box` | Flower planter | flower | 1 x 1 | 30 | 6 | [Page 13](review/painted-buildings/current-camera/after-building-review-13.jpg) |
+| 50 / `bromeliad` | Blooming bromeliad | flower | 1 x 1 | 30 | 9 | [Page 13](review/painted-buildings/current-camera/after-building-review-13.jpg) |
+| 51 / `flower_bed` | Flower bed | flower | 2 x 2 | 90 | 6 | [Page 13](review/painted-buildings/current-camera/after-building-review-13.jpg) |
+| 52 / `rainbow_bed` | Rainbow garden | flower | 2 x 2 | 180 | 15 | [Page 14](review/painted-buildings/current-camera/after-building-review-14.jpg) |
+| 53 / `broken_column` | Broken column | statue | 1 x 1 | 30 | 3 | [Page 14](review/painted-buildings/current-camera/after-building-review-14.jpg) |
+| 54 / `idol_head` | Stone idol | statue | 1 x 1 | 45 | 3 | [Page 14](review/painted-buildings/current-camera/after-building-review-14.jpg) |
+| 55 / `jaguar` | Jaguar guardian | statue | 1 x 1 | 60 | 6 | [Page 14](review/painted-buildings/current-camera/after-building-review-14.jpg) |
+| 56 / `obelisk` | Sun obelisk | statue | 1 x 1 | 60 | 9 | [Page 15](review/painted-buildings/current-camera/after-building-review-15.jpg) |
+| 57 / `sundial` | Sundial | statue | 1 x 1 | 60 | 9 | [Page 15](review/painted-buildings/current-camera/after-building-review-15.jpg) |
+| 58 / `explorer` | Explorer statue | statue | 1 x 1 | 90 | 12 | [Page 15](review/painted-buildings/current-camera/after-building-review-15.jpg) |
+| 59 / `gold_idol` | Golden idol | statue | 1 x 1 | 150 | 18 | [Page 15](review/painted-buildings/current-camera/after-building-review-15.jpg) |
+| 60 / `stone_arch` | Ruined arch | statue | 2 x 2 | 180 | 12 | [Page 16](review/painted-buildings/current-camera/after-building-review-16.jpg) |
+| 61 / `giant_head` | Giant stone head | statue | 2 x 2 | 240 | 15 | [Page 16](review/painted-buildings/current-camera/after-building-review-16.jpg) |
+| 62 / `birdbath` | Birdbath | water | 1 x 1 | 45 | 3 | [Page 16](review/painted-buildings/current-camera/after-building-review-16.jpg) |
+| 63 / `small_fountain` | Little fountain | water | 1 x 1 | 90 | 9 | [Page 16](review/painted-buildings/current-camera/after-building-review-16.jpg) |
+| 64 / `lily_pond` | Lily pond | water | 2 x 2 | 120 | 6 | [Page 17](review/painted-buildings/current-camera/after-building-review-17.jpg) |
+| 65 / `duck_pond` | Duck pond | water | 2 x 2 | 150 | 9 | [Page 17](review/painted-buildings/current-camera/after-building-review-17.jpg) |
+| 66 / `spring_rocks` | Rock spring | water | 2 x 2 | 240 | 15 | [Page 17](review/painted-buildings/current-camera/after-building-review-17.jpg) |
+| 67 / `bench` | Garden bench | garden | 1 x 1 | 30 | 0 | [Page 17](review/painted-buildings/current-camera/after-building-review-17.jpg) |
+| 68 / `lantern` | Lantern post | garden | 1 x 1 | 30 | 0 | [Page 18](review/painted-buildings/current-camera/after-building-review-18.jpg) |
+| 69 / `tiki` | Tiki torch | garden | 1 x 1 | 30 | 3 | [Page 18](review/painted-buildings/current-camera/after-building-review-18.jpg) |
+| 70 / `signpost` | Signpost | garden | 1 x 1 | 30 | 3 | [Page 18](review/painted-buildings/current-camera/after-building-review-18.jpg) |
+| 71 / `flagpole` | Expedition flag | garden | 1 x 1 | 45 | 6 | [Page 18](review/painted-buildings/current-camera/after-building-review-18.jpg) |
+| 72 / `pump` | Water pump | garden | 1 x 1 | 45 | 9 | [Page 19](review/painted-buildings/current-camera/after-building-review-19.jpg) |
+| 73 / `picnic` | Picnic rug | garden | 2 x 2 | 120 | 6 | [Page 19](review/painted-buildings/current-camera/after-building-review-19.jpg) |
+| 74 / `hammock` | Palm hammock | garden | 2 x 2 | 150 | 6 | [Page 19](review/painted-buildings/current-camera/after-building-review-19.jpg) |
+| 75 / `pergola` | Vine pergola | garden | 2 x 2 | 180 | 9 | [Page 19](review/painted-buildings/current-camera/after-building-review-19.jpg) |
+| 76 / `swing` | Garden swing | garden | 2 x 2 | 240 | 12 | [Page 20](review/painted-buildings/current-camera/after-building-review-20.jpg) |
+| 77 / `gazebo` | Jade gazebo | garden | 2 x 2 | 300 | 12 | [Page 20](review/painted-buildings/current-camera/after-building-review-20.jpg) |
+| 78 / `crates` | Supply crates | camp | 1 x 1 | 15 | 0 | [Page 20](review/painted-buildings/current-camera/after-building-review-20.jpg) |
+| 79 / `barrels` | Barrels | camp | 1 x 1 | 15 | 0 | [Page 20](review/painted-buildings/current-camera/after-building-review-20.jpg) |
+| 80 / `campfire` | Campfire | camp | 1 x 1 | 30 | 0 | [Page 21](review/painted-buildings/current-camera/after-building-review-21.jpg) |
+| 81 / `field_scope` | Field telescope | camp | 1 x 1 | 60 | 9 | [Page 21](review/painted-buildings/current-camera/after-building-review-21.jpg) |
+| 82 / `globe` | Explorer's globe | camp | 1 x 1 | 90 | 15 | [Page 21](review/painted-buildings/current-camera/after-building-review-21.jpg) |
+| 83 / `chest` | Treasure chest | camp | 1 x 1 | 120 | 15 | [Page 21](review/painted-buildings/current-camera/after-building-review-21.jpg) |
+| 84 / `supply_tent` | Supply tent | camp | 2 x 2 | 120 | 3 | [Page 22](review/painted-buildings/current-camera/after-building-review-22.jpg) |
+| 85 / `dig_site` | Dig site | camp | 2 x 2 | 120 | 6 | [Page 22](review/painted-buildings/current-camera/after-building-review-22.jpg) |
+| 86 / `rowboat` | Rowboat | camp | 2 x 2 | 150 | 9 | [Page 22](review/painted-buildings/current-camera/after-building-review-22.jpg) |
+| 87 / `cart` | Market cart | camp | 2 x 2 | 180 | 9 | [Page 22](review/painted-buildings/current-camera/after-building-review-22.jpg) |
+| 88 / `turtle` | Sunning turtle | animal | 1 x 1 | 60 | 6 | [Page 23](review/painted-buildings/current-camera/after-building-review-23.jpg) |
+| 89 / `toucan` | Toucan perch | animal | 1 x 1 | 60 | 6 | [Page 23](review/painted-buildings/current-camera/after-building-review-23.jpg) |
+| 90 / `parrot` | Parrot perch | animal | 1 x 1 | 60 | 9 | [Page 23](review/painted-buildings/current-camera/after-building-review-23.jpg) |
+| 91 / `monkey` | Curious monkey | animal | 1 x 1 | 90 | 12 | [Page 23](review/painted-buildings/current-camera/after-building-review-23.jpg) |
+| 92 / `capybara` | Capybara | animal | 1 x 1 | 90 | 12 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
+| 93 / `boulder` | Boulder | rock | 1 x 1 | 15 | 0 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
+| 94 / `crystal` | Crystal cluster | rock | 1 x 1 | 120 | 18 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
+| 95 / `mossy_rocks` | Mossy boulders | rock | 2 x 2 | 60 | 3 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
