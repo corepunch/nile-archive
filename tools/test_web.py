@@ -17,7 +17,7 @@ def main():
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(args=['--enable-unsafe-swiftshader'])
-            for game in ('nile-archive', 'relic-rush', 'christmas-market', 'volcano'):
+            for game in ('nile-archive', 'relic-rush', 'christmas-market', 'emergency'):
                 page = browser.new_page(viewport={'width': 800, 'height': 600})
                 errors = []
                 page.on('pageerror', lambda error: errors.append(str(error)))

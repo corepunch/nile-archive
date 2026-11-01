@@ -9,9 +9,61 @@ open games/relic-rush/relic-rush.xcodeproj
 ```
 
 Choose `nile-archive-macos` / `nile-archive-ipad`, `relic-rush-macos` /
-`relic-rush-iphone`, or `volcano-macos` / `volcano-ipad`. iOS requires 16+;
+`relic-rush-iphone`, or `emergency-macos` / `emergency-ipad`. iOS requires 16+;
 macOS requires 12+. Clone recursively or run `git submodule update --init`
 for the pinned Lua and corepunch/platform dependencies.
+
+## Deploy to a connected iPhone or iPad
+
+Like orion-ui's `ipad-deploy`, each game's `ios` Make target builds, signs,
+installs and launches on an available physical device:
+
+```sh
+make -C games/nile-archive ios       # iPad
+make -C games/relic-rush ios         # iPhone
+make -C games/christmas-market ios   # prefers iPhone; also supports iPad
+make -C games/emergency ios            # iPad
+
+# Equivalent repository-root targets:
+make ios-nile-archive
+make ios-relic-rush
+make ios-christmas-market
+make ios-emergency
+make ios GAME=relic-rush            # GAME defaults to nile-archive
+make list-devices
+make ios-relic-rush DEVICE="Igor’s iPhone 14 Pro Max"
+make ios-emergency DEVICE=<UDID> TEAM=<development-team-id>
+```
+
+`tools/xcode/deploy.py` queries `xcrun devicectl` using JSON, excluding
+unavailable devices and simulators. It chooses the only available device in
+the game's preferred family. Christmas Market falls back to iPad if no iPhone
+is available; `DEVICE` may select either supported family. Missing or ambiguous
+selection stops before building and lists the matching names. `DEVICE` accepts
+an exact device name, hardware UDID, CoreDevice identifier or ECID.
+
+Connect/pair the device in Xcode, enable Developer Mode and unlock it. Device
+deployment requires macOS and Xcode 16+. The helper uses the project's existing
+signing team, or the unique team in installed Apple Development certificates
+with valid signing identities if the project has none. The certificate's OU
+supplies the team; its common-name suffix is a person ID. Set `TEAM` to override
+it. Xcode automatic provisioning and
+device registration are enabled; a valid development certificate and an Xcode
+account or matching installed provisioning profile are still needed. The helper
+never edits the committed signing configuration or bundle identifier.
+
+`CONFIGURATION=Release` selects a release build; Debug is the default.
+`IOS_BUILD_DIR=/path` overrides the shared `build/ios` DerivedData directory.
+`ARGS='--fresh --mute'` forwards arguments only to the launched game. Installation
+runs only after a successful build, and launch only after a successful install.
+The app's actual built Info.plist supplies its bundle identifier.
+
+Device builds stay local because they use connected hardware and local signing
+keys. Xcode intermediates, copied app assets and SDK caches may exceed 500 MB;
+the shared build directory avoids separate SDK caches for each game.
+`make test-ios-deploy` checks both device JSON formats, all games' family/scheme
+selection, signing fallback, and failure boundaries without building or touching
+a device. These checks also run in the default test suite and CI preflight.
 
 ## Compilation
 

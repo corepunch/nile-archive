@@ -66,7 +66,7 @@ Direct test binaries retain their complete integration manifest by default:
 | `build/test/relic-rush` | Its rules, smoke runs, screens, reels and gestures |
 | `build/test/nile-archive` | Its smoke run, screens and gestures |
 | `build/test/christmas-market` | Its rules, smoke run and screens |
-| `build/test/volcano` | Its rules, smoke run and screens |
+| `build/test/emergency` | Its rules, smoke run and screens |
 
 Audio keeps its own small binary for tone playback, muting and device lifecycle.
 Clayfight and its native/JavaScript checks
@@ -164,7 +164,7 @@ The same binaries and manifests support a window-free pass:
 
 ```sh
 make test-fast
-make test-relic-rush             # substitute nile-archive, christmas-market or volcano
+make test-relic-rush             # substitute nile-archive, christmas-market or emergency
 make test-engine
 make test-extended               # CPU/rules, larger deterministic sample
 build/test/relic-rush --fast     # same executable used for full screenshots and smoke
@@ -218,7 +218,7 @@ phases, paused waves, cascades and dead-board recovery.
 each requirement one short, exact funds, preview/cancel, exact deductions and
 rewards, duplicate confirmation and free moving. Engine cases cover both quick
 and confirm paths, all resource slots together, full cities, blocked terrain,
-region unlocks, the income boundary and injected hold/move/cancel input. Volcano
+region unlocks, the income boundary and injected hold/move/cancel input. Emergency
 checks all job costs, duplicate dispatch and blocked/paused/busy/unreachable work.
 
 The embedded shared-engine module exposes `match3.new(config)`. Its direct

@@ -1,0 +1,640 @@
+// !$*UTF8*$!
+{"archiveVersion" = 1;
+"classes" = {};
+"objectVersion" = 56;
+"objects" = {"09AA38CEF3EA53936A20C858" = {"isa" = "XCBuildConfiguration";
+"name" = "Debug";
+"buildSettings" = {"ENGINE_ROOT" = "$(SRCROOT)/../..";
+"SDKROOT" = "macosx";
+"GCC_C_LANGUAGE_STANDARD" = "c11";
+"CLANG_ENABLE_OBJC_ARC" = "NO";
+"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+"ALWAYS_SEARCH_USER_PATHS" = "NO";
+"GCC_WARN_INHIBIT_ALL_WARNINGS" = "NO";
+"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+"HEADER_SEARCH_PATHS" = ("$(ENGINE_ROOT)/engine",
+);
+"GCC_PREPROCESSOR_DEFINITIONS" = ("$(inherited)",
+"GAME_IN_BUNDLE=1",
+"GAME_DIR=\\\"games/emergency\\\"",
+);
+"OTHER_CFLAGS" = ("$(inherited)",
+"-Wall",
+"-Wextra",
+"-Wno-unused-parameter",
+"-Wno-missing-field-initializers",
+"-Wno-deprecated-declarations",
+);
+"PRODUCT_NAME" = "emergency";
+"PRODUCT_BUNDLE_IDENTIFIER" = "com.corepunch.volcano";
+"MARKETING_VERSION" = "1.0";
+"CURRENT_PROJECT_VERSION" = "1";
+"ENABLE_HARDENED_RUNTIME" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "0";
+"DEBUG_INFORMATION_FORMAT" = "dwarf";
+"ONLY_ACTIVE_ARCH" = "YES";
+};
+};
+"2C51B24F1BD0E37CCD3A85CD" = {"isa" = "XCBuildConfiguration";
+"name" = "Release";
+"buildSettings" = {"ENGINE_ROOT" = "$(SRCROOT)/../..";
+"SDKROOT" = "macosx";
+"GCC_C_LANGUAGE_STANDARD" = "c11";
+"CLANG_ENABLE_OBJC_ARC" = "NO";
+"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+"ALWAYS_SEARCH_USER_PATHS" = "NO";
+"GCC_WARN_INHIBIT_ALL_WARNINGS" = "NO";
+"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+"HEADER_SEARCH_PATHS" = ("$(ENGINE_ROOT)/engine",
+);
+"GCC_PREPROCESSOR_DEFINITIONS" = ("$(inherited)",
+"GAME_IN_BUNDLE=1",
+"GAME_DIR=\\\"games/emergency\\\"",
+);
+"OTHER_CFLAGS" = ("$(inherited)",
+"-Wall",
+"-Wextra",
+"-Wno-unused-parameter",
+"-Wno-missing-field-initializers",
+"-Wno-deprecated-declarations",
+);
+"PRODUCT_NAME" = "emergency";
+"PRODUCT_BUNDLE_IDENTIFIER" = "com.corepunch.volcano";
+"MARKETING_VERSION" = "1.0";
+"CURRENT_PROJECT_VERSION" = "1";
+"ENABLE_HARDENED_RUNTIME" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "s";
+"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+"ONLY_ACTIVE_ARCH" = "NO";
+};
+};
+"1E4B6209DBC7689E3E7CF89C" = {"isa" = "XCConfigurationList";
+"buildConfigurations" = ("09AA38CEF3EA53936A20C858",
+"2C51B24F1BD0E37CCD3A85CD",
+);
+"defaultConfigurationIsVisible" = 0;
+"defaultConfigurationName" = "Debug";
+};
+"03CCB44CBD5B6AA80E5680F5" = {"isa" = "PBXFileReference";
+"path" = "u_engine.c";
+"name" = "u_engine.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"7639A619D9D273EE5E063BE3" = {"isa" = "PBXFileReference";
+"path" = "u_script.c";
+"name" = "u_script.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"0539F83D58675373B1BBEF96" = {"isa" = "PBXFileReference";
+"path" = "u_lua.c";
+"name" = "u_lua.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"93AABD575BE4735D7E53DA97" = {"isa" = "PBXFileReference";
+"path" = "u_platform.c";
+"name" = "u_platform.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.objc";
+};
+"2FD0038054919877206EA9E2" = {"isa" = "PBXFileReference";
+"path" = "u_launcher.c";
+"name" = "u_launcher.c";
+"sourceTree" = "DERIVED_FILE_DIR";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"8C7BBF5CEC333F89C39F4DD3" = {"isa" = "PBXFileReference";
+"path" = "../../engine/core.c";
+"name" = "core.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"6C93BD11F9AA66A9F00EC3BD" = {"isa" = "PBXFileReference";
+"path" = "../../engine/render.c";
+"name" = "render.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"DB3AB349C060C5F6876F6B06" = {"isa" = "PBXFileReference";
+"path" = "../../engine/gfx.c";
+"name" = "gfx.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"1307E1D3B0F32989778C78F4" = {"isa" = "PBXFileReference";
+"path" = "../../engine/font.c";
+"name" = "font.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"E48481DFBF7C633F32885C82" = {"isa" = "PBXFileReference";
+"path" = "../../engine/ui.c";
+"name" = "ui.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"ADBE7599AFC06409EDF9F7DA" = {"isa" = "PBXFileReference";
+"path" = "../../engine/save.c";
+"name" = "save.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"744E0DC332E76F47A555E499" = {"isa" = "PBXFileReference";
+"path" = "../../engine/city.c";
+"name" = "city.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"2C6345C1907FD24B6EEFEC5A" = {"isa" = "PBXFileReference";
+"path" = "../../engine/audio.c";
+"name" = "audio.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"6FDD5359139C57B8D6DD06E2" = {"isa" = "PBXFileReference";
+"path" = "../../engine/haptic.c";
+"name" = "haptic.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"2175584D517BBE7031C823AB" = {"isa" = "PBXFileReference";
+"path" = "../../engine/haptic_platform.c";
+"name" = "haptic_platform.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"45B4B9CF2B44A145D927FBC6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/story.c";
+"name" = "story.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"8A8386A2CEEEFE289DA8945E" = {"isa" = "PBXFileReference";
+"path" = "../../engine/sprite.c";
+"name" = "sprite.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"4F62C834EFF9537C0E92FC7C" = {"isa" = "PBXFileReference";
+"path" = "../../engine/nav.c";
+"name" = "nav.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"41590808361351D30D12FA8C" = {"isa" = "PBXFileReference";
+"path" = "../../engine/script_modules.c";
+"name" = "script_modules.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"3844D74B4527AE195536A1E2" = {"isa" = "PBXFileReference";
+"path" = "../../engine/script.c";
+"name" = "script.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"5A3E88961896E4AB82DE84B5" = {"isa" = "PBXFileReference";
+"path" = "../../engine/api_lua.c";
+"name" = "api_lua.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"332638782EE028D2FCDBBFAB" = {"isa" = "PBXFileReference";
+"path" = "../../engine/lua_lib.c";
+"name" = "lua_lib.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"06369032B38F99A704630800" = {"isa" = "PBXFileReference";
+"path" = "../../engine/launcher.c";
+"name" = "launcher.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"EB5CBE17182664B6DBD76360" = {"isa" = "PBXFileReference";
+"path" = "../../engine/engine.h";
+"name" = "engine.h";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.h";
+};
+"541B66CD1C747C1DB8B77446" = {"isa" = "PBXFileReference";
+"path" = "../../engine/api.xml";
+"name" = "api.xml";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text.xml";
+};
+"A94DFF8DF82F942C6612D358" = {"isa" = "PBXFileReference";
+"path" = "lua";
+"sourceTree" = "<group>";
+"lastKnownFileType" = "folder";
+};
+"AC62430F2EB96CEE6ABDEFFF" = {"isa" = "PBXFileReference";
+"path" = "data";
+"sourceTree" = "<group>";
+"lastKnownFileType" = "folder";
+};
+"9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
+"path" = "Assets.xcassets";
+"sourceTree" = "<group>";
+"lastKnownFileType" = "folder.assetcatalog";
+};
+"3F1DC9CC1C3A830C738C48D7" = {"isa" = "PBXGroup";
+"name" = "Game";
+"children" = ("A94DFF8DF82F942C6612D358",
+"AC62430F2EB96CEE6ABDEFFF",
+"9F943A6EE595432EA31BD78A",
+);
+"sourceTree" = "<group>";
+};
+"2D25A9B56DCCB8131EBB5456" = {"isa" = "PBXGroup";
+"name" = "Engine";
+"children" = ("EB5CBE17182664B6DBD76360",
+"541B66CD1C747C1DB8B77446",
+"8C7BBF5CEC333F89C39F4DD3",
+"6C93BD11F9AA66A9F00EC3BD",
+"DB3AB349C060C5F6876F6B06",
+"1307E1D3B0F32989778C78F4",
+"E48481DFBF7C633F32885C82",
+"ADBE7599AFC06409EDF9F7DA",
+"744E0DC332E76F47A555E499",
+"2C6345C1907FD24B6EEFEC5A",
+"6FDD5359139C57B8D6DD06E2",
+"2175584D517BBE7031C823AB",
+"45B4B9CF2B44A145D927FBC6",
+"8A8386A2CEEEFE289DA8945E",
+"4F62C834EFF9537C0E92FC7C",
+"41590808361351D30D12FA8C",
+"3844D74B4527AE195536A1E2",
+"5A3E88961896E4AB82DE84B5",
+"332638782EE028D2FCDBBFAB",
+"06369032B38F99A704630800",
+);
+"sourceTree" = "<group>";
+};
+"DEDC912316C3B5051B5130F9" = {"isa" = "PBXGroup";
+"name" = "Build unity sources";
+"children" = ("03CCB44CBD5B6AA80E5680F5",
+"7639A619D9D273EE5E063BE3",
+"0539F83D58675373B1BBEF96",
+"93AABD575BE4735D7E53DA97",
+"2FD0038054919877206EA9E2",
+);
+"sourceTree" = "<group>";
+};
+"D984FFD1D968F4E5826328C0" = {"isa" = "XCBuildConfiguration";
+"name" = "Debug";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/macos-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"AppKit",
+"-framework",
+"OpenGL",
+"-framework",
+"IOSurface",
+"-framework",
+"Security",
+"-framework",
+"AudioToolbox",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/../Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"SUPPORTED_PLATFORMS" = "macosx";
+"MACOSX_DEPLOYMENT_TARGET" = "12.0";
+"CODE_SIGN_STYLE" = "Automatic";
+"CODE_SIGN_IDENTITY" = "-";
+"ENABLE_APP_SANDBOX" = "YES";
+"CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/macos.entitlements";
+"GCC_OPTIMIZATION_LEVEL" = "0";
+"DEBUG_INFORMATION_FORMAT" = "dwarf";
+"ONLY_ACTIVE_ARCH" = "YES";
+};
+};
+"B96E533CD05183C512226131" = {"isa" = "XCBuildConfiguration";
+"name" = "Release";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/macos-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"AppKit",
+"-framework",
+"OpenGL",
+"-framework",
+"IOSurface",
+"-framework",
+"Security",
+"-framework",
+"AudioToolbox",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/../Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"SUPPORTED_PLATFORMS" = "macosx";
+"MACOSX_DEPLOYMENT_TARGET" = "12.0";
+"CODE_SIGN_STYLE" = "Automatic";
+"CODE_SIGN_IDENTITY" = "-";
+"ENABLE_APP_SANDBOX" = "YES";
+"CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/macos.entitlements";
+"GCC_OPTIMIZATION_LEVEL" = "s";
+"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+"ONLY_ACTIVE_ARCH" = "NO";
+};
+};
+"49F34ECFED8F13B34966BCF8" = {"isa" = "XCConfigurationList";
+"buildConfigurations" = ("D984FFD1D968F4E5826328C0",
+"B96E533CD05183C512226131",
+);
+"defaultConfigurationIsVisible" = 0;
+"defaultConfigurationName" = "Debug";
+};
+"91557692A4D7C20D0274FEDA" = {"isa" = "PBXShellScriptBuildPhase";
+"name" = "Generate unity sources";
+"buildActionMask" = 2147483647;
+"files" = ();
+"inputPaths" = ("$(ENGINE_ROOT)/tools/unity.sh",
+);
+"outputPaths" = ("$(DERIVED_FILE_DIR)/u_engine.c",
+"$(DERIVED_FILE_DIR)/u_script.c",
+"$(DERIVED_FILE_DIR)/u_lua.c",
+"$(DERIVED_FILE_DIR)/u_platform.c",
+"$(DERIVED_FILE_DIR)/u_launcher.c",
+);
+"shellPath" = "/bin/sh";
+"runOnlyForDeploymentPostprocessing" = 0;
+"shellScript" = "set -eu\nmkdir -p \"$DERIVED_FILE_DIR\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" engine > \"$DERIVED_FILE_DIR/u_engine.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" script > \"$DERIVED_FILE_DIR/u_script.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" lua > \"$DERIVED_FILE_DIR/u_lua.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" platform > \"$DERIVED_FILE_DIR/u_platform.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" launcher > \"$DERIVED_FILE_DIR/u_launcher.c\"\n";
+};
+"77A99BF7BA1868B0109E666D" = {"isa" = "PBXBuildFile";
+"fileRef" = "03CCB44CBD5B6AA80E5680F5";
+};
+"B7C823A06E7879471B967530" = {"isa" = "PBXBuildFile";
+"fileRef" = "7639A619D9D273EE5E063BE3";
+};
+"49CEC655DDAA0D79348F4A15" = {"isa" = "PBXBuildFile";
+"fileRef" = "0539F83D58675373B1BBEF96";
+"settings" = {"COMPILER_FLAGS" = "-Wno-unused-function";
+};
+};
+"4F5B4687517665D403BB488D" = {"isa" = "PBXBuildFile";
+"fileRef" = "93AABD575BE4735D7E53DA97";
+};
+"576C5238165EAD494ED14071" = {"isa" = "PBXBuildFile";
+"fileRef" = "2FD0038054919877206EA9E2";
+};
+"3C9FAD583FCD1D393D2E44C5" = {"isa" = "PBXSourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("77A99BF7BA1868B0109E666D",
+"B7C823A06E7879471B967530",
+"49CEC655DDAA0D79348F4A15",
+"4F5B4687517665D403BB488D",
+"576C5238165EAD494ED14071",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"FA00379A6E7A7BE7D0E8FC4F" = {"isa" = "PBXFrameworksBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ();
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"FCF924ABC8310663CD17B3F6" = {"isa" = "PBXBuildFile";
+"fileRef" = "A94DFF8DF82F942C6612D358";
+};
+"641E37EA6BEB0B8FD93E416B" = {"isa" = "PBXBuildFile";
+"fileRef" = "AC62430F2EB96CEE6ABDEFFF";
+};
+"269E98189F1C40CEB5F8C693" = {"isa" = "PBXBuildFile";
+"fileRef" = "9F943A6EE595432EA31BD78A";
+};
+"6EBFC1A3EF49FC5046EB6574" = {"isa" = "PBXResourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("FCF924ABC8310663CD17B3F6",
+"641E37EA6BEB0B8FD93E416B",
+"269E98189F1C40CEB5F8C693",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"2A36D9AD493E8F127026AB98" = {"isa" = "PBXFileReference";
+"path" = "emergency.app";
+"sourceTree" = "BUILT_PRODUCTS_DIR";
+"explicitFileType" = "wrapper.application";
+};
+"153ADDD1508DCB1BE34A85BC" = {"isa" = "PBXNativeTarget";
+"name" = "emergency-macos";
+"productName" = "emergency";
+"productReference" = "2A36D9AD493E8F127026AB98";
+"productType" = "com.apple.product-type.application";
+"buildConfigurationList" = "49F34ECFED8F13B34966BCF8";
+"buildPhases" = ("91557692A4D7C20D0274FEDA",
+"3C9FAD583FCD1D393D2E44C5",
+"FA00379A6E7A7BE7D0E8FC4F",
+"6EBFC1A3EF49FC5046EB6574",
+);
+"buildRules" = ();
+"dependencies" = ();
+};
+"423625B988A6BD940FD23690" = {"isa" = "XCBuildConfiguration";
+"name" = "Debug";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ios-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"UIKit",
+"-framework",
+"Foundation",
+"-framework",
+"CoreGraphics",
+"-framework",
+"QuartzCore",
+"-framework",
+"OpenGLES",
+"-framework",
+"Security",
+"-framework",
+"UniformTypeIdentifiers",
+"-framework",
+"AudioToolbox",
+"-framework",
+"CoreHaptics",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"CODE_SIGN_STYLE" = "Automatic";
+"SDKROOT" = "iphoneos";
+"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+"TARGETED_DEVICE_FAMILY" = "2";
+"SUPPORTS_MACCATALYST" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "0";
+"DEBUG_INFORMATION_FORMAT" = "dwarf";
+"ONLY_ACTIVE_ARCH" = "YES";
+};
+};
+"E9883E1EE83C943292C0895F" = {"isa" = "XCBuildConfiguration";
+"name" = "Release";
+"buildSettings" = {"INFOPLIST_FILE" = "$(PROJECT_FILE_PATH)/Generated/ios-Info.plist";
+"OTHER_LDFLAGS" = ("$(inherited)",
+"-lm",
+"-framework",
+"UIKit",
+"-framework",
+"Foundation",
+"-framework",
+"CoreGraphics",
+"-framework",
+"QuartzCore",
+"-framework",
+"OpenGLES",
+"-framework",
+"Security",
+"-framework",
+"UniformTypeIdentifiers",
+"-framework",
+"AudioToolbox",
+"-framework",
+"CoreHaptics",
+);
+"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
+"@executable_path/Frameworks",
+);
+"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+"CODE_SIGN_STYLE" = "Automatic";
+"SDKROOT" = "iphoneos";
+"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+"TARGETED_DEVICE_FAMILY" = "2";
+"SUPPORTS_MACCATALYST" = "NO";
+"GCC_OPTIMIZATION_LEVEL" = "s";
+"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+"ONLY_ACTIVE_ARCH" = "NO";
+};
+};
+"A1FA0E781BD62D341A750412" = {"isa" = "XCConfigurationList";
+"buildConfigurations" = ("423625B988A6BD940FD23690",
+"E9883E1EE83C943292C0895F",
+);
+"defaultConfigurationIsVisible" = 0;
+"defaultConfigurationName" = "Debug";
+};
+"D536E93CE1F9DA529199322B" = {"isa" = "PBXShellScriptBuildPhase";
+"name" = "Generate unity sources";
+"buildActionMask" = 2147483647;
+"files" = ();
+"inputPaths" = ("$(ENGINE_ROOT)/tools/unity.sh",
+);
+"outputPaths" = ("$(DERIVED_FILE_DIR)/u_engine.c",
+"$(DERIVED_FILE_DIR)/u_script.c",
+"$(DERIVED_FILE_DIR)/u_lua.c",
+"$(DERIVED_FILE_DIR)/u_platform.c",
+"$(DERIVED_FILE_DIR)/u_launcher.c",
+);
+"shellPath" = "/bin/sh";
+"runOnlyForDeploymentPostprocessing" = 0;
+"shellScript" = "set -eu\nmkdir -p \"$DERIVED_FILE_DIR\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" engine > \"$DERIVED_FILE_DIR/u_engine.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" script > \"$DERIVED_FILE_DIR/u_script.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" lua > \"$DERIVED_FILE_DIR/u_lua.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" platform > \"$DERIVED_FILE_DIR/u_platform.c\"\nsh \"$ENGINE_ROOT/tools/unity.sh\" launcher > \"$DERIVED_FILE_DIR/u_launcher.c\"\n";
+};
+"189E8FFC7D6FE44F093D1DFA" = {"isa" = "PBXBuildFile";
+"fileRef" = "03CCB44CBD5B6AA80E5680F5";
+};
+"84BAD5E6E78008A993C4C492" = {"isa" = "PBXBuildFile";
+"fileRef" = "7639A619D9D273EE5E063BE3";
+};
+"BDBB22FA43AA6696A88BD037" = {"isa" = "PBXBuildFile";
+"fileRef" = "0539F83D58675373B1BBEF96";
+"settings" = {"COMPILER_FLAGS" = "-Wno-unused-function";
+};
+};
+"C9C4DFE8127629994A6621C6" = {"isa" = "PBXBuildFile";
+"fileRef" = "93AABD575BE4735D7E53DA97";
+};
+"F8D734BA8FE8D99F31BEEF8E" = {"isa" = "PBXBuildFile";
+"fileRef" = "2FD0038054919877206EA9E2";
+};
+"810AC771EA97E673729B2BCA" = {"isa" = "PBXSourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("189E8FFC7D6FE44F093D1DFA",
+"84BAD5E6E78008A993C4C492",
+"BDBB22FA43AA6696A88BD037",
+"C9C4DFE8127629994A6621C6",
+"F8D734BA8FE8D99F31BEEF8E",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"6F27D535694F08B7459307B2" = {"isa" = "PBXFrameworksBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ();
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"D4BA520C9BE9B9C8DF6076C9" = {"isa" = "PBXBuildFile";
+"fileRef" = "A94DFF8DF82F942C6612D358";
+};
+"42582C1A8FC0438AEC58ACA3" = {"isa" = "PBXBuildFile";
+"fileRef" = "AC62430F2EB96CEE6ABDEFFF";
+};
+"BDFC66B211875ED7F5257A19" = {"isa" = "PBXBuildFile";
+"fileRef" = "9F943A6EE595432EA31BD78A";
+};
+"AC7D1378728AF7174997E386" = {"isa" = "PBXResourcesBuildPhase";
+"buildActionMask" = 2147483647;
+"files" = ("D4BA520C9BE9B9C8DF6076C9",
+"42582C1A8FC0438AEC58ACA3",
+"BDFC66B211875ED7F5257A19",
+);
+"runOnlyForDeploymentPostprocessing" = 0;
+};
+"68F9A7A4F52019DF77028FAE" = {"isa" = "PBXFileReference";
+"path" = "emergency.app";
+"sourceTree" = "BUILT_PRODUCTS_DIR";
+"explicitFileType" = "wrapper.application";
+};
+"E8831AA369983DE5C020564F" = {"isa" = "PBXNativeTarget";
+"name" = "emergency-ipad";
+"productName" = "emergency";
+"productReference" = "68F9A7A4F52019DF77028FAE";
+"productType" = "com.apple.product-type.application";
+"buildConfigurationList" = "A1FA0E781BD62D341A750412";
+"buildPhases" = ("D536E93CE1F9DA529199322B",
+"810AC771EA97E673729B2BCA",
+"6F27D535694F08B7459307B2",
+"AC7D1378728AF7174997E386",
+);
+"buildRules" = ();
+"dependencies" = ();
+};
+"BEAD8915881B60FC177E63AB" = {"isa" = "PBXGroup";
+"name" = "Products";
+"children" = ("2A36D9AD493E8F127026AB98",
+"68F9A7A4F52019DF77028FAE",
+);
+"sourceTree" = "<group>";
+};
+"664F835B1ED89846DAB355B5" = {"isa" = "PBXGroup";
+"children" = ("3F1DC9CC1C3A830C738C48D7",
+"2D25A9B56DCCB8131EBB5456",
+"DEDC912316C3B5051B5130F9",
+"BEAD8915881B60FC177E63AB",
+);
+"sourceTree" = "<group>";
+};
+"244210E48437B6556980A702" = {"isa" = "PBXProject";
+"buildConfigurationList" = "1E4B6209DBC7689E3E7CF89C";
+"compatibilityVersion" = "Xcode 14.0";
+"developmentRegion" = "en";
+"knownRegions" = ("en",
+"Base",
+);
+"mainGroup" = "664F835B1ED89846DAB355B5";
+"productRefGroup" = "BEAD8915881B60FC177E63AB";
+"projectDirPath" = "";
+"projectRoot" = "";
+"targets" = ("153ADDD1508DCB1BE34A85BC",
+"E8831AA369983DE5C020564F",
+);
+};
+};
+"rootObject" = "244210E48437B6556980A702";
+}

@@ -72,7 +72,7 @@ the capture tool. No new dependency environment or model is installed.
 - Real-input Nile smoke at 1200 x 900 and 1600 x 900 covers scene one, free
   movement, purchase preview/cancel/confirm, the fountain, scene two, the temple
   and entering scene three without earning Influence from scenes.
-- Shared nested-modal smoke and Volcano smoke pass. Renderer/input, safe-area,
+- Shared nested-modal smoke and Emergency smoke pass. Renderer/input, safe-area,
   Gaussian backdrop/cache and dialogue layout checks pass. All 27 authored
   Relic Rush atlas crops remain unchanged and verify successfully.
 - Every capture was inspected for clipping, incomplete text and missing art.

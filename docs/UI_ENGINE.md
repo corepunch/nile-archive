@@ -272,7 +272,7 @@ Every game now has one skin file:
 | --- | --- | --- |
 | Relic Rush | `games/relic-rush/lua/skin.lua` | Outlined palettes, parchment panel, jade button, flat variant, focus ring, and the Pause checkboxes (Sound, Reduce motion) |
 | Nile Archive | `games/nile-archive/lua/archive_skin.lua` | Three fonts with a fallback, 21 text styles, the theme, the gold-rimmed teal/parchment frame at any radius (corner studs as a `paint` layer), green/blue/red pills whose disabled state turns grey, and Pause's reduced-motion checkbox (gold-rimmed teal well, cream tick) |
-| Volcano | `games/volcano/lua/volcano_skin.lua` | Lilita palettes at any size, the theme, and the panel, button (hover, pressed, disabled, gold accent) and meters that native widgets used to draw, plus the menu's Sound checkbox (teal box, gold tick) |
+| Emergency | `games/emergency/lua/emergency_skin.lua` | Lilita palettes at any size, the theme, and the panel, button (hover, pressed, disabled, gold accent) and meters that native widgets used to draw, plus the menu's Sound checkbox (teal box, gold tick) |
 | Christmas Market | `games/christmas-market/lua/skin.lua` | Relic Rush's outlined palettes and parchment panel with a festive red button (pressed, disabled, flat) and focus ring |
 
 Their captures, including held presses, are pixel-identical to the code each

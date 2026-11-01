@@ -1,0 +1,23 @@
+Use case: stylized-concept.
+Asset type: a single app-icon concept selection atlas for "Volcano", a friendly emergency-worker rescue and town-restoration mobile game.
+Primary request: Generate ALL SIXTEEN DIFFERENT app-icon candidates TOGETHER in ONE image arranged in an EXACT 4 by 4 grid. This is one coordinated selection sheet, not one icon repeated. Number the options 1 through 16 in reading order, left to right, top to bottom, with the numbers small but clearly readable in the neutral gutters BELOW each icon, outside the actual artwork. No other text or title.
+Presentation: high resolution, large square contact sheet, uniform square artwork areas with consistent small gutters and margins. Every artwork tile must have an opaque full-bleed square background, square corners, and an unobstructed central subject suitable for later iOS corner masking. No phone mockups or surrounding UI.
+Game tone: capable, optimistic emergency workers rebuilding a small island town after a volcanic disaster. Emphasize rescue people, hard hats, practical workwear, courage, teamwork, and helping residents/pets. Volcanoes and distant smoke may be small background storytelling only; emergency workers must remain the star. Friendly adult characters, confident faces, appealing proportions. Rich, polished illustrated mobile-game artwork, bold silhouettes and high contrast that will read at small app-icon size. Mostly close-up compositions with simple backgrounds, never busy gameplay maps. Explore meaningful variations in composition and visual style across the 16 while maintaining professional finish.
+Sixteen candidates in exact reading order:
+1. A friendly clean-shaven rescue worker in a yellow hard hat, blue work shirt and orange high-visibility vest, heroic close-up with a blue-sky background; polished dimensional game illustration.
+2. A determined woman emergency worker in an orange helmet with headlamp, warm face lit against a deep teal background; dimensional game portrait.
+3. Two emergency workers shoulder to shoulder, yellow and orange helmets, a confident coordinated rescue-team portrait with a bright sky.
+4. A slightly older sturdy rescue foreman with a short beard, orange hard hat and blue workwear, one gloved hand gripping a shovel handle; premium painted game icon.
+5. A helmeted worker gently carrying a rescued small dog, clear large faces and a warm hopeful rescue moment.
+6. A helmeted woman cradling a rescued cat, simple teal-and-gold backdrop, emotionally warm readable silhouette.
+7. A strong close-up of two gloved hands clasping in a rescue pull, one visible worker in a yellow helmet behind them; energetic painterly game icon.
+8. A rescue worker giving a confident thumbs-up, orange vest and yellow hard hat, a tiny restored terracotta-roof town in the distance; warm painted illustration.
+9. A bold graphic rescue-team insignia featuring a central yellow helmet and crossed practical rescue tools, deep teal background; dimensional enamel emblem, no lettering.
+10. A large yellow safety helmet resting on blue work gloves beside a short coil of rescue rope; exceptionally clear, polished object-focused app icon.
+11. A close-up rescue worker with helmet and walkie-talkie, face dominant, clear confident command-center expression, blue and orange contrast.
+12. Three diverse adult rescue workers framed tightly as a team, central woman in yellow hard hat with two teammates behind, strong triangular composition.
+13. An orange rescue pickup truck coming toward the viewer at three-quarter angle, a clearly visible helmeted emergency worker in the cab, compact dramatic app-icon framing.
+14. A rescue helicopter with a helmeted emergency worker in the open side door, dynamic but simple close framing, bright optimistic sky.
+15. A helmeted emergency worker holding a rescued child safely against their shoulder, calm reassuring expressions, no injuries, warm sunlight.
+16. A bold heroic close-up of an orange-helmeted rescuer looking forward, one shoulder and rescue rope visible, a small distant smoking volcano behind, sophisticated cinematic painted game style.
+Constraints: all sixteen must be visually distinct finished alternatives, not stages or interaction states. Exactly 16 square icons in exactly 4 rows and 4 columns. Maintain anatomy and natural hands. No gore, distressed victims, frightening disaster scene, weapons, brand logos, watermarks, medical cross symbols, or typography within the icon artwork. Only the gutter numbers 1-16. Keep every icon intact and separated from its neighbors.

@@ -32,7 +32,8 @@ ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio'
 
 GAMES = {
     'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),
-    'volcano': dict(name='Volcano', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
+    # Preserve the published bundle identity so Emergency updates installed copies.
+    'emergency': dict(name='Emergency', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)
     'nile-archive': dict(name='Nile Archive', bundle='com.corepunch.nilearchive', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     'relic-rush': dict(name='Relic Rush', bundle='com.corepunch.relicrush', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),

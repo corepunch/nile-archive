@@ -479,7 +479,7 @@ TEST(story)
 int main(int argc, char **argv)
 {
     if (argc > 2 && !strcmp(argv[1], "--script")) {   /* a Lua tool with every game's modules, as economy_audit.py uses */
-        script_open("tests/lua;games/relic-rush/lua;games/nile-archive/lua;games/volcano/lua");
+        script_open("tests/lua;games/relic-rush/lua;games/nile-archive/lua;games/emergency/lua");
         script_dofile(argv[2]);
         script_close();
         if (test_failures()) fprintf(stderr, "%s\n", T.notes[0]);

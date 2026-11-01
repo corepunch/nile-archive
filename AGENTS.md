@@ -20,7 +20,7 @@ Use this workflow for every change, including work intended for a pull request:
 Every pull request that can change what a player sees must include screenshots in its description. That covers UI, layout, art, text, dialogue, effects and engine drawing code. Add them whenever it is possible at all. When it isn't, for example a pure build or test change, say so in one line.
 
 - **Show the changed screens.** Include each distinct changed screen, with before and after shots side by side when something existing changed. Follow the representative coverage above; every level or asset pack using that screen is not a separate screen.
-- **Cover the sizes the change affects.** Nile Archive and Volcano are iPad landscape (1200×900, 1368×1026). Relic Rush and Christmas Market are 480×900 phone portraits. Add a 16:9 or a 390×844 shot when the layout adapts to it.
+- **Cover the sizes the change affects.** Nile Archive and Emergency are iPad landscape (1200×900, 1368×1026). Relic Rush and Christmas Market are 480×900 phone portraits. Add a 16:9 or a 390×844 shot when the layout adapts to it.
 - **Capture the game itself.** Every game renders headlessly with the software renderer:
 
   ```sh
@@ -32,7 +32,7 @@ Every pull request that can change what a player sees must include screenshots i
 
   `make shots` and `make smoke` cover every game; use them for deliberate full maintenance, not routine game-local verification.
 
-  Each game has entry points for its screens: Nile Archive takes `--screen …`, Relic Rush `--level`, `--city`, `--dialog …` and others, and Volcano `--level`, `--pause` and `--preview`. Pass `--frames N` for a later frame, for example once dialogue has finished typing.
+  Each game has entry points for its screens: Nile Archive takes `--screen …`, Relic Rush `--level`, `--city`, `--dialog …` and others, and Emergency `--level`, `--pause` and `--preview`. Pass `--frames N` for a later frame, for example once dialogue has finished typing.
 - **Embed images, don't just link them.** Commit the screenshots under `games/<game>/docs/screenshots/`, or another tracked path when they are only for review. Reference them in the description with URLs pinned to the pushed commit, so they keep showing what was reviewed:
 
   ```markdown
@@ -44,7 +44,7 @@ Every pull request that can change what a player sees must include screenshots i
 
 ## Tests: one start per game
 
-`make test` compiles a test build (`-DENGINE_TEST`) and runs each suite once: `build/test/engine`, `build/test/relic-rush`, `build/test/nile-archive`, `build/test/christmas-market` and `build/test/volcano`. Independent suites run concurrently; all C/rule assertions and asset/generated checks remain enabled. `make test-full` adds the complete smoke, screen, reel and gesture manifests. [docs/TESTING.md](docs/TESTING.md) is the guide.
+`make test` compiles a test build (`-DENGINE_TEST`) and runs each suite once: `build/test/engine`, `build/test/relic-rush`, `build/test/nile-archive`, `build/test/christmas-market` and `build/test/emergency`. Independent suites run concurrently; all C/rule assertions and asset/generated checks remain enabled. `make test-full` adds the complete smoke, screen, reel and gesture manifests. [docs/TESTING.md](docs/TESTING.md) is the guide.
 
 - **Never start a game per test or per screen.** Don't loop over `subprocess.run` or a shell `for`. Add a line to `tests/games/<game>.lua`, and run only part of a suite by name: `build/test/relic-rush smoke`.
 - **Tests stay small.** C tests use `TEST`, `CHECK` and `NEAR`. Lua tests use the global `check` and `near`. Anything else a test needs belongs in the test build, as `#ifdef ENGINE_TEST` in the engine or in `engine/test_runner.c`, not as boilerplate in each test.

@@ -1,5 +1,10 @@
 # Christmas Market
 
+From the repository root, `make -C games/christmas-market ios` builds, signs,
+installs and launches on the connected iPhone (or iPad when no iPhone is
+available). Set `DEVICE="name or UDID"` to choose one. See the
+[device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
+
 An in-progress Christmas market game based on Relic Rush's hex match-4 and free-placement city systems. Its 37 buildings and decorations are modelled and rendered in Blender after the building direction sheet. See the [building catalogue](docs/building-catalogue.md).
 
 ![The 37 Blender-rendered buildings and decorations](docs/screenshots/buildings.jpg)

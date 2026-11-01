@@ -7,11 +7,11 @@ One repository, one small **C11 + platform** engine, games driven by **Lua** on 
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
 | ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 on ten shaped boards with sand, chains, ice, rays, bombs and prisms | Restore an island: ten wonders placed freely, six regions opened with stars and compasses |
 | ![](games/christmas-market/docs/screenshots/market.jpg) | **[Christmas Market](games/christmas-market/README.md)** (English, prototype) | Ten festive hex match-4 puzzles | Build a snowy Christmas market with ten stalls and attractions, two repeatable decorations and Noelle as the market keeper |
-| ![](games/volcano/docs/screenshots/outskirts.jpg) | **[Volcano · After the Eruption](games/volcano/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
+| ![](games/emergency/docs/screenshots/outskirts.jpg) | **[Emergency · After the Eruption](games/emergency/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
 
 [Clayfight](https://github.com/corepunch/clayfight) is maintained separately in `~/Developer/clayfight`, with its native C simulation, arcade ROM pipeline and photo workshop.
 
-Volcano is a five-map resource-and-route rescue campaign; see [its port assessment and asset catalog](games/volcano/docs/PORT.md).
+Emergency is a five-map resource-and-route rescue campaign; see [its port assessment and asset catalog](games/emergency/docs/PORT.md).
 
 The games target the iPad; the web build is only a fullscreen preview (a bare canvas, no HTML UI). Nile Archive and Relic Rush are a "puzzle → reward → build" loop, so the shared parts are big: the city-building meta-game (economy, building catalogue, placement, zones, timed income), characters and dialogue (portraits, speech bubbles, typed text, story beats that play once), the camera, styled text, UI widgets, save files, effects, sound, and the platform layer for desktop, iPad and phones (native and WebAssembly). Nile Archive lays itself out for any landscape screen; Relic Rush keeps a fixed 480 × 900 portrait design inside the safe area that only grows taller on tall phones, with its backgrounds running on to the screen edges — the engine supports both.
 
@@ -45,7 +45,7 @@ games/
                    + data/ (art, fonts) + docs/ + tools/ + nile-archive.xcodeproj
   relic-rush/      lua/ (main, rules, island, board, screens, vfx, island_view, state)
                    + art/ (sources) + data/ (runtime) + docs/ + tools/ + relic-rush.xcodeproj
-  volcano/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + volcano.xcodeproj
+  emergency/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + emergency.xcodeproj
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
 tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.py, make_reels.py, artkit.py
 docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), MOTION.md, LINEAGE.md
@@ -60,8 +60,8 @@ Native builds need a C compiler and the pinned [platform](https://github.com/cor
 
 ```sh
 git submodule update --init   # Lua, once
-make              # builds Nile Archive, Relic Rush, Christmas Market and Volcano
-make run-nile     # or: make run-relic / make run-volcano
+make              # builds Nile Archive, Relic Rush, Christmas Market and Emergency
+make run-nile     # or: make run-relic / make run-emergency
 make test         # all rule/renderer/preflight checks, 5s test budget after builds
 make test-fast    # same checks without a window/GPU
 make test-full    # complete smoke runs, screenshots and reels (cloud CI)
@@ -76,14 +76,20 @@ Web (needs the [Emscripten SDK](https://emscripten.org/docs/getting_started/down
 
 ```sh
 make web
-python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/ or /volcano/
+python3 -m http.server 8080 --directory dist   # open http://localhost:8080/nile-archive/ or /relic-rush/ or /emergency/
 ```
 
-**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `volcano-ipad` and `relic-rush-iphone`. The games target iOS 16+ / macOS 12+. Xcode generates temporary `u_*.c` units in its build directory, compiles them into each app, and links only Apple system frameworks. `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+**iOS and macOS** (Xcode 16+): each game has a committed project, `games/<game>/<game>.xcodeproj`, with a macOS scheme and an iOS one — `nile-archive-ipad`, `emergency-ipad` and `relic-rush-iphone`. The games target iOS 16+ / macOS 12+. Xcode generates temporary `u_*.c` units in its build directory, compiles them into each app, and links only Apple system frameworks. `make xcode` regenerates the projects with `tools/xcode/generate.py` (see [tools/xcode/README.md](tools/xcode/README.md)).
+
+`make -C games/<game> ios` (or `make ios-<game>` from the root) builds, signs,
+installs and launches on the only available physical iPhone/iPad in that game's
+device family. Use `make list-devices`, `DEVICE="name or UDID"` to choose a device,
+and `TEAM=...` to override the development signing team. See the
+[device deployment guide](tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
 CI builds the native, web and Xcode (iOS Simulator) targets on every push; the `web` artifact of a run is a ready-to-host `dist/`. The **Deploy to GitHub Pages** workflow (run it from the Actions tab) publishes it once Pages is enabled with "GitHub Actions" as the source.
 
-Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--lua DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two; Volcano: `--level`, `--preview repaired|complete` and a full five-district `--smoke`).
+Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, `--lua DIR`, `--shot out.png [--frames N]`. Games add their own entry points for screenshots (Nile: `--screen <name>`; Relic Rush: `--level`, `--city`, `--victory`, `--dialog`, … and `--smoke`, which plays level one through injected clicks, claims, builds and enters level two; Emergency: `--level`, `--preview repaired|complete` and a full five-district `--smoke`).
 
 ## The engine in five minutes
 

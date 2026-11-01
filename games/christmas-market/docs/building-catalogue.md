@@ -77,7 +77,7 @@ xvfb-run -a make test ONLY="building-review shop market"
 Without a Blender binary, use the `bpy` module from PyPI (see BUILDING_ART.md).
 To inspect or tweak the scene in a running Blender, send `build_scene.py` through
 the MCP socket bridge:
-`python3 games/volcano/source/tools/blender_mcp.py games/christmas-market/art/building-catalogue/build_scene.py`.
+`python3 games/emergency/source/tools/blender_mcp.py games/christmas-market/art/building-catalogue/build_scene.py`.
 It builds the collections there and does not overwrite the open file.
 A full render of all 37 objects takes about two minutes on four CPU cores.
 

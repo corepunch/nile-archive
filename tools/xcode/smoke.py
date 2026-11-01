@@ -70,7 +70,7 @@ def main():
                   for device in group if device.get('isAvailable')]
     if not candidates:
         raise SystemExit('No installed iOS Simulator device available')
-    groups = [('iPad', [('nile-archive', 'com.corepunch.nilearchive'), ('volcano', 'com.corepunch.volcano')]),
+    groups = [('iPad', [('nile-archive', 'com.corepunch.nilearchive'), ('emergency', 'com.corepunch.volcano')]),
               ('iPhone', [('relic-rush', 'com.corepunch.relicrush'), ('christmas-market', 'com.corepunch.christmasmarket')])]
     plan = []
     for family, games in groups:

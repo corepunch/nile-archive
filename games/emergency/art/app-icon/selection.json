@@ -1,0 +1,11 @@
+{
+  "option": 12,
+  "row": 3,
+  "column": 4,
+  "source_grid": "art/app-icon/concepts-4x4-v1.png",
+  "prompt": "art/app-icon/concepts-4x4-v1.prompt.txt",
+  "artwork_bounds_pixels": [951, 618, 1235, 884],
+  "square_crop_pixels": [961, 619, 1225, 883],
+  "export": "Crop the selected authored painting inside its gutters, then Lanczos resize; no artwork regenerated or recoloured.",
+  "master": "art/app-icon/app-icon-1024.png"
+}

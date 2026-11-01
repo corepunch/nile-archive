@@ -69,14 +69,14 @@ def run_jobs(jobs, budget, workers=4, output=None):
 
 def checks(fast=False, arguments=()):
     mode = "--fast" if fast else "--check"
-    games = ("engine", "relic-rush", "christmas-market", "volcano", "nile-archive")
+    games = ("engine", "relic-rush", "christmas-market", "emergency", "nile-archive")
     jobs = [(game, [f"./build/test/{game}", mode, *arguments]) for game in games]
     jobs += [(name, [f"./build/{name}"]) for name in
              ("test-audio",)]
     scripts = [
         ("generated code", "tools/luagen.py", "--check"),
         ("Xcode projects", "tools/xcode/generate.py", "--check"),
-        ("Volcano assets", "games/volcano/tools/check_assets.py"),
+        ("Emergency assets", "games/emergency/tools/check_assets.py"),
         ("Relic Rush catalogue", "games/relic-rush/tools/check_art_catalogue.py"),
         ("Christmas catalogue", "games/christmas-market/tools/prepare_catalogue.py", "--check"),
         ("Christmas assets", "games/christmas-market/tools/check_assets.py"),
@@ -84,6 +84,7 @@ def checks(fast=False, arguments=()):
         ("building registration", "tools/buildings.py", "--check"),
         ("match-3 atlases", "tools/match3_atlas.py", "--check"),
         ("test runner contracts", "tools/test_run_tests.py"),
+        ("iOS deploy contracts", "tools/xcode/test_deploy.py"),
     ]
     jobs += [(label, [sys.executable, *command]) for label, *command in scripts]
     return jobs

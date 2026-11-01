@@ -3,12 +3,15 @@
 #   make                 build every game natively (uses the shared platform submodule)
 #   make run-nile-archive build and run Nile Archive        (alias: run-nile)
 #   make run-relic-rush   build and run Relic Rush          (alias: run-relic)
-#   make run-volcano      build and run Volcano
-#   make run-volcano ARGS="--fresh --mute"                 pass game options
+#   make run-emergency      build and run Emergency
+#   make run-emergency ARGS="--fresh --mute"                 pass game options
 #   make test            generated-code freshness, engine tests and the games' Lua rule tests (headless)
 #   make lint            luacheck over every game, the engine's Lua and the tests (apt: lua-check)
 #   make gen             regenerate the Lua glue, docs/LUA_API.md and engine.d.lua from engine/api.xml
 #   make xcode           regenerate games/<name>/<name>.xcodeproj (tools/xcode/generate.py)
+#   make ios GAME=<game> build, sign, install and launch on a connected iPhone/iPad
+#   make ios-<game>      same; DEVICE="name or UDID" / TEAM=... override selection
+#   make list-devices    list paired devices and their availability
 #   make buildings GAME=relic-rush [KEYS="lodge well"] [REBUILD=1]
 #                        render city buildings by name from the game's Blender master
 #   make shots           regenerate docs/screenshots (headless, software renderer)
@@ -16,7 +19,7 @@
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
 
-GAMES   := nile-archive relic-rush christmas-market volcano
+GAMES   := nile-archive relic-rush christmas-market emergency
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 ARGS    ?=
@@ -114,12 +117,25 @@ xcode:
 xcode-check:
 	python3 tools/xcode/generate.py --check
 
+# The shared helper selects physical devices and uses each committed iOS scheme.
+# Export overrides as data, without interpolating device names/app arguments in shell code.
+export DEVICE TEAM CONFIGURATION IOS_BUILD_DIR ARGS
+.PHONY: ios list-devices test-ios-deploy $(GAMES:%=ios-%)
+ios:
+	python3 tools/xcode/deploy.py $(if $(GAME),$(GAME),nile-archive)
+$(GAMES:%=ios-%): ios-%:
+	python3 tools/xcode/deploy.py $*
+list-devices:
+	xcrun devicectl list devices
+test-ios-deploy:
+	python3 -m unittest discover -s tools/xcode -p 'test_deploy.py'
+
 # --- tests ----------------------------------------------------------------
 # Engine tests in C, then the games' rules in Lua (tests/lua/*.lua) run by the
 # same binary through the engine's Lua state, without a window.
 # The test build: engine and launcher with -DENGINE_TEST. One start of a binary runs
 # every test of that suite (docs/TESTING.md). make test ONLY=smoke runs a part.
-TEST_GAMES := nile-archive relic-rush christmas-market volcano
+TEST_GAMES := nile-archive relic-rush christmas-market emergency
 TEST_BINS := build/test/engine $(TEST_GAMES:%=build/test/%)
 TEST_OBJ := build/test-obj/engine.o build/test-obj/script.o build/engine/lua.o build/engine/platform.o
 TEST_DEPS := engine/test.h engine/test_runner.c engine/test_lua.c
@@ -143,7 +159,7 @@ build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
 
 .PHONY: test-assets
 test-assets:
-	python3 games/volcano/tools/check_assets.py
+	python3 games/emergency/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
 	python3 games/christmas-market/tools/prepare_catalogue.py --check
 	python3 games/christmas-market/tools/check_assets.py

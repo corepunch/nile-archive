@@ -21,6 +21,7 @@ jobs:
         run: |
           make gen-check xcode-check test-assets lint
           python3 tools/test_run_tests.py
+          make test-ios-deploy
 
   native:
     needs: preflight
@@ -57,7 +58,7 @@ jobs:
           submodules: true
       - name: Build all games' iOS targets for the Simulator from the committed Xcode projects
         run: |
-          for s in nile-archive-ipad relic-rush-iphone christmas-market-iphone volcano-ipad; do
+          for s in nile-archive-ipad relic-rush-iphone christmas-market-iphone emergency-ipad; do
             g=${s%-*}
             xcodebuild -project games/$g/$g.xcodeproj -scheme $s -configuration Debug \
               -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \

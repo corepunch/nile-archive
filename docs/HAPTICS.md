@@ -23,7 +23,7 @@ and editor annotations come from `engine/api.xml`; regenerate with `make gen`.
 | Engine match presentation, used by Relic Rush and Christmas Market | MATCH for the first clear, COMBO for later waves or activated specials, TICK for completed simultaneous gravity steps, ERROR for rejected swaps/failure, SUCCESS for victory. Tools use the same clear-wave path. |
 | Engine city transactions, used by Nile Archive and both portrait games | PLACE after a successful quick purchase or Confirm of a purchase/relocation; COLLECT after income is collected |
 | Nile Archive scene input | MATCH for an object found, COMBO for consecutive finds, ERROR for a miss, TICK for a requested hint, SUCCESS for the final object |
-| Volcano presentation adapter | PLACE for completed station repairs, MATCH for other completed jobs, COLLECT for income, SUCCESS for rescues and district victory |
+| Emergency presentation adapter | PLACE for completed station repairs, MATCH for other completed jobs, COLLECT for income, SUCCESS for rescues and district victory |
 
 Rule matching, hints, simulations and speculative move searches never request
 feedback. Neither do city seed/loading calls, building pickup, dragging, camera
@@ -62,7 +62,7 @@ system CoreHaptics framework; `make xcode` regenerates the committed projects.
 
 `make test` includes engine priority/cooldown/focus/reset tests, generated Lua
 API checks, city purchase/relocation input checks, both real match presentation
-adapters, hidden-object finds/combos/misses/hints/completion, and Volcano events.
+adapters, hidden-object finds/combos/misses/hints/completion, and Emergency events.
 `testing.haptics()` flushes the pending frame and reports count, effect and
 strength without driving hardware; it exists only in test builds.
 

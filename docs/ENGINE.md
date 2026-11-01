@@ -250,7 +250,7 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
     edge near the speaker, leaning toward their mouth: it says who speaks
     without reaching across to them, and never crosses a face;
   - narration (no speaker) is a centred caption with no tail, and a named
-    speaker without a portrait (Volcano's dispatcher) gets a name tag on it.
+    speaker without a portrait (Emergency's dispatcher) gets a name tag on it.
   - the name badge is centred on the **visible outline's top edge** for all
     three shapes. Cloud puffs, shout spikes and rims count as existing padding;
     text spacing reserves only the remainder inside the core rectangle.
@@ -361,11 +361,11 @@ the C and the Lua games and comparing them pixel for pixel.
 
 ## Atlas animation and route graphs
 
-The third game, Volcano, adds `sprite.c` for authored atlas frames, animation
+The third game, Emergency, adds `sprite.c` for authored atlas frames, animation
 timing and shared draw/pick bounds, `nav.c` for blocked geometric graphs and
 elliptical target approaches, and `ui.progress` for themed meters. These are
-game-independent APIs, described in [LUA_API.md](LUA_API.md). Volcano's Lua code
-owns its worker jobs and campaign rules. See [the port assessment](../games/volcano/docs/PORT.md).
+game-independent APIs, described in [LUA_API.md](LUA_API.md). Emergency's Lua code
+owns its worker jobs and campaign rules. See [the port assessment](../games/emergency/docs/PORT.md).
 
 Native verification can isolate save files with `SPRITE_SAVE_DIR`, an existing
 writable directory. Normal play continues to use the existing per-game save directories.
