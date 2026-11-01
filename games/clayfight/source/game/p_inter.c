@@ -8,7 +8,7 @@
 
 static bool P_CanBlock(const fighter_t *vic, const attackinfo_t *atk)
 {
-    if (!vic->blocking)
+    if (!vic->blocking || vic->dizzy || P_IsAirborne(vic))
         return false;
     animkind_t k = vic->state->kind;
     bool guarding = k == K_FREE || (k == K_HIT && (P_InAnim(vic, ANIM_BLOCK) || P_InAnim(vic, ANIM_CROUCHBLOCK)));
@@ -30,6 +30,12 @@ static void P_KnockDown(fighter_t *vic, const fighter_t *att, float up)
 static void P_DamageFighter(fighter_t *vic, const fighter_t *att, const attackinfo_t *atk, const hit_t *h)
 {
     vic->health = MAX(0, vic->health - atk->damage);
+    // Brain damage is a separate resource. Blocking may empty the meter,
+    // but only an unblocked hit can schedule dizziness after recovery.
+    vic->dizzy = false;
+    vic->brain = MIN(MAX_BRAIN, vic->brain + MAX(1, h->stun));
+    vic->braindelay = BRAIN_RECOVERY_DELAY;
+    vic->dizzypending = vic->brain >= MAX_BRAIN;
     vic->flash = 4;
     level.hitstop = HITSTOP; // on a trade both sides share one freeze
     S_StartSound(atk->damage >= 10 ? sfx_hithard : sfx_hit, vic->x, 0.9f);
@@ -49,7 +55,7 @@ static void P_DamageFighter(fighter_t *vic, const fighter_t *att, const attackin
     vic->linkstun = h->stun;
     if (!(h->crouch && P_SetAnim(vic, ANIM_CROUCHHIT)))
         P_SetAnim(vic, ANIM_HIT);
-    vic->stun = HITSTUN;
+    vic->stun = h->stun > 0 ? h->stun : HITSTUN;
     vic->momx = att->facing * atk->push;
 }
 
@@ -83,6 +89,8 @@ void P_ApplyHit(fighter_t *att, fighter_t *vic, const hit_t *h)
         if (!(h->crouch && P_SetAnim(vic, ANIM_CROUCHBLOCK)))
             P_SetAnim(vic, ANIM_BLOCK);
         vic->stun = BLOCKSTUN;
+        vic->brain = MIN(MAX_BRAIN, vic->brain + MAX(1, h->stun / 4));
+        vic->braindelay = BRAIN_RECOVERY_DELAY;
         vic->momx = att->facing * atk->push * 0.8f;
         vic->health = MAX(1, vic->health - atk->damage / 6); // chip damage
         level.hitstop = MAX(level.hitstop, 3);

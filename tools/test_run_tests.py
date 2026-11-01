@@ -30,8 +30,8 @@ class RunnerTests(unittest.TestCase):
     def test_all_suites_once_and_renderer_checks_are_default(self):
         jobs = checks(arguments=["rules", "--extended"])
         games = [command for _, command in jobs if command[0].startswith("./build/test/")]
-        self.assertEqual(len(games), 5)
-        self.assertEqual(len({command[0] for command in games}), 5)
+        self.assertEqual(len(games), 6)
+        self.assertEqual(len({command[0] for command in games}), 6)
         self.assertTrue(all(command[1:] == ["--check", "rules", "--extended"] for command in games))
         self.assertNotIn("clayfight", [arg for command in games for arg in command[1:]])
         self.assertTrue(all(command[1] == "--fast" for _, command in checks(True)

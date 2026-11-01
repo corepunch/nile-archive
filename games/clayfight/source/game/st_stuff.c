@@ -18,7 +18,7 @@ void ST_Drawer(const int wins[2])
         const fighter_t *f=&level.fighters[i];
         int damage=CLAMP((int)lroundf((MAX_HEALTH-f->shownhealth)*120.f/MAX_HEALTH),0,120);
         ST_Art(g,(i?HUD_HEALTH_RIGHT:HUD_HEALTH_LEFT)+damage,i?184:32,8,0);
-        ST_Art(g,(i?HUD_STUN_RIGHT:HUD_STUN_LEFT)+CLAMP(f->stun,0,68),i?184:72,24,0);
+        ST_Art(g,(i?HUD_STUN_RIGHT:HUD_STUN_LEFT)+CLAMP(f->brain*68/MAX_BRAIN,0,68),i?184:72,24,0);
 
         // Retail heart script 57052 holds frame 1767, then beats through
         // 1768/1769 at four ticks each. The beat interval shortens as HP falls.

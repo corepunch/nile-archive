@@ -105,11 +105,19 @@ move GROUP.BUTTON ANIM damage N stun N strength N level high|low [knockdown] [pu
 end
 ```
 
-- **Buttons:** `hq hf lq lf` (high quick, high fierce, low quick, low fierce).
-- **Groups:** `stand` at range, `close` up close, `crouch`, `jump` straight
-  up, `air` jumping across, and `power`, which Primal Rage has but Clayfight
-  doesn't trigger yet. A missing `close` or `power` move falls back to `stand`,
-  and a missing `air` move to `jump`.
+- **Buttons:** `hq hf lq lf` (high quick, high fierce, low quick, low fierce),
+  plus `hp lp` (the high/low quick+fierce power pairs).
+- **Groups:** `stand` at range, `close` up close, `crouch`, and `jump` for both
+  straight and traveling jumps. For example, `crouch.hp` is slot 20 and
+  `jump.lp` slot 23. Missing ground powers use a posture's fierce move or its
+  standing counterpart. A missing `close`/`crouch` normal uses `stand`;
+  missing air powers can use a fierce `jump` move. With no air move authored,
+  no air attack is performed.
+- **Legacy aliases:** `power.hq/hf/lq/lf` still address slots 16–19 and
+  `air.hq/hf/lq/lf` slots 20–23. Their former grouping was incorrect for the
+  source table; use the explicit posture/power names above. Existing files
+  using these aliases should migrate according to the
+  [normal-move table](primal-rage-combat.md#the-24-normal-move-slots).
 - **Move options:**
   - `damage`: health taken.
   - `stun`: how long the victim's reaction lasts, in tics.

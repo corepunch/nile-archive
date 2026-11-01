@@ -93,6 +93,11 @@ static int P_MoveSlot(const parser_t *ps, const char *s)
     static const char *const groups[NUMMOVEGROUPS] = {"stand", "close", "crouch", "jump", "power", "air"};
     static const char *const buttons[4] = {"hq", "hf", "lq", "lf"};
     const char *dot = strchr(s, '.');
+    if (dot && (!strcasecmp(dot + 1, "hp") || !strcasecmp(dot + 1, "lp"))) {
+        for (int g = 0; g < 4; g++)
+            if ((size_t)(dot - s) == strlen(groups[g]) && !strncasecmp(s, groups[g], dot - s))
+                return MP_STAND + g * 2 + (!strcasecmp(dot + 1, "lp"));
+    }
     if (dot) {
         for (int g = 0; g < NUMMOVEGROUPS; g++) {
             if ((size_t)(dot - s) != strlen(groups[g]) || strncasecmp(s, groups[g], dot - s))

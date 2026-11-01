@@ -11,7 +11,15 @@ Photo creatures continue to use authored creature states.
 
 `make test-clayfight-retail` validates 280 standard animations and move slots,
 their rendered frames and palettes, plus airborne registration and game flow.
-The following DOS reverse-engineering notes and addresses are historical.
+The current fighter controller, corrected 24-slot mapping, combat-anchor
+geometry, brain gauge and CPU planner are documented in
+[Primal Rage combat](primal-rage-combat.md).
+
+## Historical DOS investigation
+
+Everything below, including the converter recommendation and its former move
+group guesses, describes the earlier DOS investigation. It is not the current
+arcade runtime contract. The following DOS addresses are historical.
 The old converter and comparison tools require an external DOS installation;
 neither converted definitions nor `PRAGE.EXE` are runtime inputs.
 

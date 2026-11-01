@@ -14,6 +14,7 @@
 #define MOVES_C 0x72ea4
 #define HITBOXES 0x7d328
 #define BOXSHAPES 0x49f7c
+#define FRAMEANCHORS 0xfd148 // collision anchors, distinct from RLE drawing pivots
 
 #define MAXOPS 512 // instructions per advance before we call it a runaway
 
@@ -39,7 +40,9 @@ bool PS_FrameInfo(int frameid, gra_t **sprite, int *frame, int *ax, int *ay)
     gra_t *g = W_LoadGra("arcade");
     patch_t *p = W_Frame(g, frameid);
     if (!p) return false;
-    *sprite = g; *frame = frameid; *ax = p->x; *ay = p->y;
+    *sprite = g; *frame = frameid;
+    *ax = X_U8(FRAMEANCHORS + frameid * 2);
+    *ay = X_U8(FRAMEANCHORS + frameid * 2 + 1);
     return true;
 }
 
@@ -87,7 +90,7 @@ bool PS_Move(int character, int id, psmove_t *m)
     m->damage = X_U8(MOVES_A + 11 * k);
     m->strength = X_U8(MOVES_A + 11 * k + 4);
     m->stun = X_U8(MOVES_A + 11 * k + 1);
-    m->hitclass = X_U8(MOVES_C + 6 * k + 2);
+    m->hitclass = X_U8(MOVES_C + 6 * k + 3) & 7;
     uint32_t t = HITBOXES + 0x3c0 * character + 15 * id;
     for (int j = 0; j < 5; j++) {
         int step = X_S8(t + 3 * j);

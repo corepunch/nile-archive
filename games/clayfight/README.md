@@ -72,17 +72,23 @@ voices, fonts, menus, title art, character selection and stages.
 ## Features and controls
 
 Left player: WASD, R/T for high quick/fierce, F/G for low quick/fierce, Enter
-starts. Right player: arrow keys, O/P and L/semicolon. Right-player input joins
+starts. Press R+T or F+G for high/low power attacks. Hold away to guard,
+or down-away against lows; attack buttons cancel guard. Alternate left/right
+to recover faster when dizzy. Right player: arrow keys, O/P and L/semicolon. Right-player input joins
 on the select screen. Escape pauses; Q returns to the menu while paused;
 backtick toggles hit boxes. macOS and iOS support two GameController devices;
 the non-Apple platform joystick backend exposes its first device.
 
 Combat retains the original animation timing, root motion, attack/hurt boxes,
-blocking, crouching, jumping, knockdowns, hitstop, CPU behavior, best-of rounds,
+blocking, crouching, jumping, power pairs, knockdowns, hitstop, a separate brain
+gauge/dizzy recovery, timed CPU plans, best-of rounds,
 timer, palettes, stereo samples and voices. Native contact sprites replace the
 former square particles; the port's combat rules remain in C. Game flow includes the
 conquest campaign, continues, seven-opponent final gauntlet, training, tug of
 war, endurance, options, volume and sound test.
+
+See [Primal Rage combat and the port's adaptations](docs/primal-rage-combat.md)
+for the original mechanics, ROM evidence, fighter/AI changes and remaining gaps.
 
 ## Photograph a fighter
 
@@ -106,7 +112,9 @@ controls; creature capture requires the native app or desktop companion.
 ## Verification
 
 ```sh
-make test-clayfight         # framebuffer/photo/JS processing, no retail data
+make test-clayfight         # controller/AI, framebuffer/photo/JS, no retail data
+make CFLAGS="-O2 -g -Werror" clayfight build/test/clayfight
+./build/test/clayfight --retail  # focused combat and all seven CPU styles
 make test-clayfight-retail  # 280 arcade animation/move checks, audio, flow/rendering,
                            # real server publication and playable custom fighter
 python3 -B games/clayfight/tests/concepts.py

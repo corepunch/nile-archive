@@ -121,7 +121,7 @@ xcode-check:
 # The test build: engine and launcher with -DENGINE_TEST. One start of a binary runs
 # every test of that suite (docs/TESTING.md). make test ONLY=smoke runs a part.
 TEST_GAMES := nile-archive relic-rush christmas-market volcano
-TEST_BINS := build/test/engine $(TEST_GAMES:%=build/test/%)
+TEST_BINS := build/test/engine build/test/clayfight $(TEST_GAMES:%=build/test/%)
 TEST_OBJ := build/test-obj/engine.o build/test-obj/script.o build/engine/lua.o build/engine/platform.o
 TEST_DEPS := engine/test.h engine/test_runner.c engine/test_lua.c
 build/test-obj/%.o: $(ENGINE_DEPS) $(TEST_DEPS)
