@@ -768,6 +768,22 @@
         "cancel"
       ],
       "reproduction": "make buildings GAME=relic-rush"
+    },
+    "placement-guides": {
+      "source": "engine/city.c draw_placement_guides",
+      "runtime": "city.placing >= 0; excludes city.moving original position",
+      "states": [
+        "idle-hidden",
+        "held-move",
+        "released-preview",
+        "purchase-preview",
+        "blocked-preview",
+        "cancel-hidden",
+        "confirm-hidden"
+      ],
+      "geometry": "projected collision footprint including city.clearance; cream perimeter with dark contrast edge; no fill or artwork changes",
+      "reproduction": "build/test/relic-rush \"hold relic-long-press\" \"hold relic-phone-long-press\" \"shot island-blocked\"",
+      "review": "docs/review/city-placement-guides/README.md"
     }
   },
   "match3_atlas": {
@@ -874,8 +890,8 @@
     ],
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
-    "review": "docs/review/relic-input-feedback/README.md",
-    "specials": "full-size base gems with centred compact lightning or bomb symbols above all gems and blockers; full rainbow prism; no enclosing hex frames",
+    "review": "docs/review/striped-specials/README.md",
+    "specials": "ROW/COLUMN/DIAGONAL use gfx.image_striped on the full matching gem at 30/90/150 degrees; four broad cream periods, width .44, source alpha and surface shading retained. User explicitly requested engine-masked stripes on 2026-11-01. Bomb and prism replace the entire gem at full size; legacy ray sprites remain for canonical skin compatibility and are not drawn as badges.",
     "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; centred 1/2 hit counter above every board layer",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },
@@ -887,5 +903,30 @@
     "interaction_states": "unchanged engine placement, lift, valid/invalid footprint and shop controls",
     "reproduction": "python3 tools/import_painted_buildings.py relic-rush",
     "review": "docs/review/painted-buildings/current-camera/README.md"
+  },
+  "striped_specials": {
+    "source": "engine/render.c render_image_striped; engine/gfx.c draw_image_striped; engine/api.xml gfx.image_striped",
+    "runtime": "lua/board.lua R.draw_relic; lua/art.lua A.stripes",
+    "art": "existing pack gem and bomb/prism RGBA atlas regions; no new bitmap, texture mutation, offline derived states or intermediate texture allocation",
+    "authorization": "User explicitly requested drawing stripes in the engine over the icon, masked to its alpha (2026-11-01); replaces the authored-stripe approach.",
+    "states": [
+      "normal",
+      "ROW-30deg",
+      "COLUMN-90deg",
+      "DIAGONAL-150deg",
+      "BOMB-full-piece",
+      "PRISM-full-piece",
+      "selected",
+      "hint",
+      "ice-1",
+      "ice-2",
+      "chain",
+      "swap",
+      "fall",
+      "clear",
+      "guide"
+    ],
+    "review": "docs/review/striped-specials/README.md",
+    "reproduction": "build/test/relic-rush \"shot art-specials\" \"shot phone-art-specials\" \"shot stripe-states-\" \"shot guide\" \"shot phone-guide\""
   }
 }

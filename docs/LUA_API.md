@@ -1165,6 +1165,20 @@ Draw t rotated by angle (radians) about the centre of dst.
 | `angle` | `number` |  |
 | `tint` | `color` |  |
 
+### `gfx.image_striped(t, dst, angle, repeats, width, ink, tint)`
+
+Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
+
+| Argument | Type | |
+|---|---|---|
+| `t` | `texture` |  |
+| `dst` | `rect` |  |
+| `angle` | `number` |  |
+| `repeats` | `number` |  |
+| `width` | `number` |  |
+| `ink` | `color` |  |
+| `tint` | `color` |  |
+
 ### `gfx.rect(r, c)`
 
 | Argument | Type | |

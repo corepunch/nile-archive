@@ -2728,6 +2728,20 @@ static int l_gfx_image_rot(lua_State *L)
     return 0;
 }
 
+/* gfx.image_striped(t, dst, angle, repeats, width, ink, tint) */
+static int l_gfx_image_striped(lua_State *L)
+{
+    texture a_t = api_check_texture(L, 1);
+    rect a_dst = api_check_rect(L, 2);
+    float a_angle = (float)luaL_checknumber(L, 3);
+    float a_repeats = (float)luaL_checknumber(L, 4);
+    float a_width = (float)luaL_checknumber(L, 5);
+    color a_ink = api_check_color(L, 6);
+    color a_tint = api_check_color(L, 7);
+    draw_image_striped(a_t, a_dst, a_angle, a_repeats, a_width, a_ink, a_tint);
+    return 0;
+}
+
 /* gfx.rect(r, c) */
 static int l_gfx_rect(lua_State *L)
 {
@@ -4170,6 +4184,7 @@ static void open_gfx(lua_State *L)
         {"image", l_gfx_image},
         {"image_part", l_gfx_image_part},
         {"image_rot", l_gfx_image_rot},
+        {"image_striped", l_gfx_image_striped},
         {"rect", l_gfx_rect},
         {"rect_grad", l_gfx_rect_grad},
         {"round_rect", l_gfx_round_rect},

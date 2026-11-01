@@ -192,3 +192,9 @@ python3 -m http.server 8080 --directory dist   # затем http://localhost:808
 ## Fast rule tests
 
 Run `make test-nile-archive` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.
+
+При переносе или размещении здания контуры остальных построек показывают
+занятую землю с учётом отступов. Светлые линии с тёмной окантовкой помогают
+быстро выравнивать постройки. Старое место переносимого здания не выделяется;
+после подтверждения или отмены контуры исчезают.
+[Сравнение](../../docs/review/city-placement-guides/README.md).

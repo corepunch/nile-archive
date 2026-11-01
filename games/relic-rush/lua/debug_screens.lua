@@ -39,6 +39,7 @@ function R.debug_frame()
 end
 
 function R.debug_screens()
+    if app.arg("stripe-states") then R.art_review = true end
     R.island.show_footprints = app.arg("footprints") ~= nil
     local a = app.arg("level")
     if a then R.g = rules.game_start(tonumber(a) - 1, 123478); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end

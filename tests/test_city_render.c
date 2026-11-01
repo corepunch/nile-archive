@@ -17,6 +17,17 @@ static color at(int x, int y)
     return rgba(p[0], p[1], p[2], p[3]);
 }
 
+static bool guide_at(vec2 p)
+{
+    /* Sample a small neighbourhood so subpixel camera edges survive scaling. */
+    for (int y = -2; y <= 2; y++)
+        for (int x = -2; x <= 2; x++) {
+            color sample = at((int)roundf(p.x) + x, (int)roundf(p.y) + y);
+            if (sample.r > 180 && sample.g > 180 && sample.b > 120) return true;
+        }
+    return false;
+}
+
 static void init(void)
 {
     color green = rgba(50, 150, 60, 255), white = WHITE, red = rgba(220, 30, 30, 255);
@@ -40,6 +51,35 @@ static void frame(float dt)
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(at(103, 75).r > 200 && at(103, 75).g < 60);
+    /* Occupied-ground guides include clearance, remain visible during a held
+     * or released preview, and never mark the mover's vacated old position. */
+    c.clearance = sz2(1, 1);
+    c.items[0] = (building){v2(40, 70), 1, 0};
+    c.items[1] = (building){v2(110, 100), 1, 0};
+    vec2 old_edge = vec2_add(c.items[0].pos, city_tile_to_world(&c, v2(0, 1)));
+    vec2 neighbour_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(0, 1)));
+    vec2 covered_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(0, -1)));
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(!guide_at(old_edge) && !guide_at(neighbour_edge));
+    city_begin_move(&c, 0);
+    c.ghost = v2(95, 45); c.held = true; c.lift = 1;
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(!guide_at(old_edge) && guide_at(neighbour_edge) && guide_at(covered_edge));
+    c.held = false; c.lift = 0;
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(guide_at(neighbour_edge));
+    city_cancel(&c);
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(!guide_at(old_edge) && !guide_at(neighbour_edge));
+    city_begin_place(&c, 1, v2(95, 45));
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(guide_at(old_edge) && guide_at(neighbour_edge));
+    city_cancel(&c);
     /* cloud fog moves on frame time alone, and unlocking clears it at once */
     c.count = 0;
     c.zone_count = 2; c.zones[0].area = rc(0, 0, 160, 40); c.zones[1].area = rc(0, 40, 160, 120);

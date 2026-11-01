@@ -292,6 +292,7 @@ void tex_additive(texture t, bool on);      /* additive instead of alpha blendin
 void draw_image(texture t, rect dst, color tint);
 void draw_image_part(texture t, rect src, rect dst, color tint);
 void draw_image_rot(texture t, rect dst, float angle, color tint);
+void draw_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint);
 void draw_rect(rect r, color c);
 void draw_rect_grad(rect r, color top, color bottom);
 void draw_round_rect(rect r, float radius, color c);

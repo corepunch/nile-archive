@@ -331,9 +331,14 @@ the building. Dragging, panning and zooming keep these controls with the preview
 Popup backdrops snap to their full blur immediately; the popup entrance and exit
 continue animating independently.
 
-Special gems keep their full-size matching artwork with a compact lightning-arrow
-or bomb symbol centred over the gem and blockers; a rainbow prism remains a whole crystal. No hexagonal special,
-selection or hint frames are used. Frozen tiles have a translucent ice sheet
-across the whole gem and a centred **1**/**2** counter above every board layer for remaining hits. Selection uses
+Ray gems retain their matching artwork with broad engine-rendered cream stripes
+masked to the gem's alpha. Stripe direction identifies the cleared board axis.
+Bombs are full-size bombs replacing the gem; prisms remain whole crystals.
+Frozen pieces retain a centred **1**/**2** counter above the board layers. Selection uses
 a soft mint glow; hints use gold light and sparkles. See the updated Explorer’s
-guide and [visual review](../../docs/review/relic-tile-indicators/README.md).
+guide and [visual review](../../docs/review/striped-specials/README.md).
+
+While moving or placing a building, cream outlines around other buildings show
+their occupied ground and clearance for quick alignment. The mover's old spot is
+free; guides remain until Confirm/Cancel. See the
+[shared placement-guide review](../../docs/review/city-placement-guides/README.md).

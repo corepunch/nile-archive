@@ -87,6 +87,35 @@ static void draw_and_check(void)
     /* The left letterbox stays at the clear color, outside the logical scene. */
     CHECK(pixels[(height / 2 * width) * 4] == 16);
 
+    /* Stripes follow an atlas view's silhouette, including partial alpha;
+     * clipping and the following ordinary image must retain their state. */
+    color authored[12 * 4];
+    for (int y = 0; y < 4; y++)
+        for (int x = 0; x < 12; x++)
+            authored[y * 12 + x] = x < 2 || x >= 10 ? rgba(255, 0, 0, 255)
+                : rgba(40, 80, 160, x < 6 ? 255 : x < 8 ? 128 : 0);
+    texture atlas = tex_from_pixels(authored, 12, 4);
+    texture masked = tex_region(atlas, rc(2, 0, 8, 4));
+    draw_rect(rc(0, 0, 100, 100), BLACK);
+    draw_image_striped(masked, rc(10, 10, 40, 20), ENGINE_PI / 2, 4, .44f, WHITE, WHITE);
+    gfx_clip(rc(10, 40, 22, 20));
+    draw_image_striped(masked, rc(10, 40, 40, 20), 0, 4, .44f, WHITE, WHITE);
+    gfx_unclip();
+    draw_image_striped(masked, rc(10, 70, 40, 20), ENGINE_PI / 6, 4, .44f, WHITE, WHITE);
+    draw_image(green, rc(60, 10, 20, 20), WHITE);
+    CHECK(render_read_pixels(pixels, width, height));
+    c = pixel(20, 15); CHECK(c.r > 190 && c.g > 190);   /* vertical band */
+    c = pixel(25, 15); CHECK(c.r < 60 && c.g < 100 && c.b > 140); /* original colour between bands */
+    c = pixel(31, 15); CHECK(c.r > 80 && c.r < 160); /* half-alpha stays half-alpha */
+    c = pixel(45, 15); CHECK(c.r == 0 && c.g == 0 && c.b == 0); /* transparent gutter stays empty */
+    c = pixel(20, 45); CHECK(c.r > 190);   /* horizontal band */
+    c = pixel(20, 47.5f); CHECK(c.r < 80); /* horizontal gap */
+    c = pixel(35, 45); CHECK(c.r == 0 && c.g == 0 && c.b == 0); /* clip */
+    c = pixel(20, 77); CHECK(c.r > 170);  /* diagonal band */
+    c = pixel(25, 77); CHECK(c.r < 100); /* diagonal gap */
+    c = pixel(70, 20); CHECK(c.r < 15 && c.g > 240 && c.b < 15); /* no leaked stripe state */
+    tex_free(atlas);
+
     /* Off the logical screen, drawing is clipped until bleed lets it reach the display. */
     rect bleed = app_bleed(), screen = app_screen();
     CHECK(bleed.pos.x < 0 && bleed.pos.y <= 0 && rect_max(bleed).x > rect_max(screen).x && rect_max(bleed).y >= rect_max(screen).y);

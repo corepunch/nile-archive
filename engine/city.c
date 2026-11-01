@@ -598,6 +598,37 @@ static void draw_fog(const city *c, double now)
     if (n) render_geometry(NULL, v, w * (y1 - y0 + 1), idx, n);
 }
 
+static void footprint_corners(const city *c, vec2 at, int type, vec2 pts[4])
+{
+    size2 f = tiles_of(c, type);
+    vec2 t = to_tile(c, at);
+    const float u[4] = {-.5f, .5f, .5f, -.5f}, v[4] = {-.5f, -.5f, .5f, .5f};
+    for (int k = 0; k < 4; k++)
+        pts[k] = camera_to_screen(c->cam, from_tile(c, vec2_add(t, v2(u[k] * f.w, v[k] * f.h))));
+}
+
+/* Neutral occupied-ground guides, including the same clearance as collision.
+ * Paint over the sprites so tall neighbours cannot hide the alignment edges. */
+static void draw_placement_guides(const city *c)
+{
+    color shadow = rgba(18, 45, 39, 185), line = rgba(255, 243, 204, 225);
+    for (int i = 0; i < c->count; i++) {
+        if (i == c->moving) continue;   /* the old location is free during a move */
+        building b = c->items[i];
+        if (c->defs[b.type].size.w <= 0) {
+            vec2 at = camera_to_screen(c->cam, b.pos);
+            float r = c->spacing * .5f * c->cam.zoom;
+            draw_ring(at, r, 3.5f, shadow);
+            draw_ring(at, r, 1.5f, line);
+        } else {
+            vec2 pts[4];
+            footprint_corners(c, b.pos, b.type, pts);
+            for (int k = 0; k < 4; k++) draw_line(pts[k], pts[(k + 1) % 4], 3.5f, shadow);
+            for (int k = 0; k < 4; k++) draw_line(pts[k], pts[(k + 1) % 4], 1.5f, line);
+        }
+    }
+}
+
 static void draw_footprint(const city *c, vec2 at, int type, bool ok)
 {
     color fill = ok ? rgba(114, 221, 136, 110) : rgba(245, 100, 84, 145), line = ok ? rgba(217, 255, 189, 255) : rgba(255, 208, 179, 255);
@@ -608,7 +639,8 @@ static void draw_footprint(const city *c, vec2 at, int type, bool ok)
     size2 f = tiles_of(c, type);
     vec2 t = to_tile(c, at);
 #define CORNER(u, v) camera_to_screen(c->cam, from_tile(c, vec2_add(t, v2((u) - f.w * .5f, (v) - f.h * .5f))))
-    vec2 pts[4] = {CORNER(0, 0), CORNER(f.w, 0), CORNER(f.w, f.h), CORNER(0, f.h)};
+    vec2 pts[4];
+    footprint_corners(c, at, type, pts);
     draw_poly(pts, 4, fill);
     for (int i = 1; i < f.w; i++) draw_line(CORNER(i, 0), CORNER(i, f.h), 1, color_alpha(line, .45f));   /* the tiles inside */
     for (int j = 1; j < f.h; j++) draw_line(CORNER(0, j), CORNER(f.w, j), 1, color_alpha(line, .45f));
@@ -724,6 +756,7 @@ void city_draw(const city *c, input in, double now)
     if (c->draw_over) c->draw_over(c);
 
     if (c->placing >= 0) {
+        if (!c->show_footprints) draw_placement_guides(c);
         vec2 land = city_snap(c, c->ghost, c->placing);   /* mid-drag the footprint shows where it will land */
         bool ok = city_can_place(c, land, c->placing, c->moving);
         draw_footprint(c, land, c->placing, ok);

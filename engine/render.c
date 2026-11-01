@@ -28,7 +28,7 @@ struct render_texture {
 };
 static struct {
     GLuint program, vao, vertices, indices, white;
-    GLint screen, origin;
+    GLint screen, origin, stripes, stripe_rect, stripe_color;
     size2 pixels, logical;
     float scale;
     vec2 offset;
@@ -86,11 +86,18 @@ bool render_init(void)
 {
     GLuint vs = render_shader(GL_VERTEX_SHADER,
         "in vec2 position; in vec4 color; in vec2 uv; uniform vec2 screen, origin;\n"
-        "out vec4 tint; out vec2 texcoord;\n"
-        "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;}\n");
+        "out vec4 tint; out vec2 texcoord, point;\n"
+        "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;point=position;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
-        "in vec4 tint; in vec2 texcoord; uniform sampler2D image; out vec4 pixel;\n"
-        "void main(){pixel=texture(image,texcoord)*tint;}\n");
+        "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
+        "uniform vec4 stripes, stripe_rect, stripe_color;\n"
+        "void main(){vec4 base=texture(image,texcoord);"
+        "if(stripes.z>0.){vec2 q=(point-stripe_rect.xy)/stripe_rect.zw-.5;"
+        "float phase=dot(q,stripes.xy)*stripes.z;float aa=max(fwidth(phase),.001);"
+        "float band=1.-smoothstep(stripes.w*.5-aa,stripes.w*.5+aa,abs(fract(phase+.5)-.5));"
+        "float shade=.65+.35*dot(base.rgb,vec3(.2126,.7152,.0722));"
+        "base.rgb=mix(base.rgb,stripe_color.rgb*shade,band*stripe_color.a);}"
+        "pixel=base*tint;}\n");
     if (!vs || !fs) { glDeleteShader(vs); glDeleteShader(fs); return false; }
     R.program = glCreateProgram();
     glAttachShader(R.program, vs); glAttachShader(R.program, fs);
@@ -108,6 +115,9 @@ bool render_init(void)
     }
     R.screen = glGetUniformLocation(R.program, "screen");
     R.origin = glGetUniformLocation(R.program, "origin");
+    R.stripes = glGetUniformLocation(R.program, "stripes");
+    R.stripe_rect = glGetUniformLocation(R.program, "stripe_rect");
+    R.stripe_color = glGetUniformLocation(R.program, "stripe_color");
     glUseProgram(R.program);
     glUniform1i(glGetUniformLocation(R.program, "image"), 0);
     glGenVertexArrays(1, &R.vao); glBindVertexArray(R.vao);
@@ -163,6 +173,7 @@ void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
     glUseProgram(R.program);
     glUniform2f(R.screen, pixels.w / R.scale, pixels.h / R.scale);
     glUniform2f(R.origin, R.offset.x / R.scale, R.offset.y / R.scale);
+    glUniform4f(R.stripes, 0, 0, 0, 0);
     glActiveTexture(GL_TEXTURE0); glBindVertexArray(R.vao);
     render_clip(NULL);
 }
@@ -229,6 +240,22 @@ void render_image(texture t, rect src, rect dst, float angle, color tint)
     if (t.additive) t.tex->additive = true;
     render_geometry(t.tex, v, 4, idx, 6);
     t.tex->additive = original_blend;
+}
+
+void render_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint)
+{
+    if (!render_ready() || !t.tex || dst.size.w <= 0 || dst.size.h <= 0) return;
+    if (!isfinite(angle) || !isfinite(repeats) || !isfinite(width) || repeats <= 0 || width <= 0 || !ink.a) {
+        render_image(t, tex_rect(t), dst, 0, tint);
+        return;
+    }
+    /* Pattern coordinates belong to the piece, so its stripes follow squash,
+     * translation and atlas-region UVs while retaining the source alpha. */
+    glUniform4f(R.stripes, -sinf(angle), cosf(angle), repeats, saturate(width));
+    glUniform4f(R.stripe_rect, dst.pos.x, dst.pos.y, dst.size.w, dst.size.h);
+    glUniform4f(R.stripe_color, ink.r / 255.f, ink.g / 255.f, ink.b / 255.f, ink.a / 255.f);
+    render_image(t, tex_rect(t), dst, 0, tint);
+    glUniform4f(R.stripes, 0, 0, 0, 0);   /* following ordinary images/shapes stay unstriped */
 }
 
 /* The area drawing may reach: the logical screen, or the whole display. */
