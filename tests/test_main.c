@@ -3,9 +3,37 @@
  * build/test/engine, one start for all of them. See docs/TESTING.md. */
 #include "test_runner.c"
 #include "viewport.h"
+#include "script_modules.h"
+#include "third_party/lua/lauxlib.h"
 
 #include <stdio.h>
 #include <string.h>
+
+TEST(script_module_roots)
+{
+    /* A long missing root must not truncate the list or the fallback path.
+     * Separate states must own both their root strings and their caches. */
+    char roots[1200];
+    memset(roots, 'x', 1024);
+    strcpy(roots + 1024, ";tests/fixtures/modules/first");
+    lua_State *first = luaL_newstate(), *second = luaL_newstate();
+    script_modules_open(first, roots);
+    script_modules_open(second, "tests/fixtures/modules/second");
+    memset(roots, 0, sizeof roots);
+
+    lua_getglobal(first, "require");
+    lua_pushliteral(first, "loader.precedence");
+    int status = lua_pcall(first, 1, 1, 0);
+    CHECKF(status == LUA_OK, "%s", lua_tostring(first, -1));
+    CHECK(lua_isstring(first, -1) && !strcmp(lua_tostring(first, -1), "first"));
+    lua_getglobal(second, "require");
+    lua_pushliteral(second, "loader.precedence");
+    status = lua_pcall(second, 1, 1, 0);
+    CHECKF(status == LUA_OK, "%s", lua_tostring(second, -1));
+    CHECK(lua_isstring(second, -1) && !strcmp(lua_tostring(second, -1), "second"));
+    lua_close(first);
+    lua_close(second);
+}
 
 
 TEST(math)

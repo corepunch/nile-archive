@@ -183,6 +183,12 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
+"41590808361351D30D12FA8C" = {"isa" = "PBXFileReference";
+"path" = "../../engine/script_modules.c";
+"name" = "script_modules.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
 "3844D74B4527AE195536A1E2" = {"isa" = "PBXFileReference";
 "path" = "../../engine/script.c";
 "name" = "script.c";
@@ -253,6 +259,7 @@
 "45B4B9CF2B44A145D927FBC6",
 "8A8386A2CEEEFE289DA8945E",
 "4F62C834EFF9537C0E92FC7C",
+"41590808361351D30D12FA8C",
 "3844D74B4527AE195536A1E2",
 "5A3E88961896E4AB82DE84B5",
 "332638782EE028D2FCDBBFAB",

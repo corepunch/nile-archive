@@ -6,6 +6,8 @@
 std = "lua54"
 max_line_length = false
 unused_args = false
+-- Deliberately malformed fixture: the loader must retain its compiler diagnostic.
+exclude_files = {"tests/fixtures/modules/first/loader/syntax.lua"}
 read_globals = {
     -- modules
     "app", "input", "gfx", "texture", "camera", "fx", "font", "style", "text", "sfx", "ui", "save", "story", "city",

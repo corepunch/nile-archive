@@ -21,6 +21,7 @@ UNITY
         ;;
     script) cat <<'UNITY'
 /* Game scripting and generated API bindings. */
+#include "script_modules.c"
 #include "script.c"
 #include "api_lua.c"
 UNITY
