@@ -27,6 +27,15 @@ footprint placement and unwanted generation flecks. Crop-only component bounds
 exclude distant flecks; RGB and alpha inside each crop are preserved. Normal
 sprites are authored; the engine still supplies lift/placement/validity effects.
 
+## Placement after rebasing onto the updated controls
+
+The current red cancel and jade confirm controls from `93c805b` are preserved.
+These captures check the repainted sprites with those controls at both phone sizes.
+
+| 480×900 | 390×844 | Blocked preview |
+| --- | --- | --- |
+| ![Placement](after-island-placement.jpg) | ![Phone placement](after-phone-island-placement.jpg) | ![Blocked placement](after-island-blocked.jpg) |
+
 ## Every catalogue page
 
 ![after-building-review-1](after-building-review-1.jpg)
