@@ -308,8 +308,8 @@ elseif action and action.kind == "cancel" then modals:close(action.modal) end
 Each layer's backdrop fades in over 0.2 s on the engine's tween module
 ([MOTION.md](MOTION.md)); `reduced_motion` shows it at once.
 `open(id,form,model,options)` pushes model values and a layer. Options include
-`bounds`, `width`, `height`, `blur`, `dim`, `close_on_background` (default true), and a `cancel` command ID (default
-`cancel`). Automatic bounds centre the measured form within the logical screen.
+`bounds`, `width`, `height`, `blur`, `dim`, `snap_backdrop` (default false), `close_on_background` (default true), and a `cancel` command ID (default
+`cancel`). Set `snap_backdrop=true` to apply the full blur and dim on the first frame, independently of entrance animation. Automatic bounds centre the measured form within the logical screen.
 Each layer blurs/dims all earlier drawing; the next layer can blur the previous
 dialog too. Only the top form receives input. Escape or a background tap emits
 its cancel action. Set `close_on_background=false` for required confirmations.

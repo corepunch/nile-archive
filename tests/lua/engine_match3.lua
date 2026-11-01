@@ -101,7 +101,7 @@ for flags=0,63 do
     end)
     t:case('flags='..flags..' dead-board recovery',function()
         local g=H.board(R)
-        for i=0,R.CELLS-1 do g.tiles[i]=R.tile(i) end
+        for i=0,R.CELLS-1 do g.tiles[i]=R.tile((R.hex_q(i)+2*R.hex_r(i)+12)%R.COLORS) end
         local before=g.rng
         local changed=R.game_check_end(g)
         t:check((not not changed)==(flags&E.NO_RESHUFFLE==0),'NO_RESHUFFLE controls automatic recovery')
@@ -109,7 +109,7 @@ for flags=0,63 do
     end)
     t:case('flags='..flags..' idle hints',function()
         local g=H.board(R)
-        for i=0,R.CELLS-1 do g.tiles[i]=R.tile(i) end
+        for i=0,R.CELLS-1 do g.tiles[i]=R.tile((R.hex_q(i)+2*R.hex_r(i)+12)%R.COLORS) end
         local view={HEX_R=26.5,g=g,pending=R.new_match(),phase=0,phase_time=0,idle_time=6,
             shake=0,overlay=0,OV_NONE=0,OV_RESULT=1,OV_FAILED=2,hint_a=-1,hint_b=-1,
             tone=function()end,notice=function()end}

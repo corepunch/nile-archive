@@ -70,6 +70,21 @@ assert(backdrop_stack:open("required",readonly,model,{bounds=modal_bounds,close_
 backdrop_stack:draw(0,{input=outside,reduced_motion=true})
 check(not backdrop_stack:draw(0,{input=outside,reduced_motion=true}),"required modal ignores background taps")
 backdrop_stack:close()
+-- Snap backdrops stay at full strength throughout the entrance, including frame zero.
+do
+    local widgets = ui
+    local original_layer = widgets.modal_layer
+    local radii = {}
+    rawset(widgets,"modal_layer",function(radius) radii[#radii+1] = radius end)
+    local snap = ui.modals({label=function()end})
+    assert(snap:open("snap",readonly,model,{bounds=modal_bounds,blur=7,snap_backdrop=true}))
+    snap:draw(0,{input={}})
+    testing.advance(.1)
+    snap:draw(.1,{input={}})
+    snap:close()
+    rawset(widgets,"modal_layer",original_layer)
+    check(#radii==2 and radii[1]==7 and radii[2]==7,"snapped popup blur never interpolates")
+end
 local skin={button=function()end,button_text=function()end,label=function()end,focus=function()end}
 form:draw(rect(0,0,300,160),skin,{input={key=input.KEY_TAB}})
 check(form.focus=="accept","Tab focuses the first actionable control")

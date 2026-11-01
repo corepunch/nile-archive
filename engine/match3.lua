@@ -459,7 +459,7 @@ function E.new(config)
         return true
     end
 
-    function M.game_shuffle(g)
+    local function generate_board(g)
         -- never erase blockers or fill a hole merely to manufacture a move
         local m = new_match()
         for _ = 1, 2000 do
@@ -468,6 +468,30 @@ function E.new(config)
                 if m.hits == 0 and game_hint(g) then return end
             end
         end
+    end
+
+    -- Recovery moves whole pieces, including earned specials. Locked pieces
+    -- and terrain stay put; an unsuccessful search restores the original board.
+    function M.game_shuffle(g)
+        local cells, pieces, original = {}, {}, {}
+        for i = 0, CELLS - 1 do
+            if cell_active(g, i) and not locked(g, i) then
+                cells[#cells + 1], pieces[#pieces + 1] = i, g.tiles[i]
+                original[i] = g.tiles[i]
+            end
+        end
+        local m = new_match()
+        for _ = 1, 2000 do
+            for i = #pieces, 2, -1 do
+                local j = randn(g, i) + 1
+                pieces[i], pieces[j] = pieces[j], pieces[i]
+            end
+            for i, cell in ipairs(cells) do g.tiles[cell] = pieces[i] end
+            game_matches(g, m, -1)
+            if m.hits == 0 and game_hint(g) then return true end
+        end
+        for cell, piece in pairs(original) do g.tiles[cell] = piece end
+        return false
     end
     local game_shuffle = M.game_shuffle
 
@@ -490,7 +514,7 @@ function E.new(config)
             g.soil[i], g.chain[i], g.ice[i] = 0, 0, 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
-        game_shuffle(g)
+        generate_board(g)
         for i = 1, n do   -- selection sort, exactly as the original orders ties
             for j = i + 1, n do
                 if l.terrain and l.terrain[order[j] + 1] < l.terrain[order[i] + 1] then order[i], order[j] = order[j], order[i] end
@@ -517,7 +541,7 @@ function E.new(config)
         g.initial_soil = l.soil
         local m = new_match()
         game_matches(g, m, -1)
-        if m.hits > 0 or not game_hint(g) then game_shuffle(g) end
+        if m.hits > 0 or not game_hint(g) then generate_board(g) end
         return g
     end
 
@@ -526,8 +550,7 @@ function E.new(config)
         g.won = g.score >= l.score and g.relics >= l.relics and g.dug >= l.soil and g.obstacles == 0
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
-            game_shuffle(g)
-            return true   -- presentation must discard stale selection/hints after a reshuffle
+            return game_shuffle(g)   -- discard stale selection/hints only after recovery
         end
         return false
     end

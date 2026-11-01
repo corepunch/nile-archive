@@ -527,7 +527,7 @@ function R.overlays(dt)
     local d = R.dialog
     d.n = 0
     local entry, exit = d.entry, d.exit
-    ui.modal_layer(7 * entry * (1 - exit), rgba(5, 22, 22, 185 * entry * (1 - exit)))
+    ui.modal_layer(7, rgba(5, 22, 22, 185))
     local scale = .96 + .04 * entry
     -- dialogs are laid out on the 900-tall design: centre them on a taller screen
     R.hit_dy = R.drop / 2

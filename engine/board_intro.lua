@@ -219,7 +219,17 @@ function board_intro.bind(R, rules)
         if R.phase ~= R.PH_PRESENT then return update(dt) end
         if R.art_review or R.overlay ~= R.OV_NONE or R.on_island or story.active() then return end
         R.shake = math.max(0,R.shake-dt)
+        local landed, slammed = 0, 0
+        if R.intro_haptics then
+            for _, c in ipairs(R.intro.list) do
+                if not c.landed and R.intro.t + dt >= c.land_at then landed = landed + 1 end
+                if c.slam_at and not c.slammed and R.intro.t + dt >= c.slam_at + SLAM_TIME then slammed = slammed + 1 end
+            end
+        end
         R.intro:update(dt)
+        if not R.intro.reduced and (landed > 0 or slammed > 0) then
+            haptic.play(slammed > 0 and haptic.MATCH or haptic.TICK, slammed > 0 and .55 or .35)
+        end
         if R.intro:done() then R.intro=nil; R.phase=R.PH_IDLE; R.idle_time=0 end
     end
     function R.board_input(inp)

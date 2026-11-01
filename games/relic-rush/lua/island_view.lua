@@ -120,16 +120,30 @@ local function play_button(label, sub)
     return R.button(r, label, true)
 end
 
+local placement_form = ui.form{kind="row",children={
+    {kind="button",id="cancel",text="",width=56,height=56,role="placement_cancel"},
+    {kind="spacer",grow=1},
+    {kind="button",id="confirm",text="",width=56,height=56,role="placement_confirm",enabled_field="valid"},
+}}
+R.placement_form = placement_form
+
+local function placement_controls(c)
+    local sprite = c.cam:rect_to_screen(c:sprite_rect(building{pos=c.ghost,type=c.placing}))
+    local width = math.min(416,math.max(152,sprite.w))
+    local x = num.clamp(sprite:center().x-width/2,16,SCREEN_W-width-16)
+    local y = num.clamp(sprite:max().y+12,110,app.screen().h-78)
+    placement_form.values.valid = c:can_place(c:snap(c.ghost,c.placing),c.placing,c.moving)
+    local event = placement_form:draw(rect(x,y,width,56),R.skin,{hit_offset=vec2(0,R.hit_dy)})
+    if event and event.id=="cancel" then c:cancel(); R.notice("Your island is unchanged.")
+    elseif event and event.id=="confirm" then confirm_place() end
+end
+
 local function bottom_controls()
     local c = R.island
     local y = R.drop
     local restored=island.wonder_count(c)
     if c.placing >= 0 then
-        local ok = c:can_place(c:snap(c.ghost, c.placing), c.placing, c.moving)
-        R.say_at(R.buildings[c.placing + 1].name, vec2(240, 810 + y), 22, PAL_GOLD, 410)
-        ui.block(rect(30, 834 + y, 420, 44))
-        if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your island is unchanged.") end
-        if R.button(rect(188, 834 + y, 262, 44), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
+        placement_controls(c)
         return
     end
     if round_button(R.island_buttons.expeditions + vec2(0, y), "EXPEDITIONS",
