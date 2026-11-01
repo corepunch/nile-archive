@@ -247,3 +247,10 @@ and `workshop`.
 | 98 / `boulder` | Песчаный валун | rock | 1 x 1 | 15 | 0 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
 | 99 / `turquoise` | Бирюза | rock | 1 x 1 | 120 | 5 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
 | 100 / `desert_rocks` | Скалы пустыни | rock | 2 x 2 | 60 | 1 | [Page 12](review/painted-buildings/current-camera/after-building-review-12.jpg) |
+
+## Style and prompt provenance
+
+See the [shared building style guide](../../../docs/BUILDING_STYLE.md) for the
+accepted palette, materials, polish and review criteria, and the
+[reference index](../art/building-catalogue/painted-v1/references.json) for exact
+prompts, ordered input images, hashes and accepted versions.

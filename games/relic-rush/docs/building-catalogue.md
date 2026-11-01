@@ -211,3 +211,10 @@ sprite file is always `data/buildings/<key>.png`.
 | 93 / `boulder` | Boulder | rock | 1 x 1 | 15 | 0 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
 | 94 / `crystal` | Crystal cluster | rock | 1 x 1 | 120 | 18 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
 | 95 / `mossy_rocks` | Mossy boulders | rock | 2 x 2 | 60 | 3 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
+
+## Style and prompt provenance
+
+See the [shared building style guide](../../../docs/BUILDING_STYLE.md) for the
+accepted palette, materials, polish and review criteria, and the
+[reference index](../art/building-catalogue/painted-v1/references.json) for exact
+prompts, ordered input images, hashes and accepted versions.

@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "game": "christmas-market",
+  "pass": "painted-v1",
+  "generator": "image_gen",
+  "render_baseline": "aefd5442716fb81a6fb093afd717b56dfaef9581",
+  "style_guide": "../../docs/BUILDING_STYLE.md",
+  "runtime_imports": "art/building-catalogue/painted-v1/imports.json",
+  "reimport_command": "python3 tools/import_painted_buildings.py christmas-market",
+  "generation_is_deterministic": false,
+  "accepted_object_count": 37,
+  "generations": [
+    {
+      "category": "building",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/building-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/building-input.png",
+          "sha256": "9cecbadaa8fcc283663efa305cea7dc0b5ded034971cc474bfc9c5b314a99cc4"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-reference-sheet.png",
+          "sha256": "cc14233e11a595e2084b41a905e38d5e4d1f940916b5a643e363b11c541376fb"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/building-output.png",
+      "output_sha256": "a9a60e3e2fea3b4286b1afd66e36dbd6d19fa9b761bd261e3fdda1102561fc7f",
+      "layout": "art/building-catalogue/painted-v1/building-layout.json",
+      "accepted_keys": [
+        "bench",
+        "candy_canes",
+        "firs",
+        "giant_ornament",
+        "ice_star",
+        "igloo",
+        "lamp_post",
+        "mailbox",
+        "nutcracker",
+        "penguins",
+        "presents",
+        "reindeer",
+        "sleigh",
+        "snow_rocks",
+        "snowman",
+        "snowy_bench",
+        "wreath_arch"
+      ]
+    },
+    {
+      "category": "cottage",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/cottage-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/cottage-input.png",
+          "sha256": "99004d1497be82b39cdee4de3c118c35ec8f31299a1bc9a711725f84d6b28c31"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-reference-sheet.png",
+          "sha256": "cc14233e11a595e2084b41a905e38d5e4d1f940916b5a643e363b11c541376fb"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/cottage-output.png",
+      "output_sha256": "1d24a51e24a5bb87b241633a04d05e01422bacd609f091a043953180f25cc417",
+      "layout": "art/building-catalogue/painted-v1/cottage-layout.json",
+      "accepted_keys": [
+        "chapel",
+        "gingerbread_house",
+        "log_cabin",
+        "post_office",
+        "reindeer_stable",
+        "santa_workshop"
+      ]
+    },
+    {
+      "category": "tree",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/tree-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/tree-input.png",
+          "sha256": "9e853a56dc07e3ad633e22b3ebe61d2401e02ca12824885d50799d166944f8a1"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-reference-sheet.png",
+          "sha256": "cc14233e11a595e2084b41a905e38d5e4d1f940916b5a643e363b11c541376fb"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/tree-output.png",
+      "output_sha256": "3040ae74e90eae34fabe67897fc688e7a766eacd0c100d1caee0b713868fee16",
+      "layout": "art/building-catalogue/painted-v1/tree-layout.json",
+      "accepted_keys": [
+        "birch",
+        "fir_decorated",
+        "fir_snowy",
+        "pine_grove"
+      ]
+    },
+    {
+      "category": "wonder",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/wonder-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/wonder-input.png",
+          "sha256": "bbd90beb27d7374058c968f47f50db08a70543ad227c9a0cd806bde0893ed5d0"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-reference-sheet.png",
+          "sha256": "cc14233e11a595e2084b41a905e38d5e4d1f940916b5a643e363b11c541376fb"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/wonder-output.png",
+      "output_sha256": "fe57bd8aacdfe2b75069ed5ed39eee681d9b615976d19617c2220e2d2b34ce3d",
+      "layout": "art/building-catalogue/painted-v1/wonder-layout.json",
+      "accepted_keys": [
+        "arch",
+        "bakery",
+        "candles",
+        "carousel",
+        "cocoa",
+        "gifts",
+        "lumber",
+        "rink",
+        "toys",
+        "tree"
+      ]
+    }
+  ]
+}

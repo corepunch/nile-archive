@@ -15,3 +15,11 @@ ImageGen category paint-overs of christmas-market's registered Blender sprites.
 Reproduction: `python3 tools/import_painted_buildings.py christmas-market`.
 This changes normal sprites only; interaction feedback remains in the engine.
 Review: `../../../docs/review/painted-buildings/current-camera/README.md`.
+
+## Style, references and exact prompts
+
+The [shared style guide](../../../../../docs/BUILDING_STYLE.md) explains the
+accepted finish, palette and detail density. [references.json](references.json)
+records every literal prompt, ordered image inputs and hashes, retained versions
+and accepted runtime keys. Image generation requires a fresh visual review; the
+import command above reproduces sprites from the saved accepted PNGs.
