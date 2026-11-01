@@ -92,8 +92,7 @@ local function draw_markers(c)
 end
 R.draw_markers = draw_markers
 
--- No sheet over the map: one big Play button at the bottom, flanked by round
--- icon-only Expeditions and Shop buttons on the same horizontal centre line.
+-- Authored image actions in the corners; Expeditions stays the smaller compass.
 local function round_button(center, icon, diameter)
     diameter=diameter or 64
     local r = rect.centered(center, size2(diameter, diameter))
@@ -109,13 +108,13 @@ local function round_button(center, icon, diameter)
     icon(c)
     return st.clicked
 end
-local PLAY_BOUNDS = rect(316, 786, 148, 92)
-local BUILD_BOUNDS = rect(16, 786, 132, 92)
+local PLAY_BOUNDS = rect(316, 750, 148, 128)
+local BUILD_BOUNDS = rect(16, 750, 132, 128)
 R.island_buttons = {expeditions=vec2(202,844),shop=BUILD_BOUNDS:center(),play=PLAY_BOUNDS:center()}
 local navigation = ui.form{kind="row",gap=16,children={
-    {kind="button",id="build",text="BUILDINGS",width=132,height=92,em=21},
+    {kind="button",id="build",text="",role="navigation_build",width=132,height=128},
     {kind="spacer",grow=1},
-    {kind="button",id="play",text="PLAY",width=148,height=92,em=30},
+    {kind="button",id="play",text="",role="navigation_play",width=148,height=128},
 }}
 
 local placement_form = ui.form{kind="row",children={
@@ -145,9 +144,7 @@ local function bottom_controls()
         return
     end
     if round_button(R.island_buttons.expeditions + vec2(0,y),function(at) R.compass_icon(at,17) end) then R.open_expeditions() end
-    local label=R.prog.level>=rules.LEVELS and "PLAY" or ("PLAY %d"):format(R.prog.level+1)
-    navigation:set("play",label)
-    local event=navigation:draw(rect(16,786+y,448,92),R.skin)
+    local event=navigation:draw(rect(16,750+y,448,128),R.skin)
     if event and event.id=="build" then R.open_catalogue(restored<R.prog.level and "wonder" or "building")
     elseif event and event.id=="play" then
         if restored<R.prog.level then R.notice("Restore your earned wonder before the next discovery.");R.open_catalogue("wonder")

@@ -19,7 +19,7 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 ## Island navigation and resources
 
-Buildings is the large action at bottom left, Play the large action at bottom right, and Expeditions the smaller compass beside Buildings. The top-right gear opens Settings. Expeditions and the building catalogue are continuous measured scrolling lists with bounded inertia; category selectors remain, while Prev/Next item pages are reserved for future episodes. Keyboard focus reveals its item and mouse wheels scroll the same viewport.
+Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are continuous measured scrolling lists with bounded inertia; category selectors remain, while Prev/Next item pages are reserved for future episodes. Keyboard focus reveals its item and mouse wheels scroll the same viewport.
 
 The wallet contains five lives, hex amulets and discovery stars. Losing an expedition spends one life; lives regenerate every 30 minutes up to five, including offline time. First clears fund the next restoration and add spare amulets and discovery stars. Replays earn 60–100 amulets without extra stars. Buildings cost amulets; discovery-star gates open land without requiring compasses. The old wood, stone and compass slots stay reserved for save compatibility, with no new costs, rewards or UI.
 

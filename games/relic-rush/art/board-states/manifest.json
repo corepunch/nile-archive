@@ -573,6 +573,16 @@
     "data/island.jpg",
     "data/jungle.jpg",
     "data/match3.png",
+    "data/navigation/build-disabled.png",
+    "data/navigation/build-hover.png",
+    "data/navigation/build-normal.png",
+    "data/navigation/build-pressed.png",
+    "data/navigation/build-selected.png",
+    "data/navigation/play-disabled.png",
+    "data/navigation/play-hover.png",
+    "data/navigation/play-normal.png",
+    "data/navigation/play-pressed.png",
+    "data/navigation/play-selected.png",
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/tile-sets/jewels/0.png",
@@ -951,5 +961,6 @@
     ],
     "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
     "review": "docs/screenshots/hud-states.jpg"
-  }
+  },
+  "navigation": "art/navigation/manifest.json"
 }

@@ -1,0 +1,121 @@
+{
+  "source": "art/navigation/controls.png",
+  "prompt": "art/navigation/prompt.txt",
+  "size": [
+    1983,
+    793
+  ],
+  "states": [
+    "normal",
+    "hover",
+    "pressed",
+    "selected",
+    "disabled"
+  ],
+  "icons": {
+    "build-normal": {
+      "box": [
+        0,
+        0,
+        397,
+        396
+      ],
+      "runtime": "data/navigation/build-normal.png",
+      "meaning": "Build button: normal"
+    },
+    "build-hover": {
+      "box": [
+        397,
+        0,
+        793,
+        396
+      ],
+      "runtime": "data/navigation/build-hover.png",
+      "meaning": "Build button: hover"
+    },
+    "build-pressed": {
+      "box": [
+        793,
+        0,
+        1190,
+        396
+      ],
+      "runtime": "data/navigation/build-pressed.png",
+      "meaning": "Build button: pressed"
+    },
+    "build-selected": {
+      "box": [
+        1190,
+        0,
+        1586,
+        396
+      ],
+      "runtime": "data/navigation/build-selected.png",
+      "meaning": "Build button: selected"
+    },
+    "build-disabled": {
+      "box": [
+        1586,
+        0,
+        1983,
+        396
+      ],
+      "runtime": "data/navigation/build-disabled.png",
+      "meaning": "Build button: disabled"
+    },
+    "play-normal": {
+      "box": [
+        0,
+        396,
+        397,
+        793
+      ],
+      "runtime": "data/navigation/play-normal.png",
+      "meaning": "Play button: normal"
+    },
+    "play-hover": {
+      "box": [
+        397,
+        396,
+        793,
+        793
+      ],
+      "runtime": "data/navigation/play-hover.png",
+      "meaning": "Play button: hover"
+    },
+    "play-pressed": {
+      "box": [
+        793,
+        396,
+        1190,
+        793
+      ],
+      "runtime": "data/navigation/play-pressed.png",
+      "meaning": "Play button: pressed"
+    },
+    "play-selected": {
+      "box": [
+        1190,
+        396,
+        1586,
+        793
+      ],
+      "runtime": "data/navigation/play-selected.png",
+      "meaning": "Play button: selected"
+    },
+    "play-disabled": {
+      "box": [
+        1586,
+        396,
+        1983,
+        793
+      ],
+      "runtime": "data/navigation/play-disabled.png",
+      "meaning": "Play button: disabled"
+    }
+  },
+  "generator": "ImageGen; all ten interaction states authored in one atlas",
+  "registration": "Fixed cell crop; contain in 160px RGBA canvas with 4px gutters; authored alpha preserved",
+  "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
+  "review": "docs/screenshots/image-buttons-after/hud-states.jpg"
+}
