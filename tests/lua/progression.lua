@@ -21,7 +21,7 @@ do
         check(island.island_place_next(c,p.wallet,p.level,0),'zero-bonus discovery funds and fits next wonder')
         check(p.wallet[1]==0 and p.wallet[2]==0 and p.wallet[3]==0,'materials have no accidental surplus')
     end
-    check(spare==800 and c.open==63 and p.wallet[5]==0,'ten clears fund 800 free Gold and all 20-compass land costs')
+    check(spare==800 and c.open==63 and p.wallet[5]==0,'ten clears fund 800 free Gold and all land requirements')
     local stars,wood,stone,level=p.wallet[4],p.wallet[2],p.wallet[3],p.level
     for i=0,9 do
         local g=rules.game_start(i,100+i);g.won=true;g.moves=999
@@ -43,4 +43,3 @@ do
     check(first[1]==second[1] and first[2]==second[2] and first[3]==second[3],
         'random match colours never change the grant')
 end
-

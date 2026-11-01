@@ -102,7 +102,7 @@ function R.compass_icon(center, radius)
     local cols = {pc(rgba(33, 114, 102)), pc(rgba(33, 114, 102)), pc(rgba(185, 92, 47)), pc(rgba(185, 92, 47))}
     app.mesh(pts, cols, {0, 1, 3, 1, 2, 3})
 end
-local star_icon, compass_icon = R.star_icon, R.compass_icon
+local star_icon = R.star_icon
 
 --------------------------------------------------------------------- header
 
@@ -129,21 +129,22 @@ local capsule = R.capsule
 local function relic_icon(kind)
     return function(c, radius) picture(R.relics[kind + 1], rect.centered(c, size2(radius * 2, radius * 2)), 255) end
 end
-local capsule_icons = {relic_icon(RELIC_IDOL), relic_icon(RELIC_LEAF), relic_icon(RELIC_CRYSTAL),
-                       function(c, radius) star_icon(c, radius * .8) end, function(c, radius) compass_icon(c, radius * .72) end}
-local capsule_notes = {"Gold buys buildings. Replay expeditions to earn more.", "Wood funds restorations. First wins grant the full cost.",
-                       "Stone funds restorations. First wins grant the full cost.", "Discovery Stars unlock stock and land. First clears only; never spent.",
-                       "Compasses are spent to open new land."}
-
--- One slim currency row; new land opens from its fog marker.
+local capsule_icons = {
+    function(c,radius) picture(R.life_art,rect.centered(c,size2(radius*2,radius*2)),255) end,
+    relic_icon(RELIC_IDOL),function(c,radius) star_icon(c,radius*.8) end,
+}
+local capsule_notes = {"A life returns every 30 minutes, up to five.","Hex amulets buy buildings. Replay expeditions to earn more.","Discovery Stars unlock stock and land. First clears only; never spent."}
 function R.draw_header(on_island)
     if on_island then
-        for k = 1, 5 do
-            local r = rect(12 + (k - 1) * 76, 15, 72, 30)
-            if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end
+        local remaining=math.max(0,(R.prog.life_at or 0)-app.clock())
+        local lives=(R.prog.lives or rules.LIVES)==rules.LIVES and "5 FULL" or ("%d %d:%02d"):format(R.prog.lives,remaining//60,remaining%60)
+        local values={lives,tostring(R.prog.wallet[1]),tostring(R.prog.wallet[4])}
+        for k=1,3 do
+            local r=rect(12+(k-1)*128,15,120,34)
+            if capsule(r,capsule_icons[k],values[k]) then R.notice(capsule_notes[k]) end
         end
     end
-    if pause_button() then R.overlay = R.OV_PAUSE end
+    if pause_button() then R.overlay=R.OV_PAUSE end
 end
 
 function R.draw_toast()
@@ -262,17 +263,17 @@ local function result_screen()
         star_icon(slot:center(), (k == 1 and 29 or 24) * pop)
         set_paint(s)
     end
-    if not breakdown.first then say("GOLD FOR YOUR ISLAND",l.stars,23,PAL_GOLD) end
+    if not breakdown.first then say("AMULETS FOR YOUR ISLAND",l.stars,23,PAL_GOLD) end
     s = section(.43, .3, 9)
     say("EXPEDITION SCORE", l.score_label, 12, PAL_CREAM)
     local count = R.dialog_part(.43, .65).f   -- the score counts up
     say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
     set_paint(s)
     s = section(.62, .25, 8)
-    say(breakdown.first and "RESTORATION GRANT + SPARE GOLD" or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
+    say(breakdown.first and "RESTORATION GRANT + SPARE AMULETS" or "REPLAYS AWARD AMULETS ONLY", l.treasure_label, 12, PAL_CREAM)
     set_paint(s)
     local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-    local columns=breakdown.first and 3 or 1
+    local columns=1
     for k = 0, columns-1 do
         local r = l.rewards:col(columns, k, 10)
         s = section(.66 + k * .1, .28, 10)
@@ -282,17 +283,14 @@ local function result_screen()
         say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
         set_paint(s)
     end
-    say(breakdown.first and ("%d restoration Gold + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
-        ("%d base Gold + %d move bonus"):format(breakdown.base,breakdown.bonus),
+    say(breakdown.first and ("%d restoration Amulets + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
+        ("%d base Amulets + %d move bonus"):format(breakdown.base,breakdown.bonus),
         rect(l.rewards.x,l.rewards.y+l.rewards.h+2,l.rewards.w,15),13,PAL_CREAM)
     s = section(.93, .24, 8)
-    for k = 0, breakdown.first and 1 or -1 do
-        local r = l.progress:col(2, k, 12)
-        rrect(r, 16, rgba(221, 228, 182))
-        local icon = vec2(r.x + 20, r:center().y)
-        if k == 1 then compass_icon(icon, 12) else star_icon(icon, 11) end
-        local value=reward[k==1 and rules.COMPASSES or rules.STARS]
-        say(("+%d %s"):format(value,k==1 and (value==1 and "Compass" or "Compasses") or "Stars"), rect(r.x + 38, r.y, r.w - 44, r.h), 16, PAL_CREAM)
+    if breakdown.first then
+        local r=l.progress
+        rrect(r,16,rgba(221,228,182));star_icon(vec2(r.x+24,r:center().y),14)
+        say("+3 DISCOVERY STARS",rect(r.x+44,r.y,r.w-52,r.h),18,PAL_CREAM)
     end
     if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
@@ -320,8 +318,6 @@ local wonder_form = ui.form{
         {kind="spacer", height=14},
         {kind="row", height=78, padding={16,0,16,0}, gap=10, visible_field="can_build", children={
             {kind="column", grow=1, gap=9, children={{kind="image",id="gold_icon",height=34},{kind="label",id="gold",height=28}}},
-            {kind="column", grow=1, gap=9, children={{kind="image",id="wood_icon",height=34},{kind="label",id="wood",height=28}}},
-            {kind="column", grow=1, gap=9, children={{kind="image",id="stone_icon",height=34},{kind="label",id="stone",height=28}}},
         }},
         {kind="label",id="notice",height=78,wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
         {kind="spacer",height=18},
@@ -333,8 +329,6 @@ local wonder_form = ui.form{
         {id="name",field="name",readonly=true},{id="sprite",field="sprite",type="texture",readonly=true},
         {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
         {id="gold",field="cost.1",type="integer",readonly=true},
-        {id="wood",field="cost.2",type="integer",readonly=true},
-        {id="stone",field="cost.3",type="integer",readonly=true},
     },
 }
 local function wonder_screen()
@@ -345,7 +339,7 @@ local function wonder_screen()
     local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=w.about,
         cost={w.cost[1],w.cost[2],w.cost[3]}, action=built and "MOVE THIS BUILDING" or can_build and "CHOOSE A LOCATION" or "BACK TO ISLAND"}
     assert(ok,message)
-    wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1]):set("wood_icon",R.relics[RELIC_LEAF+1]):set("stone_icon",R.relics[RELIC_CRYSTAL+1])
+    wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1])
     wonder_form.values.can_build, wonder_form.values.show_notice = can_build and not built, built or not can_build
     wonder_form:set("notice",built and "HOLD AND DRAG ON THE ISLAND TO MOVE" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER")
     local bounds=rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592))
@@ -417,7 +411,7 @@ end
 -- which LEVEL / Expeditions resume later. From the island only Resume applies.
 local pause_form = ui.form{
     root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
-        {kind="label",text="Take a breath",height=44,em=34},
+        {kind="label",text="Settings",height=44,em=34},
         {kind="label",id="level",height=22,em=16,text_style=PAL_CREAM},
         {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
             {kind="checkbox",id="sound",text="SOUND",height=50},
@@ -490,7 +484,7 @@ local function zone_screen()
     say_at(zone.name, vec2(240, 304), 34, PAL_GOLD, 380)
     say_at("A NEW PLACE TO DISCOVER", vec2(240, 349), 16, PAL_CREAM, 0)
     say_at(("STARS  %d / %d"):format(R.prog.wallet[rules.STARS], zone.needs[rules.STARS]), vec2(240, 397), 24, PAL_GOLD, 0)
-    say_at(("COMPASSES  %d / %d"):format(R.prog.wallet[rules.COMPASSES], zone.cost[rules.COMPASSES]), vec2(240, 441), 23, PAL_CREAM, 0)
+    say_at("EARN STARS IN NEW EXPEDITIONS",vec2(240,441),19,PAL_CREAM,0)
     if button(rect(72, 487, 336, 47), ready and "OPEN THIS AREA" or "KEEP EXPLORING", true) then
         if R.island:unlock(z, R.prog.wallet) then
             R.island_focus(zone.marker, R.island.cam.zoom)
@@ -500,7 +494,7 @@ local function zone_screen()
         end
         R.overlay = R.OV_NONE
     end
-    say_at("COMPASSES ARE SPENT. STARS STAY WITH YOU.", vec2(240, 559), 12, PAL_WHITE, 0)
+    say_at("DISCOVERY STARS STAY WITH YOU.", vec2(240, 559), 12, PAL_WHITE, 0)
     say_at("CLOSE", vec2(240, 592), 15, PAL_WHITE, 0)
     if tapped(rect(180,575,120,38)) then R.overlay = R.OV_NONE end
 end

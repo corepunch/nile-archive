@@ -17,6 +17,16 @@ results, income collection, building pickup and release/drop. Moving a preview
 requires dragging the building; tapping land does not move it. Confirm and Cancel
 add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
+## Island navigation and resources
+
+Buildings is the large action at bottom left, Play the large action at bottom right, and Expeditions the smaller compass beside Buildings. The top-right gear opens Settings. Expeditions and the building catalogue are continuous measured scrolling lists with bounded inertia; category selectors remain, while Prev/Next item pages are reserved for future episodes. Keyboard focus reveals its item and mouse wheels scroll the same viewport.
+
+The wallet contains five lives, hex amulets and discovery stars. Losing an expedition spends one life; lives regenerate every 30 minutes up to five, including offline time. First clears fund the next restoration and add spare amulets and discovery stars. Replays earn 60–100 amulets without extra stars. Buildings cost amulets; discovery-star gates open land without requiring compasses. The old wood, stone and compass slots stay reserved for save compatibility, with no new costs, rewards or UI.
+
+Tap a placed building for its name and subtitle in the existing speech bubble above it. Only one stays open; the next press dismisses it. A stationary hold still picks up a building through the shared mover, with Confirm/Cancel preserving saved state. Taps do not open building dialogs.
+
+Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS timeline, as in CorePunch/orca, while other platforms use the platform monotonic clock.
+
 ## Shared match engine and atlas
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
@@ -48,7 +58,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 Pause, building and guide dialogs use engine-owned form resources and one game skin. The whole look (text palettes, panels, buttons and their pressed/disabled states, focus) is data in [`lua/skin.lua`](lua/skin.lua), compiled by the engine's `ui.skin`; see [skin files](../../docs/UI_ENGINE.md#skins). The expedition screen follows the portrait match-3 layout of Royal Match, Toon Blast and Homescapes. One slim jade band along the top edge holds a hexagonal Moves medallion (red over the last five moves), a row of goal icons with their remaining counts (a check seal when met) and the pause button. The three tools stand up out of a low tray along the bottom edge. Nothing else covers the painting, and the board fills the space between. Level details and the Explorer's Guide live in Pause; score/reward totals live in Results. The measured goal list retains every win condition without duplicate totals or a progress bar. The guide uses a measured data-backed list too. Menus and other closable popups dismiss on background taps through the shared engine; results retain explicit actions. Modal screens and dialogue use the engine’s cached GPU Gaussian blur. See the [match-3 HUD review](docs/review/match3-hud/README.md), the [header and popup review](docs/review/expedition-header/README.md) and [shared UI API](../../docs/UI_ENGINE.md).
 
-The expedition and city headers share a 64-unit Pause medallion with a matching touch area. Goal rows and city currency pills leave room beside it on both phone sizes. See the [before/after Pause review](docs/review/larger-pause/README.md).
+The expedition and city headers share a 64-unit Settings gear with a matching touch area. Goal rows and city currency pills leave room beside it on both phone sizes. See the [before/after Pause review](docs/review/larger-pause/README.md).
 
 ## Result screens and typography
 
@@ -126,24 +136,12 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
 2. Complete its score, idol, excavation and blocker objectives within the move budget.
-3. Claim the first win once: the full next restoration cost, 80–120 spare Gold, 3 Discovery Stars and the scheduled Compass grant.
+3. Claim the first win once: restoration amulets, 80–120 spare amulets, and 3 discovery stars.
 4. Return to the island, select the next restoration and choose its location on opened grass.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Set out for the next expedition. Ten completed stages support ten restored buildings, ending at the sun temple.
 
-Gold, Wood and Stone pay for story restorations. The guaranteed grant covers the full cost; random match colours do not change it. Spare Gold buys catalogue decorations. Earn more by opening **EXPEDITIONS** and replaying a completed stage: **60 Gold + 2 per move saved, capped at 40 bonus Gold**. First clears give 80 spare Gold with the same bonus. Replays do not add Stars, Compasses, materials, wonders or story progress. Failed attempts are free.
-
-Discovery Stars measure cumulative progress and are never spent. Compasses pay for land: levels 1–10 grant **1, 1, 3, 2, 2, 2, 3, 3, 3, 0**, covering the full 20-Compass map by discovery nine. Restore the earned wonder before the next new discovery; completed expeditions remain replayable. The campaign leaves **800–1,200 spare Gold**, with renewable Gold afterward. There is no energy, waiting timer or purchase backend.
-
-See the [Playrix/Wooga economy study, budgets and automated audit](../../docs/ECONOMY_RESEARCH.md)
-and [reviewed reward, replay and shop screens](docs/review/economy/README.md).
-Pause offers Resume, Restart and Quit to island. Restart asks first and starts
-the same expedition afresh (retrying is free). Quit keeps the unfinished board:
-the island's LEVEL button or the Expeditions browser continues it, until another
-expedition starts. Closing the application still restarts that attempt;
-persistent saves contain the island and banked progress. See the
-[pause menu review](docs/review/pause-actions/README.md) and the
-[grouped Pause review](../../docs/review/ui-skin-files/README.md#relic-rush-pause-grouped-with-restart-and-quit).
+Hex amulets pay for restorations and decorations. The guaranteed first-clear grant covers the next wonder; random match colours do not change it. Replays earn 60 base amulets plus two per saved move, up to 40 bonus, without new stars or story progress. Discovery stars unlock stock and adjacent land and are never spent. Failed attempts cost one of five lives; one life regenerates per 30 minutes, including offline time. There is no purchase backend.
 
 ## Campaign: ten hex levels
 
@@ -168,26 +166,26 @@ Ice can require more than one hit. Board patterns progress from the introductory
 
 Buildings unlock in this order as expeditions are completed. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
 
-| # | Building | Gold | Wood | Stone | Purpose in the story |
-| --- | --- | ---: | ---: | ---: | --- |
-| 1 | Expedition camp | 60 | 10 | 5 | Every great discovery begins with a little canvas. |
-| 2 | Spring well | 80 | 15 | 15 | Fresh water brings the lost valley back to life. |
-| 3 | Artisan workshop | 100 | 25 | 15 | A home for the hands that rebuild the valley. |
-| 4 | Jungle market | 120 | 25 | 25 | Stories, spices and treasures from far away. |
-| 5 | Sunstone courtyard | 140 | 30 | 30 | A sunlit gathering place brings the valley together. |
-| 6 | Explorer's lodge | 160 | 35 | 35 | A warm light after a long day of adventure. |
-| 7 | Lost-world archive | 180 | 35 | 45 | Protect the knowledge buried beneath the vines. |
-| 8 | Star observatory | 200 | 40 | 50 | Follow the stars to the next discovery. |
-| 9 | Jade fountain | 220 | 45 | 55 | Let the ancient spring flow once more. |
-| 10 | Temple of the sun | 250 | 50 | 60 | The heart of the valley shines again. |
+| # | Building | Amulets | Purpose in the story |
+| --- | --- | ---: | --- |
+| 1 | Expedition camp | 60 | Every great discovery begins with a little canvas. |
+| 2 | Spring well | 80 | Fresh water brings the lost valley back to life. |
+| 3 | Artisan workshop | 100 | A home for the hands that rebuild the valley. |
+| 4 | Jungle market | 120 | Stories, spices and treasures from far away. |
+| 5 | Sunstone courtyard | 140 | A sunlit gathering place brings the valley together. |
+| 6 | Explorer's lodge | 160 | A warm light after a long day of adventure. |
+| 7 | Lost-world archive | 180 | Protect the knowledge buried beneath the vines. |
+| 8 | Star observatory | 200 | Follow the stars to the next discovery. |
+| 9 | Jade fountain | 220 | Let the ancient spring flow once more. |
+| 10 | Temple of the sun | 250 | The heart of the valley shines again. |
 
 These are restoration milestones, not autonomous resource factories: production timers, citizens and upgrade trees are future possibilities rather than current mechanics.
 
 The island's **SHOP** adds 86 repeatable buildings and decorations to these
 ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,
 furniture, supplies, wildlife and rocks. Browse categories and pages, check the
-Gold price and cumulative Star requirement, then choose a location and confirm.
-Cancelling is free; Stars are never spent. Gold for earned story restorations
+Amulet price and cumulative Star requirement, then choose a location and confirm.
+Cancelling is free; Stars are never spent. Amulets for earned story restorations
 stays reserved so optional purchases cannot block the campaign. Purchases save
 and move like wonders, with a 160-object island limit. See the complete
 [building catalogue](docs/building-catalogue.md) and
@@ -198,16 +196,16 @@ and move like wonders, with a 160-object island limit. See the complete
 
 The 1920 × 2880 world scrolls beyond the phone screen. Hidden six-neighbor land tiles define connected regions, while placement itself uses continuous world coordinates. The puzzle grid and island territory graph are separate systems.
 
-| Region | Required cumulative Stars | Compasses spent |
-| --- | ---: | ---: |
-| Harbor glade | 0 | 0 — starting land |
-| Sunlit coast | 6 | 2 |
-| Fern meadow | 9 | 3 |
-| Sun garden | 15 | 4 |
-| Ancient heights | 21 | 5 |
-| Temple ridge | 27 | 6 |
+| Region | Required discovery stars |
+| --- | ---: |
+| Harbor glade | 0 |
+| Sunlit coast | 6 |
+| Fern meadow | 9 |
+| Sun garden | 15 |
+| Ancient heights | 21 |
+| Temple ridge | 27 |
 
-A region must touch opened land, meet its Star requirement and have its Compass cost available. Select the clouded region and confirm expansion; only Compasses are deducted. This follows the June's Journey expansion principle. Regions do not open on a timer, and players do not need to build roads. Buildings do not generate connecting roads.
+A region must touch opened land and meet its discovery-star gate. Expansion does not spend stars or require compasses. Regions do not open on a timer, and players do not need to build roads.
 
 ## Play
 
@@ -220,8 +218,8 @@ A region must touch opened land, meet its Star requirement and have its Compass 
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
-- June's Journey-style expansion: adjacent clouded regions require cumulative Stars and spendable Compasses. First clears award 3 Stars and a scheduled Compass grant; replays award neither. Confirming a region consumes only Compasses; Stars remain. Region requirements and fog are separate from building placement.
-- The island's HUD follows the home screens of Royal Match, Homescapes and June's Journey, leaving the map uncovered. One row of slim pills shows Gold, Wood, Stone, Stars and Compasses beside the pause medallion; tap a pill to learn what it is for. At the bottom one big button plays the next level (or builds the restored wonder, named above it), flanked by icon-only round **Expeditions** (compass) and **Shop** (market) buttons, aligned with the center button. Regions open from their markers in the fog; a marker that can open now shows "+" and glows. During expeditions the HUD is the slim Moves/Goals band and the tool tray. Return through Quit to Island in Pause or after win/loss. See the [island HUD review](docs/review/island-hud/README.md).
+- Adjacent clouded regions require cumulative discovery stars, which stay with the expedition. Compasses are retired.
+- The island HUD has lives, hex amulets and stars beside the settings gear. Large Buildings and Play actions sit at the bottom corners with a smaller Expeditions compass beside Buildings. Both catalogues scroll continuously.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.

@@ -62,6 +62,7 @@ local function copy_node(source, ids, depth, prefix, source_id, item_key)
     for _, key in ipairs({'width','height','grow','gap','min_width','min_height'}) do
         if n[key] and (type(n[key]) ~= 'number' or n[key] < 0 or n[key] ~= n[key] or n[key] == math.huge) then fail('invalid ' .. key) end
     end
+    if n.scroll and (n.kind~='list' or n.direction=='row') then fail('scroll requires a vertical list') end
     n.children = {}
     for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1, prefix, source_id, item_key) end
     return n
@@ -229,7 +230,12 @@ local function arrange(n, box, skin, form)
     local gap=n.gap or 0
     local available=across and inner.w or inner.h
     local remaining=math.max(0,available-total-gap*math.max(0,count-1))
-    local cursor=across and inner.x or inner.y
+    if n.scroll then
+        n.scroll_state=n.scroll_state or {offset=0,velocity=0}
+        n.scroll_max=math.max(0,total+gap*math.max(0,count-1)-inner.h)
+        n.scroll_state.offset=math.max(0,math.min(n.scroll_max,n.scroll_state.offset))
+    end
+    local cursor=(across and inner.x or inner.y)-(n.scroll and n.scroll_state.offset or 0)
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
             local cw,ch=child.measured[1],child.measured[2]
@@ -240,7 +246,7 @@ local function arrange(n, box, skin, form)
             else
                 local main=across and cw or ch
                 if child.grow and child.grow>0 then main=remaining*child.grow/weight end
-                main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor))
+                if not n.scroll then main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor)) end
                 local cross=(n.align or 'stretch')=='stretch' and (across and inner.h or inner.w) or math.min(across and ch or cw,across and inner.h or inner.w)
                 local explicit=across and child.height or child.width
                 if explicit then cross=math.min(cross,explicit) end
@@ -259,6 +265,14 @@ end
 local function paint(n,skin,form,options,event)
     if not visible(n,form.values) then return event end
     local box=n.box; local theme=skin.theme or ui.theme()
+    if options.clip then local visible_box=box:intersect(options.clip);if visible_box.w<=0 or visible_box.h<=0 then return event end end
+    if n.scroll then
+        local opts={};for k,v in pairs(options) do opts[k]=v end
+        opts.clip=options.clip and box:intersect(options.clip) or box
+        opts.suppress_hit=options.suppress_hit or n.scroll_state.moved
+        options=opts
+        gfx.clip(opts.clip);ui.block(opts.clip)
+    end
     if n.panel then
         if skin.panel then skin.panel(box,n) else ui.panel(box) end
     end
@@ -283,7 +297,9 @@ local function paint(n,skin,form,options,event)
         local selected=(n.kind=='toggle' or n.kind=='checkbox') and not not form.values[n.id]
         local flags=(enabled and 0 or ui.DISABLED)|(n.accent and ui.ACCENT or 0)|(selected and ui.ACTIVE or 0)|(n.flat and ui.FLAT or 0)
         local hitbox=options.hit_offset and box:offset(options.hit_offset) or box
+        if options.clip then hitbox=hitbox:intersect(options.hit_offset and options.clip:offset(options.hit_offset) or options.clip) end
         local st=ui.hit(hitbox,flags)
+        if options.suppress_hit then st.clicked,st.held,st.hot=false,false,false end
         local checkbox=n.kind=='checkbox'
         if not checkbox and not skin.button and not skin.button_states then ui.button_paint(box,flags,st) end
         st.disabled,st.selected,st.focused=not enabled,selected,form.focus==n.id
@@ -317,12 +333,57 @@ local function paint(n,skin,form,options,event)
         end
     end
     for _,child in ipairs(n.children) do event=paint(child,skin,form,options,event) end
+    if n.scroll then
+        local length=n.scroll_max or 0
+        if length>0 then
+            local h=box.h*box.h/(box.h+length)
+            gfx.round_rect(rect(box:max().x-4,box.y+(box.h-h)*n.scroll_state.offset/length,3,h),1.5,color(150,114,63,180))
+        end
+        gfx.unclip()
+    end
     return event
 end
 function Form:draw(box,skin,options)
     skin,options=skin or {},options or {}; options.input=options.input or input.get()
     if not skin.theme then skin=setmetatable({theme=ui.theme()},{__index=skin}) end
     self:layout(box,skin)
+    -- Scrolling belongs to the form, before any child hit test. It uses the
+    -- engine dt (CAAnimation clock on iOS), not per-control wall clocks.
+    local function scroll(n)
+        if not visible(n,self.values) then return end
+        if n.scroll and options.interactive~=false then
+            local st,inp=n.scroll_state,options.input
+            local inside=inp.pos and n.box:contains(inp.pos)
+            if inp.pressed then
+                st.down=inside;st.moved=inside and math.abs(st.velocity)>20 or false
+                st.last=inp.pos and inp.pos.y or 0;st.last_time=app.time();st.velocity=0
+            end
+            local dt=options.dt or app.dt()
+            if st.down and inp.down and inp.pos then
+                local dy=st.last-inp.pos.y
+                if inp.dragging or math.abs(dy)>8 then st.moved=true end
+                if st.moved and dy~=0 then
+                    st.offset=math.max(0,math.min(n.scroll_max,st.offset+dy))
+                    st.velocity=math.max(-1800,math.min(1800,dy/math.max(dt,1/120)))
+                    st.last,st.last_time=inp.pos.y,app.time()
+                end
+            end
+            if inp.released or inp.cancelled or inp.multi_touch or (st.down and not inp.down) then
+                st.down=false
+                if inp.cancelled or inp.multi_touch or app.time()-(st.last_time or 0)>.1 or not st.moved then st.velocity=0 end
+            end
+            if not st.down then
+                if options.reduced_motion or tween.instant() then st.velocity=0 end
+                local decay=math.exp(-7*dt)
+                local next_offset=st.offset+st.velocity*(1-decay)/7
+                st.offset=math.max(0,math.min(n.scroll_max,next_offset));st.velocity=st.velocity*decay
+                if st.offset~=next_offset or math.abs(st.velocity)<2 then st.velocity=0 end
+            end
+            if inside and inp.wheel and inp.wheel~=0 then st.offset=math.max(0,math.min(n.scroll_max,st.offset-inp.wheel*45));st.velocity=0 end
+        end
+        for _,child in ipairs(n.children) do scroll(child) end
+    end
+    scroll(self.root);self:layout(box,skin)
     local focusable={}
     local function collect(n)
         if not visible(n,self.values) then return end
@@ -335,6 +396,12 @@ function Form:draw(box,skin,options)
         self.focus_visible=true
         local current=0; for i,id in ipairs(focusable) do if id==self.focus then current=i end end
         self.focus=focusable[current%math.max(1,#focusable)+1]
+    end
+    local focused=self.focus and self.nodes[self.focus]
+    local owner=focused and focused.source_id and self.nodes[focused.source_id]
+    if self.focus_visible and owner and owner.scroll then
+        local delta=focused.box.y<owner.box.y and focused.box.y-owner.box.y or math.max(0,focused.box:max().y-owner.box:max().y)
+        owner.scroll_state.offset=math.max(0,math.min(owner.scroll_max,owner.scroll_state.offset+delta));self:layout(box,skin)
     end
     local old=ui.theme(); if skin.theme then ui.set_theme(skin.theme) end
     local ok,event=pcall(paint,self.root,skin,self,options,nil)
@@ -394,7 +461,7 @@ function Stack:draw(dt,options)
         -- The release/key that opened a modal belongs to the previous screen.
         -- In particular it must not activate a new button underneath that tap.
         if i==#self.layers then top_fresh,top_bounds=layer.fresh,bounds end
-        local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers and not layer.fresh,input=options.input or input.get()})
+        local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers and not layer.fresh,input=options.input or input.get(),dt=dt,reduced_motion=options.reduced_motion})
         layer.fresh=false
         if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end
     end

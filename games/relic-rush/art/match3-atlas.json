@@ -137,249 +137,255 @@
       128,
       128
     ],
-    "pause-disabled": [
+    "life": [
       1322,
+      2314,
+      128,
+      128
+    ],
+    "pause-disabled": [
+      1454,
       2314,
       128,
       128
     ],
     "pause-hover": [
-      1454,
+      1586,
       2314,
       128,
       128
     ],
     "pause-normal": [
-      1586,
+      1718,
       2314,
       128,
       128
     ],
     "pause-pressed": [
-      1718,
+      1850,
       2314,
       128,
       128
     ],
     "pause-selected": [
-      1850,
-      2314,
+      2,
+      2446,
       128,
       128
     ],
     "pickaxe-disabled": [
-      2,
+      134,
       2446,
       128,
       128
     ],
     "pickaxe-hover": [
-      134,
+      266,
       2446,
       128,
       128
     ],
     "pickaxe-normal": [
-      266,
+      398,
       2446,
       128,
       128
     ],
     "pickaxe-pressed": [
-      398,
+      530,
       2446,
       128,
       128
     ],
     "pickaxe-selected": [
-      530,
+      662,
       2446,
       128,
       128
     ],
     "prism": [
-      662,
+      794,
       2446,
       128,
       128
     ],
     "ray-column": [
-      794,
+      926,
       2446,
       128,
       128
     ],
     "ray-diagonal": [
-      926,
+      1058,
       2446,
       128,
       128
     ],
     "ray-row": [
-      1058,
+      1190,
       2446,
       128,
       128
     ],
     "relics-0": [
-      1190,
+      1322,
       2446,
       128,
       128
     ],
     "relics-1": [
-      1322,
+      1454,
       2446,
       128,
       128
     ],
     "relics-2": [
-      1454,
+      1586,
       2446,
       128,
       128
     ],
     "relics-3": [
-      1586,
+      1718,
       2446,
       128,
       128
     ],
     "relics-4": [
-      1718,
+      1850,
       2446,
       128,
       128
     ],
     "relics-5": [
-      1850,
-      2446,
-      128,
-      128
-    ],
-    "resources-0": [
       2,
       2578,
       128,
       128
     ],
-    "resources-1": [
+    "resources-0": [
       134,
       2578,
       128,
       128
     ],
-    "resources-2": [
+    "resources-1": [
       266,
       2578,
       128,
       128
     ],
-    "resources-3": [
+    "resources-2": [
       398,
       2578,
       128,
       128
     ],
-    "resources-4": [
+    "resources-3": [
       530,
       2578,
       128,
       128
     ],
-    "resources-5": [
+    "resources-4": [
       662,
       2578,
       128,
       128
     ],
-    "sand": [
+    "resources-5": [
       794,
       2578,
       128,
       128
     ],
-    "score": [
+    "sand": [
       926,
       2578,
       128,
       128
     ],
-    "selected": [
+    "score": [
       1058,
       2578,
       128,
       128
     ],
-    "sunburst-disabled": [
+    "selected": [
       1190,
+      2578,
+      128,
+      128
+    ],
+    "sunburst-disabled": [
+      1322,
       2578,
       128,
       128
     ],
     "sunburst-hover": [
-      1322,
+      1454,
       2578,
       128,
       128
     ],
     "sunburst-normal": [
-      1454,
+      1586,
       2578,
       128,
       128
     ],
     "sunburst-pressed": [
-      1586,
+      1718,
       2578,
       128,
       128
     ],
     "sunburst-selected": [
-      1718,
+      1850,
       2578,
       128,
       128
     ],
     "glow": [
-      1850,
+      1982,
       2578,
       64,
       64
     ],
     "kind-0": [
-      1190,
-      2446,
-      128,
-      128
-    ],
-    "kind-1": [
       1322,
       2446,
       128,
       128
     ],
-    "kind-2": [
+    "kind-1": [
       1454,
       2446,
       128,
       128
     ],
-    "kind-3": [
+    "kind-2": [
       1586,
       2446,
       128,
       128
     ],
-    "kind-4": [
+    "kind-3": [
       1718,
       2446,
       128,
       128
     ],
-    "kind-5": [
+    "kind-4": [
       1850,
       2446,
+      128,
+      128
+    ],
+    "kind-5": [
+      2,
+      2578,
       128,
       128
     ]
@@ -432,6 +438,7 @@
     "sunburst-pressed": "data/board-states/sunburst-pressed.png",
     "sunburst-selected": "data/board-states/sunburst-selected.png",
     "complete": "data/expedition-hud/complete.png",
+    "life": "data/expedition-hud/life.png",
     "pause-disabled": "data/expedition-hud/pause-disabled.png",
     "pause-hover": "data/expedition-hud/pause-hover.png",
     "pause-normal": "data/expedition-hud/pause-normal.png",
@@ -479,24 +486,25 @@
       "games/relic-rush/data/board-states/sunburst-normal.png": "e275397437e2538fa765a0faa644a69568efc71bafcb99bd7cc90747beef46cf",
       "games/relic-rush/data/board-states/sunburst-pressed.png": "a5064eb46874e6ac5fbccc89fab171b3f8506f21c494cc943ba7f7d741f38976",
       "games/relic-rush/data/board-states/sunburst-selected.png": "6db450213241f00a69e0b59af0081cf01bbcee59789ac39934d942323654d1bc",
-      "games/relic-rush/data/expedition-hud/complete.png": "f75a2a8fa11a95ab433ebbf017d9b91ce34956f893ef77b15fcb64cc3523fb93",
-      "games/relic-rush/data/expedition-hud/pause-disabled.png": "5cdab30baefc1f73fc3081b222aa2e32977ecd551ef76c5731a6ac7935f40a4b",
-      "games/relic-rush/data/expedition-hud/pause-hover.png": "2aa82dfd7e2dce2ff8bf880eff5f2f7ebfa68593744e89557a1c72ed703204d4",
-      "games/relic-rush/data/expedition-hud/pause-normal.png": "7687b704a8bca3e91bb91b2a353891630aa68ca8b93efcbbc54ec21f9514a32e",
-      "games/relic-rush/data/expedition-hud/pause-pressed.png": "ee2bd409aea0f1e7bfbdf8127dbf10d08ce029aff67bbc5a119da912b901c2b4",
-      "games/relic-rush/data/expedition-hud/pause-selected.png": "d161f9aebf8ee82af1734f928c9978cbb67562b00ebc4dcf75c98f55aaa132a7",
-      "games/relic-rush/data/expedition-hud/score.png": "46c872697310fb0321b306e2e11e74adcfaf1c9a32d115ad8addbac169b673eb",
+      "games/relic-rush/data/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
+      "games/relic-rush/data/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
+      "games/relic-rush/data/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
+      "games/relic-rush/data/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
+      "games/relic-rush/data/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
+      "games/relic-rush/data/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
+      "games/relic-rush/data/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
+      "games/relic-rush/data/expedition-hud/score.png": "8e395c4ae507674be6669e43d4a37a404886fed5acd70d1adac4c07e14818f65",
       "games/relic-rush/data/jungle.jpg": "cc8a50ab0c8b840ba18abe1c1f316d8573d044ef4bb1fd7c8166c42b92bfd122",
       "games/relic-rush/data/scene-lagoon.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
       "games/relic-rush/data/scene-temple.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
-      "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
+      "games/relic-rush/data/tile-sets/jewels/0.png": "d18c4889eb16cf008f64f21b84df95c840af8c8b19262816c264eea50588cd82",
       "games/relic-rush/data/tile-sets/jewels/1.png": "66833412fb1c7f31fc862c1ede7302f2c3a1ca395c7cdde94f081e78cce62556",
       "games/relic-rush/data/tile-sets/jewels/2.png": "c9ca304387cc3b6d37a5717cc75f43b905ff9c3af2268d0a99c0e85ba5b5bd15",
       "games/relic-rush/data/tile-sets/jewels/3.png": "7ba31f2140da12bdf28761dc9ab39b689df77cc492d96fbe430c5f9544eb27f9",
       "games/relic-rush/data/tile-sets/jewels/4.png": "a1a438c51f69fa221926f7b6b55ea85c406b008c0da5105a36d9d5c08669ff31",
       "games/relic-rush/data/tile-sets/jewels/5.png": "d8066d88f2d8f1631c71e1d3814f27187784e6eeb4db051d6ad2deaa1f943b78",
-      "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
-      "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
+      "games/relic-rush/data/tile-sets/relics/0.png": "b1e9695a8b0681cdf4b28a26ea439e921bf9a77b98a1d7fedd27b5552da0908e",
+      "games/relic-rush/data/tile-sets/relics/1.png": "ae8a0c70f7673c137c20542c3c94eb5243c1541fe4a09ee66e35c091c1d7b6c5",
       "games/relic-rush/data/tile-sets/relics/2.png": "0de85840923d944f325ce0c2cc1b8590ef6965f491a62ab952745413c51c713e",
       "games/relic-rush/data/tile-sets/relics/3.png": "5a34492d2c6df70550e2bb884038be4568fda04b0e53a73dce0726d96b47743c",
       "games/relic-rush/data/tile-sets/relics/4.png": "0f28aaa753520d5f17f47455ab1df532910598263bce385e6f11ac5101dfd570",
@@ -510,11 +518,11 @@
       "games/relic-rush/tools/prepare_assets.py": "e151b49d9bca095db2a85fd1acce616e6add62fd9c732efd81c970493962dd6d"
     },
     "outputs": {
-      "games/relic-rush/data/match3.png": "3cda879299d4dcbefb8619e3254e959ae8efa814395da72a1ac789e1f293e0bb",
-      "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
-      "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
-      "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
-      "games/relic-rush/lua/match3_skin.lua": "db30798c7fd82108d7669762f4fe96997f787103c3db6ab6b1a5d50da1b87780"
+      "games/relic-rush/data/match3.png": "169c8807058f89d5c13840e23e621c214760e1f9f6325cbb6d7c17d90d0e4575",
+      "games/relic-rush/data/tile-sets/jewels/0.png": "d18c4889eb16cf008f64f21b84df95c840af8c8b19262816c264eea50588cd82",
+      "games/relic-rush/data/tile-sets/relics/0.png": "b1e9695a8b0681cdf4b28a26ea439e921bf9a77b98a1d7fedd27b5552da0908e",
+      "games/relic-rush/data/tile-sets/relics/1.png": "ae8a0c70f7673c137c20542c3c94eb5243c1541fe4a09ee66e35c091c1d7b6c5",
+      "games/relic-rush/lua/match3_skin.lua": "a854359664f081011e0b057ffc1515346c95d60da34afa6f300cdfac8b93ed22"
     }
   }
 }

@@ -561,6 +561,7 @@
     "data/characters/mara.png",
     "data/characters/tomas.png",
     "data/expedition-hud/complete.png",
+    "data/expedition-hud/life.png",
     "data/expedition-hud/pause-disabled.png",
     "data/expedition-hud/pause-hover.png",
     "data/expedition-hud/pause-normal.png",
@@ -928,5 +929,27 @@
     ],
     "review": "docs/review/striped-specials/README.md",
     "reproduction": "build/test/relic-rush \"shot art-specials\" \"shot phone-art-specials\" \"shot stripe-states-\" \"shot guide\" \"shot phone-guide\""
+  },
+  "settings_and_wallet": {
+    "source": "art/expedition-hud/settings-lives.png",
+    "states": [
+      "pause-normal",
+      "pause-hover",
+      "pause-pressed",
+      "pause-selected",
+      "pause-disabled",
+      "life"
+    ],
+    "meaning": "Settings gear; life heart, archaeological hex amulets and discovery stars. Wood, stone and compasses are retired wallet resources.",
+    "runtime": [
+      "data/expedition-hud/pause-normal.png",
+      "data/expedition-hud/pause-hover.png",
+      "data/expedition-hud/pause-pressed.png",
+      "data/expedition-hud/pause-selected.png",
+      "data/expedition-hud/pause-disabled.png",
+      "data/expedition-hud/life.png"
+    ],
+    "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
+    "review": "docs/screenshots/hud-states.jpg"
   }
 }

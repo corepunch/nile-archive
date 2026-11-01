@@ -11,53 +11,58 @@
   "icons": {
     "pause-normal": {
       "box": [
-        30,
-        14,
-        420,
-        384
+        0,
+        0,
+        512,
+        512
       ],
       "runtime": "data/expedition-hud/pause-normal.png",
-      "meaning": "Pause control: normal"
+      "source": "art/expedition-hud/settings-lives.png",
+      "meaning": "Settings gear: normal (legacy pause API key)"
     },
     "pause-selected": {
       "box": [
-        432,
-        14,
-        811,
-        384
+        0,
+        512,
+        512,
+        1024
       ],
       "runtime": "data/expedition-hud/pause-selected.png",
-      "meaning": "Pause control: selected"
+      "source": "art/expedition-hud/settings-lives.png",
+      "meaning": "Settings gear: selected (legacy pause API key)"
     },
     "pause-pressed": {
       "box": [
-        810,
-        14,
-        1173,
-        384
+        1024,
+        0,
+        1536,
+        512
       ],
       "runtime": "data/expedition-hud/pause-pressed.png",
-      "meaning": "Pause control: pressed"
+      "source": "art/expedition-hud/settings-lives.png",
+      "meaning": "Settings gear: pressed (legacy pause API key)"
     },
     "pause-hover": {
       "box": [
-        1173,
-        14,
-        1545,
-        384
+        512,
+        0,
+        1024,
+        512
       ],
       "runtime": "data/expedition-hud/pause-hover.png",
-      "meaning": "Pause control: hover"
+      "source": "art/expedition-hud/settings-lives.png",
+      "meaning": "Settings gear: hover (legacy pause API key)"
     },
     "pause-disabled": {
       "box": [
-        1558,
-        14,
-        1945,
-        384
+        512,
+        512,
+        1024,
+        1024
       ],
       "runtime": "data/expedition-hud/pause-disabled.png",
-      "meaning": "Pause control: disabled"
+      "source": "art/expedition-hud/settings-lives.png",
+      "meaning": "Settings gear: disabled (legacy pause API key)"
     },
     "score": {
       "box": [
@@ -78,6 +83,17 @@
       ],
       "runtime": "data/expedition-hud/complete.png",
       "meaning": "Completed objective"
+    },
+    "life": {
+      "box": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "runtime": "data/expedition-hud/life.png",
+      "source": "art/expedition-hud/settings-lives.png",
+      "meaning": "Life count; regenerates one life per 30 minutes"
     }
   },
   "registration": "Measured crops, aspect-preserving resize into 120x120 on 128x128 RGBA canvas; original alpha preserved",
@@ -89,5 +105,16 @@
     "generator": "built-in ImageGen, 2026-10-31; original Elena portrait used as identity reference",
     "pose": "Static investigation: examining a sun fragment with a magnifying glass; animation-ready independent cutout",
     "status": "retired 2026-10-31: the in-level HUD no longer shows a character; source kept for reference, no runtime export"
+  },
+  "settings_lives": {
+    "source": "art/expedition-hud/settings-lives.png",
+    "prompt": "art/expedition-hud/settings-lives-prompt.txt",
+    "size": [
+      1536,
+      1024
+    ],
+    "generator": "built-in ImageGen; all states authored together; transparent background removal edit",
+    "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
+    "review": "docs/screenshots/hud-states.jpg"
   }
 }

@@ -74,7 +74,6 @@ end
 
 local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights", "Temple ridge"}
 local zone_stars = {0, 6, 9, 15, 21, 27}
-local zone_compasses = {0, 2, 3, 4, 5, 6}
 local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}
@@ -182,7 +181,7 @@ function M.island_setup(c)
     c.defs = M.buildings
     local zones = {}
     for z = 1, ZONES do
-        zones[z] = {name = zone_names[z], marker = zone_centers[z], needs = purse(0, 0, 0, zone_stars[z]), cost = purse(0, 0, 0, 0, zone_compasses[z])}
+        zones[z] = {name = zone_names[z], marker = zone_centers[z], needs = purse(0, 0, 0, zone_stars[z]), cost = purse()}
     end
     c.zones = zones
     c.buildable = function(_, p) return M.island_grass(p) end

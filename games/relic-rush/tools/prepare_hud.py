@@ -16,7 +16,8 @@ source = Image.open(ROOT / manifest["controls"]["source"]).convert("RGBA")
 assert list(source.size) == manifest["controls"]["size"]
 exports = {}
 for name, asset in manifest["icons"].items():
-    image = source.crop(asset["box"])
+    sheet=Image.open(ROOT/asset["source"]).convert("RGBA") if "source" in asset else source
+    image = sheet.crop(asset["box"])
     image.thumbnail((120, 120), Image.Resampling.LANCZOS)
     canvas = Image.new("RGBA", (128, 128))
     canvas.alpha_composite(image, ((128 - image.width) // 2, (128 - image.height) // 2))
@@ -29,4 +30,4 @@ for path, image in exports.items():
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
         image.save(path, optimize=True)
-print("Expedition HUD: seven authored icons " + ("verified" if args.check else "imported"))
+print("Expedition HUD: authored settings/lives/goal icons " + ("verified" if args.check else "imported"))

@@ -37,8 +37,8 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         60,
-        10,
-        5
+        0,
+        0
       ],
       "about": "Every great discovery begins with a little canvas.",
       "shadow": {
@@ -76,8 +76,8 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         80,
-        15,
-        15
+        0,
+        0
       ],
       "about": "Fresh water brings the lost valley back to life.",
       "shadow": {
@@ -115,8 +115,8 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         100,
-        25,
-        15
+        0,
+        0
       ],
       "about": "A home for the hands that rebuild the valley.",
       "shadow": {
@@ -154,8 +154,8 @@
       "reference": "Farmers Market",
       "cost": [
         120,
-        25,
-        25
+        0,
+        0
       ],
       "about": "Stories, spices and treasures from far away.",
       "shadow": {
@@ -193,8 +193,8 @@
       "reference": "Original dry gathering plaza",
       "cost": [
         140,
-        30,
-        30
+        0,
+        0
       ],
       "about": "A sunlit gathering place brings the valley together.",
       "shadow": {
@@ -232,8 +232,8 @@
       "reference": "Estate",
       "cost": [
         160,
-        35,
-        35
+        0,
+        0
       ],
       "about": "A warm light after a long day of adventure.",
       "shadow": {
@@ -271,8 +271,8 @@
       "reference": "Lavish Library",
       "cost": [
         180,
-        35,
-        45
+        0,
+        0
       ],
       "about": "Protect the knowledge buried beneath the vines.",
       "shadow": {
@@ -310,8 +310,8 @@
       "reference": "Observatory",
       "cost": [
         200,
-        40,
-        50
+        0,
+        0
       ],
       "about": "Follow the stars to the next discovery.",
       "shadow": {
@@ -349,8 +349,8 @@
       "reference": "Fountain",
       "cost": [
         220,
-        45,
-        55
+        0,
+        0
       ],
       "about": "Let the ancient spring flow once more.",
       "shadow": {
@@ -388,8 +388,8 @@
       "reference": "story finale, as a landmark",
       "cost": [
         250,
-        50,
-        60
+        0,
+        0
       ],
       "about": "The heart of the valley shines again.",
       "shadow": {

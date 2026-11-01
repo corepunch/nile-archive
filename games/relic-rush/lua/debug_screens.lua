@@ -12,7 +12,7 @@ local COMPASSES = rules.COMPASSES
 -- regions a player would have opened by then, stars and compasses to match.
 local function island_with(n)
     local opened_at = {0, 2, 3, 5, 7, 9}
-    R.prog = {level = n, seed = 782341, wallet = purse(340, 115, 92, n * 3, rules.discovery_compasses(n))}
+    R.prog = {level = n, seed = 782341, lives=5, wallet = purse(340, 115, 92, n * 3, 0)}
     R.island.count = 0
     local open = 1
     for z = 1, ISLAND_ZONES - 1 do
@@ -30,8 +30,23 @@ local function island_with(n)
 end
 
 -- --talk-through N: move the dialogue on every N frames, to film it.
-local talk_frames = 0
+local talk_frames,scroll_frames = 0,0
 function R.debug_frame()
+    if app.arg("scroll-review") then
+        scroll_frames=scroll_frames+1
+        local form=app.arg("catalogue") and R.catalogue_form or R.expedition_form
+        local id=app.arg("catalogue") and "stock" or "levels"
+        local box=form.boxes[id]
+        if box then
+            local start=vec2(box:center().x,box:max().y-24)
+            if scroll_frames==10 then app.inject_press(start)
+            elseif scroll_frames>=12 and scroll_frames<=21 then app.inject_move(start-vec2(0,(scroll_frames-11)*24))
+            elseif scroll_frames==22 then app.inject_release(start-vec2(0,240))
+            elseif scroll_frames==30 then
+                assert(R.on_island and form.nodes[id].scroll_state.offset>0,"catalogue drag must scroll without activating an entry")
+            end
+        end
+    end
     local every = tonumber(app.arg("talk-through"))
     if not every then return end
     talk_frames = talk_frames + 1
@@ -39,6 +54,7 @@ function R.debug_frame()
 end
 
 function R.debug_screens()
+    talk_frames,scroll_frames=0,0
     if app.arg("stripe-states") then R.art_review = true end
     R.island.show_footprints = app.arg("footprints") ~= nil
     local a = app.arg("level")
@@ -48,7 +64,7 @@ function R.debug_screens()
     if app.arg("showcase") then
         local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),
                        vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}
-        R.prog = {level = LEVELS, seed = 782341, wallet = purse(340, 115, 92, 30, 10)}
+        R.prog = {level = LEVELS, seed = 782341, lives=5, wallet = purse(340, 115, 92, 30, 10)}
         R.island.count = 0
         R.island.open = 63
         for i = 0, WONDERS - 1 do
@@ -87,7 +103,7 @@ function R.debug_screens()
     a = app.arg("zone")
     if a then R.zone_card = num.clampi(tonumber(a), 1, ISLAND_ZONES - 1); R.overlay = R.OV_ZONE; R.on_island = true end
     if app.arg("victory") then
-        R.prog = {level = 1, seed = 782341, wallet = purse(142, 37, 45, 3, 3)}
+        R.prog = {level = 1, seed = 782341, lives=5, wallet = purse(142, 37, 45, 3, 3)}
         R.g = rules.game_start(1, 123478)
         R.pending = rules.new_match()
         R.g.score, R.g.relics, R.g.wood, R.g.stone, R.g.won = 5860, 13, 9, 14, true
@@ -147,7 +163,7 @@ function R.debug_screens()
     end
     if app.arg("building-review") then
         local first = ((tonumber(app.arg("building-review")) or 1) - 1) * 4
-        R.prog = {level = 10, seed = 782341, wallet = purse(2000, 500, 500, 30, 10)}
+        R.prog = {level = 10, seed = 782341, lives=5, wallet = purse(2000, 500, 500, 30, 10)}
         R.island.count = 0
         R.island.open = 63
         local spots = {vec2(700, 1500), vec2(1100, 1500), vec2(700, 1850), vec2(1100, 1850)}
@@ -205,7 +221,7 @@ function R.debug_screens()
         elseif a == "tomas" then island_with(2); R.on_island = true; story.say("tomas", R.wonders[2].about)
         elseif a == "bubble" then
             island_with(2); R.on_island = true
-            R.bubble_wonder, R.bubble_text, R.bubble_time = 1, "A new wonder, exactly where you wanted it.", 3.5
+            R.bubble_wonder=1;local b=R.buildings[R.island.items[2].type+1];R.bubble_text=b.name.."\n"..b.about
             R.island_focus(R.island.items[2].pos, .8)
         else
             R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED

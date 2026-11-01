@@ -521,3 +521,11 @@ The guides use the existing camera and tile measurements; artwork, alpha,
 footprints and collision rules are unchanged. No bitmap or ImageGen source is
 added. Reproduce with the existing native-input hold/placement captures in the
 [review](../../../docs/review/city-placement-guides/README.md).
+
+## Settings gear and three-resource wallet
+
+The legacy `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys now draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart from the same atlas; it is a wallet readout, not an interactive control. The hex amulet uses the existing archaeological sun idol, and discovery stars retain their documented procedural glyph. Wood, stone and compasses are retired from wallet UI, costs and rewards; their old slots remain reserved for save compatibility.
+
+All five gear states were generated together by ImageGen; `settings-lives-prompt.txt` records the prompt and alpha cutout edit. `python3 games/relic-rush/tools/prepare_hud.py` performs only grid crops and thumbnail registration to 128px RGBA canvases, preserving authored alpha and paint. `tools/match3_atlas.py` then packs the five gear states. No tint-generated interaction state is used. Captures: `docs/screenshots/hud-states.jpg`, `hex-first.jpg`, `phone-board.jpg`, `island-village.jpg` and `phone-island.jpg`. Normal, selected, pressed, hover and disabled use the same authored outer medallion, with distinct painted state feedback.
+
+The larger Buildings and Play actions reuse the existing jade button skin in all its states. Expeditions remains the smaller compass action. Building name/subtitle bubbles use the existing story bubble renderer and persist until the next press.
