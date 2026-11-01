@@ -21,14 +21,18 @@ and editor annotations come from `engine/api.xml`; regenerate with `make gen`.
 | Owner | Events |
 | --- | --- |
 | Engine match presentation, used by Relic Rush and Christmas Market | MATCH for the first clear, COMBO for later waves or activated specials, TICK for completed simultaneous gravity steps, ERROR for rejected swaps/failure, SUCCESS for victory. Tools use the same clear-wave path. |
-| Engine city transactions, used by Nile Archive and both portrait games | PLACE after a successful quick purchase or Confirm of a purchase/relocation; COLLECT after income is collected |
+| Engine city transactions, used by Nile Archive and both portrait games | MATCH when a hold/preview drag lifts a building, PLACE on release/drop or a successful quick purchase; COLLECT after income is collected |
 | Nile Archive scene input | MATCH for an object found, COMBO for consecutive finds, ERROR for a miss, TICK for a requested hint, SUCCESS for the final object |
 | Emergency presentation adapter | PLACE for completed station repairs, MATCH for other completed jobs, COLLECT for income, SUCCESS for rescues and district victory |
 
 Rule matching, hints, simulations and speculative move searches never request
-feedback. Neither do city seed/loading calls, building pickup, dragging, camera
-pan/zoom, snapped previews, cancellation or failed placement. Relocations pulse
-only when Confirm commits the final position. Rendering never emits feedback.
+feedback. City seed/loading calls, continuous dragging, camera pan/zoom, cancellation and
+failed confirmation stay silent. Pickup requests MATCH at .6 strength; release
+requests PLACE at full strength, which can preempt the pickup cooldown. Pointer
+cancellation does not count as a drop. Confirm/Cancel never request feedback.
+Relic Rush entrances request the same TICK at .35 strength as normal refill,
+coalescing simultaneous landings. An opening release cannot skip the entrance;
+skipping requires a new press and release during it. Rendering never emits feedback.
 
 ## Engine and platform boundary
 

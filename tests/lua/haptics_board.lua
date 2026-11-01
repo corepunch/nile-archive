@@ -73,6 +73,16 @@ if R.intro_haptics then
     R.board_update(.001)
     check(testing.haptics()==0, 'entrance does not repeat landed gems')
     setup()
+    R.present_board()
+    R.board_update(.01)
+    R.board_input{released=true}
+    for _=1,180 do
+        testing.advance(1/60)
+        R.board_update(1/60)
+        testing.haptics() -- flush each real frame, including the cooldown
+    end
+    check(testing.haptics() >= 2, 'entrance repeats trickle feedback across real frames after the opening release')
+    setup()
     R.g.ice[rules.hex_center()] = 1
     R.present_board()
     R.board_update(3)

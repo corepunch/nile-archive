@@ -30,6 +30,7 @@ local skin=ui.skin{
         checkbox={size=20,gap=6,text="body",
             box={normal={layers={{name="face",paint=rec("box")}}},pressed={set={face={paint=rec("box-pressed")}}}},
             mark={normal={layers={{paint=rec("mark")}}}}},
+        focus={normal={layers={{paint=rec("focus")}}}},
         panel={normal={layers={{paint=rec("panel")}}}},
         label={text="body",em=14,wrap_text="title",wrap_em=9},
     },
@@ -131,7 +132,10 @@ drawn={}
 form:draw(rect(0,0,200,120),skin,{input={}})
 check(count("mark")==2,"a newly checked box draws its mark")
 form:draw(rect(0,0,200,120),skin,{input={key=input.KEY_TAB}})
-check(form.focus=="ok","focus moves past the disabled checkbox")
+check(form.focus=="ok" and count("focus")>0,"Tab moves and paints keyboard focus past the disabled checkbox")
+drawn={}
+form:draw(rect(0,0,200,120),skin,{input={pressed=true}})
+check(form.focus=="ok" and count("focus")==0,"pointer use removes the ring while retaining the focused control")
 check(not pcall(ui.form,{kind="checkbox"}),"checkbox needs an ID")
 
 -- The native look stays available without a skin.

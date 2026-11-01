@@ -193,7 +193,8 @@ and `inset` shrinks every layer that isn't `fixed` (and the caption), `alpha`
 fades its shapes, and `text` swaps its style. Variants and states combine:
 a variant's hover patch and the control's hover patch both apply.
 Disabled controls never show hover or press. Keyboard focus is its own control,
-`focus`, drawn around the focused one. `variants` apply for `flat`, `accent` or a
+`focus`, drawn around the focused one after Tab navigation. Pointer presses
+hide that ring while retaining focus for activation. `variants` apply for `flat`, `accent` or a
 node's `role` and merge the same way. `extends` reuses another control.
 A checkbox has `box` and `mark` looks (each with its own states), `size` and `gap`;
 a progress bar has `track`, `fill` and an optional `over` (a rim drawn on top).

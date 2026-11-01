@@ -388,6 +388,11 @@ TEST(city_hold)
     NEAR(c.items[0].pos.x,original.x);NEAR(c.items[0].pos.y,original.y);
     vec2 snapped=city_snap(&c,vec2_add(original,v2(64,17)),0);
     NEAR(c.ghost.x,snapped.x);NEAR(c.ghost.y,snapped.y);
+    input tap={.pressed=true,.down=true,.pos={400,700},.press_pos={400,700},.pinch=1};
+    city_update(&c,tap,&wallet,100,0);
+    tap.pressed=tap.down=false;tap.released=tap.tap=true;
+    city_update(&c,tap,&wallet,100,0);
+    NEAR(c.ghost.x,snapped.x);NEAR(c.ghost.y,snapped.y); /* tapping land cannot move the preview */
     CHECK(city_confirm(&c,&wallet,100).result==CITY_MOVED && wallet.v[0]==100);
     CHECK(city_confirm(&c,&wallet,100).result==CITY_NONE);
     NEAR(c.items[0].pos.y,snapped.y);
