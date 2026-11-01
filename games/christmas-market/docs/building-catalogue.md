@@ -127,3 +127,10 @@ A full render of all 37 objects takes about two minutes on four CPU cores.
 | 34 / `chapel` | Snowy chapel | cottage | 2 x 2 | 260 | 15 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 35 / `reindeer_stable` | Reindeer stable | cottage | 3 x 2 | 280 | 18 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 36 / `santa_workshop` | Santa's workshop | cottage | 3 x 3 | 320 | 21 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+
+## Style and prompt provenance
+
+See the [shared building style guide](../../../docs/BUILDING_STYLE.md) for the
+accepted palette, materials, polish and review criteria, and the
+[reference index](../art/building-catalogue/painted-v1/references.json) for exact
+prompts, ordered input images, hashes and accepted versions.

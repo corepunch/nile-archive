@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "game": "relic-rush",
+  "pass": "painted-v1",
+  "generator": "image_gen",
+  "render_baseline": "aefd5442716fb81a6fb093afd717b56dfaef9581",
+  "style_guide": "../../docs/BUILDING_STYLE.md",
+  "runtime_imports": "art/building-catalogue/painted-v1/imports.json",
+  "reimport_command": "python3 tools/import_painted_buildings.py relic-rush",
+  "generation_is_deterministic": false,
+  "accepted_object_count": 96,
+  "generations": [
+    {
+      "category": "animal",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/animal-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/animal-input.png",
+          "sha256": "fa4b51b3701788b5ec3049b602f878c3301964cf785d9de0901a6f5bc88b794e"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/animal-output.png",
+      "output_sha256": "37e398598b4fa21d0045b9a04c75c0c7848967be201d469774c27589e9d14f3c",
+      "layout": "art/building-catalogue/painted-v1/animal-layout.json",
+      "accepted_keys": [
+        "capybara",
+        "monkey",
+        "parrot",
+        "toucan",
+        "turtle"
+      ]
+    },
+    {
+      "category": "building",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/building-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/building-input.png",
+          "sha256": "45b02355a6d2ddcb7a53c4f085953b327facf6a7a1fbbe828aade4e1bb3452e5"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/building-output.png",
+      "output_sha256": "3dd6f216592bb9faf702c95c232709a7a11a399da336312c9a3f9d4713695ec7",
+      "layout": "art/building-catalogue/painted-v1/building-layout.json",
+      "accepted_keys": [
+        "amphitheater",
+        "apothecary",
+        "aviary",
+        "beached_ship",
+        "clock_tower",
+        "greenhouse",
+        "hanging_gardens",
+        "lighthouse",
+        "log_cabin",
+        "map_room",
+        "mess_hall",
+        "museum",
+        "stilt_house",
+        "trading_post",
+        "treehouse",
+        "water_mill"
+      ]
+    },
+    {
+      "category": "bush",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/bush-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/bush-input.png",
+          "sha256": "52155816ec91186a3ac43bcb46684a7312415a7830aa8605fc9697c7542113c0"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/bush-output.png",
+      "output_sha256": "a1a986990cec90852cbcfa904eedf3d44689b48c81226fb3ab06d74d16fd2c79",
+      "layout": "art/building-catalogue/painted-v1/bush-layout.json",
+      "accepted_keys": [
+        "berry",
+        "fern",
+        "flower_shrub",
+        "monstera",
+        "reeds",
+        "shrub",
+        "topiary"
+      ],
+      "note": "The hedge cell was rejected as a stone block. Runtime key hedge comes from the separate hedge correction."
+    },
+    {
+      "category": "camp",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/camp-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/camp-input.png",
+          "sha256": "7253d3a8afacc69409f17ff1b63b5613ef9adba3117486944deb026b7bb980a1"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/camp-output.png",
+      "output_sha256": "9052761cb9b233b7bfca25d7d721351b2b80c1c4429480e0720b20c4c3f492c1",
+      "layout": "art/building-catalogue/painted-v1/camp-layout.json",
+      "accepted_keys": [
+        "barrels",
+        "campfire",
+        "cart",
+        "chest",
+        "crates",
+        "dig_site",
+        "field_scope",
+        "globe",
+        "rowboat",
+        "supply_tent"
+      ]
+    },
+    {
+      "category": "flower",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/flower-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/flower-input.png",
+          "sha256": "464009639f82cc01e38934f7e50dc1e17875f9007b7e9de17e0abf5b8dffd9c1"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/flower-output.png",
+      "output_sha256": "a9fcb4d878696c13f3e7bd1b710dd3d25e1c945584de063c2ff71f0bee1afa30",
+      "layout": "art/building-catalogue/painted-v1/flower-layout.json",
+      "accepted_keys": [
+        "blue_lily",
+        "bromeliad",
+        "daisies",
+        "flower_bed",
+        "flower_box",
+        "hibiscus",
+        "orchid",
+        "rainbow_bed"
+      ]
+    },
+    {
+      "category": "garden",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/garden-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/garden-input.png",
+          "sha256": "81a348124ab8867665b18b67a4015abd2190caa95d4c137ba551ed4e699278ff"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/garden-output.png",
+      "output_sha256": "c654f272cd344fe8eb7e04f38b2a213e9523de7b4f26038801de78b7da63b637",
+      "layout": "art/building-catalogue/painted-v1/garden-layout.json",
+      "accepted_keys": [
+        "bench",
+        "flagpole",
+        "gazebo",
+        "hammock",
+        "lantern",
+        "pergola",
+        "picnic",
+        "pump",
+        "signpost",
+        "swing",
+        "tiki"
+      ]
+    },
+    {
+      "category": "hedge",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/hedge-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/hedge-input.png",
+          "sha256": "1cc944b60cb209d8d1d1a5e4e9da3b887256009dbf8688095dc1b3b0c63c993d"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/hedge-output.png",
+      "output_sha256": "467207d82ce1a09845628fecc33dfe6d79c1b5cc4ae606249872c261663166b1",
+      "layout": "art/building-catalogue/painted-v1/hedge-layout.json",
+      "accepted_keys": [
+        "hedge"
+      ]
+    },
+    {
+      "category": "rock",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/rock-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/rock-input.png",
+          "sha256": "310fdf23eeae9fcc5b7da2a658d524c9df1005f158be05778b4ed63ab2555170"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/rock-output.png",
+      "output_sha256": "0969e2578c181ac0f716492d89a1f483daff4488dc56a168b122ca8a24d3d8e5",
+      "layout": "art/building-catalogue/painted-v1/rock-layout.json",
+      "accepted_keys": [
+        "boulder",
+        "crystal",
+        "mossy_rocks"
+      ]
+    },
+    {
+      "category": "statue",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/statue-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/statue-input.png",
+          "sha256": "eaeb381ce215104395356037453694ceae627e3c753e1224efe8da2540d68480"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/statue-output.png",
+      "output_sha256": "974a1224fa6b1d056550bc6a5184700f31efdd52468782bfa393e4d7d5d9d691",
+      "layout": "art/building-catalogue/painted-v1/statue-layout.json",
+      "accepted_keys": [
+        "broken_column",
+        "explorer",
+        "giant_head",
+        "gold_idol",
+        "idol_head",
+        "jaguar",
+        "obelisk",
+        "stone_arch",
+        "sundial"
+      ]
+    },
+    {
+      "category": "tree",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/tree-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/tree-input.png",
+          "sha256": "5196b6069194551fefd0a77ef1756d0489a073133f54f0467c8af4d2552af24f"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/tree-output.png",
+      "output_sha256": "6d9c06c846247657d7b8f2ce7bae2aaf0b11a313695b32cd9986f0faf03334ac",
+      "layout": "art/building-catalogue/painted-v1/tree-layout.json",
+      "accepted_keys": [
+        "bamboo",
+        "banana",
+        "cypress",
+        "fan_palm",
+        "frangipani",
+        "jungle_tree",
+        "kapok",
+        "mango",
+        "palm_young",
+        "papaya",
+        "twin_palms"
+      ]
+    },
+    {
+      "category": "water",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/water-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/water-input.png",
+          "sha256": "c4f79739e1573bf1ef31845f852bc69f687805289d276f025ba79eca784fdf43"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/water-output.png",
+      "output_sha256": "3f408f120ad40f4015dc8b9299a1c36ff56c2ee9b360fa33c7f233de3d53bc38",
+      "layout": "art/building-catalogue/painted-v1/water-layout.json",
+      "accepted_keys": [
+        "birdbath",
+        "duck_pond",
+        "lily_pond",
+        "small_fountain",
+        "spring_rocks"
+      ]
+    },
+    {
+      "category": "wonder",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/wonder-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/wonder-input.png",
+          "sha256": "19cec451de0eedd30abaaaf6f4e5e8fe4ae72ab6cf59f2b5f91f2529e48f5ef0"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/wonder-output.png",
+      "output_sha256": "41264f4094191f8f315c38800af9b268c0f72b8d49a0b4a96ab213ac2d417ca9",
+      "layout": "art/building-catalogue/painted-v1/wonder-layout.json",
+      "accepted_keys": [
+        "archive",
+        "camp",
+        "fountain",
+        "gateway",
+        "lodge",
+        "market",
+        "observatory",
+        "temple",
+        "well",
+        "workshop"
+      ],
+      "note": "Accepted replacement for the archived first pass; geometry guides fit completely inside their cells."
+    },
+    {
+      "category": "wonder-first-pass",
+      "status": "superseded",
+      "reason": "Insufficient gutter space for the complete temple foundation; use the active wonder files.",
+      "prompt": "art/building-catalogue/painted-v1/versions/first/wonder-v1-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/versions/first/wonder-v1-input.png",
+          "sha256": "680399fddfd15542b4480ab7b87399d67da6227fdcedee8c449e53736fc97ca9"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/versions/first/wonder-v1-output.png",
+      "output_sha256": "792b053f77e8aa925db4e3b99f31923992becae720140bd5a6fcf65ca7b02007",
+      "layout": "art/building-catalogue/painted-v1/versions/first/wonder-v1-layout.json",
+      "accepted_keys": []
+    }
+  ]
+}

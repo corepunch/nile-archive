@@ -57,7 +57,7 @@ Every city game sees its ground through one camera. **It is orthographic, turned
 
 - **There is one definition.** `CITY_CAMERA_YAW` and `CITY_CAMERA_ELEVATION` in `engine/engine.h` set the engine's projection, and `tools/city_camera.py` reads those two lines for all art tools. Never write the angles or slopes anywhere else in code. `make test` fails when a game's rendered art doesn't match them.
 - **Model for it.** In Blender, X is tile u (the front-left side, `size.w`) and Y is -v (the front-right side, `size.h`). The camera sees faces towards **-Y** best and towards **+X** second, so a building's main facade, door and steps go on -Y.
-- **Sprites come from Blender, not paint.** A painting or paint-over is locked to the angle it was drawn from and can't be turned, so a building needs a model before it has art.
+- **Every building starts from registered Blender geometry.** The finished sprites use the approved hand-painted surface pass in [docs/BUILDING_STYLE.md](docs/BUILDING_STYLE.md). Use the current render as the edit target and the earlier painting only as a style reference. A paint-over is locked to its camera; a model or camera change requires a matching render and a new paint pass.
 - **Re-render by name.** A building's Blender collection name is its key and its file name.
 
   ```sh

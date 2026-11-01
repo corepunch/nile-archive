@@ -5,6 +5,11 @@ rendered to sprites, registered on the tile grid, added to the game, checked and
 documented. [BUILDINGS.md](BUILDINGS.md) is the spec for the camera, footprints, pivots
 and base widths. This guide is how to produce art that meets it.
 
+[BUILDING_STYLE.md](BUILDING_STYLE.md) defines the accepted painted finish for each
+game, the exact generation references and prompts, retained versions and visual
+acceptance checks. Simple model geometry is the starting point; the runtime art
+must match that guide's material detail and polish.
+
 Every city game works the same way, from one command:
 
 ```sh
@@ -96,13 +101,15 @@ receives a `Kit` and adds geometry to it in **pivot-local coordinates**:
   rectangle, so anything that overhangs is squashed flat. Use `k.fit(x, y,
   reach)` (as `k.palm` and `k.puff` do) to move plants inward. Keep props on the
   base, because footprints may touch their neighbours'.
-- **Style.** Few, big, soft shapes. The object should read at a glance from
+- **Model style.** Few, big, soft shapes. The object should read at a glance from
   its silhouette and two or three colours, with nothing smaller than about a
   tenth of a tile. Use the palette constants (`LIME`, `WASH`, `LAPIS`, `TEAL`,
   `GOLD`, `OCHRE`, …) rather than new colours. `J(col)` and `lime()` add slight
   per-block variation. Materials come from the kit: `stone`, `slab`, `wood`,
   `clay`, `glaze`, `gold`, `cloth`, `leaf`, `hedge`, `glass`, `matte`, `water`,
   `flame` and `glow`. The bevel widths in `BEVELS` give the soft, toy-like edges.
+  This describes the geometry guide, not the final surface finish. Apply the
+  detailed paint direction in [BUILDING_STYLE.md](BUILDING_STYLE.md) afterward.
 - **Primitives.** `box`, `beam`, `tube`, `path`, `lathe`, `ball`, `surface`,
   `poly`, `prism`, `wall`, `ring`, `arch`, `window`, `pane` and `hip_roof` come
   from the shared kit. Nile Archive adds `frustum` (battered walls), `pyramid`,
