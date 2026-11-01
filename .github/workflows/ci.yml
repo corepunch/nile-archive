@@ -57,7 +57,7 @@ jobs:
           submodules: true
       - name: Build all games' iOS targets for the Simulator from the committed Xcode projects
         run: |
-          for s in nile-archive-ipad relic-rush-iphone christmas-market-iphone volcano-ipad clayfight-ipad; do
+          for s in nile-archive-ipad relic-rush-iphone christmas-market-iphone volcano-ipad; do
             g=${s%-*}
             xcodebuild -project games/$g/$g.xcodeproj -scheme $s -configuration Debug \
               -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \

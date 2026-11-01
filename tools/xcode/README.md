@@ -23,7 +23,7 @@ A build phase emits temporary unity sources into `DERIVED_FILE_DIR` using
 - `u_lua.c`: the sandbox's Lua interpreter and standard libraries.
 - `u_platform.c`: the shared platform backend and audio, compiled as
   Objective-C on Apple targets. Target headers select macOS or iOS.
-- `u_launcher.c`: the per-game entry point (Clayfight uses its own host).
+- `u_launcher.c`: the per-game entry point.
 
 The included individual sources remain visible for browsing, with no separate
 compile membership. Xcode tracks their includes for incremental rebuilds.

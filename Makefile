@@ -16,7 +16,7 @@
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
 
-GAMES   := nile-archive relic-rush christmas-market volcano clayfight
+GAMES   := nile-archive relic-rush christmas-market volcano
 CC      ?= cc
 CFLAGS  ?= -O2 -g
 ARGS    ?=
@@ -84,8 +84,7 @@ build/$(1): $(ENGINE_OBJ) engine/launcher.c engine/engine.h
 run-$(1): build/$(1)
 	./build/$(1) $$(ARGS)
 endef
-$(foreach g,$(filter-out clayfight,$(GAMES)),$(eval $(call GAME_RULES,$(g))))
-include games/clayfight/Makefile.inc
+$(foreach g,$(GAMES),$(eval $(call GAME_RULES,$(g))))
 
 run-nile: run-nile-archive
 run-relic: run-relic-rush
@@ -121,7 +120,7 @@ xcode-check:
 # The test build: engine and launcher with -DENGINE_TEST. One start of a binary runs
 # every test of that suite (docs/TESTING.md). make test ONLY=smoke runs a part.
 TEST_GAMES := nile-archive relic-rush christmas-market volcano
-TEST_BINS := build/test/engine build/test/clayfight $(TEST_GAMES:%=build/test/%)
+TEST_BINS := build/test/engine $(TEST_GAMES:%=build/test/%)
 TEST_OBJ := build/test-obj/engine.o build/test-obj/script.o build/engine/lua.o build/engine/platform.o
 TEST_DEPS := engine/test.h engine/test_runner.c engine/test_lua.c
 build/test-obj/%.o: $(ENGINE_DEPS) $(TEST_DEPS)
@@ -154,13 +153,13 @@ test-assets:
 # Budget is test execution only: build prerequisites finish before the timer.
 TEST_BUDGET ?= 5
 TEST_WORKERS ?= 4
-TEST_AUX_BINS := build/test-audio build/clayfight-video build/clayfight-photo build/clayfight-input
+TEST_AUX_BINS := build/test-audio
 .PHONY: test-full test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
 test test-fast: $(TEST_BINS) $(TEST_AUX_BINS)
 	python3 tools/run_tests.py --budget $(TEST_BUDGET) --jobs $(TEST_WORKERS) $(if $(filter test-fast,$@),--fast) -- $(ONLY) $(TEST_ARGS)
 
 # Full integration/capture export is deliberate; keep it complete in cloud CI.
-test-full: gen-check xcode-check test-assets $(TEST_BINS) $(TEST_AUX_BINS) test-clayfight-native
+test-full: gen-check xcode-check test-assets $(TEST_BINS) $(TEST_AUX_BINS)
 	./build/test-audio
 	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) $(TEST_ARGS) || status=1; done; exit $$status
 
@@ -209,7 +208,7 @@ dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.
 	    engine/launcher.c $(WEB_OBJ) \
 	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua
 endef
-$(foreach g,$(filter-out clayfight,$(GAMES)),$(eval $(call WEB_RULES,$(g))))
+$(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
 
 clean:
 	rm -rf build dist

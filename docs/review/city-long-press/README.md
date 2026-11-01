@@ -54,4 +54,4 @@ press/move/release sequences, cancel one move and confirm another through their
 actual controls. Nile Archive's confirmation strip is an engine form.
 
 No building geometry, art registration, runtime texture or authored icon/state
-is added or changed. Volcano and Clayfight have no city relocation mode.
+is added or changed. Volcano has no city relocation mode.

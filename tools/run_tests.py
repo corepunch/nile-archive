@@ -69,11 +69,10 @@ def run_jobs(jobs, budget, workers=4, output=None):
 
 def checks(fast=False, arguments=()):
     mode = "--fast" if fast else "--check"
-    games = ("engine", "clayfight", "relic-rush", "christmas-market", "volcano", "nile-archive")
+    games = ("engine", "relic-rush", "christmas-market", "volcano", "nile-archive")
     jobs = [(game, [f"./build/test/{game}", mode, *arguments]) for game in games]
     jobs += [(name, [f"./build/{name}"]) for name in
-             ("test-audio", "clayfight-video", "clayfight-photo", "clayfight-input")]
-    jobs.append(("capture-processing", ["node", "--test", "games/clayfight/tests/capture-processing.mjs"]))
+             ("test-audio",)]
     scripts = [
         ("generated code", "tools/luagen.py", "--check"),
         ("Xcode projects", "tools/xcode/generate.py", "--check"),

@@ -37,8 +37,7 @@ view a different review filename.
 
 `make test` builds the test binaries, then runs correctness checks within a
 five-second wall-clock budget. Four independent workers run every rule suite,
-the engine's real-renderer/input assertions, audio, Clayfight native/JavaScript
-checks, generated-code/project checks, asset audits and launcher contracts.
+the engine's real-renderer/input assertions, audio, generated-code/project checks, asset audits and launcher contracts.
 Each game suite starts once. Results are grouped by suite, every invocation
 executes the checks again, and failures or budget overruns fail the target.
 
@@ -69,7 +68,8 @@ Direct test binaries retain their complete integration manifest by default:
 | `build/test/christmas-market` | Its rules, smoke run and screens |
 | `build/test/volcano` | Its rules, smoke run and screens |
 
-Clayfight and audio keep their own small binaries, because neither uses this engine setup.
+Audio keeps its own small binary. Clayfight and its native/JavaScript checks
+now live in the [standalone repository](https://github.com/corepunch/clayfight).
 
 ```sh
 make test                       # correctness + renderer + preflight, budget 5s
@@ -165,21 +165,18 @@ The same binaries and manifests support a window-free pass:
 make test-fast
 make test-relic-rush             # substitute nile-archive, christmas-market or volcano
 make test-engine
-make test-clayfight              # controller/AI, Lua scheduler and native/JS checks
-./build/test/clayfight --retail   # optional local ROM combat integration
 make test-extended               # CPU/rules, larger deterministic sample
 build/test/relic-rush --fast     # same executable used for full screenshots and smoke
 ```
 
 Fast mode runs Lua rules and the engine's CPU tests, skipping renderer tests,
 smoke, screenshots, reels and gestures. The aggregate target also retains
-preflight and native/JavaScript checks. `make test-extended` deliberately raises
+preflight and native audio checks. `make test-extended` deliberately raises
 the budget to 60 seconds for the larger deterministic sample. CI runs
 `make test-full TEST_ARGS=--extended`, keeping the thousand opening boards,
 greedy campaign simulation and complete integration captures.
 
 The budgeted path does not reduce puzzle seeds or remove rule assertions.
-The redundant second Clayfight Lua invocation is removed from aggregate runs.
 The city renderer compares identical-time pixels, advances the existing test
 clock by four seconds, then checks changed fog pixels; it no longer waits four
 real seconds. Test builds present with vsync disabled. These changes leave

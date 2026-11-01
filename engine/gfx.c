@@ -11,15 +11,6 @@
 #include "third_party/stb_image.h"
 #include "match3_atlas.h"
 
-uint8_t *image_load_rgba(const char *path, int *w, int *h, char *error, size_t capacity)
-{
-    int channels;
-    uint8_t *pixels = stbi_load(path, w, h, &channels, 4);
-    if (!pixels && error && capacity)
-        snprintf(error, capacity, "%s: %s", path, stbi_failure_reason());
-    return pixels;
-}
-
 /* ---------------------------------------------------------------- textures */
 
 texture tex_from_pixels(const void *rgba, int w, int h)
