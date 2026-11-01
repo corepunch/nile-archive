@@ -34,7 +34,8 @@ engine/            the shared engine: ONE public header + one .c per module
   raster.c         caller-owned CPU surfaces and indexed sprite drawing
   photo.c          background removal, common scale and shared photo palettes
   story.c          characters, dialogue with portraits, speech bubbles
-  script.c         the Lua runtime: sandboxed state, require, the main-loop callbacks
+  script.c         the Lua runtime: sandboxed libraries, API setup, main-loop callbacks
+  script_modules.c private module resolution, per-state roots/cache, dependency cycles
   launcher.c       main() for a Lua game, built once per game
   api.xml          the Lua API, described once          ─┐ tools/luagen.py
   api_lua.c/.h     the generated glue                   ─┤ (committed; make gen,

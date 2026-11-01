@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 IOS_MINIMUM = '16.0'
 UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
-ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'raster', 'photo', 'story', 'sprite', 'nav', 'script', 'api_lua', 'lua_lib', 'launcher']
+ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'raster', 'photo', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
 
 GAMES = {
     'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),

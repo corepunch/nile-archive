@@ -84,8 +84,9 @@ the games implement their screenshot entry points (`--screen`, `--level`,
 
 Every module is a **global table** (`app`, `input`, `gfx`, `texture`,
 `camera`, `fx`, `font`, `style`, `text`, `sfx`, `ui`, `save`, `story`, `city`,
-`vec2`, `size2`, `rect`, `color`, `purse`, `num`, `ease`, `tween`). There is nothing to
-`require` from the engine; `require("island")` loads the game's own files.
+`vec2`, `size2`, `rect`, `color`, `purse`, `num`, `ease`, `tween`). Most engine APIs
+are globals; the embedded match-3 modules use `require("match3")` and
+`require("match3.frames")`. `require("island")` loads the game's own files.
 `ease` and `tween` are the engine's Lua motion module ([MOTION.md](MOTION.md)):
 the engine advances every tween before it calls `frame`, so a game sets a goal
 once and draws the field every frame.
@@ -150,10 +151,33 @@ Each game gets its own Lua state with `base`, `table`, `string`, `math`,
 `utf8` and `coroutine`. `io`, `os`, `package` and `debug` are not in the build
 (`engine/lua_lib.c` amalgamates only the libraries the sandbox opens from the
 `lua/lua` submodule, pinned to v5.4.8);
-`dofile` and `loadfile` are removed. `require(name)` resolves `name` (dots as
-slashes) against the game's `lua/` folder — or, for the test binary, the
-list of folders it is given — and caches the module. Assets are reached
-through the engine (`texture.load`, `font.load`), the file system never.
+`dofile` and `loadfile` are removed. The private
+[`script_modules.c`](../engine/script_modules.c) owns module resolution; it has
+no dependency on app callbacks, generated bindings, game content or renderer
+state. Each Lua state owns its ordered script roots, completed-module cache
+and in-progress imports. Closing the state discards all three.
+
+`require(name)` searches the game's `lua/` folder, or the explicit
+semicolon-separated root list supplied by the host/test runner. Empty root
+entries are skipped. Names consist of nonempty ASCII letters/digits/underscore/
+hyphen segments, separated by dots or slashes: `contracts.puzzle` and
+`contracts/puzzle` resolve to the same file and cache entry. Leading, trailing
+or repeated separators, backslashes, embedded NULs and other characters are
+errors. Roots are host configuration; module names cannot specify filesystem
+paths. The loader does not resolve symlinks or isolate host-provided assets;
+script roots and their contents must be trusted.
+
+The first root containing a loadable file wins. Missing/unreadable files fall
+through to the next root; syntax and execution errors retain their original
+diagnostics and do not fall through. A module receives its canonical dotted
+name as `...`; returning nil caches true, and returning false caches false.
+Embedded modules are registered in the same cache before game code runs.
+Circular imports fail with the module name, and execution failures clear the
+in-progress marker so a caught failure can be retried.
+
+Assets are reached through the engine (`texture.load`, `font.load`). See
+[ARCHITECTURE.md](ARCHITECTURE.md) for dependency ownership and remaining
+boundary concerns.
 
 A Lua error prints a traceback to stderr and ends the process with status 3,
 in `init`, `frame`, a callback or a save visitor alike. Headless runs (`make
