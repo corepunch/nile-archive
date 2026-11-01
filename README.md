@@ -64,8 +64,9 @@ Native builds need a C compiler and the pinned [platform](https://github.com/cor
 git submodule update --init   # Lua, once
 make              # builds Nile Archive, Relic Rush, Volcano and Clayfight
 make run-nile     # or: make run-relic / make run-volcano
-make test         # generated-code freshness, then every test, in one start per game (docs/TESTING.md)
-make test-fast    # all CPU/rule suites, without windows or artwork
+make test         # all rule/renderer/preflight checks, 5s test budget after builds
+make test-fast    # same checks without a window/GPU
+make test-full    # complete smoke runs, screenshots and reels (cloud CI)
 make test-relic-rush # one game's fast suite; substitute another game name
 make test-extended # larger seeds and greedy campaign, using the same test binaries
 make smoke        # only the games' smoke runs

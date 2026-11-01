@@ -18,7 +18,9 @@ jobs:
           sudo apt-get update && sudo apt-get install -y lua-check
           pip install -r tools/requirements-assets.txt
       - name: Validate generated code, projects, artwork and Lua before platform builds
-        run: make gen-check xcode-check test-assets lint
+        run: |
+          make gen-check xcode-check test-assets lint
+          python3 tools/test_run_tests.py
 
   native:
     needs: preflight

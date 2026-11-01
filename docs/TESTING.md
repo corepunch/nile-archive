@@ -35,8 +35,31 @@ Use either script's `--existing` option to export a completed run without
 rendering again. Avoid adding another manifest entry just to give an existing
 view a different review filename.
 
-`make test` builds the engine and games with `-DENGINE_TEST` and runs each suite once.
-One start of a test binary runs every test in its suite, in one process and one window:
+`make test` builds the test binaries, then runs correctness checks within a
+five-second wall-clock budget. Four independent workers run every rule suite,
+the engine's real-renderer/input assertions, audio, Clayfight native/JavaScript
+checks, generated-code/project checks, asset audits and launcher contracts.
+Each game suite starts once. Results are grouped by suite, every invocation
+executes the checks again, and failures or budget overruns fail the target.
+
+Build time is separate: the five-second timer starts after compilation. The
+timer includes test process startup, waiting for workers, preflight checks,
+reporting and teardown. Timed-out jobs and their children are terminated.
+`TEST_WORKERS` defaults to four; `TEST_BUDGET` defaults to five seconds.
+
+Measured on the development Mac: `make test` passed in 3.66 seconds (the
+launcher measured 3.54 seconds); the separate test-binary build took 4.19
+seconds, and `make lint` took 0.88 seconds. No prior passing results were
+cached. The previous 215-second workflow also exported the complete capture
+library and ran long game smoke scenarios, now selected with `test-full`.
+
+Bulk screenshot/reel exports and long game smoke scenarios are explicit
+integration checks. `make test-full` retains them all and is used by cloud CI;
+`make shots` and `make smoke` select those workflows independently. Screenshots
+check dimensions and non-flat pixels; repeatedly exporting them adds little to
+the rule and renderer assertions on every local edit.
+
+Direct test binaries retain their complete integration manifest by default:
 
 | Binary | Runs |
 |---|---|
@@ -49,9 +72,13 @@ One start of a test binary runs every test in its suite, in one process and one 
 Clayfight and audio keep their own small binaries, because neither uses this engine setup.
 
 ```sh
-make test                       # everything; under xvfb-run -a on Linux
-make test ONLY=smoke            # only tests whose name contains this, in every suite
+make test                       # correctness + renderer + preflight, budget 5s
+make test-fast                  # same checks without a window/GPU
+make test-full                  # complete smoke/capture integration, deliberately slow
+make test-full ONLY=smoke        # only smoke jobs, in every suite
+make test TEST_BUDGET=10         # explicit allowance for slower hardware
 build/test/relic-rush           # one suite
+build/test/relic-rush --check   # rules only; engine --check also retains all C tests
 build/test/relic-rush rules     # part of one suite
 build/test/relic-rush --list    # what it would run
 ```
@@ -144,10 +171,18 @@ build/test/relic-rush --fast     # same executable used for full screenshots and
 ```
 
 Fast mode runs Lua rules and the engine's CPU tests, skipping renderer tests,
-smoke, screenshots, reels and gestures. The puzzle suites take about one second
-per game on the development Mac. `make test` retains the full integrated suite.
-CI runs `make test TEST_ARGS=--extended`, keeping the thousand opening boards
-and greedy campaign simulation alongside the added coverage.
+smoke, screenshots, reels and gestures. The aggregate target also retains
+preflight and native/JavaScript checks. `make test-extended` deliberately raises
+the budget to 60 seconds for the larger deterministic sample. CI runs
+`make test-full TEST_ARGS=--extended`, keeping the thousand opening boards,
+greedy campaign simulation and complete integration captures.
+
+The budgeted path does not reduce puzzle seeds or remove rule assertions.
+The redundant second Clayfight Lua invocation is removed from aggregate runs.
+The city renderer compares identical-time pixels, advances the existing test
+clock by four seconds, then checks changed fog pixels; it no longer waits four
+real seconds. Test builds present with vsync disabled. These changes leave
+release rendering and timing unchanged.
 
 Under `#ifdef ENGINE_TEST`, the private `testing` table provides
 `testing.reset()`, `testing.advance(seconds)` and `testing.input{...}`. Reset
