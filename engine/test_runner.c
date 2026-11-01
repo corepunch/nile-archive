@@ -273,10 +273,11 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
     static char failures[4096];
     char spec[128], log[160];
     bool list = false;
-    bool fast = false;
+    bool fast = false, checks_only = false;
     for (int i = 1; i < argc; i++) list |= !strcmp(argv[i], "--list");
     for (int i = 1; i < argc; i++) {
         fast |= !strcmp(argv[i], "--fast");
+        checks_only |= !strcmp(argv[i], "--check");
         if (!strcmp(argv[i], "--extended")) setenv("SPRITE_TEST_EXTENDED", "1", 1);
     }
     snprintf(spec, sizeof spec, "tests/games/%s.lua", suite);
@@ -296,7 +297,8 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
     for (int i = 0; i < total; i++) {
         const test_job *j = i < c_test_count ? NULL : &jobs[i - c_test_count];
         const char *kind = j ? j->kind : "", *name = j ? j->name : c_tests[i].name;
-        if (fast && (j ? strcmp(kind, "rules") != 0 :
+        if ((fast || checks_only) && j && strcmp(kind, "rules")) continue;
+        if (fast && !j && (
             !strcmp(name, "platform") || !strcmp(name, "platform_safe_area") ||
             !strcmp(name, "backdrop") || !strcmp(name, "story_layouts") ||
             !strcmp(name, "story_portrait_motion") || !strcmp(name, "city_render"))) continue;

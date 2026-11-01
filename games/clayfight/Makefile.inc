@@ -35,10 +35,11 @@ build/clayfight-%: games/clayfight/tests/%.c $(CLAY_OBJ) $(ENGINE_OBJ)
 	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -o $@ $^ $(LIBS) $(CLAY_CXXLIB)
 build/clayfight-arcade: games/clayfight/tests/arcade.c games/clayfight/tests/flow.c games/clayfight/tests/retail.c $(CLAY_OBJ) $(ENGINE_OBJ)
 	$(CC) $(ALL_CFLAGS) $(CLAY_FLAGS) -DCLAY_COMBINED -o $@ $^ $(LIBS) $(CLAY_CXXLIB)
-.PHONY: test-clayfight test-clayfight-retail
+.PHONY: test-clayfight test-clayfight-native test-clayfight-retail
 # The first pair is suitable for clean CI, without proprietary data.
-test-clayfight: build/test/engine build/clayfight-video build/clayfight-photo build/clayfight-input
-	./build/test/engine clayfight $(TEST_ARGS)
+test-clayfight: build/test/engine test-clayfight-native
+	./build/test/engine --fast "rules clayfight" $(TEST_ARGS)
+test-clayfight-native: build/clayfight-video build/clayfight-photo build/clayfight-input
 	./build/clayfight-video
 	./build/clayfight-photo
 	./build/clayfight-input

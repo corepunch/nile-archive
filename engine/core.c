@@ -435,7 +435,11 @@ int app_run(app_desc desc, int argc, char **argv)
 #ifdef ENGINE_TEST
     window_open = true;
 #endif
+#ifdef ENGINE_TEST
+    axSetSwapInterval(0);   /* tests present for real, without waiting for display refresh */
+#else
     axSetSwapInterval(app_arg("smoke") || A.shot_path ? 0 : 1);
+#endif
     if (!render_init()) { axShutdown(); return 1; }
     update_logical_size();
     A.in.pinch = 1;

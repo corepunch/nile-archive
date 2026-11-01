@@ -151,22 +151,26 @@ test-assets:
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 tools/buildings.py --check
 	python3 tools/match3_atlas.py --check
-test: gen-check xcode-check test-assets $(TEST_BINS) build/test-audio test-clayfight
+# Budget is test execution only: build prerequisites finish before the timer.
+TEST_BUDGET ?= 5
+TEST_WORKERS ?= 4
+TEST_AUX_BINS := build/test-audio build/clayfight-video build/clayfight-photo build/clayfight-input
+.PHONY: test-full test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
+test test-fast: $(TEST_BINS) $(TEST_AUX_BINS)
+	python3 tools/run_tests.py --budget $(TEST_BUDGET) --jobs $(TEST_WORKERS) $(if $(filter test-fast,$@),--fast) -- $(ONLY) $(TEST_ARGS)
+
+# Full integration/capture export is deliberate; keep it complete in cloud CI.
+test-full: gen-check xcode-check test-assets $(TEST_BINS) $(TEST_AUX_BINS) test-clayfight-native
 	./build/test-audio
 	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) $(TEST_ARGS) || status=1; done; exit $$status
 
-# Fast mode uses the same per-game binaries/manifests, with no rendering or sleeps.
-.PHONY: test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
-test-fast: $(TEST_BINS) build/test-audio test-clayfight
-	./build/test-audio
-	@status=0; for t in $(TEST_BINS); do ./$$t --fast $(TEST_ARGS) || status=1; done; exit $$status
 $(TEST_GAMES:%=test-%): test-%: build/test/%
 	./build/test/$* --fast $(TEST_ARGS)
 test-engine: build/test/engine build/test-audio
 	./build/test/engine --fast $(TEST_ARGS)
 	./build/test-audio
 test-extended:
-	$(MAKE) test-fast TEST_ARGS=--extended
+	$(MAKE) test-fast TEST_ARGS=--extended TEST_BUDGET=60
 MATCH3_LUA_DIR ?= engine
 test-match3: build/test/engine
 	test -f "$(MATCH3_LUA_DIR)/match3.lua"

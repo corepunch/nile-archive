@@ -9,8 +9,6 @@ static city c;
 static building_def defs[2];
 static unsigned char *pixels, *first;
 static int w, h;
-static bool sampling_fog;
-static double fog_start;
 
 static color at(int x, int y)
 {
@@ -21,7 +19,6 @@ static color at(int x, int y)
 
 static void init(void)
 {
-    sampling_fog = false;
     color green = rgba(50, 150, 60, 255), white = WHITE, red = rgba(220, 30, 30, 255);
     defs[0] = (building_def){.sprite = tex_from_pixels(&white, 1, 1), .size = {1, 6}, .pivot = {.5, 1}, .base_width = 1};
     defs[1] = (building_def){.sprite = tex_from_pixels(&red, 1, 1), .size = {1, 1}, .pivot = {.5, 1}, .base_width = 1};
@@ -32,10 +29,6 @@ static void init(void)
 
 static void frame(float dt)
 {
-    if (sampling_fog) {
-        if (app_time() - fog_start < 4) return;
-        goto compare_fog;
-    }
     struct AXsize size; axGetSize(&size);
     w = (int)roundf(size.width * axGetScaling()); h = (int)roundf(size.height * axGetScaling());
     size_t bytes = (size_t)w * h * 4;
@@ -51,12 +44,18 @@ static void frame(float dt)
     c.count = 0;
     c.zone_count = 2; c.zones[0].area = rc(0, 0, 160, 40); c.zones[1].area = rc(0, 40, 160, 120);
     c.fog = rgba(233, 242, 224, 240); c.fog_clouds = true;
+    draw_rect(app_bleed(), BLACK);
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     memcpy(first, pixels, bytes);
-    sampling_fog = true; fog_start = app_time();
-    return;
-compare_fog:
+    /* Repainting at the same time must be identical; then advance the real
+     * engine clock instead of idling for four seconds of display frames. */
+    draw_rect(app_bleed(), BLACK);
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(!memcmp(first, pixels, bytes));
+    app_test_advance(4);
+    draw_rect(app_bleed(), BLACK);
     city_draw(&c, (input){0}, 8);
     CHECK(render_read_pixels(pixels, w, h));
     bytes = (size_t)w * h * 4;
@@ -75,6 +74,6 @@ static void quit(void) { tex_free(c.ground); tex_free(defs[0].sprite); tex_free(
 TEST(city_render)
 {
     char *args[] = {"test-city-render", "--headless", "--mute", "--size", "160x160"};
-    app_desc desc = {.design = {160, 160}, .fixed = true, .init = init, .frame = frame, .quit = quit};
+    app_desc desc = {.design = {160, 160}, .fixed = true, .clear = {0, 0, 0, 255}, .init = init, .frame = frame, .quit = quit};
     CHECK(app_run(desc, 5, args) == 0);
 }
