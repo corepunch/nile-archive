@@ -22,6 +22,16 @@ for name, asset in manifest["icons"].items():
     canvas = Image.new("RGBA", (128, 128))
     canvas.alpha_composite(image, ((128 - image.width) // 2, (128 - image.height) // 2))
     exports[asset["runtime"]] = canvas
+# Navigation is a separate authored atlas, outside the match-piece GPU atlas.
+nav = json.loads((ROOT / "art/navigation/manifest.json").read_text())
+sheet = Image.open(ROOT / nav["source"]).convert("RGBA")
+assert list(sheet.size) == nav["size"]
+for asset in nav["icons"].values():
+    image = sheet.crop(asset["box"])
+    image.thumbnail((152, 152), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGBA", (160, 160))
+    canvas.alpha_composite(image, ((160 - image.width) // 2, (160 - image.height) // 2))
+    exports[asset["runtime"]] = canvas
 for path, image in exports.items():
     path = ROOT / path
     if args.check:

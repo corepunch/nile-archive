@@ -107,8 +107,8 @@ local star_icon = R.star_icon
 --------------------------------------------------------------------- header
 
 -- One prominent medallion and matching touch area on the island and board.
-local function pause_button()
-    local bounds=rect(402,0,64,64)
+local function pause_button(on_island)
+    local bounds=on_island and rect(388,-2,88,88) or rect(402,0,64,64)
     local st=ui.hit(bounds,0)
     local state=st.held and "pressed" or st.hot and "hover" or "normal"
     picture(R.hud_art["pause-"..state],bounds,255)
@@ -120,9 +120,9 @@ function R.capsule(r, icon, value)
     gfx.shadow(r:offset(vec2(0, 2)), r.h * .5, 5, rgba(0, 0, 0, 80))
     gfx.round_rect(r, r.h * .5, rgba(13, 47, 41, 215))
     gfx.round_rect_line(r, r.h * .5, 1.4, rgba(233, 199, 123, 170))
-    icon(vec2(r.x + r.h * .5, r:center().y), r.h * .5 + 1)
-    say(value, rect(r.x + r.h + 1, r.y, r.w - r.h - 6, r.h), 15, PAL_CREAM)
-    return tapped(r)
+    icon(vec2(r.x + 12, r:center().y), 30)
+    say(value, rect(r.x + 45, r.y, r.w - 50, r.h), 18, PAL_CREAM)
+    return tapped(rect(r.x-18,r.y-12,r.w+18,r.h+24))
 end
 local capsule = R.capsule
 
@@ -131,7 +131,7 @@ local function relic_icon(kind)
 end
 local capsule_icons = {
     function(c,radius) picture(R.life_art,rect.centered(c,size2(radius*2,radius*2)),255) end,
-    relic_icon(RELIC_IDOL),function(c,radius) star_icon(c,radius*.8) end,
+    relic_icon(RELIC_IDOL),function(c,radius) star_icon(c,radius*.9) end,
 }
 local capsule_notes = {"A life returns every 30 minutes, up to five.","Hex amulets buy buildings. Replay expeditions to earn more.","Discovery Stars unlock stock and land. First clears only; never spent."}
 function R.draw_header(on_island)
@@ -140,18 +140,18 @@ function R.draw_header(on_island)
         local lives=(R.prog.lives or rules.LIVES)==rules.LIVES and "5 FULL" or ("%d %d:%02d"):format(R.prog.lives,remaining//60,remaining%60)
         local values={lives,tostring(R.prog.wallet[1]),tostring(R.prog.wallet[4])}
         for k=1,3 do
-            local r=rect(12+(k-1)*128,15,120,34)
+            local r=rect(20+(k-1)*128,20,110,36)
             if capsule(r,capsule_icons[k],values[k]) then R.notice(capsule_notes[k]) end
         end
     end
-    if pause_button() then R.overlay=R.OV_PAUSE end
+    if pause_button(on_island) then R.overlay=R.OV_PAUSE end
 end
 
 function R.draw_toast()
     if R.toast_time <= 0 or R.overlay ~= R.OV_NONE then return end
     if R.on_island then   -- above the map buttons
-        rrect(rect(18, 760 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 774 + R.drop), 14, PAL_CREAM, 424)
+        rrect(rect(18, 710 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
     else   -- just below the HUD band, above the board
         rrect(rect(38, 78, 404, 28), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 92), 14, PAL_CREAM, 388)

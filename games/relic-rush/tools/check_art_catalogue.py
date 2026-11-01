@@ -62,6 +62,12 @@ for asset in [hud["controls"], hud["retired_portrait"]]:
 for name, asset in hud["icons"].items():
     assert "`" + name + "`" in doc
     assert (ROOT / asset["runtime"]).is_file()
+nav=json.loads((ROOT / manifest["navigation"]).read_text())
+assert (ROOT/nav["source"]).is_file() and (ROOT/nav["prompt"]).is_file()
+assert set(nav["icons"])=={kind+"-"+state for kind in ("build","play") for state in manifest["tool_states"]}
+for name,asset in nav["icons"].items():
+    assert "`"+name+"`" in doc
+    assert (ROOT/asset["runtime"]).is_file()
 assert not (ROOT / "data/characters/elena-investigating.png").exists(), "retired portrait must not ship"
 buildings = json.loads((ROOT / manifest['buildings']).read_text())
 assert (ROOT / buildings['source']).is_file()
