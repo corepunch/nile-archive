@@ -24,8 +24,6 @@ static bool test_rules_active;
 
 static lua_State *L;
 static app_desc desc;
-static void (*extension_open)(lua_State *);
-void script_set_extension(void (*open)(lua_State *)) { extension_open = open; }
 
 /* ------------------------------------------------------------------ calls */
 
@@ -137,7 +135,6 @@ void script_open(const char *dir)
             script_modules_register(L, embedded[i].module);
         }
     }
-    if (extension_open) extension_open(L);
 #ifdef ENGINE_TEST
     test_lua_open(L);
 #endif

@@ -30,7 +30,7 @@ engine/            the shared engine: ONE public header + one .c per module
   city.c           the city-building meta-game
   sprite.c         authored atlas animation and pivot-aware drawing
   nav.c            geometric graph routes with live blockers
-  audio.c          shared stereo PCM mixer and feedback-tone synthesiser
+  audio.c          feedback-tone synthesiser
   story.c          characters, dialogue with portraits, speech bubbles
   script.c         the Lua runtime: sandboxed libraries, API setup, main-loop callbacks
   script_modules.c private module resolution, per-state roots/cache, dependency cycles

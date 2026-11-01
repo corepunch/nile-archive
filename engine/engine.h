@@ -224,7 +224,6 @@ typedef struct {
     void (*init)(void);
     void (*frame)(float dt);
     void (*quit)(void);
-    void (*event)(const struct AXmessage *event); /* borrowed until callback returns */
 } app_desc;
 
 /* Runs the game. Command line options understood by every game:
@@ -421,16 +420,9 @@ rect text_fit(text_style s, rect box, vec2 align, const char *utf8);
 const char *fmt(const char *f, ...);
 
 /* ===================================================================== */
-/* Audio: shared stereo PCM mixing and feedback tones                       */
+/* Audio: a tiny synthesiser for UI and game sounds                       */
 /* ===================================================================== */
 
-typedef struct {
-    const uint8_t *data;           /* unsigned 8-bit mono PCM */
-    int length, rate;             /* data must live until playback stops */
-} sfx_sample;
-/* 16 voices; volume 0..1, pan -1..1. The descriptor is copied. */
-void sfx_play(sfx_sample sample, float volume, float pan);
-void sfx_stop_samples(void);
 void sfx_tone(float hz, float seconds);   /* a soft bell-like note */
 void sfx_enable(bool on);
 bool sfx_enabled(void);
@@ -704,8 +696,6 @@ void script_open(const char *lua_dir);
  * quit become Lua calls. data_dir and id are filled in when the script
  * leaves them out. Errors are printed and end the process with status 3. */
 app_desc script_boot(const char *lua_dir, const char *data_dir);
-struct lua_State;
-void script_set_extension(void (*open)(struct lua_State *));
 /* Run one file in the open state; the integer it returns, 0 if none, -1 on error. */
 int script_dofile(const char *path);
 void script_close(void);

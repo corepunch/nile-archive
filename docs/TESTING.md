@@ -68,7 +68,8 @@ Direct test binaries retain their complete integration manifest by default:
 | `build/test/christmas-market` | Its rules, smoke run and screens |
 | `build/test/volcano` | Its rules, smoke run and screens |
 
-Audio keeps its own small binary. Clayfight and its native/JavaScript checks
+Audio keeps its own small binary for tone playback, muting and device lifecycle.
+Clayfight and its native/JavaScript checks
 now live in the [standalone repository](https://github.com/corepunch/clayfight).
 
 ```sh
