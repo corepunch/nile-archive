@@ -344,7 +344,9 @@ No bitmap or atlas mapping is added.
 
 The island HUD has no sheet or panel over the map: one row of slim resource
 pills, the shared pause medallion, and a bottom row of a large Play/Build button
-between round Expeditions and Shop buttons. The round buttons are engine geometry
+between icon-only round Expeditions and Shop buttons. The side-button centres
+share the Play/Build button’s centre line; captions beneath them are removed.
+The round buttons are engine geometry
 (gold rim, jade face) around existing artwork: the procedural compass icon and the
 Jungle market sprite (`data/buildings/3.png`). Their pressed state shifts the face
 2 units, as menu buttons do; there is no hover, selected or disabled state because

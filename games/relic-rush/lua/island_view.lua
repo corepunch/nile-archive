@@ -93,10 +93,8 @@ end
 R.draw_markers = draw_markers
 
 -- No sheet over the map: one big Play button at the bottom, flanked by round
--- Expeditions and Shop buttons with captions, as in the home screens of Royal
--- Match and Homescapes. Placement keeps only the building's name and its two
--- actions; the toast explains the gestures.
-local function round_button(center, caption, icon)
+-- icon-only Expeditions and Shop buttons on the same horizontal centre line.
+local function round_button(center, icon)
     local r = rect.centered(center, size2(64, 64))
     ui.block(r)
     local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
@@ -108,13 +106,13 @@ local function round_button(center, caption, icon)
     gfx.circle(c, 25, rgba(12, 62, 52))
     gfx.glow(c + vec2(0, -5), 21, rgba(40, 132, 100), rgba(12, 62, 52, 0))
     icon(c)
-    R.say_at(caption, center + vec2(0, 42), 13, PAL_CREAM, 0)
     return st.clicked
 end
-R.island_buttons = {expeditions = vec2(58, 842), shop = vec2(422, 842)}
+local PLAY_BOUNDS = rect(116, 818, 248, 60)
+R.island_buttons = {expeditions = vec2(58, PLAY_BOUNDS:center().y), shop = vec2(422, PLAY_BOUNDS:center().y)}
 
 local function play_button(label, sub)
-    local r = rect(116, 818 + R.drop, 248, 60)
+    local r = PLAY_BOUNDS:offset(vec2(0, R.drop))
     ui.block(r)
     if sub then R.say_at(sub, vec2(240, 800 + R.drop), 20, PAL_GOLD, 420) end
     return R.button(r, label, true)
@@ -146,9 +144,9 @@ local function bottom_controls()
         placement_controls(c)
         return
     end
-    if round_button(R.island_buttons.expeditions + vec2(0, y), "EXPEDITIONS",
+    if round_button(R.island_buttons.expeditions + vec2(0, y),
                     function(at) R.compass_icon(at, 17) end) then R.open_expeditions() end
-    if round_button(R.island_buttons.shop + vec2(0, y), "SHOP",
+    if round_button(R.island_buttons.shop + vec2(0, y),
                     function(at) R.picture_fit(R.buildings[4].sprite, rect.centered(at + vec2(0, -1), size2(42, 38)), 255) end) then
         R.open_catalogue()
     end
