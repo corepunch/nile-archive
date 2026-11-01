@@ -171,3 +171,27 @@ local leaf={kind="list",id="deep",item=function()return {kind="column",children=
 for _=1,30 do leaf={kind="column",children={leaf}} end
 local deep=ui.form(leaf)
 check(not deep:set_items("deep",{{id="x"}}),"data rows obey the whole resource nesting limit")
+
+-- Clipped measured lists preserve natural row height and own their inertia.
+do
+    local f=ui.form{kind="list",id="rows",scroll=true,height=100,gap=4,item=function(e)
+        return {kind="button",id="choose",text=e.id,height=60}
+    end}
+    assert(f:set_items("rows",{{id="a"},{id="b"},{id="c"},{id="d"}}))
+    local box=rect(0,0,240,100)
+    local look={button=function()end,button_text=function()end,focus=function()end}
+    f:layout(box,look)
+    check(f.nodes.rows.scroll_max==152,'scroll content is measured beyond its viewport')
+    f:draw(box,look,{input={pos=vec2(100,90),pressed=true,down=true},dt=.016})
+    f:draw(box,look,{input={pos=vec2(100,30),down=true,dragging=true},dt=.016})
+    check(f.nodes.rows.scroll_state.offset==60,'drag moves the list, not a row button')
+    f:draw(box,look,{input={pos=vec2(100,30),released=true},dt=.016})
+    check(f.nodes.rows.scroll_state.offset>60,'release continues with inertia')
+    f:draw(box,look,{input={pos=vec2(100,30),wheel=-100},dt=.016})
+    check(f.nodes.rows.scroll_state.offset==152,'wheel clamps at the last row')
+    f:draw(box,look,{input={key=input.KEY_TAB},dt=.016})
+    check(f.nodes.rows.scroll_state.offset<152,'keyboard focus reveals its row')
+    check(f:set_items("rows",{{id="d"}}),'refresh scroll data')
+    f:layout(box,look);check(f.nodes.rows.scroll_max==0 and f.nodes.rows.scroll_state.offset==0,'removed rows clamp the old scroll position')
+    check(not pcall(ui.form,{kind="row",scroll=true}),'scrolling is a vertical measured list capability')
+end

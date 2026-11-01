@@ -6,6 +6,7 @@ rules("building_economy")
 rules("relic")
 rules("relic_board")
 rules("progression")
+rules("relic_wallet")
 smoke()
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 
@@ -109,3 +110,13 @@ for _, size in ipairs{"480x900", "390x844"} do
     reel("relic-rush-top-edge-refill-"..size, 16, 3, size,
         "--lua tests/fixtures/trickling;games/relic-rush/lua;. --review-top-edge --reel"..safe)
 end
+
+-- Continuous catalogues, including narrow safe-area layout.
+shot("expeditions", "480x900", "--expeditions")
+shot("phone-expeditions", "390x844", "--expeditions --safe-area 0,47,0,34")
+shot("catalogue", "480x900", "--catalogue building")
+shot("phone-catalogue", "390x844", "--catalogue building --safe-area 0,47,0,34")
+
+reel("expeditions-scroll",24,3,"480x900","--expeditions --scroll-review")
+reel("phone-catalogue-scroll",24,3,"390x844","--catalogue building --scroll-review --safe-area 0,47,0,34")
+shot("phone-island-bubble","390x844","--dialog bubble --safe-area 0,47,0,34")

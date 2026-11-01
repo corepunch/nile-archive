@@ -56,7 +56,7 @@ for pack in manifest["packs"]:
     for kind in range(len(kinds)):
         assert (ROOT / f"data/tile-sets/{pack}/{kind}.png").is_file()
 hud = json.loads((ROOT / manifest["expedition_hud"]).read_text())
-assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete"}
+assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete", "life"}
 for asset in [hud["controls"], hud["retired_portrait"]]:
     assert (ROOT / asset["source"]).is_file() and (ROOT / asset["prompt"]).is_file()
 for name, asset in hud["icons"].items():

@@ -4,7 +4,7 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local SCREEN_W = R.SCREEN_W
-local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
+local PAL_CREAM = R.PAL_CREAM
 local rgba = color
 
 function R.island_focus(world, zoom)
@@ -46,8 +46,8 @@ local function confirm_place()
     end
     for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
     R.bubble_wonder = ev.building   -- the island answers in a word bubble over the building
-    R.bubble_text = fresh and "A new wonder, exactly where you wanted it." or "A fresh place for your island wonder."
-    R.bubble_time = 3.5
+    local definition=R.buildings[c.items[ev.building+1].type+1]
+    R.bubble_text=definition.name.."\n"..definition.about
     R.tone(740)
     if fresh and c.items[ev.building+1].type < island.WONDERS then   -- Tomas tells each wonder's story once; the last one brings Adrian
         local kind = c.items[ev.building + 1].type
@@ -94,8 +94,9 @@ R.draw_markers = draw_markers
 
 -- No sheet over the map: one big Play button at the bottom, flanked by round
 -- icon-only Expeditions and Shop buttons on the same horizontal centre line.
-local function round_button(center, icon)
-    local r = rect.centered(center, size2(64, 64))
+local function round_button(center, icon, diameter)
+    diameter=diameter or 64
+    local r = rect.centered(center, size2(diameter, diameter))
     ui.block(r)
     local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
     local c = st.held and center + vec2(0, 2) or center
@@ -108,15 +109,14 @@ local function round_button(center, icon)
     icon(c)
     return st.clicked
 end
-local PLAY_BOUNDS = rect(116, 818, 248, 60)
-R.island_buttons = {expeditions = vec2(58, PLAY_BOUNDS:center().y), shop = vec2(422, PLAY_BOUNDS:center().y)}
-
-local function play_button(label, sub)
-    local r = PLAY_BOUNDS:offset(vec2(0, R.drop))
-    ui.block(r)
-    if sub then R.say_at(sub, vec2(240, 800 + R.drop), 20, PAL_GOLD, 420) end
-    return R.button(r, label, true)
-end
+local PLAY_BOUNDS = rect(316, 786, 148, 92)
+local BUILD_BOUNDS = rect(16, 786, 132, 92)
+R.island_buttons = {expeditions=vec2(202,844),shop=BUILD_BOUNDS:center(),play=PLAY_BOUNDS:center()}
+local navigation = ui.form{kind="row",gap=16,children={
+    {kind="button",id="build",text="BUILDINGS",width=132,height=92,em=21},
+    {kind="spacer",grow=1},
+    {kind="button",id="play",text="PLAY",width=148,height=92,em=30},
+}}
 
 local placement_form = ui.form{kind="row",children={
     {kind="button",id="cancel",text="",width=56,height=56,role="placement_cancel"},
@@ -144,18 +144,15 @@ local function bottom_controls()
         placement_controls(c)
         return
     end
-    if round_button(R.island_buttons.expeditions + vec2(0, y),
-                    function(at) R.compass_icon(at, 17) end) then R.open_expeditions() end
-    if round_button(R.island_buttons.shop + vec2(0, y),
-                    function(at) R.picture_fit(R.buildings[4].sprite, rect.centered(at + vec2(0, -1), size2(42, 38)), 255) end) then
-        R.open_catalogue()
-    end
-    if restored < R.prog.level then
-        if play_button("BUILD", R.wonders[restored + 1].name) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end
-    elseif R.prog.level >= rules.LEVELS then
-        if play_button("PLAY FOR GOLD") then R.open_expeditions() end
-    elseif play_button(("LEVEL %d"):format(R.prog.level + 1)) then
-        R.play_level(R.prog.level)
+    if round_button(R.island_buttons.expeditions + vec2(0,y),function(at) R.compass_icon(at,17) end) then R.open_expeditions() end
+    local label=R.prog.level>=rules.LEVELS and "PLAY" or ("PLAY %d"):format(R.prog.level+1)
+    navigation:set("play",label)
+    local event=navigation:draw(rect(16,786+y,448,92),R.skin)
+    if event and event.id=="build" then R.open_catalogue(restored<R.prog.level and "wonder" or "building")
+    elseif event and event.id=="play" then
+        if restored<R.prog.level then R.notice("Restore your earned wonder before the next discovery.");R.open_catalogue("wonder")
+        elseif R.prog.level>=rules.LEVELS then R.open_expeditions()
+        else R.play_level(R.prog.level) end
     end
 end
 
@@ -178,7 +175,9 @@ function R.island_screen(inp, dt)
     end
     local ev = c:update(city_input, R.prog.wallet, app.clock(), dt)
     if R.overlay == R.OV_NONE then
-        if ev.result == city.PICKED then R.inspect, R.inspect_item, R.overlay = c.items[ev.building+1].type, ev.building, R.OV_WONDER
+        if ev.result == city.PICKED then
+            local definition=R.buildings[c.items[ev.building+1].type+1]
+            R.bubble_wonder,R.bubble_text=ev.building,definition.name.."\n"..definition.about
         elseif ev.result == city.ZONE then R.zone_card, R.overlay = ev.zone, R.OV_ZONE end
     end
 
@@ -187,8 +186,7 @@ function R.island_screen(inp, dt)
     c:draw(inp, app.clock())
     gfx.bleed(false)
     R.vfx_particles()
-    R.bubble_time = R.bubble_time - dt
-    if R.bubble_time > 0 and R.bubble_wonder >= 0 and R.bubble_wonder < c.count then
+    if R.bubble_wonder >= 0 and R.bubble_wonder < c.count then
         local sprite = c.cam:rect_to_screen(c:sprite_rect(c.items[R.bubble_wonder + 1]))
         gfx.clip(MAP_VIEW)
         story.bubble(sprite:point(vec2(.5, .08)), R.bubble_text, R.speech_style(15), rgba(255, 246, 222, 245), rgba(102, 68, 39), 220, story.SPEECH)

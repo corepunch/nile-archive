@@ -420,3 +420,11 @@ coordinates follow the destination, so squash and translation keep the stripe
 registration. Atlas views, clipping and safe areas use the normal image path.
 No intermediate texture or persistent shader mode is retained. Relic Rush uses
 this explicitly requested procedural treatment for its three ray powers.
+
+## Inertial measured lists
+
+A vertical `list` may set `scroll=true` and a viewport `height` (for example 430). Its data still comes from `form:set_items` with stable keys. The engine measures the full row content, clips painting and pointer hits to the viewport, and handles drag, wheel, bounded deceleration, keyboard focus reveal and scroll indicators. The footer remains outside the list. Pointer drags or a press that stops a fling cannot activate an item. Source refreshes preserve stable focus and clamp an old offset when rows disappear. Horizontal and non-list scrolling are rejected. Reduced motion disables inertia. Pass `dt`/`reduced_motion` to `form:draw`; `ui.modals:draw` forwards both automatically.
+
+`node.scroll_state.offset` and `node.scroll_max` expose the current measured scroll position for integration checks. Reset `node.scroll_state=nil` when changing to an unrelated category. Avoid rebuilding lists every frame; measure and layout run through the existing form engine.
+
+The engine animation clock supplies one timeline to shared tweens, scroll deceleration and painting. On iOS, `animation_clock_platform.c` samples a persistent scalar `CAAnimation` on a non-rendering child layer of the actual platform view, following [ORCA's clock driver](https://github.com/corepunch/orca/blob/main/source/ios_animation.m). Focus loss pauses it; resume reinstalls the clock if needed. Other platforms retain the platform monotonic clock. The platform unit owns clock lifetime and reset, so game starts and tests do not share a stale timeline.

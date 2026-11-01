@@ -2,6 +2,7 @@
 #include "render.h"
 #include "viewport.h"
 #include "haptic.h"
+#include "animation_clock.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,7 +60,7 @@ static struct {
     float pixel_scale;
     double time;
     float dt;
-    longTime_t last_counter;
+    double last_counter;
     input in;
     const char *shot_path;
     int shot_frames;
@@ -279,8 +280,8 @@ static void poll_events(void)
                 in->pinch_center = window_to_logical(v2(e.gesture.x, e.gesture.y));
             }
             break;
-        case kEventSetFocus: haptic_focus(true); break;
-        case kEventKillFocus: haptic_focus(false); /* fall through */
+        case kEventSetFocus: haptic_focus(true); animation_clock_pause(false); A.last_counter=animation_clock_seconds(); break;
+        case kEventKillFocus: haptic_focus(false); animation_clock_pause(true); /* fall through */
         case kEventPointerCancel:
             in->down = in->pressed = in->released = in->dragging = in->hover = in->tap = false;
             in->captured = false;
@@ -339,8 +340,8 @@ static void save_screenshot(const char *path)
 void app_step(void)
 {
     if (!A.running) return;
-    longTime_t now = axGetMilliseconds();
-    float dt = (float)(now - A.last_counter) / 1000;
+    double now = animation_clock_seconds();
+    float dt = maxf(0,(float)(now - A.last_counter));
     A.last_counter = now;
     if (A.shot_path || app_arg("smoke") || dt > .1f) dt = 1.0f / 60;
     A.time += dt;
@@ -391,6 +392,7 @@ int app_run(app_desc desc, int argc, char **argv)
 #ifdef __EMSCRIPTEN__
     if (argc <= 1) argc = web_args(&argv);   /* on the web, options come from the URL */
 #endif
+    animation_clock_reset();
     memset(&A, 0, sizeof A);
 #ifdef ENGINE_TEST
     test_clock_active = false;
@@ -447,7 +449,7 @@ int app_run(app_desc desc, int argc, char **argv)
     update_logical_size();
     A.in.pinch = 1;
     A.running = true;
-    A.last_counter = axGetMilliseconds();
+    A.last_counter = animation_clock_seconds();
     if (desc.init) desc.init();
 
 #ifdef __EMSCRIPTEN__

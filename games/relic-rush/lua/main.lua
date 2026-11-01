@@ -55,10 +55,12 @@ end
 ------------------------------------------------------------------ progress
 
 local function serialize(s)
-    s:int("version", 2)
+    s:int("version", 3)
     R.prog.level = s:int("level", R.prog.level)
     R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
     R.prog.wallet = s:ints("wallet", R.prog.wallet)
+    R.prog.lives = s:int("lives",R.prog.lives or rules.LIVES)
+    R.prog.life_at = s:int("life_at",R.prog.life_at or 0)
     R.island:serialize(s)
     story.serialize(s)
     if save.is_reading(s) then
@@ -77,6 +79,8 @@ function R.start_level(chosen)
     if chosen and lvl == R.prog.level and island.wonder_count(R.island) < R.prog.level then
         R.notice("Restore your earned wonder before the next discovery."); return false
     end
+    rules.refill_lives(R.prog,app.clock())
+    if R.prog.lives<=0 then R.on_island=true;R.notice("A life returns every 30 minutes. Explore your valley meanwhile.");return false end
     R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
     R.on_island = false
     R.overlay = R.OV_NONE
@@ -107,12 +111,13 @@ function R.claim_reward()
     R.save_progress()
     R.on_island = true
     R.overlay = R.OV_NONE
-    R.notice(first and "Restoration funded. Spare Gold is yours to decorate." or "Replay Gold collected. Choose a treasure in the Build Shop.")
+    R.notice(first and "Restoration funded. Spare Amulets is yours to decorate." or "Replay Amulets collected. Choose a treasure in the Build Shop.")
 end
 
 -------------------------------------------------------------------- frame
 
 local function frame(dt)
+    if R.prog then rules.refill_lives(R.prog,app.clock());if R.g and rules.lose_life(R.prog,R.g,app.clock()) then R.save_progress() end end
     if app.arg("cell-mask") then
         -- Same flat-top polygon as a cell, captured at texture resolution.
         gfx.rect(rect(0, 0, R.SCREEN_W, R.SCREEN_H), color(0, 0, 0))
@@ -120,6 +125,7 @@ local function frame(dt)
         return
     end
     local inp = input.get()
+    if inp.pressed then R.bubble_wonder=-1 end
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
     R.layout()
@@ -161,6 +167,7 @@ local function init()
     for i = 0, rules.COLORS - 1 do R.relics[i + 1] = board_skin[(app.arg("default-match3") and "kind-" or tiles .. "-") .. i] end
     R.board_art = require("art").load()
     R.hud_art = require("art").load_hud()
+    R.life_art=texture.load("expedition-hud/life.png")
     if app.arg("art-states") then
         R.art_packs = {}
         for _, pack in ipairs({"relics", "jewels", "resources"}) do
@@ -181,8 +188,9 @@ local function init()
     R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
     R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
     R.bubble_wonder = -1
-    R.prog = {level = 0, seed = 782341, wallet = purse()}
+    R.prog = {level = 0, seed = 782341, wallet = purse(),lives=rules.LIVES,life_at=0}
     if not app.arg("smoke") then save.read("progress", serialize) end
+    rules.refill_lives(R.prog,app.clock())
     if not R.quiet then story.play("intro", R.intro_lines) end
     R.layout()
     R.start_level()

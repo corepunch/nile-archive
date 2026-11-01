@@ -295,9 +295,7 @@ local function test_island()
     wallet = purse()
     check(not c:unlock(1, wallet) and not c:can_place(vec2(1330, 2100), 0), "closed region")
     wallet[rules.STARS] = 6
-    check(not c:unlock(1, wallet), "stars alone are not enough")
-    wallet[rules.COMPASSES] = 2
-    check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.STARS] == 6, "compasses spent, stars kept")
+    check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.STARS] == 6, "stars alone unlock land and remain in the wallet")
     check(not c:unlock(1, wallet) and c:can_place(vec2(1330, 2100), 0), "open region builds")
     check(not island.island_zone_touches(5, 1), "the temple ridge is far from the harbour")
 end

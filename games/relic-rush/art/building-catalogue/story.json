@@ -3,80 +3,80 @@
     "about": "Every great discovery begins with a little canvas.",
     "cost": [
       60,
-      10,
-      5
+      0,
+      0
     ]
   },
   "well": {
     "about": "Fresh water brings the lost valley back to life.",
     "cost": [
       80,
-      15,
-      15
+      0,
+      0
     ]
   },
   "workshop": {
     "about": "A home for the hands that rebuild the valley.",
     "cost": [
       100,
-      25,
-      15
+      0,
+      0
     ]
   },
   "market": {
     "about": "Stories, spices and treasures from far away.",
     "cost": [
       120,
-      25,
-      25
+      0,
+      0
     ]
   },
   "gateway": {
     "about": "A sunlit gathering place brings the valley together.",
     "cost": [
       140,
-      30,
-      30
+      0,
+      0
     ]
   },
   "lodge": {
     "about": "A warm light after a long day of adventure.",
     "cost": [
       160,
-      35,
-      35
+      0,
+      0
     ]
   },
   "archive": {
     "about": "Protect the knowledge buried beneath the vines.",
     "cost": [
       180,
-      35,
-      45
+      0,
+      0
     ]
   },
   "observatory": {
     "about": "Follow the stars to the next discovery.",
     "cost": [
       200,
-      40,
-      50
+      0,
+      0
     ]
   },
   "fountain": {
     "about": "Let the ancient spring flow once more.",
     "cost": [
       220,
-      45,
-      55
+      0,
+      0
     ]
   },
   "temple": {
     "about": "The heart of the valley shines again.",
     "cost": [
       250,
-      50,
-      60
+      0,
+      0
     ]
   }
 }

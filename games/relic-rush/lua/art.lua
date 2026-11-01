@@ -1,6 +1,6 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
--- Idol/Leaf/Crystal artwork also identifies Gold/Wood/Stone in the island purse.
--- Board clears score points; the fixed first-clear grant and Gold-only replay
+-- The hex amulet identifies the spendable wallet; Leaf/Crystal remain board pieces.
+-- Board clears score points; the fixed first-clear grant and Amulet-only replay
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
@@ -18,6 +18,8 @@ A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
 A.tool_size = 76   -- square authored artwork and matching square touch targets
 A.hud_icons = {"score", "complete"}
+A.wallet_icons={life="expedition-hud/life.png",amulets="relics-0",stars="discovery-star"}
+A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
