@@ -190,10 +190,17 @@ local function init()
     R.bubble_wonder = -1
     R.prog = {level = 0, seed = 782341, wallet = purse(),lives=rules.LIVES,life_at=0}
     if not app.arg("smoke") then save.read("progress", serialize) end
+    if app.arg("empty-lives") then R.prog.lives=0;R.prog.life_at=app.clock()+1800;R.quiet=true end
     rules.refill_lives(R.prog,app.clock())
     if not R.quiet then story.play("intro", R.intro_lines) end
     R.layout()
-    R.start_level()
+    if not R.start_level() then
+        -- A loaded zero-life wallet still needs an inert board for shared view
+        -- updates. It cannot be resumed as an unfinished expedition.
+        R.reset_board(rules.game_start(math.min(R.prog.level,LEVELS-1),R.prog.seed))
+        R.g.lost,R.g.life_paid=true,true
+        R.on_island=true
+    end
     if R.prog.level>=LEVELS then R.g.won=true end -- no unfinished attempt is created at campaign completion
     if R.prog.level > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
     if R.needs_relocation then
