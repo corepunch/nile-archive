@@ -36,6 +36,11 @@ for name, asset in manifest["assets"].items():
     assert data[:8] == b"\x89PNG\r\n\x1a\n"
     assert struct.unpack(">II", data[16:24]) == (128, 128)
     assert data[25] == 6, f"Expected RGBA authored state: {name}"
+    if name in {"ice-1", "ice-2"}:
+        alpha = Image.open(ROOT / asset["runtime"]).getchannel("A")
+        # A frozen tile is a filled sheet, not an empty frame around a gem.
+        assert all(alpha.getpixel((x, y)) > 128 for x in range(40, 89, 8)
+                   for y in range(40, 89, 8)), f"Ice must cover the whole face: {name}"
 for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
 buttons = manifest["tool_buttons"]

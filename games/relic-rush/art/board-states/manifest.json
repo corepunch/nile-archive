@@ -9,53 +9,60 @@
   "assets": {
     "ray-diagonal": {
       "box": [
-        18,
-        48,
-        239,
-        231
+        1020,
+        20,
+        1340,
+        335
       ],
       "runtime": "data/board-states/ray-diagonal.png",
-      "fit": "hex-slot"
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png",
+      "rotation_degrees": -14
     },
     "ray-column": {
       "box": [
-        245,
-        48,
-        466,
-        231
+        680,
+        20,
+        860,
+        335
       ],
       "runtime": "data/board-states/ray-column.png",
-      "fit": "hex-slot"
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
     },
     "ray-row": {
       "box": [
-        475,
-        48,
-        694,
-        231
+        190,
+        20,
+        515,
+        335
       ],
       "runtime": "data/board-states/ray-row.png",
-      "fit": "hex-slot"
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png",
+      "rotation_degrees": 14
     },
     "bomb": {
       "box": [
-        708,
-        48,
-        914,
-        232
+        195,
+        345,
+        530,
+        670
       ],
       "runtime": "data/board-states/bomb.png",
-      "fit": "hex-slot"
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
     },
     "prism": {
       "box": [
-        928,
-        48,
-        1144,
-        235
+        610,
+        350,
+        930,
+        675
       ],
       "runtime": "data/board-states/prism.png",
-      "fit": "hex-slot"
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
     },
     "sand": {
       "box": [
@@ -78,45 +85,47 @@
     },
     "ice-2": {
       "box": [
-        237,
-        275,
-        473,
-        481
+        990,
+        355,
+        1380,
+        670
       ],
       "runtime": "data/board-states/ice-2.png",
-      "fit": "hex-slot"
+      "fit": "hex-slot",
+      "source": "art/board-states/clear-indicators.png"
     },
     "ice-1": {
       "box": [
-        477,
-        276,
-        697,
-        484
+        150,
+        680,
+        550,
+        995
       ],
       "runtime": "data/board-states/ice-1.png",
-      "fit": "hex-slot"
+      "fit": "hex-slot",
+      "source": "art/board-states/clear-indicators.png"
     },
     "selected": {
       "box": [
-        700,
-        261,
-        923,
-        493
+        570,
+        680,
+        970,
+        1024
       ],
       "runtime": "data/board-states/selected.png",
-      "fit": "hex-slot",
-      "rotation_degrees": -30
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
     },
     "hint": {
       "box": [
-        928,
-        261,
-        1148,
-        493
+        990,
+        680,
+        1400,
+        1024
       ],
       "runtime": "data/board-states/hint.png",
-      "fit": "hex-slot",
-      "rotation_degrees": -30
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
     },
     "guide": {
       "box": [
@@ -856,5 +865,18 @@
     },
     "capture": "--city 6 --placing; --city 6 --placing blocked",
     "review": "docs/review/relic-polish/"
+  },
+  "clear_indicators": {
+    "source": "art/board-states/clear-indicators.png",
+    "source_size": [
+      1536,
+      1024
+    ],
+    "prompt": "art/board-states/clear-indicators-prompt.txt",
+    "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
+    "review": "docs/review/relic-tile-indicators/README.md",
+    "specials": "full-size base gems with compact lightning or bomb badges; full rainbow prism; no enclosing hex frames",
+    "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; 1/2 hit counter",
+    "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   }
 }

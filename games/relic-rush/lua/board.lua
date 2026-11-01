@@ -51,14 +51,33 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local frame = ART_STATE_SIZE * draw_scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
-    -- Authored frames leave the matching kind visible in every optional pack.
+    -- Keep the match kind full size; a compact effect symbol names the power.
     if t.special ~= PRISM then
-        local inner = t.special == NORMAL and 1 or .72
-        gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect * inner, s / aspect * inner)), tint)
+        gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect, s / aspect)), tint)
     end
-    if t.special ~= NORMAL then gfx.image(R.board_art[art.specials[t.special]], dst, tint) end
+    if t.special ~= NORMAL then
+        if t.special ~= PRISM then
+            dst = rect.centered(at + vec2(11, 12):scale(draw_scale), size2.splat(frame * art.indicators.badge_scale))
+        end
+        gfx.image(R.board_art[art.specials[t.special]], dst, tint)
+    end
 end
 local draw_relic = R.draw_relic
+
+-- Filled ice remains translucent enough to identify the matching gem beneath it.
+-- Reuse this in the guide so the remaining-hit indicator is explained visually.
+function R.draw_ice(hits, at, scale, alpha)
+    local dst = rect.centered(at,size2.splat(ART_STATE_SIZE * scale))
+    gfx.image(R.board_art[hits > 1 and "ice-2" or "ice-1"],dst,
+        rgba(255,255,255,art.indicators.ice_opacity * alpha))
+    local badge = at + vec2(12,-12):scale(scale)
+    gfx.circle(badge,8 * scale,rgba(15,57,81,230 * alpha))
+    local style = R.pal(PAL_WHITE,12 * scale)
+    for _, key in ipairs{"fill","fill2","outline","shadow"} do
+        if style[key] then style[key] = color.alpha(style[key],alpha) end
+    end
+    text.inside(style,rect.centered(badge,size2.splat(20 * scale)),vec2(.5,.5),tostring(hits))
+end
 
 local function wrapf(v, m) return v - m * math.floor(v / m) end
 
@@ -209,7 +228,7 @@ local function draw_cells(sx)
             local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
             local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
                               or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
-            -- State panels replace the old green face/rim; no cell sticks out.
+            -- Terrain keeps its full tile face; powers and glows have no frame.
             local tile = has_state and rgba(13, 47, 41)
                       or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73)
             gfx.image_rot(R.board_art["cell-mask"], dst, turn, color.alpha(tile, fade))
@@ -253,7 +272,9 @@ local function draw_blockers(sx)
             if visible then
                 local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
-                if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, tint) end
+                if g.ice[i] > 0 then
+                    R.draw_ice(g.ice[i],at,BOARD_SCALE * scale,alpha)
+                end
                 if g.chain[i] > 0 then gfx.image(R.board_art.chain, dst, tint) end
             end
         end

@@ -22,13 +22,17 @@ def main():
         if atlas:
             sources[atlas["source"]] = Image.open(ROOT / atlas["source"]).convert("RGBA")
             assert list(sources[atlas["source"]].size) == atlas["source_size"]
+    for asset in manifest["assets"].values():
+        path = asset.get("source")
+        if path and path not in sources:
+            sources[path] = Image.open(ROOT / path).convert("RGBA")
     mask = Image.open(ROOT / manifest["cell_mask"]["source"]).convert("L")
     assert list(source.size) == manifest["source_size"]
     for name, asset in manifest["assets"].items():
         im = sources[asset.get("source", manifest["source"])].crop(asset["box"])
         if asset.get("rotation_degrees"):
-            # User-requested orientation correction: preserve the original
-            # six-stud artwork; rotation does not invent a visual state.
+            # Align authored directional artwork with its board axis.
+            # Rotation changes registration, never the authored state.
             im = im.rotate(asset["rotation_degrees"], Image.Resampling.BICUBIC, expand=True)
             im = im.crop(im.getchannel("A").point(lambda a: 255 if a > 30 else 0).getbbox())
         # Keep the authored alpha and every component (fuses, glints, chains).

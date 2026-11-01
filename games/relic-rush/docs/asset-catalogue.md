@@ -85,18 +85,14 @@ actual generated dimensions and explicit crop boxes; the importer does not assum
 the generator produced a mathematically uniform grid.
 
 Runtime pattern: `data/board-states/<name>.png`, RGBA 128 × 128.
-All hex layers use the slot's **flat-top** orientation (left/right vertices),
-51.4 logical pixels wide and 44.51 high, centred on the same cell. Their shared
-registration is recorded in `hex_slot`. The actual renderer exports
-`art/board-states/cell-mask.png`; `tools/board_assets.py` fits the artwork with a
-small overscan, then clips its alpha with that mask. The same mask fills normal
-cells at runtime, so the state and slot use identical coverage. State panels
-replace the old green face/rim. The square texture has transparent top/bottom
-margins. The original ornate selected/hint frames retain all six
-accents: at the user's request, Pillow rotates their authored art 30° clockwise
-before fitting, instead of generating replacement designs. This spatial rotation
-does not derive a new interaction state. The importer also crops ray arrow tips
-to their slot registration, so they do not overlap neighbouring cells.
+Filled terrain and ice use the slot's **flat-top** silhouette, registered to the
+renderer-authored cell mask. Special gems use no hexagonal outline frames.
+The replacement set is authored together in
+`art/board-states/clear-indicators.png` (ImageGen, 2026-11-01), with its prompt
+in `clear-indicators-prompt.txt`. The manifest records measured crop boxes,
+spatial axis registration and runtime paths. The importer preserves authored
+RGBA and clips filled ice to the actual tile; it does not synthesize states.
+Selection and hints use soft filled glows, with no hard border.
 `lua/art.lua` names these textures; `lua/board.lua` uses the same artwork for
 live pieces, collection flights, clearing animations and the guide.
 
@@ -109,11 +105,14 @@ live pieces, collection flights, clearing animations and the guide.
 | BOMB (4) | `bomb` | Six or more in a non-line group; radius-one hex blast (cell plus six neighbours) |
 | PRISM (5) | `prism` | Six in a straight line; clears the swapped kind |
 
-Rays and bombs use painted frames with transparent centres around a smaller base
-piece, preserving its match kind in all three packs. Prism uses its full rainbow
-crystal artwork and retains its kind internally. No stripes, circle glyphs or
-procedural special badges remain. The axes are separately authored, not rotated
-copies. See [match rules](match4-rules.md) for special-combination resolution.
+Rays and bombs keep the matching gem at full size and add a compact symbol at
+its lower right: an ivory/gold two-way lightning arrow showing the clearing axis,
+or a navy bomb with a lit fuse. Prism uses a full rainbow crystal. The three
+axes are separately authored and spatially registered to their board directions.
+The same symbols appear in every pack and the guide. Review captures at both
+phone sizes, optional packs, ice strengths and the guide are in
+[the indicator review](../../../docs/review/relic-tile-indicators/README.md).
+See [match rules](match4-rules.md) for special-combination resolution.
 
 ## Terrain, blockers and board interaction
 
@@ -121,13 +120,13 @@ copies. See [match rules](match4-rules.md) for special-combination resolution.
 | --- | --- |
 | `sand` | One excavation layer under a piece; cleared by a match above it |
 | `chain` | Crossed linked chains and padlock; one hit unlocks the piece |
-| `ice-2` | Thick intact icy shell; two hits remain |
-| `ice-1` | Broken icy shell; one hit remains, including after damage to ice-2 |
-| `selected` | Gold/jade frame under the tapped piece |
-| `hint` | Distinct fine gold frame under both idle-hint pieces |
+| `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
+| `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
+| `selected` | Soft filled mint glow under the tapped piece; no outline |
+| `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-Ice and chain are independent layers; if both exist, both are shown. A blocker hit
+Ice uses a uniform 0.52 material opacity so the matching gem is visible through the whole frozen face. The two separately authored ice states also show a dynamic 1/2 remaining-hit count, shared with the guide. Ice and chain are independent layers; if both exist, both are shown. A blocker hit
 removes a layer before collecting its piece. Selected/hint frames are under pieces,
 blockers over them; sand is beneath both. Board cells and outer edge lines remain
 simple intentional layout geometry. Empty/inactive cells have no piece artwork.

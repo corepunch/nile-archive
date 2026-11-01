@@ -4,6 +4,9 @@
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
+-- Effect badges retain full-size matching gems; prism is the whole gem.
+-- Ice is filled material at 0.52 opacity with a remaining-hit count, never a rim.
+A.indicators = {source="art/board-states/clear-indicators.png", badge_scale=.55, ice_opacity=133}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.

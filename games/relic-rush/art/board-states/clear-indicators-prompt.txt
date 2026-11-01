@@ -1,0 +1,4 @@
+Transparent production mobile match puzzle sprite atlas, exact 3x3 grid with generous gutters. Front-on polished treasure-jungle cartoon style, readable at 48px. No labels/text, no enclosing hexagonal frames or outlines around powers.
+Row 1: three golden two-headed lightning arrows with ivory cores, slim dark amber edge and beveled highlights, separately authored on 30-degree, vertical and 150-degree axes.
+Row 2: dark navy round bomb with brass cap and lit curved fuse; faceted rainbow prism crystal; full filled flat-top thick frosted-blue ice slab with cracks through its entire face, never an empty center or rim-only shell.
+Row 3: full filled flat-top damaged ice slab, large branching cracks and chipped edges; soft filled mint selection glow fading to transparent edges; soft filled gold hint glow with ivory sparkles fading to transparent edges. Ice designed as translucent material over gems. Real RGBA transparency, no painted checkerboard.
