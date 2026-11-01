@@ -29,7 +29,11 @@ sprites are authored; the engine still supplies lift/placement/validity effects.
 
 ## Placement after rebasing onto the updated controls
 
-The current red cancel and jade confirm controls from `93c805b` are preserved.
+The current red cancel and jade confirm controls from `93c805b`, the board
+indicators from `68e95e9`, and captionless town side buttons from `38c3b4c` are
+preserved. Island, footprint and placement overview captures are refreshed on
+that base; the catalogue pages below retain the earlier review UI with the same
+painted art and registration.
 These captures check the repainted sprites with those controls at both phone sizes.
 
 | 480×900 | 390×844 | Blocked preview |
