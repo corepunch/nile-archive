@@ -13,7 +13,6 @@ is a build optimization, not permission to reach into another module's statics.
 | Lua runtime → modules | `script.c` opens libraries, registers the generated API and embedded engine Lua, and drives callbacks. `script_modules.h` owns configured roots, module identities, cache and circular-import detection. |
 | Shared Lua → game | Embedded match-3, forms, skins, motion and city mover code accepts configuration and callbacks. It must not import a game's files or know its content IDs. |
 | Game → game | Production launchers supply only their game's script root. Shared behavior belongs in the engine; multiple roots are an explicit host/test-fixture facility. |
-| Native game extension → runtime | Clayfight installs its `clay` table through `script_set_extension`; the shared runtime does not select or import Clayfight. |
 | Test → runtime | `ENGINE_TEST` provides reset/input/clock/reporting hooks. Game manifests select rules, smoke and captures through the existing runner. Release builds omit those hooks. |
 
 ## Review findings and implemented improvement
@@ -49,10 +48,6 @@ copied root configuration and root lists beyond the old fixed buffers.
   game skins, text, artwork and economy local. Extract another shared behavior
   only when its configuration and callback contract are clear, following the
   existing match-3 engine rather than creating cross-game imports.
-- **Clayfight uses private rendering functions.** Its native framebuffer bridge
-  in `host.c` includes `render.h` for upload and nearest sampling. A public
-  texture update/sampling API would let that adapter depend only on `engine.h`;
-  it needs API generation and native/web/iOS validation as a separate change.
 
 These are follow-up review findings, not additional changes in this module
 loader refactor. Keep fixes reviewable and validate at the boundary they change.

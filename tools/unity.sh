@@ -15,8 +15,6 @@ case "${1:-}" in
 #include "story.c"
 #include "sprite.c"
 #include "nav.c"
-#include "raster.c"
-#include "photo.c"
 UNITY
         ;;
     script) cat <<'UNITY'

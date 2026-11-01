@@ -153,18 +153,6 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
-"67B17D0959CAEF090C77BD01" = {"isa" = "PBXFileReference";
-"path" = "../../engine/raster.c";
-"name" = "raster.c";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "sourcecode.c.c";
-};
-"2E3DCDD6520A0EBC2CD112A7" = {"isa" = "PBXFileReference";
-"path" = "../../engine/photo.c";
-"name" = "photo.c";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "sourcecode.c.c";
-};
 "45B4B9CF2B44A145D927FBC6" = {"isa" = "PBXFileReference";
 "path" = "../../engine/story.c";
 "name" = "story.c";
@@ -254,8 +242,6 @@
 "ADBE7599AFC06409EDF9F7DA",
 "744E0DC332E76F47A555E499",
 "2C6345C1907FD24B6EEFEC5A",
-"67B17D0959CAEF090C77BD01",
-"2E3DCDD6520A0EBC2CD112A7",
 "45B4B9CF2B44A145D927FBC6",
 "8A8386A2CEEEFE289DA8945E",
 "4F62C834EFF9537C0E92FC7C",

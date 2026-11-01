@@ -28,11 +28,10 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 IOS_MINIMUM = '16.0'
 UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
-ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'raster', 'photo', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
+ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
 
 GAMES = {
     'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),
-    'clayfight': dict(name='Clayfight', bundle='com.corepunch.clayfight', device='ipad', families='1,2', orientations=('LandscapeLeft', 'LandscapeRight')),
     'volcano': dict(name='Volcano', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)
     'nile-archive': dict(name='Nile Archive', bundle='com.corepunch.nilearchive', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
@@ -216,35 +215,18 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
                       sourceTree='SOURCE_ROOT', lastKnownFileType='text.xml')
     lua_folder = project.add('game/lua', 'PBXFileReference', path='lua', sourceTree='<group>', lastKnownFileType='folder')
     data_folder = project.add('game/data', 'PBXFileReference', path='data', sourceTree='<group>', lastKnownFileType='folder')
-    tools_folder = None
-    if game == 'clayfight':
-        tools_folder = project.add('game/tools', 'PBXFileReference', path='tools', sourceTree='<group>', lastKnownFileType='folder')
     assets = None
     if (home / 'Assets.xcassets').is_dir():
         assets = project.add('game/assets', 'PBXFileReference', path='Assets.xcassets',
                              sourceTree='<group>', lastKnownFileType='folder.assetcatalog')
     browse = [
-        project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder] + ([tools_folder] if tools_folder else []) + ([assets] if assets else []), sourceTree='<group>'),
+        project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder] + ([assets] if assets else []), sourceTree='<group>'),
         project.add('group/engine', 'PBXGroup', name='Engine',
                     children=[header, api] + [sources[n] for n in ENGINE_SOURCES], sourceTree='<group>'),
     ]
 
     browse.append(project.add('group/unity', 'PBXGroup', name='Build unity sources',
                               children=[sources[n] for n in UNITY_SOURCES], sourceTree='<group>'))
-
-    # Optional game-local native modules. The shared engine stays game-independent.
-    game_sources = []
-    if game == 'clayfight':
-        game_sources = sorted((ROOT / 'games/clayfight/source').glob('*/*.c')) + [ROOT / 'games/clayfight/source/runtime.c', ROOT / 'games/clayfight/host.c', ROOT / 'games/clayfight/controllers.m']
-        game_sources += sorted((ROOT / 'games/clayfight/ios').glob('*.m'))
-        game_sources += sorted((ROOT / 'games/clayfight/source/sound').glob('*.cpp'))
-    game_refs = {}
-    for source in game_sources:
-        path = source.relative_to(ROOT / 'games' / game).as_posix()
-        game_refs[path] = project.add('game/' + path, 'PBXFileReference', path=path, sourceTree='SOURCE_ROOT',
-                                     lastKnownFileType='sourcecode.c.objc' if source.suffix == '.m' else 'sourcecode.cpp.cpp' if source.suffix == '.cpp' else 'sourcecode.c.c')
-    if game_refs:
-        browse.append(project.add('group/native', 'PBXGroup', name='Game native modules', children=list(game_refs.values()), sourceTree='<group>'))
 
     # --- targets ---
     targets, products = [], []
@@ -268,10 +250,6 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             write(bundle / 'Generated/macos.entitlements', plistlib.dumps({'com.apple.security.app-sandbox': True}).decode())
         if team:
             settings['DEVELOPMENT_TEAM'] = team
-        if game == 'clayfight':
-            settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
-            settings['HEADER_SEARCH_PATHS'] = ['$(inherited)', '$(SRCROOT)/source']
-            settings['GCC_PREPROCESSOR_DEFINITIONS'] = ['$(inherited)', 'CLAY_HOST=1'] + (['CLAY_IOS=1'] if ipad else [])
         configs = project.configurations(name, settings)
 
         info = dict(CFBundleExecutable='$(EXECUTABLE_NAME)', CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',
@@ -289,11 +267,9 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
                                 UISceneConfigurationName='Game', UISceneDelegateClassName='AXSceneDelegate')]}))
         else:
             info.update(NSHighResolutionCapable=True, NSPrincipalClass='NSApplication')
-        if game == 'clayfight' and ipad:
-            info.update(NSCameraUsageDescription='Photograph your clay fighter.', NSMicrophoneUsageDescription='Record a video of your clay fighter.', NSPhotoLibraryUsageDescription='Choose photos or videos for your clay fighter.')
         write(bundle / 'Generated'  / (('ios' if ipad else 'macos') + '-Info.plist'), plistlib.dumps(info).decode())
 
-        unity_names = [n for n in UNITY_SOURCES if game != 'clayfight' or n != 'u_launcher']
+        unity_names = UNITY_SOURCES
         unity_phase = project.add(name + '/unity', 'PBXShellScriptBuildPhase', name='Generate unity sources',
                                   buildActionMask=2147483647, files=[],
                                   inputPaths=['$(ENGINE_ROOT)/tools/unity.sh'],
@@ -304,33 +280,19 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
                                       for n in unity_names))
         build_files = []
         for filename in UNITY_SOURCES:
-            if game == 'clayfight' and filename == 'u_launcher': continue
             fields = {'fileRef': sources[filename]}
             if filename == 'u_lua':
                 fields['settings'] = {'COMPILER_FLAGS': '-Wno-unused-function'}
             build_files.append(project.add(f'{name}/{filename}.c', 'PBXBuildFile', **fields))
-        for path, ref in game_refs.items():
-            if path.startswith('ios/') and not ipad: continue
-            fields = {'fileRef': ref}
-            if path.endswith('.m'): fields['settings'] = {'COMPILER_FLAGS': '-fobjc-arc'}
-            build_files.append(project.add(name + '/' + path, 'PBXBuildFile', **fields))
         compile_phase = project.add(name + '/sources', 'PBXSourcesBuildPhase', buildActionMask=2147483647,
                                     files=build_files, runOnlyForDeploymentPostprocessing=0)
         frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox']
                       if ipad else ['AppKit', 'OpenGL', 'IOSurface', 'Security', 'AudioToolbox'])
-        if game == 'clayfight' and not ipad:
-            # The development workshop launches a local Python companion.
-            settings['ENABLE_APP_SANDBOX'] = 'NO'
-            settings['CODE_SIGN_ENTITLEMENTS'] = ''
-            frameworks += ['GameController']
-        if game == 'clayfight' and ipad:
-            frameworks += ['AVFoundation', 'AVKit', 'PhotosUI', 'Photos', 'ImageIO', 'GameController', 'CoreMedia']
         settings['OTHER_LDFLAGS'] += [flag for framework in frameworks for flag in ('-framework', framework)]
         link_phase = project.add(name + '/frameworks', 'PBXFrameworksBuildPhase', buildActionMask=2147483647,
                                  files=[], runOnlyForDeploymentPostprocessing=0)
         resource_files = [project.add(f'{name}/{folder}', 'PBXBuildFile', fileRef=ref) for folder, ref in (('lua', lua_folder), ('data', data_folder))]
-        if tools_folder and not ipad:
-            resource_files.append(project.add(f'{name}/tools', 'PBXBuildFile', fileRef=tools_folder))
+
         if assets:
             resource_files.append(project.add(f'{name}/assets', 'PBXBuildFile', fileRef=assets))
         resources_phase = project.add(name + '/resources', 'PBXResourcesBuildPhase', buildActionMask=2147483647,

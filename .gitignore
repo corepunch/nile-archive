@@ -65,13 +65,5 @@ DerivedData/
 
 .DS_Store
 
-# Local reference games, original resource packs (including Clayfight Primal Rage)
-# and migration safety backups
+# Local reference recordings and source masters remain outside version control.
 /reference/
-
-# Local, user-supplied Clayfight retail resources and converted definitions.
-/games/clayfight/data/primalrage/
-/games/clayfight/data/primrage/
-/games/clayfight/art/reference/arcade-comparison/
-/games/clayfight/data/creatures/primalrage/
-/games/clayfight/Build/

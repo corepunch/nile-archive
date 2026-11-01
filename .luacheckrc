@@ -21,8 +21,6 @@ read_globals = {
 files["engine/tween.lua"] = {globals = {"ease", "tween"}}         -- defines the easing catalogue and the tween module
 files["engine/ui_forms.lua"] = {globals = {"ui"}}            -- defines ui.form, ui.modals and ui.modal_dismiss
 files["engine/ui_skin.lua"] = {globals = {"ui"}}             -- defines ui.skin
-files["games/clayfight/lua"] = {read_globals = {"clay"}}     -- Clayfight's host extension
-files["tests/lua/clayfight.lua"] = {globals = {"clay", "font", "app", "input", "gfx", "ui"}}   -- stubs the engine
 files["engine/city_smoke.lua"] = {globals = {"city"}}         -- defines city.move_test
 files["tests/lua"] = {read_globals = {"check", "near", "testing"}}   -- from the test build
 files["tests/games"] = {read_globals = {"rules", "smoke", "shot", "frame", "reel", "hold", "match3_root"}, globals = {"default_frames"}}

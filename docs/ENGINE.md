@@ -300,14 +300,6 @@ must remain valid until playback ends or `sfx_stop_samples()` returns. One audio
 device serves samples and tones and opens on first playback. `--mute` and
 `sfx_enable(false)` silence both; disabling clears queued voices and tones.
 
-The native C APIs in `raster.c` draw indexed sprites into caller-owned ARGB
-surfaces, including clipping, density, hotspots, flip, flash, shadow and fade.
-`photo.c` loads images through `image_load_rgba`, removes backgrounds and builds
-an indexed atlas with a shared 31-colour palette and configurable display
-density. `photo_free` releases the set and atlas. These APIs contain no game
-resource formats; Clayfight converts their results into its own frames and
-alternate palettes. They are C APIs for native modules, not Lua bindings.
-
 ## Platform notes
 
 - **Native**: corepunch/platform owns the window, GL context, events and audio.
