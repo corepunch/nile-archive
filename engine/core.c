@@ -258,7 +258,6 @@ static void poll_events(void)
 
     struct AXmessage e;
     while (axPeekMessage(&e)) {
-        if (A.desc.event) A.desc.event(&e);
         vec2 p = window_to_logical(v2((int16_t)e.x, (int16_t)e.y));
         bool hover = !(e.pointer.flags & (AX_POINTER_TOUCH | AX_POINTER_STYLUS));
         switch (e.message) {

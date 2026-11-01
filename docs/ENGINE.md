@@ -293,12 +293,9 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 ## Audio
 
 `sfx_tone(hz, seconds)` plays a soft bell-like note (Relic Rush chimes rising
-notes as cascades grow). The native C API `sfx_play(sample, volume, pan)` mixes
-up to 16 unsigned 8-bit mono PCM samples into 44.1 kHz stereo, with source-rate
-conversion, volume and panning. The sample descriptor is copied; its PCM storage
-must remain valid until playback ends or `sfx_stop_samples()` returns. One audio
-device serves samples and tones and opens on first playback. `--mute` and
-`sfx_enable(false)` silence both; disabling clears queued voices and tones.
+notes as cascades grow). The 44.1 kHz stereo device opens on the first note.
+`--mute` prevents playback and `sfx_enable(false)` silences and clears the current
+tone. Sampled audio belongs to the standalone Clayfight runtime.
 
 ## Platform notes
 
