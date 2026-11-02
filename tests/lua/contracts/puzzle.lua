@@ -58,6 +58,38 @@ return function(R, options)
                 if rand(6)==0 then g.tiles[i].kind=-1 end
             end
             local seen,expected={},{}
+            if R.flags & require('match3').LINE_MATCHES ~= 0 then
+                -- Independent oracle: sort same-axis cells by coordinates,
+                -- then find consecutive equal-colour spans, stopping at holes.
+                for axis=0,2 do
+                    for lane=-4,4 do
+                        local cells={}
+                        for i=0,N-1 do
+                            local q,r=coord(i)
+                            local value=axis==0 and r or axis==1 and q or q+r
+                            if value==lane then cells[#cells+1]=i end
+                        end
+                        table.sort(cells,function(a,b)
+                            local aq,ar=coord(a);local bq,br=coord(b)
+                            return axis==1 and ar<br or axis~=1 and aq<bq
+                        end)
+                        local run={}
+                        local function flush()
+                            if #run>=R.MATCH_MIN then for _,cell in ipairs(run) do expected[cell]=true end end
+                            run={}
+                        end
+                        for _,cell in ipairs(cells) do
+                            if not g.active[cell] or g.tiles[cell].kind<0 then flush()
+                            else
+                                if #run>0 and (distance(run[#run],cell)~=1
+                                    or g.tiles[run[#run]].kind~=g.tiles[cell].kind) then flush() end
+                                run[#run+1]=cell
+                            end
+                        end
+                        flush()
+                    end
+                end
+            else
             for i=0,N-1 do
                 if g.active[i] and g.tiles[i].kind>=0 and not seen[i] then
                     local group={i};seen[i]=true;local head=1
@@ -71,6 +103,7 @@ return function(R, options)
                     end
                     if #group>=R.MATCH_MIN then for _,cell in ipairs(group) do expected[cell]=true end end
                 end
+            end
             end
             R.game_matches(g,m,-1)
             local count=0

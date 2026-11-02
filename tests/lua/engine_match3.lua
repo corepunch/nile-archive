@@ -7,7 +7,7 @@ local function config(flags)
         levels={{name='Test',moves=20,score=1000,relics=3,soil=2,chains=0,ice=0}},
         kind_flags={[0]=E.GOAL,[1]=E.THAW,[2]=E.WOOD,[4]=E.STONE}}
 end
-for _,bad in ipairs({-1,64,1.5,'1'}) do
+for _,bad in ipairs({-1,128,1.5,'1'}) do
     t:case('invalid flags '..tostring(bad),function()
         t:check(not pcall(E.new,config(bad)),'invalid flag mask rejected')
     end)
@@ -48,6 +48,24 @@ for threshold=3,6 do
             end
         end)
     end
+end
+for _, extra in ipairs({0,E.NO_SPECIALS}) do
+    t:case('straight matching flags='..extra,function()
+        local R=E.new{flags=E.LINE_MATCHES|extra,match_min=3}
+        local g,m=H.board(R),R.new_match()
+        local c=R.hex_center()
+        for q=-2,1 do g.tiles[R.hex_index(q,0)]=R.tile(0) end
+        local branch=R.hex_index(0,1)
+        g.tiles[branch]=R.tile(0)
+        R.game_matches(g,m,c)
+        t:check(m.hits==4 and not m.mask[branch],'branch excluded from line and reward length')
+        t:check(m.make[c]==(extra==0 and R.ROW or nil),'line reward respects NO_SPECIALS')
+        for seed=1,8 do
+            g=R.game_start(0,seed)
+            R.game_matches(g,m,-1)
+            t:check(m.hits==0 and R.game_hint(g),'line-mode generator produces stable playable boards')
+        end
+    end)
 end
 -- Every combination exercises interactions between all six behavior bits.
 for flags=0,63 do

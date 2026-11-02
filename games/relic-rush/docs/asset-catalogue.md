@@ -98,12 +98,12 @@ live pieces, collection flights, clearing animations and the guide.
 
 | Rule state | Authored name | Creation / behaviour |
 | --- | --- | --- |
-| NORMAL (0) | Base kind image | Four connected equal kinds clear normally |
-| ROW (1) | `ray-row` | Group of five; full-gem stripes along the 30° board axis |
-| COLUMN (2) | `ray-column` | Group of five; full-gem vertical stripes |
-| DIAGONAL (3) | `ray-diagonal` | Group of five; full-gem stripes along the 150° axis |
-| BOMB (4) | `bomb` | Six or more in a non-line group; radius-one hex blast (cell plus six neighbours) |
-| PRISM (5) | `prism` | Six in a straight line; clears the swapped kind |
+| NORMAL (0) | Base kind image | Three equal kinds in a straight line clear normally |
+| ROW (1) | `ray-row` | Line of four; full-gem stripes along the 30° board axis |
+| COLUMN (2) | `ray-column` | Line of four; full-gem vertical stripes |
+| DIAGONAL (3) | `ray-diagonal` | Line of four; full-gem stripes along the 150° axis |
+| BOMB (4) | `bomb` | Existing/review bomb or special combination; radius-one hex blast (cell plus six neighbours) |
+| PRISM (5) | `prism` | Five or more in a straight line; clears the swapped kind |
 
 Rays use `gfx.image_striped` on the matching gem at full size. Broad cream bands
 follow the 30°, 90° or 150° clear axis, masked to the gem's authored alpha and
@@ -535,3 +535,5 @@ The larger Buildings and Play actions reuse the existing jade button skin in all
 Buildings and Play are complete image buttons with empty captions, using the engine skin variants `navigation_build` and `navigation_play`. The authored 5-by-2 atlas is `art/navigation/controls.png`; `art/navigation/prompt.txt` records the ImageGen brief. The top row is the workshop/hammer Buildings badge; the bottom row is the right-pointing Play badge. Columns are normal, hover, pressed, selected and disabled. Runtime crops: `build-normal`, `build-hover`, `build-pressed`, `build-selected`, `build-disabled`, `play-normal`, `play-hover`, `play-pressed`, `play-selected`, `play-disabled` under `data/navigation/`. `art/navigation/manifest.json` records the exact grid boxes and alpha-preserving 160px registration. Reproduce and audit with `python3 games/relic-rush/tools/prepare_hud.py [--check]`; no runtime recolouring manufactures states.
 
 The shared form still owns hit testing, focus and activation. The smaller Expeditions compass remains between the primary actions. Resource icons are drawn at 60 units beside 36-unit counter bars; they deliberately protrude beyond the pills, including their interactive bounds. The island settings gear uses an 88-unit art/touch box; expedition-board geometry stays unchanged. Toasts sit above the taller image actions. New art and every authored state are reviewed in `docs/screenshots/image-buttons-after/hud-states.jpg`; actual home UI at 480x900 and 390x844 is in the same review folder.
+
+Straight-line match-3 rules: ordinary triples, four-in-line rays on all three axes, and five-plus prisms reuse the existing authored states. The guide now shows a prism alone for the five-plus recipe. Bomb artwork remains for existing pieces, tools/effect reviews and special combinations; no nonlinear group creates one. See [rules](match4-rules.md).
