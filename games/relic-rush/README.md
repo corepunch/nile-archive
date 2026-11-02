@@ -122,6 +122,8 @@ This is an original adventure setting inspired by archaeological serials and los
 
 The intro and finale lines are new, short and written from the cast notes in [art-direction-v2](docs/art-direction-v2.md); everything else reuses the game's existing texts. Journal entries, branching choices and cinematics are not implemented.
 
+The planned three-episode script is in [docs/story.md](docs/story.md); it is not implemented yet.
+
 | Elena | Mara | Tomas | Adrian | Word bubble |
 | --- | --- | --- | --- | --- |
 | ![Elena](docs/screenshots/dialogue-elena.jpg) | ![Mara](docs/screenshots/dialogue-mara.jpg) | ![Tomas](docs/screenshots/dialogue-tomas.jpg) | ![Adrian](docs/screenshots/dialogue-adrian.jpg) | ![Bubble](docs/screenshots/island-bubble.jpg) |
