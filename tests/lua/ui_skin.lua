@@ -180,6 +180,25 @@ check(names()=="pill","draw_button paints any control kind")
 local plain_buttons=ui.skin{fonts={f={font=base_font}},text={t={font="f"}},controls={button={text="t"}}}
 check(plain_buttons.button==nil and plain_buttons.button_text~=nil,"text-only buttons keep the native button paint")
 
+-- The shared resource panel: the icon is larger than the panel and overhangs its left end.
+local resources=ui.skin{fonts={f={font=base_font}},text={t={font="f"}},controls={
+    resource={text="t",em=12,normal={layers={{paint=rec("resource")}}},variants={wallet={icon_ratio=2}}},
+}}
+local panel_box=rect(100,50,80,30)
+local icon_box=resources:resource_icon_box(panel_box)
+check(icon_box.h>panel_box.h and icon_box.x<panel_box.x and math.abs(icon_box:center().y-panel_box:center().y)<.01,
+      "the resource icon overhangs the panel, centred on it")
+drawn={}
+local icon_seen
+check(resources:draw_resource(panel_box,function(b) icon_seen=b end,"42",{interactive=false})==false,"a read-only panel never reports a tap")
+check(find("resource").box.w==80 and icon_seen and math.abs(icon_seen.h-icon_box.h)<.01,"the panel paints its look and the icon in the icon box")
+drawn={}
+icon_seen=nil
+resources:draw_resource(panel_box,function(b) icon_seen=b end,"42",{interactive=false,icon_scale=2})
+check(math.abs(icon_seen.h-icon_box.h*2)<.01 and vec2.dist(icon_seen:center(),icon_box:center())<.01,"icon_scale bounces about the icon's centre")
+
+check(math.abs(resources:resource_icon_box(panel_box,"wallet").h-60)<.01,"a role picks the control's variant for the icon")
+
 -- Authored images must exist for every state; the audit lists what is missing.
 local art=ui.skin{fonts={f={font=base_font}},text={t={font="f"}},controls={
     button={normal={layers={{image="missing.png"}}},pressed={layers={{image="missing-pressed.png"}}}},

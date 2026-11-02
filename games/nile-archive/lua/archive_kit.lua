@@ -178,17 +178,11 @@ function K.round_button(c, radius, icon, caption, green)
     return st.clicked
 end
 
--- A dark capsule with a currency icon overlapping its left end and a green "+".
+-- The shared resource panel with a green "+" at its right end.
 function K.capsule(r, icon, value)
-    local st = ui.hit(r, 0)
-    gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
-    gfx.round_rect(r, r.h * .5, rgba(9, 28, 32, 222))
-    gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
-    local ic = rect.centered(vec2(r.x + 6, r:center().y), size2(r.h + 14, r.h + 14))
-    gfx.image(icon, ic, WHITE)
-    text.fit(S.number, rect(r.x + r.h * .5 + 18, r.y, r.w - r.h * 1.5 - 22, r.h), vec2(.5, .5), value)
+    local clicked = skin:draw_resource(r, icon, value, {reserve = r.h * .7})
     plus_badge(vec2(r:max().x - r.h * .5, r:center().y), r.h * .5 - 3)
-    return st.clicked
+    return clicked
 end
 
 -- An icon followed by a figure, anchored at `pos` by `pivot`.

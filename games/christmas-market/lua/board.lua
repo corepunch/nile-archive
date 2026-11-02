@@ -77,7 +77,7 @@ local function draw_backdrop()
     end
 end
 
--- One goal panel, a moves card and Elena's independent investigation cutout.
+-- One small resource panel per goal, a moves card and Elena's independent investigation cutout.
 -- Repeated goal rows use the shared measured list, with stable objective keys.
 function R.goal_entries()
     local g, l = R.g, rules.level_of(R.g)
@@ -89,27 +89,24 @@ function R.goal_entries()
     if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
     return entries
 end
-local function goal_icon(box, entry)
-    local image = entry.remaining==0 and R.hud_art.complete
-        or entry.icon=="score" and R.hud_art.score
+local goal_centers={}
+local function goal_panel(box, entry)
+    goal_centers[entry.id]=R.skin:resource_icon_box(box):center()
+    local met=entry.remaining==0
+    local icon=entry.icon=="score" and R.hud_art.score
         or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
         or R.board_art[entry.icon]
-    gfx.image(image, box, color.WHITE)
+    R.skin:draw_resource(box,icon,tostring(entry.remaining),{interactive=false,
+        icon_alpha=met and 150/255 or 1,value_icon=met and R.hud_art.complete or nil})
 end
 local hud_form=ui.form{kind="row",gap=8,children={
-    {kind="column",panel=true,width=224,padding={12,8,12,10},gap=4,children={
-        {kind="label",text="GOAL",height=18,em=14},
-        {kind="list",id="goals",gap=4,item=function(row)
-            local cells={}
-            for _,entry in ipairs(row.entries) do
-                cells[#cells+1]={kind="row",grow=1,gap=6,align="center",children={
-                    {kind="custom",width=28,height=28,paint=function(box) goal_icon(box,entry) end},
-                    {kind="label",text=entry.remaining==0 and "DONE" or tostring(entry.remaining),grow=1,em=17,text_align="start"},
-                }}
-            end
-            return {kind="row",height=36,gap=8,children=cells}
-        end},
-    }},
+    {kind="list",id="goals",width=224,gap=10,item=function(row)
+        local cells={}
+        for _,entry in ipairs(row.entries) do
+            cells[#cells+1]={kind="custom",width=104,height=34,paint=function(box) goal_panel(box,entry) end}
+        end
+        return {kind="row",height=34,gap=16,children=cells}
+    end},
     {kind="spacer",grow=1},
     {kind="column",panel=true,width=88,height=116,padding={8,8,8,10},gap=4,children={
         {kind="label",text="MOVES",height=18,em=14},
@@ -133,10 +130,8 @@ local hud_skin={
     end,
 }
 function R.goal_target(kind)
-    -- Collection flights land on the goal they advance, rather than the old HUD.
-    local column=kind==rules.RELIC_IDOL and 1 or 0
-    local entries=R.goal_entries()
-    return #entries==2 and vec2(50,122+column*40) or vec2(50+column*104,122)
+    -- Collection flights land on the goal they advance.
+    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(50,122)
 end
 local function draw_hud(top)
     if top <= 0 then return end

@@ -405,6 +405,55 @@ function Skin:draw_checkbox(box, caption, value, opts)
     return value
 end
 
+-- A resource readout: a small panel holding one figure, its icon larger than the
+-- panel and overhanging the left end, as every game's HUD shows its currencies.
+-- The look is the skin's `resource` control; `icon_ratio` (of the panel's height)
+-- and `icon_overhang` (of the same) place the icon.
+function Skin:resource_icon_box(box, role)
+    local spec = control_spec(self, 'resource', {role = role}) or {}
+    local side = box.h * (spec.icon_ratio or 1.4)
+    return rect(box.x - box.h * (spec.icon_overhang or .12), box:center().y - side * .5, side, side)
+end
+
+-- `icon` is a texture, a function painting into a logical box (it applies any
+-- skin.transform itself), or nil. Returns true when tapped. Options: role (a
+-- variant of the control), interactive (default true; false never takes input),
+-- hit (the touch area, default the panel), hit_offset, icon_scale, icon_alpha,
+-- value_icon (a texture standing in for the figure) and reserve (width kept
+-- free at the right end, for a badge).
+function Skin:draw_resource(box, icon, value, opts)
+    opts = opts or {}
+    local node = {kind = 'resource', radius = box.h * .5, role = opts.role}
+    local spec = control_spec(self, 'resource', node) or {}
+    local hit = opts.hit or (opts.hit_offset and box:offset(opts.hit_offset)) or box
+    local st = opts.interactive ~= false and ui.hit(hit, 0) or nil
+    local look = look_for(spec, st) or {}
+    self:paint('resource', box, st, node)
+    local shift = vec(look.offset)
+    local left = box.x + box.h * .3
+    if icon then
+        local icon_box = self:resource_icon_box(box, opts.role):offset(shift)
+        left = icon_box:max().x + 1
+        local scale = opts.icon_scale or 1
+        if scale ~= 1 then icon_box = rect.centered(icon_box:center(), icon_box:size():scale(scale)) end
+        if type(icon) == 'function' then icon(icon_box)
+        else
+            local out, _, alpha = transformed(self, icon_box)
+            gfx.image(icon, out, color(255, 255, 255, math.floor(255 * alpha * (opts.icon_alpha or 1) + .5)))
+        end
+    end
+    local right = box:max().x + shift.x - box.h * .3 - (opts.reserve or 0)
+    local slot = rect(left, box.y + shift.y, math.max(1, right - left), box.h)
+    if opts.value_icon then
+        local side = math.min(slot.w, box.h)
+        local out, _, alpha = transformed(self, rect.centered(slot:center(), size2(side, side)))
+        gfx.image(opts.value_icon, out, color(255, 255, 255, math.floor(255 * alpha + .5)))
+    elseif value then
+        text.fit(make_style(self, spec.text or 'body', spec.em, true), (transformed(self, slot)), vec2(.5, .5), value)
+    end
+    return st ~= nil and st.clicked
+end
+
 -- Controls drawn from authored images must name every state's image; the
 -- engine never tints one into another. Lists {control, state} still missing.
 function Skin:audit(required)
