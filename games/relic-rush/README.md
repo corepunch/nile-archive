@@ -4,7 +4,7 @@ From the repository root, `make -C games/relic-rush ios` builds, signs, installs
 and launches on the connected iPhone. Set `DEVICE="name or UDID"` to select one.
 See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-A portrait mobile-first hex match-4 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
+A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
 Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Ten redesigned hex stages and ten buildings end in a restored sun temple. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
@@ -49,7 +49,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 | Hexagonal expeditions | Restored island |
 | --- | --- |
-| ![First hex match-4 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
+| ![First hex match-3 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
 | ![Later level with ice and chains](docs/screenshots/hex-late.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
@@ -80,11 +80,11 @@ Travelling sun rays, expanding bomb shockwaves, prism target links, special-piec
 
 See [effect reference study](docs/effects.md). The reel uses deterministic test boards; actual iPhone/Android performance still needs device testing.
 
-## Current match-4 rules and board shapes
+## Current match-3 rules and board shapes
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
-The minimum match is **four side-connected identical relics**, including bent groups and diamonds. Ready groups resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
+The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the same gems are rearranged with all earned special powers intact; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
@@ -134,7 +134,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 ## Expedition and restoration loop
 
-1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
+1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Complete its score, idol, excavation and blocker objectives within the move budget.
 3. Claim the first win once: restoration amulets, 80–120 spare amulets, and 3 discovery stars.
 4. Return to the island, select the next restoration and choose its location on opened grass.
@@ -145,18 +145,18 @@ Hex amulets pay for restorations and decorations. The guaranteed first-clear gra
 
 ## Campaign: ten hex levels
 
-Every stage uses its own active-cell mask within a radius-four hex grid (43–61 playable cells). See [current match-4 rules and all ten board shapes](docs/match4-rules.md). Objectives below are taken from the current level configuration; all listed blockers must be cleared.
+Every stage uses its own active-cell mask within a radius-four hex grid (43–61 playable cells). See [current match-3 rules and all ten board shapes](docs/match4-rules.md). Objectives below are taken from the current level configuration; all listed blockers must be cleared.
 
 | # | Expedition | Moves | Score | Idols | Sand | Chains | Ice cells | Focus |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| 1 | First Light | 24 | 1100 | 8 | 0 | 0 | 0 | Join 4+ neighbors. Bends and diamonds count! |
-| 2 | The Jade Crescent | 28 | 1800 | 10 | 7 | 0 | 0 | Groups of five create a sun ray. |
+| 1 | First Light | 24 | 1100 | 8 | 0 | 0 | 0 | Line up 3 or more relics along any hex axis. |
+| 2 | The Jade Crescent | 28 | 1800 | 10 | 7 | 0 | 0 | Four in a straight line create a sun ray. |
 | 3 | Sunstone Spiral | 32 | 2300 | 12 | 12 | 0 | 0 | Excavate the spiral beneath the relics. |
 | 4 | The Vine Constellation | 34 | 2700 | 12 | 10 | 4 | 0 | Match locked relics to break their chains. |
-| 5 | Three Paths Meet | 36 | 3100 | 14 | 13 | 4 | 0 | Groups of six or more make a hex blast. |
+| 5 | Three Paths Meet | 36 | 3100 | 14 | 13 | 4 | 0 | Combine sun rays to clear all three axes. |
 | 6 | Winter Lotus | 38 | 3400 | 14 | 13 | 0 | 5 | Break the ice around the frozen lotus. |
 | 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Fire melts ice in all six neighboring cells. |
-| 8 | Prism Observatory | 42 | 4200 | 16 | 17 | 4 | 6 | Six in a straight line forge a sun prism. |
+| 8 | Prism Observatory | 42 | 4200 | 16 | 17 | 4 | 6 | Five in a straight line forge a sun prism. |
 | 9 | The Sixfold Seal | 44 | 4600 | 18 | 19 | 5 | 6 | Combine rays to clear all three axes. |
 | 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the ancient sun at the heart of the valley. |
 
@@ -209,8 +209,8 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 ## Play
 
-- Ten distinct hex board masks with 43–61 active cells. Any side-connected group of at least four identical relics matches automatically; bends and diamonds count, three relics do not. Swaps without a match animate back and do not spend a move.
-- Four connected relics → ordinary match; five → directional lightning relic; six or more → hex bomb, or a sun prism when six form a straight line.
+- Ten distinct hex board masks with 43–61 active cells. Contiguous straight lines of three or more identical relics match along the three hex axes; bends, diamonds and rings do not count. Swaps without a match animate back and do not spend a move.
+- Three in a line → ordinary match; four → directional lightning relic; five or more → sun prism. Crossing lines do not create bombs; existing bombs and dynamite retain their effects.
 - Swap two specials for a combination attack; prism + special converts that color before detonation.
 - Ancient sand is excavated by matches above it. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits. Matched flame relics also thaw adjacent ice.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
@@ -259,7 +259,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Verification
 
-- `make test` runs the original rule regressions, ported: grid invariants, four-of-a-kind and bent/diamond groups, rejection of triples, five/six special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, ten distinct connected board masks, 1,000 opening boards (100 seeds × 10 levels) without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 40 greedy campaign trials — 40 wins in the current shared-engine regression.
+- `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, ten distinct connected board masks, 1,000 opening boards (100 seeds × 10 levels) without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 40 greedy campaign trials (extended diagnostic; results depend on the matching rules).
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
@@ -279,7 +279,7 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 
 - `lua/state.lua`: the state shared by the game's modules, and their namespace (`R`).
 - `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.
-- `lua/rules.lua`: hex grid, deterministic match-4 rules, specials, blockers, tools, campaign and rewards — pure Lua, tested headlessly.
+- `lua/rules.lua`: hex grid, deterministic match-3 rules, specials, blockers, tools, campaign and rewards — pure Lua, tested headlessly.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
 - `lua/board.lua`: the expedition screen, animation phases and swipe/tap input.
 - `lua/vfx.lua`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups.

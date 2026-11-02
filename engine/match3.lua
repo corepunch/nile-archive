@@ -1,7 +1,7 @@
 -- Reusable deterministic hex match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
 local E = {
-    NO_TRICKLE=1, NO_SPECIALS=2, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, NO_THAW=32,
+    NO_TRICKLE=1, NO_SPECIALS=2, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, NO_THAW=32, LINE_MATCHES=64,
     GOAL=1, THAW=2, WOOD=4, STONE=8, -- per-kind behavior bits
 }
 
@@ -46,7 +46,7 @@ end
 function E.new(config)
     config = config or {}
     local flags, kind_flags = config.flags or 0, config.kind_flags or {}
-    assert(math.type(flags) == "integer" and flags >= 0 and flags < 64, "invalid match3 flags")
+    assert(math.type(flags) == "integer" and flags >= 0 and flags < 128, "invalid match3 flags")
     assert(not config.radius or math.type(config.radius) == "integer" and config.radius >= 1 and config.radius <= 16, "invalid hex radius")
     local M = {flags=flags}
     -- Axial hex grid; neighbours are
@@ -170,6 +170,20 @@ function E.new(config)
         return n
     end
 
+    -- Count a contiguous run through a cell; holes and other colours stop it.
+    local function run_length(g, cell, axis)
+        local n = 1
+        for sign = 0, 1 do
+            local d = axis + sign * 3
+            local c = hex_neighbor(cell, d)
+            while equal(g, cell, c) do
+                n = n + 1
+                c = hex_neighbor(c, d)
+            end
+        end
+        return n
+    end
+
     local function mark_line(g, m, cell, axis)
         if cell_active(g, cell) then m.mask[cell] = true end
         for sign = 0, 1 do
@@ -196,6 +210,38 @@ function E.new(config)
 
     function M.game_matches(g, m, preferred)
         m.mask, m.make, m.hits = {}, {}, 0
+        if flags & E.LINE_MATCHES ~= 0 then
+            -- Process maximal runs independently: touching branches never count
+            -- toward their length or receive an unrelated run's reward.
+            for i = 0, CELLS - 1 do
+                if cell_active(g, i) and g.tiles[i].kind >= 0 then
+                    for axis = 0, 2 do
+                        if not equal(g, i, hex_neighbor(i, axis + 3)) then
+                            local cells, c = {}, i
+                            while equal(g, i, c) do
+                                cells[#cells + 1] = c
+                                c = hex_neighbor(c, axis)
+                            end
+                            local n = #cells
+                            if n >= MATCH_MIN then
+                                local pick = -1
+                                for _, a in ipairs(cells) do
+                                    m.mask[a] = true
+                                    if g.tiles[a].special == NORMAL and not locked(g, a)
+                                        and (pick < 0 or a == preferred) then pick = a end
+                                end
+                                local sp = n >= MATCH_MIN + 2 and PRISM
+                                    or n == MATCH_MIN + 1 and ray_for_axis(axis) or NORMAL
+                                if flags & E.NO_SPECIALS == 0 and pick >= 0 and sp ~= NORMAL
+                                    and (not m.make[pick] or sp > m.make[pick]) then m.make[pick] = sp end
+                            end
+                        end
+                    end
+                end
+            end
+            count_hits(m)
+            return
+        end
         local seen = {}
         local cells = {}
         for i = 0, CELLS - 1 do
@@ -450,7 +496,13 @@ function E.new(config)
                 local choices, n = {}, 0
                 for k = 0, COLORS - 1 do
                     g.tiles[i] = tile(k, NORMAL)
-                    if collect_group(g, i, cells) < MATCH_MIN then n = n + 1; choices[n] = k end
+                    local valid = true
+                    if flags & E.LINE_MATCHES ~= 0 then
+                        for axis = 0, 2 do
+                            if run_length(g, i, axis) >= MATCH_MIN then valid = false; break end
+                        end
+                    else valid = collect_group(g, i, cells) < MATCH_MIN end
+                    if valid then n = n + 1; choices[n] = k end
                 end
                 if n == 0 then return false end
                 g.tiles[i] = tile(choices[randn(g, n) + 1], NORMAL)

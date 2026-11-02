@@ -3,14 +3,14 @@ local function level(name, lesson, moves, score, relics, soil, chains, ice)
     return {name=name, lesson=lesson, moves=moves, score=score, relics=relics, soil=soil, chains=chains, ice=ice}
 end
 local levels = {
-    level("First Light", "Join 4+ neighbors. Bends and diamonds count!", 24, 1100, 8, 0, 0, 0),
-    level("The Jade Crescent", "Groups of five create a sun ray.", 28, 1800, 10, 7, 0, 0),
+    level("First Light", "Line up 3 or more relics along any hex axis.", 24, 1100, 8, 0, 0, 0),
+    level("The Jade Crescent", "Four in a straight line create a sun ray.", 28, 1800, 10, 7, 0, 0),
     level("Sunstone Spiral", "Excavate the spiral beneath the relics.", 32, 2300, 12, 12, 0, 0),
     level("The Vine Constellation", "Match locked relics to break their chains.", 34, 2700, 12, 10, 4, 0),
-    level("Three Paths Meet", "Groups of six or more make a hex blast.", 36, 3100, 14, 13, 4, 0),
+    level("Three Paths Meet", "Combine sun rays to clear all three axes.", 36, 3100, 14, 13, 4, 0),
     level("Winter Lotus", "Break the ice around the frozen lotus.", 38, 3400, 14, 13, 0, 5),
     level("The Ember Ring", "Fire melts ice in all six neighboring cells.", 40, 3800, 16, 15, 4, 5),
-    level("Prism Observatory", "Six in a straight line forge a sun prism.", 42, 4200, 16, 17, 4, 6),
+    level("Prism Observatory", "Five in a straight line forge a sun prism.", 42, 4200, 16, 17, 4, 6),
     level("The Sixfold Seal", "Combine rays to clear all three axes.", 44, 4600, 18, 19, 5, 6),
     level("Heart of the Hexagon", "Uncover the ancient sun at the heart of the valley.", 46, 5000, 20, 22, 6, 6),
 }

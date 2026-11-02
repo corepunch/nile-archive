@@ -34,6 +34,7 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
 | `NO_THAW` | Disable neighboring ice damage from thawing kinds |
+| `LINE_MATCHES` | Match only contiguous straight runs along the three hex axes |
 
 | Kind flag | Meaning |
 | --- | --- |
@@ -44,8 +45,12 @@ flags are a separate integer bitmask and may be combined for one kind.
 
 The current topology is an axial hexagon, configurable from radius 1 to 16,
 with arbitrary missing cells. `match_min` defaults to three connected pieces;
-both existing games select four. Five/six-piece rewards on those games derive
-from the configured minimum plus one/two. Tile kinds and specials remain
+Relic Rush selects three with `LINE_MATCHES`; Christmas Market retains four
+connected pieces. Rewards derive from the configured minimum plus one/two.
+In line mode each maximal run is evaluated separately; adjacent branches,
+triangles and rings do not extend it. Crossing runs clear their union, counting
+each cell once, without creating a shape-based bomb. Four in a line creates
+an axis ray; five or more creates a prism. Existing bombs and tool effects remain available. Tile kinds and specials remain
 separate, so a moving special retains its kind and behavior.
 
 Level descriptors are content: name/lesson, moves, score, collection target

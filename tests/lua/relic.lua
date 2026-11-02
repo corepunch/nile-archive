@@ -1,10 +1,10 @@
--- Relic Rush rules: hex grid, match-4 detection, specials, blockers, gravity,
+-- Relic Rush rules: hex grid, straight-line match-3 detection, specials, blockers, gravity,
 -- tools, the campaign's boards and economy, and the island on the engine
 -- city. Ported from the original tests/test_relic.c.
 local rules = require("rules")
 local island = require("island")
 local CELLS, LEVELS, COLORS = rules.CELLS, rules.LEVELS, rules.COLORS
-local NORMAL, ROW, COLUMN, DIAGONAL, BOMB, PRISM = rules.NORMAL, rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM
+local NORMAL, ROW, COLUMN, DIAGONAL, PRISM = rules.NORMAL, rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.PRISM
 local hex_index, hex_q, hex_r, hex_neighbor, hex_distance, hex_center =
     rules.hex_index, rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.hex_distance, rules.hex_center
 local tile = rules.tile
@@ -22,7 +22,7 @@ local function blank()
     return g
 end
 
--- A board with no group of four anywhere.
+-- A board with no straight triple anywhere.
 local function pattern()
     local g = blank()
     for i = 0, CELLS - 1 do g.tiles[i].kind = (hex_q(i) + 2 * hex_r(i) + 12) % 6 end
@@ -73,13 +73,6 @@ end
 local function test_matching()
     local m = rules.new_match()
     local c = hex_center()
-    local function check_four_clears(g)
-        check(next(m.make) == nil, "four creates no special")
-        check(rules.game_apply(g, m) == 4, "four clears four relics")
-        for i = 0, CELLS - 1 do
-            if m.mask[i] then check(g.tiles[i].kind == -1, "every matched relic disappears") end
-        end
-    end
     for lvl = 0, LEVELS - 1 do
         for seed = 1, testing.extended and 100 or 4 do
             local g = rules.game_start(lvl, seed)
@@ -94,18 +87,24 @@ local function test_matching()
     for axis = 0, 2 do
         local start = hex_neighbor(hex_neighbor(c, axis + 3), axis + 3)
         local g = blank()
+        line(g, start, axis, 3, 2)
+        rules.game_matches(g, m, c)
+        check(m.hits == 3 and next(m.make) == nil, "three in a line clear normally")
+        check(rules.game_apply(g, m) == 3, "triple clears all three")
+        g = blank()
         line(g, start, axis, 4, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 4 and (m.make[c] or NORMAL) == NORMAL, "four in a line")
-        check_four_clears(g)
+        check(m.hits == 4 and m.make[c] == axis + 1, "four make an axis ray")
+        rules.game_apply(g, m)
+        check(g.tiles[c].special == axis + 1, "earned ray survives its birth wave")
         g = blank()
         line(g, start, axis, 5, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 5 and m.make[c] == (axis == 0 and ROW or axis == 1 and COLUMN or DIAGONAL), "five make a ray")
+        check(m.hits == 5 and m.make[c] == PRISM, "five in a line make a prism")
         g = blank()
         line(g, hex_neighbor(start, axis + 3), axis, 6, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 6 and m.make[c] == PRISM, "six in a line make a prism")
+        check(m.hits == 6 and m.make[c] == PRISM, "longer lines retain prism reward")
         g = pattern()   -- a ray clears exactly its axis
         g.tiles[c] = tile(3, axis == 0 and ROW or axis == 1 and COLUMN or DIAGONAL)
         m = rules.new_match()
@@ -118,26 +117,37 @@ local function test_matching()
         end
     end
     local g = blank()
-    line(g, hex_neighbor(c, 3), 0, 4, 0)
-    line(g, hex_neighbor(c, 4), 1, 4, 0)
+    line(g, hex_neighbor(c, 3), 0, 3, 0)
+    line(g, hex_neighbor(c, 4), 1, 3, 0)
     rules.game_matches(g, m, c)
-    check(m.make[c] == BOMB, "a big bent group makes a bomb")
-    for d = 0, 5 do   -- every rotation of a bent four counts; three never do
+    check(m.hits == 5 and next(m.make) == nil, "crossing triples clear without a group reward")
+    for d = 0, 5 do
         g = blank()
-        local a, b, e = hex_neighbor(c, d), hex_neighbor(c, (d + 1) % 6), hex_neighbor(hex_neighbor(c, d), d)
+        local a, b = hex_neighbor(c, d), hex_neighbor(c, (d + 1) % 6)
         g.tiles[c].kind, g.tiles[a].kind, g.tiles[b].kind = 0, 0, 0
         rules.game_matches(g, m, c)
-        check(m.hits == 0, "three do not match")
+        check(m.hits == 0, "compact triangle is not a line")
+        local e = hex_neighbor(a, d)
         g.tiles[e].kind = 0
         rules.game_matches(g, m, c)
-        check(m.hits == 4 and (m.make[c] or NORMAL) == NORMAL, "bent four matches")
-        check_four_clears(g)
+        check(m.hits == 3 and not m.mask[b] and next(m.make) == nil, "side branch does not extend a triple")
     end
-    g = blank()   -- two compact triangles make a four-cell diamond
-    g.tiles[c].kind, g.tiles[hex_index(1, 0)].kind, g.tiles[hex_index(0, 1)].kind, g.tiles[hex_index(1, 1)].kind = 2, 2, 2, 2
+    g = blank()
+    for _, at in ipairs({c, hex_index(1,0), hex_index(0,1), hex_index(1,1)}) do g.tiles[at].kind = 2 end
     rules.game_matches(g, m, c)
-    check(m.hits == 4, "diamond matches")
-    check_four_clears(g)
+    check(m.hits == 0, "four-cell diamond is not a match")
+    g = blank()
+    for d = 0, 5 do g.tiles[hex_neighbor(c,d)].kind = 2 end
+    rules.game_matches(g, m, c)
+    check(m.hits == 0, "six-cell ring is not a match")
+    -- A swap that only creates a compact cluster must roll back completely.
+    g = blank()
+    local a, b = hex_index(1,0), hex_index(1,1)
+    g.tiles[c], g.tiles[hex_index(0,1)], g.tiles[b], g.tiles[a] = tile(2), tile(2), tile(2), tile(1)
+    local moves = g.moves
+    check(not rules.game_swap(g,a,b,m) and g.moves == moves
+        and g.tiles[a].kind == 1 and g.tiles[b].kind == 2, "nonlinear swap rejected without spending a move")
+
 end
 
 local function test_holes_and_shapes()

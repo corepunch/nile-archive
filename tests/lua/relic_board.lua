@@ -113,14 +113,14 @@ end
 do
     local g = dead_board(0)
     setup(g)
-    for q = -2, 1 do g.tiles[rules.hex_index(q, 0)] = rules.tile(rules.RELIC_IDOL) end
+    for q = 2-rules.MATCH_MIN, 1 do g.tiles[rules.hex_index(q, 0)] = rules.tile(rules.RELIC_IDOL) end
     local rng, moves = g.rng, g.moves
     R.board_update(.02)
     check(R.phase == R.PH_CLEAR and g.rng == rng and g.moves == moves, "ready group clears before hints/recovery")
 end
 
--- The reported level-seven photo is playable: swap the right-hand idol up
--- into the amphora above it, joining five amphorae including two chains.
+-- The old photo remains playable, but its connected five-amphora move
+-- is now rejected: only a straight-line hint is legal.
 do
     local g = dead_board()
     local columns = {"00132", "101453", "2245134", "532--414", "104---203",
@@ -138,8 +138,12 @@ do
     g.obstacles = 3
     setup(g)
     local m, copy = rules.new_match(), rules.game_copy(g)
-    check(rules.game_swap(copy, rules.hex_index(3, -2), rules.hex_index(3, -3), m)
-          and m.hits == 5 and m.mask[upper] and m.mask[lower], "photo has a five-amphora move hitting both chains")
+    local accepted = rules.game_swap(copy, rules.hex_index(3, -2), rules.hex_index(3, -3), m)
+    if rules.flags & require("match3").LINE_MATCHES ~= 0 then
+        check(not accepted and copy.moves == g.moves and m.hits == 0, "old connected-group move is rejected without a line")
+    else
+        check(accepted and m.hits == 5 and m.mask[upper] and m.mask[lower], "group-mode photo move retains both chained matches")
+    end
     local rng = g.rng
     R.board_update(.02)
     check(g.rng == rng and not R.toast and R.hint_a >= 0, "photo board receives a hint without reshuffling")

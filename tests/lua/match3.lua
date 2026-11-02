@@ -48,7 +48,7 @@ do
     r.game_apply(g,m)
     check(g.relics==1 and g.wood==1 and g.stone==0, "kind flags combine collection behavior")
 end
-for _, config in ipairs({{flags=1.5},{flags=64},{radius=0},{colors=1},{match_min=2}}) do
+for _, config in ipairs({{flags=1.5},{flags=128},{radius=0},{colors=1},{match_min=2}}) do
     check(not pcall(match3.new,config), "invalid descriptor is rejected")
 end
 print("match3 engine: independent games, configurable minimum, integer behavior/kind flags passed")
