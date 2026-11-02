@@ -8,10 +8,11 @@ The craft rules come from Infocom's practice, as collected in the [zilscript](ht
 
 Do these in order, and keep each one in the script document.
 
-1. **One sentence of play fantasy.** What is the player doing and why does it feel good? "A text adventure" or "a match-3 with a story" is not an answer. "I am relighting a town that gave up on Christmas, and someone is secretly helping me" is.
-2. **What is broken in this world.** List what is wrong, before any plot. Blockers, buildings and clues should come from this list, so that they feel as if they were always true. Ice in the tropics is a clue because the world explains it; ice as a difficulty step is only a mechanic.
+1. **One sentence of play fantasy.** What is the player doing and why does it feel good? "A text adventure" or "a match-3 with a story" is not an answer. "I am building the cosiest Christmas market in the north, and every stall makes somebody's wish come true" is.
+   **Name the feeling too,** and check every plot idea against it. Each game wants a different one. Relic Rush can carry a lie and a threat. Christmas Market exists to give the player the Christmas spirit, so a fire and a guilty secret are wrong for it however gently they are told.
+2. **What this world wants, or what is broken in it.** List it before any plot. Blockers, buildings and clues should come from this list, so that they feel as if they were always true. Ice in the tropics is a clue because the world explains it; ice as a difficulty step is only a mechanic.
 3. **What really happened.** Write the full truth in time order, including what the player never sees. Clues come from this, not the other way round.
-4. **The question.** One question the whole game answers, asked by a character in the first few levels. Each episode should move it forward and end by raising a bigger one.
+4. **The question.** Mystery is one engine among several. A warm story can run on a countdown, a chain of wishes or a surprise being prepared, with no secret worse than a birthday present. One question the whole game answers, asked by a character in the first few levels. Each episode should move it forward and end by raising a bigger one.
 5. **Working materials** (below).
 6. **The script**, line by line.
 7. **Checks** (below), then the implementation notes.
@@ -32,6 +33,8 @@ The world is bigger than working memory, so keep these sheets in the script docu
 
 ## Fair mysteries
 
+For games that use one.
+
 - **The answer must already be in the world.** A player should think "of course", never "how could I have known". Every reveal needs at least one clue, planted well before it, and the best ones need two facts from different places, which the player connects. That moment is the point of the game.
 - **Put the clue and its meaning in different beats.** Say what a glance takes in, and let the conclusion arrive later. "A chimney, standing alone" is a clue. "A fire destroyed this row" in the same line is a summary.
 - **Voice the player's wrong theory.** Infocom wrote responses for the plausible wrong answers to a puzzle. Our version: a main character states the theory the player is likely to hold, in full, and the evidence breaks it. Do this about once per episode, and have the character admit it. It rewards a player who was ahead and redirects one who was not.
@@ -39,6 +42,10 @@ The world is bigger than working memory, so keep these sheets in the script docu
 - **One tell is enough.** A joke such as "I've never liked candles" can give away a reveal thirteen levels early. Give a clue a plain everyday excuse, so that it only looks like a clue afterwards.
 - **Keep some mystery alive.** Do not answer everything. End each episode with a question the player could not have asked before it.
 - **Twists from the Infocom list:** the reversal (the goal changes), the revelation (one fact rearranges everything before it), the callback (an early joke turns out to matter). Each must survive a re-read.
+
+## Borrowing from films
+
+Genre films are a good source of technique. Take the mechanism, not the plot: strangers who write to each other while quarrelling in person, everyone you helped turning up when things go wrong. Name each technique and its source in the script, so a reader can check nothing was copied. See [Christmas Market](../games/christmas-market/docs/story.md#what-we-take-from-christmas-films).
 
 ## Characters
 
@@ -53,6 +60,7 @@ The world is bigger than working memory, so keep these sheets in the script docu
 - **Text and picture divide the work.** Over an illustrated panel, do not describe what is drawn: say what it means or what happens next. Busts over a blurred island have no scene behind them, so there a line needs one strong concrete anchor: "Twelve bunks. Plates still on the table."
 - **Short and concrete.** Aim for under 100 characters per line, and one idea per line. Name a thing rather than a feeling: not "she looked sad", but a character changing the subject.
 - **One beat, one change.** Each beat leaves something different from how it found it: a new fact, a changed relationship or a new problem. If two beats could swap without anyone noticing, one is redundant.
+- **Beats play alone, perhaps a day apart.** A thread must be understandable after a gap, so bring each one back every few levels and restate rules or objects in passing.
 - **Recurring words become memory.** Repeat a few anchors in the same words (a place, an object, a catchphrase), so the player can retell the story in them. Keep names stable.
 - **Humour comes from people and from failure.** Keep it dry, and mix it with real stakes. Comedy lands better next to danger than next to more comedy.
 
@@ -76,7 +84,7 @@ Beat order: result → island → place the wonder → beat → next goal. Wonde
 - **The opening is playable at once.** One landmark, one object, one thing that is blocked, and a reward within the first minute. Open on something interesting, never on backstory or "welcome to".
 - **Environmental storytelling first.** Prefer a letter, a burn mark or a bricked-up door to a character explaining. Put history in artifacts, and let characters argue about what they mean.
 - **The world answers back.** Things change after a reveal. A building's tap bubble can change once the player knows what it means, which is cheap and rewards curiosity. Failure screens and small lines keep the voice too.
-- **The ending must:** pay off at least two specific discoveries, include a real decision by a main character, and show what comes next.
+- **The ending must:** pay off at least two things planted earlier, include a real decision or a real gift from a main character, and show what comes next.
 - **Walk straight into the sequel.** Zork I's last room is the first room of Zork II, and players remember one continuous journey although nothing carries over. Open each episode at the place and moment the last one stopped. The "To be continued" screen should feel like the next step in that place, not an advertisement.
 
 ## Checks
@@ -84,7 +92,7 @@ Beat order: result → island → place the wonder → beat → next goal. Wonde
 Do these before calling a script done.
 
 - **Count.** Lines per beat and episode against the budget, longest line, and no unknown speakers. A small script over the document will do.
-- **Read it cold.** The author of a mystery cannot judge it, as Lebling found when he got his own puzzle wrong. Give a separate agent or person the script one episode at a time, with no notes, and ask: what do you think happened, who is lying, what will happen next? Fix what they could not reach, and what they guessed too early.
+- **Read it cold.** The author of a mystery cannot judge it, as Lebling found when he got his own puzzle wrong. Give a separate agent or person the script one episode at a time, with no notes, and ask: what do you think happened, who is lying, what will happen next, and how did this make you feel? Fix what they could not reach, what they guessed too early, and any beat that breaks the feeling.
 - **Cross the story with the systems.** Each piece is usually right on its own, and the bugs live where two meet:
   - **Replays and retries** must not repeat a beat.
   - **Queued beats:** a region opening and a wonder in the same moment must not collide or spoil each other.
