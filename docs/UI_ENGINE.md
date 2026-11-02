@@ -238,6 +238,20 @@ units, so layout doesn't change.
 `enabled`, `accent`, `flat`, `selected`, `role`, `radius`, `hit_offset`, and
 `kind` to draw another control, such as Nile Archive's `pill`), and
 `skin:draw_checkbox(bounds, caption, value, opts)` returns the new value.
+
+**Resource panels.** Every game's HUD shows its currencies, goals and supplies
+with one element: `skin:draw_resource(bounds, icon, value, opts)`, a small panel
+holding a figure, with an icon larger than the panel overhanging its left end.
+It returns true when tapped. The look is the skin's `resource` control, with
+`normal` and `pressed` layers (`radius_scale = 1` makes a pill), `text`, `em`,
+`icon_ratio` (default 1.4 of the panel's height) and `icon_overhang` (default
+.12). `icon` is a texture, a function painting into a logical box, or nil.
+`opts`: `role` for one of the control's `variants` (a larger wallet, say),
+`interactive = false` for a read-only panel that never takes input, `hit` (the
+touch area, default the panel), `hit_offset`, `icon_scale` (a landing bounce), `icon_alpha`, `value_icon` (a
+texture replacing the figure, such as a met goal's seal) and `reserve` (width
+kept free at the right end for a badge). `skin:resource_icon_box(bounds, role)` gives
+the icon's box, for effects that fly to it.
 `skin:paint(kind, bounds, state, node)` and
 `skin:paint_caption(kind, bounds, caption, state, node)` paint any control's
 look for a state the game tracks itself, and `skin:text(name, em)` gives a text

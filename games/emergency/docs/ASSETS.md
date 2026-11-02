@@ -44,3 +44,10 @@ or game-rule change is necessary.
 Packing copies existing source pixels and retains frame order, repetition and
 pivots. It does not synthesize selected/pressed/damaged states. Original prompts
 for the episode maps and prop sheet are retained beside this document.
+
+## Known gaps
+
+The HUD's food, wood and money panels (`skin:draw_resource`) show a text caption
+because no supply icons ship yet. Tracked in
+[issue #71](https://github.com/corepunch/nile-archive/issues/71): one authored
+icon per supply, legible at about 54 px on the dark pill.

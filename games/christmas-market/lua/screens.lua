@@ -98,33 +98,22 @@ local function pause_button()
     return st.clicked
 end
 
--- A resource readout: a dark pill with a gold seam, its icon overhanging the left end.
-function R.capsule(r, icon, value)
-    gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
-    gfx.round_rect(r, r.h * .5, rgba(13, 47, 41, 225))
-    gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
-    icon(vec2(r.x + 6, r:center().y), r.h * .5 + 6)
-    say(value, rect(r.x + r.h * .5 + 10, r.y, r.w - r.h * .5 - 18, r.h), 18, PAL_CREAM)
-    return tapped(r)
+local function resource_icons()
+    return {R.relics[RELIC_IDOL + 1], R.relics[RELIC_LEAF + 1], R.relics[RELIC_CRYSTAL + 1],
+            function(box) star_icon(box:center(), box.w * .32) end, function(box) compass_icon(box:center(), box.w * .3) end}
 end
-local capsule = R.capsule
-
-local function relic_icon(kind)
-    return function(c, radius) picture(R.relics[kind + 1], rect.centered(c, size2(radius * 2, radius * 2)), 255) end
-end
-local capsule_icons = {relic_icon(RELIC_IDOL), relic_icon(RELIC_LEAF), relic_icon(RELIC_CRYSTAL),
-                       function(c, radius) star_icon(c, radius * .8) end, function(c, radius) compass_icon(c, radius * .72) end}
 local capsule_notes = {"Gold buys stalls. Replay winter wishes to earn more.", "Holly bundles fund stalls. First wins cover the full cost.",
                        "Baubles fund stalls. First wins cover the full cost.", "Christmas Stars unlock stalls and land; never spent.",
                        "Golden bells are spent to open more market space."}
 
--- The island shows its purse in two rows of capsules; tapping EXPAND opens the
+-- The island shows its purse in two rows of resource panels; tapping EXPAND opens the
 -- next region. An unfinished expedition exposes only pause, never island access.
 function R.draw_header(on_market)
     if on_market then
+        local icons = resource_icons()
         for k = 1, 5 do
             local r = rect(34 + (k - 1) % 3 * 120, k <= 3 and 14 or 58, 96, 34)
-            if capsule(r, capsule_icons[k], tostring(R.prog.wallet[k])) then R.notice(capsule_notes[k]) end
+            if skin:draw_resource(r, icons[k], tostring(R.prog.wallet[k]), {hit_offset = vec2(0, R.hit_dy)}) then R.notice(capsule_notes[k]) end
         end
         local r = rect(274, 58, 96, 34)
         gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))

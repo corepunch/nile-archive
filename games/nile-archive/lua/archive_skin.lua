@@ -100,6 +100,17 @@ return ui.skin{
             variants = {parchment = {normal = {set = {inner = {fill = "parch_hi", fill2 = "parch_lo"}, line = {border = "#B0843C96"}}}}},
         },
 
+        -- A dark pill holding one figure; the icon overhangs its left end.
+        resource = {
+            text = "number",
+            normal = {layers = {
+                {shadow = "#0000005A", radius_scale = 1, blur = 6, offset = {0, 3}, fixed = true},
+                {fill = "#091C20DE", radius_scale = 1},
+                {border = "#E9C77BBE", width = 1.6, radius_scale = 1},
+            }},
+            pressed = {offset = {0, 1}},
+        },
+
         -- Glossy pills in green (default), blue and red; a disabled pill turns grey.
         pill = {
             text = "pill_green", text_inset = {14, 4}, text_fit = true, text_align = {.5, .52},

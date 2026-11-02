@@ -111,9 +111,9 @@ local function hud()
     label(rect(34,44,330,27),levels[S.chapter].title,25)
     local total=0;local idle=0
     for _,w in ipairs(g.workers) do if not w.recruit then total=total+1;if w.phase=='idle' then idle=idle+1 end end end
+    -- Supplies have no icon art yet (docs/ASSETS.md), so each panel names its own.
     for i,r in ipairs({'food','wood','money'}) do
-        label(rect(385+(i-1)*167,20,155,23),r:upper(),15)
-        label(rect(385+(i-1)*167,42,155,30),tostring(g.wallet[r]),29,nil,'gold')
+        skin:draw_resource(rect(385+(i-1)*162,27,152,38),nil,('%s %d'):format(r:upper(),g.wallet[r]),{interactive=false})
     end
     label(rect(887,23,206,23),('WORKERS  %d / %d'):format(idle,total),20)
     label(rect(887,48,195,20),('%02d:%02d'):format(math.floor(g.time/60),math.floor(g.time%60)),17,nil,'white')

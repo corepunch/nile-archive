@@ -100,14 +100,10 @@ local function draw_backdrop()
     end
 end
 
--- The expedition HUD follows the portrait match-3 convention (Royal Match, Toon
--- Blast, Homescapes): one band fixed to the top edge holding a large Moves
--- medallion, goal icons with their remaining counts beneath, and pause; the
--- tools sit in a matching tray along the bottom edge. Nothing else covers the
--- painting, and the board takes the space between.
+-- The expedition HUD floats on the painting, with no band behind it: a large
+-- Moves medallion, one small resource panel per goal, and pause along the top,
+-- the tools standing along the bottom edge, the board taking the space between.
 -- Repeated goal cells use the shared measured list, with stable objective keys.
--- Both bars stay slim so the painting carries the screen.
-local HUD_BOTTOM, TRAY_TOP = 60, 832   -- the tools stand up out of the tray
 local MOVES_AT, MOVES_R = vec2(56, 34), 40
 function R.goal_entries()
     local g, l = R.g, rules.level_of(R.g)
@@ -120,60 +116,28 @@ function R.goal_entries()
     return entries
 end
 local goal_centers = {}
-local function goal_icon(box, entry)
-    goal_centers[entry.id] = box:center()
-    local image = entry.icon=="score" and R.hud_art.score
+local function goal_panel(box, entry)
+    goal_centers[entry.id] = R.skin:resource_icon_box(box):center()
+    local icon = entry.icon=="score" and R.hud_art.score
         or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
         or R.board_art[entry.icon]
     -- Collections landing on a goal make it bounce.
     local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
-    local s = 1 + math.sin(num.saturate(pulse / .22) * PI) * .16
-    gfx.image(image, rect.centered(box:center(), box:size():scale(s)), rgba(255, 255, 255, entry.remaining==0 and 150 or 255))
+    local met = entry.remaining==0
+    R.skin:draw_resource(box, icon, tostring(entry.remaining), {interactive=false,
+        icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
+        icon_alpha=met and 150/255 or 1, value_icon=met and R.hud_art.complete or nil})
 end
-local function goal_count(box, entry)
-    if entry.remaining==0 then
-        gfx.image(R.hud_art.complete, rect(box.x, box.y + (box.h - 22) / 2, 22, 22), color.WHITE)
-    else
-        text.inside(R.pal(PAL_CREAM, 15), box, vec2(0, .5), tostring(entry.remaining))
-    end
-end
-local hud_form=ui.form{kind="row",gap=10,children={
-    {kind="spacer",width=78},    -- the Moves medallion overhangs the band here
-    {kind="row",panel=true,grow=1,padding={4,4,4,4},children={
-        {kind="spacer",grow=1},
-        {kind="list",id="goals",direction="row",gap=4,item=function(entry)
-            return {kind="row",width=66,gap=4,align="center",children={
-                {kind="custom",width=28,height=28,paint=function(box) goal_icon(box,entry) end},
-                {kind="custom",width=34,height=24,paint=function(box) goal_count(box,entry) end},
-            }}
-        end},
-        {kind="spacer",grow=1},
-    }},
+local hud_form=ui.form{kind="row",gap=6,align="center",children={
+    {kind="spacer",width=82},    -- the Moves medallion
+    {kind="spacer",grow=1},
+    {kind="list",id="goals",direction="row",gap=6,item=function(entry)
+        -- The score runs to four digits; the other counts stay narrow.
+        return {kind="custom",width=entry.id=="score" and 88 or 62,height=30,paint=function(box) goal_panel(box,entry) end}
+    end},
+    {kind="spacer",grow=1},
     {kind="spacer",width=64},    -- pause, drawn by the shared header
 }}
--- A recessed jade plate inside the band, so the goals read as one group.
-local hud_skin={
-    panel=function(r)
-        gfx.round_rect(r:offset(vec2(0,1)),15,rgba(255,226,150,70))
-        gfx.round_rect_grad(r,15,rgba(5,26,24,235),rgba(9,40,36,235))
-        gfx.round_rect_line(r,15,1.5,rgba(212,175,95,170))
-    end,
-    label=function() end,
-}
-
--- A jade band with a gold trim; `top` true hangs it from the top edge, false
--- stands it on the bottom edge. Both run under the safe areas.
-local function draw_band(edge, top)
-    local full = app.bleed()
-    gfx.bleed(true)
-    local r = top and rect(full.x, full.y, full.w, edge - full.y) or rect(full.x, edge, full.w, full.y + full.h - edge)
-    gfx.rect_grad(rect(full.x, top and edge or edge - 14, full.w, 14),
-                  rgba(0, 0, 0, top and 70 or 0), rgba(0, 0, 0, top and 0 or 70))   -- soft shadow on the board side
-    gfx.rect_grad(r, top and rgba(9, 44, 40) or rgba(17, 70, 60), top and rgba(17, 70, 60) or rgba(9, 44, 40))
-    gfx.rect(rect(full.x, edge - 2, full.w, 4), rgba(116, 74, 33))
-    gfx.rect(rect(full.x, edge - 1, full.w, 2), rgba(236, 196, 112))
-    gfx.bleed(false)
-end
 
 -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
 -- remaining moves large inside. It warms to red over the last five moves.
@@ -202,12 +166,10 @@ function R.goal_target(kind)
     -- Collection flights land on the goal they advance.
     return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, 30)
 end
-local function draw_hud(top, tray)
+local function draw_hud(top)
     if top <= 0 then return end
-    draw_band(HUD_BOTTOM + (top - 1) * 110, true)
-    draw_band(TRAY_TOP + R.drop + (1 - tray) * 130, false)
     assert(hud_form:set_items("goals",R.goal_entries()))
-    hud_form:draw(rect(14,8 + (top - 1) * 110,452,44),hud_skin,{interactive=false})
+    hud_form:draw(rect(14,10 + (top - 1) * 110,452,44),R.skin,{interactive=false})
     local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
     if medallion > .05 then draw_moves(medallion) end
 end
@@ -296,7 +258,7 @@ end
 R.tool_notes = {"Pickaxe: tap a relic to break it.", "Dynamite: tap a relic to blast around it.",
                     "Sunburst: tap a relic to clear its three lines."}
 
--- Three tools, evenly spaced in the tray; their names and the rules live in
+-- Three tools, evenly spaced; their names and the rules live in
 -- the toast and the Explorer's Guide (in Pause), as in other match-3 games.
 local function draw_tools(inp)
     local y = TOOLS_Y + R.drop
@@ -305,11 +267,11 @@ local function draw_tools(inp)
         local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
         local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
                                      inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE or R.phase == PH_PRESENT)
-        -- The tools spring up out of the tray one by one; they take taps at rest.
+        -- The tools spring up from the bottom edge one by one; they take taps at rest.
         local rise = R.intro and R.intro:arrive(.14 + k * .07, 3, .48) or 1
         local up = vec2(0, (1 - rise) * 120)
         local drawn = r:offset(up)
-        gfx.round_rect(drawn:inflate(7):offset(vec2(0, 2)), 22, rgba(4, 24, 22, 150))   -- a socket in the tray
+        gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
         gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], drawn:inflate(5), color.WHITE)
         gfx.circle(vec2(x + 31, y + 4) + up, 14, rgba(116, 74, 33))
         gfx.circle(vec2(x + 31, y + 4) + up, 12, R.g.tools[k + 1] > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
@@ -325,9 +287,9 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     local top, tray = 1, 1
     if intro then top, tray = intro:arrive(0, 2.8, .58), intro:arrive(.05, 2.8, .58) end
-    draw_hud(top, tray)
+    draw_hud(top)
     if top > 0 then
-        R.P.offset = vec2(0, (top - 1) * 110)   -- the pause medallion rides in on the band
+        R.P.offset = vec2(0, (top - 1) * 110)   -- the pause medallion rides in with the goals
         R.draw_header(false)
         R.P.offset = vec2(0, 0)
     end

@@ -117,6 +117,19 @@ return ui.skin{
             },
         },
 
+        -- A slim pill holding one figure; the icon overhangs its left end.
+        resource = {
+            text = "cream", em = 16,
+            normal = {layers = {
+                {shadow = "#00000050", radius_scale = 1, blur = 5, offset = {0, 2}, fixed = true},
+                {fill = "#0D2F29D7", radius_scale = 1},
+                {border = "#E9C77BAA", width = 1.4, radius_scale = 1},
+            }},
+            pressed = {offset = {0, 1}},
+            -- The island wallet is prominent: 60-unit icons on 36-unit panels.
+            variants = {wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5}},
+        },
+
         label = {text = "gold", em = 26, wrap_text = "cream", wrap_em = 22},
 
         focus = {normal = {layers = {{border = "#FFDF81", width = 2, radius = 15, inset = -3}}}},

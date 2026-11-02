@@ -34,6 +34,15 @@ return ui.skin{
             {border = "border", width = 1.5, radius = 13, inset = .75},
         }}},
 
+        -- A dark pill holding one figure, shared with the other games' HUDs.
+        resource = {
+            text = "gold", em = 22,
+            normal = {layers = {
+                {fill = "#0B2226E6", radius_scale = 1},
+                {border = "border", width = 1.5, radius_scale = 1},
+            }},
+        },
+
         -- Teal buttons with a soft top gloss. Hover lifts the top colour,
         -- pressing sinks the body 2 units and drops its shadow, disabled fades
         -- the whole button. Accent buttons are gold.

@@ -176,22 +176,21 @@ cover every tool/state plus normal and exhausted rows at both phone sizes.
 Priority: depleted or board busy → disabled; held pointer that began inside →
 pressed; selected tool → selected; real mouse inside → hover; otherwise normal.
 Touch never receives hover art. Charge counts are dynamic text on a counter.
-The tools stand up out of a low jade tray along the bottom edge, three evenly
-spaced sockets without captions; choosing one names it and its effect in the toast.
+The tools stand along the bottom edge on the painting, three evenly spaced
+buttons without captions; choosing one names it and its effect in the toast.
 
 ## Expedition header
 
-The header follows the portrait match-3 convention (Royal Match, Toon Blast,
-Homescapes): one jade band with a gold trim hangs from the top edge, under the
-status bar. It holds a hexagonal Moves medallion that overhangs the band, a
-recessed goal plate and the authored pause medallion. Goals are icons with their
-remaining count beside them; both bars stay slim to leave the painting visible. Score remains a win condition, represented by the star
-seal; idols, sand and lock counts use their existing artwork. A met goal dims its
-icon and replaces the count with the completed seal. Collections landing on a
-goal make its icon bounce. Over the last five moves the medallion face turns
-red and glows. The band, trim, plate and medallion are drawn with engine shapes
-(gradients, polygons); they are frames, not interaction states of an authored
-control, and the medallion has no pressed/hover states because it is read-only. No score total, level title,
+The header floats on the painting with no band or plate behind it. It holds a
+hexagonal Moves medallion, one resource panel per goal (the engine's
+`skin:draw_resource`, the same element as the island wallet) and the authored
+pause medallion. Score remains a win condition, represented by the star seal;
+idols, sand and lock counts use their existing artwork. A met goal dims its icon
+and replaces the count with the completed seal. Collections landing on a goal
+make its icon bounce. Over the last five moves the medallion face turns red and
+glows. The panels and medallion are drawn with engine shapes; the goal panels
+and medallion are read-only and have no pressed/hover states
+([reviewed captures](../../../docs/review/resource-panels/README.md)). No score total, level title,
 progress bar or island shortcut is displayed during an expedition. Level details
 are in Pause; results retain score/reward details. Pause's Restart (confirmed)
 and Quit to island (keeps the board) are the in-round exits; win/failure screens

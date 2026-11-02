@@ -37,6 +37,17 @@ return ui.skin{
             {fill = "#FFEFBC", radius = 13, inset = 5},
         }}},
 
+        -- A slim pill holding one figure; the icon overhangs its left end.
+        resource = {
+            text = "cream", em = 18,
+            normal = {layers = {
+                {shadow = "#00000050", radius_scale = 1, blur = 5, offset = {0, 2}, fixed = true},
+                {fill = "#0D2F29E1", radius_scale = 1},
+                {border = "#E9C77BBE", width = 1.4, radius_scale = 1},
+            }},
+            pressed = {offset = {0, 1}},
+        },
+
         -- A festive red button with a gloss on an evergreen shadow; pressing
         -- sinks it onto the shadow, disabled drains the colour from the same
         -- layers. Hover and selected look like normal: touch has no hover.

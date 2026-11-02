@@ -756,6 +756,10 @@ function ui_skin:paint_caption(kind, bounds, caption, state, node, align) end
 function ui_skin:draw_button(bounds, caption, opts) end
 ---@return boolean
 function ui_skin:draw_checkbox(bounds, caption, value, opts) end
+---@return rect
+function ui_skin:resource_icon_box(bounds, role) end
+---@return boolean
+function ui_skin:draw_resource(bounds, icon, value, opts) end
 ---@return {control: string, state: string}[]
 function ui_skin:audit(required) end
 ---@class ui_modal_stack
