@@ -37,10 +37,20 @@ function R.vfx_color(kind, alpha)
 end
 local vfx_color = R.vfx_color
 
--- A soft radial glow texture (cubic falloff), drawn additively.
+-- A soft radial glow texture (cubic falloff) and the CC0 Kenney particle
+-- sprites (lua/particle_skin.lua), all drawn additively with a per-kind tint.
+local fx_art = {}
 function R.vfx_init()
     R.glow = require("art").skin().glow
     R.glow.additive = true   -- per-view blend; other atlas frames retain alpha blending
+    local skin = require("particle_skin")
+    local atlas = texture.load(skin.path)
+    assert(atlas.tex, "cannot load particle atlas")
+    for name, box in pairs(skin.frames) do
+        fx_art[name] = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
+        assert(fx_art[name].tex, "invalid particle frame: " .. name)
+        fx_art[name].additive = true
+    end
 end
 
 function R.vfx_reset()
@@ -65,7 +75,12 @@ local vfx_halo = R.vfx_halo
 local function ring(at, radius, width, c)
     if radius >= 1 then gfx.ring(at, radius - width * .5, width, c) end
 end
-local function spark(at, radius, angle, c) gfx.star(at, radius, .24, 4, angle, c) end
+local function sprite(name, at, side, angle, c)
+    gfx.image_rot(fx_art[name], rect.centered(at, size2.splat(side)), angle, c)
+end
+-- The sprites' rings sit at .57 (ring) and .70 (shock) of their half-size.
+local function ring_sprite(name, at, radius, c) sprite(name, at, radius * (name == "ring" and 3.5 or 2.86), 0, c) end
+local function spark(at, radius, angle, c) sprite("glint", at, radius * 2.6, angle, c) end
 
 ------------------------------------------------------------------ particles
 
@@ -113,10 +128,12 @@ function R.vfx_particles()
                 local c = vfx_color(p.kind, 255 * fade)
                 vfx_halo(p.at, 8 * fade + 2, vfx_color(p.kind, 130 * fade))
                 if (i - 1) % 3 == 0 then
-                    spark(p.at, 5 * fade + 1, t * 4, c)
-                else
-                    gfx.line(p.at, p.at - p.vel:scale(.025), 2.5 * fade, c)
-                    gfx.circle(p.at, 1.4 + 1.6 * fade, rgba(255, 252, 216, 230 * fade))
+                    sprite("twinkle", p.at, 16 * fade + 4, t * 4, c)
+                else   -- a shard streaking along its velocity, with a hot head
+                    local tail = p.at - p.vel:scale(.025)
+                    local length = math.max(8, (p.at - tail):len() * 2.2)
+                    sprite("streak", p.at:lerp(tail, .5), length, math.atan(p.vel.y, p.vel.x) - PI / 2, c)
+                    sprite("twinkle", p.at, 7 + 5 * fade, 0, rgba(255, 252, 216, 230 * fade))
                 end
             end
         end
@@ -232,15 +249,18 @@ function R.vfx_draw()
             gfx.additive(true)
             if e.type == FX_IMPACT then
                 vfx_halo(e.at, 20 + 35 * t, vfx_color(e.kind, 150 * fade))
-                ring(e.at, 7 + 28 * t, 2.5 * fade, c)
+                ring_sprite("ring", e.at, 7 + 28 * t, c)
                 if t < .65 then spark(e.at, 16 * fade, PI / 4, cream) end
             elseif e.type == FX_BLAST then
                 local r = e.value * ease.out_cubic(t)
-                vfx_halo(e.at, 48 + 60 * t, vfx_color(e.kind, 190 * fade * fade))
-                ring(e.at, r + 7, 18 * fade, vfx_color(e.kind, 45 * fade))
+                sprite("flash", e.at, 1.5 * (48 + 60 * t), t * .6, vfx_color(e.kind, 110 * fade * fade))
+                ring_sprite("shock", e.at, r + 12, vfx_color(e.kind, 70 * fade))
                 ring(e.at, r, 4 + 7 * fade, c)
                 ring(e.at, r * .85, 2.5, rgba(255, 245, 202, 220 * fade))
-                if t < .5 then spark(e.at, 40 * fade, PI / 4, rgba(255, 242, 183, 220 * fade)) end
+                if t < .5 then
+                    sprite("burst", e.at, 70 * fade, 0, vfx_color(e.kind, 110 * fade))
+                    spark(e.at, 40 * fade, PI / 4, rgba(255, 242, 183, 220 * fade))
+                end
                 for k = 0, 7 do spark(e.at + vec2.polar(k * PI / 4, r * .8), 7 * fade, k * PI / 4, c) end
             elseif e.type == FX_RAY then
                 local tip = e.at:lerp(e.to, ease.out_cubic(math.min(1, t * 1.8)))

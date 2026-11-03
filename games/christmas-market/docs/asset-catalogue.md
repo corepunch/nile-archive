@@ -26,6 +26,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
 | Snowfall and feedback | Lua renderer | Procedural | Transient snow particles, collection particles, beams, lift and placement feedback; no authored control state is derived with a filter |
+| Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/particles.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
 Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved inside extracted artwork. Control states are directly cropped from the authored atlas.
 
@@ -85,6 +86,31 @@ boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters
 Portraits retain finite entrance/exit slides and fades. An independent colour
 tween brightens/dims active/listener states without replaying the slide. Size is
 constant for speaker/listener, with no scale/rotation animation or idle wobble. See [motion, captures and timing review](../../../docs/review/motion/README.md).
+
+## Particle sprites
+
+Seven sprites from Kenney's CC0 [Particle Pack](https://opengameart.org/content/particle-pack-80-sprites)
+texture the impact, spark and bomb effects, as in Relic Rush. The original
+black-background PNGs and `License.txt` are retained in `art/particles/kenney/`;
+`python3 tools/pack_particles.py christmas-market` (from the repository root)
+resizes them, turns brightness into alpha on white and writes `data/particles.png`
+with its contract `lua/particle_skin.lua`. `lua/vfx.lua` draws them additively,
+tinted with each piece's effect colour. They are transient effect sprites with no
+interaction states. Shooting-star beams, prism links, special births and the
+bomb's leading ring stay procedural.
+
+| Sprite | Kenney source | Use |
+| --- | --- | --- |
+| `shock` | `circle_03` | Soft outer band of the bomb shockwave |
+| `flash` | `light_01` | Bomb bloom |
+| `burst` | `star_09` | Bomb centre flare, under the glint |
+| `ring` | `circle_02` | Per-cell impact ring |
+| `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, beam tips and births |
+| `twinkle` | `star_06` | Spark particles and shard heads |
+| `streak` | `trace_06` | Shard particles, aligned to their velocity |
+
+Review: [kenney-particles](review/kenney-particles/README.md) (bomb and shooting-star frames
+before and after, `--fx bomb|ray --frames N`).
 
 ## Board entrance
 
