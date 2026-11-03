@@ -584,6 +584,7 @@
     "data/navigation/play-normal.png",
     "data/navigation/play-pressed.png",
     "data/navigation/play-selected.png",
+    "data/particles.png",
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/tile-sets/jewels/0.png",
@@ -983,5 +984,25 @@
     "script": "docs/story.md",
     "compile": "python3 games/relic-rush/tools/prepare_story.py",
     "review": "docs/review/story/README.md"
+  },
+  "particle_sprites": {
+    "source": "art/particles/kenney/",
+    "license": "art/particles/kenney/License.txt",
+    "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
+    "runtime": "data/particles.png",
+    "contract": "lua/particle_skin.lua",
+    "renderer": "lua/vfx.lua",
+    "frames": {
+      "shock": "circle_03",
+      "flash": "light_01",
+      "burst": "star_09",
+      "ring": "circle_02",
+      "glint": "star_07",
+      "twinkle": "star_06",
+      "streak": "trace_06"
+    },
+    "states": "transient additive effect sprites; per-kind tint at draw time; no interaction states",
+    "reproduction": "python3 tools/pack_particles.py relic-rush (from the repository root)",
+    "review": "docs/review/kenney-particles/README.md"
   }
 }

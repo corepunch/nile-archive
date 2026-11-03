@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,6 +53,13 @@ def main():
     for entry in entries:
         pixels = int(entry['size'].split('x')[0]) * int(entry.get('scale','1x')[:-1])
         assert png(catalogue/entry['filename']) == ((pixels,pixels),2), entry
+    particles = manifest['particle_sprites']   # retained CC0 Kenney sources, fresh atlas, documented frames
+    assert (ROOT/particles['license']).is_file()
+    doc = (ROOT/'docs/asset-catalogue.md').read_text()
+    for name, source in particles['frames'].items():
+        assert (ROOT/particles['source']/f'{source}.png').is_file(), source
+        assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
+    subprocess.run([sys.executable, str(ROOT.parents[1]/'tools/pack_particles.py'), 'christmas-market', '--check'], check=True)
     print(f'Christmas Market: {len(inventory)} runtime files, 40 atlas crops, {len(buildings)} Blender buildings, 11 native icon slots verified')
 
 if __name__ == '__main__':

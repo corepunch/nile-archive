@@ -260,6 +260,30 @@ and safe-area phone captures are in `docs/review/result-without-torches/`.
 [effects and capture modes](effects.md). There are no additional hidden gem skins
 for burning, charging, cracked gems or tool upgrades.
 
+### Particle sprites (`data/particles.png`)
+
+Seven sprites from Kenney's CC0 [Particle Pack](https://opengameart.org/content/particle-pack-80-sprites)
+texture the impact, spark and bomb effects. The original black-background PNGs
+and `License.txt` are retained in `art/particles/kenney/`;
+`python3 tools/pack_particles.py relic-rush` (from the repository root) resizes them, turns brightness into alpha on
+white and writes `data/particles.png` with its contract `lua/particle_skin.lua`.
+`lua/vfx.lua` draws them additively, tinted with each piece's effect colour.
+They are transient effect sprites with no interaction states. Ray beams,
+prism links, special births and the bomb's leading ring stay procedural.
+
+| Sprite | Kenney source | Use |
+| --- | --- | --- |
+| `shock` | `circle_03` | Soft outer band of the bomb shockwave |
+| `flash` | `light_01` | Bomb bloom |
+| `burst` | `star_09` | Bomb centre flare, under the glint |
+| `ring` | `circle_02` | Per-cell impact ring |
+| `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, ray tips and births |
+| `twinkle` | `star_06` | Spark particles and shard heads |
+| `streak` | `trace_06` | Shard particles, aligned to their velocity |
+
+Review: [kenney-particles](review/kenney-particles/README.md) (bomb and ray frames before and after,
+`--fx bomb|ray --frames N`).
+
 ## Remaining runtime asset families
 
 `cloud-fog` covers locked land with rolling cloud banks (`city.fog_clouds`, `engine/city.c`).

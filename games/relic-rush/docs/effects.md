@@ -31,7 +31,7 @@ Our interpretation is anticipation → attack → tile response → collection �
 
 ## Implementation and verification
 
-`vfx.lua` isolates presentation from `rules.lua`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. A small procedural additive light texture is created once; rings, beams and sparkles use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
+`vfx.lua` isolates presentation from `rules.lua`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. A small procedural additive light texture is created once. Impact rings, sparkles, shards and the bomb's bloom and outer shockwave use tinted CC0 Kenney particle sprites (`data/particles.png`, see the [asset catalogue](asset-catalogue.md#particle-sprites-dataparticlespng)); beams, prism links and the bomb's leading ring use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
 
 Static specials, blockers and tool controls use authored atlas artwork; their
 states and the intentional procedural animation primitives are listed in the
