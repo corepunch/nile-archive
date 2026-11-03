@@ -22,8 +22,64 @@ local function press_row(form, key, id)
     end
 end
 
+-- --smoke --campaign: all thirty expeditions through the real result, Claim,
+-- region, placement, dialogue and Play controls. Each board's goals are met
+-- before one real swap, so this checks the flow; the extended greedy-bot
+-- rules test checks that the boards themselves can be won.
+local played = {}
+local function campaign()
+    local journey = require("journey")
+    if frames > 16000 then
+        error(("campaign smoke stalled at level %d (overlay %d, island %s, story %s)"):format(
+            R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
+    end
+    if wait > 0 then wait = wait - 1; return end
+    wait = 2
+    if story.active() then
+        local b = R.story_current
+        if b and played[#played] ~= b.key then played[#played + 1] = b.key end
+        app.inject_click(vec2(240, 300)); return
+    end
+    local c = R.island
+    if R.overlay == R.OV_FINALE then
+        local want = {}
+        for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
+        assert(table.concat(played, " ") == table.concat(want, " "),
+               "campaign smoke: beats played out of order: " .. table.concat(played, " "))
+        for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
+        assert(R.prog.level == rules.LEVELS and island.wonder_count(c) == island.WONDERS and c.open == 63,
+               "campaign smoke: thirty clears restore every wonder and open every region")
+        print(("campaign smoke passed: %d expeditions, %d story beats, %d wonders, every region in %d frames"):format(
+            R.prog.level, #played, island.wonder_count(c), frames))
+        app.quit()
+    elseif R.overlay == R.OV_RESULT then
+        if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
+    elseif R.overlay == R.OV_ZONE then
+        if R.dialog_settled() then app.inject_click(rect(72, 487, 336, 47):center() + vec2(0, R.drop / 2)); wait = 20 end
+    elseif c.placing >= 0 then
+        app.inject_click(R.placement_form.boxes.confirm:center()); wait = 10
+    elseif R.on_island and R.overlay == R.OV_NONE then
+        local z = c:next_zone(R.prog.wallet)
+        if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
+        elseif island.wonder_count(c) < journey.earned(R.prog.level) then R.island_begin(island.wonder_count(c), true)
+        elseif R.prog.level < rules.LEVELS then
+            app.inject_click(R.island_buttons.play + vec2(0, R.drop)); wait = 10
+        end
+    elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
+        local g, l = R.g, rules.level_of(R.g)
+        for i = 0, rules.CELLS - 1 do g.ice[i], g.chain[i], g.soil[i] = 0, 0, 0 end
+        g.score, g.relics, g.dug, g.obstacles = l.score, l.relics, l.soil, 0
+        local ok, a, b = rules.game_hint(g)
+        assert(ok, "campaign smoke needs a legal move")
+        app.inject_click(R.cell_pos(a)); partner = b
+    elseif partner >= 0 and R.selected >= 0 and R.phase == R.PH_IDLE then
+        app.inject_click(R.cell_pos(partner)); partner = -1
+    end
+end
+
 function R.smoke()
     frames = frames + 1
+    if app.arg("campaign") then return campaign() end
     if app.arg("empty-lives") then
         assert(R.g and R.on_island and R.prog.lives==0,"empty-life load must keep a valid, inert island view")
         if frames==4 then app.inject_click(R.island_buttons.play+vec2(0,R.drop)) end

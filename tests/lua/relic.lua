@@ -377,6 +377,7 @@ local function test_campaign()
             end
             if g.won then wins = wins + 1 end
         end
+        check(wins >= 1, ("the greedy bot wins level %d at least once"):format(lvl + 1))
         total = total + wins
     end
     check(total >= runs // 4, "the greedy bot wins a share of expeditions")

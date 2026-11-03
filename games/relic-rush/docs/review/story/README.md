@@ -2,7 +2,7 @@
 
 The existing four authored portraits, island painting and ten registered wonder
 sprites are reused. No sprite dimensions, camera, footprint or pivot changed.
-The 183-line script is compiled by `tools/prepare_story.py`; a separate blind
+The 214-line script is compiled by `tools/prepare_story.py`; a separate blind
 reader checked the clues and reveals before implementation.
 
 Dialogue body text increases from 21 to 31.5 points; name badges and building
@@ -39,6 +39,9 @@ Rush rule, renderer, capture and real-input smoke cases, with 874,166 checks.
 | Longest line | ![Long line](story-longest.jpg) | ![Long line phone](phone-story-longest.jpg) |
 | Shout | ![Shout](story-shout.jpg) | ![Shout phone](phone-story-shout.jpg) |
 | Final hook | ![Finale](story-finale.jpg) | ![Finale phone](phone-story-finale.jpg) |
+| Kessler, heard but never seen (a caption, no bust) | ![Radio](story-radio.jpg) | ![Radio phone](phone-story-radio.jpg) |
 
 Later-board samples: [level 20](story-level-20.jpg) and
 [level 30 on the phone](phone-story-level-30.jpg).
+
+Busts are drawn without a frame or plate behind them. Each alpha cutout stands on the dialogue box, which hides the hard cut along the bottom of the image (the engine's unframed `story_style`). The after captures above show this.

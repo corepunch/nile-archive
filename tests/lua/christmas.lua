@@ -1,28 +1,42 @@
 -- Verify that the Christmas map and prices support the complete earning/build loop.
 local rules = require('rules')
 local island = require('island')
+local journey = require('journey')
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
-assert(#island.catalogue == 37 and island.WONDERS == 10)
-for level=0,9 do
+assert(#island.catalogue == 37 and island.WONDERS == 10 and rules.LEVELS == 30)
+-- Pip announces each region on the level the script gives it (docs/story.md#small-lines).
+local opens = {[6]=1, [9]=2, [15]=3, [21]=4, [27]=5}
+for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')
     g.won, g.moves = true, 0
-    assert(rules.progress_reward(p,g,island.wonders), 'First clear must fund construction')
+    assert(rules.progress_reward(p,g,island.wonders), 'First clear must pay')
     local before = p.wallet[1]
     assert(not rules.progress_reward(p,g,island.wonders) and p.wallet[1]==before, 'Cannot pay twice')
-    assert(island.reserved_gold(c,p.level)==island.wonders[level+1].cost[1])
-    for zone=1,5 do c:unlock(zone,p.wallet) end
-    assert(island.island_place_next(c,p.wallet,p.level,0), 'Every funded building must fit')
-    assert(island.wonder_count(c)==level+1)
+    local zone = opens[p.level]
+    if zone then
+        assert(c:unlock(zone,p.wallet), ('Region %d opens at level %d'):format(zone,p.level))
+    else
+        local z = c:next_zone(p.wallet)
+        assert(z < 0 or not c:zone_available(z,p.wallet), ('No region opens early at level %d'):format(p.level))
+    end
+    local kind = journey.wonder_at(p.level)
+    if kind then
+        assert(island.reserved_gold(c,p.level)==island.wonders[kind].cost[1])
+        assert(island.island_place_next(c,p.wallet,p.level,0), 'Every funded building must fit the land open by then')
+        assert(island.wonder_count(c)==kind)
+    else
+        assert(not island.island_place_next(c,p.wallet,p.level,0), 'A story-only wish funds no stall')
+    end
 end
-assert(c.open==63 and p.wallet[4]==30 and p.wallet[5]==0, 'Full campaign opens every region')
+assert(c.open==63 and p.wallet[4]==90 and p.wallet[5]==0, 'Full campaign opens every region')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)
 replay.won, replay.moves = true, 0
 assert(rules.progress_reward(p,replay,island.wonders))
-assert(p.wallet[1]==before+60 and p.wallet[4]==30 and p.level==10, 'Replay must pay only Gold')
+assert(p.wallet[1]==before+60 and p.wallet[4]==90 and p.level==30, 'Replay must pay only Gold')
 for kind=10,11 do
     assert(island.can_buy(c,p.wallet,p.level,kind))
     local ok,spot = c:find_spot(kind,vec2(760,2010))
@@ -36,3 +50,34 @@ for kind=10,11 do
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
 assert(c.count==12 and island.wonder_count(c)==10, 'Decorations cannot advance the campaign')
+
+-- Extended: the greedy bot, without tools, wins every winter wish at least once.
+if testing.extended then
+    local m = rules.new_match()
+    local function resolve(g)
+        for _ = 1, 200 do
+            rules.game_apply(g, m); rules.game_collapse(g); rules.game_matches(g, m, -1)
+            if m.hits == 0 then rules.game_check_end(g); return end
+        end
+    end
+    for level = 0, rules.LEVELS - 1 do
+        local wins = 0
+        for seed = 1, 4 do
+            local g = rules.game_start(level, seed)
+            for _ = 1, 100 do
+                if g.won or g.lost then break end
+                local best, a, b = -1, -1, -1
+                for i = 0, rules.CELLS - 1 do
+                    for d = 0, 2 do
+                        local j = rules.hex_neighbor(i, d)
+                        local v = rules.game_evaluate_move(g, i, j)
+                        if v > best then best, a, b = v, i, j end
+                    end
+                end
+                if a < 0 then rules.game_shuffle(g) else rules.game_swap(g, a, b, m); resolve(g) end
+            end
+            if g.won then wins = wins + 1 end
+        end
+        check(wins >= 1, ("the greedy bot wins winter wish %d at least once"):format(level + 1))
+    end
+end
