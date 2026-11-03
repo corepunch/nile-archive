@@ -236,7 +236,7 @@ local tool_names = {"Hammer", "Firecracker", "Star wand"}
 
 local function draw_tools(inp)
     if (R.word_time <= 0 or R.reduced_motion) and not R.intro then
-        R.say_at(R.tool >= 0 and "TAP A TREAT TO USE YOUR TOOL" or "CONNECT 4+ MATCHING NEIGHBORS.", vec2(240, 766 + R.drop), 13, PAL_WHITE, 0)
+        R.say_at(R.tool >= 0 and "TAP A TREAT TO USE YOUR TOOL" or "LINE UP 3+ MATCHING TREATS.", vec2(240, 766 + R.drop), 13, PAL_WHITE, 0)
     end
     local y = TOOLS_Y + R.drop
     for k = 0, 2 do

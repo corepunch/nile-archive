@@ -1,7 +1,7 @@
 -- Game content, piece identities and restoration economy. Mechanics are shared.
 local match3 = require("match3")
 local campaign = require("campaign")
-local M = match3.new{flags=0, radius=4, colors=6, match_min=4,
+local M = match3.new{flags=match3.LINE_MATCHES, radius=4, colors=6, match_min=3,
     levels=campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL, [1]=match3.THAW, [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5

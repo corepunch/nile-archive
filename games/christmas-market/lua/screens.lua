@@ -339,12 +339,12 @@ R.wonder_form=wonder_form
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Connect 4+ neighbors", description="Bends and diamonds count. Three do not.",
+    {id="neighbors", title="Line up 3+ treats", description="Match straight lines along any of three axes.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Group 5: lightning", description="A shooting star follows the longest axis.",
+    {id="lightning", title="Line of 4: shooting star", description="Its direction shows the line it clears.",
      icon={tiles={{kind=1,special=rules.ROW}}}},
-    {id="specials", title="Group 6+: bomb or prism", description="Six in a line: prism. Other shapes: bomb.",
-     icon={tiles={{kind=2,special=rules.BOMB,x=-16,scale=.7},{kind=2,special=rules.PRISM,x=16,scale=.7}}}},
+    {id="specials", title="Line of 5+: rainbow star", description="Swap with a treat to clear that colour.",
+     icon={tiles={{kind=2,special=rules.PRISM}}}},
     {id="blockers", title="Tinsel & powder snow", description="Match above snow; untangle the tinsel.",
      icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
     {id="ice", title="Ice & candy canes", description="Match on ice. Nearby candy canes thaw it.",

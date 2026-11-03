@@ -1,4 +1,4 @@
--- Relic Rush · The Lost Valley — hex match-4 expeditions that restore an island.
+-- Relic Rush · The Lost Valley — hex straight-line match-3 expeditions that restore an island.
 --
 -- main.lua owns the flow between the two screens, progress and saving, sound,
 -- and the debug entry points used for screenshots and the smoke test.
