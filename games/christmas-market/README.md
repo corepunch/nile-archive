@@ -49,6 +49,8 @@ The interface look (text palettes, panels, the red buttons and their states, foc
 Board, HUD and character art is spatially extracted by `python3 games/christmas-market/tools/prepare_assets.py`. Buildings are rendered by `tools/render_buildings.py` and imported by `tools/prepare_catalogue.py`. See the [asset catalogue](docs/asset-catalogue.md) and the [building catalogue](docs/building-catalogue.md).
 
 
+The planned three-episode script is in [docs/story.md](docs/story.md); it is not implemented yet.
+
 ## Review and validation
 
 | Snowy market | Festive puzzle | Noelle |
