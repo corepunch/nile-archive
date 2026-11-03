@@ -114,3 +114,12 @@ for pack in ['relics', 'jewels']:
     assert all(abs(a - b) < .14 for a, b in zip(spans, board_spans)), f'{pack}: six-sided flat-top contour must match board'
     assert spans[3] - spans[2] > .04 and spans[3] - spans[4] > .04, f'{pack}: side vertices must be points, not octagon edges'
 print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board mask')
+
+# Script, identities and presentation mapping must ship together.
+import subprocess
+import sys
+subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
+assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian'}
+assert all(path in actual for path in manifest['story']['cast'].values())
+assert manifest['story']['states'] == ['speaking','listening','thought','shout']
+assert 'A.story=' in art and '31.5' in doc

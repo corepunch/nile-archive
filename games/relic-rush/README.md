@@ -6,7 +6,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Ten redesigned hex stages and ten buildings end in a restored sun temple. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
+Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
@@ -21,7 +21,7 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are continuous measured scrolling lists with bounded inertia; category selectors remain, while Prev/Next item pages are reserved for future episodes. Keyboard focus reveals its item and mouse wheels scroll the same viewport.
 
-The wallet contains five lives, hex amulets and discovery stars. Losing an expedition spends one life; lives regenerate every 30 minutes up to five, including offline time. First clears fund the next restoration and add spare amulets and discovery stars. Replays earn 60–100 amulets without extra stars. Buildings cost amulets; discovery-star gates open land without requiring compasses. The old wood, stone and compass slots stay reserved for save compatibility, with no new costs, rewards or UI.
+The wallet contains five lives, hex amulets and discovery stars. Losing an expedition spends one life; lives regenerate every 30 minutes up to five, including offline time. First clears add spare amulets and discovery stars; wonder milestones also fund their restoration. Replays earn 60–100 amulets without extra stars. Buildings cost amulets; discovery-star gates open land without requiring compasses. The old wood, stone and compass slots stay reserved for save compatibility, with no new costs, rewards or UI.
 
 Tap a placed building for its name and subtitle in the existing speech bubble above it. Only one stays open; the next press dismisses it. A stationary hold still picks up a building through the shared mover, with Confirm/Cancel preserving saved state. Taps do not open building dialogs.
 
@@ -84,7 +84,7 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
-The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are ten different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
+The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are thirty different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the same gems are rearranged with all earned special powers intact; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
@@ -96,7 +96,7 @@ See [rules, shape list, implementation notes and reference sources](docs/match4-
 
 ## New art direction
 
-The match-3 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
+The match-3 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10; each later episode reuses those paintings, opening on the lagoon and moving into the temple. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
 
 See the [reference study, original cast and asset gallery](docs/art-direction-v2.md) and [complete generation prompts](docs/art-direction-v2-prompts.json).
 
@@ -112,17 +112,13 @@ You begin with a small expedition camp. Each puzzle represents an excavation: un
 
 This is an original adventure setting inspired by archaeological serials and lost-world fiction, rather than a licensed Indiana Jones setting or a claim to portray a specific historical civilization. The colorful tropical palette combines jade, turquoise, warm stone and gold, with readable silhouettes and soft jungle scenery.
 
-**Narrative status:** the cast now speaks through the engine's dialogue system (portrait and bubble centred together in the safe screen; bust in a medallion standing above a dialogue box sized to the line, name plate on the box's edge and no tail, as in the story screens of portrait match-3 games; typed text: tap to finish a line, tap again to continue, or skip). Name badges are centred on the visible outline of speech, cloud and burst bubbles; decorative puffs/spikes count toward the padding so they do not engulf the badge. Each beat plays once per save:
+**Narrative status:** all three episodes in [the reviewed script](docs/story.md) are playable: 36 named scenes and 183 lines across Elena, Mara, Tomas and Adrian. The existing four authored portraits, island and ten registered wonder sprites are reused. Dialogue uses 31.5-point text (50% larger than the previous 21), 22.5-point names and larger building bubbles. Portraits, bubble outlines, listeners and Skip stay grouped inside the safe screen.
 
-- Bubbles come in three kinds: Elena's first musing is a thought cloud, Mara's greeting a shout, the rest speech.
-- **Elena Voss** opens the expedition and explains each level's twist the first time it is played (its lesson; later it is a reminder toast).
-- **Mara Bell** greets every newly opened region.
-- **Tomas Reed** tells each restored wonder's story, and the island answers with a word bubble over the building.
-- **Adrian Vale** appears when the last wonder is restored, and Elena answers him.
+Results return to the island. A scheduled wonder must be confirmed before its discovery scene; other levels deliver their clue immediately. The wonder milestones are **1, 4, 7, 9 / 13, 16, 19 / 23, 26, 29**. The tenth wonder does not end the game: level 30 delivers the final song and “To be continued” scene. Building descriptions respond to discoveries, and Mara has a separate greeting for each new region.
 
-The intro and finale lines are new, short and written from the cast notes in [art-direction-v2](docs/art-direction-v2.md); everything else reuses the game's existing texts. Journal entries, branching choices and cinematics are not implemented.
+A completed scene is acknowledged only after its last line or Skip. Interrupted scenes restart safely on reload. Replays and retries cannot repeat a completed story scene. Older saves retain their clears, buildings, wallet and land, receive an appropriate recap, and can continue into the additional twenty levels; already-owned wonders satisfy later story milestones. No decoration-rank gate is imposed.
 
-The planned three-episode script is in [docs/story.md](docs/story.md); it is not implemented yet.
+`lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift. `lua/journey.lua` owns keyed checkpoints and the restoration schedule; `lua/narrative.lua` connects them to the existing engine dialogue system. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
 | Elena | Mara | Tomas | Adrian | Word bubble |
 | --- | --- | --- | --- | --- |
@@ -138,16 +134,16 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Complete its score, idol, excavation and blocker objectives within the move budget.
-3. Claim the first win once: restoration amulets, 80–120 spare amulets, and 3 discovery stars.
-4. Return to the island, select the next restoration and choose its location on opened grass.
+3. Claim the first win once: 80–120 spare amulets and 3 discovery stars, plus a restoration grant at a wonder milestone.
+4. Return to the island. At a wonder milestone, choose a location and confirm construction; otherwise the next story clue plays immediately.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. Set out for the next expedition. Ten completed stages support ten restored buildings, ending at the sun temple.
+6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Hex amulets pay for restorations and decorations. The guaranteed first-clear grant covers the next wonder; random match colours do not change it. Replays earn 60 base amulets plus two per saved move, up to 40 bonus, without new stars or story progress. Discovery stars unlock stock and adjacent land and are never spent. Failed attempts cost one of five lives; one life regenerates per 30 minutes, including offline time. There is no purchase backend.
+Hex amulets pay for restorations and decorations. Each scheduled first-clear grant covers its wonder; random match colours do not change it. Replays earn 60 base amulets plus two per saved move, up to 40 bonus, without new stars or story progress. Discovery stars unlock stock and adjacent land and are never spent. Failed attempts cost one of five lives; one life regenerates per 30 minutes, including offline time. There is no purchase backend.
 
-## Campaign: ten hex levels
+## Campaign: thirty hex levels
 
-Every stage uses its own active-cell mask within a radius-four hex grid (43–61 playable cells). See [current match-3 rules and all ten board shapes](docs/match4-rules.md). Objectives below are taken from the current level configuration; all listed blockers must be cleared.
+Every stage uses its own connected active-cell mask within a radius-four hex grid. The original ten layouts are preserved and twenty lane variants add terrace, stair and seal excavations. See [current match-3 rules and the original ten board shapes](docs/match4-rules.md). Objectives below are taken from the current level configuration; all listed blockers must be cleared.
 
 | # | Expedition | Moves | Score | Idols | Sand | Chains | Ice cells | Focus |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -158,15 +154,35 @@ Every stage uses its own active-cell mask within a radius-four hex grid (43–61
 | 5 | Three Paths Meet | 36 | 3100 | 14 | 13 | 4 | 0 | Combine sun rays to clear all three axes. |
 | 6 | Winter Lotus | 38 | 3400 | 14 | 13 | 0 | 5 | Break the ice around the frozen lotus. |
 | 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Fire melts ice in all six neighboring cells. |
-| 8 | Prism Observatory | 42 | 4200 | 16 | 17 | 4 | 6 | Five in a straight line forge a sun prism. |
+| 8 | Prism Hollow | 42 | 4200 | 16 | 17 | 4 | 6 | Five in a straight line forge a sun prism. |
 | 9 | The Sixfold Seal | 44 | 4600 | 18 | 19 | 5 | 6 | Combine rays to clear all three axes. |
 | 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the ancient sun at the heart of the valley. |
+| 11 | The Long Terrace | 32 | 2500 | 12 | 14 | 0 | 0 | Dig along the rail, one terrace at a time. |
+| 12 | Twelve Crates | 35 | 2900 | 13 | 15 | 5 | 0 | Chained relics first, then the crates beneath. |
+| 13 | Names in the Stone | 36 | 3200 | 14 | 16 | 6 | 0 | Sun rays reach the names no pick can. |
+| 14 | Static | 37 | 3500 | 14 | 17 | 7 | 0 | Two rays together clear the crossing lines. |
+| 15 | The Frost Line | 38 | 3700 | 15 | 18 | 4 | 6 | The frost has climbed. Break it before it sets. |
+| 16 | Supper for Twelve | 40 | 4000 | 15 | 18 | 4 | 7 | Flame relics thaw every cell around them. |
+| 17 | The Torn Log | 41 | 4200 | 16 | 19 | 5 | 7 | Old ice takes two hits. Plan for both. |
+| 18 | Lantern Steps | 42 | 3000 | 12 | 12 | 2 | 4 | Take a breath. These steps are nearly clear. |
+| 19 | Under the Vines | 44 | 4600 | 18 | 20 | 6 | 8 | Vines above, frost below. Free what you can reach. |
+| 20 | The Archivist's Key | 46 | 5100 | 20 | 22 | 7 | 9 | Everything he hid is at the centre. |
+| 21 | Tomas's Trail | 34 | 2800 | 12 | 15 | 0 | 0 | Follow the prints. Clear a path through the sand. |
+| 22 | The Frozen Stair | 38 | 3400 | 14 | 16 | 2 | 8 | Thaw the stair, one flame at a time. |
+| 23 | The Star Road | 39 | 3700 | 15 | 16 | 5 | 5 | Five in a line forge a prism. Aim it well. |
+| 24 | Noon Shadow | 40 | 3900 | 16 | 20 | 4 | 5 | Dig where the shadow falls. |
+| 25 | Smoke on the Water | 36 | 4000 | 16 | 18 | 6 | 6 | Moves are short. Every swap has to count. |
+| 26 | The Jade Deep | 42 | 4300 | 17 | 20 | 4 | 9 | Open the spring beneath the frost. |
+| 27 | Six Sun Gates | 44 | 4600 | 18 | 20 | 7 | 8 | Six gates, one seal. Clear them in any order. |
+| 28 | The Last Terrace | 44 | 3200 | 13 | 13 | 2 | 4 | Run. The board is on your side this time. |
+| 29 | The Silent Temple | 46 | 5200 | 20 | 23 | 8 | 10 | Every blocker in the valley guards this floor. |
+| 30 | The Song Returns | 48 | 5500 | 22 | 24 | 8 | 10 | Clear the way to the socket. |
 
 Ice can require more than one hit. Board patterns progress from the introductory field to crescents, spirals, branching lines, rings and the final central seal.
 
 ## Buildings
 
-Buildings unlock in this order as expeditions are completed. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
+Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
 
 | # | Building | Amulets | Purpose in the story |
 | --- | --- | ---: | --- |

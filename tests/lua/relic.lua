@@ -262,7 +262,7 @@ local function test_moves_and_blockers()
 end
 
 local function test_island()
-    -- every win pays for the next wonder exactly once, and it fits somewhere
+    -- Scheduled first clears fund a wonder once; intervening clues fund decorations.
     local c = city.new()
     island.island_setup(c)
     local p = {level = 0, seed = 0, wallet = purse()}
@@ -274,10 +274,12 @@ local function test_island()
         rules.progress_reward(p, g, island.wonders)
         check(p.wallet[rules.GOLD] == gold and p.level == i + 1, "reward once")
         for z = 1, island.ISLAND_ZONES - 1 do c:unlock(z, p.wallet) end
-        check(island.island_place_next(c, p.wallet, p.level, 0) and c.count == i + 1, "next wonder fits")
+        local kind=rules.wonder_at(i+1)
+        if kind then check(island.island_place_next(c,p.wallet,p.level,0) and c.count==kind,"scheduled wonder fits")
+        else check(not island.island_place_next(c,p.wallet,p.level,0),"clue-only clear grants no wonder") end
         check(not island.island_place_next(c, p.wallet, p.level, 0), "only one wonder per win")
     end
-    check(p.wallet[rules.STARS] == 30, "stars accumulate")
+    check(p.wallet[rules.STARS] == LEVELS*3, "stars accumulate")
 
     -- shoreline, collisions, failed builds change nothing, moving is free
     c = city.new()
@@ -304,8 +306,9 @@ local function test_island()
     island.island_setup(c)
     wallet = purse()
     check(not c:unlock(1, wallet) and not c:can_place(vec2(1330, 2100), 0), "closed region")
-    wallet[rules.STARS] = 6
-    check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.STARS] == 6, "stars alone unlock land and remain in the wallet")
+    wallet[rules.STARS] = c.zones[2].needs[rules.STARS]
+    local stars=wallet[rules.STARS]
+    check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.STARS] == stars, "stars alone unlock land and remain in the wallet")
     check(not c:unlock(1, wallet) and c:can_place(vec2(1330, 2100), 0), "open region builds")
     check(not island.island_zone_touches(5, 1), "the temple ridge is far from the harbour")
 end

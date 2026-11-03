@@ -3,6 +3,8 @@
 -- Board clears score points; the fixed first-clear grant and Amulet-only replay
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
+A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
+    scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
 -- Ray powers use engine-rendered stripes masked to the original gem alpha.
 -- Bomb and prism replace the gem with their full-size authored sprite.

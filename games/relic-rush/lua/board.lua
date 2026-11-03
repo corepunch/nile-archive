@@ -86,7 +86,7 @@ end
 local function wrapf(v, m) return v - m * math.floor(v / m) end
 
 local function draw_backdrop()
-    local scene = R.scenes[R.g.level >= 5 and 2 or 1]
+    local scene = R.scenes[rules.level_of(R.g).background or (R.g.level >= 5 and 2 or 1)]
     local tex = scene.tex and scene or R.backdrop
     local full = app.bleed()   -- the jungle runs on under the status bar and the home indicator
     local size = texture.size(tex)

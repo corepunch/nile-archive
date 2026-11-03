@@ -1,6 +1,7 @@
 -- The engine owns measured rows, focus, hit testing and modal input capture.
 local R = require('state')
 local island = require('island')
+local journey=require('journey')
 local categories = {
     {'all','All treasures'}, {'wonder','Story wonders'}, {'building','Buildings'},
     {'tree','Trees'}, {'bush','Shrubs'}, {'flower','Flowers'}, {'statue','Monuments'},
@@ -45,7 +46,7 @@ local function refresh()
         local available=island.can_buy(R.island,R.prog.wallet,R.prog.level,i-1)
         local action='CHOOSE LOCATION'
         if i<=island.WONDERS then
-            action=owned>0 and 'RESTORED' or i>R.prog.level and ('COMPLETE EXPEDITION '..i) or
+            action=owned>0 and 'RESTORED' or journey.wonder_levels[i]>R.prog.level and ('COMPLETE EXPEDITION '..journey.wonder_levels[i]) or
                 i-1~=island.wonder_count(R.island) and 'RESTORE EARLIER WONDERS' or action
         elseif R.prog.wallet[4]<meta.stars then action=('REQUIRES %d STARS'):format(meta.stars)
         elseif not R.prog.wallet:covers(def.cost) then action='MORE AMULETS NEEDED'
