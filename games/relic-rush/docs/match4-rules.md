@@ -14,7 +14,7 @@ This supersedes the prototype's connected-group match-4 rules.
 - The expedition HUD floats on the painting along the top edge: a hexagonal Moves medallion, the remaining score/idol/sand/lock objectives as small resource panels, and Pause. Absent objectives are omitted; completed objectives dim and show a check seal. The tools stand along the bottom edge; the Explorer's Guide opens from Pause. See [match-3 HUD review](review/match3-hud/README.md). Pause resumes the round, restarts it after a confirmation, or quits to the island keeping the board for LEVEL / Expeditions to continue; required results need their explicit actions. See [header and popup review](review/expedition-header/README.md).
 - Hints highlight a legal swap after five idle seconds. If the hint search finds no swap, idle boards use the same free reshuffle as boards settling after a fall, with a “No moves. Board reshuffled.” notice. Recovery resets selection/tool targeting and stale hints, preserving move/tool budgets, objective progress, holes, sand, ice, chains and their locked relics. Victory and exhausted moves take precedence over reshuffling.
 
-The shared engine's `LINE_MATCHES` flag selects this detector for Relic Rush. Generation, hints, reshuffling and cascades use the same rule. Christmas Market retains its connected-group rules.
+The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. Generation, hints, reshuffling and cascades use the same rule in both games.
 
 ## Ten board masks
 

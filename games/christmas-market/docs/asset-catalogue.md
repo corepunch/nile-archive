@@ -7,6 +7,8 @@ not match. Existing bomb artwork remains available to review boards and tools;
 there is no bent-group bomb recipe. No new artwork or growth stages are added.
 The guide and campaign lessons describe these rules; existing authored control
 states and runtime image inventory are unchanged.
+Reviewed board and guide captures are in the
+[straight-line match-3 review](review/straight-line-match3/README.md).
 
 Status: the buildings are Blender renders with projected registration (see the [building catalogue](building-catalogue.md)); the board, HUD and character art are directional ImageGen artwork. The planned ImageGen repaint of the renders and special-colour readability remain in [#34](https://github.com/corepunch/nile-archive/issues/34).
 
