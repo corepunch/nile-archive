@@ -7,17 +7,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 source = (ROOT / 'docs/story.md').read_text().split('## Small lines')[0]
 beats, beat = [], None
-speakers = {'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian'}
+speakers = {'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler'}
 for line in source.splitlines():
     heading = re.match(r'\*\*(Before level|Level) (\d+)', line)
     if heading:
         phase, level = ('before' if heading[1] == 'Before level' else 'after'), int(heading[2])
         beat = {'key': f'{phase}-{level:02}', 'phase': phase, 'level': level, 'lines': []}
         beats.append(beat)
-    spoken = re.match(r'- \*\*(Elena|Mara|Tomas|Adrian)(?: \((thought|shout)\))?:\*\* (.+)', line)
+    spoken = re.match(r'- \*\*(Elena|Mara|Tomas|Adrian|Kessler)(?: \((thought|shout)\))?:\*\* (.+)', line)
     if spoken and beat:
         beat['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-assert len(beats) == 36 and sum(len(b['lines']) for b in beats) == 183
+assert len(beats) == 36 and sum(len(b['lines']) for b in beats) == 214
 assert all(b['lines'] and len(b['lines']) <= 48 for b in beats)
 assert all(len(text) <= 100 for b in beats for _, text, _ in b['lines'])
 quote = lambda s: json.dumps(s, ensure_ascii=False)
@@ -37,4 +37,4 @@ if args.check:
     assert path.read_text() == content, 'Story changed: run python3 games/relic-rush/tools/prepare_story.py'
 else:
     path.write_text(content)
-print('Relic Rush: 36 story beats, 183 reviewed dialogue lines')
+print('Relic Rush: 36 story beats, 214 reviewed dialogue lines')

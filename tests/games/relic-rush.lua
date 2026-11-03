@@ -1,5 +1,5 @@
-rules("relic_story")
 -- Relic Rush: every test, in one start of build/test/relic-rush. See docs/TESTING.md.
+rules("relic_story")
 rules("match_matrix")
 rules("trickling")
 rules("haptics_board")
@@ -10,6 +10,7 @@ rules("progression")
 rules("relic_wallet")
 smoke()
 smoke("--empty-lives","empty-lives")
+smoke("--campaign","campaign")   -- all thirty expeditions and every story beat
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 
 shot("hex-first", "480x900")
@@ -131,6 +132,8 @@ shot("phone-story-longest", "390x844", "--story-beat before-11 --frames 240 --sa
 shot("story-shout", "480x900", "--story-beat after-28 --frames 240")
 shot("phone-story-shout", "390x844", "--story-beat after-28 --frames 240 --safe-area 0,47,0,34")
 shot("story-finale", "480x900", "--story-beat after-30 --story-line 9 --frames 240")
+shot("story-radio", "480x900", "--story-beat after-05 --story-line 2 --frames 240")   -- Kessler: heard, never seen
+shot("phone-story-radio", "390x844", "--story-beat after-05 --story-line 2 --frames 240 --safe-area 0,47,0,34")
 shot("phone-story-finale", "390x844", "--story-beat after-30 --story-line 9 --frames 240 --safe-area 0,47,0,34")
 shot("story-level-20", "480x900", "--level 20")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")

@@ -3,6 +3,7 @@
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
+local journey = require("journey")
 local SCREEN_W = R.SCREEN_W
 local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 local rgba = color
@@ -46,18 +47,11 @@ local function confirm_place()
     end
     for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
     R.bubble_wonder = ev.building   -- the island answers in a word bubble over the building
-    R.bubble_text = fresh and "A little more Christmas magic!" or "A cozy new home for this stall."
+    -- The building's story beat follows from narrative.lua once it stands.
+    local kind = c.items[ev.building + 1].type
+    R.bubble_text = journey.building_about(kind, R.prog.level, fresh and "A little more Christmas magic!" or "A cozy new home for this stall.")
     R.bubble_time = 3.5
     R.tone(740)
-    if fresh and c.items[ev.building+1].type < island.WONDERS then   -- Tomas tells each wonder's story once; the last one brings Adrian
-        local kind = c.items[ev.building + 1].type
-        local w = R.wonders[kind + 1]
-        story.play(("wonder-%d"):format(kind), {{"noelle", w.about}})
-        if island.wonder_count(c) == island.WONDERS then
-            story.play("finale", R.finale)
-            R.overlay = R.OV_FINALE
-        end
-    end
     R.save_progress()
 end
 
@@ -105,7 +99,7 @@ local function bottom_panel()
         R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 811 + y), 11, PAL_WHITE, 0)
         if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your market is unchanged.") end
         if R.button(rect(188, 834 + y, 262, 44), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
-    elseif restored < R.prog.level then
+    elseif restored < journey.earned(R.prog.level) then
         R.say_at(R.wonders[restored + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
         R.say_at("CHOOSE ITS PLACE IN YOUR MARKET", vec2(240, 811 + y), 12, PAL_WHITE, 0)
         if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end

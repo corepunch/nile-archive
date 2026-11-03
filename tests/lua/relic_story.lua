@@ -14,11 +14,11 @@ local lines=0
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
-        check(({elena=true,mara=true,tomas=true,adrian=true})[line[1]],'every line has a real cast member')
+        check(({elena=true,mara=true,tomas=true,adrian=true,kessler=true})[line[1]],'every line has a real cast member')
         lines=lines+1
     end
 end
-check(lines==183,'the entire reviewed script ships')
+check(lines==214,'the entire reviewed script ships')
 for level=1,30 do
     local before=journey.next(p,owned(c),level-1)
     if before then

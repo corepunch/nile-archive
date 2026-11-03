@@ -58,8 +58,11 @@ end
 function R.start_level(chosen)
     local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
     if lvl > R.prog.level then return false end
-    if lvl == R.prog.level and (island.wonder_count(R.island) < journey.earned(R.prog.level) or journey.awaiting_return(R.prog)) then
+    if lvl == R.prog.level and island.wonder_count(R.island) < journey.earned(R.prog.level) then
         R.notice("Restore your earned wonder before the next discovery."); return false
+    end
+    if lvl == R.prog.level and journey.awaiting_return(R.prog) then
+        R.notice("A new clue awaits on your island."); return false
     end
     rules.refill_lives(R.prog,app.clock())
     if R.prog.lives<=0 then R.on_island=true;R.notice("A life returns every 30 minutes. Explore your valley meanwhile.");return false end
@@ -135,7 +138,7 @@ local function init()
     if app.arg("cell-mask") then return end
     R.font = R.skin:font("lilita")
     story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 22.5), bubble = rgba(255, 246, 222, 252),
-                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, framed = true, skip = "SKIP"})
+                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, skip = "SKIP"})
     local board_skin = require("art").skin()
     R.backdrop = board_skin.background
     R.scenes[1], R.scenes[2] = board_skin["scene-1"] or R.backdrop, board_skin["scene-2"] or R.backdrop

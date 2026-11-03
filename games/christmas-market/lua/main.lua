@@ -11,23 +11,12 @@ require("expeditions")
 require("vfx")
 require("board")
 require("island_view")
+require("narrative")
+require("campaign_smoke")
+local journey = require("journey")
 local LEVELS, WONDERS, ISLAND_ZONES = rules.LEVELS, island.WONDERS, island.ISLAND_ZONES
 local COMPASSES = rules.COMPASSES
 local rgba = color
-
--- The expedition (see docs/art-direction-v2.md). Busts come from the cast lineup.
-local cast = {
-    {id = "noelle", name = "Noelle", role = "Christmas market keeper", portrait_path = "characters/noelle.png",
-     color = rgba(136, 42, 43), mouth = vec2(.51, .42)},
-}
-local intro = {
-    {"noelle", "Snow on the rooftops, lights in the trees... our Christmas market starts with one little wish."},
-    {"noelle", "Match four neighboring treats to earn materials. Then choose a home for every cozy stall!"},
-}
-R.finale = {
-    {"noelle", "The bakery is warm, the carousel is turning, and our Christmas tree is shining."},
-    {"noelle", "We built this little market together. Merry Christmas!"},
-}
 
 -- Dialogue text: Lilita One in dark ink on the cream bubble.
 function R.speech_style(size) return style{font = R.font, size = size, fill = rgba(74, 50, 28)} end
@@ -44,14 +33,16 @@ end
 ------------------------------------------------------------------ progress
 
 local function serialize(s)
-    s:int("version", 2)
+    local version = s:int("version", 3)
     R.prog.level = s:int("level", R.prog.level)
     R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
     R.prog.wallet = s:ints("wallet", R.prog.wallet)
     R.island:serialize(s)
     story.serialize(s)
+    journey.serialize(s, R.prog)
     if save.is_reading(s) then
         R.prog.level = num.clampi(R.prog.level, 0, LEVELS)
+        journey.migrate(R.prog, version)
         R.needs_relocation=island.restore_saved(R.island,R.prog.level)
     end
 end
@@ -63,8 +54,11 @@ end
 function R.start_level(chosen)
     local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
     if lvl > R.prog.level then return false end
-    if chosen and lvl == R.prog.level and island.wonder_count(R.island) < R.prog.level then
+    if lvl == R.prog.level and island.wonder_count(R.island) < journey.earned(R.prog.level) then
         R.notice("Build your earned stall before the next winter wish."); return false
+    end
+    if lvl == R.prog.level and journey.awaiting_return(R.prog) then
+        R.notice("Something's happening in the market square."); return false
     end
     R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
     R.on_island = false
@@ -73,12 +67,8 @@ function R.start_level(chosen)
     R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
     R.idle_time = 0
     R.vfx_reset()
-    -- Elena explains a level's twist once; repeat visits keep the header quiet.
-    local lesson = rules.level_of(R.g).lesson
-    if not R.quiet then
-        story.play(("level-%d"):format(R.g.level), {{"noelle", lesson}})
-        R.present_board()
-    end
+    -- Mechanics stay in the board lesson, apart from the story dialogue.
+    if not R.quiet then R.notice(rules.level_of(R.g).lesson); R.present_board() end
     return true
 end
 
@@ -98,7 +88,8 @@ function R.claim_reward()
     R.save_progress()
     R.on_island = true
     R.overlay = R.OV_NONE
-    R.notice(first and "New stall funded! Spare Gold is yours to decorate." or "Replay Gold collected. Add some Christmas decorations.")
+    R.notice(first and (journey.wonder_at(R.prog.level) and "New stall funded! Spare Gold is yours to decorate." or "Something's happening in the market square.")
+        or "Replay Gold collected. Add some Christmas decorations.")
 end
 
 ---------------------------------------------------------------- smoke test
@@ -269,13 +260,14 @@ local function frame(dt)
         return
     end
     local inp = input.get()
+    R.story_tick()
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
     R.layout()
     tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
-    if app.arg("smoke") then smoke() end
+    if app.arg("smoke") then if app.arg("campaign") then R.campaign_smoke() else smoke() end end
     R.now = R.now + dt
-    R.toast_time = R.toast_time - dt
+    if not talking then R.toast_time = R.toast_time - dt end
     if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
     R.board_update(dt)
@@ -297,12 +289,13 @@ end
 -- An island after n expeditions: n wonders at their suggested spots and the
 -- regions a player would have opened by then, stars and compasses to match.
 local function island_with(n)
-    local opened_at = {0, 2, 3, 5, 7, 9}
-    R.prog = {level = n, seed = 782341, wallet = purse(340, 115, 92, n * 3, rules.discovery_compasses(n))}
+    local opened_at = {0, 6, 9, 15, 21, 27}
+    local cleared = n > 0 and journey.wonder_levels[n] or 0
+    R.prog = {level = cleared, seed = 782341, story_seen = {}, wallet = purse(340, 115, 92, cleared * 3, rules.discovery_compasses(cleared))}
     R.island.count = 0
     local open = 1
     for z = 1, ISLAND_ZONES - 1 do
-        if n >= opened_at[z + 1] then
+        if cleared >= opened_at[z + 1] then
             open = open | (1 << z)
         end
     end
@@ -312,7 +305,7 @@ local function island_with(n)
         if R.island:zone_open(z) then R.prog.wallet[COMPASSES]=R.prog.wallet[COMPASSES]-R.island.zones[z+1].cost[COMPASSES] end
     end
     local spend = purse(100000, 100000, 100000)
-    for _ = 1, n do island.island_place_next(R.island, spend, n, 0) end
+    for _ = 1, n do island.island_place_next(R.island, spend, cleared, 0) end
 end
 
 local function debug_screens()
@@ -324,7 +317,7 @@ local function debug_screens()
     if app.arg("showcase") then
         local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),
                        vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}
-        R.prog = {level = LEVELS, seed = 782341, wallet = purse(340, 115, 92, 30, 10)}
+        R.prog = {level = LEVELS, seed = 782341, story_seen = {}, wallet = purse(340, 115, 92, 30, 10)}
         R.island.count = 0
         R.island.open = 63
         for i = 0, WONDERS - 1 do
@@ -346,7 +339,7 @@ local function debug_screens()
         if x then R.island_focus(vec2(tonumber(x), tonumber(y)), R.island.cam.zoom) end
     end
     if app.arg("placing") and R.island.count < WONDERS then
-        R.prog.level = R.island.count + 1
+        R.prog.level = journey.wonder_levels[R.island.count + 1]
         R.island_begin(R.island.count, true)
         if app.arg("placing") == "blocked" and R.island.count > 0 then   -- over a built wonder: the red ghost
             local c = R.island
@@ -361,9 +354,10 @@ local function debug_screens()
     end
     a = app.arg("zone")
     if a then R.zone_card = num.clampi(tonumber(a), 1, ISLAND_ZONES - 1); R.overlay = R.OV_ZONE; R.on_island = true end
-    if app.arg("victory") then
-        R.prog = {level = 1, seed = 782341, wallet = purse(142, 37, 45, 3, 3)}
-        R.g = rules.game_start(1, 123478)
+    if app.arg("victory") then   -- the Lumber workshop's wish, which funds a stall; "clue": a story-only wish
+        local level = app.arg("victory") == "clue" and 1 or 3
+        R.prog = {level = level, seed = 782341, story_seen = {}, wallet = purse(142, 37, 45, level * 3, 1)}
+        R.g = rules.game_start(level, 123478)
         R.pending = rules.new_match()
         R.g.score, R.g.relics, R.g.wood, R.g.stone, R.g.won = 5860, 13, 9, 14, true
         R.vfx_reset()
@@ -375,7 +369,7 @@ local function debug_screens()
     if a then
         local i = num.clampi(tonumber(a), 0, WONDERS - 1)
         island_with(i)
-        R.prog.level = math.max(i + 1, 2)
+        R.prog.level = journey.wonder_levels[i + 1]
         R.prog.wallet = purse(142, 37, 45, R.prog.level * 3, R.prog.level * 3)
         R.inspect = i
         R.overlay = R.OV_WONDER
@@ -413,7 +407,7 @@ local function debug_screens()
     end
     if app.arg("building-review") then
         local first=((tonumber(app.arg("building-review")) or 1)-1)*4
-        R.prog={level=10,seed=782341,wallet=purse(2000,500,500,30,10)}
+        R.prog={level=LEVELS,seed=782341,story_seen={},wallet=purse(2000,500,500,90,20)}
         R.island.count=0;R.island.open=63
         local spots={vec2(700,1500),vec2(1100,1500),vec2(700,1850),vec2(1100,1850)}
         for k=0,3 do
@@ -460,9 +454,9 @@ local function debug_screens()
     a = app.arg("dialog")
     if a then   -- guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble
         R.toast_time = 0
-        if a == "intro" then story.play("intro", intro); R.present_board()   -- no board behind the talk yet
-        elseif a == "adrian" then island_with(WONDERS); R.on_island = true; story.play("finale", R.finale)
-        elseif a == "mara" then island_with(3); R.on_island = true; story.add({"noelle", "More room for lights, stalls and winter wishes!", story.SHOUT})
+        if a == "intro" then R.queue_story({key = "before-01", lines = R.intro_lines}, true); R.present_board()   -- no board behind the talk yet
+        elseif a == "adrian" then island_with(WONDERS); R.on_island = true; R.queue_story({key = "after-30", lines = R.finale}, true)
+        elseif a == "mara" then island_with(3); R.on_island = true; story.add({"pip", journey.regions[2], story.SHOUT})
         elseif a == "tomas" then island_with(2); R.on_island = true; story.say("noelle", R.wonders[2].about)
         elseif a == "bubble" then
             island_with(2); R.on_island = true
@@ -470,8 +464,18 @@ local function debug_screens()
             R.island_focus(R.island.items[2].pos, .8)
         else
             R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED or R.OV_FINALE
-            if R.overlay == R.OV_FINALE then island_with(WONDERS); R.on_island = true end
+            if R.overlay == R.OV_FINALE then island_with(WONDERS); R.prog.level = LEVELS; R.on_island = true end
         end
+    end
+    local beat_key = app.arg("story-beat")   -- --story-beat KEY [--story-line N]: preview a scene from its Nth line
+    if beat_key then
+        local beat = assert(journey.find(beat_key), "unknown story beat")
+        island_with(journey.earned(beat.level))
+        R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
+        while story.active() do story.next() end
+        local lines = {}
+        for i = tonumber(app.arg("story-line")) or 1, #beat.lines do lines[#lines + 1] = beat.lines[i] end
+        R.queue_story({key = beat.key, lines = lines}, true)
     end
     -- A debug screen may have replaced the board, or shown something else instead.
     if R.intro then
@@ -487,8 +491,8 @@ end
 local function init()
     if app.arg("cell-mask") then return end
     R.font = R.skin:font("lilita")
-    story.setup(cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
-                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, framed = true, skip = "SKIP"})
+    story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
+                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, skip = "SKIP"})
     local board_skin = require("art").skin()
     R.backdrop = board_skin.background
     R.scenes[1], R.scenes[2] = board_skin["scene-1"] or R.backdrop, board_skin["scene-2"] or R.backdrop
@@ -517,13 +521,13 @@ local function init()
     R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
     R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
     R.bubble_wonder = -1
-    R.prog = {level = 0, seed = 782341, wallet = purse()}
+    R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
     if not app.arg("smoke") then save.read("progress", serialize) end
-    if not R.quiet then story.play("intro", intro) end
+    R.story_current, R.story_preview = nil, false
     R.layout()
     R.start_level()
     if R.prog.level>=LEVELS then R.g.won=true end -- no unfinished attempt is created at campaign completion
-    if R.prog.level > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
+    if journey.earned(R.prog.level) > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
     if R.needs_relocation then
         R.on_island=true;R.notice("Some buildings need a new spot. Hold one to move it.")
     end

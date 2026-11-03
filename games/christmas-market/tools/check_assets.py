@@ -47,6 +47,8 @@ def main():
     for i in range(6):
         assert png(ROOT/'data/tile-sets/festive'/f'{i}.png') == ((128,128),6)
     assert png(ROOT/'data/characters/noelle.png') == ((320,480),6)
+    for card in manifest['temporary_cast']['cards']:   # same canvas, so painted busts drop in
+        assert png(ROOT/card) == ((320,480),6), card
     catalogue = ROOT/'Assets.xcassets/AppIcon.appiconset'
     entries = json.loads((catalogue/'Contents.json').read_text())['images']
     assert len(entries) == 11

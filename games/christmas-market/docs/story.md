@@ -1,6 +1,6 @@
 # Story: three episodes to "To be continued"
 
-**Status: script for review, not implemented.** The game still plays Noelle's short lines. The structure matches [Relic Rush](../../relic-rush/docs/story.md): 30 levels, wonders split 4+3+3, one beat per level, a happy turn at each episode's end. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
+**Status: implemented in the thirty-level campaign.** All 198 lines play. Noelle uses her painted bust and the other five speakers use temporary name cards until their busts are painted. The structure matches [Relic Rush](../../relic-rush/docs/story.md): 30 levels, wonders split 4+3+3, one beat per level, a happy turn at each episode's end. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
 
 **Fantasy of play:** I came to help at a Christmas market for three weeks, and I am building the place where a whole town finds its way back to each other.
 
@@ -102,7 +102,7 @@ Order: result → market → place the wonder → beat → next goal. A level wi
 **Before level 1 · opening** · *Panel: Noelle stepping off a little train into falling snow, with her suitcase under one arm and the red parcel in her mittens. A dark, pretty square. One old man, sweeping.*
 
 - **Noelle (thought):** Snow on the rooftops, lights in the trees... our Christmas market starts with one little wish.
-- **Agnes:** You're Rosa's girl. You've got her chin. One stall, no stock, twenty days till Christmas Eve. Well done.
+- **Agnes:** You're Rosa's girl. You've still got her chin. One stall, no stock, twenty days till Christmas Eve. Well done.
 - **Noelle:** I'm only here for three weeks. I've a train on the twenty-sixth, and a job in the city.
 - **Agnes:** Course you have. Come in when you can't feel your nose. There's buns.
 - **Noelle:** Gran gave me this for someone here, too. "For whoever needs it most." Very helpful, Gran.
@@ -119,7 +119,7 @@ Order: result → market → place the wonder → beat → next goal. A level wi
 **Level 2 · Lumber Lane**
 
 - **Noelle:** I need timber. A lot of it. I'm told you're the man. Please don't enjoy this.
-- **Theo:** Oh, I'm going to enjoy this. How much did you pay for the arch?
+- **Theo:** Oh, I'm going to enjoy this. Is that arch made of my offcuts?
 - **Noelle:** Nothing! It's scrap! Don't touch that, your gloves are sticky!
 - **Theo:** It's resin. It's a tree thing. You wouldn't understand. You've got one arch.
 
@@ -227,8 +227,8 @@ Order: result → market → place the wonder → beat → next goal. A level wi
 
 **Level 13 · Sawdust Row · builds Toymaker's workshop**
 
-- **Henrik:** Who hung that arch? It's very nearly straight.
 - **Henrik:** Henrik Strand. That's the first proper window I've had in years.
+- **Henrik:** Who hung that arch? It's very nearly straight.
 - **Noelle:** You can see the whole square from there. And right into the bakery.
 - **Henrik:** Can you? Hadn't noticed. Tell that woman her window wants cleaning.
 - **Noelle:** Tell her yourself. It's thirty feet.
@@ -296,7 +296,7 @@ Order: result → market → place the wonder → beat → next goal. A level wi
 - **Agnes:** You daft old... Forty years. You're late.
 - **Henrik:** I know. Is there a bun?
 - **Agnes:** Course there's a bun. Get in here, you'll catch your death.
-- **Noelle (thought):** Eleven days till I leave. And I've got a note in my pocket I'm scared to open.
+- **Noelle (thought):** Eleven days till I leave. And Pip's just handed me a note I'm scared to open.
 
 ## Episode 3: Christmas Eve
 
@@ -474,15 +474,16 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 | 29 | The Big Fir | All, dense | One last drift between you and the tree. |
 | 30 | Light the Christmas Tree | All, star shape | Clear the snow and light our Christmas tree! |
 
-## For implementation
+## Implementation
 
-- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29.
-- **Same blocker as Relic Rush:** `reward_breakdown` at `lua/rules.lua:29` indexes the wonder by level, and `WONDERS` is 10 in `lua/island.lua:10`. An 11th level needs the level-to-wonder map first. Share that fix if possible, rather than writing it twice.
-- **Five new busts** (Theo, Agnes, Henrik, Pip, Mr Wren) and **eight panels** (the six episode panels plus levels 27 and 28), recorded in the [asset catalogue](asset-catalogue.md) and checked by `tools/check_assets.py`, whose inventory count changes. Dialogue can ship before the panels.
-- **The cast table** in `lua/main.lua:19` gets five entries, each with a mouth position. The automatic Noelle line at wonders (`lua/island_view.lua:55`) goes away, and `about` stays in the tap bubble.
-- **`R.finale`** moves to level 30 and keeps its second line. The end panel (`lua/screens.lua:450`) follows it.
-- **Economy is not covered here.** This game still pays and costs wood and stone, unlike Relic Rush. Any Rank gate is a separate decision.
-- **Check in the game:** the longest scene is 15 lines, and `story.frame` has not been tried past 3 in a row. The name plate must fit "Henrik Strand" and "Theo Marsh".
+- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. A level without a stall pays Gold, Stars and Bells but no materials.
+- **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. The 20 Bells are paid out by level 27. Pip's region lines replace Noelle's one repeated line.
+- **Busts:** Noelle is the only painted bust. Theo, Agnes, Henrik, Pip and Mr Wren speak through temporary name cards from `tools/prepare_name_cards.py`, catalogued in the [asset catalogue](asset-catalogue.md#story-cast) with what is still needed. The eight panels are optional, and scenes play over the live market.
+- **The cast** is in `lua/narrative.lua`. Noelle's automatic line when a stall is placed is gone; the tap card and bubble carry `about`, and the five changing bubbles above.
+- **`R.finale`** is the level 30 scene. Its end leads to the "To be continued" screen.
+- **Saves:** stable `narrative.v1.<phase>-<level>` keys are written only when a scene finishes or is skipped, so an unfinished scene replays after a reload. Replays are silent. Version 2 saves keep their level, wallet, regions and every stall, already-built later stalls count when their scene arrives, and a short recap bridges the old lines.
+- **Boards:** levels 11–30 reuse the connected lane contours and only existing mechanics. Level 20 is the ring and level 30 the star (the old level 10 board). The greedy bot's measured curve puts each episode's hardest levels at its end (19–20 and 29–30) with breathers at 18 and 28. Human tuning can follow playtesting.
+- **Checked in the game:** the longest line, a name-card speaker, "Henrik Strand" on his name plate, a shout, the last finale line and the end screen, at 480×900 and 390×844. The longest scene (15 lines) plays through in the campaign smoke run.
 
 ## Changelog
 
@@ -490,3 +491,4 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 - 2026-11-02: Second script, a joyful Santa story of a fallen mailbag and a small reindeer. The owner asked for people and the magic of the season instead, drawn from Christmas films, and not necessarily Santa.
 - 2026-11-02: Third script: four human threads through one market, with Mr Wren left unexplained. Keeps Bellmere, the cast, Noelle's parcel and Bramble, now a goat.
 - 2026-11-02: Fresh read: it felt like a Christmas film, most at levels 20, 26, 27, 28 and 29. Fixed the calendar (arrives 4 December; level 18 is the 15th), the oven, Henrik's introduction, who says what about the parcel, and overused phrases. Added parcel and rule reminders for play with long gaps. Episode 3 runs to 74 lines, over the usual 70, on purpose. Levels 12, 15, 21 and 22 are the lightest beats. Not re-read since these fixes.
+- 2026-11-03: Cold read by a separate reader, one episode at a time. The tone held throughout, Theo was readable as Someone by level 14 (as intended), and the payoffs landed. Fixes: Agnes's "still got her chin" now hints that Noelle has been to Bellmere before; Henrik introduces himself before he judges the arch; Theo asks about offcuts, not price; Pip hands Noelle the note at level 20, linking it to the next morning. The reader's date complaint was a misreading (nine days to Christmas Eve is eleven days to the 26th). Implemented all three episodes with keyed delivery, recovery, legacy recaps and the 4+3+3 schedule.
