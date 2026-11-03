@@ -25,3 +25,20 @@ use `--story-beat before-11`, `--story-beat after-28`, or
 The `rules relic_story` regression follows all thirty first clears and ten
 confirmed restorations, then checks interruption, save/read, replay silence,
 legacy recaps, retained purchases and already-owned wonder prerequisites.
+
+All twelve preserved images were inspected. The before captures come from CI
+run 41597879292 (`f6e223f49ee7d20b9d48ad185e6e31f4fe2b14bf`); the after
+captures come from run 41602186572
+(`de1c6585797cf2bb7342518eef374e57ffdc6823`). The latter passed all 141 Relic
+Rush rule, renderer, capture and real-input smoke cases, with 874,166 checks.
+
+| Scene | 480×900 | 390×844 |
+| --- | --- | --- |
+| Before | ![Before](dialogue-elena-before.jpg) | ![Before phone](phone-dialogue-intro-before.jpg) |
+| Opening, larger thought text | ![Opening](story-opening.jpg) | ![Opening phone](phone-story-opening.jpg) |
+| Longest line | ![Long line](story-longest.jpg) | ![Long line phone](phone-story-longest.jpg) |
+| Shout | ![Shout](story-shout.jpg) | ![Shout phone](phone-story-shout.jpg) |
+| Final hook | ![Finale](story-finale.jpg) | ![Finale phone](phone-story-finale.jpg) |
+
+Later-board samples: [level 20](story-level-20.jpg) and
+[level 30 on the phone](phone-story-level-30.jpg).
