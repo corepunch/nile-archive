@@ -5,7 +5,7 @@ installs and launches on the connected iPhone (or iPad when no iPhone is
 available). Set `DEVICE="name or UDID"` to choose one. See the
 [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-An in-progress Christmas market game based on Relic Rush's hex match-4 and free-placement city systems. Its 37 buildings and decorations are modelled and rendered in Blender after the building direction sheet. See the [building catalogue](docs/building-catalogue.md).
+An in-progress Christmas market game based on Relic Rush's hex straight-line match-3 and free-placement city systems. Its 37 buildings and decorations are modelled and rendered in Blender after the building direction sheet. See the [building catalogue](docs/building-catalogue.md).
 
 ![The 37 Blender-rendered buildings and decorations](docs/screenshots/buildings.jpg)
 
@@ -39,6 +39,13 @@ a neutral resource atlas for games without an override; `--default-match3`
 previews it. `python3 tools/match3_atlas.py` reproduces both skins while
 preserving authored alpha and every control state. See the
 [review captures](docs/review/trickling/README.md).
+
+Swap adjacent treats, or tap two neighbours, to make a straight line of three
+or more matching kinds along any of the three hex axes. Bent clusters and
+unselected branches do not count. Four in a line creates an axis shooting star;
+five or more creates a rainbow star. Pieces have one ordinary state rather
+than flower growth stages. Blockers, tools, cascades and restoration rewards
+retain their existing rules. Both portrait games use this same matching mode.
 
 ## Draft implementation
 

@@ -3,14 +3,14 @@ local function level(name, lesson, moves, score, relics, soil, chains, ice)
     return {name=name, lesson=lesson, moves=moves, score=score, relics=relics, soil=soil, chains=chains, ice=ice}
 end
 local levels = {
-    level("Welcome Lights", "Join 4+ neighbors. Bends and diamonds count!", 24, 1100, 8, 0, 0, 0),
-    level("Lumber Lane", "Groups of five create a shooting star.", 28, 1800, 10, 7, 0, 0),
+    level("Welcome Lights", "Line up 3 or more treats along any hex axis.", 24, 1100, 8, 0, 0, 0),
+    level("Lumber Lane", "Four in a straight line create a shooting star.", 28, 1800, 10, 7, 0, 0),
     level("Gingerbread Swirl", "Clear the powder snow beneath the treats.", 32, 2300, 12, 12, 0, 0),
     level("Cocoa Corner", "Match tangled treats to unwrap the tinsel.", 34, 2700, 12, 10, 4, 0),
-    level("Toymaker Lane", "Groups of six or more make a hex blast.", 36, 3100, 14, 13, 4, 0),
+    level("Toymaker Lane", "Combine shooting stars to clear all three axes.", 36, 3100, 14, 13, 4, 0),
     level("Ribbon Wishes", "Break the ice and wrap a winter wish.", 38, 3400, 14, 13, 0, 5),
     level("Candlelight Circle", "Candy canes melt ice in all six neighboring cells.", 40, 3800, 16, 15, 4, 5),
-    level("Carousel Stars", "Six in a straight line forge a rainbow star.", 42, 4200, 16, 17, 4, 6),
+    level("Carousel Stars", "Five in a straight line forge a rainbow star.", 42, 4200, 16, 17, 4, 6),
     level("Skating Evening", "Combine rays to clear all three axes.", 44, 4600, 18, 19, 5, 6),
     level("Light the Christmas Tree", "Clear the snow and light our Christmas tree!", 46, 5000, 20, 22, 6, 6),
 }
