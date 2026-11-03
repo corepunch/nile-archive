@@ -963,5 +963,25 @@
     "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
     "review": "docs/screenshots/hud-states.jpg"
   },
-  "navigation": "art/navigation/manifest.json"
+  "navigation": "art/navigation/manifest.json",
+  "story": {
+    "source": "art/art-direction/expedition-cast.png",
+    "import": "python3 games/relic-rush/tools/prepare_assets.py",
+    "cast": {
+      "elena": "data/characters/elena.png",
+      "mara": "data/characters/mara.png",
+      "tomas": "data/characters/tomas.png",
+      "adrian": "data/characters/adrian.png"
+    },
+    "states": [
+      "speaking",
+      "listening",
+      "thought",
+      "shout"
+    ],
+    "presentation": "Existing island and two board paintings, shared engine portrait staging and bubbles; body text 31.5 points, names/building bubbles 22.5 points. No new bitmap states or tint-authored variants.",
+    "script": "docs/story.md",
+    "compile": "python3 games/relic-rush/tools/prepare_story.py",
+    "review": "docs/review/story/README.md"
+  }
 }

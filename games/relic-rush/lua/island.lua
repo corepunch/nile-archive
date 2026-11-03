@@ -6,6 +6,7 @@
 -- connected patch) and which regions touch. Placement, unlocking, moving and
 -- drawing are the engine's.
 local M = {}
+local journey = require("journey")
 
 M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 6, 10
 local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
@@ -36,7 +37,7 @@ end
 function M.can_buy(c, wallet, level, kind)
     if kind<0 or kind>=#M.buildings or c.count>=160 then return false end
     local d=M.buildings[kind+1]
-    if kind<WONDERS and (kind~=M.wonder_count(c) or kind>=level) then return false end
+    if kind<WONDERS and (kind~=M.wonder_count(c) or kind>=journey.earned(level)) then return false end
     if kind>=WONDERS and wallet[1]-M.reserved_gold(c,level)<d.cost[1] then return false end
     if not wallet:covers(d.needs) or not wallet:covers(d.cost) then return false end
     return true
@@ -45,7 +46,7 @@ end
 -- Keep the earned story restorations affordable in the finite campaign economy.
 function M.reserved_gold(c, level)
     local gold=0
-    for kind=0,math.min(level,WONDERS)-1 do
+    for kind=0,journey.earned(level)-1 do
         if M.owned(c,kind)==0 then gold=gold+M.wonders[kind+1].cost[1] end
     end
     return gold
@@ -58,7 +59,7 @@ function M.restore_saved(c,level)
     local needs_relocation=false
     c.count=0
     for _,b in ipairs(items) do
-        local valid=b.type>=WONDERS or (b.type<level and not seen[b.type])
+        local valid=b.type>=WONDERS or (b.type>=0 and not seen[b.type])
         if valid then
             local spot=c:snap(b.pos,b.type)
             local ok=c:can_place(spot,b.type,-1)
@@ -73,7 +74,7 @@ function M.restore_saved(c,level)
 end
 
 local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights", "Temple ridge"}
-local zone_stars = {0, 6, 9, 15, 21, 27}
+local zone_stars = {0, 18, 27, 45, 63, 81}
 local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}
@@ -201,7 +202,7 @@ end
 -- Build the next wonder at a free spot.
 function M.island_place_next(c, wallet, built_limit, now)
     local nxt = M.wonder_count(c)
-    if nxt >= WONDERS or nxt >= built_limit then return false end
+    if nxt >= WONDERS or nxt >= journey.earned(built_limit) then return false end
     local ok, spot = c:find_spot(nxt, M.island_suggestion(nxt))
     if not ok then return false end
     c:begin_place(nxt, spot)

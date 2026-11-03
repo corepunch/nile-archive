@@ -16,7 +16,7 @@ This supersedes the prototype's connected-group match-4 rules.
 
 The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. Generation, hints, reshuffling and cascades use the same rule in both games.
 
-## Ten board masks
+## Original ten board masks
 
 | Level | Shape | Active cells |
 | --- | --- | ---: |
@@ -35,6 +35,8 @@ The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rus
 
 Each mask is a distinct connected graph within the common axial-coordinate envelope. Missing cells are excluded from rendering, matching, tile selection, swapping, booster targeting, obstacle placement and refill. Matching never crosses a gap. Gravity moves gems straight down whenever the cell beneath them is empty. Diagonal movement is allowed only when that cell is occupied, locked or missing. Every active cell with no active cell directly above spawns vertically before considering side donors, so the whole stepped top edge refills together. Interior cells spawn only when all upstream donors are blocked. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Directional special attacks may travel across gaps but only affect actual cells. The silhouette follows the active cells rather than a permanently painted large hexagonal frame.
 
+The three-episode campaign adds twenty connected, rotated lane variants with trimmed exposed corners. Each remains a distinct mask, checked for connectivity, empty holes, match-free generation and legal opening moves. The full thirty-level configuration is in [the README](../README.md#campaign-thirty-hex-levels).
+
 ## Idol
 
 The gold idol is six-sided, like the board. Since the tile-set update the match pieces come from `art/tile-sets/source.png` (see [tile-sets.md](tile-sets.md)); the selected Relics pack keeps the hexagonal sun idol.
@@ -43,7 +45,7 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 
 ## Validation
 
-- Seeded startup boards across all ten masks: no pre-existing straight match and at least one legal opening move.
+- Seeded startup boards across all thirty masks: no pre-existing straight match and at least one legal opening move.
 - Three/four/five/six runs on all axes, rejected triangles/diamonds/rings, excluded branches, crossing triples, swap rollback, and hole-separated runs.
 - Independent coordinate-based line oracle and exhaustive runs in both directions for every color and length.
 - Existing blockers, gravity, tools, special combinations, update-loop cascades, hints and reshuffles.

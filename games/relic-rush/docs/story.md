@@ -1,6 +1,6 @@
 # Story: three episodes to "To be continued"
 
-**Status: script for review, not implemented.** The game still plays the short lines described in the [README](../README.md#story-and-world). The structure follows the proposal in [the research report](../../../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md): 30 levels, wonders split 4+3+3, one beat per level, a hook at each episode's end. Plot, characters and names are our own; only the pacing comes from the references.
+**Status: implemented in the playable thirty-level campaign.** All 183 lines use the four existing authored portraits; story scenes play over the existing island and scene paintings. The structure follows the proposal in [the research report](../../../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md): 30 levels, wonders split 4+3+3, one beat per level, a hook at each episode's end. Plot, characters and names are our own; only the pacing comes from the references.
 
 No new speakers are needed. All dialogue uses the four existing busts (Elena, Mara, Tomas, Adrian) and all 10 wonders are the existing ones, in their existing order.
 
@@ -206,7 +206,7 @@ Bubble kinds: lines are speech unless marked *(thought)* or *(shout)*.
 
 - **Elena:** It fits. Your father cut out the Heart, crated it and sailed. That's the whole story.
 - **Adrian:** Then why is his best crate still up here, nailed shut and empty?
-- **Elena:** ...Nobody shipped anything. The Heart never left this island. I was wrong again.
+- **Elena:** Then I was wrong to call it the whole story. We haven't proved the Heart ever left.
 - **Mara:** And here's their log. The last pages are torn out.
 - **Elena:** By whoever owns that clean blanket.
 
@@ -296,7 +296,7 @@ Bubble kinds: lines are speech unless marked *(thought)* or *(shout)*.
 - **Elena:** The basin's draining into a stair. And the air coming up is warm.
 - **Tomas:** You took your time. The only warm room left in the valley, and I've kept it for you.
 - **Mara:** Elena, look at his coat. It's glowing right through the cloth.
-- **Tomas:** When the Heart sang, the sea answered. A light on the water. That's where they all went.
+- **Tomas:** The sea answered the Heart's song. A light on the water. The valley followed it centuries ago.
 - **Tomas:** Cornelius saw it too. "Silence it until I'm back, or the whole world will come."
 - **Elena:** And he left you here to watch it freeze.
 
@@ -373,7 +373,7 @@ There is no date, because we have no release schedule. The player stays on the i
 
 ## Levels
 
-Levels 1–10 keep their boards and lessons, and only level 8 is renamed. Levels 11–30 need boards authored and use existing mechanics. "Lesson" is Elena's line at level start, the same slot levels 1–10 already use. Backgrounds reuse the two we have, with no new art needed.
+Levels 1–10 keep their boards and lessons, and only level 8 is renamed. Levels 11–30 have connected lane variants and use existing mechanics. "Lesson" is Elena's line at level start, the same slot levels 1–10 already use. Backgrounds reuse the two we have, with no new art needed.
 
 | # | Name | Focus | Lesson | Background |
 | ---: | --- | --- | --- | --- |
@@ -398,17 +398,21 @@ Levels 1–10 keep their boards and lessons, and only level 8 is renamed. Levels
 | 29 | The Silent Temple | All, dense | Every blocker in the valley guards this floor. | Temple |
 | 30 | The Song Returns | All, sun crown | Clear the way to the socket. | Temple |
 
-Level difficulty follows the report's saw-tooth: each episode opens easier than the last one closed, and 18 and 28 give a breather right before the hardest stretch. All of it needs tuning once boards exist.
+Level difficulty follows the report's saw-tooth: each episode opens easier than the last one closed, and 18 and 28 give a breather right before the hardest stretch. The extended campaign simulation checks solvability with the existing greedy player; human difficulty tuning can follow playtesting.
 
-## For implementation
+## Implementation
 
-- **Six panels** are new art (opening and hook per episode), and go in the [asset catalogue](asset-catalogue.md) and the board-states manifest in the same PR. Dialogue can ship first over the existing blur, with panels added later.
-- **`R.finale` moves** from the tenth wonder to level 30, and Tomas's automatic `about` line goes away.
-- **Level 10 no longer ends the game**, and the level 10 lesson stays valid: the disc is an "ancient sun", just not the Heart.
-- **Beats are stored by key**, so new beats add without breaking saves. The level-to-wonder migration is a separate concern, in the report.
-- **`story.frame` is untested past 3 lines in a row**, and the hooks run 11 and 12. Check them in the game on both phone sizes, along with the longest lines.
+- The original ten registered buildings and four portraits are preserved. Wonder milestones are 1/4/7/9, 13/16/19 and 23/26/29. No rank gates or new footprint geometry are needed.
+- Results, confirmed construction and clue scenes follow the order above. Tomas no longer automatically reads each building's `about` line; the island bubble carries it and updates after discoveries.
+- Thirty connected board masks use the existing matching, blockers, refill and backgrounds. Level 10 is the first episode hook; only level 30 shows the ending.
+- Stable `narrative.v1.<phase>-<level>` keys are persisted after completion/Skip. An unfinished beat remains unacknowledged and restarts after reload; replays and retries are silent.
+- Version 3 saves retain level counts, purchases, wallet and open regions. A short recap bridges the old dialogue. Existing later wonders count as already restored when their story milestone arrives.
+- The scene-panel notes above describe composition and events. The implemented presentation intentionally uses the existing paintings and four authored busts; separate cinematic illustrations are optional future art direction.
+- Dialogue body text is 31.5 points, names and building text 22.5 points: 50% larger. Representative longest-line, thought, shout and finale captures cover both phone sizes.
 
 ## Changelog
 
 - 2026-11-02: First full script. Boards, panels and code not started.
 - 2026-11-02: Cold read done by a separate reader. They placed Tomas as the twelfth man by level 16, so levels 13 and 16 now point at him less. With so small a cast he stays the only suspect, so the episode's weight is on why, not who. Fixed the head count, the frost line, the dinghy, the letter, and Elena's repeated "I was wrong". Elena's voice is still the least distinct.
+
+- 2026-11-03: Implemented all three episodes, keyed delivery/recovery, legacy recaps and the 4+3+3 restoration schedule. Independent blind read confirmed the reveal chain; clarified the empty-crate inference and the centuries between the two departures. Reused the existing island, cast and wonders; enlarged dialogue by 50%.

@@ -17,31 +17,11 @@ require("smoke")
 local LEVELS = rules.LEVELS
 local rgba = color
 
--- The expedition (see docs/art-direction-v2.md). Busts come from the cast lineup.
-local cast = {
-    {id = "elena", name = "Elena Voss", role = "Archaeologist, expedition lead", portrait_path = "characters/elena.png",
-     color = rgba(44, 108, 84), mouth = vec2(.46, .51)},
-    {id = "mara", name = "Mara Bell", role = "Pilot and expedition partner", portrait_path = "characters/mara.png",
-     color = rgba(150, 74, 40), right = true, mouth = vec2(.60, .49)},
-    {id = "tomas", name = "Tomas Reed", role = "Island archivist", portrait_path = "characters/tomas.png",
-     color = rgba(92, 112, 58), right = true, mouth = vec2(.44, .52)},
-    {id = "adrian", name = "Adrian Vale", role = "Expedition financier", portrait_path = "characters/adrian.png",
-     color = rgba(104, 48, 92), right = true, mouth = vec2(.46, .52)},
-}
-
-R.intro_lines = {
-    {"elena", "The Lost Valley at last. Broken sunstones, silent terraces... someone lived here once.", story.THOUGHT},
-    {"mara", "And now we do. I'll keep the plane ready. You find out who they were."},
-    {"elena", "Every puzzle is an excavation. Let's start digging."},
-}
-
-R.finale = {
-    {"adrian", "The Heart of the Sun... remarkable. My sponsors will be delighted."},
-    {"elena", "It stays in the valley, Adrian. That was always the deal."},
-}
+local journey = require("journey")
+require("narrative")
 
 -- Dialogue text: Lilita One in dark ink on the cream bubble.
-function R.speech_style(size) return style{font = R.font, size = size, fill = rgba(74, 50, 28)} end
+function R.speech_style(size) return style{font = R.font, size = size * 1.5, fill = rgba(74, 50, 28)} end
 
 function R.notice(text)
     R.toast = text
@@ -55,7 +35,7 @@ end
 ------------------------------------------------------------------ progress
 
 local function serialize(s)
-    s:int("version", 3)
+    local version = s:int("version", 4)
     R.prog.level = s:int("level", R.prog.level)
     R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
     R.prog.wallet = s:ints("wallet", R.prog.wallet)
@@ -63,8 +43,10 @@ local function serialize(s)
     R.prog.life_at = s:int("life_at",R.prog.life_at or 0)
     R.island:serialize(s)
     story.serialize(s)
+    journey.serialize(s,R.prog)
     if save.is_reading(s) then
         R.prog.level = num.clampi(R.prog.level, 0, LEVELS)
+        journey.migrate(R.prog,version)
         R.needs_relocation=island.restore_saved(R.island,R.prog.level)
     end
 end
@@ -76,7 +58,7 @@ end
 function R.start_level(chosen)
     local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
     if lvl > R.prog.level then return false end
-    if chosen and lvl == R.prog.level and island.wonder_count(R.island) < R.prog.level then
+    if lvl == R.prog.level and (island.wonder_count(R.island) < journey.earned(R.prog.level) or journey.awaiting_return(R.prog)) then
         R.notice("Restore your earned wonder before the next discovery."); return false
     end
     rules.refill_lives(R.prog,app.clock())
@@ -86,12 +68,8 @@ function R.start_level(chosen)
     R.overlay = R.OV_NONE
     R.intro = nil
     R.vfx_reset()
-    -- Elena explains a level's twist once; repeat visits keep the header quiet.
-    local lesson = rules.level_of(R.g).lesson
-    if not R.quiet then
-        story.play(("level-%d"):format(R.g.level), {{"elena", lesson}})
-        R.present_board()
-    end
+    -- Mechanics stay in the board lesson, apart from the story dialogue.
+    if not R.quiet then R.notice(rules.level_of(R.g).lesson);R.present_board() end
     return true
 end
 
@@ -111,7 +89,7 @@ function R.claim_reward()
     R.save_progress()
     R.on_island = true
     R.overlay = R.OV_NONE
-    R.notice(first and "Restoration funded. Spare Amulets is yours to decorate." or "Replay Amulets collected. Choose a treasure in the Build Shop.")
+    R.notice(first and (journey.wonder_at(R.prog.level) and "Restoration funded. Spare Amulets are yours to decorate." or "A new clue awaits on your island.") or "Replay Amulets collected. Choose a treasure in the Build Shop.")
 end
 
 -------------------------------------------------------------------- frame
@@ -126,6 +104,7 @@ local function frame(dt)
     end
     local inp = input.get()
     if inp.pressed then R.bubble_wonder=-1 end
+    R.story_tick()
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
     R.layout()
@@ -133,7 +112,7 @@ local function frame(dt)
     if app.arg("smoke") then R.smoke() end
     R.debug_frame()
     R.now = R.now + dt
-    R.toast_time = R.toast_time - dt
+    if not talking then R.toast_time = R.toast_time - dt end
     if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
     R.board_update(dt)
@@ -155,7 +134,7 @@ end
 local function init()
     if app.arg("cell-mask") then return end
     R.font = R.skin:font("lilita")
-    story.setup(cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
+    story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 22.5), bubble = rgba(255, 246, 222, 252),
                                   edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, framed = true, skip = "SKIP"})
     local board_skin = require("art").skin()
     R.backdrop = board_skin.background
@@ -188,11 +167,11 @@ local function init()
     R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
     R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
     R.bubble_wonder = -1
-    R.prog = {level = 0, seed = 782341, wallet = purse(),lives=rules.LIVES,life_at=0}
+    R.prog = {level = 0, seed = 782341, wallet = purse(),lives=rules.LIVES,life_at=0,story_seen={}}
     if not app.arg("smoke") then save.read("progress", serialize) end
     if app.arg("empty-lives") then R.prog.lives=0;R.prog.life_at=app.clock()+1800;R.quiet=true end
     rules.refill_lives(R.prog,app.clock())
-    if not R.quiet then story.play("intro", R.intro_lines) end
+    R.story_current,R.story_preview=nil,false
     R.layout()
     if not R.start_level() then
         -- A loaded zero-life wallet still needs an inert board for shared view
@@ -202,7 +181,7 @@ local function init()
         R.on_island=true
     end
     if R.prog.level>=LEVELS then R.g.won=true end -- no unfinished attempt is created at campaign completion
-    if R.prog.level > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
+    if journey.earned(R.prog.level) > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
     if R.needs_relocation then
         R.on_island=true;R.notice("Some buildings need a new spot. Hold one to move it.")
     end

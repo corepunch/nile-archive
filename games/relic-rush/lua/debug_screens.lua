@@ -5,18 +5,20 @@
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
+local journey=require("journey")
 local LEVELS, WONDERS, ISLAND_ZONES = rules.LEVELS, island.WONDERS, island.ISLAND_ZONES
 local COMPASSES = rules.COMPASSES
 
 -- An island after n expeditions: n wonders at their suggested spots and the
 -- regions a player would have opened by then, stars and compasses to match.
 local function island_with(n)
-    local opened_at = {0, 2, 3, 5, 7, 9}
-    R.prog = {level = n, seed = 782341, lives=5, wallet = purse(340, 115, 92, n * 3, 0)}
+    local opened_at = {0, 6, 9, 15, 21, 27}
+    local cleared=n>0 and journey.wonder_levels[n] or 0
+    R.prog = {level = cleared, seed = 782341, lives=5, story_seen={}, wallet = purse(340, 115, 92, cleared * 3, 0)}
     R.island.count = 0
     local open = 1
     for z = 1, ISLAND_ZONES - 1 do
-        if n >= opened_at[z + 1] then
+        if cleared >= opened_at[z + 1] then
             open = open | (1 << z)
         end
     end
@@ -26,7 +28,7 @@ local function island_with(n)
         if R.island:zone_open(z) then R.prog.wallet[COMPASSES] = R.prog.wallet[COMPASSES] - R.island.zones[z + 1].cost[COMPASSES] end
     end
     local spend = purse(100000, 100000, 100000)
-    for _ = 1, n do island.island_place_next(R.island, spend, n, 0) end
+    for _ = 1, n do island.island_place_next(R.island, spend, cleared, 0) end
 end
 
 -- --talk-through N: move the dialogue on every N frames, to film it.
@@ -86,7 +88,7 @@ function R.debug_screens()
         if x then R.island_focus(vec2(tonumber(x), tonumber(y)), R.island.cam.zoom) end
     end
     if app.arg("placing") and R.island.count < WONDERS then
-        R.prog.level = R.island.count + 1
+        R.prog.level = journey.wonder_levels[R.island.count+1]
         R.island_begin(R.island.count, true)
         if app.arg("placing") == "blocked" and R.island.count > 0 then   -- over a built wonder: the red ghost
             local c = R.island
@@ -116,7 +118,7 @@ function R.debug_screens()
     if a then
         local i = num.clampi(tonumber(a), 0, WONDERS - 1)
         island_with(i)
-        R.prog.level = math.max(i + 1, 2)
+        R.prog.level = journey.wonder_levels[i+1]
         R.prog.wallet = purse(142, 37, 45, R.prog.level * 3, R.prog.level * 3)
         R.inspect = i
         R.overlay = R.OV_WONDER
@@ -228,6 +230,17 @@ function R.debug_screens()
                 or a == "confirm" and R.OV_CONFIRM or R.OV_FINALE
             if R.overlay == R.OV_FINALE then island_with(WONDERS); R.on_island = true end
         end
+    end
+    local beat_key=app.arg("story-beat")
+    if beat_key then
+        local beat=assert(journey.find(beat_key),"unknown story beat")
+        island_with(journey.earned(beat.level))
+        R.on_island=true;R.overlay=R.OV_NONE;R.intro=nil;R.phase=R.PH_IDLE
+        while story.active() do story.next() end
+        local line=tonumber(app.arg("story-line")) or 1
+        local lines={}
+        for i=line,#beat.lines do lines[#lines+1]=beat.lines[i] end
+        R.queue_story({key=beat.key,lines=lines},true)
     end
     if app.arg("present") then R.present_board() end
     -- A debug screen may have replaced the board, or shown something else instead.
