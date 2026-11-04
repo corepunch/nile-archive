@@ -10,7 +10,7 @@ R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for anima
 rules.bind_view(R)
 R.intro_haptics = true
 board_intro.bind(R, rules)
-local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
+local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT
 local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
@@ -24,19 +24,9 @@ local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
-local HEX_DY = 1.732050808 * HEX_R
-R.board_origin = vec2(240, 434)
-local TOOLS_Y, TOOL_SIZE = 808, art.tool_size
-
--- The screen is 480 wide and at least 900 tall; tall phones add height. The
--- bottom group moves down by all of it (R.drop) and the board by half.
-function R.layout()
-    R.drop = app.screen().h - SCREEN_H
-    R.board_origin = vec2(240, 434 + R.drop / 2)
-    local half_w = (1.5 * rules.HEX_RADIUS + 1) * HEX_R + 6
-    local half_h = (rules.HEX_RADIUS + .5) * HEX_DY + 6
-    R.BOARD_CLIP = rect.centered(R.board_origin, size2(half_w * 2, half_h * 2))
-end
+local TOOL_SIZE = art.tool_size
+-- The engine owns the board screen's layout (match3 bind_view): R.hud_rect,
+-- R.board_origin, R.BOARD_CLIP and R.tools_y.
 
 local cell_pos = R.cell_pos
 
@@ -104,7 +94,7 @@ end
 -- Moves medallion, one small resource panel per goal, and pause along the top,
 -- the tools standing along the bottom edge, the board taking the space between.
 -- Repeated goal cells use the shared measured list, with stable objective keys.
-local MOVES_AT, MOVES_R = vec2(56, 34), 40
+local MOVES_X, MOVES_R = 56, 40   -- 24 below the HUD band's top edge
 function R.goal_entries()
     local g, l = R.g, rules.level_of(R.g)
     local entries = {
@@ -142,7 +132,7 @@ local hud_form=ui.form{kind="row",gap=6,align="center",children={
 -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
 -- remaining moves large inside. It warms to red over the last five moves.
 local function draw_moves(arrive)
-    local c, r, a = MOVES_AT, MOVES_R * arrive, (1 - arrive) * -PI / 3   -- flat-top, like the cells
+    local c, r, a = vec2(MOVES_X, R.hud_rect.y + 24), MOVES_R * arrive, (1 - arrive) * -PI / 3   -- flat-top, like the cells
     local moves = R.g.moves
     local urgent = moves <= 5 and not R.g.won
     if urgent and not R.reduced_motion then
@@ -164,12 +154,12 @@ end
 
 function R.goal_target(kind)
     -- Collection flights land on the goal they advance.
-    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, 30)
+    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, R.hud_rect.y + 20)
 end
 local function draw_hud(top)
     if top <= 0 then return end
     assert(hud_form:set_items("goals",R.goal_entries()))
-    hud_form:draw(rect(14,10 + (top - 1) * 110,452,44),R.skin,{interactive=false})
+    hud_form:draw(rect(14,R.hud_rect.y + (top - 1) * (R.hud_rect.y + 110),452,44),R.skin,{interactive=false})
     local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
     if medallion > .05 then draw_moves(medallion) end
 end
@@ -261,7 +251,7 @@ R.tool_notes = {"Pickaxe: tap a relic to break it.", "Dynamite: tap a relic to b
 -- Three tools, evenly spaced; their names and the rules live in
 -- the toast and the Explorer's Guide (in Pause), as in other match-3 games.
 local function draw_tools(inp)
-    local y = TOOLS_Y + R.drop
+    local y = R.tools_y
     for k = 0, 2 do
         local x = 240 + (k - 1) * 120
         local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
@@ -289,7 +279,7 @@ function R.board_screen(inp, dt)
     if intro then top, tray = intro:arrive(0, 2.8, .58), intro:arrive(.05, 2.8, .58) end
     draw_hud(top)
     if top > 0 then
-        R.P.offset = vec2(0, (top - 1) * 110)   -- the pause medallion rides in with the goals
+        R.P.offset = vec2(0, (top - 1) * (R.hud_rect.y + 110))   -- the pause medallion rides in with the goals
         R.draw_header(false)
         R.P.offset = vec2(0, 0)
     end

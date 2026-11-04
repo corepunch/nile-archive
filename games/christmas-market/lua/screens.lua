@@ -130,9 +130,10 @@ function R.draw_toast()
     if R.on_island then   -- above the map buttons
         rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
-    else   -- below the compact header, clear of Elena and the pause control
-        rrect(rect(38, 200, 404, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 215), 14, PAL_CREAM, 388)
+    else   -- just below the HUD band, clear of Elena and the moves card
+        local y = R.hud_rect.y + R.hud_rect.h + 6
+        rrect(rect(38, y, 404, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, y + 15), 14, PAL_CREAM, 388)
     end
 end
 

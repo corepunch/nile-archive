@@ -648,6 +648,27 @@ function E.new(config)
     end
     local rules = M
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
+
+    -- One board-screen layout for every match-3 game. Games paint into its
+    -- bands but cannot move them. Top to bottom on the 480-wide screen (at
+    -- least 900 tall): the backdrop's scenery band, left clear for the
+    -- painting; the HUD band, which holds goals, moves and portraits; the
+    -- board, centred in what is left; and the tool row along the bottom.
+    assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
+    local SCENERY, SCENERY_GROWTH, HUD_H, TOOLS_FROM_BOTTOM, TOOL_HINT = 125, .7, 120, 116, 24
+    local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
+    local function layout()
+        local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
+        local h = math.max(design_h, app.screen().h)
+        R.drop = h - design_h
+        R.hud_rect = rect(0, math.floor(SCENERY + R.drop * SCENERY_GROWTH), w, HUD_H)   -- taller phones show more painting
+        R.tools_y = h - TOOLS_FROM_BOTTOM
+        local top = R.hud_rect.y + HUD_H
+        R.board_origin = vec2(w / 2, math.floor((top + R.tools_y - TOOL_HINT) / 2))
+        R.BOARD_CLIP = rect.centered(R.board_origin, board_size)
+    end
+    R.layout = layout
+    layout()
     local CELL_SIZE = R.piece_width or HEX_DY
     local PI = math.pi
     local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL = 0, 1, 2, 3, 4
@@ -714,6 +735,7 @@ function E.new(config)
     end
 
     function R.board_input(inp)
+        assert(R.layout == layout, "the match3 board layout is engine-owned; games must not replace R.layout")
         if not inp.released or R.overlay ~= R.OV_NONE then return end
         local d = inp.pos - inp.press_pos
         if R.phase == PH_IDLE and R.cell_at(inp.press_pos) >= 0 and (math.abs(d.x) > 16 or math.abs(d.y) > 16) then swipe(inp.press_pos, inp.pos)

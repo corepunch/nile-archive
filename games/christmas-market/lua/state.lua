@@ -6,7 +6,7 @@ local R = require("match3").view{
     SCREEN_W = 480, SCREEN_H = 900,
     HEX_R = 32,         -- radius-4 board spans 14 radii: 448 wide, with 16-unit screen margins
     BOARD_CLIP = rect(10, 236, 460, 512),
-    drop = 0,            -- extra screen height on tall phones (see R.layout)
+    drop = 0,            -- extra screen height on tall phones (engine match3 layout)
     hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
     intro = nil,

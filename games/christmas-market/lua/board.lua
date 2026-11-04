@@ -10,7 +10,7 @@ R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for
 rules.bind_view(R)
 board_intro.bind(R, rules)
 R.locked_notice = "Ice and tinsel must be cleared first."
-local CELLS, HEX_R, SCREEN_H = rules.CELLS, R.HEX_R, R.SCREEN_H
+local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT
 local PAL_CREAM, PAL_WHITE = R.PAL_CREAM, R.PAL_WHITE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
@@ -24,19 +24,9 @@ local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = 2 * HEX_R
-local HEX_DY = 1.732050808 * HEX_R
-R.board_origin = vec2(240, 492)
-local TOOLS_Y, TOOL_SIZE = 784, art.tool_size   -- square buttons leave room for labels below
-
--- The screen is 480 wide and at least 900 tall; tall phones add height. The
--- bottom group moves down by all of it (R.drop) and the board by half.
-function R.layout()
-    R.drop = app.screen().h - SCREEN_H
-    R.board_origin = vec2(240, 492 + R.drop / 2)
-    local half_w = (1.5 * rules.HEX_RADIUS + 1) * HEX_R + 6
-    local half_h = (rules.HEX_RADIUS + .5) * HEX_DY + 6
-    R.BOARD_CLIP = rect.centered(R.board_origin, size2(half_w * 2, half_h * 2))
-end
+local TOOL_SIZE = art.tool_size   -- square buttons leave room for labels below
+-- The engine owns the board screen's layout (match3 bind_view): R.hud_rect,
+-- R.board_origin, R.BOARD_CLIP and R.tools_y.
 
 local cell_pos = R.cell_pos
 
@@ -131,10 +121,11 @@ local hud_skin={
 }
 function R.goal_target(kind)
     -- Collection flights land on the goal they advance.
-    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(50,122)
+    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(50,R.hud_rect.y+48)
 end
 local function draw_hud(top)
     if top <= 0 then return end
+    local hud=R.hud_rect
     local entries, rows=R.goal_entries(),{}
     local per_row=#entries==2 and 1 or 2
     for i=1,#entries,per_row do
@@ -147,10 +138,10 @@ local function draw_hud(top)
     -- Separate portrait texture/anchor will also work for later animated poses.
     local cutout = R.intro and R.intro:arrive(.2, 3, .45) or 1
     if R.hud_art.elena and cutout > 0 then   -- she springs up from her feet
-        local box = rect(242,18,132,174):fit(texture.size(R.hud_art.elena))
+        local box = rect(242,hud.y+116-174,132,174):fit(texture.size(R.hud_art.elena))
         gfx.image(R.hud_art.elena,box:resize(box:size():scale(cutout),vec2(.5,1)),color.WHITE)
     end
-    hud_form:draw(rect(24,74 + (top - 1) * 210,432,116),hud_skin,{interactive=false})
+    hud_form:draw(rect(24,hud.y + (top - 1) * (hud.y + 120),432,116),hud_skin,{interactive=false})
 end
 R.hud_form=hud_form
 
@@ -236,9 +227,9 @@ local tool_names = {"Hammer", "Firecracker", "Star wand"}
 
 local function draw_tools(inp)
     if (R.word_time <= 0 or R.reduced_motion) and not R.intro then
-        R.say_at(R.tool >= 0 and "TAP A TREAT TO USE YOUR TOOL" or "LINE UP 3+ MATCHING TREATS.", vec2(240, 766 + R.drop), 13, PAL_WHITE, 0)
+        R.say_at(R.tool >= 0 and "TAP A TREAT TO USE YOUR TOOL" or "LINE UP 3+ MATCHING TREATS.", vec2(240, R.tools_y - 18), 13, PAL_WHITE, 0)
     end
-    local y = TOOLS_Y + R.drop
+    local y = R.tools_y
     for k = 0, 2 do
         local x = 63 + k * 112
         local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)

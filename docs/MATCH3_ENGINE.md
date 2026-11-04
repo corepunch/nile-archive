@@ -121,8 +121,17 @@ the art tools and non-board screens. Both games use overrides by default;
 `--default-match3` exercises the neutral fallback in the actual game.
 
 For a game view, initialize presentation data with `match3.view{...}`, then
-call `rules.bind_view(state)`. Layout supplies `board_origin`, `HEX_R`, optional authored `piece_width` and
-`BOARD_CLIP`; rendering uses `cell_pos` and `piece_pose`. Engine methods
+call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authored `piece_width`;
+rendering uses `cell_pos` and `piece_pose`.
+
+The board screen's layout belongs to the engine and is the same in every game.
+A game must not define or replace `state.layout`: `bind_view` and `board_input` assert this.
+Call `state.layout()` once per frame. On the 480-wide screen (at least 900 tall), it sets the following bands, from top to bottom:
+
+- **Scenery:** the top 125 units, plus 70% of any extra height (`state.drop`), are left clear for the backdrop painting.
+- **`hud_rect`:** a 120-unit band directly below the scenery, for goals, moves, portraits and toasts.
+- **`board_origin` and `BOARD_CLIP`:** the board, centred between the HUD band and the tool row, leaving 24 units for the tool hint.
+- **`tools_y`:** the top of the tool row, 116 units above the bottom edge. Engine methods
 `reset_board`, `board_update`, `board_input` and `select_tool` own the changes
 to interaction state. `notice`, `tone` and `vfx_wave` are presentation outputs,
 not rule customization hooks. The game still owns story, city and screen
