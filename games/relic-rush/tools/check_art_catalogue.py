@@ -114,3 +114,20 @@ for pack in ['relics', 'jewels']:
     assert all(abs(a - b) < .14 for a, b in zip(spans, board_spans)), f'{pack}: six-sided flat-top contour must match board'
     assert spans[3] - spans[2] > .04 and spans[3] - spans[4] > .04, f'{pack}: side vertices must be points, not octagon edges'
 print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board mask')
+
+# Script, identities and presentation mapping must ship together.
+import subprocess
+import sys
+subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
+assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian'}
+assert all(path in actual for path in manifest['story']['cast'].values())
+assert manifest['story']['states'] == ['speaking','listening','thought','shout']
+assert 'A.story=' in art and '31.5' in doc
+
+# Kenney particle sprites: retained CC0 sources, a fresh atlas and documented frames.
+particles = manifest['particle_sprites']
+assert (ROOT / particles['license']).is_file(), 'Particle sprites need their licence'
+for name, source in particles['frames'].items():
+    assert (ROOT / particles['source'] / f'{source}.png').is_file(), f'Missing particle source: {source}'
+    assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
+subprocess.run([sys.executable, str(ROOT.parents[1] / 'tools/pack_particles.py'), 'relic-rush', '--check'], check=True)

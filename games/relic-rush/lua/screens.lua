@@ -232,7 +232,8 @@ end
 
 local function result_screen()
     local l = result_rects()
-    local w = R.wonders[R.g.level + 1]
+    local kind=rules.wonder_at(R.g.level+1)
+    local w=kind and R.wonders[kind]
     local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
     local reward = breakdown.total
     local s
@@ -284,9 +285,10 @@ local function result_screen()
     set_paint(s)
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))
-    picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
-    say_left(breakdown.first and "READY TO RESTORE" or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(breakdown.first and w.name or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
+    if w then picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
+    else star_icon(vec2(l.next.x+38,l.next:center().y),24) end
+    say_left(breakdown.first and (w and "READY TO RESTORE" or "THE INVESTIGATION CONTINUES") or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
+    say_left(breakdown.first and (w and w.name or "Return for the next clue") or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
     set_paint(s)
     s = section(1.12, .22, 8)
     if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
@@ -477,7 +479,7 @@ local function zone_screen()
         if R.island:unlock(z, R.prog.wallet) then
             R.island_focus(zone.marker, R.island.cam.zoom)
             R.save_progress()
-            story.add({"mara", "New land is yours. Make it your own!", story.SHOUT})
+            story.add({"mara", require("journey").regions[z], story.SHOUT})
             R.tone(820)
         end
         R.overlay = R.OV_NONE
@@ -489,9 +491,9 @@ end
 
 local function finale_screen()
     panel(rect(32, 285, 416, 305))
-    say_at("The valley lives again", vec2(240, 330), 31, PAL_GOLD, 0)
-    say_at("YOU RESTORED ALL TEN WONDERS.", vec2(240, 386), 16, PAL_WHITE, 0)
-    say_at("THANK YOU FOR EXPLORING.", vec2(240, 422), 16, PAL_WHITE, 0)
+    say_at("To be continued...", vec2(240, 330), 31, PAL_GOLD, 0)
+    say_at("THE VALLEY SINGS. FIVE LIGHTS ANSWER.", vec2(240, 386), 16, PAL_WHITE, 0)
+    say_at("Your island and replay expeditions stay open.", vec2(240, 422), 16, PAL_WHITE, 0)
     if button(rect(82, 489, 316, 50), "BACK TO MY ISLAND", true) then R.overlay = R.OV_NONE end
 end
 

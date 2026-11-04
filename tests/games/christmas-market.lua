@@ -7,7 +7,9 @@ rules("haptics_board")
 rules("building_economy")
 default_frames = 3
 rules("christmas")
+rules("christmas_story")
 smoke()
+smoke("--campaign", "campaign")   -- all thirty winter wishes and every story beat
 
 shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
@@ -21,6 +23,7 @@ shot("region", "480x900", "--city 3 --zone 1")
 shot("shop", "480x900", "--catalogue building")
 shot("winter-wishes", "480x900", "--expeditions")
 shot("reward", "480x900", "--victory")
+shot("reward-story", "480x900", "--victory clue")
 -- the result dialog arriving on the motion module: 16 pictures, 6 frames apart
 reel("christmas-market-reward-entrance", 16, 6, "480x900", "--victory --reel")
 shot("pause", "480x900", "--level 4 --dialog pause")
@@ -57,3 +60,20 @@ for _, size in ipairs{"480x900", "390x844"} do
     reel("christmas-market-top-edge-refill-"..size, 16, 3, size,
         "--lua tests/fixtures/trickling;games/christmas-market/lua;. --review-top-edge --reel"..safe)
 end
+
+-- Story review (docs/review/story): all new busts, the longest line, the finale
+-- and its end screen, at both phone sizes.
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    local prefix = size == "390x844" and "phone-story-" or "story-"
+    shot(prefix .. "opening", size, "--story-beat before-01 --frames 240" .. safe)
+    shot(prefix .. "agnes", size, "--story-beat before-01 --story-line 2 --frames 240" .. safe)
+    shot(prefix .. "theo", size, "--story-beat after-01 --frames 240" .. safe)
+    shot(prefix .. "wren", size, "--story-beat before-01 --story-line 6 --frames 240" .. safe)
+    shot(prefix .. "henrik", size, "--story-beat after-13 --frames 240" .. safe)
+    shot(prefix .. "shout", size, "--story-beat after-03 --frames 240" .. safe)
+    shot(prefix .. "finale", size, "--story-beat after-30 --story-line 15 --frames 240" .. safe)
+    shot(prefix .. "end", size, "--dialog finale" .. safe)
+end
+shot("story-level-20", "480x900", "--level 20")
+shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")

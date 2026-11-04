@@ -260,6 +260,30 @@ and safe-area phone captures are in `docs/review/result-without-torches/`.
 [effects and capture modes](effects.md). There are no additional hidden gem skins
 for burning, charging, cracked gems or tool upgrades.
 
+### Particle sprites (`data/particles.png`)
+
+Seven sprites from Kenney's CC0 [Particle Pack](https://opengameart.org/content/particle-pack-80-sprites)
+texture the impact, spark and bomb effects. The original black-background PNGs
+and `License.txt` are retained in `art/particles/kenney/`;
+`python3 tools/pack_particles.py relic-rush` (from the repository root) resizes them, turns brightness into alpha on
+white and writes `data/particles.png` with its contract `lua/particle_skin.lua`.
+`lua/vfx.lua` draws them additively, tinted with each piece's effect colour.
+They are transient effect sprites with no interaction states. Ray beams,
+prism links, special births and the bomb's leading ring stay procedural.
+
+| Sprite | Kenney source | Use |
+| --- | --- | --- |
+| `shock` | `circle_03` | Soft outer band of the bomb shockwave |
+| `flash` | `light_01` | Bomb bloom |
+| `burst` | `star_09` | Bomb centre flare, under the glint |
+| `ring` | `circle_02` | Per-cell impact ring |
+| `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, ray tips and births |
+| `twinkle` | `star_06` | Spark particles and shard heads |
+| `streak` | `trace_06` | Shard particles, aligned to their velocity |
+
+Review: [kenney-particles](review/kenney-particles/README.md) (bomb and ray frames before and after,
+`--fx bomb|ray --frames N`).
+
 ## Remaining runtime asset families
 
 `cloud-fog` covers locked land with rolling cloud banks (`city.fog_clouds`, `engine/city.c`).
@@ -536,3 +560,11 @@ Buildings and Play are complete image buttons with empty captions, using the eng
 The shared form still owns hit testing, focus and activation. The smaller Expeditions compass remains between the primary actions. Resource icons are drawn at 60 units beside 36-unit counter bars; they deliberately protrude beyond the pills, including their interactive bounds. The island settings gear uses an 88-unit art/touch box; expedition-board geometry stays unchanged. Toasts sit above the taller image actions. New art and every authored state are reviewed in `docs/screenshots/image-buttons-after/hud-states.jpg`; actual home UI at 480x900 and 390x844 is in the same review folder.
 
 Straight-line match-3 rules: ordinary triples, four-in-line rays on all three axes, and five-plus prisms reuse the existing authored states. The guide now shows a prism alone for the five-plus recipe. Bomb artwork remains for existing pieces, tools/effect reviews and special combinations; no nonlinear group creates one. See [rules](match4-rules.md).
+
+## Three-episode story presentation
+
+All 36 scenes / 214 lines reuse the authored cast sheet `art/art-direction/expedition-cast.png` and its four RGBA crops `data/characters/{elena,mara,tomas,adrian}.png`. Original prompts and crop reproduction are in [art direction](art-direction-v2.md) and `python3 games/relic-rush/tools/prepare_assets.py`. No character is missing: Elena investigates, Mara pilots the Marigold, Tomas is the archivist, and Adrian funds the expedition. Cornelius is an off-screen missing person, not a speaking fifth portrait. Kessler, the Meridian Society's man, speaks but is deliberately never seen: his radio and loudhailer lines are engine captions with a name tag and no bust, which is the intended final state, not a missing asset.
+
+The shared story renderer supplies speaking/listening staging and speech/thought/shout bubbles; these use the same authored portraits and existing renderer transitions. Body text is 31.5 points, names/building bubbles 22.5 points, retaining the cream/ink palette. All thirty boards use the existing packs and the Lagoon/Temple paintings; the island and all ten wonder sprites/registration remain unchanged. Narrative-specific building bubbles reveal only clues the player has reached. The implementation intentionally stages scenes over existing paintings rather than adding cinematic panel assets.
+
+Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.json:story`. Script compilation: `python3 games/relic-rush/tools/prepare_story.py`. Reproduction and inspected game captures are in [story review](review/story/README.md); use `--story-beat before-11`, `--story-beat after-28`, or `--story-beat after-30 --story-line 9`.

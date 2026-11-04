@@ -2,10 +2,11 @@
 local R=require('state')
 local rules=require('rules')
 local island=require('island')
+local journey=require('journey')
 local stack=ui.modals(R.form_skin)
 local form=ui.form{kind='column',panel=true,padding=20,gap=12,children={
     {kind='label',text='Expeditions',height=42,em=34},
-    {kind='label',text='First clear: restoration grant + Discovery Stars.\nReplay: 60 Amulets + up to 40 for moves saved.',wrap=true,em=17,text_style=R.PAL_CREAM},
+    {kind='label',text='First clear: clues, Discovery Stars and scheduled wonder grants.\nReplay: 60 Amulets + up to 40 for moves saved.',wrap=true,em=17,text_style=R.PAL_CREAM},
     {kind='list',id='levels',scroll=true,height=430,gap=12,item=function(e)
         return {kind='column',panel=true,padding=12,gap=6,children={
             {kind='label',text=e.title,wrap=true,text_align='start',em=24},
@@ -22,13 +23,13 @@ local function refresh()
     for i=0,rules.LEVELS-1 do
         local done=i<R.prog.level
         local current=i==R.prog.level
-        local pending=island.wonder_count(R.island)<R.prog.level
+        local pending=island.wonder_count(R.island)<journey.earned(R.prog.level)
         local available=done or (current and not pending)
         local active=R.g and R.g.level==i and not R.g.won and not R.g.lost
         entries[#entries+1]={id=tostring(i),level=i,title=('%d. %s'):format(i+1,rules.levels[i+1].name),available=available,
             action=active and available and 'RESUME EXPEDITION' or done and 'REPLAY FOR AMULETS' or current and (pending and 'RESTORE YOUR WONDER FIRST' or 'NEW DISCOVERY') or 'DISCOVER EARLIER LEVELS',
             note=active and available and 'Continue the unfinished board. Rewards are paid only after a win.' or done and 'Amulets only. No extra Stars or story unlocks.' or
-                'First clear: restoration funded + 80–120 spare Amulets and 3 Stars.'}
+                (journey.wonder_at(i+1) and 'First clear: wonder funded + 80–120 spare Amulets and 3 Stars.' or 'First clear: next story clue + 80–120 Amulets and 3 Stars.')}
     end
     assert(form:set_items('levels',entries))
     R.expedition_records=entries

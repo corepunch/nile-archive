@@ -3,6 +3,7 @@
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
+local journey=require("journey")
 local SCREEN_W = R.SCREEN_W
 local PAL_CREAM = R.PAL_CREAM
 local rgba = color
@@ -47,17 +48,8 @@ local function confirm_place()
     for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
     R.bubble_wonder = ev.building   -- the island answers in a word bubble over the building
     local definition=R.buildings[c.items[ev.building+1].type+1]
-    R.bubble_text=definition.name.."\n"..definition.about
+    R.bubble_text=definition.name.."\n"..journey.building_about(c.items[ev.building+1].type,R.prog.level,definition.about)
     R.tone(740)
-    if fresh and c.items[ev.building+1].type < island.WONDERS then   -- Tomas tells each wonder's story once; the last one brings Adrian
-        local kind = c.items[ev.building + 1].type
-        local w = R.wonders[kind + 1]
-        story.play(("wonder-%d"):format(kind), {{"tomas", w.about}})
-        if island.wonder_count(c) == island.WONDERS then
-            story.play("finale", R.finale)
-            R.overlay = R.OV_FINALE
-        end
-    end
     R.save_progress()
 end
 
@@ -145,9 +137,9 @@ local function bottom_controls()
     end
     if round_button(R.island_buttons.expeditions + vec2(0,y),function(at) R.compass_icon(at,17) end) then R.open_expeditions() end
     local event=navigation:draw(rect(16,750+y,448,128),R.skin)
-    if event and event.id=="build" then R.open_catalogue(restored<R.prog.level and "wonder" or "building")
+    if event and event.id=="build" then R.open_catalogue(restored<journey.earned(R.prog.level) and "wonder" or "building")
     elseif event and event.id=="play" then
-        if restored<R.prog.level then R.notice("Restore your earned wonder before the next discovery.");R.open_catalogue("wonder")
+        if restored<journey.earned(R.prog.level) then R.notice("Restore your earned wonder before the next discovery.");R.open_catalogue("wonder")
         elseif R.prog.level>=rules.LEVELS then R.open_expeditions()
         else R.play_level(R.prog.level) end
     end
@@ -174,7 +166,7 @@ function R.island_screen(inp, dt)
     if R.overlay == R.OV_NONE then
         if ev.result == city.PICKED then
             local definition=R.buildings[c.items[ev.building+1].type+1]
-            R.bubble_wonder,R.bubble_text=ev.building,definition.name.."\n"..definition.about
+            R.bubble_wonder,R.bubble_text=ev.building,definition.name.."\n"..journey.building_about(c.items[ev.building+1].type,R.prog.level,definition.about)
         elseif ev.result == city.ZONE then R.zone_card, R.overlay = ev.zone, R.OV_ZONE end
     end
 
@@ -186,7 +178,7 @@ function R.island_screen(inp, dt)
     if R.bubble_wonder >= 0 and R.bubble_wonder < c.count then
         local sprite = c.cam:rect_to_screen(c:sprite_rect(c.items[R.bubble_wonder + 1]))
         gfx.clip(MAP_VIEW)
-        story.bubble(sprite:point(vec2(.5, .08)), R.bubble_text, R.speech_style(15), rgba(255, 246, 222, 245), rgba(102, 68, 39), 220, story.SPEECH)
+        story.bubble(sprite:point(vec2(.5, .08)), R.bubble_text, R.speech_style(15), rgba(255, 246, 222, 245), rgba(102, 68, 39), 300, story.SPEECH)
         gfx.unclip()
     end
 

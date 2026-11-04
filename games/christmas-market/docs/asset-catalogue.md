@@ -1,5 +1,15 @@
 # Christmas art direction catalogue
 
+Current puzzle rules: adjacent swaps create straight runs of 3+ along the three
+hex axes, matching Relic Rush. Four creates the existing axis shooting-star
+state; five or more creates the existing rainbow-star state. Bent clusters do
+not match. Existing bomb artwork remains available to review boards and tools;
+there is no bent-group bomb recipe. No new artwork or growth stages are added.
+The guide and campaign lessons describe these rules; existing authored control
+states and runtime image inventory are unchanged.
+Reviewed board and guide captures are in the
+[straight-line match-3 review](review/straight-line-match3/README.md).
+
 Status: the buildings are Blender renders with projected registration (see the [building catalogue](building-catalogue.md)); the board, HUD and character art are directional ImageGen artwork. The planned ImageGen repaint of the renders and special-colour readability remain in [#34](https://github.com/corepunch/nile-archive/issues/34).
 
 | Asset | Source | Draft runtime | Meaning and supported states |
@@ -13,15 +23,33 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
 | Terrain | `art/terrain.png` | `data/island.jpg`, `data/winter.jpg` | Empty snowy market ground and puzzle backdrop |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
+| Story cast | Built-in ImageGen, `art/story-cast.png` | `data/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
 | Snowfall and feedback | Lua renderer | Procedural | Transient snow particles, collection particles, beams, lift and placement feedback; no authored control state is derived with a filter |
+| Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/particles.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
 Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved inside extracted artwork. Control states are directly cropped from the authored atlas.
 
 Reproduce draft runtime extraction with `python3 games/christmas-market/tools/prepare_assets.py`; launch previews with `make run-christmas-market ARGS="--showcase --fresh --mute"` or `ARGS="--level 4 --fresh --mute"`. The PR captures all screens at 480×900, plus the market, board and dialogue at 390×844 with safe areas. All twelve directional building footprints are included across three review pages. Every building footprint is now projected from the Blender scene and checked in the ten review pages.
 
 The font and its license are inherited unmodified from Relic Rush in `data/fonts/`. Gameplay modules were adapted locally from Relic Rush; its original archaeological paintings are not used in this draft.
+
+## Story cast
+
+All six speaking characters have painted busts. One built-in ImageGen pass produced the [supporting cast sheet](../art/story-cast.png), using Noelle's existing cutout as the style reference. The exact prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). These five exports replace the cards tracked in [issue #76](https://github.com/corepunch/nile-archive/issues/76).
+
+| Character | Runtime | Story cue |
+| --- | --- | --- |
+| Theo Marsh | `data/characters/theo.png` | Tree seller with fir needles, plaid coat and resin-stained gloves |
+| Agnes Holt | `data/characters/agnes.png` | Baker in a flour-dusted apron with her arms crossed |
+| Henrik Strand | `data/characters/henrik.png` | Toymaker with white whiskers, leather apron and pencil |
+| Pip Larkin | `data/characters/pip.png` | Post runner with his satchel and gap-toothed grin |
+| Mr Wren | `data/characters/wren.png` | Grey-coated sweeper with his broom and tilted head |
+
+Run `python3 games/christmas-market/tools/prepare_story_cast.py` from the root to reproduce the cutouts. The script crops, mirrors toward Noelle, resizes proportionally and bottom-aligns each cutout on a transparent 320×480 canvas using the atlas alpha. Each speaker has one static portrait for speech, thought, shout and listening. The engine supplies bubbles and listening dimming. All five speakers were reviewed at 480×900 and 390×844 in [the story captures](review/story/README.md#supporting-cast).
+
+The script also calls for eight optional illustrated panels (six episode panels plus levels 27 and 28). The scenes currently use the live market.
 
 ## Main character and app icon review
 
@@ -75,6 +103,31 @@ boards with the test suite's `resource-icons`, `atlas-` and `trickling-` filters
 Portraits retain finite entrance/exit slides and fades. An independent colour
 tween brightens/dims active/listener states without replaying the slide. Size is
 constant for speaker/listener, with no scale/rotation animation or idle wobble. See [motion, captures and timing review](../../../docs/review/motion/README.md).
+
+## Particle sprites
+
+Seven sprites from Kenney's CC0 [Particle Pack](https://opengameart.org/content/particle-pack-80-sprites)
+texture the impact, spark and bomb effects, as in Relic Rush. The original
+black-background PNGs and `License.txt` are retained in `art/particles/kenney/`;
+`python3 tools/pack_particles.py christmas-market` (from the repository root)
+resizes them, turns brightness into alpha on white and writes `data/particles.png`
+with its contract `lua/particle_skin.lua`. `lua/vfx.lua` draws them additively,
+tinted with each piece's effect colour. They are transient effect sprites with no
+interaction states. Shooting-star beams, prism links, special births and the
+bomb's leading ring stay procedural.
+
+| Sprite | Kenney source | Use |
+| --- | --- | --- |
+| `shock` | `circle_03` | Soft outer band of the bomb shockwave |
+| `flash` | `light_01` | Bomb bloom |
+| `burst` | `star_09` | Bomb centre flare, under the glint |
+| `ring` | `circle_02` | Per-cell impact ring |
+| `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, beam tips and births |
+| `twinkle` | `star_06` | Spark particles and shard heads |
+| `streak` | `trace_06` | Shard particles, aligned to their velocity |
+
+Review: [kenney-particles](review/kenney-particles/README.md) (bomb and shooting-star frames
+before and after, `--fx bomb|ray --frames N`).
 
 ## Board entrance
 

@@ -2,11 +2,13 @@
 local R=require('state')
 local rules=require('rules')
 local island=require('island')
+local journey=require('journey')
+local PAGES=math.ceil(rules.LEVELS/3)
 local page=1
 local stack=ui.modals(R.form_skin)
 local form=ui.form{kind='column',panel=true,padding=20,gap=12,children={
     {kind='label',text='Winter wishes',height=42,em=34},
-    {kind='label',text='First clear: building materials + Christmas Stars.\nReplay: 60 Gold + up to 40 for moves saved.',wrap=true,em=17,text_style=R.PAL_CREAM},
+    {kind='label',text='First clear: the next story scene, Christmas Stars and scheduled stall materials.\nReplay: 60 Gold + up to 40 for moves saved.',wrap=true,em=17,text_style=R.PAL_CREAM},
     {kind='list',id='levels',gap=12,item=function(e)
         return {kind='column',panel=true,padding=12,gap=6,children={
             {kind='label',text=e.title,wrap=true,text_align='start',em=24},
@@ -23,27 +25,29 @@ local form=ui.form{kind='column',panel=true,padding=20,gap=12,children={
 }}
 R.expedition_form=form
 
+local function bells(n) return n==0 and '' or n==1 and ', 1 Bell' or (', %d Bells'):format(n) end
+
 local function refresh()
     local entries={}
     for i=(page-1)*3,math.min(page*3-1,rules.LEVELS-1) do
         local done=i<R.prog.level
         local current=i==R.prog.level
-        local pending=island.wonder_count(R.island)<R.prog.level
+        local pending=island.wonder_count(R.island)<journey.earned(R.prog.level)
         local available=done or (current and not pending)
         local active=R.g and R.g.level==i and not R.g.won and not R.g.lost
         entries[#entries+1]={id=tostring(i),level=i,title=('%d. %s'):format(i+1,rules.levels[i+1].name),available=available,
             action=active and available and 'RESUME PUZZLE' or done and 'REPLAY FOR GOLD' or current and (pending and 'BUILD YOUR STALL FIRST' or 'NEW WINTER WISH') or 'COMPLETE EARLIER WISHES',
             note=active and available and 'Continue the unfinished board. Rewards are paid only after a win.' or done and 'Gold only. No extra Stars, Bells or story unlocks.' or
-                ('First clear: building funded + 80–120 spare Gold, 3 Stars, %d Bells.'):format(rules.compass_rewards[i+1])}
+                ((journey.wonder_at(i+1) and 'First clear: stall funded + 80–120 spare Gold, 3 Stars%s.' or 'First clear: the next story scene + 80–120 Gold, 3 Stars%s.')):format(bells(rules.compass_rewards[i+1]))}
     end
     assert(form:set_items('levels',entries))
-    form:set('page',('%d / 4'):format(page))
-    form.nodes.previous.enabled,form.nodes.next.enabled=page>1,page<4
+    form:set('page',('%d / %d'):format(page,PAGES))
+    form.nodes.previous.enabled,form.nodes.next.enabled=page>1,page<PAGES
     R.expedition_records=entries
 end
 
 function R.open_expeditions(selected_page)
-    page=selected_page and num.clampi(selected_page,1,4) or math.min(4,math.floor(math.min(R.prog.level,9)/3)+1)
+    page=selected_page and num.clampi(selected_page,1,PAGES) or math.min(PAGES,math.floor(math.min(R.prog.level,rules.LEVELS-1)/3)+1)
     refresh()
     if stack:active() then stack:close() end
     assert(stack:open('expeditions',form,{}, {width=448,blur=7,dim=color(5,22,22,185),cancel='close'}))

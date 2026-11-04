@@ -222,7 +222,8 @@ end
 
 local function result_screen()
     local l = result_rects()
-    local w = R.wonders[R.g.level + 1]
+    local kind = rules.wonder_at(R.g.level + 1)
+    local w = kind and R.wonders[kind]
     local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
     local reward = breakdown.total
     local s
@@ -248,10 +249,10 @@ local function result_screen()
     say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
     set_paint(s)
     s = section(.62, .25, 8)
-    say(breakdown.first and "BUILDING MATERIALS + SPARE GOLD" or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
+    say(breakdown.first and (w and "BUILDING MATERIALS + SPARE GOLD" or "SPARE GOLD FOR DECORATIONS") or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
     set_paint(s)
     local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-    local columns=breakdown.first and 3 or 1
+    local columns=breakdown.first and w and 3 or 1
     for k = 0, columns-1 do
         local r = l.rewards:col(columns, k, 10)
         s = section(.66 + k * .1, .28, 10)
@@ -261,7 +262,7 @@ local function result_screen()
         say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
         set_paint(s)
     end
-    say(breakdown.first and ("%d restoration Gold + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
+    say(breakdown.first and w and ("%d restoration Gold + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
         ("%d base Gold + %d move bonus"):format(breakdown.base,breakdown.bonus),
         rect(l.rewards.x,l.rewards.y+l.rewards.h+2,l.rewards.w,15),13,PAL_CREAM)
     s = section(.93, .24, 8)
@@ -271,15 +272,16 @@ local function result_screen()
         local icon = vec2(r.x + 20, r:center().y)
         if k == 1 then compass_icon(icon, 12) else star_icon(icon, 11) end
         local value=reward[k==1 and rules.COMPASSES or rules.STARS]
-        say(("+%d %s"):format(value,k==1 and (value==1 and "Bell" or "Belles") or "Stars"), rect(r.x + 38, r.y, r.w - 44, r.h), 16, PAL_CREAM)
+        say(("+%d %s"):format(value,k==1 and (value==1 and "Bell" or "Bells") or "Stars"), rect(r.x + 38, r.y, r.w - 44, r.h), 16, PAL_CREAM)
     end
     if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))
-    picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
-    say_left(breakdown.first and "READY TO BUILD" or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(breakdown.first and w.name or "Choose a Christmas decoration", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
+    if w then picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
+    else star_icon(vec2(l.next.x + 38, l.next:center().y), 24) end
+    say_left(breakdown.first and (w and "READY TO BUILD" or "BACK TO BELLMERE") or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
+    say_left(breakdown.first and (w and w.name or "The market has news") or "Choose a Christmas decoration", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
     set_paint(s)
     s = section(1.12, .22, 8)
     if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
@@ -321,7 +323,7 @@ local function wonder_screen()
     if i < 0 or i >= #R.buildings then return end
     local w = R.buildings[i + 1]
     local can_build, built = island.can_buy(R.island,R.prog.wallet,R.prog.level,i), R.inspect_item and R.inspect_item>=0
-    local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=w.about,
+    local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=require("journey").building_about(i,R.prog.level,w.about),
         cost={w.cost[1],w.cost[2],w.cost[3]}, action=built and "MOVE THIS BUILDING" or can_build and "CHOOSE A LOCATION" or "BACK TO MARKET"}
     assert(ok,message)
     wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1]):set("wood_icon",R.relics[RELIC_LEAF+1]):set("stone_icon",R.relics[RELIC_CRYSTAL+1])
@@ -339,12 +341,12 @@ R.wonder_form=wonder_form
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Connect 4+ neighbors", description="Bends and diamonds count. Three do not.",
+    {id="neighbors", title="Line up 3+ treats", description="Match straight lines along any of three axes.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Group 5: lightning", description="A shooting star follows the longest axis.",
+    {id="lightning", title="Line of 4: shooting star", description="Its direction shows the line it clears.",
      icon={tiles={{kind=1,special=rules.ROW}}}},
-    {id="specials", title="Group 6+: bomb or prism", description="Six in a line: prism. Other shapes: bomb.",
-     icon={tiles={{kind=2,special=rules.BOMB,x=-16,scale=.7},{kind=2,special=rules.PRISM,x=16,scale=.7}}}},
+    {id="specials", title="Line of 5+: rainbow star", description="Swap with a treat to clear that colour.",
+     icon={tiles={{kind=2,special=rules.PRISM}}}},
     {id="blockers", title="Tinsel & powder snow", description="Match above snow; untangle the tinsel.",
      icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
     {id="ice", title="Ice & candy canes", description="Match on ice. Nearby candy canes thaw it.",
@@ -437,7 +439,7 @@ local function zone_screen()
         if R.island:unlock(z, R.prog.wallet) then
             R.island_focus(zone.marker, R.island.cam.zoom)
             R.save_progress()
-            story.add({"noelle", "More room for lights, stalls and winter wishes!", story.SHOUT})
+            story.add({"pip", require("journey").regions[z], story.SHOUT})
             R.tone(820)
         end
         R.overlay = R.OV_NONE
@@ -449,9 +451,10 @@ end
 
 local function finale_screen()
     panel(rect(32, 285, 416, 305))
-    say_at("The market is glowing!", vec2(240, 330), 31, PAL_GOLD, 0)
-    say_at("ALL TEN MARKET WISHES CAME TRUE.", vec2(240, 386), 16, PAL_WHITE, 0)
-    say_at("MERRY CHRISTMAS, MARKET KEEPER!", vec2(240, 422), 16, PAL_WHITE, 0)
+    say_at("To be continued", vec2(240, 330), 31, PAL_GOLD, 0)
+    say_at("Who was Mr Wren? And who's going to tell", vec2(240, 380), 16, PAL_WHITE, 0)
+    say_at("Fernhollow about the goat?", vec2(240, 404), 16, PAL_WHITE, 0)
+    say_at("NEXT: EPISODE 4, THE ROAD TO FERNHOLLOW", vec2(240, 446), 13, PAL_CREAM, 0)
     if button(rect(82, 489, 316, 50), "BACK TO MY MARKET", true) then R.overlay = R.OV_NONE end
 end
 

@@ -120,7 +120,12 @@
     "data/buildings/toys.png": "7cadf11b34ef76740376f1738cbea02da8a8248114d86ac9585a89d2d9e49b28",
     "data/buildings/tree.png": "7f5c5d0f12a8937decf5ca32b90dd74ad2c9994f0b847df2367c1a4b2c38d6f6",
     "data/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
+    "data/characters/agnes.png": "e38b5139ef451218b740e62ba800c8b5cfcec10987bee785b4074ce52c806e2d",
+    "data/characters/henrik.png": "1431fa535938c9f76342925d7903cb26707c6c3b62dd1fe2e56a8ea3f7fc86f5",
     "data/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
+    "data/characters/pip.png": "d679bcd6b6e32de6939be04dd40003944f65e6e2230f5221afdb9d2364fe796c",
+    "data/characters/theo.png": "c6342188889b4468e60bb73022bcbe1959a83d03d0c45b462f68cca2a5fac690",
+    "data/characters/wren.png": "5268c52ae0f806d02e7f7f07a2843e5eb558f6f0fb88bbc8c733e3b020132aed",
     "data/expedition-hud/complete.png": "3ed49eb6f093bc8077e1d0033e52852e2d91408cffadbfe5fdcd0684bce1e45a",
     "data/expedition-hud/pause-disabled.png": "aa0a9095b2dbd71794bd7bba878a8965dbeb857f284388609467e19b276a1045",
     "data/expedition-hud/pause-hover.png": "a6780fdf73292e183348f033959a5aef3c65a402bb0953cfd5435658de83e3ae",
@@ -131,6 +136,7 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/match3.png": "6e41503f7ecda5336c9c5a9e3bf7968aa37ce0748ebfb03ad1f239c0a7e8aea1",
+    "data/particles.png": "c806d583a185643c581689387706841800510104125d59dc7cbbd48880419507",
     "data/tile-sets/festive/0.png": "4d178237903741b62f16745203de0135e10b997e3e8b03f39ccbf6d316d2d426",
     "data/tile-sets/festive/1.png": "2574b1ba61388f3e3e3db25ebbccf7f9a12eb17248dfe16ee125395f91d65598",
     "data/tile-sets/festive/2.png": "b1861a9d10168f90035198faf3163e24104f032e6709c5f61144ecab814e9143",
@@ -138,5 +144,41 @@
     "data/tile-sets/festive/4.png": "785d0abcaafed475049ba73baecebac963ebacb65aacb2c8d58c71356b9880b6",
     "data/tile-sets/festive/5.png": "0ef6c844da3a9162e44f8c5a5cdffa6c5a1f91ed15216e33adb6a900fd3100b1",
     "data/winter.jpg": "7700415a532832935bc55eeaf1e5f95e8ea8262fc1cf9e8f2daee3d9591a1652"
+  },
+  "matching_rules": "Straight lines on three hex axes: 3 normal, 4 axis shooting star, 5+ rainbow star. Bent clusters do not match; existing bomb artwork is retained for tools and review boards.",
+  "particle_sprites": {
+    "source": "art/particles/kenney/",
+    "license": "art/particles/kenney/License.txt",
+    "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
+    "runtime": "data/particles.png",
+    "contract": "lua/particle_skin.lua",
+    "renderer": "lua/vfx.lua",
+    "frames": {
+      "shock": "circle_03",
+      "flash": "light_01",
+      "burst": "star_09",
+      "ring": "circle_02",
+      "glint": "star_07",
+      "twinkle": "star_06",
+      "streak": "trace_06"
+    },
+    "states": "transient additive effect sprites; per-kind tint at draw time; no interaction states",
+    "reproduction": "python3 tools/pack_particles.py christmas-market (from the repository root)",
+    "review": "docs/review/kenney-particles/README.md"
+  },
+  "story_cast": {
+    "source": "art/story-cast.png",
+    "prompt": "art/character-and-icon-prompts.json#story_cast",
+    "runtime": [
+      "data/characters/agnes.png",
+      "data/characters/henrik.png",
+      "data/characters/noelle.png",
+      "data/characters/pip.png",
+      "data/characters/theo.png",
+      "data/characters/wren.png"
+    ],
+    "states": "One static authored bust per speaker. The dialogue renderer handles active/listening presentation.",
+    "reproduction": "python3 games/christmas-market/tools/prepare_story_cast.py",
+    "review": "docs/review/story/README.md"
   }
 }
