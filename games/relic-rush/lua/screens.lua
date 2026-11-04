@@ -166,7 +166,10 @@ local function new_dialog()
     return {entry = 0, exit = 0, parts = {}, n = 0, tl = nil, fresh = true}
 end
 
--- Start a dialog's entrance; `settled` opens it at rest (stills).
+-- Open a dialog at rest. Popups appear and close at once, with no entrance
+-- or exit motion: they must never wait on the frame clock to become visible
+-- (a stalled clock on device left a dim with no panel), and the backdrop blur
+-- already costs the opening frame. Only reels (--reel) still play the parts.
 function R.open_dialog(settled)
     local old = R.dialog
     if old then
@@ -176,18 +179,15 @@ function R.open_dialog(settled)
     local d = new_dialog()
     R.dialog = d
     R.modal_closing = false
-    d.settled = settled
-    if settled then d.entry = 1 else tween.to(d, .28, {entry = 1}) end
+    d.settled = settled or not app.arg("reel")
+    d.entry = 1
 end
 
--- Play the exit, then bank the reward.
+-- Bank the reward and leave the dialog immediately.
 function R.close_dialog()
-    R.modal_closing = true
-    tween.to(R.dialog, .2, {exit = 1}):on_complete(function()
-        R.modal_closing = false
-        R.claim_reward()
-        R.modal_for = R.overlay
-    end)
+    R.modal_closing = false
+    R.claim_reward()
+    R.modal_for = R.overlay
 end
 
 -- Has the entrance, parts included, finished?

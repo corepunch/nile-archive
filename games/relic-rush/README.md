@@ -345,8 +345,9 @@ the entrance can. Reduced motion and skipped entrances omit these landing effect
 Building previews show a round × on the lower left and ✓ on the lower right of
 the building. Dragging, panning and zooming keep these controls with the preview;
 ✓ is disabled on blocked land. Cancel preserves the original building and wallet.
-Popup backdrops snap to their full blur immediately; the popup entrance and exit
-continue animating independently.
+Popups (Pause, results, guide, cards) and their backdrops appear and close
+immediately, with no entrance or exit motion; only `--reel` captures still play
+the results parts.
 
 Ray gems retain their matching artwork with broad engine-rendered cream stripes
 masked to the gem's alpha. Stripe direction identifies the cleared board axis.
