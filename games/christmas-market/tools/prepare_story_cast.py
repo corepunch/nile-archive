@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Register the five ImageGen story busts on the existing dialogue canvas."""
 import argparse
-import io
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -25,12 +24,14 @@ def export(key, atlas, crop, check):
     image = Image.new('RGBA', SIZE)
     image.paste(bust, ((SIZE[0] - bust.width) // 2, SIZE[1] - bust.height))
     path = ROOT / 'data/characters' / f'{key}.png'
-    png = io.BytesIO()
-    image.save(png, 'PNG')
     if check:
-        assert path.read_bytes() == png.getvalue(), f'Stale story bust: {path}'
+        # PNG compression can vary between platforms. The art contract is the
+        # decoded RGBA canvas, including the authored alpha.
+        with Image.open(path) as saved:
+            assert saved.mode == image.mode and saved.size == image.size and saved.tobytes() == image.tobytes(), (
+                f'Stale story bust: {path}')
     else:
-        path.write_bytes(png.getvalue())
+        image.save(path, 'PNG')
 
 
 def prepare(check=False):
