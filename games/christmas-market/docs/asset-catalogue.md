@@ -21,6 +21,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
+| Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Terrain | `art/terrain.png` | `data/island.jpg`, `data/winter.jpg` | Empty snowy market ground and puzzle backdrop |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
 | Story cast | Built-in ImageGen, `art/story-cast.png` | `data/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
@@ -34,6 +35,18 @@ Built-in ImageGen generated all new paintings except the buildings, which are Bl
 Reproduce draft runtime extraction with `python3 games/christmas-market/tools/prepare_assets.py`; launch previews with `make run-christmas-market ARGS="--showcase --fresh --mute"` or `ARGS="--level 4 --fresh --mute"`. The PR captures all screens at 480×900, plus the market, board and dialogue at 390×844 with safe areas. All twelve directional building footprints are included across three review pages. Every building footprint is now projected from the Blender scene and checked in the ten review pages.
 
 The font and its license are inherited unmodified from Relic Rush in `data/fonts/`. Gameplay modules were adapted locally from Relic Rush; its original archaeological paintings are not used in this draft.
+
+## Town HUD
+
+Lives, Gold and Christmas Stars use the same single-row layout and hit areas as
+Relic Rush. Lives reuse its heart, Gold uses the festive bell and Stars use
+the Christmas completion medal. Copy the heart from
+`games/relic-rush/data/expedition-hud/life.png` to `data/life.png`. Region
+markers open their map cards. Stars qualify the player for a region and stay
+in the wallet when the region opens.
+
+[Town, region, building and reward captures](screenshots/review/town-wallet/README.md)
+show the change in the game renderer.
 
 ## Story cast
 

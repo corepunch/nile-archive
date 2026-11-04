@@ -5,11 +5,9 @@ local island=require('island')
 local journey=require('journey')
 local stack=ui.modals(R.form_skin)
 local form=require('match3').expedition_form('Winter wishes',
-    'First clear: the next story scene, Christmas Stars and scheduled stall materials.\nReplay: 60 Gold + up to 40 for moves saved.',
+    'First clear: the next story scene, Christmas Stars and scheduled stall funding.\nReplay: 60 Gold + up to 40 for moves saved.',
     'BACK TO MARKET', R.PAL_CREAM)
 R.expedition_form=form
-
-local function bells(n) return n==0 and '' or n==1 and ', 1 Bell' or (', %d Bells'):format(n) end
 
 local function refresh()
     local entries={}
@@ -21,8 +19,8 @@ local function refresh()
         local active=R.g and R.g.level==i and not R.g.won and not R.g.lost
         entries[#entries+1]={id=tostring(i),level=i,title=('%d. %s'):format(i+1,rules.levels[i+1].name),available=available,
             action=active and available and 'RESUME PUZZLE' or done and 'REPLAY FOR GOLD' or current and (pending and 'BUILD YOUR STALL FIRST' or 'NEW WINTER WISH') or 'COMPLETE EARLIER WISHES',
-            note=active and available and 'Continue the unfinished board. Rewards are paid only after a win.' or done and 'Gold only. No extra Stars, Bells or story unlocks.' or
-                ((journey.wonder_at(i+1) and 'First clear: stall funded + 80–120 spare Gold, 3 Stars%s.' or 'First clear: the next story scene + 80–120 Gold, 3 Stars%s.')):format(bells(rules.compass_rewards[i+1]))}
+            note=active and available and 'Continue the unfinished board. Rewards are paid only after a win.' or done and 'Gold only. Stars and story unlocks come from first clears.' or
+                (journey.wonder_at(i+1) and 'First clear: stall funded + 80–120 spare Gold, 3 Stars.' or 'First clear: the next story scene + 80–120 Gold, 3 Stars.')}
     end
     assert(form:set_items('levels',entries))
 end

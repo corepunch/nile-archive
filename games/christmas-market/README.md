@@ -52,6 +52,11 @@ Sound, Reduce Motion, Resume and the Market Guide.
 
 ## Draft implementation
 
+The market header shows Lives, Gold and Christmas Stars in one row. A failed
+wish uses a life, and one returns every 30 minutes up to five. Gold funds
+construction and decorations. Open a region from its marker on the map once
+you have enough Stars. See the [town HUD review](docs/asset-catalogue.md#town-hud).
+
 `make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has thirty puzzles in three story episodes, funded construction, player-chosen placement, land expansion, a shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or

@@ -28,8 +28,6 @@ local function refresh()
             elseif R.island.count>=160 then action='MARKET IS FULL' end
             local price=('%d gold'):format(def.cost[1])
             if i>island.WONDERS then price=price..('  /  %d stars to unlock'):format(meta.stars)
-            elseif def.cost[2]>0 or def.cost[3]>0 then
-                price=price..(' / %d holly / %d baubles'):format(def.cost[2],def.cost[3])
             end
             records[#records+1]={id=meta.key,kind=i-1,name=def.name,sprite=def.sprite,
                 details=('%d x %d tiles  /  Owned %d\n%s'):format(meta.size.w,meta.size.h,owned,price),

@@ -31,7 +31,8 @@ for level=0,rules.LEVELS-1 do
         assert(not island.island_place_next(c,p.wallet,p.level,0), 'A story-only wish funds no stall')
     end
 end
-assert(c.open==63 and p.wallet[4]==90 and p.wallet[5]==0, 'Full campaign opens every region')
+assert(c.open==63 and p.wallet[4]==90 and p.wallet[2]==0 and p.wallet[3]==0 and p.wallet[5]==0,
+       'Stars open every region and the campaign awards no legacy materials or bells')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)
 replay.won, replay.moves = true, 0
@@ -50,6 +51,18 @@ for kind=10,11 do
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
 assert(c.count==12 and island.wonder_count(c)==10, 'Decorations cannot advance the campaign')
+
+local old_save = {}
+rules.refill_lives(old_save, 100)
+check(old_save.lives == 5 and old_save.life_at == 0, 'An older save starts with five lives')
+local failed = {lost=true}
+check(rules.lose_life(old_save, failed, 100) and old_save.lives == 4 and old_save.life_at == 1900,
+      'A failed wish costs one life and starts the refill timer')
+check(not rules.lose_life(old_save, failed, 101) and old_save.lives == 4, 'A failed wish can charge only once')
+rules.refill_lives(old_save, 1899)
+check(old_save.lives == 4, 'No life returns before thirty minutes')
+rules.refill_lives(old_save, 1900)
+check(old_save.lives == 5 and old_save.life_at == 0, 'A life returns after thirty minutes')
 
 -- Extended: the greedy bot, without tools, wins every winter wish at least once.
 if testing.extended then

@@ -15,7 +15,6 @@ require("narrative")
 require("campaign_smoke")
 local journey = require("journey")
 local LEVELS, WONDERS, ISLAND_ZONES = rules.LEVELS, island.WONDERS, island.ISLAND_ZONES
-local COMPASSES = rules.COMPASSES
 local rgba = color
 
 -- Dialogue text: Lilita One in dark ink on the cream bubble.
@@ -37,6 +36,8 @@ local function serialize(s)
     R.prog.level = s:int("level", R.prog.level)
     R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
     R.prog.wallet = s:ints("wallet", R.prog.wallet)
+    R.prog.lives = s:int("lives", R.prog.lives)
+    R.prog.life_at = s:int("life_at", R.prog.life_at)
     R.island:serialize(s)
     story.serialize(s)
     journey.serialize(s, R.prog)
@@ -59,6 +60,11 @@ function R.start_level(chosen)
     end
     if lvl == R.prog.level and journey.awaiting_return(R.prog) then
         R.notice("Something's happening in the market square."); return false
+    end
+    rules.refill_lives(R.prog, app.clock())
+    if R.prog.lives == 0 then
+        R.notice("A life returns every 30 minutes. Explore the market meanwhile.")
+        return false
     end
     R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
     R.on_island = false
@@ -161,7 +167,7 @@ local function smoke()
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
         if smoke_move.replay then
             local gain=R.prog.wallet[1]-smoke_move.replay_gold
-            assert(gain>=60 and gain<=100 and R.prog.wallet[4]==3 and R.prog.wallet[5]==1 and island.wonder_count(R.island)==1,
+            assert(gain>=60 and gain<=100 and R.prog.wallet[4]==3 and R.prog.wallet[5]==0 and island.wonder_count(R.island)==1,
                 "replay must pay only Gold without changing discoveries or restoration")
             app.inject_click(vec2(240,856+R.drop));smoke_stage=5;return
         end
@@ -292,6 +298,9 @@ local function frame(dt)
     if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
     R.board_update(dt)
+    local now = app.clock()
+    rules.refill_lives(R.prog, now)
+    if rules.lose_life(R.prog, R.g, now) then R.save_progress() end
     R.vfx_update(dt)
     ui.set_enabled(R.overlay == R.OV_NONE and not talking)
     if R.on_island then R.island_screen(world, dt) else R.board_screen(world, dt) end
@@ -308,11 +317,11 @@ end
 ---------------------------------------------------------------- debug setup
 
 -- An island after n expeditions: n wonders at their suggested spots and the
--- regions a player would have opened by then, stars and compasses to match.
+-- regions a player would have opened by then, with Stars to match.
 local function island_with(n)
     local opened_at = {0, 6, 9, 15, 21, 27}
     local cleared = n > 0 and journey.wonder_levels[n] or 0
-    R.prog = {level = cleared, seed = 782341, story_seen = {}, wallet = purse(340, 115, 92, cleared * 3, rules.discovery_compasses(cleared))}
+    R.prog.level, R.prog.wallet = cleared, purse(340, 0, 0, cleared * 3)
     R.island.count = 0
     local open = 1
     for z = 1, ISLAND_ZONES - 1 do
@@ -322,10 +331,7 @@ local function island_with(n)
     end
     R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
     R.island.open = R.island.open | 1
-    for z=1,ISLAND_ZONES-1 do
-        if R.island:zone_open(z) then R.prog.wallet[COMPASSES]=R.prog.wallet[COMPASSES]-R.island.zones[z+1].cost[COMPASSES] end
-    end
-    local spend = purse(100000, 100000, 100000)
+    local spend = purse(100000)
     for _ = 1, n do island.island_place_next(R.island, spend, cleared, 0) end
 end
 
@@ -338,7 +344,7 @@ local function debug_screens()
     if app.arg("showcase") then
         local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),
                        vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}
-        R.prog = {level = LEVELS, seed = 782341, story_seen = {}, wallet = purse(340, 115, 92, 30, 10)}
+        R.prog.level, R.prog.wallet = LEVELS, purse(340, 0, 0, LEVELS * 3)
         R.island.count = 0
         R.island.open = 63
         for i = 0, WONDERS - 1 do
@@ -377,7 +383,7 @@ local function debug_screens()
     if a then R.zone_card = num.clampi(tonumber(a), 1, ISLAND_ZONES - 1); R.overlay = R.OV_ZONE; R.on_island = true end
     if app.arg("victory") then   -- the Lumber workshop's wish, which funds a stall; "clue": a story-only wish
         local level = app.arg("victory") == "clue" and 1 or 3
-        R.prog = {level = level, seed = 782341, story_seen = {}, wallet = purse(142, 37, 45, level * 3, 1)}
+        R.prog.level, R.prog.wallet = level, purse(142, 0, 0, level * 3)
         R.g = rules.game_start(level, 123478)
         R.pending = rules.new_match()
         R.g.score, R.g.relics, R.g.wood, R.g.stone, R.g.won = 5860, 13, 9, 14, true
@@ -391,7 +397,7 @@ local function debug_screens()
         local i = num.clampi(tonumber(a), 0, WONDERS - 1)
         island_with(i)
         R.prog.level = journey.wonder_levels[i + 1]
-        R.prog.wallet = purse(142, 37, 45, R.prog.level * 3, R.prog.level * 3)
+        R.prog.wallet = purse(142, 0, 0, R.prog.level * 3)
         R.inspect = i
         R.overlay = R.OV_WONDER
         R.on_island = true
@@ -428,7 +434,7 @@ local function debug_screens()
     end
     if app.arg("building-review") then
         local first=((tonumber(app.arg("building-review")) or 1)-1)*4
-        R.prog={level=LEVELS,seed=782341,story_seen={},wallet=purse(2000,500,500,90,20)}
+        R.prog.level, R.prog.wallet = LEVELS, purse(2000, 0, 0, LEVELS * 3)
         R.island.count=0;R.island.open=63
         local spots={vec2(700,1500),vec2(1100,1500),vec2(700,1850),vec2(1100,1850)}
         for k=0,3 do
@@ -445,7 +451,7 @@ local function debug_screens()
     if app.arg("catalogue-item") then
         island_with(10);R.on_island=true
         local kind=tonumber(app.arg("catalogue-item")) or 10
-        R.prog.wallet=purse(2000,500,500,30,10)
+        R.prog.wallet=purse(2000,0,0,30)
         R.island_begin(kind,true)
     end
     if app.arg("catalogue-card") then
@@ -522,6 +528,7 @@ local function init()
     for i = 0, rules.COLORS - 1 do R.relics[i + 1] = board_skin[(app.arg("default-match3") and "kind-" or tiles .. "-") .. i] end
     R.board_art = require("art").load()
     R.hud_art = require("art").load_hud()
+    R.life_art = texture.load("life.png")
     if app.arg("art-states") then
         R.art_packs = {}
         for _, pack in ipairs({"festive"}) do
@@ -542,11 +549,18 @@ local function init()
     R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
     R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
     R.bubble_wonder = -1
-    R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
+    R.prog = {level = 0, seed = 782341, wallet = purse(), lives = rules.LIVES, life_at = 0, story_seen = {}}
     if not app.arg("smoke") then save.read("progress", serialize) end
+    if app.arg("empty-lives") then
+        R.prog.lives, R.prog.life_at = 0, app.clock() + rules.LIFE_INTERVAL
+    end
     R.story_current, R.story_preview = nil, false
     R.layout()
-    R.start_level()
+    if not R.start_level() then
+        R.reset_board(rules.game_start(math.min(R.prog.level, LEVELS - 1), R.prog.seed))
+        R.g.lost, R.g.life_paid = true, true
+        R.on_island = true
+    end
     if R.prog.level>=LEVELS then R.g.won=true end -- no unfinished attempt is created at campaign completion
     if journey.earned(R.prog.level) > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
     if R.needs_relocation then

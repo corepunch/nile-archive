@@ -11,7 +11,7 @@ local rules = require("rules")
 local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
-local RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
+local RELIC_IDOL = rules.RELIC_IDOL
 local rgba = color
 
 local P = {scale = 1, offset = vec2(0, 0), alpha = 1}
@@ -82,38 +82,29 @@ R.form_skin = form_skin
 function R.star_icon(center, radius)
     picture(R.hud_art.complete, rect.centered(center, size2(radius*2.6,radius*2.6)), 255)
 end
-function R.compass_icon(center, radius)
-    picture(R.relics[1], rect.centered(center, size2(radius*2.6,radius*2.6)), 255)
-end
-local star_icon, compass_icon = R.star_icon, R.compass_icon
+local star_icon = R.star_icon
 
 --------------------------------------------------------------------- header
 
--- No title and no band: the picture runs up to the status bar, with small
--- glassy controls in the corners, as Nile Archive's screens do.
-local function resource_icons()
-    return {R.relics[RELIC_IDOL + 1], R.relics[RELIC_LEAF + 1], R.relics[RELIC_CRYSTAL + 1],
-            function(box) star_icon(box:center(), box.w * .32) end, function(box) compass_icon(box:center(), box.w * .3) end}
-end
-local capsule_notes = {"Gold buys stalls. Replay winter wishes to earn more.", "Holly bundles fund stalls. First wins cover the full cost.",
-                       "Baubles fund stalls. First wins cover the full cost.", "Christmas Stars unlock stalls and land; never spent.",
-                       "Golden bells are spent to open more market space."}
-
--- The island shows its purse in two rows of resource panels; tapping EXPAND opens the
--- next region. An unfinished expedition exposes only pause, never island access.
+local capsule_notes = {
+    "A life returns every 30 minutes, up to five.",
+    "Gold buys stalls and decorations. Replay winter wishes to earn more.",
+    "Christmas Stars unlock shop items and land. First clears only.",
+}
 function R.draw_header()
-    local icons = resource_icons()
-    for k = 1, 5 do
-        local r = rect(34 + (k - 1) % 3 * 120, k <= 3 and 14 or 58, 96, 34)
-        if skin:draw_resource(r, icons[k], tostring(R.prog.wallet[k]), {hit_offset = vec2(0, R.hit_dy)}) then R.notice(capsule_notes[k]) end
+    local remaining = math.max(0, math.ceil(R.prog.life_at - app.clock()))
+    local lives = R.prog.lives == rules.LIVES and "5 FULL"
+        or ("%d %d:%02d"):format(R.prog.lives, remaining // 60, remaining % 60)
+    local values = {lives, tostring(R.prog.wallet[rules.GOLD]), tostring(R.prog.wallet[rules.STARS])}
+    local icons = {R.life_art, R.relics[RELIC_IDOL + 1], R.hud_art.complete}
+    for k, icon in ipairs(icons) do
+        local r = rect(20 + (k - 1) * 128, 20, 110, 36)
+        local hit = rect(r.x - 18, r.y - 12 + R.hit_dy, r.w + 18, r.h + 24)
+        if skin:draw_resource(r, icon, values[k], {role = "wallet", hit = hit}) then
+            R.notice(capsule_notes[k])
+        end
     end
-    local r = rect(274, 58, 96, 34)
-    gfx.shadow(r:offset(vec2(0, 3)), r.h * .5, 6, rgba(0, 0, 0, 90))
-    gfx.round_rect(r, r.h * .5, rgba(47, 105, 67, 240))
-    gfx.round_rect_line(r, r.h * .5, 1.6, rgba(233, 199, 123, 190))
-    say("EXPAND +", r:inflate2(vec2(-10, 0)), 15, PAL_CREAM)
-    if tapped(r) then R.expand() end
-    if match3.pause_button(R, rect(414,12,52,52)) then R.overlay = R.OV_PAUSE end
+    if match3.pause_button(R, rect(388, -2, 88, 88)) then R.overlay = R.OV_PAUSE end
 end
 
 function R.draw_toast()
@@ -230,30 +221,25 @@ local function result_screen()
     say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
     set_paint(s)
     s = section(.62, .25, 8)
-    say(breakdown.first and (w and "BUILDING MATERIALS + SPARE GOLD" or "SPARE GOLD FOR DECORATIONS") or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
+    say(breakdown.first and (w and "RESTORATION GRANT + SPARE GOLD" or "SPARE GOLD FOR DECORATIONS") or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
     set_paint(s)
-    local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-    local columns=breakdown.first and w and 3 or 1
-    for k = 0, columns-1 do
-        local r = l.rewards:col(columns, k, 10)
-        s = section(.66 + k * .1, .28, 10)
-        rrect(r, 12, rgba(241, 218, 157))
-        rrect(r:inflate(-2), 10, rgba(255, 242, 201))
-        picture_fit(R.relics[kinds[k + 1] + 1], rect(r.x + (r.w - 40) / 2, r.y + 8, 40, 40), 255)
-        say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
-        set_paint(s)
-    end
+    local r = l.rewards
+    s = section(.66, .28, 10)
+    rrect(r, 12, rgba(241, 218, 157))
+    rrect(r:inflate(-2), 10, rgba(255, 242, 201))
+    picture_fit(R.relics[RELIC_IDOL + 1], rect(r:center().x - 20, r.y + 8, 40, 40), 255)
+    say(("+%d"):format(reward[rules.GOLD]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
+    set_paint(s)
     say(breakdown.first and w and ("%d restoration Gold + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
         ("%d base Gold + %d move bonus"):format(breakdown.base,breakdown.bonus),
-        rect(l.rewards.x,l.rewards.y+l.rewards.h+2,l.rewards.w,15),13,PAL_CREAM)
+        rect(r.x,r.y+r.h+2,r.w,15),13,PAL_CREAM)
     s = section(.93, .24, 8)
-    for k = 0, breakdown.first and 1 or -1 do
-        local r = l.progress:col(2, k, 12)
-        rrect(r, 16, rgba(221, 228, 182))
-        local icon = vec2(r.x + 20, r:center().y)
-        if k == 1 then compass_icon(icon, 12) else star_icon(icon, 11) end
-        local value=reward[k==1 and rules.COMPASSES or rules.STARS]
-        say(("+%d %s"):format(value,k==1 and (value==1 and "Bell" or "Bells") or "Stars"), rect(r.x + 38, r.y, r.w - 44, r.h), 16, PAL_CREAM)
+    if breakdown.first then
+        local progress = l.progress
+        rrect(progress, 16, rgba(221, 228, 182))
+        star_icon(vec2(progress.x + 24, progress:center().y), 14)
+        say(("+%d CHRISTMAS STARS"):format(reward[rules.STARS]),
+            rect(progress.x + 44, progress.y, progress.w - 52, progress.h), 18, PAL_CREAM)
     end
     if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
@@ -282,8 +268,6 @@ local wonder_form = ui.form{
         {kind="spacer", height=14},
         {kind="row", height=78, padding={16,0,16,0}, gap=10, visible_field="can_build", children={
             {kind="column", grow=1, gap=9, children={{kind="image",id="gold_icon",height=34},{kind="label",id="gold",height=28}}},
-            {kind="column", grow=1, gap=9, children={{kind="image",id="wood_icon",height=34},{kind="label",id="wood",height=28}}},
-            {kind="column", grow=1, gap=9, children={{kind="image",id="stone_icon",height=34},{kind="label",id="stone",height=28}}},
         }},
         {kind="label",id="notice",height=78,wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
         {kind="spacer",height=18},
@@ -295,8 +279,6 @@ local wonder_form = ui.form{
         {id="name",field="name",readonly=true},{id="sprite",field="sprite",type="texture",readonly=true},
         {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
         {id="gold",field="cost.1",type="integer",readonly=true},
-        {id="wood",field="cost.2",type="integer",readonly=true},
-        {id="stone",field="cost.3",type="integer",readonly=true},
     },
 }
 local function wonder_screen()
@@ -305,9 +287,9 @@ local function wonder_screen()
     local w = R.buildings[i + 1]
     local can_build, built = island.can_buy(R.island,R.prog.wallet,R.prog.level,i), R.inspect_item and R.inspect_item>=0
     local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=require("journey").building_about(i,R.prog.level,w.about),
-        cost={w.cost[1],w.cost[2],w.cost[3]}, action=built and "MOVE THIS BUILDING" or can_build and "CHOOSE A LOCATION" or "BACK TO MARKET"}
+        cost={w.cost[1]}, action=built and "MOVE THIS BUILDING" or can_build and "CHOOSE A LOCATION" or "BACK TO MARKET"}
     assert(ok,message)
-    wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1]):set("wood_icon",R.relics[RELIC_LEAF+1]):set("stone_icon",R.relics[RELIC_CRYSTAL+1])
+    wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1])
     wonder_form.values.can_build, wonder_form.values.show_notice = can_build and not built, built or not can_build
     wonder_form:set("notice",built and "HOLD AND DRAG IN THE MARKET TO MOVE" or "COMPLETE MORE PUZZLES TO BUILD THIS STALL")
     local bounds=rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592))
@@ -361,8 +343,10 @@ local function failed_screen()
     panel(rect(38, 272, 404, 333))
     say_at("One more winter wish?", vec2(240, 317), 32, PAL_GOLD, 0)
     say_at("THE MARKET WILL WAIT FOR YOU.", vec2(240, 366), 16, PAL_WHITE, 0)
-    say_at("Try a special combo or use a tool.", vec2(240, 404), 17, PAL_CREAM, 0)
-    if button(rect(83, 448, 314, 50), "TRY AGAIN", true) then R.start_level(R.g.level) end
+    local can_retry = R.prog.lives > 0
+    local hint = can_retry and "Try a special combo or use a tool." or "A life returns every 30 minutes."
+    say_at(hint, vec2(240, 404), 17, PAL_CREAM, 0)
+    if button(rect(83, 448, 314, 50), "TRY AGAIN", can_retry) and can_retry then R.start_level(R.g.level) end
     if button(rect(115, 520, 250, 42), "VISIT MARKET", true) then R.on_island, R.overlay = true, R.OV_NONE end
 end
 
@@ -375,7 +359,7 @@ local function zone_screen()
     say_at(zone.name, vec2(240, 304), 34, PAL_GOLD, 380)
     say_at("MORE ROOM FOR CHRISTMAS CHEER", vec2(240, 349), 16, PAL_CREAM, 0)
     say_at(("STARS  %d / %d"):format(R.prog.wallet[rules.STARS], zone.needs[rules.STARS]), vec2(240, 397), 24, PAL_GOLD, 0)
-    say_at(("BELLS  %d / %d"):format(R.prog.wallet[rules.COMPASSES], zone.cost[rules.COMPASSES]), vec2(240, 441), 23, PAL_CREAM, 0)
+    say_at("EARN STARS IN NEW WINTER WISHES", vec2(240, 441), 19, PAL_CREAM, 0)
     if button(rect(72, 487, 336, 47), ready and "OPEN THIS AREA" or "KEEP EXPLORING", true) then
         if R.island:unlock(z, R.prog.wallet) then
             R.island_focus(zone.marker, R.island.cam.zoom)
@@ -385,7 +369,7 @@ local function zone_screen()
         end
         R.overlay = R.OV_NONE
     end
-    say_at("BELLS ARE SPENT. STARS STAY WITH YOU.", vec2(240, 559), 12, PAL_WHITE, 0)
+    say_at("CHRISTMAS STARS STAY WITH YOU.", vec2(240, 559), 12, PAL_WHITE, 0)
     say_at("CLOSE", vec2(240, 592), 15, PAL_WHITE, 0)
     if tapped(rect(180,575,120,38)) then R.overlay = R.OV_NONE end
 end

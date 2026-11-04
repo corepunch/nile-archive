@@ -55,12 +55,6 @@ local function confirm_place()
     R.save_progress()
 end
 
-function R.expand()
-    local z = R.island:next_zone(R.prog.wallet)
-    if z < 0 then R.notice("The whole market is open for Christmas!")
-    else R.zone_card, R.overlay = z, R.OV_ZONE end
-end
-
 -- Region markers float over the fog: "+" when the region can open now.
 local function draw_markers(c)
     local cam = c.cam

@@ -476,8 +476,8 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 
 ## Implementation
 
-- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. A level without a stall pays Gold, Stars and Bells but no materials.
-- **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. The 20 Bells are paid out by level 27. Pip's region lines replace Noelle's one repeated line.
+- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. A first clear without a stall pays Gold and Christmas Stars.
+- **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. Players open regions from their markers and keep their Stars. Pip's region lines replace Noelle's one repeated line.
 - **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). The eight panels are optional, and scenes play over the live market.
 - **The cast** is in `lua/narrative.lua`. Noelle's automatic line when a stall is placed is gone; the tap card and bubble carry `about`, and the five changing bubbles above.
 - **`R.finale`** is the level 30 scene. Its end leads to the "To be continued" screen.

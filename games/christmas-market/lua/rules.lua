@@ -11,19 +11,27 @@ M.wonder_at=require("journey").wonder_at
 
 ------------------------------------------------------------------- economy
 
-M.GOLD, M.WOOD, M.STONE, M.STARS, M.COMPASSES = 1, 2, 3, 4, 5   -- purse slots
+M.GOLD, M.STARS = 1, 4   -- Keep the legacy save slots reserved.
 
 -- Guaranteed restoration funding is separate from the discretionary Gold purse.
 -- Matches score points; their random colour mix cannot reduce a building grant.
 M.FIRST_GOLD, M.REPLAY_GOLD, M.MOVE_GOLD, M.MAX_MOVE_GOLD = 80, 60, 2, 40
--- Pays the 20-bell land budget by the 27th discovery, in time for each Star gate
--- (regions open at levels 6, 9, 15, 21 and 27).
-M.compass_rewards = {1,0,0,0,0,1, 1,1,1, 0,1,1,1,0,1, 1,1,1,0,1,1, 1,1,1,1,1,1, 0,0,0}
-
-function M.discovery_compasses(count)
-    local n=0
-    for i=1,math.min(count,LEVELS) do n=n+M.compass_rewards[i] end
-    return n
+M.LIVES, M.LIFE_INTERVAL = 5, 1800
+function M.refill_lives(p, now)
+    p.lives=num.clampi(p.lives or M.LIVES,0,M.LIVES)
+    if p.lives==M.LIVES then p.life_at=0;return end
+    if not p.life_at or p.life_at<=0 then p.life_at=now+M.LIFE_INTERVAL end
+    if now>=p.life_at then
+        local count=math.floor((now-p.life_at)/M.LIFE_INTERVAL)+1
+        p.lives=math.min(M.LIVES,p.lives+count)
+        p.life_at=p.lives==M.LIVES and 0 or p.life_at+count*M.LIFE_INTERVAL
+    end
+end
+function M.lose_life(p,g,now)
+    if not g.lost or g.life_paid then return false end
+    M.refill_lives(p,now);g.life_paid=true
+    if p.lives>0 then p.lives=p.lives-1;if not p.life_at or p.life_at==0 then p.life_at=now+M.LIFE_INTERVAL end end
+    return true
 end
 
 function M.reward_breakdown(g, wonders, progress)
@@ -34,8 +42,7 @@ function M.reward_breakdown(g, wonders, progress)
     local grant = first and w and w.cost or purse()
     local gold = first and M.FIRST_GOLD or M.REPLAY_GOLD
     return {first=first, wonder=w, grant=grant, base=gold, bonus=bonus,
-        total=purse(grant[1]+gold+bonus, grant[2], grant[3], first and 3 or 0,
-                    first and M.compass_rewards[g.level+1] or 0)}
+        total=purse(grant[1]+gold+bonus, 0, 0, first and 3 or 0)}
 end
 
 function M.level_reward(g, wonders, progress)

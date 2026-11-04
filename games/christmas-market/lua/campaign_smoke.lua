@@ -45,7 +45,11 @@ function R.campaign_smoke()
         app.inject_click(vec2(320, 856 + R.drop)); wait = 10   -- PLACE & BUILD
     elseif R.on_island and R.overlay == R.OV_NONE then
         local z = c:next_zone(R.prog.wallet)
-        if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
+        if z >= 0 and c:zone_available(z, R.prog.wallet) then
+            local marker = c.zones[z + 1].marker
+            R.island_focus(marker, c.cam.zoom)
+            app.inject_click(R.island.cam:to_screen(marker))
+            wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(vec2(240, 856 + R.drop)); wait = 10   -- CHOOSE A LOCATION or PLAY HEX LEVEL
         end
