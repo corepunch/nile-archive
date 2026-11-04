@@ -1,12 +1,12 @@
 # Design and story: three chapters to "Продолжение следует"
 
-**Status: design and script for review, not implemented.** The game still plays the seven lines in `lua/archive_content.lua`. The owner has decided that Nile Archive is our clone of June's Journey and Relic Rush takes the Tropicats-style role separately. The goal here is a game playable through several chapters to a "to be continued" ending.
+**Status.** Chapter 1 is implemented through the temple cache. Chapters 2 and 3 remain design and script. The goal for the full campaign is three chapters ending with «Продолжение следует».
 
 **How to read the labels.** Reference facts carry the labels from [the research report](../../../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md): `official` (Wooga help centre, App Store), `wiki*` and `player*` (Fandom and AppGamer, seen only through search excerpts, so recheck before tuning against them), `player` (reviews, fan transcripts, third-party guides), `analysis` (Naavik), `estimate` (arithmetic). Nobody on the research side played the game. **Everything of ours is a proposal** unless it cites our code. The report's own proposal section is for Relic Rush and none of its numbers are used.
 
 **Paths** are relative to `games/nile-archive`, except `engine/`, `tests/` and `docs/ECONOMY_RESEARCH.md`, which are from the repo root.
 
-**Code wins over docs.** I checked the brief's inventory against the code and it holds: 3 scenes of 8 items (`lua/archive_content.lua:10-30`, `lua/archive_state.lua:9`), 3 hard-coded at `lua/archive_economy.lua:14-25`, 101 building types (5 + 96), no loss state, no lives, 7 story lines. The catalogue totals 15,555 coins.
+The original prototype had three searches and seven lines. Chapter 1 now uses five searches, three existing paintings, 70 main dialogue lines and one four-tap cache. The comparison tables below retain the prototype as their baseline.
 
 ## Summary of the proposal
 
@@ -23,7 +23,7 @@
 
 ### Campaign review · 2026-11-04
 
-The current game ships three searchable locations and the opening seven lines. The script covers 15 searches, three ordered-tap caches and 206 main dialogue lines. Keep the three shipped scene IDs for saved progress and add the remaining content in chapter order.
+The full script covers 15 searches, three ordered-tap caches and 206 main dialogue lines. The first three scene IDs were preserved for saved progress.
 
 | Chapter | Reuse | Add |
 | --- | --- | --- |
@@ -33,14 +33,13 @@ The current game ships three searchable locations and the opening seven lines. T
 
 **Cast and evidence.** The existing Нефра, Мерит and Хорем portraits cover every line. Хорем appears through written notes and Ликон through documents read by Нефра. Мерит's current portrait already plants the earring, folded map and rope. Keep Миу recognizable in the scene paintings, especially the workshop, where her collar and its bead carry the final clue.
 
-**First playable milestone.** Build chapter 1 with the three existing paintings. It exercises the loop through clue A, a repeat clear for clue B, restoration and the first cache reveal. It needs the chapter browser, keyed story beats, journal notes and old-save handling. Chapters 2 and 3 then exercise the same loop with new scenes and lead to «Продолжение следует».
+**First playable milestone.** Chapter 1 exercises the loop through clue A, a repeat clear for clue B, restoration and the first cache reveal. The browser, keyed beats and journal are implemented. A legacy save keeps access to visited scenes and sees the contiguous clues it has earned in the journal before continuing.
 
-Resolve these script and progression points before locking the painting briefs:
+The campaign review also identified three dependencies for the art briefs and later chapters.
 
-- Require the fountain before the clear that can award `c1s5b`. A gate on the first cache alone comes after the line about the running fountain. Require the workshop before slot 15. Surface both restoration requirements in the browser so decoration-heavy saves can progress.
+- Chapter 1 requires the fountain before the library revisit, where `c1s5b` refers to it. Chapter 3 will need a similar workshop gate for slot 15.
 - Reconcile the vault inventory in the truth timeline. The first cache finds 239 chests against an inventory of 240, but the timeline says Хорем moved 239 and later took the Book. Establish whether he removed the Book with its chest, then carry that count through the inventory, the painting and the dialogue.
 - Establish how the dyke preserved evidence for nine months before painting it. The cut, the rope knot and the narrow keel mark each carry an inference, and the keel mark is the cache's fourth tap.
-- Give migrated saves a way to read skipped clues in order. The proposed migration can credit clue B and open the next scene before its new dialogue has played. Keep access to visited scenes and populate their journal notes or recap before the first unseen chapter beat.
 
 ## 1. What to clone, adapt or skip
 
@@ -429,7 +428,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 ### Slot 4 · Двор, второй круг
 
-*Teaser: «Яблоко указало на сад. Посмотрите на двор глазами садовника.» Items (new, `scene0.png`): Лейка, Вилы, Кувшин, Корзина, Инжир, Фонтан, Виноград, Ладья.*
+*Teaser: «Яблоко указало на сад.» Items on `scene0.png`: Лейка, Вилы, Золотой кувшин, Корзина с зеленью, Инжир, Фонтан, Виноград, Ладья.*
 
 **Beat `c1s4a` · first clear** · *Запись: Под фонтаном сухой канал. Он идёт к храму.*
 
@@ -450,7 +449,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 ### Slot 5 · Библиотека, второй круг
 
-*Teaser: «Весы отца что-то взвешивали. Вернитесь в библиотеку.» Items (new, `scene1.png`): Весы, Светильник, Бюст, Ибис, Ларец, Бусы, Каламы, Амфора.*
+*Teaser: «Весы отца что-то взвешивали.» Items on `scene1.png`: Весы, Чаша с огнём, Бюст, Ибис, Ларец у бюста, Бусы на ларце, Каламы, Большая амфора.*
 
 **Beat `c1s5a` · first clear** · *Запись: Плита на террасе работает как весы: камень против воды.*
 
@@ -800,7 +799,7 @@ Shown once, right after `c3t2`, as a new `MODAL_END` popup over the island, usin
 
 ## 5. Implementation notes
 
-Line numbers are at `c3b507b`. Nothing here has been built or run. Per `AGENTS.md`, this PR needs screenshots, and the changes are game-local unless the engine gets a list or modal feature.
+This is the original implementation sketch against `c3b507b`. Chapter 1 now uses `archive_story.lua` for dialogue and journal notes. Chapters 2 and 3 still need their paintings, searches and cache chains.
 
 ### Code
 
@@ -868,7 +867,7 @@ Add a catalogue row per painting and list as `AGENTS.md` requires for a visual a
 
 ### Suggested order
 
-1. Economy, slots, clues, saves, chapter 1 with no new art. It is playable to `c1t2` with the end screen stubbed.
+1. Chapter 1 is playable through `c1t2`. Its result names «Книга разливов» as the next chapter.
 2. First painting (A). Measure the real cost and correct 2.6.
 3. Remaining paintings, chapters 2-3, end screen.
 
@@ -885,6 +884,8 @@ Add a catalogue row per painting and list as `AGENTS.md` requires for a visual a
 
 ## Changelog
 
+**2026-11-04.** Implemented Chapter 1 with existing paintings and portraits. The revisit labels distinguish similar objects, the cache uses existing temple hit regions, and the fountain gate comes before the library revisit. The story dialogue follows the reviewed script.
+
 **2026-11-02.** First draft, written to `docs/STORY_WRITING.md`, which appeared in the repo during the work. One cold read by a separate agent, chapter by chapter, with no notes. It reached the final reveal at about 55-60% by the end of chapter 2 and found it mostly fair. **Fixed from the read:** the island contradicted "drowned"; Хорем was in two places on the night; the villages and the seal motif had no plant; inky hands had no plant; a broken seal on a jar made no sense and is gone; the token's use is now motivated (a signature); no clock (now nine months); why a game at all; "никогда не спросишь" contradicted an earlier ask; "матрица" and other stiff Russian; several confirmations of the reveal trimmed. **The fixed version has not had a second cold read.**
 
 **Still owed:** the father never appears, so the climax is a note; that is deliberate for "to be continued" but it is the read's main complaint. The reveal is guessable early, by design under the guide's small-cast rule, since the surprise is why and what it cost. Why Ликон was not exposed earlier by the record, the keel track surviving a flood, and a Russian-language pass by a native editor all remain open. Мерит still sometimes acts as a prompter for Нефра.
@@ -892,7 +893,7 @@ Add a catalogue row per painting and list as `AGENTS.md` requires for a visual a
 ## Not verified
 
 - **The cold read** covered the first draft, not this version.
-- **Nothing was built or run.** No line has been seen in a bubble. The longest new line is 99 characters, against 92 in the shipped text. Check long lines at 1200×900 and 1368×1026.
+- **Chapters 2 and 3 are unimplemented.** Chapter 1's longest line is 93 characters and has been captured at 1200×900 and 1368×1026. [Chapter 1 captures](UI_CATALOGUE.md#chapter-1-captures).
 - **June's Journey numbers** are as weak as their labels. `wiki*` and `player*` come from search excerpts.
 - **Play time and art hours** are estimates. Human session length is not measured anywhere in the repo.
 - **Extra targets on existing paintings** were identified by eye, with no measurement.

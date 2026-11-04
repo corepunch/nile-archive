@@ -1,8 +1,41 @@
 # Shared UI states
 
+## Chapter 1
+
+The browser, journal and cache result use measured `ui.form` layouts with the Nile skin. The browser and journal use stable search and clue IDs.
+
+| Control | Meaning and states |
+| --- | --- |
+| Search row | Painting thumbnail, clue count and best Stars. Play, search for clue B or replay. Locked rows show the missing clue, Influence or fountain. |
+| Journal | Earned notes in clue order, with an empty state before the first find. Back returns to the browser. |
+| Cache row | Locked until all nine clues, ready when the chain can start, completed after the reward. |
+| Cache target | Shows one named item and its position in the four-item chain. Correct taps advance, and the existing hint highlights the current target. |
+| Cache result | Shows the final journal note, 150 Coins and the title of the next chapter. The button returns to the island. |
+
+### Chapter 1 captures
+
+| Screen | 1200×900 | 1368×1026 |
+| --- | --- | --- |
+| Search browser | [Chapter 1](screenshots/chapter-one/browser.jpg) | [Larger iPad](screenshots/chapter-one/ipad-browser.jpg) |
+| Courtyard revisit | [Search](screenshots/chapter-one/courtyard.jpg) | [Larger iPad](screenshots/chapter-one/ipad-courtyard.jpg) |
+| Library revisit | [Search](screenshots/chapter-one/library.jpg) | [Larger iPad](screenshots/chapter-one/ipad-library.jpg) |
+| Temple cache | [First target](screenshots/chapter-one/cache.jpg) | [Larger iPad](screenshots/chapter-one/ipad-cache.jpg) |
+| Search reward | [New clue](screenshots/chapter-one/reward.jpg) | [Larger iPad](screenshots/chapter-one/ipad-reward.jpg) |
+| Completed cache | [Chapter result](screenshots/chapter-one/cache-result.jpg) | [Larger iPad](screenshots/chapter-one/ipad-cache-result.jpg) |
+| Journal | [All ten entries](screenshots/chapter-one/journal.jpg) | [Larger iPad](screenshots/chapter-one/ipad-journal.jpg) |
+| Opening dialogue | [Longest line](screenshots/chapter-one/dialogue.jpg) | [Larger iPad](screenshots/chapter-one/ipad-dialogue.jpg) |
+| Decorations | [Influence and footprint](screenshots/chapter-one/build.jpg) | [Larger iPad](screenshots/chapter-one/ipad-build.jpg) |
+
+```sh
+make CFLAGS="-O2 -g -Werror" nile-archive build/test/nile-archive
+./build/test/nile-archive "shot chapter-one-" "shot ipad-chapter-one-"
+```
+
+On Linux, run the test command under `xvfb-run -a`. The prototype [browser](screenshots/chapters.jpg) and [search reward](screenshots/reward.jpg) show the prior layout.
+
 ## Rewards, chapter gates and building purchases
 
-The [economy review](review/economy/README.md) covers the result, chapters,
+The [prototype economy review](review/economy/README.md) covers the result, chapters,
 building list, initial estate, purchase preview and minimum-reward restoration
 route at 1200 x 900, 1368 x 1026 and 1600 x 900. Source: `lua/archive_island.lua`,
 `lua/archive_dialogs.lua` and `lua/archive_economy.lua`; shared controls/layout: `engine/ui_forms.lua`. The
@@ -14,10 +47,10 @@ one price/payoff/requirement data source and measured horizontal item columns.
 | Presentation/control | Meaning and supported states |
 | --- | --- |
 | Coin result | Actual base + first-clear + newly improved Star + clean-search payout; informational |
-| Scene Stars | Existing 1–3 best-time rating; improvements award Coins once; no separate spending state |
+| Scene Stars | Best time rating or guaranteed clear count up to three, whichever is higher. Improvements award Coins once. |
 | Influence | Existing estate icon; building-only cumulative progress, never a scene payout or spendable balance |
-| Chapter button | Play/replay when preceding clue and Influence permit; disabled with the missing requirement otherwise; existing normal/hover/pressed/focus/disabled skin |
-| Building row | Existing normal sprite; price, Influence return (restorations) or «Украшение · W×H» (catalogue decorations), and chapter or Star requirement; no persistent selected state |
+| Chapter button | Opens the search browser, including the cache and journal. The notification dot signals a ready goal. |
+| Building row | Sprite, price and Influence. Decorations also show footprint size. Restorations become unavailable after purchase. |
 | Category/page arrows | Engine buttons in the tray header (category ‹ ›, wrapping through «Восстановление», «Все постройки» and 11 catalogue categories) and footer («Назад»/«Далее», disabled at the first/last page); light category label on the dark tray |
 | Buy/close | Engine buttons with normal/hover/pressed/focus; Buy disabled for locked or unaffordable stock |
 | Purchase preview | Existing city ghost/valid-invalid footprint; shows cost and Influence return; charges only on confirmation |
@@ -26,9 +59,7 @@ one price/payoff/requirement data source and measured horizontal item columns.
 The 96 decorations are documented in [building-catalogue.md](building-catalogue.md); the tray
 lists any category with `--screen build --catalogue <category> --catalogue-page N`.
 Reproduce with `--screen win`, `first-win`, `chapters`, `build`, `first-build`, `purchase`,
-`opening` and `island`. `--smoke` plays two scenes, cancels/confirms purchases,
-builds the fountain/temple, browses decoration categories and pages, buys a date palm
-and enters chapter three using actual control input.
+`opening` and `island`. `--smoke` covers all five searches, the replay gates, purchases, the ordered cache and the journal using actual control input.
 Pure economy tests cover minimum/maximum rewards, repeated claims, best-Star
 improvements, clue order and legacy scene access. The shared modal stack also
 consumes opening-frame input before enabling its controls.

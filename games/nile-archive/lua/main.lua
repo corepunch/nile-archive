@@ -21,6 +21,7 @@ local island = require("archive_island")
 local scene = require("archive_scene")
 local dialogs = require("archive_dialogs")
 local smoke = require("archive_smoke")
+local beats = require("archive_story")
 local rgba = color
 local scenes, SCENES = content.scenes, content.SCENES
 local ITEMS, COINS, INFLUENCE, CHAPTERS, STARS = G.ITEMS, G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
@@ -35,7 +36,8 @@ local function frame(dt)
     local talking = story.active()
     if G.modal ~= MODAL_NONE or talking then world = input{pos = inp.pos, pinch = 1} end
     if inp.back and not talking then
-        if G.modal == MODAL_WIN then scene.go_home()
+        if G.modal == MODAL_WIN or G.modal == G.MODAL_CACHE then scene.go_home()
+        elseif G.modal == G.MODAL_JOURNAL then G.open_modal(MODAL_CHAPTERS)
         elseif G.modal ~= MODAL_NONE then G.modal = MODAL_NONE
         elseif G.island.placing >= 0 then G.island:cancel()
         elseif G.tray then G.tray = false; G.island.selected = -1
@@ -49,26 +51,30 @@ local function frame(dt)
     if G.scene then scene.frame(screen, world, dt) else island.frame(screen, world) end
     ui.set_enabled(true)
 
-    if G.modal ~= MODAL_NONE and not talking then   -- a dialogue goes first: the reward waits for it
+    if G.modal ~= MODAL_NONE and not story.active() then   -- the reward waits for dialogue, even on the last tap
         local d = G.dialog
         if d.tl.paused then d.tl:resume() end
         ui.modal_backdrop(d.backdrop)
         dialogs.draw(G.modal)
     end
     story.frame(dt)
+    if G.save_intro and not story.active() then
+        G.save_intro = false
+        progress.save()
+    end
     if G.smoke then smoke.step() end
 end
 
 ------------------------------------------------------------------- setup
 
 -- Debug/QA entry points used to capture screenshots:
--- --screen island|build|purchase|opening|first-build|first-win|scene0..2|cast|pause|chapters|win|story|horem|merit,
+-- --screen island|build|purchase|opening|first-build|first-win|scene0..4|cache|cache-result|journal|cast|pause|chapters|win|story|horem|merit,
 -- --catalogue <category> --catalogue-page N with --screen build, --building-review N,
 -- and --footprints to check the buildings' measured footprints and pivots
 local function apply_screen_arg(screen)
     G.wallet[INFLUENCE] = 100
     G.wallet[COINS] = 900
-    G.wins = {1, 1, 0}
+    G.wins[1], G.wins[2], G.clues[1], G.clues[2] = 1, 1, 1, 2
     G.wallet[CHAPTERS] = economy.completed(G.wins)
     if screen:sub(1, 5) == "scene" then
         scene.open(num.clampi((tonumber(screen:sub(6)) or 0) + 1, 1, SCENES))
@@ -90,17 +96,17 @@ local function apply_screen_arg(screen)
         G.island:begin_place(3, spot)
     elseif screen == "opening" then
         G.wallet = purse(economy.START_COINS, economy.START_INFLUENCE)
-        G.wins, G.stars = {0, 0, 0}, {0, 0, 0}
+        G.wins[1], G.wins[2], G.clues[1], G.clues[2] = 0, 0, 0, 0
     elseif screen == "first-build" then
         G.wallet = purse(140, 10, 1)
-        G.wins = {1, 0, 0}
+        G.wins[2], G.clues[2] = 0, 0
         G.tray = true
     elseif screen == "first-win" then
         scene.open(1)
         G.wallet = purse(140, 10, 1)
-        G.wins, G.stars = {1, 0, 0}, {1, 0, 0}
+        G.wins[2], G.clues[2], G.stars[1] = 0, 0, 1
         for i = 1, ITEMS do G.found[i] = 0; scene.show_found(i) end   -- the last finds are still leaving the bar
-        G.result = {score = 2400, time = 180, stars = 1, payout = economy.reward(0, 0, 1, false)}
+        G.result = {score = 2400, time = 180, stars = 1, clue = 1, payout = economy.reward(0, 0, 1, false)}
         G.open_modal(MODAL_WIN, not app.arg("reel"))
     elseif screen == "cast" then
         G.open_modal(MODAL_CAST, true)
@@ -110,21 +116,32 @@ local function apply_screen_arg(screen)
         G.open_modal(MODAL_PAUSE, true)
     elseif screen == "chapters" then
         G.wallet[INFLUENCE] = 30
-        G.wins, G.stars = {1, 0, 0}, {3, 0, 0}
+        G.wins[2], G.clues[2], G.stars[1] = 0, 0, 3
         G.wallet[CHAPTERS] = economy.completed(G.wins)
         G.open_modal(MODAL_CHAPTERS, true)
     elseif screen == "win" then
         scene.open(2)
         for i = 1, ITEMS do G.found[i] = 0; scene.show_found(i) end   -- the last finds are still leaving the bar
-        G.wins, G.stars = {1, 0, 0}, {3, 0, 0}
+        G.wins[2], G.clues[2], G.stars[1] = 0, 0, 3
         G.wallet[CHAPTERS] = economy.completed(G.wins)
-        G.result = {score = 4200, time = 68, stars = 3, payout = economy.reward(0, 0, 3, true)}
+        G.result = {score = 4200, time = 68, stars = 3, clue = 1, payout = economy.reward(0, 0, 3, true)}
         G.open_modal(MODAL_WIN, not app.arg("reel"))
+    elseif screen == "cache" then
+        scene.open(content.CACHE)
+    elseif screen == "cache-result" then
+        scene.open(content.CACHE)
+        for i = 1, #scenes[content.CACHE].names do G.found[i] = -10 end
+        G.open_modal(G.MODAL_CACHE, true)
+    elseif screen == "journal" then
+        for i = 1, SCENES do G.clues[i] = economy.clue_count(i) end
+        G.cache_done = true
+        G.open_modal(G.MODAL_JOURNAL, true)
     elseif screen == "story" then
-        story.play("intro", content.intro)
+        progress.play("intro")
     elseif screen == "horem" then
         scene.open(3)
-        story.play("chapter-2", scenes[3].clue)
+        progress.play("c1s3a")
+        story.next()
         story.next()   -- Nefra listens while her father's note speaks
     elseif screen == "merit" then
         story.add(content.merit_shore)
@@ -173,7 +190,11 @@ end
 local function init()
     K.setup_theme()
     story.setup(content.cast, K.dialogue_style())
-    for i = 1, SCENES do G.backgrounds[i] = texture.load(scenes[i].background) end
+    local backgrounds = {}
+    for i, sc in ipairs(scenes) do
+        if not backgrounds[sc.background] then backgrounds[sc.background] = texture.load(sc.background) end
+        G.backgrounds[i] = backgrounds[sc.background]
+    end
     G.coin = texture.load("icons/coin.png")
     G.influence = texture.load("icons/influence.png")
     island.setup()
@@ -182,11 +203,21 @@ local function init()
     progress.read()
     G.scene = nil
     G.hint = nil
+    G.save_intro = false
     G.smoke = app.arg("smoke") ~= nil
     G.island.show_footprints = app.arg("footprints") ~= nil
     local screen = app.arg("screen")
     local review = tonumber(app.arg("building-review"))
-    if screen then apply_screen_arg(screen) elseif not review then story.play("intro", content.intro) end
+    local beat = app.arg("story-beat")
+    if screen then apply_screen_arg(screen)
+    elseif G.migrated and #progress.journal() > 0 and not review and not beat then
+        G.open_modal(G.MODAL_JOURNAL)
+        progress.save()
+    elseif not review and not beat then G.save_intro = progress.play("intro") end
+    if beat and beats[beat] then
+        progress.play(beat)
+        for _ = 2, tonumber(app.arg("story-line")) or 1 do story.next() end
+    end
     if review then building_review(review) end
 end
 

@@ -4,30 +4,52 @@
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
+local beats = require("archive_story")
 local COINS, INFLUENCE, CHAPTERS, STARS = G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
 
 local M = {}
 
 function M.new_game()
     G.wallet = purse(economy.START_COINS, economy.START_INFLUENCE)
-    G.wins = {0, 0, 0}
-    G.stars = {0, 0, 0}
+    G.wins, G.stars, G.clues, G.restored = {}, {}, {}, {[1] = true}
+    for i = 1, content.SCENES do G.wins[i], G.stars[i], G.clues[i] = 0, 0, 0 end
+    G.cache_done, G.migrated = false, false
     G.island.count = 0
     G.island.open = 1
     G.island:add(G.island:snap(vec2(850, 650), 0), 0, 0)
 end
 
 local function serialize(s)
-    s:int("version", 3)
+    local reading = save.is_reading(s)
+    local version = s:int("version", reading and 3 or 4)
     G.wallet[COINS] = s:int("coins", G.wallet[COINS])
     G.wallet[INFLUENCE] = s:int("influence", G.wallet[INFLUENCE])
     G.wins = s:ints("wins", G.wins)
     G.stars = s:ints("stars", G.stars)
+    G.clues = s:ints("clues", G.clues)
+    G.cache_done = s:int("cache_done", G.cache_done and 1 or 0) ~= 0
     G.reduced_motion = s:int("reduced_motion", G.reduced_motion and 1 or 0) ~= 0
     G.wallet[CHAPTERS] = economy.completed(G.wins)   -- non-spendable requirements, rebuilt from saved records
     G.wallet[STARS] = economy.stars(G.stars)
     G.island:serialize(s)
     story.serialize(s)
+    if not reading then return end
+    G.restored = {}
+    if version < 4 then
+        G.migrated = true
+        -- Credit only the contiguous clues from older saves. The journal lists
+        -- their notes in story order and visited searches stay playable.
+        for i = 1, content.SCENES do
+            if G.wins[i] == 0 then break end
+            G.clues[i] = G.stars[i] == 3 and economy.clue_count(i) or 1
+            if G.clues[i] < economy.clue_count(i) then break end
+        end
+    end
+    for _, b in ipairs(G.island.items) do
+        local kind = b.type + 1
+        if kind <= content.RESTORATIONS then G.restored[kind] = true
+        elseif version < 4 then G.wallet[INFLUENCE] = G.wallet[INFLUENCE] + G.buildings[kind].reward[INFLUENCE] end
+    end
 end
 
 function M.save() save.write("progress", serialize) end
@@ -63,12 +85,41 @@ function M.import_legacy()
     save.inject("progress", t .. ("city.count=%d\n"):format(n))
 end
 
--- The next chapter to win and whether it can be played now; nil once all are won.
+function M.play(key)
+    return story.play(key, beats[key].lines)
+end
+
+function M.journal()
+    local notes = {}
+    for i, sc in ipairs(content.scenes) do
+        if i == content.CACHE then
+            if G.cache_done then notes[#notes + 1] = {id = "c1t2", title = sc.title, note = beats.c1t2.note} end
+        else
+            for j = 1, G.clues[i] do
+                local key = sc.clues[j]
+                notes[#notes + 1] = {id = key, title = sc.title, note = beats[key].note}
+            end
+        end
+    end
+    return notes
+end
+
+function M.blocker(i)
+    local lock
+    if i == content.CACHE then lock = economy.cache_lock(G)
+    else lock = economy.lock(G, i) end
+    if lock == "influence" then return ("Ещё %d влияния"):format(economy.gates[i] - G.wallet[INFLUENCE]), true end
+    if lock == "fountain" then return "Восстановите фонтан", true end
+    if lock == "clue" then return i == content.CACHE and "Соберите все улики" or "Нужны предыдущие улики", false end
+    if lock == "done" then return "Тайник открыт", false end
+end
+
+-- The next search with an outstanding clue, or the temple cache.
 function M.chapter_goal()
     for i = 1, content.SCENES do
-        if G.wins[i] == 0 then return i, economy.can_play(G.wins, G.wallet[INFLUENCE], i) end
+        if G.clues[i] < economy.clue_count(i) then return i, M.blocker(i) end
     end
-    return nil, true
+    if not G.cache_done then return content.CACHE, M.blocker(content.CACHE) end
 end
 
 -- Player level from influence: levels at 0, 10, 40, 90, 160 ... Returns the

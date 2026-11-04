@@ -83,7 +83,8 @@ return ui.skin{
     },
 
     -- Build-tray typography: the budget line, the category name, card titles.
-    roles = {budget = {text = "body", em = 17}, category = {text = "button", em = 17}},
+    roles = {budget = {text = "body", em = 17}, category = {text = "button", em = 17},
+        archive_note = {text = "ink_body", em = 17}},
 
     controls = {
         -- A teal (or parchment) panel inside a bevelled gold rim, with a
@@ -97,7 +98,10 @@ return ui.skin{
                 {name = "line", border = "#E9C77B69", width = 1.2, radius = 10, radius_delta = -10, radius_min = 4, inset = 12},
                 {paint = studs, inset = 12},
             }},
-            variants = {parchment = {normal = {set = {inner = {fill = "parch_hi", fill2 = "parch_lo"}, line = {border = "#B0843C96"}}}}},
+            variants = {
+                parchment = {normal = {set = {inner = {fill = "parch_hi", fill2 = "parch_lo"}, line = {border = "#B0843C96"}}}},
+                archive_entry = {normal = {set = {inner = {fill = "parch_hi", fill2 = "parch_lo"}, line = {border = "#00000000"}}}},
+            },
         },
 
         -- A dark pill holding one figure; the icon overhangs its left end.

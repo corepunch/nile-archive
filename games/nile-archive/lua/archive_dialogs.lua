@@ -5,13 +5,13 @@ local content = require("archive_content")
 local economy = require("archive_economy")
 local progress = require("archive_progress")
 local scene = require("archive_scene")
+local island = require("archive_island")
 local K = require("archive_kit")
 local S = K.styles
-local rgba = color
-local scenes, SCENES, cast = content.scenes, content.SCENES, content.cast
-local ITEMS, INFLUENCE = G.ITEMS, G.INFLUENCE
+local beats = require("archive_story")
+local scenes, cast = content.scenes, content.cast
 local MODAL_NONE, MODAL_WIN, MODAL_CHAPTERS, MODAL_PAUSE = G.MODAL_NONE, G.MODAL_WIN, G.MODAL_CHAPTERS, G.MODAL_PAUSE
-local WHITE, GOLD, GOLD_LO, GOLD_SEAM = K.WHITE, K.GOLD, K.GOLD_LO, K.GOLD_SEAM
+local WHITE = K.WHITE
 
 local M = {}
 
@@ -33,10 +33,11 @@ end
 local function win_dialog()
     local sc = scenes[G.scene]
     local res = G.result or {score = G.score, time = G.clock, stars = 1}
-    local clue = #sc.clue > 1 and ("%s «%s»"):format(sc.clue[1][2], sc.clue[2][2]) or sc.clue[1][2]
+    local key = sc.clues[res.clue or G.clues[G.scene]]
+    local clue = key and beats[key].note or "Записи по этой сцене появятся в журнале по ходу расследования."
     local clue_h = text.box_size(S.ink_body, 560 - 80, clue).h
     local payout = res.payout or economy.reward(G.wins[G.scene], G.stars[G.scene], res.stars, false)
-    local _, r = popup(640, 470 + clue_h, "Глава пройдена!")
+    local _, r = popup(640, 470 + clue_h, "Поиск завершён!")
     r:cut_top(44)
     K.star_row(r:point(vec2(.5, 0)) + vec2(0, 34), 26, res.stars, G.dialog.stars)
     r:cut_top(84)
@@ -57,53 +58,15 @@ local function win_dialog()
     r:cut_top(16)
     local note = r:cut_top(clue_h + 46):inflate2(vec2(-24, 0))
     local paper = K.frame(note, true, 14)
-    text.draw(S.goal_eyebrow, paper:pos() + vec2(16, 10), vec2(0, 0), payout.first > 0 and "НОВЫЙ ФРАГМЕНТ АРХИВА" or "УЛИКА УЖЕ НАЙДЕНА")
+    text.draw(S.goal_eyebrow, paper:pos() + vec2(16, 10), vec2(0, 0), res.clue and "НОВАЯ УЛИКА" or "ЗАПИСЬ В ЖУРНАЛЕ")
     text.box(S.ink_body, rect(paper.x + 16, paper.y + 28, paper.w - 32, clue_h), vec2(0, 0), clue)
     r:cut_top(18)
     local continue = r:cut_top(56):align(size2(280, 56), vec2(.5, .5))
     G.spots.continue = continue:center()
-    local next_chapter, ready = progress.chapter_goal()
-    local restore = next_chapter and not ready
+    local _, _, restore = progress.chapter_goal()
     if K.button(continue, restore and "Строить за монеты" or "На остров", "green") then
         scene.go_home()
-        G.tray = not not restore
-    end
-end
-
-local function chapter_card(r, i)
-    local sc = scenes[i]
-    local locked = not economy.can_play(G.wins, G.wallet[INFLUENCE], i)
-    local previous = i > 1 and G.wins[i - 1] == 0 and G.wins[i] == 0
-    local inner = K.frame(r, true, 18)
-    local pic = inner:cut_top(inner.w * 2 / 3):inflate(-8)
-    pic.y = pic.y + 4
-    gfx.round_rect(pic:inflate(3), 10, GOLD_LO)
-    local bg = G.backgrounds[i]
-    local ts = texture.size(bg)
-    gfx.image_part(bg, rect(0, 0, ts.w, ts.h), pic, locked and rgba(110, 110, 110, 255) or WHITE)
-    gfx.round_rect_line(pic, 8, 2, GOLD_SEAM)
-    if locked then
-        gfx.rect(pic, rgba(10, 20, 24, 120))
-        gfx.circle(pic:center(), 30, rgba(9, 28, 32, 210))
-        gfx.ring(pic:center(), 30, 2, GOLD)
-        K.icon_lock(pic:center() + vec2(0, 2), 22)
-    end
-    local tag = rect.anchor(pic:point(vec2(0, 0)) + vec2(10, 10), size2(92, 26), vec2(0, 0))
-    gfx.round_rect(tag, 13, rgba(9, 28, 32, 220))
-    text.draw(S.eyebrow:sized(11), tag:center(), vec2(.5, .5), ("ГЛАВА %d"):format(i))
-    inner:cut_top(10)
-    text.fit(S.card_title:sized(23), inner:cut_top(30):inflate2(vec2(-12, 0)), vec2(.5, .5), sc.title)
-    K.star_row(inner:cut_top(36):center() + vec2(0, 4), 11, G.stars[i])
-    local teaser = inner:cut_top(math.max(0, inner.h - 74))
-    local note = previous and ("Сначала пройдите главу %d."):format(i - 1) or sc.teaser
-    note = note .. "\n80 монет за поиск + бонусы.\nВлияние дают постройки."
-    text.box(S.ink_small, teaser:inflate2(vec2(-16, -2)), vec2(.5, 0), note)
-    local b = inner:inflate2(vec2(-16, -10)):bottom(50)
-    G.spots["play" .. i] = b:center()
-    if locked then
-        K.button(b, previous and ("Пройдите главу %d"):format(i - 1) or ("Ещё %d влияния"):format(math.max(0, sc.gate - G.wallet[INFLUENCE])), "off")
-    elseif K.button(b, G.wins[i] > 0 and "Играть снова" or "Играть", G.wins[i] > 0 and "blue" or "green") then
-        scene.open(i)
+        if restore then island.open_tray("story") end
     end
 end
 
@@ -112,7 +75,7 @@ local function pause_dialog()
     local _, r = popup(560, 282, "Пауза")
     r:cut_top(44)
     text.box(S.body:sized(19), r:cut_top(40):inflate2(vec2(-30, 0)), vec2(.5, .5),
-             ("%s · найдено %d из %d"):format(scenes[G.scene].title, scene.found_count(), ITEMS))
+             ("%s · найдено %d из %d"):format(scenes[G.scene].title, scene.found_count(), #scenes[G.scene].names))
     r:cut_top(10)
     -- The setting: no pops, pulses, sparkles or floating text; saved with progress.
     local row = r:cut_top(56)
@@ -128,15 +91,100 @@ local function pause_dialog()
     if K.button(buttons:col(2, 1, 20), "Продолжить", "green") then G.modal = MODAL_NONE end
 end
 
+local browser = ui.form{kind = "column", gap = 8, children = {
+    {kind = "list", id = "searches", gap = 7, item = function(e)
+        return {kind = "row", panel = true, role = "archive_entry", radius = 12, padding = 8, gap = 14, align = "center", children = {
+            {kind = "image", image = e.image, width = 84, height = 56},
+            {kind = "column", grow = 1, gap = 2, children = {
+                {kind = "label", text = e.title, text_align = "start", wrap = true, em = 21},
+                {kind = "label", text = e.note, role = "archive_note", text_align = "start", wrap = true},
+            }},
+            {kind = "button", id = "play", text = e.action, enabled = e.available, accent = e.available, width = 240, height = 44},
+        }}
+    end},
+    {kind = "button", id = "journal", text = "Журнал улик", height = 44},
+}}
+
 local function chapters_dialog()
-    local w = math.min(1040, app.screen().w - 40)
-    local card_w = (w - 10 - 44 - 40) / SCENES
-    local card_h = (card_w - 26) * 2 / 3 + 8 + 10 + 30 + 36 + 108 + 74
-    local box, r = popup(1040, card_h + 10 + 28 + 40 + 6, "Главы архива")
+    local records = {}
+    for i, sc in ipairs(scenes) do
+        local blocked = progress.blocker(i)
+        local note, action, title
+        if i == content.CACHE then
+            title = "Тайник · " .. sc.title
+            note = G.cache_done and "Книга разливов пропала. Запись в журнале." or "Четыре предмета в порядке из записки."
+            action = "Открыть тайник"
+        else
+            local clues, total = G.clues[i], economy.clue_count(i)
+            local prior_clues = i == 1 or G.clues[i - 1] == economy.clue_count(i - 1)
+            title = ("%d. %s"):format(i, sc.title)
+            note = ("Улики %d/%d · Звёзды %d/3"):format(clues, total, G.stars[i])
+            if G.wins[i] == 0 then note = note .. " · " .. sc.teaser
+            elseif clues < total then
+                note = note .. (not prior_clues and " · Сначала найдите предыдущие улики"
+                    or G.stars[i] == 3 and " · Следующий поиск даст улику" or " · Нужны три звезды")
+            end
+            action = G.wins[i] == 0 and "Играть" or prior_clues and clues < total and "Искать улику" or "Играть снова"
+        end
+        records[i] = {id = i, title = title, note = note, image = G.backgrounds[i], action = blocked or action, available = not blocked}
+    end
+    assert(browser:set_items("searches", records))
+    local _, height = browser:measure(888, K.skin)
+    local box, r = popup(936, height + 88, "Глава 1 · Игра восьми")
     close_button(box)
-    r = r:inflate2(vec2(-22, -14))
+    r = r:inflate2(vec2(-19, 0))
     r:cut_top(40)
-    for i = 1, SCENES do chapter_card(r:col(SCENES, i - 1, 20), i) end
+    local event = browser:draw(r, K.skin)
+    G.spots.browser = browser
+    if not event then return end
+    if event.id == "journal" then G.open_modal(G.MODAL_JOURNAL)
+    elseif event.source == "searches" then scene.start(event.key) end
+end
+
+local journal = ui.form{kind = "column", gap = 8, children = {
+    {kind = "label", id = "summary", text_align = "center", role = "budget", height = 24},
+    {kind = "list", id = "notes", gap = 4, item = function(e)
+        return {kind = "column", panel = true, role = "archive_entry", radius = 10,
+            padding = {left = 14, top = 7, right = 14, bottom = 7}, gap = 1, children = {
+            {kind = "label", text = e.title, text_align = "start"},
+            {kind = "label", text = e.note, role = "archive_note", text_align = "start", wrap = true},
+        }}
+    end},
+    {kind = "button", id = "back", text = "К поискам", height = 42},
+}}
+
+local function journal_dialog()
+    local notes = progress.journal()
+    journal:set("summary", #notes == 0 and "Записи появятся после первого поиска." or ("Записей: %d"):format(#notes))
+    assert(journal:set_items("notes", notes))
+    local _, height = journal:measure(888, K.skin)
+    local box, r = popup(936, height + 88, "Журнал улик")
+    close_button(box)
+    r = r:inflate2(vec2(-19, 0))
+    r:cut_top(40)
+    local event = journal:draw(r, K.skin)
+    G.spots.journal = journal
+    if event and event.id == "back" then G.open_modal(MODAL_CHAPTERS) end
+end
+
+local cache_result = ui.form{kind = "column", gap = 16, children = {
+    {kind = "column", panel = true, role = "parchment", radius = 12, padding = 16, gap = 4, children = {
+        {kind = "label", text = "Глава 1 завершена", em = 24},
+        {kind = "label", text = beats.c1t2.note, role = "archive_note", wrap = true, em = 19},
+    }},
+    {kind = "label", text = "Дальше · Книга разливов", role = "budget", height = 30, em = 22},
+    {kind = "label", text = ("Награда за тайник · %d монет"):format(economy.CACHE_COINS), role = "budget", height = 26},
+    {kind = "button", id = "home", text = "На остров", accent = true, height = 48},
+}}
+
+local function cache_dialog()
+    local _, height = cache_result:measure(572, K.skin)
+    local _, r = popup(620, height + 88, "Тайник открыт")
+    r = r:inflate2(vec2(-19, 0))
+    r:cut_top(40)
+    local event = cache_result:draw(r, K.skin)
+    G.spots.cache_result = cache_result
+    if event and event.id == "home" then scene.go_home() end
 end
 
 local function cast_dialog()
@@ -147,7 +195,7 @@ local function cast_dialog()
     for i, who in ipairs(cast) do
         local col = r:col(#cast, i - 1, 20)
         local caption = col:cut_bottom(84)
-        gfx.glow(col:point(vec2(.5, .8)), col.w * .5, rgba(242, 210, 140, 50), rgba(242, 210, 140, 0))
+        gfx.glow(col:point(vec2(.5, .8)), col.w * .5, color(242, 210, 140, 50), color(242, 210, 140, 0))
         local face = story.character(who.id).portrait
         local fs = texture.size(face)
         gfx.image(face, col:align(fs:scale(fs:fit(col:size())), vec2(.5, 1)), WHITE)
@@ -158,7 +206,10 @@ local function cast_dialog()
     end
 end
 
-local dialogs = {[MODAL_WIN] = win_dialog, [MODAL_CHAPTERS] = chapters_dialog, [MODAL_PAUSE] = pause_dialog}
+local dialogs = {
+    [MODAL_WIN] = win_dialog, [MODAL_CHAPTERS] = chapters_dialog, [MODAL_PAUSE] = pause_dialog,
+    [G.MODAL_JOURNAL] = journal_dialog, [G.MODAL_CACHE] = cache_dialog,
+}
 
 -- Draws the open dialog; the cast gallery otherwise.
 function M.draw(modal)
