@@ -15,16 +15,24 @@ local MODAL_NONE, MODAL_WIN, MODAL_PAUSE = G.MODAL_NONE, G.MODAL_WIN, G.MODAL_PA
 
 local M = {}
 
+local function item_count()
+    return G.scene == content.CACHE and #scenes[G.scene].names or ITEMS
+end
+
+local function slot_count()
+    return G.scene == content.CACHE and 1 or SLOTS
+end
+
 -------------------------------------------------------------------- rules
 
 function M.found_count()
     local n = 0
-    for i = 1, ITEMS do if G.found[i] then n = n + 1 end end
+    for i = 1, item_count() do if G.found[i] then n = n + 1 end end
     return n
 end
 
 local function in_slots(i)
-    for k = 1, SLOTS do if G.slots[k] == i then return true end end
+    for k = 1, slot_count() do if G.slots[k] == i then return true end end
     return false
 end
 
@@ -38,11 +46,11 @@ end
 
 -- Fill empty slots (and slots whose item was found a moment ago) from the list.
 function M.refill_slots(now, linger)
-    for k = 1, SLOTS do
+    for k = 1, slot_count() do
         local i = G.slots[k]
         if not i or (G.found[i] and now - G.found[i] > linger) then
             G.slots[k] = nil
-            for j = 1, ITEMS do
+            for j = 1, item_count() do
                 if not G.found[j] and not in_slots(j) then
                     G.slots[k] = j
                     local p = pill(k)
@@ -58,7 +66,7 @@ end
 
 -- The opening list is simply there; later refills slide in.
 function M.settle_slots()
-    for k = 1, SLOTS do
+    for k = 1, slot_count() do
         local p = pill(k)
         tween.kill(p)
         p.arrive, p.leave, p.strike = 1, 0, 0
@@ -71,7 +79,7 @@ function M.show_found(i)
     local mark = {r = 0}
     G.marks[i] = mark
     tween.to(mark, .33, {r = 1}):ease("out_back")
-    for k = 1, SLOTS do
+    for k = 1, slot_count() do
         if G.slots[k] == i then
             tween.to(pill(k), .45, {strike = 1}):ease("linear"):after(.35, {leave = 1}):ease("linear")
         end
@@ -85,6 +93,8 @@ function M.open(i)
     G.slots, G.pills, G.marks = {}, {}, {}
     G.score, G.combo, G.combo_left, G.clock, G.result = 0, 0, 0, 0, nil
     G.misses, G.hints = 0, 0
+    G.focus_time, G.bonus_in, G.bonus_goal = 0, 0, 0
+    tween.kill(G)
     G.island.selected = -1
     G.tray = false
     G.modal = MODAL_NONE
@@ -92,6 +102,12 @@ function M.open(i)
     M.refill_slots(app.time(), 0)
     M.settle_slots()
     fx.clear()
+end
+
+function M.start(i)
+    if progress.blocker(i) then return end
+    M.open(i)
+    if i == content.CACHE and progress.play("c1t1") then progress.save() end
 end
 
 function M.go_home()
@@ -102,11 +118,11 @@ end
 
 function M.show_hint()
     local pick
-    for k = 1, SLOTS do   -- a name the player can read in the bar first
+    for k = 1, slot_count() do   -- a name the player can read in the bar first
         local i = G.slots[k]
         if i and not G.found[i] then pick = i break end
     end
-    for i = 1, ITEMS do if not pick and not G.found[i] then pick = i end end
+    for i = 1, item_count() do if not pick and not G.found[i] then pick = i end end
     if not pick then return end
     G.hints = G.hints + 1
     G.hint = pick
@@ -124,6 +140,22 @@ end
 function M.tap(screen)
     local sc = scenes[G.scene]
     local p = G.cam:to_world(screen)
+    if G.scene == content.CACHE then
+        local i = M.found_count() + 1
+        if not sc.at[i] or (p - sc.at[i]):ellipse(sc.radius[i]) > 1 then return end
+        G.found[i], G.hint, G.slots[1] = app.time(), nil, nil
+        M.show_found(i)
+        if i < #sc.names then
+            M.refill_slots(app.time(), 0)
+            haptic.play(haptic.MATCH)
+        elseif economy.claim_cache(G) then
+            haptic.play(haptic.SUCCESS)
+            progress.play("c1t2")
+            progress.save()
+            G.open_modal(G.MODAL_CACHE)
+        end
+        return
+    end
     for i = 1, ITEMS do
         if not G.found[i] and (p - sc.at[i]):ellipse(sc.radius[i]) <= 1 then
             G.found[i] = app.time()
@@ -144,7 +176,7 @@ function M.tap(screen)
                 G.result = {score = G.score, time = G.clock, stars = stars, complete = true, perfect = G.misses == 0 and G.hints == 0}
                 assert(economy.claim(G, G.scene, G.result), "completed scene must pay once")
                 haptic.play(haptic.SUCCESS)
-                story.play(("chapter-%d"):format(G.scene - 1), sc.clue)   -- the clue, the first time
+                if G.result.clue then progress.play(sc.clues[G.result.clue]) end
                 progress.save()
                 G.open_modal(MODAL_WIN)   -- pops in once the clue has been read
             end
@@ -178,7 +210,7 @@ function M.frame(screen, world, dt)
     G.cam.min_zoom = 0                -- cover sets the floor: the picture always fills the view
     G.cam.max_zoom = G.cam:fit_zoom() * 3.4
     G.cam = G.cam:clamp()
-    if G.modal == MODAL_NONE then
+    if playing then
         G.cam = G.cam:input(world):clamp()
         if world.tap and view:contains(world.pos) then M.tap(world.pos) end
     end
@@ -192,7 +224,7 @@ function M.frame(screen, world, dt)
     gfx.clip(view)
     G.cam:draw_texture(bg)
     local now = app.time()
-    for i = 1, ITEMS do
+    for i = 1, item_count() do
         local p = G.cam:to_screen(sc.at[i])
         if G.found[i] then
             local t = G.marks[i] and G.marks[i].r or 1
@@ -272,8 +304,9 @@ function M.frame(screen, world, dt)
 
     -- the names: three translucent pills across the bottom, the picture showing through
     local row = rect(area.x, area:max().y - 66, hc.x - 56 - area.x, 60)
-    for k = 1, SLOTS do
-        local slot = row:col(SLOTS, k - 1, 14)
+    for k = 1, slot_count() do
+        local slot = row:col(slot_count(), k - 1, 14)
+        if G.scene == content.CACHE then slot = row:align(size2(420, 60), vec2(.5, .5)) end
         local i = G.slots[k]
         if i then
             local p = pill(k)
@@ -285,7 +318,8 @@ function M.frame(screen, world, dt)
             local fill = hinted and rgba(176, 118, 36, 215) or rgba(48, 28, 12, 168)
             gfx.round_rect(box, box.h * .5, fill:alpha(a))
             gfx.round_rect(rect(box.x + box.h * .4, box.y + 3, box.w - box.h * .8, box.h * .3), box.h * .15, rgba(255, 236, 200, 16 * a))
-            local ink = text.fit(S.pill_text:faded(1 - a), box:inflate2(vec2(-box.h * .5, -8)), vec2(.5, .54), sc.names[i])
+            local name = G.scene == content.CACHE and ("%d / %d · %s"):format(i, #sc.names, sc.names[i]) or sc.names[i]
+            local ink = text.fit(S.pill_text:faded(1 - a), box:inflate2(vec2(-box.h * .5, -8)), vec2(.5, .54), name)
             if G.found[i] then gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(p.strike, .55)), 3, rgba(150, 235, 140, 240 * a)) end
             ui.block(box)
         end

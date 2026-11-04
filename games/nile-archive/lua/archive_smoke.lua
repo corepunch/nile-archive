@@ -1,15 +1,11 @@
--- archive_smoke.lua — the --smoke run: plays chapter one through injected
--- clicks (toggling Pause's reduced-motion checkbox on and off), runs the engine's pickup-and-move check on the island, cancels and
--- confirms a purchase, then reaches chapter three by finding the second clue,
--- building the temple and browsing the decoration catalogue (categories, pages
--- and a purchase) through real form input. Every step asserts what it expects.
+-- Play Chapter 1 through real input, including placement, replays and the cache.
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
 local scene = require("archive_scene")
 local island = require("archive_island")
 local scenes = content.scenes
-local ITEMS, COINS, INFLUENCE = G.ITEMS, G.COINS, G.INFLUENCE
+local COINS, INFLUENCE = G.COINS, G.INFLUENCE
 local MODAL_NONE, MODAL_WIN, MODAL_CHAPTERS = G.MODAL_NONE, G.MODAL_WIN, G.MODAL_CHAPTERS
 
 local M = {}
@@ -18,19 +14,22 @@ local frames, step = 0, 0
 local move             -- the engine's pickup/move check, while it runs
 local purchase_coins   -- coins before a purchase preview
 
--- Press the Buy button of the catalogue row with this stable item key.
-local function buy(key)
-    local f = G.spots.build_form
-    assert(f, "building catalogue was not drawn")
-    for _, node in pairs(f.nodes) do
-        if node.item_key == key and node.local_id == "buy" then
-            assert(node.enabled, "expected building is not affordable/unlocked")
-            app.inject_click(f.boxes[node.id]:center())
-            return
-        end
+local function row_button(form, key, id)
+    assert(form, "expected form was not drawn")
+    for _, node in pairs(form.nodes) do
+        if node.item_key == key and node.local_id == id then return node end
     end
-    error("building key absent from catalogue")
+    error("missing form control " .. id .. " for " .. key)
 end
+
+local function click_row(form, key, id)
+    local node = row_button(form, key, id)
+    assert(node.enabled, "expected row control to be enabled")
+    app.inject_click(form.boxes[node.id]:center())
+end
+
+local function buy(key) click_row(G.spots.build_form, key, "buy") end
+local function play(i) click_row(G.spots.browser, i, "play") end
 
 -- Press one of a form's own controls by id.
 local function press(f, id)
@@ -38,23 +37,24 @@ local function press(f, id)
     app.inject_click(f.boxes[id]:center())
 end
 
--- Tap the next unfound item of chapter `i`; true while one was left. The
--- picture covers the screen, so an item may start off it or under the HUD:
--- pan to it as a player would, then tap it.
+local function tap_item(i, item)
+    local target = scenes[i].at[item]
+    local at = G.cam:to_screen(target)
+    if not app.screen():inflate2(vec2(-110, -110)):contains(at) then
+        G.cam = G.cam:look(target):clamp()
+        at = G.cam:to_screen(target)
+    end
+    app.inject_click(at)
+end
+
 local function find_next(i)
-    for item = 1, ITEMS do
-        if not G.found[item] then
-            local at = G.cam:to_screen(scenes[i].at[item])
-            if not app.screen():inflate2(vec2(-110, -110)):contains(at) then
-                G.cam = G.cam:look(scenes[i].at[item]):clamp()
-                at = G.cam:to_screen(scenes[i].at[item])
-            end
-            app.inject_click(at)
-            return true
-        end
+    for item = 1, #scenes[i].names do
+        if not G.found[item] then tap_item(i, item); return true end
     end
     return false
 end
+
+local search, cache_coins
 
 function M.step()
     frames = frames + 1
@@ -64,7 +64,7 @@ function M.step()
     if step == 0 then app.inject_click(G.spots.chapters); step = 1
     elseif step == 1 then
         assert(G.modal == MODAL_CHAPTERS, "chapters button failed")
-        app.inject_click(G.spots.play1); step = 2
+        play(1); step = 2
     elseif step == 2 then
         assert(G.scene == 1 and G.modal == MODAL_NONE, "play button failed")
         app.inject_click(G.cam:to_screen(vec2(640, 470))); step = 3   -- open floor: a miss
@@ -91,7 +91,7 @@ function M.step()
         app.inject_click(G.spots.continue); step = 6
     elseif step == 6 then
         assert(not G.scene and G.wins[1] == 1 and G.stars[1] >= 1, "continue did not bank the chapter")
-        assert(G.wallet[INFLUENCE] == 10 and not economy.can_play(G.wins, 10, 2), "scene must leave the building gate intact")
+        assert(G.wallet[INFLUENCE] == 10 and economy.lock(G, 2) == "influence", "scene must leave the building gate intact")
         move = city.move_test(G.island, {
             look = function(at) G.island.cam = G.island.cam:look(at - vec2(0, 50)) end,
             wallet = function() return G.wallet[COINS] end,
@@ -119,19 +119,26 @@ function M.step()
         app.inject_click(G.spots.chapters); step = 20
     elseif step == 20 then
         assert(G.modal == MODAL_CHAPTERS, "chapter browser did not open")
-        app.inject_click(G.spots.play2); step = 21
+        play(2); step = 21
     elseif step == 21 then
-        assert(G.scene == 2, "restoration did not open chapter two")
+        assert(G.scene == 2, "restoration did not open the library")
         if not find_next(2) then step = 22 end
     elseif step == 22 then
-        assert(G.modal == MODAL_WIN and G.wallet[INFLUENCE] == 20, "second scene bypassed the island gate")
-        app.inject_click(G.spots.continue); step = 23
+        assert(G.modal == MODAL_WIN and G.wallet[INFLUENCE] == 20, "second search bypassed the island gate")
+        app.inject_click(G.spots.continue); step = G.clues[2] == 2 and 23 or 28
+    elseif step == 28 then
+        assert(not G.tray and G.clues[2] == 1, "the first library clear must lead to its replay")
+        app.inject_click(G.spots.chapters); step = 29
+    elseif step == 29 then
+        assert(not row_button(G.spots.browser, 3, "play").enabled, "the temple cannot skip the second clue")
+        play(2); step = 21
     elseif step == 23 then
         assert(G.tray, "result should lead to construction when Influence is needed")
+        assert(not row_button(G.spots.build_form, 4, "buy").enabled, "the restored fountain must be unavailable to buy again")
         buy(2); step = 24
     elseif step == 24 then app.inject_click(G.spots.move_confirm); step = 25
     elseif step == 25 then
-        assert(G.wallet[INFLUENCE] == 50 and G.island.count == 3, "temple must open final chapter")
+        assert(G.wallet[INFLUENCE] == 50 and G.island.count == 3, "the temple restoration must grant Influence once")
         app.inject_click(G.spots.build); step = 40
     elseif step == 40 then   -- browse the decoration catalogue: categories, then pages
         assert(G.tray, "build tray did not open")
@@ -154,13 +161,56 @@ function M.step()
         assert(content.kinds[G.island.placing + 1].key == "date_palm", "decoration preview did not start")
         app.inject_click(G.spots.move_confirm); step = 44
     elseif step == 44 then
-        assert(G.island.count == 4 and G.wallet[COINS] == purchase_coins - 30 and G.wallet[INFLUENCE] == 50,
-            "a decoration must charge its coins once and grant no Influence")
+        assert(G.island.count == 4 and G.wallet[COINS] == purchase_coins - 30 and G.wallet[INFLUENCE] == 53,
+            "a decoration must charge its coins and grant Influence once")
+        search = 3
         app.inject_click(G.spots.chapters); step = 26
-    elseif step == 26 then app.inject_click(G.spots.play3); step = 27
+    elseif step == 26 then
+        play(search); step = 27
     elseif step == 27 then
-        assert(G.scene == 3, "final chapter did not open")
-        print("Nile smoke: motion checkbox -> scene rewards -> free move -> purchase cancel/confirm -> fountain -> chapter two -> temple -> decoration catalogue -> chapter three passed")
+        assert(G.scene == search, "expected search to open")
+        if not find_next(search) then step = 45 end
+    elseif step == 45 then
+        assert(G.modal == MODAL_WIN, "search did not open the result")
+        app.inject_click(G.spots.continue); step = 46
+    elseif step == 46 then
+        if G.clues[search] == 2 then search = search + 1 end
+        if G.tray then
+            assert(search == 4 or search == 5, "unexpected construction gate")
+            buy(search == 4 and 3 or 5); step = 47
+        else
+            app.inject_click(G.spots.chapters); step = search == content.CACHE and 50 or 26
+        end
+    elseif step == 47 then
+        app.inject_click(G.spots.move_confirm); step = 48
+    elseif step == 48 then
+        assert(not economy.lock(G, search), "restoration did not open the revisit")
+        app.inject_click(G.spots.chapters); step = 26
+    elseif step == 50 then
+        assert(G.wallet[4] == 15 and not economy.cache_lock(G), "the last clue must open the cache")
+        cache_coins = G.wallet[COINS]
+        play(content.CACHE); step = 51
+    elseif step == 51 then
+        assert(G.scene == content.CACHE and G.slots[1] == 1 and not G.slots[2], "only the first cache target is shown")
+        tap_item(content.CACHE, 2); step = 52
+    elseif step == 52 then
+        assert(scene.found_count() == 0 and G.misses == 0, "out-of-order cache taps are ignored without penalty")
+        step = 53
+    elseif step == 53 then
+        if not find_next(content.CACHE) then step = 54 end
+    elseif step == 54 then
+        assert(G.cache_done and G.modal == G.MODAL_CACHE, "the ordered chain must finish the chapter")
+        assert(G.wallet[COINS] == cache_coins + 150 and G.wallet[4] == 15, "cache pays once without Stars")
+        press(G.spots.cache_result, "home"); step = 55
+    elseif step == 55 then
+        assert(not G.scene, "cache result did not return to the island")
+        app.inject_click(G.spots.chapters); step = 56
+    elseif step == 56 then
+        assert(not row_button(G.spots.browser, content.CACHE, "play").enabled, "the completed cache cannot be replayed")
+        press(G.spots.browser, "journal"); step = 57
+    elseif step == 57 then
+        assert(G.modal == G.MODAL_JOURNAL and #G.spots.journal.nodes.notes.children == 10, "journal must list nine clues and the cache")
+        print("Nile smoke: search, placement, both revisit lists, ordered cache and journal passed")
         app.quit()
     end
 end

@@ -3,16 +3,17 @@
 -- required in any order without import cycles.
 local G = {
     -- purse slots: coins are spent, influence only grows; the third slot
-    -- counts completed chapters and the fourth the best Stars across them
+    -- counts distinct completed searches and the fourth the best Stars across them
     -- (requirements, rebuilt from the wins and best stars, never spent)
     COINS = 1, INFLUENCE = 2, CHAPTERS = 3, STARS = 4,
     ITEMS = 8,                    -- hidden objects per scene
     ZONES = 4,                    -- island regions: the estate and three shores
 
     MODAL_NONE = 0, MODAL_WIN = 1, MODAL_CAST = 2, MODAL_CHAPTERS = 3, MODAL_PAUSE = 4,
+    MODAL_JOURNAL = 5, MODAL_CACHE = 6,
 
     -- Hidden-object scoring, after June's Journey: each find scores more while
-    -- a combo is alive, a stray tap costs points, and the stars come from the time.
+    -- a combo is alive, a stray tap costs points, and Stars reflect time and clears.
     FIND_POINTS = 300, MISS_POINTS = 60,
     COMBO_WINDOW = 5, COMBO_MAX = 5,
     HINT_RECHARGE = 20,
@@ -21,13 +22,13 @@ local G = {
 
     -- progress
     wallet = purse(),
-    wins = {0, 0, 0},
-    stars = {0, 0, 0},            -- best stars per chapter
+    wins = {}, stars = {}, clues = {}, restored = {},
+    cache_done = false,
     island = nil,                 -- the engine city
     buildings = nil,              -- the city's building defs, with the sprites loaded
 
     -- the hidden-object scene in play
-    scene = nil,                  -- 1-based chapter, nil = island
+    scene = nil,                  -- 1-based search or cache, nil = island
     found = {},                   -- found[i] = time the item was found
     hint = nil, hint_ready = 0,
     slots = {}, pills = {},       -- the item bar: item per slot, and each pill's motion (archive_scene.lua)

@@ -24,7 +24,8 @@ scene.show_hint()
 pulse(haptic.TICK, 'hint acknowledges the target')
 testing.reset()
 for i=1,G.ITEMS-1 do G.found[i] = 0 end
-G.wallet, G.wins, G.stars = purse(), {0,0,0}, {0,0,0}
+G.wallet = purse()
+G.wins, G.stars, G.clues = {0,0,0,0,0}, {0,0,0,0,0}, {0,0,0,0,0}
 scene.tap(content.scenes[1].at[G.ITEMS])
 pulse(haptic.SUCCESS, 'last find coalesces to scene completion')
 check(G.result and G.result.claimed, 'completion pays once')
