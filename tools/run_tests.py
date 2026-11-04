@@ -81,7 +81,7 @@ def checks(fast=False, arguments=()):
         ("Christmas catalogue", "games/christmas-market/tools/prepare_catalogue.py", "--check"),
         ("Christmas assets", "games/christmas-market/tools/check_assets.py"),
         ("Christmas story", "games/christmas-market/tools/prepare_story.py", "--check"),
-        ("Christmas name cards", "games/christmas-market/tools/prepare_name_cards.py", "--check"),
+        ("Christmas cast", "games/christmas-market/tools/prepare_story_cast.py", "--check"),
         ("Relic Rush HUD", "games/relic-rush/tools/prepare_hud.py", "--check"),
         ("Relic Rush story", "games/relic-rush/tools/prepare_story.py", "--check"),
         ("building registration", "tools/buildings.py", "--check"),

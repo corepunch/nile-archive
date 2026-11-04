@@ -23,7 +23,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
 | Terrain | `art/terrain.png` | `data/island.jpg`, `data/winter.jpg` | Empty snowy market ground and puzzle backdrop |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
-| Story cast (temporary) | `tools/prepare_name_cards.py` (Lilita One on the cast colour) | `data/characters/{theo,agnes,henrik,pip,wren}.png` | **Fallback, not finished art.** Name cards on Noelle's 320×480 canvas until the five busts are painted; see [Story cast](#story-cast) |
+| Story cast | Built-in ImageGen, `art/story-cast.png` | `data/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
 | Snowfall and feedback | Lua renderer | Procedural | Transient snow particles, collection particles, beams, lift and placement feedback; no authored control state is derived with a filter |
@@ -37,17 +37,19 @@ The font and its license are inherited unmodified from Relic Rush in `data/fonts
 
 ## Story cast
 
-The story ([docs/story.md](story.md#cast)) has six speakers. Only Noelle has a painted bust. The other five speak through generated **name cards**: a rounded card in the character's cast colour with a faint initial, their name and their role. They are catalogued fallbacks, tracked in [corepunch/nile-archive#76](https://github.com/corepunch/nile-archive/issues/76) and recorded in `art/manifest.json` under `temporary_cast`, and `tools/check_assets.py` checks their canvas size.
+All six speaking characters have painted busts. One built-in ImageGen pass produced the [supporting cast sheet](../art/story-cast.png), using Noelle's existing cutout as the style reference. The exact prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). These five exports replace the cards tracked in [issue #76](https://github.com/corepunch/nile-archive/issues/76).
 
-| Character | Runtime card | Bust still needed | Look (from the script) |
-| --- | --- | --- | --- |
-| Theo Marsh, tree seller | `data/characters/theo.png` | Yes | Thirties, plaid coat, resin on his gloves, needles in his hair |
-| Agnes Holt, baker | `data/characters/agnes.png` | Yes | Sixties, flour on her apron, arms crossed |
-| Henrik Strand, toymaker | `data/characters/henrik.png` | Yes | Seventies, white whiskers, leather apron, pencil behind the ear |
-| Pip Larkin, post runner | `data/characters/pip.png` | Yes | Ten, big satchel, gap in his teeth |
-| Mr Wren | `data/characters/wren.png` | Yes | Very old, or not. Grey coat, small bright eyes, a robin's way of tilting his head |
+| Character | Runtime | Story cue |
+| --- | --- | --- |
+| Theo Marsh | `data/characters/theo.png` | Tree seller with fir needles, plaid coat and resin-stained gloves |
+| Agnes Holt | `data/characters/agnes.png` | Baker in a flour-dusted apron with her arms crossed |
+| Henrik Strand | `data/characters/henrik.png` | Toymaker with white whiskers, leather apron and pencil |
+| Pip Larkin | `data/characters/pip.png` | Post runner with his satchel and gap-toothed grin |
+| Mr Wren | `data/characters/wren.png` | Grey-coated sweeper with his broom and tilted head |
 
-**Done when:** each bust is generated with built-in ImageGen in the same painted style as Noelle, from prompts added to `art/character-and-icon-prompts.json`, as a transparent 320×480 cutout at the same path. Then each cast entry in `lua/narrative.lua` gets a measured `mouth`, the card is dropped from `CARDS` in `tools/prepare_name_cards.py` and from `temporary_cast`, and `--story-beat` captures are checked at 480×900 and 390×844. The story also calls for eight illustrated panels (the six episode panels plus levels 27 and 28). They are optional: scenes play over the live market until the panels exist. Reproduce the cards with `python3 games/christmas-market/tools/prepare_name_cards.py`, and review them in [the story captures](review/story/README.md).
+Run `python3 games/christmas-market/tools/prepare_story_cast.py` from the root to reproduce the cutouts. The script crops, mirrors toward Noelle, resizes proportionally and bottom-aligns each cutout on a transparent 320×480 canvas using the atlas alpha. Each speaker has one static portrait for speech, thought, shout and listening. The engine supplies bubbles and listening dimming. All five speakers were reviewed at 480×900 and 390×844 in [the story captures](review/story/README.md#supporting-cast).
+
+The script also calls for eight optional illustrated panels (six episode panels plus levels 27 and 28). The scenes currently use the live market.
 
 ## Main character and app icon review
 

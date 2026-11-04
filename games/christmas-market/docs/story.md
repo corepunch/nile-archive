@@ -1,6 +1,6 @@
 # Story: three episodes to "To be continued"
 
-**Status: implemented in the thirty-level campaign.** All 198 lines play. Noelle uses her painted bust and the other five speakers use temporary name cards until their busts are painted. The structure matches [Relic Rush](../../relic-rush/docs/story.md): 30 levels, wonders split 4+3+3, one beat per level, a happy turn at each episode's end. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
+**Status: implemented in the thirty-level campaign.** All 198 lines play. All six speakers have painted busts. The structure matches [Relic Rush](../../relic-rush/docs/story.md): 30 levels, wonders split 4+3+3, one beat per level, a happy turn at each episode's end. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
 
 **Fantasy of play:** I came to help at a Christmas market for three weeks, and I am building the place where a whole town finds its way back to each other.
 
@@ -60,7 +60,7 @@ Over all of them hovers **Mr Wren**, who turned up asking for a broom, and who k
 
 ## Cast
 
-Noelle exists. The other five are **new busts** in the same painted style, generated from a new prompt in `art/character-and-icon-prompts.json`. Bramble the goat does not speak. If the budget is tight, Theo and Mr Wren matter most after Noelle.
+Noelle and the five supporting speakers have painted busts. Bramble the goat does not speak.
 
 | Character | Who | Voice | Arc |
 | --- | --- | --- | --- |
@@ -478,12 +478,12 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 
 - **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. A level without a stall pays Gold, Stars and Bells but no materials.
 - **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. The 20 Bells are paid out by level 27. Pip's region lines replace Noelle's one repeated line.
-- **Busts:** Noelle is the only painted bust. Theo, Agnes, Henrik, Pip and Mr Wren speak through temporary name cards from `tools/prepare_name_cards.py`, catalogued in the [asset catalogue](asset-catalogue.md#story-cast) with what is still needed. The eight panels are optional, and scenes play over the live market.
+- **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). The eight panels are optional, and scenes play over the live market.
 - **The cast** is in `lua/narrative.lua`. Noelle's automatic line when a stall is placed is gone; the tap card and bubble carry `about`, and the five changing bubbles above.
 - **`R.finale`** is the level 30 scene. Its end leads to the "To be continued" screen.
 - **Saves:** stable `narrative.v1.<phase>-<level>` keys are written only when a scene finishes or is skipped, so an unfinished scene replays after a reload. Replays are silent. Version 2 saves keep their level, wallet, regions and every stall, already-built later stalls count when their scene arrives, and a short recap bridges the old lines.
 - **Boards:** levels 11–30 reuse the connected lane contours and only existing mechanics. Level 20 is the ring and level 30 the star (the old level 10 board). The greedy bot's measured curve puts each episode's hardest levels at its end (19–20 and 29–30) with breathers at 18 and 28. Human tuning can follow playtesting.
-- **Checked in the game:** the longest line, a name-card speaker, "Henrik Strand" on his name plate, a shout, the last finale line and the end screen, at 480×900 and 390×844. The longest scene (15 lines) plays through in the campaign smoke run.
+- **Checked in the game:** the longest line, all five supporting portraits, a shout, the last finale line and the end screen, at 480×900 and 390×844. The longest scene (15 lines) plays through in the campaign smoke run.
 
 ## Changelog
 
@@ -492,3 +492,4 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 - 2026-11-02: Third script: four human threads through one market, with Mr Wren left unexplained. Keeps Bellmere, the cast, Noelle's parcel and Bramble, now a goat.
 - 2026-11-02: Fresh read: it felt like a Christmas film, most at levels 20, 26, 27, 28 and 29. Fixed the calendar (arrives 4 December; level 18 is the 15th), the oven, Henrik's introduction, who says what about the parcel, and overused phrases. Added parcel and rule reminders for play with long gaps. Episode 3 runs to 74 lines, over the usual 70, on purpose. Levels 12, 15, 21 and 22 are the lightest beats. Not re-read since these fixes.
 - 2026-11-03: Cold read by a separate reader, one episode at a time. The tone held throughout, Theo was readable as Someone by level 14 (as intended), and the payoffs landed. Fixes: Agnes's "still got her chin" now hints that Noelle has been to Bellmere before; Henrik introduces himself before he judges the arch; Theo asks about offcuts, not price; Pip hands Noelle the note at level 20, linking it to the next morning. The reader's date complaint was a misreading (nine days to Christmas Eve is eleven days to the 26th). Implemented all three episodes with keyed delivery, recovery, legacy recaps and the 4+3+3 schedule.
+- 2026-11-04: Replaced the five supporting speakers’ name cards with painted busts. Reviewed each speaker at both phone sizes.

@@ -1,5 +1,3 @@
-	
-
 	Particle Pack
 
 	by Kenney Vleugels (Kenney.nl)

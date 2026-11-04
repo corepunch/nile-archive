@@ -61,13 +61,15 @@ for _, size in ipairs{"480x900", "390x844"} do
         "--lua tests/fixtures/trickling;games/christmas-market/lua;. --review-top-edge --reel"..safe)
 end
 
--- Story review (docs/review/story): the longest line, a name-card speaker, the
--- longest name plate, a shout, the finale and its end screen, at both phone sizes.
+-- Story review (docs/review/story): all new busts, the longest line, the finale
+-- and its end screen, at both phone sizes.
 for _, size in ipairs{"480x900", "390x844"} do
     local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
     local prefix = size == "390x844" and "phone-story-" or "story-"
     shot(prefix .. "opening", size, "--story-beat before-01 --frames 240" .. safe)
-    shot(prefix .. "name-card", size, "--story-beat before-01 --story-line 2 --frames 240" .. safe)
+    shot(prefix .. "agnes", size, "--story-beat before-01 --story-line 2 --frames 240" .. safe)
+    shot(prefix .. "theo", size, "--story-beat after-01 --frames 240" .. safe)
+    shot(prefix .. "wren", size, "--story-beat before-01 --story-line 6 --frames 240" .. safe)
     shot(prefix .. "henrik", size, "--story-beat after-13 --frames 240" .. safe)
     shot(prefix .. "shout", size, "--story-beat after-03 --frames 240" .. safe)
     shot(prefix .. "finale", size, "--story-beat after-30 --story-line 15 --frames 240" .. safe)

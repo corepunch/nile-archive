@@ -164,7 +164,7 @@ test-assets:
 	python3 games/christmas-market/tools/prepare_catalogue.py --check
 	python3 games/christmas-market/tools/check_assets.py
 	python3 games/christmas-market/tools/prepare_story.py --check
-	python3 games/christmas-market/tools/prepare_name_cards.py --check
+	python3 games/christmas-market/tools/prepare_story_cast.py --check
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 games/relic-rush/tools/prepare_story.py --check
 	python3 tools/buildings.py --check

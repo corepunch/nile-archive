@@ -21,12 +21,10 @@ def png(path):
 
 def main():
     inventory = {str(p.relative_to(ROOT)): digest(p) for p in sorted((ROOT/'data').rglob('*')) if p.is_file()}
-    if '--update' in sys.argv:
-        MANIFEST.write_text(json.dumps({'status': 'Painted current-camera buildings (art/building-catalogue/painted-v1)',
-            'generator': 'built-in image_gen', 'prompts': ['art/prompts.json', 'art/character-and-icon-prompts.json', 'art/reference-sheet-prompt.txt'] +
-            [str(p.relative_to(ROOT)) for p in sorted((ROOT/'art/building-catalogue/painted-v1').glob('*-prompt.txt'))],
-            'states': STATES, 'runtime': inventory}, indent=2) + '\n')
     manifest = json.loads(MANIFEST.read_text())
+    if '--update' in sys.argv:
+        manifest['runtime'] = inventory
+        MANIFEST.write_text(json.dumps(manifest, indent=2) + '\n')
     assert manifest['runtime'] == inventory, 'Runtime changed: update the asset catalogue and manifest'
     assert manifest['states'] == STATES
     for path in manifest['prompts']:
@@ -46,9 +44,11 @@ def main():
     assert {p.name for p in (ROOT/'data/buildings').iterdir()} == {e['key'] + '.png' for e in buildings}
     for i in range(6):
         assert png(ROOT/'data/tile-sets/festive'/f'{i}.png') == ((128,128),6)
-    assert png(ROOT/'data/characters/noelle.png') == ((320,480),6)
-    for card in manifest['temporary_cast']['cards']:   # same canvas, so painted busts drop in
-        assert png(ROOT/card) == ((320,480),6), card
+    cast = manifest['story_cast']
+    assert png(ROOT/cast['source']) == ((1536,1024),6)
+    assert set(cast['runtime']) == {str(p.relative_to(ROOT)) for p in (ROOT/'data/characters').glob('*.png')}
+    for portrait in cast['runtime']:
+        assert png(ROOT/portrait) == ((320,480),6), portrait
     catalogue = ROOT/'Assets.xcassets/AppIcon.appiconset'
     entries = json.loads((catalogue/'Contents.json').read_text())['images']
     assert len(entries) == 11
