@@ -110,15 +110,14 @@ end
 
 --------------------------------------------------------------------- tray
 
--- The build tray pages through one category at a time: the five restorations
+-- The build tray scrolls through one category at a time: the five restorations
 -- first, then the decoration catalogue (docs/building-catalogue.md).
 M.TRAY_CATEGORIES = {
     {"story", "Восстановление"}, {"all", "Все постройки"}, {"wonder", "Памятники"}, {"building", "Дома и мастерские"},
     {"tree", "Деревья"}, {"bush", "Кусты"}, {"flower", "Цветы"}, {"statue", "Статуи"}, {"water", "Вода"},
     {"garden", "Сад"}, {"camp", "Припасы"}, {"animal", "Животные"}, {"rock", "Камни"},
 }
-local TRAY_PAGE = 5
-M.tray = {category = 1, page = 1}   -- 1 = the restorations
+M.tray = {category = 1}   -- 1 = the restorations
 
 local function plural(n, one, few, many)
     local d, h = n % 10, n % 100
@@ -137,30 +136,26 @@ local build_form = ui.form{kind = "column", panel = true, radius = 20, padding =
         {kind = "button", id = "category_next", text = ">", width = 44},
         {kind = "button", id = "close", text = "Закрыть", width = 100},
     }},
-    {kind = "list", id = "stock", direction = "row", gap = 12, item = function(e)
-        return {kind = "column", panel = true, role = "parchment", radius = 12, grow = 1, padding = 8, gap = 4, children = {
-            {kind = "label", text = e.name, height = 38, wrap = true},
-            {kind = "image", image = e.sprite, height = 80},
-            {kind = "label", text = e.detail, height = 22},
-            {kind = "label", text = ("%d монет"):format(e.coins), height = 22},
-            {kind = "button", id = "buy", text = e.action, enabled = e.available, height = 36},
+    {kind = "list", id = "stock", scroll = true, height = 454, gap = 8, item = function(e)
+        return {kind = "row", panel = true, role = "parchment", radius = 12, padding = 8, gap = 14, align = "center", children = {
+            {kind = "image", image = e.sprite, width = 108, height = 68},
+            {kind = "column", grow = 1, gap = 3, children = {
+                {kind = "label", text = e.name, wrap = true, text_align = "start"},
+                {kind = "label", text = ("%s · %d монет"):format(e.detail, e.coins), wrap = true, text_align = "start"},
+            }},
+            {kind = "button", id = "buy", text = e.action, enabled = e.available, width = 260, height = 44},
         }}
     end},
-    {kind = "row", height = 34, gap = 10, children = {
-        {kind = "button", id = "page_prev", text = "Назад", width = 110},
-        {kind = "label", id = "page", role = "budget", grow = 1},
-        {kind = "button", id = "page_next", text = "Далее", width = 110},
-    }},
 }}
--- Frames, card text and the tray's roles all come from archive_skin.lua.
 local build_skin = K.skin
 
--- Opens the tray on a category ("story", "tree", ...) and page.
-function M.open_tray(category, page)
+-- Opens the tray on a category, with an optional starting group for captures.
+function M.open_tray(category, review_page)
+    local tray = M.tray
     for i, c in ipairs(M.TRAY_CATEGORIES) do
-        if c[1] == category then M.tray.category = i end
+        if c[1] == category then tray.category = i end
     end
-    M.tray.page = page or 1
+    tray.dirty, tray.review_page = true, review_page
     G.tray = true
 end
 
@@ -184,34 +179,33 @@ local function card(i)
         available = not owned and unlocked and afford and not full, action = action}
 end
 
-local function draw_tray(r)
-    local tray = M.tray
+local function refresh_tray(tray)
     local filter = M.TRAY_CATEGORIES[tray.category][1]
-    local shown = {}
-    for i, kind in ipairs(content.kinds) do
-        if kind.category == filter or filter == "all" and kind.category ~= "story" then shown[#shown + 1] = i end
-    end
-    local pages = math.max(1, math.ceil(#shown / TRAY_PAGE))
-    tray.page = num.clampi(tray.page, 1, pages)
     local stock = {}
-    for at = (tray.page - 1) * TRAY_PAGE + 1, math.min(tray.page * TRAY_PAGE, #shown) do stock[#stock + 1] = card(shown[at]) end
+    for i, kind in ipairs(content.kinds) do
+        if kind.category == filter or filter == "all" and kind.category ~= "story" then stock[#stock + 1] = card(i) end
+    end
     assert(build_form:set_items("stock", stock))
     build_form:set("budget", ("%d монет · %s"):format(G.wallet[COINS], stars_text(G.wallet[STARS])))
     build_form:set("category", M.TRAY_CATEGORIES[tray.category][2])
-    build_form:set("page", ("Страница %d из %d · %d %s"):format(tray.page, pages, #shown, plural(#shown, "постройка", "постройки", "построек")))
-    build_form.nodes.page_prev.enabled, build_form.nodes.page_next.enabled = tray.page > 1, tray.page < pages
+    local index = num.clampi((math.floor(tray.review_page or 1) - 1) * 5 + 1, 1, math.max(1, #stock))
+    build_form:scroll_to("stock", stock[index] and stock[index].id)
+    tray.dirty, tray.review_page = false, nil
+end
+
+local function draw_tray(r)
+    local tray = M.tray
+    if tray.dirty or not G.spots.build_form then refresh_tray(tray) end
     local _, height = build_form:measure(r.w, build_skin)
     r = r:bottom(height)
     ui.block(r)
-    local event = build_form:draw(r, build_skin)
+    local event = build_form:draw(r, build_skin, {interactive = G.modal == MODAL_NONE, reduced_motion = G.reduced_motion})
     G.spots.build_form = build_form
     if not event then return end
     if event.id == "close" then G.tray = false
     elseif event.id == "category_prev" or event.id == "category_next" then
         tray.category = (tray.category - 1 + (event.id == "category_next" and 1 or -1)) % #M.TRAY_CATEGORIES + 1
-        tray.page = 1
-    elseif event.id == "page_prev" or event.id == "page_next" then
-        tray.page = tray.page + (event.id == "page_next" and 1 or -1)
+        tray.dirty = true
     elseif event.source == "stock" then
         local kind = event.key - 1
         local ok, spot = G.island:find_spot(kind, G.island.cam.center)
@@ -360,7 +354,7 @@ function M.frame(screen, world)
 
     -- bottom: build, the current goal, play
     G.spots.build = vec2(area.x + 46, area:max().y - 56)
-    if K.round_button(G.spots.build, 40, K.icon_house, "Строить") then G.tray = true end
+    if K.round_button(G.spots.build, 40, K.icon_house, "Строить") then M.open_tray() end
     draw_goal(vec2(screen:center().x, area:max().y))
     local play = vec2(area:max().x - 62, area:max().y - 66)
     G.spots.chapters = play

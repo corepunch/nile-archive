@@ -38,8 +38,8 @@ new types follow the existing ones.
 
 «Строить» opens the tray on the last category viewed. The goal plaque opens it
 on «Восстановление». The arrows at the top step through «Восстановление», «Все
-постройки» and the 11 categories. «Назад»/«Далее» page through five cards at a
-time. A card shows the name, the sprite, «+N влияния» for restorations or
+постройки» and the 11 categories. Swipe inside the tray or use the mouse wheel
+to see the rest of a category. A row shows the name, the sprite, «+N влияния» for restorations or
 «Украшение · W×H» for decorations, the price and the action. The action reads
 «Выбрать место», «Не хватает монет», «Нужно N звёзд», «Пройдите главу N» or
 «Остров заполнен», and it is disabled unless the object can be placed. The cards
@@ -133,9 +133,9 @@ Blender 5.2 renders all 96 objects in about 1.5 minutes on four CPU cores. The
 game captures under Xvfb with `LIBGL_ALWAYS_SOFTWARE=1`. `--building-review N`
 places objects 8(N−1)+1 to 8N on the island, zoomed to fit the page's largest
 footprint, and pages 1–12 cover all 96. `--screen build --catalogue <category>
---catalogue-page N` opens the tray on a page with 7 Stars, so the last few
-objects stay locked. The smoke test opens the tray, steps to «Деревья», pages
-forward and back, then buys and places a date palm. It checks that the purchase
+--catalogue-page N` starts the tray at the corresponding group of five records with 7 Stars.
+The smoke test opens the tray, steps to «Деревья», drags the list, checks that
+the gesture did not start a purchase, then buys and places a date palm. It checks that the purchase
 charges 30 coins once and grants no Influence.
 
 | Monuments, page 1 | Locked state |

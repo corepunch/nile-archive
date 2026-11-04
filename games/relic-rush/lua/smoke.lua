@@ -172,7 +172,7 @@ function R.smoke()
             shop.categories = shop.categories + 1
         else stage = 21 end
     elseif stage == 21 and R.overlay == R.OV_SHOP then
-        assert(R.catalogue_records[1].id == "shrub", "category source must refresh")
+        assert(R.catalogue_form:get_item("stock", "shrub"), "category source must refresh")
         shop.gold = R.prog.wallet[1]
         local node = press_row(R.catalogue_form, "shrub", "buy")
         assert(node and node.enabled, "smoke: starter decoration should be affordable")

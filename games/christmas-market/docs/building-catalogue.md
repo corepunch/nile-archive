@@ -18,6 +18,10 @@ portion of [#34](https://github.com/corepunch/nile-archive/issues/34).
 
 ![All 37 objects](screenshots/buildings.jpg)
 
+The build shop scrolls through the selected category. Its rows show each object's
+sprite, footprint, ownership and price, with a disabled action for unavailable
+stock. The category arrows stay above the list.
+
 ## Source and pipeline
 
 | Step | File |

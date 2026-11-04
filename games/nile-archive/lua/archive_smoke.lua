@@ -13,6 +13,7 @@ local M = {}
 local frames, step = 0, 0
 local move             -- the engine's pickup/move check, while it runs
 local purchase_coins   -- coins before a purchase preview
+local scroll_start
 
 local function row_button(form, key, id)
     assert(form, "expected form was not drawn")
@@ -92,6 +93,7 @@ function M.step()
     elseif step == 6 then
         assert(not G.scene and G.wins[1] == 1 and G.stars[1] >= 1, "continue did not bank the chapter")
         assert(G.wallet[INFLUENCE] == 10 and economy.lock(G, 2) == "influence", "scene must leave the building gate intact")
+        if G.tray then press(G.spots.build_form, "close"); return end
         move = city.move_test(G.island, {
             look = function(at) G.island.cam = G.island.cam:look(at - vec2(0, 50)) end,
             wallet = function() return G.wallet[COINS] end,
@@ -140,18 +142,29 @@ function M.step()
     elseif step == 25 then
         assert(G.wallet[INFLUENCE] == 50 and G.island.count == 3, "the temple restoration must grant Influence once")
         app.inject_click(G.spots.build); step = 40
-    elseif step == 40 then   -- browse the decoration catalogue: categories, then pages
+    elseif step == 40 then   -- browse the decoration catalogue: categories, then scroll
         assert(G.tray, "build tray did not open")
         if island.TRAY_CATEGORIES[island.tray.category][1] ~= "tree" then
             press(G.spots.build_form, "category_next")
         else
-            press(G.spots.build_form, "page_next"); step = 41
+            local viewport = G.spots.build_form.boxes.stock
+            scroll_start = viewport:point(vec2(.5, .8))
+            app.inject_press(scroll_start); step = 41
         end
     elseif step == 41 then
-        assert(island.tray.page == 2, "catalogue did not page forward")
-        press(G.spots.build_form, "page_prev"); step = 42
+        app.inject_move(scroll_start - vec2(0, 190)); step = 141
+    elseif step == 141 then
+        app.inject_release(scroll_start - vec2(0, 190)); step = 142
+    elseif step == 142 then
+        local stock = G.spots.build_form.nodes.stock
+        assert(stock.scroll_state.offset > 100 and G.island.placing < 0, "drag must scroll without buying")
+        press(G.spots.build_form, "category_prev"); step = 143
+    elseif step == 143 then
+        press(G.spots.build_form, "category_next"); step = 144
+    elseif step == 144 then
+        step = 42
     elseif step == 42 then
-        assert(island.tray.page == 1, "catalogue did not page back")
+        assert(G.spots.build_form.nodes.stock.scroll_state.offset == 0, "category change should reset scroll")
         purchase_coins = G.wallet[COINS]
         for i, kind in ipairs(content.kinds) do
             if kind.key == "date_palm" then buy(i) end

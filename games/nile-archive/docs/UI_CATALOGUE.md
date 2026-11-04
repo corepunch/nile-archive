@@ -42,7 +42,8 @@ route at 1200 x 900, 1368 x 1026 and 1600 x 900. Source: `lua/archive_island.lua
 existing five building sprites, Coin and Influence icons, fonts, theme and
 button rendering are reused. No runtime bitmap, icon set or ImageGen prompt is
 added. The repeatable building list uses `form:set_items` with stable IDs 1–5,
-one price/payoff/requirement data source and measured horizontal item columns.
+one price/payoff/requirement data source and measured rows. Both the build tray
+and chapter browser use the shared scrolling list.
 
 | Presentation/control | Meaning and supported states |
 | --- | --- |
@@ -51,7 +52,7 @@ one price/payoff/requirement data source and measured horizontal item columns.
 | Influence | Existing estate icon; building-only cumulative progress, never a scene payout or spendable balance |
 | Chapter button | Opens the search browser, including the cache and journal. The notification dot signals a ready goal. |
 | Building row | Sprite, price and Influence. Decorations also show footprint size. Restorations become unavailable after purchase. |
-| Category/page arrows | Engine buttons in the tray header (category ‹ ›, wrapping through «Восстановление», «Все постройки» and 11 catalogue categories) and footer («Назад»/«Далее», disabled at the first/last page); light category label on the dark tray |
+| Category arrows | Engine buttons in the tray header wrap through «Восстановление», «Все постройки» and 11 catalogue categories. The selected category scrolls below the header. |
 | Buy/close | Engine buttons with normal/hover/pressed/focus; Buy disabled for locked or unaffordable stock |
 | Purchase preview | Existing city ghost/valid-invalid footprint; shows cost and Influence return; charges only on confirmation |
 | Goal | Shows missing Influence and opens the building list, or opens chapters when ready |

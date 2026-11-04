@@ -100,7 +100,7 @@ local function apply_screen_arg(screen)
     elseif screen == "first-build" then
         G.wallet = purse(140, 10, 1)
         G.wins[2], G.clues[2] = 0, 0
-        G.tray = true
+        island.open_tray("story")
     elseif screen == "first-win" then
         scene.open(1)
         G.wallet = purse(140, 10, 1)

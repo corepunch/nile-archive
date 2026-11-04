@@ -437,8 +437,32 @@ this explicitly requested procedural treatment for its three ray powers.
 
 ## Inertial measured lists
 
-A vertical `list` may set `scroll=true` and a viewport `height` (for example 430). Its data still comes from `form:set_items` with stable keys. The engine measures the full row content, clips painting and pointer hits to the viewport, and handles drag, wheel, bounded deceleration, keyboard focus reveal and scroll indicators. The footer remains outside the list. Pointer drags or a press that stops a fling cannot activate an item. Source refreshes preserve stable focus and clamp an old offset when rows disappear. Horizontal and non-list scrolling are rejected. Reduced motion disables inertia. Pass `dt`/`reduced_motion` to `form:draw`; `ui.modals:draw` forwards both automatically.
+A vertical `list` with `scroll=true` and a viewport `height` acts like a
+table view. Define `item(record, index)` as its row template and populate it
+with `form:set_items(id, records)`. Each record needs a stable string or integer
+ID. Row commands carry the list ID as `event.source` and the record ID as
+`event.key`. Use `form:get_item(event.source, event.key)` to resolve the
+record, independent of its row position.
 
-`node.scroll_state.offset` and `node.scroll_max` expose the current measured scroll position for integration checks. Reset `node.scroll_state=nil` when changing to an unrelated category. Avoid rebuilding lists every frame; measure and layout run through the existing form engine.
+The form caches row measurements and positions at the current width. It
+arranges, paints and hit-tests only rows that intersect the viewport. The
+list clips partial rows and leaves its footer in the surrounding form.
+`form.boxes` contains current boxes only. Source replacement and form value
+updates invalidate measurements. If a caller mutates geometry or styles in
+place, call `form:invalidate_layout()`. Set the data source when its records
+change, such as on modal open or a category change.
+
+Touch drags and mouse wheels scroll the same viewport. Reduced motion
+disables inertia. Tab reveals the focused row, and a drag or a press that
+stops a fling consumes its release. Pass `dt` and `reduced_motion` to
+`form:draw`; modal stacks forward both. A source refresh retains stable focus
+and clamps the old offset. Use `form:scroll_to(id, key)` to start at a known
+record, or `form:scroll_to(id)` to reset to the top on a category change.
+`node.scroll_state.offset` and `node.scroll_max` expose the measured position
+for integration checks.
+
+Relic Rush and Christmas Market share `match3.catalogue_form` and
+`match3.expedition_form`. Nile Archive uses the same list contract with wider
+templates for its build tray and chapter browser.
 
 The engine animation clock supplies one timeline to shared tweens, scroll deceleration and painting. On iOS it reads the host clock with `CACurrentMediaTime()`. UIKit's display link stops driving game frames while the app is inactive. The first frame after a long gap advances by one 60 Hz step, so a board in the middle of a move can finish settling when play resumes. Other platforms keep using `axGetMilliseconds()`.

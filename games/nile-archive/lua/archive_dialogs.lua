@@ -92,7 +92,7 @@ local function pause_dialog()
 end
 
 local browser = ui.form{kind = "column", gap = 8, children = {
-    {kind = "list", id = "searches", gap = 7, item = function(e)
+    {kind = "list", id = "searches", scroll = true, height = 510, gap = 7, item = function(e)
         return {kind = "row", panel = true, role = "archive_entry", radius = 12, padding = 8, gap = 14, align = "center", children = {
             {kind = "image", image = e.image, width = 84, height = 56},
             {kind = "column", grow = 1, gap = 2, children = {
@@ -105,7 +105,7 @@ local browser = ui.form{kind = "column", gap = 8, children = {
     {kind = "button", id = "journal", text = "Журнал улик", height = 44},
 }}
 
-local function chapters_dialog()
+local function refresh_chapters()
     local records = {}
     for i, sc in ipairs(scenes) do
         local blocked = progress.blocker(i)
@@ -129,12 +129,20 @@ local function chapters_dialog()
         records[i] = {id = i, title = title, note = note, image = G.backgrounds[i], action = blocked or action, available = not blocked}
     end
     assert(browser:set_items("searches", records))
+end
+
+local browser_dialog
+local function chapters_dialog()
+    if browser_dialog ~= G.dialog then
+        refresh_chapters()
+        browser_dialog = G.dialog
+    end
     local _, height = browser:measure(888, K.skin)
     local box, r = popup(936, height + 88, "Глава 1 · Игра восьми")
     close_button(box)
     r = r:inflate2(vec2(-19, 0))
     r:cut_top(40)
-    local event = browser:draw(r, K.skin)
+    local event = browser:draw(r, K.skin, {reduced_motion = G.reduced_motion})
     G.spots.browser = browser
     if not event then return end
     if event.id == "journal" then G.open_modal(G.MODAL_JOURNAL)

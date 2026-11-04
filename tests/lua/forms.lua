@@ -181,6 +181,10 @@ do
     local box=rect(0,0,240,100)
     local look={button=function()end,button_text=function()end,focus=function()end}
     f:layout(box,look)
+    local function button_id(key)
+        for id,node in pairs(f.nodes) do if node.item_key==key then return id end end
+    end
+    check(f.boxes[button_id("a")] and not f.boxes[button_id("d")], "only visible rows have current layout boxes")
     check(f.nodes.rows.scroll_max==152,'scroll content is measured beyond its viewport')
     f:draw(box,look,{input={pos=vec2(100,90),pressed=true,down=true},dt=.016})
     f:draw(box,look,{input={pos=vec2(100,30),down=true,dragging=true},dt=.016})
@@ -189,9 +193,16 @@ do
     check(f.nodes.rows.scroll_state.offset>60,'release continues with inertia')
     f:draw(box,look,{input={pos=vec2(100,30),wheel=-100},dt=.016})
     check(f.nodes.rows.scroll_state.offset==152,'wheel clamps at the last row')
+    check(not f.boxes[button_id("a")] and f.boxes[button_id("d")], "a scroll drops stale boxes and lays out newly visible rows")
     f:draw(box,look,{input={key=input.KEY_TAB},dt=.016})
     check(f.nodes.rows.scroll_state.offset<152,'keyboard focus reveals its row')
+    check(f:scroll_to("rows","c") and not f:scroll_to("rows","missing"), "scroll target resolves through source keys")
+    f:layout(box,look)
+    check(f.nodes.rows.scroll_state.offset==128 and f:get_item("rows","c").id=="c", "scroll to the measured row with the requested key")
     check(f:set_items("rows",{{id="d"}}),'refresh scroll data')
     f:layout(box,look);check(f.nodes.rows.scroll_max==0 and f.nodes.rows.scroll_state.offset==0,'removed rows clamp the old scroll position')
+    assert(f:set_items("rows",{}))
+    f:draw(box,look,{input={pos=vec2(100,30),wheel=-1}})
+    check(f.nodes.rows.scroll_max==0, "an empty scrolling source handles input")
     check(not pcall(ui.form,{kind="row",scroll=true}),'scrolling is a vertical measured list capability')
 end

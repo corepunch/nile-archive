@@ -181,7 +181,18 @@ local function smoke()
         })
         smoke_stage=6
     elseif smoke_stage==6 then
-        if not smoke_city_move() then R.open_catalogue();smoke_move.categories=0;smoke_stage=20 end
+        if not smoke_city_move() then R.open_catalogue("all");smoke_move.categories=0;smoke_stage=120 end
+    elseif smoke_stage==120 then
+        smoke_move.scroll_start=R.catalogue_form.boxes.stock:point(vec2(.5,.8))
+        app.inject_press(smoke_move.scroll_start);smoke_stage=121
+    elseif smoke_stage==121 then
+        app.inject_move(smoke_move.scroll_start-vec2(0,170));smoke_stage=122
+    elseif smoke_stage==122 then
+        app.inject_release(smoke_move.scroll_start-vec2(0,170));smoke_stage=123
+    elseif smoke_stage==123 then
+        assert(R.overlay==R.OV_SHOP and R.catalogue_form.nodes.stock.scroll_state.offset>100,
+            "drag must scroll decorations without choosing a building")
+        smoke_stage=20
     elseif smoke_stage==20 and R.overlay==R.OV_SHOP then
         if smoke_move.categories<2 then
             app.inject_click(R.catalogue_form.boxes.category_next:center())
@@ -189,7 +200,7 @@ local function smoke()
         else smoke_stage=21 end
     elseif smoke_stage==21 and R.overlay==R.OV_SHOP then
         local f=R.catalogue_form
-        assert(R.catalogue_records[1].id=="firs","category source must refresh")
+        assert(f:get_item("stock","firs") and not f:get_item("stock","arch"),"category source must refresh")
         for _,node in pairs(f.nodes) do
             if node.item_key=="firs" and node.local_id=="buy" then
                 assert(node.enabled,"smoke: starter decoration should be affordable")

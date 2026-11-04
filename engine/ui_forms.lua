@@ -1,6 +1,7 @@
 -- Engine-owned declarative forms. Compiled into the runtime by make gen.
 -- Templates own layout/bindings; skins own paint; games handle command IDs.
 local Form, Stack = {}, {}
+local default_skin = {}
 Form.__index, Stack.__index = Form, Stack
 local kinds = {column=true, row=true, list=true, overlay=true, label=true, image=true, button=true, toggle=true, checkbox=true, progress=true, spacer=true, custom=true}
 local function fail(message) error('ui.form: ' .. message, 3) end
@@ -39,14 +40,14 @@ local function valid(value, binding)
     if type(value) == 'number' and ((binding.min and value < binding.min) or (binding.max and value > binding.max)) then return false end
     return true
 end
-local function copy_node(source, ids, depth, prefix, source_id, item_key)
+local function copy_node(source, ids, depth, prefix, source_id, item_key, row_index)
     if depth > 32 then fail('template nesting exceeds 32') end
     if type(source) ~= 'table' or not kinds[source.kind] then fail('unknown node kind ' .. tostring(source and source.kind)) end
     local n = {}
     for k,v in pairs(source) do if k ~= 'children' then n[k] = v end end
     n._depth=depth
     if prefix then
-        n.local_id, n.source_id, n.item_key = n.id, source_id, item_key
+        n.local_id, n.source_id, n.item_key, n.row_index = n.id, source_id, item_key, row_index
         for _,key in ipairs({'id','visible_field','enabled_field'}) do
             if n[key] then n[key]=prefix..n[key] end
         end
@@ -64,12 +65,12 @@ local function copy_node(source, ids, depth, prefix, source_id, item_key)
     end
     if n.scroll and (n.kind~='list' or n.direction=='row') then fail('scroll requires a vertical list') end
     n.children = {}
-    for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1, prefix, source_id, item_key) end
+    for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1, prefix, source_id, item_key, row_index) end
     return n
 end
 function ui.form(template)
     assert(type(template) == 'table', 'ui.form expects a template')
-    local self = setmetatable({nodes={}, values={}, boxes={}, bindings={}, focus=nil}, Form)
+    local self = setmetatable({nodes={}, values={}, boxes={}, bindings={}, focus=nil, layout_revision=0}, Form)
     self.root = copy_node(template.root or template, self.nodes, 1)
     for id,node in pairs(self.nodes) do if node.value~=nil then self.values[id]=node.value end end
     local bound = {}
@@ -84,7 +85,14 @@ function ui.form(template)
 end
 function Form:set(id, value)
     if not self.nodes[id] then fail('unknown control ID ' .. tostring(id)) end
-    self.values[id] = value; return self
+    if self.values[id] ~= value then
+        self.values[id] = value
+        self:invalidate_layout()
+    end
+    return self
+end
+function Form:invalidate_layout()
+    self.layout_revision = self.layout_revision + 1
 end
 function Form:get(id) return self.values[id] end
 -- Data-backed stack. Row builders return ordinary resources, never positions.
@@ -99,7 +107,7 @@ function Form:set_items(id, items)
     end
     for _,child in ipairs(list.children) do collect(child) end
     local nodes={};for name,node in pairs(self.nodes) do if not removed[name] then nodes[name]=node end end
-    local ok,children=pcall(function()
+    local ok,children,records,indices=pcall(function()
         if type(items)~='table' then fail('items must be a dense array') end
         local count,seen=#items,0
         for index in pairs(items) do
@@ -107,25 +115,39 @@ function Form:set_items(id, items)
             seen=seen+1
         end
         if seen~=count then fail('items must be a dense array') end
-        local rows,keys={},{}
+        local rows,records,indices={},{},{}
         for index,record in ipairs(items) do
             local key=type(record)=='table' and record[list.key or 'id']
             if (type(key)~='string' or key=='') and (type(key)~='number' or key%1~=0) then fail('items require a stable string/integer key') end
             local token=type(key)..':'..tostring(key)
-            if keys[token] then fail('duplicate item key '..tostring(key)) end
-            keys[token]=true
+            if indices[key] then fail('duplicate item key '..tostring(key)) end
+            records[key],indices[key]=record,index
             local prefix=id..'['..#token..':'..token..']/'
-            rows[#rows+1]=copy_node(list.item(record,index),nodes,list._depth+1,prefix,id,key)
+            rows[#rows+1]=copy_node(list.item(record,index),nodes,list._depth+1,prefix,id,key,index)
         end
-        return rows
+        return rows,records,indices
     end)
     if not ok then return false,children end
     for name in pairs(removed) do self.values[name]=nil end
     for name,node in pairs(nodes) do
         if not self.nodes[name] or removed[name] then self.values[name]=node.value end
     end
-    list.children,self.nodes,self.boxes=children,nodes,{}
+    list.children,list.records,list.indices=children,records,indices
+    self.nodes,self.boxes=nodes,{}
+    self:invalidate_layout()
     if self.focus and not nodes[self.focus] then self.focus=nil end
+    return true
+end
+function Form:get_item(id, key)
+    local list=self.nodes[id]
+    return list and list.records and list.records[key]
+end
+function Form:scroll_to(id, key)
+    local list=self.nodes[id]
+    if not list or not list.scroll then fail('unknown scroll list ID '..tostring(id)) end
+    if key~=nil and not (list.indices and list.indices[key]) then return false end
+    list.scroll_state={offset=0,velocity=0}
+    list.scroll_target=key
     return true
 end
 function Form:push(model)
@@ -135,7 +157,7 @@ function Form:push(model)
         if not valid(value, b) then return false, 'Invalid ' .. b.field end
         values[b.id] = value
     end
-    for k,v in pairs(values) do self.values[k] = v end
+    for k,v in pairs(values) do self:set(k,v) end
     return true
 end
 function Form:pull(model, validator)
@@ -168,19 +190,43 @@ local function style_for(n, skin)
     return n.style or (skin.style and skin.style(n)) or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and (n.accent and 'accent_text' or 'button') or 'text']
 end
 local function horizontal(n) return n.kind=='row' or (n.kind=='list' and n.direction=='row') end
-local function measure(n, width, skin, values)
+local measure
+local function row_metrics(n, width, skin, form)
+    local m=n.row_metrics
+    if m and m.width==width and m.skin==skin and m.revision==form.layout_revision then return m end
+    m={width=width,skin=skin,revision=form.layout_revision,rows={},by_index={},w=0,h=0,fixed=0,weight=0}
+    for i,child in ipairs(n.children) do
+        if visible(child,form.values) then
+            local w,h=measure(child,width,skin,form)
+            local row={node=child,w=w,h=h}
+            m.rows[#m.rows+1],m.by_index[i]=row,row
+            m.w,m.h=math.max(m.w,w),m.h+h
+            local grow=child.grow or 0
+            if grow>0 then m.weight=m.weight+grow else m.fixed=m.fixed+h end
+        end
+    end
+    m.gaps=(n.gap or 0)*math.max(0,#m.rows-1)
+    n.row_metrics=m
+    return m
+end
+
+measure = function(n, width, skin, form)
+    local values=form.values
     if not visible(n, values) then return 0,0 end
     width=n.width or width
     local l,t,r,b = padding(n.padding)
     local w,h = 0,0
-    if n.kind == 'row' or n.kind == 'column' or n.kind == 'list' or n.kind == 'overlay' then
+    if n.scroll then
+        local rows=row_metrics(n,math.max(0,width-l-r),skin,form)
+        w,h=rows.w,rows.h+rows.gaps
+    elseif n.kind == 'row' or n.kind == 'column' or n.kind == 'list' or n.kind == 'overlay' then
         local count = 0
         local fixed,weight=0,0
         if horizontal(n) then
             for _,child in ipairs(n.children) do if visible(child,values) then
                 count=count+1
                 if (child.grow or 0)>0 then weight=weight+child.grow
-                else local cw=measure(child,math.max(0,width-l-r),skin,values);fixed=fixed+cw end
+                else local cw=measure(child,math.max(0,width-l-r),skin,form);fixed=fixed+cw end
             end end
         end
         local remaining=math.max(0,width-l-r-fixed-math.max(0,count-1)*(n.gap or 0))
@@ -188,7 +234,7 @@ local function measure(n, width, skin, values)
         for _, child in ipairs(n.children) do
             if visible(child, values) then
                 local child_width=horizontal(n) and (child.grow or 0)>0 and remaining*child.grow/weight or math.max(0,width-l-r)
-                local cw,ch = measure(child, child_width, skin, values)
+                local cw,ch = measure(child, child_width, skin, form)
                 if horizontal(n) then w,h = w+(child.grow and child.grow>0 and child_width or cw),math.max(h,ch)
                 elseif n.kind == 'column' or n.kind=='list' then w,h = math.max(w,cw),h+ch
                 else w,h = math.max(w,cw),math.max(h,ch) end
@@ -212,17 +258,61 @@ local function measure(n, width, skin, values)
     elseif n.kind == 'progress' then w,h=100,20 end
     return math.max(n.min_width or 0,n.width or w+l+r),math.max(n.min_height or 0,n.height or h+t+b)
 end
-local function arrange(n, box, skin, form)
+local arrange
+local function arrange_scroll(n, inner, skin, form)
+    local m=row_metrics(n,inner.w,skin,form)
+    if m.height~=inner.h then
+        local cursor=0
+        local remaining=math.max(0,inner.h-m.fixed-m.gaps)
+        for _,row in ipairs(m.rows) do
+            local grow=row.node.grow or 0
+            local h=grow>0 and remaining*grow/m.weight or row.h
+            row.top,row.bottom=cursor,cursor+h
+            cursor=row.bottom+(n.gap or 0)
+        end
+        m.height,m.length=inner.h,m.rows[#m.rows] and m.rows[#m.rows].bottom or 0
+    end
+    local st=n.scroll_state or {offset=0,velocity=0}
+    n.scroll_state=st
+    n.scroll_max=math.max(0,m.length-inner.h)
+    local target=n.scroll_target and m.by_index[n.indices[n.scroll_target]]
+    n.scroll_target=nil
+    st.offset=math.max(0,math.min(n.scroll_max,target and target.top or st.offset))
+    n.scroll_inner=inner
+    -- Row bottoms are ordered. Start at the first row that intersects the
+    -- viewport, then give only visible rows current boxes for paint and input.
+    local first,last=1,#m.rows+1
+    while first<last do
+        local mid=(first+last)//2
+        if m.rows[mid].bottom<=st.offset then first=mid+1 else last=mid end
+    end
+    local limit=st.offset+inner.h
+    last=first-1
+    for i=first,#m.rows do
+        local row=m.rows[i]
+        if row.top>=limit then break end
+        local w=n.align and n.align~='stretch' and math.min(row.w,inner.w) or inner.w
+        if row.node.width then w=math.min(w,row.node.width) end
+        local free=inner.w-w
+        local dx=n.align=='center' and free/2 or n.align=='end' and free or 0
+        arrange(row.node,rect(inner.x+dx,inner.y+row.top-st.offset,w,row.bottom-row.top),skin,form)
+        last=i
+    end
+    n.first_row,n.last_row=first,last
+end
+
+arrange = function(n, box, skin, form)
     n.box=box
     if n.id then form.boxes[n.id]=box end
-    if #n.children == 0 then return end
+    if #n.children == 0 and not n.scroll then return end
     local l,t,r,b=padding(n.padding)
     local inner=rect(box.x+l,box.y+t,math.max(0,box.w-l-r),math.max(0,box.h-t-b))
+    if n.scroll then arrange_scroll(n,inner,skin,form);return end
     local across=horizontal(n)
     local total,weight,count=0,0,0
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
-            local cw,ch=measure(child,inner.w,skin,form.values)
+            local cw,ch=measure(child,inner.w,skin,form)
             child.measured={cw,ch}; count=count+1
             if child.grow and child.grow>0 then weight=weight+child.grow else total=total+(across and cw or ch) end
         end
@@ -230,23 +320,18 @@ local function arrange(n, box, skin, form)
     local gap=n.gap or 0
     local available=across and inner.w or inner.h
     local remaining=math.max(0,available-total-gap*math.max(0,count-1))
-    if n.scroll then
-        n.scroll_state=n.scroll_state or {offset=0,velocity=0}
-        n.scroll_max=math.max(0,total+gap*math.max(0,count-1)-inner.h)
-        n.scroll_state.offset=math.max(0,math.min(n.scroll_max,n.scroll_state.offset))
-    end
-    local cursor=(across and inner.x or inner.y)-(n.scroll and n.scroll_state.offset or 0)
+    local cursor=across and inner.x or inner.y
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
             local cw,ch=child.measured[1],child.measured[2]
             if across and (child.grow or 0)>0 then
-                cw,ch=measure(child,remaining*child.grow/weight,skin,form.values)
+                cw,ch=measure(child,remaining*child.grow/weight,skin,form)
             end
             if n.kind=='overlay' then arrange(child,inner,skin,form)
             else
                 local main=across and cw or ch
                 if child.grow and child.grow>0 then main=remaining*child.grow/weight end
-                if not n.scroll then main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor)) end
+                main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor))
                 local cross=(n.align or 'stretch')=='stretch' and (across and inner.h or inner.w) or math.min(across and ch or cw,across and inner.h or inner.w)
                 local explicit=across and child.height or child.width
                 if explicit then cross=math.min(cross,explicit) end
@@ -258,23 +343,23 @@ local function arrange(n, box, skin, form)
         end
     end
 end
-function Form:measure(width, skin) return measure(self.root,width,skin or {},self.values) end
+function Form:measure(width, skin) return measure(self.root,width,skin or default_skin,self) end
 function Form:layout(box,skin)
-    self.boxes={};arrange(self.root,box,skin or {},self);return self.boxes
+    self.boxes={};arrange(self.root,box,skin or default_skin,self);return self.boxes
 end
 local function paint(n,skin,form,options,event)
     if not visible(n,form.values) then return event end
     local box=n.box; local theme=skin.theme or ui.theme()
     if options.clip then local visible_box=box:intersect(options.clip);if visible_box.w<=0 or visible_box.h<=0 then return event end end
+    if n.panel then
+        if skin.panel then skin.panel(box,n) else ui.panel(box) end
+    end
     if n.scroll then
         local opts={};for k,v in pairs(options) do opts[k]=v end
-        opts.clip=options.clip and box:intersect(options.clip) or box
+        opts.clip=options.clip and n.scroll_inner:intersect(options.clip) or n.scroll_inner
         opts.suppress_hit=options.suppress_hit or n.scroll_state.moved
         options=opts
         gfx.clip(opts.clip);ui.block(opts.clip)
-    end
-    if n.panel then
-        if skin.panel then skin.panel(box,n) else ui.panel(box) end
     end
     if n.kind=='label' then
         local align=vec2(n.text_align=='start' and 0 or n.text_align=='end' and 1 or .5,.5)
@@ -328,32 +413,38 @@ local function paint(n,skin,form,options,event)
         local keyboard=options.interactive~=false and form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
         if enabled and (st.clicked or keyboard) and not event then
             form.focus=n.id
-            if n.kind=='toggle' or checkbox then form.values[n.id]=not selected end
+            if n.kind=='toggle' or checkbox then form:set(n.id,not selected) end
             event={id=n.action or n.local_id or n.id,kind=(n.kind=='toggle' or checkbox) and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
         end
     end
-    for _,child in ipairs(n.children) do event=paint(child,skin,form,options,event) end
     if n.scroll then
+        for i=n.first_row,n.last_row do event=paint(n.row_metrics.rows[i].node,skin,form,options,event) end
         local length=n.scroll_max or 0
         if length>0 then
-            local h=box.h*box.h/(box.h+length)
-            gfx.round_rect(rect(box:max().x-4,box.y+(box.h-h)*n.scroll_state.offset/length,3,h),1.5,color(150,114,63,180))
+            local viewport=n.scroll_inner
+            local h=viewport.h*viewport.h/(viewport.h+length)
+            gfx.round_rect(rect(viewport:max().x-4,viewport.y+(viewport.h-h)*n.scroll_state.offset/length,3,h),
+                1.5,color(150,114,63,180))
         end
         gfx.unclip()
+    else
+        for _,child in ipairs(n.children) do event=paint(child,skin,form,options,event) end
     end
     return event
 end
 function Form:draw(box,skin,options)
-    skin,options=skin or {},options or {}; options.input=options.input or input.get()
-    if not skin.theme then skin=setmetatable({theme=ui.theme()},{__index=skin}) end
+    skin,options=skin or default_skin,options or {}; options.input=options.input or input.get()
     self:layout(box,skin)
     -- Scrolling belongs to the form, before any child hit test. It uses the
     -- engine dt (CAAnimation clock on iOS), not per-control wall clocks.
+    local moved=false
     local function scroll(n)
         if not visible(n,self.values) then return end
         if n.scroll and options.interactive~=false then
             local st,inp=n.scroll_state,options.input
-            local inside=inp.pos and n.box:contains(inp.pos)
+            local before=st.offset
+            local hitbox=options.hit_offset and n.scroll_inner:offset(options.hit_offset) or n.scroll_inner
+            local inside=inp.pos and hitbox:contains(inp.pos)
             if inp.pressed then
                 st.down=inside;st.moved=inside and math.abs(st.velocity)>20 or false
                 st.last=inp.pos and inp.pos.y or 0;st.last_time=app.time();st.velocity=0
@@ -379,29 +470,49 @@ function Form:draw(box,skin,options)
                 st.offset=math.max(0,math.min(n.scroll_max,next_offset));st.velocity=st.velocity*decay
                 if st.offset~=next_offset or math.abs(st.velocity)<2 then st.velocity=0 end
             end
-            if inside and inp.wheel and inp.wheel~=0 then st.offset=math.max(0,math.min(n.scroll_max,st.offset-inp.wheel*45));st.velocity=0 end
+            if inside and inp.wheel and inp.wheel~=0 then
+                st.offset=math.max(0,math.min(n.scroll_max,st.offset-inp.wheel*45));st.velocity=0
+                self.focus_visible=false
+            end
+            moved=moved or before~=st.offset
         end
-        for _,child in ipairs(n.children) do scroll(child) end
+        if n.scroll then
+            for i=n.first_row,n.last_row do scroll(n.row_metrics.rows[i].node) end
+        else
+            for _,child in ipairs(n.children) do scroll(child) end
+        end
     end
-    scroll(self.root);self:layout(box,skin)
-    local focusable={}
-    local function collect(n)
-        if not visible(n,self.values) then return end
-        if (n.kind=='button' or n.kind=='toggle' or n.kind=='checkbox') and n.enabled~=false and (not n.enabled_field or self.values[n.enabled_field]) then focusable[#focusable+1]=n.id end
-        for _,child in ipairs(n.children) do collect(child) end
-    end
-    collect(self.root)
+    scroll(self.root)
+    if moved then self:layout(box,skin) end
     if options.input.pressed then self.focus_visible=false end
     if options.interactive~=false and options.input.key==input.KEY_TAB then
+        local focusable={}
+        local function collect(n)
+            if not visible(n,self.values) then return end
+            if (n.kind=='button' or n.kind=='toggle' or n.kind=='checkbox') and n.enabled~=false and (not n.enabled_field or self.values[n.enabled_field]) then focusable[#focusable+1]=n.id end
+            for _,child in ipairs(n.children) do collect(child) end
+        end
+        collect(self.root)
         self.focus_visible=true
         local current=0; for i,id in ipairs(focusable) do if id==self.focus then current=i end end
         self.focus=focusable[current%math.max(1,#focusable)+1]
-    end
-    local focused=self.focus and self.nodes[self.focus]
-    local owner=focused and focused.source_id and self.nodes[focused.source_id]
-    if self.focus_visible and owner and owner.scroll then
-        local delta=focused.box.y<owner.box.y and focused.box.y-owner.box.y or math.max(0,focused.box:max().y-owner.box:max().y)
-        owner.scroll_state.offset=math.max(0,math.min(owner.scroll_max,owner.scroll_state.offset+delta));self:layout(box,skin)
+        local focused=self.focus and self.nodes[self.focus]
+        local owner=focused and focused.source_id and self.nodes[focused.source_id]
+        if owner and owner.scroll then
+            local row=owner.row_metrics.by_index[focused.row_index]
+            local st=owner.scroll_state
+            local delta=row.top<st.offset and row.top-st.offset or math.max(0,row.bottom-st.offset-owner.scroll_inner.h)
+            if delta~=0 then
+                st.offset=st.offset+delta;st.velocity=0
+                self:layout(box,skin)
+            end
+            local target=self.boxes[focused.id]
+            if target then
+                local inner=owner.scroll_inner
+                delta=target.y<inner.y and target.y-inner.y or math.max(0,target:max().y-inner:max().y)
+                if delta~=0 then st.offset=st.offset+delta;self:layout(box,skin) end
+            end
+        end
     end
     local old=ui.theme(); if skin.theme then ui.set_theme(skin.theme) end
     local ok,event=pcall(paint,self.root,skin,self,options,nil)

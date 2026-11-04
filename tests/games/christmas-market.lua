@@ -22,6 +22,8 @@ shot("blocked-placement", "480x900", "--city 2 --placing blocked")
 shot("region", "480x900", "--city 3 --zone 1")
 shot("shop", "480x900", "--catalogue building")
 shot("winter-wishes", "480x900", "--expeditions")
+shot("phone-shop", "390x844", "--catalogue building --safe-area 0,47,0,34")
+shot("phone-winter-wishes", "390x844", "--expeditions --safe-area 0,47,0,34")
 shot("reward", "480x900", "--victory")
 shot("reward-story", "480x900", "--victory clue")
 -- the result dialog arriving on the motion module: 16 pictures, 6 frames apart

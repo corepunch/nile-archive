@@ -17,6 +17,47 @@ function E.view(state)
     return state
 end
 
+-- The two match-3 cities share the same view templates. Game code supplies
+-- localized copy, skin colors, and records with stable keys via set_items.
+function E.catalogue_form(title, hint, close, detail_color, picture_fit)
+    return ui.form{kind='column',panel=true,padding=18,gap=8,children={
+        {kind='label',text=title,height=40,em=32},
+        {kind='label',id='wallet',height=24,em=16,text_style=detail_color},
+        {kind='row',height=38,gap=8,children={
+            {kind='button',id='category_prev',text='<',width=42,em=22},
+            {kind='label',id='category',grow=1,em=21},
+            {kind='button',id='category_next',text='>',width=42,em=22},
+        }},
+        {kind='label',text=hint,height=24,em=14,text_style=detail_color},
+        {kind='list',id='stock',scroll=true,height=430,gap=10,item=function(entry)
+            return {kind='row',height=116,gap=12,align='center',children={
+                {kind='custom',width=98,height=100,paint=function(box) picture_fit(entry.sprite,box,255) end},
+                {kind='column',grow=1,gap=4,children={
+                    {kind='label',text=entry.name,wrap=true,text_align='start',em=20},
+                    {kind='label',text=entry.details,wrap=true,text_align='start',em=14,text_style=detail_color},
+                    {kind='button',id='buy',text=entry.action,height=34,em=17,enabled=entry.available},
+                }},
+            }}
+        end},
+        {kind='button',id='close',text=close,height=42,em=21},
+    }}
+end
+
+function E.expedition_form(title, intro, close, detail_color)
+    return ui.form{kind='column',panel=true,padding=20,gap=12,children={
+        {kind='label',text=title,height=42,em=34},
+        {kind='label',text=intro,wrap=true,em=17,text_style=detail_color},
+        {kind='list',id='levels',scroll=true,height=430,gap=12,item=function(e)
+            return {kind='column',panel=true,padding=12,gap=6,children={
+                {kind='label',text=e.title,wrap=true,text_align='start',em=24},
+                {kind='label',text=e.note,wrap=true,text_align='start',em=15,text_style=detail_color},
+                {kind='button',id='play',text=e.action,enabled=e.available,height=42,em=21},
+            }}
+        end},
+        {kind='button',id='close',text=close,height=42,em=21},
+    }}
+end
+
 -- One GPU texture per skin. Every named image is a borrowed texture region,
 -- so existing gfx.image, form images and particles use the same atlas directly.
 local skins = {}
