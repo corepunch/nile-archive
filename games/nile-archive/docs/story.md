@@ -21,6 +21,27 @@
 | Dialogue | See the counts table in section 3 |
 | Energy | **Owner's decision**. Recommendation: none for now (section 1.2) |
 
+### Campaign review · 2026-11-04
+
+The current game ships three searchable locations and the opening seven lines. The script covers 15 searches, three ordered-tap caches and 206 main dialogue lines. Keep the three shipped scene IDs for saved progress and add the remaining content in chapter order.
+
+| Chapter | Reuse | Add |
+| --- | --- | --- |
+| 1 · Игра восьми | Slots 1–3: Двор хранителя, Библиотека писца, Храм на закате | Two eight-item re-lists for the courtyard and library (slots 4–5). The first cache, Дверь под крылатым солнцем, uses four existing temple targets. Measure 16 new hit regions. |
+| 2 · Книга разливов | Revisit the vault and nilometer with a second list each (slots 8 and 10) | Paint Хранилище под храмом, Ниломер and Перерезанная дамба (slots 6, 7 and 9). The second cache, След киля, uses the dyke painting plus one cache-only target. Measure 41 hit regions across the five lists and cache. |
+| 3 · Печать | Revisit the barns and overseer's house with a second list each (slots 13 and 14) | Paint Затопленные амбары, Дом надзирателя and Мастерская печатей (slots 11, 12 and 15). The last cache, Последняя вещь, uses four workshop targets. Measure 40 hit regions. |
+
+**Cast and evidence.** The existing Нефра, Мерит and Хорем portraits cover every line. Хорем appears through written notes and Ликон through documents read by Нефра. Мерит's current portrait already plants the earring, folded map and rope. Keep Миу recognizable in the scene paintings, especially the workshop, where her collar and its bead carry the final clue.
+
+**First playable milestone.** Build chapter 1 with the three existing paintings. It exercises the loop through clue A, a repeat clear for clue B, restoration and the first cache reveal. It needs the chapter browser, keyed story beats, journal notes and old-save handling. Chapters 2 and 3 then exercise the same loop with new scenes and lead to «Продолжение следует».
+
+Resolve these script and progression points before locking the painting briefs:
+
+- Require the fountain before the clear that can award `c1s5b`. A gate on the first cache alone comes after the line about the running fountain. Require the workshop before slot 15. Surface both restoration requirements in the browser so decoration-heavy saves can progress.
+- Reconcile the vault inventory in the truth timeline. The first cache finds 239 chests against an inventory of 240, but the timeline says Хорем moved 239 and later took the Book. Establish whether he removed the Book with its chest, then carry that count through the inventory, the painting and the dialogue.
+- Establish how the dyke preserved evidence for nine months before painting it. The cut, the rope knot and the narrow keel mark each carry an inference, and the keel mark is the cache's fourth tap.
+- Give migrated saves a way to read skipped clues in order. The proposed migration can credit clue B and open the next scene before its new dialogue has played. Keep access to visited scenes and populate their journal notes or recap before the first unseen chapter beat.
+
 ## 1. What to clone, adapt or skip
 
 ### 1.1 Mechanics

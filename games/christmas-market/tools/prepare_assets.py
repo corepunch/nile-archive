@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from PIL import Image
 from prepare_character import main as prepare_character
+from prepare_story_cast import prepare as prepare_story_cast
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / 'data'
@@ -39,6 +40,7 @@ def main():
     save(terrain.resize((1920,2880),Image.Resampling.LANCZOS),'island.jpg')
     save(terrain.resize((600,900),Image.Resampling.LANCZOS),'winter.jpg')
     prepare_character()
+    prepare_story_cast()
     REGISTRATION.write_text(json.dumps(registration,indent=2)+'\n')
 
 if __name__ == '__main__': main()
