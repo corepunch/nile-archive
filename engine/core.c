@@ -280,8 +280,11 @@ static void poll_events(void)
                 in->pinch_center = window_to_logical(v2(e.gesture.x, e.gesture.y));
             }
             break;
-        case kEventSetFocus: haptic_focus(true); animation_clock_pause(false); A.last_counter=animation_clock_seconds(); break;
-        case kEventKillFocus: haptic_focus(false); animation_clock_pause(true); /* fall through */
+        case kEventSetFocus:
+            haptic_focus(true);
+            A.last_counter = animation_clock_seconds();
+            break;
+        case kEventKillFocus: haptic_focus(false); /* fall through */
         case kEventPointerCancel:
             in->down = in->pressed = in->released = in->dragging = in->hover = in->tap = false;
             in->captured = false;
@@ -392,7 +395,6 @@ int app_run(app_desc desc, int argc, char **argv)
 #ifdef __EMSCRIPTEN__
     if (argc <= 1) argc = web_args(&argv);   /* on the web, options come from the URL */
 #endif
-    animation_clock_reset();
     memset(&A, 0, sizeof A);
 #ifdef ENGINE_TEST
     test_clock_active = false;

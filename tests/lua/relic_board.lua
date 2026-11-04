@@ -305,21 +305,30 @@ do
     end
 end
 
--- The dialogs' motion runs on the engine's tween module (docs/MOTION.md): an
--- entrance settles, the parts of a result arrive on one timeline a tap skips,
--- a newer dialog interrupts, the exit banks the reward, and reduced motion
--- settles everything on the next frame.
+-- Relic Rush popups and rewards settle before the clock advances. Christmas
+-- Market animates the dialog, and both games can skip animated result parts.
 do
     testing.reset()
+    local instant = testing.game == "relic-rush"
     local claimed = 0
     local claim = R.claim_reward
     R.claim_reward = function() claimed = claimed + 1 end
     R.open_dialog()
-    check(R.dialog.entry == 0 and R.dialog.fresh and not R.dialog_settled(), "a dialog opens at the start of its entrance")
-    tween.update(.1)
-    check(R.dialog.entry > 0 and R.dialog.entry < 1, "the entrance eases in")
-    tween.update(.2)
-    check(R.dialog.entry == 1 and R.dialog_settled(), "the entrance settles in .28 s")
+    if instant then
+        check(R.dialog.entry == 1 and R.dialog.fresh and R.dialog_settled(), "a dialog is visible on its opening frame")
+        local part = R.dialog_part(.2, .3)
+        check(part.f == 1 and part.u == 1 and R.dialog_settled(), "result parts appear without waiting for the clock")
+        local arg = app.arg
+        app.arg = function(name) if name == "reel" then return "" end end -- luacheck: ignore 122
+        R.open_dialog()
+        app.arg = arg -- luacheck: ignore 122
+    else
+        check(R.dialog.entry == 0 and R.dialog.fresh and not R.dialog_settled(), "a dialog opens at the start of its entrance")
+        tween.update(.1)
+        check(R.dialog.entry > 0 and R.dialog.entry < 1, "the entrance eases in")
+        tween.update(.2)
+        check(R.dialog.entry == 1 and R.dialog_settled(), "the entrance settles in .28 s")
+    end
     R.dialog.n = 0
     local part = R.dialog_part(.2, .3)
     check(part.f == 0 and part.u == 0 and not R.dialog_settled(), "a part joins the dialog's timeline and holds it back")
@@ -332,14 +341,18 @@ do
     R.dialog_skip()
     check(part.f == 1 and part.u == 1 and R.dialog_settled(), "a tap skips the parts to their places")
     R.close_dialog()
-    check(R.modal_closing and R.dialog.exit == 0, "the exit starts")
-    tween.update(.3)
-    check(claimed == 1 and not R.modal_closing and R.dialog.exit == 1, "and banks the reward when it ends")
-    R.open_dialog()
-    tween.update(.1)
-    local was = R.dialog
-    R.open_dialog()
-    check(R.dialog ~= was and R.dialog.entry == 0 and not tween.is_tweening(was), "a newer dialog interrupts the old entrance")
+    if instant then
+        check(claimed == 1 and not R.modal_closing, "the reward is banked on the closing frame")
+    else
+        check(R.modal_closing and R.dialog.exit == 0, "the exit starts")
+        tween.update(.3)
+        check(claimed == 1 and not R.modal_closing and R.dialog.exit == 1, "and banks the reward when it ends")
+        R.open_dialog()
+        tween.update(.1)
+        local was = R.dialog
+        R.open_dialog()
+        check(R.dialog ~= was and R.dialog.entry == 0 and not tween.is_tweening(was), "a newer dialog interrupts the old entrance")
+    end
     R.open_dialog(true)
     R.dialog.n = 0
     check(R.dialog.entry == 1 and R.dialog_part(.5, .3).f == 1 and R.dialog_settled(), "stills open a dialog settled")
