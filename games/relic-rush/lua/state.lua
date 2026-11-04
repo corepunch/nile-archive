@@ -2,11 +2,6 @@
 -- every module attaches its public functions here (R.notice, R.cell_pos, ...)
 -- so they can call each other without import cycles, the way relic.h did.
 local R = require("match3").view{
-    -- the game is laid out for a 480 x 900 portrait screen; taller phones add height
-    SCREEN_W = 480, SCREEN_H = 900,
-    HEX_R = 32,         -- radius-4 board spans 448 units, leaving 16-unit phone side margins
-    BOARD_CLIP = rect(10, 236, 460, 512),
-    drop = 0,            -- extra screen height on tall phones (engine match3 layout)
     hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
     intro = nil,

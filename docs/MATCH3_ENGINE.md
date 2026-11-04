@@ -126,16 +126,21 @@ rendering uses `cell_pos` and `piece_pose`.
 
 The board screen's layout belongs to the engine and is the same in every game.
 A game must not define or replace `state.layout`: `bind_view` and `board_input` assert this.
-Call `state.layout()` once per frame. On the 480-wide screen (at least 900 tall), it sets the following bands, from top to bottom:
+Call `state.layout()` once per frame. It is measured up from the bottom edge, at the size it has on a 480×1040 phone, so a shorter screen crops the top of the backdrop instead of squeezing the board:
 
-- **Scenery:** the top 125 units, plus 70% of any extra height (`state.drop`), are left clear for the backdrop painting.
-- **`hud_rect`:** a 120-unit band directly below the scenery, for goals, moves, portraits and toasts.
-- **`board_origin` and `BOARD_CLIP`:** the board, centred between the HUD band and the tool row, leaving 24 units for the tool hint.
-- **`tools_y`:** the top of the tool row, 116 units above the bottom edge. Engine methods
-`reset_board`, `board_update`, `board_input` and `select_tool` own the changes
-to interaction state. `notice`, `tone` and `vfx_wave` are presentation outputs,
-not rule customization hooks. The game still owns story, city and screen
-navigation.
+- **`tools_y`:** the top of the tool row, 100 units above the bottom edge.
+- **`board_origin` and `BOARD_CLIP`:** the board, centred 409 units above the bottom edge.
+- **`hud_rect`:** a 64-unit band 782 units above the bottom edge, holding the Moves medallion, the goal row and Pause, all centred on its midline. Toasts sit just below it (`board_toast`).
+- **`backdrop_rect(size, full)`:** where to draw the backdrop painting. It keeps at least its 1040-tall scale, covers the screen and stands on the bottom edge, so the painting's scenery always ends just above the HUD. Paint a backdrop's scenery in the top 22% of its height.
+
+`match3.bind_board_ui` supplies the measured goal row, Moves medallion, Pause button
+and tool row. Input checks use the same `board_pause` and `board_tool_bounds(k)`
+rectangles. The Settings and Guide forms and the Results panel geometry also
+come from `match3`. Games provide the skin, guide content and screen actions.
+
+Engine methods `reset_board`, `board_update`, `board_input` and `select_tool`
+own changes to interaction state. `notice`, `tone` and `vfx_wave` are presentation
+outputs. Games own story, city and screen navigation.
 
 ## Reproduction and verification
 

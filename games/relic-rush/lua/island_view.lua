@@ -184,7 +184,7 @@ function R.island_screen(inp, dt)
 
     -- the HUD is drawn after the map, so tall buildings never cover buttons;
     -- a placement shows itself on the ghost alone: red when it can't go there
-    R.draw_header(true)
+    R.draw_header()
     bottom_controls()
 end
 

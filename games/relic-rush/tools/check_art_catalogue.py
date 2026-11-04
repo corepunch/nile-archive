@@ -15,7 +15,8 @@ for field, key in [("tools", "tools"), ("states", "tool_states")]:
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
-special_line = re.search(r"M\.NORMAL[^\n]+", (ROOT.parent.parent / "engine/match3.lua").read_text()).group()
+match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
+special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)
 assert specials == list(manifest["specials"]), "Rule specials need artwork and catalogue entries"
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
@@ -45,7 +46,7 @@ for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
 buttons = manifest["tool_buttons"]
 assert (ROOT / buttons["source"]).is_file() and (ROOT / buttons["prompt"]).is_file()
-assert buttons["runtime_button_size"] == [int(re.search(r"A\.tool_size = (\d+)", art).group(1))] * 2
+assert buttons["runtime_button_size"] == [int(re.search(r"E\.TOOL_SIZE = (\d+)", match3).group(1))] * 2
 for tool in manifest["tools"]:
     for state in manifest["tool_states"]:
         asset = manifest["assets"][tool + "-" + state]

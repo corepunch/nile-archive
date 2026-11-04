@@ -15,7 +15,7 @@ Direction: snow-covered timber and cream plaster, evergreen garlands, red ribbon
 
 The original transparent building atlas and the labeled reference sheet are preserved in `art/`. Built-in ImageGen produced the artwork. Exact generation prompts are in `art/prompts.json` and `art/reference-sheet-prompt.txt`.
 
-The supplied portrait is now the identity reference for Noelle, the main character (`art/noelle-reference.jpg`). Her transparent cutout is used in dialogue and the puzzle header. Her [portrait app icon](art/app-icon-1024.png) is installed in the iOS/macOS `AppIcon` catalogue; its opaque square master leaves corner masking to the OS. `python3 games/christmas-market/tools/prepare_character.py` reproduces the portrait resize and all icon sizes. Built-in ImageGen prompts are in `art/character-and-icon-prompts.json`.
+The supplied portrait is now the identity reference for Noelle, the main character (`art/noelle-reference.jpg`). Her transparent cutout is used in dialogue. Her [portrait app icon](art/app-icon-1024.png) is installed in the iOS/macOS `AppIcon` catalogue; its opaque square master leaves corner masking to the OS. `python3 games/christmas-market/tools/prepare_character.py` reproduces the portrait resize and all icon sizes. Built-in ImageGen prompts are in `art/character-and-icon-prompts.json`.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin.
@@ -46,6 +46,9 @@ unselected branches do not count. Four in a line creates an axis shooting star;
 five or more creates a rainbow star. Pieces have one ordinary state rather
 than flower growth stages. Blockers, tools, cascades and restoration rewards
 retain their existing rules. Both portrait games use this same matching mode.
+
+The board and Settings panel share Relic Rush's layout. Open Pause to reach
+Sound, Reduce Motion, Resume and the Market Guide.
 
 ## Draft implementation
 

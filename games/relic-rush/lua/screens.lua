@@ -6,6 +6,7 @@
 -- by the helpers below; hit testing always uses the untransformed layout, so
 -- a dialog is clickable where it will come to rest.
 local R = require("state")
+local match3 = require("match3")
 local rules = require("rules")
 local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
@@ -107,32 +108,22 @@ local star_icon = R.star_icon
 --------------------------------------------------------------------- header
 
 -- One prominent medallion and matching touch area on the island and board.
-local function pause_button(on_island)
-    local bounds=on_island and rect(388,-2,88,88) or rect(402,R.hud_rect.y-10,64,64)   -- in the board's HUD band
-    local st=ui.hit(bounds,0)
-    local state=st.held and "pressed" or st.hot and "hover" or "normal"
-    picture(R.hud_art["pause-"..state],bounds,255)
-    return st.clicked
-end
-
 local function resource_icons()
     return {R.life_art,R.relics[RELIC_IDOL+1],function(box) star_icon(box:center(),box.w*.45) end}
 end
 local capsule_notes = {"A life returns every 30 minutes, up to five.","Hex amulets buy buildings. Replay expeditions to earn more.","Discovery Stars unlock stock and land. First clears only; never spent."}
-function R.draw_header(on_island)
-    if on_island then
-        local remaining=math.max(0,(R.prog.life_at or 0)-app.clock())
-        local lives=(R.prog.lives or rules.LIVES)==rules.LIVES and "5 FULL" or ("%d %d:%02d"):format(R.prog.lives,remaining//60,remaining%60)
-        local values={lives,tostring(R.prog.wallet[1]),tostring(R.prog.wallet[4])}
-        local icons=resource_icons()
-        for k=1,3 do
-            local r=rect(20+(k-1)*128,20,110,36)
-            -- The touch area takes in the overhanging icon.
-            local hit=rect(r.x-18,r.y-12+R.hit_dy,r.w+18,r.h+24)
-            if skin:draw_resource(r,icons[k],values[k],{role="wallet",hit=hit}) then R.notice(capsule_notes[k]) end
-        end
+function R.draw_header()
+    local remaining=math.max(0,(R.prog.life_at or 0)-app.clock())
+    local lives=(R.prog.lives or rules.LIVES)==rules.LIVES and "5 FULL" or ("%d %d:%02d"):format(R.prog.lives,remaining//60,remaining%60)
+    local values={lives,tostring(R.prog.wallet[1]),tostring(R.prog.wallet[4])}
+    local icons=resource_icons()
+    for k=1,3 do
+        local r=rect(20+(k-1)*128,20,110,36)
+        -- The touch area takes in the overhanging icon.
+        local hit=rect(r.x-18,r.y-12+R.hit_dy,r.w+18,r.h+24)
+        if skin:draw_resource(r,icons[k],values[k],{role="wallet",hit=hit}) then R.notice(capsule_notes[k]) end
     end
-    if pause_button(on_island) then R.overlay=R.OV_PAUSE end
+    if match3.pause_button(R, rect(388,-2,88,88)) then R.overlay = R.OV_PAUSE end
 end
 
 function R.draw_toast()
@@ -141,24 +132,13 @@ function R.draw_toast()
         rrect(rect(18, 710 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
     else   -- just below the HUD, above the board
-        local y = R.hud_rect.y + 68
-        rrect(rect(38, y, 404, 28), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, y + 14), 14, PAL_CREAM, 388)
+        local bounds = R.board_toast
+        rrect(bounds, 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, bounds:center(), 14, PAL_CREAM, bounds.w - 16)
     end
 end
 
 -------------------------------------------------------------------- dialogs
-
-local function result_rects()
-    local w, s = math.min(408, SCREEN_W - 48), math.min(1, (SCREEN_H - 100) / 556)
-    local x, y = (SCREEN_W - w) / 2, (SCREEN_H - 556 * s) / 2 + 8
-    return {card = rect(x, y, w, 556 * s), header = rect(x + 22, y - 26 * s, w - 44, 74 * s), stars = rect(x + 70, y + 70 * s, w - 140, 64 * s),
-            score_label = rect(x + 66, y + 140 * s, w - 132, 20 * s), score = rect(x + 60, y + 163 * s, w - 120, 53 * s),
-            treasure_label = rect(x + 30, y + 217 * s, w - 60, 20 * s), rewards = rect(x + 22, y + 243 * s, w - 44, 91 * s),
-            progress = rect(x + 44, y + 349 * s, w - 88, 36 * s), next = rect(x + 28, y + 397 * s, w - 56, 65 * s),
-            claim = rect(x + 40, y + 480 * s, w - 80, 56 * s)}
-end
-
 
 -- The open dialog's motion, on the engine's tween module: `entry` and `exit`
 -- run 0..1, and the parts of a dialog arrive on one timeline, so a tap can
@@ -232,7 +212,7 @@ local function section(delay, duration, rise)
 end
 
 local function result_screen()
-    local l = result_rects()
+    local l = match3.result_rects(SCREEN_W, SCREEN_H)
     local kind=rules.wonder_at(R.g.level+1)
     local w=kind and R.wonders[kind]
     local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
@@ -367,73 +347,26 @@ local function guide_icon(box, icon)
         R.draw_ice(tonumber(icon.front:sub(5)),pp(at),P.scale,P.alpha)
     elseif icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
 end
-local guide_form=ui.form{kind="column",panel=true,padding=20,children={
-    {kind="label",text="Explorer's guide",height=44,em=34},
-    {kind="label",text="SWIPE OR TAP TWO NEIGHBORING RELICS",height=26,em=13,text_style=PAL_WHITE},
-    {kind="spacer",height=14},
-    {kind="list",id="topics",gap=12,item=function(entry)
-        local align=entry.icon and "start" or "center"
-        return {kind="row",gap=14,align="center",children={
-            {kind="custom",width=64,height=64,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
-            {kind="column",grow=1,gap=4,children={
-                {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style=PAL_GOLD},
-                {kind="label",text=entry.description,wrap=true,text_align=align,em=16,text_style=PAL_CREAM},
-            }},
-        }}
-    end},
-    {kind="spacer",height=18},
-    {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,text_style=PAL_WHITE},
-    {kind="spacer",height=10},
-    {kind="button",id="done",text="LET'S EXPLORE",height=45,em=25},
-}}
+local guide_form = match3.guide_form({
+    title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",
+    done = "LET'S EXPLORE",
+}, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form=guide_form -- measured control bounds are also used by the input smoke test
-local function guide_screen()
-    local width=432
-    local _,height=guide_form:measure(width,form_skin)
-    local bounds=rect.centered(vec2(240,460),size2(width,height))
-    R.modal_bounds=pr(bounds)
-    local action=guide_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
-    if action and action.id=="done" then R.overlay=R.OV_NONE end
-end
+local function guide_screen() match3.draw_guide(R, guide_form) end
 
 -- Pause, as in other match-3 games: the settings grouped in one well, then
 -- Resume and the secondary actions. Restart asks first; Quit keeps the board,
 -- which LEVEL / Expeditions resume later. From the island only Resume applies.
-local pause_form = ui.form{
-    root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
-        {kind="label",text="Settings",height=44,em=34},
-        {kind="label",id="level",height=22,em=16,text_style=PAL_CREAM},
-        {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
-            {kind="checkbox",id="sound",text="SOUND",height=50},
-            {kind="checkbox",id="motion",text="REDUCE MOTION",height=50},
-        }},
-        {kind="column",gap=12,children={
-            {kind="button",id="resume",text="RESUME",height=52},
-            {kind="button",id="restart",text="RESTART",height=46,role="secondary",visible_field="expedition"},
-            {kind="button",id="quit",text="QUIT TO ISLAND",height=46,role="secondary",visible_field="expedition"},
-        }},
-        {kind="button",id="guide",text="EXPLORER'S GUIDE",height=32,role="link",em=20},
-    }},
-    bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
-}
+local pause_form = match3.pause_form("EXPLORER'S GUIDE", "QUIT TO ISLAND")
 local function pause_screen()
-    local ok,message=pause_form:push(R);assert(ok,message)
-    pause_form.values.expedition=not R.on_island
-    pause_form:set("level",R.on_island and "Your valley" or ("%d. %s"):format(R.g.level+1,rules.level_of(R.g).name))
-    local _,height=pause_form:measure(396,form_skin)
-    local bounds=rect.centered(vec2(240,450),size2(396,height))
-    R.modal_bounds=pr(bounds)
-    local event=pause_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
-    if not event then return end
-    if event.kind=="change" then
-        ok,message=pause_form:pull(R);assert(ok,message);sfx.enable(R.sound)
-    elseif event.id=="resume" then R.overlay=R.OV_NONE
-    elseif event.id=="restart" then R.overlay=R.OV_CONFIRM
-    elseif event.id=="quit" then   -- the unfinished board waits on the island
-        R.on_island,R.overlay=true,R.OV_NONE
-        R.notice(("Your board is saved. Tap LEVEL %d or Expeditions to continue."):format(R.g.level+1))
-    elseif event.id=="guide" then R.overlay=R.OV_GUIDE end
+    local level = R.on_island and "Your valley" or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
+    local action = match3.draw_pause(R, pause_form, level)
+    if action == "restart" then R.overlay = R.OV_CONFIRM
+    elseif action == "quit" then   -- the unfinished board waits on the island
+        R.on_island, R.overlay = true, R.OV_NONE
+        R.notice(("Your board is saved. Tap LEVEL %d or Expeditions to continue."):format(R.g.level + 1))
+    end
 end
 R.pause_form=pause_form
 

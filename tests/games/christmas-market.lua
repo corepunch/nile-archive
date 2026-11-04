@@ -27,6 +27,7 @@ shot("reward-story", "480x900", "--victory clue")
 -- the result dialog arriving on the motion module: 16 pictures, 6 frames apart
 reel("christmas-market-reward-entrance", 16, 6, "480x900", "--victory --reel")
 shot("pause", "480x900", "--level 4 --dialog pause")
+shot("phone-pause", "390x844", "--level 4 --dialog pause --safe-area 0,47,0,34")
 shot("guide", "480x900", "--level 4 --dialog guide")
 shot("failed", "480x900", "--level 4 --dialog failed")
 shot("finale", "480x900", "--dialog finale")

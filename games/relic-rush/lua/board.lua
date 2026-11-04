@@ -10,9 +10,10 @@ R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for anima
 rules.bind_view(R)
 R.intro_haptics = true
 board_intro.bind(R, rules)
+require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT
-local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
+local PH_IDLE = R.PH_IDLE
+local PAL_WHITE = R.PAL_WHITE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
 local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.game_cell_active
 local rgba = color
@@ -24,10 +25,6 @@ local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
-local TOOL_SIZE = art.tool_size
--- The engine owns the board screen's layout (match3 bind_view): R.hud_rect,
--- R.board_origin, R.BOARD_CLIP and R.tools_y.
-
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
@@ -81,7 +78,7 @@ local function draw_backdrop()
     local full = app.bleed()   -- the jungle runs on under the status bar and the home indicator
     local size = texture.size(tex)
     gfx.bleed(true)
-    gfx.image(tex, full:align(size:scale(size:cover(full:size())), vec2(.5, .5)), color.WHITE)
+    gfx.image(tex, R.backdrop_rect(size, full), color.WHITE)   -- engine layout: bottom-anchored
     gfx.rect(full, rgba(5, 30, 29, 35))
     gfx.bleed(false)
     for i = 0, 11 do   -- drifting motes of sunlight
@@ -89,81 +86,6 @@ local function draw_backdrop()
         gfx.circle(p, 1.5 + math.sin(R.now + i) * .5, rgba(255, 228, 139, 70 + 50 * math.sin(R.now + i)))
     end
 end
-
--- The expedition HUD floats on the painting, with no band behind it: a large
--- Moves medallion, one small resource panel per goal, and pause along the top,
--- the tools standing along the bottom edge, the board taking the space between.
--- Repeated goal cells use the shared measured list, with stable objective keys.
-local MOVES_X, MOVES_R = 56, 40   -- 24 below the HUD band's top edge
-function R.goal_entries()
-    local g, l = R.g, rules.level_of(R.g)
-    local entries = {
-        {id="score", icon="score", remaining=math.max(0, l.score-g.score)},
-        {id="idols", icon="idols", remaining=math.max(0, l.relics-g.relics)},
-    }
-    if l.soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,l.soil-g.dug)} end
-    if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
-    return entries
-end
-local goal_centers = {}
-local function goal_panel(box, entry)
-    goal_centers[entry.id] = R.skin:resource_icon_box(box):center()
-    local icon = entry.icon=="score" and R.hud_art.score
-        or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
-        or R.board_art[entry.icon]
-    -- Collections landing on a goal make it bounce.
-    local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
-    local met = entry.remaining==0
-    R.skin:draw_resource(box, icon, tostring(entry.remaining), {interactive=false,
-        icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
-        icon_alpha=met and 150/255 or 1, value_icon=met and R.hud_art.complete or nil})
-end
-local hud_form=ui.form{kind="row",gap=6,align="center",children={
-    {kind="spacer",width=82},    -- the Moves medallion
-    {kind="spacer",grow=1},
-    {kind="list",id="goals",direction="row",gap=6,item=function(entry)
-        -- The score runs to four digits; the other counts stay narrow.
-        return {kind="custom",width=entry.id=="score" and 88 or 62,height=30,paint=function(box) goal_panel(box,entry) end}
-    end},
-    {kind="spacer",grow=1},
-    {kind="spacer",width=64},    -- pause, drawn by the shared header
-}}
-
--- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
--- remaining moves large inside. It warms to red over the last five moves.
-local function draw_moves(arrive)
-    local c, r, a = vec2(MOVES_X, R.hud_rect.y + 24), MOVES_R * arrive, (1 - arrive) * -PI / 3   -- flat-top, like the cells
-    local moves = R.g.moves
-    local urgent = moves <= 5 and not R.g.won
-    if urgent and not R.reduced_motion then
-        gfx.additive(true)
-        gfx.glow(c, r + 14, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
-        gfx.additive(false)
-    end
-    gfx.ngon(c + vec2(0, 5), r, 6, a, rgba(3, 20, 18, 150))
-    gfx.ngon(c, r, 6, a, rgba(116, 74, 33))
-    gfx.ngon(c, r - 2, 6, a, rgba(236, 196, 112))
-    gfx.ngon(c + vec2(0, 2), r - 5, 6, a, rgba(176, 120, 48))
-    gfx.ngon(c, r - 7, 6, a, urgent and rgba(112, 34, 24) or rgba(12, 62, 52))
-    gfx.glow(c + vec2(0, -4), r - 12, urgent and rgba(178, 64, 40) or rgba(36, 124, 96), urgent and rgba(112, 34, 24, 0) or rgba(12, 62, 52, 0))
-    if arrive < .8 then return end   -- the numbers come with the settled medallion
-    text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17 * arrive), size2(56, 12)), vec2(.5, .5), "MOVES")
-    local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29 * arrive)
-    text.inside(s, rect.centered(c + vec2(0, 5 * arrive), size2(62, 34)), vec2(.5, .5), tostring(moves))
-end
-
-function R.goal_target(kind)
-    -- Collection flights land on the goal they advance.
-    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, R.hud_rect.y + 20)
-end
-local function draw_hud(top)
-    if top <= 0 then return end
-    assert(hud_form:set_items("goals",R.goal_entries()))
-    hud_form:draw(rect(14,R.hud_rect.y + (top - 1) * (R.hud_rect.y + 110),452,44),R.skin,{interactive=false})
-    local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
-    if medallion > .05 then draw_moves(medallion) end
-end
-R.hud_form=hud_form
 
 local function draw_cells(sx)
     local g = R.g
@@ -248,41 +170,12 @@ end
 R.tool_notes = {"Pickaxe: tap a relic to break it.", "Dynamite: tap a relic to blast around it.",
                     "Sunburst: tap a relic to clear its three lines."}
 
--- Three tools, evenly spaced; their names and the rules live in
--- the toast and the Explorer's Guide (in Pause), as in other match-3 games.
-local function draw_tools(inp)
-    local y = R.tools_y
-    for k = 0, 2 do
-        local x = 240 + (k - 1) * 120
-        local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
-        local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
-                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE or R.phase == PH_PRESENT)
-        -- The tools spring up from the bottom edge one by one; they take taps at rest.
-        local rise = R.intro and R.intro:arrive(.14 + k * .07, 3, .48) or 1
-        local up = vec2(0, (1 - rise) * 120)
-        local drawn = r:offset(up)
-        gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
-        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], drawn:inflate(5), color.WHITE)
-        gfx.circle(vec2(x + 31, y + 4) + up, 14, rgba(116, 74, 33))
-        gfx.circle(vec2(x + 31, y + 4) + up, 12, R.g.tools[k + 1] > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
-        R.say(tostring(R.g.tools[k + 1]), rect(x + 18, y - 9, 26, 26):offset(up), 16, PAL_CREAM)
-        if R.tapped(r) and R.phase == PH_IDLE then R.select_tool(k) end
-    end
-end
-
 ---------------------------------------------------------------------- input
 
 function R.board_screen(inp, dt)
     draw_backdrop()
     local intro = R.intro
-    local top, tray = 1, 1
-    if intro then top, tray = intro:arrive(0, 2.8, .58), intro:arrive(.05, 2.8, .58) end
-    draw_hud(top)
-    if top > 0 then
-        R.P.offset = vec2(0, (top - 1) * (R.hud_rect.y + 110))   -- the pause medallion rides in with the goals
-        R.draw_header(false)
-        R.P.offset = vec2(0, 0)
-    end
+    R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx)
     draw_relics(sx)
@@ -295,7 +188,7 @@ function R.board_screen(inp, dt)
             if visible then R.draw_ice_count(R.g.ice[i],cell_pos(i)+vec2(sx,0),BOARD_SCALE*scale,alpha) end
         end
     end
-    if tray > 0 then draw_tools(inp) end
+    R.draw_board_tools(inp)
     if app.arg("art-states") then art.draw_catalogue(R) end
     if app.arg("stripe-states") then art.draw_stripe_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end

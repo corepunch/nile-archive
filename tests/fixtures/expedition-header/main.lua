@@ -17,18 +17,23 @@ game.init=function()
     if app.arg("rich") then R.prog.wallet[4],R.prog.wallet[5]=60,20 end
     moves,board=R.g.moves,R.g
 end
+local function pause() app.inject_click(R.board_pause and R.board_pause:center() or vec2(440,38)) end
 local function background() app.inject_click(vec2(6,app.screen().h-4)) end
 game.frame=function(dt)
     frame(dt)
     tick=tick+1
     -- A real tap on the Dynamite button; --tap-tool X gives its centre for older layouts.
-    if app.arg("tap-tool") and tick==2 then app.inject_click(vec2(tonumber(app.arg("tap-tool")) or 240,834+R.drop)) end
+    if app.arg("tap-tool") and tick==2 then
+        local at = R.board_tool_bounds and R.board_tool_bounds(1):center() or vec2(240,834+R.drop)
+        local x = tonumber(app.arg("tap-tool"))
+        app.inject_click(x and vec2(x,at.y) or at)
+    end
     if not app.arg("header-smoke") then return end
     if tick%24~=0 then return end
     if stage==0 then app.inject_click(vec2(40,38))
     elseif stage==1 then
         assert(not R.on_island and R.g==board and R.g.moves==moves,"old island corner must do nothing")
-        app.inject_click(vec2(440,38))
+        pause()
     elseif stage==2 then
         assert(R.overlay==R.OV_PAUSE,"authored pause control must open menu")
         app.inject_click(vec2(48,240+R.drop/2))
@@ -43,7 +48,7 @@ game.frame=function(dt)
     elseif stage==7 then
         assert(R.overlay==R.OV_NONE and not R.on_island and R.g==board and R.g.moves==moves and R.selected<0,
                "background dismissal must consume the tap and preserve the round")
-        app.inject_click(vec2(440,38))
+        pause()
     elseif stage==8 then app.inject_click(R.pause_form.boxes.guide:center()+vec2(0,R.drop/2))
     elseif stage==9 then assert(R.overlay==R.OV_GUIDE,"guide opens");background()
     elseif stage==10 then

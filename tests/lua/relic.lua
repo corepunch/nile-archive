@@ -394,11 +394,11 @@ if testing.extended then test_campaign() end
 -- Interaction precedence: depleted/busy controls cannot appear actionable,
 -- touch presses require an origin inside the button; touch has no hover.
 do
-    local art = require("art")
-    check(art.tool_state(0, true, true, true, true, true, true) == "disabled", "exhausted tool overrides selected/pressed")
-    check(art.tool_state(2, false, true, true, true, false, true) == "pressed", "touch press artwork")
-    check(art.tool_state(2, false, true, true, false, false, true) == "normal", "drag into tool is not a press")
-    check(art.tool_state(2, false, true, false, false, true, true) == "hover", "mouse hover artwork")
-    check(art.tool_state(2, true, true, false, false, true, true) == "selected", "selection overrides hover")
-    check(art.tool_state(2, true, false, false, false, false, false) == "disabled", "busy board disables tool")
+    local match3 = require("match3")
+    check(match3.tool_state(0, true, true, true, true, true, true) == "disabled", "exhausted tool overrides selected/pressed")
+    check(match3.tool_state(2, false, true, true, true, false, true) == "pressed", "touch press artwork")
+    check(match3.tool_state(2, false, true, true, false, false, true) == "normal", "drag into tool is not a press")
+    check(match3.tool_state(2, false, true, false, false, true, true) == "hover", "mouse hover artwork")
+    check(match3.tool_state(2, true, true, false, false, true, true) == "selected", "selection overrides hover")
+    check(match3.tool_state(2, true, false, false, false, false, false) == "disabled", "busy board disables tool")
 end
