@@ -108,7 +108,7 @@ local star_icon = R.star_icon
 
 -- One prominent medallion and matching touch area on the island and board.
 local function pause_button(on_island)
-    local bounds=on_island and rect(388,-2,88,88) or rect(402,0,64,64)
+    local bounds=on_island and rect(388,-2,88,88) or rect(402,R.hud_rect.y-10,64,64)   -- in the board's HUD band
     local st=ui.hit(bounds,0)
     local state=st.held and "pressed" or st.hot and "hover" or "normal"
     picture(R.hud_art["pause-"..state],bounds,255)
@@ -141,8 +141,9 @@ function R.draw_toast()
         rrect(rect(18, 710 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
         say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
     else   -- just below the HUD, above the board
-        rrect(rect(38, 78, 404, 28), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 92), 14, PAL_CREAM, 388)
+        local y = R.hud_rect.y + 68
+        rrect(rect(38, y, 404, 28), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, y + 14), 14, PAL_CREAM, 388)
     end
 end
 
