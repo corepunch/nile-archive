@@ -9,10 +9,10 @@ local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 board_intro.bind(R, rules)
+require("match3").bind_board_ui(R, rules, art.tools)
 R.locked_notice = "Ice and tinsel must be cleared first."
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local PH_IDLE, PH_PRESENT = R.PH_IDLE, R.PH_PRESENT
-local PAL_CREAM, PAL_WHITE = R.PAL_CREAM, R.PAL_WHITE
+local PH_IDLE = R.PH_IDLE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
 local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.game_cell_active
 local rgba = color
@@ -24,20 +24,15 @@ local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = 2 * HEX_R
-local TOOL_SIZE = art.tool_size   -- square buttons leave room for labels below
--- The engine owns the board screen's layout (match3 bind_view): R.hud_rect,
--- R.board_origin, R.BOARD_CLIP and R.tools_y.
-
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.kind < 0 then return end
-    -- Hex silhouettes meet all six neighboring edges; other silhouettes fit
-    -- the cell's inscribed square. Account for the authored 8px canvas gutter.
-    local span = t.kind == R.hex_piece_kind and 2 or 1.732050808
-    local s = (board and span * ART_HEX_R * 128 / 112 or ART_CELL_SIZE * .95) * scale
+    -- Same piece size as Relic Rush: the whole 128px canvas, gutter included,
+    -- spans 95% of the authored cell, so pieces never crowd the cell edges.
+    local s = ART_CELL_SIZE * .95 * scale
     local frame = (board and 2 * ART_HEX_R or ART_STATE_SIZE) * scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
@@ -58,7 +53,7 @@ local function draw_backdrop()
     local full = app.bleed()   -- the jungle runs on under the status bar and the home indicator
     local size = texture.size(tex)
     gfx.bleed(true)
-    gfx.image(tex, full:align(size:scale(size:cover(full:size())), vec2(.5, .5)), color.WHITE)
+    gfx.image(tex, R.backdrop_rect(size, full), color.WHITE)   -- engine layout: bottom-anchored
     gfx.rect(full, rgba(5, 30, 29, 35))
     gfx.bleed(false)
     for i = 0, 11 do   -- drifting motes of sunlight
@@ -66,84 +61,6 @@ local function draw_backdrop()
         gfx.circle(p, 1.5 + math.sin(R.now + i) * .5, rgba(245, 250, 255, 130 + 50 * math.sin(R.now + i)))
     end
 end
-
--- One small resource panel per goal, a moves card and Elena's independent investigation cutout.
--- Repeated goal rows use the shared measured list, with stable objective keys.
-function R.goal_entries()
-    local g, l = R.g, rules.level_of(R.g)
-    local entries = {
-        {id="score", icon="score", remaining=math.max(0, l.score-g.score)},
-        {id="idols", icon="idols", remaining=math.max(0, l.relics-g.relics)},
-    }
-    if l.soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,l.soil-g.dug)} end
-    if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
-    return entries
-end
-local goal_centers={}
-local function goal_panel(box, entry)
-    goal_centers[entry.id]=R.skin:resource_icon_box(box):center()
-    local met=entry.remaining==0
-    local icon=entry.icon=="score" and R.hud_art.score
-        or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
-        or R.board_art[entry.icon]
-    R.skin:draw_resource(box,icon,tostring(entry.remaining),{interactive=false,
-        icon_alpha=met and 150/255 or 1,value_icon=met and R.hud_art.complete or nil})
-end
-local hud_form=ui.form{kind="row",gap=8,children={
-    {kind="list",id="goals",width=224,gap=10,item=function(row)
-        local cells={}
-        for _,entry in ipairs(row.entries) do
-            cells[#cells+1]={kind="custom",width=104,height=34,paint=function(box) goal_panel(box,entry) end}
-        end
-        return {kind="row",height=34,gap=16,children=cells}
-    end},
-    {kind="spacer",grow=1},
-    {kind="column",panel=true,width=88,height=116,padding={8,8,8,10},gap=4,children={
-        {kind="label",text="MOVES",height=18,em=14},
-        {kind="label",id="moves",grow=1,em=43},
-    }},
-}}
-local function hud_style(node)
-    return style{font=R.font,size=(node.em or 17)*1.171875,fill=rgba(78,52,27)}
-end
-local hud_skin={
-    style=hud_style,
-    panel=function(r)
-        gfx.shadow(r:offset(vec2(0,4)),16,8,rgba(0,0,0,85))
-        gfx.round_rect(r,16,rgba(139,87,38))
-        gfx.round_rect(r:inflate(-2),14,rgba(228,181,92))
-        gfx.round_rect(r:inflate(-5),12,rgba(255,237,187))
-        gfx.round_rect_line(r:inflate(-6),11,1,rgba(255,252,219,190))
-    end,
-    label=function(r,label,node)
-        text.inside(hud_style(node),r,vec2(node.text_align=="start" and 0 or .5,.5),label)
-    end,
-}
-function R.goal_target(kind)
-    -- Collection flights land on the goal they advance.
-    return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(50,R.hud_rect.y+48)
-end
-local function draw_hud(top)
-    if top <= 0 then return end
-    local hud=R.hud_rect
-    local entries, rows=R.goal_entries(),{}
-    local per_row=#entries==2 and 1 or 2
-    for i=1,#entries,per_row do
-        local row={id=entries[i].id,entries={}}
-        for j=i,math.min(#entries,i+per_row-1) do row.entries[#row.entries+1]=entries[j] end
-        rows[#rows+1]=row
-    end
-    assert(hud_form:set_items("goals",rows))
-    hud_form:set("moves",tostring(R.g.moves))
-    -- Separate portrait texture/anchor will also work for later animated poses.
-    local cutout = R.intro and R.intro:arrive(.2, 3, .45) or 1
-    if R.hud_art.elena and cutout > 0 then   -- she springs up from her feet
-        local box = rect(242,hud.y+116-174,132,174):fit(texture.size(R.hud_art.elena))
-        gfx.image(R.hud_art.elena,box:resize(box:size():scale(cutout),vec2(.5,1)),color.WHITE)
-    end
-    hud_form:draw(rect(24,hud.y + (top - 1) * (hud.y + 120),432,116),hud_skin,{interactive=false})
-end
-R.hud_form=hud_form
 
 local function draw_cells(sx)
     local g = R.g
@@ -223,53 +140,21 @@ local function draw_sheen(sx)
     end
 end
 
-local tool_names = {"Hammer", "Firecracker", "Star wand"}
-
-local function draw_tools(inp)
-    if (R.word_time <= 0 or R.reduced_motion) and not R.intro then
-        R.say_at(R.tool >= 0 and "TAP A TREAT TO USE YOUR TOOL" or "LINE UP 3+ MATCHING TREATS.", vec2(240, R.tools_y - 18), 13, PAL_WHITE, 0)
-    end
-    local y = R.tools_y
-    for k = 0, 2 do
-        local x = 63 + k * 112
-        local r = rect(x - TOOL_SIZE / 2, y, TOOL_SIZE, TOOL_SIZE)
-        local state = art.tool_state(R.g.tools[k + 1], R.tool == k, r:contains(inp.pos), inp.down,
-                                     inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover, R.phase == PH_IDLE or R.phase == PH_PRESENT)
-        -- The tools spring up from below one by one; they take taps at rest.
-        local rise = R.intro and R.intro:arrive(.14 + k * .07, 3, .48) or 1
-        local up = vec2(0, (1 - rise) * 170)
-        gfx.image(R.board_art[art.tools[k + 1] .. "-" .. state], r:offset(up):inflate(5), color.WHITE)
-        gfx.circle(vec2(x + 29, y + 6) + up, 13, rgba(44, 88, 61))
-        R.say(tostring(R.g.tools[k + 1]), rect(x + 16, y - 7, 26, 26):offset(up), 16, PAL_CREAM)
-        R.say_at(tool_names[k + 1], vec2(x, y + TOOL_SIZE + 12) + up, 15, PAL_CREAM, 0)
-        if R.tapped(r) and R.phase == PH_IDLE then R.select_tool(k) end
-    end
-    local guide = rect(387, y + 14, 63, 55)
-    local rise = R.intro and R.intro:arrive(.35, 3, .48) or 1
-    local up = vec2(0, (1 - rise) * 170)
-    gfx.image(R.board_art.guide, guide:offset(up), color.WHITE)
-    R.say_at("GUIDE", vec2(419, y + TOOL_SIZE + 11) + up, 12, PAL_WHITE, 0)
-    if R.phase == PH_IDLE and R.tapped(guide) then R.overlay = R.OV_GUIDE end
-end
+R.tool_notes = {"Hammer: tap a treat to break it.", "Firecracker: tap a treat to blast around it.",
+                "Star wand: tap a treat to clear its three lines."}
 
 ---------------------------------------------------------------------- input
 
 function R.board_screen(inp, dt)
     draw_backdrop()
     local intro = R.intro
-    local top = intro and intro:arrive(0, 2.8, .58) or 1
-    if top > 0 then
-        R.P.offset = vec2(0, (top - 1) * 110)   -- the pause button rides in with the card
-        R.draw_header(false)
-        R.P.offset = vec2(0, 0)
-    end
-    draw_hud(top)
+    R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx)
     draw_relics(sx)
     draw_blockers(sx)
     if intro then draw_sheen(sx) end
-    if top > 0 then draw_tools(inp) end
+    R.draw_board_tools(inp)
     if app.arg("art-states") then art.draw_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)

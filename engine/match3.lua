@@ -8,6 +8,8 @@ local E = {
 -- Engine-owned interaction state; a game adds only its screen/presentation data.
 function E.view(state)
     state = state or {}
+    state.SCREEN_W, state.SCREEN_H = state.SCREEN_W or 480, state.SCREEN_H or 900
+    state.HEX_R, state.drop = state.HEX_R or 32, 0
     state.PH_IDLE, state.PH_SWAP, state.PH_REJECT, state.PH_CLEAR, state.PH_FALL = 0, 1, 2, 3, 4
     state.old_tiles, state.fall_from, state.wave_ice, state.wave_chain = {}, {}, {}, {}
     state.phase, state.phase_time, state.idle_time, state.shake = 0, 0, 0, 0
@@ -41,6 +43,205 @@ function E.skin(override)
     end
     skins[key] = skin
     return skin
+end
+
+-- The same board controls use the authored images from either skin.
+E.TOOL_SIZE = 76
+
+function E.tool_state(charges, selected, inside, down, started_inside, hover, idle)
+    if charges <= 0 or not idle then return "disabled" end
+    if inside and down and started_inside then return "pressed" end
+    if selected then return "selected" end
+    if inside and hover then return "hover" end
+    return "normal"
+end
+
+function E.pause_button(R, bounds, offset)
+    local st = ui.hit(bounds, 0)
+    local state = st.held and "pressed" or st.hot and "hover" or "normal"
+    gfx.image(R.hud_art["pause-" .. state], offset and bounds:offset(offset) or bounds, color.WHITE)
+    return st.clicked
+end
+
+function E.bind_board_ui(R, rules, tool_art)
+    local rgba, PI = color, math.pi
+    local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
+    function R.goal_entries()
+        local g, l = R.g, rules.level_of(R.g)
+        local entries = {
+            {id="score", icon="score", remaining=math.max(0, l.score-g.score)},
+            {id="idols", icon="idols", remaining=math.max(0, l.relics-g.relics)},
+        }
+        if l.soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,l.soil-g.dug)} end
+        if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
+        return entries
+    end
+    local goal_centers = {}
+    local function goal_panel(box, entry)
+        goal_centers[entry.id] = R.skin:resource_icon_box(box):center()
+        local icon = entry.icon=="score" and R.hud_art.score
+            or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
+            or R.board_art[entry.icon]
+        -- Collections landing on a goal make it bounce.
+        local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
+        local met = entry.remaining==0
+        R.skin:draw_resource(box, icon, tostring(entry.remaining), {interactive=false,
+            icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
+            icon_alpha=met and 150/255 or 1, value_icon=met and R.hud_art.complete or nil})
+    end
+    local hud_form=ui.form{kind="row",gap=6,align="center",children={
+        {kind="spacer",width=82},    -- the Moves medallion
+        {kind="spacer",grow=1},
+        {kind="list",id="goals",direction="row",gap=6,item=function(entry)
+            -- The score runs to four digits; the other counts stay narrow.
+            return {kind="custom",width=entry.id=="score" and 88 or 62,height=30,paint=function(box) goal_panel(box,entry) end}
+        end},
+        {kind="spacer",grow=1},
+        {kind="spacer",width=64},    -- Pause
+    }}
+
+    -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
+    -- remaining moves large inside. It warms to red over the last five moves.
+    local function draw_moves(arrive)
+        local c, r, a = vec2(56, R.hud_rect:center().y), 40 * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
+        local moves = R.g.moves
+        local urgent = moves <= 5 and not R.g.won
+        if urgent and not R.reduced_motion then
+            gfx.additive(true)
+            gfx.glow(c, r + 14, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
+            gfx.additive(false)
+        end
+        gfx.ngon(c + vec2(0, 5), r, 6, a, rgba(3, 20, 18, 150))
+        gfx.ngon(c, r, 6, a, rgba(116, 74, 33))
+        gfx.ngon(c, r - 2, 6, a, rgba(236, 196, 112))
+        gfx.ngon(c + vec2(0, 2), r - 5, 6, a, rgba(176, 120, 48))
+        local face = R.skin:color(urgent and "moves_low" or "moves_face")
+        local glow = R.skin:color(urgent and "moves_low_glow" or "moves_glow")
+        gfx.ngon(c, r - 7, 6, a, face)
+        gfx.glow(c + vec2(0, -4), r - 12, glow, color.alpha(face, 0))
+        if arrive < .8 then return end   -- the numbers come with the settled medallion
+        text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17 * arrive), size2(56, 12)), vec2(.5, .5), "MOVES")
+        local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29 * arrive)
+        text.inside(s, rect.centered(c + vec2(0, 5 * arrive), size2(62, 34)), vec2(.5, .5), tostring(moves))
+    end
+
+    function R.goal_target(kind)
+        -- Collection flights land on the goal they advance.
+        return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, R.hud_rect:center().y)
+    end
+    function R.draw_board_hud()
+        local top = R.intro and R.intro:arrive(0, 2.8, .58) or 1
+        if top <= 0 then return end
+        local offset = vec2(0, (top - 1) * (R.hud_rect.y + 110))
+        assert(hud_form:set_items("goals",R.goal_entries()))
+        -- Medallion, goals and Pause all centre on the band's midline.
+        hud_form:draw(rect.centered(R.hud_rect:center(), size2(R.hud_rect.w - 28, 44)):offset(offset),R.skin,{interactive=false})
+        local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
+        if medallion > .05 then draw_moves(medallion) end
+        if E.pause_button(R, R.board_pause, offset) then R.overlay = R.OV_PAUSE end
+    end
+
+    function R.draw_board_tools(inp)
+        if R.intro and R.intro:arrive(.05, 2.8, .58) <= 0 then return end
+        for k = 0, 2 do
+            local r = R.board_tool_bounds(k)
+            local x, y = r:center().x, r.y
+            local charges = R.g.tools[k + 1]
+            local state = E.tool_state(charges, R.tool == k, r:contains(inp.pos), inp.down,
+                                       inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover,
+                                       R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT)
+            -- The tools spring up from the bottom edge one by one; they take taps at rest.
+            local rise = R.intro and R.intro:arrive(.14 + k * .07, 3, .48) or 1
+            local up = vec2(0, (1 - rise) * 120)
+            local drawn = r:offset(up)
+            gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
+            gfx.image(R.board_art[tool_art[k + 1] .. "-" .. state], drawn:inflate(5), color.WHITE)
+            gfx.circle(vec2(x + 31, y + 4) + up, 14, rgba(116, 74, 33))
+            gfx.circle(vec2(x + 31, y + 4) + up, 12, charges > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
+            R.say(tostring(charges), rect(x + 18, y - 9, 26, 26):offset(up), 16, PAL_CREAM)
+            if ui.hit(r, 0).clicked and R.phase == R.PH_IDLE then R.select_tool(k) end
+        end
+    end
+end
+
+function E.result_rects(screen_w, screen_h)
+    local w, s = math.min(408, screen_w - 48), math.min(1, (screen_h - 100) / 556)
+    local x, y = (screen_w - w) / 2, (screen_h - 556 * s) / 2 + 8
+    return {card = rect(x, y, w, 556 * s), header = rect(x + 22, y - 26 * s, w - 44, 74 * s), stars = rect(x + 70, y + 70 * s, w - 140, 64 * s),
+            score_label = rect(x + 66, y + 140 * s, w - 132, 20 * s), score = rect(x + 60, y + 163 * s, w - 120, 53 * s),
+            treasure_label = rect(x + 30, y + 217 * s, w - 60, 20 * s), rewards = rect(x + 22, y + 243 * s, w - 44, 91 * s),
+            progress = rect(x + 44, y + 349 * s, w - 88, 36 * s), next = rect(x + 28, y + 397 * s, w - 56, 65 * s),
+            claim = rect(x + 40, y + 480 * s, w - 80, 56 * s)}
+end
+
+function E.guide_form(copy, guide_icon)
+    return ui.form{kind="column",panel=true,padding=20,children={
+        {kind="label",text=copy.title,height=44,em=34},
+        {kind="label",text=copy.instructions,height=26,em=13,text_style="white"},
+        {kind="spacer",height=14},
+        {kind="list",id="topics",gap=12,item=function(entry)
+            local align=entry.icon and "start" or "center"
+            return {kind="row",gap=14,align="center",children={
+                {kind="custom",width=64,height=64,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
+                {kind="column",grow=1,gap=4,children={
+                    {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
+                    {kind="label",text=entry.description,wrap=true,text_align=align,em=16,text_style="cream"},
+                }},
+            }}
+        end},
+        {kind="spacer",height=18},
+        {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,text_style="white"},
+        {kind="spacer",height=10},
+        {kind="button",id="done",text=copy.done,height=45,em=25},
+    }}
+end
+
+function E.pause_form(guide_label, quit_label)
+    return ui.form{
+        root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
+            {kind="label",text="Settings",height=44,em=34},
+            {kind="label",id="level",height=22,em=16,text_style="cream"},
+            {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
+                {kind="checkbox",id="sound",text="SOUND",height=50},
+                {kind="checkbox",id="motion",text="REDUCE MOTION",height=50},
+            }},
+            {kind="column",gap=12,children={
+                {kind="button",id="resume",text="RESUME",height=52},
+                {kind="button",id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+                {kind="button",id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+            }},
+            {kind="button",id="guide",text=guide_label,height=32,role="link",em=20},
+        }},
+        bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
+    }
+end
+
+local function draw_dialog_form(R, form, width, y)
+    local _, height = form:measure(width, R.skin)
+    local bounds = rect.centered(vec2(R.SCREEN_W / 2, y), size2(width, height))
+    R.modal_bounds = R.pr(bounds)
+    return form:draw(bounds, R.skin, {hit_offset=vec2(0, R.hit_dy)})
+end
+
+function E.draw_guide(R, form)
+    local event = draw_dialog_form(R, form, 432, R.SCREEN_H / 2 + 10)
+    if event and event.id == "done" then R.overlay = R.OV_NONE end
+end
+
+function E.draw_pause(R, form, level)
+    local ok, message = form:push(R)
+    assert(ok, message)
+    form.values.expedition = not R.on_island
+    form:set("level", level)
+    local event = draw_dialog_form(R, form, 396, R.SCREEN_H / 2)
+    if not event then return end
+    if event.kind == "change" then
+        ok, message = form:pull(R)
+        assert(ok, message)
+        sfx.enable(R.sound)
+    elseif event.id == "resume" then R.overlay = R.OV_NONE
+    elseif event.id == "guide" then R.overlay = R.OV_GUIDE
+    else return event.id end
 end
 
 function E.new(config)
@@ -650,22 +851,36 @@ function E.new(config)
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
 
     -- One board-screen layout for every match-3 game. Games paint into its
-    -- bands but cannot move them. Top to bottom on the 480-wide screen (at
-    -- least 900 tall): the backdrop's scenery band, left clear for the
-    -- painting; the HUD band, which holds goals, moves and portraits; the
-    -- board, centred in what is left; and the tool row along the bottom.
+    -- bands but cannot move them. It is measured up from the bottom edge, at
+    -- the size it has on a 480x1040 phone: the tool row, the board above it,
+    -- then the HUD band (goals, moves and Pause). The backdrop painting keeps
+    -- its 1040-tall scale and stands on the bottom edge too, so its scenery
+    -- always ends just above the HUD. A shorter screen only crops the top of
+    -- the painting; the board is never squeezed.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
-    local SCENERY, SCENERY_GROWTH, HUD_H, TOOLS_FROM_BOTTOM, TOOL_HINT = 125, .7, 120, 116, 24
+    local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 782, 409, 100, 64
     local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
         local h = math.max(design_h, app.screen().h)
         R.drop = h - design_h
-        R.hud_rect = rect(0, math.floor(SCENERY + R.drop * SCENERY_GROWTH), w, HUD_H)   -- taller phones show more painting
+        R.hud_rect = rect(0, h - HUD_FROM_BOTTOM, w, HUD_H)
+        R.board_pause = rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
+        R.board_toast = rect(38, R.hud_rect.y + 68, w - 76, 28)
         R.tools_y = h - TOOLS_FROM_BOTTOM
-        local top = R.hud_rect.y + HUD_H
-        R.board_origin = vec2(w / 2, math.floor((top + R.tools_y - TOOL_HINT) / 2))
+        R.board_origin = vec2(w / 2, h - BOARD_FROM_BOTTOM)
         R.BOARD_CLIP = rect.centered(R.board_origin, board_size)
+    end
+    -- Where a backdrop of this pixel size goes in the bleed rect `full`:
+    -- at least its 1040-tall scale, covering the screen, on the bottom edge.
+    function R.backdrop_rect(size, full)
+        local s = math.max(math.max(REF_H, full.h) / size.h, full.w / size.w)
+        local sw, sh = size.w * s, size.h * s
+        return rect(full.x + (full.w - sw) / 2, full.y + full.h - sh, sw, sh)
+    end
+    function R.board_tool_bounds(k)
+        local x = R.board_origin.x + (k - 1) * 120
+        return rect(x - E.TOOL_SIZE / 2, R.tools_y, E.TOOL_SIZE, E.TOOL_SIZE)
     end
     R.layout = layout
     layout()

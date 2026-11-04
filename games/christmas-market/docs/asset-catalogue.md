@@ -29,7 +29,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Snowfall and feedback | Lua renderer | Procedural | Transient snow particles, collection particles, beams, lift and placement feedback; no authored control state is derived with a filter |
 | Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/particles.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
-Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved inside extracted artwork. Control states are directly cropped from the authored atlas.
+Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved inside extracted artwork. Control states are directly cropped from the authored atlas. The six pieces, the three tools' states, Pause and the goal star are cropped square around their own artwork, with one side per family, and scaled evenly to 128×128. That keeps their authored proportions: the earlier unequal source cells stretched them tall. Hex board states keep their whole source cell, because it registers them to the board slot.
 
 Reproduce draft runtime extraction with `python3 games/christmas-market/tools/prepare_assets.py`; launch previews with `make run-christmas-market ARGS="--showcase --fresh --mute"` or `ARGS="--level 4 --fresh --mute"`. The PR captures all screens at 480×900, plus the market, board and dialogue at 390×844 with safe areas. All twelve directional building footprints are included across three review pages. Every building footprint is now projected from the Blender scene and checked in the ten review pages.
 
@@ -55,7 +55,7 @@ The script also calls for eight optional illustrated panels (six episode panels 
 
 The user selected the supplied portrait as the main character. Built-in ImageGen used it as the identity reference for the app icon and for transparent background extraction. Exact prompts are preserved in `art/character-and-icon-prompts.json`. Reproduce the runtime exports with `python3 games/christmas-market/tools/prepare_character.py` (also called by the full asset preparation script). All eleven iOS/macOS catalogue entries were checked for the declared pixel dimensions and opaque RGB, and the 64px icon was visually inspected. Xcode project freshness checks pass.
 
-Actual game captures cover both portrait uses: [480×900 puzzle header](screenshots/main-character-board.jpg) and [390×844 dialogue with safe areas](screenshots/main-character-dialogue.jpg).
+The portrait appears only in dialogue; see the [390×844 dialogue with safe areas](screenshots/main-character-dialogue.jpg) capture.
 
 
 ## Reviewed state coverage
@@ -67,6 +67,12 @@ Actual game captures cover both portrait uses: [480×900 puzzle header](screensh
 - [Valid placement](screenshots/placement.jpg), [blocked placement](screenshots/blocked-placement.jpg), [shop](screenshots/shop.jpg), [building card](screenshots/building-card.jpg), and [reward](screenshots/reward.jpg).
 
 `art/manifest.json` records hashes for every runtime file. Update it with `python3 games/christmas-market/tools/check_assets.py --update` only alongside the corresponding catalogue/source changes. The full native build with `-Werror`, rule tests, Lua lint (59 files, zero warnings), inventory checks and real-input game smoke pass on macOS. Linux Xvfb, WebAssembly and iOS Simulator coverage run in CI.
+
+Settings uses the shared match-3 form. The checked, unchecked, pressed and
+disabled checkbox looks come from `lua/skin.lua`, and the form paints keyboard
+focus with the skin's focus style. Sound and Reduce Motion use the same
+checkbox control. Review the panel with
+`build/test/christmas-market "shot pause" "shot phone-pause"`.
 
 ## Engine match-3 atlas and trickling
 

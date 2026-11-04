@@ -3,10 +3,10 @@
     {
       "path": "tile-sets/festive/0.png",
       "crop": [
-        0,
-        0,
-        198,
-        232
+        4,
+        17,
+        211,
+        224
       ],
       "output": [
         128,
@@ -16,9 +16,9 @@
     {
       "path": "tile-sets/festive/1.png",
       "crop": [
-        198,
-        0,
-        396,
+        197,
+        26,
+        404,
         232
       ],
       "output": [
@@ -29,10 +29,10 @@
     {
       "path": "tile-sets/festive/2.png",
       "crop": [
-        396,
-        0,
-        595,
-        232
+        398,
+        22,
+        605,
+        229
       ],
       "output": [
         128,
@@ -42,10 +42,10 @@
     {
       "path": "tile-sets/festive/3.png",
       "crop": [
-        595,
-        0,
-        793,
-        232
+        590,
+        22,
+        797,
+        230
       ],
       "output": [
         128,
@@ -55,10 +55,10 @@
     {
       "path": "tile-sets/festive/4.png",
       "crop": [
-        793,
-        0,
-        991,
-        232
+        790,
+        22,
+        997,
+        228
       ],
       "output": [
         128,
@@ -68,10 +68,10 @@
     {
       "path": "tile-sets/festive/5.png",
       "crop": [
-        991,
-        0,
-        1190,
-        232
+        985,
+        27,
+        1192,
+        234
       ],
       "output": [
         128,
@@ -250,10 +250,10 @@
     {
       "path": "board-states/pickaxe-normal.png",
       "crop": [
-        595,
-        422,
-        793,
-        607
+        599,
+        414,
+        790,
+        605
       ],
       "output": [
         128,
@@ -263,9 +263,9 @@
     {
       "path": "board-states/pickaxe-selected.png",
       "crop": [
-        793,
-        422,
-        991,
+        798,
+        416,
+        988,
         607
       ],
       "output": [
@@ -276,10 +276,10 @@
     {
       "path": "board-states/pickaxe-pressed.png",
       "crop": [
-        991,
-        422,
-        1190,
-        607
+        996,
+        414,
+        1187,
+        606
       ],
       "output": [
         128,
@@ -289,10 +289,10 @@
     {
       "path": "board-states/pickaxe-hover.png",
       "crop": [
-        1190,
-        422,
-        1388,
-        607
+        1193,
+        416,
+        1384,
+        606
       ],
       "output": [
         128,
@@ -302,10 +302,10 @@
     {
       "path": "board-states/pickaxe-disabled.png",
       "crop": [
-        1388,
-        422,
-        1586,
-        607
+        1392,
+        416,
+        1583,
+        606
       ],
       "output": [
         128,
@@ -315,10 +315,10 @@
     {
       "path": "board-states/dynamite-normal.png",
       "crop": [
-        0,
-        607,
+        6,
+        592,
         198,
-        786
+        784
       ],
       "output": [
         128,
@@ -328,10 +328,10 @@
     {
       "path": "board-states/dynamite-selected.png",
       "crop": [
-        198,
-        607,
-        396,
-        786
+        203,
+        592,
+        395,
+        784
       ],
       "output": [
         128,
@@ -341,10 +341,10 @@
     {
       "path": "board-states/dynamite-pressed.png",
       "crop": [
-        396,
-        607,
-        595,
-        786
+        402,
+        592,
+        594,
+        784
       ],
       "output": [
         128,
@@ -354,10 +354,10 @@
     {
       "path": "board-states/dynamite-hover.png",
       "crop": [
-        595,
-        607,
-        793,
-        786
+        598,
+        596,
+        790,
+        788
       ],
       "output": [
         128,
@@ -367,10 +367,10 @@
     {
       "path": "board-states/dynamite-disabled.png",
       "crop": [
-        793,
-        607,
-        991,
-        786
+        798,
+        592,
+        990,
+        784
       ],
       "output": [
         128,
@@ -380,10 +380,10 @@
     {
       "path": "board-states/sunburst-normal.png",
       "crop": [
-        991,
-        607,
-        1190,
-        786
+        992,
+        592,
+        1184,
+        784
       ],
       "output": [
         128,
@@ -394,9 +394,9 @@
       "path": "board-states/sunburst-selected.png",
       "crop": [
         1190,
-        607,
-        1388,
-        786
+        593,
+        1382,
+        785
       ],
       "output": [
         128,
@@ -406,10 +406,10 @@
     {
       "path": "board-states/sunburst-pressed.png",
       "crop": [
-        1388,
-        607,
-        1586,
-        786
+        1390,
+        593,
+        1582,
+        785
       ],
       "output": [
         128,
@@ -419,10 +419,10 @@
     {
       "path": "board-states/sunburst-hover.png",
       "crop": [
-        0,
-        786,
+        6,
+        778,
         198,
-        992
+        970
       ],
       "output": [
         128,
@@ -432,10 +432,10 @@
     {
       "path": "board-states/sunburst-disabled.png",
       "crop": [
-        198,
-        786,
-        396,
-        992
+        207,
+        777,
+        399,
+        969
       ],
       "output": [
         128,
@@ -445,10 +445,10 @@
     {
       "path": "expedition-hud/pause-normal.png",
       "crop": [
-        396,
-        786,
-        595,
-        992
+        402,
+        775,
+        594,
+        967
       ],
       "output": [
         128,
@@ -458,10 +458,10 @@
     {
       "path": "expedition-hud/pause-selected.png",
       "crop": [
-        595,
-        786,
-        793,
-        992
+        598,
+        776,
+        790,
+        968
       ],
       "output": [
         128,
@@ -471,10 +471,10 @@
     {
       "path": "expedition-hud/pause-pressed.png",
       "crop": [
-        793,
-        786,
-        991,
-        992
+        797,
+        776,
+        989,
+        968
       ],
       "output": [
         128,
@@ -484,10 +484,10 @@
     {
       "path": "expedition-hud/pause-hover.png",
       "crop": [
-        991,
-        786,
-        1190,
-        992
+        996,
+        777,
+        1188,
+        969
       ],
       "output": [
         128,
@@ -497,10 +497,10 @@
     {
       "path": "expedition-hud/pause-disabled.png",
       "crop": [
-        1190,
-        786,
-        1388,
-        992
+        1192,
+        776,
+        1384,
+        968
       ],
       "output": [
         128,
@@ -511,9 +511,9 @@
       "path": "expedition-hud/complete.png",
       "crop": [
         1388,
-        786,
-        1586,
-        992
+        782,
+        1578,
+        971
       ],
       "output": [
         128,

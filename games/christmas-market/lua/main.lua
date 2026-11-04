@@ -123,7 +123,17 @@ local function smoke()
         return
     end
     if smoke_stage == -2 and R.overlay==R.OV_NONE then
-        app.inject_click(vec2(419,825+R.drop));smoke_stage=-1
+        app.inject_click(R.board_pause:center());smoke_stage=-3   -- Pause, in the HUD band
+    elseif smoke_stage == -3 and R.overlay==R.OV_PAUSE and R.dialog_settled() then
+        smoke_move.sound = R.sound
+        assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "market Pause only shows supported actions")
+        app.inject_click(R.pause_form.boxes.sound:center()+vec2(0,R.drop/2));smoke_stage=-4
+    elseif smoke_stage == -4 then
+        assert(R.sound == not smoke_move.sound and R.overlay == R.OV_PAUSE, "the Sound checkbox toggles sound")
+        app.inject_click(R.pause_form.boxes.sound:center()+vec2(0,R.drop/2));smoke_stage=-5
+    elseif smoke_stage == -5 then
+        assert(R.sound == smoke_move.sound, "the Sound checkbox restores sound")
+        app.inject_click(R.pause_form.boxes.guide:center()+vec2(0,R.drop/2));smoke_stage=-1
     elseif smoke_stage == -1 and R.overlay==R.OV_GUIDE and R.dialog_settled() then
         local done=R.guide_form.boxes.done
         assert(done and #R.guide_form.nodes.topics.children==5,"smoke: guide data source was not laid out")
@@ -236,7 +246,7 @@ local function smoke()
         app.inject_click(vec2(40,38));smoke_stage=32
     elseif smoke_stage==32 then
         assert(not R.on_island and R.overlay==R.OV_NONE,'unfinished expedition must not expose island access')
-        app.inject_click(vec2(440,38));smoke_stage=33
+        app.inject_click(R.board_pause:center());smoke_stage=33
     elseif smoke_stage==33 and R.overlay==R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(vec2(12,220+R.drop/2));smoke_stage=34
     elseif smoke_stage==34 and R.overlay==R.OV_NONE then

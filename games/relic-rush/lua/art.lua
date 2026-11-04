@@ -18,7 +18,6 @@ A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
-A.tool_size = 76   -- square authored artwork and matching square touch targets
 A.hud_icons = {"score", "complete"}
 A.wallet_icons={life="expedition-hud/life.png",amulets="relics-0",stars="discovery-star"}
 A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play"},states=A.states}
@@ -57,14 +56,6 @@ function A.draw_hud_catalogue(R)
             R.skin:paint_button(rect(28+(i-1)*89,505+(row-1)*94,72,72),st,{role="navigation_"..kind})
         end
     end
-end
-
-function A.tool_state(charges, selected, inside, down, started_inside, hover, idle)
-    if charges <= 0 or not idle then return "disabled" end
-    if inside and down and started_inside then return "pressed" end
-    if selected then return "selected" end
-    if inside and hover then return "hover" end
-    return "normal"
 end
 
 function A.load()

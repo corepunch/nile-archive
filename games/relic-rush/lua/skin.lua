@@ -25,6 +25,10 @@ return ui.skin{
     colors = {
         ink = "#3E311D",
         ink_shadow = "#1F2318B8",
+        moves_face = "#0C3E34",
+        moves_glow = "#247C60",
+        moves_low = "#702218",
+        moves_low_glow = "#B24028",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.

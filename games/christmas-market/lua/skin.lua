@@ -17,6 +17,10 @@ return ui.skin{
     colors = {
         ink = "#3E311D",
         ink_shadow = "#1F2318B8",
+        moves_face = "#164630",
+        moves_glow = "#2C7850",
+        moves_low = "#80181E",
+        moves_low_glow = "#C43434",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.
@@ -35,7 +39,10 @@ return ui.skin{
             {fill = "#664427", radius = 18},
             {fill = "#EFCC87", radius = 16, inset = 2},
             {fill = "#FFEFBC", radius = 13, inset = 5},
-        }}},
+        }}, variants = {group = {normal = {layers = {
+            {fill = "#E8CC8E", fill2 = "#F6E2B0", radius = 14},
+            {border = "#C9A464", width = 1.5, radius = 14},
+        }}}}},
 
         -- A slim pill holding one figure; the icon overhangs its left end.
         resource = {
@@ -61,9 +68,35 @@ return ui.skin{
             }},
             pressed = {offset = {0, 2}},
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},
-            variants = {flat = {normal = {layers = {}}}},   -- a text-only action, such as CLOSE
+            variants = {
+                flat = {normal = {layers = {}}},
+                link = {text = "gold", normal = {layers = {}}},
+            },
         },
         toggle = {extends = "button"},
+
+        checkbox = {
+            size = 40, gap = 16, text = "cream", em = 25,
+            box = {
+                normal = {layers = {
+                    {name = "shadow", fill = "#0D362B", radius = 11, offset = {0, 5}, fixed = true},
+                    {name = "rim", fill = "#664427", radius = 11},
+                    {name = "well", fill = "#E6CB8C", fill2 = "#FFF3CC", radius = 8, inset = 3},
+                }},
+                pressed = {offset = {0, 2}},
+                disabled = {set = {rim = {fill = "#6E655A"}, well = {fill = "#C9C2B2", fill2 = "#DDD8CC"}}},
+            },
+            mark = {
+                normal = {layers = {
+                    {name = "face", fill = "#B84041", fill2 = "#85232E", radius = 8, inset = 3},
+                    {name = "gloss", fill = "#D3665B", radius = 6, height_ratio = .42, inset = {6, 5, 6, -5}},
+                    {name = "tick_rim", check = "#641D29", width = 7.5, inset = 3},
+                    {name = "tick", check = "#FFF9E2", width = 4.5, inset = 3},
+                }},
+                pressed = {offset = {0, 2}},
+                disabled = {set = {face = {fill = "#8E9A88", fill2 = "#76806F"}, gloss = {fill = "#A9B3A2"}}},
+            },
+        },
 
         label = {text = "gold", em = 26, wrap_text = "cream", wrap_em = 22},
 

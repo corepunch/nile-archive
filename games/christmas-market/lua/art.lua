@@ -7,7 +7,6 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
-A.tool_size = 76   -- square authored artwork and matching square touch targets
 A.hud_icons = {"complete"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
@@ -43,14 +42,6 @@ function A.draw_hud_catalogue(R)
     R.say_at("complete",vec2(181,502),14,R.PAL_CREAM,90)
     if R.hud_art.elena then gfx.image(R.hud_art.elena,rect(258,398,174,268):fit(texture.size(R.hud_art.elena)),color.WHITE) end
     R.say_at("Noelle, market keeper",vec2(240,683),17,R.PAL_CREAM,400)
-end
-
-function A.tool_state(charges, selected, inside, down, started_inside, hover, idle)
-    if charges <= 0 or not idle then return "disabled" end
-    if inside and down and started_inside then return "pressed" end
-    if selected then return "selected" end
-    if inside and hover then return "hover" end
-    return "normal"
 end
 
 function A.load()
