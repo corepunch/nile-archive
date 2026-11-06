@@ -53,7 +53,10 @@ return ui.skin{
                 {border = "#E9C77BBE", width = 1.4, radius_scale = 1},
             }},
             pressed = {offset = {0, 1}},
-            variants = {wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5}},
+            variants = {
+                goal = {icon_overhang = .24},
+                wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
+            },
         },
 
         -- A festive red button with a gloss on an evergreen shadow; pressing

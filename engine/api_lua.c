@@ -2728,6 +2728,19 @@ static int l_gfx_image_rot(lua_State *L)
     return 0;
 }
 
+/* gfx.image_hex(t, src, center, radius, angle, tint) */
+static int l_gfx_image_hex(lua_State *L)
+{
+    texture a_t = api_check_texture(L, 1);
+    rect a_src = api_check_rect(L, 2);
+    vec2 a_center = api_check_vec2(L, 3);
+    float a_radius = (float)luaL_checknumber(L, 4);
+    float a_angle = (float)luaL_checknumber(L, 5);
+    color a_tint = api_check_color(L, 6);
+    draw_image_hex(a_t, a_src, a_center, a_radius, a_angle, a_tint);
+    return 0;
+}
+
 /* gfx.image_striped(t, dst, angle, repeats, width, ink, tint) */
 static int l_gfx_image_striped(lua_State *L)
 {
@@ -2879,6 +2892,19 @@ static int l_gfx_ngon(lua_State *L)
     float a_angle = (float)luaL_checknumber(L, 4);
     color a_c = api_check_color(L, 5);
     draw_ngon(a_center, a_radius, a_sides, a_angle, a_c);
+    return 0;
+}
+
+/* gfx.ngon_grad(center, radius, sides, angle, top, bottom) */
+static int l_gfx_ngon_grad(lua_State *L)
+{
+    vec2 a_center = api_check_vec2(L, 1);
+    float a_radius = (float)luaL_checknumber(L, 2);
+    int a_sides = (int)luaL_checkinteger(L, 3);
+    float a_angle = (float)luaL_checknumber(L, 4);
+    color a_top = api_check_color(L, 5);
+    color a_bottom = api_check_color(L, 6);
+    draw_ngon_grad(a_center, a_radius, a_sides, a_angle, a_top, a_bottom);
     return 0;
 }
 
@@ -4184,6 +4210,7 @@ static void open_gfx(lua_State *L)
         {"image", l_gfx_image},
         {"image_part", l_gfx_image_part},
         {"image_rot", l_gfx_image_rot},
+        {"image_hex", l_gfx_image_hex},
         {"image_striped", l_gfx_image_striped},
         {"rect", l_gfx_rect},
         {"rect_grad", l_gfx_rect_grad},
@@ -4198,6 +4225,7 @@ static void open_gfx(lua_State *L)
         {"poly", l_gfx_poly},
         {"polyline", l_gfx_polyline},
         {"ngon", l_gfx_ngon},
+        {"ngon_grad", l_gfx_ngon_grad},
         {"star", l_gfx_star},
         {"additive", l_gfx_additive},
         {"clip", l_gfx_clip},

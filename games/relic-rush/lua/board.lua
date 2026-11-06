@@ -19,12 +19,14 @@ local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.
 local rgba = color
 local PI = math.pi
 
--- Preserve the authored cell-mask registration and the guide's icon size;
--- only live board pieces follow the board's geometry.
+-- Preserve the guide's icon size; only live board pieces follow the board's geometry.
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
+local CELL_FACE_R = HEX_R - .65
+local EDGE_SIZE = 128 * CELL_FACE_R / 46
+local INSET_SAND_SIZE = 128 * (CELL_FACE_R - 7.5) / 46
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
@@ -50,12 +52,13 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
 end
 local draw_relic = R.draw_relic
 
--- Filled ice remains translucent enough to identify the matching gem beneath it.
--- Reuse this in the guide so the remaining-hit indicator is explained visually.
+-- The guide and board share the ice rim and its remaining-hit indicator.
 function R.draw_ice(hits, at, scale, alpha, material_only)
-    local dst = rect.centered(at,size2.splat(ART_STATE_SIZE * scale))
-    gfx.image(R.board_art[hits > 1 and "ice-2" or "ice-1"],dst,
-        rgba(255,255,255,art.indicators.ice_opacity * alpha))
+    local name = hits > 1 and "ice-2" or "ice-1"
+    local edge = R.board_art[name .. "-edge"]
+    local size = edge and EDGE_SIZE / BOARD_SCALE or ART_STATE_SIZE
+    local dst = rect.centered(at,size2.splat(size * scale))
+    gfx.image(edge or R.board_art[name], dst, rgba(255,255,255,(edge and 255 or art.indicators.ice_opacity) * alpha))
     if material_only then return end
     R.draw_ice_count(hits,at,scale,alpha)
 end
@@ -106,11 +109,16 @@ local function draw_cells(sx)
             local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
             local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
                               or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
-            -- Terrain keeps its full tile face; powers and glows have no frame.
             local tile = has_state and rgba(13, 47, 41)
                       or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73)
-            gfx.image_rot(R.board_art["cell-mask"], dst, turn, color.alpha(tile, fade))
-            if g.soil[i] > 0 then gfx.image_rot(R.board_art.sand, dst, turn, rgba(255, 255, 255, 255 * fade)) end
+            gfx.ngon_grad(at, CELL_FACE_R * scale, 6, turn, color.alpha(color.shade(tile, 1.26), fade),
+                          color.alpha(color.shade(tile, .77), fade))
+            if g.soil[i] > 0 then
+                local edge = R.board_art["sand-edge"]
+                local size = g.ice[i] > 0 and INSET_SAND_SIZE or EDGE_SIZE
+                local sand = edge and rect.centered(at, size2.splat(size * scale)) or dst
+                gfx.image_rot(edge or R.board_art.sand, sand, turn, color.alpha(color.WHITE, fade))
+            end
             if flash > 0 then   -- it opens glowing
                 R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
                 gfx.additive(true)

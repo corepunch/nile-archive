@@ -131,7 +131,10 @@ return ui.skin{
             }},
             pressed = {offset = {0, 1}},
             -- The island wallet is prominent: 60-unit icons on 36-unit panels.
-            variants = {wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5}},
+            variants = {
+                goal = {icon_overhang = .24},
+                wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
+            },
         },
 
         label = {text = "gold", em = 26, wrap_text = "cream", wrap_em = 22},

@@ -119,14 +119,14 @@ function E.bind_board_ui(R, rules, tool_art)
     end
     local goal_centers = {}
     local function goal_panel(box, entry)
-        goal_centers[entry.id] = R.skin:resource_icon_box(box):center()
+        goal_centers[entry.id] = R.skin:resource_icon_box(box, "goal"):center()
         local icon = entry.icon=="score" and R.hud_art.score
             or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
             or R.board_art[entry.icon]
         -- Collections landing on a goal make it bounce.
         local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
         local met = entry.remaining==0
-        R.skin:draw_resource(box, icon, tostring(entry.remaining), {interactive=false,
+        R.skin:draw_resource(box, icon, tostring(entry.remaining), {role="goal", interactive=false,
             icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
             icon_alpha=met and 150/255 or 1, value_icon=met and R.hud_art.complete or nil})
     end

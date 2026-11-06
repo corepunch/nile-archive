@@ -114,6 +114,15 @@ static void draw_and_check(void)
     c = pixel(20, 77); CHECK(c.r > 170);  /* diagonal band */
     c = pixel(25, 77); CHECK(c.r < 100); /* diagonal gap */
     c = pixel(70, 20); CHECK(c.r < 15 && c.g > 240 && c.b < 15); /* no leaked stripe state */
+
+    draw_rect(rc(0, 0, 100, 100), BLACK);
+    draw_image_hex(masked, rc(1, 0, 2, 4), v2(26, 23), 16, ENGINE_PI / 6, WHITE);
+    draw_ngon_grad(v2(68, 23), 16, 6, 0, WHITE, hex(0x404040));
+    CHECK(render_read_pixels(pixels, width, height));
+    c = pixel(26, 10); CHECK(c.r < 60 && c.g > 65 && c.b > 140); /* rotated atlas crop */
+    c = pixel(39, 10); CHECK(c.r == 0 && c.g == 0 && c.b == 0); /* outside the hex */
+    CHECK(pixel(68, 12).r > pixel(68, 33).r + 100); /* light above dark */
+    CHECK(pixel(81, 12).r == 0);
     tex_free(atlas);
 
     /* Off the logical screen, drawing is clipped until bleed lets it reach the display. */

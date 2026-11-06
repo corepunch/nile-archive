@@ -9,6 +9,22 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 ![All packs and authored states rendered by the game](screenshots/art-catalogue.jpg)
 
+## Cell and goal alignment
+
+Live green wells use the engine's flat-top hex geometry and a light-to-dark
+vertical gradient. The atlas cell mask remains the registration reference for
+authored art. Goal icons sit 3.6 logical units farther left over their
+capsules, with collection flights landing at the same position.
+
+Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot art-specials"`.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Original board and goals](screenshots/review/cell-and-goals/before-480x900.jpg) | ![Gradient wells and aligned goals](screenshots/review/cell-and-goals/after-480x900.jpg) |
+| 390×844 | ![Original board on a narrower phone](screenshots/review/cell-and-goals/before-390x844.jpg) | ![Gradient wells on a narrower phone](screenshots/review/cell-and-goals/after-390x844.jpg) |
+
+[Board with blockers and specials](screenshots/review/cell-and-goals/specials.jpg)
+
 ## Buildings and decorations
 
 The [building catalogue](building-catalogue.md) covers **96** registered sprites,
@@ -85,8 +101,8 @@ actual generated dimensions and explicit crop boxes; the importer does not assum
 the generator produced a mathematically uniform grid.
 
 Runtime pattern: `data/board-states/<name>.png`, RGBA 128 × 128.
-Filled terrain and ice use the slot's **flat-top** silhouette, registered to the
-renderer-authored cell mask. Special gems use no hexagonal outline frames.
+Terrain and ice rims use the slot's **flat-top** silhouette. Special gems use
+no hexagonal outline frames.
 The replacement set is authored together in
 `art/board-states/clear-indicators.png` (ImageGen, 2026-11-01), with its prompt
 in `clear-indicators-prompt.txt`. The manifest records measured crop boxes,
@@ -131,10 +147,23 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-Ice uses a uniform 0.52 material opacity so the matching gem is visible through the whole frozen face. The two separately authored ice states also show a dynamic 1/2 remaining-hit count, shared with the guide. Ice and chain are independent layers; if both exist, both are shown. A blocker hit
-removes a layer before collecting its piece. Selected/hint frames are under pieces,
-blockers over them; sand is beneath both. Board cells and outer edge lines remain
+The live board and guide use `sand-edge`, `ice-1-edge` and `ice-2-edge`.
+Each takes an edge band from its corresponding authored crop. Sand sits
+slightly inward when ice shares its cell. The two ice states keep the dynamic
+1/2 remaining-hit count. Ice and chain are independent layers and a blocker hit
+removes a layer before collecting its piece. Selected/hint frames are under
+pieces, blockers over them, and sand beneath both. Board cells and outer edge lines remain
 simple intentional layout geometry. Empty/inactive cells have no piece artwork.
+
+Regenerate the spatial crops and atlases with `python3 tools/fit_match3_edges.py`.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Filled sand and ice](screenshots/review/frost-edges/before-480x900.jpg) | ![Sand and ice rims](screenshots/review/frost-edges/after-480x900.jpg) |
+| 390×844 | ![Earlier terrain on a narrower phone](screenshots/review/frost-edges/before-390x844.jpg) | ![Sand and ice rims on a narrower phone](screenshots/review/frost-edges/after-390x844.jpg) |
+
+[Explorer’s Guide](screenshots/review/frost-edges/guide.jpg) · [Narrower phone guide](screenshots/review/frost-edges/phone-guide.jpg)
+
 Hint opacity pulses; reduced motion uses a steady frame. There are no hover/pressed
 states for individual pieces: a touch selects a piece or initiates a swap.
 If idle hint search finds no legal swap, the existing reshuffle now also recovers

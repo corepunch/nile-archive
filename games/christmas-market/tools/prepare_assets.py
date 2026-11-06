@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-"""Spatial crops/resizes only: preserve ImageGen's authored RGB and alpha."""
+"""Register ImageGen artwork using spatial crops, resizes and board masks."""
+import argparse
 import json
+import sys
+from math import sqrt
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 from prepare_character import main as prepare_character
 from prepare_story_cast import prepare as prepare_story_cast
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
+from fit_match3_edges import build_edges, thin_ring
+
 DATA = ROOT / 'data'
 REGISTRATION = ROOT / 'art' / 'registration.json'
 
@@ -58,7 +64,62 @@ def isolate(sheet, labels, keep, bounds, near):
                 dst[x - bounds[0], y - bounds[1]] = src[x, y]
     return out
 
+SIZE = 128
+APOTHEM = sqrt(3) / 2
+# Source boxes span the six tips of the painted frames in their 128px crops.
+GOLD_FRAMES = {
+    'ray-row': (5, 32, 118, 113),
+    'ray-column': (7, 31, 117, 113),
+    'ray-diagonal': (12, 10, 121, 111),
+    'bomb': (11, 10, 123, 110),
+    'prism': (11, 10, 121, 110),
+    'selected': (9, 12, 116, 109),
+    'hint': (13, 11, 119, 107),
+}
+
+def hex_alpha():
+    side = SIZE * 8
+    lo, hi = (1 - APOTHEM) * side / 2, (1 + APOTHEM) * side / 2
+    mask = Image.new('L', (side, side))
+    ImageDraw.Draw(mask).polygon([
+        (side, side / 2), (side * .75, hi), (side * .25, hi),
+        (0, side / 2), (side * .25, lo), (side * .75, lo),
+    ], fill=255)
+    return mask.resize((SIZE, SIZE), Image.Resampling.LANCZOS)
+
+def fit_board_art(sheet, registration):
+    def original(name):
+        path = f'board-states/{name}.png'
+        crop = next(entry['crop'] for entry in registration['icons'] if entry['path'] == path)
+        return sheet.crop(crop).resize((SIZE, SIZE), Image.Resampling.LANCZOS)
+
+    mask = hex_alpha()
+    for name, (left, top, right, bottom) in GOLD_FRAMES.items():
+        mid = (top + bottom) / 2
+        half = (bottom - top) / (2 * APOTHEM)
+        im = original(name).transform((SIZE, SIZE), Image.Transform.EXTENT,
+                                      (left, mid - half, right, mid + half), Image.Resampling.BICUBIC)
+        im.putalpha(ImageChops.multiply(im.getchannel('A'), mask))
+        save(im, f'board-states/{name}.png')
+    save(thin_ring(original('chain'), (63.5, 59.5), (46, 43)), 'board-states/chain-board.png')
+    build_edges('christmas-market')
+    registration['board_fit'] = {
+        'mask': '128px regular flat-top hex, radius 64px',
+        'gold_frame_source_boxes': GOLD_FRAMES,
+        'chain-board': {'wire_center': [63.5, 59.5], 'wire_size': [92, 86],
+                        'radius': 46, 'radial_thickness_scale': .5},
+    }
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--board-fit', action='store_true', help='only register the gold frames and board tinsel')
+    args = parser.parse_args()
+    sheet = Image.open(ROOT / 'art/icons.png').convert('RGBA')
+    if args.board_fit:
+        registration = json.loads(REGISTRATION.read_text())
+        fit_board_art(sheet, registration)
+        REGISTRATION.write_text(json.dumps(registration, indent=2)+'\n')
+        return
     registration = {'icons': []}
     # Buildings are Blender renders now: tools/render_buildings.py and prepare_catalogue.py.
     names = [f'tile-sets/festive/{i}' for i in range(6)] + [
@@ -69,7 +130,6 @@ def main():
     names += ['expedition-hud/pause-'+state for state in ['normal','selected','pressed','hover','disabled']]
     names += ['expedition-hud/complete']
     assert len(names) == 40
-    sheet = Image.open(ROOT / 'art/icons.png').convert('RGBA')
     labels, blobs = artwork_blobs(sheet)
     rows = [0,232,422,607,786,992]
     cells = []
@@ -109,9 +169,11 @@ def main():
             im = sheet.crop(bounds)
         save(im.resize((128,128),Image.Resampling.LANCZOS),name+'.png')
         registration['icons'].append({'path':name+'.png','crop':bounds,'output':[128,128]})
+    fit_board_art(sheet, registration)
     terrain = Image.open(ROOT / 'art/terrain.png').convert('RGB')
     save(terrain.resize((1920,2880),Image.Resampling.LANCZOS),'island.jpg')
-    save(terrain.resize((600,900),Image.Resampling.LANCZOS),'winter.jpg')
+    backdrop = Image.open(ROOT / 'art/winter-market.png').convert('RGB')
+    save(backdrop.resize((600,900),Image.Resampling.LANCZOS),'winter.jpg')
     prepare_character()
     prepare_story_cast()
     REGISTRATION.write_text(json.dumps(registration,indent=2)+'\n')

@@ -18,16 +18,17 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
 | Six festive puzzle kinds | `art/icons.png`, cells 0–5 | `data/tile-sets/festive/` | Bell, candy cane, holly, blue ornament, purple bauble, gingerbread; bell objective, candy canes thaw nearby ice |
-| Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and cell mask |
+| Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
-| Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/life.png` | One static life counter icon. The capsule uses the existing skin press state |
-| Terrain | `art/terrain.png` | `data/island.jpg`, `data/winter.jpg` | Empty snowy market ground and puzzle backdrop |
+| Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
+| Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
+| Puzzle backdrop | Built-in ImageGen, `art/winter-market.png` | `data/winter.jpg` → `data/match3.png` | One static night market painting for all puzzles |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
 | Story cast | Built-in ImageGen, `art/story-cast.png` | `data/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
-| Snowfall and feedback | Lua renderer | Procedural | Transient snow particles, collection particles, beams, lift and placement feedback; no authored control state is derived with a filter |
+| Snowfall and feedback | Lua renderer | Procedural | Two layers of village snowfall, collection particles, beams, lift and placement feedback |
 | Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/particles.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
 Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved inside extracted artwork. Control states are directly cropped from the authored atlas. The six pieces, the three tools' states, Pause and the goal star are cropped square around their own artwork, with one side per family, and scaled evenly to 128×128. That keeps their authored proportions: the earlier unequal source cells stretched them tall. Hex board states keep their whole source cell, because it registers them to the board slot.
@@ -41,12 +42,136 @@ The font and its license are inherited unmodified from Relic Rush in `data/fonts
 Lives, Gold and Christmas Stars use the same single-row layout and hit areas as
 Relic Rush. Lives reuse its heart, Gold uses the festive bell and Stars use
 the Christmas completion medal. Copy the heart from
-`games/relic-rush/data/expedition-hud/life.png` to `data/life.png`. Region
+`games/relic-rush/data/expedition-hud/life.png`, then run
+`python3 tools/match3_atlas.py` to reproduce the atlas and registration. Region
 markers open their map cards. Stars qualify the player for a region and stay
 in the wallet when the region opens.
 
 [Town, region, building and reward captures](screenshots/review/town-wallet/README.md)
 show the change in the game renderer.
+
+## Puzzle backdrop
+
+Lantern-lit stalls and a decorated tree fill the strip above the goals. The
+center stays open snow for the hex grid, and fir boughs frame the bottom
+corners. The engine anchors the painting to the bottom and crops its upper
+edge on shorter phones. The stalls and tree sit low enough to read at both
+reviewed sizes.
+
+The [ImageGen prompt](../art/winter-market.prompt.txt) and [master painting](../art/winter-market.png)
+are retained. From the repository root, run
+`python3 games/christmas-market/tools/prepare_assets.py` to resize the opaque
+2:3 master to 600×900, then `python3 tools/match3_atlas.py` to pack it. Run
+`build/test/christmas-market "shot main-character-board" "shot phone-board"`
+for the level 4 captures.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Snow clearing](screenshots/review/winter-market/before-480x900.jpg) | ![Lantern-lit market](screenshots/review/winter-market/after-480x900.jpg) |
+| 390×844 with safe areas | ![Snow clearing on a narrower phone](screenshots/review/winter-market/before-390x844.jpg) | ![Lantern-lit market on a narrower phone](screenshots/review/winter-market/after-390x844.jpg) |
+
+## Board trim and village snow
+
+The live board paints flat spruce-green hex wells with a fine champagne edge
+on exposed sides. The original painted cell mask remains in the atlas. The
+authored snow, tinsel, ice, special, selection and hint sprites retain their
+registration over the wells.
+
+Snowfall uses two screen-space layers over the village. Larger foreground
+flakes fall faster, and both layers fade toward the bottom controls. Reduce
+Motion holds the flakes still. The HUD and dialogue draw above the snowfall.
+
+Run `build/test/christmas-market "shot main-character-board" "shot phone-board"
+"shot market" "shot phone-market" "shot specials-board"` for both portrait
+sizes and a board with blockers and specials.
+
+| View | Before | After |
+| --- | --- | --- |
+| Board, 480×900 | ![Beveled wells](screenshots/review/winter-polish/board-before-480x900.jpg) | ![Flat wells and slim rim](screenshots/review/winter-polish/board-after-480x900.jpg) |
+| Board, 390×844 | ![Beveled wells on a narrower phone](screenshots/review/winter-polish/board-before-390x844.jpg) | ![Slim rim on a narrower phone](screenshots/review/winter-polish/board-after-390x844.jpg) |
+| Village, 480×900 | ![Village before layered snowfall](screenshots/review/winter-polish/village-before-480x900.jpg) | ![Snow drifting over the village](screenshots/review/winter-polish/village-after-480x900.jpg) |
+| Village, 390×844 | ![Village before layered snowfall on a narrower phone](screenshots/review/winter-polish/village-before-390x844.jpg) | ![Village snowfall on a narrower phone](screenshots/review/winter-polish/village-after-390x844.jpg) |
+
+[Board with blockers and specials](screenshots/review/winter-polish/board-specials.jpg)
+
+## Cell and goal alignment
+
+The powder-snow goal uses the full authored sprite. On the board, the renderer
+samples its opaque interior and maps it to the exact centre, radius and rotation
+of the cell hex. The 128px source rectangle is `18,14,96,95` for Christmas and
+`32,35,63,58` for the embedded fallback. The atlas and its source alpha stay intact.
+Exposed green wells shade from light at the top to dark at the bottom. Goal icons
+sit 3.6 logical units farther left, and collection flights land at that same position.
+
+Reproduce with `build/test/christmas-market "shot main-character-board" "shot phone-board" "shot specials-board"`.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Original snow edge and goal alignment](screenshots/review/cell-and-goals/before-480x900.jpg) | ![Hex-aligned snow and green gradients](screenshots/review/cell-and-goals/after-480x900.jpg) |
+| 390×844 | ![Original board on a narrower phone](screenshots/review/cell-and-goals/before-390x844.jpg) | ![Aligned snow and goals on a narrower phone](screenshots/review/cell-and-goals/after-390x844.jpg) |
+
+[Board with blockers and specials](screenshots/review/cell-and-goals/specials.jpg)
+
+## Tinsel on the cell edge
+
+The board scales the existing `chain` atlas frame around the painted ring's
+centreline, measured at 92 × 86 px and centred at (63.5, 59.5) in its 128px
+canvas. That line follows the cell perimeter, with gold extending both inward
+and outward. The ring draws beneath treats so its overhang leaves adjacent
+pieces legible. The goal capsule and guide use the original icon framing.
+
+Reproduce with `build/test/christmas-market "shot main-character-board" "shot phone-board" "shot specials-board"`.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Inset tinsel](screenshots/review/cell-and-goals/after-480x900.jpg) | ![Tinsel centred on the cell edge](screenshots/review/tinsel-edge/after-480x900.jpg) |
+| 390×844 | ![Inset tinsel on a narrower phone](screenshots/review/cell-and-goals/after-390x844.jpg) | ![Edge-centred tinsel on a narrower phone](screenshots/review/tinsel-edge/after-390x844.jpg) |
+
+[Adjacent rings among blockers and specials](screenshots/review/tinsel-edge/specials.jpg)
+
+## Fitted specials and thin tinsel
+
+All three shooting-star axes, bomb, rainbow star, selection and hint use the
+same flat-top cell alpha mask. Each authored frame is fitted from its measured
+source box in `art/registration.json`. The mask preserves the hollow centres of
+selection and hint, and the board draws these frames at the cell face radius.
+
+`data/board-states/chain-board.png` compresses the original tinsel by half on
+both sides of its centreline. The board keeps that line on the hex edge and
+draws it beneath the treats. The original `chain` frame serves the goal icon
+and guide.
+
+Regenerate with `python3 games/christmas-market/tools/prepare_assets.py --board-fit`
+and `python3 tools/match3_atlas.py`. Review with
+`build/test/christmas-market "shot main-character-board" "shot phone-board" "shot specials-board" "shot guide"`.
+
+| View | Before | After |
+| --- | --- | --- |
+| Board, 480×900 | ![Wide tinsel](screenshots/review/tinsel-edge/after-480x900.jpg) | ![Thin tinsel](screenshots/review/fitted-gold/after-480x900.jpg) |
+| Board, 390×844 | ![Wide tinsel on a narrower phone](screenshots/review/tinsel-edge/after-390x844.jpg) | ![Thin tinsel on a narrower phone](screenshots/review/fitted-gold/after-390x844.jpg) |
+| Blockers and specials | ![Inset gold frames](screenshots/review/tinsel-edge/specials.jpg) | ![Gold frames fitted to the cell](screenshots/review/fitted-gold/specials.jpg) |
+
+[Fitted art in the Market Keeper’s Guide](screenshots/review/fitted-gold/guide.jpg)
+
+## Snow and ice rims
+
+`sand-edge` takes a narrow white band from the authored powder-snow texture.
+`ice-1-edge` compresses the broken ice ring and `ice-2-edge` compresses the
+solid blue ice ring. All three share tinsel's flat-top centreline. Snow moves
+inward when ice or tinsel shares its cell, leaving both materials visible.
+The guide illustrates the rims and the goal capsule uses the full snow icon.
+
+Regenerate the board edges and atlases with `python3 tools/fit_match3_edges.py`.
+The source is `art/icons.png` through the registered `sand` and `ice-1` /
+`ice-2` board-state crops. The transform preserves the original paint and
+uses a transparent hex-band mask for the filled snow.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480×900 | ![Filled snow and thicker ice](screenshots/review/frost-edges/before-480x900.jpg) | ![Snow and ice rims](screenshots/review/frost-edges/after-480x900.jpg) |
+| 390×844 | ![Earlier blockers on a narrower phone](screenshots/review/frost-edges/before-390x844.jpg) | ![Snow and ice rims on a narrower phone](screenshots/review/frost-edges/after-390x844.jpg) |
+
+[Market Keeper’s Guide](screenshots/review/frost-edges/guide.jpg)
 
 ## Story cast
 

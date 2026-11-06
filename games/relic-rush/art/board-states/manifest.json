@@ -347,7 +347,9 @@
     "data/board-states/dynamite-selected.png",
     "data/board-states/guide.png",
     "data/board-states/hint.png",
+    "data/board-states/ice-1-edge.png",
     "data/board-states/ice-1.png",
+    "data/board-states/ice-2-edge.png",
     "data/board-states/ice-2.png",
     "data/board-states/pickaxe-disabled.png",
     "data/board-states/pickaxe-hover.png",
@@ -358,6 +360,7 @@
     "data/board-states/ray-column.png",
     "data/board-states/ray-diagonal.png",
     "data/board-states/ray-row.png",
+    "data/board-states/sand-edge.png",
     "data/board-states/sand.png",
     "data/board-states/selected.png",
     "data/board-states/sunburst-disabled.png",
@@ -647,11 +650,23 @@
     ],
     "overscan": 144
   },
+  "board_edges": {
+    "runtime": {
+      "sand": "data/board-states/sand-edge.png",
+      "ice-1": "data/board-states/ice-1-edge.png",
+      "ice-2": "data/board-states/ice-2-edge.png"
+    },
+    "source": "The matching authored sand and ice crops in data/board-states",
+    "transform": "Spatial edge-band crop on a flat-top hex with a 46px centreline radius in a 128px canvas",
+    "reproduction": "python3 tools/fit_match3_edges.py",
+    "review": "docs/screenshots/review/frost-edges/after-480x900.jpg"
+  },
   "cell_mask": {
     "source": "art/board-states/cell-mask.png",
     "runtime": "data/board-states/cell-mask.png",
     "capture": "python3 games/relic-rush/tools/capture_cell_mask.py",
-    "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face"
+    "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face",
+    "use": "Asset registration reference. Live wells use gfx.ngon_grad with the same flat-top geometry."
   },
   "buildings": "art/building-catalogue/manifest.json",
   "economy_presentation": {

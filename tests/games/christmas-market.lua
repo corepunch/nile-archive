@@ -1,6 +1,7 @@
 -- Christmas Market: every test, in one start of build/test/christmas-market. See docs/TESTING.md.
 rules("relic_board")
 rules("progression")
+rules("campaign_play")
 rules("match_matrix")
 rules("trickling")
 rules("haptics_board")

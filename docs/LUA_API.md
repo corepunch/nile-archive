@@ -1165,6 +1165,19 @@ Draw t rotated by angle (radians) about the centre of dst.
 | `angle` | `number` |  |
 | `tint` | `color` |  |
 
+### `gfx.image_hex(t, src, center, radius, angle, tint)`
+
+Map a source rectangle in texture pixels to an anti-aliased flat-top hex. The hex and artwork rotate together by angle (radians).
+
+| Argument | Type | |
+|---|---|---|
+| `t` | `texture` |  |
+| `src` | `rect` |  |
+| `center` | `vec2` |  |
+| `radius` | `number` |  |
+| `angle` | `number` |  |
+| `tint` | `color` |  |
+
 ### `gfx.image_striped(t, dst, angle, repeats, width, ink, tint)`
 
 Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
@@ -1300,6 +1313,19 @@ A regular polygon; angle rotates it (radians).
 | `sides` | `integer` |  |
 | `angle` | `number` |  |
 | `c` | `color` |  |
+
+### `gfx.ngon_grad(center, radius, sides, angle, top, bottom)`
+
+A regular polygon with a vertical gradient from its highest to its lowest point.
+
+| Argument | Type | |
+|---|---|---|
+| `center` | `vec2` |  |
+| `radius` | `number` |  |
+| `sides` | `integer` |  |
+| `angle` | `number` |  |
+| `top` | `color` |  |
+| `bottom` | `color` |  |
 
 ### `gfx.star(center, radius, inner, points, angle, c)`
 

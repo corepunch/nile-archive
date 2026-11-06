@@ -528,7 +528,7 @@ local function init()
     for i = 0, rules.COLORS - 1 do R.relics[i + 1] = board_skin[(app.arg("default-match3") and "kind-" or tiles .. "-") .. i] end
     R.board_art = require("art").load()
     R.hud_art = require("art").load_hud()
-    R.life_art = texture.load("life.png")
+    R.life_art = texture.load("expedition-hud/life.png")
     if app.arg("art-states") then
         R.art_packs = {}
         for _, pack in ipairs({"festive"}) do
