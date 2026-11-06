@@ -8,6 +8,13 @@ A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.hud_icons = {"complete"}
+-- Board-only lift per kind, as a fraction of the piece canvas. Pieces are
+-- cropped around everything visible, so a cap, bow or leaf crown on top pushes
+-- the main shape low in the hex. Lifting re-centres that shape; the top detail
+-- may overlap the cell's top edge. Measured on data/tile-sets/festive/<kind>.png:
+-- bell 0 (gold body ~84/128 under its bow), holly 2 (alpha centroid ~71/128),
+-- ornaments 3 and 4 (ball centre ~75/128 under the cap).
+A.piece_lift = {[0] = 12 / 128, [2] = 7 / 128, [3] = 11 / 128, [4] = 11 / 128}
 -- Sample the opaque interior of each 128px terrain sprite. The board supplies
 -- the hex silhouette, while the goal icon keeps the original painted edge.
 A.snow_source = app.arg("default-match3") and rect(32, 35, 63, 58) or rect(18, 14, 96, 95)
