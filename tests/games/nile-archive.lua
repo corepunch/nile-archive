@@ -1,5 +1,6 @@
 -- Nile Archive: every test, in one start of build/test/nile-archive. See docs/TESTING.md.
 rules("archive_rewards")
+rules("archive_walkthrough")
 rules("building_economy")
 rules("archive_motion")
 rules("haptics_archive")
