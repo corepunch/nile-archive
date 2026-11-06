@@ -110,6 +110,30 @@ local function bottom_panel()
     end
 end
 
+local snow_layers = {
+    {count = 42, radius = 1.4, fall = 36, drift = 11, opacity = 175},
+    {count = 22, radius = 2.6, fall = 62, drift = 19, opacity = 235},
+}
+
+-- Screen-space flakes keep falling when the camera pans or zooms. Fade them
+-- through the village before they reach its bottom controls.
+local function draw_snow(view)
+    local height = view.h * .82
+    local time = R.reduced_motion and 0 or R.now
+    for _, layer in ipairs(snow_layers) do
+        for i = 1, layer.count do
+            local y = (i * 137 + time * (layer.fall + i % 7 * 4)) % (height + 12) - 6
+            local drift = time * layer.drift + math.sin(time * .8 + i * 2.4) * layer.drift
+            local x = (i * 97 + drift + layer.fall) % (view.w + 12) - 6
+            local at = vec2(view.x + x, view.y + y)
+            local radius = layer.radius * (.65 + i % 5 * .15)
+            local fade = 1 - num.saturate((y / height - .65) / .35)
+            gfx.circle(at + vec2(0, .8), radius + .65, rgba(60, 94, 137, 70 * fade))
+            gfx.circle(at, radius, rgba(248, 252, 255, layer.opacity * fade))
+        end
+    end
+end
+
 -- The island fills the whole display, safe-area margins included, and the HUD
 -- floats over it inside the safe screen, as island screens of match-3 games do.
 function R.island_screen(inp, dt)
@@ -128,12 +152,8 @@ function R.island_screen(inp, dt)
     gfx.bleed(true)
     gfx.rect(MAP_VIEW, rgba(115, 143, 181))
     c:draw(inp, app.clock())
+    draw_snow(MAP_VIEW)
     gfx.bleed(false)
-    for i=1,42 do
-        local x=(i*97+math.sin(R.now*.25+i)*18)%480
-        local y=(i*137+R.now*(12+i%4*5))%(R.SCREEN_H+R.drop)
-        gfx.circle(vec2(x,y),1+i%3*.4,rgba(255,255,255,140))
-    end
     R.vfx_particles()
     R.bubble_time = R.bubble_time - dt
     if R.bubble_time > 0 and R.bubble_wonder >= 0 and R.bubble_wonder < c.count then

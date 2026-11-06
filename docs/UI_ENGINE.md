@@ -246,7 +246,8 @@ It returns true when tapped. The look is the skin's `resource` control, with
 `normal` and `pressed` layers (`radius_scale = 1` makes a pill), `text`, `em`,
 `icon_ratio` (default 1.4 of the panel's height) and `icon_overhang` (default
 .12). `icon` is a texture, a function painting into a logical box, or nil.
-`opts`: `role` for one of the control's `variants` (a larger wallet, say),
+`opts`: `role` for one of the control's `variants` (a larger wallet or a
+match-3 goal with more icon overhang),
 `interactive = false` for a read-only panel that never takes input, `hit` (the
 touch area, default the panel), `hit_offset`, `icon_scale` (a landing bounce), `icon_alpha`, `value_icon` (a
 texture replacing the figure, such as a met goal's seal) and `reserve` (width

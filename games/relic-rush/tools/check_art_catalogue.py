@@ -39,9 +39,17 @@ for name, asset in manifest["assets"].items():
     assert data[25] == 6, f"Expected RGBA authored state: {name}"
     if name in {"ice-1", "ice-2"}:
         alpha = Image.open(ROOT / asset["runtime"]).getchannel("A")
-        # A frozen tile is a filled sheet, not an empty frame around a gem.
+        # Filled source sheets supply the separate live edge-band crops.
         assert all(alpha.getpixel((x, y)) > 128 for x in range(40, 89, 8)
                    for y in range(40, 89, 8)), f"Ice must cover the whole face: {name}"
+edges = manifest["board_edges"]["runtime"]
+assert set(edges) == {"sand", "ice-1", "ice-2"}
+for path in edges.values():
+    assert path in manifest["runtime_inventory"]
+    with Image.open(ROOT / path) as image:
+        assert image.size == (128, 128) and image.mode == "RGBA"
+        alpha = image.getchannel("A")
+        assert not alpha.crop((44, 44, 84, 84)).getbbox() and alpha.getpixel((64, 24)) > 128
 for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
 buttons = manifest["tool_buttons"]

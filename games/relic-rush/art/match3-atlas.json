@@ -95,296 +95,314 @@
       128,
       128
     ],
-    "ice-2": [
+    "ice-1-edge": [
       398,
+      2314,
+      128,
+      128
+    ],
+    "ice-2": [
+      530,
+      2314,
+      128,
+      128
+    ],
+    "ice-2-edge": [
+      662,
       2314,
       128,
       128
     ],
     "jewels-0": [
-      530,
+      794,
       2314,
       128,
       128
     ],
     "jewels-1": [
-      662,
+      926,
       2314,
       128,
       128
     ],
     "jewels-2": [
-      794,
+      1058,
       2314,
       128,
       128
     ],
     "jewels-3": [
-      926,
+      1190,
       2314,
       128,
       128
     ],
     "jewels-4": [
-      1058,
+      1322,
       2314,
       128,
       128
     ],
     "jewels-5": [
-      1190,
+      1454,
       2314,
       128,
       128
     ],
     "life": [
-      1322,
+      1586,
       2314,
       128,
       128
     ],
     "pause-disabled": [
-      1454,
+      1718,
       2314,
       128,
       128
     ],
     "pause-hover": [
-      1586,
+      1850,
       2314,
       128,
       128
     ],
     "pause-normal": [
-      1718,
-      2314,
+      2,
+      2446,
       128,
       128
     ],
     "pause-pressed": [
-      1850,
-      2314,
+      134,
+      2446,
       128,
       128
     ],
     "pause-selected": [
-      2,
+      266,
       2446,
       128,
       128
     ],
     "pickaxe-disabled": [
-      134,
+      398,
       2446,
       128,
       128
     ],
     "pickaxe-hover": [
-      266,
+      530,
       2446,
       128,
       128
     ],
     "pickaxe-normal": [
-      398,
+      662,
       2446,
       128,
       128
     ],
     "pickaxe-pressed": [
-      530,
+      794,
       2446,
       128,
       128
     ],
     "pickaxe-selected": [
-      662,
+      926,
       2446,
       128,
       128
     ],
     "prism": [
-      794,
+      1058,
       2446,
       128,
       128
     ],
     "ray-column": [
-      926,
+      1190,
       2446,
       128,
       128
     ],
     "ray-diagonal": [
-      1058,
+      1322,
       2446,
       128,
       128
     ],
     "ray-row": [
-      1190,
+      1454,
       2446,
       128,
       128
     ],
     "relics-0": [
-      1322,
+      1586,
       2446,
       128,
       128
     ],
     "relics-1": [
-      1454,
+      1718,
       2446,
       128,
       128
     ],
     "relics-2": [
-      1586,
+      1850,
       2446,
       128,
       128
     ],
     "relics-3": [
-      1718,
-      2446,
-      128,
-      128
-    ],
-    "relics-4": [
-      1850,
-      2446,
-      128,
-      128
-    ],
-    "relics-5": [
       2,
       2578,
       128,
       128
     ],
-    "resources-0": [
+    "relics-4": [
       134,
       2578,
       128,
       128
     ],
-    "resources-1": [
+    "relics-5": [
       266,
       2578,
       128,
       128
     ],
-    "resources-2": [
+    "resources-0": [
       398,
       2578,
       128,
       128
     ],
-    "resources-3": [
+    "resources-1": [
       530,
       2578,
       128,
       128
     ],
-    "resources-4": [
+    "resources-2": [
       662,
       2578,
       128,
       128
     ],
-    "resources-5": [
+    "resources-3": [
       794,
       2578,
       128,
       128
     ],
-    "sand": [
+    "resources-4": [
       926,
       2578,
       128,
       128
     ],
-    "score": [
+    "resources-5": [
       1058,
       2578,
       128,
       128
     ],
-    "selected": [
+    "sand": [
       1190,
       2578,
       128,
       128
     ],
-    "sunburst-disabled": [
+    "sand-edge": [
       1322,
+      2578,
+      128,
+      128
+    ],
+    "score": [
+      1454,
+      2578,
+      128,
+      128
+    ],
+    "selected": [
+      1586,
+      2578,
+      128,
+      128
+    ],
+    "sunburst-disabled": [
+      1718,
       2578,
       128,
       128
     ],
     "sunburst-hover": [
-      1454,
+      1850,
       2578,
       128,
       128
     ],
     "sunburst-normal": [
-      1586,
-      2578,
+      2,
+      2710,
       128,
       128
     ],
     "sunburst-pressed": [
-      1718,
-      2578,
+      134,
+      2710,
       128,
       128
     ],
     "sunburst-selected": [
-      1850,
-      2578,
+      266,
+      2710,
       128,
       128
     ],
     "glow": [
-      1982,
-      2578,
+      398,
+      2710,
       64,
       64
     ],
     "kind-0": [
-      1322,
+      1586,
       2446,
       128,
       128
     ],
     "kind-1": [
-      1454,
-      2446,
-      128,
-      128
-    ],
-    "kind-2": [
-      1586,
-      2446,
-      128,
-      128
-    ],
-    "kind-3": [
       1718,
       2446,
       128,
       128
     ],
-    "kind-4": [
+    "kind-2": [
       1850,
       2446,
       128,
       128
     ],
-    "kind-5": [
+    "kind-3": [
       2,
+      2578,
+      128,
+      128
+    ],
+    "kind-4": [
+      134,
+      2578,
+      128,
+      128
+    ],
+    "kind-5": [
+      266,
       2578,
       128,
       128
@@ -419,7 +437,9 @@
     "dynamite-selected": "data/board-states/dynamite-selected.png",
     "guide": "data/board-states/guide.png",
     "hint": "data/board-states/hint.png",
+    "ice-1-edge": "data/board-states/ice-1-edge.png",
     "ice-1": "data/board-states/ice-1.png",
+    "ice-2-edge": "data/board-states/ice-2-edge.png",
     "ice-2": "data/board-states/ice-2.png",
     "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
     "pickaxe-hover": "data/board-states/pickaxe-hover.png",
@@ -430,6 +450,7 @@
     "ray-column": "data/board-states/ray-column.png",
     "ray-diagonal": "data/board-states/ray-diagonal.png",
     "ray-row": "data/board-states/ray-row.png",
+    "sand-edge": "data/board-states/sand-edge.png",
     "sand": "data/board-states/sand.png",
     "selected": "data/board-states/selected.png",
     "sunburst-disabled": "data/board-states/sunburst-disabled.png",
@@ -468,7 +489,9 @@
       "games/relic-rush/data/board-states/dynamite-selected.png": "013ed3be9fad54679cd9bb19697582114a9d89b853e4fd5c917b8336ab561e49",
       "games/relic-rush/data/board-states/guide.png": "3c3dfce86d4833b5fd71b2bed2d012fd4d4f0c45d8c41fffc42b182bcf1f7306",
       "games/relic-rush/data/board-states/hint.png": "07cf83ac91b4b02f3ea076455a4116326cfcbf0b0ad0345afead940828142777",
+      "games/relic-rush/data/board-states/ice-1-edge.png": "97977be263ec850758d19992061e07752340d141c806df7a50b7bbf7b3de428e",
       "games/relic-rush/data/board-states/ice-1.png": "417c7d6b8d23fb03f57a4f1e822738e24d9f00d6b8fc907202df4b0661e41678",
+      "games/relic-rush/data/board-states/ice-2-edge.png": "7d1b82811659bb04ef4e94ec49916950829acc2fa5fd4a183c9844f2d3685d39",
       "games/relic-rush/data/board-states/ice-2.png": "493e7740e490c70e04f73b01a7308071b0c1effc4e59684bc7bf583912ba02f4",
       "games/relic-rush/data/board-states/pickaxe-disabled.png": "e057ca4f7f940a275b7091dceb057d995644d549842d47587d3f031faf656286",
       "games/relic-rush/data/board-states/pickaxe-hover.png": "fd1839b7ac73671b2bd014150e41374b05912cc511f660dd570192fe3900bae6",
@@ -479,6 +502,7 @@
       "games/relic-rush/data/board-states/ray-column.png": "5e94e2c35eb0cb03344fb3562d35db5957581866e87b6d6259cd7c24efc58a97",
       "games/relic-rush/data/board-states/ray-diagonal.png": "9bdf2bf16d968e8f6401a32dfe6f04b69916855a6376a2e6bcceb137c0642874",
       "games/relic-rush/data/board-states/ray-row.png": "8191d12daec60bb36a3ca886519be28a60e246e622d5aa437f62bdeeb90cc889",
+      "games/relic-rush/data/board-states/sand-edge.png": "5d3b94ae57377c19d5524ecf79c19e9e9910bffd2c242da6e9f4efa69f599dc9",
       "games/relic-rush/data/board-states/sand.png": "417e038161abdcf68fd3cf06b5e28eae77a444754bc90dab2cfcbc6e64272a0c",
       "games/relic-rush/data/board-states/selected.png": "a7c3541a46c33606fd8ef2ce5a46e71db51b2eae814822a7a3ba2a4de47a9aff",
       "games/relic-rush/data/board-states/sunburst-disabled.png": "6abfe7ade16df5949594fc18bd286e4d748828cf1d772cf913fbb50f2f407652",
@@ -518,11 +542,11 @@
       "games/relic-rush/tools/prepare_assets.py": "e151b49d9bca095db2a85fd1acce616e6add62fd9c732efd81c970493962dd6d"
     },
     "outputs": {
-      "games/relic-rush/data/match3.png": "169c8807058f89d5c13840e23e621c214760e1f9f6325cbb6d7c17d90d0e4575",
+      "games/relic-rush/data/match3.png": "db1011048ae7cc40ebd56321826a4bdbdb7403f1aa7415afef2162207c2242d3",
       "games/relic-rush/data/tile-sets/jewels/0.png": "d18c4889eb16cf008f64f21b84df95c840af8c8b19262816c264eea50588cd82",
       "games/relic-rush/data/tile-sets/relics/0.png": "b1e9695a8b0681cdf4b28a26ea439e921bf9a77b98a1d7fedd27b5552da0908e",
       "games/relic-rush/data/tile-sets/relics/1.png": "ae8a0c70f7673c137c20542c3c94eb5243c1541fe4a09ee66e35c091c1d7b6c5",
-      "games/relic-rush/lua/match3_skin.lua": "a854359664f081011e0b057ffc1515346c95d60da34afa6f300cdfac8b93ed22"
+      "games/relic-rush/lua/match3_skin.lua": "7620f8d6993558e5f67ad4ae679ccfdd61b0f3b167f07245f9516603528c52f3"
     }
   }
 }

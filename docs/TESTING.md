@@ -177,6 +177,18 @@ the budget to 60 seconds for the larger deterministic sample. CI runs
 `make test-full TEST_ARGS=--extended`, keeping the thousand opening boards,
 greedy campaign simulation and complete integration captures.
 
+For Relic Rush and Christmas Market, `build/test/<game> --extended 'rules campaign_play'`
+plays all 30 boards without a window using a deterministic greedy player and up
+to four fixed starting boards per level. It applies real wins to the game's
+reward and story coordinators, places the funded buildings and checks the scene
+order. Its per-campaign totals are printed to `build/test/<game>.log`. These
+independent retries do not simulate lives, time, real player choices, purchases
+or UI input. The separate `smoke campaign` runs the real interface and checks
+all scenes and building/region controls, but satisfies board goals artificially;
+neither test alone is a complete human playthrough. On macOS a hidden OpenGL
+window still needs access to the logged-in graphical session; a restricted
+process may fail with `CGSNewWindow failed` before game code runs.
+
 The budgeted path does not reduce puzzle seeds or remove rule assertions.
 The city renderer compares identical-time pixels, advances the existing test
 clock by four seconds, then checks changed fog pixels; it no longer waits four

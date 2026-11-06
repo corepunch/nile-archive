@@ -8,7 +8,7 @@ A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedi
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
 -- Ray powers use engine-rendered stripes masked to the original gem alpha.
 -- Bomb and prism replace the gem with their full-size authored sprite.
--- Ice is filled material at 0.52 opacity with a centred remaining-hit count above all board layers.
+-- The neutral skin's filled ice uses 0.52 opacity. Live rim art has open centres.
 A.indicators = {source="art/board-states/clear-indicators.png", ice_opacity=133}
 A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
@@ -63,7 +63,9 @@ function A.load()
     local function load(name) textures[name] = A.skin()[name] end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
-    load("cell-mask")
+    if not app.arg("default-match3") then
+        for _, name in ipairs{"sand-edge", "ice-1-edge", "ice-2-edge"} do load(name) end
+    end
     for _, tool in ipairs(A.tools) do
         for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
     end

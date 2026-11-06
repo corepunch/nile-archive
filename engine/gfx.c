@@ -320,12 +320,46 @@ void draw_polyline(const vec2 *pts, int n, float thickness, color c)
     flush();
 }
 
-void draw_ngon(vec2 center, float radius, int sides, float angle, color c)
+void draw_ngon_grad(vec2 center, float radius, int sides, float angle, color top, color bottom)
 {
     vec2 p[MAX_PATH];
+    float lo = center.y, hi = center.y;
     sides = clampi(sides, 3, MAX_PATH - 1);
-    for (int i = 0; i < sides; i++) p[i] = vec2_add(center, vec2_polar(angle + 2 * ENGINE_PI * i / sides, radius));
-    fill_path(p, sides, (grad){c, c, 0, 0}, feather());
+    for (int i = 0; i < sides; i++) {
+        p[i] = vec2_add(center, vec2_polar(angle + 2 * ENGINE_PI * i / sides, radius));
+        lo = minf(lo, p[i].y);
+        hi = maxf(hi, p[i].y);
+    }
+    fill_path(p, sides, (grad){top, bottom, lo, hi}, feather());
+}
+
+void draw_ngon(vec2 center, float radius, int sides, float angle, color c)
+{
+    draw_ngon_grad(center, radius, sides, angle, c, c);
+}
+
+void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle, color tint)
+{
+    if (!t.tex || radius <= 0) return;
+    vec2 path[6], uv[6];
+    for (int i = 0; i < 6; i++) {
+        float a = ENGINE_PI * i / 3;
+        path[i] = vec2_add(center, vec2_polar(a + angle, radius));
+        uv[i] = rect_point(src, v2(.5f + .5f * cosf(a), .5f + sinf(a) / sqrtf(3)));
+    }
+    render_vertex mesh[54];
+    int n = 0;
+    for (int i = 0; i < 6; i++) {
+        int j = (i + 1) % 6;
+        render_vertex a = {path[i], tint, uv[i]}, b = {path[j], tint, uv[j]};
+        render_vertex outer_a = {vec2_add(path[i], vec2_scale(path_normal(path, 6, i), feather())), color_alpha(tint, 0), uv[i]};
+        render_vertex outer_b = {vec2_add(path[j], vec2_scale(path_normal(path, 6, j), feather())), color_alpha(tint, 0), uv[j]};
+        mesh[n++] = (render_vertex){center, tint, rect_center(src)};
+        mesh[n++] = a; mesh[n++] = b;
+        mesh[n++] = a; mesh[n++] = outer_a; mesh[n++] = outer_b;
+        mesh[n++] = a; mesh[n++] = outer_b; mesh[n++] = b;
+    }
+    render_textured_geometry(t, mesh, n, NULL, 0);
 }
 
 void draw_star(vec2 center, float radius, float inner, int points, float angle, color c)

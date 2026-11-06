@@ -829,6 +829,15 @@ function gfx.image_part(t, src, dst, tint) end
 ---@param tint color
 function gfx.image_rot(t, dst, angle, tint) end
 
+---Map a source rectangle in texture pixels to an anti-aliased flat-top hex. The hex and artwork rotate together by angle (radians).
+---@param t texture
+---@param src rect
+---@param center vec2
+---@param radius number
+---@param angle number
+---@param tint color
+function gfx.image_hex(t, src, center, radius, angle, tint) end
+
 ---Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
 ---@param t texture
 ---@param dst rect
@@ -915,6 +924,15 @@ function gfx.polyline(pts, thickness, c) end
 ---@param angle number
 ---@param c color
 function gfx.ngon(center, radius, sides, angle, c) end
+
+---A regular polygon with a vertical gradient from its highest to its lowest point.
+---@param center vec2
+---@param radius number
+---@param sides integer
+---@param angle number
+---@param top color
+---@param bottom color
+function gfx.ngon_grad(center, radius, sides, angle, top, bottom) end
 
 ---A star with `points` points; inner is the inner radius as a ratio of radius.
 ---@param center vec2

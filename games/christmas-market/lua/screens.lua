@@ -318,11 +318,14 @@ local guide_entries = {
 local function guide_icon(box, icon)
     local at=box:center()
     local layer=rect.centered(at,size2(52,52))
-    if icon.back then picture(R.board_art[icon.back],layer,255) end
+    if icon.back then picture(R.board_art[icon.back .. "-edge"] or R.board_art[icon.back],layer,255) end
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
-    if icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
+    if icon.front then
+        local edge = R.board_art[icon.front .. "-edge"] or (icon.front == "chain" and R.board_art["chain-board"])
+        picture(edge or R.board_art[icon.front],layer:inflate(edge and 6 or -2),255)
+    end
 end
 local guide_form = match3.guide_form({
     title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING TREATS",

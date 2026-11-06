@@ -333,13 +333,16 @@ local guide_entries = {
      icon={tiles={{kind=2,special=rules.PRISM}}}},
     {id="blockers", title="Chains & ancient sand", description="Match on them to break or excavate.",
      icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Frozen gems", description="Ice covers the gem. The number shows hits left; matches and nearby fire thaw it.",
+    {id="ice", title="Frozen gems", description="Ice rims the cell. The number shows hits left; matches and nearby fire thaw it.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()
     local layer=rect.centered(at,size2(52,52))
-    if icon.back then picture(R.board_art[icon.back],layer,255) end
+    if icon.back then
+        local edge = R.board_art[icon.back .. "-edge"]
+        picture(edge or R.board_art[icon.back],edge and layer:inflate(4) or layer,255)
+    end
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end

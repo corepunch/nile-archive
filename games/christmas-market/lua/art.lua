@@ -1,5 +1,5 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
--- Idol/Leaf/Crystal artwork also identifies Gold/Wood/Stone in the island purse.
+-- The gold bell artwork also identifies spendable Gold in the island purse.
 -- Board clears score points; the fixed first-clear grant and Gold-only replay
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
@@ -8,6 +8,9 @@ A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.hud_icons = {"complete"}
+-- Sample the opaque interior of each 128px terrain sprite. The board supplies
+-- the hex silhouette, while the goal icon keeps the original painted edge.
+A.snow_source = app.arg("default-match3") and rect(32, 35, 63, 58) or rect(18, 14, 96, 95)
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
 
@@ -49,7 +52,10 @@ function A.load()
     local function load(name) textures[name] = A.skin()[name] end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
-    load("cell-mask")
+    if not app.arg("default-match3") then
+        for _, name in ipairs{"sand-edge", "ice-1-edge", "ice-2-edge"} do load(name) end
+    end
+    if not app.arg("default-match3") then load("chain-board") end
     for _, tool in ipairs(A.tools) do
         for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
     end

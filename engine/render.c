@@ -223,23 +223,32 @@ void render_geometry(struct render_texture *t, const render_vertex *v, int n, co
     } else glDrawArrays(GL_TRIANGLES, 0, n);
 }
 
-void render_image(texture t, rect src, rect dst, float angle, color tint)
+/* Textured meshes supply UVs in local texture pixels, including for atlas views. */
+void render_textured_geometry(texture t, render_vertex *v, int n, const int *idx, int count)
 {
     if (!t.tex) return;
+    rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
+    for (int i = 0; i < n; i++) {
+        vec2 local = vec2_div(v[i].uv, size2_vec(t.size));
+        v[i].uv = rect_point(uv, local);
+    }
+    bool original_blend = t.tex->additive;
+    if (t.additive) t.tex->additive = true;
+    render_geometry(t.tex, v, n, idx, count);
+    t.tex->additive = original_blend;
+}
+
+void render_image(texture t, rect src, rect dst, float angle, color tint)
+{
     vec2 p[4] = {dst.pos, rect_point(dst, v2(1, 0)), rect_max(dst), rect_point(dst, v2(0, 1))};
     vec2 uv[4] = {src.pos, rect_point(src, v2(1, 0)), rect_max(src), rect_point(src, v2(0, 1))};
     render_vertex v[4];
     for (int i = 0; i < 4; i++) {
         if (angle) p[i] = vec2_add(rect_center(dst), vec2_rotate(vec2_sub(p[i], rect_center(dst)), angle));
-        vec2 local_uv = vec2_div(uv[i], size2_vec(t.size));
-        if (t.uv.size.w > 0) local_uv = vec2_add(t.uv.pos, vec2_mul(local_uv, size2_vec(t.uv.size)));
-        v[i] = (render_vertex){p[i], tint, local_uv};
+        v[i] = (render_vertex){p[i], tint, uv[i]};
     }
     const int idx[] = {0, 1, 2, 0, 2, 3};
-    bool original_blend = t.tex->additive;
-    if (t.additive) t.tex->additive = true;
-    render_geometry(t.tex, v, 4, idx, 6);
-    t.tex->additive = original_blend;
+    render_textured_geometry(t, v, 4, idx, 6);
 }
 
 void render_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint)

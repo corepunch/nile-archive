@@ -47,8 +47,16 @@ five or more creates a rainbow star. Pieces have one ordinary state rather
 than flower growth stages. Blockers, tools, cascades and restoration rewards
 retain their existing rules. Both portrait games use this same matching mode.
 
-The board and Settings panel share Relic Rush's layout. Open Pause to reach
-Sound, Reduce Motion, Resume and the Market Guide.
+The board and Settings panel share Relic Rush's layout. The puzzle backdrop
+uses the space above the goals for a lantern-lit Christmas market, with open
+snow behind the spruce-green wells and their thin champagne edge. Each well
+shades from light at the top to dark at the bottom. Powder snow and both ice
+strengths use [thin hex rims](docs/asset-catalogue.md#snow-and-ice-rims).
+Goal icons sit slightly left over their capsule edges. See the
+[cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
+Thin gold tinsel straddles the cell edge. Shooting stars, the bomb, the rainbow
+star and selection highlights use the [same hex silhouette](docs/asset-catalogue.md#fitted-specials-and-thin-tinsel).
+Open Pause to reach Sound, Reduce Motion, Resume and the Market Guide.
 
 ## Draft implementation
 
@@ -56,6 +64,8 @@ The market header shows Lives, Gold and Christmas Stars in one row. A failed
 wish uses a life, and one returns every 30 minutes up to five. Gold funds
 construction and decorations. Open a region from its marker on the map once
 you have enough Stars. See the [town HUD review](docs/asset-catalogue.md#town-hud).
+Snow drifts over the village behind the controls. Reduce Motion keeps the
+flakes still.
 
 `make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has thirty puzzles in three story episodes, funded construction, player-chosen placement, land expansion, a shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
@@ -78,7 +88,7 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 
 | Snowy market | Festive puzzle | Noelle |
 | --- | --- | --- |
-| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/main-character-board.jpg) | ![Dialogue](docs/screenshots/main-character-dialogue.jpg) |
+| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/winter-market/after-480x900.jpg) | ![Dialogue](docs/screenshots/main-character-dialogue.jpg) |
 
 Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 

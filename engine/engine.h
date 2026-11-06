@@ -292,6 +292,7 @@ void tex_additive(texture t, bool on);      /* additive instead of alpha blendin
 void draw_image(texture t, rect dst, color tint);
 void draw_image_part(texture t, rect src, rect dst, color tint);
 void draw_image_rot(texture t, rect dst, float angle, color tint);
+void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle, color tint);
 void draw_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint);
 void draw_rect(rect r, color c);
 void draw_rect_grad(rect r, color top, color bottom);
@@ -306,6 +307,7 @@ void draw_line(vec2 a, vec2 b, float thickness, color c);
 void draw_poly(const vec2 *pts, int n, color c);   /* convex polygon */
 void draw_polyline(const vec2 *pts, int n, float thickness, color c);
 void draw_ngon(vec2 center, float radius, int sides, float angle, color c);
+void draw_ngon_grad(vec2 center, float radius, int sides, float angle, color top, color bottom);
 void draw_star(vec2 center, float radius, float inner, int points, float angle, color c);  /* inner: ratio of radius */
 /* Coloured triangles: one colour per vertex, three 0-based indices per triangle. */
 void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m);
