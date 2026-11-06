@@ -44,7 +44,9 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     -- Authored frames leave the matching kind visible in every optional pack.
     if t.special ~= PRISM then
         local inner = t.special == NORMAL and 1 or .72
-        gfx.image(R.relics[t.kind + 1], rect.centered(at, size2(s * aspect * inner, s / aspect * inner)), tint)
+        local h = s / aspect * inner
+        local lift = FESTIVE and art.piece_lift[t.kind] or 0
+        gfx.image(R.relics[t.kind + 1], rect.centered(vec2(at.x, at.y - lift * h), size2(s * aspect * inner, h)), tint)
     end
     if t.special ~= NORMAL then gfx.image(R.board_art[art.specials[t.special]], dst, tint) end
 end
