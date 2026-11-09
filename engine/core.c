@@ -125,12 +125,18 @@ void app_inject_move(vec2 p) { inject_pointer(p, kEventLeftButtonDragged); }
 void app_inject_release(vec2 p) { inject_pointer(p, kEventLeftButtonUp); }
 void app_inject_click(vec2 p) { app_inject_press(p); app_inject_release(p); }
 
+/* The data root while main.lua loads, before app_run has the descriptor, so
+ * a game can read its JSON configuration at load time. */
+static const char *boot_data_dir;
+void app_boot_data(const char *dir) { boot_data_dir = dir; }
+
 const char *app_path(const char *rel)
 {
     static char buf[4][512];
     static int slot;
     const char *root = app_arg("data");
     if (!root || !*root) root = A.desc.data_dir;
+    if (!root || !*root) root = boot_data_dir;
     if (!rel || rel[0] == '/' || !root || !*root) return rel;
     char *out = buf[slot++ & 3];
     snprintf(out, sizeof buf[0], "%s/%s", root, rel);
