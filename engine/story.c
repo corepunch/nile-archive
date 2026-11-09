@@ -522,6 +522,11 @@ void story_frame(float dt)
     float arrow = ts.size * .8f;   /* room for the "tap to continue" arrow after the last word */
     size2 body = text_box_size(ts, max_w - 2 * pad - arrow, text);
     float width = minf(max_w, maxf(body.w + 2 * pad + arrow, maxf(tag_w + 64, ts.size * 9)));
+    bool centered = has_face && !beside && !framed_narrow && S.style.centered;
+    if (centered) {   /* the bubble spans the screen: wrap to its full measure */
+        width = max_w;
+        body = text_box_size(ts, width - 2 * pad - arrow, text);
+    }
     float top_gap = vpad + (who ? tag * .35f : 0);
     float top_pad = top_gap, bottom_pad = vpad;
     float height = body.h + top_pad + bottom_pad;
@@ -568,6 +573,17 @@ void story_frame(float dt)
                                face, v2(who->right ? 1 : 0, 1));
         tip = rect_center(bubble);
         grow_from = rect_point(bubble, v2(who->right ? 1 : 0, 0));
+    } else if (centered) {
+        /* Phones: one full-width bubble at mid-screen. The speaker stands on
+         * its top edge at full size; a listener stands at the other end. */
+        float stood = face.h * .92f;   /* the figure overlaps the bubble's rim */
+        float y = rect_center(screen).y - (stood + height) * .5f + stood;
+        bubble = rc(screen.pos.x + m + reach, clampf(y, screen.pos.y + m + stood, rect_max(screen).y - m - reach - height - tag * 2),
+                    width, height);
+        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - m : bubble.pos.x + m, bubble.pos.y + face.h * .08f),
+                               face, v2(who->right ? 1 : 0, 1));
+        tip = rect_center(bubble);
+        grow_from = rect_point(bubble, v2(who->right ? .85f : .15f, 0));
     } else {   /* narrow screens, standing figures: a panel along the bottom, the speaker standing on it */
         bubble = rect_anchor(v2(rect_center(screen).x, rect_max(screen).y - m - reach), sz2(width, height), v2(.5f, 1));
         portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - m : bubble.pos.x + m, bubble.pos.y + face.h * .08f),
@@ -582,6 +598,10 @@ void story_frame(float dt)
     rect listener_portrait = rc(0, 0, 0, 0), group = screen;
     if (listening) {
         listener_portrait = stand(listener, h);
+        if (centered)   /* on the bubble's other end */
+            listener_portrait = rect_anchor(v2(listener->right ? rect_max(bubble).x - m : bubble.pos.x + m,
+                                               bubble.pos.y + listener_portrait.size.h * .08f),
+                                            listener_portrait.size, v2(listener->right ? 1 : 0, 1));
         if (framed_narrow)   /* on the speaker's baseline, above the box */
             listener_portrait = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5,
                                                rect_max(portrait).y), listener_portrait.size, v2(listener->right ? 1 : 0, 1));
@@ -628,7 +648,9 @@ void story_frame(float dt)
         float icon = tag * .55f;
         size2 size = sz2(text_measure(ns, S.style.skip).w + tag * 1.2f + icon + 6, tag * 1.25f);
         rect pill = rect_anchor(v2(left ? bubble.pos.x : rect_max(bubble).x, bubble.pos.y - 12 - reach), size, v2(left ? 0 : 1, 1));
-        if (beside)   /* the bottom corner away from the speaker */
+        if (centered)   /* under the bubble, both figures stand on top */
+            pill = rect_anchor(v2(left ? bubble.pos.x : rect_max(bubble).x, rect_max(bubble).y + 12 + reach), size, v2(left ? 0 : 1, 0));
+        else if (beside)   /* the bottom corner away from the speaker */
             pill = rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, rect_max(screen).y - m), pill.size, v2(left ? 0 : 1, 1));
         else if (framed_narrow)   /* travel with the unit; sit above it when a listener occupies the far end */
             pill = rect_anchor(v2(left ? group.pos.x : rect_max(group).x,

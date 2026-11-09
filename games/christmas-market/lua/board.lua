@@ -8,6 +8,7 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
+R.kudos_words = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"}   -- cascade and special-combo praise
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 R.locked_notice = "Ice and tinsel must be cleared first."
@@ -42,13 +43,20 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
     -- Authored frames leave the matching kind visible in every optional pack.
+    local striped = t.special >= rules.ROW and t.special <= rules.DIAGONAL
     if t.special ~= PRISM then
-        local inner = t.special == NORMAL and 1 or .72
+        local inner = (t.special == NORMAL or striped) and 1 or .72
         local h = s / aspect * inner
         local lift = FESTIVE and art.piece_lift[t.kind] or 0
-        gfx.image(R.relics[t.kind + 1], rect.centered(vec2(at.x, at.y - lift * h), size2(s * aspect * inner, h)), tint)
+        local box = rect.centered(vec2(at.x, at.y - lift * h), size2(s * aspect * inner, h))
+        if striped then   -- stripes run along the axis the treat clears
+            local angle = math.pi / 6 + (t.special - rules.ROW) * math.pi / 3
+            gfx.image_striped(R.relics[t.kind + 1], box, angle, art.stripes.repeats, art.stripes.width, art.stripes.ink, tint)
+        else
+            gfx.image(R.relics[t.kind + 1], box, tint)
+        end
     end
-    if t.special ~= NORMAL then gfx.image(R.board_art[art.specials[t.special]], dst, tint) end
+    if t.special ~= NORMAL and not striped then gfx.image(R.board_art[art.specials[t.special]], dst, tint) end
 end
 local draw_relic = R.draw_relic
 

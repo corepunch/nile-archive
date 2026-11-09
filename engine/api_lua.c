@@ -1055,7 +1055,7 @@ static int l_story_line_new(lua_State *L)
 
 void api_push_story_style(lua_State *L, story_style v)
 {
-    lua_createtable(L, 0, 9);
+    lua_createtable(L, 0, 10);
     lua_pushnumber(L, v.backdrop_blur); lua_setfield(L, -2, "backdrop_blur");
     api_push_text_style(L, v.text); lua_setfield(L, -2, "text");
     api_push_text_style(L, v.name); lua_setfield(L, -2, "name");
@@ -1064,6 +1064,7 @@ void api_push_story_style(lua_State *L, story_style v)
     api_push_color(L, v.dim); lua_setfield(L, -2, "dim");
     lua_pushnumber(L, v.portrait_height); lua_setfield(L, -2, "portrait_height");
     lua_pushboolean(L, v.framed); lua_setfield(L, -2, "framed");
+    lua_pushboolean(L, v.centered); lua_setfield(L, -2, "centered");
     lua_pushstring(L, v.skip); lua_setfield(L, -2, "skip");
     luaL_setmetatable(L, "engine.story_style");
 }
@@ -1098,6 +1099,9 @@ story_style api_get_story_style(lua_State *L, int i)
     lua_getfield(L, i, "framed");
     v.framed = lua_toboolean(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "centered");
+    v.centered = lua_toboolean(L, -1);
+    lua_pop(L, 1);
     lua_getfield(L, i, "skip");
     v.skip = lua_tostring(L, -1);
     lua_pop(L, 1);
@@ -1115,6 +1119,7 @@ void api_store_story_style(lua_State *L, int i, story_style v)
     api_push_color(L, v.dim); lua_setfield(L, i, "dim");
     lua_pushnumber(L, v.portrait_height); lua_setfield(L, i, "portrait_height");
     lua_pushboolean(L, v.framed); lua_setfield(L, i, "framed");
+    lua_pushboolean(L, v.centered); lua_setfield(L, i, "centered");
     lua_pushstring(L, v.skip); lua_setfield(L, i, "skip");
 }
 
@@ -3338,6 +3343,17 @@ static int l_sfx_tone(lua_State *L)
     return 0;
 }
 
+/* sfx.note(hz, seconds, delay, volume) */
+static int l_sfx_note(lua_State *L)
+{
+    float a_hz = (float)luaL_checknumber(L, 1);
+    float a_seconds = (float)luaL_checknumber(L, 2);
+    float a_delay = (float)luaL_checknumber(L, 3);
+    float a_volume = (float)luaL_checknumber(L, 4);
+    sfx_note(a_hz, a_seconds, a_delay, a_volume);
+    return 0;
+}
+
 /* sfx.enable(on) */
 static int l_sfx_enable(lua_State *L)
 {
@@ -4352,6 +4368,7 @@ static void open_sfx(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
         {"tone", l_sfx_tone},
+        {"note", l_sfx_note},
         {"enable", l_sfx_enable},
         {"enabled", l_sfx_enabled},
         {NULL, NULL}

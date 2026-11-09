@@ -1,8 +1,9 @@
 # Christmas art direction catalogue
 
 Current puzzle rules: adjacent swaps create straight runs of 3+ along the three
-hex axes, matching Relic Rush. Four creates the existing axis shooting-star
-state; five or more creates the existing rainbow-star state. Bent clusters do
+hex axes, matching Relic Rush. Four creates a striped treat (engine stripes
+masked to the treat, as in Relic Rush; the old shooting-star frames remain in
+the atlas but are no longer drawn on the board); five or more creates the existing rainbow-star state. Bent clusters do
 not match. Existing bomb artwork remains available to review boards and tools;
 there is no bent-group bomb recipe. No new artwork or growth stages are added.
 The guide and campaign lessons describe these rules; existing authored control
@@ -28,7 +29,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Story cast | Built-in ImageGen, `art/story-cast.png` | `data/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
-| Snowfall and feedback | Lua renderer | Procedural | Two layers of village snowfall, collection particles, beams, lift and placement feedback |
+| Snowfall and feedback | Lua renderer | Procedural | Two world-anchored layers of village snowfall, mission banner, kudos, collection particles, beams, lift and placement feedback |
 | Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/particles.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
 Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved inside extracted artwork. Control states are directly cropped from the authored atlas. The six pieces, the three tools' states, Pause and the goal star are cropped square around their own artwork, with one side per family, and scaled evenly to 128×128. That keeps their authored proportions: the earlier unequal source cells stretched them tall. Hex board states keep their whole source cell, because it registers them to the board slot.
@@ -77,8 +78,10 @@ on exposed sides. The original painted cell mask remains in the atlas. The
 authored snow, tinsel, ice, special, selection and hint sprites retain their
 registration over the wells.
 
-Snowfall uses two screen-space layers over the village. Larger foreground
-flakes fall faster, and both layers fade toward the bottom controls. Reduce
+Snowfall uses two layers over the village (84 small and 44 large flakes).
+Their pattern is anchored to the world origin, so panning carries the flakes
+with the market while they keep falling. Larger foreground flakes fall faster,
+and both layers fade toward the bottom controls. Reduce
 Motion holds the flakes still. The HUD and dialogue draw above the snowfall.
 
 Run `build/test/christmas-market "shot main-character-board" "shot phone-board"
@@ -129,9 +132,28 @@ Reproduce with `build/test/christmas-market "shot main-character-board" "shot ph
 
 [Adjacent rings among blockers and specials](screenshots/review/tinsel-edge/specials.jpg)
 
+## Striped treats
+
+Line specials (ROW, COLUMN, DIAGONAL) draw the treat itself through
+`gfx.image_striped`: four cream bands (`A.stripes` in `lua/art.lua`) at 30°,
+90° or 150°, masked to the treat's alpha, exactly as Relic Rush does. The user
+asked for stripes instead of shooting stars on 2026-11-09. No new artwork.
+
+## Market navigation
+
+The island's bottom controls are Relic Rush's: `navigation_build` and
+`navigation_play` skin variants in a 448-wide row at the bottom, the winter
+wishes medallion (the festive star) between them, and `placement_cancel` /
+`placement_confirm` beside a lifted building. Until an authored atlas exists
+([#84](https://github.com/corepunch/nile-archive/issues/84)), the badges are
+skin layers: a gold-rimmed evergreen tile with the Gingerbread bakery sprite
+(Build) and a ribbon-red tile with a cream triangle (Play). Normal, pressed
+(sinks 3 units) and disabled (drained gold and face) are defined; hover and
+selected look like normal. Capture: `--city 1`, `--city 3 --placing`.
+
 ## Fitted specials and thin tinsel
 
-All three shooting-star axes, bomb, rainbow star, selection and hint use the
+The bomb, rainbow star, selection and hint use the
 same flat-top cell alpha mask. Each authored frame is fitted from its measured
 source box in `art/registration.json`. The mask preserves the hollow centres of
 selection and hint, and the board draws these frames at the cell face radius.

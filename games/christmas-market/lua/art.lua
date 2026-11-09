@@ -4,6 +4,10 @@
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
+-- Line specials are striped treats, as in Relic Rush: engine-rendered cream
+-- bands masked to the treat's own alpha, along the axis they clear. The
+-- shooting-star ray frames stay in the atlas for the guide's legacy previews only.
+A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}

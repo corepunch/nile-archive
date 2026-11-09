@@ -72,7 +72,10 @@ function R.start_level(chosen)
     R.intro = nil
     R.vfx_reset()
     -- Mechanics stay in the board lesson, apart from the story dialogue.
-    if not R.quiet then R.notice(rules.level_of(R.g).lesson);R.present_board() end
+    if not R.quiet then
+        local l = rules.level_of(R.g)
+        R.mission(l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
+    end
     return true
 end
 
@@ -125,6 +128,7 @@ local function frame(dt)
     if not R.on_island then
         R.vfx_draw()
         R.vfx_particles()
+        R.draw_board_banners(dt)
     end
     R.draw_toast()
     ui.set_enabled(true)
@@ -138,7 +142,7 @@ local function init()
     if app.arg("cell-mask") then return end
     R.font = R.skin:font("lilita")
     story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 22.5), bubble = rgba(255, 246, 222, 252),
-                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, skip = "SKIP"})
+                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .34, centered = true, skip = "SKIP"})
     local board_skin = require("art").skin()
     R.backdrop = board_skin.background
     R.scenes[1], R.scenes[2] = board_skin["scene-1"] or R.backdrop, board_skin["scene-2"] or R.backdrop

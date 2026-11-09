@@ -30,7 +30,7 @@ local R = require("match3").view{
     bubble_time = 0,
 
     -- animated readouts
-    score_display = 0, score_pulse = 0, goal_display = 0, goal_pulse = 0, word_time = 0,
-    word_combo = 0, fx_combo = 0, fx_origin = -1,
+    score_display = 0, score_pulse = 0, goal_display = 0, goal_pulse = 0,
+    fx_combo = 0, fx_origin = -1,
 }
 return R

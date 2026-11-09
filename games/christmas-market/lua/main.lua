@@ -74,7 +74,10 @@ function R.start_level(chosen)
     R.idle_time = 0
     R.vfx_reset()
     -- Mechanics stay in the board lesson, apart from the story dialogue.
-    if not R.quiet then R.notice(rules.level_of(R.g).lesson); R.present_board() end
+    if not R.quiet then
+        local l = rules.level_of(R.g)
+        R.mission(l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
+    end
     return true
 end
 
@@ -105,6 +108,14 @@ end
 local smoke_stage, smoke_frames, smoke_wait, smoke_partner = -2, 0, 0, -1
 local smoke_move={}
 local smoke_city_move
+local function press_row(form, key, id)
+    for _, node in pairs(form.nodes) do
+        if node.item_key == key and node.local_id == id then
+            app.inject_click(form.boxes[node.id]:center())
+            return node
+        end
+    end
+end
 
 local function smoke()
     smoke_frames = smoke_frames + 1
@@ -119,6 +130,10 @@ local function smoke()
     if story.active() then   -- tap through the dialogue
         assert(R.phase ~= R.PH_PRESENT or R.intro.t == 0, "smoke: the board fills only after the dialogue")
         app.inject_click(vec2(240, 300))
+        return
+    end
+    if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
+        if not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
     end
     -- The board's entrance takes no moves. A tap skips the first; the rest play out.
@@ -169,20 +184,20 @@ local function smoke()
             local gain=R.prog.wallet[1]-smoke_move.replay_gold
             assert(gain>=60 and gain<=100 and R.prog.wallet[4]==3 and R.prog.wallet[5]==0 and island.wonder_count(R.island)==1,
                 "replay must pay only Gold without changing discoveries or restoration")
-            app.inject_click(vec2(240,856+R.drop));smoke_stage=5;return
+            app.inject_click(R.island_buttons.play+vec2(0,R.drop));smoke_stage=5;return
         end
-        app.inject_click(vec2(240, 856 + R.drop)); smoke_stage = 2   -- CHOOSE A LOCATION
-    elseif smoke_stage == 2 and R.overlay == R.OV_WONDER then
-        app.inject_click(rect(76, 632, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 3
+        app.inject_click(R.island_buttons.shop+vec2(0,R.drop)); smoke_stage = 2   -- Build: the earned stall
+    elseif smoke_stage == 2 and R.overlay == R.OV_SHOP then
+        assert(press_row(R.catalogue_form, "arch", "buy"), "smoke: the earned stall is in the shop"); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
-        app.inject_click(vec2(320, 856 + R.drop)); smoke_stage = 4   -- PLACE & BUILD
+        app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 1 then error("smoke: the wonder was not built") end
         smoke_city_move = city.move_test(R.island, {
             look = function(at) R.island_focus(at-vec2(0,80),math.max(.65,R.island.cam.zoom)) end,
             wallet = function() return R.prog.wallet[rules.GOLD] end,
-            cancel = function() app.inject_click(vec2(100,856+R.drop)) end,
-            confirm = function() app.inject_click(vec2(320,856+R.drop)) end,
+            cancel = function() app.inject_click(R.placement_form.boxes.cancel:center()) end,
+            confirm = function() app.inject_click(R.placement_form.boxes.confirm:center()) end,
             offset = vec2(240,0),
         })
         smoke_stage=6
@@ -216,7 +231,7 @@ local function smoke()
         end
     elseif smoke_stage==22 and R.island.placing>=0 then
         assert(R.island.placing==10,"catalogue action lost its stable item key")
-        app.inject_click(vec2(100,856+R.drop));smoke_stage=23
+        app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=23
     elseif smoke_stage==23 and R.island.placing<0 then
         assert(R.island.count==1 and R.prog.wallet[1]==smoke_move.shop_gold,"cancelled purchase changed save state")
         R.open_catalogue();smoke_stage=24
@@ -227,7 +242,7 @@ local function smoke()
             end
         end
     elseif smoke_stage==25 and R.island.placing>=0 then
-        app.inject_click(vec2(320,856+R.drop));smoke_stage=26
+        app.inject_click(R.placement_form.boxes.confirm:center());smoke_stage=26
     elseif smoke_stage==26 and R.island.placing<0 then
         assert(R.island.count==2 and island.wonder_count(R.island)==1,"decoration changed campaign restoration count")
         assert(R.prog.wallet[1]==smoke_move.shop_gold-45,"purchase must charge once")
@@ -246,9 +261,9 @@ local function smoke()
         app.inject_click(R.wonder_form.boxes.action:center()+vec2(0,R.drop/2));smoke_stage=28
     elseif smoke_stage==28 and R.island.placing>=0 then
         assert(R.island.moving==1 and R.island.placing==10,"details must move the purchased instance")
-        app.inject_click(vec2(100,856+R.drop));smoke_stage=29
+        app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=29
     elseif smoke_stage==29 and R.island.placing<0 then
-        app.inject_click(vec2(127,725+R.drop));smoke_stage=30
+        app.inject_click(R.island_buttons.expeditions+vec2(0,R.drop));smoke_stage=30
     elseif smoke_stage==30 and R.overlay==R.OV_EXPEDITIONS then
         local f=R.expedition_form
         for _,node in pairs(f.nodes) do
@@ -307,6 +322,7 @@ local function frame(dt)
     if not R.on_island then
         R.vfx_draw()
         R.vfx_particles()
+        R.draw_board_banners(dt)
     end
     R.draw_toast()
     ui.set_enabled(true)
@@ -478,6 +494,11 @@ local function debug_screens()
         R.art_review = true
     end
     if app.arg("present") then R.present_board() end
+    if app.arg("mission") then   -- the level's mission banner, as a level starts
+        local l = rules.level_of(R.g)
+        R.mission(l.lesson, ("%d. %s"):format(R.g.level + 1, l.name))
+    end
+    if app.arg("kudos") then R.award_kudos(tonumber(app.arg("kudos")) or 2) end
     a = app.arg("dialog")
     if a then   -- guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble
         R.toast_time = 0
@@ -519,7 +540,7 @@ local function init()
     if app.arg("cell-mask") then return end
     R.font = R.skin:font("lilita")
     story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, 15), bubble = rgba(255, 246, 222, 252),
-                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .27, skip = "SKIP"})
+                                  edge = rgba(102, 68, 39), dim = rgba(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .34, centered = true, skip = "SKIP"})
     local board_skin = require("art").skin()
     R.backdrop = board_skin.background
     R.scenes[1], R.scenes[2] = board_skin["scene-1"] or R.backdrop, board_skin["scene-2"] or R.backdrop

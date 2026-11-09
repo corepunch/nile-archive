@@ -231,8 +231,8 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 
 - `story_setup(cast, n, &style)` registers the cast and how the dialogue looks:
   text and name-tag styles, bubble colours, a backdrop, portrait height, and
-  `framed` for busts shown in a medallion (Relic Rush) rather than standing
-  cut-outs (Nile Archive).
+  `framed` for busts shown in a medallion rather than standing cut-outs
+  (Nile Archive), and `centered` for the phones' mid-screen, full-width bubble.
 - `story_play(beat, lines, n)` queues a beat once per save (beats are hashed
   and saved by `story_serialize`); `story_say(who, text)` queues a line every
   time. `story_active()` tells the game to hold its own input and dialogs.
@@ -275,6 +275,13 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   bottom corner away from a standing speaker. For framed phone dialogue it
   travels with the centred unit, across from the medallion above the box, or
   above the whole unit when a listener occupies that end.
+  With `centered` (Relic Rush and Christmas Market phones, standing cut-outs),
+  the bubble instead spans the safe screen with a 16-unit margin and its text
+  wraps to that full measure. The bubble and the figure standing on it are
+  centred vertically as one unit; the speaker stands on the bubble's end on
+  their side at the full `portrait_height`, and the listener stands at the
+  other end at the same size, dimmed. The skip pill sits under the bubble,
+  away from the speaker.
 - Bubble kinds: **speech** (rounded body, curved tapered tail), **thought** (a
   cloud of puffs with detached, shrinking puffs as the tail) and **shout**
   (spikes evenly spaced along a rounded box, so long and short lines burst
@@ -292,10 +299,14 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 
 ## Audio
 
-`sfx_tone(hz, seconds)` plays a soft bell-like note (Relic Rush chimes rising
-notes as cascades grow). The 44.1 kHz stereo device opens on the first note.
-`--mute` prevents playback and `sfx_enable(false)` silences and clears the current
-tone. Sampled audio belongs to the standalone Clayfight runtime.
+`sfx_note(hz, seconds, delay, volume)` plays a soft bell-like note on one of
+16 voices after `delay` seconds, so chords and jingles are a few calls; when
+all voices are busy the one nearest its end is reused, and the mix is soft
+clipped. `sfx_tone(hz, seconds)` is a note with no delay at volume 1. The
+match-3 module's sound bank (`R.play`) builds swaps, matches, specials, kudos,
+wins and losses from these notes. The 44.1 kHz stereo device opens on the first
+note. `--mute` prevents playback and `sfx_enable(false)` silences and clears
+every voice. Sampled audio belongs to the standalone Clayfight runtime.
 
 ## Platform notes
 

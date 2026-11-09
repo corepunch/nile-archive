@@ -439,6 +439,7 @@ bool haptic_available(void);
 
 /* Audio: a tiny synthesiser for UI and game sounds. */
 void sfx_tone(float hz, float seconds);   /* a soft bell-like note */
+void sfx_note(float hz, float seconds, float delay, float volume);   /* one of 16 voices, after delay seconds */
 void sfx_enable(bool on);
 bool sfx_enabled(void);
 
@@ -527,6 +528,7 @@ typedef struct {
     color bubble, edge, dim;     /* bubble fill and rim, backdrop behind the dialogue */
     float portrait_height;       /* fraction of the screen height (default .5) */
     bool framed;                 /* bust medallions; narrow screens centre the portrait/bubble unit */
+    bool centered;               /* narrow screens: a full-width bubble at mid-screen, figures standing on it */
     float backdrop_blur;         /* optional logical-pixel blur behind dialogue */
     const char *skip;            /* label of a skip button, NULL for none */
 } story_style;

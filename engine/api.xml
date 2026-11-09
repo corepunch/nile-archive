@@ -358,8 +358,9 @@
     <const name="ERROR" c="HAPTIC_ERROR" type="int" doc="Rejected swap or hidden-object miss."/>
   </module>
 
-  <module name="sfx" doc="A tiny synthesiser for feedback tones.">
+  <module name="sfx" doc="A tiny polyphonic synthesiser for feedback tones and jingles.">
     <function name="tone" c="sfx_tone" doc="A soft bell-like note."><arg name="hz" type="float"/><arg name="seconds" type="float"/></function>
+    <function name="note" c="sfx_note" doc="A bell-like note on one of 16 voices after `delay` seconds; `volume` 1 matches tone. Chords and jingles are several notes."><arg name="hz" type="float"/><arg name="seconds" type="float"/><arg name="delay" type="float"/><arg name="volume" type="float"/></function>
     <function name="enable" c="sfx_enable"><arg name="on" type="bool"/></function>
     <function name="enabled" c="sfx_enabled"><returns type="bool"/></function>
   </module>
@@ -465,6 +466,7 @@
     <field name="bubble" type="color"/><field name="edge" type="color"/><field name="dim" type="color" doc="Backdrop behind the dialogue."/>
     <field name="portrait_height" type="float" doc="Fraction of the screen height (default .5)."/>
     <field name="framed" type="bool" doc="Portraits are busts: show them in a medallion."/>
+    <field name="centered" type="bool" doc="Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size."/>
     <field name="skip" type="string" doc="Label of a skip button, nil for none."/>
   </struct>
   <module name="story" doc="Characters, dialogue and speech bubbles.">

@@ -1,11 +1,11 @@
 -- island_view.lua — the restored island: an engine city with the expedition's
--- HUD, region markers in the fog, placement and the next-step panel.
+-- HUD, region markers in the fog, placement and the bottom controls.
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local journey = require("journey")
 local SCREEN_W = R.SCREEN_W
-local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
+local PAL_CREAM = R.PAL_CREAM
 local rgba = color
 
 function R.island_focus(world, zoom)
@@ -31,7 +31,7 @@ function R.island_begin(kind, focus, item)
     end
     R.overlay, R.inspect = R.OV_NONE, -1
     if focus then R.island_focus(c.ghost-vec2(0,90),math.max(.65,c.cam.zoom)) end
-    R.notice("Tap to choose a spot. Drag the building or scroll the land.")
+    R.notice("Drag the building to choose a spot, or scroll the land.")
 end
 
 local function confirm_place()
@@ -75,59 +75,90 @@ local function draw_markers(c)
 end
 R.draw_markers = draw_markers
 
--- A sheet along the bottom edge: it runs on under the home indicator, so it
--- reads as part of the screen rather than a card floating above it.
-local function bottom_panel()
+-- The same bottom controls as Relic Rush, in the market's skin: Build in the
+-- left corner, Play in the right, and the winter wishes medallion between.
+local function round_button(center, icon, diameter)
+    diameter = diameter or 64
+    local r = rect.centered(center, size2(diameter, diameter))
+    ui.block(r)
+    local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
+    local c = st.held and center + vec2(0, 2) or center
+    gfx.circle(center + vec2(0, 4), 32, rgba(5, 30, 28, 150))
+    gfx.circle(c, 32, rgba(116, 74, 33))
+    gfx.circle(c, 30, rgba(236, 196, 112))
+    gfx.circle(c, 26, rgba(176, 120, 48))
+    gfx.circle(c, 25, rgba(22, 70, 48))
+    gfx.glow(c + vec2(0, -5), 21, rgba(44, 120, 80), rgba(22, 70, 48, 0))
+    icon(c)
+    return st.clicked
+end
+local PLAY_BOUNDS = rect(316, 750, 148, 128)
+local BUILD_BOUNDS = rect(16, 750, 132, 128)
+R.island_buttons = {expeditions = vec2(202, 844), shop = BUILD_BOUNDS:center(), play = PLAY_BOUNDS:center()}
+local navigation = ui.form{kind = "row", gap = 16, children = {
+    {kind = "button", id = "build", text = "", role = "navigation_build", width = 132, height = 128},
+    {kind = "spacer", grow = 1},
+    {kind = "button", id = "play", text = "", role = "navigation_play", width = 148, height = 128},
+}}
+
+local placement_form = ui.form{kind = "row", children = {
+    {kind = "button", id = "cancel", text = "", width = 56, height = 56, role = "placement_cancel"},
+    {kind = "spacer", grow = 1},
+    {kind = "button", id = "confirm", text = "", width = 56, height = 56, role = "placement_confirm", enabled_field = "valid"},
+}}
+R.placement_form = placement_form
+
+local function placement_controls(c)
+    local sprite = c.cam:rect_to_screen(c:sprite_rect(building{pos = c.ghost, type = c.placing}))
+    local width = math.min(416, math.max(152, sprite.w))
+    local x = num.clamp(sprite:center().x - width / 2, 16, SCREEN_W - width - 16)
+    local y = num.clamp(sprite:max().y + 12, 110, app.screen().h - 78)
+    placement_form.values.valid = c:can_place(c:snap(c.ghost, c.placing), c.placing, c.moving)
+    local event = placement_form:draw(rect(x, y, width, 56), R.skin, {hit_offset = vec2(0, R.hit_dy)})
+    if event and event.id == "cancel" then c:cancel(); R.notice("Your market is unchanged.")
+    elseif event and event.id == "confirm" then confirm_place() end
+end
+
+local function bottom_controls()
     local c = R.island
-    local full = app.bleed()
     local y = R.drop
-    local sheet = rect(12, 758 + y, 456, full:max().y - 758 - y + 24)
-    gfx.bleed(true)
-    R.panel(sheet)
-    gfx.bleed(false)
-    ui.block(sheet)
-    local restored=island.wonder_count(c)
+    local restored = island.wonder_count(c)
     if c.placing >= 0 then
-        local ok = c:can_place(c:snap(c.ghost, c.placing), c.placing, c.moving)
-        R.say_at(R.buildings[c.placing + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
-        R.say_at("DRAG BUILDING TO MOVE  -  DRAG LAND TO SCROLL", vec2(240, 811 + y), 11, PAL_WHITE, 0)
-        if R.button(rect(30, 834 + y, 142, 44), "CANCEL", true) then c:cancel(); R.notice("Your market is unchanged.") end
-        if R.button(rect(188, 834 + y, 262, 44), c.moving < 0 and "PLACE & BUILD" or "CONFIRM MOVE", ok) then confirm_place() end
-    elseif restored < journey.earned(R.prog.level) then
-        R.say_at(R.wonders[restored + 1].name, vec2(240, 782 + y), 25, PAL_GOLD, 410)
-        R.say_at("CHOOSE ITS PLACE IN YOUR MARKET", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "CHOOSE A LOCATION", true) then R.inspect, R.inspect_item, R.overlay = restored, -1, R.OV_WONDER end
-    elseif R.prog.level >= rules.LEVELS then
-        R.say_at("Your Christmas market", vec2(240, 782 + y), 27, PAL_GOLD, 0)
-        R.say_at("REPLAY WINTER WISHES TO EARN DECORATION GOLD", vec2(240, 811 + y), 12, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), "PLAY FOR GOLD", true) then R.open_expeditions() end
-    else
-        R.say_at(("LIGHT UP THE SQUARE  %d / 10"):format(restored), vec2(240, 783 + y), 15, PAL_WHITE, 0)
-        R.say_at("DRAG TO SCROLL. HOLD A BUILDING TO MOVE IT.", vec2(240, 811 + y), 11, PAL_WHITE, 0)
-        if R.button(rect(58, 834 + y, 364, 44), ("PLAY HEX LEVEL %d"):format(R.prog.level + 1), true) then
-            R.play_level(R.prog.level)
-        end
+        placement_controls(c)
+        return
+    end
+    if round_button(R.island_buttons.expeditions + vec2(0, y), function(at)
+        gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE)
+    end) then R.open_expeditions() end
+    local event = navigation:draw(rect(16, 750 + y, 448, 128), R.skin)
+    if event and event.id == "build" then R.open_catalogue(restored < journey.earned(R.prog.level) and "wonder" or "building")
+    elseif event and event.id == "play" then
+        if restored < journey.earned(R.prog.level) then R.notice("Build your earned stall before the next winter wish."); R.open_catalogue("wonder")
+        elseif R.prog.level >= rules.LEVELS then R.open_expeditions()
+        else R.play_level(R.prog.level) end
     end
 end
 
 local snow_layers = {
-    {count = 42, radius = 1.4, fall = 36, drift = 11, opacity = 175},
-    {count = 22, radius = 2.6, fall = 62, drift = 19, opacity = 235},
+    {count = 84, radius = 1.4, fall = 36, drift = 11, opacity = 175},
+    {count = 44, radius = 2.6, fall = 62, drift = 19, opacity = 235},
 }
 
--- Screen-space flakes keep falling when the camera pans or zooms. Fade them
--- through the village before they reach its bottom controls.
-local function draw_snow(view)
-    local height = view.h * .82
+-- Flakes ride the map: their pattern is anchored to the world origin, so a
+-- pan or zoom carries them with the village while they keep falling. They
+-- fade out before the bottom controls.
+local function draw_snow(view, cam)
+    local height = view.h * .86
     local time = R.reduced_motion and 0 or R.now
+    local origin = cam:to_screen(vec2(0, 0))
     for _, layer in ipairs(snow_layers) do
         for i = 1, layer.count do
-            local y = (i * 137 + time * (layer.fall + i % 7 * 4)) % (height + 12) - 6
+            local y = (i * 137 + time * (layer.fall + i % 7 * 4) + origin.y) % (height + 12) - 6
             local drift = time * layer.drift + math.sin(time * .8 + i * 2.4) * layer.drift
-            local x = (i * 97 + drift + layer.fall) % (view.w + 12) - 6
+            local x = (i * 97 + drift + layer.fall + origin.x) % (view.w + 12) - 6
             local at = vec2(view.x + x, view.y + y)
             local radius = layer.radius * (.65 + i % 5 * .15)
-            local fade = 1 - num.saturate((y / height - .65) / .35)
+            local fade = 1 - num.saturate((y / height - .7) / .3)
             gfx.circle(at + vec2(0, .8), radius + .65, rgba(60, 94, 137, 70 * fade))
             gfx.circle(at, radius, rgba(248, 252, 255, layer.opacity * fade))
         end
@@ -152,7 +183,7 @@ function R.island_screen(inp, dt)
     gfx.bleed(true)
     gfx.rect(MAP_VIEW, rgba(115, 143, 181))
     c:draw(inp, app.clock())
-    draw_snow(MAP_VIEW)
+    draw_snow(MAP_VIEW, c.cam)
     gfx.bleed(false)
     R.vfx_particles()
     R.bubble_time = R.bubble_time - dt
@@ -166,9 +197,7 @@ function R.island_screen(inp, dt)
     -- the HUD is drawn after the map, so tall buildings never cover buttons;
     -- a placement shows itself on the ghost alone: red when it can't go there
     R.draw_header()
-    if c.placing<0 and R.button(rect(18,704+R.drop,218,42),"WINTER WISHES",true) then R.open_expeditions() end
-    if c.placing<0 and R.button(rect(300,704+R.drop,162,42),"BUILD SHOP",true) then R.open_catalogue() end
-    bottom_panel()
+    bottom_controls()
 end
 
 return R

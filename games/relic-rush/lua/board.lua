@@ -8,6 +8,7 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
+R.kudos_words = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"}   -- cascade and special-combo praise
 R.intro_haptics = true
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)

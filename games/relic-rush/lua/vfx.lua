@@ -60,7 +60,7 @@ function R.vfx_reset()
     R.fx_combo = 0
     R.fx_origin = -1
     R.score_display = R.g.score
-    R.goal_display, R.word_time, R.score_pulse, R.goal_pulse = 0, 0, 0, 0
+    R.goal_display, R.score_pulse, R.goal_pulse = 0, 0, 0
 end
 
 local function add(kind_of, at, to, kind, life, delay, value)
@@ -205,7 +205,6 @@ function R.vfx_wave(old_score)
         add(FX_SCORE, sum:scale(1 / hits) - vec2(0, 22), vec2(0, 0), 0, .65, .08, R.g.score - old_score)
         R.score_pulse = .25
     end
-    if R.g.combo > 1 then R.word_time, R.word_combo = .75, R.g.combo end
 end
 
 function R.vfx_update(dt)
@@ -234,7 +233,6 @@ function R.vfx_update(dt)
     R.goal_display = num.approach(R.goal_display, num.saturate(R.g.score / rules.level_of(R.g).score), 12, dt)
     R.score_pulse = math.max(0, R.score_pulse - dt)
     R.goal_pulse = math.max(0, R.goal_pulse - dt)
-    R.word_time = math.max(0, R.word_time - dt)
 end
 
 function R.vfx_draw()
@@ -302,11 +300,6 @@ function R.vfx_draw()
             R.say_at(("+%d"):format(e.value), e.at - vec2(0, ease.out_cubic(t) * 30), 21 + 5 * math.sin(t * PI), R.PAL_GOLD, 0)
             R.set_paint(keep)
         end
-    end
-    if R.word_time > 0 then
-        local t = 1 - R.word_time / .75
-        local word = R.word_combo >= 5 and "SUNSTORM!" or R.word_combo >= 3 and "MAGNIFICENT!" or "BRILLIANT!"
-        R.say_at(word, vec2(240, 770 + R.drop - math.sin(t * PI) * 8), 28 + 8 * math.sin(math.min(1, t * 4) * PI), R.PAL_GOLD, 420)
     end
 end
 
