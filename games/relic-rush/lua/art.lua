@@ -20,7 +20,7 @@ A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
 A.hud_icons = {"score", "complete"}
 A.wallet_icons={life="expedition-hud/life.png",amulets="relics-0",stars="discovery-star"}
-A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play"},states=A.states}
+A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
@@ -39,7 +39,7 @@ function A.load_hud()
 end
 
 function A.draw_hud_catalogue(R)
-    gfx.round_rect(rect(18,220,444,490),18,color(12,47,41,250))
+    gfx.round_rect(rect(18,220,444,620),18,color(12,47,41,250))
     R.say_at("EXPEDITION ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
     for i,state in ipairs(A.states) do
         local x=62+(i-1)*89
@@ -50,7 +50,7 @@ function A.draw_hud_catalogue(R)
     gfx.image(R.hud_art.complete,rect(148,397,46,46),color.WHITE)
     R.say_at("score",vec2(79,464),14,R.PAL_CREAM,90)
     R.say_at("complete",vec2(171,464),14,R.PAL_CREAM,90)
-    for row,kind in ipairs{"build","play"} do
+    for row,kind in ipairs{"build","play","levels"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
             R.skin:paint_button(rect(28+(i-1)*89,505+(row-1)*94,72,72),st,{role="navigation_"..kind})

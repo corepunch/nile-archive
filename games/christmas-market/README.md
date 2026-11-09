@@ -140,3 +140,10 @@ Guides hide after Confirm/Cancel; the mover's old spot is omitted. See the
 The market is the engine's [shared town screen](../../docs/TOWN.md), laid out by
 `data/town.json`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
+
+Build and Play use authored winter-market navigation badges with five interaction
+states. See [market navigation](docs/asset-catalogue.md#market-navigation) for
+the source atlas, state mapping, reproduction and pending capture review.
+
+The town bottom row has a large central Play button and equal smaller Build
+and Levels buttons, with simplified authored icons and five interaction states.

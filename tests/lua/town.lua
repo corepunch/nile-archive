@@ -18,3 +18,18 @@ for _, game in ipairs({"relic-rush", "christmas-market", "nile-archive"}) do
     local text = app.read_text("../../" .. game .. "/data/town.json") or app.read_text("games/" .. game .. "/data/town.json")
     check(text and json.decode(text).texts.placing, game .. " ships a town.json with its wording")
 end
+
+-- The two puzzle towns share the primary Play layout. The level-list action
+-- keeps the old middle hook, so existing progression and smoke input stay valid.
+for _, game in ipairs{"relic-rush", "christmas-market"} do
+    local source = app.read_text("../../" .. game .. "/data/town.json") or app.read_text("games/" .. game .. "/data/town.json")
+    local config = town.config(json.decode(source))
+    local b = config.bottom
+    check(b.layout == "play-primary" and b.play > b.build, "Play is the primary button")
+    check(b.build == b.secondary_height, "Build and Levels use matching square slots")
+    local view = town.new({}, config, {skin={}, wallet=function() return {} end})
+    near(view.buttons.play.x, view.bottom_row:center().x, "Play stays centered")
+    near(view.buttons.build.y, view.buttons.levels.y, "secondary buttons align")
+    check(view.buttons.build.x + b.build/2 < view.buttons.play.x - b.play/2, "Build does not overlap Play")
+    check(view.buttons.play.x + b.play/2 < view.buttons.levels.x - b.build/2, "Levels does not overlap Play")
+end

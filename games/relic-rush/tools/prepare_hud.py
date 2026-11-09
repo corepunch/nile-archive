@@ -10,12 +10,13 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--check", action="store_true")
+parser.add_argument("--navigation-only", action="store_true", help="Export only town navigation, leaving the board HUD untouched")
 args = parser.parse_args()
 manifest = json.loads((ROOT / "art/expedition-hud/manifest.json").read_text())
 source = Image.open(ROOT / manifest["controls"]["source"]).convert("RGBA")
 assert list(source.size) == manifest["controls"]["size"]
 exports = {}
-for name, asset in manifest["icons"].items():
+for name, asset in ({} if args.navigation_only else manifest["icons"]).items():
     sheet=Image.open(ROOT/asset["source"]).convert("RGBA") if "source" in asset else source
     image = sheet.crop(asset["box"])
     image.thumbnail((120, 120), Image.Resampling.LANCZOS)

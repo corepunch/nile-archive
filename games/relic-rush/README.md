@@ -379,3 +379,6 @@ free; guides remain until Confirm/Cancel. See the
 The island is the engine's [shared town screen](../../docs/TOWN.md), laid out by
 `data/town.json`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
+
+The town bottom row has a large central Play button and equal smaller Build
+and Levels buttons, with simplified authored icons and five interaction states.

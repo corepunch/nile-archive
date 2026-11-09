@@ -9,7 +9,8 @@
     "art/building-catalogue/painted-v1/building-prompt.txt",
     "art/building-catalogue/painted-v1/cottage-prompt.txt",
     "art/building-catalogue/painted-v1/tree-prompt.txt",
-    "art/building-catalogue/painted-v1/wonder-prompt.txt"
+    "art/building-catalogue/painted-v1/wonder-prompt.txt",
+    "art/navigation/prompt.txt"
   ],
   "states": [
     "normal",
@@ -143,6 +144,21 @@
     "data/game.json": "e799e18b7e68008be4a32eff0ec44e7e0816b0159c4f0ec49f5cc3723eb1de6c",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/match3.png": "3489d05b226a0a40918477416130811765a165b6c6c5e39dde620b8567591f6a",
+    "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
+    "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
+    "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
+    "data/navigation/build-pressed.png": "b61334dc1ac687965e2c11ff6de8276b22057a407da0974e5bf9fbe914dcd547",
+    "data/navigation/build-selected.png": "b02e8ee4f65a50b71b257ca0374ce51524de010928b85e67db91dcafc50952b3",
+    "data/navigation/levels-disabled.png": "ba0afaf019e7260b4349b063053594e99bb09efc41238eacd28d847abaa29d2d",
+    "data/navigation/levels-hover.png": "c6a1cf270d02cbe4a2534837a3533e5c3f37ae7d15efe986d29d92514fa83a5e",
+    "data/navigation/levels-normal.png": "e69f36e089e245bea97bea985a3c2380ffacb90b5ea335c84db3757cbc17fabb",
+    "data/navigation/levels-pressed.png": "f94e25f05be0a8ef0056efdb183e0e0cf2841749fb9368787cd246383dc2c62a",
+    "data/navigation/levels-selected.png": "809f872367fb6761cb401c427a1b231e677479ac8a5c554f8e54cbffc3e1f623",
+    "data/navigation/play-disabled.png": "fec629af9174b2ea5487786d17e23181003a68da6c96c06de6eb96ca2a3b4376",
+    "data/navigation/play-hover.png": "e6f7cfad7c6cd0442ce475426c9b5e4140d3d974850f0925b562147d0576996b",
+    "data/navigation/play-normal.png": "07ea5930b8b5f157f69d6e65d4a2e0ca798f4575d61d3ecaee2d1bdb4202b45a",
+    "data/navigation/play-pressed.png": "8481fe1e507d3ce203cebb409b773b01c376edc2b7fefcd0418462029a50743c",
+    "data/navigation/play-selected.png": "f6a34447cb1c7925d45c5d9f7178c1baf002b5e17bb06f4f0e7c9f2d4aa5c3f8",
     "data/particles.png": "c806d583a185643c581689387706841800510104125d59dc7cbbd48880419507",
     "data/tile-sets/festive/0.png": "28cd171e2f2f9483e6e32db868ec9128fe28b50c5cbe2a10a718d7daea4f3827",
     "data/tile-sets/festive/1.png": "19359f37f0f01043962a366734a046300d6193075952e1e00b7adabae568ddc4",
@@ -150,7 +166,7 @@
     "data/tile-sets/festive/3.png": "47771b09452c047dce4ccb7ab7efe0bf5af92560a74923ae407d61e7d008888e",
     "data/tile-sets/festive/4.png": "c14aeb68832b8fbce56b9d2c55539c2c6824e821088a67a5913c37078d684166",
     "data/tile-sets/festive/5.png": "88b1d3cbe317a6afe2137298558fe92c9f30b06b72ea1b6d97b855ecff5ad671",
-    "data/town.json": "b884ef5a426ef8e36c54773e116c4873d804bdfd1121b18dec90b8047efde204",
+    "data/town.json": "8691bae64b0120da11fe67e7f42d79243da68536aecf6683fe1cec753f2572ca",
     "data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5"
   },
   "matching_rules": "Straight lines on three hex axes: 3 normal, 4 axis shooting star, 5+ rainbow star. Bent clusters do not match; existing bomb artwork is retained for tools and review boards.",
@@ -188,5 +204,21 @@
     "states": "One static authored bust per speaker. The dialogue renderer handles active/listening presentation.",
     "reproduction": "python3 games/christmas-market/tools/prepare_story_cast.py",
     "review": "docs/review/story/README.md"
+  },
+  "navigation": {
+    "manifest": "art/navigation/manifest.json",
+    "source": "art/navigation/controls.png",
+    "states": [
+      "normal",
+      "hover",
+      "pressed",
+      "selected",
+      "disabled"
+    ],
+    "roles": [
+      "navigation_build",
+      "navigation_play",
+      "navigation_levels"
+    ]
   }
 }

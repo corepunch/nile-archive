@@ -584,7 +584,50 @@ The larger Buildings and Play actions reuse the existing jade button skin in all
 
 ## Island image actions and prominent resources
 
-Buildings and Play are complete image buttons with empty captions, using the engine skin variants `navigation_build` and `navigation_play`. The authored 5-by-2 atlas is `art/navigation/controls.png`; `art/navigation/prompt.txt` records the ImageGen brief. The top row is the workshop/hammer Buildings badge; the bottom row is the right-pointing Play badge. Columns are normal, hover, pressed, selected and disabled. Runtime crops: `build-normal`, `build-hover`, `build-pressed`, `build-selected`, `build-disabled`, `play-normal`, `play-hover`, `play-pressed`, `play-selected`, `play-disabled` under `data/navigation/`. `art/navigation/manifest.json` records the exact grid boxes and alpha-preserving 160px registration. Reproduce and audit with `python3 games/relic-rush/tools/prepare_hud.py [--check]`; no runtime recolouring manufactures states.
+The **bottom of the town screen** now has Build (left), a large Play (center),
+and Levels (right). Build and Levels have equal 88×88 slots; Play has a 144×144
+slot. The shared `town` form centers the controls and routes Levels to the
+existing expedition / winter-wishes level-selection action. Game boards and
+other menus keep their existing controls.
+
+The replacement artwork is deliberately simple: one hammer, one Play triangle,
+and one level-list icon, each filling a plain face with a thin rim. No stalls,
+roofs, foliage, ribbons, star crests or decorative surrounds. Christmas retains
+only a light snow edge; Relic Rush uses jade and amber faces.
+
+Source: `art/navigation/controls.png`, an authored transparent **5×3** atlas;
+exact ImageGen prompt: `art/navigation/prompt.txt`; deterministic bounds and
+runtime paths: `art/navigation/manifest.json`. Columns are normal, hover,
+pressed, selected and disabled; rows are Build, Play and Levels. Pressed faces
+are recessed, selected faces have a simple double rim, and disabled icons are
+engraved into dull material. All states are authored separately; no runtime
+recolouring or procedural icon overlays. Each manifest box is a 324×324
+square centred on its atlas column's and row's visible art (the earlier
+equal-fifths grid cut the art off-centre and clipped some rims); the row-wide
+vertical centre keeps the pressed drop. The crop is scaled evenly into a
+160×160 RGBA image under `data/navigation/`, so the visible buttons are
+centred in their slots and `town.json`'s `bottom` puts Play's lower edge as
+far from the screen edge as Build and Levels are from the sides.
+
+| Role | Runtime state names (all `.png`) |
+|---|---|
+| `navigation_build` | `build-normal`, `build-hover`, `build-pressed`, `build-selected`, `build-disabled` |
+| `navigation_play` | `play-normal`, `play-hover`, `play-pressed`, `play-selected`, `play-disabled` |
+| `navigation_levels` | `levels-normal`, `levels-hover`, `levels-pressed`, `levels-selected`, `levels-disabled` |
+
+Reproduce: `python3 games/relic-rush/tools/prepare_hud.py --navigation-only`;
+append `--check` to verify exact exported pixels. Runtime inventory and asset
+catalogue checks cover the added files. `lua/art.lua` documents all three roles;
+`--hud-states` uses the live skin to draw all fifteen states.
+
+**Pending validation:** genuine before/after town captures at 480×900 and
+390×844 (safe area 0,47,0,34), plus the existing HUD state shot. Native builds
+remain blocked here by missing OpenGL/X11/EGL headers and Xvfb, and Lua lint by
+missing `luacheck`. Assets and Lua syntax can be checked independently; no
+fabricated game screenshots are supplied. Follow-up tracked by
+[#84](https://github.com/corepunch/nile-archive/issues/84). Unpublished review
+only; PR publication and merging require user approval.
+
 
 The shared form still owns hit testing, focus and activation. The smaller Expeditions compass remains between the primary actions. Resource icons are drawn at 60 units beside 36-unit counter bars; they deliberately protrude beyond the pills, including their interactive bounds. The island settings gear uses an 88-unit art/touch box; expedition-board geometry stays unchanged. Toasts sit above the taller image actions. New art and every authored state are reviewed in `docs/screenshots/image-buttons-after/hud-states.jpg`; actual home UI at 480x900 and 390x844 is in the same review folder.
 

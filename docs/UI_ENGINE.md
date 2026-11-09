@@ -467,3 +467,17 @@ Relic Rush and Christmas Market share `match3.catalogue_form` and
 templates for its build tray and chapter browser.
 
 The engine animation clock supplies one timeline to shared tweens, scroll deceleration and painting. On iOS it reads the host clock with `CACurrentMediaTime()`. UIKit's display link stops driving game frames while the app is inactive. The first frame after a long gap advances by one 60 Hz step, so a board in the middle of a move can finish settling when play resumes. Other platforms keep using `axGetMilliseconds()`.
+
+## Town bottom navigation
+
+`town.json` can opt into `bottom.layout = "play-primary"`: a centered large
+`navigation_play` button flanked by equally sized `navigation_build` and
+`navigation_levels` buttons. `bottom.build` and `bottom.secondary_height` size
+both secondary controls; `bottom.play` and `bottom.height` size Play. The Levels
+button dispatches the existing `middle()` hook and exposes both `buttons.levels`
+and the compatible `buttons.middle` center for input tests. Other town layouts
+retain their existing middle control. All three roles use authored skin states.
+In this layout `bottom.bottom` is measured from the physical display edge
+(`app.bleed()`, which includes the home-indicator inset), and the row draws
+with `gfx.bleed(true)`. That lets Play's gap below match Build's gap beside it
+on phones as well as on the 480×900 design size.

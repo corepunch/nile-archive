@@ -72,6 +72,7 @@ return ui.skin{
             variants = {
                 navigation_build=navigation_button("build"),
                 navigation_play=navigation_button("play"),
+                navigation_levels = navigation_button("levels"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE
                 -- Secondary actions (Restart, Quit) in carved wood, beside the jade primary.
                 secondary = {normal = {set = {shadow = {fill = "#4A2C12"}, body = {fill = "#7A4C22"},
