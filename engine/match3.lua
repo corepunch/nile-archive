@@ -88,6 +88,7 @@ end
 
 -- The same board controls use the authored images from either skin.
 E.TOOL_SIZE = 76
+E.GOAL_W = 70   -- every goal capsule; fits a four-digit score
 
 function E.tool_state(charges, selected, inside, down, started_inside, hover, idle)
     if charges <= 0 or not idle then return "disabled" end
@@ -128,14 +129,14 @@ function E.bind_board_ui(R, rules, tool_art)
         local met = entry.remaining==0
         R.skin:draw_resource(box, icon, tostring(entry.remaining), {role="goal", interactive=false,
             icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
-            icon_alpha=met and 150/255 or 1, value_icon=met and (R.hud_art.check or R.hud_art.complete) or nil})   -- a tick replaces the count
+            icon_alpha=met and 150/255 or 1, done=met})   -- one tick, the same in every capsule
     end
     local hud_form=ui.form{kind="row",gap=6,align="center",children={
         {kind="spacer",width=82},    -- the Moves medallion
         {kind="spacer",grow=1},
         {kind="list",id="goals",direction="row",gap=6,item=function(entry)
-            -- The score runs to four digits; the other counts stay narrow.
-            return {kind="custom",width=entry.id=="score" and 88 or 62,height=30,paint=function(box) goal_panel(box,entry) end}
+            -- Every goal is the same capsule: one width, one height, one tick.
+            return {kind="custom",width=E.GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
         end},
         {kind="spacer",grow=1},
         {kind="spacer",width=64},    -- Pause
@@ -187,7 +188,7 @@ function E.bind_board_ui(R, rules, tool_art)
     function R.mission(text, title)
         R.mission_banner = {text = text, title = title, t = 0}
     end
-    local MISSION_IN, MISSION_HOLD, MISSION_OUT = .4, 2.2, .35
+    local MISSION_IN, MISSION_HOLD, MISSION_OUT = .4, 3.6, .4
     local function draw_mission(dt)
         local m = R.mission_banner
         if not m or R.overlay ~= R.OV_NONE or story.active() then return end
@@ -1035,7 +1036,6 @@ function E.new(config)
         if R.tool >= 0 then
             if rules.game_tool(R.g, R.tool, cell, R.pending) then
                 R.tool = -1
-                R.kudos_level = 0
                 R.play("tool")
                 R.finish_wave()
             end
@@ -1116,8 +1116,6 @@ function E.new(config)
     R.kudos_words = R.kudos_words or {"Nice!", "Great!", "Amazing!", "Spectacular!"}
     local function kudos(level)
         level = math.min(level, #R.kudos_words)
-        if level <= (R.kudos_level or 0) then return end
-        R.kudos_level = level
         R.kudos = {text = R.kudos_words[level], level = level, t = 0}
         R.play("kudos", level)
         haptic.play(haptic.COMBO, 1)
@@ -1139,10 +1137,11 @@ function E.new(config)
             if R.pending.make[i] then made = true end
         end
         R.play(special and "blast" or made and "special" or "match", R.g.combo)
-        -- Cascades earn praise from the third wave; a special combo swap at once.
+        -- Cascades earn praise from the third wave, a special combo swap at once;
+        -- the word waits until the whole cascade has settled (see settle).
         local praise = R.g.combo >= 3 and R.g.combo - 2 or 0
         if fx_combo > 0 and R.g.combo == 1 then praise = math.max(praise, fx_combo == 3 and 3 or 2) end
-        if praise > 0 then kudos(praise) end
+        R.kudos_level = math.max(R.kudos_level or 0, praise)
         haptic.play((R.g.combo > 1 or special) and haptic.COMBO or haptic.MATCH,
             math.min(1, .6 + .1 * R.g.combo))
     end
@@ -1152,7 +1151,6 @@ function E.new(config)
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         R.idle_time = 0
         R.swap_a, R.swap_b = a, b
-        R.kudos_level = 0   -- each move can earn its own praise
         snapshot()
         if rules.game_swap(R.g, a, b, R.pending) then
             local sa, sb = R.old_tiles[a].special, R.old_tiles[b].special
@@ -1178,6 +1176,7 @@ function E.new(config)
             return
         end
         R.phase = PH_IDLE
+        if (R.kudos_level or 0) > 0 then kudos(R.kudos_level); R.kudos_level = 0 end   -- the move has resolved
         if rules.game_check_end(R.g) then
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
             R.notice("No moves. Board reshuffled.")

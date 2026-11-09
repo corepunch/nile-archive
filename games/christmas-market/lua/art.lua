@@ -38,9 +38,6 @@ function A.load_hud()
     for _, state in ipairs(A.states) do textures["pause-" .. state] = A.skin()["pause-" .. state] end
     for _, name in ipairs(A.hud_icons) do textures[name] = A.skin()[name] end
     textures.score = textures.complete
-    -- A met goal shows a tick, never the star wreath (that is the Stars/score icon).
-    textures.check = texture.load("expedition-hud/goal-check.png")
-    assert(textures.check.tex, "cannot load the completed-goal tick")
     textures.elena = A.skin().character
     return textures
 end
@@ -55,7 +52,7 @@ function A.draw_hud_catalogue(R)
     end
     gfx.image(R.hud_art.score,rect(56,414,66,66),color.WHITE)
     gfx.image(R.hud_art.complete,rect(148,414,66,66),color.WHITE)
-    gfx.image(R.hud_art.check,rect(240,414,66,66),color.WHITE)
+    R.skin:draw_resource(rect(236,432,70,30),R.relics[1],"",{role="goal",interactive=false,icon_alpha=150/255,done=true})
     R.say_at("score",vec2(89,502),14,R.PAL_CREAM,90)
     R.say_at("stars",vec2(181,502),14,R.PAL_CREAM,90)
     R.say_at("goal met",vec2(273,502),14,R.PAL_CREAM,90)

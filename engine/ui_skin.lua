@@ -419,7 +419,8 @@ end
 -- skin.transform itself), or nil. Returns true when tapped. Options: role (a
 -- variant of the control), interactive (default true; false never takes input),
 -- hit (the touch area, default the panel), hit_offset, icon_scale, icon_alpha,
--- value_icon (a texture standing in for the figure) and reserve (width kept
+-- done (a met goal: a fixed-size tick replaces the figure), value_icon (a
+-- texture standing in for the figure) and reserve (width kept
 -- free at the right end, for a badge).
 function Skin:draw_resource(box, icon, value, opts)
     opts = opts or {}
@@ -444,7 +445,19 @@ function Skin:draw_resource(box, icon, value, opts)
     end
     local right = box:max().x + shift.x - box.h * .3 - (opts.reserve or 0)
     local slot = rect(left, box.y + shift.y, math.max(1, right - left), box.h)
-    if opts.value_icon then
+    if opts.done then
+        -- A met goal: a plain tick in place of the figure, as Candy Crush does.
+        -- Its size follows the capsule height only, so every capsule draws the
+        -- same tick. Colours come from the resource spec (done, done_outline).
+        local side = box.h * .78
+        local out, scale, alpha = transformed(self, rect.centered(slot:center() + vec2(0, -1), size2(side, side)))
+        local pts = {out:point(vec2(.12, .52)), out:point(vec2(.4, .8)), out:point(vec2(.9, .2))}
+        local function tint(v, default) return color.alpha(parse_color(self, v or default), alpha) end
+        gfx.polyline({pts[1] + vec2(0, 2 * scale), pts[2] + vec2(0, 2 * scale), pts[3] + vec2(0, 2 * scale)},
+                     side * .3, tint(spec.done_shadow, '#00000060'))
+        gfx.polyline(pts, side * .3, tint(spec.done_outline, '#1F4A2A'))
+        gfx.polyline(pts, side * .18, tint(spec.done, '#7BE36A'))
+    elseif opts.value_icon then
         local side = math.min(slot.w, box.h)
         local out, _, alpha = transformed(self, rect.centered(slot:center(), size2(side, side)))
         gfx.image(opts.value_icon, out, color(255, 255, 255, math.floor(255 * alpha + .5)))
