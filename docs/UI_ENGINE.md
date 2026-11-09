@@ -481,3 +481,8 @@ In this layout `bottom.bottom` is measured from the physical display edge
 (`app.bleed()`, which includes the home-indicator inset), and the row draws
 with `gfx.bleed(true)`. That lets Play's gap below match Build's gap beside it
 on phones as well as on the 480×900 design size.
+
+The town header is one `ui.form` row with `align = "center"`: every wallet
+capsule and the menu button are `custom` nodes, so the pills and the taller
+menu share one centre line. `buttons.menu` and the bottom row's tap points
+come from the forms' layout boxes, not separate arithmetic.

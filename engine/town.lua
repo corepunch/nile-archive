@@ -125,7 +125,7 @@ end
 
 -- Where the controls are, in screen units; tests click these.
 function View:layout()
-    local s, b, h = app.screen(), self.cfg.bottom, self.cfg.header
+    local s, b = app.screen(), self.cfg.bottom
     local row = rect(s.x + b.margin, s:max().y - b.bottom - b.height, s.w - 2 * b.margin, b.height)
     self.bottom_row = row
     self.buttons.build = rect(row.x, row.y, b.build, b.height):center()
@@ -138,14 +138,13 @@ function View:layout()
         -- home-indicator inset), so Play's gap below matches Build's gap beside.
         row = rect(row.x, app.bleed():max().y - b.bottom - b.height, row.w, b.height)
         self.bottom_row = row
-        self.buttons.build = vec2(row.x + b.build / 2, row:center().y)
-        self.buttons.play = row:center()
-        self.buttons.middle = vec2(row:max().x - b.build / 2, row:center().y)
-        self.buttons.levels = self.buttons.middle
+        local boxes = self.navigation:layout(row, self.hooks.skin)
+        self.buttons.build = boxes.build:center()
+        self.buttons.play = boxes.play:center()
+        self.buttons.levels = boxes.levels:center()
+        self.buttons.middle = self.buttons.levels
     end
-    local size = h.menu.size
-    self.menu_bounds = rect(s:max().x - size - h.menu.inset, s.y + h.menu.y, size, size)
-    self.buttons.menu = self.menu_bounds:center()
+    self:header_layout({})
     return self.buttons
 end
 
@@ -258,20 +257,49 @@ local function draw_weather(v, view)
     end
 end
 
+-- The header is one row, vertically centred: the wallet capsules and the menu
+-- button share a centre line however tall each is. A capsule's node includes
+-- its icon's overhang to the left of the pill.
+function View:header_layout(caps)
+    local cfg, s = self.cfg.header, app.screen()
+    local menu, oh = self.hooks.menu and cfg.menu, cfg.overhang
+    local right = cfg.align == "right"
+    local key = {cfg.align}
+    for _, cap in ipairs(caps) do key[#key + 1] = cap.width or cfg.width end
+    key = table.concat(key, ",")
+    if self.header_key ~= key then
+        local children = {}
+        if right then children[1] = {kind = "spacer", grow = 1} end
+        for k, cap in ipairs(caps) do
+            children[#children + 1] = {kind = "custom", id = "cap" .. k, width = oh + (cap.width or cfg.width), height = cfg.height}
+        end
+        if menu then
+            if not right then children[#children + 1] = {kind = "spacer", grow = 1} end
+            children[#children + 1] = {kind = "custom", id = "menu", width = menu.size, height = menu.size}
+        end
+        -- Left-aligned pills let the next icon overhang into the gap.
+        self.header_form = ui.form{kind = "row", align = "center", gap = right and cfg.gap or cfg.gap - oh, children = children}
+        self.header_key = key
+    end
+    local h = menu and menu.size or cfg.height
+    local top = menu and s.y + menu.y or s.y + cfg.y
+    local left = s.x + cfg.x - (right and 0 or oh)
+    local band = rect(left, top, s:max().x - (menu and menu.inset or cfg.x) - left, h)
+    local boxes = self.header_form:layout(band, self.hooks.skin)
+    if menu then
+        self.menu_bounds = boxes.menu
+        self.buttons.menu = boxes.menu:center()
+    end
+    return boxes
+end
+
 function View:header()
     local h, cfg, skin = self.hooks, self.cfg.header, self.hooks.skin
-    local s = app.screen()
     local caps = h.capsules and h.capsules() or {}
-    local right_edge = h.menu and self.menu_bounds.x - cfg.gap or s:max().x - cfg.x
-    local x = cfg.align == "right" and right_edge or s.x + cfg.x
-    local from, to, step = 1, #caps, 1
-    if cfg.align == "right" then from, to, step = #caps, 1, -1 end   -- the first capsule still reads first
-    for k = from, to, step do
-        local cap = caps[k]
-        local w = cap.width or cfg.width
-        local r
-        if cfg.align == "right" then r = rect(x - w, s.y + cfg.y, w, cfg.height); x = x - w - cfg.gap - cfg.overhang
-        else r = rect(x, s.y + cfg.y, w, cfg.height); x = x + w + cfg.gap end
+    local boxes = self:header_layout(caps)
+    for k, cap in ipairs(caps) do
+        local node = boxes["cap" .. k]
+        local r = rect(node.x + cfg.overhang, node.y, node.w - cfg.overhang, node.h)
         local hit = rect(r.x - cfg.overhang, r.y - 12, r.w + cfg.overhang, r.h + 24)
         local tapped = skin:draw_resource(r, cap.icon, cap.value, {role = cfg.role, hit = hit, reserve = cap.reserve})
         if cap.decorate then cap.decorate(r) end
