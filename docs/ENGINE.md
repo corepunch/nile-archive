@@ -297,6 +297,11 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   a point (below when there is no room), kept on screen, tail on the point —
   for words over the world, like Relic Rush's restored wonders.
 
+## Town screen
+
+The city games share one town screen, `require("town")`, configured by each
+game's `data/town.json`. See [Shared town screen](TOWN.md).
+
 ## Audio
 
 `sfx_note(hz, seconds, delay, volume)` plays a soft bell-like note on one of

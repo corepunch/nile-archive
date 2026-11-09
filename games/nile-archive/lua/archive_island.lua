@@ -34,14 +34,18 @@ function M.setup()
     c.movable = true
     c.buildable = buildable
     local zones = {{area = rect(580, 200, 600, 1050)}}
+    local shores = {"Тростниковый берег", "Пальмовый берег", "Дальний берег"}
     for z = 1, ZONES - 1 do
-        zones[z + 1] = {area = rect(800 + z * 380, 200, 380, 1050), cost = purse(economy.shore_costs[z]), needs = purse(0, 0, z)}
+        local area = rect(800 + z * 380, 200, 380, 1050)
+        zones[z + 1] = {area = area, name = shores[z], marker = vec2(area:center().x, 640),
+                        cost = purse(economy.shore_costs[z]), needs = purse(0, 0, z)}
     end
     c.zones = zones
     c.cam = camera{center = vec2(900, 650), zoom = .8, min_zoom = .35, max_zoom = 2, cover = true}
     c:init("island.png")
     G.island = c
     G.buildings = c.defs   -- with the sprites loaded
+    M.town_setup()
 end
 
 ---------------------------------------------------------------------- HUD
@@ -207,27 +211,14 @@ local function draw_tray(r)
         tray.category = (tray.category - 1 + (event.id == "category_next" and 1 or -1)) % #M.TRAY_CATEGORIES + 1
         tray.dirty = true
     elseif event.source == "stock" then
-        local kind = event.key - 1
-        local ok, spot = G.island:find_spot(kind, G.island.cam.center)
-        if ok then
-            G.island:begin_place(kind, spot)
+        if M.town:begin(event.key - 1, false) then
             G.island.selected = -1
             G.tray = false
-        else ui.toast("Откройте берег, чтобы найти свободное место") end
+        end
     end
 end
 
 ---------------------------------------------------------------- placement
-
-local move_form = ui.form{kind = "column", panel = true, padding = 18, gap = 8, children = {
-    {kind = "label", id = "name", role = "title", height = 32},
-    {kind = "label", text = "Перетащите постройку или коснитесь свободного места", height = 24},
-    {kind = "label", id = "payment", height = 24},
-    {kind = "row", height = 44, gap = 12, children = {
-        {kind = "button", id = "cancel", text = "Отмена", grow = 1},
-        {kind = "button", id = "confirm", text = "Подтвердить", accent = true, grow = 1, enabled_field = "valid"},
-    }},
-}}
 
 local function finish_purchase(kind)
     if kind <= content.RESTORATIONS then
@@ -240,127 +231,102 @@ local function finish_purchase(kind)
     ui.toast(gain > 0 and ("Постройка готова · +%d влияния"):format(gain) or "Украшение на месте")
 end
 
--- The confirm/cancel sheet while a building is placed or moved; nothing is
--- charged or moved until Confirm.
-local function draw_placement(screen)
-    local island = G.island
-    local kind = island.placing + 1
-    local def = G.buildings[kind]
-    move_form:set("name", def.name)
-    local gain = def.reward[INFLUENCE]
-    move_form:set("payment", island.moving >= 0 and "Перемещение бесплатно"
-        or gain > 0 and ("%d монет · +%d влияния после подтверждения"):format(def.cost[COINS], gain)
-        or ("%d монет после подтверждения"):format(def.cost[COINS]))
-    move_form:set("confirm", island.moving >= 0 and "Подтвердить" or "Построить")
-    move_form.values.valid = (island.moving >= 0 or not G.restored[kind])
-        and island:can_place(island:snap(island.ghost, island.placing), island.placing, island.moving)
-    local width = math.min(620, screen.w - 36)
-    local _, height = move_form:measure(width)
-    local box = rect.anchor(vec2(screen:center().x, screen:max().y - 18), size2(width, height), vec2(.5, 1))
-    local action = move_form:draw(box)
-    G.spots.move_cancel, G.spots.move_confirm = move_form.boxes.cancel:center(), move_form.boxes.confirm:center()
-    if action and action.id == "cancel" then island:cancel()
-    elseif action and action.id == "confirm" and move_form.values.valid then
-        local confirmed = island:confirm(G.wallet, app.clock())
-        if confirmed.result == city.MOVED then
-            progress.save()
-            ui.toast("Постройка перемещена")
-        elseif confirmed.result == city.BUILT then
-            finish_purchase(kind)
-        elseif confirmed.result == city.CANT_AFFORD then
-            ui.toast("Недостаточно монет. Переиграйте открытую главу.")
-        end
+-------------------------------------------------------------------- frame
+
+-- The island on the engine's shared town screen (engine/town.lua), laid out
+-- by data/town.json like Relic Rush and Christmas Market. The archive adds its
+-- player plate, the cast button and the goal card between Build and Play.
+local function shore(z)
+    if G.island:unlock(z, G.wallet) then
+        progress.save()
+        story.add(content.merit_shore)
+    elseif G.wallet[CHAPTERS] < G.island.zones[z + 1].needs[CHAPTERS] then
+        local n = G.island.zones[z + 1].needs[CHAPTERS]
+        ui.toast(("Нужно завершить %d %s"):format(n, plural(n, "поиск", "поиска", "поисков")))
+    else
+        ui.toast(("Берег стоит %d монет. Переиграйте открытую главу."):format(G.island.zones[z + 1].cost[COINS]))
     end
 end
 
--------------------------------------------------------------------- frame
+local function placement_words(kind)
+    local def = G.buildings[kind]
+    local gain = def.reward[INFLUENCE]
+    return G.island.moving >= 0 and "Перемещение бесплатно"
+        or gain > 0 and ("%d монет · +%d влияния после подтверждения"):format(def.cost[COINS], gain)
+        or ("%d монет после подтверждения"):format(def.cost[COINS])
+end
 
-function M.frame(screen, world)
-    local island = G.island
-    local cam = island.cam
-    cam.view = app.bleed()   -- the island runs under the status bar and the home indicator
-    island.cam = cam
-    local ev = island:update(world, G.wallet, app.clock(), app.dt())
-    if G.modal == MODAL_NONE then
-        if ev.result == city.BUILT then
-            finish_purchase(island.items[ev.building + 1].type + 1)
+function M.town_setup()
+    local town = require("town")
+    M.town = town.new(G.island, town.load("town.json"), {
+        skin = K.skin,
+        wallet = function() return G.wallet end,
+        notice = function(text)
+            if text == M.town.cfg.texts.placing and G.island.placing >= 0 then text = text .. " · " .. placement_words(G.island.placing + 1) end
+            ui.toast(text)
+        end,
+        capsules = function()
+            local function plus(r) K.plus_badge(vec2(r:max().x - r.h * .5, r:center().y), r.h * .5 - 3) end
+            return {
+                {icon = G.coin, value = tostring(G.wallet[COINS]), width = 170, reserve = 42 * .7, decorate = plus,
+                 note = "80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок"},
+                {icon = G.influence, value = tostring(G.wallet[INFLUENCE]), width = 150, reserve = 42 * .7, decorate = plus,
+                 note = "Влияние дают постройки и украшения. Оно открывает поиски и не тратится."},
+            }
+        end,
+        build = function() M.open_tray() end,
+        play = function() G.open_modal(MODAL_CHAPTERS) end,
+        draw_middle = function(at) draw_goal(at) end,
+        hide_bottom = function() return G.tray end,
+        about = function(item)
+            local def = G.buildings[G.island.items[item + 1].type + 1]
+            local gain = def.reward[INFLUENCE]
+            return gain > 0 and ("%s\n+%d влияния"):format(def.name, gain) or def.name
+        end,
+        zone = shore,
+        event = function(ev)
+            if ev.result == city.CANT_AFFORD then ui.toast("Недостаточно монет. Пройдите сцену ещё раз.")
+            elseif ev.result == city.BLOCKED then ui.toast("Нужно свободное место на открытом берегу")
+            elseif ev.result == city.LOCKED_TYPE then ui.toast("Сначала пройдите нужную главу или соберите больше звёзд") end
+        end,
+        can_buy = function(kind) return not (kind < content.RESTORATIONS and G.restored[kind + 1]) end,
+        placed = function(ev, fresh)
+            if fresh then finish_purchase(G.island.items[ev.building + 1].type + 1)
+            else progress.save(); ui.toast("Постройка перемещена") end
             if not G.reduced_motion then fx.burst(ev.screen, 26, hex(0xF2D29A), 260, 9) end
-        elseif ev.result == city.CANT_AFFORD then
-            ui.toast("Недостаточно монет. Пройдите сцену ещё раз.")
-        elseif ev.result == city.BLOCKED then
-            ui.toast("Нужно свободное место на открытом берегу")
-        elseif ev.result == city.LOCKED_TYPE then
-            ui.toast("Сначала пройдите нужную главу или соберите больше звёзд")
-        end
-    end
-    local full = app.bleed()
-    gfx.bleed(true)
-    island:draw(world, app.clock())
-    -- a soft vignette keeps the corners readable under the HUD
-    gfx.rect_grad(rect(full.x, full.y, full.w, screen.y - full.y + 120), rgba(6, 22, 26, 150), rgba(6, 22, 26, 0))
-    local low = screen:max().y - 150
-    gfx.rect_grad(rect(full.x, low, full.w, full:max().y - low), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
-    fx.draw()
-    gfx.bleed(false)
-
-    local m = 18
-    local area = screen:inflate(-m)
-    draw_player(area:pos())
-
-    -- currencies, top right
-    local top = area:top(46)
-    local influence = top:cut_right(150)
-    top:cut_right(22)
-    local coins = top:cut_right(170)
-    if K.capsule(coins:inflate2(vec2(0, -2)), G.coin, tostring(G.wallet[COINS])) then
-        ui.toast("80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок")
-    end
-    if K.capsule(influence:inflate2(vec2(0, -2)), G.influence, tostring(G.wallet[INFLUENCE])) then
-        ui.toast("Влияние дают постройки и украшения. Оно открывает поиски и не тратится.")
-    end
-
-    if story.active() then return end   -- story scenes keep the stage clear, as June's Journey does
-
-    if island.placing >= 0 then
-        G.tray = false
-        draw_placement(screen)
-        return
-    end
-
-    -- the left column: people and the next shore
-    local x = area.x + 39
-    if K.round_button(vec2(x, area.y + 150), 32, K.icon_people, "Герои") then G.open_modal(MODAL_CAST) end
-    local nxt = island:next_zone(G.wallet)
-    if nxt >= 0 then
-        local zone = island.zones[nxt + 1]
-        local cost = zone.cost[COINS]
-        if K.round_button(vec2(x, area.y + 250), 32, K.icon_boat, ("Берег · %d"):format(cost)) then
-            if island:unlock(nxt, G.wallet) then
-                progress.save()
-                story.add(content.merit_shore)
-            elseif G.wallet[CHAPTERS] < zone.needs[CHAPTERS] then
-                local n = zone.needs[CHAPTERS]
-                ui.toast(("Нужно завершить %d %s"):format(n, plural(n, "поиск", "поиска", "поисков")))
-            else
-                ui.toast(("Берег стоит %d монет. Переиграйте открытую главу."):format(cost))
+        end,
+        bubble_text = function() return K.skin:text("card_title", 18) end,
+        reduced_motion = function() return G.reduced_motion end,
+        draw_world = function(full)
+            -- a soft vignette keeps the corners readable under the HUD
+            local screen = app.screen()
+            gfx.rect_grad(rect(full.x, full.y, full.w, screen.y - full.y + 120), rgba(6, 22, 26, 150), rgba(6, 22, 26, 0))
+            local low = screen:max().y - 150
+            gfx.rect_grad(rect(full.x, low, full.w, full:max().y - low), rgba(6, 22, 26, 0), rgba(6, 22, 26, 150))
+            fx.draw()
+        end,
+        extras = function(screen)
+            local area = screen:inflate(-18)
+            draw_player(area:pos())
+            if K.round_button(vec2(area.x + 39, area.y + 150), 32, K.icon_people, "Герои") then G.open_modal(MODAL_CAST) end
+            local island = G.island
+            if island.placing >= 0 then
+                G.tray = false
+                G.spots.move_cancel = M.town.placement_form.boxes.cancel:center()
+                G.spots.move_confirm = M.town.placement_form.boxes.confirm:center()
+                return
             end
-        end
-    end
+            if G.tray then draw_tray(area); return end
+            local i, blocked = progress.chapter_goal()
+            if i and not blocked then K.notify_dot(M.town.buttons.play + vec2(48, -46)) end
+        end,
+    })
+    G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
+end
 
-    if G.tray then
-        draw_tray(area)
-        return
-    end
-
-    -- bottom: build, the current goal, play
-    G.spots.build = vec2(area.x + 46, area:max().y - 56)
-    if K.round_button(G.spots.build, 40, K.icon_house, "Строить") then M.open_tray() end
-    draw_goal(vec2(screen:center().x, area:max().y))
-    local play = vec2(area:max().x - 62, area:max().y - 66)
-    G.spots.chapters = play
-    if K.round_button(play, 54, K.icon_glass, "Главы", true) then G.open_modal(MODAL_CHAPTERS) end
-    local i, blocked = progress.chapter_goal()
-    if i and not blocked then K.notify_dot(play + vec2(40, -40)) end
+function M.frame(_, world)
+    M.town:frame(world, app.dt(), G.modal == MODAL_NONE and not story.active())
+    G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
 end
 
 return M

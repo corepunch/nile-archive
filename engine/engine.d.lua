@@ -717,6 +717,11 @@ function app.arg(name) end
 ---@return string
 function app.path(rel) end
 
+---A text asset (such as a JSON config) relative to the data root, whole; nil if it is missing.
+---@param rel string
+---@return string?
+function app.read_text(rel) end
+
 ---Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.
 ---@param pts vec2[]
 ---@param colors color[]

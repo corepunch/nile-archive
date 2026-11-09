@@ -123,3 +123,9 @@ Placement and move previews show cream ground-footprint guides around the other
 buildings, including clearance. Dark contrast edges remain readable on snow.
 Guides hide after Confirm/Cancel; the mover's old spot is omitted. See the
 [shared review](../../docs/review/city-placement-guides/README.md).
+
+## Town screen
+
+The market is the engine's [shared town screen](../../docs/TOWN.md), laid out by
+`data/town.json`. Tapping a building shows its name in a word bubble; holding
+it for half a second lifts it to move.

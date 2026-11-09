@@ -942,6 +942,16 @@ An asset path resolved against the data root.
 
 **Returns:** `string`
 
+### `app.read_text(rel)`
+
+A text asset (such as a JSON config) relative to the data root, whole; nil if it is missing.
+
+| Argument | Type | |
+|---|---|---|
+| `rel` | `string` |  |
+
+**Returns:** `string?`
+
 ### `app.mesh(pts, colors, indices)`
 
 Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.

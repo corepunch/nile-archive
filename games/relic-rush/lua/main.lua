@@ -109,7 +109,6 @@ local function frame(dt)
         return
     end
     local inp = input.get()
-    if inp.pressed then R.bubble_wonder=-1 end
     R.story_tick()
     local talking = story.active()
     local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
@@ -164,8 +163,8 @@ local function init()
     R.vfx_init()
     R.island = city.new()
     island.island_setup(R.island)
-    R.island.draw_over = R.draw_markers
     R.buildings = R.island.defs   -- with the sprites loaded
+    R.town_setup()
     R.wonders = {}
     for i = 1, island.WONDERS do R.wonders[i]=R.buildings[i] end
 
@@ -173,7 +172,6 @@ local function init()
     R.inspect, R.zone_card = -1, -1
     R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
     R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
-    R.bubble_wonder = -1
     R.prog = {level = 0, seed = 782341, wallet = purse(),lives=rules.LIVES,life_at=0,story_seen={}}
     if not app.arg("smoke") then save.read("progress", serialize) end
     if app.arg("empty-lives") then R.prog.lives=0;R.prog.life_at=app.clock()+1800;R.quiet=true end

@@ -184,9 +184,9 @@ local function smoke()
             local gain=R.prog.wallet[1]-smoke_move.replay_gold
             assert(gain>=60 and gain<=100 and R.prog.wallet[4]==3 and R.prog.wallet[5]==0 and island.wonder_count(R.island)==1,
                 "replay must pay only Gold without changing discoveries or restoration")
-            app.inject_click(R.island_buttons.play+vec2(0,R.drop));smoke_stage=5;return
+            app.inject_click(R.town.buttons.play);smoke_stage=5;return
         end
-        app.inject_click(R.island_buttons.shop+vec2(0,R.drop)); smoke_stage = 2   -- Build: the earned stall
+        app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
     elseif smoke_stage == 2 and R.overlay == R.OV_SHOP then
         assert(press_row(R.catalogue_form, "arch", "buy"), "smoke: the earned stall is in the shop"); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
@@ -256,14 +256,15 @@ local function smoke()
         end end
         assert(target,"purchased decoration needs an exposed input target")
         app.inject_click(target);smoke_stage=27
-    elseif smoke_stage==27 and R.overlay==R.OV_WONDER then
-        assert(R.inspect==10 and R.inspect_item==1,("purchased details: expected type 10 / item 1, got %s / %s"):format(tostring(R.inspect),tostring(R.inspect_item)))
-        app.inject_click(R.wonder_form.boxes.action:center()+vec2(0,R.drop/2));smoke_stage=28
+    elseif smoke_stage==27 then   -- a tap names the building in a bubble; no popup opens
+        assert(R.overlay==R.OV_NONE and R.town.bubble and R.town.bubble.item==1 and R.town.bubble.text:find(R.buildings[11].name,1,true),
+               "tap shows the purchased building's name and words")
+        R.island_begin(10,true,1);smoke_stage=28
     elseif smoke_stage==28 and R.island.placing>=0 then
-        assert(R.island.moving==1 and R.island.placing==10,"details must move the purchased instance")
+        assert(R.island.moving==1 and R.island.placing==10,"move must lift the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=29
     elseif smoke_stage==29 and R.island.placing<0 then
-        app.inject_click(R.island_buttons.expeditions+vec2(0,R.drop));smoke_stage=30
+        app.inject_click(R.town.buttons.middle);smoke_stage=30
     elseif smoke_stage==30 and R.overlay==R.OV_EXPEDITIONS then
         local f=R.expedition_form
         for _,node in pairs(f.nodes) do
@@ -512,8 +513,8 @@ local function debug_screens()
         elseif a == "tomas" then island_with(2); R.on_island = true; story.say("noelle", R.wonders[2].about)
         elseif a == "bubble" then
             island_with(2); R.on_island = true
-            R.bubble_wonder, R.bubble_text, R.bubble_time = 1, "A little more Christmas magic!", 3.5
             R.island_focus(R.island.items[2].pos, .8)
+            R.town:say(1, R.building_words(1))
         else
             R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED or R.OV_FINALE
             if R.overlay == R.OV_FINALE then island_with(WONDERS); R.prog.level = LEVELS; R.on_island = true end
@@ -564,8 +565,8 @@ local function init()
     R.vfx_init()
     R.island = city.new()
     island.island_setup(R.island)
-    R.island.draw_over = R.draw_markers
     R.buildings = R.island.defs   -- with the sprites loaded
+    R.town_setup()
     R.wonders = {}
     for i=1,WONDERS do R.wonders[i]=R.buildings[i] end
 
@@ -573,7 +574,6 @@ local function init()
     R.inspect, R.zone_card = -1, -1
     R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
     R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
-    R.bubble_wonder = -1
     R.prog = {level = 0, seed = 782341, wallet = purse(), lives = rules.LIVES, life_at = 0, story_seen = {}}
     if not app.arg("smoke") then save.read("progress", serialize) end
     if app.arg("empty-lives") then

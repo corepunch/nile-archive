@@ -55,7 +55,7 @@ function R.campaign_smoke()
         elseif island.wonder_count(c) < journey.earned(R.prog.level) then
             R.island_begin(island.wonder_count(c), true); wait = 10   -- the earned stall, as the shop's row starts it
         elseif R.prog.level < rules.LEVELS then
-            app.inject_click(R.island_buttons.play + vec2(0, R.drop)); wait = 10   -- Play the next wish
+            app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
         local g, l = R.g, rules.level_of(R.g)

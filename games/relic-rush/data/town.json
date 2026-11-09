@@ -1,0 +1,17 @@
+{
+  "background": "#166E77",
+  "header": {"role": "wallet"},
+  "bottom": {
+    "middle": {"kind": "round",
+               "colors": {"face": "#0C3E34", "glow": "#288464"}}
+  },
+  "bubble": {"width": 300},
+  "texts": {
+    "placing": "Drag the building to choose a spot, or scroll the land.",
+    "unchanged": "Your island is unchanged.",
+    "blocked": "Choose open grass clear of other buildings.",
+    "cant_afford": "Earn more expedition treasures to build this.",
+    "cant_buy": "Earn more expedition treasures to build this.",
+    "no_room": "Open more land before placing this building."
+  }
+}

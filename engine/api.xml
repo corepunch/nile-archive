@@ -181,6 +181,7 @@
     <function name="clock" c="app_clock" doc="Wall clock, seconds since the Unix epoch."><returns type="double"/></function>
     <function name="arg" c="app_arg" doc="Value after --name on the command line (or in the web page's query string): the value, &quot;&quot; for a bare flag, nil if absent."><arg name="name" type="string"/><returns type="string" optional="true"/></function>
     <function name="path" c="app_path" doc="An asset path resolved against the data root."><arg name="rel" type="string"/><returns type="string"/></function>
+    <function name="read_text" impl="lapp_read_text" doc="A text asset (such as a JSON config) relative to the data root, whole; nil if it is missing."><arg name="rel" type="string"/><returns type="string" optional="true"/></function>
     <function name="renderer_geometry" c="draw_mesh" lua="mesh" doc="Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.">
       <arg name="pts" type="vec2[]"/><arg name="colors" type="color[]"/><arg name="n" type="count" of="pts"/><arg name="indices" type="int[]"/><arg name="m" type="count" of="indices"/>
     </function>

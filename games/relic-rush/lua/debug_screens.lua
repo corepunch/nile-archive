@@ -223,7 +223,7 @@ function R.debug_screens()
         elseif a == "tomas" then island_with(2); R.on_island = true; story.say("tomas", R.wonders[2].about)
         elseif a == "bubble" then
             island_with(2); R.on_island = true
-            R.bubble_wonder=1;local b=R.buildings[R.island.items[2].type+1];R.bubble_text=b.name.."\n"..b.about
+            local b=R.buildings[R.island.items[2].type+1];R.town:say(1,b.name.."\n"..b.about)
             R.island_focus(R.island.items[2].pos, .8)
         else
             R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED

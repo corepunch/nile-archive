@@ -4164,6 +4164,7 @@ static void open_app(lua_State *L)
         {"clock", l_app_clock},
         {"arg", l_app_arg},
         {"path", l_app_path},
+        {"read_text", lapp_read_text},
         {"mesh", l_app_renderer_geometry},
         {"inject_click", l_app_inject_click},
         {"inject_press", l_app_inject_press},

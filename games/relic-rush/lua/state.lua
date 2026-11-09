@@ -25,8 +25,6 @@ local R = require("match3").view{
     toast = nil,
     toast_time = 0, now = 0,
     quiet = false,       -- no story (stills for the docs)
-    bubble_wonder = -1,  -- a word bubble over a wonder just placed
-    bubble_text = nil,
     bubble_time = 0,
 
     -- animated readouts
