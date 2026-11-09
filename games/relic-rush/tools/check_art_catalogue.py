@@ -73,7 +73,7 @@ for name, asset in hud["icons"].items():
     assert (ROOT / asset["runtime"]).is_file()
 nav=json.loads((ROOT / manifest["navigation"]).read_text())
 assert (ROOT/nav["source"]).is_file() and (ROOT/nav["prompt"]).is_file()
-assert set(nav["icons"])=={kind+"-"+state for kind in ("build","play") for state in manifest["tool_states"]}
+assert set(nav["icons"])=={kind+"-"+state for kind in ("build","play","levels") for state in manifest["tool_states"]}
 for name,asset in nav["icons"].items():
     assert "`"+name+"`" in doc
     assert (ROOT/asset["runtime"]).is_file()
@@ -140,3 +140,6 @@ for name, source in particles['frames'].items():
     assert (ROOT / particles['source'] / f'{source}.png').is_file(), f'Missing particle source: {source}'
     assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
 subprocess.run([sys.executable, str(ROOT.parents[1] / 'tools/pack_particles.py'), 'relic-rush', '--check'], check=True)
+
+# Exact crop freshness for the changed town controls, without re-exporting the board HUD.
+subprocess.run([sys.executable, str(ROOT/"tools/prepare_hud.py"), "--navigation-only", "--check"], check=True)

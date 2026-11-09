@@ -142,15 +142,49 @@ asked for stripes instead of shooting stars on 2026-11-09. No new artwork.
 
 ## Market navigation
 
-The island's bottom controls are Relic Rush's: `navigation_build` and
-`navigation_play` skin variants in a 448-wide row at the bottom, the winter
-wishes medallion (the festive star) between them, and `placement_cancel` /
-`placement_confirm` beside a lifted building. Until an authored atlas exists
-([#84](https://github.com/corepunch/nile-archive/issues/84)), the badges are
-skin layers: a gold-rimmed evergreen tile with the Gingerbread bakery sprite
-(Build) and a ribbon-red tile with a cream triangle (Play). Normal, pressed
-(sinks 3 units) and disabled (drained gold and face) are defined; hover and
-selected look like normal. Capture: `--city 1`, `--city 3 --placing`.
+The **bottom of the town screen** now has Build (left), a large Play (center),
+and Levels (right). Build and Levels have equal 88×88 slots; Play has a 144×144
+slot. The shared `town` form centers the controls and routes Levels to the
+existing expedition / winter-wishes level-selection action. Game boards and
+other menus keep their existing controls.
+
+The replacement artwork is deliberately simple: one hammer, one Play triangle,
+and one level-list icon, each filling a plain face with a thin rim. No stalls,
+roofs, foliage, ribbons, star crests or decorative surrounds. Christmas retains
+only a light snow edge; Relic Rush uses jade and amber faces.
+
+Source: `art/navigation/controls.png`, an authored transparent **5×3** atlas;
+exact ImageGen prompt: `art/navigation/prompt.txt`; deterministic bounds and
+runtime paths: `art/navigation/manifest.json`. Columns are normal, hover,
+pressed, selected and disabled; rows are Build, Play and Levels. Pressed faces
+are recessed, selected faces have a simple double rim, and disabled icons are
+engraved into dull material. All states are authored separately; no runtime
+recolouring or procedural icon overlays. Each manifest box is a 324×324
+square centred on its atlas column's and row's visible art (the earlier
+equal-fifths grid cut the art off-centre and clipped some rims); the row-wide
+vertical centre keeps the pressed drop. The crop is scaled evenly into a
+160×160 RGBA image under `data/navigation/`, so the visible buttons are
+centred in their slots and `town.json`'s `bottom` puts Play's lower edge as
+far from the screen edge as Build and Levels are from the sides.
+
+| Role | Runtime state names (all `.png`) |
+|---|---|
+| `navigation_build` | `build-normal`, `build-hover`, `build-pressed`, `build-selected`, `build-disabled` |
+| `navigation_play` | `play-normal`, `play-hover`, `play-pressed`, `play-selected`, `play-disabled` |
+| `navigation_levels` | `levels-normal`, `levels-hover`, `levels-pressed`, `levels-selected`, `levels-disabled` |
+
+Reproduce: `python3 games/christmas-market/tools/prepare_hud.py`;
+append `--check` to verify exact exported pixels. Runtime inventory and asset
+catalogue checks cover the added files. `lua/art.lua` documents all three roles;
+`--hud-states` uses the live skin to draw all fifteen states.
+
+**Pending validation:** genuine before/after town captures at 480×900 and
+390×844 (safe area 0,47,0,34), plus the existing HUD state shot. Native builds
+remain blocked here by missing OpenGL/X11/EGL headers and Xvfb, and Lua lint by
+missing `luacheck`. Assets and Lua syntax can be checked independently; no
+fabricated game screenshots are supplied. Follow-up tracked by
+[#84](https://github.com/corepunch/nile-archive/issues/84). Unpublished review
+only; PR publication and merging require user approval.
 
 ## Fitted specials and thin tinsel
 

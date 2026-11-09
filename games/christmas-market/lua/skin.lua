@@ -8,39 +8,13 @@
 -- `height_ratio` (the top fraction, taken before the inset), then `inset`
 -- (number or {left, top, right, bottom}) and `offset` {x, y}; a state's
 -- `offset` moves every layer that isn't `fixed`.
--- Market navigation badges: a gold-rimmed evergreen (Build) or ribbon-red
--- (Play) tile, drawn as layers until an authored festive atlas replaces them
--- (see docs/asset-catalogue.md#market-navigation). Pressing sinks the badge;
--- disabled drains its colour.
-local function badge(face, face2, icon)
-    return {
-        normal = {layers = {
-            {name = "shadow", fill = "#0A1E1B99", radius = 30, inset = {8, 12, 8, 2}, offset = {0, 6}, fixed = true},
-            {name = "rim", fill = "#8A5A24", radius = 30, inset = {8, 10, 8, 4}},
-            {name = "gold", fill = "#FFE7A3", fill2 = "#C98A33", radius = 28, inset = {10, 12, 10, 6}},
-            {name = "face", fill = face, fill2 = face2, radius = 23, inset = {16, 18, 16, 12}},
-            {name = "gloss", fill = "#FFFFFF30", radius = 20, height_ratio = .42, inset = {20, 21, 20, -2}},
-            {inset = {16, 18, 16, 12}, paint = icon},
-        }},
-        hover = {},
-        selected = {},
-        pressed = {offset = {0, 3}},
-        disabled = {set = {gold = {fill = "#D8D2C2", fill2 = "#8F8A7E"}, face = {fill = "#7C847C", fill2 = "#5B625B"}}},
-    }
-end
-local function build_icon(box, _, st)
-    local R = require("state")
-    local w = R.buildings and R.buildings[3]
-    if w and w.sprite then
-        gfx.image(w.sprite, box:inflate(-4):fit(texture.size(w.sprite)), color(255, 255, 255, st and st.disabled and 140 or 255))
+-- Complete image buttons: each interaction state is an authored atlas crop.
+local function navigation_button(kind)
+    local spec={}
+    for _,state in ipairs{"normal","hover","pressed","selected","disabled"} do
+        spec[state]={offset={0,0},layers={{image="navigation/"..kind.."-"..state..".png",fit="contain"}}}
     end
-end
-local function play_icon(box, _, st)
-    local c, r = box:center() + vec2(4, 0), box.h * .3
-    local pts = {c + vec2(-r * .75, -r), c + vec2(r, 0), c + vec2(-r * .75, r)}
-    local shade, cream = color(74, 18, 24, 150), st and st.disabled and color(220, 216, 206) or color(255, 249, 226)
-    gfx.poly({pts[1] + vec2(0, 3), pts[2] + vec2(0, 3), pts[3] + vec2(0, 3)}, shade)
-    gfx.poly(pts, cream)
+    return spec
 end
 
 return ui.skin{
@@ -113,8 +87,9 @@ return ui.skin{
                 -- Secondary actions (Restart, Quit) in evergreen, beside the red primary.
                 secondary = {normal = {set = {shadow = {fill = "#0A2A1E"}, body = {fill = "#1E5A3C"},
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
-                navigation_build = badge("#2C7850", "#164630", build_icon),
-                navigation_play = badge("#D3584E", "#85232E", play_icon),
+                navigation_build = navigation_button("build"),
+                navigation_play = navigation_button("play"),
+                navigation_levels = navigation_button("levels"),
                 -- Confirm and cancel a placement beside the lifted building.
                 placement_confirm = {normal = {layers = {
                     {fill = "#0D362B", radius = 28, offset = {0, 4}, fixed = true},

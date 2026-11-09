@@ -1,11 +1,22 @@
 {
   "background": "#166E77",
-  "header": {"role": "wallet"},
-  "bottom": {
-    "middle": {"kind": "round",
-               "colors": {"face": "#0C3E34", "glow": "#288464"}}
+  "header": {
+    "role": "wallet"
   },
-  "bubble": {"width": 300},
+  "bottom": {
+    "layout": "play-primary",
+    "bottom": 9,
+    "height": 144,
+    "build": 88,
+    "play": 144,
+    "secondary_height": 88,
+    "middle": {
+      "kind": "button"
+    }
+  },
+  "bubble": {
+    "width": 300
+  },
   "texts": {
     "placing": "Drag the building to choose a spot, or scroll the land.",
     "unchanged": "Your island is unchanged.",

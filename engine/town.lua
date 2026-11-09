@@ -7,7 +7,7 @@
 -- Layout and wording come from a JSON file in the game's data root, merged
 -- over the defaults below, so every game lays the town out the same way.
 -- Behaviour the JSON cannot express arrives as hooks; the look is the game's
--- ui.skin (roles navigation_build, navigation_play, placement_cancel,
+-- ui.skin (roles navigation_build, navigation_play, navigation_levels, placement_cancel,
 -- placement_confirm and the resource role named in header.role).
 --
 --   local town = require("town")
@@ -104,6 +104,15 @@ function T.new(c, config, hooks)
         {kind = "spacer", grow = 1},
         {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     }}
+    if b.layout == "play-primary" then
+        v.navigation = ui.form{kind = "row", align = "center", gap = 8, children = {
+            {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
+            {kind = "spacer", grow = 1},
+            {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+            {kind = "spacer", grow = 1},
+            {kind = "button", id = "levels", text = "", role = "navigation_levels", width = b.build, height = b.secondary_height},
+        }}
+    end
     v.placement_form = ui.form{kind = "row", children = {
         {kind = "button", id = "cancel", text = "", width = p.button, height = p.button, role = "placement_cancel"},
         {kind = "spacer", grow = 1},
@@ -124,6 +133,16 @@ function View:layout()
     local m = b.middle
     self.buttons.middle = m.kind == "round" and vec2(row.x + b.build + m.gap + m.diameter / 2, s:max().y - m.from_bottom)
         or vec2(row:center().x, s:max().y - m.from_bottom)
+    if b.layout == "play-primary" then
+        -- Measured from the physical display edge (app.bleed includes the
+        -- home-indicator inset), so Play's gap below matches Build's gap beside.
+        row = rect(row.x, app.bleed():max().y - b.bottom - b.height, row.w, b.height)
+        self.bottom_row = row
+        self.buttons.build = vec2(row.x + b.build / 2, row:center().y)
+        self.buttons.play = row:center()
+        self.buttons.middle = vec2(row:max().x - b.build / 2, row:center().y)
+        self.buttons.levels = self.buttons.middle
+    end
     local size = h.menu.size
     self.menu_bounds = rect(s:max().x - size - h.menu.inset, s.y + h.menu.y, size, size)
     self.buttons.menu = self.menu_bounds:center()
@@ -284,12 +303,16 @@ end
 function View:bottom()
     local h, skin = self.hooks, self.hooks.skin
     local m = self.cfg.bottom.middle
-    if m.kind == "round" then
+    if self.cfg.bottom.layout ~= "play-primary" and m.kind == "round" then
         if round_button(self, self.buttons.middle) and h.middle then h.middle() end
-    elseif h.draw_middle then h.draw_middle(self.buttons.middle) end
+    elseif self.cfg.bottom.layout ~= "play-primary" and h.draw_middle then h.draw_middle(self.buttons.middle) end
+    local primary = self.cfg.bottom.layout == "play-primary"
+    if primary then gfx.bleed(true) end
     local event = self.navigation:draw(self.bottom_row, skin)
+    if primary then gfx.bleed(false) end
     if event and event.id == "build" and h.build then h.build()
-    elseif event and event.id == "play" and h.play then h.play() end
+    elseif event and event.id == "play" and h.play then h.play()
+    elseif event and event.id == "levels" and h.middle then h.middle() end
 end
 
 -- Cancel and Confirm stand under the lifted building, kept on screen.

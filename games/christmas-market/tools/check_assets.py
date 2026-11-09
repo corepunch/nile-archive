@@ -36,6 +36,11 @@ def main():
     for tool, folder in [('pickaxe','board-states'),('dynamite','board-states'),('sunburst','board-states'),('pause','expedition-hud')]:
         hashes = {digest(ROOT/'data'/folder/f'{tool}-{state}.png') for state in STATES}
         assert len(hashes) == 5, f'{tool}: every state must have its own authored artwork'
+    subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
+    nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
+    assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}
+    for kind in ('build', 'play', 'levels'):
+        assert len({digest(ROOT/nav['icons'][f'{kind}-{state}']['runtime']) for state in STATES}) == 5
     buildings = json.loads((ROOT/'art/building-catalogue/manifest.json').read_text())['items']
     for entry in buildings:
         assert png(ROOT/entry['runtime']) == (tuple(entry['image']),6), entry['key']

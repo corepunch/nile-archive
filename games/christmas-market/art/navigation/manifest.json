@@ -1,0 +1,171 @@
+{
+  "source": "art/navigation/controls.png",
+  "prompt": "art/navigation/prompt.txt",
+  "size": [
+    1619,
+    971
+  ],
+  "states": [
+    "normal",
+    "hover",
+    "pressed",
+    "selected",
+    "disabled"
+  ],
+  "icons": {
+    "build-normal": {
+      "box": [
+        25,
+        18,
+        349,
+        342
+      ],
+      "runtime": "data/navigation/build-normal.png",
+      "meaning": "Build button: normal"
+    },
+    "build-hover": {
+      "box": [
+        339,
+        18,
+        663,
+        342
+      ],
+      "runtime": "data/navigation/build-hover.png",
+      "meaning": "Build button: hover"
+    },
+    "build-pressed": {
+      "box": [
+        651,
+        18,
+        975,
+        342
+      ],
+      "runtime": "data/navigation/build-pressed.png",
+      "meaning": "Build button: pressed"
+    },
+    "build-selected": {
+      "box": [
+        961,
+        18,
+        1285,
+        342
+      ],
+      "runtime": "data/navigation/build-selected.png",
+      "meaning": "Build button: selected"
+    },
+    "build-disabled": {
+      "box": [
+        1272,
+        18,
+        1596,
+        342
+      ],
+      "runtime": "data/navigation/build-disabled.png",
+      "meaning": "Build button: disabled"
+    },
+    "play-normal": {
+      "box": [
+        25,
+        325,
+        349,
+        649
+      ],
+      "runtime": "data/navigation/play-normal.png",
+      "meaning": "Play button: normal"
+    },
+    "play-hover": {
+      "box": [
+        339,
+        325,
+        663,
+        649
+      ],
+      "runtime": "data/navigation/play-hover.png",
+      "meaning": "Play button: hover"
+    },
+    "play-pressed": {
+      "box": [
+        651,
+        325,
+        975,
+        649
+      ],
+      "runtime": "data/navigation/play-pressed.png",
+      "meaning": "Play button: pressed"
+    },
+    "play-selected": {
+      "box": [
+        961,
+        325,
+        1285,
+        649
+      ],
+      "runtime": "data/navigation/play-selected.png",
+      "meaning": "Play button: selected"
+    },
+    "play-disabled": {
+      "box": [
+        1272,
+        325,
+        1596,
+        649
+      ],
+      "runtime": "data/navigation/play-disabled.png",
+      "meaning": "Play button: disabled"
+    },
+    "levels-normal": {
+      "box": [
+        25,
+        638,
+        349,
+        962
+      ],
+      "runtime": "data/navigation/levels-normal.png",
+      "meaning": "Levels button: normal"
+    },
+    "levels-hover": {
+      "box": [
+        339,
+        638,
+        663,
+        962
+      ],
+      "runtime": "data/navigation/levels-hover.png",
+      "meaning": "Levels button: hover"
+    },
+    "levels-pressed": {
+      "box": [
+        651,
+        638,
+        975,
+        962
+      ],
+      "runtime": "data/navigation/levels-pressed.png",
+      "meaning": "Levels button: pressed"
+    },
+    "levels-selected": {
+      "box": [
+        961,
+        638,
+        1285,
+        962
+      ],
+      "runtime": "data/navigation/levels-selected.png",
+      "meaning": "Levels button: selected"
+    },
+    "levels-disabled": {
+      "box": [
+        1272,
+        638,
+        1596,
+        962
+      ],
+      "runtime": "data/navigation/levels-disabled.png",
+      "meaning": "Levels button: disabled"
+    }
+  },
+  "generator": "ImageGen; fifteen individually authored interaction states in one 5x3 atlas",
+  "registration": "Fixed grid crops; contain in 160px RGBA canvas with 4px gutters; authored alpha preserved, no state recoloring",
+  "reproduction": "python3 games/christmas-market/tools/prepare_hud.py",
+  "review": "Pending genuine town captures; see docs/asset-catalogue.md"
+}

@@ -1,16 +1,43 @@
 {
   "background": "#738FB5",
-  "header": {"role": "wallet"},
-  "bottom": {
-    "middle": {"kind": "round",
-               "colors": {"face": "#164630", "glow": "#2C7850"}}
+  "header": {
+    "role": "wallet"
   },
-  "bubble": {"width": 300},
+  "bottom": {
+    "layout": "play-primary",
+    "bottom": 10,
+    "height": 144,
+    "build": 88,
+    "play": 144,
+    "secondary_height": 88,
+    "middle": {
+      "kind": "button"
+    }
+  },
+  "bubble": {
+    "width": 300
+  },
   "weather": {
-    "snow": {"height": 0.86, "fade_from": 0.7, "layers": [
-      {"count": 84, "radius": 1.4, "fall": 36, "drift": 11, "opacity": 175},
-      {"count": 44, "radius": 2.6, "fall": 62, "drift": 19, "opacity": 235}
-    ]}
+    "snow": {
+      "height": 0.86,
+      "fade_from": 0.7,
+      "layers": [
+        {
+          "count": 84,
+          "radius": 1.4,
+          "fall": 36,
+          "drift": 11,
+          "opacity": 175
+        },
+        {
+          "count": 44,
+          "radius": 2.6,
+          "fall": 62,
+          "drift": 19,
+          "opacity": 235
+        }
+      ]
+    }
   },
   "texts": {
     "placing": "Drag the building to choose a spot, or scroll the land.",

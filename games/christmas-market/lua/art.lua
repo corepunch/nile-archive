@@ -12,6 +12,7 @@ A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.hud_icons = {"complete"}
+A.navigation = {source="art/navigation/controls.png", roles={"navigation_build", "navigation_play", "navigation_levels"}, states=A.states}
 -- Board-only lift per kind, as a fraction of the piece canvas. Pieces are
 -- cropped around everything visible, so a cap, bow or leaf crown on top pushes
 -- the main shape low in the hex. Lifting re-centres that shape; the top detail
@@ -43,7 +44,7 @@ function A.load_hud()
 end
 
 function A.draw_hud_catalogue(R)
-    gfx.round_rect(rect(18,220,444,490),18,color(12,47,41,250))
+    gfx.round_rect(rect(18,220,444,640),18,color(12,47,41,250))
     R.say_at("CHRISTMAS HUD ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
     for i,state in ipairs(A.states) do
         local x=62+(i-1)*89
@@ -56,8 +57,14 @@ function A.draw_hud_catalogue(R)
     R.say_at("score",vec2(89,502),14,R.PAL_CREAM,90)
     R.say_at("stars",vec2(181,502),14,R.PAL_CREAM,90)
     R.say_at("goal met",vec2(273,502),14,R.PAL_CREAM,90)
-    if R.hud_art.elena then gfx.image(R.hud_art.elena,rect(318,398,124,268):fit(texture.size(R.hud_art.elena)),color.WHITE) end
-    R.say_at("Noelle, market keeper",vec2(240,683),17,R.PAL_CREAM,400)
+    if R.hud_art.elena then gfx.image(R.hud_art.elena,rect(318,398,124,125):fit(texture.size(R.hud_art.elena)),color.WHITE) end
+    for row,kind in ipairs{"build","play","levels"} do
+        for i,state in ipairs(A.states) do
+            local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
+            R.skin:paint_button(rect(28+(i-1)*89,540+(row-1)*88,72,72),st,{role="navigation_"..kind})
+        end
+    end
+    R.say_at("Noelle, market keeper",vec2(240,835),17,R.PAL_CREAM,400)
 end
 
 function A.load()
