@@ -122,7 +122,7 @@ Results return to the island. A scheduled wonder must be confirmed before its di
 
 A completed scene is acknowledged only after its last line or Skip. Interrupted scenes restart safely on reload. Replays and retries cannot repeat a completed story scene. Older saves retain their clears, buildings, wallet and land, receive an appropriate recap, and can continue into the additional twenty levels; already-owned wonders satisfy later story milestones. No decoration-rank gate is imposed.
 
-`lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` owns keyed checkpoints and the restoration schedule; `lua/narrative.lua` connects them to the existing engine dialogue system. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
+`lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/match3_game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
 | Elena | Mara | Tomas | Adrian | Word bubble |
 | --- | --- | --- | --- | --- |
@@ -300,16 +300,25 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 
 ## Source layout
 
-- `lua/state.lua`: the state shared by the game's modules, and their namespace (`R`).
+Relic Rush and Christmas Market are one game with two skins
+([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)). The flow around the
+board, every dialog, the shop, the level list, the town hooks, story delivery,
+effects and the debug entry points are the engine's (`engine/match3_game.lua`,
+`engine/match3_vfx.lua`, `engine/match3_debug.lua`); this folder is data and art.
+
+- `data/game.json`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop, level list), the piece packs and the dialogue scale.
+- `data/town.json`: the town screen's layout and notices.
+- `lua/state.lua`: the shared state table (`R`) from the engine.
 - `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.
-- `lua/rules.lua`: hex grid, deterministic match-3 rules, specials, blockers, tools, campaign and rewards — pure Lua, tested headlessly.
+- `lua/rules.lua`: piece identities, the economy slots and rewards over the engine's match-3 rules.
+- `lua/campaign.lua`, `lua/story_content.lua`, `lua/buildings.lua`, `lua/building_sprites.lua`: levels, the script and the building catalogue.
+- `lua/journey.lua`: the restoration schedule, recap and changing tap lines.
+- `lua/narrative.lua`: the cast.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
-- `lua/board.lua`: the expedition screen, animation phases and swipe/tap input.
-- `lua/vfx.lua`: rays, shockwaves, prism links, births, sparks, flying relics, score pop-ups.
-- `lua/island_view.lua`: the island screen around the engine city: HUD, region markers, placement panel.
-- `lua/screens.lua`: text palettes, panels, buttons and every dialog.
-- `lua/main.lua`: flow, saves and sound; returns the app descriptor the engine runs.
-- `lua/debug_screens.lua`: the `--level`, `--city`, `--dialog`, `--catalogue` … entry points that open a screen directly for screenshots.
+- `lua/board.lua`: how cells, relics, ice and blockers are painted.
+- `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet, star and compass icons.
+- `lua/skin.lua`: the look as data (`ui.skin`).
+- `lua/main.lua`: loads the modules and returns the engine's app descriptor.
 - `lua/smoke.lua`: the `--smoke` run through injected input, including the engine's `city.move_test`.
 - `art/`, `data/`, `docs/`, `tools/`: sources, runtime assets, documentation and the asset pipeline.
 

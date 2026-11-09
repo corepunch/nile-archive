@@ -86,6 +86,17 @@ The build shop and Winter Wishes scroll continuously. Swipe inside either list o
 use the mouse wheel. The shop keeps its category arrows, and Winter Wishes opens
 near the current puzzle. Both screens share row templates with Relic Rush.
 
+Pause offers Resume, Restart (it asks first) and Quit to the market, which
+keeps the unfinished board for LEVEL or Winter Wishes. Popups open and close
+at once. With no lives left, Try Again waits and says when one returns.
+
+The game is the same as Relic Rush with other data and art
+([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)): every word of the
+shared screens is in [`data/game.json`](data/game.json), and the flow, dialogs,
+shop, level list, effects and debug entry points are the engine's
+(`engine/match3_game.lua`). `lua/board.lua` and `lua/screens.lua` paint only
+the market's own art: cells, treats, the results card and guide icons.
+
 The interface look (text palettes, panels, the red buttons and their states, focus) is data in [`lua/skin.lua`](lua/skin.lua), compiled by the engine's `ui.skin`; see [skin files](../../docs/UI_ENGINE.md#skins).
 
 Board, HUD and character art is spatially extracted by `python3 games/christmas-market/tools/prepare_assets.py`. Buildings are rendered by `tools/render_buildings.py` and imported by `tools/prepare_catalogue.py`. See the [asset catalogue](docs/asset-catalogue.md) and the [building catalogue](docs/building-catalogue.md).
@@ -95,7 +106,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. A level without a stall plays its scene when you return to the market. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
 
-`lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` owns the keyed checkpoints and the stall schedule; `lua/narrative.lua` holds the cast and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
+`lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/match3_game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
 ## Review and validation
 

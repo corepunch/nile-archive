@@ -8,8 +8,9 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
-R.kudos_words = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"}   -- cascade and special-combo praise
-R.intro_haptics = true
+local words = require("match3.game").config().board   -- data/game.json
+R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
+R.locked_notice = words.locked
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
@@ -176,8 +177,6 @@ local function draw_sheen(sx)
     end
 end
 
-R.tool_notes = {"Pickaxe: tap a relic to break it.", "Dynamite: tap a relic to blast around it.",
-                    "Sunburst: tap a relic to clear its three lines."}
 
 ---------------------------------------------------------------------- input
 

@@ -1,0 +1,62 @@
+{
+  "app": {"title": "Relic Rush - The Lost Valley", "id": "relic-rush", "clear": "#09211F"},
+  "packs": ["relics", "jewels", "resources"],
+  "speech": {"scale": 1.5, "name": 22.5},
+  "region_speaker": "mara",
+  "board": {
+    "kudos": ["Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"],
+    "tool_notes": ["Pickaxe: tap a relic to break it.", "Dynamite: tap a relic to blast around it.",
+                   "Sunburst: tap a relic to clear its three lines."]
+  },
+  "notices": {
+    "build_first": "Restore your earned wonder before the next discovery.",
+    "story_waiting": "A new clue awaits on your island.",
+    "no_lives": "A life returns every 30 minutes. Explore your valley meanwhile.",
+    "reward_building": "Restoration funded. Spare Amulets are yours to decorate.",
+    "reward_story": "A new clue awaits on your island.",
+    "reward_replay": "Replay Amulets collected. Choose a treasure in the Build Shop.",
+    "all_open": "Your whole island is open to explore.",
+    "quit": "Your board is saved. Tap LEVEL %d or Expeditions to continue."
+  },
+  "capsules": {
+    "notes": ["A life returns every 30 minutes, up to five.",
+              "Hex amulets buy buildings. Replay expeditions to earn more.",
+              "Discovery Stars unlock stock and land. First clears only; never spent."]
+  },
+  "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley"},
+  "confirm": {"title": "Restart this expedition?"},
+  "failed": {"title": "One more adventure?", "subtitle": "THE RUINS WILL WAIT FOR YOU.", "town": "VISIT ISLAND"},
+  "zone": {"subtitle": "A NEW PLACE TO DISCOVER", "earn": "EARN STARS IN NEW EXPEDITIONS",
+           "keep": "DISCOVERY STARS STAY WITH YOU."},
+  "finale": {
+    "title": "To be continued...",
+    "lines": [["THE VALLEY SINGS. FIVE LIGHTS ANSWER.", 386, 16],
+              ["Your island and replay expeditions stay open.", 422, 16]],
+    "button": "BACK TO MY ISLAND"
+  },
+  "card": {"back": "BACK TO ISLAND", "moving": "HOLD AND DRAG ON THE ISLAND TO MOVE",
+           "locked": "COMPLETE MORE LEVELS TO RESTORE THIS WONDER"},
+  "catalogue": {
+    "title": "Build your valley", "hint": "Choose a treasure, then place it on open grass.", "close": "BACK TO ISLAND",
+    "categories": [["all", "All treasures"], ["wonder", "Story wonders"], ["building", "Buildings"],
+                   ["tree", "Trees"], ["bush", "Shrubs"], ["flower", "Flowers"], ["statue", "Monuments"],
+                   ["water", "Water gardens"], ["garden", "Garden furniture"], ["camp", "Expedition supplies"],
+                   ["animal", "Wildlife"], ["rock", "Rocks & crystals"]],
+    "category": "building",
+    "built": "RESTORED", "complete": "COMPLETE EXPEDITION %d", "earlier": "RESTORE EARLIER WONDERS",
+    "poor": "MORE AMULETS NEEDED", "reserved": "AMULETS RESERVED FOR WONDERS", "full": "ISLAND IS FULL",
+    "price": "%d amulets",
+    "wallet": "%d spendable Amulets / %d reserved / %d Stars"
+  },
+  "expeditions": {
+    "title": "Expeditions",
+    "intro": "First clear: clues, Discovery Stars and scheduled wonder grants.\nReplay: 60 Amulets + up to 40 for moves saved.",
+    "close": "BACK TO ISLAND",
+    "resume": "RESUME EXPEDITION", "replay": "REPLAY FOR AMULETS", "pending": "RESTORE YOUR WONDER FIRST",
+    "new": "NEW DISCOVERY", "earlier": "DISCOVER EARLIER LEVELS",
+    "replay_note": "Amulets only. No extra Stars or story unlocks.",
+    "building_note": "First clear: wonder funded + 80–120 spare Amulets and 3 Stars.",
+    "story_note": "First clear: next story clue + 80–120 Amulets and 3 Stars."
+  },
+  "debug": {"victory": 1, "catalogue_card": 37, "narrator": "tomas"}
+}

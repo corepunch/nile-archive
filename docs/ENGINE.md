@@ -302,6 +302,16 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 The city games share one town screen, `require("town")`, configured by each
 game's `data/town.json`. See [Shared town screen](TOWN.md).
 
+## Portrait match-3 game
+
+Relic Rush and Christmas Market share the whole game around the board:
+`require("match3.game")` (`engine/match3_game.lua`) owns progress and saving,
+the level flow and lives, every dialog, the shop, the level list, the town
+hooks and story delivery; `match3.vfx` the effects and `match3.debug` the
+screenshot entry points. Each game's words are `data/game.json`, read while
+`main.lua` loads (the launcher sets the data root before it runs the script).
+See [PORTRAIT_GAMES.md](PORTRAIT_GAMES.md).
+
 ## Audio
 
 `sfx_note(hz, seconds, delay, volume)` plays a soft bell-like note on one of
@@ -346,7 +356,9 @@ cannot write: save visitors, the cast, the theme and the city's callbacks.
 `launcher.c` is `main()` for every game, built once per game with the game's
 folder compiled in. Everything else Lua can call lives in the generated
 `api_lua.c`; the description it is generated from is `api.xml` and the
-generator `tools/luagen.py`. The details are in [SCRIPTING.md](SCRIPTING.md).
+generator `tools/luagen.py`. The data root is set before `main.lua` runs, so
+`app.read_text` and `json.load` work while a game's modules load. The details
+are in [SCRIPTING.md](SCRIPTING.md).
 
 ## Testing
 
