@@ -129,7 +129,7 @@ function E.bind_board_ui(R, rules, tool_art)
         local met = entry.remaining==0
         R.skin:draw_resource(box, icon, tostring(entry.remaining), {role="goal", interactive=false,
             icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
-            icon_alpha=met and 150/255 or 1, done=met})   -- one tick, the same in every capsule
+            done=met})   -- one tick, the same in every capsule
     end
     local hud_form=ui.form{kind="row",gap=6,align="center",children={
         {kind="spacer",width=82},    -- the Moves medallion
