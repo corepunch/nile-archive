@@ -22,6 +22,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
+| Goal met | Pillow, `tools/draw_goal_check.py` (deterministic) | `data/expedition-hud/goal-check.png` | 128px gold-ringed evergreen medallion with a cream tick. Replaces a met goal's count (like Relic Rush's check medal), so finished goals never show the star wreath. Static: goal capsules are not interactive. Capture: `--level 5 --goals-met`, `--hud-states` |
 | Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
 | Puzzle backdrop | Built-in ImageGen, `art/winter-market.png` | `data/winter.jpg` → `data/match3.png` | One static night market painting for all puzzles |

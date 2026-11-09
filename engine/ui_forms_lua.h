@@ -2155,7 +2155,7 @@ static const char engine_match3[] =
 "        local met = entry.remaining==0\n"
 "        R.skin:draw_resource(box, icon, tostring(entry.remaining), {role=\"goal\", interactive=false,\n"
 "            icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,\n"
-"            icon_alpha=met and 150/255 or 1, value_icon=met and R.hud_art.complete or nil})\n"
+"            icon_alpha=met and 150/255 or 1, value_icon=met and (R.hud_art.check or R.hud_art.complete) or nil})   -- a tick replaces the count\n"
 "    end\n"
 "    local hud_form=ui.form{kind=\"row\",gap=6,align=\"center\",children={\n"
 "        {kind=\"spacer\",width=82},    -- the Moves medallion\n"
