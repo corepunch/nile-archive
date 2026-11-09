@@ -127,6 +127,9 @@ void script_open(const char *dir)
         {"@engine/board_intro.lua", engine_board_intro, sizeof engine_board_intro - 1},
         {"@engine/json.lua", engine_json, sizeof engine_json - 1, "json"},
         {"@engine/town.lua", engine_town, sizeof engine_town - 1, "town"},
+        {"@engine/match3_vfx.lua", engine_match3_vfx, sizeof engine_match3_vfx - 1, "match3.vfx"},
+        {"@engine/match3_debug.lua", engine_match3_debug, sizeof engine_match3_debug - 1, "match3.debug"},
+        {"@engine/match3_game.lua", engine_match3_game, sizeof engine_match3_game - 1, "match3.game"},
     };
     for (size_t i = 0; i < sizeof embedded / sizeof embedded[0]; i++) {
         if (luaL_loadbuffer(L, embedded[i].source, embedded[i].size, embedded[i].name) != LUA_OK || lua_pcall(L, 0, embedded[i].module ? 1 : 0, 0) != LUA_OK) {
@@ -181,6 +184,7 @@ int script_dofile(const char *path)
 
 app_desc script_boot(const char *dir, const char *data_dir)
 {
+    app_boot_data(data_dir);   /* main.lua may read its JSON data while it loads */
     script_open(dir);
     const char *roots = dir ? dir : ".";
     lua_pushlstring(L, roots, strcspn(roots, ";"));

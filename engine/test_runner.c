@@ -177,8 +177,11 @@ static void run_game(const test_job *j, const char *suite, const char *lua_dir, 
     script_close();
 }
 
-static void run_rules(const test_job *j, const char *lua_dir)
+static void run_rules(const test_job *j, const char *lua_dir, const char *data_dir)
 {
+    /* A game's rules read its JSON data as the game does; the engine's own
+     * rules name repository paths. */
+    app_boot_data(strcmp(current_suite, "engine") ? data_dir : NULL);
     char roots[512], path[128];
     snprintf(roots, sizeof roots, "%s;%s%sengine;tests/lua", lua_dir, j->roots, j->roots[0] ? ";" : "");
     snprintf(path, sizeof path, "tests/lua/%s.lua", j->file);
@@ -313,7 +316,7 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         capture_output(log);
         if (!setjmp(T.abort_to)) {
             if (!j) c_tests[i].fn();
-            else if (!strcmp(j->kind, "rules")) run_rules(j, lua_dir);
+            else if (!strcmp(j->kind, "rules")) run_rules(j, lua_dir, data_dir);
             else run_game(j, suite, lua_dir, data_dir);
         } else {
             app_test_recover();

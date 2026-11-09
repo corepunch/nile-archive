@@ -8,10 +8,11 @@ local rules = require("rules")
 local art = require("art")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
-R.kudos_words = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"}   -- cascade and special-combo praise
+local words = require("match3.game").config().board   -- data/game.json
+R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
+R.locked_notice = words.locked
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
-R.locked_notice = "Ice and tinsel must be cleared first."
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local PH_IDLE = R.PH_IDLE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
@@ -63,7 +64,7 @@ local draw_relic = R.draw_relic
 local function wrapf(v, m) return v - m * math.floor(v / m) end
 
 local function draw_backdrop()
-    local scene = R.scenes[R.g.level >= 5 and 2 or 1]
+    local scene = R.scenes[rules.level_of(R.g).background or (R.g.level >= 5 and 2 or 1)]
     local tex = scene.tex and scene or R.backdrop
     local full = app.bleed()
     local size = texture.size(tex)
@@ -171,8 +172,6 @@ local function draw_sheen(sx)
     end
 end
 
-R.tool_notes = {"Hammer: tap a treat to break it.", "Firecracker: tap a treat to blast around it.",
-                "Star wand: tap a treat to clear its three lines."}
 
 ---------------------------------------------------------------------- input
 

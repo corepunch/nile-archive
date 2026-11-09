@@ -278,7 +278,7 @@ texture the impact, spark and bomb effects, as in Relic Rush. The original
 black-background PNGs and `License.txt` are retained in `art/particles/kenney/`;
 `python3 tools/pack_particles.py christmas-market` (from the repository root)
 resizes them, turns brightness into alpha on white and writes `data/particles.png`
-with its contract `lua/particle_skin.lua`. `lua/vfx.lua` draws them additively,
+with its contract `lua/particle_skin.lua`. `engine/match3_vfx.lua` draws them additively,
 tinted with each piece's effect colour. They are transient effect sprites with no
 interaction states. Shooting-star beams, prism links, special births and the
 bomb's leading ring stay procedural.

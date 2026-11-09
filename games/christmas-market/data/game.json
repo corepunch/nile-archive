@@ -1,0 +1,63 @@
+{
+  "app": {"title": "Christmas Market - Winter Wishes", "id": "christmas-market", "clear": "#09211F"},
+  "start_on_town": true,
+  "packs": ["festive"],
+  "speech": {"scale": 1, "name": 15},
+  "region_speaker": "pip",
+  "board": {
+    "kudos": ["Jolly!", "Merry!", "Magical!", "Christmas Magic!"],
+    "tool_notes": ["Hammer: tap a treat to break it.", "Firecracker: tap a treat to blast around it.",
+                   "Star wand: tap a treat to clear its three lines."],
+    "locked": "Ice and tinsel must be cleared first."
+  },
+  "notices": {
+    "build_first": "Build your earned stall before the next winter wish.",
+    "story_waiting": "Something's happening in the market square.",
+    "no_lives": "A life returns every 30 minutes. Explore the market meanwhile.",
+    "reward_building": "New stall funded! Spare Gold is yours to decorate.",
+    "reward_story": "Something's happening in the market square.",
+    "reward_replay": "Replay Gold collected. Add some Christmas decorations.",
+    "all_open": "The whole market is open.",
+    "quit": "Your board is saved. Tap LEVEL %d or Winter wishes to continue."
+  },
+  "capsules": {
+    "notes": ["A life returns every 30 minutes, up to five.",
+              "Gold buys stalls and decorations. Replay winter wishes to earn more.",
+              "Christmas Stars unlock shop items and land. First clears only."]
+  },
+  "pause": {"guide": "MARKET GUIDE", "quit": "QUIT TO MARKET", "town": "Your Christmas market"},
+  "confirm": {"title": "Restart this winter wish?"},
+  "failed": {"title": "One more winter wish?", "subtitle": "THE MARKET WILL WAIT FOR YOU.", "town": "VISIT MARKET"},
+  "zone": {"subtitle": "MORE ROOM FOR CHRISTMAS CHEER", "earn": "EARN STARS IN NEW WINTER WISHES",
+           "keep": "CHRISTMAS STARS STAY WITH YOU."},
+  "finale": {
+    "title": "To be continued",
+    "lines": [["Who was Mr Wren? And who's going to tell", 380, 16],
+              ["Fernhollow about the goat?", 404, 16],
+              ["NEXT: EPISODE 4, THE ROAD TO FERNHOLLOW", 446, 13, "cream"]],
+    "button": "BACK TO MY MARKET"
+  },
+  "card": {"back": "BACK TO MARKET", "moving": "HOLD AND DRAG IN THE MARKET TO MOVE",
+           "locked": "COMPLETE MORE PUZZLES TO BUILD THIS STALL"},
+  "catalogue": {
+    "title": "Build your market", "hint": "Choose Christmas magic for the market.", "close": "BACK TO MARKET",
+    "categories": [["all", "All Christmas magic"], ["wonder", "Market wishes"], ["building", "Decorations"],
+                   ["tree", "Snowy trees"], ["cottage", "Cottages"]],
+    "category": "all",
+    "built": "BUILT", "complete": "COMPLETE WISH %d", "earlier": "BUILD EARLIER STALLS",
+    "poor": "MORE GOLD NEEDED", "reserved": "GOLD RESERVED FOR STALLS", "full": "MARKET IS FULL",
+    "price": "%d gold",
+    "wallet": "%d spendable Gold / %d reserved / %d Stars"
+  },
+  "expeditions": {
+    "title": "Winter wishes",
+    "intro": "First clear: the next story scene, Christmas Stars and scheduled stall funding.\nReplay: 60 Gold + up to 40 for moves saved.",
+    "close": "BACK TO MARKET",
+    "resume": "RESUME PUZZLE", "replay": "REPLAY FOR GOLD", "pending": "BUILD YOUR STALL FIRST",
+    "new": "NEW WINTER WISH", "earlier": "COMPLETE EARLIER WISHES",
+    "replay_note": "Gold only. Stars and story unlocks come from first clears.",
+    "building_note": "First clear: stall funded + 80–120 spare Gold, 3 Stars.",
+    "story_note": "First clear: the next story scene + 80–120 Gold, 3 Stars."
+  },
+  "debug": {"victory": 3, "catalogue_card": 10, "narrator": "noelle"}
+}

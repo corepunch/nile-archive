@@ -214,7 +214,7 @@ rather than a set of lerps: gravity falls, damped springs and a sweep computed
 per cell from one clock, with callbacks at the landing times, and its tests
 drive that clock (`intro:update(dt)`, `intro.t`). As tweens it would be one
 custom-eased tween per cell per effect, so it keeps its clock. The particle
-pools in `vfx.lua` and the continuous hint pulse are likewise not tweens.
+pools in `engine/match3_vfx.lua` and the continuous hint pulse are likewise not tweens.
 
 ## Writing juice with it
 

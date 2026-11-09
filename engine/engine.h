@@ -241,6 +241,7 @@ float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
+void app_boot_data(const char *dir);   /* the data root before app_run (script_boot, rule tests) */
 void app_inject_click(vec2 p);          /* queue a press and release at a logical point (tests) */
 void app_inject_press(vec2 p);          /* individual pointer events, for hold/drag input tests */
 void app_inject_move(vec2 p);

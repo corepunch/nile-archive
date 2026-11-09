@@ -43,8 +43,8 @@ prompt and reviewed game captures are recorded in the
 
 The [economy review](review/economy/README.md) records first-clear/replay rewards,
 the measured expedition list, available/locked/resume rows and the shop's spendable /
-reserved Gold. Sources are `lua/expeditions.lua`, `lua/screens.lua`,
-`lua/catalogue.lua` and `lua/rules.lua`. The shared form skin supplies existing
+reserved Gold. Sources are `engine/match3_game.lua` (the level list and shop) with
+`data/game.json` (their words), `lua/screens.lua` and `lua/rules.lua`. The shared form skin supplies existing
 normal/hover/pressed/disabled/focus controls. No new bitmap or icon set is added;
 the existing normal Idol/Leaf/Crystal artwork identifies Gold/Wood/Stone. Board
 matches contribute to score/objectives; wallet payouts use the separate fixed
@@ -285,7 +285,7 @@ Transient light, beams, rings, particles, score text and sunlight motes
 are intentional animation primitives, not missing static artwork. Result-card
 torch sconces and their flame renderer have been removed; reviewed standard
 and safe-area phone captures are in `docs/review/result-without-torches/`.
-`lua/vfx.lua` creates an additive light texture in memory; see
+`engine/match3_vfx.lua` creates an additive light texture in memory; see
 [effects and capture modes](effects.md). There are no additional hidden gem skins
 for burning, charging, cracked gems or tool upgrades.
 
@@ -296,7 +296,7 @@ texture the impact, spark and bomb effects. The original black-background PNGs
 and `License.txt` are retained in `art/particles/kenney/`;
 `python3 tools/pack_particles.py relic-rush` (from the repository root) resizes them, turns brightness into alpha on
 white and writes `data/particles.png` with its contract `lua/particle_skin.lua`.
-`lua/vfx.lua` draws them additively, tinted with each piece's effect colour.
+`engine/match3_vfx.lua` draws them additively, tinted with each piece's effect colour.
 They are transient effect sprites with no interaction states. Ray beams,
 prism links, special births and the bomb's leading ring stay procedural.
 
@@ -384,7 +384,7 @@ phone safe areas, modal underlays and effects. Historical captures are in
 `docs/review/floating-hud/`.
 
 The island's redundant minus/plus/MAP button cluster has been removed from
-`lua/island_view.lua`. Navigation uses the shared city camera: pinch or mouse
+`engine/match3_game.lua` (the town hooks). Navigation uses the shared city camera: pinch or mouse
 wheel to zoom and drag to pan. Placement, confirmation and long-press pickup
 are unchanged. No bitmap or state mapping changed. Normal, overview and
 placement captures at both phone sizes are in
@@ -394,7 +394,7 @@ Building pickup now uses the engine's stationary 0.5-second hold; ordinary drags
 pan the map. The existing ghost/footprint, held/released, valid/blocked and
 confirm/cancel states are retained. [Issue #21](https://github.com/corepunch/nile-archive/issues/21)
 tracks gesture arbitration and the two-game input audit. Sources are
-`engine/city.c`, `engine/core.c` and `lua/island_view.lua`; reviewed native-input
+`engine/city.c`, `engine/core.c` and `engine/match3_game.lua` (the town hooks); reviewed native-input
 captures and reproduction commands are in
 [the shared gesture review](../../../docs/review/city-long-press/README.md).
 No bitmap or atlas mapping is added.
@@ -532,7 +532,7 @@ constant for speaker/listener, with no scale/rotation animation or idle wobble. 
 
 ### Placement confirmation controls
 
-`lua/island_view.lua` uses an engine form with `placement_cancel` and
+`engine/match3_game.lua` (the town hooks) uses an engine form with `placement_cancel` and
 `placement_confirm` variants from `lua/skin.lua`. These are procedural UI skin
 controls like the existing checkbox: red round × (cancel) and jade round ✓
 (commit build/move), normal/hover/pressed states with a keyboard-only focus ring; confirmation fades when

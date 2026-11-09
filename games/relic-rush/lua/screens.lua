@@ -1,83 +1,18 @@
--- screens.lua — Relic Rush's look: text palettes, panels, buttons, the header,
--- toasts and every dialog (guide, pause, results, failure, wonder card, region
--- card, finale).
---
--- Dialogs animate through a paint transform (scale, offset, opacity) applied
--- by the helpers below; hit testing always uses the untransformed layout, so
--- a dialog is clickable where it will come to rest.
-local R = require("state")
+-- screens.lua — Relic Rush's art in the shared dialogs: the results card, the
+-- guide's rows and icons, and the wallet and town icons. The dialogs, their
+-- motion, the paint helpers and every other popup are the engine's
+-- (engine/match3_game.lua); words are data/game.json.
+local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
-local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
-local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
+local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
 local rgba = color
-
-local P = {scale = 1, offset = vec2(0, 0), alpha = 1}
-R.P = P
-local function reset_paint() P.scale, P.offset, P.alpha = 1, vec2(0, 0), 1 end
-local function copy_paint() return {scale = P.scale, offset = P.offset, alpha = P.alpha} end
-local function set_paint(k) P.scale, P.offset, P.alpha = k.scale, k.offset, k.alpha end
-R.copy_paint, R.set_paint = copy_paint, set_paint
-
-local function pp(p) return P.offset + p:scale(P.scale) end
-local function pr(r) return rect.make(pp(r:pos()), r:size():scale(P.scale)) end
-local function pc(c) return color.alpha(c, P.alpha) end
-R.pp, R.pr = pp, pr
-
-function R.fill(r, c) gfx.rect(pr(r), pc(c)) end
-function R.rrect(r, radius, c) gfx.round_rect(pr(r), radius * P.scale, pc(c)) end
-function R.disc(center, radius, c) gfx.circle(pp(center), radius * P.scale, pc(c)) end
-function R.seg(a, b, width, c) gfx.line(pp(a), pp(b), width * P.scale, pc(c)) end
-function R.picture(t, r, alpha) gfx.image(t, pr(r), rgba(255, 255, 255, alpha * P.alpha)) end
-function R.picture_fit(t, box, alpha)
-    if t.w > 0 then R.picture(t, box:fit(texture.size(t)), alpha) end
-end
+local P, pp, pc = R.P, R.pp, R.pc
 local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_fit
-
----------------------------------------------------------------------- text
-
--- The look lives in skin.lua; the engine paints it through the dialog's
--- current transform. A palette is one of the skin's text styles (R.PAL_*).
-local skin = require("skin")
-skin.transform = function() return P.scale, P.offset, P.alpha end
-R.skin = skin
-function R.pal(palette, em) return skin:text(palette, em) end
-local pal = R.pal
-
-function R.say(s, box, em, palette) return text.inside(pal(palette, em), pr(box), vec2(.5, .5), s) end
-function R.say_left(s, box, em, palette) return text.inside(pal(palette, em), pr(box), vec2(0, .5), s) end
-function R.say_at(s, center, em, palette, max_width)
-    local w = max_width > 0 and max_width or 2000
-    return R.say(s, rect.centered(center, size2(w, em * 2)), em, palette)
-end
-function R.paragraph(s, box, em, palette) text.box(pal(palette, em), pr(box), vec2(.5, .5), s) end
-local say, say_left, say_at = R.say, R.say_left, R.say_at
-
--------------------------------------------------------------------- widgets
-
-function R.panel(r) skin:paint("panel", r) end
-local panel = R.panel
-
-function R.tapped(r) return ui.hit(r:offset(vec2(0, R.hit_dy)), 0).clicked end
-local tapped = R.tapped
-
--- Buttons respond even when drawn disabled, so the game can explain why not.
-function R.paint_button(r, st, enabled)
-    skin:paint("button", r, {hot = st.hot, held = st.held, disabled = not enabled})
-end
-function R.button(r, label, enabled)
-    local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
-    R.paint_button(r, st, enabled)
-    say(label, (st.held and r:offset(vec2(0, 2)) or r):inflate(-12), 25, PAL_CREAM)
-    return st.clicked
-end
-local button = R.button
-
--- Forms take the same skin; the shared form engine owns layout, hits, focus and bindings.
-local form_skin = skin
-R.form_skin = form_skin
+local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
+local set_paint, section = R.set_paint, R.section
 
 -- Two-tone gold star on a darker rim, lit from above.
 function R.star_icon(center, radius)
@@ -105,108 +40,11 @@ function R.compass_icon(center, radius)
 end
 local star_icon = R.star_icon
 
---------------------------------------------------------------------- header
-
--- One prominent medallion and matching touch area on the island and board.
-local function resource_icons()
-    return {R.life_art,R.relics[RELIC_IDOL+1],function(box) star_icon(box:center(),box.w*.45) end}
+-- One prominent medallion and matching touch area on the town and board.
+function R.wallet_icons()
+    return {R.life_art, R.relics[RELIC_IDOL + 1], function(box) star_icon(box:center(), box.w * .45) end}
 end
-local capsule_notes = {"A life returns every 30 minutes, up to five.","Hex amulets buy buildings. Replay expeditions to earn more.","Discovery Stars unlock stock and land. First clears only; never spent."}
--- The town's wallet capsules (engine/town.lua lays them out).
-function R.header_capsules()
-    local remaining=math.max(0,(R.prog.life_at or 0)-app.clock())
-    local lives=(R.prog.lives or rules.LIVES)==rules.LIVES and "5 FULL" or ("%d %d:%02d"):format(R.prog.lives,remaining//60,remaining%60)
-    local values={lives,tostring(R.prog.wallet[1]),tostring(R.prog.wallet[4])}
-    local icons=resource_icons()
-    local out={}
-    for k=1,3 do out[k]={icon=icons[k],value=values[k],note=capsule_notes[k]} end
-    return out
-end
-
-function R.draw_toast()
-    if R.toast_time <= 0 or R.overlay ~= R.OV_NONE then return end
-    if R.on_island then   -- above the map buttons
-        rrect(rect(18, 710 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
-    else   -- just below the HUD, above the board
-        local bounds = R.board_toast
-        rrect(bounds, 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, bounds:center(), 14, PAL_CREAM, bounds.w - 16)
-    end
-end
-
--------------------------------------------------------------------- dialogs
-
--- The open dialog's motion, on the engine's tween module: `entry` and `exit`
--- run 0..1, and the parts of a dialog arrive on one timeline, so a tap can
--- skip to its end and reduced motion (tween.instant) settles everything at once.
-local function new_dialog()
-    return {entry = 0, exit = 0, parts = {}, n = 0, tl = nil, fresh = true}
-end
-
--- Open a dialog at rest. Popups appear and close at once, with no entrance
--- or exit motion: they must never wait on the frame clock to become visible
--- (a stalled clock on device left a dim with no panel), and the backdrop blur
--- already costs the opening frame. Only reels (--reel) still play the parts.
-function R.open_dialog(settled)
-    local old = R.dialog
-    if old then
-        tween.kill(old)
-        if old.tl then old.tl:kill() end
-    end
-    local d = new_dialog()
-    R.dialog = d
-    R.modal_closing = false
-    d.settled = settled or not app.arg("reel")
-    d.entry = 1
-end
-
--- Bank the reward and leave the dialog immediately.
-function R.close_dialog()
-    R.modal_closing = false
-    R.claim_reward()
-    R.modal_for = R.overlay
-end
-
--- Has the entrance, parts included, finished?
-function R.dialog_settled()
-    local d = R.dialog
-    return d ~= nil and d.entry >= 1 and (d.tl == nil or d.tl:is_done())
-end
-
--- Jump the parts to their places, as the first tap on a result does.
-function R.dialog_skip()
-    local d = R.dialog
-    if d.tl and not d.tl:is_done() then d.tl:complete() end
-end
-
--- A part of the dialog arriving `delay` seconds after it opened: `f` is its eased
--- progress and `u` its linear one. Parts are keyed by draw order, like controls,
--- and join the dialog's timeline the first time they are drawn.
-function R.dialog_part(delay, duration)
-    local d = R.dialog
-    d.n = d.n + 1
-    local part = d.parts[d.n]
-    if not part then
-        part = {f = 0, u = 0}
-        d.parts[d.n] = part
-        d.tl = d.tl or tween.timeline()
-        d.tl:to(part, duration, {f = 1}, delay)
-        d.tl:to(part, duration, {u = 1}, delay):ease("linear")
-        if d.settled then d.tl:complete() end
-    end
-    return part
-end
-
--- Fade and lift a part of a dialog in after `delay`; returns the paint to restore.
-local function section(delay, duration, rise)
-    local old = copy_paint()
-    local part = R.dialog_part(delay, duration)
-    local f = part.f
-    P.alpha = P.alpha * f
-    P.offset = P.offset + vec2(0, rise * (1 - f) * P.scale)
-    return old, part
-end
+function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 local function result_screen()
     local l = match3.result_rects(SCREEN_W, SCREEN_H)
@@ -275,49 +113,7 @@ local function result_screen()
     end
     set_paint(s)
 end
-
-local wonder_form = ui.form{
-    root = {kind="column", panel=true, padding={24,20,24,13}, children={
-        {kind="label", id="name", height=44, em=34},
-        {kind="spacer", height=19},
-        {kind="image", id="sprite", height=205},
-        {kind="spacer", height=18},
-        {kind="label", id="about", height=62, wrap=true, em=22, text_style=PAL_CREAM},
-        {kind="spacer", height=14},
-        {kind="row", height=78, padding={16,0,16,0}, gap=10, visible_field="can_build", children={
-            {kind="column", grow=1, gap=9, children={{kind="image",id="gold_icon",height=34},{kind="label",id="gold",height=28}}},
-        }},
-        {kind="label",id="notice",height=78,wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
-        {kind="spacer",height=18},
-        {kind="button",id="action",height=56},
-        {kind="spacer",height=17},
-        {kind="button",id="close",text="CLOSE",height=28,flat=true,em=16},
-    }},
-    bindings={
-        {id="name",field="name",readonly=true},{id="sprite",field="sprite",type="texture",readonly=true},
-        {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
-        {id="gold",field="cost.1",type="integer",readonly=true},
-    },
-}
-local function wonder_screen()
-    local i = R.inspect >= 0 and R.inspect or island.wonder_count(R.island)
-    if i < 0 or i >= #R.buildings then return end
-    local w = R.buildings[i + 1]
-    local can_build, built = island.can_buy(R.island,R.prog.wallet,R.prog.level,i), R.inspect_item and R.inspect_item>=0
-    local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=w.about,
-        cost={w.cost[1],w.cost[2],w.cost[3]}, action=built and "MOVE THIS BUILDING" or can_build and "CHOOSE A LOCATION" or "BACK TO ISLAND"}
-    assert(ok,message)
-    wonder_form:set("gold_icon",R.relics[RELIC_IDOL+1])
-    wonder_form.values.can_build, wonder_form.values.show_notice = can_build and not built, built or not can_build
-    wonder_form:set("notice",built and "HOLD AND DRAG ON THE ISLAND TO MOVE" or "COMPLETE MORE LEVELS TO RESTORE THIS WONDER")
-    local bounds=rect.centered(vec2(240,450),size2(math.min(420,SCREEN_W-48),592))
-    R.modal_bounds=pr(bounds)
-    local event = wonder_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
-    if event and event.id == "action" then
-        if can_build or built then R.island_begin(i,true,built and R.inspect_item or nil) else R.overlay=R.OV_NONE end
-    elseif event and event.id == "close" then R.overlay=R.OV_NONE end
-end
-R.wonder_form=wonder_form
+R.dialogs[R.OV_RESULT] = result_screen
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
@@ -354,113 +150,6 @@ local guide_form = match3.guide_form({
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form=guide_form -- measured control bounds are also used by the input smoke test
 local function guide_screen() match3.draw_guide(R, guide_form) end
-
--- Pause, as in other match-3 games: the settings grouped in one well, then
--- Resume and the secondary actions. Restart asks first; Quit keeps the board,
--- which LEVEL / Expeditions resume later. From the island only Resume applies.
-local pause_form = match3.pause_form("EXPLORER'S GUIDE", "QUIT TO ISLAND")
-local function pause_screen()
-    local level = R.on_island and "Your valley" or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
-    local action = match3.draw_pause(R, pause_form, level)
-    if action == "restart" then R.overlay = R.OV_CONFIRM
-    elseif action == "quit" then   -- the unfinished board waits on the island
-        R.on_island, R.overlay = true, R.OV_NONE
-        R.notice(("Your board is saved. Tap LEVEL %d or Expeditions to continue."):format(R.g.level + 1))
-    end
-end
-R.pause_form=pause_form
-
--- Restart throws the board away, so it asks first. Retrying is always free.
-local confirm_form = ui.form{
-    root={kind="column",panel=true,padding={36,22,36,18},gap=14,children={
-        {kind="label",text="Restart this expedition?",height=40,em=28},
-        {kind="label",text="The board starts over: moves, goals and tools reset. Retrying is always free.",
-         height=56,wrap=true,em=18,text_style=PAL_CREAM},
-        {kind="button",id="confirm",text="RESTART",height=50},
-        {kind="button",id="cancel",text="KEEP PLAYING",height=32,role="link",em=20},
-    }},
-}
-local function confirm_screen()
-    local _,height=confirm_form:measure(396,form_skin)
-    local bounds=rect.centered(vec2(240,450),size2(396,height))
-    R.modal_bounds=pr(bounds)
-    local event=confirm_form:draw(bounds,form_skin,{hit_offset=vec2(0,R.hit_dy)})
-    if event and event.id=="confirm" then R.start_level(R.g.level);R.overlay=R.OV_NONE
-    elseif event and event.id=="cancel" then R.overlay=R.OV_PAUSE end
-end
-R.confirm_form=confirm_form
-
-local function failed_screen()
-    panel(rect(38, 272, 404, 333))
-    say_at("One more adventure?", vec2(240, 317), 32, PAL_GOLD, 0)
-    say_at("THE RUINS WILL WAIT FOR YOU.", vec2(240, 366), 16, PAL_WHITE, 0)
-    say_at("Try a special combo or use a tool.", vec2(240, 404), 17, PAL_CREAM, 0)
-    if button(rect(83, 448, 314, 50), "TRY AGAIN", true) then R.start_level(R.g.level) end
-    if button(rect(115, 520, 250, 42), "VISIT ISLAND", true) then R.on_island, R.overlay = true, R.OV_NONE end
-end
-
-local function zone_screen()
-    local z = R.zone_card
-    local zone = R.island.zones[z + 1]
-    local ready = R.island:zone_available(z, R.prog.wallet)
-    R.modal_bounds=pr(rect(30,263,420,365))
-    panel(rect(30, 263, 420, 365))
-    say_at(zone.name, vec2(240, 304), 34, PAL_GOLD, 380)
-    say_at("A NEW PLACE TO DISCOVER", vec2(240, 349), 16, PAL_CREAM, 0)
-    say_at(("STARS  %d / %d"):format(R.prog.wallet[rules.STARS], zone.needs[rules.STARS]), vec2(240, 397), 24, PAL_GOLD, 0)
-    say_at("EARN STARS IN NEW EXPEDITIONS",vec2(240,441),19,PAL_CREAM,0)
-    if button(rect(72, 487, 336, 47), ready and "OPEN THIS AREA" or "KEEP EXPLORING", true) then
-        if R.island:unlock(z, R.prog.wallet) then
-            R.island_focus(zone.marker, R.island.cam.zoom)
-            R.save_progress()
-            story.add({"mara", require("journey").regions[z], story.SHOUT})
-            R.tone(820)
-        end
-        R.overlay = R.OV_NONE
-    end
-    say_at("DISCOVERY STARS STAY WITH YOU.", vec2(240, 559), 12, PAL_WHITE, 0)
-    say_at("CLOSE", vec2(240, 592), 15, PAL_WHITE, 0)
-    if tapped(rect(180,575,120,38)) then R.overlay = R.OV_NONE end
-end
-
-local function finale_screen()
-    panel(rect(32, 285, 416, 305))
-    say_at("To be continued...", vec2(240, 330), 31, PAL_GOLD, 0)
-    say_at("THE VALLEY SINGS. FIVE LIGHTS ANSWER.", vec2(240, 386), 16, PAL_WHITE, 0)
-    say_at("Your island and replay expeditions stay open.", vec2(240, 422), 16, PAL_WHITE, 0)
-    if button(rect(82, 489, 316, 50), "BACK TO MY ISLAND", true) then R.overlay = R.OV_NONE end
-end
-
-local dialogs = {[R.OV_GUIDE] = guide_screen, [R.OV_PAUSE] = pause_screen, [R.OV_RESULT] = result_screen, [R.OV_FAILED] = failed_screen,
-                 [R.OV_WONDER] = wonder_screen, [R.OV_ZONE] = zone_screen, [R.OV_FINALE] = finale_screen,
-                 [R.OV_CONFIRM] = confirm_screen}
-
--- Draws the open dialog over everything; it alone receives input.
-function R.overlays(dt)
-    if R.overlay ~= R.modal_for then   -- a new dialog starts its entrance
-        R.modal_for = R.overlay
-        R.open_dialog()
-    end
-    if R.overlay == R.OV_NONE then return end
-    if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
-    if R.overlay == R.OV_EXPEDITIONS then R.draw_expeditions(dt); return end
-    local d = R.dialog
-    d.n = 0
-    local entry, exit = d.entry, d.exit
-    ui.modal_layer(7, rgba(5, 22, 22, 185))
-    local scale = .96 + .04 * entry
-    -- dialogs are laid out on the 900-tall design: centre them on a taller screen
-    R.hit_dy = R.drop / 2
-    P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit + R.hit_dy), entry * (1 - exit)
-    local before=R.overlay
-    R.modal_bounds=nil
-    local draw = dialogs[R.overlay]
-    if draw then draw() end
-    if R.overlay==before and R.modal_bounds and not R.modal_closing
-            and ui.modal_dismiss(R.modal_bounds,{fresh=d.fresh}) then R.overlay=R.OV_NONE end
-    d.fresh = false
-    reset_paint()
-    R.hit_dy = 0
-end
+R.dialogs[R.OV_GUIDE] = guide_screen
 
 return R

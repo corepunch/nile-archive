@@ -110,6 +110,9 @@ return ui.skin{
             variants = {
                 flat = {normal = {layers = {}}},
                 link = {text = "gold", normal = {layers = {}}},
+                -- Secondary actions (Restart, Quit) in evergreen, beside the red primary.
+                secondary = {normal = {set = {shadow = {fill = "#0A2A1E"}, body = {fill = "#1E5A3C"},
+                                              face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
                 navigation_build = badge("#2C7850", "#164630", build_icon),
                 navigation_play = badge("#D3584E", "#85232E", play_icon),
                 -- Confirm and cancel a placement beside the lifted building.
