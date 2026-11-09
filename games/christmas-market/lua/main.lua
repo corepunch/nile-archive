@@ -498,6 +498,10 @@ local function debug_screens()
         local l = rules.level_of(R.g)
         R.mission(l.lesson, ("%d. %s"):format(R.g.level + 1, l.name))
     end
+    if app.arg("goals-met") then   -- score and bells met: their capsules show the tick
+        local l = rules.level_of(R.g)
+        R.g.score, R.g.relics = l.score, l.relics
+    end
     if app.arg("kudos") then R.award_kudos(tonumber(app.arg("kudos")) or 2) end
     a = app.arg("dialog")
     if a then   -- guide, pause, failed, finale, a dialogue (intro, mara, tomas, adrian) or a bubble
