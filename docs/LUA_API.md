@@ -24,7 +24,7 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`style`](#style) - Constructor `style{...}`; the methods return a tweaked copy.
 - [`text`](#text) - Styled TrueType text. Every function returns the rect it drew.
 - [`haptic`](#haptic) - Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.
-- [`sfx`](#sfx) - A tiny synthesiser for feedback tones.
+- [`sfx`](#sfx) - A tiny polyphonic synthesiser for feedback tones and jingles.
 - [`ui`](#ui) - Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.
 - [`sprite`](#sprite) - Authored atlas frames, pivot-aware bounds and animation timing.
 - [`nav`](#nav) - nav.new(); assign nodes and live blockers, then find. Indices are 0-based.
@@ -1797,7 +1797,7 @@ Whether the backend supports requests (iOS checks hardware). macOS trackpad and 
 
 ## sfx
 
-A tiny synthesiser for feedback tones.
+A tiny polyphonic synthesiser for feedback tones and jingles.
 
 ### `sfx.tone(hz, seconds)`
 
@@ -1807,6 +1807,17 @@ A soft bell-like note.
 |---|---|---|
 | `hz` | `number` |  |
 | `seconds` | `number` |  |
+
+### `sfx.note(hz, seconds, delay, volume)`
+
+A bell-like note on one of 16 voices after `delay` seconds; `volume` 1 matches tone. Chords and jingles are several notes.
+
+| Argument | Type | |
+|---|---|---|
+| `hz` | `number` |  |
+| `seconds` | `number` |  |
+| `delay` | `number` |  |
+| `volume` | `number` |  |
 
 ### `sfx.enable(on)`
 
@@ -2625,6 +2636,7 @@ How dialogue looks.
 | `dim` | `color` | Backdrop behind the dialogue. |
 | `portrait_height` | `number` | Fraction of the screen height (default .5). |
 | `framed` | `boolean` | Portraits are busts: show them in a medallion. |
+| `centered` | `boolean` | Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size. |
 | `skip` | `string` | Label of a skip button, nil for none. |
 
 ### building_def

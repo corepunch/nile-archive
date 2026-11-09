@@ -13,7 +13,7 @@ local H = require("support")
 
 local scenes = content.scenes
 local ITEMS = G.ITEMS
-local COINS, INFLUENCE, CHAPTERS, STARS = G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
+local COINS, INFLUENCE, CHAPTERS = G.COINS, G.INFLUENCE, G.CHAPTERS
 
 -- A test camera whose view matches the scene's world so to_world is identity.
 local function test_camera()
@@ -63,7 +63,6 @@ end
 -- the economy allows, and the temple cache is solved at the end.
 
 local function play_and_claim(i)
-    local wins_before = G.wins[i]
     play_scene(i)
     check(G.result and G.result.complete, ("scene %d completed"):format(i))
     drain_story()

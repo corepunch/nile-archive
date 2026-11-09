@@ -40,6 +40,10 @@ local function campaign()
         if b and played[#played] ~= b.key then played[#played + 1] = b.key end
         app.inject_click(vec2(240, 300)); return
     end
+    if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
+        if not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
+        return
+    end
     local c = R.island
     if R.overlay == R.OV_FINALE then
         local want = {}
@@ -97,6 +101,10 @@ function R.smoke()
     if story.active() then   -- tap through the dialogue
         assert(R.phase ~= R.PH_PRESENT or R.intro.t == 0, "smoke: the board fills only after the dialogue")
         app.inject_click(vec2(240, 300))
+        return
+    end
+    if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
+        if not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
     end
     -- The board's entrance takes no moves. A tap skips the first; the rest play out.

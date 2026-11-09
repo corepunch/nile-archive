@@ -42,8 +42,9 @@ preserving authored alpha and every control state. See the
 
 Swap adjacent treats, or tap two neighbours, to make a straight line of three
 or more matching kinds along any of the three hex axes. Bent clusters and
-unselected branches do not count. Four in a line creates an axis shooting star;
-five or more creates a rainbow star. Pieces have one ordinary state rather
+unselected branches do not count. Four in a line creates a striped treat (cream
+stripes along the axis it clears, as in Relic Rush); five or more creates a
+rainbow star. Pieces have one ordinary state rather
 than flower growth stages. Blockers, tools, cascades and restoration rewards
 retain their existing rules. Both portrait games use this same matching mode.
 
@@ -54,9 +55,21 @@ shades from light at the top to dark at the bottom. Powder snow and both ice
 strengths use [thin hex rims](docs/asset-catalogue.md#snow-and-ice-rims).
 Goal icons sit slightly left over their capsule edges. See the
 [cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
-Thin gold tinsel straddles the cell edge. Shooting stars, the bomb, the rainbow
-star and selection highlights use the [same hex silhouette](docs/asset-catalogue.md#fitted-specials-and-thin-tinsel).
+Thin gold tinsel straddles the cell edge. The bomb, the rainbow star and
+selection highlights use the [same hex silhouette](docs/asset-catalogue.md#fitted-specials-and-thin-tinsel).
 Open Pause to reach Sound, Reduce Motion, Resume and the Market Guide.
+
+Each wish opens with its mission on a banner that slides across the middle of
+the screen and away (a tap sends it on). Long cascades and special combos earn
+praise (Jolly!, Merry!, Magical!, Christmas Magic!) with a rising chime. Swaps,
+matches, specials, tools, wins and losses each have their own synthesised
+sound. The win card shows stars, score, one chip per reward and the next step.
+
+The market keeps Relic Rush's bottom controls in its own skin: Build (the
+shop) in the left corner, Play in the right and the winter wishes medallion
+between them. A placement shows Cancel and Confirm beside the building. Snow
+falls over the village and moves with it when you pan. Dialogue stands the
+speaker (and listener) on a full-width bubble in the middle of the screen.
 
 ## Draft implementation
 

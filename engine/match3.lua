@@ -182,6 +182,75 @@ function E.bind_board_ui(R, rules, tool_art)
         if E.pause_button(R, R.board_pause, offset) then R.overlay = R.OV_PAUSE end
     end
 
+    -- The level's mission arrives across the middle of the screen, holds,
+    -- then slides away, once any dialogue has finished. A tap sends it on.
+    function R.mission(text, title)
+        R.mission_banner = {text = text, title = title, t = 0}
+    end
+    local MISSION_IN, MISSION_HOLD, MISSION_OUT = .4, 2.2, .35
+    local function draw_mission(dt)
+        local m = R.mission_banner
+        if not m or R.overlay ~= R.OV_NONE or story.active() then return end
+        if m.t == 0 then R.play("mission") end
+        m.t = m.t + dt
+        local w, h = R.SCREEN_W, 150
+        local center = vec2(w / 2, R.board_origin.y - 30)
+        local slide
+        if m.t < MISSION_IN then slide = (1 - ease.out_back(m.t / MISSION_IN)) * w
+        elseif m.t < MISSION_IN + MISSION_HOLD then slide = 0
+        else slide = -ease.in_cubic(num.saturate((m.t - MISSION_IN - MISSION_HOLD) / MISSION_OUT)) * w end
+        if m.t > MISSION_IN + MISSION_HOLD + MISSION_OUT then R.mission_banner = nil; return end
+        if R.reduced_motion then slide = 0 end
+        local band = rect.centered(center + vec2(slide, 0), size2(w + 40, h))
+        local fade = num.saturate(m.t / .2) * (1 - num.saturate((m.t - MISSION_IN - MISSION_HOLD) / MISSION_OUT))
+        gfx.bleed(true)
+        gfx.rect(app.bleed(), rgba(4, 20, 18, 90 * fade))   -- the board steps back behind the mission
+        gfx.bleed(false)
+        gfx.shadow(band:offset(vec2(0, 8)), 4, 18, rgba(0, 0, 0, 110))
+        gfx.rect(band, R.skin:color("moves_face"))
+        gfx.rect(rect(band.x, band.y + 6, band.w, band.h - 12), color.shade(R.skin:color("moves_face"), 1.18))
+        gfx.rect(rect(band.x, band.y + 3, band.w, 2), rgba(236, 196, 112))
+        gfx.rect(rect(band.x, band:max().y - 5, band.w, 2), rgba(236, 196, 112))
+        local inner = band:inflate(-36)
+        if m.title then
+            text.inside(R.pal(PAL_CREAM, 17), rect(inner.x + 20, band.y + 16, inner.w - 40, 22), vec2(.5, .5), m.title)
+        end
+        text.box(R.pal(PAL_GOLD, 30), rect(inner.x + 20, band.y + (m.title and 42 or 20), inner.w - 40, band.h - (m.title and 58 or 40)),
+                 vec2(.5, .5), m.text)
+        -- Any tap while it holds sends it on its way; the board stays untouched.
+        ui.block(app.bleed())
+        if ui.hit(app.bleed(), 0).clicked and m.t < MISSION_IN + MISSION_HOLD then m.t = MISSION_IN + MISSION_HOLD end
+    end
+
+    -- Kudos pop over the board, swell, then rise and fade.
+    local function draw_kudos(dt)
+        local k = R.kudos
+        if not k then return end
+        k.t = k.t + dt
+        local life = 1.25
+        if k.t > life then R.kudos = nil; return end
+        local pop = k.t < .22 and ease.out_back(k.t / .22) or 1
+        local fade = 1 - num.saturate((k.t - .95) / .3)
+        local at = R.board_origin + vec2(0, -20 - num.saturate((k.t - .9) / .35) * 30)
+        local em = (40 + 6 * k.level) * pop
+        if not R.reduced_motion then
+            gfx.additive(true)
+            gfx.glow(at, 150 * pop, rgba(255, 214, 110, 120 * fade), rgba(255, 214, 110, 0))
+            gfx.additive(false)
+        end
+        local st = R.pal(k.level >= 3 and PAL_WHITE or PAL_GOLD, em)
+        st.fill = color.alpha(st.fill, fade)
+        if st.fill2 then st.fill2 = color.alpha(st.fill2, fade) end
+        if st.outline then st.outline = color.alpha(st.outline, fade) end
+        if st.shadow then st.shadow = color.alpha(st.shadow, fade) end
+        text.inside(st, rect.centered(at, size2(R.SCREEN_W - 20, em * 1.6)), vec2(.5, .5), k.text)
+    end
+
+    function R.draw_board_banners(dt)
+        draw_kudos(dt)
+        draw_mission(dt)
+    end
+
     function R.draw_board_tools(inp)
         if R.intro and R.intro:arrive(.05, 2.8, .58) <= 0 then return end
         for k = 0, 2 do
@@ -887,6 +956,7 @@ function E.new(config)
         R.phase, R.phase_time, R.idle_time, R.shake = 0, 0, 0, 0
         R.swap_a, R.swap_b, R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1, -1, -1
         R.fall_steps, R.fall_from = nil, {}
+        R.kudos, R.kudos_level, R.mission_banner = nil, 0, nil
     end
     local rules = M
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
@@ -899,7 +969,7 @@ function E.new(config)
     -- always ends just above the HUD. A shorter screen only crops the top of
     -- the painting; the board is never squeezed.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
-    local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 782, 409, 100, 64
+    local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
     local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
@@ -965,13 +1035,15 @@ function E.new(config)
         if R.tool >= 0 then
             if rules.game_tool(R.g, R.tool, cell, R.pending) then
                 R.tool = -1
+                R.kudos_level = 0
+                R.play("tool")
                 R.finish_wave()
             end
             return
         end
         if R.selected == cell then R.selected = -1
         elseif R.selected >= 0 and hex_distance(R.selected, cell) == 1 then R.attempt_swap(R.selected, cell)
-        else R.selected = cell; R.tone(270) end
+        else R.selected = cell; R.play("select") end
     end
 
     -- A swipe trades with the neighbour best aligned with the gesture.
@@ -1009,6 +1081,48 @@ function E.new(config)
     end
 
     local notes = {523.25, 659.25, 783.99, 1046.5, 1318.5}
+    -- The board's sound bank on the polyphonic synth: {hz, seconds, delay, volume}.
+    local C5, E5, G5, C6, E6, G6 = 523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98
+    local sounds = {
+        select = {{880, .05, 0, .45}},
+        swap = {{392, .07, 0, .6}, {587.33, .09, .045, .6}},
+        reject = {{311.13, .09, 0, .75}, {233.08, .15, .08, .75}},
+        special = {{E5, .1, 0, .7}, {G5, .1, .05, .7}, {C6, .12, .1, .7}, {E6, .22, .15, .6}},
+        blast = {{98, .3, 0, 1.4}, {196, .22, .01, .9}, {G6, .12, .04, .35}, {C6, .18, .07, .35}},
+        tool = {{C5, .07, 0, .6}, {G5, .1, .05, .6}},
+        mission = {{C5, .5, 0, .35}, {E5, .5, .04, .35}, {G5, .55, .08, .35}},
+        win = {{C5, .14, 0, .8}, {E5, .14, .12, .8}, {G5, .14, .24, .8}, {C6, .5, .36, .9}, {E6, .5, .36, .45}, {G5, .5, .36, .45}},
+        lose = {{G5, .2, 0, .7}, {E5, .2, .18, .7}, {C5, .2, .36, .7}, {261.63, .5, .54, .8}},
+    }
+    function R.play(name, level)
+        if R.sound == false or not sfx.enabled() then return end
+        local bank = sounds[name]
+        if name == "match" then   -- climbs a major scale with each cascade
+            local hz = notes[num.clampi((level or 1) - 1, 0, 4) + 1]
+            bank = {{hz, .16, 0, .9}, {hz * 1.5, .12, .03, .4}}
+        elseif name == "kudos" then   -- a rising arpeggio, longer and brighter for bigger praise
+            bank = {}
+            local scale = {C5, E5, G5, C6, E6, G6}
+            for k = 1, 3 + (level or 1) do
+                local hz = scale[(k - 1) % #scale + 1] * (k > #scale and 2 or 1)
+                bank[#bank + 1] = {hz, .18, (k - 1) * .055, .75}
+            end
+            bank[#bank + 1] = {scale[math.min(#scale, 2 + (level or 1))], .6, (2 + (level or 1)) * .055, .6}
+        end
+        for _, n in ipairs(bank or {}) do sfx.note(n[1], n[2], n[3], n[4]) end
+    end
+
+    -- Praise for long cascades and special combos. Games may replace the words.
+    R.kudos_words = R.kudos_words or {"Nice!", "Great!", "Amazing!", "Spectacular!"}
+    local function kudos(level)
+        level = math.min(level, #R.kudos_words)
+        if level <= (R.kudos_level or 0) then return end
+        R.kudos_level = level
+        R.kudos = {text = R.kudos_words[level], level = level, t = 0}
+        R.play("kudos", level)
+        haptic.play(haptic.COMBO, 1)
+    end
+    R.award_kudos = kudos
 
     function R.finish_wave()
         snapshot()
@@ -1017,12 +1131,18 @@ function E.new(config)
         R.phase = PH_CLEAR
         R.phase_time = 0
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
+        local fx_combo = R.fx_combo or 0   -- vfx_wave consumes the combo swap's effect
         R.vfx_wave(old_score)
-        R.tone(notes[num.clampi(R.g.combo - 1, 0, 4) + 1])
-        local special = false
+        local special, made = false, false
         for i = 0, CELLS - 1 do
-            if R.pending.mask[i] and R.old_tiles[i].special ~= NORMAL then special = true; break end
+            if R.pending.mask[i] and R.old_tiles[i].special ~= NORMAL then special = true end
+            if R.pending.make[i] then made = true end
         end
+        R.play(special and "blast" or made and "special" or "match", R.g.combo)
+        -- Cascades earn praise from the third wave; a special combo swap at once.
+        local praise = R.g.combo >= 3 and R.g.combo - 2 or 0
+        if fx_combo > 0 and R.g.combo == 1 then praise = math.max(praise, fx_combo == 3 and 3 or 2) end
+        if praise > 0 then kudos(praise) end
         haptic.play((R.g.combo > 1 or special) and haptic.COMBO or haptic.MATCH,
             math.min(1, .6 + .1 * R.g.combo))
     end
@@ -1032,6 +1152,7 @@ function E.new(config)
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         R.idle_time = 0
         R.swap_a, R.swap_b = a, b
+        R.kudos_level = 0   -- each move can earn its own praise
         snapshot()
         if rules.game_swap(R.g, a, b, R.pending) then
             local sa, sb = R.old_tiles[a].special, R.old_tiles[b].special
@@ -1039,11 +1160,11 @@ function E.new(config)
             R.fx_combo = (sa == PRISM or sb == PRISM) and 3 or (sa ~= NORMAL and sb ~= NORMAL) and ((sa == BOMB or sb == BOMB) and 2 or 1) or 0
             R.phase = PH_SWAP
             R.phase_time = 0
-            R.tone(320)
+            R.play("swap")
         elseif rules.game_can_swap(R.g, a, b) then
             R.phase = PH_REJECT
             R.phase_time = 0
-            R.tone(170)
+            R.play("reject")
             haptic.play(haptic.ERROR, .5)
         else
             R.notice(R.locked_notice or "Ice and chains must be broken first.")
@@ -1061,8 +1182,8 @@ function E.new(config)
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
             R.notice("No moves. Board reshuffled.")
         end
-        if R.g.won then R.overlay = R.OV_RESULT; R.tone(880); haptic.play(haptic.SUCCESS)
-        elseif R.g.lost then R.overlay = R.OV_FAILED; R.tone(165); haptic.play(haptic.ERROR) end
+        if R.g.won then R.overlay = R.OV_RESULT; R.play("win"); haptic.play(haptic.SUCCESS)
+        elseif R.g.lost then R.overlay = R.OV_FAILED; R.play("lose"); haptic.play(haptic.ERROR) end
         R.idle_time = 0
     end
 

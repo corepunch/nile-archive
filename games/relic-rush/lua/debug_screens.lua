@@ -243,6 +243,11 @@ function R.debug_screens()
         R.queue_story({key=beat.key,lines=lines},true)
     end
     if app.arg("present") then R.present_board() end
+    if app.arg("mission") then   -- the level's mission banner, as a level starts
+        local l = rules.level_of(R.g)
+        R.mission(l.lesson, ("%d. %s"):format(R.g.level + 1, l.name))
+    end
+    if app.arg("kudos") then R.award_kudos(tonumber(app.arg("kudos")) or 2) end
     -- A debug screen may have replaced the board, or shown something else instead.
     if R.intro then
         if R.phase == R.PH_PRESENT and R.overlay == R.OV_NONE and not R.art_review then R.present_board()

@@ -9,7 +9,7 @@ local R = require("state")
 local match3 = require("match3")
 local rules = require("rules")
 local island = require("island")
-local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
+local SCREEN_W = R.SCREEN_W
 local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 local RELIC_IDOL = rules.RELIC_IDOL
 local rgba = color
@@ -110,8 +110,8 @@ end
 function R.draw_toast()
     if R.toast_time <= 0 or R.overlay ~= R.OV_NONE then return end
     if R.on_island then   -- above the map buttons
-        rrect(rect(18, 663 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
-        say_at(R.toast, vec2(240, 677 + R.drop), 14, PAL_CREAM, 424)
+        rrect(rect(18, 710 + R.drop, 444, 30), 11, rgba(10, 37, 31, 235))
+        say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
     else   -- just below the HUD, above the board
         local bounds = R.board_toast
         rrect(bounds, 11, rgba(10, 37, 31, 235))
@@ -192,66 +192,69 @@ local function section(delay, duration, rise)
     return old, part
 end
 
+-- The win card says three things: how well you did (stars, score), what you
+-- earned (one chip per resource) and what comes next. Breakdowns of grants
+-- and bonuses stay out of it; the build shop explains spending.
+local RESULT = {card = rect(40, 214, 400, 522), header = rect(64, 186, 352, 72), stars = rect(110, 270, 260, 74),
+                score = rect(90, 350, 300, 62), chips = rect(68, 424, 344, 92), next = rect(64, 534, 352, 72),
+                claim = rect(70, 640, 340, 60)}
+local function reward_chip(box, icon, value, label)
+    rrect(box:offset(vec2(0, 3)), 16, rgba(201, 164, 100))
+    rrect(box, 16, rgba(255, 246, 214))
+    rrect(box:inflate(-3), 13, rgba(255, 238, 190))
+    icon(rect(box.x + 12, box.y + (box.h - 54) / 2, 54, 54))
+    say_left(value, rect(box.x + 74, box.y + 10, box.w - 82, 42), 32, PAL_GOLD)
+    say_left(label, rect(box.x + 76, box.y + box.h - 34, box.w - 84, 20), 13, PAL_CREAM)
+end
 local function result_screen()
-    local l = match3.result_rects(SCREEN_W, SCREEN_H)
+    local l = RESULT
     local kind = rules.wonder_at(R.g.level + 1)
     local w = kind and R.wonders[kind]
-    local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
+    local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
     local reward = breakdown.total
+    local first = breakdown.first
     local s
     panel(l.card)
     rrect(l.header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
     rrect(l.header, 18, rgba(31, 83, 69))
     rrect(l.header:inflate(-3), 15, rgba(44, 108, 84))
-    say(breakdown.first and "Winter wish complete" or "Replay complete", rect(l.header.x + 14, l.header.y + 9, l.header.w - 28, 34), 31, PAL_GOLD)
-    say(("WINTER WISH %d  -  COMPLETE"):format(R.g.level + 1), rect(l.header.x + 12, l.header.y + 48, l.header.w - 24, 15), 14, PAL_GOLD)
-    for k = 0, breakdown.first and 2 or -1 do
+    say(first and "Wish granted!" or "Replay complete", rect(l.header.x + 14, l.header.y + 8, l.header.w - 28, 36), 32, PAL_GOLD)
+    say(("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name), rect(l.header.x + 12, l.header.y + 46, l.header.w - 24, 16), 15, PAL_CREAM)
+    for k = 0, first and 2 or -1 do
         local slot = l.stars:col(3, k, 8)
         local part
         s, part = section(.24 + k * .13, .32, 13)
         local pop = 1 + math.sin(part.u * math.pi) * .14
-        R.vfx_halo(pp(slot:center()), 45 * P.scale, rgba(255, 201, 77, 65 * P.alpha))
-        star_icon(slot:center(), (k == 1 and 29 or 24) * pop)
+        local at = slot:center() + vec2(0, k == 1 and -6 or 4)
+        R.vfx_halo(pp(at), 48 * P.scale, rgba(255, 201, 77, 65 * P.alpha))
+        star_icon(at, (k == 1 and 31 or 25) * pop)
         set_paint(s)
     end
-    if not breakdown.first then say("GOLD FOR YOUR MARKET",l.stars,23,PAL_GOLD) end
+    if not first then say("GOLD FOR YOUR MARKET", l.stars, 22, PAL_GOLD) end
     s = section(.43, .3, 9)
-    say("PUZZLE SCORE", l.score_label, 12, PAL_CREAM)
+    say("SCORE", rect(l.score.x, l.score.y, l.score.w, 16), 13, PAL_CREAM)
     local count = R.dialog_part(.43, .65).f   -- the score counts up
-    say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
+    say(tostring(math.floor(R.g.score * count + .5)), rect(l.score.x, l.score.y + 16, l.score.w, 46), 42, PAL_GOLD)
     set_paint(s)
-    s = section(.62, .25, 8)
-    say(breakdown.first and (w and "RESTORATION GRANT + SPARE GOLD" or "SPARE GOLD FOR DECORATIONS") or "REPLAYS AWARD GOLD ONLY", l.treasure_label, 12, PAL_CREAM)
-    set_paint(s)
-    local r = l.rewards
-    s = section(.66, .28, 10)
-    rrect(r, 12, rgba(241, 218, 157))
-    rrect(r:inflate(-2), 10, rgba(255, 242, 201))
-    picture_fit(R.relics[RELIC_IDOL + 1], rect(r:center().x - 20, r.y + 8, 40, 40), 255)
-    say(("+%d"):format(reward[rules.GOLD]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
-    set_paint(s)
-    say(breakdown.first and w and ("%d restoration Gold + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
-        ("%d base Gold + %d move bonus"):format(breakdown.base,breakdown.bonus),
-        rect(r.x,r.y+r.h+2,r.w,15),13,PAL_CREAM)
-    s = section(.93, .24, 8)
-    if breakdown.first then
-        local progress = l.progress
-        rrect(progress, 16, rgba(221, 228, 182))
-        star_icon(vec2(progress.x + 24, progress:center().y), 14)
-        say(("+%d CHRISTMAS STARS"):format(reward[rules.STARS]),
-            rect(progress.x + 44, progress.y, progress.w - 52, progress.h), 18, PAL_CREAM)
+    s = section(.62, .28, 10)
+    local gold_icon = function(box) picture_fit(R.relics[RELIC_IDOL + 1], box, 255) end
+    if first then
+        local left, right = rect(l.chips.x, l.chips.y, l.chips.w / 2 - 8, l.chips.h), rect(l.chips:center().x + 8, l.chips.y, l.chips.w / 2 - 8, l.chips.h)
+        reward_chip(left, gold_icon, ("+%d"):format(reward[rules.GOLD]), "GOLD")
+        reward_chip(right, function(box) star_icon(box:center(), 21) end, ("+%d"):format(reward[rules.STARS]), "STARS")
+    else
+        reward_chip(rect.centered(l.chips:center(), size2(220, l.chips.h)), gold_icon, ("+%d"):format(reward[rules.GOLD]), "GOLD")
     end
-    if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
-    s = section(1.01, .26, 8)
-    rrect(l.next, 12, rgba(240, 225, 180))
-    if w then picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
-    else star_icon(vec2(l.next.x + 38, l.next:center().y), 24) end
-    say_left(breakdown.first and (w and "READY TO BUILD" or "BACK TO BELLMERE") or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(breakdown.first and (w and w.name or "The market has news") or "Choose a Christmas decoration", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
+    s = section(.9, .26, 8)
+    rrect(l.next, 14, rgba(240, 225, 180))
+    if first and w then picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 4, 66, l.next.h - 8), 255)
+    else star_icon(vec2(l.next.x + 40, l.next:center().y), 22) end
+    say_left(first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE", rect(l.next.x + 84, l.next.y + 10, l.next.w - 96, 18), 13, PAL_CREAM)
+    say_left(first and (w and w.name or "The market has news") or "Build shop", rect(l.next.x + 84, l.next.y + 31, l.next.w - 96, 30), 24, PAL_GOLD)
     set_paint(s)
-    s = section(1.12, .22, 8)
-    if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
+    s = section(1.02, .22, 8)
+    if button(l.claim, "COLLECT", not R.modal_closing) and not R.modal_closing then
         if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
         else R.close_dialog() end
     end
@@ -306,8 +309,8 @@ R.wonder_form=wonder_form
 local guide_entries = {
     {id="neighbors", title="Line up 3+ treats", description="Match straight lines along any of three axes.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Line of 4: shooting star", description="Its direction shows the line it clears.",
-     icon={tiles={{kind=1,special=rules.ROW}}}},
+    {id="lightning", title="Line of 4: striped treat", description="Its stripes show the line it clears.",
+     icon={tiles={{kind=5,special=rules.ROW}}}},
     {id="specials", title="Line of 5+: rainbow star", description="Swap with a treat to clear that colour.",
      icon={tiles={{kind=2,special=rules.PRISM}}}},
     {id="blockers", title="Tinsel & powder snow", description="Match above snow; untangle the tinsel.",

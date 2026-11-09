@@ -131,6 +131,7 @@
 ---@field dim color Backdrop behind the dialogue.
 ---@field portrait_height number Fraction of the screen height (default .5).
 ---@field framed boolean Portraits are busts: show them in a medallion.
+---@field centered boolean Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size.
 ---@field skip string Label of a skip button, nil for none.
 
 ---@class building_def A building type.
@@ -1202,6 +1203,13 @@ sfx = {}
 ---@param hz number
 ---@param seconds number
 function sfx.tone(hz, seconds) end
+
+---A bell-like note on one of 16 voices after `delay` seconds; `volume` 1 matches tone. Chords and jingles are several notes.
+---@param hz number
+---@param seconds number
+---@param delay number
+---@param volume number
+function sfx.note(hz, seconds, delay, volume) end
 
 ---@param on boolean
 function sfx.enable(on) end

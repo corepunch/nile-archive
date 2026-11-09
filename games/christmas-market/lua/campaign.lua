@@ -4,10 +4,10 @@ local function level(name, lesson, moves, score, relics, soil, chains, ice)
 end
 local levels = {
     level("Welcome Lights", "Line up 3 or more treats along any hex axis.", 24, 1100, 8, 0, 0, 0),
-    level("Lumber Lane", "Four in a straight line create a shooting star.", 28, 1800, 10, 7, 0, 0),
+    level("Lumber Lane", "Four in a straight line make a striped treat.", 28, 1800, 10, 7, 0, 0),
     level("Gingerbread Swirl", "Clear the powder snow beneath the treats.", 32, 2300, 12, 12, 0, 0),
     level("Cocoa Corner", "Match tangled treats to unwrap the tinsel.", 34, 2700, 12, 10, 4, 0),
-    level("Toymaker Lane", "Combine shooting stars to clear all three axes.", 36, 3100, 14, 13, 4, 0),
+    level("Toymaker Lane", "Combine striped treats to clear all three axes.", 36, 3100, 14, 13, 4, 0),
     level("Ribbon Wishes", "Break the ice and wrap a winter wish.", 38, 3400, 14, 13, 0, 5),
     level("Candlelight Circle", "Candy canes melt ice in all six neighboring cells.", 40, 3800, 16, 15, 4, 5),
     level("Carousel Stars", "Five in a straight line forge a rainbow star.", 42, 4200, 16, 17, 4, 6),

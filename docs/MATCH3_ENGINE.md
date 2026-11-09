@@ -20,6 +20,24 @@ local skin = match3.skin()  -- no override: embedded neutral resources
 -- Or match3.skin(require("match3_skin")): one game atlas + frame rectangles.
 ```
 
+## Mission banner, kudos and sounds
+
+`R.mission(text, title)` queues the level's mission. Once dialogue and dialogs
+are gone it slides in across the middle of the screen, holds for 2.2 s and
+slides away; a tap sends it on, and it blocks board input while shown. Games
+call it from their level start and draw it with `R.draw_board_banners(dt)`
+after the board's effects.
+
+Cascades from the third wave and special-combo swaps award kudos once per
+move at their highest level: a word from `R.kudos_words` (four, game-supplied)
+pops over the board with a rising arpeggio and a combo haptic.
+`R.award_kudos(level)` shows one directly (`--kudos N` in the portrait games).
+
+`R.play(name, level)` is the board's sound bank on `sfx.note`: `select`,
+`swap`, `reject`, `match` (climbs with the cascade), `special`, `blast`,
+`tool`, `mission`, `kudos`, `win` and `lose`. It is silent while `R.sound` is
+false or sfx is disabled.
+
 ## Behavior flags
 
 `flags` is a nonnegative integer bitmask; zero enables the standard behavior.

@@ -27,6 +27,8 @@ shot("phone-shop", "390x844", "--catalogue building --safe-area 0,47,0,34")
 shot("phone-winter-wishes", "390x844", "--expeditions --safe-area 0,47,0,34")
 shot("reward", "480x900", "--victory")
 shot("reward-story", "480x900", "--victory clue")
+shot("mission", "480x900", "--level 5 --mission --frames 60")
+shot("kudos", "480x900", "--level 5 --kudos 3 --frames 20")
 -- the result dialog arriving on the motion module: 16 pictures, 6 frames apart
 reel("christmas-market-reward-entrance", 16, 6, "480x900", "--victory --reel")
 shot("pause", "480x900", "--level 4 --dialog pause")

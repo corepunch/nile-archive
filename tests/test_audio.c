@@ -35,6 +35,11 @@ int main(void) {
     sfx_shutdown(); assert(closes==1);
     sfx_tone(440,.02f); mix(out,12);
     assert(opens==2 && out[20]==out[21] && out[20]!=0);
+    mix(out,1024); sfx_note(440,.05f,.01f,1); mix(out,12);
+    for(int i=0;i<24;i++) assert(!out[i]); // a delayed note waits
+    mix(out,441); mix(out,12); assert(out[20]!=0);
+    for(int k=0;k<20;k++) sfx_note(300+k*10,.05f,0,1); // more notes than voices steal the oldest
+    mix(out,12); assert(out[20]!=0 && out[20]==out[21]);
     sfx_shutdown(); assert(closes==2 && !locks);
-    puts("audio: tones, expiry, mute, disable and device lifecycle passed");
+    puts("audio: tones, delayed polyphonic notes, expiry, mute, disable and device lifecycle passed");
 }
