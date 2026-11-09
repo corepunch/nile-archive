@@ -67,7 +67,7 @@ local function campaign()
         if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
         elseif island.wonder_count(c) < journey.earned(R.prog.level) then R.island_begin(island.wonder_count(c), true)
         elseif R.prog.level < rules.LEVELS then
-            app.inject_click(R.island_buttons.play + vec2(0, R.drop)); wait = 10
+            app.inject_click(R.town.buttons.play); wait = 10
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
         local g, l = R.g, rules.level_of(R.g)
@@ -86,7 +86,7 @@ function R.smoke()
     if app.arg("campaign") then return campaign() end
     if app.arg("empty-lives") then
         assert(R.g and R.on_island and R.prog.lives==0,"empty-life load must keep a valid, inert island view")
-        if frames==4 then app.inject_click(R.island_buttons.play+vec2(0,R.drop)) end
+        if frames==4 then app.inject_click(R.town.buttons.play) end
         if frames==10 then app.quit() end
         return
     end
@@ -155,9 +155,9 @@ function R.smoke()
             local gain = R.prog.wallet[1] - shop.replay_gold
             assert(gain >= 60 and gain <= 100 and R.prog.wallet[4] == 3 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
                    "replay must pay only Gold without changing discoveries or restoration")
-            app.inject_click(R.island_buttons.play+vec2(0,R.drop)); stage = 5; return
+            app.inject_click(R.town.buttons.play); stage = 5; return
         end
-        app.inject_click(R.island_buttons.shop+vec2(0,R.drop)); stage = 2   -- CHOOSE A LOCATION
+        app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
     elseif stage == 2 and R.overlay == R.OV_SHOP then
         press_row(R.catalogue_form,"camp","buy");stage=3
     elseif stage == 3 and R.island.placing >= 0 then
@@ -201,13 +201,13 @@ function R.smoke()
         local c = R.island
         app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then
-        assert(R.bubble_wonder==1 and R.bubble_text:find("Round shrub",1,true),"tap shows the purchased building's name and subtitle")
+        assert(R.town.bubble and R.town.bubble.item==1 and R.town.bubble.text:find("Round shrub",1,true),"tap shows the purchased building's name and subtitle")
         R.island_begin(37,true,1);stage=28
     elseif stage == 28 and R.island.placing >= 0 then
         assert(R.island.moving == 1 and R.island.placing == 37, "details must move the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 29
     elseif stage == 29 and R.island.placing < 0 then
-        app.inject_click(R.island_buttons.expeditions + vec2(0, R.drop)); stage = 30
+        app.inject_click(R.town.buttons.middle); stage = 30
     elseif stage == 30 and R.overlay == R.OV_EXPEDITIONS then
         shop.replay_gold = R.prog.wallet[1]
         local node = press_row(R.expedition_form, "0", "play")
@@ -265,7 +265,7 @@ function R.smoke()
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
-        app.inject_click(R.island_buttons.expeditions + vec2(0, R.drop)); stage = 44
+        app.inject_click(R.town.buttons.middle); stage = 44
     elseif stage == 44 and R.overlay == R.OV_EXPEDITIONS then
         assert(press_row(R.expedition_form, "0", "play"), "the expedition row must offer to continue"); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then

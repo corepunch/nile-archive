@@ -134,7 +134,7 @@ function K.icon_lock(p, s, col)
     gfx.circle(p + vec2(0, s * .2), s * .14, INK)
 end
 
-local function plus_badge(p, r)
+function K.plus_badge(p, r)
     gfx.circle(p + vec2(0, 2), r, hex(0x1F5316))
     gfx.circle(p, r, hex(0x2A6A1E))
     gfx.circle(p - vec2(0, 1), r - 2, hex(0x5DBA3F))
@@ -181,7 +181,7 @@ end
 -- The shared resource panel with a green "+" at its right end.
 function K.capsule(r, icon, value)
     local clicked = skin:draw_resource(r, icon, value, {reserve = r.h * .7})
-    plus_badge(vec2(r:max().x - r.h * .5, r:center().y), r.h * .5 - 3)
+    K.plus_badge(vec2(r:max().x - r.h * .5, r:center().y), r.h * .5 - 3)
     return clicked
 end
 

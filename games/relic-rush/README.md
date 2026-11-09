@@ -364,3 +364,9 @@ While moving or placing a building, cream outlines around other buildings show
 their occupied ground and clearance for quick alignment. The mover's old spot is
 free; guides remain until Confirm/Cancel. See the
 [shared placement-guide review](../../docs/review/city-placement-guides/README.md).
+
+## Town screen
+
+The island is the engine's [shared town screen](../../docs/TOWN.md), laid out by
+`data/town.json`. Tapping a building shows its name in a word bubble; holding
+it for half a second lifts it to move.

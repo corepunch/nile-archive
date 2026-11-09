@@ -91,20 +91,16 @@ local capsule_notes = {
     "Gold buys stalls and decorations. Replay winter wishes to earn more.",
     "Christmas Stars unlock shop items and land. First clears only.",
 }
-function R.draw_header()
+-- The town's wallet capsules (engine/town.lua lays them out).
+function R.header_capsules()
     local remaining = math.max(0, math.ceil(R.prog.life_at - app.clock()))
     local lives = R.prog.lives == rules.LIVES and "5 FULL"
         or ("%d %d:%02d"):format(R.prog.lives, remaining // 60, remaining % 60)
     local values = {lives, tostring(R.prog.wallet[rules.GOLD]), tostring(R.prog.wallet[rules.STARS])}
     local icons = {R.life_art, R.relics[RELIC_IDOL + 1], R.hud_art.complete}
-    for k, icon in ipairs(icons) do
-        local r = rect(20 + (k - 1) * 128, 20, 110, 36)
-        local hit = rect(r.x - 18, r.y - 12 + R.hit_dy, r.w + 18, r.h + 24)
-        if skin:draw_resource(r, icon, values[k], {role = "wallet", hit = hit}) then
-            R.notice(capsule_notes[k])
-        end
-    end
-    if match3.pause_button(R, rect(388, -2, 88, 88)) then R.overlay = R.OV_PAUSE end
+    local out = {}
+    for k, icon in ipairs(icons) do out[k] = {icon = icon, value = values[k], note = capsule_notes[k]} end
+    return out
 end
 
 function R.draw_toast()

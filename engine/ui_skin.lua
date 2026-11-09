@@ -532,7 +532,24 @@ function ui.skin(def)
     end
     -- Without button looks, forms keep the native button paint and its theme.
     local function has_looks(kind) local spec = control_spec(skin, kind); return spec and spec.normal ~= nil end
-    if has_looks('button') or has_looks('toggle') then skin.button = function(box, st, node) skin:paint_button(box, st, node) end end
+    if has_looks('button') or has_looks('toggle') then skin.button = function(box, st, node) skin:paint_button(box, st, node) end
+    else
+        -- Native-painted buttons may still give some roles a look (the town's
+        -- badges): paint those variants and leave every other button native.
+        local spec = control_spec(skin, 'button')
+        local any = false
+        for _, v in pairs(spec and spec.variants or {}) do any = any or v.normal ~= nil end
+        if any then
+            skin.button = function(box, st, node)
+                local look = control_spec(skin, 'button', node)
+                if look and look.normal then skin:paint_button(box, st, node)
+                else
+                    ui.button_paint(box, (st.disabled and ui.DISABLED or 0) | (node.accent and ui.ACCENT or 0)
+                        | (st.selected and ui.ACTIVE or 0) | (node.flat and ui.FLAT or 0), st)
+                end
+            end
+        end
+    end
     skin.button_text = function(box, caption, node, st)
         skin:paint_caption(node.kind == 'toggle' and 'toggle' or 'button', box, caption, st, node)
     end

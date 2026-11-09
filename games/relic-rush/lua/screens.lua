@@ -112,18 +112,15 @@ local function resource_icons()
     return {R.life_art,R.relics[RELIC_IDOL+1],function(box) star_icon(box:center(),box.w*.45) end}
 end
 local capsule_notes = {"A life returns every 30 minutes, up to five.","Hex amulets buy buildings. Replay expeditions to earn more.","Discovery Stars unlock stock and land. First clears only; never spent."}
-function R.draw_header()
+-- The town's wallet capsules (engine/town.lua lays them out).
+function R.header_capsules()
     local remaining=math.max(0,(R.prog.life_at or 0)-app.clock())
     local lives=(R.prog.lives or rules.LIVES)==rules.LIVES and "5 FULL" or ("%d %d:%02d"):format(R.prog.lives,remaining//60,remaining%60)
     local values={lives,tostring(R.prog.wallet[1]),tostring(R.prog.wallet[4])}
     local icons=resource_icons()
-    for k=1,3 do
-        local r=rect(20+(k-1)*128,20,110,36)
-        -- The touch area takes in the overhanging icon.
-        local hit=rect(r.x-18,r.y-12+R.hit_dy,r.w+18,r.h+24)
-        if skin:draw_resource(r,icons[k],values[k],{role="wallet",hit=hit}) then R.notice(capsule_notes[k]) end
-    end
-    if match3.pause_button(R, rect(388,-2,88,88)) then R.overlay = R.OV_PAUSE end
+    local out={}
+    for k=1,3 do out[k]={icon=icons[k],value=values[k],note=capsule_notes[k]} end
+    return out
 end
 
 function R.draw_toast()

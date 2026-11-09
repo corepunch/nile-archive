@@ -608,7 +608,8 @@
     "data/tile-sets/resources/3.png",
     "data/tile-sets/resources/4.png",
     "data/tile-sets/resources/5.png",
-    "data/title.png"
+    "data/title.png",
+    "data/town.json"
   ],
   "hex_slot": {
     "orientation": "flat-top",

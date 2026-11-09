@@ -21,6 +21,22 @@ end
 
 -- A glossy pill: shadow, a darker lip below, the gradient body and a gloss.
 -- Pressing sinks it 3 units onto its lip and drops the shadow.
+-- A square badge in the gold rim: Build and Play along the town's bottom.
+local function badge(icon)
+    return {
+        normal = {layers = {
+            {name = "shadow", fill = "#0000006E", radius = 30, inset = {8, 12, 8, 2}, offset = {0, 6}, fixed = true},
+            {name = "rim", fill = "gold_hi", fill2 = "gold_lo", radius = 30, inset = {8, 10, 8, 4}},
+            {name = "seam", fill = "gold_seam", radius = 27, inset = {11, 13, 11, 7}},
+            {name = "face", fill = "teal_hi", fill2 = "teal_lo", radius = 24, inset = {13, 15, 13, 9}},
+            {name = "gloss", fill = "#FFFFFF26", radius = 20, height_ratio = .42, inset = {18, 18, 18, -2}},
+            {inset = {13, 15, 13, 9}, paint = icon},
+        }},
+        pressed = {offset = {0, 3}},
+        disabled = {set = {rim = {fill = "#9AA3A0", fill2 = "#66706E"}, face = {fill = "#3B4443", fill2 = "#2B3A3A"}}},
+    }
+end
+
 local function pill(hi, lo, lip, hot, text)
     return {
         normal = {set = {lip = {fill = lip}, rim = {fill = lip}, body = {fill = hi, fill2 = lo}}},
@@ -161,7 +177,27 @@ return ui.skin{
 
         -- Form text: the build tray's cards and buttons (native button paint).
         label = {text = "card_title", em = 17},
-        button = {text = "button", em = 17},
+        button = {text = "button", em = 17, variants = {
+            -- The town's shared bottom badges and placement buttons (engine/town.lua),
+            -- gold-rimmed teal like the archive's round buttons.
+            navigation_build = badge(function(box) require("archive_kit").icon_house(box:center() + vec2(0, 4), box.h * .26) end),
+            navigation_play = badge(function(box) require("archive_kit").icon_glass(box:center(), box.h * .24) end),
+            placement_confirm = {normal = {layers = {
+                {fill = "#00000064", radius = 28, offset = {0, 4}, fixed = true},
+                {fill = "#2A6A1E", radius = 28},
+                {fill = "#A8E46C", fill2 = "#4AA536", radius = 25, inset = 3},
+                {check = "#FFF6DC", width = 5, inset = 10},
+            }}, disabled = {alpha = .45}},
+            placement_cancel = {normal = {layers = {
+                {fill = "#00000064", radius = 28, offset = {0, 4}, fixed = true},
+                {fill = "#6E2017", radius = 28},
+                {fill = "#E57A5E", fill2 = "#B13F2C", radius = 25, inset = 3},
+                {inset = 18, paint = function(box)
+                    gfx.line(box:point(vec2(0, 0)), box:point(vec2(1, 1)), 5, color(255, 246, 220))
+                    gfx.line(box:point(vec2(1, 0)), box:point(vec2(0, 1)), 5, color(255, 246, 220))
+                end},
+            }}},
+        }},
     },
 
     theme = {

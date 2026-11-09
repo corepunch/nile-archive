@@ -149,6 +149,7 @@
     "data/tile-sets/festive/3.png": "47771b09452c047dce4ccb7ab7efe0bf5af92560a74923ae407d61e7d008888e",
     "data/tile-sets/festive/4.png": "c14aeb68832b8fbce56b9d2c55539c2c6824e821088a67a5913c37078d684166",
     "data/tile-sets/festive/5.png": "88b1d3cbe317a6afe2137298558fe92c9f30b06b72ea1b6d97b855ecff5ad671",
+    "data/town.json": "b884ef5a426ef8e36c54773e116c4873d804bdfd1121b18dec90b8047efde204",
     "data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5"
   },
   "matching_rules": "Straight lines on three hex axes: 3 normal, 4 axis shooting star, 5+ rainbow star. Bent clusters do not match; existing bomb artwork is retained for tools and review boards.",

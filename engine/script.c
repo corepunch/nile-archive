@@ -125,6 +125,8 @@ void script_open(const char *dir)
         {"@engine/match3.lua", engine_match3, sizeof engine_match3 - 1, "match3"},
         {"@engine/match3_frames.lua", engine_match3_frames, sizeof engine_match3_frames - 1, "match3.frames"},
         {"@engine/board_intro.lua", engine_board_intro, sizeof engine_board_intro - 1},
+        {"@engine/json.lua", engine_json, sizeof engine_json - 1, "json"},
+        {"@engine/town.lua", engine_town, sizeof engine_town - 1, "town"},
     };
     for (size_t i = 0; i < sizeof embedded / sizeof embedded[0]; i++) {
         if (luaL_loadbuffer(L, embedded[i].source, embedded[i].size, embedded[i].name) != LUA_OK || lua_pcall(L, 0, embedded[i].module ? 1 : 0, 0) != LUA_OK) {
@@ -243,6 +245,23 @@ int lsave_write(lua_State *S)
     luaL_checktype(S, 2, LUA_TFUNCTION);
     lua_settop(S, 2);
     lua_pushboolean(S, save_write(slot, visit, NULL));
+    return 1;
+}
+
+/* app.read_text(rel): a whole text asset from the data root, or nil. Games
+ * read their JSON configuration through it; scripts have no io library. */
+int lapp_read_text(lua_State *S)
+{
+    const char *path = app_path(luaL_checkstring(S, 1));
+    FILE *file = path ? fopen(path, "rb") : NULL;
+    if (!file) { lua_pushnil(S); return 1; }
+    luaL_Buffer b;
+    luaL_buffinit(S, &b);
+    char chunk[4096];
+    size_t n;
+    while ((n = fread(chunk, 1, sizeof chunk, file)) > 0) luaL_addlstring(&b, chunk, n);
+    fclose(file);
+    luaL_pushresult(&b);
     return 1;
 }
 

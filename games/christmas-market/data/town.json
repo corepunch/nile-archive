@@ -1,0 +1,23 @@
+{
+  "background": "#738FB5",
+  "header": {"role": "wallet"},
+  "bottom": {
+    "middle": {"kind": "round",
+               "colors": {"face": "#164630", "glow": "#2C7850"}}
+  },
+  "bubble": {"width": 300},
+  "weather": {
+    "snow": {"height": 0.86, "fade_from": 0.7, "layers": [
+      {"count": 84, "radius": 1.4, "fall": 36, "drift": 11, "opacity": 175},
+      {"count": 44, "radius": 2.6, "fall": 62, "drift": 19, "opacity": 235}
+    ]}
+  },
+  "texts": {
+    "placing": "Drag the building to choose a spot, or scroll the land.",
+    "unchanged": "Your market is unchanged.",
+    "blocked": "Choose open snow clear of other buildings.",
+    "cant_afford": "Complete winter wishes to fund this building.",
+    "cant_buy": "Complete winter wishes to fund this building.",
+    "no_room": "Open more land before placing this building."
+  }
+}
