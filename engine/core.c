@@ -2,6 +2,7 @@
 #include "render.h"
 #include "viewport.h"
 #include "haptic.h"
+#include "gamecenter.h"
 #include "animation_clock.h"
 
 #include <stdio.h>
@@ -99,7 +100,7 @@ void app_test_reset(void)
     A.in.pinch = 1;
     test_clock = 1700000000;
     test_clock_active = true;
-    ui_restart(); story_restart(); fx_restart(); city_restart(); haptic_restart();
+    ui_restart(); story_restart(); fx_restart(); city_restart(); haptic_restart(); gamecenter_restart();
 }
 void app_test_advance(double dt) { A.dt = (float)dt; A.time += dt; test_clock += dt; }
 void app_test_input(input in) { A.in = in; }
@@ -288,6 +289,7 @@ static void poll_events(void)
             break;
         case kEventSetFocus:
             haptic_focus(true);
+            gamecenter_focus(true);
             A.last_counter = animation_clock_seconds();
             break;
         case kEventKillFocus: haptic_focus(false); /* fall through */
@@ -458,6 +460,7 @@ int app_run(app_desc desc, int argc, char **argv)
     A.in.pinch = 1;
     A.running = true;
     A.last_counter = animation_clock_seconds();
+    gamecenter_start();   /* sign-in runs behind the game; reports wait for it */
     if (desc.init) desc.init();
 
 #ifdef __EMSCRIPTEN__

@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 IOS_MINIMUM = '16.0'
 UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
-ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'haptic', 'haptic_platform', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
+ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'haptic', 'haptic_platform', 'gamecenter', 'gamecenter_platform', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
 
 GAMES = {
     'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),
@@ -242,7 +242,9 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         if ipad:
             settings.update(CODE_SIGN_STYLE='Automatic', SDKROOT='iphoneos', SUPPORTED_PLATFORMS='iphoneos iphonesimulator',
                             IPHONEOS_DEPLOYMENT_TARGET=IOS_MINIMUM, TARGETED_DEVICE_FAMILY=meta.get('families', '1' if platform == 'iphone' else '2'),
-                            SUPPORTS_MACCATALYST='NO')
+                            SUPPORTS_MACCATALYST='NO',
+                            CODE_SIGN_ENTITLEMENTS='$(PROJECT_FILE_PATH)/Generated/ios.entitlements')
+            write(bundle / 'Generated/ios.entitlements', plistlib.dumps({'com.apple.developer.game-center': True}).decode())
         else:
             settings.update(SUPPORTED_PLATFORMS='macosx', MACOSX_DEPLOYMENT_TARGET='12.0',
                             CODE_SIGN_STYLE='Automatic', CODE_SIGN_IDENTITY='-',
@@ -287,7 +289,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             build_files.append(project.add(f'{name}/{filename}.c', 'PBXBuildFile', **fields))
         compile_phase = project.add(name + '/sources', 'PBXSourcesBuildPhase', buildActionMask=2147483647,
                                     files=build_files, runOnlyForDeploymentPostprocessing=0)
-        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox', 'CoreHaptics']
+        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox', 'CoreHaptics', 'GameKit']
                       if ipad else ['AppKit', 'OpenGL', 'IOSurface', 'Security', 'AudioToolbox'])
         settings['OTHER_LDFLAGS'] += [flag for framework in frameworks for flag in ('-framework', framework)]
         link_phase = project.add(name + '/frameworks', 'PBXFrameworksBuildPhase', buildActionMask=2147483647,

@@ -48,7 +48,7 @@ games/
   emergency/        lua/ (campaign, simulation, atlas metadata, UI) + data/ + docs/ + emergency.xcodeproj
 tests/             engine tests in C; tests/lua/: the generated API and the games' rules
 tools/             luagen.py (XML → glue + docs), xcode/generate.py (Xcode projects), screenshots.py, make_reels.py, artkit.py
-docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), MOTION.md, LINEAGE.md
+docs/              ENGINE.md, SCRIPTING.md, LUA_API.md (generated), MOTION.md, GAMECENTER.md, LINEAGE.md
 web/               shell.html: a bare fullscreen canvas for the web preview
 ```
 

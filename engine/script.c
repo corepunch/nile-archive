@@ -269,6 +269,26 @@ int lapp_read_text(lua_State *S)
     return 1;
 }
 
+/* gamecenter.entries(board, scope): the rows as plain tables, or nil. */
+int lgamecenter_entries(lua_State *S)
+{
+    const char *board = luaL_checkstring(S, 1);
+    int scope = (int)luaL_optinteger(S, 2, GAMECENTER_GLOBAL);
+    gamecenter_entry rows[GAMECENTER_ENTRY_MAX];
+    int n = gamecenter_entries(board, scope, rows, GAMECENTER_ENTRY_MAX);
+    if (n < 0) { lua_pushnil(S); return 1; }
+    lua_createtable(S, n, 0);
+    for (int i = 0; i < n; i++) {
+        lua_createtable(S, 0, 4);
+        lua_pushinteger(S, rows[i].rank);   lua_setfield(S, -2, "rank");
+        lua_pushnumber(S, rows[i].score);   lua_setfield(S, -2, "score");
+        lua_pushstring(S, rows[i].name);    lua_setfield(S, -2, "name");
+        lua_pushboolean(S, rows[i].me);     lua_setfield(S, -2, "me");
+        lua_rawseti(S, -2, i + 1);
+    }
+    return 1;
+}
+
 /* story.setup(cast, style): the engine keeps the cast, so it lives here and
  * the Lua table stays referenced for its strings. */
 #define CAST_MAX 16

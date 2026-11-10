@@ -1175,6 +1175,72 @@ function text.inside(s, box, align, utf8) end
 ---@return rect
 function text.fit(s, box, align, utf8) end
 
+---@class gamecenterlib
+---@field PENDING integer
+---@field SIGNED_IN integer
+---@field UNAVAILABLE integer
+---@field GLOBAL integer All players.
+---@field FRIENDS integer Only the player's Game Center friends.
+---@field DASHBOARD integer
+---@field LEADERBOARD integer
+---@field ACHIEVEMENTS integer
+gamecenter = {}
+
+---gamecenter.PENDING while signing in, SIGNED_IN, or UNAVAILABLE (no Game Center, declined or offline: the game still works, results stay local).
+---@return integer
+function gamecenter.state() end
+
+---The signed-in player's alias, or "".
+---@return string
+function gamecenter.player() end
+
+---Report a score to a board. Higher is better; only an improvement on the player's best is sent. Call it whenever a result is final; it costs nothing when it is not a record.
+---@param board string
+---@param score number
+function gamecenter.submit(board, score) end
+
+---Report an achievement's progress, 0-100 (default 100: unlocked). Progress never goes down. Game Center shows its own banner when it completes.
+---@param achievement string
+---@param percent? number
+function gamecenter.unlock(achievement, percent) end
+
+---Progress reported so far for an achievement, 0-100.
+---@param achievement string
+---@return number
+function gamecenter.progress(achievement) end
+
+---The player's best reported score on a board; 0 if none.
+---@param board string
+---@return number
+function gamecenter.best(board) end
+
+---Start fetching the top rows of a board (scope gamecenter.GLOBAL or FRIENDS, count 1-25, default 10). Safe to call again to refresh; ignored while a fetch is running.
+---@param board string
+---@param scope? integer
+---@param count? integer
+function gamecenter.load(board, scope, count) end
+
+---Whether a fetch of that board and scope is running.
+---@param board string
+---@param scope? integer
+---@return boolean
+function gamecenter.loading(board, scope) end
+
+---The rows of the last load as a sequence of {rank, score, name, me} (me marks the local player), best first; nil until the first load finishes. After a failed refresh the last good rows stay.
+---@param board string
+---@param scope? integer
+---@return table?
+function gamecenter.entries(board, scope) end
+
+---Open Apple's own Game Center screen: DASHBOARD, LEADERBOARD (of board) or ACHIEVEMENTS. Only while signed in; otherwise nothing happens.
+---@param view? integer
+---@param board? string
+function gamecenter.show(view, board) end
+
+---Show or hide Apple's floating Game Center badge in the screen corner.
+---@param on boolean
+function gamecenter.access_point(on) end
+
 ---@class hapticlib
 ---@field TICK integer Very light trickle/landing tick.
 ---@field MATCH integer Matched pieces or a hidden-object find.

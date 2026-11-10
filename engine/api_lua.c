@@ -3301,6 +3301,95 @@ static int l_text_fit(lua_State *L)
     return 1;
 }
 
+/* gamecenter.state() */
+static int l_gamecenter_state(lua_State *L)
+{
+    int r = gamecenter_state();
+    lua_pushinteger(L, r);
+    return 1;
+}
+
+/* gamecenter.player() */
+static int l_gamecenter_player(lua_State *L)
+{
+    const char * r = gamecenter_player();
+    lua_pushstring(L, r);
+    return 1;
+}
+
+/* gamecenter.submit(board, score) */
+static int l_gamecenter_submit(lua_State *L)
+{
+    const char * a_board = luaL_checkstring(L, 1);
+    double a_score = luaL_checknumber(L, 2);
+    gamecenter_submit(a_board, a_score);
+    return 0;
+}
+
+/* gamecenter.unlock(achievement, percent?) */
+static int l_gamecenter_unlock(lua_State *L)
+{
+    const char * a_achievement = luaL_checkstring(L, 1);
+    float a_percent = (float)luaL_optnumber(L, 2, 100);
+    gamecenter_unlock(a_achievement, a_percent);
+    return 0;
+}
+
+/* gamecenter.progress(achievement) */
+static int l_gamecenter_progress(lua_State *L)
+{
+    const char * a_achievement = luaL_checkstring(L, 1);
+    float r = gamecenter_progress(a_achievement);
+    lua_pushnumber(L, r);
+    return 1;
+}
+
+/* gamecenter.best(board) */
+static int l_gamecenter_best(lua_State *L)
+{
+    const char * a_board = luaL_checkstring(L, 1);
+    double r = gamecenter_best(a_board);
+    lua_pushnumber(L, r);
+    return 1;
+}
+
+/* gamecenter.load(board, scope?, count?) */
+static int l_gamecenter_load(lua_State *L)
+{
+    const char * a_board = luaL_checkstring(L, 1);
+    int a_scope = (int)luaL_optinteger(L, 2, 0);
+    int a_count = (int)luaL_optinteger(L, 3, 10);
+    gamecenter_load(a_board, a_scope, a_count);
+    return 0;
+}
+
+/* gamecenter.loading(board, scope?) */
+static int l_gamecenter_loading(lua_State *L)
+{
+    const char * a_board = luaL_checkstring(L, 1);
+    int a_scope = (int)luaL_optinteger(L, 2, 0);
+    bool r = gamecenter_loading(a_board, a_scope);
+    lua_pushboolean(L, r);
+    return 1;
+}
+
+/* gamecenter.show(view?, board?) */
+static int l_gamecenter_show(lua_State *L)
+{
+    int a_view = (int)luaL_optinteger(L, 1, 0);
+    const char * a_board = luaL_optstring(L, 2, NULL);
+    gamecenter_show(a_view, a_board);
+    return 0;
+}
+
+/* gamecenter.access_point(on) */
+static int l_gamecenter_access_point(lua_State *L)
+{
+    bool a_on = lua_toboolean(L, 1);
+    gamecenter_access_point(a_on);
+    return 0;
+}
+
 /* haptic.play(effect, strength?) */
 static int l_haptic_play(lua_State *L)
 {
@@ -4345,6 +4434,34 @@ static void open_text(lua_State *L)
     lua_setglobal(L, "text");
 }
 
+static void open_gamecenter(lua_State *L)
+{
+    static const luaL_Reg funcs[] = {
+        {"state", l_gamecenter_state},
+        {"player", l_gamecenter_player},
+        {"submit", l_gamecenter_submit},
+        {"unlock", l_gamecenter_unlock},
+        {"progress", l_gamecenter_progress},
+        {"best", l_gamecenter_best},
+        {"load", l_gamecenter_load},
+        {"loading", l_gamecenter_loading},
+        {"entries", lgamecenter_entries},
+        {"show", l_gamecenter_show},
+        {"access_point", l_gamecenter_access_point},
+        {NULL, NULL}
+    };
+    luaL_newlib(L, funcs);
+    lua_pushinteger(L, GAMECENTER_PENDING); lua_setfield(L, -2, "PENDING");
+    lua_pushinteger(L, GAMECENTER_SIGNED_IN); lua_setfield(L, -2, "SIGNED_IN");
+    lua_pushinteger(L, GAMECENTER_UNAVAILABLE); lua_setfield(L, -2, "UNAVAILABLE");
+    lua_pushinteger(L, GAMECENTER_GLOBAL); lua_setfield(L, -2, "GLOBAL");
+    lua_pushinteger(L, GAMECENTER_FRIENDS); lua_setfield(L, -2, "FRIENDS");
+    lua_pushinteger(L, GAMECENTER_DASHBOARD); lua_setfield(L, -2, "DASHBOARD");
+    lua_pushinteger(L, GAMECENTER_LEADERBOARD); lua_setfield(L, -2, "LEADERBOARD");
+    lua_pushinteger(L, GAMECENTER_ACHIEVEMENTS); lua_setfield(L, -2, "ACHIEVEMENTS");
+    lua_setglobal(L, "gamecenter");
+}
+
 static void open_haptic(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
@@ -4586,6 +4703,7 @@ void api_open(lua_State *L)
     open_font(L);
     open_style(L);
     open_text(L);
+    open_gamecenter(L);
     open_haptic(L);
     open_sfx(L);
     open_ui(L);

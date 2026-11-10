@@ -165,6 +165,18 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
+"FE02CA917A7F93328305F425" = {"isa" = "PBXFileReference";
+"path" = "../../engine/gamecenter.c";
+"name" = "gamecenter.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
+"580A0DDE2AC57F7DE238D671" = {"isa" = "PBXFileReference";
+"path" = "../../engine/gamecenter_platform.c";
+"name" = "gamecenter_platform.c";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "sourcecode.c.c";
+};
 "45B4B9CF2B44A145D927FBC6" = {"isa" = "PBXFileReference";
 "path" = "../../engine/story.c";
 "name" = "story.c";
@@ -262,6 +274,8 @@
 "2C6345C1907FD24B6EEFEC5A",
 "6FDD5359139C57B8D6DD06E2",
 "2175584D517BBE7031C823AB",
+"FE02CA917A7F93328305F425",
+"580A0DDE2AC57F7DE238D671",
 "45B4B9CF2B44A145D927FBC6",
 "8A8386A2CEEEFE289DA8945E",
 "4F62C834EFF9537C0E92FC7C",
@@ -459,6 +473,8 @@
 "AudioToolbox",
 "-framework",
 "CoreHaptics",
+"-framework",
+"GameKit",
 );
 "LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
 "@executable_path/Frameworks",
@@ -470,6 +486,7 @@
 "IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
 "TARGETED_DEVICE_FAMILY" = "2";
 "SUPPORTS_MACCATALYST" = "NO";
+"CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/ios.entitlements";
 "GCC_OPTIMIZATION_LEVEL" = "0";
 "DEBUG_INFORMATION_FORMAT" = "dwarf";
 "ONLY_ACTIVE_ARCH" = "YES";
@@ -498,6 +515,8 @@
 "AudioToolbox",
 "-framework",
 "CoreHaptics",
+"-framework",
+"GameKit",
 );
 "LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
 "@executable_path/Frameworks",
@@ -509,6 +528,7 @@
 "IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
 "TARGETED_DEVICE_FAMILY" = "2";
 "SUPPORTS_MACCATALYST" = "NO";
+"CODE_SIGN_ENTITLEMENTS" = "$(PROJECT_FILE_PATH)/Generated/ios.entitlements";
 "GCC_OPTIMIZATION_LEVEL" = "s";
 "DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
 "ONLY_ACTIVE_ARCH" = "NO";
