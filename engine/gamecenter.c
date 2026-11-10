@@ -97,7 +97,7 @@ static void gc_visit(save *s, void *user)
     if (n < 0 || n > GC_RECORDS) n = 0;
     for (int i = 0; i < n; i++) {
         struct gc_record *r = &GC.records[i];
-        char text[64];
+        char text[sizeof r->name];
         int ach = r->achievement;
         snprintf(text, sizeof text, "%s", r->name);
         save_text(s, fmt("n%d", i), text, sizeof text);
