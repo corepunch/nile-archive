@@ -1153,16 +1153,16 @@
         1
       ],
       "pivot": [
-        58.22,
-        75.768
+        47.38,
+        70.083
       ],
       "base_width": 136.603,
       "gold": 45,
       "stars": 3,
       "runtime": "data/buildings/banana.png",
       "image": [
-        122,
-        97
+        100,
+        86
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Banana Plants",
@@ -1176,8 +1176,8 @@
         "runtime": "data/building-shadows/banana.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          27.152,
-          21.582
+          25.639,
+          20.974
         ],
         "base_width": 38.637
       }

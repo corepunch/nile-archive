@@ -922,18 +922,18 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/palm_grove.png",
    "image": [
-    215,
-    271
+    206,
+    266
    ],
    "pivot": [
-    90.748,
-    192.422
+    88.801,
+    187.751
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/palm_grove.png",
    "shadow_pivot": [
-    56.036,
-    49.576
+    52.485,
+    50.255
    ],
    "shadow_base_width": 77.273
   },

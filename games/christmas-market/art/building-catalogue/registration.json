@@ -706,18 +706,18 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/fir_decorated.png",
    "image": [
-    112,
-    174
+    91,
+    164
    ],
    "pivot": [
-    55.909,
-    158.714
+    45.327,
+    154.943
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_decorated.png",
    "shadow_pivot": [
-    41.277,
-    38.042
+    39.947,
+    37.258
    ],
    "shadow_base_width": 38.637
   },
@@ -730,18 +730,18 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/pine_grove.png",
    "image": [
-    228,
-    271
+    216,
+    265
    ],
    "pivot": [
-    108.712,
-    217.564
+    102.85,
+    214.234
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/pine_grove.png",
    "shadow_pivot": [
-    58.737,
-    53.687
+    62.306,
+    52.745
    ],
    "shadow_base_width": 77.273
   },
