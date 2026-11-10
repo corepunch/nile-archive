@@ -391,21 +391,21 @@
     1,
     1
    ],
-   "scale": 1.0,
+   "scale": 1.5,
    "sprite": "data/buildings/snowy_bench.png",
    "image": [
-    90,
-    87
+    135,
+    130
    ],
    "pivot": [
-    44.207,
-    65.543
+    66.311,
+    98.315
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowy_bench.png",
    "shadow_pivot": [
-    21.246,
-    19.545
+    31.869,
+    29.318
    ],
    "shadow_base_width": 38.637
   },
