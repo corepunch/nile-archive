@@ -486,6 +486,12 @@ both scenes. Existing source artwork and alpha are copied without modifying
 states. The 64px cubic radial light is the existing procedural transient
 effect, packed in the same atlas and drawn with a per-view additive flag.
 
+The shop's built and locked tiles use `data/expedition-hud/shop-built.png`
+(checkmark) and `shop-locked.png` (padlock), packed into the same atlas as
+`shop-built` and `shop-locked`. Relic Rush and Christmas Market ship the same
+two files. Their source, prompt and per-game styling are not yet recorded:
+[#90](https://github.com/corepunch/nile-archive/issues/90).
+
 The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
 registrations, and `make gen` embeds the default. FALL uses engine-owned
