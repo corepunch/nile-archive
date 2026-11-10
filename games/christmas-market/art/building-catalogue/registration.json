@@ -394,18 +394,18 @@
    "scale": 1.5,
    "sprite": "data/buildings/snowy_bench.png",
    "image": [
-    135,
-    130
+    132,
+    132
    ],
    "pivot": [
-    66.311,
-    98.315
+    64.81,
+    101.351
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowy_bench.png",
    "shadow_pivot": [
-    31.869,
-    29.318
+    33.37,
+    26.818
    ],
    "shadow_base_width": 38.637
   },
@@ -658,18 +658,18 @@
    "scale": 1.5,
    "sprite": "data/buildings/fir_snowy.png",
    "image": [
-    134,
-    174
+    119,
+    172
    ],
    "pivot": [
-    66.885,
-    156.763
+    59.688,
+    155.264
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_snowy.png",
    "shadow_pivot": [
-    44.698,
-    38.566
+    44.699,
+    38.066
    ],
    "shadow_base_width": 38.637
   },
@@ -682,18 +682,18 @@
    "scale": 1.5,
    "sprite": "data/buildings/birch.png",
    "image": [
-    111,
-    168
+    108,
+    165
    ],
    "pivot": [
-    50.001,
-    145.473
+    48.384,
+    143.973
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/birch.png",
    "shadow_pivot": [
-    16.232,
-    36.873
+    35.231,
+    35.873
    ],
    "shadow_base_width": 38.637
   },
@@ -706,18 +706,18 @@
    "scale": 1.5,
    "sprite": "data/buildings/fir_decorated.png",
    "image": [
-    142,
+    125,
     196
    ],
    "pivot": [
-    71.313,
+    62.671,
     178.617
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_decorated.png",
    "shadow_pivot": [
-    45.144,
-    43.671
+    45.644,
+    43.672
    ],
    "shadow_base_width": 38.637
   },
@@ -730,18 +730,18 @@
    "scale": 1.5,
    "sprite": "data/buildings/pine_grove.png",
    "image": [
-    312,
-    327
+    292,
+    325
    ],
    "pivot": [
-    149.466,
-    256.146
+    139.227,
+    254.646
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/pine_grove.png",
    "shadow_pivot": [
-    73.202,
-    65.175
+    76.202,
+    63.176
    ],
    "shadow_base_width": 77.273
   },

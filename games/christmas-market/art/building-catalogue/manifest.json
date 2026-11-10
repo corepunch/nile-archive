@@ -453,8 +453,8 @@
     1
    ],
    "pivot": [
-    66.311,
-    98.315
+    64.81,
+    101.351
    ],
    "base_width": 136.603,
    "cost": [
@@ -463,8 +463,8 @@
    "stars": 0,
    "about": "A seat for watching the snow fall.",
    "image": [
-    135,
-    130
+    132,
+    132
    ],
    "runtime": "data/buildings/snowy_bench.png",
    "shadow": "data/building-shadows/snowy_bench.png",
@@ -750,8 +750,8 @@
     1
    ],
    "pivot": [
-    66.885,
-    156.763
+    59.688,
+    155.264
    ],
    "base_width": 136.603,
    "cost": [
@@ -760,8 +760,8 @@
    "stars": 0,
    "about": "A fir heavy with fresh snow.",
    "image": [
-    134,
-    174
+    119,
+    172
    ],
    "runtime": "data/buildings/fir_snowy.png",
    "shadow": "data/building-shadows/fir_snowy.png",
@@ -777,8 +777,8 @@
     1
    ],
    "pivot": [
-    50.001,
-    145.473
+    48.384,
+    143.973
    ],
    "base_width": 136.603,
    "cost": [
@@ -787,8 +787,8 @@
    "stars": 0,
    "about": "White bark and snow on every twig.",
    "image": [
-    111,
-    168
+    108,
+    165
    ],
    "runtime": "data/buildings/birch.png",
    "shadow": "data/building-shadows/birch.png",
@@ -804,7 +804,7 @@
     1
    ],
    "pivot": [
-    71.313,
+    62.671,
     178.617
    ],
    "base_width": 136.603,
@@ -814,7 +814,7 @@
    "stars": 3,
    "about": "Baubles, a golden star and twinkling lights.",
    "image": [
-    142,
+    125,
     196
    ],
    "runtime": "data/buildings/fir_decorated.png",
@@ -831,8 +831,8 @@
     2
    ],
    "pivot": [
-    149.466,
-    256.146
+    139.227,
+    254.646
    ],
    "base_width": 273.205,
    "cost": [
@@ -841,8 +841,8 @@
    "stars": 6,
    "about": "Four firs keep each other warm.",
    "image": [
-    312,
-    327
+    292,
+    325
    ],
    "runtime": "data/buildings/pine_grove.png",
    "shadow": "data/building-shadows/pine_grove.png",
