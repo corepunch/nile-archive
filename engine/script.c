@@ -127,6 +127,7 @@ void script_open(const char *dir)
         {"@engine/board_intro.lua", engine_board_intro, sizeof engine_board_intro - 1},
         {"@engine/json.lua", engine_json, sizeof engine_json - 1, "json"},
         {"@engine/town.lua", engine_town, sizeof engine_town - 1, "town"},
+        {"@engine/leaderboard.lua", engine_leaderboard, sizeof engine_leaderboard - 1, "leaderboard"},
         {"@engine/match3_vfx.lua", engine_match3_vfx, sizeof engine_match3_vfx - 1, "match3.vfx"},
         {"@engine/match3_debug.lua", engine_match3_debug, sizeof engine_match3_debug - 1, "match3.debug"},
         {"@engine/match3_game.lua", engine_match3_game, sizeof engine_match3_game - 1, "match3.game"},

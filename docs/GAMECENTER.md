@@ -57,6 +57,44 @@ Friends boards (`gamecenter.FRIENDS`) show only players the user has
 befriended in Game Center, and Game Center decides what is visible to a given
 player; a new player simply sees a short list.
 
+## The shared leaderboard dialog
+
+![Leaderboard dialog in Relic Rush's skin, with the Everyone tab chosen](screenshots/leaderboard.jpg)
+
+`require("leaderboard")` (`engine/leaderboard.lua`) is the screen a game opens
+from a button. It lists the rows `gamecenter.entries` returns in a scrolling
+list under Everyone / Friends tabs, marks the player's own row, offers a button
+to Apple's native board when signed in, and paints with the game's `ui.skin`.
+It also explains an empty or loading board, and tells a signed-out player how to
+compare with others. Without Game Center it shows the player's own best, so a
+leaderboard button works in every build.
+
+```lua
+local leaderboard = require("leaderboard")
+local lb = leaderboard.new{skin = skin, board = "stars", title = "Top explorers"}
+lb:open()                                 -- from the button
+
+-- frame, standalone
+if lb:begin() then update_game() end      -- false while the dialog has the input
+render_game()
+lb:draw(dt, {reduced_motion = reduced})
+```
+
+A game that already has a `ui.modals` stack passes it in
+(`leaderboard.new{modals = stack, ...}`), keeps drawing the stack itself, calls
+`lb:sync()` before it draws and `lb:handle(event)` with each event it returns
+(true when the event was the dialog's).
+
+Options: `board` (required), `title`, `count` (rows requested, up to 25),
+`rows` (rows visible before scrolling, default 8), `width`, `format(score)`
+(default thousands separators; use it for times or stars), `texts` (every
+caption, for translation) and `id`. A skin may define the optional roles
+`leaderboard_row`, `leaderboard_me` and `leaderboard_note` to style the rows
+and the status line; without them the labels use the skin's default text.
+The chosen tab is a button and the other a flat caption, so it reads in any
+skin. `tests/lua/leaderboard.lua` covers the dialog; the picture above is a
+capture with `--gamecenter-demo`.
+
 ## Engine and platform boundary
 
 `engine/gamecenter.c` owns every decision: the report queue and its saved
