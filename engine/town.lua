@@ -85,18 +85,20 @@ T.color = rgba
 -- The game's town config: its JSON over the engine defaults.
 -- A speech bubble whose first line is a title: larger and bold (the same fill
 -- as an outline, since the skins carry one weight per font), then the subtitle.
+-- `bubble.title` names a skin text palette (e.g. "cream", as the resource bar) for the title instead.
 local TITLE_SCALE = 1.3
-local function bubble_draw(tip, utf8, sub, fill, edge, max_width)
+local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style)
     local title, rest = utf8:match("^([^\n]*)\n(.*)$")
     if not title then
         story.bubble(tip, utf8, sub, fill, edge, max_width, story.SPEECH)
         return
     end
-    local head = style.outlined(style.sized(sub, sub.size * TITLE_SCALE), sub.size * 0.035, sub.fill)
+    local head = title_style or style.outlined(style.sized(sub, sub.size * TITLE_SCALE), sub.size * 0.035, sub.fill)
     local pad, vpad, gap = sub.size * .7, sub.size * .55, sub.size * .15
+    local top = vpad - sub.size * .28   -- the title's line box reaches above its capitals; trim it so both gaps look equal
     local inner = max_width - 2 * pad
     local a, b = text.box_size(head, inner, title), text.box_size(sub, inner, rest)
-    local size = size2(math.max(a.w, b.w) + 2 * pad, a.h + gap + b.h + 2 * vpad)
+    local size = size2(math.max(a.w, b.w) + 2 * pad, a.h + gap + b.h + top + vpad)
     local screen = app.screen()
     local box = rect.anchor(tip - vec2(0, 22), size, vec2(.5, 1))
     local margin = 8
@@ -104,7 +106,7 @@ local function bubble_draw(tip, utf8, sub, fill, edge, max_width)
     local lo = rect.pos(screen) + vec2(margin, margin)
     box = rect.make(vec2.clamp(rect.pos(box), lo, rect.max(screen) - vec2(size.w, size.h) - vec2(margin, margin)), size)
     story.bubble_shape(box, tip, fill, edge, story.SPEECH)
-    local inside = box:inflate2(vec2(-pad, -vpad))
+    local inside = rect.make(rect.pos(box) + vec2(pad, top), size2(size.w - 2 * pad, size.h - top - vpad))
     text.box(head, inside:top(a.h), vec2(.5, .5), title)
     text.box(sub, inside:bottom(b.h), vec2(.5, .5), rest)
 end
@@ -437,7 +439,7 @@ function View:frame(inp, dt, active)
         local style = h.bubble_text and h.bubble_text() or h.skin:text(self.cfg.markers.text, 15)
         gfx.clip(view)
         bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, rgba(self.cfg.bubble.fill), rgba(self.cfg.bubble.edge),
-                    self.cfg.bubble.width)
+                    self.cfg.bubble.width, self.cfg.bubble.title and h.skin:text(self.cfg.bubble.title, style.size * TITLE_SCALE))
         gfx.unclip()
     end
 

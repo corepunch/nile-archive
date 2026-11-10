@@ -15,7 +15,8 @@
     }
   },
   "bubble": {
-    "width": 300
+    "width": 300,
+    "title": "gold"
   },
   "weather": {
     "snow": {
