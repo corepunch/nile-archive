@@ -23,6 +23,7 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`font`](#font)
 - [`style`](#style) - Constructor `style{...}`; the methods return a tweaked copy.
 - [`text`](#text) - Styled TrueType text. Every function returns the rect it drew.
+- [`gamecenter`](#gamecenter) - Game Center sign-in, leaderboards and achievements, the same in every game. Boards and achievements are named by the game ("stars", "first_island"); on iOS the Game Center identifier is "<bundle id>.<name>", so create them in App Store Connect under that identifier (boards sorted high to low). Sign-in starts by itself at launch. Reports are saved until Game Center confirms them, so offline play or a late sign-in loses nothing. Everything is asynchronous: ask with gamecenter.load, then read gamecenter.entries each frame. Without Game Center (macOS, the web, headless runs, --no-gamecenter) the player's own results are kept and shown as a one-row board; --gamecenter-demo adds sample rivals for screenshots.
 - [`haptic`](#haptic) - Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.
 - [`sfx`](#sfx) - A tiny polyphonic synthesiser for feedback tones and jingles.
 - [`ui`](#ui) - Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.
@@ -1759,6 +1760,125 @@ A single line that shrinks to fit the box width.
 | `utf8` | `string` |  |
 
 **Returns:** `rect`
+
+## gamecenter
+
+Game Center sign-in, leaderboards and achievements, the same in every game. Boards and achievements are named by the game ("stars", "first_island"); on iOS the Game Center identifier is "<bundle id>.<name>", so create them in App Store Connect under that identifier (boards sorted high to low). Sign-in starts by itself at launch. Reports are saved until Game Center confirms them, so offline play or a late sign-in loses nothing. Everything is asynchronous: ask with gamecenter.load, then read gamecenter.entries each frame. Without Game Center (macOS, the web, headless runs, --no-gamecenter) the player's own results are kept and shown as a one-row board; --gamecenter-demo adds sample rivals for screenshots.
+
+- `gamecenter.PENDING` (integer)
+
+- `gamecenter.SIGNED_IN` (integer)
+
+- `gamecenter.UNAVAILABLE` (integer)
+
+- `gamecenter.GLOBAL` (integer) All players.
+
+- `gamecenter.FRIENDS` (integer) Only the player's Game Center friends.
+
+- `gamecenter.DASHBOARD` (integer)
+
+- `gamecenter.LEADERBOARD` (integer)
+
+- `gamecenter.ACHIEVEMENTS` (integer)
+
+### `gamecenter.state()`
+
+gamecenter.PENDING while signing in, SIGNED_IN, or UNAVAILABLE (no Game Center, declined or offline: the game still works, results stay local).
+
+**Returns:** `integer`
+
+### `gamecenter.player()`
+
+The signed-in player's alias, or "".
+
+**Returns:** `string`
+
+### `gamecenter.submit(board, score)`
+
+Report a score to a board. Higher is better; only an improvement on the player's best is sent. Call it whenever a result is final; it costs nothing when it is not a record.
+
+| Argument | Type | |
+|---|---|---|
+| `board` | `string` |  |
+| `score` | `number` |  |
+
+### `gamecenter.unlock(achievement, percent?)`
+
+Report an achievement's progress, 0-100 (default 100: unlocked). Progress never goes down. Game Center shows its own banner when it completes.
+
+| Argument | Type | |
+|---|---|---|
+| `achievement` | `string` |  |
+| `percent` | `number?` | Default 100. |
+
+### `gamecenter.progress(achievement)`
+
+Progress reported so far for an achievement, 0-100.
+
+| Argument | Type | |
+|---|---|---|
+| `achievement` | `string` |  |
+
+**Returns:** `number`
+
+### `gamecenter.best(board)`
+
+The player's best reported score on a board; 0 if none.
+
+| Argument | Type | |
+|---|---|---|
+| `board` | `string` |  |
+
+**Returns:** `number`
+
+### `gamecenter.load(board, scope?, count?)`
+
+Start fetching the top rows of a board (scope gamecenter.GLOBAL or FRIENDS, count 1-25, default 10). Safe to call again to refresh; ignored while a fetch is running.
+
+| Argument | Type | |
+|---|---|---|
+| `board` | `string` |  |
+| `scope` | `integer?` | Default 0. |
+| `count` | `integer?` | Default 10. |
+
+### `gamecenter.loading(board, scope?)`
+
+Whether a fetch of that board and scope is running.
+
+| Argument | Type | |
+|---|---|---|
+| `board` | `string` |  |
+| `scope` | `integer?` | Default 0. |
+
+**Returns:** `boolean`
+
+### `gamecenter.entries(board, scope?)`
+
+The rows of the last load as a sequence of {rank, score, name, me} (me marks the local player), best first; nil until the first load finishes. After a failed refresh the last good rows stay.
+
+| Argument | Type | |
+|---|---|---|
+| `board` | `string` |  |
+| `scope` | `integer?` | Default 0. |
+
+**Returns:** `table?`
+
+### `gamecenter.show(view?, board?)`
+
+Open Apple's own Game Center screen: DASHBOARD, LEADERBOARD (of board) or ACHIEVEMENTS. Only while signed in; otherwise nothing happens.
+
+| Argument | Type | |
+|---|---|---|
+| `view` | `integer?` | Default 0. |
+| `board` | `string?` |  |
+
+### `gamecenter.access_point(on)`
+
+Show or hide Apple's floating Game Center badge in the screen corner.
+
+| Argument | Type | |
+|---|---|---|
+| `on` | `boolean` |  |
 
 ## haptic
 

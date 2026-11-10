@@ -121,6 +121,24 @@ void save_ints(save *s, const char *key, int *v, int n)
     append(s, "\n");
 }
 
+void save_text(save *s, const char *key, char *buf, size_t cap)
+{
+    if (s->reading) {
+        const char *t = lookup(s, key);
+        if (!t) return;
+        size_t n = strcspn(t, "\n");
+        if (n >= cap) n = cap - 1;
+        memcpy(buf, t, n);
+        buf[n] = 0;
+    } else {
+        char line[512];
+        snprintf(line, sizeof line, "%s=%s\n", key, buf);
+        for (char *c = line + strlen(key) + 1; *c && c[1]; c++)
+            if (*c == '\n') *c = ' ';
+        append(s, line);
+    }
+}
+
 void save_vec2(save *s, const char *key, vec2 *v)
 {
     if (s->reading) {

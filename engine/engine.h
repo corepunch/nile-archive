@@ -438,6 +438,38 @@ void haptic_enable(bool on);
 bool haptic_enabled(void);
 bool haptic_available(void);
 
+/* ===================================================================== */
+/* Game Center: sign-in, leaderboards and achievements                    */
+/* ===================================================================== */
+
+/* Every game gets this from the engine. Boards and achievements are named
+ * by the game ("stars", "first_island"); on Apple platforms the Game Center
+ * identifier is "<bundle id>.<name>", so create them in App Store Connect
+ * under that identifier. Reports are kept (and saved) until Game Center
+ * confirms them, so offline play and a late sign-in lose nothing. Where there
+ * is no Game Center, the engine keeps the player's own results locally. */
+enum { GAMECENTER_PENDING, GAMECENTER_SIGNED_IN, GAMECENTER_UNAVAILABLE };
+enum { GAMECENTER_GLOBAL, GAMECENTER_FRIENDS };
+enum { GAMECENTER_DASHBOARD, GAMECENTER_LEADERBOARD, GAMECENTER_ACHIEVEMENTS };
+#define GAMECENTER_ENTRY_MAX 25
+typedef struct {
+    int rank;               /* 1 = best */
+    double score;
+    char name[48];          /* the player's alias */
+    bool me;                /* the local player's own row */
+} gamecenter_entry;
+int gamecenter_state(void);
+const char *gamecenter_player(void);                         /* alias; "" until signed in */
+void gamecenter_submit(const char *board, double score);     /* higher is better; only improvements count */
+void gamecenter_unlock(const char *achievement, float percent);   /* percent 0-100; never decreases */
+float gamecenter_progress(const char *achievement);
+double gamecenter_best(const char *board);                   /* the player's best reported score; 0 if none */
+void gamecenter_load(const char *board, int scope, int count);    /* refresh asynchronously; see gamecenter_entries */
+bool gamecenter_loading(const char *board, int scope);
+int gamecenter_entries(const char *board, int scope, gamecenter_entry *out, int max);   /* -1 until loaded */
+void gamecenter_show(int view, const char *board);           /* Apple's own screens; no-op elsewhere */
+void gamecenter_access_point(bool on);                       /* Apple's floating Game Center badge */
+
 /* Audio: a tiny synthesiser for UI and game sounds. */
 void sfx_tone(float hz, float seconds);   /* a soft bell-like note */
 void sfx_note(float hz, float seconds, float delay, float volume);   /* one of 16 voices, after delay seconds */
@@ -501,6 +533,7 @@ void save_int(save *s, const char *key, int *v);
 void save_float(save *s, const char *key, float *v);
 void save_double(save *s, const char *key, double *v);
 void save_ints(save *s, const char *key, int *v, int n);
+void save_text(save *s, const char *key, char *buf, size_t cap);   /* one line, no newlines */
 void save_vec2(save *s, const char *key, vec2 *v);
 /* Use text produced elsewhere as the source of the next save_read (e.g. a migration). */
 void save_inject(const char *slot, const char *text);

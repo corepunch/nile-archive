@@ -341,6 +341,30 @@
     <function name="fit" c="text_fit" doc="A single line that shrinks to fit the box width."><arg name="s" type="text_style"/><arg name="box" type="rect"/><arg name="align" type="vec2"/><arg name="utf8" type="string"/><returns type="rect"/></function>
   </module>
 
+  <!-- ========================================================== game center -->
+
+  <module name="gamecenter" doc="Game Center sign-in, leaderboards and achievements, the same in every game. Boards and achievements are named by the game (&quot;stars&quot;, &quot;first_island&quot;); on iOS the Game Center identifier is &quot;&lt;bundle id&gt;.&lt;name&gt;&quot;, so create them in App Store Connect under that identifier (boards sorted high to low). Sign-in starts by itself at launch. Reports are saved until Game Center confirms them, so offline play or a late sign-in loses nothing. Everything is asynchronous: ask with gamecenter.load, then read gamecenter.entries each frame. Without Game Center (macOS, the web, headless runs, --no-gamecenter) the player's own results are kept and shown as a one-row board; --gamecenter-demo adds sample rivals for screenshots.">
+    <function name="state" c="gamecenter_state" doc="gamecenter.PENDING while signing in, SIGNED_IN, or UNAVAILABLE (no Game Center, declined or offline: the game still works, results stay local)."><returns type="int"/></function>
+    <function name="player" c="gamecenter_player" doc="The signed-in player's alias, or &quot;&quot;."><returns type="string"/></function>
+    <function name="submit" c="gamecenter_submit" doc="Report a score to a board. Higher is better; only an improvement on the player's best is sent. Call it whenever a result is final; it costs nothing when it is not a record."><arg name="board" type="string"/><arg name="score" type="double"/></function>
+    <function name="unlock" c="gamecenter_unlock" doc="Report an achievement's progress, 0-100 (default 100: unlocked). Progress never goes down. Game Center shows its own banner when it completes."><arg name="achievement" type="string"/><arg name="percent" type="float" default="100"/></function>
+    <function name="progress" c="gamecenter_progress" doc="Progress reported so far for an achievement, 0-100."><arg name="achievement" type="string"/><returns type="float"/></function>
+    <function name="best" c="gamecenter_best" doc="The player's best reported score on a board; 0 if none."><arg name="board" type="string"/><returns type="double"/></function>
+    <function name="load" c="gamecenter_load" doc="Start fetching the top rows of a board (scope gamecenter.GLOBAL or FRIENDS, count 1-25, default 10). Safe to call again to refresh; ignored while a fetch is running."><arg name="board" type="string"/><arg name="scope" type="int" default="0"/><arg name="count" type="int" default="10"/></function>
+    <function name="loading" c="gamecenter_loading" doc="Whether a fetch of that board and scope is running."><arg name="board" type="string"/><arg name="scope" type="int" default="0"/><returns type="bool"/></function>
+    <function name="entries" impl="lgamecenter_entries" doc="The rows of the last load as a sequence of {rank, score, name, me} (me marks the local player), best first; nil until the first load finishes. After a failed refresh the last good rows stay."><arg name="board" type="string"/><arg name="scope" type="int" default="0"/><returns type="table" optional="true"/></function>
+    <function name="show" c="gamecenter_show" doc="Open Apple's own Game Center screen: DASHBOARD, LEADERBOARD (of board) or ACHIEVEMENTS. Only while signed in; otherwise nothing happens."><arg name="view" type="int" default="0"/><arg name="board" type="string" optional="true"/></function>
+    <function name="access_point" c="gamecenter_access_point" doc="Show or hide Apple's floating Game Center badge in the screen corner."><arg name="on" type="bool"/></function>
+    <const name="PENDING" c="GAMECENTER_PENDING" type="int"/>
+    <const name="SIGNED_IN" c="GAMECENTER_SIGNED_IN" type="int"/>
+    <const name="UNAVAILABLE" c="GAMECENTER_UNAVAILABLE" type="int"/>
+    <const name="GLOBAL" c="GAMECENTER_GLOBAL" type="int" doc="All players."/>
+    <const name="FRIENDS" c="GAMECENTER_FRIENDS" type="int" doc="Only the player's Game Center friends."/>
+    <const name="DASHBOARD" c="GAMECENTER_DASHBOARD" type="int"/>
+    <const name="LEADERBOARD" c="GAMECENTER_LEADERBOARD" type="int"/>
+    <const name="ACHIEVEMENTS" c="GAMECENTER_ACHIEVEMENTS" type="int"/>
+  </module>
+
   <!-- =============================================================== audio -->
 
   <module name="haptic" doc="Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.">

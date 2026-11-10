@@ -31,6 +31,8 @@
 		06369032B38F99A704630800 /* launcher.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = launcher.c; path = ../../engine/launcher.c; sourceTree = SOURCE_ROOT; };
 		1307E1D3B0F32989778C78F4 /* font.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = font.c; path = ../../engine/font.c; sourceTree = SOURCE_ROOT; };
 		1BC0FE305D205A886D72E48F /* christmas-market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = "christmas-market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE02CA917A7F93328305F425 /* gamecenter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = gamecenter.c; path = ../../engine/gamecenter.c; sourceTree = SOURCE_ROOT; };
+		580A0DDE2AC57F7DE238D671 /* gamecenter_platform.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = gamecenter_platform.c; path = ../../engine/gamecenter_platform.c; sourceTree = SOURCE_ROOT; };
 		2175584D517BBE7031C823AB /* haptic_platform.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = haptic_platform.c; path = ../../engine/haptic_platform.c; sourceTree = SOURCE_ROOT; };
 		2C6345C1907FD24B6EEFEC5A /* audio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = audio.c; path = ../../engine/audio.c; sourceTree = SOURCE_ROOT; };
 		2FD0038054919877206EA9E2 /* u_launcher.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = u_launcher.c; path = u_launcher.c; sourceTree = DERIVED_FILE_DIR; };
@@ -91,6 +93,8 @@
 				2C6345C1907FD24B6EEFEC5A /* audio.c */,
 				6FDD5359139C57B8D6DD06E2 /* haptic.c */,
 				2175584D517BBE7031C823AB /* haptic_platform.c */,
+				FE02CA917A7F93328305F425 /* gamecenter.c */,
+				580A0DDE2AC57F7DE238D671 /* gamecenter_platform.c */,
 				45B4B9CF2B44A145D927FBC6 /* story.c */,
 				8A8386A2CEEEFE289DA8945E /* sprite.c */,
 				4F62C834EFF9537C0E92FC7C /* nav.c */,
@@ -412,7 +416,10 @@
 					AudioToolbox,
 					"-framework",
 					CoreHaptics,
+					"-framework",
+					GameKit,
 				);
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_FILE_PATH)/Generated/ios.entitlements";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -529,7 +536,10 @@
 					AudioToolbox,
 					"-framework",
 					CoreHaptics,
+					"-framework",
+					GameKit,
 				);
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_FILE_PATH)/Generated/ios.entitlements";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

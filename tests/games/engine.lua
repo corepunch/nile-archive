@@ -6,6 +6,7 @@ rules("city_transactions")
 if match3_root then rules("engine_match3", match3_root) end
 rules("api")
 rules("haptics")
+rules("gamecenter")
 rules("tween")
 rules("town")
 rules("forms", "games/relic-rush/lua")

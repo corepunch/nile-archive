@@ -104,6 +104,7 @@ void api_push_city(lua_State *L, const city *p);   /* nil if unknown */
 
 /* Implemented by hand in script.c (declared with impl="..." in api.xml). */
 int lapp_read_text(lua_State *L);
+int lgamecenter_entries(lua_State *L);
 int lui_set_theme(lua_State *L);
 int lsave_read(lua_State *L);
 int lsave_write(lua_State *L);
