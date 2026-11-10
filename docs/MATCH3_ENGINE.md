@@ -108,7 +108,7 @@ same schedule; it does not skip rule steps.
 
 ## Graphics and the one-atlas skin
 
-`match3.skin()` loads the engine's embedded `engine/data/match3.png`: neutral
+`match3.skin()` loads the engine's default `engine/data/match3.png` from its resource directory: neutral
 gold, brick, timber, grain, stone, water, fruit and fish, plus board layers,
 specials, all five authored states for four controls, HUD elements and effect
 frames. Resources were informed by [Cradle of Rome's collection categories](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/);

@@ -9,7 +9,6 @@
 #define STBI_ONLY_JPEG
 #define STBI_ONLY_BMP
 #include "third_party/stb_image.h"
-#include "match3_atlas.h"
 
 /* ---------------------------------------------------------------- textures */
 
@@ -25,22 +24,13 @@ texture tex_from_pixels(const void *rgba, int w, int h)
 texture tex_match3_default(void)
 {
     if (!render_ready()) return (texture){0};
-    static const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    size_t capacity = (sizeof engine_match3_atlas - 1) / 4 * 3, count = 0;
-    unsigned char *encoded = malloc(capacity);
-    if (!encoded) return (texture){0};
-    unsigned int bits = 0, held = 0;
-    for (const char *p = engine_match3_atlas; *p && *p != '='; p++) {
-        const char *digit = strchr(alphabet, *p);
-        if (!digit) continue;
-        bits = (bits << 6) | (unsigned int)(digit - alphabet);
-        held += 6;
-        if (held >= 8) { held -= 8; encoded[count++] = (unsigned char)(bits >> held); }
-    }
     int w, h, channels;
-    unsigned char *rgba = stbi_load_from_memory(encoded, (int)count, &w, &h, &channels, 4);
-    free(encoded);
-    if (!rgba) return (texture){0};
+    const char *path = engine_path("data/match3.png");   /* the engine's default gems */
+    unsigned char *rgba = stbi_load(path, &w, &h, &channels, 4);
+    if (!rgba) {
+        fprintf(stderr, "tex_match3_default: %s: %s\n", path, stbi_failure_reason());
+        return (texture){0};
+    }
     texture result = tex_from_pixels(rgba, w, h);
     stbi_image_free(rgba);
     return result;

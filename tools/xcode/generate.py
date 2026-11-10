@@ -219,6 +219,8 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     engine_lua = [project.add('engine/lua/' + f.name, 'PBXFileReference', path=rel('engine/' + f.name), name=f.name,
                               sourceTree='SOURCE_ROOT', lastKnownFileType='text')
                   for f in sorted((ROOT / 'engine').glob('*.lua')) if f.name != 'engine.d.lua']
+    engine_data = [project.add('engine/data/match3.png', 'PBXFileReference', path=rel('engine/data/match3.png'), name='match3.png',
+                               sourceTree='SOURCE_ROOT', lastKnownFileType='image.png')]
     assets = None
     if (home / 'Assets.xcassets').is_dir():
         assets = project.add('game/assets', 'PBXFileReference', path='Assets.xcassets',
@@ -226,7 +228,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     browse = [
         project.add('group/game', 'PBXGroup', name='Game', children=[lua_folder, data_folder] + ([assets] if assets else []), sourceTree='<group>'),
         project.add('group/engine', 'PBXGroup', name='Engine',
-                    children=[header, api] + engine_lua + [sources[n] for n in ENGINE_SOURCES], sourceTree='<group>'),
+                    children=[header, api] + engine_lua + engine_data + [sources[n] for n in ENGINE_SOURCES], sourceTree='<group>'),
     ]
 
     browse.append(project.add('group/unity', 'PBXGroup', name='Build unity sources',
@@ -306,12 +308,15 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         engine_phase = project.add(name + '/engine', 'PBXCopyFilesBuildPhase', buildActionMask=2147483647, dstPath='engine',
                                    dstSubfolderSpec=7, name='Engine resources', runOnlyForDeploymentPostprocessing=0,
                                    files=[project.add(f'{name}/engine/{i}', 'PBXBuildFile', fileRef=ref) for i, ref in enumerate(engine_lua)])
+        data_phase = project.add(name + '/engine-data', 'PBXCopyFilesBuildPhase', buildActionMask=2147483647, dstPath='engine/data',
+                                 dstSubfolderSpec=7, name='Engine data', runOnlyForDeploymentPostprocessing=0,
+                                 files=[project.add(f'{name}/engine-data/{i}', 'PBXBuildFile', fileRef=ref) for i, ref in enumerate(engine_data)])
         product = project.add(name + '/product', 'PBXFileReference', path=game + '.app', sourceTree='BUILT_PRODUCTS_DIR',
                               explicitFileType='wrapper.application')
         products.append(product)
         target = project.add(name, 'PBXNativeTarget', name=name, productName=game, productReference=product,
                              productType='com.apple.product-type.application', buildConfigurationList=configs,
-                             buildPhases=[unity_phase, compile_phase, link_phase, resources_phase, engine_phase], buildRules=[],
+                             buildPhases=[unity_phase, compile_phase, link_phase, resources_phase, engine_phase, data_phase], buildRules=[],
                              dependencies=[])
         targets.append(target)
         scheme_path = bundle / 'xcshareddata/xcschemes' / (name + '.xcscheme')

@@ -325,6 +325,12 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "text";
 };
+"3FA3F3B31F150D3A898C801D" = {"isa" = "PBXFileReference";
+"path" = "../../engine/data/match3.png";
+"name" = "match3.png";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "image.png";
+};
 "9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
 "path" = "Assets.xcassets";
 "sourceTree" = "<group>";
@@ -355,6 +361,7 @@
 "A6921B57F164F52360796AAB",
 "B1B35CCDE01AA42B3453A2F6",
 "B4ACFDF027CC4D43A288DD43",
+"3FA3F3B31F150D3A898C801D",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -586,6 +593,18 @@
 "DFC003D81C99B1A44EE5C495",
 );
 };
+"2CDE8C695C4F6150FACB5724" = {"isa" = "PBXBuildFile";
+"fileRef" = "3FA3F3B31F150D3A898C801D";
+};
+"8E0E9A2E48DCB14C00182C27" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine/data";
+"dstSubfolderSpec" = 7;
+"name" = "Engine data";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("2CDE8C695C4F6150FACB5724",
+);
+};
 "D20BB7AFA807B4873DC30CAC" = {"isa" = "PBXFileReference";
 "path" = "relic-rush.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -602,6 +621,7 @@
 "7230CF63DA0E35FF6C2C59A5",
 "FA4553F21395A0E3FBFF5707",
 "A63DE33C776B7DF6008A5508",
+"8E0E9A2E48DCB14C00182C27",
 );
 "buildRules" = ();
 "dependencies" = ();
@@ -824,6 +844,18 @@
 "4F23B0E7CF73F51DF3032454",
 );
 };
+"F40506C897D177F04762EE7F" = {"isa" = "PBXBuildFile";
+"fileRef" = "3FA3F3B31F150D3A898C801D";
+};
+"418630BC87B5CB2525D3D6F6" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine/data";
+"dstSubfolderSpec" = 7;
+"name" = "Engine data";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("F40506C897D177F04762EE7F",
+);
+};
 "1A2A40820C581B58EB8416F7" = {"isa" = "PBXFileReference";
 "path" = "relic-rush.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -840,6 +872,7 @@
 "7D16D73F793E0C19171502A8",
 "B780CF5DB070E9FCC44D7434",
 "211A65D9A7566EEFF13182D8",
+"418630BC87B5CB2525D3D6F6",
 );
 "buildRules" = ();
 "dependencies" = ();

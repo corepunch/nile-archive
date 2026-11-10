@@ -325,6 +325,12 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "text";
 };
+"3FA3F3B31F150D3A898C801D" = {"isa" = "PBXFileReference";
+"path" = "../../engine/data/match3.png";
+"name" = "match3.png";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "image.png";
+};
 "9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
 "path" = "Assets.xcassets";
 "sourceTree" = "<group>";
@@ -355,6 +361,7 @@
 "A6921B57F164F52360796AAB",
 "B1B35CCDE01AA42B3453A2F6",
 "B4ACFDF027CC4D43A288DD43",
+"3FA3F3B31F150D3A898C801D",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -586,6 +593,18 @@
 "ED6C15F36D7A0DFEF4497166",
 );
 };
+"B42986A888DFAE4A87D7D03E" = {"isa" = "PBXBuildFile";
+"fileRef" = "3FA3F3B31F150D3A898C801D";
+};
+"CF6F4F4D8267BD3B2C93858F" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine/data";
+"dstSubfolderSpec" = 7;
+"name" = "Engine data";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("B42986A888DFAE4A87D7D03E",
+);
+};
 "C72034D90DBA23D41E5D536F" = {"isa" = "PBXFileReference";
 "path" = "nile-archive.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -602,6 +621,7 @@
 "CC4DE004004EB641B409107B",
 "FB75D94646D1A99FB77602BF",
 "1D027D683711019778FD3BD3",
+"CF6F4F4D8267BD3B2C93858F",
 );
 "buildRules" = ();
 "dependencies" = ();
@@ -824,6 +844,18 @@
 "554C629B0C36CFC83F060579",
 );
 };
+"CD49F47DDE9288183F2E935C" = {"isa" = "PBXBuildFile";
+"fileRef" = "3FA3F3B31F150D3A898C801D";
+};
+"E30EA896676454D26051C0B1" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine/data";
+"dstSubfolderSpec" = 7;
+"name" = "Engine data";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("CD49F47DDE9288183F2E935C",
+);
+};
 "1CD1F7CCDD6A191FBAD3DF02" = {"isa" = "PBXFileReference";
 "path" = "nile-archive.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -840,6 +872,7 @@
 "078E4CB6A321284795FEF9BD",
 "4ED34F731D8A2DC632953887",
 "8A6A6E17199BC5B5C0071DEB",
+"E30EA896676454D26051C0B1",
 );
 "buildRules" = ();
 "dependencies" = ();

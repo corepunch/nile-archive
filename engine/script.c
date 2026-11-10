@@ -118,6 +118,15 @@ static void open_libs(void)
 static const char *engine_dir = ENGINE_DIR;
 void script_engine_dir(const char *dir) { engine_dir = dir && *dir ? dir : ENGINE_DIR; }
 
+const char *engine_path(const char *rel)
+{
+    static char buf[4][1024];
+    static int slot;
+    char *out = buf[slot++ & 3];
+    snprintf(out, sizeof buf[0], "%s/%s", engine_dir, rel);
+    return out;
+}
+
 void script_open(const char *dir)
 {
     L = luaL_newstate();

@@ -98,7 +98,7 @@ run-relic: run-relic-rush
 # engine/api.xml describes the API once; tools/luagen.py writes the glue, the
 # reference and the editor annotations. They are committed, so building needs
 # no Python; `make test` fails when they are stale.
-GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua engine/match3_atlas.h
+GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua
 gen:
 	python3 tools/luagen.py
 gen-check:
@@ -227,7 +227,7 @@ dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.
 	@mkdir -p dist/$(1)
 	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -DENGINE_DIR='"/engine"' -o $$@ \
 	    engine/launcher.c $(WEB_OBJ) \
-	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua $(foreach f,$(ENGINE_LUA),--preload-file $(f)@/engine/$(notdir $(f)))
+	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua $(foreach f,$(ENGINE_LUA),--preload-file $(f)@/engine/$(notdir $(f))) --preload-file engine/data/match3.png@/engine/data/match3.png
 endef
 $(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
 
