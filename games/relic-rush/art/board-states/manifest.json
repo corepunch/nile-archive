@@ -572,6 +572,8 @@
     "data/expedition-hud/pause-pressed.png",
     "data/expedition-hud/pause-selected.png",
     "data/expedition-hud/score.png",
+    "data/expedition-hud/shop-built.png",
+    "data/expedition-hud/shop-locked.png",
     "data/fonts/LilitaOne-Regular.ttf",
     "data/fonts/lilitaone-OFL.txt",
     "data/game.json",
