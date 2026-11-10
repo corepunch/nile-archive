@@ -834,7 +834,7 @@ def fir_decorated(k): k.fir(0, 0, 0, 1.35, .4, tiers=4, deco=16, star=True, ligh
 
 def pine_grove(k):
     for (x, y, h, r) in ((-.42, .4, 1.7, .45), (.45, -.4, 1.25, .36), (.5, .5, 1.05, .32), (-.45, -.48, .9, .28)):
-        k.fir(x, y, 0, h, r, tiers=4)
+        k.fir(x * .82, y * .82, 0, h, r, tiers=4)
     k.ball("snow", 0, 0, 0, .3, SNOW, 12, sz=.4)
 
 def birch(k):

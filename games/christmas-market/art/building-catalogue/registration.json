@@ -391,21 +391,21 @@
     1,
     1
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/snowy_bench.png",
    "image": [
-    132,
-    132
+    118,
+    118
    ],
    "pivot": [
-    64.81,
-    101.351
+    57.805,
+    90.205
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowy_bench.png",
    "shadow_pivot": [
-    33.37,
-    26.818
+    30.568,
+    24.665
    ],
    "shadow_base_width": 38.637
   },
@@ -655,21 +655,21 @@
     1,
     1
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/fir_snowy.png",
    "image": [
-    119,
-    172
+    106,
+    153
    ],
    "pivot": [
-    59.688,
-    155.264
+    53.263,
+    138.008
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_snowy.png",
    "shadow_pivot": [
-    44.699,
-    38.066
+    45.573,
+    33.186
    ],
    "shadow_base_width": 38.637
   },
@@ -679,21 +679,21 @@
     1,
     1
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/birch.png",
    "image": [
-    108,
-    165
+    97,
+    147
    ],
    "pivot": [
-    48.384,
-    143.973
+    43.24,
+    127.996
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/birch.png",
    "shadow_pivot": [
-    35.231,
-    35.873
+    35.272,
+    32.354
    ],
    "shadow_base_width": 38.637
   },
@@ -703,21 +703,21 @@
     1,
     1
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/fir_decorated.png",
    "image": [
-    125,
-    196
+    112,
+    174
    ],
    "pivot": [
-    62.671,
-    178.617
+    55.909,
+    158.714
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_decorated.png",
    "shadow_pivot": [
-    45.644,
-    43.672
+    41.277,
+    38.042
    ],
    "shadow_base_width": 38.637
   },
@@ -727,21 +727,21 @@
     2,
     2
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/pine_grove.png",
    "image": [
-    292,
-    325
+    228,
+    271
    ],
    "pivot": [
-    139.227,
-    254.646
+    108.712,
+    217.564
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/pine_grove.png",
    "shadow_pivot": [
-    76.202,
-    63.176
+    58.737,
+    53.687
    ],
    "shadow_base_width": 77.273
   },
