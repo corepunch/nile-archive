@@ -10,6 +10,15 @@
 --   render_game()
 --   lb:draw(dt, {reduced_motion = reduced})
 --
+-- A game with several boards keeps one manager instead of the dialogs:
+--   local boards = leaderboard.boards{skin = skin, width = 400, texts = {...}}
+--   boards:open("stars", "Top explorers")          -- from a button; the dialog is made once per board
+--   -- every frame, after the screens and their dialogs:
+--   local covered = boards:active()                -- true while one is open: give the screens no input
+--   boards:draw(dt, {reduced_motion = reduced})
+-- boards:open(name, title, extra) takes the dialog options of leaderboard.new
+-- (format, count, rows...) as `extra`; `defaults` fill whatever it leaves out.
+--
 -- A game that already has a ui.modals stack passes it in (`modals = stack`) and
 -- keeps drawing it itself; it calls lb:sync() before the stack draws and
 -- lb:handle(event) with every event the stack returns (true when it was ours).
@@ -57,21 +66,24 @@ function L.new(options)
     local me_suffix = " " .. texts.you
     self.form = ui.form{root = {kind = "column", panel = true, padding = 24, gap = 14, children = {
         {kind = "label", id = "title", text = texts.title, role = "title", height = 44},
-        -- the chosen tab is a button, the other a flat caption, whatever the skin does for "selected"
+        -- the chosen tab is an accent button, the other a flat caption, whatever the skin does for "selected"
         {kind = "row", gap = 10, height = 46, children = {
-            {kind = "button", id = "global_on", text = texts.everyone, grow = 1, visible_field = "show_global_on"},
+            {kind = "button", id = "global_on", text = texts.everyone, grow = 1, accent = true, visible_field = "show_global_on"},
             {kind = "button", id = "global", text = texts.everyone, grow = 1, flat = true, visible_field = "show_global_off"},
-            {kind = "button", id = "friends_on", text = texts.friends, grow = 1, visible_field = "show_friends_on"},
+            {kind = "button", id = "friends_on", text = texts.friends, grow = 1, accent = true, visible_field = "show_friends_on"},
             {kind = "button", id = "friends", text = texts.friends, grow = 1, flat = true, visible_field = "show_friends_off"},
         }},
         {kind = "label", id = "status", text = "", wrap = true, role = "leaderboard_note", min_height = 26, visible_field = "show_status"},
         {kind = "list", id = "rows", scroll = true, gap = 4, height = visible_rows * 44, item = function(record)
             local role = record.me and "leaderboard_me" or "leaderboard_row"
+            -- the outlined text spills past its box, and the list clips at its edge: keep a margin on both sides
             return {kind = "row", height = 40, gap = 8, align = "center", children = {
-                {kind = "label", text = tostring(record.rank), width = 36, text_align = "start", role = role},
+                {kind = "spacer", width = 4},
+                {kind = "label", text = tostring(record.rank), width = 26, text_align = "start", role = role},
                 {kind = "custom", width = 36, height = 36, paint = function(box) self:portrait(box, record) end},
                 {kind = "label", text = record.name .. (record.me and me_suffix or ""), grow = 1, text_align = "start", role = role},
                 {kind = "label", text = self.format(record.score), width = 110, text_align = "end", role = role},
+                {kind = "spacer", width = 10},
             }}
         end},
         {kind = "row", gap = 10, height = 50, children = {
@@ -181,6 +193,41 @@ function L:draw(dt, options)
     self:sync()
     local event = self.modals:draw(dt, options)
     if event and not self:handle(event) then return event end
+end
+
+local Boards = {}
+Boards.__index = Boards
+
+function L.boards(defaults)
+    return setmetatable({defaults = defaults or {}, dialogs = {}}, Boards)
+end
+
+function Boards:open(board, title, extra)
+    local dialog = self.dialogs[board]
+    if not dialog then
+        local options = {}
+        for k, v in pairs(self.defaults) do options[k] = v end
+        for k, v in pairs(extra or {}) do options[k] = v end
+        options.board, options.title = board, title or options.title
+        dialog = L.new(options)
+        self.dialogs[board] = dialog
+    end
+    return dialog:open()
+end
+
+-- The open dialog, or nil.
+function Boards:active()
+    for _, dialog in pairs(self.dialogs) do if dialog:active() then return dialog end end
+end
+
+function Boards:close()
+    local dialog = self:active()
+    if dialog then dialog:close() end
+end
+
+function Boards:draw(dt, options)
+    local dialog = self:active()
+    if dialog then return dialog:draw(dt, options) end
 end
 
 return L

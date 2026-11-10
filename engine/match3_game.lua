@@ -912,36 +912,22 @@ function G.bind(R, over)
     -- "leaderboard" block turns it on: `board` holds the lifetime Discovery Stars,
     -- `level_board` (a format with the level number, e.g. "level_%02d") each
     -- expedition's best score. Scores are reported when a reward is claimed.
-    local boards = {}
+    local boards = require("leaderboard").boards{skin = skin, width = 400, texts = W.leaderboard and W.leaderboard.texts}
     function R.submit_scores()
         local c = W.leaderboard
         if not c then return end
         gamecenter.submit(c.board, R.prog.wallet[rules.STARS])
         if c.level_board and R.g then gamecenter.submit(c.level_board:format(R.g.level + 1), R.g.score) end
     end
-    local function board_dialog(name, title)
-        if not boards[name] then
-            boards[name] = require("leaderboard").new{skin = skin, board = name, title = title, width = 400, texts = W.leaderboard.texts}
-        end
-        return boards[name]
-    end
     -- The board of the whole game, or of one expedition (0-based level).
     function R.open_leaderboard(level)
         local c = W.leaderboard
         if not c then return end
-        if level and c.level_board then
-            board_dialog(c.level_board:format(level + 1), c.level_title:format(level + 1)):open()
-        elseif not level then
-            board_dialog(c.board, c.title):open()
-        end
+        if level and c.level_board then boards:open(c.level_board:format(level + 1), c.level_title:format(level + 1))
+        elseif not level then boards:open(c.board, c.title) end
     end
-    function R.leaderboard_active()
-        for _, lb in pairs(boards) do if lb:active() then return lb end end
-    end
-    function R.draw_leaderboard(dt)
-        local lb = R.leaderboard_active()
-        if lb then lb:draw(dt, {reduced_motion = R.reduced_motion}) end
-    end
+    function R.leaderboard_active() return boards:active() end
+    function R.draw_leaderboard(dt) boards:draw(dt, {reduced_motion = R.reduced_motion}) end
 
     require("match3.debug").bind(R, W)
     require("match3.vfx").bind(R, rules)
