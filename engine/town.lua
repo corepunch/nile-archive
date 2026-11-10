@@ -269,16 +269,26 @@ local function draw_weather(v, view)
     local origin = v.city.cam:to_screen(vec2(0, 0))
     local height = view.h * (snow.height or .86)
     local fade_from = snow.fade_from or .7
-    for _, layer in ipairs(snow.layers) do
+    -- Every flake owns an irrational-stride column and phase (so none share a
+    -- path or arrive together) and its own fall speed and sway. Flakes are soft
+    -- radial blobs with no outline or shadow.
+    local span = height + 24
+    for li, layer in ipairs(snow.layers) do
         for i = 1, layer.count do
-            local y = (i * 137 + time * (layer.fall + i % 7 * 4) + origin.y) % (height + 12) - 6
-            local drift = time * layer.drift + math.sin(time * .8 + i * 2.4) * layer.drift
-            local x = (i * 97 + drift + layer.fall + origin.x) % (view.w + 12) - 6
-            local at = vec2(view.x + x, view.y + y)
-            local radius = layer.radius * (.65 + i % 5 * .15)
+            local k = i + li * 1000
+            local r1 = (k * 0.6180339887) % 1
+            local r2 = (k * 0.7548776662) % 1
+            local r3 = (k * 0.5698402910) % 1
+            local speed = layer.fall * (.7 + r3 * .6)
+            local y = (r2 * span + time * speed + origin.y) % span - 12
+            local sway = math.sin(time * (.5 + r1 * .6) + k * 2.4) * layer.drift
+            local x = (r1 * (view.w + 24) + time * layer.drift * .35 + sway + origin.x) % (view.w + 24) - 12
+            local radius = layer.radius * (.7 + r3 * .8) * 1.8
             local fade = 1 - num.saturate((y / height - fade_from) / (1 - fade_from))
-            gfx.circle(at + vec2(0, .8), radius + .65, color(60, 94, 137, math.floor(70 * fade)))
-            gfx.circle(at, radius, color(248, 252, 255, math.floor(layer.opacity * fade)))
+            if y > -6 then
+                local a = math.floor(layer.opacity * fade * (.65 + r2 * .35))
+                gfx.glow(vec2(view.x + x, view.y + y), radius, color(255, 255, 255, a), color(255, 255, 255, 0))
+            end
         end
     end
 end
