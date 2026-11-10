@@ -159,14 +159,16 @@ static vec2 tail_base(rect box, vec2 tip, float radius, vec2 *along)
  * to the tip and a trailing edge that bows outward, the lettered "comma".
  * One polygon has one smooth rim and no seams. `grow` widens it for the
  * outline pass and pushes its point a little past the tip. */
-static int tail_shape(vec2 base, vec2 dir, vec2 along, float len, float half, float grow, vec2 *out)
+static int tail_shape(vec2 base, vec2 dir, vec2 along, float len, float half, float grow, float sink, vec2 *out)
 {
     enum { N = 8 };
     vec2 side = vec2_dot(along, v2(-dir.y, dir.x)) >= 0 ? along : vec2_scale(along, -1);
-    vec2 root = vec2_sub(base, vec2_scale(dir, 8));   /* inside the body, under its rim */
+    vec2 root = vec2_sub(base, vec2_scale(dir, sink));   /* inside the body, under its rim */
     vec2 tip = vec2_add(base, vec2_scale(dir, len + grow * 1.5f));
     vec2 a = vec2_add(root, vec2_scale(side, half + grow)), b = vec2_sub(root, vec2_scale(side, half + grow));
-    vec2 ctrl = vec2_add(vec2_lerp(b, tip, .5f), vec2_scale(side, -(half + grow) * .7f));
+    /* the bow fades as the tail points straight out, so a centred tail is symmetric */
+    float lean = fminf(1, fabsf(vec2_dot(dir, along)) * 4);
+    vec2 ctrl = vec2_add(vec2_lerp(b, tip, .5f), vec2_scale(side, -(half + grow) * .7f * lean));
     int n = 0;
     out[n++] = a;
     out[n++] = tip;
@@ -185,11 +187,12 @@ static int tail_shape(vec2 base, vec2 dir, vec2 along, float len, float half, fl
 static void speech_shape(rect box, vec2 tip, color fill, color edge, bool tail)
 {
     float r = minf(24, box.size.h * .42f);
+    fill.a = 255;   /* the tail overlaps the body: a translucent fill would show it twice, brighter */
     vec2 along, base = tail_base(box, tip, r, &along), dir = vec2_norm(vec2_sub(tip, base));
     float len = minf(TAIL_LEN, vec2_dist(base, tip));
     vec2 outline[12], body[12];
-    int n = tail ? tail_shape(base, dir, along, len, TAIL_HALF, OUTLINE, outline) : 0;
-    if (tail) tail_shape(base, dir, along, len, TAIL_HALF, 0, body);
+    int n = tail ? tail_shape(base, dir, along, len, TAIL_HALF, OUTLINE, 8, outline) : 0;
+    if (tail) tail_shape(base, dir, along, len, TAIL_HALF, 0, 8, body);
     draw_shadow(rect_offset(box, v2(0, 6)), r + 4, 16, rgba(0, 0, 0, 60));
     draw_round_rect(rect_inflate(box, OUTLINE), r + OUTLINE, edge);
     if (tail) draw_poly(outline, n, edge);
