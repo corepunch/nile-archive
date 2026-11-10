@@ -11,15 +11,11 @@ local island = require("island")
 local smoke_stage, smoke_frames, smoke_wait, smoke_partner = -2, 0, 0, -1
 local smoke_move={}
 local smoke_city_move
-local function press_row(form, key, id)
-    for _, node in pairs(form.nodes) do
-        if node.item_key == key and node.local_id == id then
-            app.inject_click(form.boxes[node.id]:center())
-            return node
-        end
-    end
+local function press_tile(key)
+    local node = R.catalogue_tile(key)
+    if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
+    return node
 end
-
 function R.smoke()
     smoke_frames = smoke_frames + 1
     if smoke_frames > 8000 or R.g.lost then
@@ -36,7 +32,7 @@ function R.smoke()
         return
     end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
-        if not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
+        if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
     end
     -- The board's entrance takes no moves. A tap skips the first; the rest play out.
@@ -91,7 +87,7 @@ function R.smoke()
         end
         app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
     elseif smoke_stage == 2 and R.overlay == R.OV_SHOP then
-        assert(press_row(R.catalogue_form, "arch", "buy"), "smoke: the earned stall is in the shop"); smoke_stage = 3
+        assert(press_tile("arch"), "smoke: the earned stall is in the shop"); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
@@ -124,14 +120,11 @@ function R.smoke()
         else smoke_stage=21 end
     elseif smoke_stage==21 and R.overlay==R.OV_SHOP then
         local f=R.catalogue_form
-        assert(f:get_item("stock","firs") and not f:get_item("stock","arch"),"category source must refresh")
-        for _,node in pairs(f.nodes) do
-            if node.item_key=="firs" and node.local_id=="buy" then
-                assert(node.enabled,"smoke: starter decoration should be affordable")
-                smoke_move.shop_gold=R.prog.wallet[1]
-                app.inject_click(f.boxes[node.id]:center());smoke_stage=22;break
-            end
-        end
+        assert(R.catalogue_tile("firs") and not R.catalogue_tile("arch"),"category source must refresh")
+        local node,record=R.catalogue_tile("firs")
+        assert(node and record.available,"smoke: starter decoration should be affordable")
+        smoke_move.shop_gold=R.prog.wallet[1]
+        app.inject_click(f.boxes[node.id]:center());smoke_stage=22
     elseif smoke_stage==22 and R.island.placing>=0 then
         assert(R.island.placing==10,"catalogue action lost its stable item key")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=23
@@ -139,11 +132,8 @@ function R.smoke()
         assert(R.island.count==1 and R.prog.wallet[1]==smoke_move.shop_gold,"cancelled purchase changed save state")
         R.open_catalogue();smoke_stage=24
     elseif smoke_stage==24 and R.overlay==R.OV_SHOP then
-        for _,node in pairs(R.catalogue_form.nodes) do
-            if node.item_key=="firs" and node.local_id=="buy" then
-                app.inject_click(R.catalogue_form.boxes[node.id]:center());smoke_stage=25;break
-            end
-        end
+        local node=R.catalogue_tile("firs")
+        if node then app.inject_click(R.catalogue_form.boxes[node.id]:center());smoke_stage=25 end
     elseif smoke_stage==25 and R.island.placing>=0 then
         app.inject_click(R.placement_form.boxes.confirm:center());smoke_stage=26
     elseif smoke_stage==26 and R.island.placing<0 then

@@ -13,6 +13,11 @@ local move             -- the engine's pickup/move check, while it runs
 local shop = {}        -- what the catalogue and replay stages remember
 
 -- Press a list row's button by its stable item key.
+local function press_tile(key)
+    local node = R.catalogue_tile(key)
+    if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
+    return node
+end
 local function press_row(form, key, id)
     for _, node in pairs(form.nodes) do
         if node.item_key == key and node.local_id == id then
@@ -41,7 +46,7 @@ local function campaign()
         app.inject_click(vec2(240, 300)); return
     end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
-        if not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
+        if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
     end
     local c = R.island
@@ -104,7 +109,7 @@ function R.smoke()
         return
     end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
-        if not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
+        if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
     end
     -- The board's entrance takes no moves. A tap skips the first; the rest play out.
@@ -159,7 +164,7 @@ function R.smoke()
         end
         app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
     elseif stage == 2 and R.overlay == R.OV_SHOP then
-        press_row(R.catalogue_form,"camp","buy");stage=3
+        press_tile("camp");stage=3
     elseif stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
@@ -180,10 +185,10 @@ function R.smoke()
             shop.categories = shop.categories + 1
         else stage = 21 end
     elseif stage == 21 and R.overlay == R.OV_SHOP then
-        assert(R.catalogue_form:get_item("stock", "shrub"), "category source must refresh")
+        assert(R.catalogue_tile("shrub"), "category source must refresh")
         shop.gold = R.prog.wallet[1]
-        local node = press_row(R.catalogue_form, "shrub", "buy")
-        assert(node and node.enabled, "smoke: starter decoration should be affordable")
+        local node = press_tile("shrub")
+        assert(node and select(2, R.catalogue_tile("shrub")).available, "smoke: starter decoration should be affordable")
         stage = 22
     elseif stage == 22 and R.island.placing >= 0 then
         assert(R.island.placing == 37, "catalogue action lost its stable item key")
@@ -192,7 +197,7 @@ function R.smoke()
         assert(R.island.count == 1 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
         R.open_catalogue(); stage = 24
     elseif stage == 24 and R.overlay == R.OV_SHOP then
-        if press_row(R.catalogue_form, "shrub", "buy") then stage = 25 end
+        if press_tile("shrub") then stage = 25 end
     elseif stage == 25 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 26
     elseif stage == 26 and R.island.placing < 0 then
