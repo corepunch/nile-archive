@@ -155,13 +155,13 @@ Re-render only the shadows with `make buildings GAME=<game>` plus
 
 | Key | Meaning | Christmas Market |
 |---|---|---|
-| `sun` | Direction the light travels, world `[x, y, z]`; z is down. | `[-0.9, 0, -1.5]` |
+| `sun` | Direction the light travels, world `[x, y, z]`; z is down. | `[-0.779, 0.45, -1.5]` |
 | `angle` | Sun disc in degrees; sets the penumbra width. | `1.5` |
 | `ppt` | Shadow pixels per tile side (the engine scales it up, so keep it near the sprite's). | `85` |
 | `strength` | Opacity multiplier. | `0.45` |
 | `tint` | RGB of the shadow. Omit for the catcher's grey. | `[52, 78, 168]` |
 
-Christmas Market's shadows fall along -X, to the left on screen, away from the light that falls on the sprites from the right, with a slope of 0.9 world units of run per unit of height (`sun.xy` has length 0.9, `sun.z` is -1.5, so a shadow is 0.6 as long as its caster is tall). They are a snow-blue, not grey: a
+Christmas Market's shadows fall along -X turned 30° clockwise seen from above (to the left and slightly back on screen), away from the light that falls on the sprites from the right, with a slope of 0.9 world units of run per unit of height (`sun.xy` has length 0.9, `sun.z` is -1.5, so a shadow is 0.6 as long as its caster is tall). They are a snow-blue, not grey: a
 shadow on snow reads cool. The fill light is hidden for the shadow pass, since its wide disc
 only blurs the edge. A game without a `shadow` block keeps the master's sun, 28 px per
 tile and 0.42 strength. Shadows render at 32 samples without denoising.
