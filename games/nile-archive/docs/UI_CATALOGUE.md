@@ -115,7 +115,7 @@ are in [the road removal comparison](review/no-auto-roads/README.md).
 
 `placement-guides` uses the shared `engine/city.c` renderer. While moving or
 placing a building, other buildings show neutral cream outlines with dark
-contrast edges around their occupied ground, including placement clearance.
+contrast edges around their occupied ground. Adjacent bases may share an edge.
 The building in hand retains its green/red footprint; its original location
 is omitted. Guides stay visible after release until Confirm/Cancel, then hide.
 The guides use the existing camera and tile measurements; artwork, alpha,

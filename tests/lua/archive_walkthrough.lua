@@ -24,7 +24,7 @@ end
 -- Set up the island without loading textures.
 G.island = H.city(content.buildings)
 G.island.tile = content.TILE
-G.island.clearance = size2(1, 1)
+G.island.clearance = size2(0, 0)
 G.island.zones = {{area = rect(580, 200, 600, 1050)}}
 for z = 1, G.ZONES - 1 do
     G.island.zones[z + 1] = {area = rect(800 + z * 380, 200, 380, 1050),

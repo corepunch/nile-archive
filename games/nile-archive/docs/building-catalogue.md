@@ -258,3 +258,5 @@ prompts, ordered input images, hashes and accepted versions.
 ## Enlarged painted sprites
 
 The enlarged objects `acacia`, `cypress`, `date_palm`, `doum_palm`, `fig`, `olive`, `palm_grove`, `pomegranate`, `sycamore`, `tamarisk`, `twin_palms` use the `z-enlarged` painted atlas, based on the registered Blender renders at `ef26de3`. Normal world state only; interaction feedback remains an engine effect. Sources, exact ImageGen prompt, layout, import transforms and reproduction command are recorded in [painted-v1](../art/building-catalogue/painted-v1/README.md); [in-game footprint review](review/painted-buildings/enlarged/README.md).
+
+Known artwork defect: [`sculptor_yard` and `pharaoh_garden`](https://github.com/corepunch/nile-archive/issues/91) have painted foundations that do not match the camera grid, and the garden's left palm is clipped. Replace both paint-overs using complete registered renders, then verify both base edges, every corner and both palms in game at the supported sizes.

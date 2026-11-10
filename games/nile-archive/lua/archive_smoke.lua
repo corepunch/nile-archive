@@ -62,7 +62,26 @@ function M.step()
     if frames > 6000 then error("Nile smoke timed out at step " .. tostring(step)) end
     if frames % 6 ~= 0 then return end
     if story.active() then story.next() return end
-    if step == 0 then app.inject_click(G.spots.chapters); step = 1
+    if step == 0 then
+        assert(G.island.clearance.w == 0 and G.island.clearance.h == 0,
+            "Nile island must not add placement clearance")
+        local c = city.new()
+        c:init(nil)
+        c.defs, c.tile, c.clearance = content.buildings, G.island.tile, G.island.clearance
+        c.cam = camera{world = size2(10000, 10000), view = rect(0, 0, 10000, 10000),
+            center = vec2(5000, 5000), zoom = 1, min_zoom = 1, max_zoom = 1}
+        local tree
+        for i, def in ipairs(content.buildings) do
+            if def.size.w == 1 and def.size.h == 1 then tree = i - 1; break end
+        end
+        assert(tree, "missing one-tile decoration")
+        local at = c:snap(vec2(5000, 5000), tree)
+        c:add(at, tree, 0)
+        assert(not c:can_place(at, tree), "overlapping trees must be blocked")
+        local ok, neighbour = c:find_spot(tree, at)
+        assert(ok and (neighbour - at):len() < c.tile,
+            "one-tile decorations must fit in adjacent cells")
+        app.inject_click(G.spots.chapters); step = 1
     elseif step == 1 then
         assert(G.modal == MODAL_CHAPTERS, "chapters button failed")
         play(1); step = 2
