@@ -1712,6 +1712,9 @@ def iso_camera(scn):
     return co, rot @ Vector((1, 0, 0)), rot @ Vector((0, 1, 0)), rot @ Vector((0, 0, 1))
 
 
+TREES = ("fir_snowy", "birch", "fir_decorated", "pine_grove", "snowy_bench")   # modelled building_kit.TREE_GROWTH times larger (the bench read small beside the shops)
+
+
 def build():
     """Every object in its own collection, laid out in rows on the ground for inspection."""
     clean_previous()
@@ -1733,6 +1736,8 @@ def build():
         pivot = bpy.data.objects.new(it["key"] + ".pivot", None)
         pivot.location = (u + it["w"] / 2, -(v + it["h"] / 2), 0)
         pivot.empty_display_size = .25
+        grow = building_kit.TREE_GROWTH if it["key"] in TREES else 1.
+        pivot.scale = (grow,) * 3   # children (meshes, lights) inherit it
         pivot["title"], pivot["w"], pivot["h"] = it["title"], it["w"], it["h"]
         coll.objects.link(pivot)
         for mat, bucket in k.buckets.items():
@@ -1743,7 +1748,7 @@ def build():
         for n, light in enumerate(k.lights):
             p, watts, colour = light if len(light) == 3 else (*light, (1, .62, .28))
             li = bpy.data.lights.new(PREFIX + it["key"] + "_light", "POINT")
-            li.energy = watts
+            li.energy = watts * grow ** 2   # the same light on the surfaces at the scaled distance
             li.color = colour
             li.shadow_soft_size = .08
             lo = bpy.data.objects.new(it["key"] + ".light%d" % n, li)
