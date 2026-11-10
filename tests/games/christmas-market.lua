@@ -10,6 +10,7 @@ rules("building_economy")
 default_frames = 3
 rules("christmas")
 rules("christmas_story")
+rules("christmas_leaderboard")
 smoke()
 smoke("--campaign", "campaign")   -- all thirty winter wishes and every story beat
 
@@ -35,6 +36,9 @@ shot("goals-met", "480x900", "--level 5 --goals-met")
 reel("christmas-market-reward-entrance", 16, 6, "480x900", "--victory --reel")
 shot("pause", "480x900", "--level 4 --dialog pause")
 shot("phone-pause", "390x844", "--level 4 --dialog pause --safe-area 0,47,0,34")
+shot("leaderboard", "480x900", "--level 4 --dialog leaderboard --gamecenter-demo")
+shot("phone-leaderboard", "390x844", "--level 4 --dialog leaderboard --gamecenter-demo --safe-area 0,47,0,34")
+shot("level-leaderboard", "480x900", "--victory --dialog level-leaderboard --gamecenter-demo")
 shot("restart", "480x900", "--level 4 --dialog confirm")
 shot("guide", "480x900", "--level 4 --dialog guide")
 shot("failed", "480x900", "--level 4 --dialog failed --empty-lives")
