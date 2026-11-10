@@ -247,6 +247,84 @@
 "sourceTree" = "<group>";
 "lastKnownFileType" = "folder";
 };
+"6381E17C7276272DC6DC5CC6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/board_intro.lua";
+"name" = "board_intro.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"ECDA85D0CBDCAD3F6D5E09A6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/city_smoke.lua";
+"name" = "city_smoke.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"849DB55FFBB051D4F8045F40" = {"isa" = "PBXFileReference";
+"path" = "../../engine/json.lua";
+"name" = "json.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"C547089BBD2224CAB8659129" = {"isa" = "PBXFileReference";
+"path" = "../../engine/leaderboard.lua";
+"name" = "leaderboard.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"6428ECB55BAFADD8FB48D8DA" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3.lua";
+"name" = "match3.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"898D908F744AAE03EAF42633" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_debug.lua";
+"name" = "match3_debug.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"5C7A52D4239F958EC87E2894" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_frames.lua";
+"name" = "match3_frames.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"70CA0C3545609F2A89BBBBB3" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_game.lua";
+"name" = "match3_game.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"00556967F9F5635A526D112F" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_vfx.lua";
+"name" = "match3_vfx.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"3701F2C6C99CD48B7085AB11" = {"isa" = "PBXFileReference";
+"path" = "../../engine/town.lua";
+"name" = "town.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"A6921B57F164F52360796AAB" = {"isa" = "PBXFileReference";
+"path" = "../../engine/tween.lua";
+"name" = "tween.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"B1B35CCDE01AA42B3453A2F6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/ui_forms.lua";
+"name" = "ui_forms.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"B4ACFDF027CC4D43A288DD43" = {"isa" = "PBXFileReference";
+"path" = "../../engine/ui_skin.lua";
+"name" = "ui_skin.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
 "9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
 "path" = "Assets.xcassets";
 "sourceTree" = "<group>";
@@ -264,6 +342,19 @@
 "name" = "Engine";
 "children" = ("EB5CBE17182664B6DBD76360",
 "541B66CD1C747C1DB8B77446",
+"6381E17C7276272DC6DC5CC6",
+"ECDA85D0CBDCAD3F6D5E09A6",
+"849DB55FFBB051D4F8045F40",
+"C547089BBD2224CAB8659129",
+"6428ECB55BAFADD8FB48D8DA",
+"898D908F744AAE03EAF42633",
+"5C7A52D4239F958EC87E2894",
+"70CA0C3545609F2A89BBBBB3",
+"00556967F9F5635A526D112F",
+"3701F2C6C99CD48B7085AB11",
+"A6921B57F164F52360796AAB",
+"B1B35CCDE01AA42B3453A2F6",
+"B4ACFDF027CC4D43A288DD43",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -435,6 +526,66 @@
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };
+"CBD37A930293F45C9EE47EFE" = {"isa" = "PBXBuildFile";
+"fileRef" = "6381E17C7276272DC6DC5CC6";
+};
+"5BBEC483CE11A180EBB3C9A5" = {"isa" = "PBXBuildFile";
+"fileRef" = "ECDA85D0CBDCAD3F6D5E09A6";
+};
+"B2709F8C8EDA24CB33C942FC" = {"isa" = "PBXBuildFile";
+"fileRef" = "849DB55FFBB051D4F8045F40";
+};
+"A0724B66BAF78AD2375B4774" = {"isa" = "PBXBuildFile";
+"fileRef" = "C547089BBD2224CAB8659129";
+};
+"178DF7365018D82AFFA5D777" = {"isa" = "PBXBuildFile";
+"fileRef" = "6428ECB55BAFADD8FB48D8DA";
+};
+"F3CD88177CE0BE64FE45CB9E" = {"isa" = "PBXBuildFile";
+"fileRef" = "898D908F744AAE03EAF42633";
+};
+"8E107D514C14DFAB40CF2BD6" = {"isa" = "PBXBuildFile";
+"fileRef" = "5C7A52D4239F958EC87E2894";
+};
+"3D663D283836BBB59092C622" = {"isa" = "PBXBuildFile";
+"fileRef" = "70CA0C3545609F2A89BBBBB3";
+};
+"452F1CFE70683F2AA67C4EAE" = {"isa" = "PBXBuildFile";
+"fileRef" = "00556967F9F5635A526D112F";
+};
+"FB2599E8884B7C4952C34613" = {"isa" = "PBXBuildFile";
+"fileRef" = "3701F2C6C99CD48B7085AB11";
+};
+"E0023EAA53F5927330FEC6E8" = {"isa" = "PBXBuildFile";
+"fileRef" = "A6921B57F164F52360796AAB";
+};
+"8E0CEAC2A0C79FEFD98DBD07" = {"isa" = "PBXBuildFile";
+"fileRef" = "B1B35CCDE01AA42B3453A2F6";
+};
+"ED6C15F36D7A0DFEF4497166" = {"isa" = "PBXBuildFile";
+"fileRef" = "B4ACFDF027CC4D43A288DD43";
+};
+"1D027D683711019778FD3BD3" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine";
+"dstSubfolderSpec" = 7;
+"name" = "Engine resources";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("CBD37A930293F45C9EE47EFE",
+"5BBEC483CE11A180EBB3C9A5",
+"B2709F8C8EDA24CB33C942FC",
+"A0724B66BAF78AD2375B4774",
+"178DF7365018D82AFFA5D777",
+"F3CD88177CE0BE64FE45CB9E",
+"8E107D514C14DFAB40CF2BD6",
+"3D663D283836BBB59092C622",
+"452F1CFE70683F2AA67C4EAE",
+"FB2599E8884B7C4952C34613",
+"E0023EAA53F5927330FEC6E8",
+"8E0CEAC2A0C79FEFD98DBD07",
+"ED6C15F36D7A0DFEF4497166",
+);
+};
 "C72034D90DBA23D41E5D536F" = {"isa" = "PBXFileReference";
 "path" = "nile-archive.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -450,6 +601,7 @@
 "BA9E0C7C466A8BA6E7152655",
 "CC4DE004004EB641B409107B",
 "FB75D94646D1A99FB77602BF",
+"1D027D683711019778FD3BD3",
 );
 "buildRules" = ();
 "dependencies" = ();
@@ -612,6 +764,66 @@
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };
+"FF5158A50BB546E434091B49" = {"isa" = "PBXBuildFile";
+"fileRef" = "6381E17C7276272DC6DC5CC6";
+};
+"28785FD5D55C90A6CF7E67C1" = {"isa" = "PBXBuildFile";
+"fileRef" = "ECDA85D0CBDCAD3F6D5E09A6";
+};
+"92598ED31E505BD82EFACB75" = {"isa" = "PBXBuildFile";
+"fileRef" = "849DB55FFBB051D4F8045F40";
+};
+"1830DC87666D5D5245929A18" = {"isa" = "PBXBuildFile";
+"fileRef" = "C547089BBD2224CAB8659129";
+};
+"1A27A7B5C55587867D4803CD" = {"isa" = "PBXBuildFile";
+"fileRef" = "6428ECB55BAFADD8FB48D8DA";
+};
+"78FAF45CAC04B3334233BC8F" = {"isa" = "PBXBuildFile";
+"fileRef" = "898D908F744AAE03EAF42633";
+};
+"63267B5329C7E9EE95CA00C0" = {"isa" = "PBXBuildFile";
+"fileRef" = "5C7A52D4239F958EC87E2894";
+};
+"6C7AAA6E426EA5CD1287B656" = {"isa" = "PBXBuildFile";
+"fileRef" = "70CA0C3545609F2A89BBBBB3";
+};
+"C5B75364D3D0915A0626D177" = {"isa" = "PBXBuildFile";
+"fileRef" = "00556967F9F5635A526D112F";
+};
+"CE8FEB0A36BB54254DA117E6" = {"isa" = "PBXBuildFile";
+"fileRef" = "3701F2C6C99CD48B7085AB11";
+};
+"491E19C5676C2DA0AB74F58F" = {"isa" = "PBXBuildFile";
+"fileRef" = "A6921B57F164F52360796AAB";
+};
+"DA6FB9748082BC2F3C82F621" = {"isa" = "PBXBuildFile";
+"fileRef" = "B1B35CCDE01AA42B3453A2F6";
+};
+"554C629B0C36CFC83F060579" = {"isa" = "PBXBuildFile";
+"fileRef" = "B4ACFDF027CC4D43A288DD43";
+};
+"8A6A6E17199BC5B5C0071DEB" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine";
+"dstSubfolderSpec" = 7;
+"name" = "Engine resources";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("FF5158A50BB546E434091B49",
+"28785FD5D55C90A6CF7E67C1",
+"92598ED31E505BD82EFACB75",
+"1830DC87666D5D5245929A18",
+"1A27A7B5C55587867D4803CD",
+"78FAF45CAC04B3334233BC8F",
+"63267B5329C7E9EE95CA00C0",
+"6C7AAA6E426EA5CD1287B656",
+"C5B75364D3D0915A0626D177",
+"CE8FEB0A36BB54254DA117E6",
+"491E19C5676C2DA0AB74F58F",
+"DA6FB9748082BC2F3C82F621",
+"554C629B0C36CFC83F060579",
+);
+};
 "1CD1F7CCDD6A191FBAD3DF02" = {"isa" = "PBXFileReference";
 "path" = "nile-archive.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -627,6 +839,7 @@
 "A772095BF84DEA49B03164A5",
 "078E4CB6A321284795FEF9BD",
 "4ED34F731D8A2DC632953887",
+"8A6A6E17199BC5B5C0071DEB",
 );
 "buildRules" = ();
 "dependencies" = ();

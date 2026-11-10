@@ -381,7 +381,7 @@ transform, checkbox binding and keyboard input, immediate widgets and the audit.
 nested modal input.
 
 ```sh
-make gen                         # after API, engine/ui_forms.lua, engine/ui_skin.lua or engine/city_smoke.lua changes
+make gen                         # after engine/api.xml changes
 make CFLAGS="-O2 -g -Werror"
 make test
 make test-platform               # prefix with xvfb-run -a on Linux
@@ -390,8 +390,8 @@ make test-platform               # prefix with xvfb-run -a on Linux
 ```
 
 The fixture accepts `--nested --shot file.png`; without `--nested` it shows the
-same template in two skin files (`tests/fixtures/ui/*_skin.lua`). `make shots` captures both. The runtime embeds
-`engine/ui_forms.lua` and `engine/ui_skin.lua` through the generated `engine/ui_forms_lua.h`; native,
+same template in two skin files (`tests/fixtures/ui/*_skin.lua`). `make shots` captures both. The runtime loads
+`engine/ui_forms.lua` and `engine/ui_skin.lua` from the engine's resource directory; native,
 iOS and web games use the same implementation without extra game resources.
 
 This core supports display, action and boolean controls (toggle and checkbox). Text-entry/IME, combo

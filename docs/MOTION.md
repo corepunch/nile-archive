@@ -1,7 +1,7 @@
 # Motion: ease and tween
 
 The engine animates through one Lua module, [`engine/tween.lua`](../engine/tween.lua),
-embedded by `make gen` and loaded before `main.lua`. It defines two globals:
+loaded from the engine's resource directory before `main.lua`. It defines two globals:
 
 - **`ease`**, the easing catalogue: every curve of [easings.net](https://easings.net)
   plus `linear`, `steps` and the parameterised `back` and `elastic`.

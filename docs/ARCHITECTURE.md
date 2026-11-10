@@ -10,7 +10,7 @@ is a build optimization, not permission to reach into another module's statics.
 | Platform → engine | `third_party/platform` supplies windows, events, GL contexts, audio and native services. Engine modules adapt these behind `engine.h`. |
 | Game → engine | `engine.h` is the C game API; `api.xml` generates Lua bindings, editor declarations and API documentation. API changes regenerate all outputs with `make gen`. |
 | Drawing → renderer | `render.h` is private to engine drawing/platform adapters. Ordinary Lua game code draws through `gfx`, `text`, `ui`, city and story APIs. |
-| Lua runtime → modules | `script.c` opens libraries, registers the generated API and embedded engine Lua, and drives callbacks. `script_modules.h` owns configured roots, module identities, cache and circular-import detection. |
+| Lua runtime → modules | `script.c` opens libraries, registers the generated API and loads the engine's own Lua from its resource directory, and drives callbacks. `script_modules.h` owns configured roots, module identities, cache and circular-import detection. |
 | Shared Lua → game | Embedded match-3, forms, skins, motion and city mover code accepts configuration and callbacks. It must not import a game's files or know its content IDs. |
 | Game → game | Production launchers supply only their game's script root. Shared behavior belongs in the engine; multiple roots are an explicit host/test-fixture facility. |
 | Test → runtime | `ENGINE_TEST` provides reset/input/clock/reporting hooks. Game manifests select rules, smoke and captures through the existing runner. Release builds omit those hooks. |

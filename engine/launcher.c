@@ -2,8 +2,9 @@
  *
  * Built once per game with -DGAME_DIR="games/<name>": the game's assets are
  * GAME_DIR/data and its scripts GAME_DIR/lua (--data and --lua override them;
- * the web build preloads both as /data and /lua). The Xcode projects define
- * GAME_IN_BUNDLE: lua/ and data/ are then found inside the app bundle. */
+ * the web build preloads both as /data and /lua). The engine's own Lua is in
+ * ENGINE_DIR (engine/; the web build preloads it as /engine). The Xcode projects
+ * define GAME_IN_BUNDLE: lua/, data/ and engine/ are then found inside the app bundle. */
 #include "render.h"
 
 #include <stdio.h>
@@ -33,6 +34,9 @@ static int launch(int argc, char **argv)
         snprintf(lua_path, sizeof lua_path, "%s/lua", base);
         snprintf(data_path, sizeof data_path, "%s/data", base);
         lua_dir = lua_path, data_dir = data_path;
+        static char engine_path[1024];
+        snprintf(engine_path, sizeof engine_path, "%s/engine", base);
+        script_engine_dir(engine_path);
     }
 #endif
     for (int i = 1; i + 1 < argc; i++)   /* app_arg needs the app; the script root is needed first */

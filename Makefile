@@ -59,6 +59,8 @@ ENGINE_OBJ := build/engine/engine.o build/engine/script.o build/engine/lua.o bui
 ENGINE_DEPS := $(UNITY) $(wildcard engine/*.c engine/*.h)
 PLATFORM_DEPS := $(shell find $(PLATFORM_DIR) -type f \( -name '*.c' -o -name '*.m' -o -name '*.h' \) 2>/dev/null)
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
+# the engine's own Lua, shared by every game (the web build serves it from /engine)
+ENGINE_LUA  := $(filter-out engine/engine.d.lua,$(wildcard engine/*.lua))
 
 .PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
@@ -96,7 +98,7 @@ run-relic: run-relic-rush
 # engine/api.xml describes the API once; tools/luagen.py writes the glue, the
 # reference and the editor annotations. They are committed, so building needs
 # no Python; `make test` fails when they are stale.
-GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua engine/ui_forms_lua.h engine/match3_atlas.h
+GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua engine/match3_atlas.h
 gen:
 	python3 tools/luagen.py
 gen-check:
@@ -221,11 +223,11 @@ build/web/%.o: $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h $(wildcard $(LUA
 web: $(GAMES:%=dist/%/index.html)
 
 define WEB_RULES
-dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h web/shell.html $(call game_lua,$(1)) $(shell find games/$(1)/data -type f 2>/dev/null)
+dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h web/shell.html $(call game_lua,$(1)) $(ENGINE_LUA) $(shell find games/$(1)/data -type f 2>/dev/null)
 	@mkdir -p dist/$(1)
-	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -o $$@ \
+	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -DENGINE_DIR='"/engine"' -o $$@ \
 	    engine/launcher.c $(WEB_OBJ) \
-	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua
+	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua $(foreach f,$(ENGINE_LUA),--preload-file $(f)@/engine/$(notdir $(f)))
 endef
 $(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
 

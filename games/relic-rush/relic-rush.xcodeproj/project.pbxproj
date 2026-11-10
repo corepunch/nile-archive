@@ -247,6 +247,84 @@
 "sourceTree" = "<group>";
 "lastKnownFileType" = "folder";
 };
+"6381E17C7276272DC6DC5CC6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/board_intro.lua";
+"name" = "board_intro.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"ECDA85D0CBDCAD3F6D5E09A6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/city_smoke.lua";
+"name" = "city_smoke.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"849DB55FFBB051D4F8045F40" = {"isa" = "PBXFileReference";
+"path" = "../../engine/json.lua";
+"name" = "json.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"C547089BBD2224CAB8659129" = {"isa" = "PBXFileReference";
+"path" = "../../engine/leaderboard.lua";
+"name" = "leaderboard.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"6428ECB55BAFADD8FB48D8DA" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3.lua";
+"name" = "match3.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"898D908F744AAE03EAF42633" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_debug.lua";
+"name" = "match3_debug.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"5C7A52D4239F958EC87E2894" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_frames.lua";
+"name" = "match3_frames.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"70CA0C3545609F2A89BBBBB3" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_game.lua";
+"name" = "match3_game.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"00556967F9F5635A526D112F" = {"isa" = "PBXFileReference";
+"path" = "../../engine/match3_vfx.lua";
+"name" = "match3_vfx.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"3701F2C6C99CD48B7085AB11" = {"isa" = "PBXFileReference";
+"path" = "../../engine/town.lua";
+"name" = "town.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"A6921B57F164F52360796AAB" = {"isa" = "PBXFileReference";
+"path" = "../../engine/tween.lua";
+"name" = "tween.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"B1B35CCDE01AA42B3453A2F6" = {"isa" = "PBXFileReference";
+"path" = "../../engine/ui_forms.lua";
+"name" = "ui_forms.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
+"B4ACFDF027CC4D43A288DD43" = {"isa" = "PBXFileReference";
+"path" = "../../engine/ui_skin.lua";
+"name" = "ui_skin.lua";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "text";
+};
 "9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
 "path" = "Assets.xcassets";
 "sourceTree" = "<group>";
@@ -264,6 +342,19 @@
 "name" = "Engine";
 "children" = ("EB5CBE17182664B6DBD76360",
 "541B66CD1C747C1DB8B77446",
+"6381E17C7276272DC6DC5CC6",
+"ECDA85D0CBDCAD3F6D5E09A6",
+"849DB55FFBB051D4F8045F40",
+"C547089BBD2224CAB8659129",
+"6428ECB55BAFADD8FB48D8DA",
+"898D908F744AAE03EAF42633",
+"5C7A52D4239F958EC87E2894",
+"70CA0C3545609F2A89BBBBB3",
+"00556967F9F5635A526D112F",
+"3701F2C6C99CD48B7085AB11",
+"A6921B57F164F52360796AAB",
+"B1B35CCDE01AA42B3453A2F6",
+"B4ACFDF027CC4D43A288DD43",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -435,6 +526,66 @@
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };
+"08D12EE04239E518389ECDC7" = {"isa" = "PBXBuildFile";
+"fileRef" = "6381E17C7276272DC6DC5CC6";
+};
+"0516FFA5B82446D8BE906B88" = {"isa" = "PBXBuildFile";
+"fileRef" = "ECDA85D0CBDCAD3F6D5E09A6";
+};
+"A20F111E68FF74DF658F6C69" = {"isa" = "PBXBuildFile";
+"fileRef" = "849DB55FFBB051D4F8045F40";
+};
+"DDEA06FB257BFB2F8EE19C5F" = {"isa" = "PBXBuildFile";
+"fileRef" = "C547089BBD2224CAB8659129";
+};
+"B240EBACF79C50E8033BF1D7" = {"isa" = "PBXBuildFile";
+"fileRef" = "6428ECB55BAFADD8FB48D8DA";
+};
+"CE7CE704F8BF7051B016206C" = {"isa" = "PBXBuildFile";
+"fileRef" = "898D908F744AAE03EAF42633";
+};
+"7F622EDFA59A20E589D26FF6" = {"isa" = "PBXBuildFile";
+"fileRef" = "5C7A52D4239F958EC87E2894";
+};
+"90743038D4FD989EDC331837" = {"isa" = "PBXBuildFile";
+"fileRef" = "70CA0C3545609F2A89BBBBB3";
+};
+"623DD73804660067F0B84F2F" = {"isa" = "PBXBuildFile";
+"fileRef" = "00556967F9F5635A526D112F";
+};
+"1B3C22DC17765E2D350DF6DB" = {"isa" = "PBXBuildFile";
+"fileRef" = "3701F2C6C99CD48B7085AB11";
+};
+"486BC79FD84F7C1DF2174E47" = {"isa" = "PBXBuildFile";
+"fileRef" = "A6921B57F164F52360796AAB";
+};
+"83DB88C049C27F30D08EBCD4" = {"isa" = "PBXBuildFile";
+"fileRef" = "B1B35CCDE01AA42B3453A2F6";
+};
+"DFC003D81C99B1A44EE5C495" = {"isa" = "PBXBuildFile";
+"fileRef" = "B4ACFDF027CC4D43A288DD43";
+};
+"A63DE33C776B7DF6008A5508" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine";
+"dstSubfolderSpec" = 7;
+"name" = "Engine resources";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("08D12EE04239E518389ECDC7",
+"0516FFA5B82446D8BE906B88",
+"A20F111E68FF74DF658F6C69",
+"DDEA06FB257BFB2F8EE19C5F",
+"B240EBACF79C50E8033BF1D7",
+"CE7CE704F8BF7051B016206C",
+"7F622EDFA59A20E589D26FF6",
+"90743038D4FD989EDC331837",
+"623DD73804660067F0B84F2F",
+"1B3C22DC17765E2D350DF6DB",
+"486BC79FD84F7C1DF2174E47",
+"83DB88C049C27F30D08EBCD4",
+"DFC003D81C99B1A44EE5C495",
+);
+};
 "D20BB7AFA807B4873DC30CAC" = {"isa" = "PBXFileReference";
 "path" = "relic-rush.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -450,6 +601,7 @@
 "7DC3FD64D038E4123CA1E8BB",
 "7230CF63DA0E35FF6C2C59A5",
 "FA4553F21395A0E3FBFF5707",
+"A63DE33C776B7DF6008A5508",
 );
 "buildRules" = ();
 "dependencies" = ();
@@ -612,6 +764,66 @@
 );
 "runOnlyForDeploymentPostprocessing" = 0;
 };
+"A44ED45F2A6D9C41BB0D1D1D" = {"isa" = "PBXBuildFile";
+"fileRef" = "6381E17C7276272DC6DC5CC6";
+};
+"1610DF446BA8762F06A76D01" = {"isa" = "PBXBuildFile";
+"fileRef" = "ECDA85D0CBDCAD3F6D5E09A6";
+};
+"572C63282FE4D64937F6EBC6" = {"isa" = "PBXBuildFile";
+"fileRef" = "849DB55FFBB051D4F8045F40";
+};
+"2519DC88ECB593120F5CA011" = {"isa" = "PBXBuildFile";
+"fileRef" = "C547089BBD2224CAB8659129";
+};
+"DC8F82C1AC79ACF2C8415D86" = {"isa" = "PBXBuildFile";
+"fileRef" = "6428ECB55BAFADD8FB48D8DA";
+};
+"4B1123ED9F220105E6A42639" = {"isa" = "PBXBuildFile";
+"fileRef" = "898D908F744AAE03EAF42633";
+};
+"A4DF182E99342425421A9DFA" = {"isa" = "PBXBuildFile";
+"fileRef" = "5C7A52D4239F958EC87E2894";
+};
+"3E2F77AD3A0E85E42BB0A05F" = {"isa" = "PBXBuildFile";
+"fileRef" = "70CA0C3545609F2A89BBBBB3";
+};
+"69DE3B9074FE3FFEB75B9CA7" = {"isa" = "PBXBuildFile";
+"fileRef" = "00556967F9F5635A526D112F";
+};
+"68718CE3FBCA477784BAF1DA" = {"isa" = "PBXBuildFile";
+"fileRef" = "3701F2C6C99CD48B7085AB11";
+};
+"2831AE64F9E3CCE568218C3B" = {"isa" = "PBXBuildFile";
+"fileRef" = "A6921B57F164F52360796AAB";
+};
+"6DF82D7D6C9848BF4016B933" = {"isa" = "PBXBuildFile";
+"fileRef" = "B1B35CCDE01AA42B3453A2F6";
+};
+"4F23B0E7CF73F51DF3032454" = {"isa" = "PBXBuildFile";
+"fileRef" = "B4ACFDF027CC4D43A288DD43";
+};
+"211A65D9A7566EEFF13182D8" = {"isa" = "PBXCopyFilesBuildPhase";
+"buildActionMask" = 2147483647;
+"dstPath" = "engine";
+"dstSubfolderSpec" = 7;
+"name" = "Engine resources";
+"runOnlyForDeploymentPostprocessing" = 0;
+"files" = ("A44ED45F2A6D9C41BB0D1D1D",
+"1610DF446BA8762F06A76D01",
+"572C63282FE4D64937F6EBC6",
+"2519DC88ECB593120F5CA011",
+"DC8F82C1AC79ACF2C8415D86",
+"4B1123ED9F220105E6A42639",
+"A4DF182E99342425421A9DFA",
+"3E2F77AD3A0E85E42BB0A05F",
+"69DE3B9074FE3FFEB75B9CA7",
+"68718CE3FBCA477784BAF1DA",
+"2831AE64F9E3CCE568218C3B",
+"6DF82D7D6C9848BF4016B933",
+"4F23B0E7CF73F51DF3032454",
+);
+};
 "1A2A40820C581B58EB8416F7" = {"isa" = "PBXFileReference";
 "path" = "relic-rush.app";
 "sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -627,6 +839,7 @@
 "8BDA36A014BA4F4B4E62642B",
 "7D16D73F793E0C19171502A8",
 "B780CF5DB070E9FCC44D7434",
+"211A65D9A7566EEFF13182D8",
 );
 "buildRules" = ();
 "dependencies" = ();

@@ -745,6 +745,7 @@ void city_serialize(city *c, save *s);
 /* Create the game's Lua state: the engine API (engine/api.xml), a sandboxed
  * standard library and `require` resolving against lua_dir (several roots
  * separated by ';' are searched in order). */
+void script_engine_dir(const char *dir);   /* where the engine's own Lua is (default: ENGINE_DIR, "engine") */
 void script_open(const char *lua_dir);
 /* Run lua_dir/main.lua, which returns the app descriptor; its init, frame and
  * quit become Lua calls. data_dir and id are filled in when the script
