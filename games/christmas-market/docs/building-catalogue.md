@@ -44,7 +44,8 @@ stock. The category arrows stay above the list.
   evergreen garlands with warm bulbs, red bows, iron lanterns and snow-capped
   firs.
 - **Lighting.** Warm sun, blue fill and Cycles on the CPU at 64 samples, with
-  transparent film. There is no shadow catcher.
+  transparent film. Ground shadows are a separate pass with their own sun, direction, blue tint and strength (see
+  [Ground shadows](../../../docs/BUILDING_ART.md#ground-shadows)).
 - **Painted registration.** The current camera projects a footprint's width as
   `(w * cos(yaw) + h * sin(yaw)) * ppt`. The importer aligns painted foundations
   to the render's ground centre and preserves this base width. `city.tile` stays

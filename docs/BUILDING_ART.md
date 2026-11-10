@@ -142,9 +142,31 @@ inside it. These are fixed, which is what makes all sprites one registered set:
   cell. Each sprite's `base_width` follows exactly from it and from the camera.
 - **Framing.** Each object renders alone, on whole pixels, so its pivot is exact.
 - **Lighting.** The master's sun, fill and world, unchanged. Each object's ground shadow
-  renders separately on a catcher, at low resolution.
+  renders separately on a catcher; see [Ground shadows](#ground-shadows).
 - **Cycles on the CPU.** 64 samples, adaptive threshold 0.02, denoising on, transparent
   film, RGBA PNG and the Standard view transform.
+
+### Ground shadows
+
+A game's `art/buildings.json` may carry a `shadow` block. The shadow pass has its own
+sun, so a lit sprite keeps its light while the shadow falls where the camera sees it.
+Re-render only the shadows with `make buildings GAME=<game>` plus
+`python3 tools/buildings.py <game> --shadows` (sprites and their registration stay).
+
+| Key | Meaning | Christmas Market |
+|---|---|---|
+| `sun` | Direction the light travels, world `[x, y, z]`; z is down. | `[0.45, 0.779, -1.5]` |
+| `angle` | Sun disc in degrees; sets the penumbra width. | `1.5` |
+| `ppt` | Shadow pixels per tile side (the engine scales it up, so keep it near the sprite's). | `85` |
+| `strength` | Opacity multiplier. | `0.45` |
+| `tint` | RGB of the shadow. Omit for the catcher's grey. | `[52, 78, 168]` |
+
+Christmas Market's shadows fall along +Y turned 30° clockwise seen from above (towards
++X), with a slope of 0.9 world units of run per unit of height (`sun.xy` has length
+0.9, `sun.z` is -1.5, so a shadow is 0.6 as long as its caster is tall). They are a snow-blue, not grey: a
+shadow on snow reads cool. The fill light is hidden for the shadow pass, since its wide disc
+only blurs the edge. A game without a `shadow` block keeps the master's sun, 28 px per
+tile and 0.42 strength. Shadows render at 32 samples without denoising.
 
 It then crops each sprite to its visible pixels, moving the pivot with the crop, and
 gives fully transparent edge pixels their neighbours' RGB so filtering can't darken the
