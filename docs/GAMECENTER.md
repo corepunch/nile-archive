@@ -63,7 +63,8 @@ player; a new player simply sees a short list.
 
 `require("leaderboard")` (`engine/leaderboard.lua`) is the screen a game opens
 from a button. It lists the rows `gamecenter.entries` returns in a scrolling
-list under Everyone / Friends tabs, marks the player's own row, offers a button
+list under Everyone / Friends tabs, shows each player's Game Center portrait
+(a round placeholder with their initial until it arrives), marks the player's own row, offers a button
 to Apple's native board when signed in, and paints with the game's `ui.skin`.
 It also explains an empty or loading board, and tells a signed-out player how to
 compare with others. Without Game Center it shows the player's own best, so a
@@ -94,6 +95,25 @@ and the status line; without them the labels use the skin's default text.
 The chosen tab is a button and the other a flat caption, so it reads in any
 skin. `tests/lua/leaderboard.lua` covers the dialog; the picture above is a
 capture with `--gamecenter-demo`.
+
+## Portraits
+
+Each row carries `id` (Game Center's player id) and, once loaded, `photo`, a
+round texture (`photo_rev` changes when it arrives). The platform loads a
+portrait once per player after a board arrives (`GKPlayer loadPhotoForSize:`),
+clips it to a circle at 96 px and hands it to the engine, which keeps the last
+64 (`gamecenter.photo` in C: `gamecenter_photo(id)`). A player without a
+portrait, or a failed load, leaves `photo` nil and is not asked again that run.
+`--gamecenter-demo` draws placeholder busts so the dialog can be captured.
+
+## One board per level
+
+A board is only a name, so a game may keep one per level: `gamecenter.submit("level_07", score)` and
+`leaderboard.new{board = "level_07"}`. Every board still has to exist in App Store
+Connect under `<bundle id>.level_07` (Game Center allows 500 per app, and
+boards can be grouped into a leaderboard set), and a board nobody has played
+looks empty. Prefer one overall board as the main screen and per-level boards
+reached from the level result or the level list, opened on the Friends tab.
 
 ## Engine and platform boundary
 

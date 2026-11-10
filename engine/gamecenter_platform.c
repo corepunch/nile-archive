@@ -39,6 +39,36 @@ static UIViewController *gc_top_controller(void)
 @end
 static GCFinish *gc_finish;
 
+/* A player's portrait as a round RGBA image, handed to the engine once. */
+static void gc_load_photo(GKPlayer *player)
+{
+    NSString *pid = player.gamePlayerID;
+    if (!pid.length || !gamecenter_wants_photo(pid.UTF8String)) return;
+    [player loadPhotoForSize:GKPhotoSizeNormal withCompletionHandler:^(UIImage *photo, NSError *error) {
+        enum { N = 96 };
+        unsigned char *px = NULL;
+        if (photo && !error && photo.CGImage) {
+            px = calloc(N * N, 4);
+            CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+            CGContextRef context = CGBitmapContextCreate(px, N, N, 8, N * 4, space, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+            CGContextAddEllipseInRect(context, CGRectMake(0, 0, N, N));
+            CGContextClip(context);
+            CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+            CGContextDrawImage(context, CGRectMake(0, 0, N, N), photo.CGImage);
+            CGContextRelease(context);
+            CGColorSpaceRelease(space);
+            for (int i = 0; i < N * N; i++) {   /* the renderer wants straight alpha */
+                unsigned char *o = px + i * 4;
+                if (o[3] && o[3] < 255) for (int k = 0; k < 3; k++) o[k] = (unsigned char)MIN(255, o[k] * 255 / o[3]);
+            }
+        }
+        gc_main(^{
+            gamecenter_on_photo(pid.UTF8String, px, px ? N : 0, px ? N : 0);
+            free(px);
+        });
+    }];
+}
+
 bool gamecenter_platform_available(void) { return NSBundle.mainBundle.bundleIdentifier != nil; }
 
 void gamecenter_platform_start(void)
@@ -102,9 +132,11 @@ void gamecenter_platform_load(const char *board, int scope, int count)
                     row->score = (double)e.score;
                     row->me = [e.player.gamePlayerID isEqualToString:GKLocalPlayer.localPlayer.gamePlayerID];
                     snprintf(row->name, sizeof row->name, "%s", e.player.displayName.UTF8String ?: "");
+                    snprintf(row->id, sizeof row->id, "%s", e.player.gamePlayerID.UTF8String ?: "");
                 }
                 (void)mine;
                 gamecenter_on_entries(name.UTF8String, scope, rows, n, true);
+                for (GKLeaderboardEntry *e in entries) gc_load_photo(e.player);
             });
         }];
     }];

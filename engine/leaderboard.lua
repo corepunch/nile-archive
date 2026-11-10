@@ -68,7 +68,8 @@ function L.new(options)
         {kind = "list", id = "rows", scroll = true, gap = 4, height = visible_rows * 44, item = function(record)
             local role = record.me and "leaderboard_me" or "leaderboard_row"
             return {kind = "row", height = 40, gap = 8, align = "center", children = {
-                {kind = "label", text = tostring(record.rank), width = 48, text_align = "start", role = role},
+                {kind = "label", text = tostring(record.rank), width = 36, text_align = "start", role = role},
+                {kind = "custom", width = 36, height = 36, paint = function(box) self:portrait(box, record) end},
                 {kind = "label", text = record.name .. (record.me and me_suffix or ""), grow = 1, text_align = "start", role = role},
                 {kind = "label", text = self.format(record.score), width = 110, text_align = "end", role = role},
             }}
@@ -79,6 +80,21 @@ function L.new(options)
         }},
     }}}
     return self
+end
+
+-- The player's portrait, or a round placeholder with their initial while it
+-- loads (or when they have none). Portraits are already round.
+function L:portrait(box, record)
+    if record.photo then
+        gfx.image(record.photo, box, color.WHITE)
+        return
+    end
+    gfx.circle(box:center(), box.w * .5, color.hex(record.me and 0xD6AC62 or 0xB8A27A))
+    local ok, style = pcall(self.skin.text, self.skin, "body", 18)
+    if ok and style then
+        local initial = record.name:match(utf8.charpattern) or "?"
+        text.in_(style, box, vec2(.5, .5), initial:upper())
+    end
 end
 
 function L:active()
@@ -128,13 +144,15 @@ function L:sync()
     local form = self.form
     local rows = gamecenter.entries(self.board, self.scope)
     local parts = {gamecenter.state(), self.scope}
-    for _, row in ipairs(rows or {}) do parts[#parts + 1] = row.rank .. ":" .. row.name .. ":" .. row.score .. (row.me and "*" or "") end
+    for _, row in ipairs(rows or {}) do
+        parts[#parts + 1] = row.rank .. ":" .. row.name .. ":" .. row.score .. ":" .. row.photo_rev .. (row.me and "*" or "")
+    end
     if rows == nil then parts[#parts + 1] = "-" end
     local signature = table.concat(parts, "|")
     if signature == self.signature then return end
     self.signature = signature
     local items = {}
-    for i, row in ipairs(rows or {}) do items[i] = {id = i, rank = row.rank, name = row.name, score = row.score, me = row.me} end
+    for i, row in ipairs(rows or {}) do items[i] = {id = i, rank = row.rank, name = row.name, score = row.score, me = row.me, photo = row.photo} end
     assert(form:set_items("rows", items))
     local note = self:note(rows)
     form:set("status", note or "")

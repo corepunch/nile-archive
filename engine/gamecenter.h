@@ -18,6 +18,8 @@ void gamecenter_platform_access_point(bool on);
 /* Engine side, called by the backend. */
 void gamecenter_on_auth(bool signed_in, const char *alias);
 void gamecenter_on_report(bool achievement, const char *name, double value, bool ok);
+bool gamecenter_wants_photo(const char *id);   /* true once per player: load their portrait now */
+void gamecenter_on_photo(const char *id, const unsigned char *rgba, int w, int h);   /* NULL rgba: none available */
 void gamecenter_on_entries(const char *board, int scope, const gamecenter_entry *entries, int n, bool ok);
 
 /* Core hooks. */
