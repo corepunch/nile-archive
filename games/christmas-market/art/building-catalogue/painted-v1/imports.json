@@ -384,27 +384,27 @@
     ]
   },
   "snowy_bench": {
-    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
-      560,
-      281,
-      841,
-      561
+      0,
+      0,
+      540,
+      486
     ],
     "crop": [
-      27,
-      43,
-      265,
-      273
+      168,
+      152,
+      368,
+      356
     ],
-    "scale": 0.37815126,
+    "scale": 0.57843137,
     "pivot": [
-      44.207,
-      65.543
+      56.648,
+      90.205
     ],
     "image": [
-      90,
-      87
+      116,
+      118
     ]
   },
   "mailbox": {
@@ -792,99 +792,99 @@
     ]
   },
   "fir_snowy": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
+      540,
       0,
-      0,
-      543,
-      724
+      1079,
+      486
     ],
     "crop": [
-      100,
-      155,
-      438,
-      598
+      173,
+      116,
+      368,
+      379
     ],
-    "scale": 0.26185102,
+    "scale": 0.58174905,
     "pivot": [
-      44.59,
-      104.509
+      56.984,
+      138.008
     ],
     "image": [
-      89,
-      116
+      113,
+      153
     ]
   },
   "birch": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
-      543,
+      1079,
       0,
-      1086,
-      724
+      1619,
+      486
     ],
     "crop": [
-      130,
-      143,
-      423,
-      586
+      178,
+      89,
+      377,
+      383
     ],
-    "scale": 0.25282167,
+    "scale": 0.5,
     "pivot": [
-      33.334,
-      96.982
+      44.49,
+      127.996
     ],
     "image": [
-      74,
-      112
+      100,
+      147
     ]
   },
   "fir_decorated": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
-      1086,
       0,
-      1629,
-      724
+      486,
+      540,
+      971
     ],
     "crop": [
-      100,
-      124,
-      444,
-      600
+      181,
+      81,
+      368,
+      389
     ],
-    "scale": 0.27521008,
+    "scale": 0.53246753,
     "pivot": [
-      47.542,
-      119.078
+      49.613,
+      154.943
     ],
     "image": [
-      95,
-      131
+      100,
+      164
     ]
   },
   "pine_grove": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
-      1629,
-      0,
-      2172,
-      724
+      540,
+      486,
+      1079,
+      971
     ],
     "crop": [
-      48,
-      152,
-      482,
-      606
+      97,
+      45,
+      446,
+      432
     ],
-    "scale": 0.48017621,
+    "scale": 0.68475452,
     "pivot": [
-      99.644,
-      170.764
+      114.34,
+      214.234
     ],
     "image": [
-      208,
-      218
+      239,
+      265
     ]
   }
 }

@@ -293,19 +293,7 @@
       "output": "art/building-catalogue/painted-v1/tree-output.png",
       "output_sha256": "6d9c06c846247657d7b8f2ce7bae2aaf0b11a313695b32cd9986f0faf03334ac",
       "layout": "art/building-catalogue/painted-v1/tree-layout.json",
-      "accepted_keys": [
-        "bamboo",
-        "banana",
-        "cypress",
-        "fan_palm",
-        "frangipani",
-        "jungle_tree",
-        "kapok",
-        "mango",
-        "palm_young",
-        "papaya",
-        "twin_palms"
-      ]
+      "accepted_keys": []
     },
     {
       "category": "water",
@@ -388,6 +376,40 @@
       "output_sha256": "792b053f77e8aa925db4e3b99f31923992becae720140bd5a6fcf65ca7b02007",
       "layout": "art/building-catalogue/painted-v1/versions/first/wonder-v1-layout.json",
       "accepted_keys": []
+    },
+    {
+      "category": "z-enlarged",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/z-enlarged-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/z-enlarged-input.png",
+          "sha256": "915a5ab2ebb454a328c4d8da77953c1dd39d1994230ce68e26ad9d431ffea9dd"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/detail-reference.png",
+          "sha256": "132d6c932bf67b3c34a6de170ad64c4b5af98ecadbe9f3e5c3465c8f5c07b2a9"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+      "output_sha256": "320b2458b313e7450f17682ec1712d5e1c9ec26f255f02f4d9d8f2ebbdece584",
+      "layout": "art/building-catalogue/painted-v1/z-enlarged-layout.json",
+      "accepted_keys": [
+        "bamboo",
+        "banana",
+        "cypress",
+        "fan_palm",
+        "frangipani",
+        "jungle_tree",
+        "kapok",
+        "mango",
+        "palm_young",
+        "papaya",
+        "twin_palms"
+      ],
+      "render_baseline": "ef26de3"
     }
   ]
 }

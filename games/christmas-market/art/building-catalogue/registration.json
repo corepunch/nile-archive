@@ -394,11 +394,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/snowy_bench.png",
    "image": [
-    118,
+    116,
     118
    ],
    "pivot": [
-    57.805,
+    56.648,
     90.205
    ],
    "base_width": 136.603,
@@ -658,11 +658,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/fir_snowy.png",
    "image": [
-    106,
+    113,
     153
    ],
    "pivot": [
-    53.263,
+    56.984,
     138.008
    ],
    "base_width": 136.603,
@@ -682,11 +682,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/birch.png",
    "image": [
-    97,
+    100,
     147
    ],
    "pivot": [
-    43.24,
+    44.49,
     127.996
    ],
    "base_width": 136.603,
@@ -706,11 +706,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/fir_decorated.png",
    "image": [
-    91,
+    100,
     164
    ],
    "pivot": [
-    45.327,
+    49.613,
     154.943
    ],
    "base_width": 136.603,
@@ -730,11 +730,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/pine_grove.png",
    "image": [
-    216,
+    239,
     265
    ],
    "pivot": [
-    102.85,
+    114.34,
     214.234
    ],
    "base_width": 273.205,

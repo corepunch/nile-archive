@@ -754,11 +754,11 @@
    "scale": 1.4521801471710205,
    "sprite": "data/buildings/date_palm.png",
    "image": [
-    130,
+    126,
     138
    ],
    "pivot": [
-    65.766,
+    63.903,
     128.447
    ],
    "base_width": 136.603,
@@ -779,11 +779,11 @@
    "sprite": "data/buildings/doum_palm.png",
    "image": [
     130,
-    116
+    119
    ],
    "pivot": [
     65.362,
-    108.328
+    111.135
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/doum_palm.png",
@@ -802,11 +802,11 @@
    "scale": 2.4553847312927246,
    "sprite": "data/buildings/cypress.png",
    "image": [
-    132,
+    129,
     282
    ],
    "pivot": [
-    66.294,
+    64.766,
     270.249
    ],
    "base_width": 136.603,
@@ -826,12 +826,12 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/acacia.png",
    "image": [
-    121,
-    129
+    129,
+    120
    ],
    "pivot": [
-    50.91,
-    122.228
+    54.941,
+    113.57
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/acacia.png",
@@ -850,11 +850,11 @@
    "scale": 1.8009268045425415,
    "sprite": "data/buildings/fig.png",
    "image": [
-    116,
+    146,
     175
    ],
    "pivot": [
-    58.033,
+    73.279,
     163.824
    ],
    "base_width": 136.603,
@@ -874,11 +874,11 @@
    "scale": 2.026759386062622,
    "sprite": "data/buildings/pomegranate.png",
    "image": [
-    134,
+    158,
     177
    ],
    "pivot": [
-    68.637,
+    80.531,
     167.615
    ],
    "base_width": 136.603,
@@ -898,11 +898,11 @@
    "scale": 1.7983828783035278,
    "sprite": "data/buildings/olive.png",
    "image": [
-    117,
+    147,
     161
    ],
    "pivot": [
-    57.492,
+    72.236,
     151.69
    ],
    "base_width": 136.603,
@@ -922,11 +922,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/palm_grove.png",
    "image": [
-    206,
+    213,
     266
    ],
    "pivot": [
-    88.801,
+    92.216,
     187.751
    ],
    "base_width": 273.205,
@@ -946,11 +946,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/twin_palms.png",
    "image": [
-    197,
+    203,
     233
    ],
    "pivot": [
-    99.706,
+    102.568,
     191.7
    ],
    "base_width": 273.205,
@@ -970,11 +970,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/sycamore.png",
    "image": [
-    178,
+    197,
     202
    ],
    "pivot": [
-    89.773,
+    99.513,
     180.524
    ],
    "base_width": 273.205,
@@ -995,11 +995,11 @@
    "sprite": "data/buildings/tamarisk.png",
    "image": [
     171,
-    171
+    159
    ],
    "pivot": [
     87.112,
-    159.948
+    148.228
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/tamarisk.png",

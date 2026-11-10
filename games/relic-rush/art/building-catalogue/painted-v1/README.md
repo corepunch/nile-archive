@@ -23,3 +23,5 @@ accepted finish, palette and detail density. [references.json](references.json)
 records every literal prompt, ordered image inputs and hashes, retained versions
 and accepted runtime keys. Image generation requires a fresh visual review; the
 import command above reproduces sprites from the saved accepted PNGs.
+
+`z-enlarged-*` overrides earlier accepted artwork for the enlarged objects. Its guide is assembled from the current registered Blender renders at `ef26de3`; the remaining geometry registrations retain the original baseline. See `references.json` for the exact prompt and `imports.json` for spatial registration. Reimport with the command above.
