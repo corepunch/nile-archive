@@ -54,6 +54,29 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
+## Leaderboards
+
+Game Center is in every game through the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)).
+Relic Rush turns it on with the `leaderboard` block of `data/game.json`: one **stars** board holds
+the lifetime Discovery Stars (they are never spent), and one board per expedition (`level_01`
+to `level_30`) holds its best score. Scores are reported when a reward is claimed, so a
+replay that beats the old score raises that board, and a weaker one changes nothing. Settings
+has a LEADERBOARD link for the stars board; the results card has a LEADERBOARD button for that
+expedition. Both open the shared dialog with Everyone / Friends tabs, player portraits and the
+player's own row marked; without Game Center it shows the player's own best.
+
+| Settings | Stars board | Results card | Expedition board |
+| --- | --- | --- | --- |
+| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The stars board](docs/screenshots/leaderboard.jpg) | ![Results with a Leaderboard button](docs/screenshots/victory.jpg) | ![One expedition's board](docs/screenshots/level-leaderboard.jpg) |
+
+![The stars board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
+
+To publish them, create 31 leaderboards in App Store Connect (Game Center, high to low) with the
+identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_01` ...
+`com.corepunch.relicrush.level_30`, ideally grouped in a leaderboard set. `--gamecenter-demo`
+shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
+open the dialogs.
+
 ## Shared UI and dialog layers
 
 Pause, building and guide dialogs use engine-owned form resources and one game skin. The whole look (text palettes, panels, buttons and their pressed/disabled states, focus) is data in [`lua/skin.lua`](lua/skin.lua), compiled by the engine's `ui.skin`; see [skin files](../../docs/UI_ENGINE.md#skins). The expedition screen follows the portrait match-3 layout of Royal Match, Toon Blast and Homescapes. With no band behind them, a hexagonal Moves medallion (red over the last five moves), one small resource panel per goal with its remaining count (a check seal when met) and the pause button float along the top edge, and the three tools stand along the bottom edge. Nothing else covers the painting, and the board fills the space between. Level details and the Explorer's Guide live in Pause; score/reward totals live in Results. The measured goal list retains every win condition without duplicate totals or a progress bar. The guide uses a measured data-backed list too. Menus and other closable popups dismiss on background taps through the shared engine; results retain explicit actions. Modal screens and dialogue use the engine’s cached GPU Gaussian blur. See the [match-3 HUD review](docs/review/match3-hud/README.md), the [header and popup review](docs/review/expedition-header/README.md) and [shared UI API](../../docs/UI_ENGINE.md).
@@ -270,7 +293,7 @@ make web && python3 -m http.server 8080 --directory dist   # http://localhost:80
 
 The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the HUD bands run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble|leaderboard|level-leaderboard`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx ray|bomb|prism`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 

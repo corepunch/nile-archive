@@ -19,6 +19,7 @@
 --   R.town_middle_icon(at)  the round middle button's icon in the town
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
+--   data/game.json "leaderboard" {board, title, level_board, level_title}   Game Center boards (below)
 -- See docs/PORTRAIT_GAMES.md.
 local json = require("json")
 local G = {}
@@ -47,7 +48,7 @@ G.DEFAULTS = {
         lives_full = "5 FULL",
         notes = {"A life returns every 30 minutes, up to five.", "Gold buys buildings.", "Stars unlock shop items and land."},
     },
-    pause = {guide = "GUIDE", quit = "QUIT", town = "Your town"},
+    pause = {guide = "GUIDE", quit = "QUIT", town = "Your town", leaderboard = "LEADERBOARD"},
     confirm = {title = "Restart this level?", body = "The board starts over: moves, goals and tools reset. Retrying is always free.",
                restart = "RESTART", cancel = "KEEP PLAYING"},
     failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Try a special combo or use a tool.",
@@ -456,12 +457,13 @@ function G.bind(R, over)
     -- Pause: the settings grouped in one well, then Resume and the secondary
     -- actions. Restart asks first; Quit keeps the board, which LEVEL or the
     -- level list resume later. From the town only Resume applies.
-    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit)
+    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard)
     R.pause_form = pause_form
     R.dialogs[R.OV_PAUSE] = function()
         local level = R.on_island and W.pause.town or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
         local action = match3.draw_pause(R, pause_form, level)
         if action == "restart" then R.overlay = R.OV_CONFIRM
+        elseif action == "leaderboard" then R.open_leaderboard()
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
             R.notice(W.notices.quit:format(R.g.level + 1))
@@ -552,8 +554,11 @@ function G.bind(R, over)
         local before = R.overlay
         R.modal_bounds = nil
         local draw = R.dialogs[R.overlay]
+        local covered = R.leaderboard_active()   -- a board above this dialog owns the input
+        if covered then ui.set_enabled(false) end
         if draw then draw() end
-        if R.overlay == before and R.modal_bounds and not R.modal_closing
+        if covered then ui.set_enabled(true) end
+        if R.overlay == before and R.modal_bounds and not R.modal_closing and not covered
                 and ui.modal_dismiss(R.modal_bounds, {fresh=d.fresh}) then R.overlay = R.OV_NONE end
         d.fresh = false
         reset_paint()
@@ -896,10 +901,46 @@ function G.bind(R, over)
     function R.claim_reward()
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders)
         if not paid then return end
+        R.submit_scores()
         R.save_progress()
         R.on_island = true
         R.overlay = R.OV_NONE
         R.notice(first and (journey.wonder_at(R.prog.level) and W.notices.reward_building or W.notices.reward_story) or W.notices.reward_replay)
+    end
+
+    -- Game Center (engine/gamecenter.lua docs: docs/GAMECENTER.md). game.json's
+    -- "leaderboard" block turns it on: `board` holds the lifetime Discovery Stars,
+    -- `level_board` (a format with the level number, e.g. "level_%02d") each
+    -- expedition's best score. Scores are reported when a reward is claimed.
+    local boards = {}
+    function R.submit_scores()
+        local c = W.leaderboard
+        if not c then return end
+        gamecenter.submit(c.board, R.prog.wallet[rules.STARS])
+        if c.level_board and R.g then gamecenter.submit(c.level_board:format(R.g.level + 1), R.g.score) end
+    end
+    local function board_dialog(name, title)
+        if not boards[name] then
+            boards[name] = require("leaderboard").new{skin = skin, board = name, title = title, width = 400, texts = W.leaderboard.texts}
+        end
+        return boards[name]
+    end
+    -- The board of the whole game, or of one expedition (0-based level).
+    function R.open_leaderboard(level)
+        local c = W.leaderboard
+        if not c then return end
+        if level and c.level_board then
+            board_dialog(c.level_board:format(level + 1), c.level_title:format(level + 1)):open()
+        elseif not level then
+            board_dialog(c.board, c.title):open()
+        end
+    end
+    function R.leaderboard_active()
+        for _, lb in pairs(boards) do if lb:active() then return lb end end
+    end
+    function R.draw_leaderboard(dt)
+        local lb = R.leaderboard_active()
+        if lb then lb:draw(dt, {reduced_motion = R.reduced_motion}) end
     end
 
     require("match3.debug").bind(R, W)
@@ -927,7 +968,8 @@ function G.app(R)
         local inp = input.get()
         R.story_tick()
         local talking = story.active()
-        local world = (R.overlay ~= R.OV_NONE or talking) and input{pos = inp.pos, pinch = 1} or input.world()
+        local board = R.leaderboard_active()
+        local world = (R.overlay ~= R.OV_NONE or talking or board) and input{pos = inp.pos, pinch = 1} or input.world()
         R.layout()
         tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
         if app.arg("smoke") then (app.arg("campaign") and R.campaign_smoke or R.smoke)() end
@@ -941,7 +983,7 @@ function G.app(R)
         rules.refill_lives(R.prog, now)
         if rules.lose_life(R.prog, R.g, now) then R.save_progress() end
         R.vfx_update(dt)
-        ui.set_enabled(R.overlay == R.OV_NONE and not talking)
+        ui.set_enabled(R.overlay == R.OV_NONE and not talking and not board)
         if R.on_island then R.island_screen(world, dt) else R.board_screen(world, dt) end
         if not R.on_island then
             R.vfx_draw()
@@ -951,10 +993,11 @@ function G.app(R)
         R.draw_toast()
         ui.set_enabled(true)
         if not talking then R.overlays(dt) end   -- a dialogue comes first; dialogs wait for it
+        if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
         -- The top row (wallet in the town, goals and moves on a board) stays crisp above every
         -- popup, blur and dialogue; it is only drawn again here, so it takes no input.
-        if R.overlay ~= R.OV_NONE or talking then
+        if (R.overlay ~= R.OV_NONE or talking) and not board then   -- a leaderboard covers the top row too
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end
             ui.set_enabled(true)
@@ -1003,6 +1046,7 @@ function G.app(R)
         if not app.arg("smoke") then save.read("progress", R.serialize) end
         if app.arg("empty-lives") then R.prog.lives, R.prog.life_at, R.quiet = 0, app.clock() + rules.LIFE_INTERVAL, true end
         rules.refill_lives(R.prog, app.clock())
+        if W.leaderboard and not app.arg("smoke") then gamecenter.submit(W.leaderboard.board, R.prog.wallet[rules.STARS]) end
         R.story_current, R.story_preview = nil, false
         R.layout()
         if not R.start_level() then

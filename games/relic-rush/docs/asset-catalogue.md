@@ -66,6 +66,17 @@ safe-area phone layout. States are listed below with the checkbox and button
 variants; no artwork, source prompt, runtime file or sprite transform is added.
 The menu contract is recorded in `art/board-states/manifest.json` under `pause_menu`.
 
+Pause also carries a LEADERBOARD link above the guide link, and the results card a
+LEADERBOARD button under the card, both drawn by the game skin (the jade button and the link
+role). They open the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)):
+a panel with Everyone / Friends tabs (the chosen one a jade button, the other a flat caption), a
+scrolling list of rank, portrait, name and score rows (a round placeholder bust with the initial
+while a portrait loads, "(you)" on the player's row), loading / empty / signed-out notes, and
+Game Center and Close buttons. No artwork is added: every state is skin paint, and the portraits
+come from Game Center at runtime. Reviewed captures: `pause`, `phone-pause`, `victory`,
+`leaderboard`, `phone-leaderboard` and `level-leaderboard` in `docs/screenshots` (from
+`build/test/relic-rush "shot leaderboard"` ..., with `--gamecenter-demo`).
+
 Reproduce and inspect both contexts at both phone sizes with
 `python3 tests/fixtures/pause-actions/capture.py`; reviewed captures and exact
 commands are in the [pause menu review](review/pause-actions/README.md).

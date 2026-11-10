@@ -315,7 +315,7 @@ function E.guide_form(copy, guide_icon)
     }}
 end
 
-function E.pause_form(guide_label, quit_label)
+function E.pause_form(guide_label, quit_label, leaderboard_label)
     return ui.form{
         root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
             {kind="label",text="Settings",height=44,em=34},
@@ -329,6 +329,7 @@ function E.pause_form(guide_label, quit_label)
                 {kind="button",id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
                 {kind="button",id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
             }},
+            {kind="button",id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
             {kind="button",id="guide",text=guide_label,height=32,role="link",em=20},
         }},
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
@@ -352,7 +353,8 @@ function E.draw_pause(R, form, level)
     assert(ok, message)
     form.values.expedition = not R.on_island
     form:set("level", level)
-    local event = draw_dialog_form(R, form, 396, R.SCREEN_H / 2)
+    -- the leaderboard link makes the card taller: sit lower so its top clears the gear
+    local event = draw_dialog_form(R, form, 396, R.SCREEN_H / 2 + (R.words.leaderboard and 24 or 0))
     if not event then return end
     if event.kind == "change" then
         ok, message = form:pull(R)
@@ -360,7 +362,7 @@ function E.draw_pause(R, form, level)
         sfx.enable(R.sound)
     elseif event.id == "resume" then R.overlay = R.OV_NONE
     elseif event.id == "guide" then R.overlay = R.OV_GUIDE
-    else return event.id end
+    else return event.id end   -- restart, quit, leaderboard: the game decides
 end
 
 function E.new(config)

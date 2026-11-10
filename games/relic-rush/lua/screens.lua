@@ -111,6 +111,11 @@ local function result_screen()
         if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
         else R.close_dialog() end
     end
+    local boards = R.words.leaderboard
+    if boards and boards.level_board and not R.modal_closing then   -- this expedition's Game Center board
+        local y = math.min(l.card.y + l.card.h + 16, SCREEN_H - 66)
+        if button(rect(l.card.x + 60, y, l.card.w - 120, 46), boards.level_button, true) then R.open_leaderboard(R.g.level) end
+    end
     set_paint(s)
 end
 R.dialogs[R.OV_RESULT] = result_screen
