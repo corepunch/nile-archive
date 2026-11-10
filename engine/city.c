@@ -258,6 +258,7 @@ void city_begin_move(city *c, int index)
     c->press_target = 0;
     c->press_time = 0;
     c->ghost = city_snap(c, c->items[index].pos, c->placing);
+    haptic_play(HAPTIC_MATCH, .6f);
 }
 
 void city_cancel(city *c)
@@ -277,6 +278,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
     const building_def *d = &c->defs[c->placing];
     if (!city_can_place(c, c->ghost, c->placing, c->moving)) {
         ev.result = CITY_BLOCKED;
+        haptic_play(HAPTIC_ERROR, .5f);
         return ev;
     }
     if (c->moving >= 0) {
@@ -296,6 +298,7 @@ city_event city_confirm(city *c, purse *wallet, double now)
     }
     c->pop_index = ev.building;
     c->pop_time = 1;
+    haptic_play(HAPTIC_PLACE, 1);
     city_cancel(c);
     return ev;
 }

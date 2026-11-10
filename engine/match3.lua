@@ -19,39 +19,44 @@ end
 
 -- The two match-3 cities share the same view templates. Game code supplies
 -- localized copy, skin colors, and records with stable keys via set_items.
-function E.catalogue_form(title, hint, close, detail_color, picture_fit)
+function E.catalogue_form(title, hint, close, detail_color, paint_tile)
+    -- Icons in rows of four: a record is one row, {id, cells={building records}}.
+    -- A tile is its painted icon under a flat button (pick1..pick4).
     return ui.form{kind='column',panel=true,padding=18,gap=8,children={
         {kind='label',text=title,height=40,em=32},
-        {kind='label',id='wallet',height=24,em=16,text_style=detail_color},
         {kind='row',height=38,gap=8,children={
             {kind='button',id='category_prev',text='<',width=42,em=22},
             {kind='label',id='category',grow=1,em=21},
             {kind='button',id='category_next',text='>',width=42,em=22},
         }},
         {kind='label',text=hint,height=24,em=14,text_style=detail_color},
-        {kind='list',id='stock',scroll=true,height=430,gap=10,item=function(entry)
-            return {kind='row',height=116,gap=12,align='center',children={
-                {kind='custom',width=98,height=100,paint=function(box) picture_fit(entry.sprite,box,255) end},
-                {kind='column',grow=1,gap=4,children={
-                    {kind='label',text=entry.name,wrap=true,text_align='start',em=20},
-                    {kind='label',text=entry.details,wrap=true,text_align='start',em=14,text_style=detail_color},
-                    {kind='button',id='buy',text=entry.action,height=34,em=17,enabled=entry.available},
-                }},
-            }}
+        {kind='list',id='stock',scroll=true,height=350,gap=8,item=function(row)
+            local cells = {}
+            for j = 1, 4 do
+                local record = row.cells[j]
+                cells[j] = record and {kind='overlay',grow=1,height=100,children={
+                    {kind='custom',paint=function(box) paint_tile(box, record) end},
+                    {kind='button',id='pick'..j,text='',flat=true},
+                }} or {kind='spacer',grow=1}
+            end
+            return {kind='row',height=100,gap=8,children=cells}
         end},
+        {kind='label',id='info_name',height=26,em=20},
+        {kind='label',id='info_note',height=40,wrap=true,em=14,text_style=detail_color},
         {kind='button',id='close',text=close,height=42,em=21},
     }}
 end
 
-function E.expedition_form(title, intro, close, detail_color)
+-- Slim rows: the whole row is the button (id 'play'); paint_level draws its
+-- medallion, name and state.
+function E.expedition_form(title, intro, close, detail_color, paint_level)
     return ui.form{kind='column',panel=true,padding=20,gap=12,children={
         {kind='label',text=title,height=42,em=34},
-        {kind='label',text=intro,wrap=true,em=17,text_style=detail_color},
-        {kind='list',id='levels',scroll=true,height=430,gap=12,item=function(e)
-            return {kind='column',panel=true,padding=12,gap=6,children={
-                {kind='label',text=e.title,wrap=true,text_align='start',em=24},
-                {kind='label',text=e.note,wrap=true,text_align='start',em=15,text_style=detail_color},
-                {kind='button',id='play',text=e.action,enabled=e.available,height=42,em=21},
+        {kind='label',text=intro,wrap=true,em=14,text_style=detail_color},
+        {kind='list',id='levels',scroll=true,height=430,gap=6,item=function(e)
+            return {kind='overlay',height=e.state == 'current' and 66 or 50,children={
+                {kind='custom',paint=function(box) paint_level(box, e) end},
+                {kind='button',id='play',text='',flat=true,enabled=e.available},
             }}
         end},
         {kind='button',id='close',text=close,height=42,em=21},
@@ -219,8 +224,9 @@ function E.bind_board_ui(R, rules, tool_art)
         text.box(R.pal(PAL_GOLD, 30), rect(inner.x + 20, band.y + (m.title and 42 or 20), inner.w - 40, band.h - (m.title and 58 or 40)),
                  vec2(.5, .5), m.text)
         -- Any tap while it holds sends it on its way; the board stays untouched.
+        -- The tap that started the level (Play releases as the board opens) is not one.
         ui.block(app.bleed())
-        if ui.hit(app.bleed(), 0).clicked and m.t < MISSION_IN + MISSION_HOLD then m.t = MISSION_IN + MISSION_HOLD end
+        if ui.hit(app.bleed(), 0).clicked and m.t > .15 and m.t < MISSION_IN + MISSION_HOLD then m.t = MISSION_IN + MISSION_HOLD end
     end
 
     -- Kudos pop over the board, swell, then rise and fade.
@@ -233,7 +239,9 @@ function E.bind_board_ui(R, rules, tool_art)
         local pop = k.t < .22 and ease.out_back(k.t / .22) or 1
         local fade = 1 - num.saturate((k.t - .95) / .3)
         local at = R.board_origin + vec2(0, -20 - num.saturate((k.t - .9) / .35) * 30)
-        local em = (40 + 6 * k.level) * pop
+        -- Glyphs with outline and shadow are rasterised per pixel size, so the pop
+        -- steps through a few sizes instead of one new size every frame.
+        local em = (40 + 6 * k.level) * (math.floor(pop * 5 + .5) / 5)
         if not R.reduced_motion then
             gfx.additive(true)
             gfx.glow(at, 150 * pop, rgba(255, 214, 110, 120 * fade), rgba(255, 214, 110, 0))

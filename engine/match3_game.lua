@@ -61,16 +61,15 @@ G.DEFAULTS = {
         title = "Build your town", hint = "Choose a building, then place it.", close = "BACK TO TOWN",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
         category = "all",
-        choose = "CHOOSE LOCATION", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
+        choose = "CHOOSE LOCATION", tap = "Tap to build", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
         stars = "REQUIRES %d STARS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
         price = "%d gold", unlock = "  /  %d stars to unlock",
         details = "%d x %d tiles  /  Owned %d\n%s",
-        wallet = "%d spendable Gold / %d reserved / %d Stars",
     },
     expeditions = {
         title = "Levels", intro = "First clear: the story, Stars and building funding.\nReplay: gold.", close = "BACK TO TOWN",
-        resume = "RESUME", replay = "REPLAY FOR GOLD", pending = "BUILD FIRST", new = "NEW LEVEL", earlier = "COMPLETE EARLIER LEVELS",
-        resume_note = "Continue the unfinished board. Rewards are paid only after a win.",
+        locked = "LOCKED", resume = "RESUME", replay = "REPLAY", pending = "BUILD FIRST", new = "NEW LEVEL", earlier = "COMPLETE EARLIER LEVELS",
+        resume_note = "Continue the unfinished board. Rewards come with a win.",
         replay_note = "Gold only.", building_note = "First clear: building funded.", story_note = "First clear: the next scene.",
     },
     debug = {victory = 1, catalogue_card = 10, narrator = ""},
@@ -570,11 +569,27 @@ function G.bind(R, over)
     local categories, category = C.categories, 1
     for i, cat in ipairs(categories) do if cat[1] == C.category then category = i end end
     local shop = ui.modals(skin)
-    local catalogue_form = match3.catalogue_form(C.title, C.hint, C.close, PAL_CREAM, R.picture_fit)
+    local function paint_tile(box, record)
+        local locked = record.state == "locked"
+        R.rrect(box:offset(vec2(0, 3)), 13, rgba(201, 164, 100))
+        R.rrect(box, 13, record.selected and rgba(184, 60, 60) or locked and rgba(243, 229, 192) or rgba(255, 246, 214))
+        if record.selected then R.rrect(box:inflate(-3), 11, rgba(255, 246, 214)) end
+        R.picture_fit(record.sprite, rect(box.x + 4, box.y + 4, box.w - 8, box.h - 34), locked and 110 or 255)
+        local line = rect(box.x, box.y + box.h - 28, box.w, 24)
+        if record.state == "built" or locked then   -- icons from the game's atlas
+            R.picture_fit(record.state == "built" and R.shop_built_art or R.shop_locked_art, rect.centered(line:center(), size2(30, 30)), 255)
+        else
+            R.picture_fit(R.wallet_icons()[2], rect(box.x + box.w / 2 - 34, line.y + 1, 22, 22), 255)
+            R.say_left(tostring(record.cost), rect(box.x + box.w / 2 - 9, line.y, box.w / 2, 24), 19, record.state == "ready" and PAL_GOLD or PAL_CREAM)
+        end
+    end
+    local catalogue_form = match3.catalogue_form(C.title, C.hint, C.close, PAL_CREAM, paint_tile)
     R.catalogue_form = catalogue_form
 
+    local tiles = {}   -- building key -> its tile record
+    local selected   -- the tile the footer explains
     local function refresh_catalogue()
-        local records = {}
+        local records, rows = {}, {}
         local cat = categories[category][1]
         local wallet = R.prog.wallet
         for i, meta in ipairs(island.catalogue) do
@@ -582,25 +597,51 @@ function G.bind(R, over)
                 local def = R.buildings[i]
                 local owned = island.owned(R.island, i - 1)
                 local available = island.can_buy(R.island, wallet, R.prog.level, i - 1)
-                local action = C.choose
+                local action, state = C.choose, "ready"
                 if i <= island.WONDERS then
-                    action = owned > 0 and C.built or journey.wonder_levels[i] > R.prog.level and C.complete:format(journey.wonder_levels[i]) or
-                        i - 1 ~= island.wonder_count(R.island) and C.earlier or action
-                elseif wallet[rules.STARS] < meta.stars then action = C.stars:format(meta.stars)
-                elseif not wallet:covers(def.cost) then action = C.poor
-                elseif wallet[rules.GOLD] - island.reserved_gold(R.island, R.prog.level) < def.cost[1] then action = C.reserved
-                elseif R.island.count >= 160 then action = C.full end
+                    local reason = owned > 0 and C.built or journey.wonder_levels[i] > R.prog.level and C.complete:format(journey.wonder_levels[i]) or
+                        i - 1 ~= island.wonder_count(R.island) and C.earlier
+                    if reason then action, state = reason, owned > 0 and "built" or "locked" end
+                elseif wallet[rules.STARS] < meta.stars then action, state = C.stars:format(meta.stars), "locked"
+                elseif not wallet:covers(def.cost) then action, state = C.poor, "poor"
+                elseif wallet[rules.GOLD] - island.reserved_gold(R.island, R.prog.level) < def.cost[1] then action, state = C.reserved, "poor"
+                elseif R.island.count >= 160 then action, state = C.full, "poor" end
                 local price = C.price:format(def.cost[1])
                 if i > island.WONDERS then price = price .. C.unlock:format(meta.stars) end
-                records[#records + 1] = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite,
-                    details=C.details:format(meta.size.w, meta.size.h, owned, price), available=available, action=action}
+                local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, cost=def.cost[1], state=state,
+                    details=C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  "), available=available, action=action}
+                records[#records + 1], tiles[meta.key] = record, record
             end
         end
-        assert(catalogue_form:set_items("stock", records))
+        local in_category = false
+        for _, record in ipairs(records) do if record.id == selected then in_category = true end end
+        if not in_category then
+            selected = records[1] and records[1].id
+            for _, record in ipairs(records) do if record.available then selected = record.id; break end end
+        end
+        for n, record in ipairs(records) do
+            record.selected = record.id == selected
+            local r = (n - 1) // 4 + 1
+            rows[r] = rows[r] or {id="r" .. r, cells={}}
+            rows[r].cells[#rows[r].cells + 1] = record
+        end
+        assert(catalogue_form:set_items("stock", rows))
         catalogue_form:set("category", categories[category][2])
-        local reserved = island.reserved_gold(R.island, R.prog.level)
-        catalogue_form:set("wallet", C.wallet:format(math.max(0, wallet[rules.GOLD] - reserved), reserved, wallet[rules.STARS]))
+        local record = tiles[selected]
+        catalogue_form:set("info_name", record and record.name or "")
+        catalogue_form:set("info_note", record and (record.details .. "\n" .. (record.available and C.tap or record.action)) or "")
         return records
+    end
+
+    -- The tile node and record for a building key, for smoke tests that press it.
+    function R.catalogue_tile(key)
+        for _, node in pairs(catalogue_form.nodes) do
+            if node.local_id and node.local_id:find("^pick") then
+                local row = catalogue_form:get_item("stock", node.item_key)
+                local record = row and row.cells[tonumber(node.local_id:sub(5))]
+                if record and record.id == key then return node, record end
+            end
+        end
     end
 
     function R.open_catalogue(filter, review_page)
@@ -612,7 +653,7 @@ function G.bind(R, over)
         local records = refresh_catalogue()
         if review_page and #records > 0 then
             local index = num.clampi((math.floor(review_page) - 1) * 4 + 1, 1, #records)
-            catalogue_form:scroll_to("stock", records[index].id)
+            catalogue_form:scroll_to("stock", "r" .. ((index - 1) // 4 + 1))
         elseif category ~= old_category then catalogue_form:scroll_to("stock") end
         assert(shop:open("catalogue", catalogue_form, {}, MODAL))
         R.overlay = R.OV_SHOP
@@ -627,15 +668,36 @@ function G.bind(R, over)
             refresh_catalogue()
             catalogue_form:scroll_to("stock")
         elseif event.source == "stock" then
-            local record = catalogue_form:get_item("stock", event.key)
-            if record and record.available then shop:close(); R.island_begin(record.kind, true) end
+            local row = catalogue_form:get_item("stock", event.key)
+            local record = row and row.cells[tonumber(tostring(event.id):sub(5)) or 0]
+            if record and record.available then shop:close(); R.island_begin(record.kind, true)
+            elseif record then selected = record.id; refresh_catalogue() end   -- the footer says why it cannot be built
         end
     end
 
     -- Repeatable earning and the one-time story track share one level list.
     local E = W.expeditions
     local levels = ui.modals(skin)
-    local expedition_form = match3.expedition_form(E.title, E.intro, E.close, PAL_CREAM)
+    local function paint_level(box, e)
+        local current = e.state == "current"
+        R.rrect(box:offset(vec2(0, 2)), 13, rgba(201, 164, 100))
+        R.rrect(box, 13, current and rgba(255, 228, 150) or e.state == "locked" and rgba(243, 229, 192) or rgba(255, 246, 214))
+        local c = vec2(box.x + 30, box.y + (current and 33 or box.h / 2))
+        gfx.circle(c, 19, rgba(77, 58, 31))
+        gfx.circle(c, 17, current and rgba(184, 60, 60) or e.state == "locked" and rgba(140, 150, 136) or rgba(44, 108, 84))
+        R.say(tostring(e.number), rect.centered(c, size2(34, 24)), 17, PAL_CREAM)
+        local title = rect(box.x + 58, box.y + (current and 7 or 0), box.w - 168, current and 26 or box.h)
+        R.say_left(e.name, title, 18, e.state == "locked" and PAL_CREAM or PAL_GOLD)
+        if current then R.say_left(e.note, rect(box.x + 58, box.y + 34, box.w - 70, 24), 12, PAL_CREAM) end
+        local right = rect(box.x + box.w - 106, box.y + (current and 7 or (box.h - 28) / 2), 96, 28)
+        if e.state == "current" or e.resume then
+            R.rrect(right:offset(vec2(0, 2)), 14, rgba(120, 36, 36))
+            R.rrect(right, 14, e.available and rgba(184, 60, 60) or rgba(125, 140, 126))
+            R.say(e.action, right, 14, PAL_CREAM)
+        elseif e.state == "done" then R.say(e.action, right, 13, PAL_CREAM)
+        else R.say(E.locked, right, 13, PAL_CREAM) end
+    end
+    local expedition_form = match3.expedition_form(E.title, E.intro, E.close, PAL_CREAM, paint_level)
     R.expedition_form = expedition_form
 
     local function refresh_levels()
@@ -646,7 +708,8 @@ function G.bind(R, over)
             local current = i == R.prog.level
             local available = done or (current and not pending)
             local active = R.g and R.g.level == i and not R.g.won and not R.g.lost
-            entries[#entries + 1] = {id=tostring(i), level=i, title=("%d. %s"):format(i + 1, rules.levels[i + 1].name), available=available,
+            entries[#entries + 1] = {id=tostring(i), level=i, number=i + 1, name=rules.levels[i + 1].name, available=available,
+                state=done and "done" or current and "current" or "locked", resume=active and available,
                 action=active and available and E.resume or done and E.replay or current and (pending and E.pending or E.new) or E.earlier,
                 note=active and available and E.resume_note or done and E.replay_note or
                     (journey.wonder_at(i + 1) and E.building_note or E.story_note)}
@@ -889,6 +952,13 @@ function G.app(R)
         ui.set_enabled(true)
         if not talking then R.overlays(dt) end   -- a dialogue comes first; dialogs wait for it
         story.frame(dt)
+        -- The top row (wallet in the town, goals and moves on a board) stays crisp above every
+        -- popup, blur and dialogue; it is only drawn again here, so it takes no input.
+        if R.overlay ~= R.OV_NONE or talking then
+            ui.set_enabled(false)
+            if R.on_island then R.town:header() else R.draw_board_hud() end
+            ui.set_enabled(true)
+        end
     end
 
     local function init()
@@ -910,6 +980,7 @@ function G.app(R)
         for _, pack in ipairs(W.packs) do if app.arg("tiles") == pack then tiles = pack end end
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
         R.board_art = art.load()
+        R.shop_built_art, R.shop_locked_art = board_skin["shop-built"], board_skin["shop-locked"]   -- in the game's match3 atlas
         R.hud_art = art.load_hud()
         R.life_art = texture.load("expedition-hud/life.png")
         if app.arg("art-states") then

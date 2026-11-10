@@ -257,38 +257,50 @@
       128,
       128
     ],
-    "sunburst-disabled": [
+    "shop-built": [
       266,
       1170,
       128,
       128
     ],
-    "sunburst-hover": [
+    "shop-locked": [
       398,
       1170,
       128,
       128
     ],
-    "sunburst-normal": [
+    "sunburst-disabled": [
       530,
       1170,
       128,
       128
     ],
-    "sunburst-pressed": [
+    "sunburst-hover": [
       662,
       1170,
       128,
       128
     ],
-    "sunburst-selected": [
+    "sunburst-normal": [
       794,
       1170,
       128,
       128
     ],
-    "glow": [
+    "sunburst-pressed": [
       926,
+      1170,
+      128,
+      128
+    ],
+    "sunburst-selected": [
+      1058,
+      1170,
+      128,
+      128
+    ],
+    "glow": [
+      1190,
       1170,
       64,
       64
@@ -394,6 +406,8 @@
     "pause-normal": "data/expedition-hud/pause-normal.png",
     "pause-pressed": "data/expedition-hud/pause-pressed.png",
     "pause-selected": "data/expedition-hud/pause-selected.png",
+    "shop-built": "data/expedition-hud/shop-built.png",
+    "shop-locked": "data/expedition-hud/shop-locked.png",
     "background": "data/winter.jpg",
     "character": "data/characters/noelle.png"
   },
@@ -444,6 +458,8 @@
       "games/christmas-market/data/expedition-hud/pause-normal.png": "b4a3131d25ffb3a8d419fd658b90208b1024e2e97a9eb5b4dd1d5ca589c1394a",
       "games/christmas-market/data/expedition-hud/pause-pressed.png": "d166db886202f02a7fb2a3a34f2bc5b8682605c7c8fb05878c064758c2be3cd8",
       "games/christmas-market/data/expedition-hud/pause-selected.png": "56287787c7e68549b0b72af866a02712681902578264a795fe4323a17c649d9f",
+      "games/christmas-market/data/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
+      "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/data/tile-sets/festive/0.png": "28cd171e2f2f9483e6e32db868ec9128fe28b50c5cbe2a10a718d7daea4f3827",
       "games/christmas-market/data/tile-sets/festive/1.png": "19359f37f0f01043962a366734a046300d6193075952e1e00b7adabae568ddc4",
       "games/christmas-market/data/tile-sets/festive/2.png": "6a28dbbd5120a604f4ad8d2744d95570e5d70a80a05fe0eb9511df234619cc55",
@@ -453,8 +469,8 @@
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "3489d05b226a0a40918477416130811765a165b6c6c5e39dde620b8567591f6a",
-      "games/christmas-market/lua/match3_skin.lua": "42be806b89b6f017e8c215daf489256d275c691ab75ebd9fe09e65ccf37f0541"
+      "games/christmas-market/data/match3.png": "e20391f3193369ad5a82b61881b38dd06ed5faac2a65912c1f7e24f5caece1f5",
+      "games/christmas-market/lua/match3_skin.lua": "128715ff3b785a0244785319446bcf71a1465bd2efaa433b5a5adc9938f0b730"
     }
   }
 }

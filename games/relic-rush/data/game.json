@@ -45,15 +45,14 @@
     "category": "building",
     "built": "RESTORED", "complete": "COMPLETE EXPEDITION %d", "earlier": "RESTORE EARLIER WONDERS",
     "poor": "MORE AMULETS NEEDED", "reserved": "AMULETS RESERVED FOR WONDERS", "full": "ISLAND IS FULL",
-    "price": "%d amulets",
-    "wallet": "%d spendable Amulets / %d reserved / %d Stars"
+    "price": "%d amulets"
   },
   "expeditions": {
     "title": "Expeditions",
     "intro": "First clear: clues, Discovery Stars and scheduled wonder grants.\nReplay: 60 Amulets + up to 40 for moves saved.",
     "close": "BACK TO ISLAND",
-    "resume": "RESUME EXPEDITION", "replay": "REPLAY FOR AMULETS", "pending": "RESTORE YOUR WONDER FIRST",
-    "new": "NEW DISCOVERY", "earlier": "DISCOVER EARLIER LEVELS",
+    "resume": "RESUME", "replay": "REPLAY", "pending": "RESTORE FIRST",
+    "new": "PLAY", "earlier": "DISCOVER EARLIER LEVELS",
     "replay_note": "Amulets only. No extra Stars or story unlocks.",
     "building_note": "First clear: wonder funded + 80–120 spare Amulets and 3 Stars.",
     "story_note": "First clear: next story clue + 80–120 Amulets and 3 Stars."

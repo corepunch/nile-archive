@@ -46,15 +46,14 @@
     "category": "all",
     "built": "BUILT", "complete": "COMPLETE WISH %d", "earlier": "BUILD EARLIER STALLS",
     "poor": "MORE GOLD NEEDED", "reserved": "GOLD RESERVED FOR STALLS", "full": "MARKET IS FULL",
-    "price": "%d gold",
-    "wallet": "%d spendable Gold / %d reserved / %d Stars"
+    "price": "%d gold"
   },
   "expeditions": {
     "title": "Winter wishes",
     "intro": "First clear: the next story scene, Christmas Stars and scheduled stall funding.\nReplay: 60 Gold + up to 40 for moves saved.",
     "close": "BACK TO MARKET",
-    "resume": "RESUME PUZZLE", "replay": "REPLAY FOR GOLD", "pending": "BUILD YOUR STALL FIRST",
-    "new": "NEW WINTER WISH", "earlier": "COMPLETE EARLIER WISHES",
+    "resume": "RESUME", "replay": "REPLAY", "pending": "BUILD FIRST",
+    "new": "PLAY", "earlier": "COMPLETE EARLIER WISHES",
     "replay_note": "Gold only. Stars and story unlocks come from first clears.",
     "building_note": "First clear: stall funded + 80–120 spare Gold, 3 Stars.",
     "story_note": "First clear: the next story scene + 80–120 Gold, 3 Stars."

@@ -83,6 +83,32 @@ end
 T.color = rgba
 
 -- The game's town config: its JSON over the engine defaults.
+-- A speech bubble whose first line is a title: larger and bold (the same fill
+-- as an outline, since the skins carry one weight per font), then the subtitle.
+local TITLE_SCALE = 1.3
+local function bubble_draw(tip, utf8, sub, fill, edge, max_width)
+    local title, rest = utf8:match("^([^\n]*)\n(.*)$")
+    if not title then
+        story.bubble(tip, utf8, sub, fill, edge, max_width, story.SPEECH)
+        return
+    end
+    local head = style.outlined(style.sized(sub, sub.size * TITLE_SCALE), sub.size * 0.035, sub.fill)
+    local pad, vpad, gap = sub.size * .7, sub.size * .55, sub.size * .15
+    local inner = max_width - 2 * pad
+    local a, b = text.box_size(head, inner, title), text.box_size(sub, inner, rest)
+    local size = size2(math.max(a.w, b.w) + 2 * pad, a.h + gap + b.h + 2 * vpad)
+    local screen = app.screen()
+    local box = rect.anchor(tip - vec2(0, 22), size, vec2(.5, 1))
+    local margin = 8
+    if rect.pos(box).y < rect.pos(screen).y + margin then box = rect.anchor(tip + vec2(0, 22), size, vec2(.5, 0)) end
+    local lo = rect.pos(screen) + vec2(margin, margin)
+    box = rect.make(vec2.clamp(rect.pos(box), lo, rect.max(screen) - vec2(size.w, size.h) - vec2(margin, margin)), size)
+    story.bubble_shape(box, tip, fill, edge, story.SPEECH)
+    local inside = box:inflate2(vec2(-pad, -vpad))
+    text.box(head, inside:top(a.h), vec2(.5, .5), title)
+    text.box(sub, inside:bottom(b.h), vec2(.5, .5), rest)
+end
+
 function T.load(path) return json.load(path) end
 function T.config(over) return merge(DEFAULTS, over) end
 
@@ -400,8 +426,8 @@ function View:frame(inp, dt, active)
         local sprite = c.cam:rect_to_screen(c:sprite_rect(c.items[b.item + 1]))
         local style = h.bubble_text and h.bubble_text() or h.skin:text(self.cfg.markers.text, 15)
         gfx.clip(view)
-        story.bubble(sprite:point(vec2(.5, .08)), b.text, style, rgba(self.cfg.bubble.fill), rgba(self.cfg.bubble.edge),
-                     self.cfg.bubble.width, story.SPEECH)
+        bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, rgba(self.cfg.bubble.fill), rgba(self.cfg.bubble.edge),
+                    self.cfg.bubble.width)
         gfx.unclip()
     end
 

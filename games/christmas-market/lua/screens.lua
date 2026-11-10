@@ -24,9 +24,9 @@ function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, 
 -- The win card says three things: how well you did (stars, score), what you
 -- earned (one chip per resource) and what comes next. Breakdowns of grants
 -- and bonuses stay out of it; the build shop explains spending.
-local RESULT = {card = rect(40, 214, 400, 522), header = rect(64, 186, 352, 72), stars = rect(110, 270, 260, 74),
-                score = rect(90, 350, 300, 62), chips = rect(68, 424, 344, 92), next = rect(64, 534, 352, 72),
-                claim = rect(70, 640, 340, 60)}
+local RESULT = {card = rect(40, 238, 400, 534), header = rect(64, 210, 352, 72), stars = rect(110, 310, 260, 74),
+                score = rect(90, 388, 300, 62), chips = rect(68, 462, 344, 92), next = rect(64, 572, 352, 72),
+                claim = rect(70, 676, 340, 60)}
 local function reward_chip(box, icon, value, label)
     rrect(box:offset(vec2(0, 3)), 16, rgba(201, 164, 100))
     rrect(box, 16, rgba(255, 246, 214))
