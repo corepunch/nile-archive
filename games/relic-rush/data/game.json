@@ -23,7 +23,9 @@
               "Hex amulets buy buildings. Replay expeditions to earn more.",
               "Discovery Stars unlock stock and land. First clears only; never spent."]
   },
-  "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley"},
+  "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley", "leaderboard": "LEADERBOARD"},
+  "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d",
+                  "level_button": "LEADERBOARD"},
   "confirm": {"title": "Restart this expedition?"},
   "failed": {"title": "One more adventure?", "subtitle": "THE RUINS WILL WAIT FOR YOU.", "town": "VISIT ISLAND"},
   "zone": {"subtitle": "A NEW PLACE TO DISCOVER", "earn": "EARN STARS IN NEW EXPEDITIONS",

@@ -210,7 +210,7 @@ function D.bind(R, W)
         end
         if app.arg("kudos") then R.award_kudos(tonumber(app.arg("kudos")) or 2) end
         a = app.arg("dialog")
-        if a then   -- guide, pause, confirm, failed, finale, a dialogue (intro, adrian, mara, tomas) or a bubble
+        if a then   -- guide, pause, confirm, failed, finale, leaderboard, level-leaderboard, a dialogue (intro, adrian, mara, tomas) or a bubble
             R.toast_time = 0
             if a == "intro" then R.queue_story({key = journey.beats[1].key, lines = R.intro_lines}, true); R.present_board()   -- no board behind the talk yet
             elseif a == "adrian" then island_with(WONDERS); R.on_island = true; R.queue_story({key = "finale", lines = R.finale}, true)
@@ -220,6 +220,8 @@ function D.bind(R, W)
                 island_with(2); R.on_island = true
                 R.island_focus(R.island.items[2].pos, .8)
                 R.town:say(1, R.building_words(1))
+            elseif a == "leaderboard" then R.overlay = R.OV_PAUSE; R.open_leaderboard()   -- from Settings; --gamecenter-demo adds rivals
+            elseif a == "level-leaderboard" then R.open_leaderboard(R.g.level)   -- over --victory's results card
             else
                 R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED
                     or a == "confirm" and R.OV_CONFIRM or R.OV_FINALE
