@@ -112,6 +112,17 @@ scene.cycles.use_adaptive_sampling = False
 scene.cycles.use_denoising = False
 scene.cycles.max_bounces = 0
 scene.world.node_tree.nodes['Background'].inputs['Strength'].default_value = 0
+sun_dir = request.get('shadow_sun')
+if sun_dir:   # the shadow pass has its own sun: lit sprites keep their light, shadows fall where the camera sees them
+    for ob in scene.objects:
+        if ob.type == 'LIGHT' and ob.data.type == 'SUN':
+            if ob.name == 'sun':
+                ob.rotation_mode = 'QUATERNION'
+                ob.rotation_quaternion = Vector(sun_dir).to_track_quat('-Z', 'Y')
+                ob.data.angle = math.radians(request.get('shadow_angle', 3))
+            else:
+                ob.hide_render = True
+    bpy.context.view_layer.update()
 suns = [ob.matrix_world.to_3x3() @ Vector((0, 0, -1)) for ob in scene.objects if ob.type == 'LIGHT' and ob.data.type == 'SUN']
 
 for key in keys:

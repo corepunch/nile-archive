@@ -168,7 +168,7 @@ def contact_sheet(root, registry, path, ppt):
     sheet.save(path, quality=88)
 
 
-def render(game, keys, rebuild, samples, workdir):
+def render(game, keys, rebuild, samples, workdir, shadows_only=False):
     root, cfg = config(game)
     blend = root / cfg['blend']
     out = Path(workdir) / game
@@ -178,7 +178,11 @@ def render(game, keys, rebuild, samples, workdir):
         print(f'{game}: building {blend.relative_to(ROOT)}')
         run_blender(['--factory-startup', '--python', str(root / cfg['generator']), '--', str(blend)], out / 'build.log')
     ppt = cfg.get('ppt', 85)
-    request = dict(out=str(out), keys=keys, ppt=ppt, shadow_ppt=SHADOW_PPT, samples=samples or cfg.get('samples', 64), denoise=cfg.get('denoise', True))
+    look = cfg.get('shadow', {})   # per game: resolution, strength, and the shadow pass's own sun direction
+    shadow_ppt, strength = look.get('ppt', SHADOW_PPT), look.get('strength', SHADOW_STRENGTH)
+    request = dict(out=str(out), keys=keys, ppt=ppt, shadow_ppt=shadow_ppt, samples=samples or cfg.get('samples', 64),
+                   denoise=cfg.get('denoise', True), shadows_only=shadows_only,
+                   shadow_sun=look.get('sun'), shadow_angle=look.get('angle', 3))
     (out / 'request.json').write_text(json.dumps(request))
     print(f'{game}: rendering {len(keys) if keys else "all"} buildings at {ppt} px per tile')
     run_blender([str(blend), '--python', str(ROOT / 'tools/render_buildings_blender.py'), '--', str(out / 'request.json')], out / 'render.log')
@@ -186,26 +190,30 @@ def render(game, keys, rebuild, samples, workdir):
     report = json.loads((out / 'report.json').read_text())
     path = registry_path(root, cfg)
     registry = json.loads(path.read_text()) if path.exists() else {}
-    if not keys or 'camera' not in registry:   # a whole set, or a registry from before this tool
+    if (not keys and not shadows_only) or 'camera' not in registry:   # a whole set, or a registry from before this tool
         registry['items'] = {}
     sprites, shadows = root / 'data/buildings', root / 'data/building-shadows'
     sprites.mkdir(parents=True, exist_ok=True)
     shadows.mkdir(parents=True, exist_ok=True)
     for key, item in report['items'].items():
-        sprite, at = trim(out / 'sprites' / f'{key}.png')
-        if sprite is None:
-            sys.exit(f'{game}: {key} rendered empty')
-        bleed(sprite).save(sprites / f'{key}.png', optimize=True)
+        if not shadows_only:
+            sprite, at = trim(out / 'sprites' / f'{key}.png')
+            if sprite is None:
+                sys.exit(f'{game}: {key} rendered empty')
+            bleed(sprite).save(sprites / f'{key}.png', optimize=True)
         layer, shadow_at = trim(out / 'shadows' / f'{key}.png', threshold=24, margin=3)
         if layer is None:
             sys.exit(f'{game}: {key} rendered no shadow')
         # A direct-light catcher holds full occlusion; bright ambient island light keeps it translucent.
-        layer.putalpha(layer.getchannel('A').point(lambda v: round(v * SHADOW_STRENGTH)))
+        layer.putalpha(layer.getchannel('A').point(lambda v: round(v * strength)))
         layer.save(shadows / f'{key}.png', optimize=True)
+        old = registry['items'].get(key, {})
         registry['items'][key] = dict(
             title=item['title'], size=item['size'], scale=item['scale'],
-            sprite=f'data/buildings/{key}.png', image=list(sprite.size),
-            pivot=rounded([item['pivot'][0] - at[0], item['pivot'][1] - at[1]]), base_width=round(item['base_width'], 3),
+            sprite=f'data/buildings/{key}.png',
+            image=old['image'] if shadows_only else list(sprite.size),
+            pivot=old['pivot'] if shadows_only else rounded([item['pivot'][0] - at[0], item['pivot'][1] - at[1]]),
+            base_width=round(item['base_width'], 3),
             shadow=f'data/building-shadows/{key}.png',
             shadow_pivot=rounded([item['shadow_pivot'][0] - shadow_at[0], item['shadow_pivot'][1] - shadow_at[1]]),
             shadow_base_width=round(item['shadow_base_width'], 3))
@@ -281,6 +289,7 @@ def main():
     ap.add_argument('keys', nargs='*', help='building keys; all of them when omitted')
     ap.add_argument('--rebuild', action='store_true', help='rebuild the .blend from its build_scene.py first')
     ap.add_argument('--samples', type=int, help='Cycles samples (the game default otherwise)')
+    ap.add_argument('--shadows', action='store_true', help='re-render only the ground shadows; sprites stay as they are')
     ap.add_argument('--finish', action='store_true', help='regenerate Lua, the sheet and hooks without rendering')
     ap.add_argument('--list', action='store_true', help='print every key in the registry')
     ap.add_argument('--check', action='store_true', help='verify every game without Blender')
@@ -299,7 +308,7 @@ def main():
     if a.finish:
         return finish(a.game)
     with tempfile.TemporaryDirectory(prefix='buildings-') as workdir:
-        render(a.game, a.keys, a.rebuild, a.samples, workdir)
+        render(a.game, a.keys, a.rebuild, a.samples, workdir, a.shadows)
 
 
 if __name__ == '__main__':

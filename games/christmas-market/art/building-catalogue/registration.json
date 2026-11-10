@@ -20,10 +20,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/arch.png",
    "shadow_pivot": [
-    104.606,
-    73.795
+    175.508,
+    112.827
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "lumber": {
    "title": "Lumber workshop",
@@ -44,10 +44,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/lumber.png",
    "shadow_pivot": [
-    113.521,
-    79.226
+    176.24,
+    113.15
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "bakery": {
    "title": "Gingerbread bakery",
@@ -68,10 +68,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/bakery.png",
    "shadow_pivot": [
-    113.533,
-    79.226
+    176.277,
+    113.15
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "cocoa": {
    "title": "Hot cocoa kiosk",
@@ -92,10 +92,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/cocoa.png",
    "shadow_pivot": [
-    107.012,
-    77.163
+    175.68,
+    112.96
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "toys": {
    "title": "Toymaker\u2019s workshop",
@@ -116,10 +116,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/toys.png",
    "shadow_pivot": [
-    113.572,
-    83.95
+    176.393,
+    113.343
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "gifts": {
    "title": "Gift wrapping pavilion",
@@ -140,10 +140,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/gifts.png",
    "shadow_pivot": [
-    106.546,
-    73.377
+    176.332,
+    113.572
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "candles": {
    "title": "Candlelight shop",
@@ -164,10 +164,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/candles.png",
    "shadow_pivot": [
-    113.558,
-    79.226
+    176.352,
+    113.15
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "carousel": {
    "title": "Reindeer carousel",
@@ -188,10 +188,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/carousel.png",
    "shadow_pivot": [
-    111.725,
-    68.939
+    175.881,
+    113.24
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "rink": {
    "title": "Winter skating rink",
@@ -212,10 +212,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/rink.png",
    "shadow_pivot": [
-    77.035,
-    57.958
+    175.587,
+    113.197
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "tree": {
    "title": "Christmas tree",
@@ -236,10 +236,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/tree.png",
    "shadow_pivot": [
-    78.023,
-    70.932
+    175.797,
+    113.239
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "firs": {
    "title": "Lantern firs",
@@ -260,10 +260,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/firs.png",
    "shadow_pivot": [
-    57.911,
-    44.416
+    118.172,
+    75.512
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "bench": {
    "title": "Snowman bench",
@@ -284,10 +284,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/bench.png",
    "shadow_pivot": [
-    47.91,
-    41.667
+    118.058,
+    76.234
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "snowman": {
    "title": "Snowman",
@@ -308,10 +308,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowman.png",
    "shadow_pivot": [
-    23.404,
-    24.564
+    31.433,
+    11.825
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "presents": {
    "title": "Pile of presents",
@@ -332,10 +332,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/presents.png",
    "shadow_pivot": [
-    19.097,
-    16.018
+    40.4,
+    25.132
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "candy_canes": {
    "title": "Candy canes",
@@ -356,10 +356,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/candy_canes.png",
    "shadow_pivot": [
-    23.44,
-    21.05
+    27.522,
+    18.264
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "lamp_post": {
    "title": "Lamp post",
@@ -380,10 +380,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/lamp_post.png",
    "shadow_pivot": [
-    12.465,
-    29.725
+    8.679,
+    6.347
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "snowy_bench": {
    "title": "Snowy bench",
@@ -404,10 +404,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowy_bench.png",
    "shadow_pivot": [
-    30.568,
-    24.665
+    48.9,
+    25.124
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "mailbox": {
    "title": "Letters to Santa",
@@ -428,10 +428,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/mailbox.png",
    "shadow_pivot": [
-    37.966,
-    25.037
+    23.143,
+    12.252
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "snow_rocks": {
    "title": "Snowy rocks",
@@ -452,10 +452,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/snow_rocks.png",
    "shadow_pivot": [
-    21.534,
-    16.18
+    44.708,
+    24.618
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "giant_ornament": {
    "title": "Giant bauble",
@@ -476,10 +476,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/giant_ornament.png",
    "shadow_pivot": [
-    34.084,
-    22.377
+    34.467,
+    16.259
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "ice_star": {
    "title": "Ice star sculpture",
@@ -500,10 +500,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/ice_star.png",
    "shadow_pivot": [
-    34.557,
-    24.277
+    32.9,
+    16.97
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "nutcracker": {
    "title": "Nutcracker guard",
@@ -524,10 +524,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/nutcracker.png",
    "shadow_pivot": [
-    18.778,
-    24.217
+    22.554,
+    13.783
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "reindeer": {
    "title": "Reindeer",
@@ -548,10 +548,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/reindeer.png",
    "shadow_pivot": [
-    30.471,
-    20.919
+    20.698,
+    14.878
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "penguins": {
    "title": "Penguin pair",
@@ -572,10 +572,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/penguins.png",
    "shadow_pivot": [
-    22.289,
-    19.73
+    24.021,
+    16.293
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "wreath_arch": {
    "title": "Wreath arch",
@@ -596,10 +596,10 @@
    "base_width": 223.205,
    "shadow": "data/building-shadows/wreath_arch.png",
    "shadow_pivot": [
-    48.747,
-    35.581
+    70.596,
+    26.943
    ],
-   "shadow_base_width": 63.131
+   "shadow_base_width": 189.724
   },
   "sleigh": {
    "title": "Santa's sleigh",
@@ -620,10 +620,10 @@
    "base_width": 223.205,
    "shadow": "data/building-shadows/sleigh.png",
    "shadow_pivot": [
-    42.881,
-    25.211
+    66.883,
+    32.766
    ],
-   "shadow_base_width": 63.131
+   "shadow_base_width": 189.724
   },
   "igloo": {
    "title": "Igloo",
@@ -644,10 +644,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/igloo.png",
    "shadow_pivot": [
-    41.016,
-    26.84
+    80.269,
+    51.656
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "fir_snowy": {
    "title": "Snowy fir",
@@ -668,10 +668,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_snowy.png",
    "shadow_pivot": [
-    45.573,
-    33.186
+    45.052,
+    21.756
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "birch": {
    "title": "Frosted birch",
@@ -692,10 +692,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/birch.png",
    "shadow_pivot": [
-    35.272,
-    32.354
+    33.141,
+    15.246
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "fir_decorated": {
    "title": "Decorated fir",
@@ -716,10 +716,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_decorated.png",
    "shadow_pivot": [
-    39.947,
-    37.258
+    38.217,
+    17.001
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "pine_grove": {
    "title": "Pine grove",
@@ -740,10 +740,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/pine_grove.png",
    "shadow_pivot": [
-    62.306,
-    52.745
+    87.374,
+    55.549
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "log_cabin": {
    "title": "Log cabin",
@@ -764,10 +764,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/log_cabin.png",
    "shadow_pivot": [
-    80.324,
-    51.173
+    119.443,
+    76.818
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "gingerbread_house": {
    "title": "Gingerbread house",
@@ -788,10 +788,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/gingerbread_house.png",
    "shadow_pivot": [
-    71.304,
-    46.662
+    119.338,
+    77.251
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "post_office": {
    "title": "North Pole post office",
@@ -812,10 +812,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/post_office.png",
    "shadow_pivot": [
-    71.799,
-    48.645
+    119.819,
+    77.216
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "chapel": {
    "title": "Snowy chapel",
@@ -836,10 +836,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/chapel.png",
    "shadow_pivot": [
-    66.88,
-    48.057
+    119.106,
+    77.476
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "reindeer_stable": {
    "title": "Reindeer stable",
@@ -860,10 +860,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/reindeer_stable.png",
    "shadow_pivot": [
-    90.56,
-    52.163
+    156.238,
+    90.788
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "santa_workshop": {
    "title": "Santa's workshop",
@@ -884,10 +884,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/santa_workshop.png",
    "shadow_pivot": [
-    108.578,
-    75.649
+    177.387,
+    114.39
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   }
  },
  "generator": "tools/buildings.py",
