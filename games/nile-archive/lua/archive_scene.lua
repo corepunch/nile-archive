@@ -175,6 +175,7 @@ function M.tap(screen)
                 local stars = stars_for(G.clock)
                 G.result = {score = G.score, time = G.clock, stars = stars, complete = true, perfect = G.misses == 0 and G.hints == 0}
                 assert(economy.claim(G, G.scene, G.result), "completed scene must pay once")
+                gamecenter.submit(("search_%d"):format(G.scene), G.score)   -- this search's board; influence goes out with the save
                 haptic.play(haptic.SUCCESS)
                 if G.result.clue then progress.play(sc.clues[G.result.clue]) end
                 progress.save()

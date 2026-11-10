@@ -45,6 +45,17 @@ Packing copies existing source pixels and retains frame order, repetition and
 pivots. It does not synthesize selected/pressed/damaged states. Original prompts
 for the episode maps and prop sheet are retained beside this document.
 
+## Leaderboard dialog
+
+The engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)) is skin paint
+only: `emergency_skin.lua` gives it the teal panel, gold title, cream rows, a gold accent tab for the
+chosen Everyone / Friends tab (the other a flat caption) and the standard buttons. Rows hold rank, a
+round portrait (a placeholder with the initial until Game Center's photo arrives) and the score, which
+the district boards show as `m:ss`. The menu's Leaderboard button and the results card's Leaderboard
+button open it. No bitmap or ImageGen source is added. Reviewed captures: `menu`, `menu-leaderboard`,
+`complete` and `district-leaderboard` in `docs/screenshots`, from
+`build/test/emergency "shot menu-leaderboard"` ... with `--gamecenter-demo`.
+
 ## Known gaps
 
 The HUD's food, wood and money panels (`skin:draw_resource`) show a text caption

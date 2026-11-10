@@ -65,6 +65,7 @@ end
 local function play_and_claim(i)
     play_scene(i)
     check(G.result and G.result.complete, ("scene %d completed"):format(i))
+    check(gamecenter.best(("search_%d"):format(i)) >= G.result.score, ("scene %d reaches its Game Center board"):format(i))
     drain_story()
     scene.go_home()
 end
@@ -178,6 +179,7 @@ end
 for kind = 1, content.RESTORATIONS do
     check(G.restored[kind], content.buildings[kind].name .. " is restored")
 end
+check(gamecenter.best("influence") == G.wallet[INFLUENCE], "the influence board holds the lifetime influence")
 
 -- Verify save/load round-trips the completed state.
 progress.save()

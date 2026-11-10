@@ -52,7 +52,11 @@ local function serialize(s)
     end
 end
 
-function M.save() save.write("progress", serialize) end
+-- Influence only grows, so its board always holds the lifetime total.
+function M.save()
+    save.write("progress", serialize)
+    gamecenter.submit("influence", G.wallet[INFLUENCE])
+end
 -- Land saved buildings on the grid, whichever tile projection they were saved under.
 local function rehome_saved()
     local c = G.island

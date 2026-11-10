@@ -96,6 +96,29 @@ The chosen tab is a button and the other a flat caption, so it reads in any
 skin. `tests/lua/leaderboard.lua` covers the dialog; the picture above is a
 capture with `--gamecenter-demo`.
 
+## Games using it
+
+| Game | Boards | Opened from |
+| --- | --- | --- |
+| Relic Rush | `stars`, `level_01`..`level_30` | Settings, results card |
+| Christmas Market | `stars`, `level_01`..`level_30` | Settings, results card |
+| Nile Archive | `influence`, `search_1`..`search_5` | Chapter list, search result |
+| Emergency | `rescue`, `district_01`..`district_05` (time as a speed score) | Menu, district results |
+
+A game with its own painted screens keeps one manager rather than one dialog per board:
+
+```lua
+local boards = require("leaderboard").boards{skin = skin, width = 520, texts = {...}}
+boards:open("influence", "Influence")                 -- from a button; `extra` = per-board options (format...)
+-- every frame, after the screens and their dialogs:
+local covered = boards:active()                       -- nil, or the open dialog: give the screens no input
+boards:draw(dt, {reduced_motion = reduced})
+```
+
+The dialog reads its text from the game's `ui.skin`, so a skin that has no label control (Emergency's
+had none) adds `controls.label` and the roles `title`, `leaderboard_row`, `leaderboard_me` and
+`leaderboard_note`. The chosen tab is an accent button and the other a flat caption.
+
 ## Portraits
 
 Each row carries `id` (Game Center's player id) and, once loaded, `photo`, a
