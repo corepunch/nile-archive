@@ -456,7 +456,9 @@ typedef struct {
     int rank;               /* 1 = best */
     double score;
     char name[48];          /* the player's alias */
+    char id[48];            /* Game Center's player id; "" for the local fallback row */
     bool me;                /* the local player's own row */
+    int photo_rev;          /* 0 until the player's portrait arrives, then changes when it does */
 } gamecenter_entry;
 int gamecenter_state(void);
 const char *gamecenter_player(void);                         /* alias; "" until signed in */
@@ -467,6 +469,7 @@ double gamecenter_best(const char *board);                   /* the player's bes
 void gamecenter_load(const char *board, int scope, int count);    /* refresh asynchronously; see gamecenter_entries */
 bool gamecenter_loading(const char *board, int scope);
 int gamecenter_entries(const char *board, int scope, gamecenter_entry *out, int max);   /* -1 until loaded */
+texture gamecenter_photo(const char *id);                  /* a player's round portrait; tex = NULL until it arrives */
 void gamecenter_show(int view, const char *board);           /* Apple's own screens; no-op elsewhere */
 void gamecenter_access_point(bool on);                       /* Apple's floating Game Center badge */
 

@@ -6,11 +6,14 @@
  * and shown as a one-row board, so a game's screens work everywhere. */
 #include "gamecenter.h"
 
+#include "render.h"
+
 #include <stdio.h>
 #include <string.h>
 
 #define GC_RECORDS 64
 #define GC_SLOTS 16
+#define GC_PHOTOS 64
 #define GC_SLOT "gamecenter"
 
 struct gc_record {
@@ -29,6 +32,14 @@ struct gc_slot {
     double stamp;
 };
 
+struct gc_photo {
+    char id[48];
+    texture tex;       /* tex.tex == NULL while loading, or when the player has none */
+    double stamp;
+    int rev;
+    bool used;
+};
+
 static struct gc_state {
     int state;
     char alias[48];
@@ -36,6 +47,7 @@ static struct gc_state {
     int nrecords;
     struct gc_record records[GC_RECORDS];
     struct gc_slot slots[GC_SLOTS];
+    struct gc_photo photos[GC_PHOTOS];
     double clock;
 #ifdef ENGINE_TEST
     bool fake_platform;
@@ -143,6 +155,70 @@ static struct gc_slot *gc_slot_for(const char *board, int scope, bool create)
     return victim;
 }
 
+/* ---------------------------------------------------------------- photos */
+
+static struct gc_photo *gc_photo_find(const char *id, bool create)
+{
+    struct gc_photo *victim = NULL;
+    for (int i = 0; i < GC_PHOTOS; i++) {
+        struct gc_photo *p = &GC.photos[i];
+        if (p->used && !strcmp(p->id, id)) return p;
+        if (!victim || (victim->used && (!p->used || p->stamp < victim->stamp))) victim = p;
+    }
+    if (!create) return NULL;
+    if (victim->used && victim->tex.tex) tex_free(victim->tex);
+    *victim = (struct gc_photo){.used = true, .stamp = ++GC.clock};
+    snprintf(victim->id, sizeof victim->id, "%s", id);
+    return victim;
+}
+
+bool gamecenter_wants_photo(const char *id)
+{
+    if (!id || !*id || gc_photo_find(id, false)) return false;
+    gc_photo_find(id, true);   /* in flight: nobody asks twice */
+    return true;
+}
+
+void gamecenter_on_photo(const char *id, const unsigned char *rgba, int w, int h)
+{
+    struct gc_photo *p = id && *id ? gc_photo_find(id, true) : NULL;
+    if (!p) return;
+    p->stamp = ++GC.clock;
+    if (rgba && w > 0 && h > 0 && render_ready()) {
+        if (p->tex.tex) tex_free(p->tex);
+        p->tex = tex_from_pixels(rgba, w, h);
+    }
+    p->rev++;
+}
+
+texture gamecenter_photo(const char *id)
+{
+    struct gc_photo *p = id && *id ? gc_photo_find(id, false) : NULL;
+    return p && p->tex.tex ? p->tex : (texture){0};
+}
+
+/* A round placeholder portrait for --gamecenter-demo, tinted by the player's id. */
+static void gc_demo_photo(const char *id, int index)
+{
+    if (!gamecenter_wants_photo(id)) return;
+    enum { N = 64 };
+    static unsigned char px[N * N * 4];
+    static const unsigned char tints[][3] = {{214, 120, 78}, {96, 150, 196}, {128, 178, 104}, {196, 150, 70}, {150, 110, 170}, {84, 170, 160}, {200, 100, 120}};
+    const unsigned char *c = tints[index % 7];
+    for (int y = 0; y < N; y++)
+        for (int x = 0; x < N; x++) {
+            float dx = x + .5f - N / 2, dy = y + .5f - N / 2, d = sqrtf(dx * dx + dy * dy);
+            float cover = fminf(1, fmaxf(0, N / 2 - d));
+            float head = fminf(1, fmaxf(0, 11 - sqrtf(dx * dx + (dy + 8) * (dy + 8))));   /* a simple bust */
+            float body = fminf(1, fmaxf(0, 22 - sqrtf(dx * dx * .5f + (dy - 26) * (dy - 26) * .8f)));
+            float figure = fmaxf(head, body);
+            unsigned char *o = &px[(y * N + x) * 4];
+            for (int k = 0; k < 3; k++) o[k] = (unsigned char)(c[k] * (1 - .45f * figure) + 255 * .45f * figure);
+            o[3] = (unsigned char)(255 * cover);
+        }
+    gamecenter_on_photo(id, px, N, N);
+}
+
 /* The player's own best as a one-row board; sample rivals under --gamecenter-demo. */
 static void gc_fill_local(struct gc_slot *s)
 {
@@ -159,6 +235,8 @@ static void gc_fill_local(struct gc_slot *s)
             e->me = i == 3;
             e->score = floor(best * (1.5 - 0.15 * i));
             snprintf(e->name, sizeof e->name, "%s", e->me ? me : names[i]);
+            snprintf(e->id, sizeof e->id, "demo-%s", e->me ? "me" : names[i]);
+            gc_demo_photo(e->id, i);
         }
         if (s->scope == GAMECENTER_FRIENDS) { /* friends only: the first three and me */
             int keep = 0;
@@ -247,7 +325,13 @@ int gamecenter_entries(const char *board, int scope, gamecenter_entry *out, int 
     struct gc_slot *s = board ? gc_slot_for(board, scope, false) : NULL;
     if (!s || !s->loaded) return -1;
     int n = s->n < max ? s->n : max;
-    if (out) memcpy(out, s->entries, (size_t)n * sizeof *out);
+    if (out) {
+        memcpy(out, s->entries, (size_t)n * sizeof *out);
+        for (int i = 0; i < n; i++) {
+            struct gc_photo *p = gc_photo_find(out[i].id, false);
+            out[i].photo_rev = p && p->tex.tex ? p->rev : 0;
+        }
+    }
     return n;
 }
 
@@ -301,6 +385,8 @@ void gamecenter_on_entries(const char *board, int scope, const gamecenter_entry 
 
 void gamecenter_restart(void)
 {
+    for (int i = 0; i < GC_PHOTOS; i++)
+        if (GC.photos[i].used && GC.photos[i].tex.tex) tex_free(GC.photos[i].tex);
     memset(&GC, 0, sizeof GC);
     GC.state = GAMECENTER_UNAVAILABLE;   /* until gamecenter_start finds a backend */
 }

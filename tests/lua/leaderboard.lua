@@ -28,3 +28,10 @@ empty:open(); empty:sync()
 check(#empty.form.nodes.rows.children == 0 and empty.form:get('status') == empty.texts.empty, 'an empty board says so')
 check(empty:open(), 'opening twice is harmless')
 check(not pcall(leaderboard.new, {}), 'a board name is required')
+
+-- portraits: demo rivals arrive with ids, and rows without a photo get a placeholder
+testing.reset()
+gamecenter.submit('stars', 5)
+gamecenter.load('stars')
+local mine = gamecenter.entries('stars')[1]
+check(mine.id == '' and mine.photo == nil and mine.photo_rev == 0, 'the local row has no portrait yet')

@@ -135,3 +135,24 @@ TEST(gamecenter_cache_evicts_the_oldest_board)
     CHECK(gamecenter_entries("board19", GAMECENTER_GLOBAL, NULL, 0) == 0);
     CHECK(gamecenter_entries("board0", GAMECENTER_GLOBAL, NULL, 0) < 0);
 }
+
+TEST(gamecenter_portraits_load_once_and_survive_failure)
+{
+    fresh(true);
+    CHECK(gamecenter_wants_photo("p1") && !gamecenter_wants_photo("p1"));   /* in flight: nobody asks twice */
+    gamecenter_on_photo("p1", NULL, 0, 0);                                  /* no portrait available */
+    CHECK(!gamecenter_wants_photo("p1") && gamecenter_photo("p1").tex == NULL);
+    CHECK(!gamecenter_wants_photo("") && !gamecenter_wants_photo(NULL));
+    gamecenter_on_auth(true, "Me");
+    gamecenter_load("stars", GAMECENTER_GLOBAL, 3);
+    gamecenter_entry in[1] = {{.rank = 1, .score = 5, .name = "A", .id = "p1"}};
+    gamecenter_on_entries("stars", GAMECENTER_GLOBAL, in, 1, true);
+    gamecenter_entry rows[2];
+    CHECK(gamecenter_entries("stars", GAMECENTER_GLOBAL, rows, 2) == 1 && !strcmp(rows[0].id, "p1") && rows[0].photo_rev == 0);
+    for (int i = 0; i < 100; i++) {   /* more players than the cache holds */
+        char id[16];
+        snprintf(id, sizeof id, "q%d", i);
+        CHECK(gamecenter_wants_photo(id));
+    }
+    CHECK(gamecenter_wants_photo("q0"));   /* the oldest was evicted, so it may load again */
+}
