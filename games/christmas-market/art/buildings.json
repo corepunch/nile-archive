@@ -7,12 +7,17 @@
  "samples": 64,
  "shadow": {
   "ppt": 85,
-  "strength": 0.7,
+  "strength": 0.45,
   "sun": [
    0.45,
    0.779,
    -1.5
   ],
-  "angle": 1.5
+  "angle": 1.5,
+  "tint": [
+   52,
+   78,
+   168
+  ]
  }
 }

@@ -206,6 +206,8 @@ def render(game, keys, rebuild, samples, workdir, shadows_only=False):
             sys.exit(f'{game}: {key} rendered no shadow')
         # A direct-light catcher holds full occlusion; bright ambient island light keeps it translucent.
         layer.putalpha(layer.getchannel('A').point(lambda v: round(v * strength)))
+        if look.get('tint'):   # shadow on snow reads blue, not grey
+            layer.paste(tuple(look['tint']), mask=layer.getchannel('A'))
         layer.save(shadows / f'{key}.png', optimize=True)
         old = registry['items'].get(key, {})
         registry['items'][key] = dict(
