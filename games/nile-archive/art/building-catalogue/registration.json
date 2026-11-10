@@ -751,21 +751,21 @@
     1,
     1
    ],
-   "scale": 1.6378,
+   "scale": 1.4521801471710205,
    "sprite": "data/buildings/date_palm.png",
    "image": [
-    142,
-    158
+    130,
+    138
    ],
    "pivot": [
-    71.619,
-    145.981
+    65.766,
+    128.447
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/date_palm.png",
    "shadow_pivot": [
-    50.07,
-    37.017
+    46.386,
+    33.481
    ],
    "shadow_base_width": 38.637
   },
@@ -775,21 +775,21 @@
     1,
     1
    ],
-   "scale": 1.5652,
+   "scale": 1.3878262042999268,
    "sprite": "data/buildings/doum_palm.png",
    "image": [
-    147,
-    123
+    130,
+    116
    ],
    "pivot": [
-    73.332,
-    112.898
+    65.362,
+    108.328
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/doum_palm.png",
    "shadow_pivot": [
-    46.766,
-    38.099
+    40.456,
+    33.791
    ],
    "shadow_base_width": 38.637
   },
@@ -799,21 +799,21 @@
     1,
     1
    ],
-   "scale": 2.7692,
+   "scale": 2.4553847312927246,
    "sprite": "data/buildings/cypress.png",
    "image": [
-    160,
-    320
+    132,
+    282
    ],
    "pivot": [
-    80.395,
-    305.909
+    66.294,
+    270.249
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/cypress.png",
    "shadow_pivot": [
-    76.874,
-    76.251
+    80.421,
+    57.589
    ],
    "shadow_base_width": 38.637
   },
@@ -823,21 +823,21 @@
     1,
     1
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/acacia.png",
    "image": [
-    141,
-    148
+    121,
+    129
    ],
    "pivot": [
-    59.662,
-    138.968
+    50.91,
+    122.228
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/acacia.png",
    "shadow_pivot": [
-    48.558,
-    38.032
+    42.725,
+    33.722
    ],
    "shadow_base_width": 38.637
   },
@@ -847,21 +847,21 @@
     1,
     1
    ],
-   "scale": 2.0311,
+   "scale": 1.8009268045425415,
    "sprite": "data/buildings/fig.png",
    "image": [
-    153,
-    200
+    116,
+    175
    ],
    "pivot": [
-    77.263,
-    185.88
+    58.033,
+    163.824
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fig.png",
    "shadow_pivot": [
-    58.945,
-    51.302
+    57.245,
+    46.488
    ],
    "shadow_base_width": 38.637
   },
@@ -871,21 +871,21 @@
     1,
     1
    ],
-   "scale": 2.2858,
+   "scale": 2.026759386062622,
    "sprite": "data/buildings/pomegranate.png",
    "image": [
-    172,
-    201
+    134,
+    177
    ],
    "pivot": [
-    88.38,
-    190.155
+    68.637,
+    167.615
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/pomegranate.png",
    "shadow_pivot": [
-    60.028,
-    51.01
+    57.866,
+    43.56
    ],
    "shadow_base_width": 38.637
   },
@@ -895,21 +895,21 @@
     1,
     1
    ],
-   "scale": 2.0283,
+   "scale": 1.7983828783035278,
    "sprite": "data/buildings/olive.png",
    "image": [
-    150,
-    183
+    117,
+    161
    ],
    "pivot": [
-    74.291,
-    172.195
+    57.492,
+    151.69
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/olive.png",
    "shadow_pivot": [
-    49.38,
-    50.431
+    48.754,
+    39.055
    ],
    "shadow_base_width": 38.637
   },
@@ -919,21 +919,21 @@
     2,
     2
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/palm_grove.png",
    "image": [
-    260,
-    308
+    215,
+    271
    ],
    "pivot": [
-    112.118,
-    218.135
+    90.748,
+    192.422
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/palm_grove.png",
    "shadow_pivot": [
-    63.593,
-    57.425
+    56.036,
+    49.576
    ],
    "shadow_base_width": 77.273
   },
@@ -943,21 +943,21 @@
     2,
     2
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/twin_palms.png",
    "image": [
-    208,
-    266
+    197,
+    233
    ],
    "pivot": [
-    105.4,
-    217.32
+    99.706,
+    191.7
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/twin_palms.png",
    "shadow_pivot": [
-    66.602,
-    61.694
+    60.703,
+    60.372
    ],
    "shadow_base_width": 77.273
   },
@@ -967,21 +967,21 @@
     2,
     2
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/sycamore.png",
    "image": [
-    214,
-    230
+    178,
+    202
    ],
    "pivot": [
-    108.516,
-    204.714
+    89.773,
+    180.524
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/sycamore.png",
    "shadow_pivot": [
-    79.251,
-    61.128
+    64.94,
+    51.211
    ],
    "shadow_base_width": 77.273
   },
@@ -991,21 +991,21 @@
     2,
     2
    ],
-   "scale": 1.5,
+   "scale": 1.3300000429153442,
    "sprite": "data/buildings/tamarisk.png",
    "image": [
-    195,
-    188
+    171,
+    171
    ],
    "pivot": [
-    99.363,
-    174.033
+    87.112,
+    159.948
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/tamarisk.png",
    "shadow_pivot": [
-    67.367,
-    53.066
+    62.062,
+    47.391
    ],
    "shadow_base_width": 77.273
   },

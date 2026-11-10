@@ -697,17 +697,17 @@
     1
    ],
    "pivot": [
-    47.746,
-    97.321
+    65.766,
+    128.447
    ],
    "base_width": 136.603,
-   "scale": 1.0918647050857544,
+   "scale": 1.4521801471710205,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 26",
    "image": [
-    95,
-    105
+    130,
+    138
    ],
    "runtime": "data/buildings/date_palm.png",
    "shadow": "data/building-shadows/date_palm.png",
@@ -723,17 +723,17 @@
     1
    ],
    "pivot": [
-    48.888,
-    75.265
+    65.362,
+    108.328
    ],
    "base_width": 136.603,
-   "scale": 1.04347825050354,
+   "scale": 1.3878262042999268,
    "coins": 30,
    "stars": 0,
    "note": "Relic slot 27 · branching palm",
    "image": [
-    98,
-    82
+    130,
+    116
    ],
    "runtime": "data/buildings/doum_palm.png",
    "shadow": "data/building-shadows/doum_palm.png",
@@ -749,17 +749,17 @@
     1
    ],
    "pivot": [
-    53.597,
-    203.939
+    66.294,
+    270.249
    ],
    "base_width": 136.603,
-   "scale": 1.8461538553237915,
+   "scale": 2.4553847312927246,
    "coins": 45,
    "stars": 1,
    "note": "Relic slot 28",
    "image": [
-    107,
-    213
+    132,
+    282
    ],
    "runtime": "data/buildings/cypress.png",
    "shadow": "data/building-shadows/cypress.png",
@@ -775,17 +775,17 @@
     1
    ],
    "pivot": [
-    39.775,
-    92.645
+    50.91,
+    122.228
    ],
    "base_width": 136.603,
-   "scale": 1.0,
+   "scale": 1.3300000429153442,
    "coins": 45,
    "stars": 1,
    "note": "Relic slot 29 · flat umbrella crown",
    "image": [
-    94,
-    99
+    121,
+    129
    ],
    "runtime": "data/buildings/acacia.png",
    "shadow": "data/building-shadows/acacia.png",
@@ -801,17 +801,17 @@
     1
    ],
    "pivot": [
-    51.509,
-    123.92
+    58.033,
+    163.824
    ],
    "base_width": 136.603,
-   "scale": 1.354080319404602,
+   "scale": 1.8009268045425415,
    "coins": 45,
    "stars": 2,
    "note": "Relic slot 30",
    "image": [
-    102,
-    133
+    116,
+    175
    ],
    "runtime": "data/buildings/fig.png",
    "shadow": "data/building-shadows/fig.png",
@@ -827,17 +827,17 @@
     1
    ],
    "pivot": [
-    58.92,
-    126.77
+    68.637,
+    167.615
    ],
    "base_width": 136.603,
-   "scale": 1.5238792896270752,
+   "scale": 2.026759386062622,
    "coins": 60,
    "stars": 3,
    "note": "Relic slot 31",
    "image": [
-    115,
-    134
+    134,
+    177
    ],
    "runtime": "data/buildings/pomegranate.png",
    "shadow": "data/building-shadows/pomegranate.png",
@@ -853,17 +853,17 @@
     1
    ],
    "pivot": [
-    49.527,
-    114.797
+    57.492,
+    151.69
    ],
    "base_width": 136.603,
-   "scale": 1.3521674871444702,
+   "scale": 1.7983828783035278,
    "coins": 75,
    "stars": 4,
    "note": "Relic slot 32",
    "image": [
-    100,
-    122
+    117,
+    161
    ],
    "runtime": "data/buildings/olive.png",
    "shadow": "data/building-shadows/olive.png",
@@ -879,17 +879,17 @@
     2
    ],
    "pivot": [
-    74.745,
-    145.423
+    90.748,
+    192.422
    ],
    "base_width": 273.205,
-   "scale": 1.0,
+   "scale": 1.3300000429153442,
    "coins": 120,
    "stars": 2,
    "note": "Relic slot 33",
    "image": [
-    173,
-    205
+    215,
+    271
    ],
    "runtime": "data/buildings/palm_grove.png",
    "shadow": "data/building-shadows/palm_grove.png",
@@ -905,17 +905,17 @@
     2
    ],
    "pivot": [
-    70.267,
-    144.88
+    99.706,
+    191.7
    ],
    "base_width": 273.205,
-   "scale": 1.0,
+   "scale": 1.3300000429153442,
    "coins": 150,
    "stars": 2,
    "note": "Relic slot 34",
    "image": [
-    139,
-    177
+    197,
+    233
    ],
    "runtime": "data/buildings/twin_palms.png",
    "shadow": "data/building-shadows/twin_palms.png",
@@ -931,17 +931,17 @@
     2
    ],
    "pivot": [
-    72.344,
-    136.476
+    89.773,
+    180.524
    ],
    "base_width": 273.205,
-   "scale": 1.0,
+   "scale": 1.3300000429153442,
    "coins": 180,
    "stars": 3,
    "note": "Relic slot 35 · broad sacred fig",
    "image": [
-    143,
-    153
+    178,
+    202
    ],
    "runtime": "data/buildings/sycamore.png",
    "shadow": "data/building-shadows/sycamore.png",
@@ -957,17 +957,17 @@
     2
    ],
    "pivot": [
-    66.242,
-    116.022
+    87.112,
+    159.948
    ],
    "base_width": 273.205,
-   "scale": 1.0,
+   "scale": 1.3300000429153442,
    "coins": 300,
    "stars": 5,
    "note": "Relic slot 36 · feathery pink-flowered tree",
    "image": [
-    130,
-    125
+    171,
+    171
    ],
    "runtime": "data/buildings/tamarisk.png",
    "shadow": "data/building-shadows/tamarisk.png",
