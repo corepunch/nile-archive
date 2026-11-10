@@ -879,8 +879,8 @@
     2
    ],
    "pivot": [
-    90.748,
-    192.422
+    88.801,
+    187.751
    ],
    "base_width": 273.205,
    "scale": 1.3300000429153442,
@@ -888,8 +888,8 @@
    "stars": 2,
    "note": "Relic slot 33",
    "image": [
-    215,
-    271
+    206,
+    266
    ],
    "runtime": "data/buildings/palm_grove.png",
    "shadow": "data/building-shadows/palm_grove.png",

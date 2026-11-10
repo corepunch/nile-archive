@@ -693,9 +693,9 @@ def olive(k):
     for x, y, z in ((-.24, -.12, .58), (.2, -.2, .64), (-.02, -.2, .8)):
         k.ball("matte", x, y, z, .03, C("#3E3A2A"), 6)
 def palm_grove(k):
-    date_palm(k, -.4, .35, 0, 1.25, .5, 7)
-    date_palm(k, .4, .3, 0, 1.0, .46, 7, dates=False)
-    date_palm(k, 0, -.42, 0, .8, .42, 6)
+    date_palm(k, -.36, .31, 0, 1.25, .5, 7)
+    date_palm(k, .36, .27, 0, 1.0, .46, 7, dates=False)
+    date_palm(k, 0, -.38, 0, .8, .42, 6)
     k.puff(.55, -.55, 0, .14)
 def twin_palms(k):
     date_palm(k, -.3, .25, 0, 1.3, .6, 7)

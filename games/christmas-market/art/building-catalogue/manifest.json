@@ -804,8 +804,8 @@
     1
    ],
    "pivot": [
-    55.909,
-    158.714
+    45.327,
+    154.943
    ],
    "base_width": 136.603,
    "cost": [
@@ -814,8 +814,8 @@
    "stars": 3,
    "about": "Baubles, a golden star and twinkling lights.",
    "image": [
-    112,
-    174
+    91,
+    164
    ],
    "runtime": "data/buildings/fir_decorated.png",
    "shadow": "data/building-shadows/fir_decorated.png",
@@ -831,8 +831,8 @@
     2
    ],
    "pivot": [
-    108.712,
-    217.564
+    102.85,
+    214.234
    ],
    "base_width": 273.205,
    "cost": [
@@ -841,8 +841,8 @@
    "stars": 6,
    "about": "Four firs keep each other warm.",
    "image": [
-    228,
-    271
+    216,
+    265
    ],
    "runtime": "data/buildings/pine_grove.png",
    "shadow": "data/building-shadows/pine_grove.png",

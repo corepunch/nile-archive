@@ -943,7 +943,7 @@ def banana(k):
         k.tube("leaf", (x, y, 0), (x, y, h), .07, .05, C("#6DAE3A"), 10)
         for i in range(4):
             a = 2 * math.pi * i / 4 + x * 9
-            blade(k, (x, y, h), (math.cos(a), math.sin(a)), .36, .1, rise=.9, droop=1.2)
+            blade(k, (x, y, h), (math.cos(a), math.sin(a)), .27, .1, rise=.9, droop=1.2)
     for dz in (0, .07, .14):
         k.ball("matte", .15, -.14, .34 - dz, .055 + dz * .1, C("#F0CE3A"), 8)
 def papaya(k):

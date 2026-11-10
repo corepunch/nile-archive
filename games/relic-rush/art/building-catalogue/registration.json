@@ -711,18 +711,18 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/banana.png",
    "image": [
-    122,
-    97
+    100,
+    86
    ],
    "pivot": [
-    58.22,
-    75.768
+    47.38,
+    70.083
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/banana.png",
    "shadow_pivot": [
-    27.152,
-    21.582
+    25.639,
+    20.974
    ],
    "shadow_base_width": 38.637
   },
