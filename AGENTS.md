@@ -1,5 +1,9 @@
 # Instructions for coding agents
 
+## Commit your work
+
+Commit every finished, verified step yourself, without being asked, and never close a turn with "nothing is committed" while your own changes sit uncommitted. Stage only the files you changed (and regenerated files that follow from them), leave other people's uncommitted edits alone, and say what you committed. Pushing and opening a pull request still wait for the user.
+
 ## Match verification to the change
 
 Use this workflow for every change, including work intended for a pull request:
