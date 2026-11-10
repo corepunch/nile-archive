@@ -1467,5 +1467,9 @@ CATALOGUE = [dict(zip(("key", "title", "cat", "w", "h", "gold", "stars", "like")
              for row in json.loads((HERE / "catalogue.json").read_text())]
 BASED = ("wonder", "building")   # these stand on a slab; decorations stand on the grass
 
+TREES = ("palm_young", "jungle_tree", "cypress", "banana", "fan_palm", "papaya", "frangipani",
+         "bamboo", "twin_palms", "mango", "kapok")
+
 assemble("RelicRushBuildings", CATALOGUE, {it["key"]: globals()[it["key"]] for it in CATALOGUE},
-         blend_argument(HERE / "relic_rush_buildings.blend"), slab=lambda it: it["cat"] in BASED)
+         blend_argument(HERE / "relic_rush_buildings.blend"), slab=lambda it: it["cat"] in BASED,
+         model_scale=lambda it, reach: TREE_GROWTH if it["key"] in TREES else 1.)

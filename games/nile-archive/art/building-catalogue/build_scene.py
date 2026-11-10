@@ -1230,10 +1230,15 @@ BASED = ("story", "wonder", "building")   # these stand on a slab; decorations s
 FILL, MAX_SCALE = .48, 2.
 
 
+TREES = ("date_palm", "doum_palm", "cypress", "acacia", "fig", "pomegranate", "olive",
+         "palm_grove", "twin_palms", "sycamore", "tamarisk")
+
+
 def model_scale(it, reach):
+    grow = TREE_GROWTH if it["key"] in TREES else 1.
     if it["cat"] in BASED or (it["w"], it["h"]) != (1, 1):
-        return 1.
-    return max(1., min(MAX_SCALE, FILL / reach))
+        return grow
+    return max(1., min(MAX_SCALE, FILL / reach)) * grow
 
 
 STORY = [dict(it, cat="story") for it in restorations.BUILDINGS]

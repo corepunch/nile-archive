@@ -512,6 +512,11 @@ def _sun(scene, name, energy, angle, color, direction):
     scene.collection.objects.link(ob)
 
 
+# Trees read small beside buildings, so each game lists its tree keys and models them this much
+# larger about their pivot (see model_scale in assemble). Footprints and base widths stay put.
+TREE_GROWTH = 1.5
+
+
 def assemble(scene_name, items, builders, blend, slab=None, slab_color=None, model_scale=None, extra_materials=None, light_color=(1, .62, .28)):
     """Build every item (dicts with key, title, w, h) with builders[key] and save blend.
 

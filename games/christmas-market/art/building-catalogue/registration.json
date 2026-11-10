@@ -655,21 +655,21 @@
     1,
     1
    ],
-   "scale": 1.0,
+   "scale": 1.5,
    "sprite": "data/buildings/fir_snowy.png",
    "image": [
-    89,
-    116
+    134,
+    174
    ],
    "pivot": [
-    44.59,
-    104.509
+    66.885,
+    156.763
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_snowy.png",
    "shadow_pivot": [
-    29.799,
-    25.711
+    44.698,
+    38.566
    ],
    "shadow_base_width": 38.637
   },
@@ -679,21 +679,21 @@
     1,
     1
    ],
-   "scale": 1.0,
+   "scale": 1.5,
    "sprite": "data/buildings/birch.png",
    "image": [
-    74,
-    112
+    111,
+    168
    ],
    "pivot": [
-    33.334,
-    96.982
+    50.001,
+    145.473
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/birch.png",
    "shadow_pivot": [
-    10.821,
-    24.582
+    16.232,
+    36.873
    ],
    "shadow_base_width": 38.637
   },
@@ -703,21 +703,21 @@
     1,
     1
    ],
-   "scale": 1.0,
+   "scale": 1.5,
    "sprite": "data/buildings/fir_decorated.png",
    "image": [
-    95,
-    131
+    142,
+    196
    ],
    "pivot": [
-    47.542,
-    119.078
+    71.313,
+    178.617
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_decorated.png",
    "shadow_pivot": [
-    30.096,
-    29.114
+    45.144,
+    43.671
    ],
    "shadow_base_width": 38.637
   },
@@ -727,21 +727,21 @@
     2,
     2
    ],
-   "scale": 1.0,
+   "scale": 1.5,
    "sprite": "data/buildings/pine_grove.png",
    "image": [
-    208,
-    218
+    312,
+    327
    ],
    "pivot": [
-    99.644,
-    170.764
+    149.466,
+    256.146
    ],
    "base_width": 273.205,
    "shadow": "data/building-shadows/pine_grove.png",
    "shadow_pivot": [
-    48.801,
-    43.45
+    73.202,
+    65.175
    ],
    "shadow_base_width": 77.273
   },
