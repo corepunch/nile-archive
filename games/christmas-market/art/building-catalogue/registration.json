@@ -20,8 +20,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/arch.png",
    "shadow_pivot": [
-    176.508,
-    113.827
+    175.508,
+    134.827
    ],
    "shadow_base_width": 348.336
   },
@@ -44,8 +44,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/lumber.png",
    "shadow_pivot": [
-    177.24,
-    113.15
+    175.24,
+    157.15
    ],
    "shadow_base_width": 348.336
   },
@@ -68,8 +68,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/bakery.png",
    "shadow_pivot": [
-    176.277,
-    113.15
+    175.277,
+    157.15
    ],
    "shadow_base_width": 348.336
   },
@@ -92,8 +92,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/cocoa.png",
    "shadow_pivot": [
-    176.68,
-    113.96
+    175.68,
+    148.96
    ],
    "shadow_base_width": 348.336
   },
@@ -116,8 +116,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/toys.png",
    "shadow_pivot": [
-    177.393,
-    113.343
+    175.393,
+    169.343
    ],
    "shadow_base_width": 348.336
   },
@@ -140,8 +140,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/gifts.png",
    "shadow_pivot": [
-    180.332,
-    113.572
+    175.332,
+    166.572
    ],
    "shadow_base_width": 348.336
   },
@@ -164,8 +164,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/candles.png",
    "shadow_pivot": [
-    177.352,
-    113.15
+    175.352,
+    157.15
    ],
    "shadow_base_width": 348.336
   },
@@ -188,8 +188,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/carousel.png",
    "shadow_pivot": [
-    176.881,
-    113.24
+    174.881,
+    140.24
    ],
    "shadow_base_width": 348.336
   },
@@ -212,8 +212,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/rink.png",
    "shadow_pivot": [
-    176.587,
-    113.197
+    175.587,
+    140.197
    ],
    "shadow_base_width": 348.336
   },
@@ -236,8 +236,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/tree.png",
    "shadow_pivot": [
-    178.797,
-    113.239
+    175.797,
+    119.239
    ],
    "shadow_base_width": 348.336
   },
@@ -260,8 +260,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/firs.png",
    "shadow_pivot": [
-    119.172,
-    76.512
+    117.172,
+    80.512
    ],
    "shadow_base_width": 232.224
   },
@@ -284,8 +284,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/bench.png",
    "shadow_pivot": [
-    119.058,
-    76.234
+    117.058,
+    86.234
    ],
    "shadow_base_width": 232.224
   },
@@ -308,8 +308,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowman.png",
    "shadow_pivot": [
-    44.433,
-    13.825
+    20.433,
+    40.825
    ],
    "shadow_base_width": 116.112
   },
@@ -332,8 +332,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/presents.png",
    "shadow_pivot": [
-    42.4,
-    25.132
+    39.4,
+    34.132
    ],
    "shadow_base_width": 116.112
   },
@@ -356,8 +356,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/candy_canes.png",
    "shadow_pivot": [
-    38.522,
-    18.264
+    28.522,
+    37.264
    ],
    "shadow_base_width": 116.112
   },
@@ -380,8 +380,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/lamp_post.png",
    "shadow_pivot": [
-    31.679,
-    6.347
+    8.679,
+    50.347
    ],
    "shadow_base_width": 116.112
   },
@@ -404,8 +404,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/snowy_bench.png",
    "shadow_pivot": [
-    54.9,
-    26.124
+    44.9,
+    50.124
    ],
    "shadow_base_width": 116.112
   },
@@ -428,8 +428,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/mailbox.png",
    "shadow_pivot": [
-    40.143,
-    12.252
+    18.143,
+    43.252
    ],
    "shadow_base_width": 116.112
   },
@@ -452,8 +452,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/snow_rocks.png",
    "shadow_pivot": [
-    47.708,
-    26.618
+    43.708,
+    35.618
    ],
    "shadow_base_width": 116.112
   },
@@ -476,8 +476,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/giant_ornament.png",
    "shadow_pivot": [
-    44.467,
-    17.259
+    25.467,
+    42.259
    ],
    "shadow_base_width": 116.112
   },
@@ -500,8 +500,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/ice_star.png",
    "shadow_pivot": [
-    48.9,
-    17.97
+    26.9,
+    38.97
    ],
    "shadow_base_width": 116.112
   },
@@ -524,8 +524,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/nutcracker.png",
    "shadow_pivot": [
-    26.554,
-    14.783
+    21.554,
+    39.783
    ],
    "shadow_base_width": 116.112
   },
@@ -548,8 +548,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/reindeer.png",
    "shadow_pivot": [
-    42.698,
-    15.878
+    11.698,
+    40.878
    ],
    "shadow_base_width": 116.112
   },
@@ -572,8 +572,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/penguins.png",
    "shadow_pivot": [
-    31.021,
-    18.293
+    19.021,
+    37.293
    ],
    "shadow_base_width": 116.112
   },
@@ -596,8 +596,8 @@
    "base_width": 223.205,
    "shadow": "data/building-shadows/wreath_arch.png",
    "shadow_pivot": [
-    86.596,
-    27.943
+    66.596,
+    64.943
    ],
    "shadow_base_width": 189.724
   },
@@ -620,8 +620,8 @@
    "base_width": 223.205,
    "shadow": "data/building-shadows/sleigh.png",
    "shadow_pivot": [
-    77.883,
-    32.766
+    66.883,
+    54.766
    ],
    "shadow_base_width": 189.724
   },
@@ -644,8 +644,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/igloo.png",
    "shadow_pivot": [
-    82.269,
-    51.656
+    80.269,
+    60.656
    ],
    "shadow_base_width": 232.224
   },
@@ -668,8 +668,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_snowy.png",
    "shadow_pivot": [
-    50.052,
-    26.756
+    39.052,
+    55.756
    ],
    "shadow_base_width": 116.112
   },
@@ -692,8 +692,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/birch.png",
    "shadow_pivot": [
-    52.141,
-    18.246
+    23.141,
+    57.246
    ],
    "shadow_base_width": 116.112
   },
@@ -716,8 +716,8 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fir_decorated.png",
    "shadow_pivot": [
-    43.217,
-    22.001
+    32.217,
+    62.001
    ],
    "shadow_base_width": 116.112
   },
@@ -740,8 +740,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/pine_grove.png",
    "shadow_pivot": [
-    90.374,
-    60.549
+    83.374,
+    101.549
    ],
    "shadow_base_width": 232.224
   },
@@ -764,8 +764,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/log_cabin.png",
    "shadow_pivot": [
-    120.443,
-    77.818
+    119.443,
+    102.818
    ],
    "shadow_base_width": 232.224
   },
@@ -788,8 +788,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/gingerbread_house.png",
    "shadow_pivot": [
-    120.338,
-    77.251
+    119.338,
+    90.251
    ],
    "shadow_base_width": 232.224
   },
@@ -812,8 +812,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/post_office.png",
    "shadow_pivot": [
-    120.819,
-    77.216
+    118.819,
+    96.216
    ],
    "shadow_base_width": 232.224
   },
@@ -836,8 +836,8 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/chapel.png",
    "shadow_pivot": [
-    120.106,
-    77.476
+    119.106,
+    88.476
    ],
    "shadow_base_width": 232.224
   },
@@ -860,8 +860,8 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/reindeer_stable.png",
    "shadow_pivot": [
-    157.238,
-    90.788
+    156.238,
+    113.788
    ],
    "shadow_base_width": 305.836
   },
@@ -884,8 +884,8 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/santa_workshop.png",
    "shadow_pivot": [
-    180.387,
-    114.39
+    177.387,
+    153.39
    ],
    "shadow_base_width": 348.336
   }
