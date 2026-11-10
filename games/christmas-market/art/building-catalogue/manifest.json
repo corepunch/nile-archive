@@ -453,8 +453,8 @@
     1
    ],
    "pivot": [
-    44.207,
-    65.543
+    66.311,
+    98.315
    ],
    "base_width": 136.603,
    "cost": [
@@ -463,8 +463,8 @@
    "stars": 0,
    "about": "A seat for watching the snow fall.",
    "image": [
-    90,
-    87
+    135,
+    130
    ],
    "runtime": "data/buildings/snowy_bench.png",
    "shadow": "data/building-shadows/snowy_bench.png",
