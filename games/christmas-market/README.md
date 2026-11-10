@@ -116,6 +116,22 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 
 Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 
+## Leaderboards
+
+Game Center comes from the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)) and is switched on by the
+`leaderboard` block of `data/game.json`: a **stars** board for the lifetime Christmas Stars (never spent)
+and one board per winter wish (`level_01` to `level_30`) for its best score. Scores are reported when a
+reward is claimed. Settings has a LEADERBOARD link for the stars board and the results card a LEADERBOARD
+button for that wish; both open the shared dialog in this game's red and green skin. Create 31
+leaderboards in App Store Connect (high to low) as `com.corepunch.christmasmarket.stars` and
+`com.corepunch.christmasmarket.level_01` ... `level_30`. Try it with `--gamecenter-demo --dialog leaderboard`.
+
+| Settings | Merriest markets | Results card | Winter wish board |
+| --- | --- | --- | --- |
+| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The stars board](docs/screenshots/leaderboard.jpg) | ![Results with a Leaderboard button](docs/screenshots/reward.jpg) | ![One wish's board](docs/screenshots/level-leaderboard.jpg) |
+
+![The stars board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
+
 `python3 games/christmas-market/tools/check_assets.py` verifies the 125-file runtime inventory (five of them temporary name-card busts), 37 buildings, all forty authored atlas crops and eleven native icon slots. `python3 games/christmas-market/tools/capture_screenshots.py` reproduces the review captures; pass names such as `market phone-market` to capture a subset. Use `xvfb-run -a` on Linux. CI also builds the iOS Simulator target and the WebAssembly game.
 
 ## Fast rule tests

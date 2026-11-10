@@ -269,6 +269,16 @@ focus with the skin's focus style. Sound and Reduce Motion use the same
 checkbox control. Review the panel with
 `build/test/christmas-market "shot pause" "shot phone-pause"`.
 
+Settings also has a LEADERBOARD link and the results card a LEADERBOARD button, which open
+the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)) in this
+game's skin: Everyone / Friends tabs (the chosen one a red button, the other a flat caption), rows of
+rank, portrait, name and score, loading / empty / signed-out notes, and Game Center and Close buttons.
+No artwork is added: every state is skin paint, and portraits come from Game Center at runtime.
+Reviewed captures: [Settings](screenshots/pause.jpg), [the stars board](screenshots/leaderboard.jpg),
+[a wish's board](screenshots/level-leaderboard.jpg), [the 390×844 phone](screenshots/phone-leaderboard.jpg)
+and [the results card](screenshots/reward.jpg), from `build/test/christmas-market "shot leaderboard"` ...
+with `--gamecenter-demo`.
+
 ## Engine match-3 atlas and trickling
 
 `data/match3.png`, registered by `lua/match3_skin.lua` and

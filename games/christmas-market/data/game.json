@@ -25,7 +25,9 @@
               "Gold buys stalls and decorations. Replay winter wishes to earn more.",
               "Christmas Stars unlock shop items and land. First clears only."]
   },
-  "pause": {"guide": "MARKET GUIDE", "quit": "QUIT TO MARKET", "town": "Your Christmas market"},
+  "pause": {"guide": "MARKET GUIDE", "quit": "QUIT TO MARKET", "town": "Your Christmas market", "leaderboard": "LEADERBOARD"},
+  "leaderboard": {"board": "stars", "title": "Merriest markets", "level_board": "level_%02d", "level_title": "Winter wish %d",
+                  "level_button": "LEADERBOARD"},
   "confirm": {"title": "Restart this winter wish?"},
   "failed": {"title": "One more winter wish?", "subtitle": "THE MARKET WILL WAIT FOR YOU.", "town": "VISIT MARKET"},
   "zone": {"subtitle": "MORE ROOM FOR CHRISTMAS CHEER", "earn": "EARN STARS IN NEW WINTER WISHES",
