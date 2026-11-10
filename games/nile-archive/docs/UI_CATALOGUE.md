@@ -122,3 +122,17 @@ The guides use the existing camera and tile measurements; artwork, alpha,
 footprints and collision rules are unchanged. No bitmap or ImageGen source is
 added. Reproduce with the existing native-input hold/placement captures in the
 [review](../../../docs/review/city-placement-guides/README.md).
+
+## Leaderboard dialog
+
+The engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)) is drawn by
+`lua/archive_skin.lua`: the teal frame, the gold `score` heading, cream `board_row` rows, gold
+`board_me` for the player's own row, `board_note` for loading / empty / signed-out notes, an accent
+pill for the chosen Все / Друзья tab (the other a flat caption) and the Game Center and Закрыть pills.
+Rows hold rank, a round portrait (a placeholder with the initial until Game Center's photo arrives) and
+the score. It opens from the chapter list's «Таблица лидеров» button (influence) and from the
+«Поиск завершён!» window's blue pill (that search). No bitmap or ImageGen source is added: every
+state is skin paint and the portraits come from Game Center at runtime. Reviewed captures:
+`leaderboard`, `ipad-leaderboard`, `search-leaderboard`, `chapters` and `reward` in
+`docs/screenshots`, from `build/test/nile-archive "shot leaderboard"` ... with `--gamecenter-demo`.
+

@@ -34,8 +34,9 @@ local function frame(dt)
     local inp = input.get()
     local world = input.world()
     local talking = story.active()
-    if G.modal ~= MODAL_NONE or talking then world = input{pos = inp.pos, pinch = 1} end
-    if inp.back and not talking then
+    local board = dialogs.boards:active()   -- a leaderboard has the input, and the back key
+    if G.modal ~= MODAL_NONE or talking or board then world = input{pos = inp.pos, pinch = 1} end
+    if inp.back and not talking and not board then
         if G.modal == MODAL_WIN or G.modal == G.MODAL_CACHE then scene.go_home()
         elseif G.modal == G.MODAL_JOURNAL then G.open_modal(MODAL_CHAPTERS)
         elseif G.modal ~= MODAL_NONE then G.modal = MODAL_NONE
@@ -47,7 +48,7 @@ local function frame(dt)
     fx.update(dt)
 
     local screen = app.screen()
-    ui.set_enabled(G.modal == MODAL_NONE and not talking)
+    ui.set_enabled(G.modal == MODAL_NONE and not talking and not board)
     if G.scene then scene.frame(screen, world, dt) else island.frame(screen, world) end
     ui.set_enabled(true)
 
@@ -55,8 +56,11 @@ local function frame(dt)
         local d = G.dialog
         if d.tl.paused then d.tl:resume() end
         ui.modal_backdrop(d.backdrop)
+        if board then ui.set_enabled(false) end
         dialogs.draw(G.modal)
+        ui.set_enabled(true)
     end
+    if not talking then dialogs.boards:draw(dt, {reduced_motion = G.reduced_motion}) end
     story.frame(dt)
     if G.save_intro and not story.active() then
         G.save_intro = false
@@ -68,7 +72,7 @@ end
 ------------------------------------------------------------------- setup
 
 -- Debug/QA entry points used to capture screenshots:
--- --screen island|build|purchase|opening|first-build|first-win|scene0..4|cache|cache-result|journal|cast|pause|chapters|win|story|horem|merit,
+-- --screen island|build|purchase|opening|first-build|first-win|scene0..4|cache|cache-result|journal|cast|pause|chapters|win|story|horem|merit|leaderboard|win-leaderboard,
 -- --catalogue <category> --catalogue-page N with --screen build, --building-review N,
 -- and --footprints to check the buildings' measured footprints and pivots
 local function apply_screen_arg(screen)
@@ -119,13 +123,17 @@ local function apply_screen_arg(screen)
         G.wins[2], G.clues[2], G.stars[1] = 0, 0, 3
         G.wallet[CHAPTERS] = economy.completed(G.wins)
         G.open_modal(MODAL_CHAPTERS, true)
-    elseif screen == "win" then
+    elseif screen == "leaderboard" then   -- the influence board over the chapter list; add --gamecenter-demo
+        G.open_modal(MODAL_CHAPTERS, true)
+        dialogs.boards:open("influence", "Влияние")
+    elseif screen == "win" or screen == "win-leaderboard" then
         scene.open(2)
         for i = 1, ITEMS do G.found[i] = 0; scene.show_found(i) end   -- the last finds are still leaving the bar
         G.wins[2], G.clues[2], G.stars[1] = 0, 0, 3
         G.wallet[CHAPTERS] = economy.completed(G.wins)
         G.result = {score = 4200, time = 68, stars = 3, clue = 1, payout = economy.reward(0, 0, 3, true)}
         G.open_modal(MODAL_WIN, not app.arg("reel"))
+        if screen == "win-leaderboard" then dialogs.boards:open("search_2", scenes[2].title) end
     elseif screen == "cache" then
         scene.open(content.CACHE)
     elseif screen == "cache-result" then

@@ -85,6 +85,10 @@ return ui.skin{
         multiplier = {font = "serif", em = 24, fill = "#F6C24A", fill2 = "#B8761C", outline = "#5A3608", outline_width = 1.2},
         float = {font = "serif", em = 26, fill = "#FFF6DC", fill2 = "#F5C860", outline = "#4A2A08", outline_width = 1.6},
         float_miss = {font = "serif", em = 22, fill = "#FF8A70", outline = "#3A0E08", outline_width = 1.4},
+        -- The shared leaderboard dialog (engine/leaderboard.lua): rows, the player's own row and the note.
+        board_row = {font = "sans_bold", em = 20, fill = "cream", shadow = "#0000005A", shadow_offset = {0, 1}, shadow_blur = 1},
+        board_me = {font = "sans_bold", em = 20, fill = "gold_hi", shadow = "#0000005A", shadow_offset = {0, 1}, shadow_blur = 1},
+        board_note = {font = "sans", em = 17, fill = "#E9D7A8", shadow = "#00000050", shadow_offset = {0, 1}, shadow_blur = 1},
         -- Pill captions take the pill's lip colour as a 2-pixel rim.
         pill_green = {extends = "button", outline = "#2A6A1E", outline_width = 2},
         pill_blue = {extends = "button", outline = "#184A5B", outline_width = 2},
@@ -100,7 +104,10 @@ return ui.skin{
 
     -- Build-tray typography: the budget line, the category name, card titles.
     roles = {budget = {text = "body", em = 17}, category = {text = "button", em = 17},
-        archive_note = {text = "ink_body", em = 17}},
+        archive_note = {text = "ink_body", em = 17},
+        title = {text = "score", em = 28},
+        leaderboard_row = {text = "board_row", em = 20}, leaderboard_me = {text = "board_me", em = 20},
+        leaderboard_note = {text = "board_note", em = 17}},
 
     controls = {
         -- A teal (or parchment) panel inside a bevelled gold rim, with a

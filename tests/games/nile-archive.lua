@@ -21,6 +21,9 @@ shot("footprints", "1200x900", "--screen island --footprints")
 shot("ipad-island", "1368x1026", "--screen island")
 for page = 1, 12 do shot("building-review-" .. page, "1200x900", "--building-review " .. page .. " --footprints") end
 shot("reward", "1200x900", "--screen win --frames 60")
+shot("leaderboard", "1200x900", "--screen leaderboard --gamecenter-demo --frames 30")
+shot("ipad-leaderboard", "1368x1026", "--screen leaderboard --gamecenter-demo --frames 30")
+shot("search-leaderboard", "1200x900", "--screen win-leaderboard --gamecenter-demo --frames 30")
 -- the chapter-won popup arriving on the motion module: 16 pictures, 6 frames apart
 reel("nile-reward-entrance", 16, 6, "1200x900", "--screen win --reel")
 -- the engine's motion module (tests/fixtures/motion): 16 pictures, 6 frames apart, into docs/screenshots/motion-reel.gif

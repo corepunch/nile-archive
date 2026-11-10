@@ -26,7 +26,16 @@ return ui.skin{
         cream_off = {extends = "cream", fade = .45},
     },
 
+    -- The shared leaderboard dialog (engine/leaderboard.lua) sets its title, rows, the player's own row and its note by role.
+    roles = {
+        title = {text = "gold", em = 42},
+        leaderboard_row = {text = "cream", em = 26},
+        leaderboard_me = {text = "gold", em = 26},
+        leaderboard_note = {text = "white", em = 20},
+    },
+
     controls = {
+        label = {text = "cream", em = 24, wrap_text = "cream", wrap_em = 20},
         -- A deep teal card with a soft drop shadow and a fine gold rim.
         panel = {normal = {layers = {
             {shadow = "#00000046", radius = 19, blur = 18, offset = {0, 6}},

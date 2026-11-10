@@ -8,6 +8,15 @@ local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB
 local white=color.WHITE
 -- The look lives in emergency_skin.lua; lettering is one of its text styles at a size.
 local skin=require('emergency_skin')
+-- Game Center (engine/leaderboard.lua). Boards rank high to low, so a district's time becomes a speed
+-- score, 1e9 / (1000 + tenths of a second): faster is higher, with no ceiling and a tiny rounding error;
+-- time_text turns it back. The rescue board adds up each district's best.
+local boards=require('leaderboard').boards{skin=skin,width=600}
+local function speed_score(seconds) return math.floor(1e9/(1000+math.floor(seconds*10))) end
+local function time_text(score)
+    local t=score>0 and (1e9/score-1000)/10 or 0
+    return ('%d:%02d'):format(math.floor(t/60),math.floor(t%60))
+end
 local function lettering(size,palette) return skin:text(palette or 'cream',size) end
 local function panel(r) ui.block(r);skin:paint('panel',r) end
 local function button(r,caption,flags)
@@ -26,6 +35,13 @@ local function serialize(s)
     story.serialize(s)
 end
 local function persist() if not S.testing then save.write('campaign',serialize) end end
+local function rescue_total()
+    local total=0
+    for i=1,#levels do if S.best[i]>0 then total=total+speed_score(S.best[i]) end end
+    return total
+end
+local function open_rescue_board() boards:open('rescue','Rescue score') end
+local function open_district_board(i) boards:open(('district_%02d'):format(i),levels[i].title,{format=time_text}) end
 local function load_back(i)
     if not S.backs[i] then S.backs[i]=texture.load(levels[i].background) end
     return S.backs[i]
@@ -144,10 +160,11 @@ local function menu()
         local title=('%02d   %s%s'):format(i,level.title,done and '   - restored' or '')
         if button(rect(380,340+(i-1)*82,608,64),title,i>S.unlocked and ui.DISABLED or (i==S.unlocked and ui.ACCENT or 0)) then start(i,false) end
     end
-    if button(rect(380,774,292,54),'How to play') then S.modal='help' end
-    -- Sound is a checkbox, centred in the slot beside How to play.
+    if button(rect(380,774,182,54),'How to play') then S.modal='help' end
+    if button(rect(576,774,214,54),'Leaderboard') then open_rescue_board() end
+    -- Sound is a checkbox, centred in the slot beside them.
     local width=skin:checkbox_size({kind='checkbox'},'Sound')
-    S.sound_box=rect(690+(298-width)/2,774,width,54)
+    S.sound_box=rect(804+(184-width)/2,774,width,54)
     local sound=skin:draw_checkbox(S.sound_box,'Sound',S.sound)
     if sound~=S.sound then S.sound=sound;sfx.enable(S.sound);persist() end
     label(rect(374,850,620,27),'Five districts. One rescue team. A fresh start.',20,vec2(.5,.5))
@@ -156,7 +173,7 @@ local function modal()
     local kind=S.modal
     if not kind then return end
     -- each panel fits its content: no empty band under the last button
-    ui.set_enabled(true);ui.modal_backdrop(1);panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
+    ui.set_enabled(not boards:active());ui.modal_backdrop(1);panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
     local title=kind=='pause' and 'Rescue paused' or kind=='win' and 'District restored!' or 'Every route matters'
     label(rect(385,267,598,62),title,42,vec2(.5,.5),'gold')
     if kind=='win' then
@@ -166,7 +183,8 @@ local function modal()
             start(S.chapter<#levels and S.chapter+1 or 1,false)
         end
         if button(rect(414,580,540,58),'Replay district') then start(S.chapter,false) end
-        if button(rect(414,660,540,58),'Districts') then S.screen='menu';S.modal=nil end
+        if button(rect(414,660,262,58),'Districts') then S.screen='menu';S.modal=nil end
+        if button(rect(692,660,262,58),'Leaderboard') then open_district_board(S.chapter) end
     elseif kind=='pause' then
         label(rect(398,350,572,52),'Your team and production are paused.',25,vec2(.5,.5))
         if button(rect(414,442,540,64),'Resume rescue',ui.ACCENT) then S.modal=nil;S.g.paused=false end
@@ -201,6 +219,7 @@ local function smoke()
     end
     if S.smoke_stage==9 then
         assert(S.chapter==1 and S.g.cleared==0,'final replay did not restart the episode')
+        assert(gamecenter.best('district_05')>0 and gamecenter.best('rescue')>=gamecenter.best('district_05'),'smoke: wins reach the boards')
         print('Emergency smoke: sound checkbox, all five districts, pause, restart and final replay passed through injected clicks')
         app.quit();return
     elseif S.smoke_stage==0 then
@@ -226,7 +245,8 @@ local function smoke()
 end
 local function frame(dt)
     if S.smoke then dt=1/30 end
-    if input.get().back then
+    local board=boards:active()   -- a leaderboard has the input, and the back key
+    if input.get().back and not board then
         if story.active() then story.next()
         elseif S.modal=='pause' then S.modal=nil;S.g.paused=false
         elseif S.screen=='play' and not S.modal then S.modal='pause';S.g.paused=true
@@ -239,6 +259,7 @@ local function frame(dt)
         if S.g.won and not S.banked then
             S.banked=true;S.completed=S.completed|(1<<(S.chapter-1));S.unlocked=math.max(S.unlocked,math.min(S.chapter+1,#levels))
             if S.best[S.chapter]==0 or S.g.time<S.best[S.chapter] then S.best[S.chapter]=math.floor(S.g.time) end
+            gamecenter.submit(('district_%02d'):format(S.chapter),speed_score(S.g.time));gamecenter.submit('rescue',rescue_total())
             persist();S.modal='win';sfx.tone(880,.4);feedback.win()
         end
         for _,ev in ipairs(S.g.events) do
@@ -248,8 +269,8 @@ local function frame(dt)
             else fx.burst(p,12,C.gold,70,3);sfx.tone(ev.kind=='rescue' and 660 or 440,.12) end
         end
         S.g.events={}
-        ui.set_enabled(not S.modal and not story.active())
-        if not S.modal and not story.active() then
+        ui.set_enabled(not S.modal and not story.active() and not board)
+        if not S.modal and not story.active() and not board then
             local in_=input.world();S.cam=S.cam:input(in_)
             if in_.tap then
                 local e=pick(in_.pos);S.selected=e
@@ -257,8 +278,10 @@ local function frame(dt)
             end
         end
         world();hud()
-    else ui.set_enabled(not S.modal);menu() end
-    modal();fx.update(dt);fx.draw();story.frame(dt)
+    else ui.set_enabled(not S.modal and not board);menu() end
+    modal();fx.update(dt);fx.draw()
+    if not story.active() then boards:draw(dt) end
+    story.frame(dt)
     if S.smoke then smoke() end
 end
 local function init()
@@ -290,6 +313,11 @@ local function init()
         assert(steps<18000,'preview playthrough stalled')
     end
     if app.arg('pause') and S.g then S.modal='pause';S.g.paused=true end
+    if not S.testing then gamecenter.submit('rescue',rescue_total()) end   -- progress made before the boards
+    local board=app.arg('leaderboard')   -- --leaderboard [district]: the rescue board, or the chapter's, for captures
+    if board=='district' and S.g then
+        gamecenter.submit(('district_%02d'):format(S.chapter),speed_score(S.g.time>0 and S.g.time or 300));open_district_board(S.chapter)
+    elseif board then gamecenter.submit('rescue',5*speed_score(300));open_rescue_board() end
 end
 -- Keep the published save namespace so the rename retains existing progress.
 return {title='Emergency - After the Eruption',id='volcano',design=size2(1368,1026),fixed=true,landscape=true,clear=C.ink,init=init,frame=frame}
