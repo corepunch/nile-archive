@@ -254,3 +254,7 @@ See the [shared building style guide](../../../docs/BUILDING_STYLE.md) for the
 accepted palette, materials, polish and review criteria, and the
 [reference index](../art/building-catalogue/painted-v1/references.json) for exact
 prompts, ordered input images, hashes and accepted versions.
+
+## Enlarged painted sprites
+
+The enlarged objects `acacia`, `cypress`, `date_palm`, `doum_palm`, `fig`, `olive`, `palm_grove`, `pomegranate`, `sycamore`, `tamarisk`, `twin_palms` use the `z-enlarged` painted atlas, based on the registered Blender renders at `ef26de3`. Normal world state only; interaction feedback remains an engine effect. Sources, exact ImageGen prompt, layout, import transforms and reproduction command are recorded in [painted-v1](../art/building-catalogue/painted-v1/README.md); [in-game footprint review](review/painted-buildings/enlarged/README.md).

@@ -1920,55 +1920,55 @@
     ]
   },
   "palm_young": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       0,
-      0,
+      724,
       362,
-      362
+      1086
     ],
     "crop": [
-      38,
-      37,
-      313,
-      326
+      28,
+      17,
+      329,
+      335
     ],
-    "scale": 0.28719723,
+    "scale": 0.3427673,
     "pivot": [
-      39.79,
-      76.069
+      52.067,
+      100.181
     ],
     "image": [
-      79,
-      83
+      103,
+      109
     ]
   },
   "jungle_tree": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       362,
-      0,
+      362,
       724,
-      362
+      724
     ],
     "crop": [
-      75,
-      33,
-      287,
+      38,
+      15,
+      304,
       330
     ],
-    "scale": 0.34006734,
+    "scale": 0.42222222,
     "pivot": [
-      35.155,
-      93.609
+      54.746,
+      123.51
     ],
     "image": [
-      72,
-      101
+      112,
+      133
     ]
   },
   "cypress": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       724,
       0,
@@ -1976,23 +1976,47 @@
       362
     ],
     "crop": [
-      103,
-      28,
-      268,
-      335
+      99,
+      13,
+      261,
+      345
     ],
-    "scale": 0.36807818,
+    "scale": 0.44578313,
     "pivot": [
-      30.614,
-      106.246
+      36.231,
+      140.647
     ],
     "image": [
-      61,
-      113
+      72,
+      148
     ]
   },
   "banana": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+    "cell": [
+      362,
+      0,
+      724,
+      362
+    ],
+    "crop": [
+      32,
+      46,
+      320,
+      329
+    ],
+    "scale": 0.34722222,
+    "pivot": [
+      47.38,
+      82.347
+    ],
+    "image": [
+      100,
+      98
+    ]
+  },
+  "fan_palm": {
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       1086,
       0,
@@ -2000,23 +2024,47 @@
       362
     ],
     "crop": [
-      35,
-      70,
-      330,
-      319
+      19,
+      73,
+      334,
+      303
     ],
-    "scale": 0.31525424,
+    "scale": 0.3968254,
     "pivot": [
-      44.271,
-      62.276
+      62.25,
+      79.242
+    ],
+    "image": [
+      125,
+      91
+    ]
+  },
+  "papaya": {
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+    "cell": [
+      362,
+      724,
+      724,
+      1086
+    ],
+    "crop": [
+      46,
+      17,
+      304,
+      336
+    ],
+    "scale": 0.36050157,
+    "pivot": [
+      45.435,
+      108.188
     ],
     "image": [
       93,
-      78
+      115
     ]
   },
-  "fan_palm": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+  "frangipani": {
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       0,
       362,
@@ -2024,71 +2072,71 @@
       724
     ],
     "crop": [
-      26,
-      87,
-      332,
-      297
-    ],
-    "scale": 0.31372549,
-    "pivot": [
-      48.301,
-      56.627
-    ],
-    "image": [
-      96,
-      66
-    ]
-  },
-  "papaya": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
-    "cell": [
-      362,
-      362,
-      724,
-      724
-    ],
-    "crop": [
-      71,
-      23,
-      298,
+      41,
+      19,
+      322,
       325
     ],
-    "scale": 0.29470199,
+    "scale": 0.40849673,
     "pivot": [
-      32.665,
-      82.841
+      58.853,
+      116.787
     ],
     "image": [
-      67,
-      89
-    ]
-  },
-  "frangipani": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
-    "cell": [
-      724,
-      362,
-      1086,
-      724
-    ],
-    "crop": [
-      66,
-      22,
-      312,
-      328
-    ],
-    "scale": 0.31372549,
-    "pivot": [
-      39.919,
-      88.554
-    ],
-    "image": [
-      77,
-      96
+      115,
+      125
     ]
   },
   "bamboo": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+    "cell": [
+      0,
+      0,
+      362,
+      362
+    ],
+    "crop": [
+      34,
+      19,
+      327,
+      344
+    ],
+    "scale": 0.81538462,
+    "pivot": [
+      126.698,
+      205.267
+    ],
+    "image": [
+      239,
+      265
+    ]
+  },
+  "twin_palms": {
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+    "cell": [
+      724,
+      724,
+      1086,
+      1086
+    ],
+    "crop": [
+      45,
+      18,
+      316,
+      338
+    ],
+    "scale": 0.73125,
+    "pivot": [
+      101.066,
+      192.114
+    ],
+    "image": [
+      198,
+      234
+    ]
+  },
+  "mango": {
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       1086,
       362,
@@ -2096,91 +2144,43 @@
       724
     ],
     "crop": [
-      39,
-      13,
-      333,
-      335
+      27,
+      18,
+      335,
+      332
     ],
-    "scale": 0.6242236,
+    "scale": 0.6656051,
     "pivot": [
-      97.635,
-      155.08
+      102.721,
+      191.079
     ],
     "image": [
-      184,
-      201
-    ]
-  },
-  "twin_palms": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
-    "cell": [
-      0,
-      724,
-      362,
-      1086
-    ],
-    "crop": [
-      43,
-      24,
-      338,
-      335
-    ],
-    "scale": 0.56913183,
-    "pivot": [
-      85.702,
-      145.191
-    ],
-    "image": [
-      168,
-      177
-    ]
-  },
-  "mango": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
-    "cell": [
-      362,
-      724,
-      724,
-      1086
-    ],
-    "crop": [
-      50,
-      13,
-      325,
-      331
-    ],
-    "scale": 0.49685535,
-    "pivot": [
-      68.472,
-      144.413
-    ],
-    "image": [
-      137,
-      158
+      205,
+      209
     ]
   },
   "kapok": {
-    "atlas": "art/building-catalogue/painted-v1/tree-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-enlarged-output.png",
     "cell": [
       724,
-      724,
+      362,
       1086,
-      1086
+      724
     ],
     "crop": [
-      80,
-      19,
-      305,
-      335
+      30,
+      13,
+      320,
+      326
     ],
-    "scale": 0.82594937,
+    "scale": 1.10223642,
     "pivot": [
-      98.007,
-      221.302
+      166.285,
+      293.341
     ],
     "image": [
-      186,
-      261
+      320,
+      345
     ]
   },
   "birdbath": {

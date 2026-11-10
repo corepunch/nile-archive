@@ -45,7 +45,6 @@
         "sleigh",
         "snow_rocks",
         "snowman",
-        "snowy_bench",
         "wreath_arch"
       ]
     },
@@ -96,12 +95,7 @@
       "output": "art/building-catalogue/painted-v1/tree-output.png",
       "output_sha256": "3040ae74e90eae34fabe67897fc688e7a766eacd0c100d1caee0b713868fee16",
       "layout": "art/building-catalogue/painted-v1/tree-layout.json",
-      "accepted_keys": [
-        "birch",
-        "fir_decorated",
-        "fir_snowy",
-        "pine_grove"
-      ]
+      "accepted_keys": []
     },
     {
       "category": "wonder",
@@ -134,6 +128,34 @@
         "toys",
         "tree"
       ]
+    },
+    {
+      "category": "z-enlarged",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/z-enlarged-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/z-enlarged-input.png",
+          "sha256": "0d6c93de428a8beb470c24515d6c2013d896cfb9b14b3146ef4a153b425e9786"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-reference-sheet.png",
+          "sha256": "cc14233e11a595e2084b41a905e38d5e4d1f940916b5a643e363b11c541376fb"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+      "output_sha256": "932dc5aa96fe4fecb3096d4d92bf8d3442897bda3abb56768fe91966baff189e",
+      "layout": "art/building-catalogue/painted-v1/z-enlarged-layout.json",
+      "accepted_keys": [
+        "snowy_bench",
+        "fir_snowy",
+        "birch",
+        "fir_decorated",
+        "pine_grove"
+      ],
+      "render_baseline": "ef26de3"
     }
   ]
 }

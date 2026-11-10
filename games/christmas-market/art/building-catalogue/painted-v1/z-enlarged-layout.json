@@ -1,0 +1,60 @@
+{
+  "size": [
+    1500,
+    900
+  ],
+  "cols": 3,
+  "rows": 2,
+  "entries": [
+    {
+      "key": "snowy_bench",
+      "box": [
+        191,
+        166,
+        309,
+        284
+      ],
+      "display_scale": 1
+    },
+    {
+      "key": "fir_snowy",
+      "box": [
+        697,
+        148,
+        803,
+        301
+      ],
+      "display_scale": 1
+    },
+    {
+      "key": "birch",
+      "box": [
+        1201,
+        151,
+        1298,
+        298
+      ],
+      "display_scale": 1
+    },
+    {
+      "key": "fir_decorated",
+      "box": [
+        204,
+        593,
+        295,
+        757
+      ],
+      "display_scale": 1
+    },
+    {
+      "key": "pine_grove",
+      "box": [
+        642,
+        542,
+        858,
+        807
+      ],
+      "display_scale": 1
+    }
+  ]
+}

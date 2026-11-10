@@ -1036,7 +1036,7 @@
         1
       ],
       "pivot": [
-        51.983,
+        52.067,
         100.181
       ],
       "base_width": 136.603,
@@ -1075,7 +1075,7 @@
         1
       ],
       "pivot": [
-        41.649,
+        54.746,
         123.51
       ],
       "base_width": 136.603,
@@ -1083,7 +1083,7 @@
       "stars": 0,
       "runtime": "data/buildings/jungle_tree.png",
       "image": [
-        86,
+        112,
         133
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1114,7 +1114,7 @@
         1
       ],
       "pivot": [
-        38.603,
+        36.231,
         140.647
       ],
       "base_width": 136.603,
@@ -1122,7 +1122,7 @@
       "stars": 3,
       "runtime": "data/buildings/cypress.png",
       "image": [
-        77,
+        72,
         148
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1154,7 +1154,7 @@
       ],
       "pivot": [
         47.38,
-        70.083
+        82.347
       ],
       "base_width": 136.603,
       "gold": 45,
@@ -1162,7 +1162,7 @@
       "runtime": "data/buildings/banana.png",
       "image": [
         100,
-        86
+        98
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Banana Plants",
@@ -1193,7 +1193,7 @@
       ],
       "pivot": [
         62.25,
-        77.035
+        79.242
       ],
       "base_width": 136.603,
       "gold": 45,
@@ -1201,7 +1201,7 @@
       "runtime": "data/buildings/fan_palm.png",
       "image": [
         125,
-        89
+        91
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fan Palm",
@@ -1231,7 +1231,7 @@
         1
       ],
       "pivot": [
-        41.912,
+        45.435,
         108.188
       ],
       "base_width": 136.603,
@@ -1239,7 +1239,7 @@
       "stars": 9,
       "runtime": "data/buildings/papaya.png",
       "image": [
-        86,
+        93,
         115
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1270,7 +1270,7 @@
         1
       ],
       "pivot": [
-        48.022,
+        58.853,
         116.787
       ],
       "base_width": 136.603,
@@ -1278,7 +1278,7 @@
       "stars": 12,
       "runtime": "data/buildings/frangipani.png",
       "image": [
-        93,
+        115,
         125
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1309,7 +1309,7 @@
         2
       ],
       "pivot": [
-        130.8,
+        126.698,
         205.267
       ],
       "base_width": 273.205,
@@ -1317,7 +1317,7 @@
       "stars": 6,
       "runtime": "data/buildings/bamboo.png",
       "image": [
-        247,
+        239,
         265
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1348,7 +1348,7 @@
         2
       ],
       "pivot": [
-        102.017,
+        101.066,
         192.114
       ],
       "base_width": 273.205,
@@ -1356,7 +1356,7 @@
       "stars": 6,
       "runtime": "data/buildings/twin_palms.png",
       "image": [
-        200,
+        198,
         234
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1387,7 +1387,7 @@
         2
       ],
       "pivot": [
-        87.737,
+        102.721,
         191.079
       ],
       "base_width": 273.205,
@@ -1395,7 +1395,7 @@
       "stars": 9,
       "runtime": "data/buildings/mango.png",
       "image": [
-        175,
+        205,
         209
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1426,7 +1426,7 @@
         2
       ],
       "pivot": [
-        117.292,
+        166.285,
         293.341
       ],
       "base_width": 273.205,
@@ -1434,7 +1434,7 @@
       "stars": 18,
       "runtime": "data/buildings/kapok.png",
       "image": [
-        222,
+        320,
         345
       ],
       "source": "art/building-catalogue/relic_rush_buildings.blend",

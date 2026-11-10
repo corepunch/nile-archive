@@ -643,7 +643,7 @@
     109
    ],
    "pivot": [
-    51.983,
+    52.067,
     100.181
    ],
    "base_width": 136.603,
@@ -663,11 +663,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/jungle_tree.png",
    "image": [
-    86,
+    112,
     133
    ],
    "pivot": [
-    41.649,
+    54.746,
     123.51
    ],
    "base_width": 136.603,
@@ -687,11 +687,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/cypress.png",
    "image": [
-    77,
+    72,
     148
    ],
    "pivot": [
-    38.603,
+    36.231,
     140.647
    ],
    "base_width": 136.603,
@@ -712,11 +712,11 @@
    "sprite": "data/buildings/banana.png",
    "image": [
     100,
-    86
+    98
    ],
    "pivot": [
     47.38,
-    70.083
+    82.347
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/banana.png",
@@ -736,11 +736,11 @@
    "sprite": "data/buildings/fan_palm.png",
    "image": [
     125,
-    89
+    91
    ],
    "pivot": [
     62.25,
-    77.035
+    79.242
    ],
    "base_width": 136.603,
    "shadow": "data/building-shadows/fan_palm.png",
@@ -759,11 +759,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/papaya.png",
    "image": [
-    86,
+    93,
     115
    ],
    "pivot": [
-    41.912,
+    45.435,
     108.188
    ],
    "base_width": 136.603,
@@ -783,11 +783,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/frangipani.png",
    "image": [
-    93,
+    115,
     125
    ],
    "pivot": [
-    48.022,
+    58.853,
     116.787
    ],
    "base_width": 136.603,
@@ -807,11 +807,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/bamboo.png",
    "image": [
-    247,
+    239,
     265
    ],
    "pivot": [
-    130.8,
+    126.698,
     205.267
    ],
    "base_width": 273.205,
@@ -831,11 +831,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/twin_palms.png",
    "image": [
-    200,
+    198,
     234
    ],
    "pivot": [
-    102.017,
+    101.066,
     192.114
    ],
    "base_width": 273.205,
@@ -855,11 +855,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/mango.png",
    "image": [
-    175,
+    205,
     209
    ],
    "pivot": [
-    87.737,
+    102.721,
     191.079
    ],
    "base_width": 273.205,
@@ -879,11 +879,11 @@
    "scale": 1.3300000429153442,
    "sprite": "data/buildings/kapok.png",
    "image": [
-    222,
+    320,
     345
    ],
    "pivot": [
-    117.292,
+    166.285,
     293.341
    ],
    "base_width": 273.205,

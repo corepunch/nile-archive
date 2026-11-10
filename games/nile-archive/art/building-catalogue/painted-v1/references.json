@@ -302,19 +302,7 @@
       "output": "art/building-catalogue/painted-v1/tree-output.png",
       "output_sha256": "853ebc434564abad115ab28ce5ae1ad6c9ec0ae8a5678b8141e8a7f9d8b86ae6",
       "layout": "art/building-catalogue/painted-v1/tree-layout.json",
-      "accepted_keys": [
-        "acacia",
-        "cypress",
-        "date_palm",
-        "doum_palm",
-        "fig",
-        "olive",
-        "palm_grove",
-        "pomegranate",
-        "sycamore",
-        "tamarisk",
-        "twin_palms"
-      ]
+      "accepted_keys": []
     },
     {
       "category": "water",
@@ -374,6 +362,40 @@
         "sphinx",
         "sun_temple"
       ]
+    },
+    {
+      "category": "z-enlarged",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/z-enlarged-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/z-enlarged-input.png",
+          "sha256": "6eb6e663682879b90736a824961c4d886d16c384558dbe459b33bd83e6b3d56d"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-0.png",
+          "sha256": "85ad9bf577a0f9e8aeb8bdd8b333caf7ed0e11d6e8b71036c19a4d169a0c3068"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/z-enlarged-output.png",
+      "output_sha256": "d45a9b0b30e1dd5c19934ce98d9d18b8f64f365b00f637ac3f8425a8781968e7",
+      "layout": "art/building-catalogue/painted-v1/z-enlarged-layout.json",
+      "accepted_keys": [
+        "acacia",
+        "cypress",
+        "date_palm",
+        "doum_palm",
+        "fig",
+        "olive",
+        "palm_grove",
+        "pomegranate",
+        "sycamore",
+        "tamarisk",
+        "twin_palms"
+      ],
+      "render_baseline": "ef26de3"
     }
   ]
 }
