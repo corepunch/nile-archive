@@ -37,6 +37,23 @@ def J(col, j=.08):
     m = 1 + R.uniform(-j, j)
     return tuple(max(0, c * m * (1 + R.uniform(-j, j) * .25)) for c in col)
 
+class Gradient:
+    """A colour laid on by a gizmo instead of per vertex, so Scener can say it as <gradient type="uv">: over a
+    surface's (u, v), t = u * tile[0] + v * tile[1] + offset; repeat wraps t, power curves it, edge (0..1) steps
+    it from a to b. Blender calls it like any col(u, v) and gets the vertex colour."""
+    def __init__(self, a, b, tile=(0, 1), offset=0., repeat=False, edge=0., power=1.):
+        self.a, self.b, self.tile, self.offset, self.repeat, self.edge, self.power = a, b, tile, offset, repeat, edge, power
+
+    def amount(self, u, v):
+        t = u * self.tile[0] + v * self.tile[1] + self.offset
+        t = t % 1 if self.repeat else max(0., min(1., t))
+        t = t ** self.power
+        return (1. if t >= self.edge else 0.) if self.edge > 0 else t
+
+    def __call__(self, u, v=0.):
+        t = self.amount(u, v)
+        return tuple(a + (b - a) * t for a, b in zip(self.a, self.b))
+
 SANDS = [C(h) for h in ("#E2C48A", "#D9B878", "#CFAB6A")]
 SAND_DK, SAND_PALE = C("#94744A"), C("#E8D3A0")
 SLAB = C("#A8946F")

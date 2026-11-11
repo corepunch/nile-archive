@@ -274,9 +274,7 @@ def snow_sheet(k, s, xm, half, y0, y1, z, h, th=.15, lip=.15):
         g = max(0, 1 - (yb - y) / .1)
         p -= N * (g * g * lip)
         return tuple(p)
-    def col(u, v):
-        return SNOW_S if v > .985 else SNOW
-    k.surface("matte", fn, 34, 34, col)
+    k.surface("matte", fn, 34, 34, Gradient(SNOW, SNOW_S, edge=.985))
 
 def snow_gable(k, x0, x1, y0, y1, z, h, over=OV, fascia=WOOD_D, th=.15, lip=.15):
     """A timber roof deck under a thick, soft snow blanket, with its ridge along Y."""
@@ -417,9 +415,7 @@ def candy_post(k, x, y, z0, z1, r=.1, turns=5):
     def fn(u, v):
         a = 2 * math.pi * u
         return (x + r * math.cos(a), y + r * math.sin(a), z0 + (z1 - z0) * v)
-    def col(u, v):
-        return XRED if (u + v * turns) % 1 < .5 else C("#FBF3E6")
-    k.surface("glaze", fn, 24, int(turns * 12), col)
+    k.surface("glaze", fn, 24, int(turns * 12), Gradient(XRED, C("#FBF3E6"), tile=(1, turns), repeat=True, edge=.5))
 
 def gingerbread_man(k, x, y, z, s=.2):
     """Flat, iced and standing: head, body, arms and legs."""
@@ -1132,7 +1128,7 @@ def rink(k):
         def fn(u, v, x=x, y=y, r=r, i=i):
             a = 2 * math.pi * u
             return (x + r * v * math.cos(a), y + r * v * math.sin(a), G + .056 + i * .001)
-        k.surface("matte", fn, 24, 4, lambda u, v: tuple(a + (b - a) * v ** .8 for a, b in zip(warm, ICE)))
+        k.surface("matte", fn, 24, 4, Gradient(warm, ICE, power=.8))
     # the fence is low: two of its runs stand between the camera and the ice
     for a, b, out in (((-hs, -hs), (hs, -hs), (0, -1, 0)), ((hs, -hs), (hs, hs), (1, 0, 0)),
                       ((-hs, hs), (hs, hs), (0, 1, 0)), ((-hs, -hs), (-hs, hs), (-1, 0, 0))):
