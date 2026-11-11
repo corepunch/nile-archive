@@ -1,4 +1,4 @@
-import {cellArt, boardObjects} from './art.mjs';
+import {cellArt, boardObjects, boardTexture} from './art.mjs';
 import {GOALS, LAYERS, valueAt, occupied, distinct, changedAt,
   sourceIndex, describeValue, goalLines, filterLevels} from './model.mjs';
 
@@ -137,7 +137,9 @@ function render() {
   $('boards').innerHTML = tiers.map(([tier, title]) => {
     const level = variants[tier];
     const delta = level.data.moves - variants.a.data.moves;
-    return `<article class="board-card"><div class="card-heading"><div><span class="tier-label">${tier.toUpperCase()} / ${title}</span><h2>${level.data.moves}<small> moves</small></h2></div>${tier === 'a' ? '<span class="pill">Baseline</span>' : `<span class="pill">${delta > 0 ? '+' : ''}${delta} moves</span>`}</div><div class="board-wrap${sprites ? ' source-wrap' : ''}"><div class="board${sprites ? ' source-board' : ''}" role="group" aria-label="${title} board">${sprites ? objectMarkup(level) : ''}${Array.from({length:81}, (_, i) => tileMarkup(level, tier, i)).join('')}</div></div><div class="objectives">${sprites ? spriteImage(`ui_icon_objective_${current.objective === 'hiddenitem' ? 'hiddenitem_monkey' : current.objective}`, 'class="goal-icon"') : ''}<strong>${escape(GOALS[current.objective] ?? current.objective)}</strong>${goalLines(level, current.objective).map(text => `<p>${escape(text)}</p>`).join('')}</div></article>`;
+    const texture = boardTexture(current.objective), boardArt = artwork[texture] ?? artwork.board_recipe;
+    const boardStyle = sprites && boardArt ? ` style="background-image:url('${escape(boardArt.url)}')"` : '';
+    return `<article class="board-card"><div class="card-heading"><div><span class="tier-label">${tier.toUpperCase()} / ${title}</span><h2>${level.data.moves}<small> moves</small></h2></div>${tier === 'a' ? '<span class="pill">Baseline</span>' : `<span class="pill">${delta > 0 ? '+' : ''}${delta} moves</span>`}</div><div class="board-wrap${sprites ? ' source-wrap' : ''}"><div class="board${sprites ? ' source-board' : ''}"${boardStyle} role="group" aria-label="${title} board">${sprites ? objectMarkup(level) : ''}${Array.from({length:81}, (_, i) => tileMarkup(level, tier, i)).join('')}</div></div><div class="objectives">${sprites ? spriteImage(`ui_icon_objective_${current.objective === 'hiddenitem' ? 'hiddenitem_monkey' : current.objective}`, 'class="goal-icon"') : ''}<strong>${escape(GOALS[current.objective] ?? current.objective)}</strong>${goalLines(level, current.objective).map(text => `<p>${escape(text)}</p>`).join('')}</div></article>`;
   }).join('');
   const rows = [['Move budget', l => l.data.moves], ['Nonzero field cells', l => occupied(l, 'fields')],
     ['Stone / blocker cells', l => occupied(l, 'stones')], ['Chain cells', l => occupied(l, 'chains')],

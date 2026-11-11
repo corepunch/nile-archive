@@ -3,8 +3,8 @@
     "bundle": "Data/Raw/AssetBundles/allscenes_be7e0be1439093721cd26af7025dad92",
     "sha256": "25cc90192b8c380927857b50ea308f948d0b8bb597b5fb673b1edcdb08fe9c9f",
     "decoder": "UnityPy 1.25.4",
-    "sprites": 241,
-    "decoded_images": 102,
+    "sprites": 248,
+    "decoded_images": 109,
     "material_renders": 139,
     "transform": "Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders, stencil gauge, skeletal chameleon and color LUTs; no painted replacements.",
     "materials": {
@@ -38,6 +38,28 @@
       "color_wheel": {
         "shader": "Sprites/Default-LUT",
         "sha256": "4f4ca44d7a09b79b7b1dd528fc37a94c3d9ed8fe7b320bddad5c619dcf119aef"
+      }
+    },
+    "theme_source": {
+      "bundle": "bundles/m3_themes",
+      "sha256": "951cd88f3b2ebc4a61eceed8812130e64b7df61954b5b9f6b44c220bdc267f83",
+      "references": {
+        "treasure": {
+          "texture": "board_DirtAndTreasure",
+          "theme_id": -6879688274661737053
+        },
+        "water": {
+          "texture": "board_water",
+          "theme_id": 47211934960433494
+        },
+        "hiddenitem": {
+          "texture": "board_hiddenitem",
+          "theme_id": 5554513327123128569
+        },
+        "droppable": {
+          "texture": "board_drop",
+          "theme_id": 6431608166288694830
+        }
       }
     }
   },
@@ -672,6 +694,24 @@
       "height": 126,
       "sha256": "a49c9293b68d9bca6a49d9997db72823ee492cb726afefc7054022cc92600406"
     },
+    "growing_window_bridge_01": {
+      "url": "/art/growing_window_bridge_01.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 690,
+      "kind": "Sprite",
+      "width": 120,
+      "height": 79,
+      "sha256": "92f4b52234400f4d810c7e227f6eedbf824fdf7cc3aff380fd2e4678c6566bb3"
+    },
+    "growing_window_bridge_02": {
+      "url": "/art/growing_window_bridge_02.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 649,
+      "kind": "Sprite",
+      "width": 121,
+      "height": 78,
+      "sha256": "a55ad452dcb5f52f3970cda5b5dacdebe7d6ec71cfd18d6730aaffa874cde6da"
+    },
     "hiddenItem": {
       "url": "/art/hiddenItem.png",
       "file": "BuildPlayer-M3_Level.sharedAssets",
@@ -973,6 +1013,51 @@
       "width": 134,
       "height": 156,
       "sha256": "9f130e310b2aa2591668dc80841fc38124d4e41accfb1afd6614ad03b820d690"
+    },
+    "window_bridge": {
+      "url": "/art/window_bridge.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 696,
+      "kind": "Sprite",
+      "width": 134,
+      "height": 40,
+      "sha256": "d47523aec8155432423ce9702c00487a75377d65d34e2d03cb595a740f4275bc"
+    },
+    "board_DirtAndTreasure": {
+      "url": "/art/board_DirtAndTreasure.png",
+      "file": "m3_themes",
+      "path_id": 6211989458974691306,
+      "kind": "Texture2D",
+      "width": 936,
+      "height": 936,
+      "sha256": "6be7e485fa7d1d501757b64761d9b10d7881f636ab394ca88c13cb8d7f16463b"
+    },
+    "board_water": {
+      "url": "/art/board_water.png",
+      "file": "m3_themes",
+      "path_id": 5711751078894140048,
+      "kind": "Texture2D",
+      "width": 936,
+      "height": 936,
+      "sha256": "333be6f045ef87da8f90a0b0eb9c70edb65766856c11769e7bf4e5615d8a3f2f"
+    },
+    "board_hiddenitem": {
+      "url": "/art/board_hiddenitem.png",
+      "file": "m3_themes",
+      "path_id": 1497306428228039340,
+      "kind": "Texture2D",
+      "width": 936,
+      "height": 936,
+      "sha256": "a52e1ef7b5618239aa7bdeb075c04a6e797dc55c20a16fd51b5573b56ef5b3da"
+    },
+    "board_drop": {
+      "url": "/art/board_drop.png",
+      "file": "m3_themes",
+      "path_id": -5463405204884600320,
+      "kind": "Texture2D",
+      "width": 936,
+      "height": 936,
+      "sha256": "af48241a3b70d7d55662a571ad7170267b90975345437c8bf83f0378904d4fa1"
     },
     "material_bomb": {
       "url": "/art/material_bomb.png",

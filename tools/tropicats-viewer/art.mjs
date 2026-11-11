@@ -19,6 +19,11 @@ export function mechanicPalette(level, reduced = false) {
     .map(g => COLORS.findIndex(c => c.toLowerCase() === g.type.toLowerCase()))
     .filter(c => [1,2,3,4,5,6,9].includes(c)))];
 }
+// LevelTheme board references from the cached original m3_themes bundle.
+export function boardTexture(objective) {
+  return ({treasure:'board_DirtAndTreasure', water:'board_water', hiddenitem:'board_hiddenitem',
+    droppable:'board_drop', chameleon:'board_water', resistant_blocker:'board_water'})[objective] ?? 'board_recipe';
+}
 export const cannonCharge = modifier => ({7:30,8:15,9:0}[modifier] ?? 0);
 export function wheelState(level, stone) {
   const colors = mechanicPalette(level, stone >= 11);
@@ -79,8 +84,8 @@ export function cellArt(level, index, {preview = false, seed = 0} = {}) {
     add(crateColor ? `material_crate_${crateColor}_${hp}` : `crate_${hp}hp`, 12, 'cover');
   }
   if (v('chains')) add(`chain_${v('chains')}hp`, 11, 'cover');
-  if (v('fields') === 2) add('window', 13, 'cover');
-  if (v('fields') === 3) add('growing_window', 13, 'cover');
+  if (v('fields') === 2) { add('window', 13, 'cover'); notes.push('Bridge between adjoining vertical windows is inferred from field layout.'); }
+  if (v('fields') === 3) { add('growing_window', 13, 'cover'); notes.push('Bridge between adjoining vertical growing windows is inferred; variant 01 is illustrative.'); }
   // Odd endpoints drain from a field's bottom; even endpoints feed its top.
   // Verified against boundary placement in every campaign variant (see ART.md).
   if (v('portals')) add(v('portals') % 2 ? 'portal_entrance' : 'portal_exit', 14, 'portal');
@@ -90,6 +95,15 @@ export function cellArt(level, index, {preview = false, seed = 0} = {}) {
 export function boardObjects(level, flip = false) {
   const result = [], hidden = new Map();
   for (let i = 0; i < 81; i++) {
+    const field = valueAt(level, 'fields', i);
+    // The prefabs contain vertical bridge sprites. Neighbor selection is inferred
+    // from the serialized field types because the native runtime is encrypted.
+    if (Math.floor(i / 9) < 8 && field >= 2 && field <= 3 && valueAt(level, 'fields', i + 9) === field) {
+      const a = sourceIndex(i, flip), b = sourceIndex(i + 9, flip);
+      result.push({name:field === 2 ? 'window_bridge' : 'growing_window_bridge_01',
+        left:i % 9, top:Math.min(Math.floor(a / 9), Math.floor(b / 9)) + .5,
+        width:1, height:1, z:13, note:'Original bridge sprite; adjoining vertical fields inferred from layout.'});
+    }
     const id = valueAt(level, 'hiddenItems', i);
     if (id) { if (!hidden.has(id)) hidden.set(id, []); hidden.get(id).push(sourceIndex(i, flip)); }
     if ([9,11].includes(valueAt(level, 'stones', i))) {

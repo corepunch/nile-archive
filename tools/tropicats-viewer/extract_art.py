@@ -9,7 +9,7 @@ import re
 ROOT = Path(__file__).resolve().parents[2]
 # Static illustrations are deliberate: animated meshes are not single sprites.
 NAMES = set('''board_recipe ui_icon_climber hiddenItem water_field
-window growing_window portal_entrance portal_exit drop_item_exit climber_exit
+window window_bridge growing_window growing_window_bridge_01 growing_window_bridge_02 portal_entrance portal_exit drop_item_exit climber_exit
 ice_background cannon_tutorial chameleon_1_tutorial diagonal_gems_random
 ui_icon_objective_colorwheel'''.split())
 PATTERN = re.compile(r"(?:dot_[A-Za-z_]+|ui_icon_objective_[a-z_]+|stone_[1-5]hp|chain_[1-3]hp|crate_(?:tintable_)?[1-3]hp|tile_[12]hp|iceHp[1-3]|DirtHp[1-3]|resistantBlocker_tutorial_[1-3]hp|diagonal_gems_Diagonal[A-Za-z]+)")
@@ -51,6 +51,34 @@ def extract(app, output):
                           'path_id': obj.path_id, 'kind': obj.type.name,
                           'width': bitmap.width, 'height': bitmap.height,
                           'sha256': hashlib.sha256(target.read_bytes()).hexdigest()}
+    # Cached theme bundle is optional: it is downloaded separately from the app.
+    # Read the explicit LevelTheme references, never guess a texture by appearance.
+    theme_path = output.parent / 'bundles/m3_themes'
+    theme_source = None
+    if theme_path.is_file():
+        theme_env = UnityPy.load(str(theme_path))
+        objects = {o.path_id: o for o in theme_env.objects}
+        references = {}
+        for obj in theme_env.objects:
+            if obj.type.name != 'MonoBehaviour':
+                continue
+            tree = obj.read_typetree()
+            board_id = tree.get('board', {}).get('m_PathID', 0)
+            if not board_id:
+                continue
+            texture = objects[board_id].read()
+            name = texture.m_Name
+            target = sprites / f'{name}.png'
+            bitmap = texture.image
+            bitmap.save(target)
+            manifest[name] = {'url': f'/art/{name}.png', 'file': theme_path.name,
+                              'path_id': board_id, 'kind': 'Texture2D',
+                              'width': bitmap.width, 'height': bitmap.height,
+                              'sha256': hashlib.sha256(target.read_bytes()).hexdigest()}
+            references[tree['m_Name']] = {'texture': name, 'theme_id': obj.path_id}
+        theme_source = {'bundle': 'bundles/m3_themes',
+                        'sha256': hashlib.sha256(theme_path.read_bytes()).hexdigest(),
+                        'references': references}
     # Evaluate native materials with their authored inputs, rather than inventing variants.
     from materials import render_overlay, render_crate
     import lz4.block
@@ -105,11 +133,12 @@ def extract(app, output):
     provenance = {'bundle': str(bundle.relative_to(app)),
                   'sha256': hashlib.sha256(bundle.read_bytes()).hexdigest(),
                   'decoder': f'UnityPy {UnityPy.__version__}', 'sprites': len(manifest),
-                  'decoded_images': len(candidates), 'material_renders': len(manifest) - len(candidates),
+                  'decoded_images': len(candidates) + sum(item['kind'] == 'Texture2D' and item['file'] == 'm3_themes' for item in manifest.values()),
+                  'material_renders': sum(item['kind'] == 'MaterialRender' for item in manifest.values()),
                   'transform': 'Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders, stencil gauge, skeletal chameleon and color LUTs; no painted replacements.',
-                  'materials': material_sources}
+                  'materials': material_sources, 'theme_source': theme_source}
     (output / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
-    print(f'Prepared {len(candidates)} original images and {len(manifest) - len(candidates)} material renders in {output}')
+    print(f"Prepared {provenance['decoded_images']} original images and {provenance['material_renders']} material renders in {output}")
     return {'source': provenance, 'sprites': manifest}
 
 

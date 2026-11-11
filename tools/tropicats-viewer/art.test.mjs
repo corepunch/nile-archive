@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {cellArt, previewColor, boardObjects, mechanicPalette, cannonCharge} from './art.mjs';
+import {cellArt, previewColor, boardObjects, mechanicPalette, cannonCharge, boardTexture} from './art.mjs';
 import {changedAt, describeValue} from './model.mjs';
 const level = overrides => ({data:{gems:[{type:'red',amount:10},{type:'blue',amount:10},{type:'green',amount:0}]},
   layout:{fields:[1],gemColors:[8],...overrides}});
@@ -128,4 +128,21 @@ test('all 8,190 campaign variants resolve artwork and keep wheels inside the boa
       assert.ok(o.left>=0 && o.top>=0 && o.left+o.width<=9 && o.top+o.height<=9,file);
     }
   }
+});
+
+
+test('vertical same-type windows connect once and follow row flips', () => {
+  const l=level({fields:[2,3,0,0,0,0,0,0,0,2,3]});
+  const bridges=boardObjects(l).filter(o=>o.name.includes('bridge'));
+  assert.deepEqual(bridges.map(o=>[o.name,o.left,o.top]),[['window_bridge',0,.5],['growing_window_bridge_01',1,.5]]);
+  assert.deepEqual(boardObjects(l,true).filter(o=>o.name.includes('bridge')).map(o=>o.top),[7.5,7.5]);
+  l.layout.fields[9]=3;
+  assert.equal(boardObjects(l).filter(o=>o.name==='window_bridge').length,0);
+});
+
+
+test('objective board textures use original theme references with an explicit fallback', () => {
+  for (const [goal,texture] of Object.entries({treasure:'board_DirtAndTreasure',water:'board_water',
+    hiddenitem:'board_hiddenitem',droppable:'board_drop',chameleon:'board_water',resistant_blocker:'board_water',
+    climber:'board_recipe',recipe:'board_recipe'})) assert.equal(boardTexture(goal),texture);
 });

@@ -1,7 +1,7 @@
 # Original artwork in the Tropicats viewer
 
-The viewer uses 102 decoded source images and 139 static material renders from the user's installed Tropicats 2.5.11
-`Data/Raw/AssetBundles/allscenes_be7e0be1439093721cd26af7025dad92`.
+The viewer uses 109 decoded source images and 139 static material renders from the user's installed Tropicats 2.5.11
+`Data/Raw/AssetBundles/allscenes_be7e0be1439093721cd26af7025dad92` and the separately cached original `m3_themes` bundle.
 [art-catalogue.json](art-catalogue.json) records the bundle SHA-256, original
 serialized file, object path ID, dimensions and PNG SHA-256 for every image.
 No generated art or prompts are involved. The material renders evaluate the original
@@ -20,7 +20,7 @@ python3 tools/tropicats-viewer/serve.py
 
 Alternatively provide a Python environment with `UnityPy==1.25.4` and run the same
 script. The existing environment occupies about 32 MB; decoded images occupy
-less than 10 MB. No downloads are needed from the game CDN. The extraction accepts
+less than 10 MB. The board theme textures additionally use the optional cached `reference/tropicats-analysis/bundles/m3_themes`; when absent the viewer falls back to the recipe board. No downloads are needed from the game CDN. The extraction accepts
 `--app`, `--output`, and an optional `--catalogue` metadata destination.
 Normal viewer startup uses only Python's standard library.
 
@@ -61,11 +61,11 @@ that manifest. There are no arbitrary file or directory routes.
 | Precharge modifiers 7–9 | Native cannon gauge | Metadata maps to 30/15/0 out of 45; cover travel fitted to source mask bounds. Non-cannon combinations retain an explicit `Q` source badge |
 | Tiles 1–2; watered tile 3 | `tile_1hp/2hp`, `water_field` | Authored layers below fruit, above hidden statues |
 | Hidden-object IDs | `hiddenItem` | One original statue per ID, bounded by its occupied cells, under covering tiles and stones |
-| Field 2/3 | `window`, `growing_window` | Original plank/bamboo sprite; bridge connections are not reconstructed |
+| Field 2/3 | `window`, `growing_window`, `window_bridge`, `growing_window_bridge_01` | Original sprites; vertically adjacent fields of the same type are connected by an inferred bridge. Growing bridge variant 01 is illustrative. Exact native neighbor rules and variant selection remain unknown |
 | Field 0 | No sprites | Non-playable space remains clickable for inspection of otherwise masked source data |
 | Portal endpoints | `portal_entrance`, `portal_exit` | Original sprites placed from prefab offsets, pixels-per-unit, trim offsets and pivot. Odd IDs are entrances at the lower edge; even IDs are exits at the upper edge. Pair numbers remain in the inspector. Drop/climber route indicators remain unassigned |
 | Objectives | `ui_icon_objective_<family>` (`hiddenitem_monkey` for hidden statues) | Original objective artwork alongside text totals |
-| Board surface | `board_recipe` | Original bundled board texture, shared by all objective families in this viewer |
+| Board surface | `board_DirtAndTreasure`, `board_water`, `board_hiddenitem`, `board_drop`, `board_recipe` | Original LevelTheme references for treasure, water, hiddenitem and droppable; chameleon and resistant blocker themes also reference `board_water`. Recipe and climber fall back to `board_recipe`; the climber theme bundle is unavailable |
 
 The base fruit, strength and layer choices were checked against the
 `BuildPlayer-M3_Level.sharedAssets` prefab TypeTrees: `GemView` (2237),
@@ -125,7 +125,7 @@ space outside the board so boundary portals are not clipped.
 
 [Issue #97](https://github.com/corepunch/nile-archive/issues/97) tracks the remaining
 animated poses and transitions, exact native gauge travel, runtime color order,
-non-portal route indicators, window bridges and objective-specific board skins.
+non-portal route indicators, exact window bridge selection, the climber board skin and remaining objective theme details.
 Bomb/line static overlays, color-crate materials, portal artwork, static cannon gauges, skeletal chameleon colors and wheel palette segments are implemented. The table above records every current fallback. Exact data remains
 available in the layer selector, inspector and raw JSON. Static compositions and disclosed approximations are not claimed as pixel-identical runtime states.
 
@@ -254,3 +254,14 @@ Focused verification: 15 Node tests **2.38 s**, 10 material/HTTP tests **0.89 s*
 repository lint **1.10 s**, measured wall time. No build step; no game or shared
 engine behavior changed. Additional local storage remains below 30 MB; no new
 environment, model or game-data download was needed.
+
+
+### Objective themes and bridge update
+
+The optional `m3_themes` bundle contains `LevelTheme` records linking treasure, water, hiddenitem and droppable directly to the four board textures in the catalogue. The cached `m3_themes_chameleon` and `m3_themes_resistant_blocker` records both point to `board_water`. The recipe record has a null board reference; the recipe board already extracted from the scene remains the fallback. The climber theme bundle was not available locally. Missing cached theme assets fall back to the recipe board.
+
+The field prefab contains `WindowBridge` (sprite 696; transform 1277) and two growing bridge variants (sprites 690/649; transforms 1352/1300). Those transforms place the growing bridge at a vertical half-cell. Connecting vertically adjacent matching field IDs is a viewer inference: the encrypted native code does not establish adjacency or variant choice. The second growing bridge is extracted and catalogued but not selected until that choice is understood. Issue #97 tracks the exact connection and variant rules.
+
+The native climber and resistant blocker each contain region attachments and mixed inherited rotation/scale. Their first animations include slot timelines, so the existing chameleon-only setup evaluator cannot faithfully reconstruct those poses. The tutorial illustrations remain explicit fallbacks; issue #97 tracks the missing poses and strength-specific native attachments.
+
+The source textures and bridge sprites were inspected directly. Browser review at desktop and narrow sizes remains outstanding because no browser surface was available in this session.

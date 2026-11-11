@@ -45,6 +45,8 @@ original 3–6 segment assets, including coins. Reduced palettes omit weights be
 Chameleon next-color order and clockwise wheel order are illustrative; cannon
 cover travel is fitted to the original mask. These limits are visible in the inspector.
 
+The optional cached `m3_themes` bundle supplies objective-specific original board textures; otherwise the recipe texture is used. Vertical window bridges use original sprites with inferred adjacency, and the growing bridge variant is illustrative. See the artwork audit for remaining fidelity gaps.
+
 Without extracted artwork the viewer falls back to its schematic. Numeric layer
 views and the inspector remain available in either mode, including zero-field
 cells and details not rendered by the static artwork.
