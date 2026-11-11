@@ -67,7 +67,7 @@ Every city game sees its ground through one camera. **It is orthographic, turned
   ```sh
   make buildings GAME=relic-rush                 # every building in the game
   make buildings GAME=relic-rush KEYS="lodge well"
-  make buildings GAME=relic-rush REBUILD=1       # after editing build_scene.py
+  make buildings GAME=relic-rush BLENDER=1      # Blender/Cycles instead of Scener (REBUILD=1 rebuilds the .blend)
   ```
 
   Look at the review sheet it writes, `games/<game>/docs/screenshots/buildings.jpg`, then at the game.

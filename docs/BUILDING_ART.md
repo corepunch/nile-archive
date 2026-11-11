@@ -134,8 +134,11 @@ The master is generated from the script, so never edit the `.blend` by hand.
 make buildings GAME=nile-archive REBUILD=1 KEYS="sphinx date_palm"   # omit KEYS to render all
 ```
 
-`tools/buildings.py` starts Blender, and `tools/render_buildings_blender.py` renders
-inside it. These are fixed, which is what makes all sprites one registered set:
+`tools/buildings.py` renders with Scener (`tools/scener_buildings.py` writes its scenes from
+`build_scene.py`, no Blender needed); with `BLENDER=1` it starts Blender, and
+`tools/render_buildings_blender.py` renders inside it. See
+[BUILDINGS.md](BUILDINGS.md#rendering-buildings). Either way these are fixed, which is what
+makes all sprites one registered set:
 
 - **Camera.** `tools/city_camera.py`, read from `engine/engine.h`.
 - **Fixed scale.** `ppt` pixels per tile side from `art/buildings.json`, never fitted to a
@@ -143,7 +146,7 @@ inside it. These are fixed, which is what makes all sprites one registered set:
 - **Framing.** Each object renders alone, on whole pixels, so its pivot is exact.
 - **Lighting.** The master's sun, fill and world, unchanged. Each object's ground shadow
   renders separately on a catcher; see [Ground shadows](#ground-shadows).
-- **Cycles on the CPU.** 64 samples, adaptive threshold 0.02, denoising on, transparent
+- **Scener:** 3×3 supersampling, transparent PNG. **Blender:** Cycles on the CPU, 64 samples, adaptive threshold 0.02, denoising on, transparent
   film, RGBA PNG and the Standard view transform.
 
 ### Ground shadows

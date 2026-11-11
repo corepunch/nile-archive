@@ -25,10 +25,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/camp.png",
    "shadow_pivot": [
-    49.124,
-    37.288
+    119.112,
+    80.081
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "well": {
    "title": "Spring well",
@@ -49,10 +49,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/well.png",
    "shadow_pivot": [
-    53.386,
-    44.373
+    119.112,
+    80.255
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "workshop": {
    "title": "Artisan workshop",
@@ -73,10 +73,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/workshop.png",
    "shadow_pivot": [
-    85.161,
-    63.898
+    155.918,
+    113.528
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "market": {
    "title": "Jungle market",
@@ -97,10 +97,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/market.png",
    "shadow_pivot": [
-    82.093,
-    60.599
+    155.918,
+    103.119
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "gateway": {
    "title": "Sunstone courtyard",
@@ -121,10 +121,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/gateway.png",
    "shadow_pivot": [
-    65.337,
-    52.536
+    155.918,
+    96.419
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "lodge": {
    "title": "Explorer's lodge",
@@ -145,10 +145,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/lodge.png",
    "shadow_pivot": [
-    119.353,
-    84.327
+    177.168,
+    150.713
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "archive": {
    "title": "Lost-world archive",
@@ -169,10 +169,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/archive.png",
    "shadow_pivot": [
-    97.171,
-    74.775
+    177.168,
+    137.731
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "observatory": {
    "title": "Star observatory",
@@ -193,10 +193,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/observatory.png",
    "shadow_pivot": [
-    95.829,
-    68.668
+    119.112,
+    88.779
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "fountain": {
    "title": "Jade fountain",
@@ -217,10 +217,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/fountain.png",
    "shadow_pivot": [
-    79.693,
-    71.584
+    177.168,
+    117.857
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "temple": {
    "title": "Temple of the sun",
@@ -241,10 +241,10 @@
    "base_width": 546.41,
    "shadow": "data/building-shadows/temple.png",
    "shadow_pivot": [
-    99.334,
-    86.212
+    235.224,
+    174.103
    ],
-   "shadow_base_width": 154.547
+   "shadow_base_width": 464.449
   },
   "log_cabin": {
    "title": "Trapper's cabin",
@@ -265,10 +265,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/log_cabin.png",
    "shadow_pivot": [
-    73.335,
-    52.628
+    119.112,
+    89.419
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "apothecary": {
    "title": "Herbalist's hut",
@@ -289,10 +289,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/apothecary.png",
    "shadow_pivot": [
-    54.771,
-    40.818
+    119.112,
+    80.684
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "mess_hall": {
    "title": "Mess hall",
@@ -313,10 +313,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/mess_hall.png",
    "shadow_pivot": [
-    91.91,
-    58.917
+    155.918,
+    104.193
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "stilt_house": {
    "title": "Stilt house",
@@ -337,10 +337,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/stilt_house.png",
    "shadow_pivot": [
-    91.907,
-    60.519
+    155.918,
+    110.206
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "map_room": {
    "title": "Cartographer's house",
@@ -361,10 +361,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/map_room.png",
    "shadow_pivot": [
-    91.097,
-    60.611
+    155.918,
+    109.414
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "greenhouse": {
    "title": "Glass greenhouse",
@@ -385,10 +385,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/greenhouse.png",
    "shadow_pivot": [
-    78.445,
-    50.667
+    155.918,
+    93.858
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "trading_post": {
    "title": "Trading post",
@@ -409,10 +409,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/trading_post.png",
    "shadow_pivot": [
-    104.649,
-    75.234
+    177.168,
+    129.461
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "water_mill": {
    "title": "Water mill",
@@ -433,10 +433,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/water_mill.png",
    "shadow_pivot": [
-    99.926,
-    68.754
+    177.168,
+    134.24
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "clock_tower": {
    "title": "Clock tower",
@@ -457,10 +457,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/clock_tower.png",
    "shadow_pivot": [
-    127.51,
-    90.808
+    119.112,
+    121.434
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "lighthouse": {
    "title": "Valley lighthouse",
@@ -481,10 +481,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/lighthouse.png",
    "shadow_pivot": [
-    92.471,
-    68.385
+    119.112,
+    81.586
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "treehouse": {
    "title": "Canopy treehouse",
@@ -505,10 +505,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/treehouse.png",
    "shadow_pivot": [
-    95.678,
-    81.867
+    177.168,
+    117.044
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "aviary": {
    "title": "Great aviary",
@@ -529,10 +529,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/aviary.png",
    "shadow_pivot": [
-    74.52,
-    55.023
+    177.168,
+    117.372
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "beached_ship": {
    "title": "Beached schooner",
@@ -553,10 +553,10 @@
    "base_width": 446.41,
    "shadow": "data/building-shadows/beached_ship.png",
    "shadow_pivot": [
-    83.557,
-    57.649
+    192.724,
+    107.053
    ],
-   "shadow_base_width": 126.263
+   "shadow_base_width": 379.449
   },
   "amphitheater": {
    "title": "Stone amphitheatre",
@@ -577,10 +577,10 @@
    "base_width": 496.41,
    "shadow": "data/building-shadows/amphitheater.png",
    "shadow_pivot": [
-    93.698,
-    50.191
+    213.974,
+    130.693
    ],
-   "shadow_base_width": 140.405
+   "shadow_base_width": 421.949
   },
   "museum": {
    "title": "Relic museum",
@@ -601,10 +601,10 @@
    "base_width": 496.41,
    "shadow": "data/building-shadows/museum.png",
    "shadow_pivot": [
-    117.701,
-    76.415
+    213.974,
+    138.788
    ],
-   "shadow_base_width": 140.405
+   "shadow_base_width": 421.949
   },
   "hanging_gardens": {
    "title": "Hanging gardens",
@@ -625,10 +625,10 @@
    "base_width": 546.41,
    "shadow": "data/building-shadows/hanging_gardens.png",
    "shadow_pivot": [
-    99.962,
-    76.613
+    235.224,
+    165.239
    ],
-   "shadow_base_width": 154.547
+   "shadow_base_width": 464.449
   },
   "palm_young": {
    "title": "Young palm",
@@ -649,10 +649,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/palm_young.png",
    "shadow_pivot": [
-    36.575,
-    30.487
+    13.636,
+    46.604
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "jungle_tree": {
    "title": "Round jungle tree",
@@ -673,10 +673,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/jungle_tree.png",
    "shadow_pivot": [
-    39.702,
-    34.085
+    14.852,
+    45.433
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "cypress": {
    "title": "Temple cypress",
@@ -697,10 +697,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/cypress.png",
    "shadow_pivot": [
-    38.541,
-    30.215
+    12.262,
+    36.85
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "banana": {
    "title": "Banana plant",
@@ -721,10 +721,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/banana.png",
    "shadow_pivot": [
-    25.639,
-    20.974
+    19.723,
+    37.021
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "fan_palm": {
    "title": "Fan palm",
@@ -745,10 +745,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fan_palm.png",
    "shadow_pivot": [
-    29.79,
-    22.94
+    29.213,
+    42.929
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "papaya": {
    "title": "Papaya tree",
@@ -769,10 +769,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/papaya.png",
    "shadow_pivot": [
-    36.497,
-    23.034
+    11.076,
+    44.26
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "frangipani": {
    "title": "Frangipani",
@@ -793,10 +793,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/frangipani.png",
    "shadow_pivot": [
-    39.866,
-    34.183
+    12.269,
+    47.719
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "bamboo": {
    "title": "Bamboo grove",
@@ -817,10 +817,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/bamboo.png",
    "shadow_pivot": [
-    81.906,
-    61.209
+    84.48,
+    83.927
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "twin_palms": {
    "title": "Twin palms",
@@ -841,10 +841,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/twin_palms.png",
    "shadow_pivot": [
-    62.031,
-    59.489
+    29.015,
+    95.747
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "mango": {
    "title": "Mango tree",
@@ -865,10 +865,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/mango.png",
    "shadow_pivot": [
-    64.039,
-    49.196
+    26.026,
+    74.867
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "kapok": {
    "title": "Giant kapok",
@@ -889,10 +889,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/kapok.png",
    "shadow_pivot": [
-    107.339,
-    82.12
+    71.149,
+    101.79
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "shrub": {
    "title": "Round shrub",
@@ -913,10 +913,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/shrub.png",
    "shadow_pivot": [
-    21.586,
-    16.208
+    22.341,
+    29.703
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "fern": {
    "title": "Forest fern",
@@ -937,10 +937,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fern.png",
    "shadow_pivot": [
-    14.699,
-    10.681
+    37.158,
+    26.084
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "monstera": {
    "title": "Big-leaf monstera",
@@ -961,10 +961,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/monstera.png",
    "shadow_pivot": [
-    17.154,
-    12.503
+    37.6,
+    23.565
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "flower_shrub": {
    "title": "Flowering shrub",
@@ -985,10 +985,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/flower_shrub.png",
    "shadow_pivot": [
-    22.287,
-    17.449
+    25.214,
+    28.438
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "berry": {
    "title": "Berry bush",
@@ -1009,10 +1009,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/berry.png",
    "shadow_pivot": [
-    22.394,
-    17.208
+    26.336,
+    27.703
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "reeds": {
    "title": "Riverside reeds",
@@ -1033,10 +1033,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/reeds.png",
    "shadow_pivot": [
-    28.051,
-    19.861
+    26.178,
+    38.728
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "topiary": {
    "title": "Topiary ball",
@@ -1057,10 +1057,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/topiary.png",
    "shadow_pivot": [
-    26.606,
-    24.186
+    15.183,
+    30.674
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "hedge": {
    "title": "Clipped hedge block",
@@ -1081,10 +1081,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/hedge.png",
    "shadow_pivot": [
-    30.324,
-    23.506
+    52.928,
+    45.557
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "orchid": {
    "title": "Wild orchids",
@@ -1105,10 +1105,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/orchid.png",
    "shadow_pivot": [
-    18.489,
-    12.883
+    26.232,
+    23.726
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "hibiscus": {
    "title": "Red hibiscus",
@@ -1129,10 +1129,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/hibiscus.png",
    "shadow_pivot": [
-    22.657,
-    11.863
+    19.617,
+    21.645
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "daisies": {
    "title": "Sunny daisies",
@@ -1153,10 +1153,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/daisies.png",
    "shadow_pivot": [
-    17.624,
-    13.785
+    26.818,
+    25.423
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "blue_lily": {
    "title": "Blue lilies",
@@ -1177,10 +1177,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/blue_lily.png",
    "shadow_pivot": [
-    18.817,
-    17.184
+    21.636,
+    28.648
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "flower_box": {
    "title": "Flower planter",
@@ -1201,10 +1201,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/flower_box.png",
    "shadow_pivot": [
-    20.501,
-    15.024
+    40.011,
+    28.618
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "bromeliad": {
    "title": "Blooming bromeliad",
@@ -1225,10 +1225,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/bromeliad.png",
    "shadow_pivot": [
-    14.151,
-    11.202
+    27.432,
+    23.658
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "flower_bed": {
    "title": "Flower bed",
@@ -1249,10 +1249,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/flower_bed.png",
    "shadow_pivot": [
-    43.514,
-    30.373
+    117.64,
+    80.507
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "rainbow_bed": {
    "title": "Rainbow garden",
@@ -1273,10 +1273,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/rainbow_bed.png",
    "shadow_pivot": [
-    33.347,
-    22.537
+    85.425,
+    58.718
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "broken_column": {
    "title": "Broken column",
@@ -1297,10 +1297,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/broken_column.png",
    "shadow_pivot": [
-    24.657,
-    19.228
+    38.995,
+    29.237
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "idol_head": {
    "title": "Stone idol",
@@ -1321,10 +1321,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/idol_head.png",
    "shadow_pivot": [
-    29.263,
-    22.375
+    41.317,
+    37.552
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "jaguar": {
    "title": "Jaguar guardian",
@@ -1345,10 +1345,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/jaguar.png",
    "shadow_pivot": [
-    23.928,
-    17.769
+    45.961,
+    34.389
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "obelisk": {
    "title": "Sun obelisk",
@@ -1369,10 +1369,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/obelisk.png",
    "shadow_pivot": [
-    28.778,
-    26.641
+    37.834,
+    29.113
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "sundial": {
    "title": "Sundial",
@@ -1393,10 +1393,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/sundial.png",
    "shadow_pivot": [
-    25.217,
-    18.861
+    24.67,
+    29.283
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "explorer": {
    "title": "Explorer statue",
@@ -1417,10 +1417,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/explorer.png",
    "shadow_pivot": [
-    27.594,
-    18.202
+    40.156,
+    31.105
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "gold_idol": {
    "title": "Golden idol",
@@ -1441,10 +1441,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/gold_idol.png",
    "shadow_pivot": [
-    25.328,
-    20.035
+    41.317,
+    32.525
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "stone_arch": {
    "title": "Ruined arch",
@@ -1465,10 +1465,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/stone_arch.png",
    "shadow_pivot": [
-    51.615,
-    37.177
+    99.175,
+    54.107
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "giant_head": {
    "title": "Giant stone head",
@@ -1489,10 +1489,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/giant_head.png",
    "shadow_pivot": [
-    45.646,
-    40.113
+    101.927,
+    56.078
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "birdbath": {
    "title": "Birdbath",
@@ -1513,10 +1513,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/birdbath.png",
    "shadow_pivot": [
-    28.213,
-    20.858
+    24.432,
+    34.234
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "small_fountain": {
    "title": "Little fountain",
@@ -1537,10 +1537,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/small_fountain.png",
    "shadow_pivot": [
-    20.387,
-    18.083
+    39.4,
+    31.343
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "lily_pond": {
    "title": "Lily pond",
@@ -1561,10 +1561,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/lily_pond.png",
    "shadow_pivot": [
-    35.751,
-    24.055
+    86.45,
+    60.718
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "duck_pond": {
    "title": "Duck pond",
@@ -1585,10 +1585,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/duck_pond.png",
    "shadow_pivot": [
-    29.451,
-    25.093
+    82.033,
+    62.433
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "spring_rocks": {
    "title": "Rock spring",
@@ -1609,10 +1609,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/spring_rocks.png",
    "shadow_pivot": [
-    31.19,
-    31.44
+    69.169,
+    65.485
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "bench": {
    "title": "Garden bench",
@@ -1633,10 +1633,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/bench.png",
    "shadow_pivot": [
-    21.952,
-    19.547
+    36.816,
+    34.22
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "lantern": {
    "title": "Lantern post",
@@ -1657,10 +1657,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/lantern.png",
    "shadow_pivot": [
-    12.306,
-    15.807
+    14.611,
+    16.56
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "tiki": {
    "title": "Tiki torch",
@@ -1681,10 +1681,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/tiki.png",
    "shadow_pivot": [
-    14.066,
-    14.552
+    8.05,
+    15.773
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "signpost": {
    "title": "Signpost",
@@ -1705,10 +1705,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/signpost.png",
    "shadow_pivot": [
-    30.727,
-    20.958
+    8.775,
+    24.066
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "flagpole": {
    "title": "Expedition flag",
@@ -1729,10 +1729,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/flagpole.png",
    "shadow_pivot": [
-    12.852,
-    19.871
+    22.739,
+    22.79
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "pump": {
    "title": "Water pump",
@@ -1753,10 +1753,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/pump.png",
    "shadow_pivot": [
-    19.393,
-    12.851
+    30.639,
+    22.407
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "picnic": {
    "title": "Picnic rug",
@@ -1777,10 +1777,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/picnic.png",
    "shadow_pivot": [
-    30.705,
-    21.118
+    86.601,
+    58.04
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "hammock": {
    "title": "Palm hammock",
@@ -1801,10 +1801,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/hammock.png",
    "shadow_pivot": [
-    55.222,
-    36.341
+    64.503,
+    59.213
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "pergola": {
    "title": "Vine pergola",
@@ -1825,10 +1825,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/pergola.png",
    "shadow_pivot": [
-    62.454,
-    50.432
+    95.082,
+    88.036
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "swing": {
    "title": "Garden swing",
@@ -1849,10 +1849,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/swing.png",
    "shadow_pivot": [
-    45.415,
-    37.399
+    75.815,
+    71.163
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "gazebo": {
    "title": "Jade gazebo",
@@ -1873,10 +1873,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/gazebo.png",
    "shadow_pivot": [
-    56.772,
-    43.38
+    79.462,
+    74.396
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "crates": {
    "title": "Supply crates",
@@ -1897,10 +1897,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/crates.png",
    "shadow_pivot": [
-    28.428,
-    19.467
+    42.1,
+    29.754
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "barrels": {
    "title": "Barrels",
@@ -1921,10 +1921,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/barrels.png",
    "shadow_pivot": [
-    22.849,
-    16.473
+    37.199,
+    30.704
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "campfire": {
    "title": "Campfire",
@@ -1945,10 +1945,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/campfire.png",
    "shadow_pivot": [
-    17.34,
-    11.855
+    35.718,
+    28.616
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "field_scope": {
    "title": "Field telescope",
@@ -1969,10 +1969,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/field_scope.png",
    "shadow_pivot": [
-    21.186,
-    15.05
+    26.668,
+    22.003
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "globe": {
    "title": "Explorer's globe",
@@ -1993,10 +1993,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/globe.png",
    "shadow_pivot": [
-    24.384,
-    19.622
+    25.911,
+    26.321
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "chest": {
    "title": "Treasure chest",
@@ -2017,10 +2017,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/chest.png",
    "shadow_pivot": [
-    25.382,
-    17.899
+    55.139,
+    30.78
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "supply_tent": {
    "title": "Supply tent",
@@ -2041,10 +2041,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/supply_tent.png",
    "shadow_pivot": [
-    40.797,
-    26.445
+    104.223,
+    55.025
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "dig_site": {
    "title": "Dig site",
@@ -2065,10 +2065,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/dig_site.png",
    "shadow_pivot": [
-    36.626,
-    26.778
+    93.567,
+    67.657
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "rowboat": {
    "title": "Rowboat",
@@ -2089,10 +2089,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/rowboat.png",
    "shadow_pivot": [
-    36.414,
-    22.615
+    61.508,
+    39.942
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "cart": {
    "title": "Market cart",
@@ -2113,10 +2113,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/cart.png",
    "shadow_pivot": [
-    39.008,
-    26.519
+    32.067,
+    54.469
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "turtle": {
    "title": "Sunning turtle",
@@ -2137,10 +2137,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/turtle.png",
    "shadow_pivot": [
-    17.421,
-    13.472
+    15.902,
+    29.475
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "toucan": {
    "title": "Toucan perch",
@@ -2161,10 +2161,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/toucan.png",
    "shadow_pivot": [
-    11.134,
-    14.823
+    20.202,
+    22.588
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "parrot": {
    "title": "Parrot perch",
@@ -2185,10 +2185,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/parrot.png",
    "shadow_pivot": [
-    22.344,
-    15.256
+    20.202,
+    22.89
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "monkey": {
    "title": "Curious monkey",
@@ -2209,10 +2209,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/monkey.png",
    "shadow_pivot": [
-    20.209,
-    16.278
+    15.875,
+    26.929
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "capybara": {
    "title": "Capybara",
@@ -2233,10 +2233,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/capybara.png",
    "shadow_pivot": [
-    20.365,
-    14.943
+    19.362,
+    26.897
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "boulder": {
    "title": "Boulder",
@@ -2257,10 +2257,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/boulder.png",
    "shadow_pivot": [
-    20.718,
-    17.367
+    26.9,
+    32.183
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "crystal": {
    "title": "Crystal cluster",
@@ -2281,10 +2281,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/crystal.png",
    "shadow_pivot": [
-    24.099,
-    16.652
+    14.064,
+    25.052
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "mossy_rocks": {
    "title": "Mossy boulders",
@@ -2305,10 +2305,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/mossy_rocks.png",
    "shadow_pivot": [
-    36.969,
-    31.42
+    69.351,
+    63.415
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   }
  },
  "generator": "tools/buildings.py",
@@ -2421,5 +2421,6 @@
   "version": "painted-v1",
   "importer": "tools/import_painted_buildings.py",
   "sources": "art/building-catalogue/painted-v1"
- }
+ },
+ "renderer": "Scener"
 }

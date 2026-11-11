@@ -20,10 +20,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/gardener_house.png",
    "shadow_pivot": [
-    85.834,
-    59.084
+    119.112,
+    91.573
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "isis_temple": {
    "title": "Temple of Isis",
@@ -44,10 +44,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/isis_temple.png",
    "shadow_pivot": [
-    112.64,
-    84.564
+    155.918,
+    127.95
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "archive": {
    "title": "Archive",
@@ -68,10 +68,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/archive.png",
    "shadow_pivot": [
-    121.283,
-    83.033
+    155.918,
+    133.141
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "fountain": {
    "title": "Fountain",
@@ -92,10 +92,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/fountain.png",
    "shadow_pivot": [
-    55.574,
-    39.947
+    119.112,
+    84.045
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "workshop": {
    "title": "Workshop",
@@ -116,10 +116,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/workshop.png",
    "shadow_pivot": [
-    73.629,
-    57.658
+    119.112,
+    102.3
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "small_pyramid": {
    "title": "\u041c\u0430\u043b\u0430\u044f \u043f\u0438\u0440\u0430\u043c\u0438\u0434\u0430",
@@ -140,10 +140,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/small_pyramid.png",
    "shadow_pivot": [
-    49.815,
-    40.148
+    119.112,
+    81.643
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "nilometer": {
    "title": "\u041d\u0438\u043b\u043e\u043c\u0435\u0440",
@@ -164,10 +164,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/nilometer.png",
    "shadow_pivot": [
-    50.937,
-    36.007
+    119.112,
+    83.229
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "sphinx": {
    "title": "\u0421\u0444\u0438\u043d\u043a\u0441",
@@ -188,10 +188,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/sphinx.png",
    "shadow_pivot": [
-    55.47,
-    34.319
+    155.918,
+    93.413
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "barque_shrine": {
    "title": "\u0421\u0432\u044f\u0442\u0438\u043b\u0438\u0449\u0435 \u043b\u0430\u0434\u044c\u0438",
@@ -212,10 +212,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/barque_shrine.png",
    "shadow_pivot": [
-    75.27,
-    53.224
+    155.918,
+    93.895
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "pylon_gate": {
    "title": "\u041f\u0438\u043b\u043e\u043d",
@@ -236,10 +236,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/pylon_gate.png",
    "shadow_pivot": [
-    98.236,
-    60.779
+    155.918,
+    99.084
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "hypostyle": {
    "title": "\u041a\u043e\u043b\u043e\u043d\u043d\u044b\u0439 \u0437\u0430\u043b",
@@ -260,10 +260,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/hypostyle.png",
    "shadow_pivot": [
-    102.276,
-    75.191
+    177.168,
+    136.06
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "sun_temple": {
    "title": "\u0425\u0440\u0430\u043c \u0441\u043e\u043b\u043d\u0446\u0430",
@@ -284,10 +284,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/sun_temple.png",
    "shadow_pivot": [
-    76.471,
-    55.654
+    177.168,
+    126.318
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "lighthouse": {
    "title": "\u041c\u0430\u044f\u043a",
@@ -308,10 +308,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/lighthouse.png",
    "shadow_pivot": [
-    80.427,
-    52.925
+    119.112,
+    80.126
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "sacred_lake": {
    "title": "\u0421\u0432\u044f\u0449\u0435\u043d\u043d\u043e\u0435 \u043e\u0437\u0435\u0440\u043e",
@@ -332,10 +332,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/sacred_lake.png",
    "shadow_pivot": [
-    62.713,
-    42.718
+    177.168,
+    117.367
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "great_pyramid": {
    "title": "\u0412\u0435\u043b\u0438\u043a\u0430\u044f \u043f\u0438\u0440\u0430\u043c\u0438\u0434\u0430",
@@ -356,10 +356,10 @@
    "base_width": 546.41,
    "shadow": "data/building-shadows/great_pyramid.png",
    "shadow_pivot": [
-    87.066,
-    62.148
+    235.224,
+    154.853
    ],
-   "shadow_base_width": 154.547
+   "shadow_base_width": 464.449
   },
   "mud_house": {
    "title": "\u0413\u043b\u0438\u043d\u043e\u0431\u0438\u0442\u043d\u044b\u0439 \u0434\u043e\u043c",
@@ -380,10 +380,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/mud_house.png",
    "shadow_pivot": [
-    57.761,
-    47.756
+    119.112,
+    82.946
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "pottery": {
    "title": "\u0413\u043e\u043d\u0447\u0430\u0440\u043d\u044f",
@@ -404,10 +404,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/pottery.png",
    "shadow_pivot": [
-    47.473,
-    40.863
+    119.112,
+    81.201
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "bakery": {
    "title": "\u041f\u0435\u043a\u0430\u0440\u043d\u044f",
@@ -428,10 +428,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/bakery.png",
    "shadow_pivot": [
-    66.911,
-    47.472
+    155.918,
+    96.073
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "weaver": {
    "title": "\u0422\u043a\u0430\u0446\u043a\u0430\u044f \u043c\u0430\u0441\u0442\u0435\u0440\u0441\u043a\u0430\u044f",
@@ -452,10 +452,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/weaver.png",
    "shadow_pivot": [
-    72.935,
-    46.548
+    155.918,
+    101.135
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "scribe_school": {
    "title": "\u0428\u043a\u043e\u043b\u0430 \u043f\u0438\u0441\u0446\u043e\u0432",
@@ -476,10 +476,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/scribe_school.png",
    "shadow_pivot": [
-    72.86,
-    52.91
+    155.918,
+    107.414
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "granary": {
    "title": "\u0417\u0435\u0440\u043d\u043e\u0445\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435",
@@ -500,10 +500,10 @@
    "base_width": 359.808,
    "shadow": "data/building-shadows/granary.png",
    "shadow_pivot": [
-    63.407,
-    41.636
+    155.918,
+    96.117
    ],
-   "shadow_base_width": 101.768
+   "shadow_base_width": 305.836
   },
   "bazaar": {
    "title": "\u0411\u0430\u0437\u0430\u0440",
@@ -524,10 +524,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/bazaar.png",
    "shadow_pivot": [
-    64.74,
-    50.674
+    177.168,
+    117.589
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "villa": {
    "title": "\u0412\u0438\u043b\u043b\u0430 \u0432\u0435\u043b\u044c\u043c\u043e\u0436\u0438",
@@ -548,10 +548,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/villa.png",
    "shadow_pivot": [
-    86.872,
-    77.336
+    177.168,
+    133.491
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "dovecote": {
    "title": "\u0413\u043e\u043b\u0443\u0431\u044f\u0442\u043d\u044f",
@@ -572,10 +572,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/dovecote.png",
    "shadow_pivot": [
-    69.831,
-    55.26
+    119.112,
+    80.075
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "watchtower": {
    "title": "\u0421\u0442\u043e\u0440\u043e\u0436\u0435\u0432\u0430\u044f \u0431\u0430\u0448\u043d\u044f",
@@ -596,10 +596,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/watchtower.png",
    "shadow_pivot": [
-    87.914,
-    55.402
+    119.112,
+    81.553
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "winery": {
    "title": "\u0412\u0438\u043d\u043e\u0434\u0435\u043b\u044c\u043d\u044f",
@@ -620,10 +620,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/winery.png",
    "shadow_pivot": [
-    65.464,
-    58.441
+    177.168,
+    131.037
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "bastet_shrine": {
    "title": "\u0421\u0432\u044f\u0442\u0438\u043b\u0438\u0449\u0435 \u0411\u0430\u0441\u0442\u0435\u0442",
@@ -644,10 +644,10 @@
    "base_width": 409.808,
    "shadow": "data/building-shadows/bastet_shrine.png",
    "shadow_pivot": [
-    71.939,
-    56.613
+    177.168,
+    117.705
    ],
-   "shadow_base_width": 115.91
+   "shadow_base_width": 348.336
   },
   "felucca_dock": {
    "title": "\u041f\u0440\u0438\u0447\u0430\u043b \u0441 \u0444\u0435\u043b\u044e\u043a\u043e\u0439",
@@ -668,10 +668,10 @@
    "base_width": 446.41,
    "shadow": "data/building-shadows/felucca_dock.png",
    "shadow_pivot": [
-    66.717,
-    38.724
+    192.724,
+    107.465
    ],
-   "shadow_base_width": 126.263
+   "shadow_base_width": 379.449
   },
   "chariot_stable": {
    "title": "\u041a\u043e\u043d\u044e\u0448\u043d\u044f \u043a\u043e\u043b\u0435\u0441\u043d\u0438\u0446",
@@ -692,10 +692,10 @@
    "base_width": 496.41,
    "shadow": "data/building-shadows/chariot_stable.png",
    "shadow_pivot": [
-    81.449,
-    63.967
+    213.974,
+    136.744
    ],
-   "shadow_base_width": 140.405
+   "shadow_base_width": 421.949
   },
   "sculptor_yard": {
    "title": "\u0414\u0432\u043e\u0440 \u0441\u043a\u0443\u043b\u044c\u043f\u0442\u043e\u0440\u0430",
@@ -716,10 +716,10 @@
    "base_width": 496.41,
    "shadow": "data/building-shadows/sculptor_yard.png",
    "shadow_pivot": [
-    74.848,
-    60.354
+    213.974,
+    130.769
    ],
-   "shadow_base_width": 140.405
+   "shadow_base_width": 421.949
   },
   "pharaoh_garden": {
    "title": "\u0421\u0430\u0434 \u0444\u0430\u0440\u0430\u043e\u043d\u0430",
@@ -740,10 +740,10 @@
    "base_width": 546.41,
    "shadow": "data/building-shadows/pharaoh_garden.png",
    "shadow_pivot": [
-    80.859,
-    73.208
+    235.224,
+    155.024
    ],
-   "shadow_base_width": 154.547
+   "shadow_base_width": 464.449
   },
   "date_palm": {
    "title": "\u0424\u0438\u043d\u0438\u043a\u043e\u0432\u0430\u044f \u043f\u0430\u043b\u044c\u043c\u0430",
@@ -764,10 +764,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/date_palm.png",
    "shadow_pivot": [
-    46.386,
-    33.481
+    14.201,
+    54.63
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "doum_palm": {
    "title": "\u041f\u0430\u043b\u044c\u043c\u0430 \u0434\u0443\u043c",
@@ -788,10 +788,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/doum_palm.png",
    "shadow_pivot": [
-    40.456,
-    33.791
+    13.007,
+    42.529
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "cypress": {
    "title": "\u041a\u0438\u043f\u0430\u0440\u0438\u0441",
@@ -812,10 +812,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/cypress.png",
    "shadow_pivot": [
-    80.421,
-    57.589
+    19.8,
+    62.162
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "acacia": {
    "title": "\u0410\u043a\u0430\u0446\u0438\u044f",
@@ -836,10 +836,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/acacia.png",
    "shadow_pivot": [
-    42.725,
-    33.722
+    10.723,
+    56.344
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "fig": {
    "title": "\u0421\u043c\u043e\u043a\u043e\u0432\u043d\u0438\u0446\u0430",
@@ -860,10 +860,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/fig.png",
    "shadow_pivot": [
-    57.245,
-    46.488
+    17.778,
+    59.701
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "pomegranate": {
    "title": "\u0413\u0440\u0430\u043d\u0430\u0442\u043e\u0432\u043e\u0435 \u0434\u0435\u0440\u0435\u0432\u043e",
@@ -884,10 +884,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/pomegranate.png",
    "shadow_pivot": [
-    57.866,
-    43.56
+    15.792,
+    58.923
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "olive": {
    "title": "\u041e\u043b\u0438\u0432\u0430",
@@ -908,10 +908,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/olive.png",
    "shadow_pivot": [
-    48.754,
-    39.055
+    11.318,
+    55.386
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "palm_grove": {
    "title": "\u041f\u0430\u043b\u044c\u043c\u043e\u0432\u0430\u044f \u0440\u043e\u0449\u0430",
@@ -932,10 +932,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/palm_grove.png",
    "shadow_pivot": [
-    52.485,
-    50.255
+    34.781,
+    91.038
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "twin_palms": {
    "title": "\u0414\u0432\u043e\u0439\u043d\u0430\u044f \u043f\u0430\u043b\u044c\u043c\u0430",
@@ -956,10 +956,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/twin_palms.png",
    "shadow_pivot": [
-    60.703,
-    60.372
+    29.05,
+    94.395
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "sycamore": {
    "title": "\u0421\u0438\u043a\u043e\u043c\u043e\u0440",
@@ -980,10 +980,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/sycamore.png",
    "shadow_pivot": [
-    64.94,
-    51.211
+    30.757,
+    72.895
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "tamarisk": {
    "title": "\u0422\u0430\u043c\u0430\u0440\u0438\u0441\u043a",
@@ -1004,10 +1004,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/tamarisk.png",
    "shadow_pivot": [
-    62.062,
-    47.391
+    13.495,
+    69.405
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "shrub": {
    "title": "\u041a\u0440\u0443\u0433\u043b\u044b\u0439 \u043a\u0443\u0441\u0442",
@@ -1028,10 +1028,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/shrub.png",
    "shadow_pivot": [
-    25.53,
-    19.121
+    32.421,
+    32.459
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "papyrus": {
    "title": "\u041f\u0430\u043f\u0438\u0440\u0443\u0441",
@@ -1052,10 +1052,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/papyrus.png",
    "shadow_pivot": [
-    36.165,
-    32.53
+    22.445,
+    44.745
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "aloe": {
    "title": "\u0410\u043b\u043e\u044d",
@@ -1076,10 +1076,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/aloe.png",
    "shadow_pivot": [
-    17.693,
-    16.489
+    40.18,
+    34.594
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "oleander": {
    "title": "\u041e\u043b\u0435\u0430\u043d\u0434\u0440",
@@ -1100,10 +1100,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/oleander.png",
    "shadow_pivot": [
-    26.697,
-    20.902
+    30.985,
+    35.815
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "henna": {
    "title": "\u041a\u0443\u0441\u0442 \u0445\u043d\u044b",
@@ -1124,10 +1124,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/henna.png",
    "shadow_pivot": [
-    24.635,
-    19.227
+    29.594,
+    30.772
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "reeds": {
    "title": "\u041d\u0438\u043b\u044c\u0441\u043a\u0438\u0439 \u0442\u0440\u043e\u0441\u0442\u043d\u0438\u043a",
@@ -1148,10 +1148,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/reeds.png",
    "shadow_pivot": [
-    29.174,
-    27.95
+    30.71,
+    44.008
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "potted_tree": {
    "title": "\u0414\u0435\u0440\u0435\u0432\u0446\u0435 \u0432 \u043a\u0430\u0434\u043a\u0435",
@@ -1172,10 +1172,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/potted_tree.png",
    "shadow_pivot": [
-    50.987,
-    38.456
+    23.451,
+    52.579
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "hedge": {
    "title": "\u0416\u0438\u0432\u0430\u044f \u0438\u0437\u0433\u043e\u0440\u043e\u0434\u044c",
@@ -1196,10 +1196,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/hedge.png",
    "shadow_pivot": [
-    28.648,
-    20.206
+    52.928,
+    44.65
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "blue_lotus": {
    "title": "\u0413\u043e\u043b\u0443\u0431\u043e\u0439 \u043b\u043e\u0442\u043e\u0441",
@@ -1220,10 +1220,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/blue_lotus.png",
    "shadow_pivot": [
-    21.567,
-    15.818
+    31.18,
+    34.117
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "poppies": {
    "title": "\u041c\u0430\u043a\u0438",
@@ -1244,10 +1244,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/poppies.png",
    "shadow_pivot": [
-    23.314,
-    17.655
+    38.348,
+    32.074
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "chamomile": {
    "title": "\u0420\u043e\u043c\u0430\u0448\u043a\u0438",
@@ -1268,10 +1268,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/chamomile.png",
    "shadow_pivot": [
-    22.351,
-    16.993
+    36.046,
+    34.072
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "cornflowers": {
    "title": "\u0412\u0430\u0441\u0438\u043b\u044c\u043a\u0438",
@@ -1292,10 +1292,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/cornflowers.png",
    "shadow_pivot": [
-    27.627,
-    26.367
+    34.775,
+    44.238
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "flower_box": {
    "title": "\u0426\u0432\u0435\u0442\u043e\u0447\u043d\u044b\u0439 \u044f\u0449\u0438\u043a",
@@ -1316,10 +1316,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/flower_box.png",
    "shadow_pivot": [
-    25.299,
-    16.598
+    51.015,
+    36.504
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "irises": {
    "title": "\u0418\u0440\u0438\u0441\u044b",
@@ -1340,10 +1340,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/irises.png",
    "shadow_pivot": [
-    30.627,
-    22.365
+    23.41,
+    35.233
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "flower_bed": {
    "title": "\u041a\u043b\u0443\u043c\u0431\u0430",
@@ -1364,10 +1364,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/flower_bed.png",
    "shadow_pivot": [
-    43.514,
-    30.373
+    117.64,
+    80.507
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "pattern_bed": {
    "title": "\u0423\u0437\u043e\u0440\u043d\u044b\u0439 \u0446\u0432\u0435\u0442\u043d\u0438\u043a",
@@ -1388,10 +1388,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/pattern_bed.png",
    "shadow_pivot": [
-    40.387,
-    27.062
+    113.307,
+    76.415
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "broken_column": {
    "title": "\u0423\u043f\u0430\u0432\u0448\u0430\u044f \u043a\u043e\u043b\u043e\u043d\u043d\u0430",
@@ -1412,10 +1412,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/broken_column.png",
    "shadow_pivot": [
-    23.328,
-    20.25
+    41.365,
+    27.964
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "pharaoh_head": {
    "title": "\u0413\u043e\u043b\u043e\u0432\u0430 \u0444\u0430\u0440\u0430\u043e\u043d\u0430",
@@ -1436,10 +1436,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/pharaoh_head.png",
    "shadow_pivot": [
-    42.067,
-    29.895
+    53.018,
+    44.176
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "bastet_cat": {
    "title": "\u041a\u043e\u0448\u043a\u0430 \u0411\u0430\u0441\u0442\u0435\u0442",
@@ -1460,10 +1460,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/bastet_cat.png",
    "shadow_pivot": [
-    48.2,
-    35.755
+    53.734,
+    44.509
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "obelisk": {
    "title": "\u041e\u0431\u0435\u043b\u0438\u0441\u043a",
@@ -1484,10 +1484,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/obelisk.png",
    "shadow_pivot": [
-    44.8,
-    39.02
+    54.089,
+    45.447
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "sundial": {
    "title": "\u0421\u043e\u043b\u043d\u0435\u0447\u043d\u044b\u0435 \u0447\u0430\u0441\u044b",
@@ -1508,10 +1508,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/sundial.png",
    "shadow_pivot": [
-    43.563,
-    32.02
+    41.18,
+    46.438
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "scribe_statue": {
    "title": "\u0421\u0442\u0430\u0442\u0443\u044f \u043f\u0438\u0441\u0446\u0430",
@@ -1532,10 +1532,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/scribe_statue.png",
    "shadow_pivot": [
-    38.369,
-    29.184
+    58.734,
+    44.737
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "golden_scarab": {
    "title": "\u0417\u043e\u043b\u043e\u0442\u043e\u0439 \u0441\u043a\u0430\u0440\u0430\u0431\u0435\u0439",
@@ -1556,10 +1556,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/golden_scarab.png",
    "shadow_pivot": [
-    32.342,
-    26.696
+    54.734,
+    44.239
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "colossus": {
    "title": "\u041a\u043e\u043b\u043e\u0441\u0441",
@@ -1580,10 +1580,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/colossus.png",
    "shadow_pivot": [
-    51.233,
-    37.607
+    80.351,
+    59.197
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "anubis": {
    "title": "\u0410\u043d\u0443\u0431\u0438\u0441",
@@ -1604,10 +1604,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/anubis.png",
    "shadow_pivot": [
-    40.301,
-    24.758
+    81.015,
+    55.704
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "birdbath": {
    "title": "\u0427\u0430\u0448\u0430 \u0434\u043b\u044f \u043f\u0442\u0438\u0446",
@@ -1628,10 +1628,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/birdbath.png",
    "shadow_pivot": [
-    33.127,
-    30.456
+    29.18,
+    43.921
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "small_fountain": {
    "title": "\u0424\u043e\u043d\u0442\u0430\u043d\u0447\u0438\u043a",
@@ -1652,10 +1652,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/small_fountain.png",
    "shadow_pivot": [
-    27.171,
-    17.857
+    44.754,
+    33.681
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "lotus_pond": {
    "title": "\u041f\u0440\u0443\u0434 \u0441 \u043b\u043e\u0442\u043e\u0441\u0430\u043c\u0438",
@@ -1676,10 +1676,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/lotus_pond.png",
    "shadow_pivot": [
-    30.384,
-    20.381
+    80.286,
+    55.244
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "ibis_pond": {
    "title": "\u041f\u0440\u0443\u0434 \u0441 \u0438\u0431\u0438\u0441\u0430\u043c\u0438",
@@ -1700,10 +1700,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/ibis_pond.png",
    "shadow_pivot": [
-    36.766,
-    21.052
+    82.092,
+    55.335
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "shaduf": {
    "title": "\u0428\u0430\u0434\u0443\u0444",
@@ -1724,10 +1724,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/shaduf.png",
    "shadow_pivot": [
-    39.187,
-    23.158
+    95.752,
+    59.329
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "bench": {
    "title": "\u041a\u0430\u043c\u0435\u043d\u043d\u0430\u044f \u0441\u043a\u0430\u043c\u044c\u044f",
@@ -1748,10 +1748,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/bench.png",
    "shadow_pivot": [
-    25.053,
-    16.945
+    43.024,
+    34.468
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "lamp_post": {
    "title": "\u0421\u0432\u0435\u0442\u0438\u043b\u044c\u043d\u0438\u043a",
@@ -1772,10 +1772,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/lamp_post.png",
    "shadow_pivot": [
-    36.85,
-    29.643
+    37.834,
+    30.206
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "torch": {
    "title": "\u0424\u0430\u043a\u0435\u043b",
@@ -1796,10 +1796,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/torch.png",
    "shadow_pivot": [
-    34.722,
-    31.217
+    8.907,
+    27.913
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "signpost": {
    "title": "\u0423\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c",
@@ -1820,10 +1820,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/signpost.png",
    "shadow_pivot": [
-    31.686,
-    29.191
+    9.278,
+    25.757
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "standard": {
    "title": "\u0428\u0442\u0430\u043d\u0434\u0430\u0440\u0442",
@@ -1844,10 +1844,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/standard.png",
    "shadow_pivot": [
-    43.79,
-    34.23
+    37.834,
+    31.006
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "grain_mill": {
    "title": "\u0420\u0443\u0447\u043d\u0430\u044f \u043c\u0435\u043b\u044c\u043d\u0438\u0446\u0430",
@@ -1868,10 +1868,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/grain_mill.png",
    "shadow_pivot": [
-    18.014,
-    11.139
+    33.841,
+    25.126
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "feast_mat": {
    "title": "\u041f\u0438\u0440 \u043d\u0430 \u0446\u0438\u043d\u043e\u0432\u043a\u0435",
@@ -1892,10 +1892,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/feast_mat.png",
    "shadow_pivot": [
-    31.731,
-    21.285
+    89.515,
+    57.274
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "shade_canopy": {
    "title": "\u041d\u0430\u0432\u0435\u0441 \u0441 \u043f\u043e\u0434\u0443\u0448\u043a\u0430\u043c\u0438",
@@ -1916,10 +1916,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/shade_canopy.png",
    "shadow_pivot": [
-    56.409,
-    39.999
+    87.289,
+    79.455
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "vine_pergola": {
    "title": "\u0412\u0438\u043d\u043e\u0433\u0440\u0430\u0434\u043d\u0430\u044f \u043f\u0435\u0440\u0433\u043e\u043b\u0430",
@@ -1940,10 +1940,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/vine_pergola.png",
    "shadow_pivot": [
-    59.523,
-    38.183
+    84.47,
+    76.946
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "palanquin": {
    "title": "\u041f\u0430\u043b\u0430\u043d\u043a\u0438\u043d",
@@ -1964,10 +1964,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/palanquin.png",
    "shadow_pivot": [
-    50.712,
-    42.41
+    49.695,
+    59.68
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "kiosk": {
    "title": "\u0411\u0435\u0441\u0435\u0434\u043a\u0430-\u043a\u0438\u043e\u0441\u043a",
@@ -1988,10 +1988,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/kiosk.png",
    "shadow_pivot": [
-    61.573,
-    50.33
+    95.89,
+    84.931
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "crates": {
    "title": "\u042f\u0449\u0438\u043a\u0438",
@@ -2012,10 +2012,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/crates.png",
    "shadow_pivot": [
-    33.379,
-    28.263
+    39.395,
+    44.204
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "amphorae": {
    "title": "\u0410\u043c\u0444\u043e\u0440\u044b",
@@ -2036,10 +2036,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/amphorae.png",
    "shadow_pivot": [
-    23.056,
-    17.623
+    26.828,
+    33.461
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "campfire": {
    "title": "\u041a\u043e\u0441\u0442\u0451\u0440",
@@ -2060,10 +2060,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/campfire.png",
    "shadow_pivot": [
-    17.695,
-    13.399
+    36.359,
+    30.256
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "scribe_desk": {
    "title": "\u041f\u044e\u043f\u0438\u0442\u0440 \u043f\u0438\u0441\u0446\u0430",
@@ -2084,10 +2084,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/scribe_desk.png",
    "shadow_pivot": [
-    35.667,
-    27.443
+    49.091,
+    48.0
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "grain_baskets": {
    "title": "\u041a\u043e\u0440\u0437\u0438\u043d\u044b \u0441 \u0437\u0435\u0440\u043d\u043e\u043c",
@@ -2108,10 +2108,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/grain_baskets.png",
    "shadow_pivot": [
-    21.142,
-    18.706
+    36.828,
+    33.196
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "treasure_chest": {
    "title": "\u0421\u0443\u043d\u0434\u0443\u043a \u0441\u043e\u043a\u0440\u043e\u0432\u0438\u0449",
@@ -2132,10 +2132,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/treasure_chest.png",
    "shadow_pivot": [
-    20.091,
-    15.526
+    31.668,
+    28.458
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "tent": {
    "title": "\u0428\u0430\u0442\u0451\u0440",
@@ -2156,10 +2156,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/tent.png",
    "shadow_pivot": [
-    42.943,
-    32.612
+    80.758,
+    55.016
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "dig_site": {
    "title": "\u0420\u0430\u0441\u043a\u043e\u043f\u043a\u0438",
@@ -2180,10 +2180,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/dig_site.png",
    "shadow_pivot": [
-    32.887,
-    22.88
+    83.98,
+    58.413
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "reed_boat": {
    "title": "\u0422\u0440\u043e\u0441\u0442\u043d\u0438\u043a\u043e\u0432\u0430\u044f \u043b\u043e\u0434\u043a\u0430",
@@ -2204,10 +2204,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/reed_boat.png",
    "shadow_pivot": [
-    32.67,
-    18.804
+    38.076,
+    39.516
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "cart": {
    "title": "\u041f\u043e\u0432\u043e\u0437\u043a\u0430",
@@ -2228,10 +2228,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/cart.png",
    "shadow_pivot": [
-    30.498,
-    23.571
+    31.38,
+    49.018
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   },
   "crocodile": {
    "title": "\u041a\u0440\u043e\u043a\u043e\u0434\u0438\u043b",
@@ -2252,10 +2252,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/crocodile.png",
    "shadow_pivot": [
-    16.426,
-    14.435
+    24.851,
+    34.365
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "ibis": {
    "title": "\u0418\u0431\u0438\u0441",
@@ -2276,10 +2276,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/ibis.png",
    "shadow_pivot": [
-    28.537,
-    19.112
+    24.532,
+    30.453
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "falcon": {
    "title": "\u0421\u043e\u043a\u043e\u043b",
@@ -2300,10 +2300,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/falcon.png",
    "shadow_pivot": [
-    40.511,
-    31.106
+    37.834,
+    37.558
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "cat": {
    "title": "\u041a\u043e\u0448\u043a\u0430",
@@ -2324,10 +2324,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/cat.png",
    "shadow_pivot": [
-    34.247,
-    29.039
+    42.478,
+    32.285
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "hippo": {
    "title": "\u0411\u0435\u0433\u0435\u043c\u043e\u0442\u0438\u043a",
@@ -2348,10 +2348,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/hippo.png",
    "shadow_pivot": [
-    18.429,
-    13.33
+    29.232,
+    23.05
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "boulder": {
    "title": "\u041f\u0435\u0441\u0447\u0430\u043d\u044b\u0439 \u0432\u0430\u043b\u0443\u043d",
@@ -2372,10 +2372,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/boulder.png",
    "shadow_pivot": [
-    22.228,
-    20.69
+    30.458,
+    36.162
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "turquoise": {
    "title": "\u0411\u0438\u0440\u044e\u0437\u0430",
@@ -2396,10 +2396,10 @@
    "base_width": 136.603,
    "shadow": "data/building-shadows/turquoise.png",
    "shadow_pivot": [
-    30.237,
-    22.724
+    20.041,
+    34.306
    ],
-   "shadow_base_width": 38.637
+   "shadow_base_width": 116.112
   },
   "desert_rocks": {
    "title": "\u0421\u043a\u0430\u043b\u044b \u043f\u0443\u0441\u0442\u044b\u043d\u0438",
@@ -2420,10 +2420,10 @@
    "base_width": 273.205,
    "shadow": "data/building-shadows/desert_rocks.png",
    "shadow_pivot": [
-    37.708,
-    30.369
+    71.958,
+    70.26
    ],
-   "shadow_base_width": 77.273
+   "shadow_base_width": 232.224
   }
  },
  "generator": "tools/buildings.py",
@@ -2541,5 +2541,6 @@
   "version": "painted-v1",
   "importer": "tools/import_painted_buildings.py",
   "sources": "art/building-catalogue/painted-v1"
- }
+ },
+ "renderer": "Scener"
 }

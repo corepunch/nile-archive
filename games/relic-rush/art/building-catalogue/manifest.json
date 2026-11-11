@@ -45,10 +45,10 @@
         "runtime": "data/building-shadows/camp.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          49.124,
-          37.288
+          119.112,
+          80.081
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -84,10 +84,10 @@
         "runtime": "data/building-shadows/well.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          53.386,
-          44.373
+          119.112,
+          80.255
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -123,10 +123,10 @@
         "runtime": "data/building-shadows/workshop.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          85.161,
-          63.898
+          155.918,
+          113.528
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -162,10 +162,10 @@
         "runtime": "data/building-shadows/market.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          82.093,
-          60.599
+          155.918,
+          103.119
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -201,10 +201,10 @@
         "runtime": "data/building-shadows/gateway.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          65.337,
-          52.536
+          155.918,
+          96.419
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -240,10 +240,10 @@
         "runtime": "data/building-shadows/lodge.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          119.353,
-          84.327
+          177.168,
+          150.713
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -279,10 +279,10 @@
         "runtime": "data/building-shadows/archive.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          97.171,
-          74.775
+          177.168,
+          137.731
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -318,10 +318,10 @@
         "runtime": "data/building-shadows/observatory.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          95.829,
-          68.668
+          119.112,
+          88.779
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -357,10 +357,10 @@
         "runtime": "data/building-shadows/fountain.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          79.693,
-          71.584
+          177.168,
+          117.857
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -396,10 +396,10 @@
         "runtime": "data/building-shadows/temple.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          99.334,
-          86.212
+          235.224,
+          174.103
         ],
-        "base_width": 154.547
+        "base_width": 464.449
       }
     },
     {
@@ -435,10 +435,10 @@
         "runtime": "data/building-shadows/log_cabin.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          73.335,
-          52.628
+          119.112,
+          89.419
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -474,10 +474,10 @@
         "runtime": "data/building-shadows/apothecary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          54.771,
-          40.818
+          119.112,
+          80.684
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -513,10 +513,10 @@
         "runtime": "data/building-shadows/mess_hall.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          91.91,
-          58.917
+          155.918,
+          104.193
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -552,10 +552,10 @@
         "runtime": "data/building-shadows/stilt_house.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          91.907,
-          60.519
+          155.918,
+          110.206
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -591,10 +591,10 @@
         "runtime": "data/building-shadows/map_room.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          91.097,
-          60.611
+          155.918,
+          109.414
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -630,10 +630,10 @@
         "runtime": "data/building-shadows/greenhouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          78.445,
-          50.667
+          155.918,
+          93.858
         ],
-        "base_width": 101.768
+        "base_width": 305.836
       }
     },
     {
@@ -669,10 +669,10 @@
         "runtime": "data/building-shadows/trading_post.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          104.649,
-          75.234
+          177.168,
+          129.461
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -708,10 +708,10 @@
         "runtime": "data/building-shadows/water_mill.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          99.926,
-          68.754
+          177.168,
+          134.24
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -747,10 +747,10 @@
         "runtime": "data/building-shadows/clock_tower.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          127.51,
-          90.808
+          119.112,
+          121.434
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -786,10 +786,10 @@
         "runtime": "data/building-shadows/lighthouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          92.471,
-          68.385
+          119.112,
+          81.586
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -825,10 +825,10 @@
         "runtime": "data/building-shadows/treehouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          95.678,
-          81.867
+          177.168,
+          117.044
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -864,10 +864,10 @@
         "runtime": "data/building-shadows/aviary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          74.52,
-          55.023
+          177.168,
+          117.372
         ],
-        "base_width": 115.91
+        "base_width": 348.336
       }
     },
     {
@@ -903,10 +903,10 @@
         "runtime": "data/building-shadows/beached_ship.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          83.557,
-          57.649
+          192.724,
+          107.053
         ],
-        "base_width": 126.263
+        "base_width": 379.449
       }
     },
     {
@@ -942,10 +942,10 @@
         "runtime": "data/building-shadows/amphitheater.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          93.698,
-          50.191
+          213.974,
+          130.693
         ],
-        "base_width": 140.405
+        "base_width": 421.949
       }
     },
     {
@@ -981,10 +981,10 @@
         "runtime": "data/building-shadows/museum.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          117.701,
-          76.415
+          213.974,
+          138.788
         ],
-        "base_width": 140.405
+        "base_width": 421.949
       }
     },
     {
@@ -1020,10 +1020,10 @@
         "runtime": "data/building-shadows/hanging_gardens.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          99.962,
-          76.613
+          235.224,
+          165.239
         ],
-        "base_width": 154.547
+        "base_width": 464.449
       }
     },
     {
@@ -1059,10 +1059,10 @@
         "runtime": "data/building-shadows/palm_young.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          36.575,
-          30.487
+          13.636,
+          46.604
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1098,10 +1098,10 @@
         "runtime": "data/building-shadows/jungle_tree.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          39.702,
-          34.085
+          14.852,
+          45.433
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1137,10 +1137,10 @@
         "runtime": "data/building-shadows/cypress.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          38.541,
-          30.215
+          12.262,
+          36.85
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1176,10 +1176,10 @@
         "runtime": "data/building-shadows/banana.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          25.639,
-          20.974
+          19.723,
+          37.021
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1215,10 +1215,10 @@
         "runtime": "data/building-shadows/fan_palm.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          29.79,
-          22.94
+          29.213,
+          42.929
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1254,10 +1254,10 @@
         "runtime": "data/building-shadows/papaya.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          36.497,
-          23.034
+          11.076,
+          44.26
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1293,10 +1293,10 @@
         "runtime": "data/building-shadows/frangipani.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          39.866,
-          34.183
+          12.269,
+          47.719
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1332,10 +1332,10 @@
         "runtime": "data/building-shadows/bamboo.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          81.906,
-          61.209
+          84.48,
+          83.927
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -1371,10 +1371,10 @@
         "runtime": "data/building-shadows/twin_palms.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          62.031,
-          59.489
+          29.015,
+          95.747
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -1410,10 +1410,10 @@
         "runtime": "data/building-shadows/mango.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          64.039,
-          49.196
+          26.026,
+          74.867
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -1449,10 +1449,10 @@
         "runtime": "data/building-shadows/kapok.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          107.339,
-          82.12
+          71.149,
+          101.79
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -1488,10 +1488,10 @@
         "runtime": "data/building-shadows/shrub.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          21.586,
-          16.208
+          22.341,
+          29.703
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1527,10 +1527,10 @@
         "runtime": "data/building-shadows/fern.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          14.699,
-          10.681
+          37.158,
+          26.084
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1566,10 +1566,10 @@
         "runtime": "data/building-shadows/monstera.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          17.154,
-          12.503
+          37.6,
+          23.565
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1605,10 +1605,10 @@
         "runtime": "data/building-shadows/flower_shrub.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          22.287,
-          17.449
+          25.214,
+          28.438
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1644,10 +1644,10 @@
         "runtime": "data/building-shadows/berry.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          22.394,
-          17.208
+          26.336,
+          27.703
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1683,10 +1683,10 @@
         "runtime": "data/building-shadows/reeds.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          28.051,
-          19.861
+          26.178,
+          38.728
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1722,10 +1722,10 @@
         "runtime": "data/building-shadows/topiary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          26.606,
-          24.186
+          15.183,
+          30.674
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1761,10 +1761,10 @@
         "runtime": "data/building-shadows/hedge.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          30.324,
-          23.506
+          52.928,
+          45.557
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1800,10 +1800,10 @@
         "runtime": "data/building-shadows/orchid.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          18.489,
-          12.883
+          26.232,
+          23.726
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1839,10 +1839,10 @@
         "runtime": "data/building-shadows/hibiscus.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          22.657,
-          11.863
+          19.617,
+          21.645
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1878,10 +1878,10 @@
         "runtime": "data/building-shadows/daisies.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          17.624,
-          13.785
+          26.818,
+          25.423
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1917,10 +1917,10 @@
         "runtime": "data/building-shadows/blue_lily.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          18.817,
-          17.184
+          21.636,
+          28.648
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1956,10 +1956,10 @@
         "runtime": "data/building-shadows/flower_box.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          20.501,
-          15.024
+          40.011,
+          28.618
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -1995,10 +1995,10 @@
         "runtime": "data/building-shadows/bromeliad.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          14.151,
-          11.202
+          27.432,
+          23.658
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2034,10 +2034,10 @@
         "runtime": "data/building-shadows/flower_bed.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          43.514,
-          30.373
+          117.64,
+          80.507
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2073,10 +2073,10 @@
         "runtime": "data/building-shadows/rainbow_bed.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          33.347,
-          22.537
+          85.425,
+          58.718
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2112,10 +2112,10 @@
         "runtime": "data/building-shadows/broken_column.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          24.657,
-          19.228
+          38.995,
+          29.237
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2151,10 +2151,10 @@
         "runtime": "data/building-shadows/idol_head.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          29.263,
-          22.375
+          41.317,
+          37.552
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2190,10 +2190,10 @@
         "runtime": "data/building-shadows/jaguar.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          23.928,
-          17.769
+          45.961,
+          34.389
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2229,10 +2229,10 @@
         "runtime": "data/building-shadows/obelisk.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          28.778,
-          26.641
+          37.834,
+          29.113
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2268,10 +2268,10 @@
         "runtime": "data/building-shadows/sundial.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          25.217,
-          18.861
+          24.67,
+          29.283
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2307,10 +2307,10 @@
         "runtime": "data/building-shadows/explorer.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          27.594,
-          18.202
+          40.156,
+          31.105
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2346,10 +2346,10 @@
         "runtime": "data/building-shadows/gold_idol.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          25.328,
-          20.035
+          41.317,
+          32.525
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2385,10 +2385,10 @@
         "runtime": "data/building-shadows/stone_arch.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          51.615,
-          37.177
+          99.175,
+          54.107
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2424,10 +2424,10 @@
         "runtime": "data/building-shadows/giant_head.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          45.646,
-          40.113
+          101.927,
+          56.078
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2463,10 +2463,10 @@
         "runtime": "data/building-shadows/birdbath.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          28.213,
-          20.858
+          24.432,
+          34.234
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2502,10 +2502,10 @@
         "runtime": "data/building-shadows/small_fountain.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          20.387,
-          18.083
+          39.4,
+          31.343
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2541,10 +2541,10 @@
         "runtime": "data/building-shadows/lily_pond.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          35.751,
-          24.055
+          86.45,
+          60.718
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2580,10 +2580,10 @@
         "runtime": "data/building-shadows/duck_pond.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          29.451,
-          25.093
+          82.033,
+          62.433
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2619,10 +2619,10 @@
         "runtime": "data/building-shadows/spring_rocks.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          31.19,
-          31.44
+          69.169,
+          65.485
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2658,10 +2658,10 @@
         "runtime": "data/building-shadows/bench.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          21.952,
-          19.547
+          36.816,
+          34.22
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2697,10 +2697,10 @@
         "runtime": "data/building-shadows/lantern.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          12.306,
-          15.807
+          14.611,
+          16.56
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2736,10 +2736,10 @@
         "runtime": "data/building-shadows/tiki.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          14.066,
-          14.552
+          8.05,
+          15.773
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2775,10 +2775,10 @@
         "runtime": "data/building-shadows/signpost.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          30.727,
-          20.958
+          8.775,
+          24.066
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2814,10 +2814,10 @@
         "runtime": "data/building-shadows/flagpole.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          12.852,
-          19.871
+          22.739,
+          22.79
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2853,10 +2853,10 @@
         "runtime": "data/building-shadows/pump.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          19.393,
-          12.851
+          30.639,
+          22.407
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -2892,10 +2892,10 @@
         "runtime": "data/building-shadows/picnic.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          30.705,
-          21.118
+          86.601,
+          58.04
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2931,10 +2931,10 @@
         "runtime": "data/building-shadows/hammock.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          55.222,
-          36.341
+          64.503,
+          59.213
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -2970,10 +2970,10 @@
         "runtime": "data/building-shadows/pergola.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          62.454,
-          50.432
+          95.082,
+          88.036
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3009,10 +3009,10 @@
         "runtime": "data/building-shadows/swing.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          45.415,
-          37.399
+          75.815,
+          71.163
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3048,10 +3048,10 @@
         "runtime": "data/building-shadows/gazebo.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          56.772,
-          43.38
+          79.462,
+          74.396
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3087,10 +3087,10 @@
         "runtime": "data/building-shadows/crates.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          28.428,
-          19.467
+          42.1,
+          29.754
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3126,10 +3126,10 @@
         "runtime": "data/building-shadows/barrels.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          22.849,
-          16.473
+          37.199,
+          30.704
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3165,10 +3165,10 @@
         "runtime": "data/building-shadows/campfire.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          17.34,
-          11.855
+          35.718,
+          28.616
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3204,10 +3204,10 @@
         "runtime": "data/building-shadows/field_scope.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          21.186,
-          15.05
+          26.668,
+          22.003
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3243,10 +3243,10 @@
         "runtime": "data/building-shadows/globe.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          24.384,
-          19.622
+          25.911,
+          26.321
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3282,10 +3282,10 @@
         "runtime": "data/building-shadows/chest.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          25.382,
-          17.899
+          55.139,
+          30.78
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3321,10 +3321,10 @@
         "runtime": "data/building-shadows/supply_tent.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          40.797,
-          26.445
+          104.223,
+          55.025
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3360,10 +3360,10 @@
         "runtime": "data/building-shadows/dig_site.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          36.626,
-          26.778
+          93.567,
+          67.657
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3399,10 +3399,10 @@
         "runtime": "data/building-shadows/rowboat.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          36.414,
-          22.615
+          61.508,
+          39.942
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3438,10 +3438,10 @@
         "runtime": "data/building-shadows/cart.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          39.008,
-          26.519
+          32.067,
+          54.469
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     },
     {
@@ -3477,10 +3477,10 @@
         "runtime": "data/building-shadows/turtle.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          17.421,
-          13.472
+          15.902,
+          29.475
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3516,10 +3516,10 @@
         "runtime": "data/building-shadows/toucan.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          11.134,
-          14.823
+          20.202,
+          22.588
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3555,10 +3555,10 @@
         "runtime": "data/building-shadows/parrot.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          22.344,
-          15.256
+          20.202,
+          22.89
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3594,10 +3594,10 @@
         "runtime": "data/building-shadows/monkey.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          20.209,
-          16.278
+          15.875,
+          26.929
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3633,10 +3633,10 @@
         "runtime": "data/building-shadows/capybara.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          20.365,
-          14.943
+          19.362,
+          26.897
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3672,10 +3672,10 @@
         "runtime": "data/building-shadows/boulder.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          20.718,
-          17.367
+          26.9,
+          32.183
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3711,10 +3711,10 @@
         "runtime": "data/building-shadows/crystal.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          24.099,
-          16.652
+          14.064,
+          25.052
         ],
-        "base_width": 38.637
+        "base_width": 116.112
       }
     },
     {
@@ -3750,10 +3750,10 @@
         "runtime": "data/building-shadows/mossy_rocks.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
-          36.969,
-          31.42
+          69.351,
+          63.415
         ],
-        "base_width": 77.273
+        "base_width": 232.224
       }
     }
   ]

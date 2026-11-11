@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Render a game's city buildings, by name, from its Blender master.
+"""Render a game's city buildings, by name, with Scener (or Blender), from the game's build_scene.py.
 
     python3 tools/buildings.py relic-rush                 every building
     python3 tools/buildings.py relic-rush lodge well      just these two
     python3 tools/buildings.py relic-rush --rebuild       rebuild the .blend from build_scene.py first
     python3 tools/buildings.py --list relic-rush          what the registry holds
     python3 tools/buildings.py --check                    every game's art matches the engine's camera
+    python3 tools/buildings.py relic-rush --blender       render with Blender/Cycles from the .blend instead
+
+Scener (apps/scener in github.com/corepunch/orion-ui) renders by default: tools/scener_buildings.py
+runs the game's build_scene.py without Blender and writes the buildings as Scener scenes, one
+orthographic camera per building. Set SCENER to the binary, or keep an orion-ui checkout beside
+this one and run `make scener` there. Without a display, the renders run under xvfb-run.
 
 A building's Blender collection name is its key and its file name: collection
 `lodge` becomes data/buildings/lodge.png and data/building-shadows/lodge.png. Each
@@ -32,6 +38,64 @@ import city_camera
 GAMES = ['relic-rush', 'nile-archive', 'christmas-market']
 SHADOW_PPT = 28.284   # shadows stay low-resolution: the engine blurs them up
 SHADOW_STRENGTH = .42
+
+
+SUPERSAMPLE = 3      # Scener renders 3x3 samples per pixel
+SHADOW_SOFTEN = 1.2  # px of blur on a Scener shadow: Blender's sun has a 1.5 degree disc, Scener's stencil none
+
+
+def find_scener():
+    """The scener binary and the environment it runs in (a build tree's libraries, a virtual display)."""
+    sibling = ROOT.parent / 'orion-ui/build/bin/scener'
+    for candidate in (os.environ.get('SCENER'), shutil.which('scener'), str(sibling)):
+        if candidate and Path(candidate).exists():
+            env = dict(os.environ)
+            lib = Path(candidate).resolve().parents[1] / 'lib'
+            if lib.is_dir():
+                env['LD_LIBRARY_PATH'] = f'{lib}:{env["LD_LIBRARY_PATH"]}' if env.get('LD_LIBRARY_PATH') else str(lib)
+                env['DYLD_LIBRARY_PATH'] = env['LD_LIBRARY_PATH']
+            cmd = [candidate]
+            if sys.platform.startswith('linux') and not env.get('DISPLAY') and shutil.which('xvfb-run'):
+                cmd = ['xvfb-run', '-a', '-s', '-screen 0 1280x1024x24'] + cmd
+            return cmd, env
+    sys.exit('Scener not found: set SCENER, or build ../orion-ui with `make scener` (or pass --blender)')
+
+
+def run_scener(args, log):
+    cmd, env = find_scener()
+    with open(log, 'w') as f:
+        code = subprocess.call(cmd + args, stdout=f, stderr=subprocess.STDOUT, env=env)
+    if code:
+        sys.exit(f'Scener failed, see {log}:\n' + '\n'.join(Path(log).read_text().splitlines()[-12:]))
+
+
+def render_scener(game, cfg, keys, out, ppt, look, shadows_only):
+    """Sprites and shadow layers for tools/buildings.py's render(), drawn by Scener; returns the report."""
+    import time
+    import scener_buildings
+    t0 = time.time()
+    report = scener_buildings.write_scenes(game, out, ppt, look, keys)
+    t1 = time.time()
+    if not shadows_only:
+        run_scener(['--render', str(out / 'sprites.blks'), '--transparent', '--format', 'png',
+                    '--supersample', str(SUPERSAMPLE), '--output-dir', str(out / 'sprites')], out / 'sprites.log')
+    t2 = time.time()
+    run_scener(['--render', str(out / 'shadows.blks'), '--format', 'png', '--supersample', str(SUPERSAMPLE),
+                '--output-dir', str(out / 'shadow-catcher')], out / 'shadows.log')
+    from PIL import ImageFilter
+    for key in report['items']:
+        # The catcher is white where the sun reaches it: its darkening is the shadow, black at full occlusion,
+        # as Blender's shadow catcher writes it.
+        lum = Image.open(out / 'shadow-catcher' / f'{key}.png').convert('L')
+        lit = max(1, lum.getextrema()[1])
+        alpha = lum.point(lambda v: max(0, min(255, round(255 * (1 - v / lit)))))
+        alpha = alpha.filter(ImageFilter.GaussianBlur(SHADOW_SOFTEN))
+        layer = Image.new('RGBA', lum.size, (0, 0, 0, 0))
+        layer.putalpha(alpha)
+        layer.save(out / 'shadows' / f'{key}.png')
+    t3 = time.time()
+    print(f'{game}: scenes {t1 - t0:.1f} s, sprites {t2 - t1:.1f} s, shadows {t3 - t2:.1f} s')
+    return report
 
 
 def find_blender():
@@ -168,26 +232,41 @@ def contact_sheet(root, registry, path, ppt):
     sheet.save(path, quality=88)
 
 
-def render(game, keys, rebuild, samples, workdir, shadows_only=False):
+def render(game, keys, rebuild, samples, workdir, shadows_only=False, blender=False):
     root, cfg = config(game)
     blend = root / cfg['blend']
     out = Path(workdir) / game
     (out / 'sprites').mkdir(parents=True, exist_ok=True)
     (out / 'shadows').mkdir(parents=True, exist_ok=True)
-    if rebuild or not blend.exists():
-        print(f'{game}: building {blend.relative_to(ROOT)}')
-        run_blender(['--factory-startup', '--python', str(root / cfg['generator']), '--', str(blend)], out / 'build.log')
     ppt = cfg.get('ppt', 85)
     look = cfg.get('shadow', {})   # per game: resolution, strength, and the shadow pass's own sun direction
     shadow_ppt, strength = look.get('ppt', SHADOW_PPT), look.get('strength', SHADOW_STRENGTH)
+    if not blender:
+        print(f'{game}: rendering {len(keys) if keys else "all"} buildings with Scener at {ppt} px per tile')
+        report = render_scener(game, cfg, keys, out, ppt, look, shadows_only)
+    else:
+        report = render_blender(game, cfg, keys, rebuild, samples, out, ppt, look, shadows_only)
+    store(game, root, cfg, keys, out, report, ppt, strength, look, shadows_only, 'Scener' if not blender else 'Blender')
+
+
+def render_blender(game, cfg, keys, rebuild, samples, out, ppt, look, shadows_only):
+    root = ROOT / 'games' / game
+    blend = root / cfg['blend']
+    if rebuild or not blend.exists():
+        print(f'{game}: building {blend.relative_to(ROOT)}')
+        run_blender(['--factory-startup', '--python', str(root / cfg['generator']), '--', str(blend)], out / 'build.log')
+    shadow_ppt = look.get('ppt', SHADOW_PPT)
     request = dict(out=str(out), keys=keys, ppt=ppt, shadow_ppt=shadow_ppt, samples=samples or cfg.get('samples', 64),
                    denoise=cfg.get('denoise', True), shadows_only=shadows_only,
                    shadow_sun=look.get('sun'), shadow_angle=look.get('angle', 3))
     (out / 'request.json').write_text(json.dumps(request))
     print(f'{game}: rendering {len(keys) if keys else "all"} buildings at {ppt} px per tile')
     run_blender([str(blend), '--python', str(ROOT / 'tools/render_buildings_blender.py'), '--', str(out / 'request.json')], out / 'render.log')
+    return json.loads((out / 'report.json').read_text())
 
-    report = json.loads((out / 'report.json').read_text())
+
+def store(game, root, cfg, keys, out, report, ppt, strength, look, shadows_only, renderer):
+    """Trim the renders into data/, record their registration and regenerate what follows from it."""
     path = registry_path(root, cfg)
     registry = json.loads(path.read_text()) if path.exists() else {}
     if (not keys and not shadows_only) or 'camera' not in registry:   # a whole set, or a registry from before this tool
@@ -219,7 +298,7 @@ def render(game, keys, rebuild, samples, workdir, shadows_only=False):
             shadow=f'data/building-shadows/{key}.png',
             shadow_pivot=rounded([item['shadow_pivot'][0] - shadow_at[0], item['shadow_pivot'][1] - shadow_at[1]]),
             shadow_base_width=round(item['shadow_base_width'], 3))
-    registry.update(generator='tools/buildings.py', master=cfg['blend'], scene_generator=cfg['generator'],
+    registry.update(generator='tools/buildings.py', renderer=renderer, master=cfg['blend'], scene_generator=cfg['generator'],
                     camera=dict(yaw=city_camera.YAW, elevation=city_camera.ELEVATION),
                     ppt=ppt, order=report['order'])
     path.write_text(json.dumps(registry, indent=1) + '\n')
@@ -290,7 +369,8 @@ def main():
     ap.add_argument('game', nargs='?', choices=GAMES)
     ap.add_argument('keys', nargs='*', help='building keys; all of them when omitted')
     ap.add_argument('--rebuild', action='store_true', help='rebuild the .blend from its build_scene.py first')
-    ap.add_argument('--samples', type=int, help='Cycles samples (the game default otherwise)')
+    ap.add_argument('--samples', type=int, help='Cycles samples (the game default otherwise; Blender only)')
+    ap.add_argument('--blender', action='store_true', help='render with Blender/Cycles from the .blend instead of Scener')
     ap.add_argument('--shadows', action='store_true', help='re-render only the ground shadows; sprites stay as they are')
     ap.add_argument('--finish', action='store_true', help='regenerate Lua, the sheet and hooks without rendering')
     ap.add_argument('--list', action='store_true', help='print every key in the registry')
@@ -310,7 +390,7 @@ def main():
     if a.finish:
         return finish(a.game)
     with tempfile.TemporaryDirectory(prefix='buildings-') as workdir:
-        render(a.game, a.keys, a.rebuild, a.samples, workdir, a.shadows)
+        render(a.game, a.keys, a.rebuild, a.samples, workdir, a.shadows, a.blender)
 
 
 if __name__ == '__main__':
