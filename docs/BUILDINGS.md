@@ -34,14 +34,14 @@ its buildings:
 | Game | `city.tile` | `city.clearance` |
 |---|---|---|
 | Nile Archive | `34` | `size2(0, 0)` |
-| Relic Rush | `56` | `size2(1, 1)` |
-| Christmas Market | `56` | `size2(1, 1)` |
+| Relic Rush | `56` | `size2(0, 0)` |
+| Christmas Market | `56` | `size2(0, 0)` |
 
 `city.clearance` adds tiles to every footprint around its base, so buildings
 keep apart: with `size2(1, 1)` a 2 × 2 base takes a 3 × 3 footprint, half a
 tile of open ground on each side. It changes the footprint (snapping,
 collision, the green/red tiles), never the sprite's size: `size` is always
-the base the art shows. Nile Archive has no added clearance, so neighbouring
+the base the art shows. No game adds clearance by default, so neighbouring
 bases may share an edge.
 
 ## A building

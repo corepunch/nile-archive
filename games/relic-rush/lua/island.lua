@@ -189,7 +189,7 @@ function M.island_setup(c)
     c.zone_at = function(_, p) return M.island_zone(p) end
     c.zone_touches = function(_, z, open) return M.island_zone_touches(z, open) end
     c.tile = M.TILE
-    c.clearance = size2(1, 1)   -- half a tile of ground around every base
+    c.clearance = size2(0, 0)   -- adjacent bases may share an edge
     c.fog = color(233, 242, 224, 240)
     c.fog_on_land_only = true
     c.fog_clouds = true

@@ -49,7 +49,7 @@ stock. The category arrows stay above the list.
 - **Painted registration.** The current camera projects a footprint's width as
   `(w * cos(yaw) + h * sin(yaw)) * ppt`. The importer aligns painted foundations
   to the render's ground centre and preserves this base width. `city.tile` stays
-  56 with `clearance = size2(1, 1)`.
+  56 with `clearance = size2(0, 0)`.
 
 `art/building-catalogue/painted-v1/` retains every input/output atlas, prompt, cell
 layout, original render registration and per-key crop/scale/translation in
