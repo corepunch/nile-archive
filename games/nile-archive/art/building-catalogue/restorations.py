@@ -128,7 +128,7 @@ def frond(k, top, a, L, rise=.32, droop=.8, width=.2, spread=1.):
         w = L * width * math.sin(math.pi * min(v * .92 + .08, 1))
         p = top + out * L * v * spread + Vector((0, 0, L * (rise * v - droop * v * v)))
         return tuple(p + side * (u - .5) * 2 * w - Vector((0, 0, abs(u - .5) * w * .6)))
-    k.surface("leaf", fn, 2, 7, lambda u, v: tuple(c * (.72 + .4 * (1 - abs(u - .5) * 2)) for c in base))
+    k.surface("leaf", fn, 2, 7, Gradient(tone(base, .72), tone(base, 1.12), tile=(1, 0), mirror=True))   # bright midrib
 
 
 def reach(k, x, y, a, L):
@@ -385,9 +385,9 @@ def gardener_house(k):
         return zc + .05 + .08 * v - .05 * math.sin(math.pi * u) * math.sin(math.pi * v)
     def cloth(u, v):
         return (px0 - e + (px1 - px0 + 2 * e) * u, py0 - e + (py1 - py0 + 2 * e) * v, cloth_height(u, v))
-    def cloth_col(u, v):
-        return GOLD if .05 < min(u, 1 - u) < .1 else (TURQUOISE if min(v, 1 - v) > .1 else TURQUOISE_L)
-    k.surface("cloth", cloth, 60, 20, cloth_col)
+    k.surface("cloth", cloth, 60, 20, Gradient(TURQUOISE_L, TURQUOISE, tile=(0, 1), mirror=True, edge=.2))   # pale hems
+    for u0 in (.05, .9):   # two gold bands laid on the cloth
+        k.surface("gold", lambda u, v, u0=u0: (lambda p: (p[0], p[1], p[2] + .004))(cloth(u0 + .05 * u, v)), 2, 20, GOLD)
     # the hems: a hanging valance along -y and +x
     k.box("cloth", (px0 + px1) / 2, py0 - e - .01, zc - .04, px1 - px0 + 2 * e, .035, .09, TEAL)
     k.box("gold", (px0 + px1) / 2, py0 - e - .02, zc - .06, px1 - px0 + 2 * e, .03, .035, GOLD)
@@ -468,7 +468,7 @@ def isis_temple(k):
     def drape(u, v, x0, x1):
         return (x0 + (x1 - x0) * u, .195 - .025 * math.sin(u * math.pi * 7), zp + (h_col - .1) * (1 - v))
     for x0, x1 in ((-.46, -.08), (.08, .46)):
-        k.surface("cloth", lambda u, v, x0=x0, x1=x1: drape(u, v, x0, x1), 14, 3, lambda u, v: GOLD if .42 < u < .58 else TURQUOISE)
+        k.surface("cloth", lambda u, v, x0=x0, x1=x1: drape(u, v, x0, x1), 14, 3, Gradient(TURQUOISE, GOLD, tile=(1, 0), mirror=True, edge=.84))   # a gold centre band
     # the columns: a pair in front, a pair at the sanctum door, the corners
     for x, y in ((-.43, -.4), (.43, -.4), (-.62, .14), (.62, .14), (-1.25, -.03), (1.25, -.03), (-1.25, .72), (1.25, .72)):
         papyrus_column(k, x, y, zp, zc)

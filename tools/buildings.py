@@ -234,13 +234,12 @@ def contact_sheet(root, registry, path, ppt):
 
 def render(game, keys, rebuild, samples, workdir, shadows_only=False, blender=False):
     root, cfg = config(game)
-    blend = root / cfg['blend']
     out = Path(workdir) / game
     (out / 'sprites').mkdir(parents=True, exist_ok=True)
     (out / 'shadows').mkdir(parents=True, exist_ok=True)
     ppt = cfg.get('ppt', 85)
     look = cfg.get('shadow', {})   # per game: resolution, strength, and the shadow pass's own sun direction
-    shadow_ppt, strength = look.get('ppt', SHADOW_PPT), look.get('strength', SHADOW_STRENGTH)
+    strength = look.get('strength', SHADOW_STRENGTH)
     if not blender:
         print(f'{game}: rendering {len(keys) if keys else "all"} buildings with Scener at {ppt} px per tile')
         report = render_scener(game, cfg, keys, out, ppt, look, shadows_only)

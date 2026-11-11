@@ -125,18 +125,26 @@ python3 tools/buildings.py --list relic-rush       # every key
 
 **Scener renders by default.** [Scener](https://github.com/corepunch/orion-ui/tree/main/apps/scener)
 is a small OpenGL scene renderer. `tools/scener_buildings.py` runs the game's
-`build_scene.py` unchanged, with stand-in `bpy` and `mathutils`, and writes the meshes
-the kit collects (the ones `assemble()` would give Blender) as two Scener scenes: the
-lit buildings, and invisible shadow casters over a white catcher. Every building gets
+`build_scene.py` unchanged, with stand-in `bpy` and `mathutils`, against a kit
+(`tools/scener_kit.py`) that writes every kit call as a Scener primitive with its
+modifiers: a box is a soft-box rounded by its material's bevel, a lathe a `<lathe>`, a
+wall block, voussoir or roof tile a `<shape>` extruded (and tapered), a frame a
+`<group>`. A piece has one colour; a `Gradient` is its gizmo, never per-vertex colour.
+It writes two scenes: the lit buildings, and the same groups hidden
+(`renderable="0"`), casting shadows on a white catcher. Every building gets
 an orthographic camera named after its key, framed on whole pixels exactly as the
 Blender script frames it, so registration is identical. Point `SCENER` at the binary,
 or build `make scener` in an `orion-ui` checkout beside this one; without a display
-the renders run under `xvfb-run`. All 234 buildings and shadows of the three games
+the renders run under `xvfb-run`; `ORION_UI` names the checkout if it isn't beside this
+one (the scenes use its writer kit and `utilities.xml`). All 234 buildings and shadows of the three games
 take about three minutes on four CPU cores with Mesa's software renderer.
 
-Scener has no general mesh bevel or global illumination: edges keep Blender's 40°
-smoothing but lose the rounded rims, and a calibrated gain stands in for bounced
-light. Use `BLENDER=1` when that difference matters.
+Colour that varies over a piece is a `building_kit.Gradient`: `uv` over a surface's or
+lathe's parameters, or `Gradient.box(a, b, axis="z")` over the piece's own bounds, with
+`repeat`, `mirror`, `edge` and `power`, as a 3ds Max map on its gizmo. Blender evaluates
+the same gizmo per vertex. A builder that passes a function as a colour stops the
+Scener render with the piece's name. Scener has no global illumination: a calibrated
+gain stands in for bounced light. Use `BLENDER=1` when that matters.
 
 **A full render replaces the painted sprites.** `data/buildings/` holds the accepted
 paint-over ([BUILDING_STYLE.md](BUILDING_STYLE.md)); a full `make buildings` writes raw

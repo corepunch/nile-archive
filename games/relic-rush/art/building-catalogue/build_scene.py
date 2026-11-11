@@ -701,11 +701,10 @@ def clock_tower(k):
 
 
 def lighthouse(k):
-    def stripe(h):
-        return RED if int((h + .01) / .46) % 2 else CANVAS
     k.ring(0, 0, G, G + .28, .74, .3, .28, .66)
     k.lathe("stone", 0, 0, G, [(.66, 0), (.66, .28)], SAND_DK, 24)
-    k.lathe("matte", 0, 0, G + .28, [(.54 - .2 * (i / 10), i * .23) for i in range(11)], stripe, 28)
+    k.lathe("matte", 0, 0, G + .28, [(.54 - .2 * (i / 10), i * .23) for i in range(11)],
+            Gradient(CANVAS, RED, tile=(0, 2.5), repeat=True, edge=.5), 28)   # five bands up the tower
     with k.at(radial_frame(0, 0, .56, math.radians(-45))):
         k.window(0, G + .3, G + .58, .18, fill=WOOD, fill_mat="wood", y=.03)
     with k.at(radial_frame(0, 0, .42, math.radians(-90))):
@@ -795,15 +794,18 @@ def beached_ship(k):
         z = G + .1 + lift + (.92 + .34 * (2 * u - 1) ** 2 - lift) * v
         return (x, y, z)
     for s in (-1, 1):
-        k.surface("wood", lambda u, v, s=s: hull(u, v, s), 24, 6, lambda u, v: J(WOOD if int(v * 6) % 2 else WOOD_L, .04))
+        k.surface("wood", lambda u, v, s=s: hull(u, v, s), 24, 6, Gradient(WOOD_L, WOOD, tile=(0, 3), repeat=True, edge=.5))   # planks
+        spend(25 * 7)
     k.surface("wood", lambda u, v: (lambda a, b: (a[0], a[1] + (b[1] - a[1]) * v, a[2] - .05))(hull(u, 1, -1), hull(u, 1, 1)), 18, 2, WOOD_D)
     k.tube("wood", (-.1, 0, G + .9), (-.1, 0, G + 2.5), .07, .05, WOOD_D, 12)
     k.tube("wood", (.95, 0, G + .95), (.95, 0, G + 2.0), .06, .045, WOOD_D, 12)
     # a tattered sail on the main mast, a yard above it
     k.beam("wood", (-.1, -.72, G + 2.25), (-.1, .72, G + 2.25), .07, .07, WOOD)
-    k.surface("cloth", lambda u, v: (-.1 + .2 * math.sin(math.pi * v) * .9, -.66 + 1.32 * u, G + 2.2 - .92 * v), 8, 6, lambda u, v: J(CANVAS, .03))
+    k.surface("cloth", lambda u, v: (-.1 + .2 * math.sin(math.pi * v) * .9, -.66 + 1.32 * u, G + 2.2 - .92 * v), 8, 6, CANVAS)
+    spend(9 * 7)
     k.beam("wood", (.95, -.5, G + 1.76), (.95, .5, G + 1.76), .06, .06, WOOD)
-    k.surface("cloth", lambda u, v: (.95 + .14 * math.sin(math.pi * v) * .9, -.45 + .9 * u, G + 1.72 - .6 * v), 6, 5, lambda u, v: J(CANVAS_D, .03))
+    k.surface("cloth", lambda u, v: (.95 + .14 * math.sin(math.pi * v) * .9, -.45 + .9 * u, G + 1.72 - .6 * v), 6, 5, CANVAS_D)
+    spend(7 * 6)
     k.surface("cloth", lambda u, v: (-.05 + .5 * u, 0, G + 2.5 - .24 * v * (1 - u * .9)), 4, 2, TEAL)
     # wheel-house and crates on the sand
     k.box("wood", -1.0, 0, G + .95, .62, .66, .42, WOOD_L)
@@ -915,7 +917,7 @@ def blade(k, p, out, L, w, rise=.4, droop=.8, col=None):
         wid = w * math.sin(math.pi * (v * .92 + .08))
         q = p + out * L * v + Vector((0, 0, L * (rise * v - droop * v * v))) + side * (u - .5) * 2 * wid - Vector((0, 0, abs(u - .5) * wid * .6))
         return tuple(q)
-    k.surface("leaf", fn, 2, 6, lambda u, v: tuple(c * (.72 + .4 * (1 - abs(u - .5) * 2)) for c in base))
+    k.surface("leaf", fn, 2, 6, Gradient(tone(base, .72), tone(base, 1.12), tile=(1, 0), mirror=True))   # bright midrib
 
 def bloom(k, x, y, z, r, col, centre=None):
     for i in range(5):
@@ -959,7 +961,7 @@ def jungle_tree(k):
 def cypress(k):
     k.tube("wood", (0, 0, 0), (0, 0, .2), .08, .07, WOOD, 10)
     prof = [(.001, 0), (.2, .02), (.27, .24), (.22, .62), (.1, 1.0), (.001, 1.22)]
-    k.lathe("leaf", 0, 0, .14, prof, lambda h: tuple(c * (.55 + .5 * h / 1.2) for c in C("#3B8F3A")), 16)
+    k.lathe("leaf", 0, 0, .14, prof, Gradient.box(tone(C("#3B8F3A"), .55), tone(C("#3B8F3A"), 1.06)), 16)   # darker at the foot
 def frangipani(k):
     k.tube("wood", (0, 0, 0), (0, 0, .36), .08, .06, C("#7D6848"), 10)
     k.tube("wood", (0, 0, .34), (-.2, .08, .6), .05, .04, C("#7D6848"), 8)
@@ -990,7 +992,8 @@ def mango(k):
     for x, y, z in ((-.48, -.3, .72), (.42, -.38, .68), (.05, -.42, .96), (.6, .1, .7), (-.2, -.34, 1.2)):
         k.ball("matte", x, y, z, .07, C("#F29A1E"), 10, sz=1.2)
 def kapok(k):
-    k.lathe("wood", 0, 0, 0, [(.62, 0), (.34, .1), (.22, .34), (.17, 1.1), (.15, 1.6)], lambda h: J(C("#9A7A52"), .02), 8)
+    k.lathe("wood", 0, 0, 0, [(.62, 0), (.34, .1), (.22, .34), (.17, 1.1), (.15, 1.6)], C("#9A7A52"), 8)
+    spend(5 * 8)
     for x, y, z, r in ((-.45, -.05, 1.62, .46), (.48, -.15, 1.6, .44), (.05, .42, 1.62, .5), (0, -.3, 1.74, .46), (.0, .05, 2.1, .56)):
         k.blob(x, y, z, r)
 
@@ -1253,7 +1256,7 @@ def flagpole(k):
     k.box("stone", 0, 0, 0, .34, .34, .14, SAND_PALE)
     k.tube("wood", (0, 0, .14), (0, 0, 1.46), .03, .022, WOOD_L, 8)
     k.ball("gold", 0, 0, 1.5, .05, GOLD, 10)
-    k.surface("cloth", lambda u, v: (.42 * u, -.42 * u * .0 + .03 * math.sin(u * 6), 1.42 - .3 * v), 8, 3, lambda u, v: TEAL if .3 < v < .7 else GOLD)
+    k.surface("cloth", lambda u, v: (.42 * u, -.42 * u * .0 + .03 * math.sin(u * 6), 1.42 - .3 * v), 8, 3, Gradient(GOLD, TEAL, tile=(0, 1), mirror=True, edge=.6))   # a teal centre band
 def pump(k):
     k.box("stone", 0, 0, 0, .52, .4, .14, sand())
     k.tube("matte", (0, .06, .14), (0, .06, .7), .07, .06, C("#5F6E73"), 12)
@@ -1277,7 +1280,7 @@ def hammock(k):
         k.tube("wood", (s * .74, 0, 0), (s * .74, 0, 1.1), .08, .06, WOOD, 10)
     k.palm(-.74, 0, 1.0, .28, .52, 7)
     k.palm(.74, 0, 1.0, .28, .52, 7)
-    k.surface("cloth", lambda u, v: (-.62 + 1.24 * u, -.2 + .4 * v, .9 - .54 * math.sin(math.pi * u) + .08 * (2 * v - 1) ** 2), 12, 4, lambda u, v: TEAL if int(u * 8) % 2 else CANVAS)
+    k.surface("cloth", lambda u, v: (-.62 + 1.24 * u, -.2 + .4 * v, .9 - .54 * math.sin(math.pi * u) + .08 * (2 * v - 1) ** 2), 12, 4, Gradient(CANVAS, TEAL, tile=(4, 0), repeat=True, edge=.5))   # stripes
     k.puff(.3, .7, 0, .13)
 def pergola(k):
     for x, y in ((-.72, -.72), (.72, -.72), (.72, .72), (-.72, .72)):
@@ -1378,7 +1381,8 @@ def rowboat(k):
         t = abs(2 * u - 1) ** 2.2
         return (x, s * W * (1 - t * .9) * (1 - (1 - v) ** 2 * .6), .08 + (.28 + .08 * (2 * u - 1) ** 2) * v)
     for s in (-1, 1):
-        k.surface("wood", lambda u, v, s=s: hull(u, v, s), 14, 4, lambda u, v: TEAL if v > .75 else J(WOOD_L, .04))
+        k.surface("wood", lambda u, v, s=s: hull(u, v, s), 14, 4, Gradient(WOOD_L, TEAL, tile=(0, 1), edge=.75))   # a painted gunwale
+        spend(4 * 15)
     k.surface("wood", lambda u, v: (lambda a, b: (a[0], a[1] + (b[1] - a[1]) * v, a[2] - .1))(hull(u, 1, -1), hull(u, 1, 1)), 14, 2, WOOD_D)
     for x in (-.3, .3):
         k.box("wood", x, 0, .3, .16, 2 * W * .9, .04, WOOD_L)
