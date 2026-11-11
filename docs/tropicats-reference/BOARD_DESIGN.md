@@ -25,6 +25,18 @@ Run `python3 tools/tropicats-viewer/serve.py` from the repository root to open t
 
 Across all 2,730 paired numbers, c has fewer moves than a in **1,906**, equal moves in **261**, and more in **563**. Mean budgets a/b/c are **34.07 / 32.84 / 31.10**; ranges are 20–46 / 19–46 / 18–45. These summarize authored budgets, not actual difficulty, win rate, or number of player attempts. Even an apparently increased obstacle count does not prove a harder puzzle without runtime testing.
 
+## A practical authoring pass
+
+Treat a tier as three independently adjustable decisions, then set a move budget and test their interaction:
+
+| Decision | Authoring question | Source comparison |
+| --- | --- | --- |
+| Goal and demand | What must be collected, and how much? | Level 1 changes one climber to two in c; level 11 asks for 2/3/4 turtles. Level 2726 keeps both targets at four across tiers. |
+| Shape and movement | Which field cells, route markers, portals and spawn constraints expose the goal? | Level 411 changes the mask 49→63→77 cells; level 51 keeps the 72-cell mask and four portal pairs while changing other properties. Inspect routes independently of the mask. |
+| Local layers and palette | What covers, blocks or colors the playable space? | Level 8 increases tile cells 20→48→67; level 606 holds major layer occupancy constant but changes source values and palette. Compare the atlas's cell inspector rather than extrapolating from counts. |
+
+For a new board, first pick the goal and sketch a readable route or region for it. Choose a field mask and connection points that make that route consequential, then place coverings, blockers, initial specials and palette weights around it. Create tier variants deliberately along those three axes: specify which feature stays recognizable, which constraints change, and why. Give each tier an initial move allowance, then playtest openings, cascades, reachability and the actual objective flow; revise budgets and constraints from observed outcomes. Inspect combined layers and each numeric layer so a hidden obstruction or spawn restriction does not accidentally undermine the intended route. These steps are a design method inferred from the serialized examples, not a claim about Tropicats' internal authoring process.
+
 ## Measured vocabulary and presentation sequence
 
 The generator [tools/tropicats_board_analysis.py](../../tools/tropicats_board_analysis.py) reads all tier files and reports counts and first serialized appearances, with no external dependency:
