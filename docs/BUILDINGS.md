@@ -143,7 +143,9 @@ Colour that varies over a piece is a `building_kit.Gradient`: `uv` over a surfac
 lathe's parameters, or `Gradient.box(a, b, axis="z")` over the piece's own bounds, with
 `repeat`, `mirror`, `edge` and `power`, as a 3ds Max map on its gizmo. Blender evaluates
 the same gizmo per vertex. A builder that passes a function as a colour stops the
-Scener render with the piece's name. Scener has no global illumination: a calibrated
+Scener render with the piece's name. A material Blender textures with noise (`mottle`, `bump` in `make_material`) becomes a Scener
+`<material>` carrying a noise `<map>` on the same scale; its pieces name it and keep their own colours.
+Scener has no global illumination: a calibrated
 gain stands in for bounced light. Use `BLENDER=1` when that matters.
 
 **A full render replaces the painted sprites.** `data/buildings/` holds the accepted
