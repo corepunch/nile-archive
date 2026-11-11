@@ -43,8 +43,19 @@ class ViewerServerTests(unittest.TestCase):
         with self.get("/app.mjs") as response:
             self.assertIn("text/javascript", response.headers["Content-Type"])
 
+    @unittest.skipUnless((DEFAULT_DATA / "art/sprites.json").exists(), "Local sprites unavailable")
+    def test_original_sprite_manifest_and_png(self):
+        with self.get("/api/art") as response:
+            art = json.load(response)
+        self.assertIn("dot_red", art)
+        with self.get(art["dot_red"]["url"]) as response:
+            self.assertEqual(response.headers["Content-Type"], "image/png")
+            self.assertEqual(response.read(8), b"\x89PNG\r\n\x1a\n")
+        with self.get("/art.mjs") as response:
+            self.assertIn("text/javascript", response.headers["Content-Type"])
+
     def test_no_arbitrary_files_or_invalid_levels(self):
-        for path in ["/../serve.py", "/%2e%2e/serve.py", "/api/level/0", "/api/level/2731", "/api/level/1a", "/config/areasconfig.json"]:
+        for path in ["/../serve.py", "/%2e%2e/serve.py", "/api/level/0", "/api/level/2731", "/api/level/1a", "/config/areasconfig.json", "/art/../../serve.py", "/art/unknown.png", "/art/%2e%2e.png"]:
             with self.subTest(path=path), self.assertRaises(HTTPError) as caught:
                 self.get(path)
             self.assertEqual(caught.exception.code, 404)

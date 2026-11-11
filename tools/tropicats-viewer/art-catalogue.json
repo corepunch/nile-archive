@@ -1,0 +1,929 @@
+{
+  "source": {
+    "bundle": "Data/Raw/AssetBundles/allscenes_be7e0be1439093721cd26af7025dad92",
+    "sha256": "25cc90192b8c380927857b50ea308f948d0b8bb597b5fb673b1edcdb08fe9c9f",
+    "decoder": "UnityPy 1.25.4",
+    "sprites": 102,
+    "transform": "Original Sprite.image / Texture2D.image; no repainting, tinting or synthesized states."
+  },
+  "sprites": {
+    "DirtHp1": {
+      "url": "/art/DirtHp1.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 609,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "36fe739711ecc6a27ceac4203fbe167ac77af6442151b90157d2073092d389f5"
+    },
+    "DirtHp2": {
+      "url": "/art/DirtHp2.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 612,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "419026f3169fdf25c9d24812e10383329ee9cd7b19dfba7eba9a8866d61e4961"
+    },
+    "DirtHp3": {
+      "url": "/art/DirtHp3.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 655,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "1efeb6db540cc6a97ebf4ab68f6cead39f4b3150bd6ca4c00342bc409c879c0e"
+    },
+    "board_recipe": {
+      "url": "/art/board_recipe.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 118,
+      "kind": "Texture2D",
+      "width": 936,
+      "height": 936,
+      "sha256": "41d6835cc1da81778520b9ec11d316745d7fdc1ad269520c1690c1423a723333"
+    },
+    "cannon_tutorial": {
+      "url": "/art/cannon_tutorial.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 683,
+      "kind": "Sprite",
+      "width": 117,
+      "height": 111,
+      "sha256": "5342a82e1f9b29c073de7d43d19e415ceb9f03bc3400a3a3f22cad87f626583a"
+    },
+    "chain_1hp": {
+      "url": "/art/chain_1hp.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 46,
+      "kind": "Sprite",
+      "width": 121,
+      "height": 113,
+      "sha256": "9944f77b8ae80e18cb3b9ca30f9486fd40aaccfb8e63456cd274b0b235d5d1a6"
+    },
+    "chain_2hp": {
+      "url": "/art/chain_2hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 697,
+      "kind": "Sprite",
+      "width": 123,
+      "height": 114,
+      "sha256": "1719be213d1f1d8d29cdb502b6cf547e2f9a67d914208daee963db8e9bbd242b"
+    },
+    "chain_3hp": {
+      "url": "/art/chain_3hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 680,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 123,
+      "sha256": "eb0c19920dfa7fa400da8d68ee750dba7ace13432de32f10e871b649d902487f"
+    },
+    "chameleon_1_tutorial": {
+      "url": "/art/chameleon_1_tutorial.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 621,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "ed518e498537cade7c50a24ca195ec4e2c1d6e8307e1566f75e085f33830bb14"
+    },
+    "climber_exit": {
+      "url": "/art/climber_exit.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 687,
+      "kind": "Sprite",
+      "width": 108,
+      "height": 73,
+      "sha256": "0db8a27d56bcd18ff606b76082ef12aff24bd572837cad4c3d56328db72495f7"
+    },
+    "crate_1hp": {
+      "url": "/art/crate_1hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 691,
+      "kind": "Sprite",
+      "width": 149,
+      "height": 146,
+      "sha256": "6b3ed20555a77a080b2ad715721a45324895025ce55ca3ab4574312cdd7fb585"
+    },
+    "crate_2hp": {
+      "url": "/art/crate_2hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 670,
+      "kind": "Sprite",
+      "width": 159,
+      "height": 159,
+      "sha256": "61ff9279e38b1d843322396b9131a1d6d9b994ba5b662c55196c64005aa6e5b9"
+    },
+    "crate_3hp": {
+      "url": "/art/crate_3hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 592,
+      "kind": "Sprite",
+      "width": 159,
+      "height": 159,
+      "sha256": "37662dc2ebb68a2824c1cd23086484233341397e6a9a13934c2f916dab0bb07c"
+    },
+    "crate_tintable_1hp": {
+      "url": "/art/crate_tintable_1hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 685,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "08422b2c3fa11c22381bba49b953d322e78681cc18ef1f2b8678144b5a7b709a"
+    },
+    "crate_tintable_2hp": {
+      "url": "/art/crate_tintable_2hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 645,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "4f4002d8d6b5934ff9277a8b56ddc57a1568f965f41f028109e74b024eaf4e47"
+    },
+    "crate_tintable_3hp": {
+      "url": "/art/crate_tintable_3hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 617,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "a127875210aed0aa6fa87abd380eb72690fb06364dc70259c14fce4f77f1ffc5"
+    },
+    "diagonal_gems_DiagonalDownLeft": {
+      "url": "/art/diagonal_gems_DiagonalDownLeft.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 666,
+      "kind": "Sprite",
+      "width": 109,
+      "height": 107,
+      "sha256": "b2d7e3108e3fb33c48e54251c95c655ce94e5f33a2fbc2013b7af7f2d3cdbf88"
+    },
+    "diagonal_gems_DiagonalDownRight": {
+      "url": "/art/diagonal_gems_DiagonalDownRight.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 667,
+      "kind": "Sprite",
+      "width": 105,
+      "height": 104,
+      "sha256": "07a58b13be57814665e4500aa7699b24f08491bf11a46fca2be73775fd464e46"
+    },
+    "diagonal_gems_DiagonalUpLeft": {
+      "url": "/art/diagonal_gems_DiagonalUpLeft.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 686,
+      "kind": "Sprite",
+      "width": 106,
+      "height": 105,
+      "sha256": "e3e34b0bf93588ebfd421f83f6263f43d31a78cc1ab385c7d2bea1e8595102ce"
+    },
+    "diagonal_gems_DiagonalUpRight": {
+      "url": "/art/diagonal_gems_DiagonalUpRight.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 628,
+      "kind": "Sprite",
+      "width": 108,
+      "height": 106,
+      "sha256": "f62b04605298a3cb0ff9c0ee8df83e42eb6803d9da964b0c95409075c638a9e7"
+    },
+    "diagonal_gems_random": {
+      "url": "/art/diagonal_gems_random.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 652,
+      "kind": "Sprite",
+      "width": 114,
+      "height": 113,
+      "sha256": "f8af2e5d1aa314fc3d8658eeacaadb679b0e0744fd39f6ae7eb0f4095f917d44"
+    },
+    "dot_animated_rainbow": {
+      "url": "/art/dot_animated_rainbow.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 607,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "b3c6eecd6e590ed876ce222bea6bc57c2ccc6f4c7f1b747e23d0271a61ede892"
+    },
+    "dot_blue": {
+      "url": "/art/dot_blue.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 45,
+      "kind": "Sprite",
+      "width": 110,
+      "height": 112,
+      "sha256": "020975cc4a8de73fdf37399f64b83a50cd6412f70280c91e92bc82e2d2f13447"
+    },
+    "dot_blue_ClimberGem": {
+      "url": "/art/dot_blue_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 619,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "c865a93e273d9f2cd32e68891598e327807a259ef1a3b5d371fb4066062198c6"
+    },
+    "dot_blue_StackedGemBig": {
+      "url": "/art/dot_blue_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 650,
+      "kind": "Sprite",
+      "width": 118,
+      "height": 120,
+      "sha256": "166603166eff973c51e9f56f701e6dc9c9796fb62d540b8d422e46e4bfd4d292"
+    },
+    "dot_blue_StackedGemMedium": {
+      "url": "/art/dot_blue_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 684,
+      "kind": "Sprite",
+      "width": 123,
+      "height": 112,
+      "sha256": "7844eb6fe08cf8e3258b4aeeb5a560f55651c28ab44f8114e7ca8b0da7d42e22"
+    },
+    "dot_blue_StackedGemSmall": {
+      "url": "/art/dot_blue_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 695,
+      "kind": "Sprite",
+      "width": 114,
+      "height": 116,
+      "sha256": "b34335fc3ac4cd256061adf693022c3a77edc5580d957c1e697f19bb7f638cb1"
+    },
+    "dot_cannonball": {
+      "url": "/art/dot_cannonball.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 172,
+      "kind": "Sprite",
+      "width": 136,
+      "height": 129,
+      "sha256": "5af324b6f61fd66fd31514eb73750ebc158661123145613b0fa038817ac2db89"
+    },
+    "dot_coins": {
+      "url": "/art/dot_coins.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 48,
+      "kind": "Sprite",
+      "width": 117,
+      "height": 117,
+      "sha256": "bb6e921ac0ea31ed4525ac84e13395cb2f048d8b55a6f15f8ba3c82c41b3cc1c"
+    },
+    "dot_coins_ClimberGem": {
+      "url": "/art/dot_coins_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 648,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "98fad4a16a5793ae24b10396db9d04c50d7835f6608631d62b0dddadf6430467"
+    },
+    "dot_coins_StackedGemBig": {
+      "url": "/art/dot_coins_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 647,
+      "kind": "Sprite",
+      "width": 117,
+      "height": 119,
+      "sha256": "d9f601f3dc96d39f749f73998e99b78a1882c0b13fa015c78e17de351cad4fb1"
+    },
+    "dot_coins_StackedGemMedium": {
+      "url": "/art/dot_coins_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 662,
+      "kind": "Sprite",
+      "width": 122,
+      "height": 111,
+      "sha256": "8a7a1cfaa64b234175ba3d171e09b2f4be7da3452443ecfa2721950e73cf5f79"
+    },
+    "dot_coins_StackedGemSmall": {
+      "url": "/art/dot_coins_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 616,
+      "kind": "Sprite",
+      "width": 113,
+      "height": 115,
+      "sha256": "59d582e9e77d958e36dae074c6b85a0a2daa984f927c43fa387842faca18c299"
+    },
+    "dot_colorless": {
+      "url": "/art/dot_colorless.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 646,
+      "kind": "Sprite",
+      "width": 126,
+      "height": 116,
+      "sha256": "44b618b8f0b29e4f16460c6002af5652519f4b55a1892ca791933cbe48b1e739"
+    },
+    "dot_droppable": {
+      "url": "/art/dot_droppable.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 69,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 127,
+      "sha256": "fdf17d279cd2a693f383d91d25b7aa982edd133e444b3010190a4dc0d409ed87"
+    },
+    "dot_green": {
+      "url": "/art/dot_green.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 44,
+      "kind": "Sprite",
+      "width": 119,
+      "height": 120,
+      "sha256": "90c884f86e72d908f8ff3161c3b0710c6f4d2948e0724780eda6ccb4c523e377"
+    },
+    "dot_green_ClimberGem": {
+      "url": "/art/dot_green_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 642,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "0f5a7ed47ab72f84828c21227d087ae37fd0ea7a2b7fac492d84e47692ed384e"
+    },
+    "dot_green_StackedGemBig": {
+      "url": "/art/dot_green_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 671,
+      "kind": "Sprite",
+      "width": 116,
+      "height": 118,
+      "sha256": "9e051c3198f2407757ea49f5b0d345e9c0419e4fc2c293a91d642e6e901d10c9"
+    },
+    "dot_green_StackedGemMedium": {
+      "url": "/art/dot_green_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 606,
+      "kind": "Sprite",
+      "width": 121,
+      "height": 110,
+      "sha256": "e979f6c852468160a074ad8c7845be11f3e812328a5359e60660c639b2241ac3"
+    },
+    "dot_green_StackedGemSmall": {
+      "url": "/art/dot_green_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 663,
+      "kind": "Sprite",
+      "width": 111,
+      "height": 114,
+      "sha256": "6a31875bbfc46a086581b0afe00fd5e078c14d98468abc7d335d887f82fff5d0"
+    },
+    "dot_grey": {
+      "url": "/art/dot_grey.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 615,
+      "kind": "Sprite",
+      "width": 96,
+      "height": 96,
+      "sha256": "7682f7cd1c310b28939e5eed7d1ece6fb9cc4373de031b006b63a81b0b285ee4"
+    },
+    "dot_orange": {
+      "url": "/art/dot_orange.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 70,
+      "kind": "Sprite",
+      "width": 111,
+      "height": 113,
+      "sha256": "dcf49ed18e66eb862ac2b1b8e13a091f10810fbda4c0ce1227b6e3bbdfab45f1"
+    },
+    "dot_orange_ClimberGem": {
+      "url": "/art/dot_orange_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 625,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "1c87e19de6798771b958a2711e0f69c2b0103ee9d2899e488bb15c965b856f1f"
+    },
+    "dot_orange_StackedGemBig": {
+      "url": "/art/dot_orange_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 626,
+      "kind": "Sprite",
+      "width": 119,
+      "height": 124,
+      "sha256": "9362339bfab08c3029a5e291271715e641ed1d3745b7eb54f236dba0ba3117fe"
+    },
+    "dot_orange_StackedGemMedium": {
+      "url": "/art/dot_orange_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 643,
+      "kind": "Sprite",
+      "width": 125,
+      "height": 116,
+      "sha256": "236ae36bc0c7d012152b931c2a8c13322c381448cda02370a07f9c9a23f8dd43"
+    },
+    "dot_orange_StackedGemSmall": {
+      "url": "/art/dot_orange_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 668,
+      "kind": "Sprite",
+      "width": 117,
+      "height": 120,
+      "sha256": "c4d010e018bf5fca03424281ac4bc98a751c1e7a923e4e120b0f3e0bc7ed1926"
+    },
+    "dot_purple": {
+      "url": "/art/dot_purple.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 49,
+      "kind": "Sprite",
+      "width": 111,
+      "height": 113,
+      "sha256": "6c59ebac5ffda93d969f24f8556dbcbba175a1490aa955472dae0c605756a4f3"
+    },
+    "dot_purple_ClimberGem": {
+      "url": "/art/dot_purple_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 614,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "29610089177f669912a2093c00903ef34ae23d671d48f0a0d59ae732a73bcd8b"
+    },
+    "dot_purple_StackedGemBig": {
+      "url": "/art/dot_purple_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 601,
+      "kind": "Sprite",
+      "width": 119,
+      "height": 124,
+      "sha256": "cb9e3818bdc3382567af6b092f8c50a1eadf078b9f2c08baea6eeb5307884d8c"
+    },
+    "dot_purple_StackedGemMedium": {
+      "url": "/art/dot_purple_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 59,
+      "kind": "Sprite",
+      "width": 125,
+      "height": 116,
+      "sha256": "6224e85f5f558522e0f960ab59572964f5963f2da05564c1f93a65bda852f1b9"
+    },
+    "dot_purple_StackedGemSmall": {
+      "url": "/art/dot_purple_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 637,
+      "kind": "Sprite",
+      "width": 117,
+      "height": 120,
+      "sha256": "f37ca8a6e5e0f655ef0c2a457a558083f01ac20d5c9d24d033a12e2f051ed1cd"
+    },
+    "dot_rainbow": {
+      "url": "/art/dot_rainbow.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 124,
+      "kind": "Sprite",
+      "width": 119,
+      "height": 117,
+      "sha256": "e85fa9e882c2e33af66abdaf06ab4bf8da7304fc76a687241523fb9c6085086e"
+    },
+    "dot_random": {
+      "url": "/art/dot_random.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 656,
+      "kind": "Sprite",
+      "width": 96,
+      "height": 96,
+      "sha256": "e7b41103d133b8b159a5fc68262c50bc9eb206897009154e08a9e34d790b76e2"
+    },
+    "dot_random_ClimberGem": {
+      "url": "/art/dot_random_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 595,
+      "kind": "Sprite",
+      "width": 126,
+      "height": 134,
+      "sha256": "3fc421f603e46b079a206cd444275cea3457d2e20f1b9e2652669c1ed8e21ead"
+    },
+    "dot_random_StackedGemBig": {
+      "url": "/art/dot_random_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 658,
+      "kind": "Sprite",
+      "width": 116,
+      "height": 100,
+      "sha256": "4febc4b4233ae6248167432b401b20e0d3b7f69fe0f2199690ed2e341a129faa"
+    },
+    "dot_random_StackedGemMedium": {
+      "url": "/art/dot_random_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 660,
+      "kind": "Sprite",
+      "width": 116,
+      "height": 100,
+      "sha256": "08e7eb2ee9cdb9f811acb75641dba047545b03c46ff619cefb00c37a479924b8"
+    },
+    "dot_random_StackedGemSmall": {
+      "url": "/art/dot_random_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 672,
+      "kind": "Sprite",
+      "width": 116,
+      "height": 100,
+      "sha256": "a1ec3f594a60b7d474a865826e2e2cb5f9406f8f69912c84019e1a414ae074b9"
+    },
+    "dot_red": {
+      "url": "/art/dot_red.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 67,
+      "kind": "Sprite",
+      "width": 107,
+      "height": 108,
+      "sha256": "9b3934f78751ab0e9ad4e65ebee2abd11126e8d3caff85e0a94c38f4adfdfcc0"
+    },
+    "dot_red_ClimberGem": {
+      "url": "/art/dot_red_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 627,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "65deb69732a8a9fc7529bf3db23140b5522b4f8e0714664fb5bd8caea9b05bfd"
+    },
+    "dot_red_StackedGemBig": {
+      "url": "/art/dot_red_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 681,
+      "kind": "Sprite",
+      "width": 119,
+      "height": 124,
+      "sha256": "a9210b59098a799a8e657fca28a1d104473ce1c535980c5e4a9bc1aca709a913"
+    },
+    "dot_red_StackedGemMedium": {
+      "url": "/art/dot_red_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 644,
+      "kind": "Sprite",
+      "width": 125,
+      "height": 116,
+      "sha256": "80c9bafc2cc7833e8cdcfa660f0c5f97738631e3ed256e77ecb003f42e50397a"
+    },
+    "dot_red_StackedGemSmall": {
+      "url": "/art/dot_red_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 130,
+      "kind": "Sprite",
+      "width": 117,
+      "height": 120,
+      "sha256": "edc62ad1c52923a470cade778a0f3cc9a17ae82c563d9fa98c63fab476b901cc"
+    },
+    "dot_treasure": {
+      "url": "/art/dot_treasure.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 53,
+      "kind": "Sprite",
+      "width": 118,
+      "height": 128,
+      "sha256": "c328147d9d520e6d46e20ecb9e04c9744dc419d3d1cb03f07248ea6290f00089"
+    },
+    "dot_yellow": {
+      "url": "/art/dot_yellow.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 68,
+      "kind": "Sprite",
+      "width": 119,
+      "height": 121,
+      "sha256": "9b350fb8ac09d228a5b7f12dcfa43581d2dffd9c39a62932200a8da0aa2e73ee"
+    },
+    "dot_yellow_ClimberGem": {
+      "url": "/art/dot_yellow_ClimberGem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 682,
+      "kind": "Sprite",
+      "width": 130,
+      "height": 140,
+      "sha256": "9cfce7616be40ed4cb5a9aa63d52be219147cd5d1bf25001ce390e89566b3600"
+    },
+    "dot_yellow_StackedGemBig": {
+      "url": "/art/dot_yellow_StackedGemBig.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 654,
+      "kind": "Sprite",
+      "width": 118,
+      "height": 120,
+      "sha256": "81b6b125ebb1cefa03a0b2f333f012d43c4fb68241fb3deae2ae0c0884bbf084"
+    },
+    "dot_yellow_StackedGemMedium": {
+      "url": "/art/dot_yellow_StackedGemMedium.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 641,
+      "kind": "Sprite",
+      "width": 123,
+      "height": 112,
+      "sha256": "ad458c74ec4126623da0838350af96b6d45bd0c2862410647474f059bf969d24"
+    },
+    "dot_yellow_StackedGemSmall": {
+      "url": "/art/dot_yellow_StackedGemSmall.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 634,
+      "kind": "Sprite",
+      "width": 114,
+      "height": 116,
+      "sha256": "633f8f9e0a269f9630097d5050d50f6a0bfd89d12285a416cfd2ef182521dd71"
+    },
+    "drop_item_exit": {
+      "url": "/art/drop_item_exit.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 665,
+      "kind": "Sprite",
+      "width": 108,
+      "height": 73,
+      "sha256": "1da554ca6c64f33e7568b8d0da1ea7ab3db20e73a361efd884cadcfcfd07de77"
+    },
+    "growing_window": {
+      "url": "/art/growing_window.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 694,
+      "kind": "Sprite",
+      "width": 112,
+      "height": 126,
+      "sha256": "a49c9293b68d9bca6a49d9997db72823ee492cb726afefc7054022cc92600406"
+    },
+    "hiddenItem": {
+      "url": "/art/hiddenItem.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 608,
+      "kind": "Sprite",
+      "width": 233,
+      "height": 252,
+      "sha256": "78f5aa4996a5793979ad25dba972ce5b606b2daf245b91da11211dd50869b666"
+    },
+    "iceHp1": {
+      "url": "/art/iceHp1.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 636,
+      "kind": "Sprite",
+      "width": 158,
+      "height": 102,
+      "sha256": "f401962c07f3ea1647343af7b6423e1f3d1c89643d325136f5d980a89f2eb873"
+    },
+    "iceHp2": {
+      "url": "/art/iceHp2.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 698,
+      "kind": "Sprite",
+      "width": 158,
+      "height": 158,
+      "sha256": "bb6bd82fd48eff536fcc2d3d38e00fd372630bc0c0967cd2677a9c30dc915bd8"
+    },
+    "iceHp3": {
+      "url": "/art/iceHp3.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 675,
+      "kind": "Sprite",
+      "width": 158,
+      "height": 158,
+      "sha256": "f51fc36eecf649a0cf3070fb745b905262e6cd50eb81db0fe46d3e1b51e46ef1"
+    },
+    "ice_background": {
+      "url": "/art/ice_background.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 633,
+      "kind": "Sprite",
+      "width": 158,
+      "height": 158,
+      "sha256": "8d81f17a8a7cb736d10497aaf4b7242adf77a9a6bf526a01e0c0a28292116cba"
+    },
+    "portal_entrance": {
+      "url": "/art/portal_entrance.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 597,
+      "kind": "Sprite",
+      "width": 232,
+      "height": 145,
+      "sha256": "d9039fc6647b8bb563aa6d47a79fc39fc3edb2ef2d8cd21964351ab204a76452"
+    },
+    "portal_exit": {
+      "url": "/art/portal_exit.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 669,
+      "kind": "Sprite",
+      "width": 216,
+      "height": 138,
+      "sha256": "6b8ffd5172a4c12747e57aa38cbf705a5992855bf67999e58c0e68fa17451f98"
+    },
+    "resistantBlocker_tutorial_1hp": {
+      "url": "/art/resistantBlocker_tutorial_1hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 631,
+      "kind": "Sprite",
+      "width": 120,
+      "height": 123,
+      "sha256": "de34aa714ba5876cd0df58f04f5ccfaaabb23d49a28c5655b6205d2c9402686f"
+    },
+    "resistantBlocker_tutorial_2hp": {
+      "url": "/art/resistantBlocker_tutorial_2hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 664,
+      "kind": "Sprite",
+      "width": 121,
+      "height": 120,
+      "sha256": "6b9fca2e3bcc09f4845bee5c6b266b8f1714702c79c0f52f88e78b97a7d03012"
+    },
+    "resistantBlocker_tutorial_3hp": {
+      "url": "/art/resistantBlocker_tutorial_3hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 630,
+      "kind": "Sprite",
+      "width": 121,
+      "height": 128,
+      "sha256": "dc7bb4704ec89527919d186d0d01c62915c004ae1c8ff48663ba8506f489b900"
+    },
+    "stone_1hp": {
+      "url": "/art/stone_1hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 699,
+      "kind": "Sprite",
+      "width": 156,
+      "height": 156,
+      "sha256": "5f0d1bc385708ad4d63d9df1703039d0fec5846f6005d253744b020a70637306"
+    },
+    "stone_2hp": {
+      "url": "/art/stone_2hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 639,
+      "kind": "Sprite",
+      "width": 156,
+      "height": 156,
+      "sha256": "9214c0a592936e551efd11bd2ca95942c406384b99f2673642a9615680661364"
+    },
+    "stone_3hp": {
+      "url": "/art/stone_3hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 624,
+      "kind": "Sprite",
+      "width": 156,
+      "height": 156,
+      "sha256": "8177b380e835c92dec3e441832ea8b82d9995de592fa095601cf215090d8bc2f"
+    },
+    "stone_4hp": {
+      "url": "/art/stone_4hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 629,
+      "kind": "Sprite",
+      "width": 156,
+      "height": 156,
+      "sha256": "ba711ab4fe4f1d81c912fd92838f02709039520bbebfd9cdc8d4a3f5e0a1640f"
+    },
+    "stone_5hp": {
+      "url": "/art/stone_5hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 622,
+      "kind": "Sprite",
+      "width": 154,
+      "height": 157,
+      "sha256": "c213412a4883b085fc08b87933a36294ac6cb1faf4f39b2b27d70640502f0cb5"
+    },
+    "tile_1hp": {
+      "url": "/art/tile_1hp.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 693,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "5009e03e0af242cddf75001925f27c4560ce54c91edd03d4763db2f1fba7fa0d"
+    },
+    "tile_2hp": {
+      "url": "/art/tile_2hp.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 60,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "2ebac244b0945e6842b89e9a0ecb3c0e75b9e3e176bb42f25c6800faaeec58b4"
+    },
+    "ui_icon_climber": {
+      "url": "/art/ui_icon_climber.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 50,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 122,
+      "sha256": "b33b7c9038dc9261711cd4206a3433dac1fa5776c72d3a77a722e8de61f23c39"
+    },
+    "ui_icon_objective_chameleon": {
+      "url": "/art/ui_icon_objective_chameleon.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 170,
+      "kind": "Sprite",
+      "width": 228,
+      "height": 252,
+      "sha256": "cdde1afec4f73ea53199bac87f8d893ed03a9ddce567f7f37ac38a928b50c38d"
+    },
+    "ui_icon_objective_climber": {
+      "url": "/art/ui_icon_objective_climber.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 140,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "969e374a5dc5c07fb09f70d7cc4992d5e889f0175d025bd0b380629cd0305141"
+    },
+    "ui_icon_objective_colorwheel": {
+      "url": "/art/ui_icon_objective_colorwheel.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 148,
+      "kind": "Sprite",
+      "width": 255,
+      "height": 246,
+      "sha256": "7fbbd4f0b1e4607f813340f7cd2ed31a2b853cdfe73aa2a82a2695ddda84b543"
+    },
+    "ui_icon_objective_droppable": {
+      "url": "/art/ui_icon_objective_droppable.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 149,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "e1e03b62b2a5afa2b76921e54513df9bd6685594b5376188d4eff47a3f971628"
+    },
+    "ui_icon_objective_hiddenitem_monkey": {
+      "url": "/art/ui_icon_objective_hiddenitem_monkey.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 117,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "47fa30897ec0f48efae3939ab5c6e9b0cd9361bf9381a93bc02acb33612deec0"
+    },
+    "ui_icon_objective_kittycracker": {
+      "url": "/art/ui_icon_objective_kittycracker.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 122,
+      "kind": "Sprite",
+      "width": 218,
+      "height": 217,
+      "sha256": "072cffa261076df89c82e085a950d945f7ae9991ead936bad18e78748e44a13d"
+    },
+    "ui_icon_objective_mimic_flower": {
+      "url": "/art/ui_icon_objective_mimic_flower.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 196,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 249,
+      "sha256": "d1a949c14b7d4bb28ba829359a54a25a75bc66ecfc964f4f2e9cde682d8f6801"
+    },
+    "ui_icon_objective_platypus": {
+      "url": "/art/ui_icon_objective_platypus.png",
+      "file": "BuildPlayer-M3_LevelSelectionUi.sharedAssets",
+      "path_id": 150,
+      "kind": "Sprite",
+      "width": 227,
+      "height": 241,
+      "sha256": "a0302d2e7f1fa195292c264de386411cd4b552815e25f38b65b32223717a0ca9"
+    },
+    "ui_icon_objective_recipe": {
+      "url": "/art/ui_icon_objective_recipe.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 135,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "cebfa1b62ac3d53ee0d819f57f6bc30bed5472fe4469d7ef7e0518163bfc5d16"
+    },
+    "ui_icon_objective_resistant_blocker": {
+      "url": "/art/ui_icon_objective_resistant_blocker.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 126,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "d15b36a15ca67a03ef79ee86ed752d28c074623b821936e805026be44cf8414d"
+    },
+    "ui_icon_objective_treasure": {
+      "url": "/art/ui_icon_objective_treasure.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 161,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 256,
+      "sha256": "3c28ce529de6c428474d408b1d53fb91232377b76b4571ee680539ac2003371a"
+    },
+    "ui_icon_objective_water": {
+      "url": "/art/ui_icon_objective_water.png",
+      "file": "BuildPlayer-M3_PirateBreakoutStart.sharedAssets",
+      "path_id": 118,
+      "kind": "Sprite",
+      "width": 256,
+      "height": 268,
+      "sha256": "dd33da8e0a516403b0967d38ed3131266d7b3de9f828d26d9547c8dae65142ed"
+    },
+    "water_field": {
+      "url": "/art/water_field.png",
+      "file": "BuildPlayer-M3_LevelOfDayFailed.sharedAssets",
+      "path_id": 57,
+      "kind": "Sprite",
+      "width": 128,
+      "height": 128,
+      "sha256": "cc808913a706c0f14e128e6e9b67c6a664d8317f525d61eede3ad69537744e40"
+    },
+    "window": {
+      "url": "/art/window.png",
+      "file": "BuildPlayer-M3_Level.sharedAssets",
+      "path_id": 632,
+      "kind": "Sprite",
+      "width": 134,
+      "height": 156,
+      "sha256": "9f130e310b2aa2591668dc80841fc38124d4e41accfb1afd6614ad03b820d690"
+    }
+  }
+}

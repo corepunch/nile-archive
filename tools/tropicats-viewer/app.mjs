@@ -1,3 +1,4 @@
+import {cellArt, boardObjects} from './art.mjs';
 import {GOALS, LAYERS, valueAt, occupied, distinct, changedAt,
   sourceIndex, describeValue, goalLines, filterLevels} from './model.mjs';
 
@@ -8,7 +9,7 @@ const colors = ['#52646b','#ce5655','#3e9376','#497eb8','#d8b84c','#8c68ae','#d4
   '#639d97','#54716f','#b89946','#536172','#ab7b9a','#449a9a','#c09749','#927453','#99a9ac'];
 const shortColors = ['','R','G','B','Y','P','O','T','?','$','CB','RB','CL','TR','D','–'];
 const special = ['','LH','LV','B','AB','SB','CG','S1','S2','S3','CN','CH','CR','DR','DL','UL','UR','D?'];
-let index, filtered = [], current, variants, page = 0, cell = null, request = 0;
+let artwork = {}, index, filtered = [], current, variants, page = 0, cell = null, request = 0;
 const PAGE_SIZE = 50;
 
 function fillSelect(id, entries) {
@@ -61,12 +62,26 @@ async function loadLevel() {
     $('status').hidden = true; $('content').hidden = false;
   } catch (error) { if (token === request) $('status').textContent = error.message; }
 }
+function spriteMode() { return $('sprites').checked && $('layer').value === 'combined'; }
+function spriteImage(name, attributes = '') {
+  return artwork[name] ? `<img src="${escape(artwork[name].url)}" alt="" draggable="false" ${attributes}>` : '';
+}
+function objectMarkup(level) {
+  return boardObjects(level, $('flip').checked).map(o => spriteImage(o.name,
+    `class="board-object" style="left:${o.left / 9 * 100}%;top:${o.top / 9 * 100}%;width:${o.width / 9 * 100}%;height:${o.height / 9 * 100}%;z-index:${o.z}"`)).join('');
+}
 function tileMarkup(level, tier, displayIndex) {
   const i = sourceIndex(displayIndex, $('flip').checked), layer = $('layer').value;
   const v = key => valueAt(level, key, i);
   const diff = $('differences').checked && tier !== 'a' && changedAt(variants.a, level, i, layer);
-  let label = '', badges = '', style = '', classes = '';
-  if (layer === 'combined') {
+  let label = '', badges = '', style = '', classes = '', art = '';
+  if (spriteMode()) {
+    classes += ' sprite-cell';
+    const result = cellArt(level, i, {preview:$('preview').checked, seed:current.number});
+    const missing = result.images.filter(s => !artwork[s.name]);
+    art = result.images.map(s => spriteImage(s.name, `class="sprite ${s.role}" style="z-index:${s.z}"`)).join('');
+    badges = [...result.badges, ...missing.map(() => '?')].map(b => `<small class="art-badge">${escape(b)}</small>`).join('');
+  } else if (layer === 'combined') {
     label = shortColors[v('gemColors')] ?? `G${v('gemColors')}`;
     style = `--piece:${colors[v('gemColors')] ?? '#52646b'}`;
     if (v('stones')) { label = `S${v('stones')}`; classes += ' stone'; }
@@ -88,14 +103,22 @@ function tileMarkup(level, tier, displayIndex) {
   }
   if (!v('fields')) classes += ' void';
   const detail = Object.keys(level.layout).filter(k => v(k)).map(k => `${k}: ${describeValue(k, v(k))}`).join('; ');
-  return `<button class="cell${classes}${diff ? ' changed' : ''}${cell === i ? ' selected' : ''}" style="${style}" data-cell="${i}" data-display="${displayIndex}" data-tier="${tier}" tabindex="${cell === i || (cell === null && displayIndex === 0) ? '0' : '-1'}" aria-label="${escape(`${tier.toUpperCase()}, row ${Math.floor(i / 9) + 1}, column ${i % 9 + 1}. ${detail || 'Empty'}`)}" aria-pressed="${cell === i}" title="${escape(detail || 'Empty cell')}"><span>${escape(label)}</span>${badges}</button>`;
+  return `<button class="cell${classes}${diff ? ' changed' : ''}${cell === i ? ' selected' : ''}" style="${style}" data-cell="${i}" data-display="${displayIndex}" data-tier="${tier}" tabindex="${cell === i || (cell === null && displayIndex === 0) ? '0' : '-1'}" aria-label="${escape(`${tier.toUpperCase()}, row ${Math.floor(i / 9) + 1}, column ${i % 9 + 1}. ${detail || 'Empty'}`)}" aria-pressed="${cell === i}" title="${escape(detail || 'Empty cell')}">${art}${label ? `<span>${escape(label)}</span>` : ''}${badges}</button>`;
 }
 function render() {
   if (!variants) return;
+  const sprites = spriteMode();
+  $('preview').disabled = !sprites;
+  $('view-note').textContent = sprites
+    ? `Original game artwork, composed as a static board. ${$('preview').checked ? 'Random slots show illustrative fruit from the level palette, not the game’s starting RNG.' : 'Striped pieces are the game’s authored random-color markers.'} Click any cell for exact values. Rows follow source order.`
+    : 'Schematic of the extracted starting board. Select a cell to inspect all layers across three tiers. Rows follow serialized order.';
+  $('legend').innerHTML = sprites
+    ? '<strong>Source sprites</strong><span>Animated characters use original static illustrations</span><span>Badges retain shader, charge, color-crate and portal data</span><span class="amber">Amber outline = changed source cell</span>'
+    : '<strong>Schematic</strong><span>Letters = color · ? = random · S = blocker · C = chain · H = hidden object · P = portal</span><span class="amber">Amber outline = changed cell</span>';
   $('boards').innerHTML = tiers.map(([tier, title]) => {
     const level = variants[tier];
     const delta = level.data.moves - variants.a.data.moves;
-    return `<article class="board-card"><div class="card-heading"><div><span class="tier-label">${tier.toUpperCase()} / ${title}</span><h2>${level.data.moves}<small> moves</small></h2></div>${tier === 'a' ? '<span class="pill">Baseline</span>' : `<span class="pill">${delta > 0 ? '+' : ''}${delta} moves</span>`}</div><div class="board" role="group" aria-label="${title} board">${Array.from({length:81}, (_, i) => tileMarkup(level, tier, i)).join('')}</div><div class="objectives"><strong>${escape(GOALS[current.objective] ?? current.objective)}</strong>${goalLines(level, current.objective).map(text => `<p>${escape(text)}</p>`).join('')}</div></article>`;
+    return `<article class="board-card"><div class="card-heading"><div><span class="tier-label">${tier.toUpperCase()} / ${title}</span><h2>${level.data.moves}<small> moves</small></h2></div>${tier === 'a' ? '<span class="pill">Baseline</span>' : `<span class="pill">${delta > 0 ? '+' : ''}${delta} moves</span>`}</div><div class="board${sprites ? ' source-board' : ''}" role="group" aria-label="${title} board">${sprites ? objectMarkup(level) : ''}${Array.from({length:81}, (_, i) => tileMarkup(level, tier, i)).join('')}</div><div class="objectives">${sprites ? spriteImage(`ui_icon_objective_${current.objective === 'hiddenitem' ? 'hiddenitem_monkey' : current.objective}`, 'class="goal-icon"') : ''}<strong>${escape(GOALS[current.objective] ?? current.objective)}</strong>${goalLines(level, current.objective).map(text => `<p>${escape(text)}</p>`).join('')}</div></article>`;
   }).join('');
   const rows = [['Move budget', l => l.data.moves], ['Nonzero field cells', l => occupied(l, 'fields')],
     ['Stone / blocker cells', l => occupied(l, 'stones')], ['Chain cells', l => occupied(l, 'chains')],
@@ -114,8 +137,9 @@ function renderInspector() {
   $('cell-title').textContent = cell === null ? 'Cell inspector' : `Row ${Math.floor(cell / 9) + 1} · column ${cell % 9 + 1}`;
   $('cell-hint').textContent = cell === null ? 'Select any board cell' : `Serialized index ${cell} · same coordinate across tiers`;
   if (cell === null) { $('cell-detail').innerHTML = '<p class="muted">Click a cell to compare its piece, obstacles, routes and hidden-object values. Use arrow keys to move between cells.</p>'; return; }
+  const artNotes = [...new Set(tiers.flatMap(([tier]) => cellArt(variants[tier], cell).notes))];
   const layers = new Set(tiers.flatMap(([tier]) => Object.keys(variants[tier].layout)));
-  $('cell-detail').innerHTML = `<div class="table-scroll"><table><thead><tr><th>Layer</th><th>Easy</th><th>Medium</th><th>Hard</th></tr></thead><tbody>${[...layers].map(layer => `<tr><th>${escape(LAYERS[layer] ?? layer)}</th>${tiers.map(([tier]) => `<td class="${changedAt(variants.a, variants[tier], cell, layer) ? 'different' : ''}">${escape(describeValue(layer, valueAt(variants[tier], layer, cell)))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  $('cell-detail').innerHTML = `<div class="table-scroll"><table><thead><tr><th>Layer</th><th>Easy</th><th>Medium</th><th>Hard</th></tr></thead><tbody>${[...layers].map(layer => `<tr><th>${escape(LAYERS[layer] ?? layer)}</th>${tiers.map(([tier]) => `<td class="${changedAt(variants.a, variants[tier], cell, layer) ? 'different' : ''}">${escape(describeValue(layer, valueAt(variants[tier], layer, cell)))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${artNotes.length ? `<p class="muted">${artNotes.map(escape).join(' ')}</p>` : ''}`;
 }
 function selectCell(button) {
   cell = Number(button.dataset.cell);
@@ -133,7 +157,7 @@ $('level-list').onclick = e => { const button = e.target.closest('[data-number]'
 for (const [id, offset] of [['previous',-1],['next',1]]) $(id).onclick = () => {
   const at = filtered.findIndex(l => l.number === current?.number); if (filtered[at + offset]) choose(filtered[at + offset].number);
 };
-for (const id of ['layer','differences','flip']) $(id).onchange = render;
+for (const id of ['layer','differences','flip','sprites','preview']) $(id).onchange = render;
 $('boards').onclick = e => { const button = e.target.closest('[data-cell]'); if (button) selectCell(button); };
 $('boards').onkeydown = e => {
   const button = e.target.closest('[data-cell]');
@@ -145,7 +169,11 @@ $('boards').onkeydown = e => {
 };
 window.addEventListener('hashchange', () => { if (index) loadLevel(); });
 try {
-  index = await read('/api/index');
+  [index, artwork] = await Promise.all([read('/api/index'), read('/api/art')]);
+  if (!artwork.dot_red || !artwork.board_recipe) {
+    $('sprites').checked = false; $('sprites').disabled = true;
+    $('sprites').parentElement.title = 'Run extract_art.py to enable original sprites. See the viewer README.';
+  }
   $('total').textContent = index.levels.length.toLocaleString();
   fillSelect('chapter', index.chapters.map(c => [c.chapter, `${c.chapter}. ${c.title}`]));
   fillSelect('family', Object.entries(GOALS).map(([key,label]) => [key,label]));

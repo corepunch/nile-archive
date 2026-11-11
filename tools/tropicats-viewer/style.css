@@ -634,3 +634,79 @@ footer {
     font-size:8px;
   }
 }
+
+/* Sprite positions share the board grid. Layer order follows the Unity prefabs. */
+.board.source-board {
+  position:relative;
+  isolation:isolate;
+  grid-template-rows:repeat(9,minmax(0,1fr));
+  gap:0;
+  border:0;
+  border-radius:5px;
+  background:#bd904c url('/art/board_recipe.png') center/100% 100%;
+  overflow:hidden;
+}
+.source-board .sprite-cell {
+  background:transparent;
+  border:0;
+  border-radius:0;
+  overflow:visible;
+  opacity:1;
+  filter:none;
+}
+.source-board .sprite-cell.void {
+  background:#24474c;
+}
+.source-board .sprite-cell:hover {
+  background:#ffffff25;
+  filter:none;
+}
+.sprite,.board-object {
+  position:absolute;
+  pointer-events:none;
+  object-fit:contain;
+  user-select:none;
+}
+.sprite {
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.sprite.fruit {
+  inset:3%;
+  width:94%;
+  height:94%;
+}
+.source-board .cell::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:30;
+  pointer-events:none;
+}
+.source-board .cell.changed::after {
+  box-shadow:inset 0 0 0 2px #ffc664;
+}
+.source-board .cell.selected::after,.source-board .cell:focus-visible::after {
+  box-shadow:inset 0 0 0 3px white,inset 0 0 0 4px #1c6868;
+}
+.source-board .cell:focus-visible {
+  z-index:auto;
+}
+.source-board .cell .art-badge {
+  z-index:20;
+  background:#173b40e6;
+  padding:2px;
+  border-radius:2px;
+  font-size:clamp(7px,.7vw,10px);
+  line-height:1;
+  align-self:flex-end;
+  margin:1px;
+}
+.goal-icon {
+  width:36px;
+  height:36px;
+  object-fit:contain;
+  float:right;
+  margin:0 0 8px 10px;
+}

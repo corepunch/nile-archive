@@ -7,6 +7,8 @@ analysis, not a playthrough or a recovery of the original C# source. Spoilers fo
 
 Browse the extracted puzzles with the [local level atlas](../tools/tropicats-viewer/README.md):
 run `python3 tools/tropicats-viewer/serve.py` and open <http://127.0.0.1:8765>.
+The viewer also supports [original sprites extracted from the installed app](../tools/tropicats-viewer/ART.md),
+with an explicit random-fruit preview and exact data inspection.
 It compares all three tiers, displays objectives and board layers, and provides
 cell-level inspection and changes relative to easy.
 

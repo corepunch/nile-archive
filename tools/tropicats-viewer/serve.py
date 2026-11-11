@@ -48,6 +48,13 @@ def handler_for(root, index):
             try:
                 if path == "/api/index":
                     return self.send_json(index)
+                if path == "/api/art":
+                    return self.send_json(art)
+                artwork = re.fullmatch(r"/art/([A-Za-z0-9_-]+)\.png", path)
+                if artwork:
+                    if artwork[1] not in art:
+                        return self.send_error(404)
+                    return self.send_bytes((root / "art/sprites" / f"{artwork[1]}.png").read_bytes(), "image/png")
                 match = re.fullmatch(r"/api/level/([1-9][0-9]{0,3})", path)
                 if match:
                     number = int(match[1])
@@ -58,6 +65,7 @@ def handler_for(root, index):
                 files = {"/": ("index.html", "text/html"),
                          "/app.mjs": ("app.mjs", "text/javascript"),
                          "/model.mjs": ("model.mjs", "text/javascript"),
+                         "/art.mjs": ("art.mjs", "text/javascript"),
                          "/style.css": ("style.css", "text/css")}
                 if path not in files:
                     return self.send_error(404)
@@ -71,9 +79,9 @@ def handler_for(root, index):
 
         def send_bytes(self, body, mime, status=200):
             self.send_response(status)
-            self.send_header("Content-Type", mime + "; charset=utf-8")
+            self.send_header("Content-Type", mime if mime.startswith("image/") else mime + "; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))
-            self.send_header("Cache-Control", "no-store")
+            self.send_header("Cache-Control", "private, max-age=3600" if mime.startswith("image/") else "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.end_headers()
             self.wfile.write(body)
@@ -81,6 +89,8 @@ def handler_for(root, index):
         def log_message(self, *args):
             pass
 
+    manifest = root / "art/sprites.json"
+    art = read_json(manifest) if manifest.exists() else {}
     valid_numbers = {row["number"] for row in index["levels"]}
     return Handler
 
