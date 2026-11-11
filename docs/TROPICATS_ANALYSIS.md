@@ -5,6 +5,11 @@ Inspected 2026-11-11: the locally supplied `reference/Tropicats.app`, version
 named in that app's embedded manifest. This is a static resource and metadata
 analysis, not a playthrough or a recovery of the original C# source. Spoilers follow.
 
+Browse the extracted puzzles with the [local level atlas](../tools/tropicats-viewer/README.md):
+run `python3 tools/tropicats-viewer/serve.py` and open <http://127.0.0.1:8765>.
+It compares all three tiers, displays objectives and board layers, and provides
+cell-level inspection and changes relative to easy.
+
 ## What is actually there
 
 | Measure | Verified result |

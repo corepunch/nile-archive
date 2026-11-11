@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tropicats · Level atlas</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><div class="brand">T<span> / </span></div><div><strong>TROPICATS</strong><span class="subtitle">Level atlas</span></div><span class="local">LOCAL REFERENCE</span></header>
+<div class="shell">
+<aside aria-label="Level browser">
+  <div class="aside-title">Explore the campaign <span id="total"></span></div>
+  <label for="search">Find a level or quest</label><input id="search" type="search" placeholder="Number, quest, objective…">
+  <label for="chapter">Chapter</label><select id="chapter"><option value="">All chapters</option></select>
+  <label for="family">Objective</label><select id="family"><option value="">All objectives</option></select>
+  <div class="list-heading"><span id="result-count" aria-live="polite"></span><button id="reset" class="text-button">Reset</button></div>
+  <nav id="level-list" aria-label="Levels"></nav>
+  <div class="pagination"><button id="page-prev">Previous</button><span id="page-info"></span><button id="page-next">Next</button></div>
+</aside>
+<main>
+  <div id="status" role="status">Loading extracted campaign…</div>
+  <section id="content" hidden>
+    <div class="heading"><div><div id="chapter-title" class="eyebrow"></div><h1>Level <span id="level-number"></span></h1><p id="quest-line"></p></div><div class="stepper"><button id="previous" aria-label="Previous matching level">←</button><button id="next" aria-label="Next matching level">→</button></div></div>
+    <div class="toolbar"><div><label for="layer">Board view</label><select id="layer"><option value="combined">Combined board</option></select></div><label class="check"><input type="checkbox" id="differences"> Highlight changes from easy</label><label class="check"><input type="checkbox" id="flip"> Flip rows</label></div>
+    <p class="view-note">Schematic of the extracted starting board. Select a cell to inspect all layers across three tiers. Rows follow serialized order.</p>
+    <div id="boards" class="boards"></div>
+    <div class="legend"><strong>Combined view</strong><span>Letters = piece color</span><span>? = random piece</span><span>S = stone/blocker ID</span><span>C = chain value</span><span>H = hidden object ID</span><span>F = field-mask value</span><span class="amber">Amber outline = changed cell</span></div>
+    <section class="comparison panel"><div class="section-heading"><h2>What changes?</h2><span>Counts describe occupied cells, not hit points.</span></div><div class="table-scroll"><table id="comparison-table"></table></div></section>
+    <section class="panel inspector"><div class="section-heading"><h2 id="cell-title">Cell inspector</h2><span id="cell-hint">Select any board cell</span></div><div id="cell-detail"></div></section>
+    <details class="panel"><summary>Piece palette, spawning & raw definitions</summary><div id="raw" class="raw-grid"></div></details>
+    <footer>App 2.5.11 · 2,730 campaign levels · 3 authored tiers per level. This viewer displays source data; it does not simulate gameplay. Layout-derived goal totals are only shown where directly countable.</footer>
+  </section>
+</main></div>
+<script type="module" src="/app.mjs"></script>
+</body></html>
