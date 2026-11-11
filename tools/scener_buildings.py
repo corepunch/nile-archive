@@ -6,18 +6,19 @@ apps/scener) through this module:
     scenes = write_scenes(game, workdir, ppt, shadow)   # sprites.blks, shadows.blks, frames
     scener --render sprites.blks --transparent ...       # one orthographic camera per building
 
-Nothing is translated by hand. The game's builders run unchanged against the real building kit
-(tools/building_kit.py, or Christmas Market's own) with stand-in bpy and mathutils modules, and the
-meshes the kit collects, the ones assemble() would hand to Blender, are written out as Scener
-<mesh> elements with their vertex colours. So a building looks the same in both renderers, and
-editing build_scene.py changes both.
+Nothing is translated by hand. The game's builders run unchanged against a subclass of the real
+building kit (tools/scener_kit.py, over tools/building_kit.py or Christmas Market's own), with stand-in
+bpy and mathutils modules, and every kit call is written as a Scener primitive with its modifiers:
+soft-boxes, lathes, tubes, surfaces, shapes extruded and tapered, in groups for the kit's frames. A
+piece has one colour; a Gradient is its gizmo. So a building reads as its source does, looks the same
+in both renderers, and editing build_scene.py changes both.
 
 What Blender adds on top, and how it comes across:
   - a material: roughness becomes shininess (Scener's shader takes roughness = exp(-shininess / 18)),
     Specular IOR Level and metallic go across as Scener's specular and metallic, emission becomes
     an unlit piece. Bump, mottle, subsurface, coat and glass transparency have no counterpart.
-  - the bevel modifier (angle limit 40 degrees, harden normals): edges sharper than 40 degrees stay
-    sharp, gentler ones are smoothed. Scener has no general mesh bevel, so the rounded rims are missing.
+  - the bevel modifier: the material's bevel width rounds every soft-box and every extruded shape
+    (a fillet on its corners, a bevel on its rims).
   - Cycles' global illumination: Scener lights with the sun, the fill, the sky as an ambient term
     and the building's own lamps.
 
@@ -27,6 +28,7 @@ camera's frame or shadow reaches a neighbour, and each camera is named after its
 """
 import importlib.util
 import json
+import shutil
 import math
 import sys
 import types
@@ -39,7 +41,6 @@ import city_camera
 TILE = 160.          # cm per tile, as Scener's building kit
 SPACING = 48         # tiles between buildings along the camera's right vector
 CAMERA_BACK = 120.   # tiles from a building to its camera, as Blender's frame()
-SMOOTH_ANGLE = 40.   # the bevel modifier's angle limit: sharper edges stay sharp
 LIGHT_SCALE = .35    # Blender point-light watts -> Scener intensity (Scener's building kit)
 GI_GAIN = 1.55       # Cycles' bounced light: Blender's renders are this much brighter (linear) than direct + ambient
 
@@ -175,40 +176,35 @@ def load(name, path, globs=None, stop=None):
 
 # ---------------------------------------------------------------- capture
 
+def find_writer():
+    """Scener's writer kit (orion-ui apps/scener/tools/building_kit.py) and its utilities.xml."""
+    import os
+    roots = [os.environ.get('ORION_UI'), str(ROOT.parent / 'orion-ui')]
+    scener = os.environ.get('SCENER')
+    if scener:   # .../orion-ui/build/bin/scener
+        roots.insert(0, str(Path(scener).resolve().parents[2]))
+    for r in roots:
+        if r and (Path(r) / 'apps/scener/tools/building_kit.py').exists():
+            tools = Path(r) / 'apps/scener'
+            spec = importlib.util.spec_from_file_location('scener_writer', tools / 'tools/building_kit.py')
+            writer = importlib.util.module_from_spec(spec)
+            sys.modules['scener_writer'] = writer
+            spec.loader.exec_module(writer)
+            return writer, tools / 'scenes/utilities.xml'
+    raise SystemExit('Scener\'s building kit not found: set ORION_UI to an orion-ui checkout')
+
+
 class Captured:
-    """One building as Blender gets it: buckets by material, lights, and its pivot scale."""
+    """One building: its Scener elements, the base kit's meshes (to frame it), lights and pivot scale."""
     def __init__(self, it, kit, scale, light_color):
         self.key, self.title, self.w, self.h = it['key'], it['title'], it['w'], it['h']
         self.scale = scale
         self.buckets = kit.buckets
-        self.sheets = getattr(kit, '_sheet_faces', {})
+        self.lines = kit.sk.lines
         self.lights = []
         for light in kit.lights:
             p, watts, colour = light if len(light) == 3 else (*light, light_color)
             self.lights.append((tuple(p), watts, tuple(colour)))
-
-
-def _mark_sheets(Kit):
-    """Faces made by surface() and poly() are open sheets, drawn from both sides as Blender does."""
-    orig_add = Kit.add
-    def add(self, mat, verts, faces, col, smooth=False, m=None):
-        b = self.buckets.get(mat)
-        base = len(b['f']) if b else 0
-        orig_add(self, mat, verts, faces, col, smooth, m)
-        if getattr(self, '_sheet', 0):
-            self.__dict__.setdefault('_sheet_faces', {}).setdefault(mat, set()).update(range(base, base + len(faces)))
-    def sheet(fn):
-        def wrapped(self, *a, **k):
-            self._sheet = getattr(self, '_sheet', 0) + 1
-            try:
-                return fn(self, *a, **k)
-            finally:
-                self._sheet -= 1
-        return wrapped
-    Kit.add = add
-    for name in ('surface', 'poly'):
-        if hasattr(Kit, name):
-            setattr(Kit, name, sheet(getattr(Kit, name)))
 
 
 def _materials(module):
@@ -223,189 +219,89 @@ def _materials(module):
     return seen
 
 
-def capture(game):
-    """Run the game's builders without Blender. Returns (buildings, materials, bevels, lighting)."""
+def g22(v):
+    """A linear value as Scener reads scene colours (it raises them to 2.2); values above 1 stay."""
+    return max(0., v) ** (1 / 2.2)
+
+
+def palette(writer, kwargs, bevels):
+    """Point Scener's writer at one kit's materials: Blender's roughness as shininess (Scener's shader takes
+    roughness = exp(-shininess / 18)), its bevel width and segments, specular and metallic, emission as unlit.
+    Returns material -> emission strength, by which an unlit piece's colour is raised as Blender's is."""
+    writer.MATERIALS.clear(); writer.SURFACE.clear(); writer.SEGMENTS.clear(); writer.GRADIENTS.clear()
+    emission = {}
+    for name, kw in kwargs.items():
+        rough = max(kw.get('rough', .7), .05)
+        wid, seg = bevels.get(name, (0, 2))
+        writer.MATERIALS[name] = (round(-18 * math.log(rough), 1), wid, kw.get('emit', 0) > 0)
+        writer.SEGMENTS[name] = seg
+        writer.SURFACE[name] = (kw.get('spec', .4), kw.get('metal', 0.))
+        if kw.get('emit', 0) > 0:
+            emission[name] = kw['emit']
+    return emission
+
+
+def capture(game, stats=None):
+    """Run the game's builders without Blender, drawing Scener elements. Returns (buildings, shapes, lighting)."""
+    import collections
+    import scener_kit
     install_stubs()
-    for name in ('building_kit', 'city_camera'):
+    for name in ('building_kit', 'city_camera', 'market_wishes'):
         sys.modules.pop(name, None)
     here = ROOT / 'games' / game / 'art/building-catalogue'
     sys.path.insert(0, str(ROOT / 'tools'))
     sys.path.insert(0, str(here))
     import building_kit as kit
-    _mark_sheets(kit.Kit)
-    materials = {'kit': _materials(kit)}
-    bevels = {'kit': kit.BEVELS}
+    writer, _ = find_writer()
+    stats = stats if stats is not None else collections.Counter()
+    shapes = {}
+    KitS = scener_kit.make_kit(kit.Kit, writer, g22, kit.Gradient, stats)
+    KitS.shapes = shapes
+    looks = {'kit': (_materials(kit), kit.BEVELS)}
     out = []
 
     if game == 'christmas-market':
-        for name in ('market_wishes',):
-            sys.modules.pop(name, None)
         scene = load('cm_build_scene', here / 'build_scene.py', stop='\nif __name__ == "__main__"')
-        _mark_sheets(scene.Kit)
-        materials['own'] = _materials(scene)
-        bevels['own'] = scene.BEVELS
+        OwnS = scener_kit.make_kit(scene.Kit, writer, g22, kit.Gradient, stats)
+        OwnS.shapes = shapes
+        looks['own'] = (_materials(scene), scene.BEVELS)
         import market_wishes
+        market_wishes.Kit, scene.Kit = KitS, OwnS
         for i, it in enumerate(scene.CATALOGUE):
             wish = it['key'] in market_wishes.KEYS
+            (KitS if wish else OwnS).emission = palette(writer, *looks['kit' if wish else 'own'])
             k = market_wishes.model(it, i) if wish else scene.model(it, i)
-            grow = kit.TREE_GROWTH if it['key'] in scene.TREES else 1.
-            c = Captured(it, k, grow, (1, .62, .28))
-            c.palette = 'kit' if wish else 'own'
-            out.append(c)
+            out.append(Captured(it, k, kit.TREE_GROWTH if it['key'] in scene.TREES else 1., (1, .62, .28)))
         lighting = dict(sun=(3.0, 6, (1, .9, .78), (-.55, 1.0, -1.25)), fill=(.55, 40, (.75, .85, 1), (-1.0, .2, -.6)),
                         world=((.62, .74, 1.0), .7), exposure=-.15)
-        return out, materials, bevels, lighting
+        return out, shapes, lighting
 
     calls = []
     kit.assemble = lambda *a, **k: calls.append((a, k))
     load(game.replace('-', '_') + '_build_scene', here / 'build_scene.py')
-    (scene_name, items, builders, blend), opts = calls[0][0][:4], calls[0][1]
+    (_, items, builders, _), opts = calls[0][0][:4], calls[0][1]
     slab, slab_color, model_scale = opts.get('slab'), opts.get('slab_color'), opts.get('model_scale')
     light_color = opts.get('light_color', (1, .62, .28))
+    KitS.emission = palette(writer, *looks['kit'])
     for i, it in enumerate(items):   # kit.assemble, without bpy
         kit.R.seed(7 + i)
-        k = kit.Kit(it['w'], it['h'])
+        k = KitS(it['w'], it['h'])
         if slab is None or slab(it):
             k.box('slab', 0, 0, 0, it['w'], it['h'], kit.G, slab_color or kit.SLAB)
         builders[it['key']](k)
         for b in k.buckets.values():   # nothing may leave the footprint
             b['v'] = [(max(-it['w'] / 2, min(it['w'] / 2, p[0])), max(-it['h'] / 2, min(it['h'] / 2, p[1])), p[2]) for p in b['v']]
         reach = max((max(abs(p[0]), abs(p[1])) for b in k.buckets.values() for p in b['v']), default=0)
-        c = Captured(it, k, model_scale(it, reach) if model_scale else 1., light_color)
-        c.palette = 'kit'
-        out.append(c)
+        out.append(Captured(it, k, model_scale(it, reach) if model_scale else 1., light_color))
     lighting = dict(sun=(2.7, 7, (1, .93, .8), (.34, 1.0, -1.3)), fill=(.7, 40, (1, .88, .72), (-1.0, .35, -.7)),
                     world=((.62, .72, .95), .62), exposure=0.)
-    return out, materials, bevels, lighting
-
-
-# ---------------------------------------------------------------- geometry
-
-def _sub(a, b): return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
-def _cross(a, b): return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
-def _dot(a, b): return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
-
-
-def _normal(vs, f):
-    """Newell's normal of a polygon (unnormalised; its length is twice the area)."""
-    n = [0., 0., 0.]
-    for i in range(len(f)):
-        a, b = vs[f[i]], vs[f[(i + 1) % len(f)]]
-        n[0] += (a[1] - b[1]) * (a[2] + b[2])
-        n[1] += (a[2] - b[2]) * (a[0] + b[0])
-        n[2] += (a[0] - b[0]) * (a[1] + b[1])
-    return tuple(n)
-
-
-def _components(faces):
-    """Faces grouped by shared vertices: each kit primitive is one."""
-    parent = {}
-    def find(x):
-        while parent.setdefault(x, x) != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    for f in faces:
-        r = find(f[0])
-        for v in f[1:]:
-            q = find(v)
-            if q != r: parent[q] = r
-    groups = {}
-    for i, f in enumerate(faces):
-        groups.setdefault(find(f[0]), []).append(i)
-    return list(groups.values())
-
-
-def _closed(faces, idx):
-    edges = {}
-    for i in idx:
-        f = faces[i]
-        for a, b in zip(f, f[1:] + f[:1]):
-            e = (min(a, b), max(a, b))
-            edges[e] = edges.get(e, 0) + 1
-    return all(n == 2 for n in edges.values())
-
-
-def _volume(vs, faces, idx):
-    v = 0.
-    for i in idx:
-        f = faces[i]
-        for k in range(1, len(f) - 1):
-            v += _dot(vs[f[0]], _cross(vs[f[k]], vs[f[k + 1]]))
-    return v
-
-
-def split_bucket(bucket, sheets, auto_smooth):
-    """A kit bucket as Scener meshes: [(verts, cols, faces, twoSided)] with smoothing groups baked in.
-
-    Scener's smooth="1" averages normals over shared vertices, so vertices are split wherever shading
-    must break: a flat face gets its own corners; an edge sharper than SMOOTH_ANGLE breaks a bevelled
-    material's smoothing (auto_smooth), as the bevel modifier with harden normals does in Blender."""
-    vs, cs, faces, smooth = bucket['v'], bucket['c'], [tuple(f) for f in bucket['f']], bucket['s']
-    if auto_smooth:
-        smooth = [True] * len(faces)
-    normals = []
-    for f in faces:
-        n = _normal(vs, f)
-        l = math.sqrt(_dot(n, n)) or 1
-        normals.append((n[0] / l, n[1] / l, n[2] / l))
-    flipped = set()
-    groups = {False: [], True: []}
-    for comp in _components(faces):
-        open_sheet = any(i in sheets for i in comp) or not _closed(faces, comp)
-        if not open_sheet and _volume(vs, faces, comp) < 0:   # a solid winds outward
-            flipped.update(comp)
-        groups[open_sheet].append(comp)
-    cos_limit = math.cos(math.radians(SMOOTH_ANGLE))
-    out = []
-    for two_sided, comps in groups.items():
-        if not comps: continue
-        verts, cols, fout, key_index = [], [], [], {}
-        for comp in comps:
-            # corner (face, vertex) -> smoothing group: faces sharing a vertex and a smooth enough edge join
-            corner_group = {}
-            if any(smooth[i] for i in comp):
-                parent = {}
-                def find(x):
-                    while parent.setdefault(x, x) != x:
-                        parent[x] = parent[parent[x]]
-                        x = parent[x]
-                    return x
-                edge_faces = {}
-                for i in comp:
-                    if not smooth[i]: continue
-                    f = faces[i]
-                    for a, b in zip(f, f[1:] + f[:1]):
-                        edge_faces.setdefault((min(a, b), max(a, b)), []).append(i)
-                for (a, b), fs in edge_faces.items():
-                    for x in range(len(fs)):
-                        for y in range(x + 1, len(fs)):
-                            i, j = fs[x], fs[y]
-                            if auto_smooth and _dot(normals[i], normals[j]) < cos_limit:
-                                continue
-                            for v in (a, b):
-                                ra, rb = find((i, v)), find((j, v))
-                                if ra != rb: parent[ra] = rb
-                for i in comp:
-                    if smooth[i]:
-                        for v in faces[i]: corner_group[(i, v)] = find((i, v))
-            for i in comp:
-                f = faces[i][::-1] if i in flipped else faces[i]
-                idx = []
-                for v in f:
-                    key = ('s', corner_group[(i, v)]) if (i, v) in corner_group else ('f', i, v)
-                    n = key_index.get(key)
-                    if n is None:
-                        n = key_index[key] = len(verts)
-                        verts.append(vs[v])
-                        cols.append(cs[v])
-                    idx.append(n)
-                fout.append(idx)
-        out.append((verts, cols, fout, two_sided))
-    return out
+    return out, shapes, lighting
 
 
 # ---------------------------------------------------------------- writing
+
+def _dot(a, b): return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
 
 def f(v, digits=2):
     s = '%.*f' % (digits, v)
@@ -413,33 +309,9 @@ def f(v, digits=2):
     return '0' if s in ('-0', '') else s
 
 
-def srgb(v):
-    v = max(0., min(1., v))
-    return 12.92 * v if v <= .0031308 else 1.055 * v ** (1 / 2.4) - .055
-
-
-def g22(v):
-    """A linear value as Scener reads scene colours (it raises them to 2.2); values above 1 stay."""
-    return max(0., v) ** (1 / 2.2)
-
-
-def hexcol(c):
-    return '%02x%02x%02x' % tuple(round(srgb(x) * 255) for x in c[:3])
-
-
 def to_scener(p):
     """Blender tiles (x = u, y = -v, z up) -> Scener cm (y up)."""
     return (p[0] * TILE, p[2] * TILE, -p[1] * TILE)
-
-
-def material_attrs(kw, emit_ok=True):
-    rough = max(kw.get('rough', .7), .05)
-    a = [('shininess', f(-18 * math.log(rough), 1)), ('specular', f(kw.get('spec', .4), 3))]
-    if kw.get('metal'): a.append(('metallic', f(kw['metal'], 3)))
-    if kw.get('emit', 0) > 0 and emit_ok:
-        k = kw['emit']   # Blender adds emission to the lit colour and its Standard view clips the sum
-        a = [('unlit', '1'), ('castShadow', '0'), ('color', ' '.join([f(g22(k), 3)] * 3))]
-    return a
 
 
 def frame_of(points, scale, margin):
@@ -482,7 +354,9 @@ def write_scenes(game, out, ppt, shadow_cfg, keys=None, log=print):
 
     Returns {key: dict(title, size, scale, pivot, base_width, shadow_pivot, shadow_base_width)} with
     every pixel position in its camera's image, as render_buildings_blender.py reports them."""
-    buildings, materials, bevels, lighting = capture(game)
+    import collections
+    stats = collections.Counter()
+    buildings, shapes, lighting = capture(game, stats)
     order = [b.key for b in buildings]
     if keys:
         missing = [k for k in keys if k not in order]
@@ -515,47 +389,41 @@ def write_scenes(game, out, ppt, shadow_cfg, keys=None, log=print):
         sprite.append(camera_xml(b.key, fr, ppt))
         shadow.append(camera_xml(b.key, sfr, shadow_ppt))
 
-        body = []
-        for mat, bucket in b.buckets.items():
-            if not bucket['f']: continue
-            kw = materials[b.palette].get(mat, {})
-            attrs = material_attrs(kw)
-            auto = mat in bevels[b.palette]
-            for verts, cols, faces, two in split_bucket(bucket, b.sheets.get(mat, set()), auto):
-                if not faces: continue
-                body.append('    <mesh name="%s.%s" smooth="1"%s %s v="%s" colors="%s" f="%s"/>' % (
-                    b.key, mat, ' twoSided="1"' if two else '', ' '.join('%s="%s"' % p for p in attrs),
-                    ' '.join(f(c) for v in verts for c in to_scener(v)),
-                    ' '.join(hexcol(c) for c in cols), ', '.join(' '.join(map(str, fc)) for fc in faces)))
+        body = ['  ' + l for l in b.lines]
         lamps = ['    <light pos="%s" color="%s" intensity="%s" radius="%s" castShadows="1"/>' % (
             ' '.join(f(c) for c in to_scener(p)), ' '.join(f(g22(c), 3) for c in colour),
             f(LIGHT_SCALE * watts * exposure, 3), f(TILE * 1.4)) for p, watts, colour in b.lights]
-        head = '  <group name="%s" pos="%s"%s' % (b.key, ' '.join(f(c) for c in to_scener(origin)),
-                                                 ' scale="%s %s %s"' % ((f(s, 4),) * 3) if s != 1 else '')
-        sprite += [head + '>'] + body + lamps + ['  </group>']
-        shadow += [head + '>'] + [l.replace('<mesh ', '<mesh renderable="0" ', 1) for l in body if 'unlit="1"' not in l] + ['  </group>']
+        head = '  <group pos="%s"%s' % (' '.join(f(c) for c in to_scener(origin)), ' scale="%s %s %s"' % ((f(s, 4),) * 3) if s != 1 else '')
+        sprite += ['%s name="%s">' % (head, b.key)] + body + lamps + ['  </group>']
+        shadow += ['%s name="%s" renderable="0">' % (head, b.key)] + body + ['  </group>']
 
     sun_strength, _, sun_colour, sun_direction = lighting['sun']
     fill_strength, _, fill_colour, fill_direction = lighting['fill']
+    profiles = ['  <shape id="%s" closed="0" v="%s"/>' % (sid, ' '.join(' '.join(p.split(',')) for p in key.split(' ')))
+                for key, sid in shapes.items()]
     head = ['<?xml version="1.0" encoding="UTF-8"?>',
             f'<!-- {game} buildings for the city camera, written by nile-archive tools/scener_buildings.py from the',
-            '     game\'s build_scene.py. Generated: edit build_scene.py, not this file. -->']
+            '     game\'s build_scene.py: one group per building, each kit call one primitive with its modifiers.',
+            '     Generated: edit build_scene.py, not this file. -->']
+    lib = ['  <include src="utilities.xml"/>'] + profiles
     sprites = head + ['<scene ambient="%s" background="0 0 0">' % ' '.join(f(c, 3) for c in ambient),
                       sun_xml(sun_strength, sun_colour, sun_direction, 1, exposure),
-                      sun_xml(fill_strength, fill_colour, fill_direction, 0, exposure)] + sprite + ['</scene>', '']
+                      sun_xml(fill_strength, fill_colour, fill_direction, 0, exposure)] + lib + sprite + ['</scene>', '']
     # the shadow pass: the buildings cast but are not drawn; a white catcher lit by the shadow sun alone
     lo = (-SPACING, -SPACING)
     hi = (len(buildings) * SPACING * math.cos(yaw) + SPACING, len(buildings) * SPACING * math.sin(yaw) + SPACING)
     catcher = [(lo[0], lo[1], -.006), (hi[0], lo[1], -.006), (hi[0], hi[1], -.006), (lo[0], hi[1], -.006)]
     shadows = head + ['<scene ambient="0 0 0" background="0 0 0">',
-                      sun_xml(math.pi, (1, 1, 1), sun, 1),
+                      sun_xml(math.pi, (1, 1, 1), sun, 1)] + lib + [
                       '  <mesh name="shadow_catcher" castShadow="0" specular="0" v="%s" f="0 1 2 3"/>' % ' '.join(
                           f(c) for p in catcher for c in to_scener(p))] + shadow + ['</scene>', '']
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     (out / 'sprites.blks').write_text('\n'.join(sprites))
     (out / 'shadows.blks').write_text('\n'.join(shadows))
-    log(f'{game}: wrote {len(buildings)} buildings to {out}/sprites.blks ({(out / "sprites.blks").stat().st_size // 1024} KB)')
+    shutil.copy(find_writer()[1], out / 'utilities.xml')
+    log(f'{game}: wrote {len(buildings)} buildings to {out}/sprites.blks ({(out / "sprites.blks").stat().st_size // 1024} KB): '
+        + ', '.join(f'{n} {k}' for k, n in stats.most_common()))
     return dict(order=order, items=report)
 
 

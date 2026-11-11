@@ -161,7 +161,7 @@ class Kit:
         b = self.buckets.setdefault(mat, {"v": [], "f": [], "c": [], "s": []})
         base = len(b["v"])
         t = self.xf @ m if m is not None else self.xf
-        cols = col if isinstance(col, list) else [col] * len(verts)
+        cols = building_kit.vertex_colours(col, verts)
         for v, c in zip(verts, cols):
             b["v"].append(tuple(t @ Vector(v)))
             b["c"].append(c)
@@ -218,12 +218,13 @@ class Kit:
                 self.ball(mat, a[0], a[1], a[2], r, col(i) if callable(col) else col, n)
 
     def lathe(self, mat, x, y, z, prof, col, n=18, smooth=True, sx=1., sy=1., m=None):
-        pts, cols = [], []
-        for r, h in prof:
+        pts, uv = [], []
+        for j, (r, h) in enumerate(prof):
             for i in range(n):
                 t = 2 * math.pi * i / n
                 pts.append((r * math.cos(t) * sx, r * math.sin(t) * sy, h))
-                cols.append(col(h, t) if callable(col) else col)
+                uv.append((i / n, j / (len(prof) - 1)))
+        cols = building_kit.vertex_colours(col, pts, uv)
         f = []
         for j in range(len(prof) - 1):
             for i in range(n):
@@ -241,12 +242,13 @@ class Kit:
         self.lathe(mat, x, y, z, [(r, 0), (r, h)], col, n)
 
     def surface(self, mat, fn, nu, nv, col, smooth=True):
-        pts, cols = [], []
+        pts, uv = [], []
         for j in range(nv + 1):
             for i in range(nu + 1):
                 u, v = i / nu, j / nv
                 pts.append(fn(u, v))
-                cols.append(col(u, v) if callable(col) else col)
+                uv.append((u, v))
+        cols = building_kit.vertex_colours(col, pts, uv)
         f = []
         for j in range(nv):
             for i in range(nu):
@@ -417,7 +419,7 @@ class Kit:
             tops.append((ri, zi, th))
             ph = R.uniform(0, 6.28)
             prof = [(ri * .55, 0), (ri, th * .08), (ri * .96, th * .16), (.001, th)]
-            self.lathe("leaf", x, y, zi, prof, lambda hh, t, col=col: tuple(c * (.7 + .5 * hh / th) for c in col), 20)
+            self.lathe("leaf", x, y, zi, prof, building_kit.Gradient.box(building_kit.tone(col, .7), building_kit.tone(col, 1.2)), 20)
             if snow:
                 def fn(u, v, ri=ri, zi=zi, ph=ph):
                     a = 2 * math.pi * u
@@ -765,10 +767,10 @@ def log_cabin(k):
 
 def old_carousel(k):
     rr = 1.3
-    k.lathe("paint", 0, 0, G, [(rr, 0), (rr, .14), (rr - .05, .16)], lambda h, t: RED if h < .1 else GOLD, 40)
+    k.lathe("paint", 0, 0, G, [(rr, 0), (rr, .14), (rr - .05, .16)], building_kit.Gradient.box(RED, GOLD, edge=.1 / .16), 40)   # a gold rim
     k.disc("paint", 0, 0, G + .12, rr - .06, .05, CREAM, 40)
     k.lathe("gold", 0, 0, G + .16, [(.24, 0), (.2, .2), (.2, 1.18), (.26, 1.3)], GOLD, 18)
-    k.lathe("glossy", 0, 0, G + .38, [(.205, 0), (.205, .8)], lambda h, t: RED if int(t / (math.pi / 6)) % 2 else SNOW, 24)
+    k.lathe("glossy", 0, 0, G + .38, [(.205, 0), (.205, .8)], building_kit.Gradient(SNOW, RED, tile=(6, 0), repeat=True, edge=.5), 24)   # twelve stripes around
     n = 8
     for i in range(n):
         a = 2 * math.pi * i / n + math.pi / 8

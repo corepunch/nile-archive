@@ -38,21 +38,65 @@ def J(col, j=.08):
     return tuple(max(0, c * m * (1 + R.uniform(-j, j) * .25)) for c in col)
 
 class Gradient:
-    """A colour laid on by a gizmo instead of per vertex, so Scener can say it as <gradient type="uv">: over a
-    surface's (u, v), t = u * tile[0] + v * tile[1] + offset; repeat wraps t, power curves it, edge (0..1) steps
-    it from a to b. Blender calls it like any col(u, v) and gets the vertex colour."""
-    def __init__(self, a, b, tile=(0, 1), offset=0., repeat=False, edge=0., power=1.):
-        self.a, self.b, self.tile, self.offset, self.repeat, self.edge, self.power = a, b, tile, offset, repeat, edge, power
+    """A colour laid on by a gizmo instead of per vertex, as a 3ds Max map is placed by its UVW gizmo; Scener
+    says it as <gradient>. Two gizmos:
 
-    def amount(self, u, v):
-        t = u * self.tile[0] + v * self.tile[1] + self.offset
+      uv   (axis None) over a surface's or lathe's (u, v): t = u * tile[0] + v * tile[1] + offset. A lathe's u runs
+           around it and v along its profile.
+      box  (axis "x", "y" or "z") the piece's own bounds along that axis, 0 at the low end and 1 at the high end.
+
+    repeat wraps t (stripes), mirror folds it (1 in the middle, 0 at both ends, as Max's mirror tiling), power
+    curves it, edge (0..1) steps it from a to b. Blender evaluates it per vertex (colours()) to the same values."""
+    def __init__(self, a, b, tile=(0, 1), offset=0., repeat=False, edge=0., power=1., mirror=False, axis=None):
+        self.a, self.b, self.tile, self.offset, self.repeat, self.edge, self.power = a, b, tile, offset, repeat, edge, power
+        self.mirror, self.axis = mirror, axis
+
+    @staticmethod
+    def box(a, b, axis="z", **kw):
+        return Gradient(a, b, tile=(1, 0), axis=axis, **kw)
+
+    def shade(self, t):
         t = t % 1 if self.repeat else max(0., min(1., t))
+        if self.mirror:
+            t = 1 - abs(2 * t - 1)
         t = t ** self.power
         return (1. if t >= self.edge else 0.) if self.edge > 0 else t
+
+    def amount(self, u, v):
+        return self.shade(u * self.tile[0] + v * self.tile[1] + self.offset)
 
     def __call__(self, u, v=0.):
         t = self.amount(u, v)
         return tuple(a + (b - a) * t for a, b in zip(self.a, self.b))
+
+    def colours(self, verts, uv=None):
+        """Per-vertex colours for Blender: a box gizmo from the verts' own bounds, a uv one from uv."""
+        if self.axis is None:
+            return [self(u, v) for u, v in uv] if uv else [self(.5, .5)] * len(verts)
+        i = "xyz".index(self.axis)
+        lo, hi = min(p[i] for p in verts), max(p[i] for p in verts)
+        span = (hi - lo) or 1.
+        return [self((p[i] - lo) / span + self.offset) for p in verts]
+
+
+def spend(jitters):
+    """Draws what that many J() calls would. Where a colour that was jittered per vertex became one colour or a
+    Gradient, this keeps every later random piece where it was, which the painted sprites are registered to."""
+    for _ in range(jitters):
+        J((0, 0, 0))
+
+
+def tone(col, k):
+    """col scaled by k: a gradient end as a multiple of a base colour."""
+    return tuple(c * k for c in col)
+
+
+def vertex_colours(col, verts, uv=None):
+    """The colour of each vertex: a Gradient laid on by its gizmo, a list as given, else one colour."""
+    if isinstance(col, Gradient):
+        return col.colours(verts, uv)
+    return col if isinstance(col, list) else [col] * len(verts)
+
 
 SANDS = [C(h) for h in ("#E2C48A", "#D9B878", "#CFAB6A")]
 SAND_DK, SAND_PALE = C("#94744A"), C("#E8D3A0")
@@ -176,7 +220,7 @@ class Kit:
         b = self.buckets.setdefault(mat, {"v": [], "f": [], "c": [], "s": []})
         base = len(b["v"])
         t = self.xf @ m if m is not None else self.xf
-        cols = col if isinstance(col, list) else [col] * len(verts)
+        cols = vertex_colours(col, verts)
         for v, c in zip(verts, cols):
             b["v"].append(tuple(t @ Vector(v)))
             b["c"].append(c)
@@ -228,12 +272,13 @@ class Kit:
             self.tube(mat, a, b, r, r, col, n)
 
     def lathe(self, mat, x, y, z, prof, col, n=18, smooth=True, sx=1., sy=1., m=None):
-        pts, cols = [], []
-        for r, h in prof:
+        pts, uv = [], []
+        for j, (r, h) in enumerate(prof):
             for i in range(n):
                 t = 2 * math.pi * i / n
                 pts.append((r * math.cos(t) * sx, r * math.sin(t) * sy, h))
-                cols.append(col(h) if callable(col) else col)
+                uv.append((i / n, j / (len(prof) - 1)))
+        cols = vertex_colours(col, pts, uv)
         f = []
         for j in range(len(prof) - 1):
             for i in range(n):
@@ -247,12 +292,13 @@ class Kit:
         self.lathe(mat, x, y, z - r * sz, prof, col, n, True, sx, sy)
 
     def surface(self, mat, fn, nu, nv, col):
-        pts, cols = [], []
+        pts, uv = [], []
         for j in range(nv + 1):
             for i in range(nu + 1):
                 u, v = i / nu, j / nv
                 pts.append(fn(u, v))
-                cols.append(col(u, v) if callable(col) else col)
+                uv.append((u, v))
+        cols = vertex_colours(col, pts, uv)
         f = []
         for j in range(nv):
             for i in range(nu):
@@ -390,7 +436,7 @@ class Kit:
 
     def blob(self, x, y, z, r):
         base = J(R.choice(LEAVES), .04)
-        self.ball("leaf", x, y, z, r, lambda h: tuple(c * (.6 + .6 * h / (2 * r)) for c in base), 16)
+        self.ball("leaf", x, y, z, r, Gradient.box(tone(base, .6), tone(base, 1.2)), 16)   # darker underneath
 
     def puff(self, x, y, z, r=.25):
         """A rounded shrub: a few big soft balls."""
@@ -415,14 +461,14 @@ class Kit:
                 p = top + out * L * v + Vector((0, 0, L * (.32 * v - .8 * v * v)))
                 q = p + side * (u - .5) * 2 * w - Vector((0, 0, abs(u - .5) * w * .6))
                 return tuple(q)
-            self.surface("leaf", fn, 2, 7, lambda u, v, base=base: tuple(c * (.72 + .4 * (1 - abs(u - .5) * 2)) for c in base))
+            self.surface("leaf", fn, 2, 7, Gradient(tone(base, .72), tone(base, 1.12), tile=(1, 0), mirror=True))   # bright midrib
         self.blob(top.x, top.y, top.z, .08)
 
     # ---- props
 
     def flame(self, x, y, z, s=.14, light=3.):
         prof = [(max(s * .7 * math.sin(math.pi * min(t * 1.5, 1) ** .7) * (1 - t) ** .55, .001), s * 2.2 * t) for t in [i / 9 for i in range(10)]]
-        self.lathe("flame", x, y, z, prof, lambda h: FLAME if h < s * .7 else FLAME_L, 12)
+        self.lathe("flame", x, y, z, prof, Gradient.box(FLAME, FLAME_L, edge=.7 / 2.2), 12)   # a hot core, a pale tip
         if light:
             self.lights.append(((x, y, z + s), light))
 

@@ -29,7 +29,7 @@ def blade(k, p, out, L, w, rise=.4, droop=.8, col=None):
         wid = w * math.sin(math.pi * (v * .92 + .08))
         q = p + out * L * v + Vector((0, 0, L * (rise * v - droop * v * v))) + side * (u - .5) * 2 * wid - Vector((0, 0, abs(u - .5) * wid * .6))
         return tuple(q)
-    k.surface("leaf", fn, 2, 6, lambda u, v: tuple(c * (.72 + .4 * (1 - abs(u - .5) * 2)) for c in base))
+    k.surface("leaf", fn, 2, 6, Gradient(tone(base, .72), tone(base, 1.12), tile=(1, 0), mirror=True))   # bright midrib
 
 def bloom(k, x, y, z, r, col, centre=None):
     for i in range(5):
@@ -230,7 +230,8 @@ def sail_boat(k, x, y, z, L, W, hull=WOOD, sail=True):
         wid = W * .5 * (1 - t * t) ** .6
         a = math.pi * v
         return (x + t * L / 2, y + wid * math.cos(a), z + rise + .2 * (1 - math.sin(a) * .9) * (1 - t * t) ** .3 - .2)
-    k.surface("wood", fn, 14, 6, lambda u, v: J(hull, .02) if v < .5 or v > .5 else hull)
+    k.surface("wood", fn, 14, 6, hull)
+    spend(6 * 15)
     k.box("wood", x, y, z + .02, L * .74, W * .8, .04, WOOD_L)
     if sail:
         k.tube("wood", (x + L * .08, y, z), (x + L * .08, y, z + 1.3), .03, .025, WOOD_D, 8)
@@ -665,7 +666,7 @@ def doum_palm(k):
 def cypress_t(k):
     k.tube("wood", (0, 0, 0), (0, 0, .2), .08, .07, WOOD, 10)
     prof = [(.001, 0), (.2, .02), (.26, .24), (.2, .62), (.09, 1.05), (.001, 1.28)]
-    k.lathe("leaf", 0, 0, .14, prof, lambda h: tuple(c * (.55 + .5 * h / 1.2) for c in C("#3B7F3A")), 16)
+    k.lathe("leaf", 0, 0, .14, prof, Gradient.box(tone(C("#3B7F3A"), .55), tone(C("#3B7F3A"), 1.08)), 16)   # darker at the foot
 def acacia(k):
     k.tube("wood", (0, 0, 0), (0, 0, .4), .06, .05, C("#7D6040"), 8)
     for a in (0, 2.1, 4.2):

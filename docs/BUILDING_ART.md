@@ -108,6 +108,17 @@ receives a `Kit` and adds geometry to it in **pivot-local coordinates**:
   per-block variation. Materials come from the kit: `stone`, `slab`, `wood`,
   `clay`, `glaze`, `gold`, `cloth`, `leaf`, `hedge`, `glass`, `matte`, `water`,
   `flame` and `glow`. The bevel widths in `BEVELS` give the soft, toy-like edges.
+- **One colour per piece; gradients by gizmo.** Never colour by vertex (no
+  function as a colour). Shading across a piece is a `Gradient`: `uv` over a
+  surface's or lathe's `(u, v)` (`tile`, `repeat` and `edge` make stripes, `mirror`
+  a centre band or a midrib) or `Gradient.box(a, b)` over its height. Scener writes
+  it as its `<gradient>` gizmo, and Blender evaluates the same values.
+- **Prefer kit primitives to `k.add`.** Boxes, beams, tubes, lathes, surfaces and
+  kit prisms each become one readable Scener element. A solid built from vertices
+  is written as an extruded `<shape>` only when it is a polygon swept straight
+  (a prism), to a scaled top (a frustum or pyramid) or with a thickness ramp (a
+  roof tile); anything else falls back to a `<mesh>`, which the Scener render
+  counts.
   This describes the geometry guide, not the final surface finish. Apply the
   detailed paint direction in [BUILDING_STYLE.md](BUILDING_STYLE.md) afterward.
 - **Primitives.** `box`, `beam`, `tube`, `path`, `lathe`, `ball`, `surface`,
@@ -123,7 +134,7 @@ Three geometry traps show up as render defects:
 |---|---|---|
 | Black, flickering sails and flags | A face and its reversed copy at the same place, which z-fight | Add one face. Cycles shades both sides. |
 | A pale disc where water should be | `lathe` caps both ends, so the rim's top cap covers the water | End the rim profile inside and below the water, e.g. `[(r,0),(r,h),(r2,h),(r2,.02)]`, and raise the water to just under the rim top. |
-| Stripes blur into one colour | Vertex colours interpolate between few rings | Build striped parts from solid-colour bands, one closed `lathe`/`box` per band. |
+| Stripes blur into one colour | Blender interpolates vertex colours between few rings | Use a `Gradient` with `repeat` and `edge` (crisp in Scener), or one closed `lathe`/`box` per band. |
 | A painted band covers a whole plinth top | A full-size `glaze` box laid on top | Use `band_plinth`: a slightly wider band just under the top. |
 
 The master is generated from the script, so never edit the `.blend` by hand.
