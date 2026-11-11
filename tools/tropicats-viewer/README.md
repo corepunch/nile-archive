@@ -38,7 +38,7 @@ this display option never changes source values or the difference counts.
 
 Cannons use their native tint map and mouth gauge: low/medium/high precharge is
 0/15/30 out of 45. None of the 3,668 campaign cannon placements encode a direction;
-the viewer preserves the authored facing pose. Chameleons use the original skeleton,
+the viewer preserves the authored facing pose. Climbers, resistant blockers and chameleons use original skeletal idle poses; chameleons use
 body/next-color shader and left/right facing. Wheels use the level palette and the
 original 3–6 segment assets, including coins. Reduced palettes omit weights below
 25, an inference grounded in metadata and checked against every wheel layout.

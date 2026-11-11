@@ -135,7 +135,7 @@ def extract(app, output):
                   'decoder': f'UnityPy {UnityPy.__version__}', 'sprites': len(manifest),
                   'decoded_images': len(candidates) + sum(item['kind'] == 'Texture2D' and item['file'] == 'm3_themes' for item in manifest.values()),
                   'material_renders': sum(item['kind'] == 'MaterialRender' for item in manifest.values()),
-                  'transform': 'Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders, stencil gauge, skeletal chameleon and color LUTs; no painted replacements.',
+                  'transform': 'Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders, stencil gauge, skeletal characters and color LUTs; no painted replacements.',
                   'materials': material_sources, 'theme_source': theme_source}
     (output / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
     print(f"Prepared {provenance['decoded_images']} original images and {provenance['material_renders']} material renders in {output}")

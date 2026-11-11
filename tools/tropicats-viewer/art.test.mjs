@@ -146,3 +146,14 @@ test('objective board textures use original theme references with an explicit fa
     hiddenitem:'board_hiddenitem',droppable:'board_drop',chameleon:'board_water',resistant_blocker:'board_water',
     climber:'board_recipe',recipe:'board_recipe'})) assert.equal(boardTexture(goal),texture);
 });
+
+
+test('climber and resistant strength use original native idle poses', () => {
+  const climber=cellArt(level({gemColors:[12]}),0);
+  assert.equal(climber.images[0].name,'material_climber');
+  for (const stone of [6,7,8]) {
+    const result=cellArt(level({stones:[stone]}),0);
+    assert.ok(result.images.some(i=>i.name===`material_resistant_${stone-5}`));
+    assert.ok(result.notes.some(note=>note.includes('time zero')));
+  }
+});

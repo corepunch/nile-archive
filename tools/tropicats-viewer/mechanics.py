@@ -115,6 +115,25 @@ def extract_mechanics(scene, output, manifest, material_sources):
                  shader_sha256=hashes['chameleon'])
 
 
+    # The character prefabs use these exact original Spine animations at t=0.
+    for name, skeleton_id, atlas_id, texture_id, animation, y in [
+            ('climber',358,360,227,'Idle',-64),
+            ('resistant_1',355,354,168,'IdleHp1',0),
+            ('resistant_2',355,354,168,'IdleHp2',0),
+            ('resistant_3',355,354,168,'IdleHp3',0)]:
+        skeleton = scene.objects[skeleton_id].read().m_Script.encode('utf8','surrogateescape')
+        atlas_text = scene.objects[atlas_id].read().m_Script
+        regions = read_atlas(atlas_text)
+        layers = read_setup(skeleton,animation,regions)
+        (evidence / f'{name}.skel').write_bytes(skeleton)
+        (evidence / f'{name}.atlas').write_text(atlas_text)
+        save(f'material_{name}', render_setup(layers,regions,scene.objects[texture_id].read().image,offset_y=y),
+             skeleton_id=skeleton_id,atlas_id=atlas_id,texture_id=texture_id,
+             skeleton_sha256=hashlib.sha256(skeleton).hexdigest(), pose=animation,time=0,
+             pixels_per_unit=128, offset_y_pixels=y,
+             attachment_paths=[layer['path'] for layer in layers])
+
+
 def review_sheet(art):
     """Contact sheet of every cannon/chameleon state and all wheel LUT columns."""
     from PIL import ImageDraw

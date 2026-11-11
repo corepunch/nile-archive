@@ -1,6 +1,6 @@
 # Original artwork in the Tropicats viewer
 
-The viewer uses 109 decoded source images and 139 static material renders from the user's installed Tropicats 2.5.11
+The viewer uses 109 decoded source images and 143 static material renders from the user's installed Tropicats 2.5.11
 `Data/Raw/AssetBundles/allscenes_be7e0be1439093721cd26af7025dad92` and the separately cached original `m3_themes` bundle.
 [art-catalogue.json](art-catalogue.json) records the bundle SHA-256, original
 serialized file, object path ID, dimensions and PNG SHA-256 for every image.
@@ -44,14 +44,14 @@ that manifest. There are no arbitrary file or directory routes.
 | Red, green, blue, yellow, purple, orange | `dot_red/green/blue/yellow/purple/orange` | Original strawberry, starfruit, blueberry, banana, grapes and apple sprites |
 | Random color 8 | `dot_random` and its authored special variants | Exact mode shows the original striped marker. Optional preview chooses actual fruit from the level's positive-weight color palette; deterministic by level and source coordinate, without simulating RNG, gravity, matches or solvability |
 | Coins, droppable, cannonball, rainbow, treasure, colorless | Corresponding `dot_*` | Original static sprite; no animated rainbow shader |
-| Climber color 12 | `ui_icon_climber` | Original static illustration of the animated character |
+| Climber color 12 | `material_climber` | Native Spine `Idle` first frame, including the prefab’s half-cell vertical offset |
 | ClimberGem / stacked small, medium, big | `dot_<color>_ClimberGem/StackedGemSmall/StackedGemMedium/StackedGemBig` | Authored color and size variants, including random and coin variants. Unusual non-fruit combinations retain their base image plus `T<type>` and inspector explanation |
 | Diagonal types 13–16 | `diagonal_gems_DiagonalDownRight/DownLeft/UpLeft/UpRight` | Four original authored directions; no generated rotations |
 | Cannon | `material_cannon_<color>_<charge>` | Original tint map, background, stencil mask, gauge cover and face. Charge is 0/15/30 out of 45; review also includes full charge. Authored orientation retained: every campaign cannon has direction 0 |
 | Chameleon/reduced | `material_chameleon_<current>_<next>` | Original Spine mesh, Blink pose at t=0, two-color mask/LUT. Encoded body color; illustrative next color from the tier palette, excluding low weights for reduced type 12. Left-facing pose is mirrored; vertical directions remain the resting pose |
 | Horizontal/vertical line; bomb | `material_line_horizontal/line_vertical/bomb` | Original meshes and packed shader inputs evaluated at time zero, layered on the fruit and clipped to its alpha. Activated types retain the static bomb depiction; detonation is not simulated |
 | Stones 1–5 | `stone_1hp` through `stone_5hp` | Five authored damage strengths |
-| Resistant blockers 6–8 | `resistantBlocker_tutorial_1hp/2hp/3hp` | Three original tutorial poses; metadata constants give HP range 6–8 |
+| Resistant blockers 6–8 | `material_resistant_1/2/3` | Original Spine `IdleHp1/2/3` first frames, corresponding to encoded strengths 6–8 |
 | Color wheel stones 9–12 | `material_wheel_*` | Original wedges, count-specific frame, background and cat face, registered to native pivots; 3–6 segments from the level palette. IDs 11/12 use the inferred reduced palette. Clockwise color order is illustrative. IDs 9/11 mark the 2×2 corner and 10/12 its occupancy |
 | Chains 1–3 | `chain_1hp/2hp/3hp` | Three authored banana-chain strengths, above pieces |
 | Crates 1–3 | `crate_1hp/2hp/3hp` | Three authored strengths |
@@ -124,7 +124,7 @@ space outside the board so boundary portals are not clipped.
 ## Remaining fidelity work
 
 [Issue #97](https://github.com/corepunch/nile-archive/issues/97) tracks the remaining
-animated poses and transitions, exact native gauge travel, runtime color order,
+animated transitions, exact native gauge travel, runtime color order,
 non-portal route indicators, exact window bridge selection, the climber board skin and remaining objective theme details.
 Bomb/line static overlays, color-crate materials, portal artwork, static cannon gauges, skeletal chameleon colors and wheel palette segments are implemented. The table above records every current fallback. Exact data remains
 available in the layer selector, inspector and raw JSON. Static compositions and disclosed approximations are not claimed as pixel-identical runtime states.
@@ -173,9 +173,8 @@ portal pairs/boundaries passed the corpus check. No game/engine build is needed.
 ### Cannon, chameleon and wheel reconstruction
 
 `mechanics.py` evaluates the bundled shader equations and composes native layers;
-`skeleton.py` reads only the features present in the bundled Spine 3.2.01 skeleton.
-Unknown versions, bone inheritance, constraints, colors or attachment types fail
-explicitly. No third-party runtime is installed or vendored. Binary field ordering
+`skeleton.py` reads the features needed by the bundled Spine 3.2.01 character skeletons.
+Unknown versions, unsupported constraints, attachment types and nontrivial selected deform or draw-order keys fail explicitly. No third-party runtime is installed or vendored. Binary field ordering
 was checked against the official format readers for
 [3.1.07](https://github.com/EsotericSoftware/spine-runtimes/blob/3.1.07/spine-csharp/src/SkeletonBinary.cs)
 and [3.4.02](https://github.com/EsotericSoftware/spine-runtimes/blob/3.4.02/spine-csharp/src/SkeletonBinary.cs).
@@ -262,6 +261,13 @@ The optional `m3_themes` bundle contains `LevelTheme` records linking treasure, 
 
 The field prefab contains `WindowBridge` (sprite 696; transform 1277) and two growing bridge variants (sprites 690/649; transforms 1352/1300). Those transforms place the growing bridge at a vertical half-cell. Connecting vertically adjacent matching field IDs is a viewer inference: the encrypted native code does not establish adjacency or variant choice. The second growing bridge is extracted and catalogued but not selected until that choice is understood. Issue #97 tracks the exact connection and variant rules.
 
-The native climber and resistant blocker each contain region attachments and mixed inherited rotation/scale. Their first animations include slot timelines, so the existing chameleon-only setup evaluator cannot faithfully reconstruct those poses. The tutorial illustrations remain explicit fallbacks; issue #97 tracks the missing poses and strength-specific native attachments.
+The climber and resistant blocker use the original Spine skeletons, atlas textures, default skin and `Idle` / `IdleHp1`, `IdleHp2`, `IdleHp3` animation keys at time zero. Their slot timelines select the inactive wings and feet, and the different shell, hand and body attachments at each strength. Bone inheritance and region quads follow the official [Spine 3.4 Bone](https://github.com/EsotericSoftware/spine-runtimes/blob/3.4.02/spine-csharp/src/Bone.cs) and [RegionAttachment](https://github.com/EsotericSoftware/spine-runtimes/blob/3.4.02/spine-csharp/src/Attachments/RegionAttachment.cs) algorithms; the serialized file is 3.2.01. The climber child prefab is translated down 0.5 world units, applied as −64 authored pixels at 128 pixels per unit. Blocker prefabs use an identity transform. Rasterization preserves the original textures and attachment draw order; it does not execute the native game or simulate transitions.
 
-The source textures and bridge sprites were inspected directly. Browser review at desktop and narrow sizes remains outstanding because no browser surface was available in this session.
+| Pose | Source skeleton / atlas / texture | Authored state |
+| --- | --- | --- |
+| Climber | 358 / 360 / 227 | `Idle`, t=0; inactive wings and feet, prefab transform 1285 |
+| Resistant 1–3 HP | 355 / 354 / 168 | `IdleHp1`, `IdleHp2`, `IdleHp3`, t=0; prefab 971 |
+
+Controller 453 names all three blocker idle clips and defaults to the 3-HP state; controller 456 defaults to the climber idle clip. All skeleton attachment paths and source hashes are recorded in the catalogue.
+
+The source textures, bridge sprites and four character idle renders were inspected directly. Browser review at desktop and narrow sizes is being prepared separately.

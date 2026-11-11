@@ -42,7 +42,7 @@ export function cellArt(level, index, {preview = false, seed = 0} = {}) {
   if (v('tiles') === 3) add('water_field', 4, 'tile');
   else if (v('tiles')) add(`tile_${v('tiles')}hp`, 4, 'tile');
   if (color || type === 10) {
-    let name = color === 12 ? 'ui_icon_climber' : color === 14 ? null : `dot_${COLORS[color]?.toLowerCase()}`;
+    let name = color === 12 ? 'material_climber' : color === 14 ? null : `dot_${COLORS[color]?.toLowerCase()}`;
     if (type >= 6 && type <= 9) {
       if ([1,2,3,4,5,6,8,9].includes(color)) name = `dot_${COLORS[color].toLowerCase()}_${TYPES[type]}`;
       else { badges.push(`T${type}`); notes.push(`${TYPES[type]} on ${COLORS[color]}: original base illustration with exact type retained as a badge.`); }
@@ -71,13 +71,13 @@ export function cellArt(level, index, {preview = false, seed = 0} = {}) {
       add(`material_${type === 1 ? 'line_horizontal' : type === 2 ? 'line_vertical' : 'bomb'}`, 7, 'material-overlay', name);
       notes.push(`${TYPES[type]}: original mesh and packed shader rendered at time zero.`);
     }
-    if (color === 12) notes.push('Climber: original objective illustration, static pose.');
+    if (color === 12) notes.push('Climber: original Idle skeleton pose at time zero.');
   }
   if (modifier >= 1 && modifier <= 3) add(`iceHp${modifier}`, 10, 'cover');
   if (modifier >= 4 && modifier <= 6) add(`DirtHp${modifier - 3}`, 10, 'cover');
   if (modifier >= 7 && type !== 10) { badges.push(`Q${modifier}`); notes.push('Precharge on a non-cannon is retained as source data.'); }
   if (stone >= 1 && stone <= 5) add(`stone_${stone}hp`, 8, 'cover');
-  if (stone >= 6 && stone <= 8) { add(`resistantBlocker_tutorial_${stone - 5}hp`, 8, 'cover'); notes.push('Resistant blocker: original tutorial pose at the encoded strength.'); }
+  if (stone >= 6 && stone <= 8) { add(`material_resistant_${stone - 5}`, 8, 'cover'); notes.push('Resistant blocker: original IdleHp skeleton pose at the encoded strength, time zero.'); }
   if (stone >= 9) notes.push(wheelState(level, stone).note);
   if (v('crates')) {
     const crate = v('crates'), hp = crate % 4, crateColor = Math.floor(crate / 4);
