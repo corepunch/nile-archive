@@ -224,11 +224,14 @@ def g22(v):
     return max(0., v) ** (1 / 2.2)
 
 
-def palette(writer, kwargs, bevels):
+def palette(writer, kwargs, bevels, prefix, bump_distance, octaves, defs):
     """Point Scener's writer at one kit's materials: Blender's roughness as shininess (Scener's shader takes
     roughness = exp(-shininess / 18)), its bevel width and segments, specular and metallic, emission as unlit.
+    A material Blender textures with noise (mottle: colour variation, bump: a rough surface) becomes a Scener
+    <material> with a noise <map> on the same scale, in defs; its pieces name it and keep their own colours.
     Returns material -> emission strength, by which an unlit piece's colour is raised as Blender's is."""
     writer.MATERIALS.clear(); writer.SURFACE.clear(); writer.SEGMENTS.clear(); writer.GRADIENTS.clear()
+    writer.MATERIAL_IDS.clear()
     emission = {}
     for name, kw in kwargs.items():
         rough = max(kw.get('rough', .7), .05)
@@ -238,6 +241,22 @@ def palette(writer, kwargs, bevels):
         writer.SURFACE[name] = (kw.get('spec', .4), kw.get('metal', 0.))
         if kw.get('emit', 0) > 0:
             emission[name] = kw['emit']
+        bump, mottle = kw.get('bump', 0.), kw.get('mottle', 0.)
+        if bump or mottle:
+            mid = f'{prefix}-{name}'
+            writer.MATERIAL_IDS[name] = mid
+            # Blender's noise on object coordinates at `scale` per tile; mottle maps its 0.32..0.68 to
+            # 1 - mottle .. 1 + mottle / 2, which over the whole 0..1 is the range below
+            lo, hi = (1 - 2.33 * mottle, 1 + 1.83 * mottle) if mottle else (1., 1.)
+            spec, metal = writer.SURFACE[name]
+            noise = [('type', 'noise'), ('size', f(TILE / kw.get('scale', 20.), 3)), ('octaves', octaves)]
+            if mottle:
+                noise += [('from', ' '.join([f(lo, 3)] * 3)), ('to', ' '.join([f(hi, 3)] * 3))]
+            if bump:
+                noise.append(('bump', f(bump * bump_distance * TILE, 3)))
+            defs[mid] = '  <material id="%s" shininess="%s" specular="%s"%s><map %s/></material>' % (
+                mid, f(writer.MATERIALS[name][0], 1), f(spec, 3), ' metallic="%s"' % f(metal, 3) if metal else '',
+                ' '.join('%s="%s"' % kv for kv in noise))
     return emission
 
 
@@ -253,6 +272,17 @@ def capture(game, stats=None):
     sys.path.insert(0, str(here))
     import building_kit as kit
     writer, _ = find_writer()
+    if not hasattr(writer, 'MATERIAL_IDS'):   # a piece of a textured material names it and keeps its colour
+        writer.MATERIAL_IDS = {}
+        look = writer.Kit.look
+        def textured(self, mat, col):
+            pairs = look(self, mat, col)
+            mid = writer.MATERIAL_IDS.get(mat)
+            if not mid:
+                return pairs
+            return [p for p in pairs if p[0] not in ('shininess', 'specular', 'metallic')] + [('material', mid)]
+        writer.Kit.look = textured
+    defs = {}
     stats = stats if stats is not None else collections.Counter()
     shapes = {}
     KitS = scener_kit.make_kit(kit.Kit, writer, g22, kit.Gradient, stats)
@@ -269,12 +299,13 @@ def capture(game, stats=None):
         market_wishes.Kit, scene.Kit = KitS, OwnS
         for i, it in enumerate(scene.CATALOGUE):
             wish = it['key'] in market_wishes.KEYS
-            (KitS if wish else OwnS).emission = palette(writer, *looks['kit' if wish else 'own'])
+            (KitS if wish else OwnS).emission = palette(writer, *looks['kit' if wish else 'own'],
+                                                        *(('kit', .03, 4) if wish else ('own', .02, 3)), defs)
             k = market_wishes.model(it, i) if wish else scene.model(it, i)
             out.append(Captured(it, k, kit.TREE_GROWTH if it['key'] in scene.TREES else 1., (1, .62, .28)))
         lighting = dict(sun=(3.0, 6, (1, .9, .78), (-.55, 1.0, -1.25)), fill=(.55, 40, (.75, .85, 1), (-1.0, .2, -.6)),
                         world=((.62, .74, 1.0), .7), exposure=-.15)
-        return out, shapes, lighting
+        return out, shapes, lighting, defs
 
     calls = []
     kit.assemble = lambda *a, **k: calls.append((a, k))
@@ -282,7 +313,7 @@ def capture(game, stats=None):
     (_, items, builders, _), opts = calls[0][0][:4], calls[0][1]
     slab, slab_color, model_scale = opts.get('slab'), opts.get('slab_color'), opts.get('model_scale')
     light_color = opts.get('light_color', (1, .62, .28))
-    KitS.emission = palette(writer, *looks['kit'])
+    KitS.emission = palette(writer, *looks['kit'], 'kit', .03, 4, defs)
     for i, it in enumerate(items):   # kit.assemble, without bpy
         kit.R.seed(7 + i)
         k = KitS(it['w'], it['h'])
@@ -295,7 +326,7 @@ def capture(game, stats=None):
         out.append(Captured(it, k, model_scale(it, reach) if model_scale else 1., light_color))
     lighting = dict(sun=(2.7, 7, (1, .93, .8), (.34, 1.0, -1.3)), fill=(.7, 40, (1, .88, .72), (-1.0, .35, -.7)),
                     world=((.62, .72, .95), .62), exposure=0.)
-    return out, shapes, lighting
+    return out, shapes, lighting, defs
 
 
 # ---------------------------------------------------------------- writing
@@ -356,7 +387,7 @@ def write_scenes(game, out, ppt, shadow_cfg, keys=None, log=print):
     every pixel position in its camera's image, as render_buildings_blender.py reports them."""
     import collections
     stats = collections.Counter()
-    buildings, shapes, lighting = capture(game, stats)
+    buildings, shapes, lighting, defs = capture(game, stats)
     order = [b.key for b in buildings]
     if keys:
         missing = [k for k in keys if k not in order]
@@ -405,7 +436,7 @@ def write_scenes(game, out, ppt, shadow_cfg, keys=None, log=print):
             f'<!-- {game} buildings for the city camera, written by nile-archive tools/scener_buildings.py from the',
             '     game\'s build_scene.py: one group per building, each kit call one primitive with its modifiers.',
             '     Generated: edit build_scene.py, not this file. -->']
-    lib = ['  <include src="utilities.xml"/>'] + profiles
+    lib = ['  <include src="utilities.xml"/>'] + profiles + list(defs.values())
     sprites = head + ['<scene ambient="%s" background="0 0 0">' % ' '.join(f(c, 3) for c in ambient),
                       sun_xml(sun_strength, sun_colour, sun_direction, 1, exposure),
                       sun_xml(fill_strength, fill_colour, fill_direction, 0, exposure)] + lib + sprite + ['</scene>', '']
