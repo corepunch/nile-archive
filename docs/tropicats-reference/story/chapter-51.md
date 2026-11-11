@@ -1,8 +1,8 @@
-# Chapter 51
+# Chapter 51: New Purrspectives
 
 [Story index](../STORY.md) · [Previous](chapter-50.md) · [Next](chapter-52.md)
 
-Configured chapter start: campaign level **1931**; starts with `chp51_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1931–1970**; starts with `chp51_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie tries to understand Mee Li's work habits. Ava and Meownardo build an inn, and the group helps Mee Li try running it more calmly.
 

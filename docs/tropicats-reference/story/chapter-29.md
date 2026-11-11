@@ -1,8 +1,8 @@
-# Chapter 29
+# Chapter 29: Trouble In Paradise
 
 [Story index](../STORY.md) · [Previous](chapter-28.md) · [Next](chapter-30.md)
 
-Configured chapter start: campaign level **1051**; starts with `chp29_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1051–1090**; starts with `chp29_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Wedding preparations are interrupted by Blacktail's suspicious absence and a search. Elsie and Blacktail marry and leave for Catton Abbey, asking the others to keep looking for their parents.
 

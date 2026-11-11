@@ -1,8 +1,8 @@
-# Chapter 60
+# Chapter 60: Cats Rule, Dogs Drool
 
 [Story index](../STORY.md) · [Previous](chapter-59.md) · [Next](chapter-61.md)
 
-Configured chapter start: campaign level **2291**; starts with `chp60_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2291–2330**; starts with `chp60_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Flyers attract Nordog visitors to the hockey match, and another Taka arrives. The cat–dog contest finally takes place, but neither side proves decisive.
 

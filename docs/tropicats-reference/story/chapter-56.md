@@ -1,8 +1,8 @@
-# Chapter 56
+# Chapter 56: Too Mewl For School
 
 [Story index](../STORY.md) · [Previous](chapter-55.md) · [Next](chapter-57.md)
 
-Configured chapter start: campaign level **2131**; starts with `chp56_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2131–2170**; starts with `chp56_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Kip dislikes his first classes and resents Lily's success while the adults improve the school. Redd wonders whether he is a cat or a dog, and attempts to manage Kip's behavior deepen his frustration.
 

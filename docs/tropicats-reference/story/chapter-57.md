@@ -1,8 +1,8 @@
-# Chapter 57
+# Chapter 57: Ain't Misbehavin'
 
 [Story index](../STORY.md) · [Previous](chapter-56.md) · [Next](chapter-58.md)
 
-Configured chapter start: campaign level **2171**; starts with `chp57_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2171–2210**; starts with `chp57_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Lily's learning prompts a library while Kip and Redd prank Sylvia and receive detention. Kip breaks a crystal and releases vines; Gruffgar reaches him, and Kip regrets his behavior toward Lily.
 

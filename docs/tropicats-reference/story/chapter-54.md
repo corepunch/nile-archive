@@ -1,8 +1,8 @@
-# Chapter 54
+# Chapter 54: A Meow For Help
 
 [Story index](../STORY.md) · [Previous](chapter-53.md) · [Next](chapter-55.md)
 
-Configured chapter start: campaign level **2051**; starts with `chp54_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2051–2090**; starts with `chp54_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie takes command and seeks allies; the Duchess also organizes resistance to the Queen. Taka accidentally meets another version of himself through a portal, while a letter reaches Redd.
 

@@ -1,8 +1,8 @@
-# Chapter 53
+# Chapter 53: Purrcini's Cannon March
 
 [Story index](../STORY.md) · [Previous](chapter-52.md) · [Next](chapter-54.md)
 
-Configured chapter start: campaign level **2011**; starts with `chp53_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2011–2050**; starts with `chp53_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Purrcini arrives with the Queen's navy and prevents departure; Tammy is captured and then freed through Elsie's mother. Blacktail surrenders so Olivia can return to her kittens, leaving Elsie determined to rescue him.
 

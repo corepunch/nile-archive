@@ -1,8 +1,8 @@
-# Chapter 61
+# Chapter 61: Sylvia's Scheme
 
 [Story index](../STORY.md) · [Previous](chapter-60.md) · [Next](chapter-62.md)
 
-Configured chapter start: campaign level **2331**; starts with `chp61_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2331–2370**; starts with `chp61_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Lily melts the ice to end the match, angering Sylvia. As Lily studies crystals, news arrives of Blacktail's capture, and the children investigate how the crystals could help rescue him.
 

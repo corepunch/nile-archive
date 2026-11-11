@@ -1,8 +1,8 @@
-# Chapter 33
+# Chapter 33: Courting Disaster
 
 [Story index](../STORY.md) · [Previous](chapter-32.md) · [Next](chapter-34.md)
 
-Configured chapter start: campaign level **1211**; starts with `chp33_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1211–1250**; starts with `chp33_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Blacktail helps Felicity prepare a dinner; his apparent theft of McYowler's clubs raises suspicion. At the dinner McYowler suddenly collapses, turning the visit into a murder mystery.
 

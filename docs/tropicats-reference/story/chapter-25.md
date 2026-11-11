@@ -1,8 +1,8 @@
-# Chapter 25
+# Chapter 25: A Trial Of Guts
 
 [Story index](../STORY.md) · [Previous](chapter-24.md) · [Next](chapter-26.md)
 
-Configured chapter start: campaign level **891**; starts with `chp25_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **891–930**; starts with `chp25_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Ragnaruff wins a trial for the right to seek the Nordog crown, and Meowser pledges allegiance to him. Olivia and the Chief discover that poison caused Gruffgar's apparent voices.
 

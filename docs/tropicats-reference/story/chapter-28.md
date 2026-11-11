@@ -1,8 +1,8 @@
-# Chapter 28
+# Chapter 28: Toil And Trouble
 
 [Story index](../STORY.md) · [Previous](chapter-27.md) · [Next](chapter-29.md)
 
-Configured chapter start: campaign level **1011**; starts with `chp28_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1011–1050**; starts with `chp28_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Sylvia's amnesia poison affects the Duchess; an antidote restores hope and Sylvia faces trial. Ragnaruff gives her a chance to make amends, and the Duchess permits Blacktail and Elsie to marry despite the Queen's wishes.
 

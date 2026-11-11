@@ -1,8 +1,8 @@
-# Chapter 36
+# Chapter 36: The Ham Of The Whiskervilles
 
 [Story index](../STORY.md) · [Previous](chapter-35.md) · [Next](chapter-37.md)
 
-Configured chapter start: campaign level **1331**; starts with `chp36_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1331–1370**; starts with `chp36_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 A supposed supernatural hamster leads the group to the old clan ruins. Blacktail confronts the creature, and a trap reveals Woodshavings in disguise.
 

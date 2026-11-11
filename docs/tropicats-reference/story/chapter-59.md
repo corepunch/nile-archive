@@ -1,8 +1,8 @@
-# Chapter 59
+# Chapter 59: A Song Of Ice And Felines
 
 [Story index](../STORY.md) · [Previous](chapter-58.md) · [Next](chapter-60.md)
 
-Configured chapter start: campaign level **2251**; starts with `chp59_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2251–2290**; starts with `chp59_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 A hockey rink becomes the setting for the rivalry. Gruffgar uses play to teach Kip and Redd, Lily studies advanced magic with Sylvia, and Kip begins to enjoy school.
 

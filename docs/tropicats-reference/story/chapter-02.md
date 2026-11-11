@@ -1,8 +1,8 @@
-# Chapter 2
+# Chapter 2: A Mew Beginning
 
 [Story index](../STORY.md) · [Previous](chapter-01.md) · [Next](chapter-03.md)
 
-Configured chapter start: campaign level **6**; starts with `chp2_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **6–10**; starts with `chp2_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie's hut is repaired and her brother's crab recovered. Ava then reveals that the totem was deliberately cut down, changing the restoration into an investigation.
 

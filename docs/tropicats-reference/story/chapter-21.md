@@ -1,8 +1,8 @@
-# Chapter 21
+# Chapter 21: A Way Home?
 
 [Story index](../STORY.md) · [Previous](chapter-20.md) · [Next](chapter-22.md)
 
-Configured chapter start: campaign level **731**; starts with `chp21_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **731–770**; starts with `chp21_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Tracks reveal a puppy, Redd, who recounts evacuation from Nordog Island and separation from his mother in Montclaw's storm. Meanwhile Taka and the Chief help Felicity recover the confidence to enter a vegetable contest.
 

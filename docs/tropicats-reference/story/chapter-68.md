@@ -1,8 +1,8 @@
-# Chapter 68
+# Chapter 68: Cat Scratch Fever
 
 [Story index](../STORY.md) · [Previous](chapter-67.md) · [Next](chapter-69.md)
 
-Configured chapter start: campaign level **2611**; starts with `chp68_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2611–2650**; starts with `chp68_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The group recognizes that Sylvia and the alternate Tropicats have manipulated them. The hostile counterparts are sent home, the good Sylvia returns, and Ragnaruff destroys their totem.
 

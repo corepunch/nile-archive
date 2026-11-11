@@ -1,10 +1,10 @@
-# Chapter 70
+# Chapter 70: The Fate of the Crown
 
-[Story index](../STORY.md) · [Previous](chapter-69.md) · 
+[Story index](../STORY.md) · [Previous](chapter-69.md)
 
-Configured chapter start: campaign level **2691**; starts with `chp70_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2691–2730**; starts with `chp70_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
-Elsie reunites with Blacktail and sends Purrcini away. She briefly becomes queen, passes the crown to the Chief, and the friends spend a final quest together before farewell.
+Elsie reunites with Blacktail; Purrcini is sent away after she refuses his appeal. She briefly becomes queen, passes the crown to the Chief, and the friends spend a final quest together before farewell.
 
 ## chp70_q1: In With The Mew
 

@@ -1,8 +1,8 @@
-# Chapter 24
+# Chapter 24: Dogs Of War
 
 [Story index](../STORY.md) · [Previous](chapter-23.md) · [Next](chapter-25.md)
 
-Configured chapter start: campaign level **851**; starts with `chp24_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **851–890**; starts with `chp24_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Restoring a hall honoring Gruffgar's grandfather brings hope of peace and spares Meowser. A summit collapses after the Duchess arranges Blacktail's political marriage and Blacktail clashes with Gruffgar.
 

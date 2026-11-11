@@ -1,8 +1,8 @@
-# Chapter 9
+# Chapter 9: The Great Kikuna
 
 [Story index](../STORY.md) · [Previous](chapter-08.md) · [Next](chapter-10.md)
 
-Configured chapter start: campaign level **251**; starts with `chp9_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **251–290**; starts with `chp9_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The elder predicts Kikuna's return as the cats restore places connected to Kikuna and his brother Tika. When the prophecy fails, the elder's hideout reveals his role in destroying the totem and his plan involving Tika's spirit.
 

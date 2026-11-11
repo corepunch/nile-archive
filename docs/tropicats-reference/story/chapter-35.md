@@ -1,8 +1,8 @@
-# Chapter 35
+# Chapter 35: Whodunit?!
 
 [Story index](../STORY.md) · [Previous](chapter-34.md) · [Next](chapter-36.md)
 
-Configured chapter start: campaign level **1291**; starts with `chp35_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1291–1330**; starts with `chp35_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Sherlock Bones investigates an invitation nobody admits sending and rules out Blacktail. Poison and a will implicate Woodshavings, but the detective ultimately rules him out as the killer too.
 

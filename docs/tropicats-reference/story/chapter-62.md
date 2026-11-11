@@ -1,8 +1,8 @@
-# Chapter 62
+# Chapter 62: Lily The Learned
 
 [Story index](../STORY.md) · [Previous](chapter-61.md) · [Next](chapter-63.md)
 
-Configured chapter start: campaign level **2371**; starts with `chp62_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2371–2410**; starts with `chp62_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Lily seeks Nordog support and permission to join the rescue. Gruffgar refuses to release her from school, so she and Kip secretly board the expedition to the Island of the Ancients.
 

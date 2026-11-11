@@ -1,8 +1,8 @@
-# Chapter 18
+# Chapter 18: Age Of Purrgress
 
 [Story index](../STORY.md) · [Previous](chapter-17.md) · [Next](chapter-19.md)
 
-Configured chapter start: campaign level **611**; starts with `chp18_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **611–650**; starts with `chp18_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 A pigeon post office helps Mee Li seek an antidote; Kip loses his unusual hair. Given a second chance as a merchant, she asks for help with Felicity's new farm, and the Chief and Ava depart.
 

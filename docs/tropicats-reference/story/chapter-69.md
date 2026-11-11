@@ -1,8 +1,8 @@
-# Chapter 69
+# Chapter 69: Impurrial Interference
 
 [Story index](../STORY.md) · [Previous](chapter-68.md) · [Next](chapter-70.md)
 
-Configured chapter start: campaign level **2651**; starts with `chp69_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2651–2690**; starts with `chp69_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The Queen and Purrcini arrive with Blacktail; Sylvia tries to undo the harm and Gruffgar attempts to reason with the Queen. When her claim is challenged, she attacks Elsie and Gruffgar intervenes.
 

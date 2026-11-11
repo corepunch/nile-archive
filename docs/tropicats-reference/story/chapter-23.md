@@ -1,8 +1,8 @@
-# Chapter 23
+# Chapter 23: A Hero's Welcome
 
 [Story index](../STORY.md) · [Previous](chapter-22.md) · [Next](chapter-24.md)
 
-Configured chapter start: campaign level **811**; starts with `chp23_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **811–850**; starts with `chp23_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Nordog Island is burned and abandoned; the Impurrial spy Meowser admits accidentally causing the fire. A restored horn recalls King Gruffgar's fleet, but the king still plans war and Meowser's execution.
 

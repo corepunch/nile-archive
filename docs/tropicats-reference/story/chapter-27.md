@@ -1,8 +1,8 @@
-# Chapter 27
+# Chapter 27: The Mother's Truth
 
 [Story index](../STORY.md) · [Previous](chapter-26.md) · [Next](chapter-28.md)
 
-Configured chapter start: campaign level **971**; starts with `chp27_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **971–1010**; starts with `chp27_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The Mother is Sylvia, Taka's mother, who offers an account of the missing parents. A mysterious cat and Elder Alapa give competing information about Sylvia and the parents, leaving their fate uncertain.
 

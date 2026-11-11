@@ -1,8 +1,8 @@
-# Chapter 43
+# Chapter 43: Renaissance Cat
 
 [Story index](../STORY.md) · [Previous](chapter-42.md) · [Next](chapter-44.md)
 
-Configured chapter start: campaign level **1611**; starts with `chp43_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1611–1650**; starts with `chp43_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie's mother receives the antidote, but a storm destroys Blacktail's ship. The group meets inventor Meownardo, who paints Elsie; Ava's attraction to him becomes awkward when she learns he is gay.
 

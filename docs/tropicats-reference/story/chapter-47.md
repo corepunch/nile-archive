@@ -1,8 +1,8 @@
-# Chapter 47
+# Chapter 47: Unhappy Landings
 
 [Story index](../STORY.md) · [Previous](chapter-46.md) · [Next](chapter-48.md)
 
-Configured chapter start: campaign level **1771**; starts with `chp47_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1771–1810**; starts with `chp47_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Wind damages the wings and the group crashes at Felicity's farm, where Olivia is hurt. A shipyard is built; Felicity and Mee Li's relationship is revealed, and the inventors propose wind-independent propulsion.
 

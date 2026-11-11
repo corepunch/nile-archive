@@ -1,8 +1,8 @@
-# Chapter 11
+# Chapter 11: I Do, I Mew
 
 [Story index](../STORY.md) · [Previous](chapter-10.md) · [Next](chapter-12.md)
 
-Configured chapter start: campaign level **331**; starts with `chp11_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **331–370**; starts with `chp11_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Olivia withdraws and calls off the wedding, but Cubby demonstrates his commitment with a proposal setting and her favorite flamingo. They marry at the restored pagoda and sail on Ragnaruff's ship.
 

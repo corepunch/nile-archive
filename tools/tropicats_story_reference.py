@@ -30,10 +30,15 @@ def main():
     for chapter in chapters:
         n = chapter['chapter']
         selected = [q for q in quests if re.fullmatch(r'chp%d_q\d+' % n, q['id'])]
-        lines = [f'# Chapter {n}', '', '[Story index](../STORY.md) · '
-                 + (f'[Previous](chapter-{n-1:02}.md) · ' if n > 1 else '')
-                 + (f'[Next](chapter-{n+1:02}.md)' if n < len(chapters) else ''), '',
-                 f"Configured chapter start: campaign level **{chapter['first_level']}**; starts with `{chapter['started_by_quest']}`. Task gates below are level/tier tokens, not guaranteed play order.", '', narratives[str(n)], '']
+        name = safe(english[f'quest.chapter.name_{n}'])
+        end = chapters[n]['first_level'] - 1 if n < len(chapters) else max(int(v) for q in selected for token in q['task_levels'] for v in re.findall(r'\d+', token))
+        nav = ['[Story index](../STORY.md)']
+        if n > 1:
+            nav.append(f'[Previous](chapter-{n-1:02}.md)')
+        if n < len(chapters):
+            nav.append(f'[Next](chapter-{n+1:02}.md)')
+        lines = [f'# Chapter {n}: {name}', '', ' · '.join(nav), '',
+                 f"Campaign levels **{chapter['first_level']}–{end}**; starts with `{chapter['started_by_quest']}`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.", '', narratives[str(n)], '']
         for q in selected:
             qid = q['id']
             assert qid not in ids

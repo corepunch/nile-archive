@@ -1,8 +1,8 @@
-# Chapter 44
+# Chapter 44: Dubious Parentage
 
 [Story index](../STORY.md) · [Previous](chapter-43.md) · [Next](chapter-45.md)
 
-Configured chapter start: campaign level **1651**; starts with `chp44_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1651–1690**; starts with `chp44_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Ava and Meownardo become friends and pursue a way home. A conventional ship would take too long, so Ava proposes flying with wings.
 

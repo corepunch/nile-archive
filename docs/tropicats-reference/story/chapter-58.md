@@ -1,8 +1,8 @@
-# Chapter 58
+# Chapter 58: To Furgive Is Divine
 
 [Story index](../STORY.md) · [Previous](chapter-57.md) · [Next](chapter-59.md)
 
-Configured chapter start: campaign level **2211**; starts with `chp58_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2211–2250**; starts with `chp58_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Lily forgives Kip and uses magic to clean up the vines, though Sylvia rejects his apology. Ragnaruff observes the school, and Sylvia and Gruffgar's dispute over cats and dogs escalates toward a contest.
 

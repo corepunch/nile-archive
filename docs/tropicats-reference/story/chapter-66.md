@@ -1,8 +1,8 @@
-# Chapter 66
+# Chapter 66: The Return Of Blacktail
 
 [Story index](../STORY.md) · [Previous](chapter-65.md) · [Next](chapter-67.md)
 
-Configured chapter start: campaign level **2531**; starts with `chp66_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2531–2570**; starts with `chp66_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 A crystal transport system helps the rescue effort, and the Lilies bring another Blacktail through the portal. Seeing him kiss another Elsie hurts the original Elsie; Sylvia redirects her anger toward Purrcini.
 

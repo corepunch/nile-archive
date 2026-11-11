@@ -1,8 +1,8 @@
-# Chapter 22
+# Chapter 22: The Dream Harvest
 
 [Story index](../STORY.md) · [Previous](chapter-21.md) · [Next](chapter-23.md)
 
-Configured chapter start: campaign level **771**; starts with `chp22_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **771–810**; starts with `chp22_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Felicity prepares for and wins the regional farm contest judged by the Duchess. Redd's account and the observatory give Ragnaruff a route home, and he, Redd and the Chief sail north.
 

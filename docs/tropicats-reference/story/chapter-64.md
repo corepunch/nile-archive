@@ -1,8 +1,8 @@
-# Chapter 64
+# Chapter 64: Hisstaken Identity
 
 [Story index](../STORY.md) · [Previous](chapter-63.md) · [Next](chapter-65.md)
 
-Configured chapter start: campaign level **2451**; starts with `chp64_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2451–2490**; starts with `chp64_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 More alternate Tropicats arrive, including an Ava romantically involved with her Cubby. Their different relationships and personalities unsettle the original group, and Sylvia is expected to arrive.
 

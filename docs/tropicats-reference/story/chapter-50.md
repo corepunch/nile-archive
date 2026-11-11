@@ -1,8 +1,8 @@
-# Chapter 50
+# Chapter 50: All Work And No Play
 
 [Story index](../STORY.md) · [Previous](chapter-49.md) · [Next](chapter-51.md)
 
-Configured chapter start: campaign level **1891**; starts with `chp50_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1891–1930**; starts with `chp50_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The team works toward a critic's visit that does not happen as expected. The restaurant becomes unbearable even for Felicity, who breaks up with Mee Li and asks her to change her relationship with work.
 

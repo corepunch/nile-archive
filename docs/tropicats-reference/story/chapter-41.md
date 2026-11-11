@@ -1,8 +1,8 @@
-# Chapter 41
+# Chapter 41: Of Art And Memory
 
 [Story index](../STORY.md) · [Previous](chapter-40.md) · [Next](chapter-42.md)
 
-Configured chapter start: campaign level **1531**; starts with `chp41_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1531–1570**; starts with `chp41_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Olivia and Tammy work toward an antidote, but Purrcini removes Elsie's mother to protect the performance. The group plans a deliberately embarrassing show to undermine him and get her back.
 

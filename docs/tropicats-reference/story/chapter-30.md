@@ -1,8 +1,8 @@
-# Chapter 30
+# Chapter 30: The Truth About Chief
 
 [Story index](../STORY.md) · [Previous](chapter-29.md) · [Next](chapter-31.md)
 
-Configured chapter start: campaign level **1091**; starts with `chp30_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1091–1130**; starts with `chp30_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Evidence places the parents on the Island of the Ancients, and Sylvia's library contains a doll resembling the Chief. A shrine shows a vision of the Chief's homeland; a letter sends Ava and the Chief to Catton Abbey.
 

@@ -1,8 +1,8 @@
-# Chapter 4
+# Chapter 4: On The Prowl
 
 [Story index](../STORY.md) · [Previous](chapter-03.md) · [Next](chapter-05.md)
 
-Configured chapter start: campaign level **51**; starts with `chp4_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **51–90**; starts with `chp4_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The search for tracks brings in wildlife expert Olivia. Her damaged encyclopedia identifies a dog, alarming the tribe; gathering medicine from the herb market calms her and directs them to the shaman.
 

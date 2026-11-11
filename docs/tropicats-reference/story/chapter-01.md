@@ -1,8 +1,8 @@
-# Chapter 1
+# Chapter 1: Totem Troubles
 
 [Story index](../STORY.md) · [Next](chapter-02.md)
 
-Configured chapter start: campaign level **1**; starts with `chp1_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1–5**; starts with `chp1_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The Chief clears the village and restores the fallen Great Totem, returning its protective magic after the earthquake.
 

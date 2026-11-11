@@ -1,8 +1,8 @@
-# Chapter 7
+# Chapter 7: A Fair Trial
 
 [Story index](../STORY.md) · [Previous](chapter-06.md) · [Next](chapter-08.md)
 
-Configured chapter start: campaign level **171**; starts with `chp7_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **171–210**; starts with `chp7_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Olivia tries to treat the prisoner and the purified spring heals him. Ragnaruff claims a bottle message offered a reward for cutting the totem; the cats cannot find it and prepare to send him away, until Lily and Kip stray into crocodile territory.
 

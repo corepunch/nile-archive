@@ -1,8 +1,8 @@
-# Chapter 3
+# Chapter 3: The Totem Cutter
 
 [Story index](../STORY.md) · [Previous](chapter-02.md) · [Next](chapter-04.md)
 
-Configured chapter start: campaign level **11**; starts with `chp3_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **11–50**; starts with `chp3_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The search leads to guard Cubby, whose breakfast and investigation require work on the grill. A witness recalls a strange creature; Cubby's hut must be restored before he can retrieve his spear.
 

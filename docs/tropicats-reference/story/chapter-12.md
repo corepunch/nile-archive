@@ -1,8 +1,8 @@
-# Chapter 12
+# Chapter 12: Purrenthood
 
 [Story index](../STORY.md) · [Previous](chapter-11.md) · [Next](chapter-13.md)
 
-Configured chapter start: campaign level **371**; starts with `chp12_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **371–410**; starts with `chp12_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Pregnancy brings gifts and a new family hut, but Cubby disappears as Olivia goes into labor. Ragnaruff finds and reassures him, and the playground is completed in time for the twins' birth.
 

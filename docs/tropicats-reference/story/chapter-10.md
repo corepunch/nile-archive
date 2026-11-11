@@ -1,8 +1,8 @@
-# Chapter 10
+# Chapter 10: Taming Tika
 
 [Story index](../STORY.md) · [Previous](chapter-09.md) · [Next](chapter-11.md)
 
-Configured chapter start: campaign level **291**; starts with `chp10_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **291–330**; starts with `chp10_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Kip uses village memories to calm Tika, and Kikuna reconciles with his brother. The elder apologizes; the story shifts to Olivia's planned proposal and Ava's competing offer to Cubby.
 

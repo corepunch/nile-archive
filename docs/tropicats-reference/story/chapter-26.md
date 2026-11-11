@@ -1,8 +1,8 @@
-# Chapter 26
+# Chapter 26: Hail To The King
 
 [Story index](../STORY.md) · [Previous](chapter-25.md) · [Next](chapter-27.md)
 
-Configured chapter start: campaign level **931**; starts with `chp26_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **931–970**; starts with `chp26_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Barker is identified as the poisoner, acting for the mysterious Mother. Ragnaruff becomes king; the Mother invites the Chief to the Island of the Ancients, and Taka recognizes his mother's poison recipe.
 

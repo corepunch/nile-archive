@@ -1,8 +1,8 @@
-# Chapter 52
+# Chapter 52: Furgive And Furget
 
 [Story index](../STORY.md) · [Previous](chapter-51.md) · [Next](chapter-53.md)
 
-Configured chapter start: campaign level **1971**; starts with `chp52_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1971–2010**; starts with `chp52_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Felicity sees Mee Li's change and the pair reconcile. Meanwhile Cubby struggles to care for the kittens without Olivia, and the steamship is completed to take her home.
 

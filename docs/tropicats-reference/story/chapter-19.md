@@ -1,8 +1,8 @@
-# Chapter 19
+# Chapter 19: Felicity's Farm
 
 [Story index](../STORY.md) · [Previous](chapter-18.md) · [Next](chapter-20.md)
 
-Configured chapter start: campaign level **651**; starts with `chp19_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **651–690**; starts with `chp19_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 At Felicity's farm the group builds a farmhouse and finds water while clues about former owner Montclaw suggest something unsettling in the woods. His diary refers to a storm and a shaman as the farm takes shape.
 

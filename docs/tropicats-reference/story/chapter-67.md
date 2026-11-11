@@ -1,8 +1,8 @@
-# Chapter 67
+# Chapter 67: Tropicruel Cats
 
 [Story index](../STORY.md) · [Previous](chapter-66.md) · [Next](chapter-68.md)
 
-Configured chapter start: campaign level **2571**; starts with `chp67_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2571–2610**; starts with `chp67_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie trains to confront Purrcini, with Sylvia urging her on. Nibblesby builds an information network among hamster butlers, and Sherlock Bones discovers a secret about the Queen's claim to rule.
 

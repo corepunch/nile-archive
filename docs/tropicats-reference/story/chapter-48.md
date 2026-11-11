@@ -1,8 +1,8 @@
-# Chapter 48
+# Chapter 48: Captains Of Industry
 
 [Story index](../STORY.md) · [Previous](chapter-47.md) · [Next](chapter-49.md)
 
-Configured chapter start: campaign level **1811**; starts with `chp48_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1811–1850**; starts with `chp48_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The inventors demonstrate a steam engine. Mee Li sells prototypes to fund a surprise for Felicity, extending the work and delaying the journey home while she plans a restaurant.
 

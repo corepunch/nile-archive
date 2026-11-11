@@ -1,8 +1,8 @@
-# Chapter 34
+# Chapter 34: Ode To A Highland Cat
 
 [Story index](../STORY.md) · [Previous](chapter-33.md) · [Next](chapter-35.md)
 
-Configured chapter start: campaign level **1251**; starts with `chp34_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1251–1290**; starts with `chp34_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Woodshavings accuses the guests, the Duchess grieves, and McYowler's body vanishes. The group tries to summon help despite a missing carrier pigeon; an unexpected visitor arrives.
 

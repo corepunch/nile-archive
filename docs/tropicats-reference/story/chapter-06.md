@@ -1,8 +1,8 @@
-# Chapter 6
+# Chapter 6: Heating Up
 
 [Story index](../STORY.md) · [Previous](chapter-05.md) · [Next](chapter-07.md)
 
-Configured chapter start: campaign level **131**; starts with `chp6_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **131–170**; starts with `chp6_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Taka prepares a sun ritual at the repaired shrine to draw the dog out for water. The dog falls into the well during the attempted capture and is rescued injured.
 

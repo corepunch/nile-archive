@@ -1,8 +1,8 @@
-# Chapter 38
+# Chapter 38: The Highlander And The Duchess
 
 [Story index](../STORY.md) · [Previous](chapter-37.md) · [Next](chapter-39.md)
 
-Configured chapter start: campaign level **1411**; starts with `chp38_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1411–1450**; starts with `chp38_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The Duchess accepts McYowler's proposal and they marry. A new lead says Elsie's missing mother may be an opera singer on Furrenze Island.
 

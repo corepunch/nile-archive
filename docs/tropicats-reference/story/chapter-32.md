@@ -1,8 +1,8 @@
-# Chapter 32
+# Chapter 32: Unfortunate Son
 
 [Story index](../STORY.md) · [Previous](chapter-31.md) · [Next](chapter-33.md)
 
-Configured chapter start: campaign level **1171**; starts with `chp32_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1171–1210**; starts with `chp32_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The Duchess and McYowler grow close as the abbey is prepared for him. His butler Woodshavings mistreats Nibblesby and spreads rumors, but Blacktail agrees to support his mother.
 

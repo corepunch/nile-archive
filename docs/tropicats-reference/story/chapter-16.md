@@ -1,8 +1,8 @@
-# Chapter 16
+# Chapter 16: Bad Romance
 
 [Story index](../STORY.md) · [Previous](chapter-15.md) · [Next](chapter-17.md)
 
-Configured chapter start: campaign level **531**; starts with `chp16_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **531–570**; starts with `chp16_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie breaks off a disappointing date with Furbert; a garden and serenade do not solve the problem. He rediscovers his pirate identity and stands up to his mother, then he and Nibblesby settle on the island before a ship appears in distress.
 

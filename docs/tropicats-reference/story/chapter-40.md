@@ -1,8 +1,8 @@
-# Chapter 40
+# Chapter 40: Purrformance Of A Lifetime
 
 [Story index](../STORY.md) · [Previous](chapter-39.md) · [Next](chapter-41.md)
 
-Configured chapter start: campaign level **1491**; starts with `chp40_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1491–1530**; starts with `chp40_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Elsie tries to build a relationship with her amnesiac mother while Purrcini demands hard work for the opera. Ava's date with Purrcini goes poorly.
 

@@ -1,8 +1,8 @@
-# Chapter 20
+# Chapter 20: Fowl Play
 
 [Story index](../STORY.md) · [Previous](chapter-19.md) · [Next](chapter-21.md)
 
-Configured chapter start: campaign level **691**; starts with `chp20_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **691–730**; starts with `chp20_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Chicks disappear from the repaired coop. Mee Li describes Montclaw's rain magic and an alleged spirit; Taka and Lily investigate, and a failed séance suggests the intruder is alive.
 

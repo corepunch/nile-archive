@@ -1,8 +1,8 @@
-# Chapter 15
+# Chapter 15: Mummy's Boy
 
 [Story index](../STORY.md) · [Previous](chapter-14.md) · [Next](chapter-16.md)
 
-Configured chapter start: campaign level **491**; starts with `chp15_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **491–530**; starts with `chp15_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The Duchess dismisses the island's welcome and customs and wants Blacktail home. Ava builds a mansion to impress her, while Blacktail adopts his birth name Furbert and behaves differently around his mother.
 

@@ -1,8 +1,8 @@
-# Chapter 13
+# Chapter 13: The Beacon
 
 [Story index](../STORY.md) · [Previous](chapter-12.md) · [Next](chapter-14.md)
 
-Configured chapter start: campaign level **411**; starts with `chp13_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **411–450**; starts with `chp13_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The twins Layla and Milo meet the tribe. A lighthouse and harbor are built to invite visitors, and the first arriving ship raises the possibility of pirates.
 

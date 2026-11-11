@@ -1,8 +1,8 @@
-# Chapter 39
+# Chapter 39: Artistic Differences
 
 [Story index](../STORY.md) · [Previous](chapter-38.md) · [Next](chapter-40.md)
 
-Configured chapter start: campaign level **1451**; starts with `chp39_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1451–1490**; starts with `chp39_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 On Furrenze, Elsie finds her mother, who does not remember her. Repairing the opera house and auditioning bring them together, but Elsie wins the lead and upsets her mother.
 

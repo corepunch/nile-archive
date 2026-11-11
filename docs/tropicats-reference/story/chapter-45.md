@@ -1,8 +1,8 @@
-# Chapter 45
+# Chapter 45: The Mother Of Invention
 
 [Story index](../STORY.md) · [Previous](chapter-44.md) · [Next](chapter-46.md)
 
-Configured chapter start: campaign level **1691**; starts with `chp45_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1691–1730**; starts with `chp45_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Excavation for a launch tower reveals ancient remains. Elsie learns that Purrcini is her father, but he refuses to talk; the remains are identified as those of the fin-tailed mercats.
 

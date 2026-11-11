@@ -1,8 +1,8 @@
-# Chapter 14
+# Chapter 14: Pirates of the Sea of Slobber
 
 [Story index](../STORY.md) · [Previous](chapter-13.md) · [Next](chapter-15.md)
 
-Configured chapter start: campaign level **451**; starts with `chp14_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **451–490**; starts with `chp14_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Captain Blacktail arrives seeking somewhere to hide treasure, rather than to steal it. His account of the Duchess leads to the discovery of her spy Nibblesby and the revelation that she is his mother.
 

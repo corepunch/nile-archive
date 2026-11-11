@@ -1,8 +1,8 @@
-# Chapter 55
+# Chapter 55: Herding Kittens
 
 [Story index](../STORY.md) · [Previous](chapter-54.md) · [Next](chapter-56.md)
 
-Configured chapter start: campaign level **2091**; starts with `chp55_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2091–2130**; starts with `chp55_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The adults struggle to keep Kip and Lily occupied; returning King Gruffgar has his own stern approach. They build a school, much to Kip's displeasure.
 

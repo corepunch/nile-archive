@@ -1,10 +1,10 @@
-# Chapter 63
+# Chapter 63: Yarn Theory
 
 [Story index](../STORY.md) · [Previous](chapter-62.md) · [Next](chapter-64.md)
 
-Configured chapter start: campaign level **2411**; starts with `chp63_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2411–2450**; starts with `chp63_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
-Another Taka explains the existence of other worlds. The group opens a portal, welcomes alternate versions of familiar cats and builds them a totem; another Lily uses crystals to send a message to Elsie.
+Another Taka explains the existence of other worlds. The group opens a portal, welcomes alternate versions of familiar cats and builds them a totem; Other Lily teaches Taka to use a crystal, and he sends a message to Elsie.
 
 ## chp63_q1: Into The Takaverse
 

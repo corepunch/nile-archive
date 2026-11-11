@@ -1,8 +1,8 @@
-# Chapter 5
+# Chapter 5: Eternal Enemies?
 
 [Story index](../STORY.md) · [Previous](chapter-04.md) · [Next](chapter-06.md)
 
-Configured chapter start: campaign level **91**; starts with `chp5_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **91–130**; starts with `chp5_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Lily, the shaman's apprentice, regards the dog as a friend. Ava turns Lily's planned tea party into a trap, and the group must regain Lily's cooperation before Taka agrees to make a nonviolent spell.
 

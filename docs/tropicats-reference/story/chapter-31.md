@@ -1,8 +1,8 @@
-# Chapter 31
+# Chapter 31: The Shabby Abbey
 
 [Story index](../STORY.md) · [Previous](chapter-30.md) · [Next](chapter-32.md)
 
-Configured chapter start: campaign level **1131**; starts with `chp31_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1131–1170**; starts with `chp31_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The honeymoon party restores the dilapidated abbey, and the Duchess knights Ava. The group discovers Angus McYowler in a peerage book and invites him to visit the Duchess.
 

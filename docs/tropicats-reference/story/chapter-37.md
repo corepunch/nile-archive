@@ -1,8 +1,8 @@
-# Chapter 37
+# Chapter 37: Night Of The Living Cat
 
 [Story index](../STORY.md) · [Previous](chapter-36.md) · [Next](chapter-38.md)
 
-Configured chapter start: campaign level **1371**; starts with `chp37_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1371–1410**; starts with `chp37_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 McYowler reappears and admits staging his death to test the Duchess's love. He apologizes, earns another chance and prepares a proposal.
 

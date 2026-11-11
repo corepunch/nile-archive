@@ -1,8 +1,8 @@
-# Chapter 46
+# Chapter 46: Flight Of The Tropicats
 
 [Story index](../STORY.md) · [Previous](chapter-45.md) · [Next](chapter-47.md)
 
-Configured chapter start: campaign level **1731**; starts with `chp46_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1731–1770**; starts with `chp46_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Ava and Meownardo build the tower, and the group trains and prepares safety measures for flight. Olivia becomes strong enough to make the journey and they launch.
 

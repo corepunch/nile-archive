@@ -1,8 +1,8 @@
-# Chapter 17
+# Chapter 17: Enter The Inventor
 
 [Story index](../STORY.md) · [Previous](chapter-16.md) · [Next](chapter-18.md)
 
-Configured chapter start: campaign level **571**; starts with `chp17_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **571–610**; starts with `chp17_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The tribe rescues inventor Mee Li and builds her a workshop. Her cure for Kip's cold appears successful, but mass-producing it exposes a side effect: leaves grow on his head.
 

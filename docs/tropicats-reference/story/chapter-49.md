@@ -1,8 +1,8 @@
-# Chapter 49
+# Chapter 49: Felicity's Feast
 
 [Story index](../STORY.md) · [Previous](chapter-48.md) · [Next](chapter-50.md)
 
-Configured chapter start: campaign level **1851**; starts with `chp49_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1851–1890**; starts with `chp49_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Felicity's new bistro draws more customers than expected. Its success strains the group and exhausts the helpers as supplies run low.
 

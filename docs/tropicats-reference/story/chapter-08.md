@@ -1,8 +1,8 @@
-# Chapter 8
+# Chapter 8: Who's A Good Boy?
 
 [Story index](../STORY.md) · [Previous](chapter-07.md) · [Next](chapter-09.md)
 
-Configured chapter start: campaign level **211**; starts with `chp8_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **211–250**; starts with `chp8_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Ragnaruff saves the kittens and earns a place in the tribe. The cats make a home for him and introduce him to their customs; at the rebuilt observatory Olivia sees a sign she associates with the ancestors' return.
 

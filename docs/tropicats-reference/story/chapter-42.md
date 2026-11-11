@@ -1,8 +1,8 @@
-# Chapter 42
+# Chapter 42: The Worst Show On Earth
 
 [Story index](../STORY.md) · [Previous](chapter-41.md) · [Next](chapter-43.md)
 
-Configured chapter start: campaign level **1571**; starts with `chp42_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **1571–1610**; starts with `chp42_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 The troupe publicizes the opera and prepares Ava for the stage, then deliberately makes the performance dreadful. Purrcini loses the audience's respect and Elsie gets her mother back.
 

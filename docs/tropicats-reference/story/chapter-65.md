@@ -1,8 +1,8 @@
-# Chapter 65
+# Chapter 65: Be Mine
 
 [Story index](../STORY.md) · [Previous](chapter-64.md) · [Next](chapter-66.md)
 
-Configured chapter start: campaign level **2491**; starts with `chp65_q1`. Task gates below are level/tier tokens, not guaranteed play order.
+Campaign levels **2491–2530**; starts with `chp65_q1`. The range ends before the next configured chapter, or at the final referenced level for the last chapter. Task gates below are level/tier tokens, not guaranteed play order.
 
 Sylvia directs the search for magic crystals and a mine. When both Cubbies disappear, the two Kips find them asleep in the woods; Cubby feels ashamed and seeks forgiveness.
 
