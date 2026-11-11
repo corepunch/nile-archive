@@ -204,7 +204,7 @@ smoke: $(TEST_BINS)
 	@status=0; for t in $(TEST_GAMES); do ./build/test/$$t smoke || status=1; done; exit $$status
 
 buildings:
-	python3 tools/buildings.py $(GAME) $(KEYS) $(if $(REBUILD),--rebuild)
+	python3 tools/buildings.py $(GAME) $(KEYS) $(if $(REBUILD),--rebuild) $(if $(BLENDER),--blender)
 
 # --- WebAssembly (Emscripten) ------------------------------------------------
 # gnu11 rather than c11: Emscripten's EM_JS/EM_ASM macros need GNU extensions.

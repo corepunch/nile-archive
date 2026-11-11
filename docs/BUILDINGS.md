@@ -112,15 +112,36 @@ Reviewed native-input comparisons are in [the gesture review](review/city-long-p
 
 ## Rendering buildings
 
-Sprites are rendered from each game's Blender master. A painting can't be turned
+Sprites are rendered from each game's `build_scene.py`. A painting can't be turned
 to another camera, so a building needs a model before it has art.
 
 ```sh
-make buildings GAME=relic-rush                     # every building
+make buildings GAME=relic-rush                     # every building, with Scener
 make buildings GAME=relic-rush KEYS="lodge well"   # just these
-make buildings GAME=relic-rush REBUILD=1           # rebuild the .blend from build_scene.py first
+make buildings GAME=relic-rush BLENDER=1           # with Blender/Cycles from the .blend instead
+make buildings GAME=relic-rush BLENDER=1 REBUILD=1 # rebuild the .blend from build_scene.py first
 python3 tools/buildings.py --list relic-rush       # every key
 ```
+
+**Scener renders by default.** [Scener](https://github.com/corepunch/orion-ui/tree/main/apps/scener)
+is a small OpenGL scene renderer. `tools/scener_buildings.py` runs the game's
+`build_scene.py` unchanged, with stand-in `bpy` and `mathutils`, and writes the meshes
+the kit collects (the ones `assemble()` would give Blender) as two Scener scenes: the
+lit buildings, and invisible shadow casters over a white catcher. Every building gets
+an orthographic camera named after its key, framed on whole pixels exactly as the
+Blender script frames it, so registration is identical. Point `SCENER` at the binary,
+or build `make scener` in an `orion-ui` checkout beside this one; without a display
+the renders run under `xvfb-run`. All 234 buildings and shadows of the three games
+take about three minutes on four CPU cores with Mesa's software renderer.
+
+Scener has no general mesh bevel or global illumination: edges keep Blender's 40°
+smoothing but lose the rounded rims, and a calibrated gain stands in for bounced
+light. Use `BLENDER=1` when that difference matters.
+
+**A full render replaces the painted sprites.** `data/buildings/` holds the accepted
+paint-over ([BUILDING_STYLE.md](BUILDING_STYLE.md)); a full `make buildings` writes raw
+renders there. Use `--shadows` to re-render shadows alone, or restore the painted
+sprites afterwards.
 
 **The name is the file.** A building's Blender collection name is its key:
 collection `lodge` becomes `data/buildings/lodge.png` and
@@ -132,10 +153,11 @@ own list: append new rows, never reorder.
 | File | Role |
 |---|---|
 | `games/<game>/art/buildings.json` | Where the game's master is, sprite resolution, samples, post-render step |
-| `games/<game>/art/building-catalogue/build_scene.py` | The models; saves the `.blend` |
+| `games/<game>/art/building-catalogue/build_scene.py` | The models; saves the `.blend`, and is read directly for Scener |
 | `tools/building_kit.py` | The shared toolbox: palette, materials, `Kit`, `assemble()` |
 | `tools/buildings.py` | The command; crops, registers, writes Lua and the review sheet |
-| `tools/render_buildings_blender.py` | Runs inside Blender: one sprite and one shadow per building |
+| `tools/scener_buildings.py` | Runs the models without Blender and writes the Scener scenes |
+| `tools/render_buildings_blender.py` | Runs inside Blender (`BLENDER=1`): one sprite and one shadow per building |
 | `tools/city_camera.py` | The camera for all of them, read from `engine/engine.h` |
 
 To add a building: add a function to the game's `build_scene.py`, add it to the
@@ -201,9 +223,9 @@ sprite. `shadow_pivot` is the same ground centre in shadow pixels and
 by `city_base_span(c, size) / shadow_base_width` and transparent crop margins, sprite
 resolution and lift animation cannot move its anchor. Without `shadow_base_width`
 a layer uses the sprite's pixel scale. Shadows draw beneath all buildings and stay
-grounded during a lift. `tools/render_buildings_blender.py` renders each layer from
-the building's own geometry: invisible clay casters, direct sun and fill, a
-transparent Cycles catcher.
+grounded during a lift. Each layer comes from the building's own geometry:
+invisible casters and the shadow sun alone on a catcher, in Scener (stencil shadows,
+softened by 1.2 px for the sun's disc) or in Blender (a transparent Cycles catcher).
 All placed shadows draw before the fog, so closed land covers them too.
 
 ## Cloud fog
