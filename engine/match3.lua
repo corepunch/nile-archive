@@ -19,9 +19,11 @@ end
 
 -- The two match-3 cities share the same view templates. Game code supplies
 -- localized copy, skin colors, and records with stable keys via set_items.
+E.CATALOGUE_COLUMNS = 3
+
 function E.catalogue_form(title, hint, close, detail_color, paint_tile)
-    -- Icons in rows of four: a record is one row, {id, cells={building records}}.
-    -- A tile is its painted icon under a flat button (pick1..pick4).
+    -- A record is one row, {id, cells={building records}}. Each tile is its
+    -- painted icon under a flat button.
     return ui.form{kind='column',panel=true,padding=18,gap=8,children={
         {kind='label',text=title,height=40,em=32},
         {kind='row',height=38,gap=8,children={
@@ -32,7 +34,7 @@ function E.catalogue_form(title, hint, close, detail_color, paint_tile)
         {kind='label',text=hint,height=24,em=14,text_style=detail_color},
         {kind='list',id='stock',scroll=true,height=350,gap=8,item=function(row)
             local cells = {}
-            for j = 1, 4 do
+            for j = 1, E.CATALOGUE_COLUMNS do
                 local record = row.cells[j]
                 cells[j] = record and {kind='overlay',grow=1,height=100,children={
                     {kind='custom',paint=function(box) paint_tile(box, record) end},

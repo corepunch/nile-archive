@@ -92,15 +92,15 @@ make buildings GAME=relic-rush
 make CFLAGS="-O2 -g -Werror"
 make test
 ./build/relic-rush --headless --mute --fresh --catalogue --shot /tmp/shop.png
-./build/relic-rush --headless --mute --fresh --catalogue all --catalogue-page 24 --shot /tmp/shop-last.png
+./build/relic-rush --headless --mute --fresh --catalogue all --catalogue-page 32 --shot /tmp/shop-last.png
 ./build/relic-rush --headless --mute --fresh --building-review 24 --footprints --shot /tmp/footprints-last.png
 ./build/relic-rush --headless --mute --fresh --smoke
 ```
 
 On Linux, run renderer captures and smoke under Xvfb with
 `LIBGL_ALWAYS_SOFTWARE=1`; the reviewed captures here use the installed native
-macOS renderer. Review pages 1 through 24 cover all 96 sprites in both catalogue
-rows and actual city footprints. The [review gallery](review/building-catalogue/README.md)
+macOS renderer. The shop fits all 96 sprites in 32 rows of three. The footprint
+review fits them in 24 pages of four. The [review gallery](review/building-catalogue/README.md)
 also includes normal/blocked placement, details and 480 x 900 / 390 x 844 layouts.
 Generated masters and editable sources are preserved in the repository; rendering
 needs only Blender.

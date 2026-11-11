@@ -626,7 +626,7 @@ function G.bind(R, over)
         end
         for n, record in ipairs(records) do
             record.selected = record.id == selected
-            local r = (n - 1) // 4 + 1
+            local r = (n - 1) // match3.CATALOGUE_COLUMNS + 1
             rows[r] = rows[r] or {id="r" .. r, cells={}}
             rows[r].cells[#rows[r].cells + 1] = record
         end
@@ -635,7 +635,7 @@ function G.bind(R, over)
         local record = tiles[selected]
         catalogue_form:set("info_name", record and record.name or "")
         catalogue_form:set("info_note", record and (record.details .. "\n" .. (record.available and C.tap or record.action)) or "")
-        return records
+        return #rows
     end
 
     -- The tile node and record for a building key, for smoke tests that press it.
@@ -655,10 +655,10 @@ function G.bind(R, over)
             for i, cat in ipairs(categories) do if cat[1] == filter then category = i end end
         end
         if shop:active() then shop:close() end
-        local records = refresh_catalogue()
-        if review_page and #records > 0 then
-            local index = num.clampi((math.floor(review_page) - 1) * 4 + 1, 1, #records)
-            catalogue_form:scroll_to("stock", "r" .. ((index - 1) // 4 + 1))
+        local row_count = refresh_catalogue()
+        if review_page and row_count > 0 then
+            local row = num.clampi(math.floor(review_page), 1, row_count)
+            catalogue_form:scroll_to("stock", "r" .. row)
         elseif category ~= old_category then catalogue_form:scroll_to("stock") end
         assert(shop:open("catalogue", catalogue_form, {}, MODAL))
         R.overlay = R.OV_SHOP
