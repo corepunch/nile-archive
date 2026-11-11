@@ -65,7 +65,7 @@ that manifest. There are no arbitrary file or directory routes.
 | Field 0 | No sprites | Non-playable space remains clickable for inspection of otherwise masked source data |
 | Portal endpoints | `portal_entrance`, `portal_exit` | Original sprites placed from prefab offsets, pixels-per-unit, trim offsets and pivot. Odd IDs are entrances at the lower edge; even IDs are exits at the upper edge. Pair numbers remain in the inspector. Drop/climber route indicators remain unassigned |
 | Objectives | `ui_icon_objective_<family>` (`hiddenitem_monkey` for hidden statues) | Original objective artwork alongside text totals |
-| Board surface | `board_DirtAndTreasure`, `board_water`, `board_hiddenitem`, `board_drop`, `board_recipe` | Original LevelTheme references for treasure, water, hiddenitem and droppable; chameleon and resistant blocker themes also reference `board_water`. Recipe and climber fall back to `board_recipe`; the climber theme bundle is unavailable |
+| Board surface | `board_DirtAndTreasure`, `board_water`, `board_hiddenitem`, `board_drop`, `board_recipe` | Original LevelTheme references for treasure, water, hiddenitem and droppable; chameleon and resistant blocker themes also reference `board_water`. Recipe and climber fall back to `board_recipe`; the embedded manifest has no climber-specific theme bundle |
 
 The base fruit, strength and layer choices were checked against the
 `BuildPlayer-M3_Level.sharedAssets` prefab TypeTrees: `GemView` (2237),
@@ -257,7 +257,7 @@ environment, model or game-data download was needed.
 
 ### Objective themes and bridge update
 
-The optional `m3_themes` bundle contains `LevelTheme` records linking treasure, water, hiddenitem and droppable directly to the four board textures in the catalogue. The cached `m3_themes_chameleon` and `m3_themes_resistant_blocker` records both point to `board_water`. The recipe record has a null board reference; the recipe board already extracted from the scene remains the fallback. The climber theme bundle was not available locally. Missing cached theme assets fall back to the recipe board.
+The optional `m3_themes` bundle contains `LevelTheme` records linking treasure, water, hiddenitem and droppable directly to the four board textures in the catalogue. The cached `m3_themes_chameleon` and `m3_themes_resistant_blocker` records both point to `board_water`. The recipe record has a null board reference; the recipe board already extracted from the scene remains the fallback. The embedded HD manifest lists exactly these three theme bundles; all are cached and inspected. None defines a climber-specific `LevelTheme` or board reference, and the manifest supplies no separate climber-theme URL. The climber objective therefore retains an explicit recipe-board fallback. Missing cached theme assets also fall back to the recipe board.
 
 The field prefab contains `WindowBridge` (sprite 696; transform 1277) and two growing bridge variants (sprites 690/649; transforms 1352/1300). Those transforms place the growing bridge at a vertical half-cell. Connecting vertically adjacent matching field IDs is a viewer inference: the encrypted native code does not establish adjacency or variant choice. The second growing bridge is extracted and catalogued but not selected until that choice is understood. Issue #97 tracks the exact connection and variant rules.
 
