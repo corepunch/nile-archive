@@ -3,7 +3,7 @@
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
 -- --level, --city, --showcase, --placing, --zone, --victory, --card, --fx,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
--- --kudos, --story-beat, --talk-through, --scroll-review and the art reviews.
+-- --kudos, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- Nothing here runs in a normal game.
 local D = {}
 
@@ -34,8 +34,12 @@ function D.bind(R, W)
 
     -- --talk-through N moves the dialogue on every N frames, to film it;
     -- --scroll-review drags the open shop or level list.
-    local talk_frames, scroll_frames = 0, 0
+    local talk_frames, scroll_frames, dive_frames = 0, 0, 0
     function R.debug_frame()
+        if app.arg("dive") then   -- --city N --dive: Play is pressed on the third frame (the town -> board dive)
+            dive_frames = dive_frames + 1
+            if dive_frames == 3 then R.play_level(R.prog.level); R.present_board() end
+        end
         if app.arg("scroll-review") then
             scroll_frames = scroll_frames + 1
             local form = app.arg("catalogue") and R.catalogue_form or R.expedition_form
@@ -58,7 +62,7 @@ function D.bind(R, W)
     end
 
     function R.debug_screens()
-        talk_frames, scroll_frames = 0, 0
+        talk_frames, scroll_frames, dive_frames = 0, 0, 0
         if app.arg("stripe-states") then R.art_review = true end
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")

@@ -944,6 +944,60 @@ function G.app(R)
     local journey = require("journey")
     local LEVELS = rules.LEVELS
 
+    -- Town <-> board: the screen being left rushes into a blur and a warm flash
+    -- (the town's camera dives into its newest building), then the other screen
+    -- settles out of it while the board's pieces start to fall. Game state
+    -- switches at once; only drawing and input wait for the dive.
+    local DIVE_OUT, DIVE_IN = .32, .38
+    local DIVE_FLASH = {255, 247, 224}
+    local dive, shown_island
+    local function dive_focus()   -- the screen point the town zooms about
+        local c, screen = R.island, app.screen()
+        if c.count > 0 then
+            local at = c.cam:rect_to_screen(c:sprite_rect(c.items[c.count])):center()
+            if screen:inflate(-40):contains(at) then return at end
+        end
+        return screen:center()
+    end
+    function R.diving() return dive ~= nil end
+    local function dive_watch()
+        if shown_island ~= nil and shown_island ~= R.on_island and not R.reduced_motion
+           and (not R.quiet or app.arg("dive")) then
+            dive = {t = 0, from_island = shown_island, focus = dive_focus()}
+        end
+        shown_island = R.on_island
+    end
+    -- Zoom of the town camera, blur radius and flash alpha at the dive's time.
+    local function dive_look(d)
+        if d.t < DIVE_OUT then
+            local e = ease.in_cubic(d.t / DIVE_OUT)
+            return d.from_island and 1 + 2.4 * e or 1, 16 * e, 110 * num.saturate((d.t / DIVE_OUT - .55) / .45)
+        end
+        local u = num.saturate((d.t - DIVE_OUT) / DIVE_IN)
+        local settle = 1 - ease.out_cubic(u)
+        return d.from_island and 1 or 1 + 2 * settle, 14 * settle, 110 * (1 - u) * (1 - u)
+    end
+    local function dive_screen(world, dt)
+        local leaving = dive.t < DIVE_OUT
+        local island_view = leaving == dive.from_island
+        local zoom, blur, flash = dive_look(dive)
+        if island_view then
+            local cam = R.island.cam
+            if zoom ~= 1 then R.island.cam = cam:zoom_at(zoom, dive.focus) end
+            R.island_screen(world, dt)
+            R.island.cam = cam
+        else
+            R.board_screen(world, dt)
+            R.vfx_draw()
+            R.vfx_particles()
+        end
+        gfx.bleed(true)
+        gfx.backdrop(blur, color(DIVE_FLASH[1], DIVE_FLASH[2], DIVE_FLASH[3], flash))
+        gfx.bleed(false)
+        dive.t = dive.t + dt
+        if dive.t >= DIVE_OUT + DIVE_IN then dive = nil end
+    end
+
     local function frame(dt)
         if app.arg("cell-mask") then
             -- Same flat-top polygon as a cell, captured at texture resolution.
@@ -955,8 +1009,9 @@ function G.app(R)
         R.story_tick()
         local talking = story.active()
         local board = R.leaderboard_active()
-        local world = (R.overlay ~= R.OV_NONE or talking or board) and input{pos = inp.pos, pinch = 1} or input.world()
         R.layout()
+        dive_watch()
+        local world = (R.overlay ~= R.OV_NONE or talking or board or dive) and input{pos = inp.pos, pinch = 1} or input.world()
         tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
         if app.arg("smoke") then (app.arg("campaign") and R.campaign_smoke or R.smoke)() end
         R.debug_frame()
@@ -964,14 +1019,15 @@ function G.app(R)
         if not talking then R.toast_time = R.toast_time - dt end
         if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
-        R.board_update(dt)
+        if not (dive and dive.t < DIVE_OUT) then R.board_update(dt) end   -- the board waits behind the dive
         local now = app.clock()   -- lives return on the clock; a lost board costs one at once
         rules.refill_lives(R.prog, now)
         if rules.lose_life(R.prog, R.g, now) then R.save_progress() end
         R.vfx_update(dt)
-        ui.set_enabled(R.overlay == R.OV_NONE and not talking and not board)
-        if R.on_island then R.island_screen(world, dt) else R.board_screen(world, dt) end
-        if not R.on_island then
+        ui.set_enabled(R.overlay == R.OV_NONE and not talking and not board and not dive)
+        if dive then dive_screen(world, dt)
+        elseif R.on_island then R.island_screen(world, dt) else R.board_screen(world, dt) end
+        if not R.on_island and not dive then
             R.vfx_draw()
             R.vfx_particles()
             R.draw_board_banners(dt)

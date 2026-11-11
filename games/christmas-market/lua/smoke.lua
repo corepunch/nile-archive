@@ -21,6 +21,7 @@ function R.smoke()
     if smoke_frames > 8000 or R.g.lost then
         error(("smoke test failed at stage %d (overlay %d, level %d)"):format(smoke_stage,R.overlay,R.g.level))
     end
+    if R.diving() then return end   -- the town <-> board dive takes no input
     if smoke_wait > 0 then   -- one click per few frames, so each press and release is its own frame
         smoke_wait = smoke_wait - 1
         return

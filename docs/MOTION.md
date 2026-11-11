@@ -213,7 +213,13 @@ The match board's entrance (`engine/board_intro.lua`) is a small simulation
 rather than a set of lerps: gravity falls, damped springs and a sweep computed
 per cell from one clock, with callbacks at the landing times, and its tests
 drive that clock (`intro:update(dt)`, `intro.t`). As tweens it would be one
-custom-eased tween per cell per effect, so it keeps its clock. The particle
+custom-eased tween per cell per effect, so it keeps its clock. The town <-> board
+dive in `engine/match3_game.lua` also keeps a small clock of its own: game state
+switches at once, and for 0.32 s the screen being left (the town zooming into its
+newest building) blurs into a warm flash through `gfx.backdrop`, then the other
+screen settles out of it in 0.38 s while the board's entrance plays. It takes no
+input (`R.diving()`), and reduced motion skips it. Capture with
+`--city 3 --dive --reel` (the `*-town-dive` reels). The particle
 pools in `engine/match3_vfx.lua` and the continuous hint pulse are likewise not tweens.
 
 ## Writing juice with it

@@ -282,6 +282,7 @@ pause, guide and the island.
 | State | Presentation / assets |
 | --- | --- |
 | PRESENT | The board's entrance after any dialogue: existing HUD, tool, cell, piece and blocker artwork move on the shared timeline in `engine/board_intro.lua`, with transient glows, sparks and a sheen. No new art. Tap skips it. Capture: `build/test/relic-rush board-intro` (`--level 5 --present --reel`), frames in `build/shots/frames/` |
+| DIVE | Town <-> board transition: the screen being left blurs into a warm flash (the town's camera zooms into its newest building), the other settles out of it; procedural (`gfx.backdrop`, camera zoom) in `engine/match3_game.lua`, no art. Input waits for it; reduced motion skips it. Capture: `build/test/relic-rush relic-rush-town-dive` (`--city 3 --dive --reel`), frames in `build/shots/frames/` |
 | Idle | Base or special frame, optional sand/selection/hint/blocker layers |
 | SWAP | Existing piece artwork moves to neighbour |
 | REJECT | Same artwork returns; no move spent |

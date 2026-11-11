@@ -357,6 +357,14 @@ new assets. A tap skips it and reduced motion makes it a short fade. Capture:
 `build/test/christmas-market board-intro` (`--level 4 --present --reel`), frames
 in `build/shots/frames/`.
 
+Pressing Play in the market (and returning to it) runs the shared town <-> board
+dive in `engine/match3_game.lua`: the screen being left blurs into a warm flash
+while the market's camera zooms into its newest stall, then the other settles out
+of the blur. It is procedural (`gfx.backdrop` and a camera zoom) and adds no art;
+input waits for it and reduced motion skips it. Capture:
+`build/test/christmas-market christmas-market-town-dive` (`--city 3 --dive --reel`),
+frames in `build/shots/frames/`.
+
 ## Current-camera building paint pass
 
 All registered buildings and decorations use the painted-v1 sources, normal sprite

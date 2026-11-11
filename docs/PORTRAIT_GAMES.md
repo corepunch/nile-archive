@@ -9,7 +9,7 @@ tables, and PNGs. Behaviour belongs to the engine:
 | `engine/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
 | `engine/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
 | `engine/town.lua` (`town`) | The town screen (`data/town.json`) |
-| `engine/match3_game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, lives, the frame, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`data/game.json`) |
+| `engine/match3_game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, lives, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`data/game.json`) |
 | `engine/match3_vfx.lua` (`match3.vfx`) | Effects: impacts, rays, blasts, links, births, score pop-ups and particles |
 | `engine/match3_debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--dialog`, ...) |
 
