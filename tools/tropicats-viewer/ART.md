@@ -270,4 +270,15 @@ The climber and resistant blocker use the original Spine skeletons, atlas textur
 
 Controller 453 names all three blocker idle clips and defaults to the 3-HP state; controller 456 defaults to the climber idle clip. All skeleton attachment paths and source hashes are recorded in the catalogue.
 
-The source textures, bridge sprites and four character idle renders were inspected directly. Browser review at desktop and narrow sizes is being prepared separately.
+The source textures, bridge sprites and [four character idle renders](../../docs/review/tropicats-viewer/native-idle-states.png) were inspected directly. Browser review covered level 1764's water theme, vertical window bridges, ice and portals at desktop and narrow sizes, plus level 892's climber, resistant eggs and growing windows. There were no broken images, console warnings/errors or horizontal page overflow at either checked size. Row flip and schematic fallback were exercised; returning to sprites restored the native poses and original theme.
+
+| View | Before | After |
+| --- | --- | --- |
+| 1764 · 1368×1026 | [Before](../../docs/review/tropicats-viewer/themes-before-desktop.jpg) | [After](../../docs/review/tropicats-viewer/themes-after-desktop.jpg) |
+| 1764 · 390×844 | [Before](../../docs/review/tropicats-viewer/themes-before-narrow.jpg) | [After](../../docs/review/tropicats-viewer/themes-after-narrow.jpg) |
+| 892 · native creatures | [Before](../../docs/review/tropicats-viewer/creatures-before-desktop.jpg) | [After](../../docs/review/tropicats-viewer/creatures-after-desktop.jpg) |
+
+Before captures use viewer commit `c6322df` with the same extracted level data.
+Focused verification: 18 Node tests **2.52 s**, 12 Python material/HTTP tests
+**0.94 s**, repository lint **1.09 s**; extraction **65.27 s**, measured wall time.
+There is no build step for this viewer. No playable game or shared engine changed.
