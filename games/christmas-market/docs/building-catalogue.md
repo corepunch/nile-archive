@@ -47,16 +47,19 @@ stock. The category arrows stay above the list.
   transparent film. Ground shadows are a separate pass with their own sun, direction, blue tint and strength (see
   [Ground shadows](../../../docs/BUILDING_ART.md#ground-shadows)).
 - **Painted registration.** The current camera projects a footprint's width as
-  `(w * cos(yaw) + h * sin(yaw)) * ppt`. The importer aligns painted foundations
-  to the render's ground centre and preserves this base width. `city.tile` stays
-  56 with `clearance = size2(0, 0)`.
+  `(w * cos(yaw) + h * sin(yaw)) * ppt`. The importer projects the model's slab
+  corners at ground level and resamples the painted stone and snow onto the
+  visible contact edges. It rejects gaps in the projected slab and edge errors
+  greater than one source pixel. `city.tile` is 56 with
+  `clearance = size2(0, 0)`.
 
 `art/building-catalogue/painted-v1/` retains every input/output atlas, prompt, cell
 layout, original render registration and per-key crop/scale/translation in
-`imports.json`. Importing only crops, scales and translates the authored RGBA;
-there are no colour filters, procedural texture additions or alpha replacements.
+`imports.json`. The import record also identifies which sprites use projected
+foundation edges. Decorations with a virtual base use the authored RGBA crop.
 Reproduce with `python3 tools/import_painted_buildings.py christmas-market`.
-See the [before/after and complete footprint review](review/painted-buildings/current-camera/README.md).
+See the [painted catalogue review](review/painted-buildings/current-camera/README.md)
+and the [adjacent foundation review](review/foundations/README.md).
 
 The old ImageGen atlas (`art/buildings.png`) and its crops are retired. The
 atlas stays in `art/` as the direction source, and `tools/prepare_assets.py`

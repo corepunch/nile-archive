@@ -31,7 +31,9 @@ defines what the finished artwork should look like and where its sources live.
 - **Authored transparency.** Request a transparent output with clear gutters.
   Preserve complete foundations and all legitimate parts. Import by spatial
   crop, uniform resize and translation, preserving the authored RGBA inside the
-  crop. Do not reconstruct masks or manufacture states with recolouring.
+  crop. For Christmas Market slabs, the model's ground-contact edges determine
+  coverage at the foundation. Preserve authored transparency for interaction
+  states.
 
 ## Each game's direction
 
@@ -123,6 +125,10 @@ python3 tools/buildings.py --check
 
 The importer writes runtime PNGs, registration, generated Lua, manifests and the
 review sheet. Do not edit generated `lua/building_sprites.lua` by hand.
+For Christmas Market's slab-based objects, the importer registers the lower
+band of the painting to the 3D footprint. The paint supplies the stone and
+snow colours, and the projected contact edge supplies coverage at ground level.
+The importer checks the finished sprite against the footprint before writing it.
 
 To **create new art**, render matching geometry with `make buildings GAME=<game>`,
 assemble category guides with recorded layouts/display scales, and regenerate

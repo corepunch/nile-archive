@@ -32,7 +32,7 @@
    "about": "A warm welcome for every winter visitor.",
    "image": [
     416,
-    429
+    432
    ],
    "runtime": "data/buildings/arch.png",
    "shadow": "data/building-shadows/arch.png",
@@ -59,7 +59,7 @@
    "about": "Fresh timber for a market full of wishes.",
    "image": [
     417,
-    454
+    455
    ],
    "runtime": "data/buildings/lumber.png",
    "shadow": "data/building-shadows/lumber.png",
@@ -86,7 +86,7 @@
    "about": "Follow the smell of cinnamon and warm gingerbread.",
    "image": [
     416,
-    451
+    452
    ],
    "runtime": "data/buildings/bakery.png",
    "shadow": "data/building-shadows/bakery.png",
@@ -140,7 +140,7 @@
    "about": "Little wooden toys, made with Christmas care.",
    "image": [
     417,
-    466
+    467
    ],
    "runtime": "data/buildings/toys.png",
    "shadow": "data/building-shadows/toys.png",
@@ -194,7 +194,7 @@
    "about": "Let a hundred little candles light the snowy evening.",
    "image": [
     417,
-    455
+    456
    ],
    "runtime": "data/buildings/candles.png",
    "shadow": "data/building-shadows/candles.png",
@@ -291,7 +291,7 @@
     2
    ],
    "pivot": [
-    130.168,
+    139.168,
     187.149
    ],
    "base_width": 273.205,
@@ -301,8 +301,8 @@
    "stars": 0,
    "about": "Snowy firs and a lantern make the paths feel like home.",
    "image": [
-    260,
-    276
+    278,
+    277
    ],
    "runtime": "data/buildings/firs.png",
    "shadow": "data/building-shadows/firs.png",
@@ -318,7 +318,7 @@
     2
    ],
    "pivot": [
-    137.99,
+    138.99,
     169.294
    ],
    "base_width": 273.205,
@@ -328,8 +328,8 @@
    "stars": 0,
    "about": "A friendly snowman is saving you a seat.",
    "image": [
-    276,
-    257
+    278,
+    260
    ],
    "runtime": "data/buildings/bench.png",
    "shadow": "data/building-shadows/bench.png",
@@ -869,7 +869,7 @@
    "about": "A crackling fire and boots drying by the door.",
    "image": [
     278,
-    289
+    291
    ],
    "runtime": "data/buildings/log_cabin.png",
    "shadow": "data/building-shadows/log_cabin.png",
@@ -896,7 +896,7 @@
    "about": "Sweet enough to eat, if the icing holds.",
    "image": [
     285,
-    282
+    284
    ],
    "runtime": "data/buildings/gingerbread_house.png",
    "shadow": "data/building-shadows/gingerbread_house.png",
@@ -923,7 +923,7 @@
    "about": "Every letter finds its way north.",
    "image": [
     279,
-    272
+    276
    ],
    "runtime": "data/buildings/post_office.png",
    "shadow": "data/building-shadows/post_office.png",
@@ -950,7 +950,7 @@
    "about": "Its bell rings the carols in.",
    "image": [
     282,
-    301
+    305
    ],
    "runtime": "data/buildings/chapel.png",
    "shadow": "data/building-shadows/chapel.png",
@@ -977,7 +977,7 @@
    "about": "Hay, harness bells and nine sleepy reindeer.",
    "image": [
     377,
-    333
+    334
    ],
    "runtime": "data/buildings/reindeer_stable.png",
    "shadow": "data/building-shadows/reindeer_stable.png",
@@ -1004,7 +1004,7 @@
    "about": "Hammers, ribbons and cocoa until the last toy is wrapped.",
    "image": [
     427,
-    435
+    437
    ],
    "runtime": "data/buildings/santa_workshop.png",
    "shadow": "data/building-shadows/santa_workshop.png",

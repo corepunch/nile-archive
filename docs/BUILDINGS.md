@@ -180,6 +180,9 @@ the tile grid with its footprint, pivot and name.
 `python3 tools/buildings.py --check` needs no Blender and runs in `make test`. It
 fails on art rendered with another camera, a sprite not named after its key, a
 missing or stray file, and stale Lua.
+For registered painted slabs in Christmas Market, it also checks opaque
+coverage inside the projected ground polygon and compares the visible front
+edges against it with a one-source-pixel rasterization tolerance.
 
 ## Measuring a hand-made sprite
 

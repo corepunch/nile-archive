@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Import reviewed category paint-overs; crop/scale/translate only, retaining alpha.
+"""Import reviewed category paint-overs and register their foundations.
 
 python3 tools/import_painted_buildings.py relic-rush [wonder building ...]
 Inputs, outputs, prompts and original Blender registration live in painted-v1/.
-The Blender master remains the geometry source. No colour or mask processing.
+The Blender master remains the geometry source.
 """
 import argparse
 import json
@@ -14,6 +14,7 @@ from PIL import Image
 from scipy import ndimage
 
 import buildings
+import painted_foundations
 from city_camera import U, V
 
 
@@ -72,6 +73,8 @@ def main():
     original = json.loads((source / 'render-registration.json').read_text())
     registry_path = buildings.registry_path(root, cfg)
     registry = json.loads(registry_path.read_text())
+    slabs = painted_foundations.slab_keys(root, cfg)
+    sprites = {}
     imports = {}
     for layout_path in sorted(source.glob('*-layout.json')):
         category = layout_path.name.removesuffix('-layout.json')
@@ -105,14 +108,35 @@ def main():
                 new_pivot = np.array([painted.width / 2, painted.height]) * scale
                 new_pivot += (pivot - np.array([base.width / 2, base.height])) / display_scale
             size = [max(1, round(v * scale)) for v in painted.size]
-            painted.resize(size, Image.Resampling.LANCZOS).save(root / old['sprite'])
+            sprite = painted.resize(size, Image.Resampling.LANCZOS)
             item = registry['items'][key]
-            item['image'] = size
-            item['pivot'] = buildings.rounded(new_pivot.tolist())
+            if key in slabs:
+                try:
+                    sprite, new_pivot = painted_foundations.register(sprite, new_pivot, item['size'], registry['ppt'])
+                except ValueError as error:
+                    raise SystemExit(f'{args.game}: {key}: {error}') from error
+                error = painted_foundations.check(sprite, buildings.rounded(new_pivot), item['size'], registry['ppt'])
+                if error:
+                    raise SystemExit(f'{args.game}: {key}: {error}')
+                item['painted_foundation'] = True
+            sprites[root / old['sprite']] = sprite
+            item['image'] = list(sprite.size)
+            item['pivot'] = buildings.rounded(new_pivot)
             imports[key] = dict(atlas=str(output.relative_to(root)), cell=cell, crop=crop,
-                                scale=round(scale, 8), pivot=item['pivot'], image=size)
+                                scale=round(scale, 8), pivot=item['pivot'], image=item['image'])
+            if key in slabs:
+                imports[key]['foundation'] = 'projected ground-contact edges'
     if not imports:
         raise SystemExit('No painted outputs to import')
+    missing_slabs = slabs - imports.keys()
+    if missing_slabs and not args.categories:
+        raise SystemExit(f'Missing painted foundations: {", ".join(sorted(missing_slabs))}')
+    for path, sprite in sprites.items():
+        if path.is_file():
+            with Image.open(path) as current:
+                if current.size == sprite.size and current.convert('RGBA').tobytes() == sprite.tobytes():
+                    continue
+        sprite.save(path)
     registry['paintover'] = dict(version='painted-v1', importer='tools/import_painted_buildings.py',
                                 sources='art/building-catalogue/painted-v1')
     registry_path.write_text(json.dumps(registry, indent=1) + '\n')

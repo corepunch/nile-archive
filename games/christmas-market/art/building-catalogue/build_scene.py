@@ -1590,8 +1590,8 @@ BUILDERS = {"tree": tree, "bench": bench, "bakery": bakery, "carousel": carousel
 
 with open(os.path.join(HERE, "catalogue.json")) as f:
     CATALOGUE = [dict(zip(("key", "title", "cat", "w", "h", "gold", "stars", "about"), row)) for row in json.load(f)]
-BASED = ("wonder", "cottage")      # these stand on a slab; decorations stand on the snow
-SLABBED = ("firs", "bench")        # the two original decorations have one too, as on the direction sheet
+with open(os.path.join(HERE, "..", "buildings.json")) as f:
+    FOUNDATIONS = json.load(f)["foundations"]
 
 
 def to_object(name, bucket, mat, materials, coll, parent):
@@ -1644,7 +1644,7 @@ def clean_previous():
 def model(it, i):
     R.seed(1000 + i)
     k = Kit(it["w"], it["h"])
-    if it["cat"] in BASED or it["key"] in SLABBED:
+    if it["cat"] in FOUNDATIONS["categories"] or it["key"] in FOUNDATIONS["keys"]:
         if it["cat"] == "cottage":
             k.box("slab", 0, 0, 0, it["w"], it["h"], G, COBBLE)     # the base: exactly the footprint
             k.box("snow", 0, 0, G - .03, it["w"] - .06, it["h"] - .06, .04, SNOW)

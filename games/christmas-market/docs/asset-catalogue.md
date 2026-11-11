@@ -363,6 +363,8 @@ All registered buildings and decorations use the painted-v1 sources, normal spri
 and unchanged engine placement/lift/validity states documented in the
 [building catalogue](building-catalogue.md) and
 [review gallery](review/painted-buildings/current-camera/README.md).
+The 18 slab-based sprites register their painted foundations to the 3D
+ground-contact edges. See the [adjacent foundation captures](review/foundations/README.md).
 
 ## Placement alignment guides
 

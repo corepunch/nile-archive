@@ -34,6 +34,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 import city_camera
+import painted_foundations
 
 GAMES = ['relic-rush', 'nile-archive', 'christmas-market']
 SHADOW_PPT = 28.284   # shadows stay low-resolution: the engine blurs them up
@@ -297,6 +298,8 @@ def store(game, root, cfg, keys, out, report, ppt, strength, look, shadows_only,
             shadow=f'data/building-shadows/{key}.png',
             shadow_pivot=rounded([item['shadow_pivot'][0] - shadow_at[0], item['shadow_pivot'][1] - shadow_at[1]]),
             shadow_base_width=round(item['shadow_base_width'], 3))
+        if shadows_only and old.get('painted_foundation'):
+            registry['items'][key]['painted_foundation'] = True
     registry.update(generator='tools/buildings.py', renderer=renderer, master=cfg['blend'], scene_generator=cfg['generator'],
                     camera=dict(yaw=city_camera.YAW, elevation=city_camera.ELEVATION),
                     ppt=ppt, order=report['order'])
@@ -344,8 +347,14 @@ def check():
             for field in ('sprite', 'shadow'):
                 if not (root / b[field]).is_file():
                     problems.append(f'{game}: {key} lost {b[field]}')
-            if (root / b['sprite']).is_file() and list(Image.open(root / b['sprite']).size) != b['image']:
-                problems.append(f'{game}: {b["sprite"]} changed size without a render')
+            if (root / b['sprite']).is_file():
+                with Image.open(root / b['sprite']) as image:
+                    if list(image.size) != b['image']:
+                        problems.append(f'{game}: {b["sprite"]} changed size without a render')
+                    if b.get('painted_foundation'):
+                        error = painted_foundations.check(image, b['pivot'], b['size'], registry['ppt'])
+                        if error:
+                            problems.append(f'{game}: {key}: {error}')
             if Path(b['sprite']).stem != key:
                 problems.append(f'{game}: {b["sprite"]} is not named after {key}')
             if abs(b['base_width'] - city_camera.base_span(*b['size']) * registry['ppt']) > .01:
