@@ -290,7 +290,10 @@ def capture(game, stats=None):
     looks = {'kit': (_materials(kit), kit.BEVELS)}
     out = []
 
+    scener_kit.SATURATION = 1.
     if game == 'christmas-market':
+        # tuned towards the painted sprites (painted-v1): richer colour, blue-lavender snow in shade
+        scener_kit.SATURATION = 1.7
         scene = load('cm_build_scene', here / 'build_scene.py', stop='\nif __name__ == "__main__"')
         OwnS = scener_kit.make_kit(scene.Kit, writer, g22, kit.Gradient, stats)
         OwnS.shapes = shapes
@@ -303,8 +306,9 @@ def capture(game, stats=None):
                                                         *(('kit', .03, 4) if wish else ('own', .02, 3)), defs)
             k = market_wishes.model(it, i) if wish else scene.model(it, i)
             out.append(Captured(it, k, kit.TREE_GROWTH if it['key'] in scene.TREES else 1., (1, .62, .28)))
-        lighting = dict(sun=(3.0, 6, (1, .9, .78), (-.55, 1.0, -1.25)), fill=(.55, 40, (.75, .85, 1), (-1.0, .2, -.6)),
-                        world=((.62, .74, 1.0), .7), exposure=-.15)
+        # A lower exposure keeps the snow off white; a weak blue sky shades it lavender, as painted
+        lighting = dict(sun=(4.1, 6, (1, .88, .72), (-.55, 1.0, -1.25)), fill=(.25, 40, (.6, .7, 1), (-1.0, .2, -.6)),
+                        world=((.4, .48, 1.0), .36), exposure=-.85, lamps=1 / LIGHT_SCALE)
         return out, shapes, lighting, defs
 
     calls = []
@@ -423,7 +427,7 @@ def write_scenes(game, out, ppt, shadow_cfg, keys=None, log=print):
         body = ['  ' + l for l in b.lines]
         lamps = ['    <light pos="%s" color="%s" intensity="%s" radius="%s" castShadows="1"/>' % (
             ' '.join(f(c) for c in to_scener(p)), ' '.join(f(g22(c), 3) for c in colour),
-            f(LIGHT_SCALE * watts * exposure, 3), f(TILE * 1.4)) for p, watts, colour in b.lights]
+            f(LIGHT_SCALE * lighting.get('lamps', 1.) * watts * exposure, 3), f(TILE * 1.4)) for p, watts, colour in b.lights]
         head = '  <group pos="%s"%s' % (' '.join(f(c) for c in to_scener(origin)), ' scale="%s %s %s"' % ((f(s, 4),) * 3) if s != 1 else '')
         sprite += ['%s name="%s">' % (head, b.key)] + body + lamps + ['  </group>']
         shadow += ['%s name="%s" renderable="0">' % (head, b.key)] + body + ['  </group>']

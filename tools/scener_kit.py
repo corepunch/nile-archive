@@ -19,6 +19,13 @@ is rendered in, exactly as Blender frames it.
 import math
 
 TOL = 1e-4   # tiles
+SATURATION = 1.   # kit colours (linear) move this much further from their luminance; set by scener_buildings
+
+
+def saturate(c):
+    """A linear colour with SATURATION applied around its luminance (Rec. 709), never below 0."""
+    y = .2126 * c[0] + .7152 * c[1] + .0722 * c[2]
+    return tuple(max(0., y + (x - y) * SATURATION) for x in c[:3])
 
 
 # ---------------------------------------------------------------- small vector algebra (tiles, Blender axes)
@@ -285,10 +292,10 @@ def make_kit(Base, writer, linear_to_scene, gradient_cls, stats):
             if isinstance(col, list):
                 raise SystemExit(f'a {mat} piece has per-vertex colours: give it one colour or a Gradient')
             k = SKit.emission.get(mat, 1.)
-            return tuple(linear_to_scene(c * k) for c in col[:3]), ""
+            return tuple(linear_to_scene(c * k) for c in saturate(col)), ""
 
         def _gradient(self, mat, g):
-            ends = lambda c: v3(*(linear_to_scene(x * SKit.emission.get(mat, 1.)) for x in c[:3]))
+            ends = lambda c: v3(*(linear_to_scene(x * SKit.emission.get(mat, 1.)) for x in saturate(c)))
             a = [("from", ends(g.a)), ("to", ends(g.b))]
             if g.axis is None:
                 a = [("type", "uv"), ("tile", "%s %s" % (f(g.tile[0]), f(g.tile[1])))] + a
