@@ -24,6 +24,8 @@ export function sourceIndex(displayIndex, flip) {
   return flip ? (8 - Math.floor(displayIndex / 9)) * 9 + displayIndex % 9 : displayIndex;
 }
 export function describeValue(layer, value) {
+  if (layer === 'portals' && value) return `${value} · ${value % 2 ? 'Entrance' : 'Exit'} · pair ${Math.ceil(value / 2)}`;
+  if (layer === 'crates' && value) return `${value} · ${value < 4 ? 'Wood' : COLORS[Math.floor(value / 4)] || 'Unknown'} · ${value % 4} HP`;
   const names = {gemColors:COLORS, gemTypes:TYPES, gemModifier:MODIFIERS,
     spawning:['None','Normal spawn','Defined gem','Chameleon spawn']};
   return names[layer]?.[value] ? `${value} · ${names[layer][value]}` : String(value);

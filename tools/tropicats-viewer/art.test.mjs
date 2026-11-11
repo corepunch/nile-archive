@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {cellArt, previewColor, boardObjects} from './art.mjs';
-import {changedAt} from './model.mjs';
+import {changedAt, describeValue} from './model.mjs';
 const level = overrides => ({data:{gems:[{type:'red',amount:10},{type:'blue',amount:10},{type:'green',amount:0}]},
   layout:{fields:[1],gemColors:[8],...overrides}});
 
@@ -36,6 +36,31 @@ test('non-fruit stacked pieces retain the original base image and disclose unmat
   assert.deepEqual(result.badges,['T7']); assert.ok(result.notes.length);
 });
 
+test('bomb and both line axes use original material overlays, under ice and crates', () => {
+  for (const [type, name] of [[1,'line_horizontal'],[2,'line_vertical'],[3,'bomb']]) {
+    const result=cellArt(level({gemColors:[1],gemTypes:[type],gemModifier:[2],crates:[7]}),0);
+    const overlay=result.images.find(i=>i.role==='material-overlay');
+    assert.equal(overlay.name,`material_${name}`); assert.equal(overlay.mask,'dot_red');
+    assert.ok(overlay.z<result.images.find(i=>i.name==='iceHp2').z);
+    assert.ok(overlay.z<result.images.find(i=>i.name==='material_crate_1_3').z);
+    assert.deepEqual(result.badges,[]);
+  }
+});
+
+test('crate encoding keeps color and strength; portal pairs retain exact IDs in inspection', () => {
+  for(const color of [1,2,3,4,5,6,9]) for(const hp of [1,2,3]) {
+    const result=cellArt(level({crates:[color*4+hp]}),0);
+    assert.ok(result.images.some(i=>i.name===`material_crate_${color}_${hp}`));
+    assert.deepEqual(result.badges,[]);
+  }
+  for(const [id,name] of [[1,'entrance'],[2,'exit'],[17,'entrance'],[18,'exit']]) {
+    const result=cellArt(level({portals:[id]}),0);
+    assert.ok(result.images.some(i=>i.name===`portal_${name}`)); assert.deepEqual(result.badges,[]);
+  }
+  assert.equal(describeValue('portals',18),'18 · Exit · pair 9');
+  assert.equal(describeValue('crates',39),'39 · Coins · 3 HP');
+});
+
 const root=new URL('../../reference/tropicats-analysis/',import.meta.url);
 const available=fs.existsSync(new URL('art/sprites.json',root));
 test('all 8,190 campaign variants resolve artwork and keep wheels inside the board', {skip:!available}, () => {
@@ -47,6 +72,14 @@ test('all 8,190 campaign variants resolve artwork and keep wheels inside the boa
     for(let i=0;i<81;i++) for(const preview of [false,true]) {
       for(const item of cellArt(l,i,{preview,seed:parseInt(file)}).images)
         assert.ok(art[item.name],`${file}:${i} missing ${item.name}`);
+    }
+    // Parity is grounded in every serialized endpoint's open boundary.
+    for(let i=0;i<81;i++) {
+      const id=l.layout.portals?.[i];
+      if(!id) continue;
+      const neighbor=i+(id%2 ? 9 : -9);
+      assert.ok(neighbor<0 || neighbor>=81 || !l.layout.fields[neighbor], `${file}:${i} portal edge`);
+      assert.ok(l.layout.portals.includes(id%2 ? id+1 : id-1), `${file}:${i} portal pair`);
     }
     for(const o of boardObjects(l)) {
       assert.ok(art[o.name]); assert.ok(o.left>=0 && o.top>=0 && o.left+o.width<=9 && o.top+o.height<=9,file);

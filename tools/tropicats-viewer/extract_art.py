@@ -39,6 +39,7 @@ def extract(app, output):
     required = {'dot_red', 'dot_random', 'board_recipe', 'stone_1hp', 'iceHp3'}
     if required - candidates.keys():
         raise ValueError(f'Missing expected artwork: {required - candidates.keys()}')
+    scene = next(o.assets_file for o in environment.objects if o.assets_file.name == "BuildPlayer-M3_Level.sharedAssets")
     sprites = output / 'sprites'
     sprites.mkdir(parents=True, exist_ok=True)
     manifest = {}
@@ -50,13 +51,63 @@ def extract(app, output):
                           'path_id': obj.path_id, 'kind': obj.type.name,
                           'width': bitmap.width, 'height': bitmap.height,
                           'sha256': hashlib.sha256(target.read_bytes()).hexdigest()}
+    # Evaluate native materials with their authored inputs, rather than inventing variants.
+    from materials import render_overlay, render_crate
+    import lz4.block
+    evidence = output / 'shader-evidence'
+    evidence.mkdir(exist_ok=True)
+    material_sources = {}
+    for name, material_id, mesh_id, texture_id in [('bomb', 5, 314, 124),
+            ('line_horizontal', 59, 317, 289), ('line_vertical', 59, 321, 289)]:
+        material = scene.objects[material_id].read()
+        shader = material.m_Shader.read()
+        # Keep recovered source local and fingerprint it in the review catalogue.
+        decoded = lz4.block.decompress(bytes(shader.compressedBlob), uncompressed_size=shader.decompressedLengths[0][0])
+        (evidence / f'{name}.decoded').write_bytes(decoded)
+        image = render_overlay(scene.objects[mesh_id].read(), scene.objects[texture_id].read(), material, bomb=name == 'bomb')
+        key = f'material_{name}'
+        target = sprites / f'{key}.png'
+        image.save(target)
+        manifest[key] = {'url': f'/art/{key}.png', 'kind': 'MaterialRender', 'width': image.width, 'height': image.height,
+            'file': scene.name, 'material_id': material_id, 'mesh_id': mesh_id, 'texture_id': texture_id,
+            'shader_sha256': hashlib.sha256(decoded).hexdigest(), 'time': 0,
+            'sha256': hashlib.sha256(target.read_bytes()).hexdigest()}
+        material_sources[name] = {'shader': shader.m_ParsedForm.m_Name, 'sha256': hashlib.sha256(decoded).hexdigest()}
+    crate_material = scene.objects[95].read()
+    shader = crate_material.m_Shader.read()
+    decoded = lz4.block.decompress(bytes(shader.compressedBlob), uncompressed_size=shader.decompressedLengths[0][0])
+    (evidence / 'crate.decoded').write_bytes(decoded)
+    material_sources['crate'] = {'shader': shader.m_ParsedForm.m_Name, 'sha256': hashlib.sha256(decoded).hexdigest(),
+        'columns': 10, 'column_center_offset': .05, 'crate_hp_stride': 4}
+    lut = scene.objects[304].read().image
+    for color in [1,2,3,4,5,6,9]:
+        for hp in [1,2,3]:
+            source_name = f'crate_tintable_{hp}hp'
+            image = render_crate(candidates[source_name][2].image, lut, color)
+            key = f'material_crate_{color}_{hp}'
+            target = sprites / f'{key}.png'
+            image.save(target)
+            manifest[key] = {'url': f'/art/{key}.png', 'kind': 'MaterialRender', 'width': image.width, 'height': image.height,
+                'file': scene.name, 'material_id': 95, 'lut_id': 304, 'sprite_id': candidates[source_name][1].path_id,
+                'shader_sha256': material_sources['crate']['sha256'], 'color': color, 'hp': hp,
+                'sha256': hashlib.sha256(target.read_bytes()).hexdigest()}
+    for name, sprite_id, transform_id in [('portal_entrance',597,1273), ('portal_exit',669,1216)]:
+        sprite = scene.objects[sprite_id].read()
+        position = scene.objects[transform_id].read().m_LocalPosition
+        rect, offset, pivot, ppu = sprite.m_Rect, sprite.m_RD.textureRectOffset, sprite.m_Pivot, sprite.m_PixelsToUnits
+        width, height = manifest[name]['width']/ppu, manifest[name]['height']/ppu
+        manifest[name]['placement'] = {'left': .5 + position.x + (offset.x-pivot.x*rect.width)/ppu,
+            'top': .5-position.y-(offset.y+manifest[name]['height']-pivot.y*rect.height)/ppu,
+            'width': width, 'height': height, 'transform_id': transform_id}
     (output / 'sprites.json').write_text(json.dumps(manifest, indent=2) + '\n')
     provenance = {'bundle': str(bundle.relative_to(app)),
                   'sha256': hashlib.sha256(bundle.read_bytes()).hexdigest(),
                   'decoder': f'UnityPy {UnityPy.__version__}', 'sprites': len(manifest),
-                  'transform': 'Original Sprite.image / Texture2D.image; no repainting, tinting or synthesized states.'}
+                  'decoded_images': len(candidates), 'material_renders': len(manifest) - len(candidates),
+                  'transform': 'Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders and crate LUT; no painted replacements.',
+                  'materials': material_sources}
     (output / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
-    print(f'Extracted {len(manifest)} original images to {output}')
+    print(f'Prepared {len(candidates)} original images and {len(manifest) - len(candidates)} material renders in {output}')
     return {'source': provenance, 'sprites': manifest}
 
 

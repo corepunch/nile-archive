@@ -30,7 +30,8 @@ arbitrary repository files. Stop it with Ctrl+C.
 
 The combined view uses the game's original sprites when the local art extraction
 is present. See [ART.md](ART.md) for extraction, the complete source catalogue,
-layer mapping, static illustrations and remaining fidelity work. The optional
+layer mapping, reconstructed bomb/line materials, colored-crate LUT rendering,
+portal registration, static illustrations and remaining fidelity work. The optional
 random-fruit preview is clearly labeled: it uses a deterministic sample from the
 level palette and does not reproduce the game's RNG or simulate play. Changing
 this display option never changes source values or the difference counts.
@@ -57,7 +58,7 @@ values remain numeric. `Field.TILE_AMOUNT_FOR_WATERED` is 3.
 
 ```sh
 node --test tools/tropicats-viewer/model.test.mjs tools/tropicats-viewer/art.test.mjs
-python3 -m unittest discover -s tools/tropicats-viewer -p 'test_*.py'
+/tmp/tropicats-inspect-venv/bin/python -m unittest discover -s tools/tropicats-viewer -p 'test_*.py'
 make lint
 ```
 
@@ -66,9 +67,12 @@ layer stacking, multi-cell footprints and non-fruit special cases. With local
 reference data, the artwork test checks sprite-name resolution for all 8,190
 campaign variants in exact and preview modes. HTTP tests require local data and
 loopback access; they cover campaign data, tiers, artwork serving and path rejection.
-Local-data checks skip when their reference files are absent.
+Local-data checks skip when their reference files are absent. The material checks
+use Pillow in the extraction environment; standard-library-only HTTP checks can
+still run with `python3`. Tests also cover original shader channels, LUT brightness
+orientation, all crate alpha planes, line axes and every campaign portal boundary/pair.
 
-Verified 2026-11-11: ten Node tests **2.40 s**, four HTTP tests **0.94 s**, repository
-lint **1.24 s** (measured wall time). There is no build step and no changed game or
+Verified 2026-11-11: twelve Node tests **2.93 s**, seven material/HTTP tests **0.85 s**,
+repository lint **1.48 s** (measured wall time). There is no build step and no changed game or
 engine dependency. Browser checks and before/after captures are recorded in
 [the artwork audit](ART.md#visual-audit).

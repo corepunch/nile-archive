@@ -644,7 +644,7 @@ footer {
   border:0;
   border-radius:5px;
   background:#bd904c url('/art/board_recipe.png') center/100% 100%;
-  overflow:hidden;
+  overflow:visible;
 }
 .source-board .sprite-cell {
   background:transparent;
@@ -709,4 +709,22 @@ footer {
   object-fit:contain;
   float:right;
   margin:0 0 8px 10px;
+}
+
+/* Reserve half a cell above/below for the original portal edge artwork. */
+.source-wrap {
+  margin:0 10px;
+  padding:5.6% 2%;
+  border-radius:8px;
+  background:#24474c;
+}
+.source-wrap .source-board {
+  margin:0;
+}
+.material-overlay {
+  mask-repeat:no-repeat;
+  mask-position:center;
+}
+.sprite.portal {
+  inset:auto;
 }

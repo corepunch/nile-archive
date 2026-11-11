@@ -66,6 +66,20 @@ function spriteMode() { return $('sprites').checked && $('layer').value === 'com
 function spriteImage(name, attributes = '') {
   return artwork[name] ? `<img src="${escape(artwork[name].url)}" alt="" draggable="false" ${attributes}>` : '';
 }
+function cellImage(item) {
+  let style = `z-index:${item.z};`;
+  const asset = artwork[item.name];
+  if (item.role === 'portal' && asset?.placement) {
+    const p = asset.placement;
+    const top = $('flip').checked ? 1 - p.top - p.height : p.top;
+    style += `left:${p.left*100}%;top:${top*100}%;width:${p.width*100}%;height:${p.height*100}%;`;
+  }
+  if (item.mask && artwork[item.mask]) {
+    const mask = artwork[item.mask], longest = Math.max(mask.width, mask.height);
+    style += `mask-image:url('${escape(mask.url)}');mask-size:${94*mask.width/longest}% ${94*mask.height/longest}%;`;
+  }
+  return spriteImage(item.name, `class="sprite ${item.role}" style="${style}"`);
+}
 function objectMarkup(level) {
   return boardObjects(level, $('flip').checked).map(o => spriteImage(o.name,
     `class="board-object" style="left:${o.left / 9 * 100}%;top:${o.top / 9 * 100}%;width:${o.width / 9 * 100}%;height:${o.height / 9 * 100}%;z-index:${o.z}"`)).join('');
@@ -79,7 +93,7 @@ function tileMarkup(level, tier, displayIndex) {
     classes += ' sprite-cell';
     const result = cellArt(level, i, {preview:$('preview').checked, seed:current.number});
     const missing = result.images.filter(s => !artwork[s.name]);
-    art = result.images.map(s => spriteImage(s.name, `class="sprite ${s.role}" style="z-index:${s.z}"`)).join('');
+    art = result.images.map(cellImage).join('');
     badges = [...result.badges, ...missing.map(() => '?')].map(b => `<small class="art-badge">${escape(b)}</small>`).join('');
   } else if (layer === 'combined') {
     label = shortColors[v('gemColors')] ?? `G${v('gemColors')}`;
@@ -113,12 +127,12 @@ function render() {
     ? `Original game artwork, composed as a static board. ${$('preview').checked ? 'Random slots show illustrative fruit from the level palette, not the game’s starting RNG.' : 'Striped pieces are the game’s authored random-color markers.'} Click any cell for exact values. Rows follow source order.`
     : 'Schematic of the extracted starting board. Select a cell to inspect all layers across three tiers. Rows follow serialized order.';
   $('legend').innerHTML = sprites
-    ? '<strong>Source sprites</strong><span>Animated characters use original static illustrations</span><span>Badges retain shader, charge, color-crate and portal data</span><span class="amber">Amber outline = changed source cell</span>'
+    ? '<strong>Source sprites</strong><span>Animated characters use original static illustrations</span><span>Bombs, lines and crates use reconstructed game materials · Portal IDs remain in the inspector</span><span class="amber">Amber outline = changed source cell</span>'
     : '<strong>Schematic</strong><span>Letters = color · ? = random · S = blocker · C = chain · H = hidden object · P = portal</span><span class="amber">Amber outline = changed cell</span>';
   $('boards').innerHTML = tiers.map(([tier, title]) => {
     const level = variants[tier];
     const delta = level.data.moves - variants.a.data.moves;
-    return `<article class="board-card"><div class="card-heading"><div><span class="tier-label">${tier.toUpperCase()} / ${title}</span><h2>${level.data.moves}<small> moves</small></h2></div>${tier === 'a' ? '<span class="pill">Baseline</span>' : `<span class="pill">${delta > 0 ? '+' : ''}${delta} moves</span>`}</div><div class="board${sprites ? ' source-board' : ''}" role="group" aria-label="${title} board">${sprites ? objectMarkup(level) : ''}${Array.from({length:81}, (_, i) => tileMarkup(level, tier, i)).join('')}</div><div class="objectives">${sprites ? spriteImage(`ui_icon_objective_${current.objective === 'hiddenitem' ? 'hiddenitem_monkey' : current.objective}`, 'class="goal-icon"') : ''}<strong>${escape(GOALS[current.objective] ?? current.objective)}</strong>${goalLines(level, current.objective).map(text => `<p>${escape(text)}</p>`).join('')}</div></article>`;
+    return `<article class="board-card"><div class="card-heading"><div><span class="tier-label">${tier.toUpperCase()} / ${title}</span><h2>${level.data.moves}<small> moves</small></h2></div>${tier === 'a' ? '<span class="pill">Baseline</span>' : `<span class="pill">${delta > 0 ? '+' : ''}${delta} moves</span>`}</div><div class="board-wrap${sprites ? ' source-wrap' : ''}"><div class="board${sprites ? ' source-board' : ''}" role="group" aria-label="${title} board">${sprites ? objectMarkup(level) : ''}${Array.from({length:81}, (_, i) => tileMarkup(level, tier, i)).join('')}</div></div><div class="objectives">${sprites ? spriteImage(`ui_icon_objective_${current.objective === 'hiddenitem' ? 'hiddenitem_monkey' : current.objective}`, 'class="goal-icon"') : ''}<strong>${escape(GOALS[current.objective] ?? current.objective)}</strong>${goalLines(level, current.objective).map(text => `<p>${escape(text)}</p>`).join('')}</div></article>`;
   }).join('');
   const rows = [['Move budget', l => l.data.moves], ['Nonzero field cells', l => occupied(l, 'fields')],
     ['Stone / blocker cells', l => occupied(l, 'stones')], ['Chain cells', l => occupied(l, 'chains')],
