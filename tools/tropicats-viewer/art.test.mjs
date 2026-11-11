@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {cellArt, previewColor, boardObjects} from './art.mjs';
+import {cellArt, previewColor, boardObjects, mechanicPalette, cannonCharge} from './art.mjs';
 import {changedAt, describeValue} from './model.mjs';
 const level = overrides => ({data:{gems:[{type:'red',amount:10},{type:'blue',amount:10},{type:'green',amount:0}]},
   layout:{fields:[1],gemColors:[8],...overrides}});
@@ -61,6 +61,46 @@ test('crate encoding keeps color and strength; portal pairs retain exact IDs in 
   assert.equal(describeValue('crates',39),'39 · Coins · 3 HP');
 });
 
+test('native cannon charges replace badges, including undefined-color cannons', () => {
+  for (const [modifier,charge] of [[7,30],[8,15],[9,0]]) {
+    assert.equal(cannonCharge(modifier),charge);
+    const result=cellArt(level({gemTypes:[10],gemColors:[5],gemModifier:[modifier]}),0);
+    assert.equal(result.images[0].name,`material_cannon_5_${charge}`);
+    assert.deepEqual(result.badges,[]);
+    assert.ok(result.notes[0].includes(`${charge}/45`));
+    assert.ok(result.notes[0].includes('No cannon direction'));
+  }
+  assert.equal(cellArt(level({gemTypes:[10],gemColors:[0],gemModifier:[9]}),0).images[0].name,'material_cannon_0_0');
+});
+
+test('chameleon keeps encoded body color, previews next palette color and mirrors left facing', () => {
+  const l=level({gemTypes:[12],gemColors:[1],gemDirection:[1]});
+  l.data.gems=[{type:'red',amount:25},{type:'green',amount:8},{type:'coins',amount:25}];
+  const before=structuredClone(l), reduced=cellArt(l,0);
+  assert.equal(reduced.images[0].name,'material_chameleon_1_9');
+  assert.equal(reduced.images[0].mirror,true);
+  assert.ok(reduced.notes[0].includes('illustrative'));
+  assert.deepEqual(l,before);
+  l.layout.gemTypes[0]=11;l.layout.gemDirection[0]=3;
+  assert.equal(cellArt(l,0).images[0].name,'material_chameleon_1_2');
+  assert.ok(!cellArt(l,0).images[0].mirror);
+  for(const [value,name] of [[1,'Left'],[2,'Up'],[3,'Right'],[4,'Down']])
+    assert.equal(describeValue('gemDirection',value),`${value} · ${name}`);
+});
+
+test('wheel uses native wedges for the tier palette, including coins and reduced colors', () => {
+  const l=level({stones:[11,12,0,0,0,0,0,0,0,12,12]});
+  l.data.gems=[{type:'red',amount:25},{type:'green',amount:8},{type:'coins',amount:25},{type:'blue',amount:25},{type:'yellow',amount:25}];
+  assert.deepEqual(mechanicPalette(l,true),[1,9,3,4]);
+  const wheel=boardObjects(l)[0];
+  assert.equal(wheel.name,'material_wheel_frame_4');
+  assert.deepEqual(wheel.images.filter(i=>i.rotation!==undefined).map(i=>i.rotation),[0,90,180,270]);
+  assert.ok(wheel.images.some(i=>i.name==='material_wheel_piece_4_9'));
+  assert.equal(boardObjects(l,true)[0].top,7);
+  l.layout.stones[0]=9;
+  assert.equal(boardObjects(l)[0].name,'material_wheel_frame_5');
+});
+
 const root=new URL('../../reference/tropicats-analysis/',import.meta.url);
 const available=fs.existsSync(new URL('art/sprites.json',root));
 test('all 8,190 campaign variants resolve artwork and keep wheels inside the board', {skip:!available}, () => {
@@ -82,7 +122,10 @@ test('all 8,190 campaign variants resolve artwork and keep wheels inside the boa
       assert.ok(l.layout.portals.includes(id%2 ? id+1 : id-1), `${file}:${i} portal pair`);
     }
     for(const o of boardObjects(l)) {
-      assert.ok(art[o.name]); assert.ok(o.left>=0 && o.top>=0 && o.left+o.width<=9 && o.top+o.height<=9,file);
+      assert.ok(art[o.name]);
+      for(const image of o.images ?? []) assert.ok(art[image.name],`${file} missing ${image.name}`);
+      if ([9,11].some(stone=>l.layout.stones.includes(stone))) assert.ok(!o.name.includes('objective_colorwheel'),`${file} unsupported wheel`);
+      assert.ok(o.left>=0 && o.top>=0 && o.left+o.width<=9 && o.top+o.height<=9,file);
     }
   }
 });

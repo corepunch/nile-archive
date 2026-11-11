@@ -49,7 +49,7 @@ class ViewerServerTests(unittest.TestCase):
             art = json.load(response)
         self.assertIn("dot_red", art)
         if 'material_bomb' in art:
-            for name in ['material_bomb', 'material_line_horizontal', 'material_line_vertical', 'material_crate_9_3', 'portal_exit']:
+            for name in ['material_bomb', 'material_line_horizontal', 'material_line_vertical', 'material_crate_9_3', 'portal_exit', 'material_cannon_5_15', 'material_chameleon_1_9', 'material_wheel_piece_4_9']:
                 with self.get(art[name]['url']) as image:
                     self.assertEqual(image.read(8), b"\x89PNG\r\n\x1a\n")
         with self.get(art["dot_red"]["url"]) as response:

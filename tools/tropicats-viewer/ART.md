@@ -1,11 +1,11 @@
 # Original artwork in the Tropicats viewer
 
-The viewer uses 102 decoded source images and 24 static material renders from the user's installed Tropicats 2.5.11
+The viewer uses 102 decoded source images and 139 static material renders from the user's installed Tropicats 2.5.11
 `Data/Raw/AssetBundles/allscenes_be7e0be1439093721cd26af7025dad92`.
 [art-catalogue.json](art-catalogue.json) records the bundle SHA-256, original
 serialized file, object path ID, dimensions and PNG SHA-256 for every image.
 No generated art or prompts are involved. The material renders evaluate the original
-meshes, packed texture channels and color lookup table at time zero. The original images stay under ignored
+meshes, packed texture channels, skeletal pose, stencil mask and color lookup tables. The original images stay under ignored
 `reference/tropicats-analysis/art/sprites/`; only metadata and review captures
 are tracked. This is a local inspection tool, not a repackaging of the game.
 
@@ -29,7 +29,7 @@ rotation and original alpha. `board_recipe` is a decoded Texture2D. There is no
 painting or invented state artwork. Colored crates now use the game’s own LUT
 shader mapping; the source alpha remains byte-for-byte unchanged. The browser scales
 each original image uniformly into its cell; ordinary pieces use 94% of a cell,
-blockers use 100%. Hidden statues and color-wheel illustrations span their source
+blockers use 100%. Hidden statues and composited color wheels span their source
 footprints. Flipping rows moves their bounds but does not mirror the artwork. Portal anchors
 move to the mirrored cell edge when rows are flipped.
 
@@ -47,17 +47,18 @@ that manifest. There are no arbitrary file or directory routes.
 | Climber color 12 | `ui_icon_climber` | Original static illustration of the animated character |
 | ClimberGem / stacked small, medium, big | `dot_<color>_ClimberGem/StackedGemSmall/StackedGemMedium/StackedGemBig` | Authored color and size variants, including random and coin variants. Unusual non-fruit combinations retain their base image plus `T<type>` and inspector explanation |
 | Diagonal types 13–16 | `diagonal_gems_DiagonalDownRight/DownLeft/UpLeft/UpRight` | Four original authored directions; no generated rotations |
-| Cannon; chameleon/reduced | `cannon_tutorial`, `chameleon_1_tutorial` | Original static illustrations; direction, charge and reduced/color state are not reconstructed |
+| Cannon | `material_cannon_<color>_<charge>` | Original tint map, background, stencil mask, gauge cover and face. Charge is 0/15/30 out of 45; review also includes full charge. Authored orientation retained: every campaign cannon has direction 0 |
+| Chameleon/reduced | `material_chameleon_<current>_<next>` | Original Spine mesh, Blink pose at t=0, two-color mask/LUT. Encoded body color; illustrative next color from the tier palette, excluding low weights for reduced type 12. Left-facing pose is mirrored; vertical directions remain the resting pose |
 | Horizontal/vertical line; bomb | `material_line_horizontal/line_vertical/bomb` | Original meshes and packed shader inputs evaluated at time zero, layered on the fruit and clipped to its alpha. Activated types retain the static bomb depiction; detonation is not simulated |
 | Stones 1–5 | `stone_1hp` through `stone_5hp` | Five authored damage strengths |
 | Resistant blockers 6–8 | `resistantBlocker_tutorial_1hp/2hp/3hp` | Three original tutorial poses; metadata constants give HP range 6–8 |
-| Color wheel stones 9–12 | `ui_icon_objective_colorwheel` | One original 2×2 objective illustration. IDs 9/11 mark the top-left corner; 10/12 occupy the other three cells. Segment/configuration state is not simulated |
+| Color wheel stones 9–12 | `material_wheel_*` | Original wedges, count-specific frame, background and cat face, registered to native pivots; 3–6 segments from the level palette. IDs 11/12 use the inferred reduced palette. Clockwise color order is illustrative. IDs 9/11 mark the 2×2 corner and 10/12 its occupancy |
 | Chains 1–3 | `chain_1hp/2hp/3hp` | Three authored banana-chain strengths, above pieces |
 | Crates 1–3 | `crate_1hp/2hp/3hp` | Three authored strengths |
 | Encoded color crates >3 | `material_crate_<color>_<hp>` | Original strength sprite evaluated through `LookUpTableGemColorRangePot`: seven colors × three strengths. Encoding is color × 4 + HP; stride 4 is confirmed by metadata |
 | Ice modifiers 1–3 | `iceHp1/2/3` | Three authored overlays, above fruit |
 | Dirt modifiers 4–6 | `DirtHp1/2/3` | Three authored overlays; color 14 alone does not invent a fruit |
-| Precharge modifiers 7–9 | Base sprite + `Q<source ID>` | Exact source value preserved, shader gauge not reconstructed |
+| Precharge modifiers 7–9 | Native cannon gauge | Metadata maps to 30/15/0 out of 45; cover travel fitted to source mask bounds. Non-cannon combinations retain an explicit `Q` source badge |
 | Tiles 1–2; watered tile 3 | `tile_1hp/2hp`, `water_field` | Authored layers below fruit, above hidden statues |
 | Hidden-object IDs | `hiddenItem` | One original statue per ID, bounded by its occupied cells, under covering tiles and stones |
 | Field 2/3 | `window`, `growing_window` | Original plank/bamboo sprite; bridge connections are not reconstructed |
@@ -123,11 +124,10 @@ space outside the board so boundary portals are not clipped.
 ## Remaining fidelity work
 
 [Issue #97](https://github.com/corepunch/nile-archive/issues/97) tracks the remaining
-animated poses and transitions, gauge/direction states, wheel configurations,
+animated poses and transitions, exact native gauge travel, runtime color order,
 non-portal route indicators, window bridges and objective-specific board skins.
-Bomb/line static overlays, color-crate materials and portal artwork are now implemented. The table above records every current fallback. Exact data remains
-available in the layer selector, inspector and raw JSON. These illustrations
-and badges are not claimed as faithful runtime states.
+Bomb/line static overlays, color-crate materials, portal artwork, static cannon gauges, skeletal chameleon colors and wheel palette segments are implemented. The table above records every current fallback. Exact data remains
+available in the layer selector, inspector and raw JSON. Static compositions and disclosed approximations are not claimed as pixel-identical runtime states.
 
 ## Visual audit
 
@@ -168,3 +168,89 @@ alpha plane and verify horizontal/vertical mesh orientation.
 Verification: 12 Node tests (2.93 s), 7 Python material/HTTP tests (0.85 s),
 repository lint (1.48 s), measured wall time. All campaign artwork references and
 portal pairs/boundaries passed the corpus check. No game/engine build is needed.
+
+
+### Cannon, chameleon and wheel reconstruction
+
+`mechanics.py` evaluates the bundled shader equations and composes native layers;
+`skeleton.py` reads only the features present in the bundled Spine 3.2.01 skeleton.
+Unknown versions, bone inheritance, constraints, colors or attachment types fail
+explicitly. No third-party runtime is installed or vendored. Binary field ordering
+was checked against the official format readers for
+[3.1.07](https://github.com/EsotericSoftware/spine-runtimes/blob/3.1.07/spine-csharp/src/SkeletonBinary.cs)
+and [3.4.02](https://github.com/EsotericSoftware/spine-runtimes/blob/3.4.02/spine-csharp/src/SkeletonBinary.cs).
+The 3.2 file has shear-aware bones and separate weighted-mesh attachments.
+
+| Mechanic | Bundled source objects | Registered rendering |
+| --- | --- | --- |
+| Cannon | `CannonView` 2279, color map 2270, sprites 594/600/604/653, stencil materials 90/91 | Background × the original RGBA color; cover clipped to the alpha-test mask (threshold .1, mask scale 1.06), then face. Sprite trim offsets and pivots restored to the original 128-pixel coordinate system |
+| Chameleon | Material 85, main texture 279, mask 273, LUT 304, skeleton 361, atlas 353, skeleton data 2187 | 24 bones and 25 active attachments, original weighted vertices, triangle UVs and draw order, at 128 pixels/unit. The authored first frame of `Blink` opens the eyelids; no invented facial pose |
+| Wheel | `ColorWheelView` 2302, sprite manager 2342, material 96, LUT 285 | Wedges 651/661/689/679 and frames 657/598/677/692 for 3/4/5/6 segments; background 623 and face 599. Trim registration restored to 256×256 around the original pivot; wedges rotated by 360/count in the browser |
+
+Cannon metadata defaults `CANNON_PRE_CHARGE_SMALL/MEDIUM/BIG/MAX_CHARGE`
+are **0/15/30/45** (compressed bytes 00/1e/3c/5a). The source modifier names
+are Little/Medium/Much, IDs 9/8/7. The private native initializers `minYPos`
+and `chargeRange` are not available in the encrypted executable, so the cover's
+travel is fitted to the source mask's top/bottom bounds. The numerical charge is
+exact; the pixel height is an approximation. Transient charge glow and explosions
+are not rendered. All 3,668 campaign cannon placements have direction 0; there
+is no encoded left/up/right/down cannon art state to reconstruct. The native
+CannonView method list also has no facing setter.
+
+Chameleon's `Unlit/Unlit-RecolorLUT` clamps source red to .02–.98, samples the
+current and next colors from LUT columns `color/10+.05`, mixes next→current by
+mask red, then original→colored by mask green. Alpha remains the original main
+texture alpha. Main texture is 512×128, mask is 256×64: mask sampling uses matching
+UVs, not matching pixel indexes. The evaluator restores straight alpha for PNG,
+then rasterizes the original triangles with 2× supersampling. Baking the shader
+before triangle filtering approximates GPU edge filtering; it does not reproduce
+half-float precision or color-space conversion exactly.
+
+Direction defaults confirm 1=Left, 2=Up, 3=Right, 4=Down. ChameleonView exposes
+`SetFacingDirection`, `scaleRight` and `scaleLeft`. The viewer mirrors the native
+right-looking pose for Left; it does not rotate it upside down for vertical movement.
+The precise native facing choice after vertical motion remains unverified.
+
+Wheel uses its own `LookUpTableColorWheelPot` 285, not the crate/chameleon LUT.
+`BoardFactory.STANDARD_GEM_AMOUNT` is **25** (compressed byte 32). Metadata names
+`GetColorsFromConfig(skipLowAmountColors)`, `isColorWheelVariant` and
+`ChameleonVariant.Reduced` ground the reduced-palette interpretation: include
+positive-weight match colors normally, and weights ≥25 for stone IDs 11/12 or
+chameleon type 12. Coins are included. Across the campaign this produces 3–6
+segments for **every wheel**, matching all four authored frames. The actual
+native predicate and runtime permutations were not executed; membership remains
+an explicit inference. Wedges follow the config's color order clockwise, and
+chameleon spots preview its first other eligible color. Neither ordering is
+serialized as a runtime state, and both are labeled illustrative in the UI.
+
+The generated catalogue adds 32 cannon compositions (neutral plus seven colors,
+four charge states), 49 chameleon color pairs, 28 colored wedges, four frames,
+one background and one face. Retained tutorial/objective sprites remain available
+for objectives and unsupported segment counts, although no campaign wheel uses
+that fallback. Raw source and decoded shaders stay in ignored `art/shader-evidence/`.
+[Issue #97](https://github.com/corepunch/nile-archive/issues/97) retains acceptance
+criteria for exact gauge travel, facing after vertical motion, reduced-palette
+predicate, native color permutations and animation transitions.
+
+Review covered level 2422's red/purple charge differences and reduced wheels,
+and 2726's opposite-facing chameleons and wheel compositions. No broken images
+or browser errors; row flip moves complete wheel groups, schematic toggle removes
+them, difference highlighting remains source-based, and random markers still work.
+The complete [state review sheet](../../docs/review/tropicats-viewer/mechanics-states.png)
+was inspected, including full charge, all 49 chameleon pairs, every wheel segment
+count and every color column. Reproduce it after extraction:
+
+```sh
+/tmp/tropicats-inspect-venv/bin/python tools/tropicats-viewer/mechanics.py reference/tropicats-analysis/art/sprites docs/review/tropicats-viewer/mechanics-states.png
+```
+
+| View | Before | After |
+| --- | --- | --- |
+| 2422 · 1368×1026 | [Before](../../docs/review/tropicats-viewer/mechanics-before-desktop.png) | [After](../../docs/review/tropicats-viewer/mechanics-after-desktop.png) |
+| 2422 · 390×844 | [Before](../../docs/review/tropicats-viewer/mechanics-before-narrow.png) | [After](../../docs/review/tropicats-viewer/mechanics-after-narrow.png) |
+| 2726 · chameleon facing/colors | [Before](../../docs/review/tropicats-viewer/mechanics-before-chameleons.png) | [After](../../docs/review/tropicats-viewer/mechanics-after-chameleons.png) |
+
+Focused verification: 15 Node tests **2.38 s**, 10 material/HTTP tests **0.89 s**,
+repository lint **1.10 s**, measured wall time. No build step; no game or shared
+engine behavior changed. Additional local storage remains below 30 MB; no new
+environment, model or game-data download was needed.

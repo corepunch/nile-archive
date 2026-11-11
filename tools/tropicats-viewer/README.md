@@ -31,10 +31,19 @@ arbitrary repository files. Stop it with Ctrl+C.
 The combined view uses the game's original sprites when the local art extraction
 is present. See [ART.md](ART.md) for extraction, the complete source catalogue,
 layer mapping, reconstructed bomb/line materials, colored-crate LUT rendering,
-portal registration, static illustrations and remaining fidelity work. The optional
+portal registration, cannon gauges, skeletal chameleon colors, wheel segments and remaining fidelity work. The optional
 random-fruit preview is clearly labeled: it uses a deterministic sample from the
 level palette and does not reproduce the game's RNG or simulate play. Changing
 this display option never changes source values or the difference counts.
+
+Cannons use their native tint map and mouth gauge: low/medium/high precharge is
+0/15/30 out of 45. None of the 3,668 campaign cannon placements encode a direction;
+the viewer preserves the authored facing pose. Chameleons use the original skeleton,
+body/next-color shader and left/right facing. Wheels use the level palette and the
+original 3–6 segment assets, including coins. Reduced palettes omit weights below
+25, an inference grounded in metadata and checked against every wheel layout.
+Chameleon next-color order and clockwise wheel order are illustrative; cannon
+cover travel is fitted to the original mask. These limits are visible in the inspector.
 
 Without extracted artwork the viewer falls back to its schematic. Numeric layer
 views and the inspector remain available in either mode, including zero-field
@@ -47,7 +56,7 @@ counts are not hit points. Field-mask values other than zero are counted without
 assuming they all behave like normal playable cells. Board rows follow source
 array order; runtime orientation has not been independently verified.
 
-Piece colors/types/modifiers and spawn enum values were checked against the
+Piece colors/types/modifiers, direction and spawn enum values were checked against the
 app's IL2CPP v31 field defaults. The table layout was interpreted using the
 [Il2CppDumper metadata definitions](https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/MetadataClass.cs).
 For the small nonnegative enum values used here, compressed default bytes decode
@@ -71,8 +80,10 @@ Local-data checks skip when their reference files are absent. The material check
 use Pillow in the extraction environment; standard-library-only HTTP checks can
 still run with `python3`. Tests also cover original shader channels, LUT brightness
 orientation, all crate alpha planes, line axes and every campaign portal boundary/pair.
+Mechanic tests cover charge mapping, reduced palettes, wheel layers, chameleon
+facing, unequal shader texture sizes and alpha preservation for all 49 color pairs.
 
-Verified 2026-11-11: twelve Node tests **2.93 s**, seven material/HTTP tests **0.85 s**,
-repository lint **1.48 s** (measured wall time). There is no build step and no changed game or
+Verified 2026-11-11: fifteen Node tests **2.38 s**, ten material/HTTP tests **0.89 s**,
+repository lint **1.10 s** (measured wall time). There is no build step and no changed game or
 engine dependency. Browser checks and before/after captures are recorded in
 [the artwork audit](ART.md#visual-audit).

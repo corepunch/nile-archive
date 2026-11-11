@@ -5,6 +5,7 @@ export const TYPES = ['Undefined', 'LineHorizontal', 'LineVertical', 'Bomb', 'Ac
   'ActivatedSuperBomb', 'ClimberGem', 'StackedGemSmall', 'StackedGemMedium', 'StackedGemBig',
   'Cannon', 'Chameleon', 'ChameleonReduced', 'DiagonalDownRight', 'DiagonalDownLeft',
   'DiagonalUpLeft', 'DiagonalUpRight', 'DiagonalRandom'];
+export const DIRECTIONS = ['Undefined','Left','Up','Right','Down'];
 export const MODIFIERS = ['Undefined', 'IceHp1', 'IceHp2', 'IceHp3', 'DirtHp1', 'DirtHp2',
   'DirtHp3', 'PreChargedMuch', 'PreChargedMedium', 'PreChargedLittle'];
 export const GOALS = {climber:'Rescue climbers', droppable:'Turtles', hiddenitem:'Hidden statues',
@@ -26,7 +27,7 @@ export function sourceIndex(displayIndex, flip) {
 export function describeValue(layer, value) {
   if (layer === 'portals' && value) return `${value} · ${value % 2 ? 'Entrance' : 'Exit'} · pair ${Math.ceil(value / 2)}`;
   if (layer === 'crates' && value) return `${value} · ${value < 4 ? 'Wood' : COLORS[Math.floor(value / 4)] || 'Unknown'} · ${value % 4} HP`;
-  const names = {gemColors:COLORS, gemTypes:TYPES, gemModifier:MODIFIERS,
+  const names = {gemColors:COLORS, gemTypes:TYPES, gemModifier:MODIFIERS, gemDirection:DIRECTIONS,
     spawning:['None','Normal spawn','Defined gem','Chameleon spawn']};
   return names[layer]?.[value] ? `${value} · ${names[layer][value]}` : String(value);
 }

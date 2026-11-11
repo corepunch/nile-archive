@@ -99,12 +99,14 @@ def extract(app, output):
         manifest[name]['placement'] = {'left': .5 + position.x + (offset.x-pivot.x*rect.width)/ppu,
             'top': .5-position.y-(offset.y+manifest[name]['height']-pivot.y*rect.height)/ppu,
             'width': width, 'height': height, 'transform_id': transform_id}
+    from mechanics import extract_mechanics
+    extract_mechanics(scene, output, manifest, material_sources)
     (output / 'sprites.json').write_text(json.dumps(manifest, indent=2) + '\n')
     provenance = {'bundle': str(bundle.relative_to(app)),
                   'sha256': hashlib.sha256(bundle.read_bytes()).hexdigest(),
                   'decoder': f'UnityPy {UnityPy.__version__}', 'sprites': len(manifest),
                   'decoded_images': len(candidates), 'material_renders': len(manifest) - len(candidates),
-                  'transform': 'Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders and crate LUT; no painted replacements.',
+                  'transform': 'Original decoded sprites plus time-zero evaluation of bundled meshes, packed overlay shaders, stencil gauge, skeletal chameleon and color LUTs; no painted replacements.',
                   'materials': material_sources}
     (output / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
     print(f'Prepared {len(candidates)} original images and {len(manifest) - len(candidates)} material renders in {output}')

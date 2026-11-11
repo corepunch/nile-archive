@@ -68,6 +68,7 @@ function spriteImage(name, attributes = '') {
 }
 function cellImage(item) {
   let style = `z-index:${item.z};`;
+  if (item.mirror) style += 'transform:scaleX(-1);';
   const asset = artwork[item.name];
   if (item.role === 'portal' && asset?.placement) {
     const p = asset.placement;
@@ -81,8 +82,12 @@ function cellImage(item) {
   return spriteImage(item.name, `class="sprite ${item.role}" style="${style}"`);
 }
 function objectMarkup(level) {
-  return boardObjects(level, $('flip').checked).map(o => spriteImage(o.name,
-    `class="board-object" style="left:${o.left / 9 * 100}%;top:${o.top / 9 * 100}%;width:${o.width / 9 * 100}%;height:${o.height / 9 * 100}%;z-index:${o.z}"`)).join('');
+  return boardObjects(level, $('flip').checked).map(o => {
+    const style = `left:${o.left / 9 * 100}%;top:${o.top / 9 * 100}%;width:${o.width / 9 * 100}%;height:${o.height / 9 * 100}%;z-index:${o.z}`;
+    if (!o.images) return spriteImage(o.name, `class="board-object" style="${style}"`);
+    return `<span class="board-object wheel" style="${style}">${o.images.map(i => spriteImage(i.name,
+      `style="transform:rotate(${i.rotation ?? 0}deg)"`)).join('')}</span>`;
+  }).join('');
 }
 function tileMarkup(level, tier, displayIndex) {
   const i = sourceIndex(displayIndex, $('flip').checked), layer = $('layer').value;
@@ -124,10 +129,10 @@ function render() {
   const sprites = spriteMode();
   $('preview').disabled = !sprites;
   $('view-note').textContent = sprites
-    ? `Original game artwork, composed as a static board. ${$('preview').checked ? 'Random slots show illustrative fruit from the level palette, not the game’s starting RNG.' : 'Striped pieces are the game’s authored random-color markers.'} Click any cell for exact values. Rows follow source order.`
+    ? `Original game artwork, composed as a static board. ${$('preview').checked ? 'Random slots show illustrative fruit from the level palette, not the game’s starting RNG.' : 'Striped pieces are the game’s authored random-color markers.'} Chameleon next colors and wheel order are illustrative. Click any cell for exact values. Rows follow source order.`
     : 'Schematic of the extracted starting board. Select a cell to inspect all layers across three tiers. Rows follow serialized order.';
   $('legend').innerHTML = sprites
-    ? '<strong>Source sprites</strong><span>Animated characters use original static illustrations</span><span>Bombs, lines and crates use reconstructed game materials · Portal IDs remain in the inspector</span><span class="amber">Amber outline = changed source cell</span>'
+    ? '<strong>Source sprites</strong><span>Chameleons use the original skeleton and color shader</span><span>Cannons show source charge · Wheels use palette segments · Static poses and inferred color order</span><span class="amber">Amber outline = changed source cell</span>'
     : '<strong>Schematic</strong><span>Letters = color · ? = random · S = blocker · C = chain · H = hidden object · P = portal</span><span class="amber">Amber outline = changed cell</span>';
   $('boards').innerHTML = tiers.map(([tier, title]) => {
     const level = variants[tier];
@@ -151,7 +156,7 @@ function renderInspector() {
   $('cell-title').textContent = cell === null ? 'Cell inspector' : `Row ${Math.floor(cell / 9) + 1} · column ${cell % 9 + 1}`;
   $('cell-hint').textContent = cell === null ? 'Select any board cell' : `Serialized index ${cell} · same coordinate across tiers`;
   if (cell === null) { $('cell-detail').innerHTML = '<p class="muted">Click a cell to compare its piece, obstacles, routes and hidden-object values. Use arrow keys to move between cells.</p>'; return; }
-  const artNotes = [...new Set(tiers.flatMap(([tier]) => cellArt(variants[tier], cell).notes))];
+  const artNotes = [...new Set(tiers.flatMap(([tier]) => cellArt(variants[tier], cell, {preview:$('preview').checked,seed:current.number}).notes))];
   const layers = new Set(tiers.flatMap(([tier]) => Object.keys(variants[tier].layout)));
   $('cell-detail').innerHTML = `<div class="table-scroll"><table><thead><tr><th>Layer</th><th>Easy</th><th>Medium</th><th>Hard</th></tr></thead><tbody>${[...layers].map(layer => `<tr><th>${escape(LAYERS[layer] ?? layer)}</th>${tiers.map(([tier]) => `<td class="${changedAt(variants.a, variants[tier], cell, layer) ? 'different' : ''}">${escape(describeValue(layer, valueAt(variants[tier], layer, cell)))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${artNotes.length ? `<p class="muted">${artNotes.map(escape).join(' ')}</p>` : ''}`;
 }
