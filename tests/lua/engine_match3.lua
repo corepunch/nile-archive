@@ -136,6 +136,55 @@ for flags=0,63 do
         t:check((view.idle_time>6)==(flags&E.NO_HINTS~=0),'NO_HINTS stops the automatic idle search')
     end)
 end
+-- A played swap must create its power-up at the matched swapped gem, not
+-- whichever end of the run happens to be visited first in board order.
+for _, mode in ipairs({{name='straight lines',flags=E.LINE_MATCHES},
+                       {name='connected groups',flags=0}}) do
+    for length=4,5 do
+        for _, direction in ipairs({'into match','out of match'}) do
+            t:case(('%s: match %d %s'):format(mode.name,length,direction),function()
+                local R=E.new{flags=mode.flags}
+                local g,m=H.board(R),R.new_match()
+                local matched,other=R.hex_index(0,0),R.hex_index(0,1)
+                for q=-2,length-3 do
+                    if q~=0 then g.tiles[R.hex_index(q,0)]=R.tile(1) end
+                end
+                g.tiles[matched],g.tiles[other]=R.tile(2),R.tile(1)
+                local a,b=other,matched
+                if direction=='out of match' then a,b=matched,other end
+                t:check(R.game_swap(g,a,b,m),'the swap completes the line')
+                local special=length==4 and R.ROW or R.PRISM
+                t:check(m.hits==length and m.make[matched]==special,
+                    'special appears on the swapped gem in the match')
+                for i=0,R.CELLS-1 do
+                    if i~=matched then t:check(m.make[i]==nil,'no power-up at the end of the run') end
+                end
+                R.game_apply(g,m)
+                t:check(g.tiles[matched].kind==1 and g.tiles[matched].special==special,
+                    'the matched swapped gem retains the power-up after clearing')
+            end)
+        end
+    end
+    for _, reverse in ipairs({false,true}) do
+        t:case(('%s: two matches from one swap, reverse=%s'):format(mode.name,tostring(reverse)),function()
+            local R=E.new{flags=mode.flags}
+            local g,m=H.board(R),R.new_match()
+            local center,side=R.hex_index(0,0),R.hex_index(0,1)
+            for q=-2,1 do
+                if q~=0 then g.tiles[R.hex_index(q,0)]=R.tile(1) end
+            end
+            for r=2,4 do g.tiles[R.hex_index(0,r)]=R.tile(2) end
+            g.tiles[center],g.tiles[side]=R.tile(2),R.tile(1)
+            local a,b=reverse and side or center,reverse and center or side
+            t:check(R.game_swap(g,a,b,m),'both crossing directions form a match')
+            t:check(m.hits==8 and m.make[center]==R.ROW and m.make[side]==R.COLUMN,
+                'each run leaves its special on its own swapped endpoint')
+            R.game_apply(g,m)
+            t:check(g.tiles[center].special==R.ROW and g.tiles[side].special==R.COLUMN,
+                'both swapped gems survive with their respective specials')
+        end)
+    end
+end
 local failures=t:finish()
 return failures+require('contracts/puzzle')(E.new(config(0)),
     {name='engine match3',extended=testing.extended,goal_kind=0,wood_kind=2,stone_kind=4})
