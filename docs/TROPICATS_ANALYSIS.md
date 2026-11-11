@@ -5,6 +5,10 @@ Inspected 2026-11-11: the locally supplied `reference/Tropicats.app`, version
 named in that app's embedded manifest. This is a static resource and metadata
 analysis, not a playthrough or a recovery of the original C# source. Spoilers follow.
 
+The [design reference](tropicats-reference/README.md) expands this overview into
+an element dictionary, board-design examples, all 70 chapters and 1,217 story
+tasks, and concrete adaptation guidance for Relic Rush and Christmas Market.
+
 Browse the extracted puzzles with the [local level atlas](../tools/tropicats-viewer/README.md):
 run `python3 tools/tropicats-viewer/serve.py` and open <http://127.0.0.1:8765>.
 The viewer also supports [original sprites extracted from the installed app](../tools/tropicats-viewer/ART.md),
@@ -177,7 +181,8 @@ JSON TextAssets with `data`, `layout` and `collectable` sections.
 Some goals derive from the layout: an empty `data.objectives` array does not
 mean a level has no objective. Metadata includes `LevelConfig.UpdateObjectives`
 and layout counters for hidden items, treasure and unwatered fields. Numeric
-tile/gem enum values and the exact spawn-probability calculation were not decoded.
+tile/gem enum values are now mapped in the [mechanics dictionary](tropicats-reference/MECHANICS.md).
+The exact runtime spawn-probability calculation remains unverified.
 
 The campaign index classifies levels into these primary objective families:
 
