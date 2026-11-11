@@ -85,8 +85,11 @@ sprite drawn `height` tall, standing on its bottom centre.
   the tile lines inside, green when it fits and red when it doesn't. During
   placement or relocation, all other buildings show cream perimeter guides
   around their collision footprints, including clearance. A dark edge keeps
-  them readable over grass, snow and building art. The mover's old footprint
-  is omitted; guides disappear on Confirm/Cancel. See the
+  them readable over the terrain. Christmas Market enables
+  `city.placement_guides_on_ground` so opaque building pixels cover the
+  lines behind them. The mover's old footprint is omitted. Confirm or Cancel
+  hides the guides. Debug `--footprints` overlays all four edges and the pivot
+  on the sprites. See the
   [placement-guide review](review/city-placement-guides/README.md).
 - **Depth.** Tiles skew, so a footprint's y says little about a long neighbour's.
   A building draws in front of another when it lies past it along one tile axis

@@ -607,8 +607,7 @@ static void footprint_corners(const city *c, vec2 at, int type, vec2 pts[4])
         pts[k] = camera_to_screen(c->cam, from_tile(c, vec2_add(t, v2(u[k] * f.w, v[k] * f.h))));
 }
 
-/* Neutral occupied-ground guides, including the same clearance as collision.
- * Paint over the sprites so tall neighbours cannot hide the alignment edges. */
+/* Neutral occupied-ground guides, including the same clearance as collision. */
 static void draw_placement_guides(const city *c)
 {
     color shadow = rgba(18, 45, 39, 185), line = rgba(255, 243, 204, 225);
@@ -713,6 +712,9 @@ void city_draw(const city *c, input in, double now)
     }
     draw_fog(c, app_time());   /* over the land and its shadows, under the buildings; frame time stays smooth, income uses wall-clock now */
 
+    bool show_placement_guides = c->placing >= 0 && !c->show_footprints;
+    if (show_placement_guides && c->placement_guides_on_ground) draw_placement_guides(c);
+
     int order[CITY_MAX], n = depth_order(c, order);
     for (int k = 0; k < n; k++) {
         int i = order[k];
@@ -756,7 +758,7 @@ void city_draw(const city *c, input in, double now)
     if (c->draw_over) c->draw_over(c);
 
     if (c->placing >= 0) {
-        if (!c->show_footprints) draw_placement_guides(c);
+        if (show_placement_guides && !c->placement_guides_on_ground) draw_placement_guides(c);
         vec2 land = city_snap(c, c->ghost, c->placing);   /* mid-drag the footprint shows where it will land */
         bool ok = city_can_place(c, land, c->placing, c->moving);
         draw_footprint(c, land, c->placing, ok);

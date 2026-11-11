@@ -23,7 +23,7 @@ static bool guide_at(vec2 p)
     for (int y = -2; y <= 2; y++)
         for (int x = -2; x <= 2; x++) {
             color sample = at((int)roundf(p.x) + x, (int)roundf(p.y) + y);
-            if (sample.r > 180 && sample.g > 180 && sample.b > 120) return true;
+            if (sample.r > 180 && sample.g > 180) return true;
         }
     return false;
 }
@@ -58,7 +58,7 @@ static void frame(float dt)
     c.items[1] = (building){v2(110, 100), 1, 0};
     vec2 old_edge = vec2_add(c.items[0].pos, city_tile_to_world(&c, v2(0, 1)));
     vec2 neighbour_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(0, 1)));
-    vec2 covered_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(0, -1)));
+    vec2 covered_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(-.3f, -1)));
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(!guide_at(old_edge) && !guide_at(neighbour_edge));
@@ -71,6 +71,15 @@ static void frame(float dt)
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(guide_at(neighbour_edge));
+    c.placement_guides_on_ground = true;
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(!guide_at(old_edge) && guide_at(neighbour_edge) && !guide_at(covered_edge));
+    c.show_footprints = true;
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(guide_at(covered_edge));
+    c.show_footprints = false;
     city_cancel(&c);
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));

@@ -204,6 +204,7 @@
 ---@field fog_clouds boolean Animated world-space cloud density and billow lighting, clipped to the closed-region mask.
 ---@field path color Paths linking buildings; alpha 0 = none.
 ---@field movable boolean Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map.
+---@field placement_guides_on_ground boolean Draw occupied-ground placement guides beneath the placed buildings so their sprites can cover the lines.
 ---@field show_footprints boolean Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements.
 ---@field income_icon texture
 ---@field selected integer Quick build: a tap places this type at once (-1 = off).

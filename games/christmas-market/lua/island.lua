@@ -181,6 +181,7 @@ function M.island_setup(c)
     c.fog_on_land_only = true
     c.path = color(202, 210, 220, 180)
     c.movable = true
+    c.placement_guides_on_ground = true
     c.cam = camera{center = vec2(760, 2010), zoom = .65, min_zoom = .24, max_zoom = 1.05, world = size2(M.ISLAND_W, M.ISLAND_H)}
     c:init("island.jpg")
 end

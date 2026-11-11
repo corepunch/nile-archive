@@ -368,12 +368,9 @@ ground-contact edges. See the [adjacent foundation captures](review/foundations/
 
 ## Placement alignment guides
 
-`placement-guides` uses the shared `engine/city.c` renderer. While moving or
-placing a building, other buildings show neutral cream outlines with dark
-contrast edges around their occupied ground, including placement clearance.
-The building in hand retains its green/red footprint; its original location
-is omitted. Guides stay visible after release until Confirm/Cancel, then hide.
-The guides use the existing camera and tile measurements; artwork, alpha,
-footprints and collision rules are unchanged. No bitmap or ImageGen source is
-added. Reproduce with the existing native-input hold/placement captures in the
-[review](../../../docs/review/city-placement-guides/README.md).
+The shared `engine/city.c` renderer draws cream outlines around occupied
+ground during placement. Building sprites cover the lines behind them. The
+building in hand retains its green/red footprint, and the old plot of a
+building being moved is free. Confirm or Cancel hides the guides. Debug
+`--footprints` draws the full outlines above the sprites. See the
+[phone captures](review/placement-guides/README.md).

@@ -2412,6 +2412,7 @@ The building meta-game: ground, zones, a catalogue of building types and the pla
 | `fog_clouds` | `boolean` | read/write | Animated world-space cloud density and billow lighting, clipped to the closed-region mask. |
 | `path` | `color` | read/write | Paths linking buildings; alpha 0 = none. |
 | `movable` | `boolean` | read/write | Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map. |
+| `placement_guides_on_ground` | `boolean` | read/write | Draw occupied-ground placement guides beneath the placed buildings so their sprites can cover the lines. |
 | `show_footprints` | `boolean` | read/write | Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements. |
 | `income_icon` | `texture` | read/write |  |
 | `selected` | `integer` | read/write | Quick build: a tap places this type at once (-1 = off). |

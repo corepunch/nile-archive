@@ -71,6 +71,10 @@ between them. A placement shows Cancel and Confirm beside the building. Snow
 falls over the village and moves with it when you pan. Dialogue stands the
 speaker (and listener) on a full-width bubble in the middle of the screen.
 
+During placement, cream guides trace occupied ground and disappear behind
+buildings that cover them. Debug `--footprints` shows the full outline over
+each sprite. See the [placement captures](docs/review/placement-guides/README.md).
+
 ## Draft implementation
 
 The market header shows Lives, Gold and Christmas Stars in one row. A failed

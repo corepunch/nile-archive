@@ -688,6 +688,7 @@ typedef struct city {
     bool fog_clouds;                        /* animated, world-anchored cloud density and lighting */
     color path;                             /* paths linking buildings; alpha 0 = none */
     bool movable;                           /* hold a building for .5 seconds to pick it up */
+    bool placement_guides_on_ground;        /* placed sprites can occlude their neighbours' guides */
     bool show_footprints;                   /* debug: every building's footprint and pivot over its sprite */
     texture income_icon;                    /* bubble shown over buildings with income ready */
     int selected;                           /* quick build: tap places this type at once (-1 = off) */
