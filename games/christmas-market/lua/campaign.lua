@@ -3,16 +3,16 @@ local function level(name, lesson, moves, score, relics, soil, chains, ice)
     return {name=name, lesson=lesson, moves=moves, score=score, relics=relics, soil=soil, chains=chains, ice=ice}
 end
 local levels = {
-    level("Welcome Lights", "Line up 3 or more treats along any hex axis.", 24, 1100, 8, 0, 0, 0),
-    level("Lumber Lane", "Four in a straight line make a striped treat.", 28, 1800, 10, 7, 0, 0),
-    level("Gingerbread Swirl", "Clear the powder snow beneath the treats.", 32, 2300, 12, 12, 0, 0),
-    level("Cocoa Corner", "Match tangled treats to unwrap the tinsel.", 34, 2700, 12, 10, 4, 0),
-    level("Toymaker Lane", "Combine striped treats to clear all three axes.", 36, 3100, 14, 13, 4, 0),
-    level("Ribbon Wishes", "Break the ice and wrap a winter wish.", 38, 3400, 14, 13, 0, 5),
-    level("Candlelight Circle", "Candy canes melt ice in all six neighboring cells.", 40, 3800, 16, 15, 4, 5),
-    level("Carousel Stars", "Five in a straight line forge a rainbow star.", 42, 4200, 16, 17, 4, 6),
-    level("Skating Evening", "Combine rays to clear all three axes.", 44, 4600, 18, 19, 5, 6),
-    level("Under the Big Fir", "Clear the snow from under the big fir.", 46, 5000, 20, 22, 6, 6),
+    level("Welcome Lights", "Match 3 in a row.", 24, 1100, 8, 0, 0, 0),
+    level("Lumber Lane", "Match 4 for a striped treat.", 28, 1800, 10, 7, 0, 0),
+    level("Gingerbread Swirl", "Clear the snow.", 32, 2300, 12, 12, 0, 0),
+    level("Cocoa Corner", "Match to free the tinsel.", 34, 2700, 12, 10, 4, 0),
+    level("Toymaker Lane", "Combine striped treats.", 36, 3100, 14, 13, 4, 0),
+    level("Ribbon Wishes", "Break the ice.", 38, 3400, 14, 13, 0, 5),
+    level("Candlelight Circle", "Candy canes melt ice.", 40, 3800, 16, 15, 4, 5),
+    level("Carousel Stars", "Match 5 for a rainbow star.", 42, 4200, 16, 17, 4, 6),
+    level("Skating Evening", "Combine rays.", 44, 4600, 18, 19, 5, 6),
+    level("Under the Big Fir", "Clear the big fir.", 46, 5000, 20, 22, 6, 6),
 }
 local shapes = {"Hexagon", "Crescent", "Diamond", "Butterfly", "Hourglass", "Lotus", "Ring", "Twin courts", "Crossroads", "Sun crown"}
 
@@ -47,26 +47,26 @@ end
 -- Episodes two and three (docs/story.md#levels): authored lane variants, with a
 -- gentler restart and a breather before each final stretch. All contours stay connected.
 local later = {
-    {level("Carols and Crumbs", "Dig out the square, one drift at a time.", 32, 2500, 12, 14, 0, 0), "1111111111111111111111111111111111011111111111111111111111111", 1},
-    {level("Word from Fenwick", "Unwrap the tangled treats. Bramble's been busy.", 35, 2900, 13, 15, 5, 0), "0000001111101111110111111101111111001111110111111011111000000", 1},
-    {level("Sawdust Row", "Shooting stars reach what your hands can't.", 36, 3200, 14, 16, 6, 0), "1111111111011110001111100011011101000011111000111101111111111", 1},
-    {level("The Bench by the Fir", "Two specials together clear a whole crossing.", 37, 3500, 14, 17, 7, 0), "1111111111111111111111111100011100001111111111111111111111111", 1},
-    {level("Tangled Tinsel", "So much tinsel. Work from the outside in.", 38, 3700, 15, 16, 9, 0), "1000101111001111100111111011111111001111110011111001111010001", 1},
-    {level("Paper and String", "Break the ice, then wrap a winter wish.", 40, 4000, 15, 18, 4, 7), "1111111111111111111111111101111111111111111111111111111111111", 1},
-    {level("Twelve Horses", "Candy canes melt every cell around them.", 41, 4200, 16, 19, 5, 7), "1111111111111111111110011111100011011100111111111111111111111", 1},
+    {level("Carols and Crumbs", "Dig out the square.", 32, 2500, 12, 14, 0, 0), "1111111111111111111111111111111111011111111111111111111111111", 1},
+    {level("Word from Fenwick", "Unwrap the tangled treats.", 35, 2900, 13, 15, 5, 0), "0000001111101111110111111101111111001111110111111011111000000", 1},
+    {level("Sawdust Row", "Shooting stars reach far.", 36, 3200, 14, 16, 6, 0), "1111111111011110001111100011011101000011111000111101111111111", 1},
+    {level("The Bench by the Fir", "Pair specials for a crossing.", 37, 3500, 14, 17, 7, 0), "1111111111111111111111111100011100001111111111111111111111111", 1},
+    {level("Tangled Tinsel", "Work from the outside in.", 38, 3700, 15, 16, 9, 0), "1000101111001111100111111011111111001111110011111001111010001", 1},
+    {level("Paper and String", "Break the ice.", 40, 4000, 15, 18, 4, 7), "1111111111111111111111111101111111111111111111111111111111111", 1},
+    {level("Twelve Horses", "Candy canes melt ice.", 41, 4200, 16, 19, 5, 7), "1111111111111111111110011111100011011100111111111111111111111", 1},
     {level("Fairy Lights", "Nearly clear. Have a cocoa.", 42, 3000, 12, 12, 2, 4), "1110011110111111110111111100111110001111110111111110111100111", 1},
-    {level("A Hundred Flames", "Old ice takes two hits. Plan for both.", 44, 4600, 18, 20, 6, 8), "1000111001111000111111111111111111011111111110001111001110001", 2},
-    {level("A Letter Forty Years Late", "Clear the thirty feet between two doors.", 46, 5100, 20, 22, 7, 9), "1111111111111111111110011111100011111100111111111111111111111", 2},
-    {level("Carolers Court", "One drift at a time. The tuba's watching.", 34, 2800, 12, 15, 0, 0), "1111111111011111101111110011111100011111110111111111111111111", 1},
-    {level("Many Hands", "Thread the lights along the narrow path.", 38, 3400, 14, 16, 6, 0), "0011110111111111111111111000111110001111111011111111110111100", 1},
-    {level("Painted Horses", "A rainbow star clears a whole colour.", 39, 3700, 15, 16, 5, 5), "1101111111101111101111111111111111011111111011111011111111011", 1},
-    {level("Frozen Fountain", "Free the ribbons from the centre.", 40, 3900, 16, 20, 4, 6), "0111001111001111100111111001111111001111110011111001111000110", 2},
-    {level("Snow on the Line", "Moves are short. Every swap has to count.", 36, 4000, 16, 18, 6, 6), "0111110111111011111111111111111111011111111111101111110111110", 2},
-    {level("Lantern Ice", "Clear the rink before the wind gets up.", 34, 4300, 17, 20, 4, 9), "1000101111001111100111111001111111101111110011111001111010001", 2},
-    {level("Every Light in Bellmere", "Light every corner of the board.", 38, 4800, 18, 21, 7, 8), "1111111111111111101111100011111100011111100111111111111111111", 2},
-    {level("The Last Train", "Nearly there. The board is on your side.", 44, 3200, 13, 13, 2, 4), "1111111111111111111111111111111111101111111111111111111111111", 1},
-    {level("The Big Fir", "One last drift between you and the tree.", 37, 5200, 20, 23, 8, 10), "1101111111101111101111111011111111111111111011111011111111011", 2},
-    {level("Light the Christmas Tree", "Clear the snow and light our Christmas tree!", 33, 5500, 22, 24, 8, 10), masks[10], 2},
+    {level("A Hundred Flames", "Old ice takes two hits.", 44, 4600, 18, 20, 6, 8), "1000111001111000111111111111111111011111111110001111001110001", 2},
+    {level("A Letter Forty Years Late", "Clear between the doors.", 46, 5100, 20, 22, 7, 9), "1111111111111111111110011111100011111100111111111111111111111", 2},
+    {level("Carolers Court", "The tuba's watching.", 34, 2800, 12, 15, 0, 0), "1111111111011111101111110011111100011111110111111111111111111", 1},
+    {level("Many Hands", "Thread the narrow path.", 38, 3400, 14, 16, 6, 0), "0011110111111111111111111000111110001111111011111111110111100", 1},
+    {level("Painted Horses", "Rainbow stars clear a colour.", 39, 3700, 15, 16, 5, 5), "1101111111101111101111111111111111011111111011111011111111011", 1},
+    {level("Frozen Fountain", "Free the ribbons.", 40, 3900, 16, 20, 4, 6), "0111001111001111100111111001111111001111110011111001111000110", 2},
+    {level("Snow on the Line", "Make every swap count.", 36, 4000, 16, 18, 6, 6), "0111110111111011111111111111111111011111111111101111110111110", 2},
+    {level("Lantern Ice", "Clear the rink.", 34, 4300, 17, 20, 4, 9), "1000101111001111100111111001111111101111110011111001111010001", 2},
+    {level("Every Light in Bellmere", "Light every corner.", 38, 4800, 18, 21, 7, 8), "1111111111111111101111100011111100011111100111111111111111111", 2},
+    {level("The Last Train", "The board is on your side.", 44, 3200, 13, 13, 2, 4), "1111111111111111111111111111111111101111111111111111111111111", 1},
+    {level("The Big Fir", "One last drift.", 37, 5200, 20, 23, 8, 10), "1101111111101111101111111011111111111111111011111011111111011", 2},
+    {level("Light the Christmas Tree", "Light our Christmas tree!", 33, 5500, 22, 24, 8, 10), masks[10], 2},
 }
 for i, entry in ipairs(later) do
     local l = entry[1]

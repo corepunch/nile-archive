@@ -193,7 +193,7 @@ function E.bind_board_ui(R, rules, tool_art)
     function R.mission(text, title)
         R.mission_banner = {text = text, title = title, t = 0}
     end
-    local MISSION_IN, MISSION_HOLD, MISSION_OUT = .4, 3.6, .4
+    local MISSION_IN, MISSION_HOLD, MISSION_OUT = .3, 1.4, .3   -- two seconds, then it goes on its own
     local function draw_mission(dt)
         local m = R.mission_banner
         if not m or R.overlay ~= R.OV_NONE or story.active() then return end

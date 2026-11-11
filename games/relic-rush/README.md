@@ -174,35 +174,35 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 
 | # | Expedition | Moves | Score | Idols | Sand | Chains | Ice cells | Focus |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| 1 | First Light | 24 | 1100 | 8 | 0 | 0 | 0 | Line up 3 or more relics along any hex axis. |
-| 2 | The Jade Crescent | 28 | 1800 | 10 | 7 | 0 | 0 | Four in a straight line create a sun ray. |
-| 3 | Sunstone Spiral | 32 | 2300 | 12 | 12 | 0 | 0 | Excavate the spiral beneath the relics. |
-| 4 | The Vine Constellation | 34 | 2700 | 12 | 10 | 4 | 0 | Match locked relics to break their chains. |
-| 5 | Three Paths Meet | 36 | 3100 | 14 | 13 | 4 | 0 | Combine sun rays to clear all three axes. |
-| 6 | Winter Lotus | 38 | 3400 | 14 | 13 | 0 | 5 | Break the ice around the frozen lotus. |
-| 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Fire melts ice in all six neighboring cells. |
-| 8 | Prism Hollow | 42 | 4200 | 16 | 17 | 4 | 6 | Five in a straight line forge a sun prism. |
-| 9 | The Sixfold Seal | 44 | 4600 | 18 | 19 | 5 | 6 | Combine rays to clear all three axes. |
-| 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the ancient sun at the heart of the valley. |
-| 11 | The Long Terrace | 32 | 2500 | 12 | 14 | 0 | 0 | Dig along the rail, one terrace at a time. |
-| 12 | Twelve Crates | 35 | 2900 | 13 | 15 | 5 | 0 | Chained relics first, then the crates beneath. |
-| 13 | Names in the Stone | 36 | 3200 | 14 | 16 | 6 | 0 | Sun rays reach the names no pick can. |
-| 14 | Static | 37 | 3500 | 14 | 17 | 7 | 0 | Two rays together clear the crossing lines. |
-| 15 | The Frost Line | 38 | 3700 | 15 | 18 | 4 | 6 | The frost has climbed. Break it before it sets. |
-| 16 | Supper for Twelve | 40 | 4000 | 15 | 18 | 4 | 7 | Flame relics thaw every cell around them. |
-| 17 | The Torn Log | 41 | 4200 | 16 | 19 | 5 | 7 | Old ice takes two hits. Plan for both. |
-| 18 | Lantern Steps | 42 | 3000 | 12 | 12 | 2 | 4 | Take a breath. These steps are nearly clear. |
-| 19 | Under the Vines | 44 | 4600 | 18 | 20 | 6 | 8 | Vines above, frost below. Free what you can reach. |
-| 20 | The Archivist's Key | 46 | 5100 | 20 | 22 | 7 | 9 | Everything he hid is at the centre. |
-| 21 | Tomas's Trail | 34 | 2800 | 12 | 15 | 0 | 0 | Follow the prints. Clear a path through the sand. |
-| 22 | The Frozen Stair | 38 | 3400 | 14 | 16 | 2 | 8 | Thaw the stair, one flame at a time. |
-| 23 | The Star Road | 39 | 3700 | 15 | 16 | 5 | 5 | Five in a line forge a prism. Aim it well. |
-| 24 | Noon Shadow | 40 | 3900 | 16 | 20 | 4 | 5 | Dig where the shadow falls. |
-| 25 | Smoke on the Water | 36 | 4000 | 16 | 18 | 6 | 6 | Moves are short. Every swap has to count. |
-| 26 | The Jade Deep | 42 | 4300 | 17 | 20 | 4 | 9 | Open the spring beneath the frost. |
-| 27 | Six Sun Gates | 44 | 4600 | 18 | 20 | 7 | 8 | Six gates, one seal. Clear them in any order. |
-| 28 | The Last Terrace | 44 | 3200 | 13 | 13 | 2 | 4 | Run. The board is on your side this time. |
-| 29 | The Silent Temple | 46 | 5200 | 20 | 23 | 8 | 10 | Every blocker in the valley guards this floor. |
+| 1 | First Light | 24 | 1100 | 8 | 0 | 0 | 0 | Match 3 in a row. |
+| 2 | The Jade Crescent | 28 | 1800 | 10 | 7 | 0 | 0 | Match 4 for a sun ray. |
+| 3 | Sunstone Spiral | 32 | 2300 | 12 | 12 | 0 | 0 | Dig out the spiral. |
+| 4 | The Vine Constellation | 34 | 2700 | 12 | 10 | 4 | 0 | Match to break chains. |
+| 5 | Three Paths Meet | 36 | 3100 | 14 | 13 | 4 | 0 | Combine sun rays. |
+| 6 | Winter Lotus | 38 | 3400 | 14 | 13 | 0 | 5 | Break the ice. |
+| 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Fire melts nearby ice. |
+| 8 | Prism Hollow | 42 | 4200 | 16 | 17 | 4 | 6 | Match 5 for a prism. |
+| 9 | The Sixfold Seal | 44 | 4600 | 18 | 19 | 5 | 6 | Combine rays. |
+| 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the ancient sun. |
+| 11 | The Long Terrace | 32 | 2500 | 12 | 14 | 0 | 0 | Dig terrace by terrace. |
+| 12 | Twelve Crates | 35 | 2900 | 13 | 15 | 5 | 0 | Chains first, then crates. |
+| 13 | Names in the Stone | 36 | 3200 | 14 | 16 | 6 | 0 | Sun rays reach the names. |
+| 14 | Static | 37 | 3500 | 14 | 17 | 7 | 0 | Pair rays to clear lines. |
+| 15 | The Frost Line | 38 | 3700 | 15 | 18 | 4 | 6 | Break the frost. |
+| 16 | Supper for Twelve | 40 | 4000 | 15 | 18 | 4 | 7 | Flames thaw their neighbours. |
+| 17 | The Torn Log | 41 | 4200 | 16 | 19 | 5 | 7 | Old ice takes two hits. |
+| 18 | Lantern Steps | 42 | 3000 | 12 | 12 | 2 | 4 | Nearly clear. Breathe. |
+| 19 | Under the Vines | 44 | 4600 | 18 | 20 | 6 | 8 | Vines above, frost below. |
+| 20 | The Archivist's Key | 46 | 5100 | 20 | 22 | 7 | 9 | Clear to the centre. |
+| 21 | Tomas's Trail | 34 | 2800 | 12 | 15 | 0 | 0 | Follow the prints. |
+| 22 | The Frozen Stair | 38 | 3400 | 14 | 16 | 2 | 8 | Thaw the stair. |
+| 23 | The Star Road | 39 | 3700 | 15 | 16 | 5 | 5 | Aim your prism well. |
+| 24 | Noon Shadow | 40 | 3900 | 16 | 20 | 4 | 5 | Dig in the shadow. |
+| 25 | Smoke on the Water | 36 | 4000 | 16 | 18 | 6 | 6 | Make every swap count. |
+| 26 | The Jade Deep | 42 | 4300 | 17 | 20 | 4 | 9 | Free the spring. |
+| 27 | Six Sun Gates | 44 | 4600 | 18 | 20 | 7 | 8 | Clear all six gates. |
+| 28 | The Last Terrace | 44 | 3200 | 13 | 13 | 2 | 4 | The board is on your side. |
+| 29 | The Silent Temple | 46 | 5200 | 20 | 23 | 8 | 10 | Every blocker, one floor. |
 | 30 | The Song Returns | 48 | 5500 | 22 | 24 | 8 | 10 | Clear the way to the socket. |
 
 Ice can require more than one hit. Board patterns progress from the introductory field to crescents, spirals, branching lines, rings and the final central seal.

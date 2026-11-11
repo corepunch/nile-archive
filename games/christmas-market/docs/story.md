@@ -452,27 +452,27 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 
 | # | Name | Focus | Lesson |
 | ---: | --- | --- | --- |
-| 10 | Under the Big Fir | All | Clear the snow from under the big fir. |
-| 11 | Carols and Crumbs | Snow, gentle restart | Dig out the square, one drift at a time. |
-| 12 | Word from Fenwick | Snow, tinsel | Unwrap the tangled treats. Bramble's been busy. |
-| 13 | Sawdust Row | Tinsel, specials | Shooting stars reach what your hands can't. |
-| 14 | The Bench by the Fir | Tinsel, combos | Two specials together clear a whole crossing. |
-| 15 | Tangled Tinsel | Tinsel, dense | So much tinsel. Work from the outside in. |
-| 16 | Paper and String | Ice returns | Break the ice, then wrap a winter wish. |
-| 17 | Twelve Horses | Ice, candy canes | Candy canes melt every cell around them. |
+| 10 | Under the Big Fir | All | Clear the big fir. |
+| 11 | Carols and Crumbs | Snow, gentle restart | Dig out the square. |
+| 12 | Word from Fenwick | Snow, tinsel | Unwrap the tangled treats. |
+| 13 | Sawdust Row | Tinsel, specials | Shooting stars reach far. |
+| 14 | The Bench by the Fir | Tinsel, combos | Pair specials for a crossing. |
+| 15 | Tangled Tinsel | Tinsel, dense | Work from the outside in. |
+| 16 | Paper and String | Ice returns | Break the ice. |
+| 17 | Twelve Horses | Ice, candy canes | Candy canes melt ice. |
 | 18 | Fairy Lights | Lighter board | Nearly clear. Have a cocoa. |
-| 19 | A Hundred Flames | Double ice | Old ice takes two hits. Plan for both. |
-| 20 | A Letter Forty Years Late | All, ring shape | Clear the thirty feet between two doors. |
-| 21 | Carolers Court | Snow, gentle restart | One drift at a time. The tuba's watching. |
-| 22 | Many Hands | Tinsel, narrow shape | Thread the lights along the narrow path. |
-| 23 | Painted Horses | Rainbow stars | A rainbow star clears a whole colour. |
-| 24 | Frozen Fountain | Ice, rainbow stars | Free the ribbons from the centre. |
-| 25 | Snow on the Line | Tight moves | Moves are short. Every swap has to count. |
-| 26 | Lantern Ice | Ice, snow | Clear the rink before the wind gets up. |
-| 27 | Every Light in Bellmere | All, wide shape | Light every corner of the board. |
-| 28 | The Last Train | Lighter board | Nearly there. The board is on your side. |
-| 29 | The Big Fir | All, dense | One last drift between you and the tree. |
-| 30 | Light the Christmas Tree | All, star shape | Clear the snow and light our Christmas tree! |
+| 19 | A Hundred Flames | Double ice | Old ice takes two hits. |
+| 20 | A Letter Forty Years Late | All, ring shape | Clear between the doors. |
+| 21 | Carolers Court | Snow, gentle restart | The tuba's watching. |
+| 22 | Many Hands | Tinsel, narrow shape | Thread the narrow path. |
+| 23 | Painted Horses | Rainbow stars | Rainbow stars clear a colour. |
+| 24 | Frozen Fountain | Ice, rainbow stars | Free the ribbons. |
+| 25 | Snow on the Line | Tight moves | Make every swap count. |
+| 26 | Lantern Ice | Ice, snow | Clear the rink. |
+| 27 | Every Light in Bellmere | All, wide shape | Light every corner. |
+| 28 | The Last Train | Lighter board | The board is on your side. |
+| 29 | The Big Fir | All, dense | One last drift. |
+| 30 | Light the Christmas Tree | All, star shape | Light our Christmas tree! |
 
 ## Implementation
 
