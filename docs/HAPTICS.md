@@ -22,6 +22,7 @@ and editor annotations come from `engine/api.xml`; regenerate with `make gen`.
 | --- | --- |
 | Engine match presentation, used by Relic Rush and Christmas Market | MATCH for the first clear, COMBO for later waves or activated specials, TICK for completed simultaneous gravity steps, ERROR for rejected swaps/failure, SUCCESS for victory. Tools use the same clear-wave path. |
 | Engine city transactions, used by Nile Archive and both portrait games | MATCH when a hold/preview drag lifts a building, PLACE on release/drop or a successful quick purchase; COLLECT after income is collected |
+| Engine town view, used by the portrait city games | TICK at .6 strength when a bottom navigation button (Build, Play, Levels) or the round middle button is tapped |
 | Nile Archive scene input | MATCH for an object found, COMBO for consecutive finds, ERROR for a miss, TICK for a requested hint, SUCCESS for the final object |
 | Emergency presentation adapter | PLACE for completed station repairs, MATCH for other completed jobs, COLLECT for income, SUCCESS for rescues and district victory |
 

@@ -370,12 +370,16 @@ function View:bottom()
     local h, skin = self.hooks, self.hooks.skin
     local m = self.cfg.bottom.middle
     if self.cfg.bottom.layout ~= "play-primary" and m.kind == "round" then
-        if round_button(self, self.buttons.middle) and h.middle then h.middle() end
+        if round_button(self, self.buttons.middle) then
+            haptic.play(haptic.TICK, .6)
+            if h.middle then h.middle() end
+        end
     elseif self.cfg.bottom.layout ~= "play-primary" and h.draw_middle then h.draw_middle(self.buttons.middle) end
     local primary = self.cfg.bottom.layout == "play-primary"
     if primary then gfx.bleed(true) end
     local event = self.navigation:draw(self.bottom_row, skin)
     if primary then gfx.bleed(false) end
+    if event and (event.id == "build" or event.id == "play" or event.id == "levels") then haptic.play(haptic.TICK, .6) end
     if event and event.id == "build" and h.build then h.build()
     elseif event and event.id == "play" and h.play then h.play()
     elseif event and event.id == "levels" and h.middle then h.middle() end
