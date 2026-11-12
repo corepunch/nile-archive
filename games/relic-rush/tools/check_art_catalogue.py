@@ -133,6 +133,16 @@ assert all(path in actual for path in manifest['story']['cast'].values())
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 
+quest = manifest["quest_objects"]
+assert quest["runtime"] in actual
+declaration = re.search(r"A\.quest_objects = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == quest["slots"]
+for key in quest["slots"]:
+    assert "`" + key + "`" in doc
+for key in ["source", "prompt", "registration"]:
+    assert (ROOT / quest[key]).is_file()
+subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
+
 # Kenney particle sprites: retained CC0 sources, a fresh atlas and documented frames.
 particles = manifest['particle_sprites']
 assert (ROOT / particles['license']).is_file(), 'Particle sprites need their licence'

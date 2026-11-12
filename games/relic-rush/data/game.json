@@ -21,7 +21,8 @@
   "capsules": {
     "notes": ["A life returns every 30 minutes, up to five.",
               "Hex amulets buy buildings. Replay expeditions to earn more.",
-              "Discovery Stars unlock stock and land. First clears only; never spent."]
+              "Discovery Stars unlock stock and land. First clears only; never spent.",
+              "Placed buildings earn decoration points for the next quest."]
   },
   "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley", "leaderboard": "LEADERBOARD"},
   "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d",
@@ -32,7 +33,7 @@
            "keep": "DISCOVERY STARS STAY WITH YOU."},
   "finale": {
     "title": "To be continued...",
-    "lines": [["THE VALLEY SINGS. FIVE LIGHTS ANSWER.", 386, 16],
+    "lines": [["THE QUAY IS SAFE. OTHER LIGHTS ARE WAITING.", 386, 16],
               ["Your island and replay expeditions stay open.", 422, 16]],
     "button": "BACK TO MY ISLAND"
   },

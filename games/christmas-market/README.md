@@ -179,3 +179,8 @@ the source atlas, state mapping, reproduction and pending capture review.
 
 The town bottom row has a large central Play button and equal smaller Build
 and Levels buttons, with simplified authored icons and five interaction states.
+
+For a local story walkthrough, launch `./build/christmas-market --debug-walkthrough`.
+Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
+On the island, **Complete task** places an earned story building or starts the next board.
+The walkthrough has its own save. Add `--fresh` to start at the opening without saving.

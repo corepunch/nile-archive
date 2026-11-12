@@ -117,12 +117,13 @@ function E.bind_board_ui(R, rules, tool_art)
     local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
     function R.goal_entries()
         local g, l = R.g, rules.level_of(R.g)
-        local entries = {
-            {id="score",icon="score",remaining=math.max(0,l.score-g.score)},
-            {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)},
-        }
+        local discoveries = {id="discoveries", icon=g.objects[1] and g.objects[1].art or "hidden-revealed",
+            remaining=#g.objects-g.discovered}
+        if g.object_only and g.objects[1] and g.objects[1].art then return {discoveries} end
+        local entries = {{id="score",icon="score",remaining=math.max(0,l.score-g.score)},
+            {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)}}
         if g.initial_soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,g.initial_soil-g.dug)} end
-        if #g.objects>0 then entries[#entries+1]={id="discoveries",icon="hidden-revealed",remaining=#g.objects-g.discovered} end
+        if #g.objects>0 then entries[#entries+1]=discoveries end
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
         return entries
@@ -870,7 +871,7 @@ function E.new(config)
         c.stone_hp, c.crate_hp, c.crate_kind, c.hazard = copy_array(g.stone_hp), copy_array(g.crate_hp), copy_array(g.crate_kind), copy_array(g.hazard)
         c.objects = {}
         for i, object in ipairs(g.objects) do
-            c.objects[i] = {state=object.state, cells={table.unpack(object.cells)}}
+            c.objects[i] = {state=object.state, art=object.art, cells={table.unpack(object.cells)}}
         end
         c.tools = {g.tools[1], g.tools[2], g.tools[3]}
         return c
@@ -984,6 +985,8 @@ function E.new(config)
             tools = {2, 2, 2},   -- pickaxe, dynamite, sunburst charges
         }
         local l = M.levels[lvl + 1]
+        g.object_only = l.object_only
+        assert(not g.object_only or l.objects and #l.objects > 0, "recovery board needs a hidden object")
         g.moves = l.moves
         local order, n = {}, 0
         for i = 0, CELLS - 1 do
@@ -1047,7 +1050,7 @@ function E.new(config)
         local object_cells = {}
         for _, entry in ipairs(l.objects or {}) do
             assert(#entry.cells > 0, "empty hidden object")
-            local object = {cells = {}, state = "hidden"}
+            local object = {cells = {}, state = "hidden", art = entry.art}
             for _, cell in ipairs(entry.cells) do
                 valid_cell(cell)
                 assert(not used[cell] and not object_cells[cell], "overlapping hidden object")
@@ -1137,8 +1140,9 @@ function E.new(config)
     function M.game_check_end(g)
         M.game_end_turn(g)
         local l = M.levels[g.level + 1]
-        g.won = g.score >= l.score and g.relics >= l.relics and g.dug >= g.initial_soil and g.obstacles == 0
-            and g.discovered == #g.objects and g.delivered == g.delivery_total
+        local cleared = g.object_only or
+            (g.score >= l.score and g.relics >= l.relics and g.dug >= g.initial_soil and g.obstacles == 0)
+        g.won = cleared and g.discovered == #g.objects and g.delivered == g.delivery_total
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
             return game_shuffle(g)   -- discard stale selection/hints only after recovery
@@ -1166,8 +1170,18 @@ function E.new(config)
         local m = new_match()
         if not game_swap(c, a, b, m) then return -1 end
         game_apply(c, m)
-        local goal = M.levels[g.level + 1].relics
+        local level = M.levels[g.level + 1]
+        local goal = level.relics
         local relics = math.min(c.relics, goal) - math.min(g.relics, goal)
+        local object_progress = 0
+        if g.object_only then
+            for _, object in ipairs(g.objects) do
+                for _, cell in ipairs(object.cells) do
+                    object_progress = object_progress + g.soil[cell] - c.soil[cell] + g.ice[cell] - c.ice[cell]
+                        + g.chain[cell] - c.chain[cell]
+                end
+            end
+        end
         local delivery_access = 0
         for i = 0, CELLS - 1 do
             if g.tiles[i].kind == M.DELIVERY then
@@ -1177,7 +1191,7 @@ function E.new(config)
             end
         end
         return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200
-            + (g.obstacles - c.obstacles) * 220 + delivery_access * 350
+            + (g.obstacles - c.obstacles) * 220 + delivery_access * 350 + object_progress * 900
     end
 
 

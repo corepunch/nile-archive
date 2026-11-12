@@ -1,3 +1,4 @@
+rules("debug_walkthrough")
 -- Christmas Market: every test, in one start of build/test/christmas-market. See docs/TESTING.md.
 rules("relic_board")
 rules("portrait_game")
@@ -14,8 +15,13 @@ rules("christmas")
 rules("christmas_story")
 rules("christmas_leaderboard")
 smoke()
+smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer")
 smoke("--campaign", "campaign")   -- all thirty winter wishes and every story beat
 
+shot("debug-board", "480x900", "--debug-walkthrough --level 4 --frames 180")
+shot("debug-town", "480x900", "--debug-walkthrough --city 2 --frames 180")
+shot("debug-phone-board", "390x844", "--debug-walkthrough --level 4 --frames 180 --safe-area 0,47,0,34")
+shot("debug-phone-town", "390x844", "--debug-walkthrough --city 2 --frames 180 --safe-area 0,47,0,34")
 shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
 shot("main-character-board", "480x900", "--level 4")

@@ -234,7 +234,7 @@ R.reduced_motion = false
 -- The compact header reports remaining win conditions from the rules, without
 -- dropping score/sand/locks or exposing redundant current/target totals.
 do
-    local g=rules.game_start(6,123)
+    local g=rules.game_start(16,123)
     R.g=g
     local goals=R.goal_entries()
     local l = rules.level_of(g)
@@ -245,7 +245,11 @@ do
     g.discovered,g.delivered=#g.objects,g.delivery_total
     for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
     R.g=rules.game_start(0,123)
-    check(#R.goal_entries()==2,"opening HUD omits absent sand/lock objectives")
+    local opening=R.goal_entries()
+    if rules.level_of(R.g).object_only then
+        check(#opening==1 and opening[1].icon=="timber" and opening[1].remaining==1,
+              "the opening HUD shows the timber that the camp needs")
+    else check(#opening==2,"opening HUD omits absent sand/lock objectives") end
 end
 
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,

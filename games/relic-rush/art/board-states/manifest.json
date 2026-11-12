@@ -620,6 +620,7 @@
     "data/navigation/play-pressed.png",
     "data/navigation/play-selected.png",
     "data/particles.png",
+    "data/quest-objects.png",
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/tile-sets/jewels/0.png",
@@ -1092,5 +1093,15 @@
     "delivery_prompt": "../../engine/art/match3-elements/prompt-v1.txt",
     "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
     "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states."
+  },
+  "quest_objects": {
+    "source": "art/quest-objects/source.png",
+    "prompt": "art/quest-objects/prompt.txt",
+    "runtime": "data/quest-objects.png",
+    "registration": "../../tools/relic_quest_art.py",
+    "slots": ["timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"],
+    "cell": [128, 128],
+    "states": ["covered", "partial", "recovered", "goal", "story handoff"],
+    "transform": "One authored object sprite per slot. The board uses the authored sand over the covered cells, preserving the object alpha and palette. The same sprite appears in the goal and handoff."
   }
 }

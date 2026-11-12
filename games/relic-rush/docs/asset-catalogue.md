@@ -1,5 +1,29 @@
 # Relic Rush artwork and state catalogue
 
+## Chapter 1 quest objects
+
+The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
+contain eight recognizable objects. The objects are drawn on their actual excavation cells,
+in the goal, and alongside the first-clear exchange. Covered and partial cells retain their
+authored sand layer. Recovering the whole footprint exposes the same sprite and completes
+the expedition. The object art is independent of the selected match piece pack.
+
+| Atlas slot | Quest object | Board and use |
+| --- | --- | --- |
+| `timber` | Camp timber | 1, put up the Expedition camp |
+| `lens` | Lamp lens | 2, answer the light below the cliff |
+| `cable` | Relay cable and broken end | 3 and 8, trace the route and establish that the cable is broken |
+| `chart` | Tide chart | 4, read the route after restoring the Spring well |
+| `marker` | Quay and shore markers | 5 and 6, locate the steps below the quay |
+| `tools` | Tool roll | 7, equip the Artisan workshop |
+| `supplies` | Supply crate | 9, stock the Jungle market supply point |
+| `crank` | Shutter crank | 10, test the tide-room signal |
+
+Run `python3 tools/relic_quest_art.py` from the repository root to register the source
+into `data/quest-objects.png`. The tool only crops, resizes and centers the original RGBA art.
+Each 128×128 slot passes the canonical hex check in strict object mode. The
+[review captures](review/quest-campaign/README.md) show the artwork and its handoff at both phone sizes.
+
 ## Additional board elements
 
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
