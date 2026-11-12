@@ -1,5 +1,10 @@
 # Homescapes match-3 resources
 
+[Open the decoded atlas and sprite gallery](../../reference/homescapes-analysis/board-art/index.html).
+It shows all five 1576 × 1576 board pages and 30 identified sprite crops. The
+gallery links to the full PNGs, the auxiliary planes, and a source manifest.
+For those sprites on level layouts, open the [board explorer](#explore-bundled-board-definitions).
+
 ## Bundled resource export
 
 [Browse the local export](../../reference/homescapes-analysis/match3-export/index.html)
@@ -53,45 +58,43 @@ For example, the image named `magic_hat` resembles toast; do not infer an item's
 rules from either the filename or this thumbnail. The variants show differences
 in rendering and proportions rather than a proven chronology of use.
 
-Visually, the icons use strong silhouettes, glossy highlights and saturated
-color. Their purpose appears to be recognizability at UI size; the images do
-not establish how animation, obstacles or layered states look in play. The
-Tropicats atlas renders extracted board states, so a direct quality or coverage
-comparison would require the Homescapes board assets and runtime mapping too.
+## Decoded board atlases
 
-The package also contains `base_mm/atlases/Match3_00.dds` through `_04.dds`,
-plus other DDS assets and associated metadata. They use a compressed container
-and an ETC2-tagged texture format. A straightforward decode did not produce a
-valid image, and the matching XML metadata is encoded; the board atlas remains
-unrecovered. The gallery is therefore an initial visual inventory, not the
-complete set the game uses.
+The five `base_mm/atlases/Match3_00.dds` through `Match3_04.dds` files
+each contain a BLK wrapper with a Zstandard frame at byte 40. Unwrapping
+recovers an ETC2-tagged DDS with three packed streams. Each stream has four
+little-endian counts, followed by commands, an eight-byte block dictionary,
+and literal blocks. The count invariant is
+`total = 3 + command_words + 2 × dictionary_entries + literal_words`.
 
-## Board atlas investigation
+The decoder expands commands in most significant bit order. It reads
+short runs, nested length prefixes, dictionary entries and backward distances.
+One selector repeats the previous distance. Each plane reconstructs exactly
+155,236 eight-byte blocks. ETC2 gives RGB and EAC R11 gives the opacity plane.
+The third plane is exported separately. The PNG export flips Y to orient the
+art. The manifest records checksums for the unpacked blocks and the DDS files.
 
-Each tested `Match3_00.dds` through `Match3_04.dds` starts in a `BLK` wrapper
-with a Zstandard frame at byte 40. Decompression recovers a DDS header tagged
-`etc2` (1576×1576 for these five), but the remaining data is shorter than a
-raw ETC2 image with alpha of that size. Direct ETC1, ETC2 and ETC2
-punch-through decoding produced noise. The payload is a second packing layer:
-all five DDS files have three streams, with no gaps or trailing bytes.
+The sprite gallery includes six regular gems, both rocket directions, bombs,
+planes, rainbow balls, two ice shells, single and crossed chains, six box
+variants, three cookies, carpet, a carpet roll, donuts and cherries. The
+sprite rectangles were identified visually. The crossed-chain crop excludes
+two neighboring atlas fragments. The PLXE region files remain encoded, so
+original region names, animation timing, placement and complete state
+assignments are still unverified. All five complete atlas pages are available
+for inspecting additional art.
 
-Each stream begins with four little-endian 32-bit counts: total words after
-the first count, command words, dictionary entries and literal words.
-The invariant is `total = 3 + commands + 2 × entries + literals`. The command
-bytes immediately follow the counts, then the dictionary (60 eight-byte
-entries in each of these 15 streams), then literal data. In page 00 the
-streams start at offsets 128, 611508 and 905396. The dictionary and literals
-contain recognizably structured ETC/EAC blocks; their placement in the image
-is determined by the separate command stream. Small controls in the same
-bundle (`whitebox.dds` and `logo_mask.dds`) store a single literal block for
-a uniform color plane, so copying the literals without interpreting the
-commands cannot recover the texture. This layout is specific to these five
-pages; other bundled DDS files can contain different stream layouts.
+Reproduce the PNG export from the repository root. Install Pillow and the
+[texture2ddecoder package](https://pypi.org/project/texture2ddecoder/) in
+your Python environment, and run `extract_gems.py` first if the unwrapped
+DDS files are absent.
 
-`python3 tools/homescapes-reference/inspect_board_atlases.py` checks all
-stream boundaries and reports sizes from the existing extraction. The command
-grammar, plane composition and PLXE sprite-region metadata are still
-unresolved. No decoded board sprites are claimed.
+```sh
+python3 tools/homescapes-reference/decode_board_atlases.py
+python3 tools/homescapes-reference/inspect_board_atlases.py
+```
+
+The decoder writes into a new directory. Pass `--output` for a second export.
+The default output and the third-party PNGs stay in ignored reference data.
 
 ## Explore bundled board definitions
 
@@ -101,10 +104,11 @@ Run the local-only board explorer from the repository root:
 python3 tools/homescapes-reference/serve.py
 ```
 
-Open <http://127.0.0.1:8767/>. Search source paths, choose a file, flip Y and
-select a cell to inspect its coordinates, model layers and attributes. The
-server binds only to loopback and serves only indexed level XML data. It reads
-one level at a time, avoiding a large duplicate data file.
+Open <http://127.0.0.1:8767/>. Use the example links to compare gems, ice,
+chains, boxes and cookies. Search source paths, flip Y or select a cell to
+inspect its coordinates, models, attributes and selected sprite IDs. The
+server binds to loopback and reads one level at a time. It serves only
+indexed levels and allowlisted art files.
 
 The level archive contains **6,184 XML files**, including **500** files in
 `base/st/`; all 6,184 parse as XML `Level` definitions. The default
@@ -113,17 +117,14 @@ The level archive contains **6,184 XML files**, including **500** files in
 and tuning files remain encoded; `st0001` is a source filename, not a verified
 campaign-level assignment. Event and contest files are included.
 
-The board uses original goal-panel WebP icons as approximations for six numbered
-`NORMAL` chips and selected model IDs. The icon-to-model and color mappings are
-inferred from filenames; they are not verified runtime sprites. Jelly and rug
-icons are layered below normal pieces, with mapped obstacle icons above; the
-actual draw order and visual states remain unverified. Unmapped or random models
-show a question mark when no mapped layer is present, and all model IDs remain
-visible in cell labels and details. Y orientation is selectable
-because runtime orientation has not been confirmed. Random pieces and generators
-are not simulated. Nested model elements are retained in cell details. For the
-actual packaged art and remaining decoding problem, see the atlas investigation
-above and the goal-icon gallery.
+With the decoded art available, the board draws original sprites for
+`NORMAL`, `BOX`, `TRASH`, `JELLY`, `CARRY`, `CHERRY`, `BOMB`, `LINE`,
+`LIGHTNING`, `ICE` and `LOCK`. The explorer draws carpet under chips and
+ice or chains over them. It selects visually identified crops by serialized
+color, strength and orientation where mapped. Unmapped models and random
+chips retain their labels. Use the raw cell details for authored metadata and
+nested models. The bundled goal icons provide a fallback when no board art
+has been exported. The viewer depicts static layouts.
 
 Data comes from `base_mm/fs_archives/match3levels.zstd`, a `pzsd` archive with
 an embedded Zstandard dictionary. Run
@@ -132,14 +133,6 @@ directory is missing; this also extracts the screenplay archive. The two outputs
 total about 59.4 MB of file contents (roughly 71 MiB on disk); no game download
 or remote content is needed. The script checks index bounds and paths, decoded
 lengths and decompression errors, and refuses to overwrite existing output.
-
-For `Match3/vso/textures/Elements/Carpet/Border.dds`, the Zstandard-unwrapped
-payload was also checked at offsets 128–191 with zlib framing, raw DEFLATE,
-gzip framing and raw LZ4 against plausible ETC output sizes. None yielded a
-valid texture. This only rules out those exact trials for this one texture; it
-does not identify the format of the atlas pixels.
-
-The icon mapping currently covers `BOX`, `TRASH`, `JELLY`, `LOCK`, `RUG`, `CARRY`, `CHERRY`, `TAPE_MEASURE`, `JAR`, `TARGET_GEN`, `BOMB`, `LINE` and `LIGHTNING`. `CHERRY` uses the cherry-looking `piggy.webp`; that association is visual inference. Icons are read directly from the original app archive and served from a filename whitelist.
 
 ## Extracted gem sources
 
@@ -152,13 +145,11 @@ and result images, with source names preserved. These are original WebP files,
 not converted or recolored assets; the files named `facelift` are not proof of
 a specific runtime state or release order.
 
-The `board-atlases/` subdirectory contains five Zstandard-unwrapped DDS files
-and their original encoded XML metadata. The DDS headers identify 1576×1576
-textures, but their pixels and sprite regions are still undecoded; the metadata
-remains PLXE-encoded. They are source material for further investigation, not
-extracted individual board gems. The manifest records source paths, SHA-256
-hashes and output sizes for all 45 files. The original app bundle remains in
-`reference/Homescapes.app`.
+The `board-atlases/` subdirectory contains the five unwrapped DDS inputs
+and their encoded XML region metadata. The separate
+[board art export](#decoded-board-atlases) contains the decoded PNGs. The
+gem sources manifest records source paths, SHA-256 hashes and sizes for its
+45 files. The original app bundle remains in `reference/Homescapes.app`.
 
 From the repository root, with `zstd` available:
 

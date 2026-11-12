@@ -34,7 +34,7 @@ def encoding(data):
     return 'as bundled'
 
 
-def catalogue(rows):
+def catalogue(rows, has_board_art=False):
     images, resources = [], []
     for row in sorted(rows, key=lambda item: item['file'].casefold()):
         path = html.escape(row['file'])
@@ -45,6 +45,8 @@ def catalogue(rows):
             images.append(f'<figure><a href="{link}" title="{path}"><img loading="lazy" src="{link}" alt=""></a>'
                           f'<figcaption>{name}</figcaption></figure>')
         resources.append(f'<tr><td><a href="{link}">{path}</a></td><td>{kind}</td><td>{row["bytes"]:,}</td></tr>')
+    board_link = ('<p><a href="../board-art/index.html">Browse the decoded board atlases and sprites</a></p>'
+                  if has_board_art else '')
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Homescapes match-3 export</title>
@@ -59,8 +61,8 @@ td:first-child{{overflow-wrap:anywhere}}td:last-child{{text-align:right}}
 </style></head>
 <body><h1>Homescapes match-3 export</h1>
 <p>{len(rows)} original files, including {len(images)} readable images.
-Board atlas pixels and region metadata are still packed. Images below include UI and tutorial art.
-The <a href="manifest.json">manifest</a> records sources and SHA-256 checksums.</p>
+Images below include UI and tutorial art.
+The <a href="manifest.json">manifest</a> records sources and SHA-256 checksums.</p>{board_link}
 <label for="filter">Filter by path or encoding</label><br><input id="filter" type="search">
 <h2>Readable images</h2><div class="grid">{''.join(images)}</div>
 <h2>All exported files</h2>
@@ -122,7 +124,8 @@ def main():
                              'bytes': len(data), 'encoding': encoding(data),
                              'sha256': hashlib.sha256(data).hexdigest()})
             (out / 'manifest.json').write_text(json.dumps(rows, indent=2) + '\n', encoding='utf-8')
-            (out / 'index.html').write_text(catalogue(rows), encoding='utf-8')
+            has_board_art = (dest.parent / 'board-art/index.html').is_file()
+            (out / 'index.html').write_text(catalogue(rows, has_board_art), encoding='utf-8')
             out.rename(dest)
     print(f'Exported {len(rows)} files ({size:,} bytes) to {dest}')
     print(dict(Counter(row['encoding'] for row in rows)))

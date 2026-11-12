@@ -6,6 +6,7 @@ import json
 import zipfile
 from urllib.parse import parse_qs, urlsplit
 
+from decode_board_atlases import OUTPUT as ART
 from level_viewer import PAGE, SOURCE, load_level
 from story_index import SOURCE as APP_ARCHIVE
 
@@ -13,6 +14,8 @@ from story_index import SOURCE as APP_ARCHIVE
 class Handler(BaseHTTPRequestHandler):
     paths = {}
     icons = {}
+    art_files = {}
+    sprite_ids = []
 
     def send_bytes(self, body, content_type):
         self.send_response(200)
@@ -28,6 +31,11 @@ class Handler(BaseHTTPRequestHandler):
             self.send_bytes(PAGE.encode(), 'text/html; charset=utf-8')
         elif url.path == '/api/list':
             self.send_bytes(json.dumps(sorted(self.paths)).encode(), 'application/json')
+        elif url.path == '/api/sprites':
+            self.send_bytes(json.dumps(self.sprite_ids).encode(), 'application/json')
+        elif url.path in self.art_files:
+            path, content_type = self.art_files[url.path]
+            self.send_bytes(path.read_bytes(), content_type)
         elif url.path.startswith('/api/icon/'):
             name = url.path.removeprefix('/api/icon/')
             if name not in self.icons:
@@ -46,6 +54,30 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(404)
 
 
+def load_art(root):
+    manifest = root / 'manifest.json'
+    if not manifest.is_file():
+        return {}, []
+    data = json.loads(manifest.read_text(encoding='utf-8'))
+    files = {'/art/': (root / 'index.html', 'text/html; charset=utf-8'),
+             '/art/manifest.json': (manifest, 'application/json')}
+    ids = []
+    for page in data['pages']:
+        for name in ('color', 'auxiliary'):
+            file = f'pages/{page["id"]}' + ('-auxiliary.png' if name == 'auxiliary' else '.png')
+            files['/art/' + file] = (root / file, 'image/png')
+    for sprite in data['sprites']:
+        identifier = sprite['id']
+        if not identifier or not identifier.replace('-', '').isalnum() or identifier in ids:
+            raise ValueError(f'Invalid or duplicate board sprite ID: {identifier}')
+        file = f'sprites/{identifier}.png'
+        files['/art/' + file] = (root / file, 'image/png')
+        ids.append(identifier)
+    if any(not path.is_file() for path, _ in files.values()):
+        raise ValueError('Decoded board art is incomplete. Regenerate it with decode_board_atlases.py.')
+    return files, ids
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port', type=int, default=8767)
@@ -60,6 +92,7 @@ def main():
         Handler.icons = {name[len(prefix):]: archive.read(name) for name in archive.namelist()
                          if name.startswith(prefix) and name.endswith('.webp')
                          and '/' not in name[len(prefix):]}
+    Handler.art_files, Handler.sprite_ids = load_art(ART)
     server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
     print(f'{len(Handler.paths)} files: http://127.0.0.1:{args.port}/', flush=True)
     server.serve_forever()

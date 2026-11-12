@@ -6,7 +6,8 @@ Inspected 2026-11-12: the App Store package matching the connected iPhone's
 player-guide study, not an extracted campaign or a playthrough. Spoilers are
 limited to the premise. Player guides can change independently of this build.
 
-See the [match-3 resource export](ART.md#bundled-resource-export),
+See the [decoded board atlas](ART.md#decoded-board-atlases),
+[match-3 resource export](ART.md#bundled-resource-export),
 [mechanics comparison](MECHANICS.md), [complete board ID inventory](BOARD_IDS.md),
 and [opening story study](STORY.md).
 
@@ -47,7 +48,7 @@ content; no remote content or personal app data was acquired.
 | Tutorials and localization | `base_mm/Tutorials.xml`, `Assets/Common/texts/` | Encoded; no transcript recovered |
 | Story execution | `base_mm/fs_archives/screenplays.zstd`, `Storyline.lua` | 1,329 compiled scripts decoded; localization and scene order unknown |
 | Content delivery | `base_mm/Assets/CDS/CdsPack.xml` | Encoded; remote inventory not recovered |
-| Match-3 resources | `base_mm/` and `packs/*.zip` | [620 exported files](ART.md#bundled-resource-export); 98 readable images; board textures and regions still packed |
+| Match-3 resources | `base_mm/` and `packs/*.zip` | [620 exported files](ART.md#bundled-resource-export); [five decoded board atlas pages and 30 sprite crops](ART.md#decoded-board-atlases) |
 
 ## Progression and economy
 

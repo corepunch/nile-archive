@@ -33,6 +33,22 @@ console.log(JSON.stringify([...new Set(Object.values(iconModels))]));
                 with self.subTest(name=name):
                     self.assertTrue(archive.read(prefix + name + '.webp').startswith(b'RIFF'))
 
+    def test_original_art_layers_and_strengths(self):
+        start = PAGE.index('function pickSprites(')
+        end = PAGE.index('function options()')
+        check = """
+const assert = require('node:assert/strict');
+const available = new Set(['carpet', 'chip-2', 'ice-2', 'chain-1-mirror', 'box-6', 'cookie-3']);
+const ids = models => pickSprites(models, available).map(sprite => sprite.id);
+assert.deepEqual(ids([{modelId:'ICE',level:'2'},{modelId:'NORMAL',color:'2'},{modelId:'JELLY'}]),
+                 ['carpet', 'chip-2', 'ice-2']);
+assert.deepEqual(ids([{modelId:'LOCK',level:'1',mirror:'true'},{modelId:'NORMAL',color:'2'}]),
+                 ['chip-2', 'chain-1-mirror']);
+assert.deepEqual(ids([{modelId:'BOX',level:'6'},{modelId:'TRASH',level:'3'}]), ['box-6', 'cookie-3']);
+assert.deepEqual(ids([{modelId:'RANDOM_CHIP'},{modelId:'BOX',level:'7'}]), []);
+"""
+        subprocess.run(['node', '-e', PAGE[start:end] + check], check=True, capture_output=True, text=True)
+
 
 if __name__ == '__main__':
     unittest.main()
