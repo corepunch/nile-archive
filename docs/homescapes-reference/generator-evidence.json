@@ -1,0 +1,379 @@
+{
+  "archive_sha256": "9383b651680b01900f3e9bb4ab701c0cd0cc785eb9f09b5005cdbf9f5cb13c93",
+  "corpus_sha256": "d37aa19a356b30f29df2be608e2854fc7c3f5b9fee2f5aac39c5969925e60272",
+  "counts": {
+    "ARTIFACT_GEN_instances": 2662,
+    "BornPatterns": 743,
+    "ColorChipsPattern": 321,
+    "PATTERN_COLOR_BORN_instances": 1349
+  },
+  "levels": 6184,
+  "loops": {
+    "false": 372,
+    "true": 714
+  },
+  "original_runtime_verified": false,
+  "palettes": {
+    "[Cs0123]": 16,
+    "[Cs0124]": 2,
+    "[Cs0125]": 2,
+    "[Cs012]": 215,
+    "[Cs0134]": 1,
+    "[Cs013]": 10,
+    "[Cs014]": 2,
+    "[Cs015]": 2,
+    "[Cs01]": 8,
+    "[Cs0234]": 2,
+    "[Cs0235]": 1,
+    "[Cs023]": 13,
+    "[Cs024]": 3,
+    "[Cs025]": 1,
+    "[Cs02]": 3,
+    "[Cs04]": 1,
+    "[Cs1234]": 2,
+    "[Cs1235]": 1,
+    "[Cs123]": 47,
+    "[Cs1245]": 1,
+    "[Cs124]": 6,
+    "[Cs125]": 2,
+    "[Cs12]": 4,
+    "[Cs13]": 1,
+    "[Cs145]": 1,
+    "[Cs14]": 1,
+    "[Cs235]": 2,
+    "[Cs23]": 2,
+    "[Cs3]": 2,
+    "[Cs4]": 1
+  },
+  "properties": [
+    {
+      "attributes": {
+        "colorSetId": "0",
+        "name": "ColorSetProperty",
+        "randomEverySpawn": "0"
+      },
+      "occurrences": 3
+    },
+    {
+      "attributes": {
+        "colorSetId": "1",
+        "name": "ColorSetProperty",
+        "randomEverySpawn": "0"
+      },
+      "occurrences": 6
+    },
+    {
+      "attributes": {
+        "count": "1",
+        "name": "CountProperty"
+      },
+      "occurrences": 36
+    },
+    {
+      "attributes": {
+        "count": "2",
+        "name": "CountProperty"
+      },
+      "occurrences": 2
+    },
+    {
+      "attributes": {
+        "count": "4",
+        "name": "CountProperty"
+      },
+      "occurrences": 3
+    },
+    {
+      "attributes": {
+        "count": "6",
+        "name": "CountProperty"
+      },
+      "occurrences": 1
+    },
+    {
+      "attributes": {
+        "count": "8",
+        "name": "CountProperty"
+      },
+      "occurrences": 1
+    },
+    {
+      "attributes": {
+        "levelMax": "2",
+        "levels": "2",
+        "name": "LevelProperty"
+      },
+      "occurrences": 13
+    },
+    {
+      "attributes": {
+        "levelMax": "3",
+        "levels": "1",
+        "name": "LevelProperty"
+      },
+      "occurrences": 6
+    },
+    {
+      "attributes": {
+        "levelMax": "3",
+        "levels": "3",
+        "name": "LevelProperty"
+      },
+      "occurrences": 15
+    },
+    {
+      "attributes": {
+        "mode": "0",
+        "name": "RingProperty",
+        "shuffle": "true",
+        "value": "100"
+      },
+      "occurrences": 1
+    },
+    {
+      "attributes": {
+        "name": "DropChanceProperty",
+        "value": "100"
+      },
+      "occurrences": 43
+    }
+  ],
+  "reference_conflicts": [
+    {
+      "cell": {
+        "x": "110",
+        "y": "104"
+      },
+      "file": "Match3/Levels/base/st/st0299.xml",
+      "model": {
+        "id": "2",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[c][c][f][c][c][c][c][l][c][c][c]"
+      }
+    },
+    {
+      "cell": {
+        "x": "97",
+        "y": "101"
+      },
+      "file": "Match3/Levels/packs/contest/contest_072_07.xml",
+      "model": {
+        "id": "1",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[f][c][c][c][c][c][c][c][c]"
+      }
+    },
+    {
+      "cell": {
+        "x": "97",
+        "y": "106"
+      },
+      "file": "Match3/Levels/packs/contest/contest_072_07.xml",
+      "model": {
+        "id": "1",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[f][c][c][c][c][c][c][c][c]"
+      }
+    },
+    {
+      "cell": {
+        "x": "104",
+        "y": "101"
+      },
+      "file": "Match3/Levels/packs/contest/contest_072_07.xml",
+      "model": {
+        "id": "1",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[f][c][c][c][c][c][c][c][c]"
+      }
+    },
+    {
+      "cell": {
+        "x": "104",
+        "y": "106"
+      },
+      "file": "Match3/Levels/packs/contest/contest_072_07.xml",
+      "model": {
+        "id": "1",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[f][c][c][c][c][c][c][c][c]"
+      }
+    },
+    {
+      "cell": {
+        "x": "102",
+        "y": "107"
+      },
+      "file": "Match3/Levels/packs/contest/contest_127_06.xml",
+      "model": {
+        "id": "2",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[c][c][t1]"
+      }
+    },
+    {
+      "cell": {
+        "x": "108",
+        "y": "107"
+      },
+      "file": "Match3/Levels/packs/contest/contest_127_06.xml",
+      "model": {
+        "id": "2",
+        "isLooped": "1",
+        "isTexture": "1",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[c][c][t1]"
+      }
+    },
+    {
+      "cell": {
+        "x": "103",
+        "y": "106"
+      },
+      "file": "Match3/Levels/packs/contest/contest_446_01.xml",
+      "model": {
+        "id": "2",
+        "isLooped": "0",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[O][O][O][O][O]"
+      }
+    },
+    {
+      "cell": {
+        "x": "104",
+        "y": "106"
+      },
+      "file": "Match3/Levels/packs/contest/contest_446_01.xml",
+      "model": {
+        "id": "2",
+        "isLooped": "0",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[O][O][O][O][O]"
+      }
+    },
+    {
+      "cell": {
+        "x": "105",
+        "y": "106"
+      },
+      "file": "Match3/Levels/packs/contest/contest_446_01.xml",
+      "model": {
+        "id": "2",
+        "isLooped": "0",
+        "modelId": "ARTIFACT_GEN",
+        "pattern": "[O][O][O][O][O]"
+      }
+    }
+  ],
+  "source": "base.zip/base_mm/fs_archives/match3levels.zstd",
+  "token_examples": {
+    "Chs": "Match3/Levels/packs/contest/contest_401_07.xml",
+    "D": "Match3/Levels/packs/contest/contest_440_01.xml",
+    "EG": "Match3/Levels/packs/contest/contest_424_01.xml",
+    "Eb": "Match3/Levels/packs/contest/contest_412_07.xml",
+    "F1": "Match3/Levels/packs/contest/contest_230_10.xml",
+    "F12": "Match3/Levels/packs/contest/contest_212_10.xml",
+    "F2": "Match3/Levels/packs/contest/contest_175_09.xml",
+    "HG": "Match3/Levels/packs/contest/contest_226_01.xml",
+    "HG3": "Match3/Levels/packs/contest/contest_198_15.xml",
+    "MB": "Match3/Levels/base/beta/beta003.xml",
+    "O": "Match3/Levels/packs/contest/contest_402_01.xml",
+    "PT5": "Match3/Levels/packs/contest/contest_419_07.xml",
+    "S1": "Match3/Levels/packs/contest/contest_144_09.xml",
+    "S12": "Match3/Levels/packs/contest/contest_088_13.xml",
+    "S2": "Match3/Levels/packs/contest/contest_262_07.xml",
+    "T1": "Match3/Levels/packs/contest/contest_016_02.xml",
+    "T2": "Match3/Levels/packs/contest/contest_069_14.xml",
+    "T3": "Match3/Levels/packs/contest/contest_401_01.xml",
+    "Tb": "Match3/Levels/packs/contest/contest_020_15.xml",
+    "Tmr": "Match3/Levels/packs/contest/contest_240_11.xml",
+    "Y": "Match3/Levels/packs/contest/contest_156_15.xml",
+    "a": "Match3/Levels/packs/contest/contest_111_10.xml",
+    "b": "Match3/Levels/base/st/st0111.xml",
+    "c": "Match3/Levels/base/beta/beta003.xml",
+    "c1": "Match3/Levels/base/beta/beta012.xml",
+    "c2": "Match3/Levels/base/beta/beta011.xml",
+    "c3": "Match3/Levels/base/beta/beta011.xml",
+    "c4": "Match3/Levels/base/beta/beta011.xml",
+    "c5": "Match3/Levels/base/st/st0001.xml",
+    "c6": "Match3/Levels/packs/contest/contest_101_11.xml",
+    "d2": "Match3/Levels/packs/contest/contest_404_01.xml",
+    "e2": "Match3/Levels/packs/contest/contest_023_01.xml",
+    "e23": "Match3/Levels/packs/contest/contest_052_03.xml",
+    "e3": "Match3/Levels/packs/contest/contest_067_11.xml",
+    "f": "Match3/Levels/base/st/st0111.xml",
+    "g1": "Match3/Levels/packs/contest/contest_309_04.xml",
+    "g2": "Match3/Levels/packs/contest/contest_193_11.xml",
+    "l": "Match3/Levels/base/st/st0111.xml",
+    "l1": "Match3/Levels/packs/contest/contest_408_01.xml",
+    "lh": "Match3/Levels/base/st/st0290.xml",
+    "lv": "Match3/Levels/base/st/st0168.xml",
+    "p": "Match3/Levels/packs/contest/contest_005_11.xml",
+    "sh": "Match3/Levels/packs/contest/contest_406_01.xml",
+    "t1": "Match3/Levels/base/st/st0065.xml",
+    "t12": "Match3/Levels/packs/contest/contest_024_15.xml",
+    "t2": "Match3/Levels/packs/contest/contest_024_01.xml",
+    "z": "Match3/Levels/base/st/st0111.xml"
+  },
+  "tokens": {
+    "Chs": 132,
+    "D": 6,
+    "EG": 37,
+    "Eb": 31,
+    "F1": 3,
+    "F12": 3,
+    "F2": 12,
+    "HG": 1,
+    "HG3": 38,
+    "MB": 1,
+    "O": 150,
+    "PT5": 47,
+    "S1": 2,
+    "S12": 4,
+    "S2": 1,
+    "T1": 155,
+    "T2": 13,
+    "T3": 42,
+    "Tb": 19,
+    "Tmr": 3,
+    "Y": 44,
+    "a": 35,
+    "b": 124,
+    "c": 5427,
+    "c1": 187,
+    "c2": 172,
+    "c3": 140,
+    "c4": 96,
+    "c5": 26,
+    "c6": 5,
+    "d2": 172,
+    "e2": 33,
+    "e23": 6,
+    "e3": 81,
+    "f": 232,
+    "g1": 358,
+    "g2": 251,
+    "l": 137,
+    "l1": 108,
+    "lh": 99,
+    "lv": 42,
+    "p": 47,
+    "sh": 84,
+    "t1": 255,
+    "t12": 11,
+    "t2": 6,
+    "z": 26
+  }
+}

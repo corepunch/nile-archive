@@ -1,19 +1,26 @@
 # Homescapes lab coverage — 2026-11-12
 
-All **6,184** local 9.2.601 level files parse. **753** boards initialize (previously 232); **747** played at least one legal move in the 12-turn exercise, totalling **8,791 moves**. Goals advanced on 665 boards. Six boards start stalled. No attempted construction or hint execution failed. The other 5,431 boards retain unsupported vocabulary.
+All **6,184** local 9.2.601 level files parse. **1,005** boards initialize (previously 753; 232 before the first blocker pass). **996** played at least one legal move in the 12-turn exercise, totalling **11,717 moves**. Goals advanced on **897** boards. Nine boards start stalled. No attempted construction or hint execution failed.
 
-The corpus has 130 model IDs and 82 goal types. The lab rejects 106 model IDs and 71 goal types. Accepted identifiers do not establish complete scripting, routing, art or original-runtime equivalence. See the [blocker implementation record](BLOCKERS.md) for exact rules, evidence, limitations, verification timings and captures.
+Of the other 5,179 boards, 5,178 retain unsupported model/goal vocabulary. One additional board (`packs/contest/contest_179_15.xml`) has accepted model/goal IDs but an unsupported `[a]` queue token. Generator configuration gaps occur in 291 files, usually alongside other unsupported mechanics.
 
-Run `HomescapesLab --root "$PWD" --audit --exercise` to regenerate the machine report; local results are retained in `reference/homescapes-analysis/lab-audit.json`. Every entry records unsupported model/goal IDs, initialization, turns, progress, stalled state and errors. `originalRuntimeVerified` remains false.
+The corpus has 130 model IDs and 82 goal types. The lab rejects **102 model IDs and 69 goal types**. Accepted identifiers do not establish complete scripting, routing, art or original-runtime equivalence. See the [complete feature reference](FEATURES.md), [blocker implementation record](BLOCKERS.md) and [generator/tile/blind record](GENERATORS.md).
+
+The exercise emitted **2,851 queued pieces across 99 boards** and **938 palette-controlled pieces across 20 boards**, including initial-fill emissions. These counters verify that the new code executes, not just that identifiers are accepted. 112 accepted boards contain artifact sources, 57 contain tiles and 75 contain blinds; these groups overlap.
+
+Run `HomescapesLab --root "$PWD" --audit --exercise` to regenerate the machine report; local results are retained in `reference/homescapes-analysis/lab-audit.json`. Every entry records unsupported models/goals/configurations, initialization, turns, progress, emissions, stalled state and actual errors. `originalRuntimeVerified` remains false.
 
 ## Stalled at startup
 
 - `base/st/st0049.xml`
 - `packs/contest/contest_004_15.xml`
+- `packs/contest/contest_021_13.xml`
 - `packs/contest/contest_030_03.xml`
 - `packs/contest/contest_047_08.xml`
+- `packs/contest/contest_064_07.xml`
 - `packs/contest/contest_107_03.xml`
 - `packs/contest/contest_136_15.xml`
+- `packs/contest/contest_139_12.xml`
 
 ## Remaining model vocabulary
 
@@ -23,7 +30,6 @@ Counts are files containing each identifier.
 | --- | ---: | --- |
 | `ARCADE` | 20 | `packs/contest/contest_401_08.xml` |
 | `ARMOR` | 84 | `packs/contest/contest_403_01.xml` |
-| `ARTIFACT_GEN` | 743 | `base/beta/beta003.xml` |
 | `BALLOON` | 85 | `packs/contest/contest_035_03.xml` |
 | `BALLOON_ROPE` | 85 | `packs/contest/contest_035_03.xml` |
 | `BATTERY` | 2 | `base/beta/beta001.xml` |
@@ -35,7 +41,6 @@ Counts are files containing each identifier.
 | `BOX_ST` | 346 | `base/st/st0191.xml` |
 | `BRICK_WALL` | 117 | `base/beta/beta003.xml` |
 | `BROOCH` | 132 | `packs/contest/contest_098_02.xml` |
-| `BUBBLE_MEMBRANE` | 280 | `packs/contest/contest_011_12.xml` |
 | `BUCKET` | 188 | `base/View/ply-water.xml` |
 | `BUCKET_WATER` | 188 | `base/View/ply-water.xml` |
 | `CAKE` | 91 | `packs/contest/contest_181_14.xml` |
@@ -94,7 +99,6 @@ Counts are files containing each identifier.
 | `PAINT_TUBE` | 80 | `packs/contest/contest_058_09.xml` |
 | `PARROT` | 124 | `packs/contest/contest_148_14.xml` |
 | `PASSABLE_FOR_CHIP` | 266 | `base/beta/beta001.xml` |
-| `PATTERN_COLOR_BORN` | 321 | `base/st/st0037.xml` |
 | `PENCIL_BOX` | 159 | `packs/contest/contest_097_08.xml` |
 | `PHONE` | 155 | `packs/contest/contest_061_12.xml` |
 | `PHOTO_CAMERA` | 135 | `packs/contest/contest_169_04.xml` |
@@ -106,7 +110,6 @@ Counts are files containing each identifier.
 | `RUG` | 101 | `base/beta/beta002.xml` |
 | `SAFE` | 80 | `packs/contest/contest_403_08.xml` |
 | `SEASHELL` | 85 | `base/beta/beta005.xml` |
-| `SHUTTERS` | 341 | `base/st/st0401.xml` |
 | `SOAP` | 77 | `packs/contest/contest_080_06.xml` |
 | `STAINED_GLASS` | 34 | `packs/contest/contest_072_09.xml` |
 | `STEAM` | 178 | `packs/contest/contest_015_02.xml` |
@@ -144,7 +147,6 @@ Counts are files containing each identifier.
 | `BOOMBOX` | 3 | `base/beta/beta001.xml` |
 | `BRICK_WALL` | 77 | `base/beta/beta003.xml` |
 | `BROOCH` | 132 | `packs/contest/contest_098_02.xml` |
-| `BUBBLE_MEMBRANE` | 311 | `base/beta/beta007.xml` |
 | `BUCKET` | 188 | `base/View/ply-water.xml` |
 | `CAKE` | 83 | `packs/contest/contest_401_03.xml` |
 | `CAT` | 169 | `packs/contest/contest_088_04.xml` |
@@ -191,7 +193,6 @@ Counts are files containing each identifier.
 | `PHOTO` | 135 | `packs/contest/contest_169_04.xml` |
 | `RUG` | 167 | `base/beta/beta002.xml` |
 | `SEASHELL` | 91 | `base/beta/beta005.xml` |
-| `SHUTTERS` | 19 | `base/st/st0401.xml` |
 | `STEAM` | 13 | `packs/contest/contest_401_06.xml` |
 | `STEAM_GEN` | 78 | `packs/contest/contest_137_05.xml` |
 | `STONE_TAPE_MEASURE` | 124 | `packs/contest/contest_173_09.xml` |
@@ -244,3 +245,44 @@ Cells, basic goals, chip weights and random-chip color lists are interpreted. Re
 | `TrashStoneChips` | 110 |
 | `colorSets` | 8 |
 | `curtain_manager` | 127 |
+
+## Generator configuration gaps
+
+Counts are files with each reported first failure per referenced pattern; files can appear in several rows. The [original inventory](generator-evidence.json) records **all** token spellings and properties, including those after the first unsupported token. Configuration gaps are inspected even when a different model/goal already prevents the level from running.
+
+| Reason | Files |
+| --- | ---: |
+| `BornPatterns token [g1]` | 36 |
+| `BornPatterns token [g2]` | 34 |
+| `BornPatterns token [p]` | 25 |
+| `BornPatterns token [e2]` | 25 |
+| `BornPatterns token [Chs]` | 21 |
+| `BornPatterns token [d2]` | 17 |
+| `BornPatterns token [Tb]` | 15 |
+| `BornPatterns token [a]` | 15 |
+| `BornPatterns token [l1]` | 13 |
+| `BornPatterns token [sh]` | 12 |
+| `BornPatterns token [Y]` | 11 |
+| `BornPatterns token [e3]` | 11 |
+| `BornPatterns token [O]` | 10 |
+| `BornPatterns token [PT5]` | 10 |
+| `BornPatterns token [HG3]` | 6 |
+| `BornPatterns token [Eb]` | 6 |
+| `BornPatterns token [e23]` | 5 |
+| `BornPatterns token [t12]` | 4 |
+| `BornPatterns token [S12]` | 4 |
+| `BornPatterns token [EG]` | 4 |
+| `BornPatterns missing/conflicting reference id=2` | 3 |
+| `BornPatterns token [F2]` | 3 |
+| `BornPatterns token [F1]` | 3 |
+| `BornPatterns token [Tmr]` | 3 |
+| `BornPatterns token [S1]` | 2 |
+| `BornPatterns token [F12]` | 2 |
+| `BornPatterns token [MB]` | 1 |
+| `BornPatterns missing/conflicting reference id=1` | 1 |
+| `BornPatterns token [HG]` | 1 |
+| `BornPatterns token [D]` | 1 |
+
+## Verification
+
+44 Swift tests pass, including the full 6,184-file source-retention test. The latest test build took 2.77 s and execution took 5.92 s. The corpus exercise took 20.79 s. Six original-resource inventory tests took 2.13 s; the byte-for-byte original archive check took 1.76 s. Lint took 1.54 s with no warnings/errors. UI-only rebuilds and native visual checks are recorded in [GENERATORS.md](GENERATORS.md). No large dependencies or datasets were downloaded.

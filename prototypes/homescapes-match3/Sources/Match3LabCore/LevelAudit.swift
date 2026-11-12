@@ -6,11 +6,14 @@ public struct LevelAudit: Codable {
         public let path: String
         public let unknownModels: [String]
         public let unknownGoals: [String]
+        public let unsupportedConfigurations: [String]
         public let error: String?
         public let initialized: Bool
         public let turns: Int
         public let stalled: Bool
         public let goalProgress: Int
+        public let patternSpawns: Int
+        public let paletteSpawns: Int
     }
     public let entries: [Entry]
     public let models: [String: Int]
@@ -38,8 +41,16 @@ public struct LevelAudit: Codable {
                 for section in sections { configurations[section, default: 0] += 1 }
                 let unknownModels = modelIDs.subtracting(Board.supportedModels).sorted()
                 let unknownGoals = goalIDs.subtracting(Board.supportedGoals).sorted()
-                var error: String?, initialized = false, turns = 0, stalled = false, goalProgress = 0
-                if unknownModels.isEmpty && unknownGoals.isEmpty {
+                var gaps = Set<String>()
+                // Inspect generator variants even on boards with unrelated unsupported blockers.
+                for model in level.cells.flatMap(\.models) {
+                    do {
+                        if model["modelId"] == "ARTIFACT_GEN" { _ = try SpawnPattern.read(model, level: level) }
+                        if model["modelId"] == "PATTERN_COLOR_BORN" { _ = try SpawnPattern.colors(model, level: level) }
+                    } catch BoardError.unsupported(let reasons) { gaps.formUnion(reasons) }
+                }
+                var error: String?, initialized = false, turns = 0, stalled = false, goalProgress = 0, patternSpawns = 0, paletteSpawns = 0
+                if unknownModels.isEmpty && unknownGoals.isEmpty && gaps.isEmpty {
                     do {
                         var board = try Board(level: level)
                         initialized = true
@@ -51,15 +62,18 @@ public struct LevelAudit: Codable {
                             turns += 1
                         }
                         stalled = board.stalled
+                        patternSpawns = board.patternSpawns.values.reduce(0, +)
+                        paletteSpawns = board.paletteSpawns
                         goalProgress = board.goals.reduce(0) { $0 + $1.count - $1.goal.initial }
                     }
+                    catch BoardError.unsupported(let reasons) { gaps.formUnion(reasons) }
                     catch let failure { error = failure.localizedDescription }
                 }
                 entries.append(Entry(path: path, unknownModels: unknownModels, unknownGoals: unknownGoals,
-                                     error: error, initialized: initialized, turns: turns, stalled: stalled, goalProgress: goalProgress))
+                                     unsupportedConfigurations: gaps.sorted(), error: error, initialized: initialized, turns: turns, stalled: stalled, goalProgress: goalProgress, patternSpawns: patternSpawns, paletteSpawns: paletteSpawns))
             } catch {
-                entries.append(Entry(path: path, unknownModels: [], unknownGoals: [], error: error.localizedDescription,
-                                     initialized: false, turns: 0, stalled: false, goalProgress: 0))
+                entries.append(Entry(path: path, unknownModels: [], unknownGoals: [], unsupportedConfigurations: [], error: error.localizedDescription,
+                                     initialized: false, turns: 0, stalled: false, goalProgress: 0, patternSpawns: 0, paletteSpawns: 0))
             }
         }
         return Self(entries: entries, models: models, goals: goals, configurations: configurations,

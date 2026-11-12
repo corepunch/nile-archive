@@ -102,3 +102,12 @@ and content-delivery inventory, then cross-check decoded opening tasks, scene
 text, level data and actual gameplay. Only then can a chapter-by-chapter story
 handoff or level atlas comparable to Tropicats be claimed. No level counts,
 quest costs, exact dialogue or runtime state mapping are asserted here.
+
+## Executable match-3 reference
+
+The local Mac simulation and its [complete feature reference](FEATURES.md)
+now cover source queues/palettes, basic and shared blockers, ceramic tiles,
+window blinds, power-up combinations and configurable refill. See
+[generator implementation and evidence](GENERATORS.md), [blocker rules](BLOCKERS.md)
+and the measured [coverage/gap report](LAB_COVERAGE.md). Original-runtime parity
+is not claimed; the lossless source archive remains available for the unsupported rules.

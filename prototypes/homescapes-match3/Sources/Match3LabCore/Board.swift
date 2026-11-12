@@ -44,6 +44,9 @@ public struct Cell {
     public var boxColor: Int?
     public var platter: Position?
     public var born = false
+    public var visibleGenerator = false
+    public var tile = 0
+    public var blind: Position?
     public var statue = 0
     public var cookieStack = 0
     public var maker: Position?
@@ -54,7 +57,7 @@ public struct Cell {
     public var carpet = false
     public var exit = false
 
-    var solid: Bool { box > 0 || jelly > 0 || platter != nil || statue > 0 || cookieStack > 0 || maker != nil }
+    var solid: Bool { blind != nil || box > 0 || jelly > 0 || platter != nil || statue > 0 || cookieStack > 0 || maker != nil }
     var held: Bool { solid || ice > 0 || chain > 0 }
     var matchColor: Int? { solid ? nil : piece?.color }
     var canFall: Bool { !solid && !held && piece != .cherry }
@@ -76,6 +79,8 @@ public struct Cell {
         }
         if platter != nil { models.append(["modelId": "TARGET_GEN"]) }
         if maker != nil { models.append(["modelId": "CARRY_GEN"]) }
+        if tile > 0 { models.append(["modelId": "BUBBLE_MEMBRANE", "level": String(tile)]) }
+        if blind != nil { models.append(["modelId": "SHUTTERS"]) }
         if statue > 0 { models.append(["modelId": "STATUE", "level": String(statue)]) }
         if cookieStack > 0 { models.append(["modelId": "COOKIE_BOX", "level": String(cookieStack)]) }
         if ice > 0 { models.append(["modelId": "ICE", "level": String(ice)]) }
@@ -108,8 +113,8 @@ struct Match {
 
 public struct Board {
     public static let supportedModels: Set<String> = ["NORMAL", "RANDOM_CHIP", "BOX", "TRASH", "ICE", "LOCK",
-        "JELLY", "CARRY", "CARRY_EXIT", "CHERRY", "BOMB", "LINE", "LIGHTNING", "BORN", "NONE_CHIP", "FISH", "HONEY", "COLOR_BOX", "TRASH_STONE", "TARGET_GEN", "STATUE", "COOKIE_BOX", "CARRY_GEN", "CARRY_GEN_CELLS"]
-    public static let supportedGoals: Set<String> = ["CHIPS", "CELL_JELLY", "BOX", "TRASH", "ICE", "LOCK", "CARRY", "COLLECT_PIGGY", "COLOR_BOX", "TRASHSTONE", "TARGET_GENERATOR", "STATUE"]
+        "JELLY", "CARRY", "CARRY_EXIT", "CHERRY", "BOMB", "LINE", "LIGHTNING", "BORN", "NONE_CHIP", "FISH", "HONEY", "COLOR_BOX", "TRASH_STONE", "TARGET_GEN", "STATUE", "COOKIE_BOX", "CARRY_GEN", "CARRY_GEN_CELLS", "ARTIFACT_GEN", "PATTERN_COLOR_BORN", "BUBBLE_MEMBRANE", "SHUTTERS"]
+    public static let supportedGoals: Set<String> = ["CHIPS", "CELL_JELLY", "BOX", "TRASH", "ICE", "LOCK", "CARRY", "COLLECT_PIGGY", "COLOR_BOX", "TRASHSTONE", "TARGET_GENERATOR", "STATUE", "BUBBLE_MEMBRANE", "SHUTTERS"]
 
     public let level: Level
     public private(set) var cells: [Position: Cell] = [:]
@@ -122,8 +127,13 @@ public struct Board {
         public var hits = 0
     }
     public private(set) var makers: [Position: CarryMaker] = [:]
+    public private(set) var blinds: [Position: Int] = [:]
     private var pendingCookies = 0
     public private(set) var platters: [Position: Int] = [:]
+    public private(set) var patternSpawns: [Position: Int] = [:]
+    public private(set) var paletteSpawns = 0
+    private var spawnPatterns: [Position: SpawnPattern] = [:]
+    private var colorSources: [Position: [Int]] = [:]
     private var refillRules: [RefillRule] = []
     private var seed: UInt64
     private let positions: [Position]
@@ -164,6 +174,19 @@ public struct Board {
                     cell.box = strength; cell.boxColor = color
                 case "HONEY": cell.jelly = strength
                 case "TRASH_STONE": cell.piece = .hazelnut(strength)
+                case "BUBBLE_MEMBRANE":
+                    guard (1...2).contains(strength) else { throw BoardError.unsupported(["BUBBLE_MEMBRANE strength"]) }
+                    cell.tile = strength
+                case "SHUTTERS":
+                    if let x = model["mainX"].flatMap(Int.init), let y = model["mainY"].flatMap(Int.init) {
+                        cell.blind = Position(x, y)
+                    } else {
+                        guard let height = model["shutterHeight"].flatMap(Int.init), (1...9).contains(height) else {
+                            throw BoardError.unsupported(["SHUTTERS height"])
+                        }
+                        blinds[source.position] = height
+                        cell.blind = source.position
+                    }
                 case "STATUE": cell.statue = strength
                 case "COOKIE_BOX": cell.cookieStack = strength
                 case "CARRY_GEN_CELLS": cell.carrySpawn = true
@@ -196,12 +219,32 @@ public struct Board {
                 case "BOMB": cell.piece = .special(.bomb)
                 case "LINE": cell.piece = .special(model["line_orient"] == "0" ? .horizontal : .vertical)
                 case "LIGHTNING": cell.piece = .special(.rainbow)
+                case "ARTIFACT_GEN":
+                    spawnPatterns[source.position] = try SpawnPattern.read(model, level: level)
+                    cell.visibleGenerator = model["isTexture"] == "1"
+                case "PATTERN_COLOR_BORN": colorSources[source.position] = try SpawnPattern.colors(model, level: level)
                 case "BORN": cell.born = true
                 case "NONE_CHIP": break
                 default: throw BoardError.unsupported([model["modelId"] ?? "(missing model ID)"])
                 }
             }
             cells[source.position] = cell
+        }
+        for (anchor, height) in blinds {
+            for step in 0..<height {
+                let p = anchor.offset(0, -step)
+                guard let cell = cells[p], cell.blind == nil || cell.blind == anchor else {
+                    throw BoardError.unsupported(["SHUTTERS footprint"])
+                }
+                cells[p]?.blind = anchor
+            }
+        }
+        for (p, cell) in cells {
+            if let anchor = cell.blind {
+                guard let height = blinds[anchor], p.x == anchor.x, (0..<height).contains(anchor.y - p.y) else {
+                    throw BoardError.unsupported(["SHUTTERS missing/outside anchor"])
+                }
+            }
         }
         // Legacy XML stores only the top-left anchor; newer files also name the other three cells.
         for anchor in platters.keys.sorted() {
@@ -233,8 +276,12 @@ public struct Board {
         // Maker-controlled boards must not also create the same donuts through normal refill.
         if !makers.isEmpty { refillRules.removeAll { $0.goal == "CARRY" } }
         for p in positions where cells[p]?.piece == nil && cells[p]?.solid == false {
-            let color = nextColor(at: p, restricted: random[p], avoidMatch: true)
-            cells[p]?.piece = .gem(color)
+            if random[p] == nil, let generated = generatedPiece(at: p, avoidMatch: true, initial: true) {
+                cells[p]?.piece = generated
+            } else {
+                let color = nextColor(at: p, restricted: random[p], avoidMatch: true)
+                cells[p]?.piece = .gem(color)
+            }
         }
         if !won && !hasMove() { stalled = true }
     }
@@ -307,7 +354,8 @@ public struct Board {
         stalled = true
     }
 
-    private mutating func nextColor(at p: Position, restricted: [Int]? = nil, avoidMatch: Bool = false) -> Int {
+    private mutating func nextColor(at p: Position, restricted: [Int]? = nil, avoidMatch: Bool = false, customWeights: [Int: Int]? = nil) -> Int {
+        let weights = customWeights.map { $0.sorted { $0.key < $1.key }.map { (color: $0.key, weight: $0.value) } } ?? self.weights
         let allowed = weights.filter { restricted?.contains($0.color) ?? true }
         let choices = allowed.isEmpty ? weights : allowed
         let legal = avoidMatch ? choices.filter { !matchesAt(p, placing: $0.color) } : choices
@@ -520,16 +568,22 @@ public struct Board {
         let matchingColors = Dictionary(uniqueKeysWithValues: hits.compactMap { p in
             cells[p]?.matchColor.map { (p, $0) }
         })
-        var hitPlatters = Set<Position>(), hitMakers = Set<Position>()
+        var hitPlatters = Set<Position>(), hitMakers = Set<Position>(), hitBlinds = Set<Position>()
         for p in hits.union(adjacent).sorted() {
             guard var cell = cells[p] else { continue }
             let direct = hits.contains(p)
             // Only jelly's original settings enable damage from a neighbouring explosion.
             if isBlast && !direct && cell.jelly == 0 { continue }
+            if let anchor = cell.blind { hitBlinds.insert(anchor); continue }
             if let anchor = cell.maker { hitMakers.insert(anchor); continue }
             if let anchor = cell.platter {
                 hitPlatters.insert(anchor)
                 continue
+            }
+            // Tiles are ground layers: damage an exposed tile without holding its piece.
+            if direct && !cell.held && cell.tile > 0 && (cell.tile == 1 || isBlast) {
+                cell.tile -= 1
+                if cell.tile == 0 { credit("BUBBLE_MEMBRANE") }
             }
             if cell.ice > 0 {
                 if direct {
@@ -581,6 +635,14 @@ public struct Board {
                 credit("CELL_JELLY")
             }
             cells[p] = cell
+        }
+        for anchor in hitBlinds.sorted() {
+            guard let height = blinds[anchor] else { continue }
+            cells[anchor.offset(0, 1 - height)]?.blind = nil
+            if height == 1 {
+                blinds.removeValue(forKey: anchor)
+                credit("SHUTTERS")
+            } else { blinds[anchor] = height - 1 }
         }
         for anchor in hitMakers { makers[anchor]?.hits += 1 }
         for anchor in hitPlatters.sorted() {
@@ -643,20 +705,36 @@ public struct Board {
         }
     }
 
-    private mutating func generatedPiece(at p: Position) -> Piece? {
+    private mutating func generatedPiece(at p: Position, avoidMatch: Bool = false, initial: Bool = false) -> Piece? {
         var q = p
         var hasSource = false
         while let cell = cells[q], cell.canFall {
-            if cell.born { hasSource = true; break }
+            if cell.born || spawnPatterns[q] != nil || colorSources[q] != nil { hasSource = true; break }
             q = q.offset(0, 1)
         }
-        guard hasSource else { return nil }
+        guard hasSource, !initial || spawnPatterns[q] != nil || colorSources[q] != nil else { return nil }
+        if let output = spawnPatterns[q]?.next() {
+            patternSpawns[q, default: 0] += 1
+            switch output {
+            case .piece(let piece): return piece
+            case .rocket:
+                seed = seed &* 6364136223846793005 &+ 1442695040888963407
+                return .special((seed >> 32) % 2 == 0 ? .horizontal : .vertical)
+            case .colors(let weights): return .gem(nextColor(at: p, restricted: colorSources[q], avoidMatch: avoidMatch, customWeights: weights))
+            }
+        }
         for rule in refillRules {
+            guard rule.sources.isEmpty || rule.sources.contains(q) else { continue }
             let onBoard = cells.values.filter { rule.matches($0.piece) }.count
             let remaining = goals.filter { $0.goal.type == rule.goal }.reduce(0) { $0 + max(0, $1.goal.maximum - $1.count) }
             guard onBoard < rule.maximum && (!rule.limited || onBoard < remaining) else { continue }
             seed = seed &* 6364136223846793005 &+ 1442695040888963407
             if Int((seed >> 32) % 100) < rule.chance { return rule.piece }
+        }
+        if let colors = colorSources[q] {
+            paletteSpawns += 1
+            return .gem(nextColor(at: p, restricted: colors, avoidMatch: avoidMatch,
+                                  customWeights: Dictionary(uniqueKeysWithValues: colors.map { ($0, level.colors[$0] ?? 100) })))
         }
         return nil
     }

@@ -210,3 +210,14 @@ paper plane and uses the existing decoded plane sprite. See the
 [blocker visual catalogue and reviewed captures](BLOCKERS.md#runtime-visual-catalogue)
 for supported states, diagnostic presentations, source references and commands.
 Missing authored states remain tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
+
+### Queue, tile and blind diagnostics
+
+The lab now labels visible artifact sources with their emitted count, ceramic
+tiles with strength 1/2, and blinds with their shared remaining height. Stacked
+labels stay within the cell; pieces beneath closed blinds are hidden. These
+are diagnostic states pending original artwork, linked to
+[issue #98](https://github.com/corepunch/nile-archive/issues/98). The full state
+catalogue, reproduction commands, acceptance criteria and inspected native
+captures are in [GENERATORS.md](GENERATORS.md#diagnostics-artwork-and-captures).
+Existing piece textures and mappings are unchanged.

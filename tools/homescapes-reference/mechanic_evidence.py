@@ -13,7 +13,8 @@ RECORDS = {
         'ElementCarrySettings', 'ElementTrashSettings', 'ElementBornPointSettings', 'TargetGenerator'}),
     'packs/Match3_Settings.zip': ('Match3/Settings/', {
         'ElementColorBoxSettings', 'ElementTrashStoneSettings', 'ElementStatueSettings',
-        'ElementCarryGeneratorSettings', 'ElementCookieBoxSettings'}),
+        'ElementCarryGeneratorSettings', 'ElementCookieBoxSettings',
+        'ElementBubbleMembraneSettings', 'ElementShuttersSettings'}),
 }
 
 

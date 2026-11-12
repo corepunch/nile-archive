@@ -4,7 +4,7 @@ This standalone macOS Swift package opens match-3 boards from the
 Homescapes 9.2.601 bundle. It reads the extracted XML, including the board
 shape, fixed pieces, blocker strengths, goals and move budget, and displays
 the decoded art in SpriteKit. The game has no animation. Eight sample boards open by default; `--all-levels`
-loads every board accepted by the simulator (currently 753).
+loads every board accepted by the simulator (currently 1,005).
 
 Run from the Nile Archive checkout root with Xcode's Swift toolchain:
 
@@ -124,8 +124,9 @@ See [the coverage record](../../docs/homescapes-reference/LAB_COVERAGE.md).
 
 ## Blockers, generators and access to more boards
 
-The current source audit accepts **753 boards**, up from 232. A 12-turn exercise
-played 8,791 legal moves on 747 of them; six start without a legal move. This is
+The first blocker pass accepted **753 boards**, up from 232. Its 12-turn exercise
+played 8,791 legal moves on 747 of them; six started without a legal move. The
+subsequent generator pass below raises acceptance to 1,005. This is
 execution coverage, not a claim of exact reproduction or guaranteed solvability.
 
 The new rules cover jelly around cherries, colored boxes, movable hazelnuts,
@@ -148,3 +149,17 @@ behavior without command-line arguments. Command-line root takes precedence.
 The missing authored blocker/generator states are tracked in
 [issue #98](https://github.com/corepunch/nile-archive/issues/98). The labels and
 material preview are intentional diagnostics, not finished game artwork.
+
+## Source queues, palettes, tiles and blinds
+
+`ARTIFACT_GEN` now executes the supported `BornPatterns` sequences, including
+independent source cursors, looping/finite queues, fixed colors, power-ups,
+cookies, hazelnuts and supported per-item properties. `PATTERN_COLOR_BORN`
+restricts refill colors, and ordinary refill honors source coordinates.
+Ceramic tiles and shared vertical window blinds are also simulated.
+
+The full implemented feature reference is [FEATURES.md](../../docs/homescapes-reference/FEATURES.md).
+The grammar, every property, resource evidence, visual states and limitations
+are in [GENERATORS.md](../../docs/homescapes-reference/GENERATORS.md).
+The latest corpus exercise initializes 1,005 boards and plays 996; unresolved
+tokens/configurations remain explicit in [LAB_COVERAGE.md](../../docs/homescapes-reference/LAB_COVERAGE.md).

@@ -34,3 +34,11 @@ class MechanicEvidenceTest(unittest.TestCase):
             self.assertIn('IsTargetGenerator', flags)
             self.assertIn('CanClearByNearMatch', flags)
             self.assertIn('CanClearByExplosion', flags)
+
+    def test_ground_and_shared_cover_identities(self):
+        tile = self.records['ElementBubbleMembraneSettings']['identifiers']
+        self.assertIn('BUBBLE_MEMBRANE', tile)
+        self.assertIn('TunerUnder', tile)
+        blind = self.records['ElementShuttersSettings']['identifiers']
+        for flag in ('SHUTTERS', 'IsBig', 'HidesChip', 'CanClearByNearMatch', 'CanClearByExplosion'):
+            self.assertIn(flag, blind)

@@ -29,6 +29,30 @@
     "section": "M3Settings.vso",
     "sha256": "e7dbb83f4f63b51db3ffb0678b0cfd705d13c13638501987c7a2b186e509a868"
   },
+  "ElementBubbleMembraneSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 562,
+    "identifiers": [
+      "BUBBLE_MEMBRANE",
+      "BubbleMembrane_Destroy_",
+      "BubbleMembrane_Kick_NewIntro",
+      "IsTarget",
+      "Match3BubbleMembrane1_NewIntro",
+      "Match3BubbleMembrane2_NewIntro",
+      "NewIntro",
+      "TileGenerator_Tile_1_appear",
+      "TileGenerator_Tile_2_appear",
+      "TunerUnder",
+      "bubbleMembraneFill_NewIntro",
+      "elementBubbleMembraneSettings",
+      "top_NewIntro",
+      "trashBot_NewIntro",
+      "trash_NewIntro"
+    ],
+    "offset": 18344,
+    "section": "M3Settings.vso",
+    "sha256": "dbebf089f587d5a802d11212f953f3aa449067cd7a7e2991ff304f96382f301f"
+  },
   "ElementCarryGeneratorSettings": {
     "archive": "packs/Match3_Settings.zip",
     "bytes": 186,
@@ -116,6 +140,24 @@
     "offset": 48977,
     "section": "M3Settings.vso",
     "sha256": "b01c8fc771ec9dbe1019268f7964a1c06047c7af2dc811af18a0646e16212acf"
+  },
+  "ElementShuttersSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 196,
+    "identifiers": [
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "CanClearByNearMatch",
+      "CanClearBySideMatch",
+      "HangChip",
+      "HidesChip",
+      "IsBig",
+      "SHUTTERS",
+      "elementShuttersSettings"
+    ],
+    "offset": 72868,
+    "section": "M3Settings.vso",
+    "sha256": "f86542fd658f0f677e96d609cf9990150b38f918ee94825034a4b2879c382b79"
   },
   "ElementStatueSettings": {
     "archive": "packs/Match3_Settings.zip",

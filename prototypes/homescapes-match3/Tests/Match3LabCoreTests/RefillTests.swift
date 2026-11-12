@@ -45,6 +45,15 @@ final class RefillTests: XCTestCase {
         XCTAssertFalse(b.cells.values.contains { $0.piece == .hazelnut(1) })
     }
 
+    func testExplicitSourceCoordinatesDoNotSpawnInOtherColumns() throws {
+        for x in [0, 9] {
+            var board = try Board(level: load("<TrashChips chance=\"100\" max=\"1\" level=\"2\"><b x=\"\(x)\" y=\"1\"/></TrashChips>", goal: "TRASH"))
+            board.apply([Position(0, 0), Position(0, 1)], spread: [], isBlast: true)
+            board.fallAndRefill()
+            XCTAssertEqual(board.cells.values.filter { $0.piece == .cookie(2) }.count, x == 0 ? 1 : 0)
+        }
+    }
+
     func testInvalidConfigurationFailsInsteadOfSilentlyChangingRules() throws {
         XCTAssertThrowsError(try Board(level: load("<TrashChips chance=\"101\" max=\"1\"/>", goal: "TRASH")))
     }

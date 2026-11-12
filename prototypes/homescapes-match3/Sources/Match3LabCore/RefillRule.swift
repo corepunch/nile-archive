@@ -6,6 +6,7 @@ struct RefillRule {
     let chance: Int
     let maximum: Int
     let limited: Bool
+    let sources: Set<Position>
 
     func matches(_ other: Piece?) -> Bool {
         switch (piece, other) {
@@ -37,8 +38,15 @@ struct RefillRule {
                 throw BoardError.unsupported([section + " refill configuration"])
             }
             let piece: Piece = section == "CarryChips" ? .donut : section == "TrashChips" ? .cookie(strength) : .hazelnut(strength)
+            var sources = Set<Position>()
+            for point in config.children where point.name == "b" {
+                guard let x = point.attributes["x"].flatMap(Int.init), let y = point.attributes["y"].flatMap(Int.init) else {
+                    throw BoardError.unsupported([section + " source coordinate"])
+                }
+                sources.insert(Position(x, y))
+            }
             result.append(Self(goal: goal, piece: piece, chance: chance, maximum: maximum,
-                               limited: attributes["gen_limitation"] == "true"))
+                               limited: attributes["gen_limitation"] == "true", sources: sources))
         }
         return result
     }

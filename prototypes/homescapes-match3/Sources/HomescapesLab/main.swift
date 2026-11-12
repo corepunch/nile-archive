@@ -162,11 +162,14 @@ final class BoardScene: SKScene {
             addChild(background)
             for model in cell.artModels {
                 if let mapping = files.mappings[model["modelId"] ?? ""], let id = mapping.resolve(model) {
-                    addSprite(id, at: point, layer: mapping.layer)
+                    if cell.blind == nil || mapping.layer != "piece" { addSprite(id, at: point, layer: mapping.layer) }
                 }
             }
-            if case .special(let special) = cell.piece { addSprite(special.sprite, at: point, layer: "piece") }
+            if cell.blind == nil, case .special(let special) = cell.piece { addSprite(special.sprite, at: point, layer: "piece") }
             var diagnostic: [String] = []
+            if cell.tile > 0 { diagnostic.append("Tile \(cell.tile)") }
+            if let anchor = cell.blind { diagnostic.append("Blind \(board.blinds[anchor] ?? 0)") }
+            if cell.visibleGenerator { diagnostic.append("Gen \(board.patternSpawns[p] ?? 0)") }
             if cell.jelly > 0 { diagnostic.append("Jelly \(cell.jelly)") }
             if let color = cell.boxColor, cell.box > 0 { diagnostic.append("Box C\(color):\(cell.box)") }
             if case .hazelnut(let n) = cell.piece { diagnostic.append("Nut \(n)") }
@@ -177,7 +180,9 @@ final class BoardScene: SKScene {
                 diagnostic.append("Maker \(maker.hits)/\(maker.period)")
             }
             if !diagnostic.isEmpty {
-                let label = SKLabelNode(text: diagnostic.joined(separator: " / "))
+                let label = SKLabelNode(text: diagnostic.joined(separator: "\n"))
+                label.numberOfLines = 0
+                label.preferredMaxLayoutWidth = tile * 0.9
                 label.fontName = "Menlo-Bold"
                 label.fontSize = max(7, tile * 0.16)
                 label.fontColor = .white

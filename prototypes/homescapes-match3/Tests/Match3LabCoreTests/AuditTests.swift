@@ -3,6 +3,22 @@ import XCTest
 @testable import Match3LabCore
 
 final class AuditTests: XCTestCase {
+    func testGeneratorGapsAreReportedAlongsideUnrelatedBlockers() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let xml = """
+        <root><Level movesLimitLocal="10"><Targets/><BornPatterns><pattern str="[Tmr]" isLooped="true"/></BornPatterns>
+        <Line><Cell x="0" y="0"><Model modelId="UNKNOWN"/><Model modelId="ARTIFACT_GEN" id="0" pattern="[Tmr]" isLooped="1"/></Cell></Line></Level></root>
+        """
+        try Data(xml.utf8).write(to: directory.appendingPathComponent("unknown.xml"))
+        let result = try XCTUnwrap(LevelAudit.run(directory: directory).entries.first)
+        XCTAssertEqual(result.unknownModels, ["UNKNOWN"])
+        XCTAssertEqual(result.unsupportedConfigurations, ["BornPatterns token [Tmr]"])
+        XCTAssertNil(result.error)
+        XCTAssertFalse(result.initialized)
+    }
+
     func testAuditListsAllGapsAndParseFailures() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)

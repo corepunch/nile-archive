@@ -1,7 +1,9 @@
 # Homescapes blocker and generator implementation
 
 This is a simulation lab for the local 9.2.601 bundle, not an original-runtime
-reimplementation. The additions raise accepted boards from 232 to 753. A
+reimplementation. The first blocker pass raised accepted boards from 232 to 753. The subsequent
+[queue, palette, tile and blind pass](GENERATORS.md) raises this to 1,005. The measurements
+below describe the first pass; [LAB_COVERAGE.md](LAB_COVERAGE.md) has current totals. A
 12-move corpus exercise played 8,791 legal moves on 747 boards, with goal
 progress on 665. Six accepted boards start stalled; 5,431 still have unsupported
 vocabulary. No board construction or invalid-hint errors occurred. These
@@ -57,8 +59,9 @@ statues. These are current publisher rules, which can differ from the bundle.
   donut population (at least one). Those defaults are unverified. Random rolls
   use the lab's seeded generator, not the original game's RNG.
 - Refill is still straight-column with a random-fill fallback; diagonal flow,
-  portals, alternate gravity, `ARTIFACT_GEN` and its `BornPatterns` grammar are
-  not implemented. `BORN.isLooped` is retained but not interpreted. Unknown artifact generators remain rejected. The lab does
+  portals and alternate gravity are not implemented. Supported `ARTIFACT_GEN`,
+  `BornPatterns` and color palettes are now covered in [GENERATORS.md](GENERATORS.md).
+  `BORN.isLooped` is retained but not interpreted. Unknown artifact tokens remain rejected. The lab does
   not claim every initialized board's routing or scripting is understood.
 - Blast overlap is a single damage pass. Matching groups that resolve together
   also share a pass; original multi-hit timing can differ. This especially
