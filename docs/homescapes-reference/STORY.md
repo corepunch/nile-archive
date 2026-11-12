@@ -37,3 +37,28 @@ scene IDs to decoded English. We cannot yet make that join for Homescapes:
 quest binary has not been parsed. Next research requires a validated reader for
 those formats, then a check against actual play. Until then, this page should
 not be treated as a full story reference.
+
+## Explore the bundled identifiers
+
+[Open the local quest string explorer](../../reference/homescapes-analysis/quest-strings.html).
+It offers a file selector and text filter over **113,932 printable string
+occurrences** in all **48** bundled `/Quest.xml.au` files. Offsets locate each
+string in its decompressed binary. Run `python3 tools/homescapes-reference/story_index.py`
+to regenerate it; this requires the `zstd` command and the local app bundle.
+The generator checks the `BLK` signature, frame signature, expected output size
+and the prefix repeated in the container header. Some inputs have trailing
+bytes after the frame; the decoder accepts the CLI's trailing-header error only
+if the complete output passes those checks.
+
+For example, choose `cluster1/CH_Hall/Quest.xml.au` and filter `_Title` to see
+identifiers such as `CH_OstinsRoom_ReplaceCarpet_Title`,
+`CH_OstinsRoom_CleanRoom_Title` and `CH_OstinsRoom_SetBed_Title`. These provide
+leads to authored actions, not the localized task descriptions or an established
+sequence. Searching `Scene` exposes scene-like identifiers but not their dialogue.
+The explorer intentionally retains duplicate occurrences and binary order for
+inspection; neither is a count of unique tasks or proof of progression.
+
+A previously published [PLXE version 4 unpacking approach](https://www.zenhax.com/viewtopic.php%40t%3D16964.html)
+expects a Zstandard frame following the header. The version 5 resources in this
+bundle do not have that frame at the expected offset, and the old approach does
+not decode them. No conclusion about their exact encoding follows from that test.

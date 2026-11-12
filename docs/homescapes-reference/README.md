@@ -31,7 +31,7 @@ archives. Paths and counts describe this package, not the entire live game.
 For example, `base_mm/cluster1/CH_Hall/Quest.xml.au` and 47 other entries ending
 in `/Quest.xml.au` identify possible quest sources, but do not establish chapter
 counts, task sequences or dialogue. The quest files begin with a `BLK` container;
-the Hall example includes a Zstandard frame and decompresses into structured
+all 48 contain Zstandard frames and decompress into structured
 binary data with readable identifiers. Other relevant files, including
 `Match3LevelSelector.xml`, `Tutorials.xml`, and `Storyline.lua`, begin with `PLXE`
 rather than readable XML or Lua. Their contents have not been decoded. Neither a
@@ -40,7 +40,7 @@ content; no remote content or personal app data was acquired.
 
 | Research target | Bundled starting point | Status |
 | --- | --- | --- |
-| Quest and day structure | `base_mm/cluster*/.../Quest.xml.au` | Containers identified; structured data not parsed |
+| Quest and day structure | `base_mm/cluster*/.../Quest.xml.au` | 48 containers decompressed; [raw string explorer](STORY.md#explore-the-bundled-identifiers), structured data not parsed |
 | Level selection and tuning | `base_mm/Match3/Match3LevelSelector.xml`, `Match3SpecialBalance/` | Encoded; level corpus and assignments not recovered |
 | Tutorials and localization | `base_mm/Tutorials.xml`, `Assets/Common/texts/` | Encoded; no transcript recovered |
 | Story execution | `base_mm/Storyline.lua`, `Assets/GameStory/` | Encoded or binary; scene order unknown |

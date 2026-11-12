@@ -35,3 +35,14 @@ and an ETC2-tagged texture format. A straightforward decode did not produce a
 valid image, and the matching XML metadata is encoded; the board atlas remains
 unrecovered. The gallery is therefore an initial visual inventory, not the
 complete set the game uses.
+
+## Board atlas investigation
+
+Each tested `Match3_00.dds` through `Match3_04.dds` starts in a `BLK` wrapper
+with a Zstandard frame at byte 40. Decompression recovers a DDS header tagged
+`etc2` (1576×1576 for these five), but the remaining data is shorter than a
+raw ETC2 image of that size. Direct ETC1, ETC2 and ETC2 punch-through decoding,
+including 2-, 4- and 8-byte word reversals, produced noise rather than recognizable
+art. The data therefore cannot safely be treated as a raw texture; the exact
+additional encoding and the mapping from atlas regions to game states remain
+unknown. No invalid render is shown as an asset.
