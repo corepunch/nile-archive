@@ -2740,8 +2740,8 @@ Someone who speaks.
 | `portrait_path` | `string` |  |
 | `portrait` | `texture` | Loaded by story.setup. |
 | `color` | `color` | Name tag. |
-| `right` | `boolean` | Stands on the right of the dialogue. |
-| `mouth` | `vec2` | Where they speak from, 0..1 inside the portrait (default .5, .25). |
+| `right` | `boolean` | Preferred side of the dialogue. |
+| `mouth` | `vec2` | Where they speak from, 0..1 inside the source portrait (default .5, .25). |
 
 ### story_line
 
@@ -2768,6 +2768,8 @@ How dialogue looks.
 | `portrait_height` | `number` | Fraction of the screen height (default .5). |
 | `framed` | `boolean` | Portraits are busts: show them in a medallion. |
 | `centered` | `boolean` | Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size. |
+| `inward` | `boolean` | All source portraits face right. Stage conversation partners on opposite sides and mirror portraits on the right. |
+| `edge_to_edge` | `boolean` | On narrow unframed screens, align the speech outline and the centered portraits to the safe screen edges. |
 | `skip` | `string` | Label of a skip button, nil for none. |
 
 ### building_def

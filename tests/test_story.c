@@ -170,6 +170,75 @@ TEST(story_layouts)
     CHECK(sample_index==TOTAL_CASES);
 }
 
+static void check_facing_pixels(rect left, rect right)
+{
+    struct AXsize window;
+    axGetSize(&window);
+    int w=(int)roundf(window.width*axGetScaling()), h=(int)roundf(window.height*axGetScaling());
+    unsigned char *pixels=malloc((size_t)w*h*4);
+    CHECK(pixels != NULL);
+    if (!pixels) return;
+    CHECK(render_read_pixels(pixels,w,h));
+    rect screen=app_bleed();
+    rect portraits[] = {left, right};
+    for (int side=0;side<2;side++) for (int half=0;half<2;half++) {
+        vec2 p=vec2_sub(rect_point(portraits[side],v2(half ? .8f : .2f,.35f)),screen.pos);
+        int x=(int)(p.x*w/screen.size.w), y=(int)(p.y*h/screen.size.h);
+        const unsigned char *ink=pixels+((size_t)y*w+x)*4;
+        /* Source is blue on the left. The right portrait reverses the order. */
+        CHECK((half==side ? ink[2] : ink[1])>80 && (half==side ? ink[1] : ink[2])<40);
+    }
+    int rim_y=(int)((rect_max(left).y-left.size.h*.08f+30-screen.pos.y)*h/screen.size.h);
+    for (int side=0;side<2;side++) {
+        int x=side ? w-2 : 1;
+        const unsigned char *ink=pixels+((size_t)rim_y*w+x)*4;
+        CHECK(ink[0]>120 && ink[1]<65 && ink[2]<65);
+    }
+    free(pixels);
+}
+
+static void inward_facing_pair(void)
+{
+    unsigned char face[4*5*4];
+    for (int i=0;i<20;i++) {
+        bool blue=i%4<2;
+        face[i*4]=0;face[i*4+1]=blue ? 0 : 240;face[i*4+2]=blue ? 240 : 0;face[i*4+3]=255;
+    }
+    texture directional=tex_from_pixels(face,4,5);
+    CHECK(directional.tex != NULL);
+    if (!directional.tex) return;
+    cast[0].portrait=cast[1].portrait=directional;
+    cast[0].right=cast[1].right=true;
+    test_style.framed=false;
+    test_style.centered=test_style.inward=test_style.edge_to_edge=true;
+    story_setup(cast,2,&test_style);
+    story_say("ann","The same line.");
+    story_say("other","The same line.");
+    story_say("ann","The same line.");
+    story_frame(1);
+    story_next();
+    draw_rect(app_bleed(),rgba(10,20,70,255));
+    story_frame(1);
+    rect left={0}, right={0}, now_left={0}, now_right={0};
+    color tint;
+    bool has_left=story_test_portrait(&cast[1],&left,&tint);
+    bool has_right=story_test_portrait(&cast[0],&right,&tint);
+    CHECK(has_left && has_right && rect_center(left).x<rect_center(right).x);
+    NEAR(left.pos.x,app_screen().pos.x);
+    NEAR(rect_max(right).x,rect_max(app_screen()).x);
+    if (has_left && has_right) check_facing_pixels(left,right);
+    story_next();
+    draw_rect(app_bleed(),rgba(10,20,70,255));
+    story_frame(1);
+    has_left=story_test_portrait(&cast[1],&now_left,&tint);
+    has_right=story_test_portrait(&cast[0],&now_right,&tint);
+    CHECK(has_left && has_right);
+    CHECK(!memcmp(&left,&now_left,sizeof left) && !memcmp(&right,&now_right,sizeof right));
+    if (has_left && has_right) check_facing_pixels(now_left,now_right);
+    story_next();story_frame(1);
+    tex_free(directional);
+}
+
 static void motion_frame(float dt)
 {
     (void)dt;
@@ -214,6 +283,7 @@ static void motion_frame(float dt)
     story_frame(.2f);
     CHECK(!story_test_portrait(&cast[0],&r,&tint));
     CHECK(!story_test_portrait(&cast[1],&r,&tint));
+    inward_facing_pair();
     app_quit();
 }
 

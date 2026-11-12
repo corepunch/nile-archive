@@ -54,6 +54,9 @@ uses the shared form and modal stack. The selection is saved before the reply
 plays, and the scene is acknowledged after the reply finishes. Use
 `--story-choice after-10` to preview the Relic Rush prompt.
 
+Results keep the board HUD in the blurred background so the card title and
+actions have a clear foreground.
+
 Both games support `--debug-walkthrough`. Skip level opens the normal results.
 Complete task confirms an earned restoration or opens the next board. The
 walkthrough uses its own save and does not report scores to Game Center.

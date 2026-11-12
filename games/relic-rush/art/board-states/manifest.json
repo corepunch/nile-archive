@@ -1016,7 +1016,8 @@
   "navigation": "art/navigation/manifest.json",
   "story": {
     "source": "art/art-direction/expedition-cast.png",
-    "import": "python3 games/relic-rush/tools/prepare_assets.py",
+    "import": "python3 games/relic-rush/tools/prepare_assets.py --portraits-only",
+    "source_orientation": "Runtime crops face right. Adrian is mirrored horizontally on export from the original lineup. Mara retains her original crop canvas after removing a disconnected neighboring fragment. The engine mirrors the right slot.",
     "cast": {
       "elena": "data/characters/elena.png",
       "mara": "data/characters/mara.png",

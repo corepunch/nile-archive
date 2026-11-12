@@ -80,6 +80,8 @@ shot("island-fog", "480x900", "--city 3 --open 3 --look 700,1640")
 shot("island-unlock", "480x900", "--city 3 --zone 1")
 shot("victory", "480x900", "--victory")
 shot("phone-victory", "390x844", "--victory --safe-area 0,47,0,34")
+shot("result-layer-480", "480x900", "--victory --quest-object-state revealed")
+shot("result-layer-390", "390x844", "--victory --quest-object-state revealed --safe-area 0,47,0,34")
 shot("building-card", "480x900", "--card 1")
 shot("dialogue-elena", "480x900", "--dialog intro --frames 240")
 shot("dialogue-mara", "480x900", "--dialog mara --frames 240")
@@ -136,6 +138,7 @@ for _, size in ipairs{"480x900", "390x844"} do
     frame("portrait-listener-"..size,size,opts.." --frames 45")
 end
 reel("portrait-transitions", 42, 2, "390x844", "--lua tests/fixtures/dialogue;games/relic-rush/lua;. --safe-area 0,47,0,34")
+frame("portrait-same-side-390x844", "390x844", "--lua tests/fixtures/dialogue;games/relic-rush/lua;. --safe-area 0,47,0,34 --same-side --frames 45")
 reel("relic-rush-board-intro", 18, 6, "480x900", "--level 5 --present --reel")
 reel("relic-rush-town-dive", 16, 3, "480x900", "--city 3 --dive --reel")   -- Play: the town dives into the board
 reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --reel --safe-area 0,47,0,34")

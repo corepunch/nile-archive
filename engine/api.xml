@@ -476,8 +476,8 @@
     <field name="portrait_path" type="string"/>
     <field name="portrait" type="texture" doc="Loaded by story.setup."/>
     <field name="color" type="color" doc="Name tag."/>
-    <field name="right" type="bool" doc="Stands on the right of the dialogue."/>
-    <field name="mouth" type="vec2" doc="Where they speak from, 0..1 inside the portrait (default .5, .25)."/>
+    <field name="right" type="bool" doc="Preferred side of the dialogue."/>
+    <field name="mouth" type="vec2" doc="Where they speak from, 0..1 inside the source portrait (default .5, .25)."/>
   </struct>
   <struct name="story_line" c="story_line" doc="`{who, text, kind}` (positional or named); who is a character id, nil for the narrator.">
     <field name="who" type="string" pos="1"/>
@@ -492,6 +492,8 @@
     <field name="portrait_height" type="float" doc="Fraction of the screen height (default .5)."/>
     <field name="framed" type="bool" doc="Portraits are busts: show them in a medallion."/>
     <field name="centered" type="bool" doc="Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size."/>
+    <field name="inward" type="bool" doc="All source portraits face right. Stage conversation partners on opposite sides and mirror portraits on the right."/>
+    <field name="edge_to_edge" type="bool" doc="On narrow unframed screens, align the speech outline and the centered portraits to the safe screen edges."/>
     <field name="skip" type="string" doc="Label of a skip button, nil for none."/>
   </struct>
   <module name="story" doc="Characters, dialogue and speech bubbles.">

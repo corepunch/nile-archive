@@ -551,7 +551,7 @@ typedef struct {
     const char *portrait_path;
     texture portrait;            /* loaded by story_setup */
     color color;                 /* name tag */
-    bool right;                  /* stands on the right of the dialogue */
+    bool right;                  /* preferred side of the dialogue */
     vec2 mouth;                  /* where they speak from, 0..1 inside the portrait (default .5, .25) */
 } character;
 
@@ -566,6 +566,8 @@ typedef struct {
     float portrait_height;       /* fraction of the screen height (default .5) */
     bool framed;                 /* bust medallions; narrow screens centre the portrait/bubble unit */
     bool centered;               /* narrow screens: a full-width bubble at mid-screen, figures standing on it */
+    bool inward;                 /* right-facing source portraits turn toward the other side */
+    bool edge_to_edge;           /* narrow unframed dialogue reaches both safe edges */
     float backdrop_blur;         /* optional logical-pixel blur behind dialogue */
     const char *skip;            /* label of a skip button, NULL for none */
 } story_style;

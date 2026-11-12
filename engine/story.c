@@ -27,7 +27,7 @@ typedef struct {
     rect bounds;
     color from_tint, to_tint;
     tween blend, visibility;
-    bool wanted, active;
+    bool wanted, active, right;
 } portrait_track;
 
 static struct {
@@ -38,6 +38,7 @@ static struct {
     int lines;
     float shown, enter, line_time, arrive, hold;
     const character *last, *listener;
+    bool last_right, listener_right;
     int seen[MAX_SEEN];
     int seen_count;
     portrait_track portraits[QUEUE];
@@ -115,7 +116,11 @@ void story_serialize(save *s)
 
 static void next_line(void)
 {
-    if (S.lines > 1 && S.queue[1].who != S.queue[0].who) S.listener = S.queue[0].who;   /* stays on stage */
+    if (S.lines > 1 && S.queue[1].who != S.queue[0].who) {
+        S.listener = S.queue[0].who;
+        /* Keep the outgoing speaker on the side where they were drawn. */
+        S.listener_right = S.listener && (S.listener == S.last ? S.last_right : S.listener->right);
+    }
     memmove(S.queue, S.queue + 1, sizeof S.queue[0] * (size_t)(S.lines - 1));
     S.lines--;
     S.shown = S.line_time = S.hold = 0;
@@ -378,25 +383,41 @@ static size2 portrait_size(const character *c, float h)
 }
 
 /* Where a character stands: bottom corner on their side. */
-static rect stand(const character *c, float h)
+static rect stand(const character *c, float h, bool right)
 {
     rect screen = app_screen();
     float m = 16;
-    vec2 foot = v2(c->right ? rect_max(screen).x - m : screen.pos.x + m, rect_max(screen).y - (S.style.framed ? m : 0));
-    return rect_anchor(foot, portrait_size(c, h), v2(c->right ? 1 : 0, 1));
+    vec2 foot = v2(right ? rect_max(screen).x - m : screen.pos.x + m, rect_max(screen).y - (S.style.framed ? m : 0));
+    return rect_anchor(foot, portrait_size(c, h), v2(right ? 1 : 0, 1));
 }
 
-static void draw_portrait(const character *c, rect r, color tint)
+static rect stand_on_bubble(rect span, rect bubble, size2 face, float margin, bool right)
 {
+    float x = right ? rect_max(span).x - margin : span.pos.x + margin;
+    return rect_anchor(v2(x, bubble.pos.y + face.h * .08f), face, v2(right ? 1 : 0, 1));
+}
+
+static bool portrait_mirrored(bool right)
+{
+    return S.style.inward && right;
+}
+
+static void draw_portrait(const character *c, rect r, bool right, color tint)
+{
+    rect source = tex_rect(c->portrait);
+    if (portrait_mirrored(right)) {
+        source.pos.x = source.size.w;
+        source.size.w = -source.size.w;
+    }
     if (!S.style.framed) {
-        draw_image(c->portrait, r, tint);
+        draw_image_part(c->portrait, source, r, tint);
         return;
     }
     float alpha = tint.a / 255.f;
     draw_shadow(rect_offset(r, v2(0, 6)), 22, 16, color_alpha(rgba(0, 0, 0, 110), alpha));
     draw_round_rect(rect_inflate(r, 5), 22, color_alpha(color_lerp(S.style.edge, BLACK, 1 - tint.r / 255.f), alpha));
     draw_round_rect(r, 18, color_alpha(color_lerp(color_shade(c->color, .55f), BLACK, 1 - tint.r / 255.f), alpha));
-    draw_image(c->portrait, rect_inflate(r, -3), tint);
+    draw_image_part(c->portrait, source, rect_inflate(r, -3), tint);
     draw_round_rect_line(rect_inflate(r, 1), 19, 4, color_alpha(S.style.edge, alpha));
 }
 
@@ -405,7 +426,7 @@ static void draw_portrait(const character *c, rect r, color tint)
 static rect portrait_pose(const portrait_track *p)
 {
     float slide = (1 - tween_value(p->visibility)) * p->bounds.size.w * .3f;
-    return rect_offset(p->bounds, v2(p->who->right ? slide : -slide, 0));
+    return rect_offset(p->bounds, v2(p->right ? slide : -slide, 0));
 }
 
 static color portrait_tint(const portrait_track *p)
@@ -421,7 +442,7 @@ static void portrait_target(portrait_track *p, color tint)
     p->blend = (tween){.to=1, .duration=PORTRAIT_TIME};
 }
 
-static void portrait_stage(const character *who, rect r, bool active)
+static void portrait_stage(const character *who, rect r, bool right, bool active)
 {
     color tint = active ? WHITE : rgba(120, 124, 132, 235);
     portrait_track *p = NULL;
@@ -432,6 +453,7 @@ static void portrait_stage(const character *who, rect r, bool active)
         *p = (portrait_track){.who=who, .from_tint=tint, .to_tint=tint};
     }
     p->bounds = r;
+    p->right = right;
     p->wanted = true;
     p->active = active;
     portrait_target(p, tint);
@@ -446,7 +468,7 @@ static void portraits_frame(float dt)
         tween_step(&p->visibility, dt);
         tween_step(&p->blend, dt);
         color tint = portrait_tint(p);
-        if (tint.a) draw_portrait(p->who, portrait_pose(p), tint);
+        if (tint.a) draw_portrait(p->who, portrait_pose(p), p->right, tint);
         if (!p->wanted && p->visibility.elapsed >= p->visibility.duration) *p = (portrait_track){0};
     }
 }
@@ -510,26 +532,31 @@ void story_frame(float dt)
     ui_block(screen);
 
     bool has_face = who && who->portrait.tex;
+    const character *listener = S.listener;
+    bool has_listener = who && listener && listener != who && listener->portrait.tex;
+    bool face_to_face = S.style.inward && has_face && has_listener;
+    bool listener_right = has_listener && (face_to_face ? S.listener_right : listener->right);
+    bool right = face_to_face ? !listener_right : who && who->right;
+    bool listening = has_listener && (face_to_face || listener_right != right);
     size2 face = has_face ? portrait_size(who, h) : sz2(0, 0);
     text_style ts = S.style.text;
     float pad = ts.size * .9f, vpad = ts.size * .7f, tag = S.style.name.size * 1.6f;
     float tag_w = who ? text_measure(S.style.name, who->name).w + tag : 0;
     bool beside = has_face && screen.size.w - face.w * .7f - 2 * m >= 420;   /* room for a bubble at face height */
     bool framed_narrow = has_face && !beside && S.style.framed;
+    bool centered = has_face && !beside && !framed_narrow && S.style.centered;
+    bool edge_to_edge = !beside && !S.style.framed && S.style.edge_to_edge;
     float reach = bubble_reach(kind, rc(0, 0, 400, 100));
 
     /* the bubble hugs its text: balanced lines no wider than a comfortable measure */
     float max_w = beside ? minf(560, screen.size.w * .45f)
+                : edge_to_edge ? screen.size.w - 2 * reach
                 : has_face ? screen.size.w - 2 * (m + reach)
                 : minf(screen.size.w - 2 * (m + reach), maxf(560, screen.size.w * .62f));
     float arrow = ts.size * .8f;   /* room for the "tap to continue" arrow after the last word */
     size2 body = text_box_size(ts, max_w - 2 * pad - arrow, text);
-    float width = minf(max_w, maxf(body.w + 2 * pad + arrow, maxf(tag_w + 64, ts.size * 9)));
-    bool centered = has_face && !beside && !framed_narrow && S.style.centered;
-    if (centered) {   /* the bubble spans the screen: wrap to its full measure */
-        width = max_w;
-        body = text_box_size(ts, width - 2 * pad - arrow, text);
-    }
+    float width = centered || edge_to_edge ? max_w
+                : minf(max_w, maxf(body.w + 2 * pad + arrow, maxf(tag_w + 64, ts.size * 9)));
     float top_gap = vpad + (who ? tag * .35f : 0);
     float top_pad = top_gap, bottom_pad = vpad;
     float height = body.h + top_pad + bottom_pad;
@@ -552,17 +579,19 @@ void story_frame(float dt)
         tip = rect_center(bubble);
         grow_from = rect_point(bubble, v2(.5f, 1));
     } else if (beside) {   /* Playrix staging: the bubble at face height, the tail on the mouth */
-        portrait = stand(who, h);
-        vec2 mouth = rect_point(portrait, who->mouth);
-        float side = who->right ? -1 : 1;
-        float x = who->right ? mouth.x - face.w * .22f - width : mouth.x + face.w * .22f;
+        portrait = stand(who, h, right);
+        vec2 mouth = who->mouth;
+        if (portrait_mirrored(right)) mouth.x = 1 - mouth.x;
+        mouth = rect_point(portrait, mouth);
+        float side = right ? -1 : 1;
+        float x = right ? mouth.x - face.w * .22f - width : mouth.x + face.w * .22f;
         float y = mouth.y - height - 14;   /* the bubble's bottom just above the mouth */
         bubble = rc(clampf(x, m + reach, rect_max(screen).x - m - reach - width),
                     clampf(y, m + 50, rect_max(screen).y - m - reach - height), width, height);
         /* the tail leaves the bottom edge near the speaker and leans toward
          * their mouth; thought puffs trail further, a shout's spike a little */
         float drop = kind == BUBBLE_THOUGHT ? 46 : kind == BUBBLE_SHOUT ? 26 : TAIL_LEN;
-        float near = who->right ? rect_max(bubble).x - 44 : bubble.pos.x + 44;
+        float near = right ? rect_max(bubble).x - 44 : bubble.pos.x + 44;
         tip = v2(near - side * 12, rect_max(bubble).y + drop);
         grow_from = tip;
     } else if (framed_narrow) {
@@ -570,44 +599,39 @@ void story_frame(float dt)
          * visible bounds below. The box stays sized to the phrase, with the
          * medallion above the speaker's end and no competing tail. */
         width = clampf(width, minf(face.w + 60, max_w), max_w);
-        bubble = rect_anchor(v2(who->right ? rect_max(screen).x - m - reach : screen.pos.x + m + reach, rect_max(screen).y - m - reach),
-                             sz2(width, height), v2(who->right ? 1 : 0, 1));
-        portrait = rect_anchor(v2(who->right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5, speech_bubble_bounds(bubble, kind).pos.y - tag * .5f - 2),
-                               face, v2(who->right ? 1 : 0, 1));
+        bubble = rect_anchor(v2(right ? rect_max(screen).x - m - reach : screen.pos.x + m + reach, rect_max(screen).y - m - reach),
+                             sz2(width, height), v2(right ? 1 : 0, 1));
+        portrait = rect_anchor(v2(right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5, speech_bubble_bounds(bubble, kind).pos.y - tag * .5f - 2),
+                               face, v2(right ? 1 : 0, 1));
         tip = rect_center(bubble);
-        grow_from = rect_point(bubble, v2(who->right ? 1 : 0, 0));
+        grow_from = rect_point(bubble, v2(right ? 1 : 0, 0));
     } else if (centered) {
         /* Phones: one full-width bubble at mid-screen. The speaker stands on
          * its top edge at full size; a listener stands at the other end. */
         float stood = face.h * .92f;   /* the figure overlaps the bubble's rim */
         float y = rect_center(screen).y - (stood + height) * .5f + stood;
-        bubble = rc(screen.pos.x + m + reach, clampf(y, screen.pos.y + m + stood, rect_max(screen).y - m - reach - height - tag * 2),
-                    width, height);
-        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - m : bubble.pos.x + m, bubble.pos.y + face.h * .08f),
-                               face, v2(who->right ? 1 : 0, 1));
+        bubble = rc(rect_center(screen).x - width * .5f,
+                    clampf(y, screen.pos.y + m + stood, rect_max(screen).y - m - reach - height - tag * 2), width, height);
+        portrait = stand_on_bubble(edge_to_edge ? screen : bubble, bubble, face, edge_to_edge ? 0 : m, right);
         tip = rect_center(bubble);
-        grow_from = rect_point(bubble, v2(who->right ? .85f : .15f, 0));
+        grow_from = rect_point(bubble, v2(right ? .85f : .15f, 0));
     } else {   /* narrow screens, standing figures: a panel along the bottom, the speaker standing on it */
         bubble = rect_anchor(v2(rect_center(screen).x, rect_max(screen).y - m - reach), sz2(width, height), v2(.5f, 1));
-        portrait = rect_anchor(v2(who->right ? rect_max(bubble).x - m : bubble.pos.x + m, bubble.pos.y + face.h * .08f),
-                               face, v2(who->right ? 1 : 0, 1));
+        portrait = stand_on_bubble(bubble, bubble, face, m, right);
         tip = rect_center(bubble);   /* the figure overlaps the bubble: no tail */
-        grow_from = rect_point(bubble, v2(who->right ? .85f : .15f, 0));
+        grow_from = rect_point(bubble, v2(right ? .85f : .15f, 0));
     }
 
     /* the listener: the previous speaker, dimmed, on the other side */
-    const character *listener = S.listener;
-    bool listening = listener && listener->portrait.tex && who && listener->right != who->right && listener != who;
     rect listener_portrait = rc(0, 0, 0, 0), group = screen;
     if (listening) {
-        listener_portrait = stand(listener, h);
+        listener_portrait = stand(listener, h, listener_right);
         if (centered)   /* on the bubble's other end */
-            listener_portrait = rect_anchor(v2(listener->right ? rect_max(bubble).x - m : bubble.pos.x + m,
-                                               bubble.pos.y + listener_portrait.size.h * .08f),
-                                            listener_portrait.size, v2(listener->right ? 1 : 0, 1));
+            listener_portrait = stand_on_bubble(edge_to_edge ? screen : bubble, bubble, listener_portrait.size,
+                                                edge_to_edge ? 0 : m, listener_right);
         if (framed_narrow)   /* on the speaker's baseline, above the box */
-            listener_portrait = rect_anchor(v2(listener->right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5,
-                                               rect_max(portrait).y), listener_portrait.size, v2(listener->right ? 1 : 0, 1));
+            listener_portrait = rect_anchor(v2(listener_right ? rect_max(screen).x - m - 5 : screen.pos.x + m + 5,
+                                               rect_max(portrait).y), listener_portrait.size, v2(listener_right ? 1 : 0, 1));
     }
     if (framed_narrow) {
         /* Centre the authored frame plus the actual puff/spike outline, not
@@ -623,8 +647,8 @@ void story_frame(float dt)
         grow_from = vec2_add(grow_from, offset);
         group = rect_offset(group, offset);
     }
-    if (listening) portrait_stage(listener, listener_portrait, false);
-    if (has_face) portrait_stage(who, portrait, true);
+    if (listening) portrait_stage(listener, listener_portrait, listener_right, false);
+    if (has_face) portrait_stage(who, portrait, right, true);
     portraits_frame(dt);
 
     /* the bubble springs out of its tail when a speaker arrives */
@@ -634,8 +658,8 @@ void story_frame(float dt)
 
     float settle = saturate((S.arrive - POP_TIME * .5f) / (POP_TIME * .5f));
     if (who && settle > 0) {   /* name tag on the bubble's top edge, on the speaker's side */
-        vec2 at = v2(who->right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, speech_bubble_bounds(bubble, kind).pos.y);
-        name_tag(who, vec2_add(at, v2(0, (1 - settle) * 6)), v2(who->right ? 1 : 0, .5f), tag);
+        vec2 at = v2(right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, speech_bubble_bounds(bubble, kind).pos.y);
+        name_tag(who, vec2_add(at, v2(0, (1 - settle) * 6)), v2(right ? 1 : 0, .5f), tag);
     }
     rect inner = rc(bubble.pos.x + pad, bubble.pos.y + top_pad, bubble.size.w - 2 * pad - arrow, body.h);
     text_box_reveal(ts, inner, v2(who ? 0 : .5f, .5f), text, (int)S.shown);
@@ -644,15 +668,19 @@ void story_frame(float dt)
         draw_poly((vec2[]){vec2_sub(at, v2(8, 6)), vec2_add(at, v2(8, -6)), vec2_add(at, v2(0, 4))}, 3, S.style.edge);
     }
     S.last = who;
+    S.last_right = right;
 
     if (S.style.skip) {   /* a quiet pill with a fast-forward mark, away from the speaker */
         text_style ns = S.style.name;
-        bool left = who && who->right;
+        bool left = right;
         float icon = tag * .55f;
         size2 size = sz2(text_measure(ns, S.style.skip).w + tag * 1.2f + icon + 6, tag * 1.25f);
         rect pill = rect_anchor(v2(left ? bubble.pos.x : rect_max(bubble).x, bubble.pos.y - 12 - reach), size, v2(left ? 0 : 1, 1));
-        if (centered)   /* under the bubble, both figures stand on top */
-            pill = rect_anchor(v2(left ? bubble.pos.x : rect_max(bubble).x, rect_max(bubble).y + 12 + reach), size, v2(left ? 0 : 1, 0));
+        if (centered) {   /* under the bubble, both figures stand on top */
+            float inset = edge_to_edge ? m : 0;
+            pill = rect_anchor(v2(left ? bubble.pos.x + inset : rect_max(bubble).x - inset,
+                                   rect_max(bubble).y + 12 + reach), size, v2(left ? 0 : 1, 0));
+        }
         else if (beside)   /* the bottom corner away from the speaker */
             pill = rect_anchor(v2(left ? screen.pos.x + m : rect_max(screen).x - m, rect_max(screen).y - m), pill.size, v2(left ? 0 : 1, 1));
         else if (framed_narrow)   /* travel with the unit; sit above it when a listener occupies the far end */

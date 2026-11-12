@@ -1155,9 +1155,10 @@ function G.app(R)
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
         if story.active() and R.draw_story_item then R.draw_story_item() end
-        -- The top row stays crisp above popups and dialogue. The tall guide
-        -- and leaderboard cover it so their content remains readable.
-        if (R.overlay ~= R.OV_NONE or talking) and R.overlay ~= R.OV_GUIDE and not board then
+        -- Keep the HUD above ordinary dialogs. Results, the guide and
+        -- leaderboard own the whole foreground.
+        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_GUIDE and not board
+        if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end
             ui.set_enabled(true)
@@ -1168,7 +1169,9 @@ function G.app(R)
         if app.arg("cell-mask") then return end
         R.font = R.skin:font("lilita")
         story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
-                                      edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .34, centered = true, skip = "SKIP"})
+                                      edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
+                                      portrait_height = .34, centered = true, inward = W.speech.inward,
+                                      edge_to_edge = W.speech.edge_to_edge, skip = "SKIP"})
         local art = require("art")
         local board_skin = art.skin()
         R.backdrop = board_skin.background

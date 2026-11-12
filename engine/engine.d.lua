@@ -114,8 +114,8 @@
 ---@field portrait_path string
 ---@field portrait texture Loaded by story.setup.
 ---@field color color Name tag.
----@field right boolean Stands on the right of the dialogue.
----@field mouth vec2 Where they speak from, 0..1 inside the portrait (default .5, .25).
+---@field right boolean Preferred side of the dialogue.
+---@field mouth vec2 Where they speak from, 0..1 inside the source portrait (default .5, .25).
 
 ---@class story_line `{who, text, kind}` (positional or named); who is a character id, nil for the narrator.
 ---@field who string
@@ -132,6 +132,8 @@
 ---@field portrait_height number Fraction of the screen height (default .5).
 ---@field framed boolean Portraits are busts: show them in a medallion.
 ---@field centered boolean Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size.
+---@field inward boolean All source portraits face right. Stage conversation partners on opposite sides and mirror portraits on the right.
+---@field edge_to_edge boolean On narrow unframed screens, align the speech outline and the centered portraits to the safe screen edges.
 ---@field skip string Label of a skip button, nil for none.
 
 ---@class building_def A building type.
