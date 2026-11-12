@@ -1,6 +1,6 @@
 # Design and story: three chapters to "Продолжение следует"
 
-**Status.** Chapter 1 is implemented through the temple cache. Chapters 2 and 3 remain design and script. The goal for the full campaign is three chapters ending with «Продолжение следует».
+**Status.** All three chapters are implemented through their caches. The campaign ends with «Продолжение следует». The 2026-11-02 prototype proposals and cost estimates below are retained as historical context; the current [progression and economy](progression-economy.md) and runtime Lua define the implemented behaviour.
 
 **How to read the labels.** Reference facts carry the labels from [the research report](../../../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md): `official` (Wooga help centre, App Store), `wiki*` and `player*` (Fandom and AppGamer, seen only through search excerpts, so recheck before tuning against them), `player` (reviews, fan transcripts, third-party guides), `analysis` (Naavik), `estimate` (arithmetic). Nobody on the research side played the game. **Everything of ours is a proposal** unless it cites our code. The report's own proposal section is for Relic Rush and none of its numbers are used.
 
@@ -23,7 +23,7 @@ The original prototype had three searches and seven lines. Chapter 1 now uses fi
 
 ### Campaign review · 2026-11-04
 
-The full script covers 15 searches and three ordered-tap caches. Chapter 1 dialogue is implemented; later dialogue and targets are a production script. The first three scene IDs were preserved for saved progress.
+The full script covers 15 searches and three ordered-tap caches. All chapter dialogue and targets are implemented in the runtime. The first three scene IDs were preserved for saved progress.
 
 | Chapter | Reuse | Add |
 | --- | --- | --- |
@@ -114,7 +114,7 @@ Three also suits the island: it has 3 shores to open (`lua/archive_state.lua:10`
 
 ### 2.2 Scene slots
 
-Existing scenes keep slots 1-3 and their order. Slots are append-only, like the building catalogue, so `wins` and `stars` indices in old saves stay valid and need no remapping. Gates for slots 6–15 below are the current unimplemented candidates in [progression and economy](progression-economy.md), not current game data.
+Existing scenes keep slots 1-3 and their order. Slots are append-only, like the building catalogue, so `wins` and `stars` indices in old saves stay valid and need no remapping. Gates for slots 6–15 below are implemented and documented in [progression and economy](progression-economy.md).
 
 | Slot | Ch. | Scene | Painting | Item list | Gate |
 | ---: | ---: | --- | --- | --- | ---: |
@@ -325,8 +325,7 @@ The player learns this in pieces. Writers need it whole.
 
 ### Chapter 2–3 production handoff · 2026-11-12
 
-Chapter 1 and its existing IDs are shipped. These are planned later searches,
-not playable content. The numbered `cNsMa` and `cNsMb` IDs below address the
+Chapter 1 and its existing IDs are retained. These later searches are implemented. The numbered `cNsMa` and `cNsMb` IDs below address the
 first discovery and the later discovery for that scene. `cNt1` is the cache
 entry beat and `cNt2` its one-time completion beat. The Influence values in
 section 2.2 are candidates from [progression and economy](progression-economy.md), subject to a complete
@@ -354,7 +353,7 @@ The existing fountain gate remains before scene 5.
 For production, each row needs a stable scene key, background and measured hit
 regions, a first-clear and B beat key, journal note, and preconditions checked
 before launch. Use the existing `c2s*`, `c3s*`, `c2t*` and `c3t*` keys shown
-above. They are planned keys, not existing save entries. A clue completion and
+above. These keys are the runtime story beat IDs. A clue completion and
 its journal record must be saved together; replay or skipping the dialogue must
 not award a second clue or discard the fact. Keep visited chapter-1 searches
 accessible when adding later gates. The cache target in C is the paired gouge
@@ -601,19 +600,19 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 ### Slot 9 · Перерезанная дамба
 
-*New painting C, a broken earth dyke on the northern branch, reeds and a mooring stake. Show a silt-covered sheltered cut face, a rope fragment and paired gouges on the stake; the cut and stake were protected beneath the silt. Teaser: «Отец боялся за дамбу. Надо увидеть её своими глазами.» Items: Лопата, Кошка, Кол, Канат, Весло, Мотыга, Сандалия, Кувшин.*
+*New painting C, a broken earth dyke on the northern branch, reeds and a mooring stake. Show a sheltered cut face, a rope fragment and paired gouges on the stake; the silt that protected them has recently washed away. Teaser: «Отец боялся за дамбу. Надо увидеть её своими глазами.» Items: Лопата, Кошка, Кол, Канат, Весло, Мотыга, Сандалия, Кувшин.*
 
 **Beat `c2s4a` · first clear** · *Запись: Края пролома ровные. Дамбу перерезали лопатами. Это не разлив.*
 
-- **Мерит:** Вот дамба. После воды её завалило илом, а теперь и тростником.
-- **Нефра:** Под илом срез твёрдый. Видишь борозды от лопат?
+- **Мерит:** Ил укрывал дамбу после разлива. Теперь вода его смыла.
+- **Нефра:** Срез твёрдый. Видишь борозды от лопат?
 - **Мерит:** Вода их не смыла. Эта сторона была укрыта.
 - **Нефра:** Дамбу перерезали. Воду сюда привели.
 - **Мерит:** Поехали отсюда. Комары.
 
 **Beat `c2s4b` · clear after the third Star** · *Запись: На колу обрывок каната с речным узлом. Мерит не хочет на него смотреть.*
 
-- **Нефра:** Под илом на колу канат. Рядом две борозды, словно от киля.
+- **Нефра:** На колу канат. Рядом две борозды, словно от киля.
 - **Мерит:** Мало ли лодок на реке.
 - **Нефра:** Помоги снять. Не развязывается, сколько ни тяни.
 - **Мерит:** Брось, говорю. Режь, если так нужен.
@@ -643,7 +642,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 ### Тайник 2 · След киля
 
-*Chain on painting C: Кол, Канат, Весло, then the paired gouges on the stake, След киля (cache only, +1 ellipse). Clearing the silt reveals an existing mark in the illustration.*
+*Chain on painting C: Кол, Канат, Весло, then the paired gouges on the stake, След киля (cache only, +1 ellipse). The paired marks were protected by silt until recently and are visible in the illustration.*
 
 **Beat `c2t1` · on entering**
 
@@ -843,7 +842,7 @@ Shown once, right after `c3t2`, as a new `MODAL_END` popup over the island, usin
 
 ## 5. Implementation notes
 
-This is the historical implementation sketch against `c3b507b`. Chapter 1 now uses `archive_story.lua` for dialogue and journal notes. Chapters 2 and 3 still need their paintings, searches and cache chains.
+This is the historical implementation sketch against `c3b507b`. All three chapters now use `archive_story.lua` for dialogue and journal notes, with the new paintings, searches and cache chains.
 
 ### Code
 
@@ -927,21 +926,25 @@ need expert review; no approval step is implied by this list.
 
 ## Changelog
 
-**2026-11-12.** Counted scripted lines, excluding journal notes and small lines. Chapter 1 has 70 lines (longest 93 characters), chapter 2 has 70 (99) and chapter 3 has 68 (89). Speakers are Нефра, Мерит and Хорем, with thought/shout annotations. A sequential cold reader reviewed all three chapters and re-read the corrections. Later chapters have not been staged in-game. Reconciled the 240-chest inventory and the missing Book: Хорем removed its small chest through the crawlway. Gave the cut, rope and keel evidence a sheltered silt-covered location, and made Мерит identify her repaired keel rather than having Нефра deduce a unique boat from width. The dated inventory and visible counterweight in chapter 2 corroborate Нефра’s opening theories. A separate reader examined the chapters in order and identified unsupported conclusions; chapter 2–3 dialogue, notes and clue chain now keep them provisional until supported, and the witness states they saw the token handed over. The reader rechecked the revised script. Artwork, real in-game staging and native-language editing still need review. Reconciled the future gate table with the current economy handoff. Chapters 2–3 remain unimplemented and need art and in-game review.
+**2026-11-12 (implementation).** The dyke scene shows marks exposed after the protective silt washed away. Its dialogue now matches that view.
+
+**2026-11-12.** Counted scripted lines, excluding journal notes and small lines. Chapter 1 has 70 lines (longest 93 characters), chapter 2 has 70 (99) and chapter 3 has 68 (89). Speakers are Нефра, Мерит and Хорем, with thought/shout annotations. A sequential cold reader reviewed all three chapters and re-read the corrections. At the time of this cold read, later chapters had not been staged in-game. Reconciled the 240-chest inventory and the missing Book: Хорем removed its small chest through the crawlway. Gave the cut, rope and keel evidence a sheltered silt-covered location, and made Мерит identify her repaired keel rather than having Нефра deduce a unique boat from width. The dated inventory and visible counterweight in chapter 2 corroborate Нефра’s opening theories. A separate reader examined the chapters in order and identified unsupported conclusions; chapter 2–3 dialogue, notes and clue chain now keep them provisional until supported, and the witness states they saw the token handed over. The reader rechecked the revised script. At that point, artwork, in-game staging and native-language editing still needed review. Reconciled the future gate table with the current economy handoff. Chapters 2–3 were subsequently implemented and reviewed in game.
 
 **2026-11-04.** Implemented Chapter 1 with existing paintings and portraits. The revisit labels distinguish similar objects, the cache uses existing temple hit regions, and the fountain gate comes before the library revisit. The story dialogue follows the reviewed script.
 
 **2026-11-02.** First draft, written to `docs/STORY_WRITING.md`, which appeared in the repo during the work. One cold read by a separate agent, chapter by chapter, with no notes. It reached the final reveal at about 55-60% by the end of chapter 2 and found it mostly fair. **Fixed from the read:** the island contradicted "drowned"; Хорем was in two places on the night; the villages and the seal motif had no plant; inky hands had no plant; a broken seal on a jar made no sense and is gone; the token's use is now motivated (a signature); no clock (now nine months); why a game at all; "никогда не спросишь" contradicted an earlier ask; "матрица" and other stiff Russian; several confirmations of the reveal trimmed. At that time the fixed version had not had a second cold read; see the 2026-11-12 entry for the later review.
 
-**Still owed:** the father never appears, so the climax is a note; that is deliberate for "to be continued" but it is the read's main complaint. The reveal is guessable early, by design under the guide's small-cast rule, since the surprise is why and what it cost. Why Ликон was not exposed earlier by the record and a Russian-language pass by a native editor remain open. The silt-covered stake and cut are a production requirement for the dyke painting, and need review once artwork exists. Мерит still sometimes acts as a prompter for Нефра.
+**Still owed:** the father never appears, so the climax is a note; that is deliberate for "to be continued" but it is the read's main complaint. The reveal is guessable early, by design under the guide's small-cast rule, since the surprise is why and what it cost. Why Ликон was not exposed earlier by the record and a Russian-language pass by a native editor remain open. The silt-covered stake and cut were a production requirement for the dyke painting; the implemented scene uses a mark exposed by receding silt. Мерит still sometimes acts as a prompter for Нефра.
 
 ## Not verified
 
-- **The cold read** covered the revised text. A separate in-game reading is still needed when later chapters are implemented.
-- **Chapters 2 and 3 are unimplemented.** Chapter 1's longest line is 93 characters and has been captured at 1200×900 and 1368×1026. [Chapter 1 captures](UI_CATALOGUE.md#chapter-1-captures).
+- **The cold read** covered the revised text. Representative later-chapter dialogue is reviewed in game at both supported sizes.
+- **Chapter dialogue and the new scenes are implemented.** Chapter 1's longest line is 93 characters; representative scenes and interface were captured at 1200×900 and 1368×1026. [Chapter 1 captures](UI_CATALOGUE.md#chapter-1-captures).
 - **June's Journey numbers** are as weak as their labels. `wiki*` and `player*` come from search excerpts.
 - **Play time and art hours** are estimates. Human session length is not measured anywhere in the repo.
 - **Extra targets on existing paintings** were identified by eye, with no measurement.
 - **Land capacity** for about 25-30 buildings across the opened zones is not checked.
 - **`texture.load` caching** when several scenes share a painting.
 - **History.** Nilometers, flood-based tax, the first cataract and a royal decree copied at Memphis around 196 BC are from general knowledge, not checked. `docs/PROJECT.md:44` already says the setting has had no expert review. Likon and his office are invented.
+
+**2026-11-12, implementation.** Added all 15 searches, three caches, reviewed chapter 2–3 dialogue, saved clue and cache progression, ten one-time island works and six new scene illustrations. Preserved prior search IDs and migrated the first-cache flag. Scene 9 wording now says receding silt exposed the previously protected cut and marks, matching its painting. The economy implementation and test route are in [progression and economy](progression-economy.md).

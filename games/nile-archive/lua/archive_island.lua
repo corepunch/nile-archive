@@ -89,9 +89,9 @@ end
 local function draw_goal(c)
     local i, blocked, restore = progress.chapter_goal()
     local eyebrow, title
-    if not i then eyebrow, title = "ГЛАВА 1 ЗАВЕРШЕНА", "Дальше · Книга разливов"
+    if not i then eyebrow, title = "ИСТОРИЯ ЗАВЕРШЕНА", "След ведёт вверх по Нилу"
     elseif blocked then eyebrow, title = "СЛЕДУЮЩАЯ ЦЕЛЬ", blocked
-    elseif i == content.CACHE then eyebrow, title = "ТАЙНИК ГОТОВ", content.scenes[i].title
+    elseif content.cache_chapter(i) then eyebrow, title = "ТАЙНИК ГОТОВ", content.scenes[i].title
     else
         eyebrow = G.wins[i] == 0 and ("ПОИСК %d"):format(i)
             or G.stars[i] < 3 and "СОБЕРИТЕ ТРИ ЗВЕЗДЫ" or "ПОВТОРИТЕ ПОИСК РАДИ УЛИКИ"
@@ -108,7 +108,10 @@ local function draw_goal(c)
     local arrow = vec2(inner:max().x - 18, inner:center().y)
     gfx.poly({arrow + vec2(-6, -9), arrow + vec2(6, 0), arrow + vec2(-6, 9)}, INK_SOFT)
     if st.clicked then
-        if restore then M.open_tray("story") else G.open_modal(MODAL_CHAPTERS) end
+        if restore then
+            local projects = i and i > 5 and i <= content.SCENES and economy.lock(G, i) == "influence"
+            M.open_tray(projects and "projects" or "story")
+        else G.open_modal(MODAL_CHAPTERS) end
     end
 end
 
@@ -117,7 +120,7 @@ end
 -- The build tray scrolls through one category at a time: the five restorations
 -- first, then the decoration catalogue (docs/building-catalogue.md).
 M.TRAY_CATEGORIES = {
-    {"story", "Восстановление"}, {"all", "Все постройки"}, {"wonder", "Памятники"}, {"building", "Дома и мастерские"},
+    {"story", "Восстановление"}, {"projects", "Работы на острове"}, {"all", "Все постройки"}, {"wonder", "Памятники"}, {"building", "Дома и мастерские"},
     {"tree", "Деревья"}, {"bush", "Кусты"}, {"flower", "Цветы"}, {"statue", "Статуи"}, {"water", "Вода"},
     {"garden", "Сад"}, {"camp", "Припасы"}, {"animal", "Животные"}, {"rock", "Камни"},
 }
@@ -153,13 +156,22 @@ local build_form = ui.form{kind = "column", panel = true, radius = 20, padding =
 }}
 local build_skin = K.skin
 
+local project_confirm = ui.form{kind = "column", panel = true, radius = 20, padding = 24, gap = 12, children = {
+    {kind = "label", id = "title", role = "category", wrap = true},
+    {kind = "label", id = "detail", role = "budget", wrap = true},
+    {kind = "row", gap = 12, height = 56, children = {
+        {kind = "button", id = "cancel", text = "Отмена", grow = 1},
+        {kind = "button", id = "confirm", text = "Выполнить", grow = 1, accent = true},
+    }},
+}}
+
 -- Opens the tray on a category, with an optional starting group for captures.
 function M.open_tray(category, review_page)
     local tray = M.tray
     for i, c in ipairs(M.TRAY_CATEGORIES) do
         if c[1] == category then tray.category = i end
     end
-    tray.dirty, tray.review_page = true, review_page
+    tray.dirty, tray.review_page, tray.pending = true, review_page, nil
     G.tray = true
 end
 
@@ -189,6 +201,17 @@ local function refresh_tray(tray)
     for i, kind in ipairs(content.kinds) do
         if kind.category == filter or filter == "all" and kind.category ~= "story" then stock[#stock + 1] = card(i) end
     end
+    if filter == "projects" then
+        local building_types = {3, 4, 5, 2, 1, 3, 4, 5, 2, 1}
+        for i, project in ipairs(economy.projects) do
+            local lock = economy.project_lock(G, i)
+            local action = lock == "done" and "Выполнено" or lock == "chapter" and "Завершите предыдущую главу"
+                or lock == "coins" and "Не хватает монет" or "Выбрать"
+            stock[#stock + 1] = {id = "project-" .. i, name = project.name,
+                sprite = G.buildings[building_types[i]].sprite, coins = project.coins,
+                detail = ("+%d влияния"):format(project.influence), available = not lock, action = action}
+        end
+    end
     assert(build_form:set_items("stock", stock))
     build_form:set("budget", ("%d монет · %s"):format(G.wallet[COINS], stars_text(G.wallet[STARS])))
     build_form:set("category", M.TRAY_CATEGORIES[tray.category][2])
@@ -199,6 +222,27 @@ end
 
 local function draw_tray(r)
     local tray = M.tray
+    if tray.pending then
+        local project = economy.projects[tray.pending]
+        project_confirm:set("title", project.name)
+        project_confirm:set("detail", ("%d монет · +%d влияния"):format(project.coins, project.influence))
+        local _, height = project_confirm:measure(r.w, build_skin)
+        r = r:bottom(height)
+        ui.block(r)
+        local event = project_confirm:draw(r, build_skin, {interactive = G.modal == MODAL_NONE, reduced_motion = G.reduced_motion})
+        G.spots.project_form = project_confirm
+        if event and event.id == "cancel" then tray.pending = nil; tray.dirty = true
+        elseif event and event.id == "confirm" then
+            if economy.claim_project(G, tray.pending) then
+                progress.save()
+                ui.toast(("Работы завершены · +%d влияния"):format(project.influence))
+            else
+                ui.toast("Работы больше недоступны")
+            end
+            tray.pending, tray.dirty = nil, true
+        end
+        return
+    end
     if tray.dirty or not G.spots.build_form then refresh_tray(tray) end
     local _, height = build_form:measure(r.w, build_skin)
     r = r:bottom(height)
@@ -211,7 +255,10 @@ local function draw_tray(r)
         tray.category = (tray.category - 1 + (event.id == "category_next" and 1 or -1)) % #M.TRAY_CATEGORIES + 1
         tray.dirty = true
     elseif event.source == "stock" then
-        if M.town:begin(event.key - 1, false) then
+        if M.TRAY_CATEGORIES[tray.category][1] == "projects" then
+            local id = tonumber(event.key:match("^project%-(%d+)$"))
+            if id and not economy.project_lock(G, id) then tray.pending = id end
+        elseif M.town:begin(event.key - 1, false) then
             G.island.selected = -1
             G.tray = false
         end

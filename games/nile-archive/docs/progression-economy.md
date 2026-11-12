@@ -1,9 +1,8 @@
 # Nile Archive progression and building economy
 
 This is a balance handoff for the hidden-object investigation and the island.
-Chapter 1 values below are implemented in `lua/archive_economy.lua` as of this
-revision. Chapters 2 and 3 are a proposed, unimplemented balance model for the
-existing three-chapter story plan. The values are Nile's own tuning choices.
+All three chapters, their gates and the ten island projects below are implemented
+in `lua/archive_economy.lua`. The values are Nile's own tuning choices.
 [June's Journey research](../../../docs/junes-journey-reference/README.md) is the
 reference for the relationship between clues, replay, decorations and narrative
 access. The original [story](story.md) supplies Nile's characters and clue beats.
@@ -106,29 +105,25 @@ Total future player savings vary, so chapter 2 cannot assume everyone arrives
 with either exact wallet. Players can already use alternate decorations to meet
 Influence gates. They can also buy shores or other decorations before the cache.
 
-## Proposed chapters 2 and 3
+## Chapters 2 and 3
 
-The following is a concrete tuning candidate, not current game behaviour.
+The following rules and prices are implemented.
 Each chapter has five searches with two clues each and a final cache or
 Adventure Scene. Keep the current three-Star and prior-best clue rules, base
-and first-clear payouts, and no energy or timers for this candidate. Starting
+and first-clear payouts, and no energy or timers for this implementation. Starting
 chapter 2 requires the chapter-1 cache. Starting chapter 3 requires the
 chapter-2 finale. The preceding search's two clues and the stated Influence
 are required to start each subsequent search. Chapter 3 search 5, scene 15,
 also requires the workshop restoration because its story enters the workshop.
 The finale requires all ten clues. Previously opened searches stay replayable.
 
-These totals are candidate gates for testing story pacing. They do not assert
-that June's Journey uses these thresholds. The restore projects below are
-independent one-time narrative improvements to be designed against the actual
-chapter scripts and island art. They must be accessible even when the player
-used decorations instead of optional chapter-1 restorations. The numbers below
-are project effects, not existing catalogue purchases or current building
-upgrade prices. They are not mandatory if another legal purchase meets a gate.
+These totals are Nile Archive gates. They do not assert
+that June's Journey uses these thresholds. The projects below are independent one-time island works. They must be accessible even when the player
+used decorations instead of optional chapter-1 restorations. The numbers below are project effects, separate from catalogue purchases. They are not mandatory if another legal purchase meets a gate.
 
-### Proposed gate and project schedule
+### Gate and project schedule
 
-| Chapter | Search (scene) | Gate, total Influence | Candidate project before search | Price | Influence gained |
+| Chapter | Search (scene) | Gate, total Influence | Island project example | Price | Influence gained |
 | --- | ---: | ---: | --- | ---: | ---: |
 | 2 | 1 (6) | 100 | Archive survey | 100 | 15 |
 | 2 | 2 (7) | 120 | Fountain channel survey | 150 | 20 |
@@ -141,28 +136,27 @@ upgrade prices. They are not mandatory if another legal purchase meets a gate.
 | 3 | 4 (14) | 330 | Temple work | 400 | 35 |
 | 3 | 5 (15) | 370 | Gardener's grounds work | 450 | 40 |
 
-The chapter 2 candidate projects cost 1,000 coins and add 115 Influence.
+The chapter 2 projects cost 1,000 coins and add 115 Influence.
 Starting at exactly 90, they leave 205. Chapter 3 projects cost 1,830 and add
-170, leaving 375. The proposed one-time finale payouts are 150 coins for
+170, leaving 375. The one-time finale payouts are 150 coins for
 chapter 2 and 200 for chapter 3. No mandatory Star gate beyond the clue rules
-is included in this candidate, so the existing best-Star behaviour does not
+is included in this implementation, so the existing best-Star behaviour does not
 need to be replaced with five-Star mastery.
 
 Scene 15 checks the existing workshop restoration, which costs 100 coins and
 adds 15 Influence if it has not already been bought. The two modeled routes
 below purchased it in chapter 1, so they incur no second charge. A player who
 reached chapter 3 using decorations still has access to that restoration after
-one distinct search. The proposed workshop project is a separate one-time
+one distinct search. The workshop project is a separate one-time
 improvement and does not satisfy the scene 15 restoration gate by itself.
 
-The project titles describe tuning slots. Their presentation, location and
-artwork are unresolved and require implementation. A project must have a stable
-ID, price, Influence gain, unlock condition and persisted claimed flag. Buying
-one consumes coins only after confirmation and credits Influence exactly once.
-It must not depend on a previous optional one-time building purchase. Cancellation
-or insufficient funds leave the wallet and progress unchanged. Repeatable
-catalogue decorations may satisfy a gate instead, and already visited searches
-remain playable after an economy change or save migration.
+Projects appear in the island works category using existing building artwork.
+Each has an append-only ID, price, Influence gain, chapter unlock and saved
+completion flag. The confirmation screen charges and grants Influence once.
+Cancellation and insufficient funds leave the wallet and progress unchanged.
+Projects are independent of optional restoration ownership. Repeatable catalogue
+decorations can also satisfy Influence gates, and already visited searches
+remain playable after migration.
 
 ### Projected route budgets
 
@@ -171,7 +165,7 @@ purchases or land costs. Every later search has two clues. The slower route pays
 420 per search over four clears; the quicker route pays 260 over two. Projects
 are bought immediately before their matching search. All prices are affordable
 at the point of purchase in these modeled paths. These are calculations from the
-candidate rules and the listed assumptions, not measured playthroughs.
+implemented rules and the listed assumptions, not measured playthroughs.
 
 | Milestone | Influence | Slower coins | Quicker coins |
 | --- | ---: | ---: | ---: |
@@ -189,31 +183,25 @@ candidate rules and the listed assumptions, not measured playthroughs.
 | Chapter 3 search 5 complete | 375 | 3,040 | 840 |
 | Chapter 3 finale | 375 | 3,240 | 1,040 |
 
-These trajectories use 20 or 10 search clears per future chapter. Replays
+These trajectories use 20 or 10 search clears per later chapter. Replays
 without new Stars still give 80 base coins per successful clear. Actual wallets
 will vary. In particular, optional spending, site capacity and any additional
 shore costs may require extra replays. A player must always have an accessible
 search and an affordable path to Influence. Do not silently award a restoration
 or reduce a prior purchase to force this route.
 
-## Before implementation
+## Verification and future balancing
 
-1. Bind each project slot and chapter gate to the final story beats and source
-   IDs. Specify which project dialogues are one-shot and which journal entries
-   appear after clues. Finish and review the story before claiming its triggers
-   are implemented.
-2. Determine how projects are presented without requiring an optional earlier
-   restoration or a new asset. Check whole-tile footprints, city clearance and
-   available land. If a project changes a building's art or footprint, follow
-   `docs/BUILDINGS.md` and inspect the in-game footprint overlay.
-3. Extend save data with stable chapter/search/clue/project IDs. Migrate old
-   saves without re-paying completed scenes, replaying collected dialogue,
-   reducing Influence, moving buildings or revoking access to visited searches.
+1. Chapter scene and clue IDs follow the reviewed script. The project works
+   grant Influence and show confirmation; they do not fire separate dialogue.
+2. Projects use a confirmation form and existing building icons without adding
+   buildings, altering footprints or requiring an earlier optional restoration.
+3. Save version 5 stores all search, clue, cache and project states. Version 4
+   first-cache state migrates without awarding the cache again.
 4. Exercise actual input and persistence around purchase confirmation,
    cancellation, failed affordability, leaving and re-entering a scene,
    repeated claims, clue skips and final rewards. Check zero and surplus wallets,
    a fast three-Star opening, slow clears, alternate decoration gates and
    players who spent on all three shores.
 5. Measure the time and number of searches in a playtest, then revise prices and
-   gates together. Do not describe the table as June's live balance or as
-   implemented until the game, tests and documentation agree.
+   gates together. These prices are Nile Archive tuning, independent of June’s live balance.

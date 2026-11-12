@@ -136,3 +136,20 @@ state is skin paint and the portraits come from Game Center at runtime. Reviewed
 `leaderboard`, `ipad-leaderboard`, `search-leaderboard`, `chapters` and `reward` in
 `docs/screenshots`, from `build/test/nile-archive "shot leaderboard"` ... with `--gamecenter-demo`.
 
+
+## Chapters and island works
+
+The chapter browser lists the fifteen searches and three caches in story order,
+using stable search and cache keys. It scrolls to the next goal when opened. The
+island works category lists the ten one-time projects with their costs and
+Influence rewards, using existing building sprites. A separate confirmation form
+shows the price and offers Confirm or Cancel. The form uses the existing skin
+and engine controls; it creates no new building footprint. The smoke test uses
+real input to cancel and confirm a project and checks the one-time payment.
+
+Reviewed game captures show the [chapter browser](screenshots/chapters-2-3/chapter2-browser.jpg),
+[works tray](screenshots/chapters-2-3/chapter2-projects.jpg) and confirmation at
+[1200×900](screenshots/chapters-2-3/chapter2-project-confirm.jpg) and
+[1368×1026](screenshots/chapters-2-3/chapter2-project-confirm-ipad.jpg).
+
+Dialogue staging was reviewed at both supported sizes: chapter 2 at [1200×900](screenshots/chapters-2-3/chapter2-dialogue-long.jpg) and [1368×1026](screenshots/chapters-2-3/chapter2-dialogue-long-ipad.jpg), and chapter 3 at [1200×900](screenshots/chapters-2-3/chapter3-dialogue-horem.jpg) and [1368×1026](screenshots/chapters-2-3/chapter3-dialogue-horem-ipad.jpg).

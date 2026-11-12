@@ -36,8 +36,12 @@ M.scenes = {
      at = {vec2(327, 323), vec2(490, 407), vec2(227, 251), vec2(922, 197), vec2(132, 283), vec2(726, 415), vec2(985, 251), vec2(778, 544)},
      radius = {vec2(85, 95), vec2(47, 36), vec2(30, 51), vec2(31, 70), vec2(50, 36), vec2(21, 47), vec2(28, 48), vec2(47, 107)}},
 }
-M.SCENES = #M.scenes
-M.CACHE = M.SCENES + 1
+-- Search IDs 1–15 are stable save indices; cache screens use IDs 16–18.
+local later = require("archive_new_scenes")
+for i = 6, 15 do M.scenes[i] = later.scenes[i] end
+M.SCENES = 15
+M.CACHES = {16, 17, 18}
+M.CACHE = M.CACHES[1]   -- legacy first-chapter capture and smoke entry point
 local temple = M.scenes[3]
 local cache = {title = "Дверь под крылатым солнцем", background = temple.background,
     names = {}, at = {}, radius = {}}
@@ -45,6 +49,13 @@ for i, item in ipairs({5, 4, 1, 8}) do
     cache.names[i], cache.at[i], cache.radius[i] = temple.names[item], temple.at[item], temple.radius[item]
 end
 M.scenes[M.CACHE] = cache
+for chapter = 2, 3 do M.scenes[M.CACHES[chapter]] = later.caches[chapter] end
+
+function M.cache_chapter(index)
+    for chapter, cache_id in ipairs(M.CACHES) do
+        if index == cache_id then return chapter end
+    end
+end
 
 -- Sprites are rendered by name from the Blender master, which registers each
 -- one's pivot, base width and size (docs/BUILDINGS.md); this adds the economy.
