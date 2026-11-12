@@ -1,7 +1,7 @@
 # Homescapes match-3 resources
 
 [Open the decoded atlas and sprite gallery](../../reference/homescapes-analysis/board-art/index.html).
-It shows all five 1576 × 1576 board pages and 30 identified sprite crops. The
+It shows all five 1576 × 1576 board pages and 32 sprite crops. The
 gallery links to the full PNGs, the auxiliary planes, and a source manifest.
 For those sprites on level layouts, open the [board explorer](#explore-bundled-board-definitions).
 
@@ -83,7 +83,42 @@ original region names, animation timing, placement and complete state
 assignments are still unverified. All five complete atlas pages are available
 for inspecting additional art.
 
-Reproduce the PNG export from the repository root. Install Pillow and the
+The supplemental honey and web crops come from the named
+`Elements/Honey/Border.dds` and `Elements/Web/2.dds` resources. The
+explorer marks honey and rolled carpet as material previews because the
+strength-specific artwork remains unresolved. Web 2 uses the named
+texture, and web 1 remains unmapped.
+
+## Prefab and settings metadata
+
+`Library.xml.meta` indexes named records by offset and length in the
+binary prefab library. The BLK directory supplies the Zstandard frame
+boundaries. The decoder reconstructs both frames of `Vso.vso` and reads
+the corresponding named records in `M3Settings.vso` from the base archive
+and the Match3 settings pack. The names establish the color numbering:
+`NormalChipRed` references `Match3Chip_0_base_facelift`,
+`NormalChipBlue` references `Match3Chip_3_base_facelift`, and the other
+four color prefab records supply the remaining IDs. The settings index
+also exposes field names such as `BlocksSwap` and
+`CanClearByNearColoredMatch`. It records the names and source offsets.
+Field values, execution order and sprite rectangles are still separate
+research questions.
+
+The five PLXE atlas files carry version words 5 and 5. Their payloads at
+offset 12 did not produce data with standard Zstandard framing, with
+the Zstandard magic restored, or with Brotli. The sprite regions in
+the gallery remain visual identifications. See the
+[recovered prefab references](../../reference/homescapes-analysis/board-art/prefab-references.json)
+and the [board sprite coverage table](SPRITE_COVERAGE.md).
+
+```sh
+python3 tools/homescapes-reference/sprite_metadata.py
+python3 tools/homescapes-reference/sprite_coverage.py
+```
+
+## Reproduce the PNG export
+
+From the repository root, install Pillow and the
 [texture2ddecoder package](https://pypi.org/project/texture2ddecoder/) in
 your Python environment, and run `extract_gems.py` first if the unwrapped
 DDS files are absent.
@@ -119,12 +154,14 @@ campaign-level assignment. Event and contest files are included.
 
 With the decoded art available, the board draws original sprites for
 `NORMAL`, `BOX`, `TRASH`, `JELLY`, `CARRY`, `CHERRY`, `BOMB`, `LINE`,
-`LIGHTNING`, `ICE` and `LOCK`. The explorer draws carpet under chips and
+`LIGHTNING`, `ICE`, `LOCK` and web state 2. The explorer draws carpet under chips and
 ice or chains over them. It selects visually identified crops by serialized
 color, strength and orientation where mapped. Unmapped models and random
 chips retain their labels. Use the raw cell details for authored metadata and
 nested models. The bundled goal icons provide a fallback when no board art
-has been exported. The viewer depicts static layouts.
+has been exported. The viewer depicts static layouts. The
+[Swift and SpriteKit lab](../../prototypes/homescapes-match3/README.md)
+plays eight sample boards with the same sprite map.
 
 Data comes from `base_mm/fs_archives/match3levels.zstd`, a `pzsd` archive with
 an embedded Zstandard dictionary. Run

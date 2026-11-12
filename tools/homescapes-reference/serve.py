@@ -3,6 +3,7 @@
 import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+from pathlib import Path
 import zipfile
 from urllib.parse import parse_qs, urlsplit
 
@@ -10,12 +11,15 @@ from decode_board_atlases import OUTPUT as ART
 from level_viewer import PAGE, SOURCE, load_level
 from story_index import SOURCE as APP_ARCHIVE
 
+MODEL_ART = Path(__file__).with_name('model_sprites.json')
+
 
 class Handler(BaseHTTPRequestHandler):
     paths = {}
     icons = {}
     art_files = {}
     sprite_ids = []
+    model_art = b'{}'
 
     def send_bytes(self, body, content_type):
         self.send_response(200)
@@ -33,6 +37,8 @@ class Handler(BaseHTTPRequestHandler):
             self.send_bytes(json.dumps(sorted(self.paths)).encode(), 'application/json')
         elif url.path == '/api/sprites':
             self.send_bytes(json.dumps(self.sprite_ids).encode(), 'application/json')
+        elif url.path == '/api/model-art':
+            self.send_bytes(self.model_art, 'application/json')
         elif url.path in self.art_files:
             path, content_type = self.art_files[url.path]
             self.send_bytes(path.read_bytes(), content_type)
@@ -61,6 +67,9 @@ def load_art(root):
     data = json.loads(manifest.read_text(encoding='utf-8'))
     files = {'/art/': (root / 'index.html', 'text/html; charset=utf-8'),
              '/art/manifest.json': (manifest, 'application/json')}
+    prefab_index = root / 'prefab-references.json'
+    if prefab_index.is_file():
+        files['/art/prefab-references.json'] = (prefab_index, 'application/json')
     ids = []
     for page in data['pages']:
         for name in ('color', 'auxiliary'):
@@ -93,6 +102,7 @@ def main():
                          if name.startswith(prefix) and name.endswith('.webp')
                          and '/' not in name[len(prefix):]}
     Handler.art_files, Handler.sprite_ids = load_art(ART)
+    Handler.model_art = MODEL_ART.read_bytes()
     server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
     print(f'{len(Handler.paths)} files: http://127.0.0.1:{args.port}/', flush=True)
     server.serve_forever()

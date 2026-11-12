@@ -29,5 +29,7 @@
   {"id": "carpet", "label": "Green carpet tile", "page": 3, "rect": [946, 429, 1074, 557]},
   {"id": "carpet-roll", "label": "Carpet roll", "page": 3, "rect": [598, 583, 641, 728]},
   {"id": "donut", "label": "Donut", "page": 2, "rect": [532, 666, 651, 784]},
-  {"id": "cherry", "label": "Cherry", "page": 3, "rect": [130, 113, 231, 204]}
+  {"id": "cherry", "label": "Cherry", "page": 3, "rect": [130, 113, 231, 204]},
+  {"id": "honey-material", "label": "Pink honey tile material", "source": "base_mm/Match3/vso/textures/Elements/Honey/Border.dds", "rect": [178, 299, 305, 430]},
+  {"id": "web-2", "label": "Web, named texture 2", "source": "base_mm/Match3/vso/textures/Elements/Web/2.dds", "rect": [49, 50, 192, 176]}
 ]

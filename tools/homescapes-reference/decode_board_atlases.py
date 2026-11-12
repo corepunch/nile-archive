@@ -7,8 +7,11 @@ import json
 from pathlib import Path
 import struct
 from tempfile import TemporaryDirectory
+from zipfile import ZipFile
 
 from extract_gems import DEST as GEMS
+from sprite_metadata import bundled_references
+from story_index import SOURCE, decode
 
 OUTPUT = GEMS.parent / 'board-art'
 REGIONS = Path(__file__).with_name('board_regions.json')
@@ -17,7 +20,7 @@ BLOCK_SIZE = 8
 DISTANCE_FORMATS = {61: (5, 1), 64: (13, 33), 62: (16, 8225), 63: (20, 73761)}
 
 
-def read_streams(data):
+def read_streams(data, *, allow_trailer=False):
     if len(data) < 128 or data[:4] != b'DDS ' or data[84:88] != b'etc2':
         raise ValueError('Expected an ETC2-tagged DDS')
     height, width, _, planes = struct.unpack_from('<4I', data, 12)
@@ -38,7 +41,7 @@ def read_streams(data):
         streams.append((offset, data[offset + 16:commands_end],
                         data[commands_end:dictionary_end], data[dictionary_end:end]))
         offset = end
-    if offset != len(data):
+    if offset != len(data) and not allow_trailer:
         raise ValueError('Streams do not span the DDS payload')
     return width, height, streams
 
@@ -122,27 +125,27 @@ def unpack_blocks(commands, dictionary, literals, block_count):
     return b''.join(blocks)
 
 
-def unpack_dds(data):
-    width, height, streams = read_streams(data)
+def unpack_dds(data, *, allow_trailer=False):
+    width, height, streams = read_streams(data, allow_trailer=allow_trailer)
     count = ((width + 3) // 4) * ((height + 3) // 4)
     return width, height, [unpack_blocks(cmd, entries, literals, count)
                            for _, cmd, entries, literals in streams]
 
 
-def render_page(data):
+def render_page(data, *, allow_trailer=False):
     from PIL import Image
     import texture2ddecoder as texture
 
-    width, height, planes = unpack_dds(data)
-    if len(planes) != 3:
-        raise ValueError('Expected three Match3 atlas planes')
+    width, height, planes = unpack_dds(data, allow_trailer=allow_trailer)
+    if len(planes) < 2:
+        raise ValueError('Expected Match3 color and opacity planes')
 
     def image(decoder, plane):
         return Image.frombytes('RGBA', (width, height), decoder(plane, width, height), 'raw', 'BGRA')
 
     color = image(texture.decode_etc2, planes[0])
     color.putalpha(image(texture.decode_eacr, planes[1]).getchannel('R'))
-    auxiliary = image(texture.decode_etc2, planes[2]).convert('RGB')
+    auxiliary = image(texture.decode_etc2, planes[2]).convert('RGB') if len(planes) == 3 else None
     return color, auxiliary, [sha256(plane).hexdigest() for plane in planes]
 
 
@@ -171,7 +174,8 @@ img{{width:100%;height:105px;object-fit:contain;background:#e7ded4}}.sheets img{
 figcaption{{font-size:.9rem}}small{{display:block;overflow-wrap:anywhere;color:#625764}}
 </style></head><body><h1>Homescapes board atlas</h1>
 <p>Original board textures from Homescapes 9.2.601. Click an image to open its full PNG.
-The <a href="manifest.json">manifest</a> records source files, regions and orientation.</p>
+The <a href="manifest.json">manifest</a> records source files, regions and orientation.
+Browse the <a href="prefab-references.json">prefab names and settings</a> recovered from the bundle.</p>
 <h2>Identified sprites</h2><div class="grid">{''.join(thumbnails)}</div>
 <h2>Complete atlas pages</h2><div class="grid sheets">{''.join(sheets)}</div>
 </body></html>'''
@@ -192,7 +196,7 @@ def export(source, output):
             source_file = source / (name + '.dds')
             data = source_file.read_bytes()
             color, auxiliary, hashes = render_page(data)
-            if color.size != (1576, 1576):
+            if color.size != (1576, 1576) or auxiliary is None:
                 raise ValueError(f'Unexpected atlas size for {name}')
             file = f'pages/{name}.png'
             auxiliary_file = f'pages/{name}-auxiliary.png'
@@ -202,7 +206,7 @@ def export(source, output):
                           'block_sha256': hashes, 'color': file, 'auxiliary': auxiliary_file,
                           'orientation': 'vertical flip of packed data'})
             for region in regions:
-                if region['page'] != page:
+                if region.get('page') != page:
                     continue
                 x0, y0, x1, y1 = region['rect']
                 if not (0 <= x0 < x1 <= color.width and 0 <= y0 < y1 <= color.height):
@@ -218,12 +222,31 @@ def export(source, output):
                 file = f'sprites/{region["id"]}.png'
                 sprite.save(root / file)
                 sprites.append({**region, 'page': name, 'file': file, 'orientation': 'vertical flip of packed data'})
+        supplemental = [region for region in regions if 'source' in region]
+        if supplemental:
+            with ZipFile(SOURCE) as archive:
+                for region in supplemental:
+                    member = region['source']
+                    wrapped = archive.read(member)
+                    # The named web texture appends a third stream after the
+                    # declared color and opacity. Its static crop uses those two planes.
+                    color, _, hashes = render_page(decode(wrapped), allow_trailer=region['id'] == 'web-2')
+                    x0, y0, x1, y1 = region['rect']
+                    if not (0 <= x0 < x1 <= color.width and 0 <= y0 < y1 <= color.height):
+                        raise ValueError(f'Invalid crop for {region["id"]}')
+                    file = f'sprites/{region["id"]}.png'
+                    color.crop(region['rect']).transpose(flip).save(root / file)
+                    sprites.append({**region, 'page': Path(member).parent.name + '/' + Path(member).name,
+                                    'file': file, 'source_sha256': sha256(wrapped).hexdigest(),
+                                    'block_sha256': hashes, 'orientation': 'vertical flip of packed data'})
         if len(sprites) != len(regions) or len({item['id'] for item in sprites}) != len(regions):
             raise ValueError('Missing or duplicate atlas region')
         order = {region['id']: index for index, region in enumerate(regions)}
         sprites.sort(key=lambda item: order[item['id']])
         (root / 'manifest.json').write_text(json.dumps({'pages': pages, 'sprites': sprites}, indent=2) + '\n',
                                             encoding='utf-8')
+        (root / 'prefab-references.json').write_text(json.dumps(bundled_references(), indent=2) + '\n',
+                                                     encoding='utf-8')
         (root / 'index.html').write_text(gallery(pages, sprites), encoding='utf-8')
         root.rename(output)
     print(f'{len(pages)} decoded pages and {len(sprites)} sprites: {output}')

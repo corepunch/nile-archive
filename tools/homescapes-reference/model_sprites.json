@@ -1,0 +1,16 @@
+{
+  "NORMAL": {"layer": "piece", "field": "color", "variants": {"0":"chip-0","1":"chip-1","2":"chip-2","3":"chip-3","4":"chip-4","5":"chip-5"}},
+  "BOX": {"layer": "piece", "field": "level", "variants": {"1":"box-1","2":"box-2","3":"box-3","4":"box-4","5":"box-5","6":"box-6"}},
+  "TRASH": {"layer": "piece", "field": "level", "variants": {"1":"cookie-1","2":"cookie-2","3":"cookie-3"}},
+  "JELLY": {"layer": "ground", "sprite": "carpet"},
+  "HONEY": {"layer": "ground", "sprite": "honey-material", "status": "material"},
+  "ROLL_CARPET": {"layer": "piece", "sprite": "carpet-roll", "status": "material"},
+  "WEB": {"layer": "overlay", "field": "level", "variants": {"2":"web-2"}},
+  "CARRY": {"layer": "piece", "sprite": "donut"},
+  "CHERRY": {"layer": "piece", "sprite": "cherry"},
+  "BOMB": {"layer": "piece", "sprite": "bomb"},
+  "LINE": {"layer": "piece", "field": "line_orient", "variants": {"0":"rocket-horizontal","2":"rocket-vertical","-2":"rocket-vertical"}},
+  "LIGHTNING": {"layer": "piece", "sprite": "rainbow-ball"},
+  "ICE": {"layer": "overlay", "field": "level", "variants": {"1":"ice-1","2":"ice-2"}},
+  "LOCK": {"layer": "overlay", "field": "level", "variants": {"1":"chain-1","2":"chain-2","1:mirror":"chain-1-mirror"}}
+}

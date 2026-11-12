@@ -6,6 +6,7 @@ import unittest
 import zipfile
 
 from level_viewer import PAGE
+from sprite_coverage import MAPPINGS
 from story_index import SOURCE
 
 
@@ -38,16 +39,20 @@ console.log(JSON.stringify([...new Set(Object.values(iconModels))]));
         end = PAGE.index('function options()')
         check = """
 const assert = require('node:assert/strict');
-const available = new Set(['carpet', 'chip-2', 'ice-2', 'chain-1-mirror', 'box-6', 'cookie-3']);
-const ids = models => pickSprites(models, available).map(sprite => sprite.id);
+const mappings = JSON.parse(process.argv[1]);
+const available = new Set(['carpet', 'chip-2', 'ice-2', 'chain-1-mirror', 'box-6', 'cookie-3', 'honey-material', 'web-2']);
+const ids = models => pickSprites(models, available, mappings).map(sprite => sprite.id);
 assert.deepEqual(ids([{modelId:'ICE',level:'2'},{modelId:'NORMAL',color:'2'},{modelId:'JELLY'}]),
                  ['carpet', 'chip-2', 'ice-2']);
 assert.deepEqual(ids([{modelId:'LOCK',level:'1',mirror:'true'},{modelId:'NORMAL',color:'2'}]),
                  ['chip-2', 'chain-1-mirror']);
 assert.deepEqual(ids([{modelId:'BOX',level:'6'},{modelId:'TRASH',level:'3'}]), ['box-6', 'cookie-3']);
 assert.deepEqual(ids([{modelId:'RANDOM_CHIP'},{modelId:'BOX',level:'7'}]), []);
+assert.deepEqual(ids([{modelId:'WEB',level:'1'},{modelId:'WEB',level:'2'}]), ['web-2']);
+assert.equal(pickSprites([{modelId:'HONEY',level:'3'}], available, mappings)[0].status, 'material');
 """
-        subprocess.run(['node', '-e', PAGE[start:end] + check], check=True, capture_output=True, text=True)
+        subprocess.run(['node', '-e', PAGE[start:end] + check, MAPPINGS.read_text()],
+                       check=True, capture_output=True, text=True)
 
 
 if __name__ == '__main__':

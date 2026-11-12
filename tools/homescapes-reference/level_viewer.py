@@ -45,10 +45,12 @@ body{font:15px system-ui,sans-serif;background:#f6f3ee;color:#262030;max-width:1
 <a href="/?level=base%2Fst%2Fst0136.xml">Ice</a>
 <a href="/?level=base%2Fst%2Fst0038.xml">Chains</a>
 <a href="/?level=base%2Fst%2Fst0120.xml">Boxes</a>
-<a href="/?level=base%2Fst%2Fst0101.xml">Cookies</a></nav>
+<a href="/?level=base%2Fst%2Fst0101.xml">Cookies</a>
+<a href="/?level=base%2Fst%2Fst0038.xml">Honey</a>
+<a href="/?level=packs%2Fcontest%2Fcontest_007_04.xml">Cobwebs</a></nav>
 <div class="controls"><label>Filter paths<input type="search" id="filter" placeholder="e.g. st0001 or contest"></label><label>Level file<select id="level"></select></label><button id="flip" type="button">Flip Y</button></div><p id="meta"></p><div class="layout"><div id="board" aria-label="Board layout"></div><aside class="detail"><h2>Cell details</h2><p>Choose a cell to see its coordinates and model layers.</p><pre id="detail">No cell selected</pre><h3>Level attributes</h3><pre id="levelinfo"></pre></aside></div>
 <script>
-let levels = [], sprites = new Set(), flipped = false;
+let levels = [], sprites = new Set(), modelArt = {}, flipped = false;
 const requested = new URLSearchParams(location.search).get('level') || 'base/st/st0001.xml';
 const filter = document.querySelector('#filter'), select = document.querySelector('#level'),
       board = document.querySelector('#board'), meta = document.querySelector('#meta'),
@@ -56,30 +58,19 @@ const filter = document.querySelector('#filter'), select = document.querySelecto
 const iconModels={BOX:'box',TRASH:'trash',JELLY:'jelly',LOCK:'lock',RUG:'rug',CARRY:'carry',CHERRY:'piggy',TAPE_MEASURE:'tape_measure',JAR:'jar',TARGET_GEN:'target_generator',BOMB:'bonus_bomb',LINE:'bonus_line',LIGHTNING:'bonus_lightning'};
 function pickIcons(models){let ground=models.filter(m=>m.modelId==='JELLY'||m.modelId==='RUG').map(m=>iconModels[m.modelId]+'.webp');let n=models.find(m=>m.modelId==='NORMAL'&&/^[0-5]$/.test(m.color));if(n)ground.push('chip_'+n.color+'.webp');for(const m of models){if(iconModels[m.modelId]&&m.modelId!=='JELLY'&&m.modelId!=='RUG')ground.push(iconModels[m.modelId]+'.webp')}return ground}
 
-function pickSprites(models, available) {
-  const layers = [[], [], []];
-  const put = (layer, id, style = '') => {
-    if (available.has(id)) layers[layer].push({id, style});
-  };
-  for (const model of models) {
-    const {modelId, color, level, mirror, line_orient} = model;
-    switch (modelId) {
-      case 'JELLY': put(0, 'carpet', 'ground'); break;
-      case 'NORMAL': put(1, 'chip-' + color); break;
-      case 'BOX': put(1, 'box-' + level); break;
-      case 'TRASH': put(1, 'cookie-' + level); break;
-      case 'CARRY': put(1, 'donut'); break;
-      case 'CHERRY': put(1, 'cherry'); break;
-      case 'BOMB': put(1, 'bomb'); break;
-      case 'LINE': put(1, line_orient === '0' ? 'rocket-horizontal' : 'rocket-vertical'); break;
-      case 'LIGHTNING': put(1, 'rainbow-ball'); break;
-      case 'ICE': put(2, 'ice-' + level, level === '1' ? 'overlay ice-fragment' : 'overlay'); break;
-      case 'LOCK':
-        put(2, level === '1' && mirror === 'true' ? 'chain-1-mirror' : 'chain-' + level, 'overlay');
-        break;
-    }
+function pickSprites(models, available, mappings) {
+  const layers = {ground: [], piece: [], overlay: []};
+  for (const [index, model] of models.entries()) {
+    const mapping = mappings[model.modelId];
+    if (!mapping) continue;
+    const value = model[mapping.field];
+    const mirror = model.mirror === 'true' ? mapping.variants?.[value + ':mirror'] : undefined;
+    const id = mirror || mapping.variants?.[value] || mapping.sprite;
+    if (!available.has(id)) continue;
+    const style = id === 'ice-1' ? 'overlay ice-fragment' : mapping.layer;
+    layers[mapping.layer].push({id, style, index, status: mapping.status || 'identified'});
   }
-  return layers.flat();
+  return Object.values(layers).flat();
 }
 
 function options() {
@@ -99,8 +90,9 @@ function cellButton(cell) {
   button.type = 'button';
   button.title = '(' + x + ', ' + y + ') ' + names.join(', ');
   const art = sprites.size
-    ? pickSprites(models, sprites).map(sprite => ({
-        src: '/art/sprites/' + sprite.id + '.png', title: sprite.id, style: sprite.style
+    ? pickSprites(models, sprites, modelArt).map(sprite => ({
+        src: '/art/sprites/' + sprite.id + '.png', title: sprite.id, style: sprite.style,
+        index: sprite.index, status: sprite.status
       }))
     : pickIcons(models).map((icon, index) => ({
         src: '/api/icon/' + icon, title: 'Goal icon ' + icon, style: index === 0 ? 'ground' : ''
@@ -123,7 +115,14 @@ function cellButton(cell) {
   button.addEventListener('click', () => {
     board.querySelector('.selected')?.classList.remove('selected');
     button.classList.add('selected');
-    detail.textContent = JSON.stringify({x, y, attributes, models, art: art.map(layer => layer.title)}, null, 2);
+    const layers = new Map(art.map(layer => [layer.index, layer]));
+    const inspected = models.map((model, index) => {
+      const layer = layers.get(index);
+      return sprites.size
+        ? {...model, art: layer ? {sprite: layer.title, status: layer.status} : {status: 'unmapped'}}
+        : model;
+    });
+    detail.textContent = JSON.stringify({x, y, attributes, models: inspected}, null, 2);
   });
   return button;
 }
@@ -173,13 +172,14 @@ async function draw() {
 filter.addEventListener('input', options);
 select.addEventListener('change', draw);
 document.querySelector('#flip').addEventListener('click', () => { flipped = !flipped; draw(); });
-Promise.all(['/api/list', '/api/sprites'].map(url => fetch(url).then(response => response.json())))
-  .then(([paths, ids]) => {
+Promise.all(['/api/list', '/api/sprites', '/api/model-art'].map(url => fetch(url).then(response => response.json())))
+  .then(([paths, ids, mappings]) => {
     levels = paths;
     sprites = new Set(ids);
+    modelArt = mappings;
     document.querySelector('#atlas').hidden = !sprites.size;
     document.querySelector('#art-status').textContent = sprites.size
-      ? 'Original atlas sprites on bundled board layouts. Sprite assignments are visually identified. Random and unmapped pieces retain their model labels.'
+      ? 'Original sprites on bundled layouts. Select a cell to see its model, strength, and whether its art is identified, a material preview, or unmapped.'
       : 'Board art is unavailable. These layouts use goal icons where available.';
     options();
   })
