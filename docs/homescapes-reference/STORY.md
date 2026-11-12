@@ -98,3 +98,16 @@ decoded bytes). Regenerate the extracted archives with
 `python3 tools/homescapes-reference/extract_archives.py`, then run
 `python3 tools/homescapes-reference/scene_index.py`. The extraction refuses to
 overwrite an existing decoded directory. The local output is ignored by Git.
+
+### Text decoding checks
+
+The bundle also contains two compressed 524,288-byte Zstandard dictionaries at
+`base_mm/zstd/524288.dict` and `base_mm/zstd/682b7023.dict`. They are distinct
+from the dictionaries embedded in the successfully decoded screenplay and level
+archives. For `base_mm/preload_text.xml`, direct Zstandard decoding was tested
+at offsets 12–32 with standard and magicless framing, with no dictionary and
+with each of these two dictionaries: none of the 126 combinations decoded. This
+is a bounded negative result, not proof that the text is encrypted or that a
+particular untested compression scheme cannot work. The iOS executable's
+`LC_ENCRYPTION_INFO_64` has `cryptid 1`, so its code is not available as an
+ordinary static binary in this App Store package.

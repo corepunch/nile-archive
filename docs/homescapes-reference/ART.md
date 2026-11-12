@@ -81,3 +81,9 @@ directory is missing; this also extracts the screenplay archive. The two outputs
 total about 59.4 MB of file contents (roughly 71 MiB on disk); no game download
 or remote content is needed. The script checks index bounds and paths, decoded
 lengths and decompression errors, and refuses to overwrite existing output.
+
+For `Match3/vso/textures/Elements/Carpet/Border.dds`, the Zstandard-unwrapped
+payload was also checked at offsets 128–191 with zlib framing, raw DEFLATE,
+gzip framing and raw LZ4 against plausible ETC output sizes. None yielded a
+valid texture. This only rules out those exact trials for this one texture; it
+does not identify the format of the atlas pixels.
