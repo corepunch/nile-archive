@@ -424,7 +424,7 @@ partner opposite them. The right slot mirrors the portrait and its mouth
 anchor. A character's `right` flag sets their preferred side when they enter alone.
 On narrow unframed screens, `story_style.edge_to_edge` puts the centered
 portraits at the safe screen edges and draws a rectangular dialogue bar
-across the usable width. The name tag sits above the bar. The renderer
+across the usable width. The name tag is centered on the top border. The renderer
 centers the ink bounds of the fully wrapped text, so the text stays centered
 as it types in.
 

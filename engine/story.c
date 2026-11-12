@@ -663,10 +663,10 @@ void story_frame(float dt)
 
     float settle = saturate((S.arrive - POP_TIME * .5f) / (POP_TIME * .5f));
     if (who && settle > 0) {   /* name tag on the bubble's top edge, on the speaker's side */
-        float y = edge_to_edge ? bubble.pos.y - 2 - (1 - settle) * 6
+        float y = edge_to_edge ? bubble.pos.y + OUTLINE * .5f - (1 - settle) * 6
                 : speech_bubble_bounds(bubble, kind).pos.y + (1 - settle) * 6;
         vec2 at = v2(right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, y);
-        name_tag(who, at, v2(right ? 1 : 0, edge_to_edge ? 1 : .5f), tag);
+        name_tag(who, at, v2(right ? 1 : 0, .5f), tag);
     }
     rect inner = rc(bubble.pos.x + pad, bubble.pos.y + top_pad, bubble.size.w - 2 * pad - arrow, body.h);
     vec2 align = v2(who ? 0 : .5f, .5f);
