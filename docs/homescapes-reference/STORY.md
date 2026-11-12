@@ -25,16 +25,13 @@ the sources, not a claim that each day forms a complete dramatic arc.
 The `base_mm/cluster1/CH_Hall/Quest.xml.au` container decompresses to structured
 binary containing the labels `Ostin room: Day 1` and `Hall: Day 1` through
 `Hall: Day 4`, alongside identifiers for a bed, furniture and other objects.
-Their presence suggests authored room/day groupings; string order alone does not
-establish task order, costs, dialogue, or which opening the player sees. Other
-quest containers include labels for other rooms, but many cannot yet be read
-using the same simple extraction. No completeness claim follows from these
-filenames or strings.
+The pointer arrays now identify five day groups and 46 records in this file;
+their serialized order does not establish actual display order, costs, dialogue,
+or which opening the player sees.
 
 For comparison, the Tropicats handoff can join chapter, quest, task, board and
 scene IDs to decoded English. We cannot yet make that join for Homescapes:
-`Storyline.lua`, tutorials and many text resources begin with `PLXE`, and the
-quest binary has not been parsed. Next research requires a validated reader for
+`Storyline.lua`, tutorials and many text resources begin with `PLXE`, while the quest parser currently covers day arrays, record IDs and title keys only. Next research requires a validated reader for
 those formats, then a check against actual play. Until then, this page should
 not be treated as a full story reference.
 
@@ -62,3 +59,25 @@ A previously published [PLXE version 4 unpacking approach](https://www.zenhax.co
 expects a Zstandard frame following the header. The version 5 resources in this
 bundle do not have that frame at the expected offset, and the old approach does
 not decode them. No conclusion about their exact encoding follows from that test.
+
+## Structured outline
+
+[Open the local quest outline](../../reference/homescapes-analysis/story-outline.html)
+to browse **48 area files, 285 serialized day groups and 6,078 records**. The
+viewer starts with the Hall and uses readable labels mechanically split from
+the identifiers. Select another area or filter by an action. Each row retains
+its exact ID, title key and decompressed offset. Run
+`python3 tools/homescapes-reference/story_outline.py` to regenerate it.
+
+This reader follows the binary's relative-pointer arrays rather than inferring
+grouping from nearby strings. In the first Hall group, for example, it returns
+Homecoming, ReplaceCarpet, CleanRoom, SetChair, SetBed, CageParrot and
+OpenExpansion in array order. The corresponding title keys are separate fields;
+119 records use title keys that do not start with their record ID, so matching
+localization by string concatenation would be incorrect. These arrays alone do
+not establish visible text, dependencies, alternate branches, which records are
+shown, or the actual order of a playthrough.
+
+Verification: the focused parser tests inspect all 48 supplied files, check the
+opening Hall array and its title key, and reject truncated inputs. Counts are
+for this bundled data, not the full live game or a claim about played tasks.
