@@ -188,3 +188,5 @@ The walkthrough has its own save. Add `--fresh` to start at the opening without 
 ### Homescapes board mechanics
 
 The shared hex board uses original Homescapes pieces and standalone rockets, bombs, planes and rainbow balls, with the existing animations and effects. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.
+
+The field uses neutral gray hex backgrounds (`#484848` / `#545454`), without decorative borders.

@@ -114,7 +114,7 @@ local function draw_cells(sx, foreground)
             local at=cell_pos(i)+vec2(sx,lift)
             if not foreground then
                 -- Plain flat hex ground: no authored frame, bevel or edge trim.
-                local face=(hex_q(i)-hex_r(i))%2==1 and rgba(29,82,67) or rgba(35,94,73)
+                local face=(hex_q(i)-hex_r(i))%2==1 and rgba(72,72,72) or rgba(84,84,84)
                 gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(face,fade))
             elseif flash>0 then
                 R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))

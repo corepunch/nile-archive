@@ -152,8 +152,10 @@ fixture, alongside the existing shared-engine and game tests.
 ## Field-only visual replacement
 
 At the user's request, the live field has no legacy gold edges, snow/sand rims,
-bevels, authored selection/hint frames or numeric ice badges. Flat hex ground is
-geometry; selection and hints scale the original piece. Only Homescapes sprites
+bevels, authored selection/hint frames or numeric ice badges. Flat hex ground
+uses neutral grays `#484848` and `#545454` (alternating cells), with no green tint.
+See the [gray-field review](review/gray-hex-ground/README.md). Selection and hints
+scale the original piece. Only Homescapes sprites
 are used for board pieces and blockers. Existing quest-resource artwork is the
 explicit temporary exception. Surrounding backgrounds, panels, tool buttons and
 interface remain, as do the requested particle effects and animation transforms.
