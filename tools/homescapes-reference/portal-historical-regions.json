@@ -1,0 +1,9 @@
+{
+  "source": "Homescapes Android 3.5.9, https://apk.gold/download?file_id=1370034/homescapes",
+  "apk_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+  "note": "Adjacent yellow and blue portal-shaped sprites. Portal color roles are supported by https://homescapes.fandom.com/wiki/Portals; exact prefab placement and orientation remain unverified.",
+  "regions": [
+    {"id": "portal-entrance-source", "page": 5, "rect": [310, 74, 434, 139]},
+    {"id": "portal-output-source", "page": 5, "rect": [438, 74, 562, 139]}
+  ]
+}
