@@ -737,3 +737,8 @@ registration and portrait review](../../../docs/review/homescapes-arrow-maker/RE
 The Windows 9.2.601 x64 atlas supplies all 36 colored-box states and the
 classic donut maker charge layers. See the [source registration and portrait
 review](../../../docs/review/homescapes-windows-art/README.md).
+
+The maker plays queued, approximate source-video stage transitions on the field;
+[durations, uncertainty and review command](../../../docs/HOMESCAPES_ART.md)
+are recorded in the shared inventory. Original particle curves remain open in
+[issue #98](https://github.com/corepunch/nile-archive/issues/98).

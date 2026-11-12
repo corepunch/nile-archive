@@ -35,7 +35,7 @@ function D.bind(R, W)
 
     -- --talk-through N moves the dialogue on every N frames, to film it;
     -- --scroll-review drags the open shop or level list.
-    local talk_frames, scroll_frames, dive_frames = 0, 0, 0
+    local talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
     function R.debug_frame()
         if app.arg("dive") then   -- --city N --dive: Play is pressed on the third frame (the town -> board dive)
             dive_frames = dive_frames + 1
@@ -56,6 +56,16 @@ function D.bind(R, W)
                 end
             end
         end
+        if app.arg("maker-reel") and R.g.hs then
+            local elements=require("match3.elements_view")
+            local group=R.g.hs.groups[rules.hex_index(1,-1)]
+            maker_frames=maker_frames+1
+            elements.maker_observe(R)
+            if maker_frames==10 then group.hits=4
+            elseif maker_frames==55 then group.hits=5
+            elseif maker_frames==80 then group.hits=0 end
+            elements.maker_update(R,1/60)
+        end
         local every = tonumber(app.arg("talk-through"))
         if not every then return end
         talk_frames = talk_frames + 1
@@ -63,7 +73,7 @@ function D.bind(R, W)
     end
 
     function R.debug_screens()
-        talk_frames, scroll_frames, dive_frames = 0, 0, 0
+        talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
         if app.arg("stripe-states") then R.art_review = true end
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
@@ -260,7 +270,7 @@ function D.bind(R, W)
             R.tool, R.toast_time, R.on_island = 1, 0, false
             R.art_review = true
         end
-        local art=app.arg("homescapes-art")
+        local art=app.arg("maker-reel") and "maker" or app.arg("homescapes-art")
         if art then
             -- Real board drawing paths, with every recovered blocker strength.
             R.g=rules.game_start(0,123478)

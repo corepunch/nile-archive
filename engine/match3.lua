@@ -1297,6 +1297,7 @@ function E.new(config)
     -- Presentation adapter: callbacks below emit graphics, sound, haptics and notices.
     -- The engine owns selection, gestures, phase timing and all piece poses.
     function M.bind_view(R)
+        local elements = require("match3.elements_view")
     local function noop() end
     R.tone, R.vfx_wave = R.tone or noop, R.vfx_wave or noop
     R.notice = R.notice or function(message) R.toast, R.toast_time = message, 3.6 end
@@ -1502,7 +1503,9 @@ function E.new(config)
     function R.finish_wave()
         snapshot()
         local old_score = R.g.score
+        elements.maker_observe(R)
         rules.game_apply(R.g, R.pending)
+        elements.maker_observe(R)
         R.phase = PH_CLEAR
         R.phase_time = 0
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
@@ -1567,6 +1570,7 @@ function E.new(config)
         if R.art_review then return end
         R.shake = math.max(0, R.shake - dt)
         if R.overlay ~= R.OV_NONE or R.on_island then return end
+        elements.maker_update(R,dt)
         R.idle_time = R.idle_time + dt
         if R.phase == PH_IDLE and not R.g.won and not R.g.lost then   -- ready groups resolve before any input
             rules.game_matches(R.g, R.pending, -1)
@@ -1585,8 +1589,9 @@ function E.new(config)
         local speed = R.reduced_motion and .35 or 1
         if R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
         elseif R.phase == PH_REJECT and R.phase_time > .32 * speed then R.phase = PH_IDLE
-        elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed then
+        elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed and not elements.maker_busy(R) then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
+            elements.maker_observe(R)
             R.phase = PH_FALL
             R.phase_time = 0
             R.fall_landed = 0

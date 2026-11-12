@@ -133,3 +133,5 @@ shot("homescapes-colored-boxes", "480x900", "--homescapes-art colors")
 shot("phone-homescapes-colored-boxes", "390x844", "--homescapes-art colors --safe-area 0,47,0,34")
 shot("homescapes-maker-stages", "480x900", "--homescapes-art maker")
 shot("phone-homescapes-maker-stages", "390x844", "--homescapes-art maker --safe-area 0,47,0,34")
+
+reel("homescapes-maker-transition", 40, 3, "480x900", "--maker-reel --reel")

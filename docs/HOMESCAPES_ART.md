@@ -159,7 +159,18 @@ reviewed as objects, not certified as single-hex fills.
 [Jelly and portal captures](review/homescapes-jelly-portals/README.md),
 [donut exit captures](review/homescapes-arrow-maker/README.md) and
 [Windows box and maker captures](review/homescapes-windows-art/README.md)
-show the recovered states in both games. Maker particle timing, output
-indicator placement and exact group composition still require source
-rendering evidence.
+show the recovered states in both games. Maker stage transitions use a visual
+queue shared by Relic Rush and Christmas Market: a hit plays each intermediate
+pose before the board collapses; release clears the completed pose in 0.10 s.
+The approximate cross-fades for poses 1–5 are 0.50, 1.90, 0.30, 0.50 and
+0.20 s. They are estimates informed by the 30 fps official clip, not decoded
+PBI durations: the raw pose settles around 1.50–1.67 s, heating is visible
+around 2.87–4.83 s, green sprinkles gather around 6.67–7.30 s, and release
+occurs around 10.00–10.10 s. The video is compressed, effects obscure stage
+boundaries, and the moves are separated by player-dependent pauses; errors can
+exceed a frame and the individual cross-fade curves are conjectural. Original
+particle effects, output indicator placement and exact group composition still
+require source rendering evidence. Reduced motion settles the visual queue
+immediately. Reproduce the transition review with each game's test binary and
+`"reel homescapes-maker-transition"`.
 [Issue #98](https://github.com/corepunch/nile-archive/issues/98)

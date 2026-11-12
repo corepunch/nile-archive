@@ -497,3 +497,26 @@ do
         end
     end
 end
+
+-- A maker may receive another hit or release while its visual transition runs.
+do
+    local elements=require("match3.elements_view")
+    local group={kind="CARRY_GEN",period=3,hits=0}
+    local view={g={hs={groups={[1]=group}}}}
+    elements.maker_observe(view)
+    group.hits=1; elements.maker_observe(view)
+    elements.maker_update(view,.5)
+    check(view.maker_visual[1].pose==1,"combined hit shows its first stage")
+    elements.maker_update(view,1.9)
+    check(view.maker_visual[1].pose==2,"combined hit reaches its held pose")
+    group.hits=3; elements.maker_observe(view)
+    group.hits=0; elements.maker_observe(view)
+    elements.maker_update(view,1.11)
+    check(view.maker_visual[1].pose==0 and #view.maker_visual[1].queue==0,"queued release follows every stage")
+    group.hits=1; elements.maker_observe(view)
+    view.reduced_motion=true; elements.maker_update(view,0)
+    check(view.maker_visual[1].pose==2,"reduced motion immediately settles")
+    view.g={hs={groups={[1]={kind="CARRY_GEN",period=5,hits=0}}}}
+    elements.maker_observe(view)
+    check(view.maker_visual[1].pose==0,"new board resets maker presentation")
+end

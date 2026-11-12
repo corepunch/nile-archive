@@ -102,7 +102,63 @@ local maker_poses = {
     {5}, {2,5}, {2,3,5}, {1,2,3,5}, {1,2,3,4,5},
 }
 
-local function group_art(R,group,sx)
+-- Approximate visible transitions from the 30 fps tutorial; hit intervals are
+-- player-dependent, and flashes obscure the original effect curves.
+local maker_duration = {.5, 1.9, .3, .5, .2}
+local function maker_pose(group, hits)
+    if hits <= 0 then return 0 end
+    local poses=maker_poses[group.period]
+    return poses and poses[math.min(hits,group.period)] or math.floor(math.min(hits,group.period)*5/group.period)
+end
+
+-- Queue visual changes independently of the rules so a cascade cannot skip a
+-- stage, and a new board cannot inherit another board's pending animation.
+function E.maker_observe(R)
+    if R.maker_game ~= R.g then R.maker_game, R.maker_visual = R.g, {} end
+    local visuals=R.maker_visual
+    for anchor,group in pairs(R.g.hs and R.g.hs.groups or {}) do
+        if group.kind=='CARRY_GEN' then
+            local v=visuals[anchor]
+            if not v then
+                v={hits=group.hits,pose=maker_pose(group,group.hits),queue={}}
+                visuals[anchor]=v
+            elseif v.hits~=group.hits then
+                local from=maker_pose(group,v.hits)
+                local target=maker_pose(group,group.hits)
+                if target>from then
+                    for pose=from+1,target do v.queue[#v.queue+1]={pose=pose,duration=maker_duration[pose]} end
+                elseif target<from then
+                    v.queue[#v.queue+1]={pose=target,duration=.1}
+                end
+                v.hits=group.hits
+            end
+        end
+    end
+end
+
+function E.maker_busy(R)
+    for _,v in pairs(R.maker_visual or {}) do if v.queue[1] then return true end end
+    return false
+end
+
+function E.maker_update(R,dt)
+    E.maker_observe(R)
+    for _,v in pairs(R.maker_visual) do
+        if R.reduced_motion then
+            while #v.queue>0 do v.pose=table.remove(v.queue,1).pose end
+            v.elapsed=0
+        else
+            v.elapsed=(v.elapsed or 0)+dt
+            while v.queue[1] and v.elapsed>=v.queue[1].duration do
+                v.elapsed=v.elapsed-v.queue[1].duration
+                v.pose=table.remove(v.queue,1).pose
+            end
+            if not v.queue[1] then v.elapsed=0 end
+        end
+    end
+end
+
+local function group_art(R,group,sx,anchor)
     local cx,cy,minx,maxx,miny,maxy=0,0,math.huge,-math.huge,math.huge,-math.huge
     for _,cell in ipairs(group.cells) do
         local p=R.cell_pos(cell)
@@ -113,14 +169,18 @@ local function group_art(R,group,sx)
     if group.kind=='TARGET_GEN' then
         name='apple-platter-'..group.count
     else
-        local hits=math.min(group.hits,group.period)
-        local poses=maker_poses[group.period]
-        local pose=poses and poses[hits] or math.floor(hits*5/group.period)
-        name='donut-maker-'..pose
+        local visual=R.maker_game==R.g and R.maker_visual and R.maker_visual[anchor]
+        name='donut-maker-'..(visual and visual.pose or maker_pose(group,group.hits))
     end
     assert(R.board_art[name],"missing original group art: "..name)
     local size=math.min(maxx-minx+2*R.HEX_R,maxy-miny+math.sqrt(3)*R.HEX_R)
-    image(R,name,vec2(cx/#group.cells+sx,cy/#group.cells),size,1)
+    local at=vec2(cx/#group.cells+sx,cy/#group.cells)
+    image(R,name,at,size,1)
+    local visual=R.maker_game==R.g and R.maker_visual and R.maker_visual[anchor]
+    if group.kind=='CARRY_GEN' and visual and visual.queue[1] then
+        local next_stage=visual.queue[1]
+        image(R,'donut-maker-'..next_stage.pose,at,size,math.min(1,(visual.elapsed or 0)/next_stage.duration))
+    end
 end
 
 local function generator_art(R,g,i,at,alpha)
@@ -158,7 +218,7 @@ function E.blockers(R, rules, sx)
                 elseif c.group then
                     local group=g.hs.groups[c.group]
                     if group.kind=='SHUTTERS' then name="blind-body"
-                    elseif c.group==i then group_art(R,group,sx) end
+                    elseif c.group==i then group_art(R,group,sx,i) end
                 elseif c.visibleGenerator then generator_art(R,g,i,R.cell_pos(i)+vec2(sx,0),1) end
             end
             if name then
