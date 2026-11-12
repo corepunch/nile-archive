@@ -84,6 +84,10 @@ struct Match {
 }
 
 public struct Board {
+    public static let supportedModels: Set<String> = ["NORMAL", "RANDOM_CHIP", "BOX", "TRASH", "ICE", "LOCK",
+        "JELLY", "CARRY", "CARRY_EXIT", "CHERRY", "BOMB", "LINE", "LIGHTNING", "BORN", "NONE_CHIP"]
+    public static let supportedGoals: Set<String> = ["CHIPS", "CELL_JELLY", "BOX", "TRASH", "ICE", "LOCK", "CARRY", "COLLECT_PIGGY"]
+
     public let level: Level
     public private(set) var cells: [Position: Cell] = [:]
     public private(set) var remaining: Int
@@ -104,8 +108,7 @@ public struct Board {
         positions = level.cells.map(\.position).sorted()
         let weights = level.colors.isEmpty ? Dictionary(uniqueKeysWithValues: (0..<5).map { ($0, 100) }) : level.colors
         self.weights = weights.sorted(by: { $0.key < $1.key }).map { ($0.key, $0.value) }
-        let allowedGoals: Set<String> = ["CHIPS", "CELL_JELLY", "BOX", "TRASH", "ICE", "LOCK", "CARRY", "COLLECT_PIGGY"]
-        let unsupportedGoals = Set(level.goals.map(\.type)).subtracting(allowedGoals)
+        let unsupportedGoals = Set(level.goals.map(\.type)).subtracting(Self.supportedGoals)
         if !unsupportedGoals.isEmpty { throw BoardError.unsupported(unsupportedGoals.sorted()) }
 
         var random: [Position: [Int]] = [:]
@@ -315,24 +318,75 @@ public struct Board {
         for (p, reward) in rewards where cells[p]?.piece == nil { cells[p]?.piece = .special(reward) }
     }
 
-    /// Returns false for pairs whose combined behavior is not implemented yet.
+    /// Returns false unless both cells contain power-ups.
     /// The moved power-up's destination is the lab's combination centre.
     @discardableResult
     mutating func combine(_ first: Position, _ second: Position) -> Bool {
         guard let a = cells[first]?.piece?.power, let b = cells[second]?.piece?.power else { return false }
+        resolveCombination(a, b, first: first, second: second)
+        return true
+    }
+
+    // Separate dispatch lets rules tests exercise generated planes without inventing XML model IDs.
+    mutating func resolveCombination(_ a: Special, _ b: Special, first: Position, second: Position) {
         let rockets: Set<Special> = [.horizontal, .vertical]
-        let width: Int
-        if rockets.contains(a) && rockets.contains(b) { width = 0 }
-        else if (a == .bomb && rockets.contains(b)) || (b == .bomb && rockets.contains(a)) { width = 1 }
-        else { return false }
-        let footprint = Set(positions.filter {
-            abs($0.x - second.x) <= width || abs($0.y - second.y) <= width
-        }).union([first, second])
-        // Consumed ingredients must not fire again at their separate locations.
+        let starts: Set<Position> = [first, second]
+        let carriesCarpet = starts.contains { cells[$0]?.carpet == true }
         cells[first]?.piece = nil
         cells[second]?.piece = nil
-        blast([first, second], additionalHits: footprint)
-        return true
+        var footprint = starts
+        if a == .rainbow && b == .rainbow {
+            // One simultaneous hit per cell, not a sequence of individual explosions.
+            apply(Set(positions), spread: carriesCarpet ? Set(positions) : [], isBlast: true)
+            return
+        } else if a == .rainbow || b == .rainbow {
+            let replacement = a == .rainbow ? b : a
+            if let color = mostCommonColor() {
+                for p in positions where cells[p]?.piece?.color == color && cells[p]?.held == false {
+                    cells[p]?.piece = .special(replacement)
+                    footprint.insert(p)
+                }
+            }
+        } else if a == .plane || b == .plane {
+            footprint.formUnion(second.neighbors.filter { cells[$0] != nil })
+            let payload = a == .plane ? b : a
+            let count = payload == .plane ? 3 : 1
+            for _ in 0..<count {
+                guard let target = planeTarget(excluding: footprint) else { break }
+                footprint.insert(target)
+                if payload != .plane {
+                    footprint.formUnion(area(of: payload, at: target))
+                }
+            }
+        } else if a == .bomb && b == .bomb {
+            footprint.formUnion(positions.filter { abs($0.x - second.x) <= 2 && abs($0.y - second.y) <= 2 })
+        } else {
+            let width = rockets.contains(a) && rockets.contains(b) ? 0 : 1
+            footprint.formUnion(positions.filter {
+                abs($0.x - second.x) <= width || abs($0.y - second.y) <= width
+            })
+        }
+        blast(starts, additionalHits: footprint)
+    }
+
+    private func mostCommonColor() -> Int? {
+        let counts = Dictionary(grouping: cells.values.compactMap { $0.piece?.color }, by: { $0 })
+        return counts.keys.sorted().max { counts[$0]!.count < counts[$1]!.count }
+    }
+
+    private func planeTarget(excluding excluded: Set<Position>) -> Position? {
+        let available = positions.filter { !excluded.contains($0) }
+        return available.first { cells[$0]?.solid == true || cells[$0]?.held == true || cells[$0]?.piece == .cherry }
+            ?? available.first { cells[$0]?.piece != nil }
+    }
+
+    private func area(of special: Special, at p: Position) -> Set<Position> {
+        switch special {
+        case .horizontal: return Set(positions.filter { $0.y == p.y })
+        case .vertical: return Set(positions.filter { $0.x == p.x })
+        case .bomb: return Set(positions.filter { abs($0.x - p.x) <= 1 && abs($0.y - p.y) <= 1 })
+        default: return [p]
+        }
     }
 
     private mutating func blast(_ starting: Set<Position>, rainbowColors: [Position: Int] = [:],
@@ -343,18 +397,13 @@ public struct Board {
             fired.insert(p)
             guard let special = cells[p]?.piece?.power else { continue }
             switch special {
-            case .horizontal: hits.formUnion(positions.filter { $0.y == p.y })
-            case .vertical: hits.formUnion(positions.filter { $0.x == p.x })
-            case .bomb: hits.formUnion(positions.filter { abs($0.x - p.x) <= 1 && abs($0.y - p.y) <= 1 })
+            case .horizontal, .vertical, .bomb: hits.formUnion(area(of: special, at: p))
             case .plane:
                 hits.formUnion(p.neighbors.filter { cells[$0] != nil })
-                let target = positions.first { q in
-                    !hits.contains(q) && (cells[q]?.solid == true || cells[q]?.held == true || cells[q]?.piece == .cherry)
-                } ?? positions.first { !hits.contains($0) && cells[$0]?.piece?.color != nil }
+                let target = planeTarget(excluding: hits)
                 if let target { hits.insert(target) }
             case .rainbow:
-                let counts = Dictionary(grouping: cells.values.compactMap { $0.piece?.color }, by: { $0 })
-                if let color = rainbowColors[p] ?? counts.keys.sorted().max(by: { counts[$0]!.count < counts[$1]!.count }) {
+                if let color = rainbowColors[p] ?? mostCommonColor() {
                     hits.formUnion(positions.filter { cells[$0]?.piece?.color == color })
                 }
             }
@@ -368,18 +417,22 @@ public struct Board {
         for p in hits.union(adjacent).sorted() {
             guard var cell = cells[p] else { continue }
             let direct = hits.contains(p)
-            if cell.box > 0 {
+            if cell.ice > 0 {
+                if direct {
+                    cell.ice -= 1
+                    if cell.ice == 0 { credit("ICE") }
+                }
+            } else if cell.chain > 0 {
+                if direct {
+                    cell.chain -= 1
+                    if cell.chain == 0 { credit("LOCK") }
+                }
+            } else if cell.box > 0 {
                 cell.box -= 1
                 if cell.box == 0 { credit("BOX") }
             } else if cell.cookie > 0 {
                 cell.cookie -= 1
                 if cell.cookie == 0 { credit("TRASH") }
-            } else if cell.ice > 0 && (direct || isBlast) {
-                cell.ice -= 1
-                if cell.ice == 0 { credit("ICE") }
-            } else if cell.chain > 0 && (direct || isBlast) {
-                cell.chain -= 1
-                if cell.chain == 0 { credit("LOCK") }
             } else if cell.piece == .cherry {
                 cell.piece = nil
                 credit("COLLECT_PIGGY")
@@ -396,22 +449,29 @@ public struct Board {
     }
 
     private mutating func fallAndRefill() {
-        // Iterate bottom first so every destination is resolved before its source.
-        for p in positions {
-            guard cells[p]?.canFall == true, cells[p]?.piece == nil else { continue }
-            var q = p.offset(0, 1)
-            while let source = cells[q], source.canFall {
-                if let piece = source.piece {
-                    cells[p]?.piece = piece
-                    cells[q]?.piece = nil
-                    break
+        // Exits empty a cell again: settle existing pieces before inserting random refill.
+        // Every repeated pass collects at least one donut, so this loop is bounded by the board size.
+        while true {
+            for p in positions {
+                guard cells[p]?.canFall == true, cells[p]?.piece == nil else { continue }
+                var q = p.offset(0, 1)
+                while let source = cells[q], source.canFall {
+                    if let piece = source.piece {
+                        cells[p]?.piece = piece
+                        cells[q]?.piece = nil
+                        break
+                    }
+                    q = q.offset(0, 1)
                 }
-                q = q.offset(0, 1)
             }
-        }
-        for p in positions where cells[p]?.exit == true && cells[p]?.piece == .donut && cells[p]?.held == false {
-            cells[p]?.piece = nil
-            credit("CARRY")
+            let exiting = positions.filter {
+                cells[$0]?.exit == true && cells[$0]?.piece == .donut && cells[$0]?.held == false
+            }
+            if exiting.isEmpty { break }
+            for p in exiting {
+                cells[p]?.piece = nil
+                credit("CARRY")
+            }
         }
         for p in positions where cells[p]?.canFall == true && cells[p]?.piece == nil {
             let color = nextColor(at: p)

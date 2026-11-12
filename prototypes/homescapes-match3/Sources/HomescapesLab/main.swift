@@ -274,6 +274,16 @@ let arguments = CommandLine.arguments
 let root = arguments.firstIndex(of: "--root").flatMap { arguments.indices.contains($0 + 1) ? arguments[$0 + 1] : nil }
     ?? FileManager.default.currentDirectoryPath
 do {
+    if arguments.contains("--audit") {
+        let directory = URL(fileURLWithPath: root).appendingPathComponent(
+            "reference/homescapes-analysis/decoded/match3levels/Match3/Levels")
+        let audit = try LevelAudit.run(directory: directory)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        FileHandle.standardOutput.write(try encoder.encode(audit))
+        FileHandle.standardOutput.write(Data([10]))
+        exit(audit.entries.contains { $0.error != nil } ? 1 : 0)
+    }
     let files = try LabFiles(root: URL(fileURLWithPath: root, isDirectory: true))
     if arguments.contains("--check") {
         for level in files.levels {
