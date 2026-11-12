@@ -34,6 +34,7 @@ function E.ground(R, rules, sx)
             local cx, cy = x / #object.cells, y / #object.cells
             local radius, height = R.HEX_R - .65, math.sqrt(3) * (R.HEX_R - .65)
             local alpha = R.intro and R.intro:fade() or 1
+            local art = object.art and R.board_art[object.art] or R.board_art["hidden-" .. state]
             -- Each hex samples its portion of the same footprint image. This
             -- prevents a large object from spilling into holes or other wells.
             for _, cell in ipairs(object.cells) do
@@ -41,7 +42,7 @@ function E.ground(R, rules, sx)
                 local src = rect((p.x - cx + size / 2 - radius) * 128 / size,
                     (p.y - cy + size / 2 - height / 2) * 128 / size,
                     2 * radius * 128 / size, height * 128 / size)
-                gfx.image_hex(R.board_art["hidden-" .. state], src, p, radius, 0, color(255, 255, 255, 255 * alpha))
+                gfx.image_hex(art, src, p, radius, 0, color(255, 255, 255, 255 * alpha))
             end
         end
     end

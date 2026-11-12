@@ -139,17 +139,24 @@ Elena Voss leads the archaeological expedition; Mara Bell is its pilot, Tomas Re
 
 ## Story and world
 
-An archaeological expedition reaches an overgrown tropical island known only as the Lost Valley. Broken sunstones, abandoned terraces and a silent temple suggest that the island once held a thriving settlement. The expedition's goal is to uncover its history, restore a home among the ruins and bring light back to the Temple of the Sun.
+Mara spots a light under the cliff before the expedition can land. The crew rebuilds its
+camp and follows the signal through the Lost Valley. The opening chapter, **A Light Below**,
+uses boards 1–10 and four island upgrades to lead to the tide room. The player chooses
+whether Mara or Tomas answers the signal. Their replies differ, and both advance the expedition.
 
-You begin with a small expedition camp. Each puzzle represents an excavation: uncover buried ground, free relics from ancient chains, thaw frozen seals and collect the materials that make the next restoration possible. The growing settlement turns discoveries into visible progress: fresh water, a workshop, a market, a lodge and an archive. The observatory and jade fountain prepare the final approach to the temple, where the expedition uncovers the Heart of the Sun.
+In Chapter 1 the requested object is the board goal. Recover timber for the camp, find the
+lamp lens to answer the light, and uncover the tide chart that leads to the quay. The same
+object appears with the first-clear dialogue.
 
-This is an original adventure setting inspired by archaeological serials and lost-world fiction, rather than a licensed Indiana Jones setting or a claim to portray a specific historical civilization. The colorful tropical palette combines jade, turquoise, warm stone and gold, with readable silhouettes and soft jungle scenery.
+The island shows the active chapter, quest, next task and decoration progress. First clears
+award Amulets and Discovery Stars, and fund the scheduled story upgrades. Each confirmed
+wonder adds four decoration points. Other purchases add one. Required upgrades meet the
+thresholds for the next quests. Moving a building leaves its points intact.
 
-**Narrative status:** all three episodes in [the reviewed script](docs/story.md) are playable: 36 named scenes and 214 lines across Elena, Mara, Tomas, Adrian and Kessler, a rival heard only over the radio, whose lines show as captions with no bust. The existing four authored portraits, island and ten registered wonder sprites are reused. Dialogue uses 31.5-point text (50% larger than the previous 21), 22.5-point names and larger building bubbles. Busts stand on the dialogue box with no frame or plate behind them, so the box hides the cut along the bottom of each cutout. Bubble outlines, listeners and Skip stay inside the safe screen.
-
-Results return to the island. A scheduled wonder must be confirmed before its discovery scene; other levels deliver their clue immediately. The wonder milestones are **1, 4, 7, 9 / 13, 16, 19 / 23, 26, 29**. The tenth wonder does not end the game: level 30 delivers the final song and “To be continued” scene. Building descriptions respond to discoveries, and Mara has a separate greeting for each new region.
-
-A completed scene is acknowledged only after its last line or Skip. Interrupted scenes restart safely on reload. Replays and retries cannot repeat a completed story scene. Older saves retain their clears, buildings, wallet and land, receive an appropriate recap, and can continue into the additional twenty levels; already-owned wonders satisfy later story milestones. No decoration-rank gate is imposed.
+First-clear dialogue leads into Results. The tide-room choice follows Claim, and each
+funded wonder has a separate scene after confirmed placement. Replays earn Amulets.
+Existing saves retain clears, currency, land and buildings and receive a recap at their
+current level. Chapters 2 and 3 have provisional dialogue to carry the campaign to its finale.
 
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/match3_game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
@@ -312,7 +319,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 - `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, connected board masks and seeded opening boards without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 120 greedy campaign trials (extended: `make test-extended`). The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. Every one of the 36 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. Every one of the 46 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
 
@@ -411,3 +418,8 @@ it for half a second lifts it to move.
 
 The town bottom row has a large central Play button and equal smaller Build
 and Levels buttons, with simplified authored icons and five interaction states.
+
+For a local story walkthrough, launch `./build/relic-rush --debug-walkthrough`.
+Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
+On the island, **Complete task** places an earned story building or starts the next board.
+The walkthrough has its own save. Add `--fresh` to start at the opening without saving.

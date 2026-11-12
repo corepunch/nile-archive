@@ -41,6 +41,32 @@ return require("match3.game").app(R)                       -- last line of main.
 
 plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
+`engine/match3_game.lua` selects the engine's default portrait-game dialogue
+layout, drawn by `engine/story.c`. On phones the engine puts the portraits at
+the screen edges, centers the text vertically in a full-width bar, and centers
+the speaker's name tag on its top border. Games supply the skin, cast and
+dialogue. Cast art faces right and the engine mirrors the right slot.
+
+## Quest objectives and story previews
+
+Relic Rush defines its chapters and ordered tasks in `quests.lua`. A board task
+completes on first clear and a restoration task completes on confirmed placement.
+The board can name a hidden object and use it as the only win condition with
+`object_only`. The rules record discovery when all of its footprint is uncovered.
+
+A journey can show first-clear dialogue before Results with `clear_before_result`
+and schedule a separate `restore` scene after placement. A beat with choices
+uses the shared form and modal stack. The selection is saved before the reply
+plays, and the scene is acknowledged after the reply finishes. Use
+`--story-choice after-10` to preview the Relic Rush prompt.
+
+Results keep the board HUD in the blurred background so the card title and
+actions have a clear foreground.
+
+Both games support `--debug-walkthrough`. Skip level opens the normal results.
+Complete task confirms an earned restoration or opens the next board. The
+walkthrough uses its own save and does not report scores to Game Center.
+
 ## Inventory (November 2026)
 
 Every difference between the two games' copies, sorted into content, skin,

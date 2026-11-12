@@ -56,11 +56,15 @@ local function campaign()
         assert(table.concat(played, " ") == table.concat(want, " "),
                "campaign smoke: beats played out of order: " .. table.concat(played, " "))
         for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
+        assert(R.prog.story_choices["after-10"] == 1, "campaign smoke: Mara answered the signal")
         assert(R.prog.level == rules.LEVELS and island.wonder_count(c) == island.WONDERS and c.open == 63,
                "campaign smoke: thirty clears restore every wonder and open every region")
         print(("campaign smoke passed: %d expeditions, %d story beats, %d wonders, every region in %d frames"):format(
             R.prog.level, #played, island.wonder_count(c), frames))
         app.quit()
+    elseif R.overlay == R.OV_STORY_CHOICE then
+        local box = R.choice_form.boxes["1"]
+        if box then app.inject_click(box:center()); wait = 10 end
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_ZONE then

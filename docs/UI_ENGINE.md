@@ -418,6 +418,16 @@ animation. Frame, outline and shadow share the portrait's opacity. Settled
 portraits stay still while text types or waits for input. Bubble arrival uses a
 monotonic cubic curve, too.
 
+With `story_style.inward`, the cast uses right-facing source portraits. The
+engine keeps the previous speaker on their established side and puts their
+partner opposite them. The right slot mirrors the portrait and its mouth
+anchor. A character's `right` flag sets their preferred side when they enter alone.
+On narrow unframed screens, `story_style.edge_to_edge` puts the centered
+portraits at the safe screen edges and draws a rectangular dialogue bar
+across the usable width. The name tag is centered on the top border. The renderer
+centers the ink bounds of the fully wrapped text, so the text stays centered
+as it types in.
+
 C tests cover interruption, repeated targets, frame subdivision, entrance,
 active/inactive switching, return and exit. Real-renderer tests compare portrait
 pixels during idle across phone, safe-area and landscape layouts. `story_restart`

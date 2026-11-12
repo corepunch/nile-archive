@@ -292,6 +292,21 @@ function D.bind(R, W)
             for i = tonumber(app.arg("story-line")) or 1, #beat.lines do lines[#lines + 1] = beat.lines[i] end
             R.queue_story({key = beat.key, lines = lines}, true)
         end
+        local choice_key = app.arg("story-choice")
+        if choice_key then
+            local beat = assert(journey.find(choice_key), "unknown story choice")
+            island_with(journey.earned(beat.level))
+            R.on_island, R.toast_time = true, 0
+            R.open_story_choice(beat, true)
+        end
+        local object_state = app.arg("quest-object-state")
+        if object_state then
+            local object = assert(R.g.objects[1], "quest object preview needs a recovery board")
+            assert(object.art and (object_state == "partial" or object_state == "revealed"), "unknown quest object preview")
+            local count = object_state == "partial" and #object.cells - 1 or #object.cells
+            for i = 1, count do R.g.soil[object.cells[i]] = 0 end
+            rules.game_apply(R.g, rules.new_match())
+        end
         -- A debug screen may have replaced the board, or shown something else instead.
         if R.intro then
             if R.phase == R.PH_PRESENT and R.overlay == R.OV_NONE and not R.art_review then R.present_board()

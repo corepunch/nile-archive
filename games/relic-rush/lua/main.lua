@@ -9,6 +9,7 @@ local R = require("state")
 require("screens")
 require("board")
 require("narrative")
+require("quests")
 require("smoke")
 
 return require("match3.game").app(R)

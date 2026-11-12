@@ -403,10 +403,18 @@ static int codepoints(const char *s, const char *end)
     return n;
 }
 
+static void copy_wrapped_line(char line[512], const char *start, const char *end)
+{
+    size_t len = (size_t)(end - start);
+    if (len >= 512) len = 511;
+    memcpy(line, start, len);
+    line[len] = 0;
+}
+
 /* Wraps (balanced), shrinks to fit, aligns and, when draw is set, draws the
  * first `visible` codepoints (-1 = all). Lines keep the place they will have
  * when complete, so revealed text never jumps. */
-static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int visible, bool draw)
+static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int visible, bool draw, bool align_ink)
 {
     if (!s.font || !utf8) return rect_make(box.pos, sz2(0, 0));
     const char *starts[MAX_LINES], *ends[MAX_LINES];
@@ -432,11 +440,20 @@ static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int
     size2 total = sz2(widest * m.unit, n * line_h - (line_h - s.size));
     rect area = rect_align(box, total, align);
     char line[512];
+    if (align_ink) {
+        float top = 1e9f, bottom = -1e9f;
+        for (int i = 0; i < n; i++) {
+            copy_wrapped_line(line, starts[i], ends[i]);
+            rect ink = text_ink(s, line);
+            if (ink.size.h <= 0) continue;
+            top = minf(top, ink.pos.y + i * line_h);
+            bottom = maxf(bottom, rect_max(ink).y + i * line_h);
+        }
+        if (bottom > top)
+            area.pos.y = box.pos.y + (box.size.h - (bottom - top)) * align.y - top;
+    }
     for (int i = 0; draw && i < n; i++) {
-        size_t len = (size_t)(ends[i] - starts[i]);
-        if (len >= sizeof line) len = sizeof line - 1;
-        memcpy(line, starts[i], len);
-        line[len] = 0;
+        copy_wrapped_line(line, starts[i], ends[i]);
         float full = text_measure(s, line).w;
         if (visible >= 0) {   /* cut the line at the first hidden codepoint */
             int shown = visible - codepoints(utf8, starts[i]);
@@ -453,16 +470,21 @@ static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int
     return area;
 }
 
-rect text_box(text_style s, rect box, vec2 align, const char *utf8) { return box_layout(s, box, align, utf8, -1, true); }
+rect text_box(text_style s, rect box, vec2 align, const char *utf8) { return box_layout(s, box, align, utf8, -1, true, false); }
 
 rect text_box_reveal(text_style s, rect box, vec2 align, const char *utf8, int visible)
 {
-    return box_layout(s, box, align, utf8, visible, true);
+    return box_layout(s, box, align, utf8, visible, true, false);
+}
+
+void text_box_reveal_ink(text_style s, rect box, vec2 align, const char *utf8, int visible)
+{
+    box_layout(s, box, align, utf8, visible, true, true);
 }
 
 size2 text_box_size(text_style s, float width, const char *utf8)
 {
-    return box_layout(s, rc(0, 0, width, 1e6f), v2(0, 0), utf8, -1, false).size;
+    return box_layout(s, rc(0, 0, width, 1e6f), v2(0, 0), utf8, -1, false, false).size;
 }
 
 int text_length(const char *utf8) { return utf8 ? codepoints(utf8, utf8 + strlen(utf8)) : 0; }

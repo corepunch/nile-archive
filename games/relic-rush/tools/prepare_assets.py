@@ -92,7 +92,30 @@ def hex_replacements():
     return result
 
 
+def prepare_portraits():
+    # Dialogue uses a right-facing source pose. Normalize Adrian from the
+    # original lineup before the engine mirrors portraits on the right side.
+    (DATA / 'characters').mkdir(parents=True, exist_ok=True)
+    cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')
+    busts = {'elena': (40, 100, 370, 505), 'mara': (430, 95, 760, 500), 'tomas': (790, 100, 1120, 505), 'adrian': (1160, 85, 1490, 490)}
+    for name, box in busts.items():
+        im = cast.crop(box)
+        im.thumbnail((264, 324), Image.Resampling.LANCZOS)
+        if name == 'mara':
+            # The lineup crop catches a disconnected sliver of the next bust.
+            # Restore the sprite to its original canvas to keep its anchors.
+            sprite, bounds = isolate_sprite(im, with_box=True)
+            im = Image.new('RGBA', im.size)
+            im.paste(sprite, bounds[:2])
+        if name == 'adrian':
+            im = im.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+        im.save(DATA / 'characters' / f'{name}.png', optimize=True)
+
+
 def main():
+    if sys.argv[1:] == ['--portraits-only']:
+        prepare_portraits()
+        return
     # Match pieces: three original six-piece packs in one 6 x 3 sheet. Row order
     # is the pieces' meaning (idol, flame, leaf, scarab, crystal, amphora...).
     sheet = Image.open(ART / 'tile-sets' / 'source.png').convert('RGBA')
@@ -106,14 +129,7 @@ def main():
     for (pack, kind), image in hex_replacements().items():
         image.save(DATA / 'tile-sets' / pack / f'{kind}.png', optimize=True)
 
-    # Busts of the expedition cast for the dialogue, cut from the concept lineup.
-    (DATA / 'characters').mkdir(parents=True, exist_ok=True)
-    cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')
-    busts = {'elena': (40, 100, 370, 505), 'mara': (430, 95, 760, 500), 'tomas': (790, 100, 1120, 505), 'adrian': (1160, 85, 1490, 490)}
-    for name, box in busts.items():
-        im = cast.crop(box)
-        im.thumbnail((264, 324), Image.Resampling.LANCZOS)
-        im.save(DATA / 'characters' / f'{name}.png', optimize=True)
+    prepare_portraits()
     print('relic-rush data ready')
     subprocess.run([sys.executable, str(ROOT / 'tools/board_assets.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'tools/prepare_hud.py')], check=True)

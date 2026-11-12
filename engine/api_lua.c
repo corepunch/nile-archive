@@ -1055,7 +1055,7 @@ static int l_story_line_new(lua_State *L)
 
 void api_push_story_style(lua_State *L, story_style v)
 {
-    lua_createtable(L, 0, 10);
+    lua_createtable(L, 0, 12);
     lua_pushnumber(L, v.backdrop_blur); lua_setfield(L, -2, "backdrop_blur");
     api_push_text_style(L, v.text); lua_setfield(L, -2, "text");
     api_push_text_style(L, v.name); lua_setfield(L, -2, "name");
@@ -1065,6 +1065,8 @@ void api_push_story_style(lua_State *L, story_style v)
     lua_pushnumber(L, v.portrait_height); lua_setfield(L, -2, "portrait_height");
     lua_pushboolean(L, v.framed); lua_setfield(L, -2, "framed");
     lua_pushboolean(L, v.centered); lua_setfield(L, -2, "centered");
+    lua_pushboolean(L, v.inward); lua_setfield(L, -2, "inward");
+    lua_pushboolean(L, v.edge_to_edge); lua_setfield(L, -2, "edge_to_edge");
     lua_pushstring(L, v.skip); lua_setfield(L, -2, "skip");
     luaL_setmetatable(L, "engine.story_style");
 }
@@ -1102,6 +1104,12 @@ story_style api_get_story_style(lua_State *L, int i)
     lua_getfield(L, i, "centered");
     v.centered = lua_toboolean(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "inward");
+    v.inward = lua_toboolean(L, -1);
+    lua_pop(L, 1);
+    lua_getfield(L, i, "edge_to_edge");
+    v.edge_to_edge = lua_toboolean(L, -1);
+    lua_pop(L, 1);
     lua_getfield(L, i, "skip");
     v.skip = lua_tostring(L, -1);
     lua_pop(L, 1);
@@ -1120,6 +1128,8 @@ void api_store_story_style(lua_State *L, int i, story_style v)
     lua_pushnumber(L, v.portrait_height); lua_setfield(L, i, "portrait_height");
     lua_pushboolean(L, v.framed); lua_setfield(L, i, "framed");
     lua_pushboolean(L, v.centered); lua_setfield(L, i, "centered");
+    lua_pushboolean(L, v.inward); lua_setfield(L, i, "inward");
+    lua_pushboolean(L, v.edge_to_edge); lua_setfield(L, i, "edge_to_edge");
     lua_pushstring(L, v.skip); lua_setfield(L, i, "skip");
 }
 

@@ -150,12 +150,12 @@
     "data/buildings/toys.png": "53866212bcb2ad0818bcbff38b542ad6d1bfc7de67897c8d2ef38b0d5fe757fb",
     "data/buildings/tree.png": "acfd2d54ac76075b9236305b10def2b9018fe662c6852a56b0fffbebce1a30a6",
     "data/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
-    "data/characters/agnes.png": "e38b5139ef451218b740e62ba800c8b5cfcec10987bee785b4074ce52c806e2d",
-    "data/characters/henrik.png": "1431fa535938c9f76342925d7903cb26707c6c3b62dd1fe2e56a8ea3f7fc86f5",
+    "data/characters/agnes.png": "85e9ac46ec23ae2b4b451208f4ec639ba6b1fa41aedf742f060c72a593eb5c09",
+    "data/characters/henrik.png": "614fe67fcddde03fa8dce7e6f08b0b854fb1c5e535261b865ed4e85557a918a3",
     "data/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
-    "data/characters/pip.png": "d679bcd6b6e32de6939be04dd40003944f65e6e2230f5221afdb9d2364fe796c",
-    "data/characters/theo.png": "c6342188889b4468e60bb73022bcbe1959a83d03d0c45b462f68cca2a5fac690",
-    "data/characters/wren.png": "5268c52ae0f806d02e7f7f07a2843e5eb558f6f0fb88bbc8c733e3b020132aed",
+    "data/characters/pip.png": "f26c1d2514b93d56056e064c4c2d33726cb545835bf3be9d25f26e4ba9257206",
+    "data/characters/theo.png": "cb2aa98d7cc32a164197d0cb86dd103af86ae46cd794e29913c304bd02d14796",
+    "data/characters/wren.png": "4a1369fe8ac249af84ced5fa50bbe4c4eb1643c652aa0a1216163a6a6d218743",
     "data/expedition-hud/complete.png": "5187914f965d5a88e879106862f7dbca79dd74b43b1286e7b40bd3bb052db8e4",
     "data/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
     "data/expedition-hud/pause-disabled.png": "e166178a7f2bc4da406a7f31ee2e312c5298eac97d3eac415ba810fa991592ea",
@@ -227,9 +227,9 @@
       "data/characters/theo.png",
       "data/characters/wren.png"
     ],
-    "states": "One static authored bust per speaker. The dialogue renderer handles active/listening presentation.",
+    "states": "One right-facing authored bust per speaker. The shared dialogue renderer mirrors the right slot and handles active/listening presentation.",
     "reproduction": "python3 games/christmas-market/tools/prepare_story_cast.py",
-    "review": "docs/review/story/README.md"
+    "review": "docs/review/dialogue-bar/README.md"
   },
   "navigation": {
     "manifest": "art/navigation/manifest.json",

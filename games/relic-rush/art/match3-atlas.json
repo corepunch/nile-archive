@@ -747,7 +747,7 @@
       "games/relic-rush/data/tile-sets/resources/3.png": "56718f477672df3fe9fac1267e69b9e3f92ea3f4b897b921fa0d63d61e688eeb",
       "games/relic-rush/data/tile-sets/resources/4.png": "d6f5782acd974114c1d90089fd33399da57695cda0b045fb606038cd85a098cb",
       "games/relic-rush/data/tile-sets/resources/5.png": "2e7fb26156cba5d872ef506cab2386cef848ff9d2fee08ea4e05a4cbcab58d87",
-      "games/relic-rush/tools/prepare_assets.py": "e151b49d9bca095db2a85fd1acce616e6add62fd9c732efd81c970493962dd6d"
+      "games/relic-rush/tools/prepare_assets.py": "e08cbe315f015e6e101e08cf8451516fa171a4dfaef85a7b0f2f0f5f990f530d"
     },
     "outputs": {
       "games/relic-rush/data/match3.png": "e81bb77c7a6b25a90f0c500eb09460f5658373c52393007d236b813eb3240460",

@@ -19,14 +19,20 @@ local m = rules.new_match()
 local attempts, wins, earned, bonus = 0, 0, 0, 0
 local played = {}
 
-local function scene(expected)
+local function scene(expected, before_reward)
     R.story_tick()
     check(R.story_current and R.story_current.key == expected, 'expected story scene ' .. expected)
     if not R.story_current then error('missing story scene ' .. expected) end
     played[#played + 1] = R.story_current.key
     while story.active() do story.next() end
     R.story_tick()
-    check(R.prog.story_seen[expected], 'finished scene acknowledged: ' .. expected)
+    if R.overlay == R.OV_STORY_CHOICE then
+        assert(R.choose_story_option(2), 'could not choose the reply')
+        while story.active() do story.next() end
+        R.story_tick()
+    end
+    if before_reward then check(R.g.story_clear == expected, 'reply waits for the reward transaction')
+    else check(R.prog.story_seen[expected], 'finished scene acknowledged: ' .. expected) end
 end
 
 local function play(g)
@@ -71,18 +77,26 @@ for level = 1, rules.LEVELS do
     end
     assert(won, ('bot failed all four starts on level %d'):format(level))
     wins = wins + 1
+    local after = ('after-%02d'):format(level)
+    local first_exchange = journey.result_beat(R.prog, R.g)
+    if first_exchange then
+        R.overlay = R.OV_RESULT
+        scene(after, true)
+    end
     local reward = rules.reward_breakdown(R.g, R.wonders, R.prog)
     local before = R.prog.wallet[1]
     R.claim_reward()
     check(R.prog.level == level and R.prog.wallet[1] == before + reward.total[1], 'win pays once and advances')
     earned, bonus = earned + reward.total[1], bonus + reward.bonus
+    if journey.clear_before_result and not first_exchange then scene(after) end
     local kind = journey.wonder_at(level)
     if kind then
         check(not journey.next(R.prog, function(k) return island.owned(R.island, k) > 0 end, nil), 'story waits for construction')
         for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
         assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
+        if journey.clear_before_result then scene(('restore-%02d'):format(level)) end
     end
-    scene(('after-%02d'):format(level))
+    if not journey.clear_before_result then scene(after) end
 end
 check(#played == #journey.beats, 'every story beat played')
 for i, beat in ipairs(journey.beats) do check(played[i] == beat.key, 'story order: ' .. beat.key) end

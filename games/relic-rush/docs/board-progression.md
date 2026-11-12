@@ -1,8 +1,9 @@
 # Relic Rush board progression
 
 The expedition moves from excavation to opening a route for recovered objects.
-The first two boards teach matches and rays. Boards 18 and 28 provide lighter
-intervals. The following are intended decisions, not measured human difficulty.
+In Chapter 1, matching over marked sand uncovers the requested object. Each
+board ends as soon as the full object is uncovered. Boards 18 and 28 provide
+lighter intervals in the later chapters.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap
@@ -15,16 +16,16 @@ objectives move the emphasis within each family.
 
 | Level | Board | Family | Lesson and focus | Moves |
 | ---: | --- | --- | --- | ---: |
-| 1 | First Light | Tapered bowl | Match 3 in a row. (line matching) | 24 |
-| 2 | The Jade Crescent | Tapered bowl | Match 4 for a sun ray. (familiar coverings) | 29 |
-| 3 | Sunstone Spiral | Two chambers | Match beside the stone to break it. (stone) | 32 |
-| 4 | The Vine Constellation | Twin lanes | Match to break chains. (familiar coverings) | 35 |
-| 5 | Three Paths Meet | Tapered bowl | Excavate both cells to reveal the find. (hidden find) | 35 |
-| 6 | Winter Lotus | Two chambers | Match to break ice. (familiar coverings) | 37 |
-| 7 | The Ember Ring | Two chambers | Some stones need two hits. (stone) | 40 |
-| 8 | Prism Hollow | Compact court | Match 5 for a prism. (familiar coverings) | 40 |
-| 9 | The Sixfold Seal | Two chambers | Match the seal's colour beside it. (colour seal) | 43 |
-| 10 | Heart of the Hexagon | Twin lanes | Uncover the buried centre. (familiar coverings) | 46 |
+| 1 | First Light | Tapered bowl | Recover camp timber. | 24 |
+| 2 | The Lamp Lens | Tapered bowl | Uncover both parts of the lens. | 29 |
+| 3 | The Buried Cable | Two chambers | Break the stone and uncover the relay cable. | 32 |
+| 4 | Under the Pump | Twin lanes | Break chains and recover the tide chart. | 35 |
+| 5 | The Quay Marker | Tapered bowl | Uncover both halves of the quay marker. | 35 |
+| 6 | The Shore Marker | Two chambers | Break ice to uncover the shore marker. | 37 |
+| 7 | The Tool Roll | Two chambers | Break layered stone and uncover the tool roll. | 40 |
+| 8 | The Broken Cable | Compact court | Use a prism to uncover the broken cable. | 40 |
+| 9 | The Supply Crate | Two chambers | Open the coloured seal and uncover the supply crate. | 43 |
+| 10 | The Shutter Crank | Twin lanes | Uncover the shutter crank. | 46 |
 | 11 | The Long Terrace | Tapered bowl | Pieces travel between paired conduits. (conduit) | 33 |
 | 12 | Twelve Crates | Twin lanes | Free chained relics. (colour seal) | 36 |
 | 13 | Names in the Stone | Twin lanes | Aim rays along the stone. (hidden find) | 37 |
@@ -44,7 +45,7 @@ objectives move the emphasis within each family.
 | 27 | Six Sun Gates | Twin lanes | Clear the scattered locks. (colour seal) | 45 |
 | 28 | The Last Terrace | Tapered bowl | Clear the open terrace. (familiar coverings) | 42 |
 | 29 | The Silent Temple | Twin lanes | Dig through the temple floor. (stone) | 47 |
-| 30 | The Song Returns | Tapered bowl | Send the tablet through the conduit. (conduit, delivery) | 49 |
+| 30 | The Warning Returns | Tapered bowl | Send the tablet through the conduit. (conduit, delivery) | 49 |
 
 Stones and seals are solid cells: matches beside them or direct special hits
 remove one layer per wave. Seals require their own colour from adjacent matches;

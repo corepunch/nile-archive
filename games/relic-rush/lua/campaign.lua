@@ -62,7 +62,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Jade Crescent", "Match 4 for a sun ray.", 29, 1800, 10, 7, 0, 0)
+        local l = level("The Lamp Lens", "Match 4 for a sun ray.", 29, 1800, 10, 7, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
         l.ice_layers = 1
@@ -70,7 +70,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Sunstone Spiral", "Dig along the seam.", 32, 2300, 12, 12, 0, 0)
+        local l = level("The Buried Cable", "Dig along the seam.", 32, 2300, 12, 12, 0, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -78,7 +78,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Vine Constellation", "Match to break chains.", 35, 2700, 12, 10, 4, 0)
+        local l = level("Under the Pump", "Match to break chains.", 35, 2700, 12, 10, 4, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, 1)
         l.ice_layers = 1
@@ -86,7 +86,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Three Paths Meet", "Rays cross gaps.", 35, 3100, 14, 13, 4, 0)
+        local l = level("The Quay Marker", "Rays cross gaps.", 35, 3100, 14, 13, 4, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -94,7 +94,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Winter Lotus", "Match to break ice.", 37, 3400, 14, 13, 0, 5)
+        local l = level("The Shore Marker", "Match to break ice.", 37, 3400, 14, 13, 0, 5)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -102,7 +102,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Ember Ring", "Flames thaw nearby ice.", 40, 3800, 16, 12, 3, 4)
+        local l = level("The Tool Roll", "Flames thaw nearby ice.", 40, 3800, 16, 12, 3, 4)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -110,7 +110,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Prism Hollow", "Match 5 for a prism.", 40, 4200, 16, 17, 4, 6)
+        local l = level("The Broken Cable", "Match 5 for a prism.", 40, 4200, 16, 17, 4, 6)
         l.mask = compact_mask
         l.terrain = seam(0, 1, -1, -1, 0)
         l.ice_layers = 2
@@ -118,7 +118,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Sixfold Seal", "Use rays across the seal.", 43, 4600, 18, 19, 5, 6)
+        local l = level("The Supply Crate", "Use rays across the seal.", 43, 4600, 18, 19, 5, 6)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -126,7 +126,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Heart of the Hexagon", "Uncover the buried centre.", 46, 5000, 20, 22, 6, 6)
+        local l = level("The Shutter Crank", "Uncover the buried centre.", 46, 5000, 20, 22, 6, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, -1)
         l.ice_layers = 2
@@ -286,7 +286,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Song Returns", "Uncover the final approach.", 49, 5500, 22, 24, 8, 10)
+        local l = level("The Warning Returns", "Uncover the final approach.", 49, 5500, 22, 24, 8, 10)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 0, -1, 0)
         l.ice_layers = 2
@@ -299,8 +299,6 @@ local levels = {
 -- Teach each new problem alone, then combine it with a familiar one.
 levels[3].stones = {{cell=cell(2,0),hp=1}}
 levels[3].lesson = "Match beside the stone to break it."
-levels[5].objects = {{cells={cell(0,-1),cell(1,-1)}}}
-levels[5].lesson = "Excavate both cells to reveal the find."
 levels[7].stones = {{cell=cell(2,0),hp=2}}
 levels[7].lesson = "Some stones need two hits."
 levels[9].crates = {{cell=cell(2,0),hp=1,kind=0}}
@@ -328,6 +326,27 @@ levels[26].objects = {{cells={cell(2,-1),cell(2,0)}}}
 levels[27].crates = {{cell=cell(2,0),hp=2,kind=5}}
 levels[29].stones = {{cell=cell(2,0),hp=3}}
 levels[30].tunnels = {{entrance=cell(1,-1),exit=cell(1,1)}}
+
+-- These expeditions end when the requested thing has been recovered. The
+-- existing shapes, terrain, chains and ice determine how to reach each find.
+local function find(level_number, key, name, lesson, ...)
+    local entry = levels[level_number]
+    entry.quest_object = {key=key, name=name}
+    entry.object_only = true
+    entry.objects = {{cells={...}, art=key}}
+    entry.lesson = lesson
+end
+
+find(1, "timber", "Camp timber", "Match over the sand to uncover the timber.", cell(0,0))
+find(2, "lens", "Lamp lens", "Clear the sand over both parts of the lens.", cell(0,-1), cell(1,-1))
+find(3, "cable", "Relay cable", "Break stone with adjacent matches. Uncover the cable.", cell(-2,0), cell(-2,1))
+find(4, "chart", "Tide chart", "Match to break chains and uncover the chart.", cell(0,-1), cell(0,0))
+find(5, "marker", "Quay marker", "Match over both halves to uncover the quay marker.", cell(0,-1), cell(1,-1))
+find(6, "marker", "Shore marker", "Match to break ice and uncover the shore marker.", cell(-2,-1), cell(-2,0))
+find(7, "tools", "Tool roll", "Some stones need two hits. Uncover the tool roll.", cell(2,-2), cell(2,-1))
+find(8, "cable", "Broken cable", "Match five for a prism to help uncover the cable.", cell(0,0), cell(1,0))
+find(9, "supplies", "Supply crate", "Match a seal’s colour beside it. Uncover the supplies.", cell(-2,0), cell(-2,1))
+find(10, "crank", "Shutter crank", "Clear the covering to recover the shutter crank.", cell(0,-1), cell(0,0))
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Send the tablet through the conduit."
 

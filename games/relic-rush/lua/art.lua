@@ -14,6 +14,7 @@ A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
+A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -65,6 +66,10 @@ function A.load()
     local function load(name) textures[name] = A.skin()[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
+    local quest_atlas = texture.load("quest-objects.png")
+    for i, key in ipairs(A.quest_objects) do
+        textures[key] = texture.region(quest_atlas, rect((i - 1) % 4 * 128, (i - 1) // 4 * 128, 128, 128))
+    end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then

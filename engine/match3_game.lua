@@ -115,7 +115,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -177,10 +177,21 @@ function G.journey(content)
 
     function M.serialize(s, p)
         p.story_seen = p.story_seen or {}
+        p.story_choices = p.story_choices or {}
         for _, b in ipairs(M.beats) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
+            if b.choices then
+                local choice = s:int("narrative.choice." .. b.key, p.story_choices[b.key] or 0)
+                p.story_choices[b.key] = b.choices[choice] and choice or nil
+            end
         end
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
+    end
+
+    function M.result_beat(p, g)
+        if not M.clear_before_result or not g.won or g.level ~= p.level then return end
+        local beat = M.find(("after-%02d"):format(p.level + 1))
+        if beat and not beat.choices and not p.story_seen[beat.key] and g.story_clear ~= beat.key then return beat end
     end
 
     function M.next(p, owns, before_level)
@@ -190,7 +201,7 @@ function G.journey(content)
                     if before_level == b.level - 1 and p.level >= b.level - 1 then return b end
                 elseif p.level >= b.level then
                     local wonder = M.wonder_at(b.level)
-                    if not wonder or owns(wonder - 1) then return b end
+                    if (b.phase == "after" and M.clear_before_result) or not wonder or owns(wonder - 1) then return b end
                 end
                 return nil
             end
@@ -199,7 +210,7 @@ function G.journey(content)
 
     function M.awaiting_return(p)
         for _, b in ipairs(M.beats) do
-            if not (p.story_seen or {})[b.key] then return b.phase == "after" and p.level >= b.level end
+            if not (p.story_seen or {})[b.key] then return b.phase ~= "before" and p.level >= b.level end
         end
         return false
     end
@@ -543,6 +554,7 @@ function G.bind(R, over)
         if R.overlay == R.OV_NONE then return end
         if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
         if R.overlay == R.OV_EXPEDITIONS then R.draw_expeditions(dt); return end
+        if R.overlay == R.OV_STORY_CHOICE then R.draw_story_choice(dt); return end
         local d = R.dialog
         d.n = 0
         local entry, exit = d.entry, d.exit
@@ -613,8 +625,10 @@ function G.bind(R, over)
                 elseif R.island.count >= 160 then action, state = C.full, "poor" end
                 local price = C.price:format(def.cost[1])
                 if i > island.WONDERS then price = price .. C.unlock:format(meta.stars) end
+                local details = C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  ")
+                if R.quest_build_points then details = details .. ("  /  +%d decoration points"):format(R.quest_build_points(i - 1)) end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, cost=def.cost[1], state=state,
-                    details=C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  "), available=available, action=action}
+                    details=details, available=available, action=action}
                 records[#records + 1], tiles[meta.key] = record, record
             end
         end
@@ -798,6 +812,7 @@ function G.bind(R, over)
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
             overlay = R.vfx_particles,
+            extras = R.draw_quest,
         })
         R.placement_form = R.town.placement_form
     end
@@ -811,10 +826,49 @@ function G.bind(R, over)
     R.intro_lines = journey.beats[1].lines              -- the opening scene
     R.finale = journey.beats[#journey.beats].lines      -- its end opens the finale
 
-    function R.queue_story(beat, preview)
+    function R.queue_story(beat, preview, before_result)
         R.story_current = beat
         R.story_preview = preview
+        R.story_before_result = before_result
         for _, line in ipairs(beat.lines) do story.add(line) end
+    end
+
+    local choices = ui.modals(skin)
+
+    local function choice_reply(beat, index, preview)
+        R.queue_story({key=beat.key, lines=beat.choices[index].lines}, preview)
+    end
+
+    function R.open_story_choice(beat, preview)
+        local children = {{kind="label", text=beat.prompt, wrap=true, em=27}}
+        for index, option in ipairs(beat.choices) do
+            children[#children + 1] = {kind="button", id=tostring(index), text=option.label, height=54}
+        end
+        R.choice_form = ui.form{root={kind="column", panel=true, padding=22, gap=14, children=children}}
+        if choices:active() then choices:close() end
+        assert(choices:open(beat.key, R.choice_form, {}, {width=416, snap_backdrop=true, close_on_background=false}))
+        R.story_choice_beat, R.story_choice_preview = beat, preview
+        R.overlay = R.OV_STORY_CHOICE
+    end
+
+    function R.choose_story_option(index)
+        local beat, preview = R.story_choice_beat, R.story_choice_preview
+        if not beat or not beat.choices[index] then return false end
+        choices:close()
+        R.story_choice_beat, R.story_choice_preview = nil, nil
+        R.overlay = R.OV_NONE
+        if not preview then
+            R.prog.story_choices = R.prog.story_choices or {}
+            R.prog.story_choices[beat.key] = index
+            R.save_progress()
+        end
+        choice_reply(beat, index, preview)
+        return true
+    end
+
+    function R.draw_story_choice(dt)
+        local event = choices:draw(dt, {reduced_motion=R.reduced_motion})
+        if event and event.kind == "click" then R.choose_story_option(tonumber(event.id)) end
     end
 
     -- Acknowledge a finished beat, then start the next one that is due. The
@@ -825,12 +879,24 @@ function G.bind(R, over)
             local b = R.story_current
             R.story_current = nil
             if R.story_preview then R.story_preview = false; return end
+            if R.story_before_result then
+                R.story_before_result = false
+                R.g.story_clear = b.key
+                return
+            end
+            if b.choices then R.open_story_choice(b); return end
             if b.key == "recap" then R.prog.story_recap = false
             else R.prog.story_seen[b.key] = true end
             R.save_progress()
             if b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
-        if R.quiet or story.active() or R.overlay ~= R.OV_NONE or R.island.placing >= 0 then return end
+        if R.quiet or story.active() then return end
+        if R.overlay == R.OV_RESULT and R.g then
+            local b = journey.result_beat(R.prog, R.g)
+            if b then R.queue_story(b, false, true) end
+            return
+        end
+        if R.overlay ~= R.OV_NONE or R.island.placing >= 0 then return end
         if R.prog.story_recap then
             R.on_island = true
             R.queue_story({key="recap", lines=journey.recap(R.prog.level)})
@@ -839,8 +905,10 @@ function G.bind(R, over)
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
         local b = journey.next(R.prog, function(kind) return island.owned(R.island, kind) > 0 end, before)
         if b then
-            if b.phase == "after" then R.on_island = true end
-            R.queue_story(b)
+            if b.phase ~= "before" then R.on_island = true end
+            local reply = R.prog.story_choices and R.prog.story_choices[b.key]
+            if reply then choice_reply(b, reply)
+            else R.queue_story(b) end
         end
     end
 
@@ -864,8 +932,13 @@ function G.bind(R, over)
     end
     R.serialize = serialize
 
+    local function progress_slot()
+        return app.arg("debug-walkthrough") and "walkthrough" or "progress"
+    end
+    R.progress_slot = progress_slot
+
     function R.save_progress()
-        if not R.test_mode then save.write("progress", serialize) end
+        if not R.test_mode then save.write(progress_slot(), serialize) end
     end
 
     function R.start_level(chosen)
@@ -873,6 +946,7 @@ function G.bind(R, over)
         if lvl > R.prog.level then return false end
         if lvl == R.prog.level and owes_building() then R.notice(W.notices.build_first); return false end
         if lvl == R.prog.level and journey.awaiting_return(R.prog) then R.notice(W.notices.story_waiting); return false end
+        if lvl == R.prog.level and R.quest_allows_board and not R.quest_allows_board(lvl + 1) then return false end
         rules.refill_lives(R.prog, app.clock())
         if R.prog.lives <= 0 then R.on_island = true; R.notice(W.notices.no_lives); return false end
         R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
@@ -890,6 +964,8 @@ function G.bind(R, over)
 
     function R.play_level(level)
         if R.g and R.g.level == level and not R.g.won and not R.g.lost then
+            if level == R.prog.level and (owes_building() or journey.awaiting_return(R.prog)) then return false end
+            if level == R.prog.level and R.quest_allows_board and not R.quest_allows_board(level + 1) then return false end
             R.on_island = false; R.overlay = R.OV_NONE
             if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end
             return true
@@ -901,11 +977,40 @@ function G.bind(R, over)
     function R.claim_reward()
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders)
         if not paid then return end
-        R.submit_scores()
+        if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
+        if not app.arg("debug-walkthrough") then R.submit_scores() end
         R.save_progress()
         R.on_island = true
-        R.overlay = R.OV_NONE
+        R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE or R.OV_NONE
         R.notice(first and (journey.wonder_at(R.prog.level) and W.notices.reward_building or W.notices.reward_story) or W.notices.reward_replay)
+    end
+
+    -- Opt-in walkthrough controls use the same result and placement paths as play.
+    function R.debug_skip_level()
+        if R.on_island or not R.g or R.g.won or R.g.lost or R.overlay ~= R.OV_NONE then return false end
+        local g = R.g
+        g.score = math.max(g.score, rules.level_of(g).score)
+        g.discovered, g.delivered = #g.objects, g.delivery_total
+        for _, object in ipairs(g.objects) do object.state = "revealed" end
+        g.won = true
+        R.overlay = R.OV_RESULT
+        return true
+    end
+
+    function R.debug_complete_task()
+        if not R.on_island or R.overlay ~= R.OV_NONE then return false end
+        if R.island.placing >= 0 then return R.town:confirm() ~= nil end
+        if owes_building() then
+            local kind = island.wonder_count(R.island)
+            if not R.town:begin(kind, false) then
+                local zone = R.island:next_zone(R.prog.wallet)
+                if zone >= 0 and R.island:zone_available(zone, R.prog.wallet) then R.expand() end
+                return false
+            end
+            return R.town:confirm() ~= nil
+        end
+        if R.prog.level < LEVELS then return R.play_level(R.prog.level) end
+        return false
     end
 
     -- Game Center (engine/gamecenter.lua docs: docs/GAMECENTER.md). game.json's
@@ -1032,14 +1137,28 @@ function G.app(R)
             R.vfx_particles()
             R.draw_board_banners(dt)
         end
+        if app.arg("debug-walkthrough") and not talking and not board and not dive
+            and R.overlay == R.OV_NONE then
+            local label = R.on_island and "Complete task" or "Skip level"
+            local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
+            local state = ui.hit(bounds, 0)
+            R.paint_button(bounds, state, true)
+            R.say(label, bounds:inflate(-8), 18, R.PAL_CREAM)
+            if state.clicked then
+                if R.on_island then R.debug_complete_task() else R.debug_skip_level() end
+            end
+        end
         R.draw_toast()
         ui.set_enabled(true)
-        if not talking then R.overlays(dt) end   -- a dialogue comes first; dialogs wait for it
+        local clear_due = not R.quiet and R.overlay == R.OV_RESULT and journey.result_beat(R.prog, R.g)
+        if not talking and not clear_due then R.overlays(dt) end   -- the first-clear beat precedes the result
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
-        -- The top row stays crisp above popups and dialogue. The tall guide
-        -- and leaderboard cover it so their content remains readable.
-        if (R.overlay ~= R.OV_NONE or talking) and R.overlay ~= R.OV_GUIDE and not board then
+        if story.active() and R.draw_story_item then R.draw_story_item() end
+        -- Keep the HUD above ordinary dialogs. Results, the guide and
+        -- leaderboard own the whole foreground.
+        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_GUIDE and not board
+        if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end
             ui.set_enabled(true)
@@ -1050,7 +1169,9 @@ function G.app(R)
         if app.arg("cell-mask") then return end
         R.font = R.skin:font("lilita")
         story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
-                                      edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7, portrait_height = .34, centered = true, skip = "SKIP"})
+                                      edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
+                                      portrait_height = .34, centered = true, inward = true,
+                                      edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
         local board_skin = art.skin()
         R.backdrop = board_skin.background
@@ -1085,11 +1206,14 @@ function G.app(R)
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
         R.prog = {level = 0, seed = 782341, wallet = purse(), lives = rules.LIVES, life_at = 0, story_seen = {}}
-        if not app.arg("smoke") then save.read("progress", R.serialize) end
+        if not app.arg("smoke") then save.read(R.progress_slot(), R.serialize) end
         if app.arg("empty-lives") then R.prog.lives, R.prog.life_at, R.quiet = 0, app.clock() + rules.LIFE_INTERVAL, true end
         rules.refill_lives(R.prog, app.clock())
-        if W.leaderboard and not app.arg("smoke") then gamecenter.submit(W.leaderboard.board, R.prog.wallet[rules.STARS]) end
-        R.story_current, R.story_preview = nil, false
+        if W.leaderboard and not app.arg("smoke") and not app.arg("debug-walkthrough") then
+            gamecenter.submit(W.leaderboard.board, R.prog.wallet[rules.STARS])
+        end
+        R.story_current, R.story_preview, R.story_before_result = nil, false, false
+        R.story_choice_beat, R.story_choice_preview = nil, nil
         R.layout()
         if not R.start_level() then
             -- A loaded zero-life wallet still needs an inert board for shared view

@@ -1,5 +1,29 @@
 # Relic Rush artwork and state catalogue
 
+## Chapter 1 quest objects
+
+The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
+contain eight recognizable objects. The objects are drawn on their actual excavation cells,
+in the goal, and alongside the first-clear exchange. Covered and partial cells retain their
+authored sand layer. Recovering the whole footprint exposes the same sprite and completes
+the expedition. The object art is independent of the selected match piece pack.
+
+| Atlas slot | Quest object | Board and use |
+| --- | --- | --- |
+| `timber` | Camp timber | 1, put up the Expedition camp |
+| `lens` | Lamp lens | 2, answer the light below the cliff |
+| `cable` | Relay cable and broken end | 3 and 8, trace the route and establish that the cable is broken |
+| `chart` | Tide chart | 4, read the route after restoring the Spring well |
+| `marker` | Quay and shore markers | 5 and 6, locate the steps below the quay |
+| `tools` | Tool roll | 7, equip the Artisan workshop |
+| `supplies` | Supply crate | 9, stock the Jungle market supply point |
+| `crank` | Shutter crank | 10, test the tide-room signal |
+
+Run `python3 tools/relic_quest_art.py` from the repository root to register the source
+into `data/quest-objects.png`. The tool only crops, resizes and centers the original RGBA art.
+Each 128×128 slot passes the canonical hex check in strict object mode. The
+[review captures](review/quest-campaign/README.md) show the artwork and its handoff at both phone sizes.
+
 ## Additional board elements
 
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
@@ -686,8 +710,8 @@ Straight-line match-3 rules: ordinary triples, four-in-line rays on all three ax
 
 ## Three-episode story presentation
 
-All 36 scenes / 214 lines reuse the authored cast sheet `art/art-direction/expedition-cast.png` and its four RGBA crops `data/characters/{elena,mara,tomas,adrian}.png`. Original prompts and crop reproduction are in [art direction](art-direction-v2.md) and `python3 games/relic-rush/tools/prepare_assets.py`. No character is missing: Elena investigates, Mara pilots the Marigold, Tomas is the archivist, and Adrian funds the expedition. Cornelius is an off-screen missing person, not a speaking fifth portrait. Kessler, the Meridian Society's man, speaks but is deliberately never seen: his radio and loudhailer lines are engine captions with a name tag and no bust, which is the intended final state, not a missing asset.
+All 46 scenes / 120 lines reuse the authored cast sheet `art/art-direction/expedition-cast.png` and its four RGBA crops `data/characters/{elena,mara,tomas,adrian}.png`. Original prompts and crop reproduction are in [art direction](art-direction-v2.md) and `python3 games/relic-rush/tools/prepare_assets.py`. No character is missing: Elena investigates, Mara pilots the Marigold, Tomas is the archivist, and Adrian funds the expedition. Cornelius is an off-screen missing person, not a speaking fifth portrait. Kessler, the Meridian Society's man, speaks but is deliberately never seen: his radio and loudhailer lines are engine captions with a name tag and no bust, which is the intended final state, not a missing asset.
 
-The shared story renderer supplies speaking/listening staging and speech/thought/shout bubbles; these use the same authored portraits and existing renderer transitions. Body text is 31.5 points, names/building bubbles 22.5 points, retaining the cream/ink palette. All thirty boards use the existing packs and the Lagoon/Temple paintings; the island and all ten wonder sprites/registration remain unchanged. Narrative-specific building bubbles reveal only clues the player has reached. The implementation intentionally stages scenes over existing paintings rather than adding cinematic panel assets.
+The runtime cast all face right. The portrait import mirrors Adrian’s crop from the original lineup to match the other three. It also isolates Mara’s bust from a stray fragment of the neighboring portrait while keeping her canvas and anchors. Run `python3 games/relic-rush/tools/prepare_assets.py --portraits-only` to reproduce the exports. The story renderer mirrors the portrait on the right side and keeps partners facing one another across turns. [Phone captures](review/portrait-facing/README.md) show the staging. Body text is 31.5 points, names/building bubbles 22.5 points, retaining the cream/ink palette. All thirty boards use the existing packs and the Lagoon/Temple paintings; the island and all ten wonder sprites/registration remain unchanged. Narrative-specific building bubbles reveal only clues the player has reached. The implementation intentionally stages scenes over existing paintings rather than adding cinematic panel assets.
 
 Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.json:story`. Script compilation: `python3 games/relic-rush/tools/prepare_story.py`. Reproduction and inspected game captures are in [story review](review/story/README.md); use `--story-beat before-11`, `--story-beat after-28`, or `--story-beat after-30 --story-line 9`.
