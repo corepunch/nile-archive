@@ -122,7 +122,6 @@ function M.show_hint()
         local i = G.slots[k]
         if i and not G.found[i] then pick = i break end
     end
-    for i = 1, item_count() do if not pick and not G.found[i] then pick = i end end
     if not pick then return end
     G.hints = G.hints + 1
     G.hint = pick
@@ -157,7 +156,7 @@ function M.tap(screen)
         return
     end
     for i = 1, ITEMS do
-        if not G.found[i] and (p - sc.at[i]):ellipse(sc.radius[i]) <= 1 then
+        if not G.found[i] and in_slots(i) and (p - sc.at[i]):ellipse(sc.radius[i]) <= 1 then
             G.found[i] = app.time()
             M.show_found(i)
             if G.hint == i then G.hint = nil end

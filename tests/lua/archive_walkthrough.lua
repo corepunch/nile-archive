@@ -52,6 +52,7 @@ local function play_scene(i)
             scene.tap(sc.at[item])
         else
             if not G.found[item] then scene.tap(sc.at[item]) end
+            scene.refill_slots(app.time() + 1, .8)
         end
         drain_story()
     end

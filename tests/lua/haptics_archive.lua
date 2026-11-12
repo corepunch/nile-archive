@@ -17,13 +17,25 @@ testing.reset()
 scene.tap(content.scenes[1].at[2])
 pulse(haptic.COMBO, 'consecutive finds escalate feedback')
 testing.reset()
+local unlisted = 4
+local score = G.score
+scene.tap(content.scenes[1].at[unlisted])
+pulse(haptic.ERROR, 'an object outside the visible list is a miss')
+check(not G.found[unlisted] and G.score == math.max(0, score - G.MISS_POINTS),
+    'unlisted objects cannot be collected')
+testing.reset()
 scene.tap(vec2(600,10))
 pulse(haptic.ERROR, 'miss breaks the chain with error feedback')
 testing.reset()
 scene.show_hint()
 pulse(haptic.TICK, 'hint acknowledges the target')
 testing.reset()
+G.found[3] = app.time()
+local hints = G.hints
+scene.show_hint()
+check(G.hints == hints and testing.haptics() == 0, 'hint waits until a visible slot refills')
 for i=1,G.ITEMS-1 do G.found[i] = 0 end
+G.slots = {G.ITEMS}
 G.wallet = purse()
 G.wins, G.stars, G.clues = {0,0,0,0,0}, {0,0,0,0,0}, {0,0,0,0,0}
 scene.tap(content.scenes[1].at[G.ITEMS])
