@@ -46,3 +46,38 @@ including 2-, 4- and 8-byte word reversals, produced noise rather than recogniza
 art. The data therefore cannot safely be treated as a raw texture; the exact
 additional encoding and the mapping from atlas regions to game states remain
 unknown. No invalid render is shown as an asset.
+
+## Explore bundled board definitions
+
+Run the local-only board explorer from the repository root:
+
+```sh
+python3 tools/homescapes-reference/serve.py
+```
+
+Open <http://127.0.0.1:8767/>. Search source paths, choose a file, flip Y and
+select a cell to inspect its coordinates, model layers and attributes. The
+server binds only to loopback and serves only indexed level XML data. It reads
+one level at a time, avoiding a large duplicate data file.
+
+The level archive contains **6,184 XML files**, including **500** files in
+`base/st/`; all 6,184 parse as XML `Level` definitions. The default
+`base/st/st0001.xml` has 42 cells, 26 moves and a CHIPS target of 12 with subtype
+1. These are serialized values, not verified current runtime settings. Selection
+and tuning files remain encoded; `st0001` is a source filename, not a verified
+campaign-level assignment. Event and contest files are included.
+
+The board is a schematic: dots and abbreviated model IDs are placeholders, not
+the original atlas art or verified color mapping. Y orientation is selectable
+because runtime orientation has not been confirmed. Random pieces and generators
+are not simulated. Nested model elements are retained in cell details. For the
+actual packaged art and remaining decoding problem, see the atlas investigation
+above and the goal-icon gallery.
+
+Data comes from `base_mm/fs_archives/match3levels.zstd`, a `pzsd` archive with
+an embedded Zstandard dictionary. Run
+`python3 tools/homescapes-reference/extract_archives.py` if the local decoded
+directory is missing; this also extracts the screenplay archive. The two outputs
+total about 59.4 MB of file contents (roughly 71 MiB on disk); no game download
+or remote content is needed. The script checks index bounds and paths, decoded
+lengths and decompression errors, and refuses to overwrite existing output.

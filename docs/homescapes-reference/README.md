@@ -41,9 +41,9 @@ content; no remote content or personal app data was acquired.
 | Research target | Bundled starting point | Status |
 | --- | --- | --- |
 | Quest and day structure | `base_mm/cluster*/.../Quest.xml.au` | [48 structured area outlines](STORY.md#structured-outline); titles and dialogue remain encoded |
-| Level selection and tuning | `base_mm/Match3/Match3LevelSelector.xml`, `Match3SpecialBalance/` | Encoded; level corpus and assignments not recovered |
+| Level selection and tuning | `base_mm/Match3/Match3LevelSelector.xml`, `Match3SpecialBalance/` | 6,184 bundled level XML files decoded; selection and campaign assignments remain encoded |
 | Tutorials and localization | `base_mm/Tutorials.xml`, `Assets/Common/texts/` | Encoded; no transcript recovered |
-| Story execution | `base_mm/Storyline.lua`, `Assets/GameStory/` | Encoded or binary; scene order unknown |
+| Story execution | `base_mm/fs_archives/screenplays.zstd`, `Storyline.lua` | 1,329 compiled scripts decoded; localization and scene order unknown |
 | Content delivery | `base_mm/Assets/CDS/CdsPack.xml` | Encoded; remote inventory not recovered |
 | Art | `base_mm/` and `packs/*.zip` | Inventory only; no runtime mapping or captures |
 
@@ -93,7 +93,7 @@ tests; an icon match alone does not establish equivalent behavior.
 
 ## Remaining work
 
-Extend the partially parsed `BLK` quest structure, investigate the `PLXE` resources
+Extend the partially parsed `BLK` quest structure, decode dialogue localization in the `PLXE` resources
 and content-delivery inventory, then cross-check decoded opening tasks, scene
 text, level data and actual gameplay. Only then can a chapter-by-chapter story
 handoff or level atlas comparable to Tropicats be claimed. No level counts,

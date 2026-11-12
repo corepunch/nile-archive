@@ -31,8 +31,7 @@ or which opening the player sees.
 
 For comparison, the Tropicats handoff can join chapter, quest, task, board and
 scene IDs to decoded English. We cannot yet make that join for Homescapes:
-`Storyline.lua`, tutorials and many text resources begin with `PLXE`, while the quest parser currently covers day arrays, record IDs and title keys only. Next research requires a validated reader for
-those formats, then a check against actual play. Until then, this page should
+`Storyline.lua`, tutorials and many text resources begin with `PLXE`, while the quest parser currently covers day arrays, record IDs and title keys only. Compiled screenplay scripts are now decoded, but localization and actual playback order remain unverified. Until then, this page should
 not be treated as a full story reference.
 
 ## Explore the bundled identifiers
@@ -81,3 +80,21 @@ shown, or the actual order of a playthrough.
 Verification: the focused parser tests inspect all 48 supplied files, check the
 opening Hall array and its title key, and reject truncated inputs. Counts are
 for this bundled data, not the full live game or a claim about played tasks.
+
+## Compiled screenplay references
+
+[Open the screenplay reference index](../../reference/homescapes-analysis/screenplay-index.html)
+to search **1,329** bundled compiled Lua scripts and **2,733** recognized
+`ShowText` calls by filename or text key. For example, search
+`chHall_FeedCat_After2` to see the actor and text key for each call. These are
+not the dialogue lines: the English localization remains encoded. The calls
+are organized by actor branches, so file order is not necessarily conversation
+order. Some scenes use comics or other calls instead of `ShowText`. Raw scripts
+are available locally under `reference/homescapes-analysis/decoded/screenplays/`.
+
+The source is `base_mm/fs_archives/screenplays.zstd` inside `base.zip`. Its
+`pzsd` index and embedded Zstandard dictionary recover 1,329 Lua files (9,851,547
+decoded bytes). Regenerate the extracted archives with
+`python3 tools/homescapes-reference/extract_archives.py`, then run
+`python3 tools/homescapes-reference/scene_index.py`. The extraction refuses to
+overwrite an existing decoded directory. The local output is ignored by Git.
