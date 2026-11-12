@@ -274,7 +274,7 @@ All six speaking characters have painted busts. One built-in ImageGen pass produ
 | Pip Larkin | `data/characters/pip.png` | Post runner with his satchel and gap-toothed grin |
 | Mr Wren | `data/characters/wren.png` | Grey-coated sweeper with his broom and tilted head |
 
-Run `python3 games/christmas-market/tools/prepare_story_cast.py` from the root to reproduce the cutouts. The script crops, mirrors toward Noelle, resizes proportionally and bottom-aligns each cutout on a transparent 320×480 canvas using the atlas alpha. Each speaker has one static portrait for speech, thought, shout and listening. The engine supplies bubbles and listening dimming. All five speakers were reviewed at 480×900 and 390×844 in [the story captures](review/story/README.md#supporting-cast).
+Run `python3 games/christmas-market/tools/prepare_story_cast.py` from the root to reproduce the cutouts. The script crops and proportionally resizes the right-facing source art, then bottom-aligns each cutout on a transparent 320×480 canvas. The shared dialogue renderer mirrors the right slot so conversation partners face each other. [Dialogue bar captures](review/dialogue-bar/README.md)
 
 The script also calls for eight optional illustrated panels (six episode panels plus levels 27 and 28). The scenes currently use the live market.
 

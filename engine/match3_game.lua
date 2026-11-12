@@ -1170,8 +1170,8 @@ function G.app(R)
         R.font = R.skin:font("lilita")
         story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
                                       edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
-                                      portrait_height = .34, centered = true, inward = W.speech.inward,
-                                      edge_to_edge = W.speech.edge_to_edge, skip = "SKIP"})
+                                      portrait_height = .34, centered = true, inward = true,
+                                      edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
         local board_skin = art.skin()
         R.backdrop = board_skin.background

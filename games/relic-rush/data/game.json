@@ -1,7 +1,7 @@
 {
   "app": {"title": "Relic Rush - The Lost Valley", "id": "relic-rush", "clear": "#09211F"},
   "packs": ["relics", "jewels", "resources"],
-  "speech": {"scale": 1.5, "name": 22.5, "inward": true, "edge_to_edge": true},
+  "speech": {"scale": 1.5, "name": 22.5},
   "region_speaker": "mara",
   "board": {
     "kudos": ["Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"],

@@ -41,6 +41,12 @@ return require("match3.game").app(R)                       -- last line of main.
 
 plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
+Both games use the dialogue layout configured in `engine/match3_game.lua`
+and drawn by `engine/story.c`. On phones it puts the portraits at the
+screen edges and centers the text vertically in a full-width bar. Cast
+art faces right and the engine mirrors the right slot. Each game supplies
+its cast, text sizes and story content.
+
 ## Quest objectives and story previews
 
 Relic Rush defines its chapters and ordered tasks in `quests.lua`. A board task

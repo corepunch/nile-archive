@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from PIL import Image, ImageOps
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SIZE = (320, 480)
@@ -18,8 +18,8 @@ CROPS = {
 
 
 def export(key, atlas, crop, check):
-    # Turn the atlas's right-facing characters toward Noelle on the left.
-    bust = ImageOps.mirror(atlas.crop(crop))
+    # Keep the atlas's right-facing pose. Dialogue mirrors the right slot.
+    bust = atlas.crop(crop)
     bust.thumbnail(SIZE, Image.Resampling.LANCZOS)
     image = Image.new('RGBA', SIZE)
     image.paste(bust, ((SIZE[0] - bust.width) // 2, SIZE[1] - bust.height))
