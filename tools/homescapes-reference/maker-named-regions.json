@@ -1,0 +1,220 @@
+{
+  "archive_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+  "coordinate_note": "Raw atlas crops; frame geometry is retained from decoded source XML. No layer placements inferred.",
+  "records": [
+    {
+      "id": "Match3CarryGeneratorBase",
+      "page": 1,
+      "attributes": {
+        "frameHeight": "420",
+        "frameWidth": "460",
+        "height": "207",
+        "id": "Match3CarryGeneratorBase",
+        "innerX": "99",
+        "innerY": "56",
+        "width": "276",
+        "x": "690",
+        "y": "3"
+      },
+      "output": "maker-source-match3carrygeneratorbase.png"
+    },
+    {
+      "id": "Match3CarryGeneratorGlassFront",
+      "page": 1,
+      "attributes": {
+        "frameHeight": "420",
+        "frameWidth": "460",
+        "height": "142",
+        "id": "Match3CarryGeneratorGlassFront",
+        "innerX": "117",
+        "innerY": "127",
+        "width": "232",
+        "x": "1174",
+        "y": "1091"
+      },
+      "output": "maker-source-match3carrygeneratorglassfront.png"
+    },
+    {
+      "id": "Match3CarryGeneratorSwitch0",
+      "page": 3,
+      "attributes": {
+        "frameHeight": "103",
+        "frameWidth": "89",
+        "height": "102",
+        "id": "Match3CarryGeneratorSwitch0",
+        "innerX": "0",
+        "innerY": "1",
+        "width": "89",
+        "x": "120",
+        "y": "1007"
+      },
+      "output": "maker-source-match3carrygeneratorswitch0.png"
+    },
+    {
+      "id": "textures/particles/Match3/CarryGenerator/_0031_glaze",
+      "page": 3,
+      "attributes": {
+        "frameHeight": "274",
+        "frameWidth": "276",
+        "height": "112",
+        "id": "textures/particles/Match3/CarryGenerator/_0031_glaze",
+        "innerX": "70",
+        "innerY": "124",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5",
+        "width": "126",
+        "x": "371",
+        "y": "1122"
+      },
+      "output": "maker-source--0031-glaze.png"
+    },
+    {
+      "id": "Match3CarryGeneratorGlassBack",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "420",
+        "frameWidth": "460",
+        "height": "95",
+        "id": "Match3CarryGeneratorGlassBack",
+        "innerX": "117",
+        "innerY": "235",
+        "width": "232",
+        "x": "394",
+        "y": "547"
+      },
+      "output": "maker-source-match3carrygeneratorglassback.png"
+    },
+    {
+      "id": "Match3CarryGeneratorSwitch1",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "103",
+        "frameWidth": "88",
+        "height": "102",
+        "id": "Match3CarryGeneratorSwitch1",
+        "innerX": "0",
+        "innerY": "1",
+        "width": "88",
+        "x": "926",
+        "y": "443"
+      },
+      "output": "maker-source-match3carrygeneratorswitch1.png"
+    },
+    {
+      "id": "Match3CarryGeneratorSwitch2",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "103",
+        "frameWidth": "89",
+        "height": "102",
+        "id": "Match3CarryGeneratorSwitch2",
+        "innerX": "0",
+        "innerY": "1",
+        "width": "89",
+        "x": "1116",
+        "y": "443"
+      },
+      "output": "maker-source-match3carrygeneratorswitch2.png"
+    },
+    {
+      "id": "Match3CarryGeneratorSwitch3",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "103",
+        "frameWidth": "89",
+        "height": "102",
+        "id": "Match3CarryGeneratorSwitch3",
+        "innerX": "0",
+        "innerY": "1",
+        "width": "89",
+        "x": "1020",
+        "y": "443"
+      },
+      "output": "maker-source-match3carrygeneratorswitch3.png"
+    },
+    {
+      "id": "Match3CarryGeneratorSwitch4",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "103",
+        "frameWidth": "86",
+        "height": "102",
+        "id": "Match3CarryGeneratorSwitch4",
+        "innerX": "0",
+        "innerY": "1",
+        "width": "86",
+        "x": "835",
+        "y": "443"
+      },
+      "output": "maker-source-match3carrygeneratorswitch4.png"
+    },
+    {
+      "id": "textures/particles/Match3/CarryGenerator/_0033_02",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "274",
+        "frameWidth": "276",
+        "height": "104",
+        "id": "textures/particles/Match3/CarryGenerator/_0033_02",
+        "innerX": "72",
+        "innerY": "122",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5",
+        "width": "124",
+        "x": "798",
+        "y": "226"
+      },
+      "output": "maker-source--0033-02.png"
+    },
+    {
+      "id": "textures/particles/Match3/CarryGenerator/_0034_01",
+      "page": 4,
+      "attributes": {
+        "frameHeight": "274",
+        "frameWidth": "276",
+        "height": "104",
+        "id": "textures/particles/Match3/CarryGenerator/_0034_01",
+        "innerX": "72",
+        "innerY": "122",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5",
+        "width": "124",
+        "x": "926",
+        "y": "226"
+      },
+      "output": "maker-source--0034-01.png"
+    },
+    {
+      "id": "Match3CarryGeneratorLampOff",
+      "page": 5,
+      "attributes": {
+        "frameHeight": "43",
+        "frameWidth": "30",
+        "height": "43",
+        "id": "Match3CarryGeneratorLampOff",
+        "innerX": "0",
+        "innerY": "0",
+        "width": "30",
+        "x": "1375",
+        "y": "471"
+      },
+      "output": "maker-source-match3carrygeneratorlampoff.png"
+    },
+    {
+      "id": "Match3CarryGeneratorLampOn",
+      "page": 5,
+      "attributes": {
+        "frameHeight": "42",
+        "frameWidth": "29",
+        "height": "42",
+        "id": "Match3CarryGeneratorLampOn",
+        "innerX": "0",
+        "innerY": "0",
+        "width": "29",
+        "x": "1376",
+        "y": "803"
+      },
+      "output": "maker-source-match3carrygeneratorlampon.png"
+    }
+  ]
+}
