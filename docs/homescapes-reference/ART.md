@@ -67,8 +67,13 @@ The level archive contains **6,184 XML files**, including **500** files in
 and tuning files remain encoded; `st0001` is a source filename, not a verified
 campaign-level assignment. Event and contest files are included.
 
-The board is a schematic: dots and abbreviated model IDs are placeholders, not
-the original atlas art or verified color mapping. Y orientation is selectable
+The board uses original goal-panel WebP icons as approximations for six numbered
+`NORMAL` chips and selected model IDs. The icon-to-model and color mappings are
+inferred from filenames; they are not verified runtime sprites. Jelly and rug
+icons are layered below normal pieces, with mapped obstacle icons above; the
+actual draw order and visual states remain unverified. Unmapped or random models
+show a question mark when no mapped layer is present, and all model IDs remain
+visible in cell labels and details. Y orientation is selectable
 because runtime orientation has not been confirmed. Random pieces and generators
 are not simulated. Nested model elements are retained in cell details. For the
 actual packaged art and remaining decoding problem, see the atlas investigation
@@ -87,3 +92,5 @@ payload was also checked at offsets 128–191 with zlib framing, raw DEFLATE,
 gzip framing and raw LZ4 against plausible ETC output sizes. None yielded a
 valid texture. This only rules out those exact trials for this one texture; it
 does not identify the format of the atlas pixels.
+
+The icon mapping currently covers `BOX`, `TRASH`, `JELLY`, `LOCK`, `RUG`, `CARRY`, `CHERRY`, `TAPE_MEASURE`, `JAR`, `TARGET_GEN`, `BOMB`, `LINE` and `LIGHTNING`. `CHERRY` uses the cherry-looking `piggy.webp`; that association is visual inference. Icons are read directly from the original app archive and served from a filename whitelist.

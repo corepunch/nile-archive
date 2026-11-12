@@ -3,13 +3,16 @@
 import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import zipfile
 from urllib.parse import parse_qs, urlsplit
 
 from level_viewer import PAGE, SOURCE, load_level
+from story_index import SOURCE as APP_ARCHIVE
 
 
 class Handler(BaseHTTPRequestHandler):
     paths = {}
+    icons = {}
 
     def send_bytes(self, body, content_type):
         self.send_response(200)
@@ -25,6 +28,12 @@ class Handler(BaseHTTPRequestHandler):
             self.send_bytes(PAGE.encode(), 'text/html; charset=utf-8')
         elif url.path == '/api/list':
             self.send_bytes(json.dumps(sorted(self.paths)).encode(), 'application/json')
+        elif url.path.startswith('/api/icon/'):
+            name = url.path.removeprefix('/api/icon/')
+            if name not in self.icons:
+                self.send_error(404)
+                return
+            self.send_bytes(self.icons[name], 'image/webp')
         elif url.path == '/api/level':
             query = parse_qs(url.query)
             names = query.get('path', [])
@@ -46,6 +55,11 @@ def main():
     Handler.paths = {p.relative_to(SOURCE).as_posix(): p for p in SOURCE.rglob('*.xml')}
     if not Handler.paths:
         parser.error('No decoded XML levels found')
+    prefix = 'base_mm/Match3/vso/textures/UI/Match3TargetsBase/'
+    with zipfile.ZipFile(APP_ARCHIVE) as archive:
+        Handler.icons = {name[len(prefix):]: archive.read(name) for name in archive.namelist()
+                         if name.startswith(prefix) and name.endswith('.webp')
+                         and '/' not in name[len(prefix):]}
     server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
     print(f'{len(Handler.paths)} files: http://127.0.0.1:{args.port}/', flush=True)
     server.serve_forever()
