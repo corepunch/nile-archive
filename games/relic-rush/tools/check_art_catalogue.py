@@ -33,6 +33,11 @@ assert re.findall(r'"([^"]+)"', special_declaration) == [v for v in manifest["sp
 for name, asset in manifest["assets"].items():
     assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"
     assert len(asset["box"]) == 4
+    if asset.get("atlas_frame"):
+        atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
+        assert asset["atlas_frame"] in atlas["homescapes"]
+        assert asset["runtime"] == "data/match3.png"
+        continue
     data = (ROOT / asset["runtime"]).read_bytes()
     assert data[:8] == b"\x89PNG\r\n\x1a\n"
     assert struct.unpack(">II", data[16:24]) == (128, 128)

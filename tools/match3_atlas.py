@@ -15,6 +15,7 @@ from pathlib import Path
 
 from PIL import Image
 from match3_elements_art import NAMES as ELEMENT_NAMES
+import homescapes_atlas
 
 ROOT = Path(__file__).resolve().parents[1]
 STATES = ['normal', 'selected', 'pressed', 'hover', 'disabled']
@@ -115,6 +116,17 @@ def build_default(check):
         frames[name] = [x, y, 128, 128]
         registration[name] = {'source': str(path.relative_to(ROOT)), 'runtime': frames[name],
                               'transform': 'RGBA canvas copied without change'}
+    originals, registration_h = homescapes_atlas.registered()
+    start = 11 * 8
+    for n, (name, sprite) in enumerate(sorted(originals.items())):
+        if name in frames:
+            x,y,_,_ = frames[name]
+        else:
+            row,col = divmod(start,8);start += 1
+            x,y = col*128,row*128
+        image.paste(sprite,(x,y))
+        frames[name] = [x,y,128,128]
+        registration[name] = registration_h[name]
     frames["glow"] = frames["spark-0"]
     raw = png(image)
     write_asset(ROOT / 'engine/data/match3.png', raw)
@@ -126,7 +138,7 @@ def build_default(check):
                 'runtime': 'engine/data/match3.png', 'registration': registration,
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
-        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']] + element_sources,
+        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']] + element_sources + homescapes_atlas.inputs(),
         [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
     return raw
@@ -161,6 +173,14 @@ def build_game(game, check):
         sources['background'] = root / 'data/winter.jpg'
         sources['character'] = root / 'data/characters/noelle.png'
     loaded = {name: Image.open(path).convert('RGBA') for name, path in sources.items()}
+    originals, original_registration = homescapes_atlas.registered()
+    loaded.update(originals)
+    for name in originals: sources.pop(name, None)
+    # Every former piece pack now selects the same six original colors.
+    for pack in packs:
+        for i in range(6):
+            loaded.pop(f'{pack}-{i}', None)
+            sources.pop(f'{pack}-{i}', None)
     glow = Image.new("RGBA", (64, 64))
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
@@ -179,7 +199,7 @@ def build_game(game, check):
         image.paste(loaded[name], tuple(frames[name][:2]))
     # Canonical names plus optional packs all borrow the same GPU allocation.
     for i in range(6):
-        frames[f'kind-{i}'] = frames[f'{packs[0]}-{i}']
+        for pack in packs: frames[f'{pack}-{i}'] = frames[f'kind-{i}']
     if game == 'christmas-market':
         frames['scene-1'] = frames['scene-2'] = frames['background']
         frames['score'] = frames['complete']
@@ -187,10 +207,11 @@ def build_game(game, check):
     write_asset(root / 'lua/match3_skin.lua', lua_table(frames, 'match3.png'))
     manifest = {'runtime': 'data/match3.png', 'size': [width, height], 'frames': frames,
                 'sources': {name: str(path.relative_to(root)) for name, path in sources.items()},
+                'homescapes': original_registration,
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    inputs = list(sources.values())
+    inputs = list(sources.values()) + homescapes_atlas.inputs()
     outputs = [root / 'data/match3.png', root / 'lua/match3_skin.lua']
     if game == 'relic-rush':
         inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]

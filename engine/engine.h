@@ -241,6 +241,7 @@ float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
+void app_boot_args(int argc, char **argv); /* command-line configuration while Lua modules load */
 void app_boot_data(const char *dir);   /* the data root before app_run (script_boot, rule tests) */
 void app_inject_click(vec2 p);          /* queue a press and release at a logical point (tests) */
 void app_inject_press(vec2 p);          /* individual pointer events, for hold/drag input tests */
@@ -756,6 +757,7 @@ void script_open(const char *lua_dir);
  * quit become Lua calls. data_dir and id are filled in when the script
  * leaves them out. Errors are printed and end the process with status 3. */
 app_desc script_boot(const char *lua_dir, const char *data_dir);
+app_desc script_boot_args(const char *lua_dir, const char *data_dir, int argc, char **argv);
 /* Run one file in the open state; the integer it returns, 0 if none, -1 on error. */
 int script_dofile(const char *path);
 void script_close(void);

@@ -414,3 +414,11 @@ building in hand retains its green/red footprint, and the old plot of a
 building being moved is free. Confirm or Cancel hides the guides. Debug
 `--footprints` draws the full outlines above the sprites. See the
 [phone captures](review/placement-guides/README.md).
+
+## Original Homescapes board atlas
+
+Current board art supersedes the earlier striped-gem and themed-piece mappings below/above. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` are standalone original power-ups; all piece packs alias `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
+
+See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
+
+Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. Legacy portal/exit markers are text; missing source identities remain diagnostic under issue #98.

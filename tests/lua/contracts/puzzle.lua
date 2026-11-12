@@ -105,6 +105,20 @@ return function(R, options)
                 end
             end
             end
+            if R.flags & require('match3').LINE_MATCHES~=0 and R.MATCH_MIN==3 then
+                -- Independent coordinate oracle for the three axial rhombi.
+                for q=-R.HEX_RADIUS,R.HEX_RADIUS do for r=-R.HEX_RADIUS,R.HEX_RADIUS do
+                    for _,d in ipairs{{1,0,0,1},{0,1,-1,1},{-1,1,-1,0}} do
+                        local cells={R.hex_index(q,r),R.hex_index(q+d[1],r+d[2]),R.hex_index(q+d[3],r+d[4]),R.hex_index(q+d[1]+d[3],r+d[2]+d[4])}
+                        local valid,kind=true,nil
+                        for _,i in ipairs(cells) do
+                            if i<0 or not g.active[i] or g.tiles[i].kind<0 or kind and g.tiles[i].kind~=kind then valid=false;break end
+                            kind=g.tiles[i].kind
+                        end
+                        if valid then for _,i in ipairs(cells) do expected[i]=true end end
+                    end
+                end end
+            end
             R.game_matches(g,m,-1)
             local count=0
             for i=0,N-1 do

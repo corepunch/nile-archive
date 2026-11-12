@@ -47,7 +47,7 @@ local levels = {
     level("Welcome Lights", "Match three treats in a line.", 24, 1100, 8, 0, 0, 0, 1,
         bowl_mask, terrain(-1, 0, 1, -1, 1)),
     -- 02: Lumber Lane
-    level("Lumber Lane", "Match four to make a striped treat.", 28, 1800, 10, 7, 0, 0, 1,
+    level("Lumber Lane", "Match four to make a rocket.", 28, 1800, 10, 7, 0, 0, 1,
         bowl_mask, terrain(0, -1, 1, 0, -1)),
     -- 03: Gingerbread Swirl
     level("Gingerbread Swirl", "Match on snow to clear it.", 32, 2300, 12, 12, 0, 0, 1,
@@ -56,13 +56,13 @@ local levels = {
     level("Cocoa Corner", "Match through tinsel to free treats.", 34, 2700, 12, 10, 4, 0, 1,
         lanes_mask, terrain(1, -2, -1, 1, -1)),
     -- 05: Toymaker Lane
-    level("Toymaker Lane", "Use striped treats across the court.", 36, 3100, 14, 13, 4, 0, 1,
+    level("Toymaker Lane", "Use rockets across the court.", 36, 3100, 14, 13, 4, 0, 1,
         chambers_mask, terrain(-2, 0, 2, -1, 1)),
     -- 06: Ribbon Wishes
     level("Ribbon Wishes", "Match on ice to crack it.", 38, 3400, 14, 13, 0, 5, 1,
         compact_mask, terrain(0, 1, 1, -2, -1)),
     -- 07: Candlelight Circle
-    level("Candlelight Circle", "Candy canes also thaw nearby ice.", 40, 3800, 16, 15, 4, 5, 2,
+    level("Candlelight Circle", "Hit frozen pieces with matches or power-ups.", 40, 3800, 16, 15, 4, 5, 2,
         chambers_mask, terrain(-1, 1, 2, -1, 1)),
     -- 08: Carousel Stars
     level("Carousel Stars", "Match five to make a rainbow star.", 42, 4200, 16, 17, 4, 6, 2,
@@ -80,7 +80,7 @@ local levels = {
     level("Word from Fenwick", "Free tinsel along the snowy court.", 35, 2900, 13, 15, 5, 0, 1,
         bowl_mask, terrain(-2, 1, 1, -1, -1)),
     -- 13: Sawdust Row
-    level("Sawdust Row", "Use a striped treat to reach across.", 36, 3200, 14, 16, 6, 0, 1,
+    level("Sawdust Row", "Use a rocket to reach across.", 36, 3200, 14, 16, 6, 0, 1,
         lanes_mask, terrain(1, -2, -1, 1, 1)),
     -- 14: The Bench by the Fir
     level("The Bench by the Fir", "Open the court from either side.", 37, 3500, 14, 17, 7, 0, 1,

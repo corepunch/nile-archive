@@ -7,6 +7,7 @@ local R = require("state")
 local rules = require("rules")
 local art = require("art")
 local elements = require("match3.elements_view")
+if app.arg("homescapes") then R.HEX_R=32*4/rules.HEX_RADIUS end
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json
@@ -15,10 +16,9 @@ R.locked_notice = words.locked
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local NORMAL, PRISM = rules.NORMAL, rules.PRISM
-local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.game_cell_active
+local NORMAL = rules.NORMAL
+local hex_q, hex_r, cell_active = rules.hex_q, rules.hex_r, rules.game_cell_active
 local rgba = color
-local PI = math.pi
 
 -- Keep the guide's icon size; only live board pieces use the enlarged board scale.
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
@@ -27,8 +27,6 @@ local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = 2 * HEX_R
 local CELL_FACE_R = HEX_R - .65
 -- Registered edge sprites have a centreline radius of 46 px on a 128px canvas.
-local EDGE_SIZE = 128 * CELL_FACE_R / 46
-local INSET_SNOW_SIZE = 128 * (CELL_FACE_R - 7.5) / 46
 local FESTIVE = not app.arg("default-match3")
 local BOARD_FRAME_SIZE = FESTIVE and 2 * CELL_FACE_R / BOARD_SCALE or 2 * ART_HEX_R
 local cell_pos = R.cell_pos
@@ -44,21 +42,11 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local frame = (board and BOARD_FRAME_SIZE or ART_STATE_SIZE) * scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
-    -- Authored frames leave the matching kind visible in every optional pack.
-    local striped = t.special >= rules.ROW and t.special <= rules.DIAGONAL
-    if t.special ~= PRISM then
-        local inner = (t.special == NORMAL or striped) and 1 or .72
-        local h = s / aspect * inner
-        local lift = FESTIVE and art.piece_lift[t.kind] or 0
-        local box = rect.centered(vec2(at.x, at.y - lift * h), size2(s * aspect * inner, h))
-        if striped then   -- stripes run along the axis the treat clears
-            local angle = math.pi / 6 + (t.special - rules.ROW) * math.pi / 3
-            gfx.image_striped(R.relics[t.kind + 1], box, angle, art.stripes.repeats, art.stripes.width, art.stripes.ink, tint)
-        else
-            gfx.image(R.relics[t.kind + 1], box, tint)
-        end
+    if t.special ~= NORMAL then
+        gfx.image(R.board_art[art.specials[t.special]],dst,tint)
+    else
+        gfx.image(R.relics[t.kind+1],rect.centered(at,size2(s*aspect,s/aspect)),tint)
     end
-    if t.special ~= NORMAL and not striped then gfx.image(R.board_art[art.specials[t.special]], dst, tint) end
 end
 local draw_relic = R.draw_relic
 
@@ -80,44 +68,19 @@ local function draw_backdrop()
 end
 
 local function draw_cells(sx, foreground)
-    local g = R.g
-    local intro = R.intro
-    local fade = intro and intro:fade() or 1
-    for i = 0, CELLS - 1 do
-        local active, scale, turn, lift, flash = cell_active(g, i), 1, 0, 0, 0
-        if intro and active then scale, turn, lift, flash = intro:cell(i) end
-        if active and scale > .02 then
-            local at = cell_pos(i) + vec2(sx, lift)
-            -- Match Relic Rush's flat wells. The painted Christmas cell mask
-            -- had its own bevel, doubling the rim around every treat.
-            local face = (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(24, 65, 58) or rgba(29, 73, 63)
-            local radius = CELL_FACE_R * scale
+    local g,intro=R.g,R.intro
+    local fade=intro and intro:fade() or 1
+    for i=0,CELLS-1 do
+        local scale,turn,lift,flash=1,0,0,0
+        if intro then scale,turn,lift,flash=intro:cell(i) end
+        if cell_active(g,i) and scale>.02 then
+            local at=cell_pos(i)+vec2(sx,lift)
             if not foreground then
-                gfx.ngon(at + vec2(0, scale), (HEX_R + .25) * scale, 6, turn, rgba(11, 34, 36, 255 * fade))
-                gfx.ngon_grad(at, radius, 6, turn, color.alpha(color.shade(face, 1.26), fade),
-                              color.alpha(color.shade(face, .77), fade))
-                for d = 0, 5 do   -- a fine champagne rim along the exposed sides
-                    if not cell_active(g, hex_neighbor(i, d)) then
-                        local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
-                        gfx.line(at + vec2.polar(a, radius), at + vec2.polar(b, radius),
-                                 1.1 * scale, rgba(239, 212, 154, 220 * fade))
-                    end
-                end
-            else
-                if not FESTIVE and g.soil[i] > 0 then
-                    gfx.image_hex(R.board_art.sand, art.snow_source, at, radius, turn, rgba(255, 255, 255, 255 * fade))
-                end
-                if FESTIVE and g.soil[i] > 0 then
-                    local size = (g.ice[i] > 0 or g.chain[i] > 0) and INSET_SNOW_SIZE or EDGE_SIZE
-                    local snow = rect.centered(at, size2.splat(size * scale))
-                    gfx.image_rot(R.board_art["sand-edge"], snow, turn, color.alpha(color.WHITE, fade))
-                end
-                if flash > 0 then
-                    R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
-                    gfx.additive(true)
-                    gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
-                    gfx.additive(false)
-                end
+                -- Plain flat hex ground: no authored frame, bevel or edge trim.
+                local face=(hex_q(i)-hex_r(i))%2==1 and rgba(29,82,67) or rgba(35,94,73)
+                gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(face,fade))
+            elseif flash>0 then
+                R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
             end
         end
     end
@@ -130,7 +93,7 @@ local function draw_relics(sx)
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
             if clip then gfx.clip(clip) end
-            draw_relic(t, at, scale * BOARD_SCALE * elements.piece_scale(g, i), alpha, aspect, true)
+            draw_relic(t, at, scale * BOARD_SCALE * elements.piece_scale(g, i) * elements.selection_scale(R,i), alpha, aspect, true)
             if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end
@@ -147,14 +110,14 @@ local function draw_blockers(sx)
             local visible, scale, alpha = true, 1, 1
             if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
             if visible then
-                local dst = rect.centered(at, size2.splat((FESTIVE and EDGE_SIZE or STATE_SIZE) * scale))
+                local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
                 if ice then
                     local name = g.ice[i] > 1 and "ice-2" or "ice-1"
-                    gfx.image(R.board_art[FESTIVE and name .. "-edge" or name], dst, tint)
+                    gfx.image(R.board_art[name], dst, tint)
                 end
                 if tinsel then
-                    gfx.image(FESTIVE and R.board_art["chain-board"] or R.board_art.chain, dst, tint)
+                    gfx.image(elements.chain(R,g,i), dst, tint)
                 end
             end
         end
@@ -181,11 +144,9 @@ function R.board_screen(inp, dt)
     elements.ground(R, rules, sx)
     draw_cells(sx, true)
     -- Overhanging blockers sit below treats, including those in adjacent cells.
-    if FESTIVE then draw_blockers(sx) end
     draw_relics(sx)
-    if not FESTIVE then draw_blockers(sx) end
+    draw_blockers(sx)
     elements.blockers(R, rules, sx)
-    elements.highlights(R, rules, sx, FESTIVE and 2 * CELL_FACE_R or STATE_SIZE)
     if intro then draw_sheen(sx) end
     R.draw_board_tools(inp)
     if app.arg("art-states") then art.draw_catalogue(R) end

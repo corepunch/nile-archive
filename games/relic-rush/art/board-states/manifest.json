@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Straight lines on three hex axes: 3 normal, 4 axis ray, 5+ prism. No group/shape bomb recipe; existing bomb states retain their effects.",
+  "matching_rules": "Homescapes on hexes: straight 3 clear, straight 4 color-independent rocket, 5 rainbow, crossing lines bomb, four-cell rhombus plane.",
   "source": "art/board-states/source.png",
   "prompt": "art/board-states.prompt.txt",
   "generator": "built-in image_gen, 2026-10-30; first full-atlas geometry edit selected; user requested 30-degree tool rotation of original ornate selected/hint frames",
@@ -10,60 +10,63 @@
   "assets": {
     "ray-diagonal": {
       "box": [
-        1020,
-        20,
-        1340,
-        335
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/ray-diagonal.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png",
-      "rotation_degrees": -14
+      "runtime": "data/match3.png",
+      "atlas_frame": "ray-diagonal",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "ray-column": {
       "box": [
-        680,
-        20,
-        860,
-        335
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/ray-column.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png"
+      "runtime": "data/match3.png",
+      "atlas_frame": "ray-column",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "ray-row": {
       "box": [
-        190,
-        20,
-        515,
-        335
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/ray-row.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png",
-      "rotation_degrees": 14
+      "runtime": "data/match3.png",
+      "atlas_frame": "ray-row",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "bomb": {
       "box": [
-        195,
-        345,
-        530,
-        670
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/bomb.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png"
+      "runtime": "data/match3.png",
+      "atlas_frame": "bomb",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "prism": {
       "box": [
-        610,
-        350,
-        930,
-        675
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/prism.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png"
+      "runtime": "data/match3.png",
+      "atlas_frame": "prism",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "sand": {
       "box": [
@@ -78,33 +81,38 @@
     "chain": {
       "box": [
         0,
-        261,
-        230,
-        493
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/chain.png"
+      "runtime": "data/match3.png",
+      "atlas_frame": "chain",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "ice-2": {
       "box": [
-        990,
-        355,
-        1380,
-        670
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/ice-2.png",
-      "fit": "hex-slot",
-      "source": "art/board-states/clear-indicators.png"
+      "runtime": "data/match3.png",
+      "atlas_frame": "ice-2",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "ice-1": {
       "box": [
-        150,
-        680,
-        550,
-        995
+        0,
+        0,
+        128,
+        128
       ],
-      "runtime": "data/board-states/ice-1.png",
-      "fit": "hex-slot",
-      "source": "art/board-states/clear-indicators.png"
+      "runtime": "data/match3.png",
+      "atlas_frame": "ice-1",
+      "fit": "free-object",
+      "registration": "art/match3-atlas.json"
     },
     "selected": {
       "box": [
@@ -301,6 +309,18 @@
       "runtime": "data/board-states/sunburst-disabled.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
+    },
+    "plane": {
+      "box": [
+        0,
+        0,
+        128,
+        128
+      ],
+      "runtime": "data/match3.png",
+      "atlas_frame": "plane",
+      "source": "../../engine/art/homescapes/sprites/plane.png",
+      "fit": "free-object"
     }
   },
   "packs": [
@@ -322,7 +342,8 @@
     "COLUMN": "ray-column",
     "DIAGONAL": "ray-diagonal",
     "BOMB": "bomb",
-    "PRISM": "prism"
+    "PRISM": "prism",
+    "PLANE": "plane"
   },
   "tools": [
     "pickaxe",
@@ -953,7 +974,7 @@
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
     "review": "docs/review/striped-specials/README.md",
-    "specials": "ROW/COLUMN/DIAGONAL use gfx.image_striped on the full matching gem at 30/90/150 degrees; four broad cream periods, width .44, source alpha and surface shading retained. User explicitly requested engine-masked stripes on 2026-11-01. Bomb and prism replace the entire gem at full size; legacy ray sprites remain for canonical skin compatibility and are not drawn as badges.",
+    "specials": "Standalone original Homescapes power-ups from data/match3.png. Legacy stripe rendering retired.",
     "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; centred 1/2 hit counter above every board layer",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },
@@ -967,29 +988,8 @@
     "review": "docs/review/painted-buildings/current-camera/README.md"
   },
   "striped_specials": {
-    "source": "engine/render.c render_image_striped; engine/gfx.c draw_image_striped; engine/api.xml gfx.image_striped",
-    "runtime": "lua/board.lua R.draw_relic; lua/art.lua A.stripes",
-    "art": "existing pack gem and bomb/prism RGBA atlas regions; no new bitmap, texture mutation, offline derived states or intermediate texture allocation",
-    "authorization": "User explicitly requested drawing stripes in the engine over the icon, masked to its alpha (2026-11-01); replaces the authored-stripe approach.",
-    "states": [
-      "normal",
-      "ROW-30deg",
-      "COLUMN-90deg",
-      "DIAGONAL-150deg",
-      "BOMB-full-piece",
-      "PRISM-full-piece",
-      "selected",
-      "hint",
-      "ice-1",
-      "ice-2",
-      "chain",
-      "swap",
-      "fall",
-      "clear",
-      "guide"
-    ],
-    "review": "docs/review/striped-specials/README.md",
-    "reproduction": "build/test/relic-rush \"shot art-specials\" \"shot phone-art-specials\" \"shot stripe-states-\" \"shot guide\" \"shot phone-guide\""
+    "status": "retired; superseded by original Homescapes rockets",
+    "documentation": "../../docs/HOMESCAPES_HEX.md"
   },
   "settings_and_wallet": {
     "source": "art/expedition-hud/settings-lives.png",
@@ -1100,9 +1100,33 @@
     "prompt": "art/quest-objects/prompt.txt",
     "runtime": "data/quest-objects.png",
     "registration": "../../tools/relic_quest_art.py",
-    "slots": ["timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"],
-    "cell": [128, 128],
-    "states": ["covered", "partial", "recovered", "goal", "story handoff"],
+    "slots": [
+      "timber",
+      "lens",
+      "cable",
+      "chart",
+      "marker",
+      "tools",
+      "supplies",
+      "crank"
+    ],
+    "cell": [
+      128,
+      128
+    ],
+    "states": [
+      "covered",
+      "partial",
+      "recovered",
+      "goal",
+      "story handoff"
+    ],
     "transform": "One authored object sprite per slot. The board uses the authored sand over the covered cells, preserving the object alpha and palette. The same sprite appears in the goal and handoff."
+  },
+  "homescapes": {
+    "registration": "art/match3-atlas.json",
+    "source": "../../engine/art/homescapes/source-regions.json",
+    "documentation": "../../docs/HOMESCAPES_HEX.md",
+    "gaps": "https://github.com/corepunch/nile-archive/issues/98"
   }
 }

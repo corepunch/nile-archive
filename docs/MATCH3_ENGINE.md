@@ -1,5 +1,7 @@
 # Shared match-3 engine
 
+The current default rules and original-art atlas are documented in [Homescapes on hexes](HOMESCAPES_HEX.md). Legacy opt-in flags and campaign-only elements below remain supported.
+
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
 `engine/match3.lua` owns the hex grid, matching, specials, swaps, blockers,
 collection, seeded refill, free reshuffle, hints, tools, objectives and move
@@ -53,7 +55,7 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
 | `NO_THAW` | Disable neighboring ice damage from thawing kinds |
-| `LINE_MATCHES` | Match only contiguous straight runs along the three hex axes |
+| `LINE_MATCHES` | Default: straight runs along three hex axes, plus four-cell rhombi at minimum three |
 
 | Kind flag | Meaning |
 | --- | --- |
@@ -63,14 +65,15 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `STONE` | Count it toward the third resource total |
 
 The current topology is an axial hexagon, configurable from radius 1 to 16,
-with arbitrary missing cells. `match_min` defaults to three connected pieces;
-Relic Rush and Christmas Market select three with `LINE_MATCHES`.
-Rewards derive from the configured minimum plus one/two.
-In line mode each maximal run is evaluated separately; adjacent branches,
-triangles and rings do not extend it. Crossing runs clear their union, counting
-each cell once, without creating a shape-based bomb. Four in a line creates
-an axis ray; five or more creates a prism. Existing bombs and tool effects remain available. Tile kinds and specials remain
-separate, so a moving special retains its kind and behavior.
+with arbitrary missing cells. The default is `match_min=3` with `LINE_MATCHES`;
+explicit `flags=0` retains legacy connected-group matching.
+Straight four creates an axis rocket, a four-cell rhombus creates a plane,
+intersecting runs of at least five cells create a bomb, and straight five or
+more creates a rainbow ball. Overlapping shapes form one group, count each
+cell once, and use rainbow > bomb > rocket > plane reward priority. The swapped
+cell is preferred for the reward. Power-ups are separate activatable objects
+and do not participate in ordinary color matches. See the current
+[shape and combination contract](HOMESCAPES_HEX.md) for the hex adaptation.
 
 Level descriptors are content: name/lesson, moves, score, collection target
 (`relics`), excavation target (`soil`), chains and ice counts. Optional `mask`
@@ -115,15 +118,15 @@ same schedule; it does not skip rule steps.
 
 ## Graphics and the one-atlas skin
 
-`match3.skin()` loads the engine's default `engine/data/match3.png` from its resource directory: neutral
-gold, brick, timber, grain, stone, water, fruit and fish, plus board layers,
-specials, all five authored states for four controls, HUD elements and effect
-frames. Resources were informed by [Cradle of Rome's collection categories](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/);
-the art is original. The [full prompt](../engine/art/match3/prompt.txt) and
-[registration](../engine/art/match3/manifest.json) preserve its origin.
+`match3.skin()` loads `engine/data/match3.png` from its resource directory.
+The six pieces, rockets, bomb, rainbow ball, plane and available blocker states
+come from the original Homescapes resources. Existing controls, HUD and effect
+frames remain in the same atlas. The [registration manifest](../engine/art/match3/manifest.json)
+records source hashes and transforms; the retired original-art
+[prompt](../engine/art/match3/prompt.txt) remains historical provenance.
 
 An override is a data table `{path="match3.png", frames={name={x,y,w,h}, ...}}`.
-Required names cover six kinds, three special axes, bomb/prism, terrain,
+Required names cover six kinds, three special axes, bomb/prism/plane, terrain,
 selection/hint, guide/cell mask, score/completion, a background, and the five
 normal/selected/pressed/hover/disabled states of pickaxe, dynamite, sunburst
 and pause. Incomplete or out-of-bounds skins fail loudly. Optional entries
@@ -138,13 +141,15 @@ texture. Keep the owner alive; freeing a view leaves the owner intact.
 alpha-blended pieces in one atlas. Font glyphs, engine shape primitives and
 transient beam/particle geometry remain normal renderer facilities.
 
-Relic Rush packs all three piece sets, both scenes, the fallback background,
-board/control/HUD art and its light sprite in one 2048×4096 atlas. Christmas
-Market uses one 2048×2048 atlas, including the winter background and Noelle's
-board portrait. Packing copies existing RGBA canvases without resizing,
-recoloring or manufacturing states. The old source files remain available to
-the art tools and non-board screens. Both games use overrides by default;
-`--default-match3` exercises the neutral fallback in the actual game.
+Relic Rush uses one 2048×4096 atlas; Christmas Market uses one 2048×2048
+atlas. All former theme-piece names alias the same six original Homescapes
+pieces. Original sprites are uniformly fitted to the canonical hex object
+bounds with alpha preserved; diagonal rocket aliases use documented rotations.
+Outside-field backgrounds, portraits, controls and HUD art remain unchanged.
+Legacy field art stays archived but is no longer drawn, except the provisional
+quest-resource image. Flat hex geometry has no decorative frame; selection and
+hints animate piece scale. Both games use overrides by default;
+`--default-match3` exercises the shared Homescapes-piece fallback.
 
 For a game view, initialize presentation data with `match3.view{...}`, then
 call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authored `piece_width`;

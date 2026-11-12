@@ -130,6 +130,7 @@ void app_inject_click(vec2 p) { app_inject_press(p); app_inject_release(p); }
  * a game can read its JSON configuration at load time. */
 static const char *boot_data_dir;
 void app_boot_data(const char *dir) { boot_data_dir = dir; }
+void app_boot_args(int argc, char **argv) { A.argc = argc; A.argv = argv; }
 
 const char *app_path(const char *rel)
 {

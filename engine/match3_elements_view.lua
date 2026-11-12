@@ -8,6 +8,11 @@ for kind = 0, 5 do
     for hp = 1, 2 do E.assets[#E.assets + 1] = ("crate-%d-%d"):format(kind, hp) end
 end
 
+for i=0,5 do E.assets[#E.assets+1]="kind-"..i end
+for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
+    E.assets[#E.assets+1]=name
+end
+
 function E.load(art, skin)
     for _, name in ipairs(E.assets) do art[name] = assert(skin[name], "missing element art: " .. name) end
     art.object = art["object-goal"]
@@ -29,12 +34,11 @@ function E.ground(R, rules, sx)
             minx, maxx, miny, maxy = math.min(minx, p.x), math.max(maxx, p.x), math.min(miny, p.y), math.max(maxy, p.y)
         end
         if #object.cells > 0 then
-            local state = object.state == "revealed" and "revealed" or object.state == "partial" and "partial" or "covered"
             local size = 2 * R.HEX_R + math.max(maxx - minx, maxy - miny)
             local cx, cy = x / #object.cells, y / #object.cells
             local radius, height = R.HEX_R - .65, math.sqrt(3) * (R.HEX_R - .65)
             local alpha = R.intro and R.intro:fade() or 1
-            local art = object.art and R.board_art[object.art] or R.board_art["hidden-" .. state]
+            local art = object.art and R.board_art[object.art] or R.board_art.carpet
             -- Each hex samples its portion of the same footprint image. This
             -- prevents a large object from spilling into holes or other wells.
             for _, cell in ipairs(object.cells) do
@@ -50,9 +54,10 @@ function E.ground(R, rules, sx)
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
             local alpha = R.intro and R.intro:fade() or 1
-            if g.tunnel_to and g.tunnel_to[i] then image(R, "tunnel-in", at, 2 * (R.HEX_R - .65), alpha) end
-            if g.tunnel_from and g.tunnel_from[i] then image(R, "tunnel-out", at, 2 * (R.HEX_R - .65), alpha) end
-            if g.delivery_exits and g.delivery_exits[i] then image(R, "delivery-exit", at, 2 * (R.HEX_R - .65), alpha) end
+            if g.hs and g.hs.cells[i].carpet then image(R,"carpet",at,2*(R.HEX_R-.65),alpha) end
+            if g.tunnel_to and g.tunnel_to[i] then R.say_at("IN",at+vec2(0,R.HEX_R*.6),10,R.PAL_WHITE,50) end
+            if g.tunnel_from and g.tunnel_from[i] then R.say_at("OUT",at+vec2(0,R.HEX_R*.6),10,R.PAL_WHITE,50) end
+            if g.delivery_exits and g.delivery_exits[i] then R.say_at("EXIT",at+vec2(0,R.HEX_R*.6),10,R.PAL_WHITE,50) end
         end
     end
 end
@@ -65,9 +70,21 @@ function E.blockers(R, rules, sx)
             local name
             local hp = g.stone_hp and g.stone_hp[i] or 0
             local crate = g.crate_hp and g.crate_hp[i] or 0
-            if hp > 0 then name = "stone-" .. math.min(hp, 3)
-            elseif crate > 0 then name = ("crate-%d-%d"):format(g.crate_kind[i], math.min(crate, 2))
-            elseif g.hazard and (g.hazard[i] or 0) > 0 then name = "growth" end
+            if hp > 0 then name = "box-" .. math.min(hp, 6)
+            elseif crate > 0 then name = "box-"..math.min(crate,6)
+            elseif g.hazard and (g.hazard[i] or 0) > 0 then name = "honey-material" end
+            local label
+            if g.hs then
+                local c=g.hs.cells[i]
+                if (c.box or 0)>0 then name="box-"..math.min(6,c.box);if c.color then label="C"..c.color end
+                elseif (c.jelly or 0)>0 then name="honey-material";label="J"..c.jelly
+                elseif (c.statue or 0)>0 then label="S"..c.statue
+                elseif (c.stack or 0)>0 then label="K"..c.stack
+                elseif c.group then local group=g.hs.groups[c.group]
+                    label=group.kind=='SHUTTERS' and "BL"..group.count or group.kind=='TARGET_GEN' and "A"..group.count or "D"..group.hits
+                elseif (c.tile or 0)>0 then label="T"..c.tile
+                elseif c.visibleGenerator then label="GEN" end
+            end
             if name then
                 local visible, scale, alpha = true, 1, 1
                 if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
@@ -76,25 +93,18 @@ function E.blockers(R, rules, sx)
                     image(R, name, R.cell_pos(i) + vec2(sx, 0), 2 * radius * scale, alpha)
                 end
             end
+            if label then R.say_at(label,R.cell_pos(i)+vec2(sx,0),13,R.PAL_WHITE,50) end
         end
     end
 end
 
--- Hints and selections remain readable above all board elements.
-function E.highlights(R, rules, sx, size)
-    for i = 0, rules.CELLS - 1 do
-        if rules.game_cell_active(R.g, i) then
-            local name = i == R.selected and "selected"
-                or (i == R.hint_a or i == R.hint_b) and R.phase == R.PH_IDLE and "hint"
-            if name then
-                local scale, turn, lift = 1, 0, 0
-                if R.intro then scale, turn, lift = R.intro:cell(i) end
-                local at = R.cell_pos(i) + vec2(sx, lift)
-                local alpha = name == "hint" and (R.reduced_motion and 220 or 170 + 60 * math.sin(R.now * 5)) or 255
-                gfx.image_rot(R.board_art[name], rect.centered(at, size2.splat(size * scale)), turn, color(255, 255, 255, alpha))
-            end
-        end
+-- Selection/hints animate the original piece; no legacy frame is drawn.
+function E.selection_scale(R,i)
+    if i==R.selected then return 1.08 end
+    if R.phase==R.PH_IDLE and (i==R.hint_a or i==R.hint_b) then
+        return R.reduced_motion and 1.06 or 1+.06*math.sin(R.now*5)^2
     end
+    return 1
 end
 
 -- Leave room to see artwork underneath pieces on special floor cells.
@@ -107,7 +117,19 @@ function E.piece_scale(g, cell)
     return 1
 end
 
+function E.chain(R,g,i)
+    local c=g.hs and g.hs.cells[i]
+    return R.board_art[g.chain[i]>1 and "chain-2" or c and c.mirror and "chain-1-mirror" or "chain"]
+end
+
 function E.delivery(R, rules, t, at, scale, alpha, aspect, size)
+    if t.element then
+        local name=t.element=='cookie' and 'cookie-'..math.min(3,t.hp) or t.element=='cherry' and 'cherry'
+        if name then
+            gfx.image(R.board_art[name],rect.centered(at,size2(size*scale*aspect,size*scale/aspect)),color(255,255,255,alpha))
+        else R.say_at("N"..t.hp,at,18*scale,R.PAL_WHITE,50) end
+        return true
+    end
     if t.kind ~= rules.DELIVERY then return false end
     local box = rect.centered(at, size2(size * scale * aspect, size * scale / aspect))
     gfx.image(R.board_art.delivery, box, color(255, 255, 255, alpha))

@@ -1,9 +1,10 @@
 -- Game content, piece identities and restoration economy. Mechanics are shared.
 local match3 = require("match3")
 local campaign = require("campaign")
-local M = match3.new{flags=match3.LINE_MATCHES, radius=4, colors=6, match_min=3,
-    levels=campaign.levels, level_shapes=campaign.shapes,
-    kind_flags={[0]=match3.GOAL, [1]=match3.THAW, [2]=match3.WOOD, [4]=match3.STONE}}
+local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
+local M = match3.new{flags=match3.LINE_MATCHES, radius=reference and reference.radius or 4, colors=6, match_min=3,
+    levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
+    kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS
 M.wonder_levels=campaign.wonder_levels
@@ -51,6 +52,7 @@ function M.level_reward(g, wonders, progress)
 end
 
 function M.progress_reward(p, g, wonders)
+    if reference then return false end
     if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
     local reward = M.reward_breakdown(g,wonders,p)
     p.wallet = p.wallet + reward.total

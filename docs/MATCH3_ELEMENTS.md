@@ -1,5 +1,7 @@
 # Match-3 elements and board design
 
+The current default rules and original-art atlas are documented in [Homescapes on hexes](HOMESCAPES_HEX.md). Legacy opt-in flags and campaign-only elements below remain supported.
+
 Relic Rush and Christmas Market share rules, but author their own shapes,
 terrain priorities, element placements and teaching order. The playable
 campaigns are in each game's `lua/campaign.lua`; their design notes are in
@@ -28,8 +30,8 @@ matching colors: clear a route to a destination.
 | Family | Implemented behavior | Design purpose |
 | --- | --- | --- |
 | Stone / packed snow | A solid cell with 1–3 hits, no piece inside. Adjacent ordinary matches or direct special/tool hits remove one layer per wave. | Gate a bridge or divide work into successive openings. A three-hit wall needs repeated access, not just more score. |
-| Color crate / gift | Solid, 1–2 hits. Adjacent ordinary matches must match its marked kind; direct effects ignore the color. | Make the player bring a useful color to a particular edge, or build a ray with the right reach. All six kinds have separate art. |
-| Buried tablet / star display | An explicit footprint under excavation coverings. Clearing every footprint cell discovers one object. Covered, partial and revealed art records progress. | Concentrate work into a readable region; the last corner matters. Footprints are authored rather than randomly scattered. |
+| Color crate / gift | Solid, 1–2 hits. Adjacent ordinary matches must match its marked kind; direct effects ignore the color. | Make the player bring a useful color to a particular edge, or build a ray with the right reach. Color-specific original art is still missing; see the current art-gap catalogue. |
+| Buried tablet / star display | An explicit footprint under excavation coverings. Clearing every footprint cell discovers one object. The quest-resource image is provisionally retained; covering progress follows the current original-sprite adapter. | Concentrate work into a readable region; the last corner matters. Footprints are authored rather than randomly scattered. |
 | Vines / tangled ribbon | One-hit overlay locking its piece. Adjacent ordinary matches or direct effects remove it. One new cell grows after a successful swap and its complete cascade if no hazard was damaged that turn. | Create a local priority that competes with excavation or routing. Free tools do not advance growth. |
 | Tunnel / chute | Fixed directed entrance and exit, with the exit lower on screen. The exit draws from the entrance before ordinary donors. Pieces retain their kind and special. | Connect work in separate regions: clearing the destination pulls from another lane. Current campaigns have at most one pair per board. |
 | Relic parcel / present delivery | A nonmatching, unswappable token. It falls straight down or through tunnels and is consumed once at a marked exit. Blasts cannot destroy it; shuffles keep it in place. | Turn clearing into route preparation. Unlike normal pieces it cannot drift diagonally into an unintended bottom pocket. |
@@ -107,7 +109,7 @@ as the board and HUD.
 
 ## Artwork and verification
 
-The **48 new sprites** cover 24 Relic Rush states and 24 Christmas Market
+The retired pre-Homescapes set contains **48 sprites** covering 24 Relic Rush states and 24 Christmas Market
 states. Three stone strengths, twelve crate states,
 two tunnel ends, three object stages, growth, delivery, exit and object icon
 are individually painted. A second art direction replaces perspective boxes
@@ -117,7 +119,7 @@ The two freestanding delivery icons retain the first atlas's authored alpha.
 The [master](../engine/art/match3-elements/source.png),
 [exact prompt](../engine/art/match3-elements/prompt.txt), and
 [registration manifest](../engine/art/match3-elements/manifest.json) are retained.
-No external game sprites are used in these two runtime atlases.
+These are historical assets, no longer drawn on the field except the provisional quest-resource image. The current atlases use original Homescapes sprites; see [the port contract](HOMESCAPES_HEX.md) for replacements and missing states.
 
 ```sh
 python3 tools/match3_elements_art.py
@@ -133,10 +135,10 @@ The full-bleed painted surfaces are cut with the authoritative
 [engine tile mask](../engine/art/hex-tile/README.md); this fixes geometry without
 recoloring artwork or deriving one strength from another. Delivery icons keep
 their original alpha. Every one of the 46 tile surfaces passes the strict
-coverage, edge and spill check. The neutral engine skin includes the Relic
-element set. Existing default-frame coordinates are preserved; the default
-atlas grows to 1024×2048. Each game's inventory and asset catalogue records
-its additions. See the [review captures and checks](review/match3-elements/README.md).
+coverage, edge and spill check. The archived registration checks describe that former art set. The default atlas
+is now 1024×2048 with original Homescapes frame aliases. Each game's inventory
+and asset catalogue records the replacement. See the [historical review](review/match3-elements/README.md)
+and [current review](review/homescapes-port/README.md).
 
 Rule tests cover strength/color gating, one damage per wave, footprint
 completion, growth suppression, state copying, shuffles, tunnel donor priority,

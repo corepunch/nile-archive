@@ -168,7 +168,7 @@ static void run_game(const test_job *j, const char *suite, const char *lua_dir, 
     for (char *t = strtok(line, " "); t && n < MAX_ARGS; t = strtok(NULL, " ")) args[n++] = t;
     for (int i = 1; i + 1 < n; i++)
         if (!strcmp(args[i], "--lua")) lua_dir = args[i + 1];
-    app_desc desc = script_boot(lua_dir, data_dir);
+    app_desc desc = script_boot_args(lua_dir, data_dir, n, args);
     if (!strcmp(j->kind, "hold")) {
         gesture_game_frame = desc.frame, desc.frame = gesture_frame;
         gesture_index = 0;
@@ -181,6 +181,7 @@ static void run_rules(const test_job *j, const char *lua_dir, const char *data_d
 {
     /* A game's rules read its JSON data as the game does; the engine's own
      * rules name repository paths. */
+    app_boot_args(0, NULL);
     app_boot_data(strcmp(current_suite, "engine") ? data_dir : NULL);
     char roots[512], path[128];
     snprintf(roots, sizeof roots, "%s;%s%sengine;tests/lua", lua_dir, j->roots, j->roots[0] ? ";" : "");

@@ -184,3 +184,7 @@ For a local story walkthrough, launch `./build/christmas-market --debug-walkthro
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
 On the island, **Complete task** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
+
+### Homescapes board mechanics
+
+The shared hex board uses original Homescapes pieces and standalone rockets, bombs, planes and rainbow balls, with the existing animations and effects. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.

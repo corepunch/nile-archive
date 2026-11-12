@@ -169,7 +169,7 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/game.json": "c5ccfd00ca9357fe4f11fbc2d982dcfcbf5084e5258e491010c54c1ce21b87ca",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
-    "data/match3.png": "c707f2466fb29ae73da3aec4c796426b066ee62da9be5a0e70a17b6d95d4be3a",
+    "data/match3.png": "f9f5e889440db29d5ebf493f33aebc2f642aeaa2d998fd60852832a6b8d6d169",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -286,5 +286,10 @@
     "delivery_prompt": "../../engine/art/match3-elements/prompt-v1.txt",
     "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
     "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states."
+  },
+  "homescapes": {
+    "registration": "art/match3-atlas.json",
+    "documentation": "../../docs/HOMESCAPES_HEX.md",
+    "gaps": "https://github.com/corepunch/nile-archive/issues/98"
   }
 }

@@ -5,8 +5,8 @@
 local A = {}
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
-A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism"}
--- Ray powers use engine-rendered stripes masked to the original gem alpha.
+A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
+-- Color-independent original Homescapes power-ups replace the ordinary piece.
 -- Bomb and prism replace the gem with their full-size authored sprite.
 -- The neutral skin's filled ice uses 0.52 opacity. Live rim art has open centres.
 A.indicators = {source="art/board-states/clear-indicators.png", ice_opacity=133}

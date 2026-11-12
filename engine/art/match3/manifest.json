@@ -16,120 +16,82 @@
   "runtime": "engine/data/match3.png",
   "registration": {
     "kind-0": {
-      "crop": [
-        0,
-        0,
-        157,
-        167
-      ],
+      "source": "engine/art/homescapes/sprites/chip-0.png",
       "rotation": 0,
-      "size": [
-        117,
-        124
+      "registered_size": [
+        108,
+        85
       ],
-      "runtime": [
-        0,
-        0,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "kind-1": {
-      "crop": [
-        156,
-        36,
-        315,
-        163
-      ],
+      "source": "engine/art/homescapes/sprites/chip-1.png",
       "rotation": 0,
-      "size": [
-        124,
-        99
+      "registered_size": [
+        112,
+        106
       ],
-      "runtime": [
-        128,
-        0,
+      "canvas": [
         128,
         128
       ],
-      "source": "engine/art/match3/source-brick.png",
-      "prompt": "engine/art/match3/brick.prompt.txt"
+      "mask": false
     },
     "kind-2": {
-      "crop": [
-        314,
-        0,
-        470,
-        167
-      ],
+      "source": "engine/art/homescapes/sprites/chip-2.png",
       "rotation": 0,
-      "size": [
-        116,
-        124
+      "registered_size": [
+        110,
+        98
       ],
-      "runtime": [
-        256,
-        0,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "kind-3": {
-      "crop": [
-        470,
-        0,
-        627,
-        167
-      ],
+      "source": "engine/art/homescapes/sprites/chip-3.png",
       "rotation": 0,
-      "size": [
-        117,
-        124
+      "registered_size": [
+        97,
+        104
       ],
-      "runtime": [
-        384,
-        0,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "kind-4": {
-      "crop": [
-        627,
-        0,
-        784,
-        167
-      ],
+      "source": "engine/art/homescapes/sprites/chip-4.png",
       "rotation": 0,
-      "size": [
-        117,
-        124
+      "registered_size": [
+        112,
+        111
       ],
-      "runtime": [
-        512,
-        0,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "kind-5": {
-      "crop": [
-        784,
-        0,
-        940,
-        167
-      ],
+      "source": "engine/art/homescapes/sprites/chip-5.png",
       "rotation": 0,
-      "size": [
-        116,
-        124
+      "registered_size": [
+        110,
+        102
       ],
-      "runtime": [
-        640,
-        0,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "kind-6": {
       "crop": [
@@ -170,99 +132,69 @@
       ]
     },
     "ray-row": {
-      "crop": [
-        0,
-        167,
-        157,
-        338
+      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
+      "rotation": -30,
+      "registered_size": [
+        112,
+        104
       ],
-      "rotation": 0,
-      "size": [
-        114,
-        124
-      ],
-      "runtime": [
-        0,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "ray-column": {
-      "crop": [
-        157,
-        167,
-        314,
-        338
-      ],
+      "source": "engine/art/homescapes/sprites/rocket-vertical.png",
       "rotation": 0,
-      "size": [
-        114,
-        124
+      "registered_size": [
+        91,
+        112
       ],
-      "runtime": [
-        128,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "ray-diagonal": {
-      "crop": [
-        314,
-        167,
-        470,
-        338
+      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
+      "rotation": -150,
+      "registered_size": [
+        112,
+        104
       ],
-      "rotation": 0,
-      "size": [
-        113,
-        124
-      ],
-      "runtime": [
-        256,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "bomb": {
-      "crop": [
-        470,
-        167,
-        627,
-        338
-      ],
+      "source": "engine/art/homescapes/sprites/bomb.png",
       "rotation": 0,
-      "size": [
-        114,
-        124
+      "registered_size": [
+        112,
+        110
       ],
-      "runtime": [
-        384,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "prism": {
-      "crop": [
-        627,
-        167,
-        784,
-        338
-      ],
+      "source": "engine/art/homescapes/sprites/rainbow-ball.png",
       "rotation": 0,
-      "size": [
-        114,
-        124
+      "registered_size": [
+        112,
+        109
       ],
-      "runtime": [
-        512,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "sand": {
       "crop": [
@@ -284,61 +216,43 @@
       ]
     },
     "chain": {
-      "crop": [
-        940,
-        167,
-        1097,
-        338
+      "source": "engine/art/homescapes/sprites/chain-1.png",
+      "rotation": 0,
+      "registered_size": [
+        90,
+        89
       ],
-      "rotation": 30,
-      "size": [
-        122,
-        124
-      ],
-      "runtime": [
-        768,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "ice-2": {
-      "crop": [
-        1097,
-        167,
-        1254,
-        338
+      "source": "engine/art/homescapes/sprites/ice-2.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        106
       ],
-      "rotation": 30,
-      "size": [
-        122,
-        124
-      ],
-      "runtime": [
-        896,
-        128,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "ice-1": {
-      "crop": [
-        0,
-        338,
-        157,
-        499
+      "source": "engine/art/homescapes/sprites/ice-1.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        74
       ],
-      "rotation": 30,
-      "size": [
-        123,
-        124
-      ],
-      "runtime": [
-        0,
-        256,
+      "canvas": [
         128,
         128
-      ]
+      ],
+      "mask": false
     },
     "selected": {
       "crop": [
@@ -1444,14 +1358,17 @@
       "transform": "RGBA canvas copied without change"
     },
     "delivery": {
-      "source": "games/relic-rush/data/board-states/delivery.png",
-      "runtime": [
-        640,
-        1280,
+      "source": "engine/art/homescapes/sprites/donut.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        111
+      ],
+      "canvas": [
         128,
         128
       ],
-      "transform": "RGBA canvas copied without change"
+      "mask": false
     },
     "delivery-exit": {
       "source": "games/relic-rush/data/board-states/delivery-exit.png",
@@ -1472,13 +1389,423 @@
         128
       ],
       "transform": "RGBA canvas copied without change"
+    },
+    "box-1": {
+      "source": "engine/art/homescapes/sprites/box-1.png",
+      "rotation": 0,
+      "registered_size": [
+        99,
+        104
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "box-2": {
+      "source": "engine/art/homescapes/sprites/box-2.png",
+      "rotation": 0,
+      "registered_size": [
+        100,
+        99
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "box-3": {
+      "source": "engine/art/homescapes/sprites/box-3.png",
+      "rotation": 0,
+      "registered_size": [
+        102,
+        99
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "box-4": {
+      "source": "engine/art/homescapes/sprites/box-4.png",
+      "rotation": 0,
+      "registered_size": [
+        102,
+        99
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "box-5": {
+      "source": "engine/art/homescapes/sprites/box-5.png",
+      "rotation": 0,
+      "registered_size": [
+        100,
+        97
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "box-6": {
+      "source": "engine/art/homescapes/sprites/box-6.png",
+      "rotation": 0,
+      "registered_size": [
+        102,
+        98
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "carpet": {
+      "source": "engine/art/homescapes/sprites/carpet.png",
+      "rotation": 0,
+      "registered_size": [
+        94,
+        94
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": true
+    },
+    "carpet-roll": {
+      "source": "engine/art/homescapes/sprites/carpet-roll.png",
+      "rotation": 0,
+      "registered_size": [
+        33,
+        112
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chain-1": {
+      "source": "engine/art/homescapes/sprites/chain-1.png",
+      "rotation": 0,
+      "registered_size": [
+        90,
+        89
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chain-1-mirror": {
+      "source": "engine/art/homescapes/sprites/chain-1-mirror.png",
+      "rotation": 0,
+      "registered_size": [
+        92,
+        89
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chain-2": {
+      "source": "engine/art/homescapes/sprites/chain-2.png",
+      "rotation": 0,
+      "registered_size": [
+        90,
+        88
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "cherry": {
+      "source": "engine/art/homescapes/sprites/cherry.png",
+      "rotation": 0,
+      "registered_size": [
+        94,
+        85
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chip-0": {
+      "source": "engine/art/homescapes/sprites/chip-0.png",
+      "rotation": 0,
+      "registered_size": [
+        108,
+        85
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chip-1": {
+      "source": "engine/art/homescapes/sprites/chip-1.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        106
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chip-2": {
+      "source": "engine/art/homescapes/sprites/chip-2.png",
+      "rotation": 0,
+      "registered_size": [
+        110,
+        98
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chip-3": {
+      "source": "engine/art/homescapes/sprites/chip-3.png",
+      "rotation": 0,
+      "registered_size": [
+        97,
+        104
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chip-4": {
+      "source": "engine/art/homescapes/sprites/chip-4.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        111
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "chip-5": {
+      "source": "engine/art/homescapes/sprites/chip-5.png",
+      "rotation": 0,
+      "registered_size": [
+        110,
+        102
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "cookie-1": {
+      "source": "engine/art/homescapes/sprites/cookie-1.png",
+      "rotation": 0,
+      "registered_size": [
+        105,
+        112
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "cookie-2": {
+      "source": "engine/art/homescapes/sprites/cookie-2.png",
+      "rotation": 0,
+      "registered_size": [
+        107,
+        112
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "cookie-3": {
+      "source": "engine/art/homescapes/sprites/cookie-3.png",
+      "rotation": 0,
+      "registered_size": [
+        105,
+        112
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "donut": {
+      "source": "engine/art/homescapes/sprites/donut.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        111
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "gold-rainbow-ball": {
+      "source": "engine/art/homescapes/sprites/gold-rainbow-ball.png",
+      "rotation": 0,
+      "registered_size": [
+        111,
+        109
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "honey-material": {
+      "source": "engine/art/homescapes/sprites/honey-material.png",
+      "rotation": 0,
+      "registered_size": [
+        79,
+        82
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": true
+    },
+    "plane": {
+      "source": "engine/art/homescapes/sprites/plane.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        110
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "rainbow-ball": {
+      "source": "engine/art/homescapes/sprites/rainbow-ball.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        109
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "rocket-horizontal": {
+      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
+      "rotation": 0,
+      "registered_size": [
+        112,
+        87
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "rocket-vertical": {
+      "source": "engine/art/homescapes/sprites/rocket-vertical.png",
+      "rotation": 0,
+      "registered_size": [
+        91,
+        112
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "web-2": {
+      "source": "engine/art/homescapes/sprites/web-2.png",
+      "rotation": 0,
+      "registered_size": [
+        104,
+        92
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
     }
   },
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "267e485f69583bb2718531541456c4e74eeb316c934811244044240f3c00466b",
+    "recipe": "a724ae4b49d4c9fc24814229012c4a9c04ec0065ad35fc796a33888f1231f6a9",
     "inputs": {
+      "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
+      "engine/art/homescapes/sprites/bomb.png": "db835621cea3c59746f28699df2c1464c958843d7aff634dad231f661b3260cb",
+      "engine/art/homescapes/sprites/box-1.png": "c1fc6d424c43ee5e4c6a2ae59c61f35f39762597535296cbfeabf63040bb5244",
+      "engine/art/homescapes/sprites/box-2.png": "3a712a3f569ea4dc84df51e15e1e1faed536d903d6b17acde91fc3b9800f300a",
+      "engine/art/homescapes/sprites/box-3.png": "c205d253ddbb6f62952c292497a156f045946b0e2fd777cd23f1547ceb0025fe",
+      "engine/art/homescapes/sprites/box-4.png": "4bb4f86e8c5a002f477eaa87e8d8998131a89b951a9e853892842b942d87a524",
+      "engine/art/homescapes/sprites/box-5.png": "99e5c27a43898a9957ac98c82f4fbc3070132ae55fc2f9aca536dfd3bea7dd4a",
+      "engine/art/homescapes/sprites/box-6.png": "b3822d10d2107dcbb075e7273968bf9941a94524808333b872c3a2ec66672795",
+      "engine/art/homescapes/sprites/carpet-roll.png": "bc19ce532d3efe05cd827aa4d21b3ec8b75102f5d30b79bb74af2dfc3d7265b4",
+      "engine/art/homescapes/sprites/carpet.png": "ebf3be34de7d341224782c6ac8973efd7b47e518b2e0240026074e5bac874038",
+      "engine/art/homescapes/sprites/chain-1-mirror.png": "4a8d55a723c47232842840593784e8037be59466fe4e9595d0190030f6904b3e",
+      "engine/art/homescapes/sprites/chain-1.png": "6dd6e26a2517fecaf23426569c131de0108465e35ab13b12075471bbea30d0e4",
+      "engine/art/homescapes/sprites/chain-2.png": "b079e697e46e005d1faecd99d755293af3b0678705c105b9f2f9f05bedf1563b",
+      "engine/art/homescapes/sprites/cherry.png": "26a4e2666f714bb2eee3c860338c21d80c1fef944f90364710045a06a5e6cf57",
+      "engine/art/homescapes/sprites/chip-0.png": "094a4dd120f6872221659620a8173c3cd5102efa6595fb0b905427dc339f0f7d",
+      "engine/art/homescapes/sprites/chip-1.png": "cb86082a22841f680c69fe75abdcc79c1c1d238e9528af4ff3253004f5835218",
+      "engine/art/homescapes/sprites/chip-2.png": "995b5c46a2076aabe93bc0866a82ace271cc04f51589ebf630e984bbd694c826",
+      "engine/art/homescapes/sprites/chip-3.png": "194d24be0e7133a78db8d8f66a40bcf49ca2d6b665e2ed96bb062ed511ca6dd9",
+      "engine/art/homescapes/sprites/chip-4.png": "94bb1af374d2cf7ca8af06244d22f0ade12b3805440735d835755373557621b3",
+      "engine/art/homescapes/sprites/chip-5.png": "376d97edcd50e46e448a692de7a0f22785c5a510d3c92f351779a7f797968e65",
+      "engine/art/homescapes/sprites/cookie-1.png": "2f6f9ec34b9ea8c91d4ca13bd23ffffaeee2119d1329b489a19543670ba2bf35",
+      "engine/art/homescapes/sprites/cookie-2.png": "7647fa0c786bcb9b8cd14c36f5d8a81749ca9636caae9506114e47fdd0037216",
+      "engine/art/homescapes/sprites/cookie-3.png": "fbf7c33fb76ddbb40ba97632d3f809edc60408d430f5f0264c3a03fc8977a0cf",
+      "engine/art/homescapes/sprites/donut.png": "6430452c03918a5541a79f8d5f6d07f9958f54fb5fb38f8a1c5a263ce47a0253",
+      "engine/art/homescapes/sprites/gold-rainbow-ball.png": "2d69d32439257dd62bb7c410397e51f8124e7b135f146f48cd5814632cb3641b",
+      "engine/art/homescapes/sprites/honey-material.png": "9cf454541cc62620a3fe0e6a2555d953235596494d7d4b68baeede04d6011f54",
+      "engine/art/homescapes/sprites/ice-1.png": "aa335d52106e6e41e63a8cfd20f3d0337be0105714f5c54ba4dd7dc44a79e389",
+      "engine/art/homescapes/sprites/ice-2.png": "971b2c451a4d04df9a62075cd7c6896bb741bfdeb51a0e688698aba5976e5d1f",
+      "engine/art/homescapes/sprites/plane.png": "5986a288603f4d5e711620092ee74bfd1ace896861aed046fefb58441bf6aa4b",
+      "engine/art/homescapes/sprites/rainbow-ball.png": "7f7e33828421498f3658e0588c37712b12a72344ac15aa597e96a3fba796a04b",
+      "engine/art/homescapes/sprites/rocket-horizontal.png": "634ae885dfb7be9f17adf1a4ac9dcb2af86a5fbb32028c24b373d7015fbd9ae6",
+      "engine/art/homescapes/sprites/rocket-vertical.png": "f4910c53b06207d53b234533edf4f7dd8cdb7f8e971048e6fc75f86d53a583e5",
+      "engine/art/homescapes/sprites/web-2.png": "54bc25ae19d5f7e5aa9770347ad0d04bc9eba8ab945a73786c819728d75cd8b3",
       "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
@@ -1506,11 +1833,12 @@
       "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
-      "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae"
+      "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
+      "tools/homescapes_atlas.py": "c7c2e10778f0662a37de94863f4bab02c8b5ae7be1c77323a699efd355891c0f"
     },
     "outputs": {
-      "engine/data/match3.png": "7fead825f16e47c0cd34ea5225b845af0565b1d97a9660822bc02e1620acb450",
-      "engine/match3_frames.lua": "fb83407325afc6ddba1f0eded25ecfe642d495536007b1f0d6ea468ca4f303ce"
+      "engine/data/match3.png": "3475aebe15f1a5caeb351de58a3a83947a20a4b492ae19bb8ebd22dd434b5dd3",
+      "engine/match3_frames.lua": "8e6c8f006d161ab507283dcb3ce60a06072ce14149176fc8f82246f63f63473d"
     }
   }
 }

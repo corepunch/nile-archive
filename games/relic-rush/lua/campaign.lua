@@ -102,7 +102,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Tool Roll", "Flames thaw nearby ice.", 40, 3800, 16, 12, 3, 4)
+        local l = level("The Tool Roll", "Hit frozen pieces with matches or power-ups.", 40, 3800, 16, 12, 3, 4)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -174,7 +174,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Supper for Twelve", "Flames thaw nearby ice.", 40, 4000, 15, 18, 4, 7)
+        local l = level("Supper for Twelve", "Hit frozen pieces with matches or power-ups.", 40, 4000, 15, 18, 4, 7)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, -1)
         l.ice_layers = 2

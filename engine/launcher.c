@@ -41,7 +41,7 @@ static int launch(int argc, char **argv)
 #endif
     for (int i = 1; i + 1 < argc; i++)   /* app_arg needs the app; the script root is needed first */
         if (!strcmp(argv[i], "--lua")) lua_dir = argv[i + 1];
-    app_desc desc = script_boot(lua_dir, data_dir);
+    app_desc desc = script_boot_args(lua_dir, data_dir, argc, argv);
     int status = app_run(desc, argc, argv);
 #ifndef AX_PLATFORM_IOS
     script_close();

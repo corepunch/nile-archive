@@ -365,3 +365,22 @@ do
     R.claim_reward = claim
     testing.reset()
 end
+
+-- A real release/tap starts the existing clearing phase without selecting twice.
+do
+    local g=rules.game_start(0,123);local cell=rules.hex_center()
+    g.active[cell]=true;g.chain[cell],g.ice[cell],g.stone_hp[cell],g.crate_hp[cell],g.hazard[cell]=0,0,0,0,0
+    g.tiles[cell]=rules.tile(0,rules.PLANE)
+    setup(g);R.selected,R.tool=-1,-1;R.sound=false
+    local moves=g.moves;local at=R.cell_pos(cell)
+    R.board_input{released=true,pos=at,press_pos=at}
+    check(g.moves==moves-1 and R.phase==R.PH_CLEAR,"one tap activates and enters the preserved clear phase")
+    check(#R.pending.flights==1,"plane activation reaches the animated effect event")
+end
+
+-- More source mechanic rows must remain reachable without pushing Done offscreen.
+do
+    local _,height=R.guide_form:measure(432,R.skin)
+    check(height<=800,"mechanics guide fits the portrait screen")
+    check(R.guide_form:scroll_to("topics","growth"),"last mechanic remains reachable by scrolling")
+end

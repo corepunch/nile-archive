@@ -1,0 +1,442 @@
+{
+  "bomb": {
+    "coverage": 0.7539593814048817,
+    "spill": 0.0,
+    "edge_coverage": 0.01381509032943677,
+    "alpha_error_pixels": 3492,
+    "alpha_max_error": 255,
+    "inside_pixels": 8093,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "box-1": {
+    "coverage": 0.6861375069871437,
+    "spill": 0.0,
+    "edge_coverage": 0.04250797024442083,
+    "alpha_error_pixels": 5190,
+    "alpha_max_error": 255,
+    "inside_pixels": 7365,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "box-2": {
+    "coverage": 0.7112912241475685,
+    "spill": 0.00013095861707700367,
+    "edge_coverage": 0.06907545164718384,
+    "alpha_error_pixels": 4827,
+    "alpha_max_error": 255,
+    "inside_pixels": 7635,
+    "outside_pixels": 1,
+    "pass": true
+  },
+  "box-3": {
+    "coverage": 0.7231227874045091,
+    "spill": 0.0,
+    "edge_coverage": 0.07226354941551541,
+    "alpha_error_pixels": 4775,
+    "alpha_max_error": 255,
+    "inside_pixels": 7762,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "box-4": {
+    "coverage": 0.7227501397428732,
+    "spill": 0.0,
+    "edge_coverage": 0.07226354941551541,
+    "alpha_error_pixels": 4779,
+    "alpha_max_error": 255,
+    "inside_pixels": 7758,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "box-5": {
+    "coverage": 0.694056269796907,
+    "spill": 0.0,
+    "edge_coverage": 0.03294367693942614,
+    "alpha_error_pixels": 4940,
+    "alpha_max_error": 255,
+    "inside_pixels": 7450,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "box-6": {
+    "coverage": 0.7059809949692566,
+    "spill": 0.0,
+    "edge_coverage": 0.03719447396386823,
+    "alpha_error_pixels": 4929,
+    "alpha_max_error": 255,
+    "inside_pixels": 7578,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "carpet-roll": {
+    "coverage": 0.1936836221352711,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 9685,
+    "alpha_max_error": 255,
+    "inside_pixels": 2079,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "carpet": {
+    "coverage": 0.975498416247438,
+    "spill": 0.0,
+    "edge_coverage": 0.7789585547290117,
+    "alpha_error_pixels": 676,
+    "alpha_max_error": 255,
+    "inside_pixels": 10471,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chain-1-mirror": {
+    "coverage": 0.17868455375442518,
+    "spill": 0.0,
+    "edge_coverage": 0.03294367693942614,
+    "alpha_error_pixels": 10001,
+    "alpha_max_error": 255,
+    "inside_pixels": 1918,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chain-1": {
+    "coverage": 0.17840506800819825,
+    "spill": 0.0,
+    "edge_coverage": 0.02763018065887354,
+    "alpha_error_pixels": 9994,
+    "alpha_max_error": 255,
+    "inside_pixels": 1915,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chain": {
+    "coverage": 0.17840506800819825,
+    "spill": 0.0,
+    "edge_coverage": 0.02763018065887354,
+    "alpha_error_pixels": 9994,
+    "alpha_max_error": 255,
+    "inside_pixels": 1915,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chain-2": {
+    "coverage": 0.3420905533817775,
+    "spill": 0.0,
+    "edge_coverage": 0.05844845908607864,
+    "alpha_error_pixels": 8655,
+    "alpha_max_error": 255,
+    "inside_pixels": 3672,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "cherry": {
+    "coverage": 0.417551704863052,
+    "spill": 0.0,
+    "edge_coverage": 0.01700318809776833,
+    "alpha_error_pixels": 7292,
+    "alpha_max_error": 255,
+    "inside_pixels": 4482,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chip-0": {
+    "coverage": 0.5864542574995342,
+    "spill": 0.0,
+    "edge_coverage": 0.1073326248671626,
+    "alpha_error_pixels": 5639,
+    "alpha_max_error": 255,
+    "inside_pixels": 6295,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "kind-0": {
+    "coverage": 0.5864542574995342,
+    "spill": 0.0,
+    "edge_coverage": 0.1073326248671626,
+    "alpha_error_pixels": 5639,
+    "alpha_max_error": 255,
+    "inside_pixels": 6295,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chip-1": {
+    "coverage": 0.7154835103409726,
+    "spill": 0.0,
+    "edge_coverage": 0.018065887353878853,
+    "alpha_error_pixels": 4204,
+    "alpha_max_error": 255,
+    "inside_pixels": 7680,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "kind-1": {
+    "coverage": 0.7154835103409726,
+    "spill": 0.0,
+    "edge_coverage": 0.018065887353878853,
+    "alpha_error_pixels": 4204,
+    "alpha_max_error": 255,
+    "inside_pixels": 7680,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chip-2": {
+    "coverage": 0.6754238867151109,
+    "spill": 0.00013791201213625708,
+    "edge_coverage": 0.05419766206163656,
+    "alpha_error_pixels": 4594,
+    "alpha_max_error": 255,
+    "inside_pixels": 7250,
+    "outside_pixels": 1,
+    "pass": true
+  },
+  "kind-2": {
+    "coverage": 0.6754238867151109,
+    "spill": 0.00013791201213625708,
+    "edge_coverage": 0.05419766206163656,
+    "alpha_error_pixels": 4594,
+    "alpha_max_error": 255,
+    "inside_pixels": 7250,
+    "outside_pixels": 1,
+    "pass": true
+  },
+  "chip-3": {
+    "coverage": 0.728060368921185,
+    "spill": 0.00012794268167860799,
+    "edge_coverage": 0.04250797024442083,
+    "alpha_error_pixels": 4124,
+    "alpha_max_error": 255,
+    "inside_pixels": 7815,
+    "outside_pixels": 1,
+    "pass": true
+  },
+  "kind-3": {
+    "coverage": 0.728060368921185,
+    "spill": 0.00012794268167860799,
+    "edge_coverage": 0.04250797024442083,
+    "alpha_error_pixels": 4124,
+    "alpha_max_error": 255,
+    "inside_pixels": 7815,
+    "outside_pixels": 1,
+    "pass": true
+  },
+  "chip-4": {
+    "coverage": 0.8049189491335942,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 2875,
+    "alpha_max_error": 255,
+    "inside_pixels": 8640,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "kind-4": {
+    "coverage": 0.8049189491335942,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 2875,
+    "alpha_max_error": 255,
+    "inside_pixels": 8640,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "chip-5": {
+    "coverage": 0.6947084032047699,
+    "spill": 0.0,
+    "edge_coverage": 0.07013815090329437,
+    "alpha_error_pixels": 4409,
+    "alpha_max_error": 255,
+    "inside_pixels": 7457,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "kind-5": {
+    "coverage": 0.6947084032047699,
+    "spill": 0.0,
+    "edge_coverage": 0.07013815090329437,
+    "alpha_error_pixels": 4409,
+    "alpha_max_error": 255,
+    "inside_pixels": 7457,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "cookie-1": {
+    "coverage": 0.6801751444009689,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 5240,
+    "alpha_max_error": 255,
+    "inside_pixels": 7301,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "cookie-2": {
+    "coverage": 0.6925656791503634,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 5240,
+    "alpha_max_error": 255,
+    "inside_pixels": 7434,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "cookie-3": {
+    "coverage": 0.6803614682317869,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 5249,
+    "alpha_max_error": 255,
+    "inside_pixels": 7303,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "donut": {
+    "coverage": 0.7224706539966461,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 5575,
+    "alpha_max_error": 255,
+    "inside_pixels": 7755,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "delivery": {
+    "coverage": 0.7224706539966461,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 5575,
+    "alpha_max_error": 255,
+    "inside_pixels": 7755,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "gold-rainbow-ball": {
+    "coverage": 0.7394261226010806,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 3727,
+    "alpha_max_error": 255,
+    "inside_pixels": 7937,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "honey-material": {
+    "coverage": 0.9304080491894914,
+    "spill": 0.0,
+    "edge_coverage": 0.8905419766206164,
+    "alpha_error_pixels": 10256,
+    "alpha_max_error": 144,
+    "inside_pixels": 9987,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "ice-1": {
+    "coverage": 0.3027762250791876,
+    "spill": 0.0,
+    "edge_coverage": 0.031880977683315624,
+    "alpha_error_pixels": 11003,
+    "alpha_max_error": 255,
+    "inside_pixels": 3250,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "ice-2": {
+    "coverage": 0.4836966648034284,
+    "spill": 0.0,
+    "edge_coverage": 0.012752391073326248,
+    "alpha_error_pixels": 11200,
+    "alpha_max_error": 255,
+    "inside_pixels": 5192,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "plane": {
+    "coverage": 0.5847773430221725,
+    "spill": 0.0,
+    "edge_coverage": 0.03719447396386823,
+    "alpha_error_pixels": 5613,
+    "alpha_max_error": 255,
+    "inside_pixels": 6277,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "rainbow-ball": {
+    "coverage": 0.7594559344140116,
+    "spill": 0.0,
+    "edge_coverage": 0.07013815090329437,
+    "alpha_error_pixels": 3876,
+    "alpha_max_error": 255,
+    "inside_pixels": 8152,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "prism": {
+    "coverage": 0.7594559344140116,
+    "spill": 0.0,
+    "edge_coverage": 0.07013815090329437,
+    "alpha_error_pixels": 3876,
+    "alpha_max_error": 255,
+    "inside_pixels": 8152,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "rocket-horizontal": {
+    "coverage": 0.5635364263089249,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 6210,
+    "alpha_max_error": 255,
+    "inside_pixels": 6049,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "ray-row": {
+    "coverage": 0.3538289547233091,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 7973,
+    "alpha_max_error": 255,
+    "inside_pixels": 3798,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "ray-diagonal": {
+    "coverage": 0.35233836407676544,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 7969,
+    "alpha_max_error": 255,
+    "inside_pixels": 3782,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "rocket-vertical": {
+    "coverage": 0.6297745481647102,
+    "spill": 0.0,
+    "edge_coverage": 0.0010626992561105207,
+    "alpha_error_pixels": 5147,
+    "alpha_max_error": 255,
+    "inside_pixels": 6760,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "ray-column": {
+    "coverage": 0.6297745481647102,
+    "spill": 0.0,
+    "edge_coverage": 0.0010626992561105207,
+    "alpha_error_pixels": 5147,
+    "alpha_max_error": 255,
+    "inside_pixels": 6760,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  "web-2": {
+    "coverage": 0.37339295695919505,
+    "spill": 0.0002494387627837366,
+    "edge_coverage": 0.02763018065887354,
+    "alpha_error_pixels": 11330,
+    "alpha_max_error": 255,
+    "inside_pixels": 4008,
+    "outside_pixels": 1,
+    "pass": true
+  }
+}

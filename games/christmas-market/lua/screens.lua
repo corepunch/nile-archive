@@ -99,24 +99,28 @@ R.dialogs[R.OV_RESULT] = result_screen
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up 3+ treats", description="Match straight lines along any of three axes.",
+    {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of three axes.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Line of 4: striped treat", description="Its stripes show the line it clears.",
-     icon={tiles={{kind=5,special=rules.ROW}}}},
-    {id="specials", title="Line of 5+: rainbow star", description="Swap with a treat to clear that colour.",
+    {id="lightning", title="Line of 4: rocket", description="A multicolor rocket clears its axis. Tap it or swap it to launch.",
+     icon={tiles={{kind=1,special=rules.ROW}}}},
+    {id="specials", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its color; combine with a power-up to multiply it.",
      icon={tiles={{kind=2,special=rules.PRISM}}}},
+    {id="plane", title="Four-cell rhombus: plane", description="Clears neighboring cells, then flies to a target. Two planes launch three flights.",
+     icon={tiles={{kind=0,special=rules.PLANE}}}},
+    {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells. Combine power-ups for larger effects.",
+     icon={tiles={{kind=0,special=rules.BOMB}}}},
     {id="blockers", title="Tinsel & powder snow", description="Match above snow; untangle the tinsel.",
-     icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Ice & candy canes", description="Match on ice. Nearby candy canes thaw it.",
+     icon={front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
+    {id="ice", title="Frozen pieces", description="Match the frozen piece or hit it with a power-up. Each hit removes one layer.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Snow blocks and colour gifts", description="Match beside blocks; gifts need their colour or a special.",
-     icon={front="crate-0-2",tiles={}}},
+     icon={front="box-2",tiles={}}},
     {id="discover", title="Uncover a star display", description="Clear every covered cell in its footprint.",
-     icon={front="hidden-revealed",tiles={}}},
+     icon={front="carpet",tiles={}}},
     {id="tunnels", title="Chutes and presents", description="Pieces travel through chutes. Bring special presents to their baskets.",
-     icon={front="tunnel-in",tiles={}}},
+     icon={front="delivery",tiles={}}},
     {id="growth", title="Tangled ribbon", description="Clear ribbon each turn to stop it spreading.",
-     icon={front="growth",tiles={}}},
+     icon={front="honey-material",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()
@@ -126,7 +130,7 @@ local function guide_icon(box, icon)
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
     if icon.front then
-        local edge = R.board_art[icon.front .. "-edge"] or (icon.front == "chain" and R.board_art["chain-board"])
+        local edge = icon.front=="sand" and R.board_art["sand-edge"]
         picture(edge or R.board_art[icon.front],layer:inflate(edge and 6 or -2),255)
     end
 end

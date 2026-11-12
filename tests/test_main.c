@@ -9,6 +9,16 @@
 #include <stdio.h>
 #include <string.h>
 
+TEST(script_boot_arguments)
+{
+    char *args[] = {"test", "--homescapes", "st0065", "--fresh"};
+    app_boot_args(4, args);
+    CHECK(!strcmp(app_arg("homescapes"), "st0065"));
+    CHECK(app_arg("fresh") && !*app_arg("fresh"));
+    app_boot_args(0, NULL);
+    CHECK(app_arg("homescapes") == NULL);
+}
+
 TEST(script_module_roots)
 {
     /* A long missing root must not truncate the list or the fallback path.

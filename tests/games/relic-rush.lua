@@ -177,3 +177,7 @@ shot("phone-story-radio", "390x844", "--story-beat after-05 --story-line 2 --fra
 shot("phone-story-finale", "390x844", "--story-beat after-30 --story-line 9 --frames 240 --safe-area 0,47,0,34")
 shot("story-level-20", "480x900", "--level 20")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
+
+shot("homescapes-queue", "480x900", "--homescapes st0065")
+shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
+reel("fx-plane",18,2,"480x900","--fx plane --reel")

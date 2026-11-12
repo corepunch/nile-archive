@@ -116,3 +116,8 @@ shot("story-level-20", "480x900", "--level 20")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
 shot("dialogue-bar-480", "480x900", "--story-beat before-01 --talk-through 270 --frames 535")
 shot("dialogue-bar-390", "390x844", "--story-beat before-01 --talk-through 270 --frames 535 --safe-area 0,47,0,34")
+
+shot("homescapes-queue", "480x900", "--homescapes st0065")
+shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
+reel("fx-plane",18,2,"480x900","--fx plane --reel")
+shot("phone-specials-board","390x844","--art-board --safe-area 0,47,0,34")

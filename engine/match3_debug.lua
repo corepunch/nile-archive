@@ -141,10 +141,13 @@ function D.bind(R, W)
             R.vfx_reset()
             R.g.obstacles = R.g.obstacles - R.g.chain[c] - R.g.ice[c]
             R.g.chain[c], R.g.ice[c] = 0, 0
-            R.g.tiles[c] = rules.tile(mode == 2 and 0 or 3, mode == 0 and rules.ROW or mode == 1 and rules.BOMB or rules.PRISM)
+            R.g.active[c]=true;R.g.stone_hp[c]=0;R.g.crate_hp[c]=0;R.g.hazard[c]=0
+            R.g.tiles[c] = rules.tile(mode == 2 and 0 or 3, mode == 0 and rules.ROW or mode == 1 and rules.BOMB or a=="plane" and rules.PLANE or rules.PRISM)
             R.pending.mask[c] = true
             R.pending.hits = 1
             R.finish_wave()
+            assert(R.pending.hits>0,"effect review must hit active cells")
+            if a=="plane" then assert(#R.pending.flights>0,"plane review must emit a flight") end
             R.toast_time = 0
         end
         if app.arg("catalogue") then
@@ -243,7 +246,11 @@ function D.bind(R, W)
         if app.arg("art-board") then
             R.g = rules.game_start(8, 123478)
             R.pending = rules.new_match()
-            local cells = {rules.hex_index(-2, 0), rules.hex_index(-1, 0), rules.hex_index(0, 0), rules.hex_index(1, 0), rules.hex_index(2, 0)}
+            local cells = {rules.hex_index(-3,0),rules.hex_index(-2,0),rules.hex_index(-1,0),rules.hex_index(0,0),rules.hex_index(1,0),rules.hex_index(2,0)}
+            R.g.objects={};R.g.object_only=false
+            for _,cell in ipairs(cells) do
+                R.g.active[cell]=true;R.g.soil[cell]=0;R.g.stone_hp[cell]=0;R.g.crate_hp[cell]=0;R.g.hazard[cell]=0
+            end
             for k, cell in ipairs(cells) do
                 R.g.tiles[cell] = rules.tile(k - 1, k)
                 R.g.chain[cell], R.g.ice[cell] = 0, 0
@@ -252,6 +259,11 @@ function D.bind(R, W)
             R.g.tools = {2, 2, 0}
             R.tool, R.toast_time, R.on_island = 1, 0, false
             R.art_review = true
+        end
+        if app.arg("homescapes") then
+            R.g=rules.game_start(0,require("match3.reference")[app.arg("homescapes")].seed)
+            assert(R.g.hs,"source preview must load source mechanics")
+            R.pending=rules.new_match();R.on_island=false;R.overlay=R.OV_NONE;R.toast_time=0;R.art_review=true
         end
         if app.arg("present") then R.present_board() end
         if app.arg("mission") then   -- the level's mission banner, as a level starts

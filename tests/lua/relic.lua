@@ -128,7 +128,7 @@ local function test_matching()
     line(g, hex_neighbor(c, 3), 0, 3, 0)
     line(g, hex_neighbor(c, 4), 1, 3, 0)
     rules.game_matches(g, m, c)
-    check(m.hits == 5 and next(m.make) == nil, "crossing triples clear without a group reward")
+    check(m.hits == 5 and m.make[c] == rules.BOMB, "crossing triples make a bomb")
     for d = 0, 5 do
         g = blank()
         local a, b = hex_neighbor(c, d), hex_neighbor(c, (d + 1) % 6)
@@ -143,7 +143,7 @@ local function test_matching()
     g = blank()
     for _, at in ipairs({c, hex_index(1,0), hex_index(0,1), hex_index(1,1)}) do g.tiles[at].kind = 2 end
     rules.game_matches(g, m, c)
-    check(m.hits == 0, "four-cell diamond is not a match")
+    check(m.hits == 4 and m.make[c] == rules.PLANE, "four-cell diamond creates a plane")
     g = blank()
     for d = 0, 5 do g.tiles[hex_neighbor(c,d)].kind = 2 end
     rules.game_matches(g, m, c)
@@ -237,15 +237,15 @@ local function test_moves_and_blockers()
     rules.game_apply(g, m)
     check(g.ice[c] == 0, "ice gone")
 
-    g = pattern()   -- a matched flame thaws one layer of ice on all six sides
+    g = pattern()   -- source yellow pieces have no privileged thaw behavior
     g.tiles[c].kind = rules.RELIC_FLAME
     for d = 0, 5 do g.ice[hex_neighbor(c, d)] = 2 end
     g.obstacles = 12
     m = rules.new_match()
     m.mask[c] = true
     rules.game_apply(g, m)
-    for d = 0, 5 do check(g.ice[hex_neighbor(c, d)] == 1, "flame thaws") end
-    check(g.obstacles == 6, "thaw counts obstacles")
+    for d = 0, 5 do check(g.ice[hex_neighbor(c, d)] == 2, "ordinary color cannot thaw adjacent ice") end
+    check(g.obstacles == 12, "ordinary color preserves adjacent obstacles")
 
     g = pattern()
     g.tools[2] = 1

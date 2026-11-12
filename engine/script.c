@@ -140,6 +140,10 @@ void script_open(const char *dir)
         {"ui_skin.lua", NULL},
         {"city_smoke.lua", NULL},
         {"match3.lua", "match3"},
+        {"match3_patterns.lua", "match3.patterns"},
+        {"match3_homescapes.lua", "match3.homescapes"},
+        {"match3_reference.lua", "match3.reference"},
+        {"match3_shapes.lua", "match3.shapes"},
         {"match3_elements_view.lua", "match3.elements_view"},
         {"match3_frames.lua", "match3.frames"},
         {"board_intro.lua", NULL},
@@ -203,10 +207,11 @@ int script_dofile(const char *path)
     return result;
 }
 
-app_desc script_boot(const char *dir, const char *data_dir)
+app_desc script_boot_args(const char *dir, const char *data_dir, int argc, char **argv)
 {
     app_boot_data(data_dir);   /* main.lua may read its JSON data while it loads */
     script_open(dir);
+    app_boot_args(argc, argv);
     const char *roots = dir ? dir : ".";
     lua_pushlstring(L, roots, strcspn(roots, ";"));
     const char *path = lua_pushfstring(L, "%s/main.lua", lua_tostring(L, -1));
@@ -411,3 +416,8 @@ void lcity_draw_over(const struct city *c)
 #ifdef ENGINE_TEST
 #include "test_lua.c"
 #endif
+
+app_desc script_boot(const char *dir, const char *data_dir)
+{
+    return script_boot_args(dir, data_dir, 0, NULL);
+}

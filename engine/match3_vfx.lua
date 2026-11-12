@@ -8,13 +8,14 @@ local V = {}
 
 function V.bind(R, rules)
     local CELLS, RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.CELLS, rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
+    local NORMAL=rules.NORMAL
     local ROW, COLUMN, DIAGONAL, BOMB, PRISM = rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM
     local hex_neighbor = rules.hex_neighbor
     local rgba = color
     local PI = math.pi
 
     local FX_CAP, PARTICLES = 256, 650
-    local FX_NONE, FX_IMPACT, FX_RAY, FX_BLAST, FX_LINK, FX_BIRTH, FX_SCORE = 0, 1, 2, 3, 4, 5, 6
+    local FX_NONE, FX_IMPACT, FX_RAY, FX_BLAST, FX_LINK, FX_BIRTH, FX_SCORE, FX_PLANE = 0, 1, 2, 3, 4, 5, 6, 7
 
     local pool, parts = {}, {}
     for i = 1, FX_CAP do pool[i] = {type = FX_NONE, kind = 0, value = 0, at = vec2(), to = vec2(), age = 0, life = 0, delay = 0} end
@@ -156,7 +157,11 @@ function V.bind(R, rules)
             local d = axis + sign * 3
             local e = cell
             local n = hex_neighbor(cell, d)
-            while n >= 0 do e = n; n = hex_neighbor(n, d) end
+            while n >= 0 do
+                e=n
+                if R.old_tiles[n].element=="cookie" then break end
+                n=hex_neighbor(n,d)
+            end
             add(FX_RAY, R.cell_pos(cell), R.cell_pos(e), kind, .6, .025, 0)
         end
     end
@@ -186,16 +191,23 @@ function V.bind(R, rules)
                 add(FX_IMPACT, at, vec2(0, 0), kind, .3, 0, 0)
                 vfx_emit(at, kind, false)
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
-                    if was.kind == RELIC_IDOL or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL then vfx_emit(at, was.kind, true) end
+                    if was.special==NORMAL and not was.element and not (R.pending.activations or {})[i]
+                        and (was.kind == RELIC_IDOL or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL) then vfx_emit(at, was.kind, true) end
                     if not R.pending.make[i] then
-                        if was.special == ROW or was.special == COLUMN or was.special == DIAGONAL then
-                            axis_rays(i, was.special == ROW and 0 or was.special == COLUMN and 1 or 2, was.kind)
-                        elseif was.special == BOMB then add(FX_BLAST, at, vec2(0, 0), 0, .58, 0, 95)
-                        elseif was.special == PRISM then prism_links(i) end
+                        local special=(R.pending.activations or {})[i]
+                        if special == ROW or special == COLUMN or special == DIAGONAL then
+                            axis_rays(i, special == ROW and 0 or special == COLUMN and 1 or 2, was.kind)
+                        elseif special == BOMB then add(FX_BLAST, at, vec2(0, 0), 0, .58, 0, 95)
+                        elseif special == PRISM then prism_links(i) end
                     end
                 end
                 if R.pending.make[i] then add(FX_BIRTH, at, vec2(0, 0), was.kind, .65, .2, 0) end
             end
+        end
+        for _,path in ipairs(R.pending.flights or {}) do
+            add(FX_PLANE,R.cell_pos(path.from),R.cell_pos(path.to),0,.48,0,0)
+            if path.payload==BOMB then add(FX_BLAST,R.cell_pos(path.to),vec2(0,0),0,.58,.4,95)
+            elseif path.payload and path.payload>=ROW and path.payload<=DIAGONAL then axis_rays(path.to,path.payload-1,0) end
         end
         if R.fx_origin >= 0 then   -- the cell a combo swap fired from
             if R.fx_combo == 3 then prism_links(R.fx_origin)
@@ -282,6 +294,10 @@ function V.bind(R, rules)
                         prev = nxt
                     end
                     vfx_halo(e.to, 24, vfx_color(e.kind, 150 * fade))
+                elseif e.type == FX_PLANE then
+                    local at=e.at:lerp(e.to,ease.out_cubic(t))+vec2(0,-math.sin(t*PI)*35)
+                    gfx.additive(false)
+                    gfx.image(R.board_art.plane,rect.centered(at,size2.splat(R.HEX_R*2)),rgba(255,255,255,255*math.min(1,fade*5)))
                 elseif e.type == FX_BIRTH then
                     vfx_halo(e.at, 48 * fade + 20, c)
                     ring(e.at, R.HEX_R * (1 + .4 * t), 3 * fade, c)

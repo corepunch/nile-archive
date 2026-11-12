@@ -123,24 +123,28 @@ R.dialogs[R.OV_RESULT] = result_screen
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up 3+ relics", description="Match straight lines along any of three axes.",
+    {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of three axes.",
      icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Line of 4: lightning", description="Stripes show the line it clears.",
+    {id="lightning", title="Line of 4: rocket", description="A multicolor rocket clears its axis. Tap it or swap it to launch.",
      icon={tiles={{kind=1,special=rules.ROW}}}},
-    {id="specials", title="Line of 5+: sun prism", description="Swap a prism with a relic to clear its color.",
+    {id="specials", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its color; combine with a power-up to multiply it.",
      icon={tiles={{kind=2,special=rules.PRISM}}}},
+    {id="plane", title="Four-cell rhombus: plane", description="Clears neighboring cells, then flies to a target. Two planes launch three flights.",
+     icon={tiles={{kind=0,special=rules.PLANE}}}},
+    {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells. Combine power-ups for larger effects.",
+     icon={tiles={{kind=0,special=rules.BOMB}}}},
     {id="blockers", title="Chains & ancient sand", description="Match on them to break or excavate.",
-     icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Frozen gems", description="Ice rims the cell. The number shows hits left; matches and nearby fire thaw it.",
+     icon={front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
+    {id="ice", title="Frozen gems", description="Match the frozen piece or hit it with a power-up. Each hit removes one layer.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Stones and coloured crates", description="Match beside stones; crates need their colour or a special.",
-     icon={front="crate-0-2",tiles={}}},
+     icon={front="box-2",tiles={}}},
     {id="discover", title="Uncover a hidden object", description="Clear every covered cell in its footprint.",
-     icon={front="hidden-revealed",tiles={}}},
+     icon={front="carpet",tiles={}}},
     {id="tunnels", title="Tunnels and deliveries", description="Pieces enter a tunnel and reappear at its exit. Bring delivery pieces to their exits.",
-     icon={front="tunnel-in",tiles={}}},
+     icon={front="delivery",tiles={}}},
     {id="growth", title="Spreading growth", description="Clear growth each turn to stop it spreading.",
-     icon={front="growth",tiles={}}},
+     icon={front="honey-material",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

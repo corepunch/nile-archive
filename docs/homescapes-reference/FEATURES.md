@@ -149,3 +149,7 @@ The full current unknown model/goal lists, pattern configuration gaps, initial
 stalls and measured verification results live in [LAB_COVERAGE.md](LAB_COVERAGE.md).
 The lab still rejects thousands of levels. Retaining their data, recognizing a
 token, executing hints and reproducing the original game are separate milestones.
+
+## Shared hex-engine port
+
+The supported source models, queues and power-ups also have a Lua implementation in the shared engine. See [Homescapes on hexes](../HOMESCAPES_HEX.md) for the exact adaptation, original atlas, ten archive-derived verification boards, preserved effects and remaining artwork/parity gaps. This does not change the lab corpus coverage counts above.
