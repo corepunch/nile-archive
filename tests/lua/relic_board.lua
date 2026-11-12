@@ -398,11 +398,23 @@ do
     local g=rules.game_start(0,123);local cell=rules.hex_center()
     g.active[cell]=true;g.chain[cell],g.ice[cell],g.stone_hp[cell],g.crate_hp[cell],g.hazard[cell]=0,0,0,0,0
     g.tiles[cell]=rules.tile(0,rules.PLANE)
-    setup(g);R.selected,R.tool=-1,-1;R.sound=false
+    setup(g);R.selected,R.tool=-1,-1;R.sound=false;R.reduced_motion=false
     local moves=g.moves;local at=R.cell_pos(cell)
     R.board_input{released=true,pos=at,press_pos=at}
     check(g.moves==moves-1 and R.phase==R.PH_CLEAR,"one tap activates and enters the preserved clear phase")
     check(#R.pending.flights==1,"plane activation reaches the animated effect event")
+    local target=R.pending.flights[1].to
+    check(g.tiles[target].kind==-1,"plane target is removed by the rules")
+    local _,_,before_scale,before_alpha=R.piece_pose(target,0)
+    R.board_update(.3)
+    local _,_,during_scale,during_alpha=R.piece_pose(target,0)
+    check(R.phase==R.PH_CLEAR and before_scale==1 and before_alpha==255 and during_scale==1 and during_alpha==255,
+        "target stays visible during the flight and refill waits")
+    R.board_update(.3)
+    local _,_,impact_scale,impact_alpha=R.piece_pose(target,0)
+    check(R.phase==R.PH_CLEAR and impact_scale<1 and impact_alpha<255,"target clears after the plane arrives")
+    R.board_update(.13)
+    check(R.phase==R.PH_FALL,"refill starts after the impact")
 end
 
 -- More source mechanic rows must remain reachable without pushing Done offscreen.

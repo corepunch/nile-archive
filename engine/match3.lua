@@ -1509,6 +1509,10 @@ function E.new(config)
         elements.maker_observe(R)
         R.phase = PH_CLEAR
         R.phase_time = 0
+        R.flight_targets = {}
+        if not R.reduced_motion then
+            for _, path in ipairs(R.pending.flights or {}) do R.flight_targets[path.to] = true end
+        end
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
         local fx_combo = R.fx_combo or 0   -- vfx_wave consumes the combo swap's effect
         R.vfx_wave(old_score)
@@ -1590,7 +1594,7 @@ function E.new(config)
         local speed = R.reduced_motion and .35 or 1
         if R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
         elseif R.phase == PH_REJECT and R.phase_time > .32 * speed then R.phase = PH_IDLE
-        elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed and not elements.maker_busy(R) then
+        elseif R.phase == PH_CLEAR and R.phase_time > (.24 + (next(R.flight_targets or {}) and .48 or 0)) * speed and not elements.maker_busy(R) then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
             elements.maker_observe(R)
             R.phase = PH_FALL
@@ -1627,7 +1631,8 @@ function E.new(config)
         t = R.old_tiles[i]
         if R.wave_chain[i] == 0 and R.wave_ice[i] == 0 and not R.pending.make[i]
             and t.kind ~= M.DELIVERY and not (R.g.hazard_damaged_cell or {})[i] then   -- a small pop, then shrink away
-            local f = num.saturate(R.phase_time / .24)
+            local delay = (R.flight_targets or {})[i] and .48 or 0
+            local f = num.saturate((R.phase_time - delay) / .24)
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)
             alpha = 255 * (1 - f * f)
         end

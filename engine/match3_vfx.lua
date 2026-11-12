@@ -188,8 +188,9 @@ function V.bind(R, rules)
                 sum = sum + at
                 hits = hits + 1
                 local kind = R.wave_ice[i] > 0 and 6 or R.wave_chain[i] > 0 and 7 or was.kind
-                add(FX_IMPACT, at, vec2(0, 0), kind, .3, 0, 0)
-                vfx_emit(at, kind, false)
+                local delay = (R.flight_targets or {})[i] and .48 or 0
+                add(FX_IMPACT, at, vec2(0, 0), kind, .3, delay, 0)
+                if delay == 0 then vfx_emit(at, kind, false) end
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
                     if was.special==NORMAL and not was.element and not (R.pending.activations or {})[i]
                         and (was.kind == RELIC_IDOL or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL) then vfx_emit(at, was.kind, true) end
