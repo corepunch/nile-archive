@@ -42,7 +42,9 @@ def maker(charge, regions):
     stack.alpha_composite(back[1], back[2])
     if charge:
         name = f'donut-maker-dough-{charge}'
-        dough = Image.open(SOURCE / (name + '.png')).convert('RGBA')
+        # The dough crops are stored in the same bottom-origin atlas as the shell.
+        with Image.open(SOURCE / (name + '.png')) as raw:
+            dough = raw.convert('RGBA').transpose(Image.Transpose.FLIP_TOP_BOTTOM)
         at = (base[2][0] + (base[1].width - dough.width) // 2, base[2][1] + 11)
         stack.alpha_composite(dough, at)
         layers['dough'] = list(at)
@@ -55,7 +57,7 @@ def maker(charge, regions):
     canvas.alpha_composite(stack, ((256 - stack.width) // 2, (256 - stack.height) // 2))
     return canvas, {'sources': sources, 'canvas': [256, 256], 'native_layer_offsets': layers,
                     'source_canvas': list(base[3]), 'source_crop': list(crop),
-                    'registration': 'native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred'}
+                    'registration': 'native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred'}
 
 
 def jelly(flower, cherry=None):

@@ -2961,7 +2961,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -3007,7 +3007,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -3053,7 +3053,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -3099,7 +3099,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -3471,10 +3471,10 @@
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
-      "tools/homescapes_composites.py": "43ac6fa9505fbcbded3fe3532c476ffbfb45043cd0546a022324344796066a53"
+      "tools/homescapes_composites.py": "572c557f109580207ef13fe1c8194fca52c20191e08179abd071f72080ead291"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "ff068e16a6ceae2c3c905cdd447abbaa066239245ac31459f6661337ba9acb7d",
+      "games/christmas-market/data/match3.png": "0af4e55081950b98aed0e8132e3be3dd97aedf672afbccb8c2014b24d9951de2",
       "games/christmas-market/lua/match3_skin.lua": "ccf9c3bcd67ab496f7353c77e8a378ec3f9c685b12064a323254bbb957736468"
     }
   }

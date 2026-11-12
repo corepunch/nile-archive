@@ -91,9 +91,10 @@ once. The clip, scale and offsets adapt the reference to the hex layout.
 
 The original base and glass layers share a 460 × 420 source frame. The three
 top-origin positions are `(99,157)` for the base, `(117,90)` for the rear
-glass and `(117,151)` for the front glass. The atlas recipe flips their
-bottom-origin crops vertically, layers the dough between the glass planes and
-scales the result to the shared hex footprint.
+glass and `(117,151)` for the front glass. The atlas recipe flips the shell
+and all three dough crops vertically to convert from the bottom-origin atlas.
+It layers the dough between the glass planes and scales the result to the
+shared hex footprint. [Dough orientation review](review/homescapes-dough/README.md)
 [Playrix's donut maker illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1333-donut-maker/)
 
 The portal rings in the 3.5.9 atlas match the colors and silhouettes of the

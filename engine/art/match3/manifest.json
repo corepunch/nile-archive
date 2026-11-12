@@ -2315,7 +2315,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2361,7 +2361,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2407,7 +2407,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2453,7 +2453,7 @@
         375,
         364
       ],
-      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
+      "registration": "native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -3453,10 +3453,10 @@
       "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
-      "tools/homescapes_composites.py": "43ac6fa9505fbcbded3fe3532c476ffbfb45043cd0546a022324344796066a53"
+      "tools/homescapes_composites.py": "572c557f109580207ef13fe1c8194fca52c20191e08179abd071f72080ead291"
     },
     "outputs": {
-      "engine/data/match3.png": "770babe8a8ff01e5e67366587687f27141a62b2f9db399ad693f7cc1196d8d1d",
+      "engine/data/match3.png": "4ea9e23ddfcfca493482b13773008979a6f7c5723a8868f380e8bfae59c09b6d",
       "engine/match3_frames.lua": "a777c34ece3f5dc8d9511f76bbdfdfa89b2e76e15ade380c8734c61c826b19fb"
     }
   }
