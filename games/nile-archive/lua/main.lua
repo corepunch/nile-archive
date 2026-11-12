@@ -72,7 +72,7 @@ end
 ------------------------------------------------------------------- setup
 
 -- Debug/QA entry points used to capture screenshots:
--- --screen island|build|purchase|opening|first-build|first-win|scene0..4|cache|cache-result|journal|cast|pause|chapters|win|story|horem|merit|leaderboard|win-leaderboard,
+-- --screen island|build|purchase|opening|first-build|first-win|scene0..14|cache|cache2|cache3|cache-result|projects|project-confirm|chapters2|journal|cast|pause|chapters|win|story|horem|merit|leaderboard|win-leaderboard,
 -- --catalogue <category> --catalogue-page N with --screen build, --building-review N,
 -- and --footprints to check the buildings' measured footprints and pivots
 local function apply_screen_arg(screen)
@@ -94,6 +94,11 @@ local function apply_screen_arg(screen)
     elseif screen == "build" then
         G.wallet[STARS] = economy.stars({3, 3, 1})   -- most of the catalogue unlocked, a few still locked
         island.open_tray(app.arg("catalogue") or "story", tonumber(app.arg("catalogue-page")))
+    elseif screen == "projects" or screen == "project-confirm" then
+        G.caches[1], G.cache_done = 1, true
+        G.wallet[COINS] = 1000
+        island.open_tray("projects")
+        if screen == "project-confirm" then island.tray.pending = 1 end
     elseif screen == "purchase" then
         local ok, spot = G.island:find_spot(3, vec2(940, 760))
         assert(ok)
@@ -123,6 +128,12 @@ local function apply_screen_arg(screen)
         G.wins[2], G.clues[2], G.stars[1] = 0, 0, 3
         G.wallet[CHAPTERS] = economy.completed(G.wins)
         G.open_modal(MODAL_CHAPTERS, true)
+    elseif screen == "chapters2" then
+        for i = 1, 5 do G.wins[i], G.stars[i], G.clues[i] = 1, 3, economy.clue_count(i) end
+        G.caches[1], G.cache_done = 1, true
+        G.wallet[INFLUENCE] = 120
+        G.wallet[CHAPTERS] = economy.completed(G.wins)
+        G.open_modal(MODAL_CHAPTERS, true)
     elseif screen == "leaderboard" then   -- the influence board over the chapter list; add --gamecenter-demo
         G.open_modal(MODAL_CHAPTERS, true)
         dialogs.boards:open("influence", "Влияние")
@@ -136,6 +147,8 @@ local function apply_screen_arg(screen)
         if screen == "win-leaderboard" then dialogs.boards:open("search_2", scenes[2].title) end
     elseif screen == "cache" then
         scene.open(content.CACHE)
+    elseif screen == "cache2" or screen == "cache3" then
+        scene.open(content.CACHES[tonumber(screen:sub(6))])
     elseif screen == "cache-result" then
         scene.open(content.CACHE)
         for i = 1, #scenes[content.CACHE].names do G.found[i] = -10 end

@@ -16,11 +16,11 @@ local MODAL_NONE, MODAL_WIN, MODAL_PAUSE = G.MODAL_NONE, G.MODAL_WIN, G.MODAL_PA
 local M = {}
 
 local function item_count()
-    return G.scene == content.CACHE and #scenes[G.scene].names or ITEMS
+    return content.cache_chapter(G.scene) and #scenes[G.scene].names or ITEMS
 end
 
 local function slot_count()
-    return G.scene == content.CACHE and 1 or SLOTS
+    return content.cache_chapter(G.scene) and 1 or SLOTS
 end
 
 -------------------------------------------------------------------- rules
@@ -107,7 +107,8 @@ end
 function M.start(i)
     if progress.blocker(i) then return end
     M.open(i)
-    if i == content.CACHE and progress.play("c1t1") then progress.save() end
+    local chapter = content.cache_chapter(i)
+    if chapter and progress.play(("c%dt1"):format(chapter)) then progress.save() end
 end
 
 function M.go_home()
@@ -122,7 +123,6 @@ function M.show_hint()
         local i = G.slots[k]
         if i and not G.found[i] then pick = i break end
     end
-    for i = 1, item_count() do if not pick and not G.found[i] then pick = i end end
     if not pick then return end
     G.hints = G.hints + 1
     G.hint = pick
@@ -140,7 +140,7 @@ end
 function M.tap(screen)
     local sc = scenes[G.scene]
     local p = G.cam:to_world(screen)
-    if G.scene == content.CACHE then
+    if content.cache_chapter(G.scene) then
         local i = M.found_count() + 1
         if not sc.at[i] or (p - sc.at[i]):ellipse(sc.radius[i]) > 1 then return end
         G.found[i], G.hint, G.slots[1] = app.time(), nil, nil
@@ -148,16 +148,16 @@ function M.tap(screen)
         if i < #sc.names then
             M.refill_slots(app.time(), 0)
             haptic.play(haptic.MATCH)
-        elseif economy.claim_cache(G) then
+        elseif economy.claim_cache(G, content.cache_chapter(G.scene)) then
             haptic.play(haptic.SUCCESS)
-            progress.play("c1t2")
+            progress.play(("c%dt2"):format(content.cache_chapter(G.scene)))
             progress.save()
             G.open_modal(G.MODAL_CACHE)
         end
         return
     end
     for i = 1, ITEMS do
-        if not G.found[i] and (p - sc.at[i]):ellipse(sc.radius[i]) <= 1 then
+        if not G.found[i] and in_slots(i) and (p - sc.at[i]):ellipse(sc.radius[i]) <= 1 then
             G.found[i] = app.time()
             M.show_found(i)
             if G.hint == i then G.hint = nil end
@@ -307,7 +307,7 @@ function M.frame(screen, world, dt)
     local row = rect(area.x, area:max().y - 66, hc.x - 56 - area.x, 60)
     for k = 1, slot_count() do
         local slot = row:col(slot_count(), k - 1, 14)
-        if G.scene == content.CACHE then slot = row:align(size2(420, 60), vec2(.5, .5)) end
+        if content.cache_chapter(G.scene) then slot = row:align(size2(420, 60), vec2(.5, .5)) end
         local i = G.slots[k]
         if i then
             local p = pill(k)
@@ -319,7 +319,7 @@ function M.frame(screen, world, dt)
             local fill = hinted and rgba(176, 118, 36, 215) or rgba(48, 28, 12, 168)
             gfx.round_rect(box, box.h * .5, fill:alpha(a))
             gfx.round_rect(rect(box.x + box.h * .4, box.y + 3, box.w - box.h * .8, box.h * .3), box.h * .15, rgba(255, 236, 200, 16 * a))
-            local name = G.scene == content.CACHE and ("%d / %d · %s"):format(i, #sc.names, sc.names[i]) or sc.names[i]
+            local name = content.cache_chapter(G.scene) and ("%d / %d · %s"):format(i, #sc.names, sc.names[i]) or sc.names[i]
             local ink = text.fit(S.pill_text:faded(1 - a), box:inflate2(vec2(-box.h * .5, -8)), vec2(.5, .54), name)
             if G.found[i] then gfx.line(ink:point(vec2(0, .55)), ink:point(vec2(p.strike, .55)), 3, rgba(150, 235, 140, 240 * a)) end
             ui.block(box)

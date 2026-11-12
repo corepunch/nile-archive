@@ -76,10 +76,13 @@ local function win_dialog()
     local continue = buttons:col(2, 1, 16)
     G.spots.continue = continue:center()
     if K.button(buttons:col(2, 0, 16), "Таблица лидеров", "blue") then open_search_board(G.scene) end
-    local _, _, restore = progress.chapter_goal()
+    local goal, _, restore = progress.chapter_goal()
     if K.button(continue, restore and "Строить за монеты" or "На остров", "green") then
         scene.go_home()
-        if restore then island.open_tray("story") end
+        if restore then
+            local is_project = goal and goal >= 6 and goal <= content.SCENES and economy.lock(G, goal) == "influence"
+            island.open_tray(is_project and "projects" or "story")
+        end
     end
 end
 
@@ -123,28 +126,35 @@ local browser = ui.form{kind = "column", gap = 8, children = {
 
 local function refresh_chapters()
     local records = {}
-    for i, sc in ipairs(scenes) do
-        local blocked = progress.blocker(i)
-        local note, action, title
-        if i == content.CACHE then
-            title = "Тайник · " .. sc.title
-            note = G.cache_done and "Книга разливов пропала. Запись в журнале." or "Четыре предмета в порядке из записки."
-            action = "Открыть тайник"
-        else
-            local clues, total = G.clues[i], economy.clue_count(i)
-            local prior_clues = i == 1 or G.clues[i - 1] == economy.clue_count(i - 1)
-            title = ("%d. %s"):format(i, sc.title)
-            note = ("Улики %d/%d · Звёзды %d/3"):format(clues, total, G.stars[i])
-            if G.wins[i] == 0 then note = note .. " · " .. sc.teaser
-            elseif clues < total then
-                note = note .. (not prior_clues and " · Сначала найдите предыдущие улики"
-                    or G.stars[i] == 3 and " · Следующий поиск даст улику" or " · Нужны три звезды")
+    for chapter = 1, 3 do
+        for slot = 1, 6 do
+            local i = slot == 6 and content.CACHES[chapter] or (chapter - 1) * 5 + slot
+            local sc = scenes[i]
+            local blocked = progress.blocker(i)
+            local note, action, title
+            if slot == 6 then
+                title = ("Глава %d · Тайник · %s"):format(chapter, sc.title)
+                note = G.caches[chapter] == 1 and "Тайник открыт. Запись в журнале." or "Найдите предметы в нужном порядке."
+                action = "Открыть тайник"
+            else
+                local clues, total = G.clues[i], economy.clue_count(i)
+                local prior_clues = i == 1 or G.clues[i - 1] == economy.clue_count(i - 1)
+                title = ("%d. %s"):format(i, sc.title)
+                note = ("Улики %d/%d · Звёзды %d/3"):format(clues, total, G.stars[i])
+                if G.wins[i] == 0 then note = note .. " · " .. sc.teaser
+                elseif clues < total then
+                    note = note .. (not prior_clues and " · Сначала найдите предыдущие улики"
+                        or G.stars[i] == 3 and " · Следующий поиск даст улику" or " · Нужны три звезды")
+                end
+                action = G.wins[i] == 0 and "Играть" or prior_clues and clues < total and "Искать улику" or "Играть снова"
             end
-            action = G.wins[i] == 0 and "Играть" or prior_clues and clues < total and "Искать улику" or "Играть снова"
+            records[#records + 1] = {id = i, title = title, note = note, image = G.backgrounds[i],
+                                     action = blocked or action, available = not blocked}
         end
-        records[i] = {id = i, title = title, note = note, image = G.backgrounds[i], action = blocked or action, available = not blocked}
     end
     assert(browser:set_items("searches", records))
+    local goal = progress.chapter_goal()
+    if goal then browser:scroll_to("searches", goal) end
 end
 
 local browser_dialog
@@ -154,7 +164,7 @@ local function chapters_dialog()
         browser_dialog = G.dialog
     end
     local _, height = browser:measure(888, K.skin)
-    local box, r = popup(936, height + 88, "Глава 1 · Игра восьми")
+    local box, r = popup(936, height + 88, "Главы")
     close_button(box)
     r = r:inflate2(vec2(-19, 0))
     r:cut_top(40)
@@ -168,7 +178,7 @@ end
 
 local journal = ui.form{kind = "column", gap = 8, children = {
     {kind = "label", id = "summary", text_align = "center", role = "budget", height = 24},
-    {kind = "list", id = "notes", gap = 4, item = function(e)
+    {kind = "list", id = "notes", scroll = true, height = 510, gap = 4, item = function(e)
         return {kind = "column", panel = true, role = "archive_entry", radius = 10,
             padding = {left = 14, top = 7, right = 14, bottom = 7}, gap = 1, children = {
             {kind = "label", text = e.title, text_align = "start"},
@@ -194,15 +204,20 @@ end
 
 local cache_result = ui.form{kind = "column", gap = 16, children = {
     {kind = "column", panel = true, role = "parchment", radius = 12, padding = 16, gap = 4, children = {
-        {kind = "label", text = "Глава 1 завершена", em = 24},
-        {kind = "label", text = beats.c1t2.note, role = "archive_note", wrap = true, em = 19},
+        {kind = "label", id = "chapter", text = "Глава 1 завершена", em = 24},
+        {kind = "label", id = "note", text = beats.c1t2.note, role = "archive_note", wrap = true, em = 19},
     }},
-    {kind = "label", text = "Дальше · Книга разливов", role = "budget", height = 30, em = 22},
-    {kind = "label", text = ("Награда за тайник · %d монет"):format(economy.CACHE_COINS), role = "budget", height = 26},
+    {kind = "label", id = "next", text = "Дальше · Книга разливов", role = "budget", height = 30, em = 22},
+    {kind = "label", id = "reward", text = ("Награда за тайник · %d монет"):format(economy.CACHE_COINS), role = "budget", height = 26},
     {kind = "button", id = "home", text = "На остров", accent = true, height = 48},
 }}
 
 local function cache_dialog()
+    local chapter = content.cache_chapter(G.scene) or 1
+    cache_result:set("chapter", ("Глава %d завершена"):format(chapter))
+    cache_result:set("note", beats[("c%dt2"):format(chapter)].note)
+    cache_result:set("next", ({"Дальше · Книга разливов", "Дальше · Печать", "Продолжение следует"})[chapter])
+    cache_result:set("reward", ("Награда за тайник · %d монет"):format(economy.cache_rewards[chapter]))
     local _, height = cache_result:measure(572, K.skin)
     local _, r = popup(620, height + 88, "Тайник открыт")
     r = r:inflate2(vec2(-19, 0))

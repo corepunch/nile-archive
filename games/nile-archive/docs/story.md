@@ -1,6 +1,6 @@
 # Design and story: three chapters to "Продолжение следует"
 
-**Status.** Chapter 1 is implemented through the temple cache. Chapters 2 and 3 remain design and script. The goal for the full campaign is three chapters ending with «Продолжение следует».
+**Status.** All three chapters are implemented through their caches. The campaign ends with «Продолжение следует». The 2026-11-02 prototype proposals and cost estimates below are retained as historical context; the current [progression and economy](progression-economy.md) and runtime Lua define the implemented behaviour.
 
 **How to read the labels.** Reference facts carry the labels from [the research report](../../../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md): `official` (Wooga help centre, App Store), `wiki*` and `player*` (Fandom and AppGamer, seen only through search excerpts, so recheck before tuning against them), `player` (reviews, fan transcripts, third-party guides), `analysis` (Naavik), `estimate` (arithmetic). Nobody on the research side played the game. **Everything of ours is a proposal** unless it cites our code. The report's own proposal section is for Relic Rush and none of its numbers are used.
 
@@ -23,7 +23,7 @@ The original prototype had three searches and seven lines. Chapter 1 now uses fi
 
 ### Campaign review · 2026-11-04
 
-The full script covers 15 searches, three ordered-tap caches and 206 main dialogue lines. The first three scene IDs were preserved for saved progress.
+The full script covers 15 searches and three ordered-tap caches. All chapter dialogue and targets are implemented in the runtime. The first three scene IDs were preserved for saved progress.
 
 | Chapter | Reuse | Add |
 | --- | --- | --- |
@@ -38,8 +38,7 @@ The full script covers 15 searches, three ordered-tap caches and 206 main dialog
 The campaign review also identified three dependencies for the art briefs and later chapters.
 
 - Chapter 1 requires the fountain before the library revisit, where `c1s5b` refers to it. Chapter 3 will need a similar workshop gate for slot 15.
-- Reconcile the vault inventory in the truth timeline. The first cache finds 239 chests against an inventory of 240, but the timeline says Хорем moved 239 and later took the Book. Establish whether he removed the Book with its chest, then carry that count through the inventory, the painting and the dialogue.
-- Establish how the dyke preserved evidence for nine months before painting it. The cut, the rope knot and the narrow keel mark each carry an inference, and the keel mark is the cache's fourth tap.
+- The vault inventory and preserved dyke evidence are reconciled in the truth timeline and chapter 2 below. The crawlway, buried cut and scarred stake need to be legible in their paintings. Their exact hit regions remain to be measured.
 
 ## 1. What to clone, adapt or skip
 
@@ -55,10 +54,10 @@ The campaign review also identified three dependencies for the art briefs and la
 | Opening scene with one clue | Chapter 1 has 9 clues; its first level has a single clue (`wiki*`; `player` transcript) | **Clone** | First session reaches the library after one clear, as today. Our chapter 1 has 9 clues |
 | 5 accumulating Stars | Up to 5, points accumulate across plays (`official`) | **Adapt**: keep 3 Stars, add a guaranteed floor | See 2.3. 3 Stars was a deliberate decision, and a skill-only third Star would be a soft loss state |
 | Next scene gate | Both clues plus a Flower level, nothing spent (`official`) | **Clone** | Our gate today is one clue plus Influence, so only the clue rule changes |
-| Adventure Scene gate | 20 of 25 chapter Stars (`official`); plus all chapter clues (`official`); wiki also says "all 20 clues", which does not fit 10 (`wiki*`, conflict) | **Adapt**: all clues, no Star count | Clue B needs 3 Stars in every scene, so 15 of 15 Stars is already implied |
+| Adventure Scene gate | 20 of 25 chapter Stars (`official`); plus all chapter clues (`official`); wiki also says "all 20 clues", which does not fit 10 (`wiki*`, conflict) | **Adapt**: all clues, no Star count | Clue B needs 3 Stars in scenes 2–5, so 12 chapter Stars are already implied; scene 1 needs only clue A |
 | Adventure Scene form | Interactive puzzle, no time limit, one solution, key on a drawer (`official`) | **Adapt** as Тайник: an ordered chain of taps | A true puzzle engine is a new system. A chain reuses `sc.at` and `sc.radius` hit data |
 | Flowers | Thresholds, never spent, come from decorating and building (`official`) | **Adapt**: Influence plays the role | Influence already grows only and is never spent (`lua/archive_state.lua:5-7`) |
-| Decorating gates story | Coin decorations give Flowers at a linear rate, 30 coins each (`wiki*`, `player*`, confirmed by `estimate` on three samples) | **Clone the idea**, at our own rate | Today the 96 decorations affect nothing. This is the largest economy change |
+| Decorating gates story | Coin decorations give Flowers at a linear rate, 30 coins each (`wiki*`, `player*`, confirmed by `estimate` on three samples) | **Clone the idea**, at our own rate | At the prototype baseline the 96 decorations did not affect Influence. They now do |
 | Pay per play | floor(score / 10,000) + 10 for Perfect, ceiling 76-80 (`wiki*`, `estimate`) | **Keep ours**, 80 flat plus bonuses | Our floor already equals their ceiling, and it is tested |
 | Star Boxes, suitcases | Random rewards with published odds (`official`) | **Skip** | Random reward layer with no store behind it. `docs/ECONOMY_RESEARCH.md:63` rules out random chests |
 | Materials, build timers, passive income, compasses | `official`, `wiki*` | **Skip** | Extra currencies and waits with nothing to sell. `docs/ECONOMY_RESEARCH.md:227` warns against exactly this |
@@ -115,7 +114,7 @@ Three also suits the island: it has 3 shores to open (`lua/archive_state.lua:10`
 
 ### 2.2 Scene slots
 
-Existing scenes keep slots 1-3 and their order. Slots are append-only, like the building catalogue, so `wins` and `stars` indices in old saves stay valid and need no remapping.
+Existing scenes keep slots 1-3 and their order. Slots are append-only, like the building catalogue, so `wins` and `stars` indices in old saves stay valid and need no remapping. Gates for slots 6–15 below are implemented and documented in [progression and economy](progression-economy.md).
 
 | Slot | Ch. | Scene | Painting | Item list | Gate |
 | ---: | ---: | --- | --- | --- | ---: |
@@ -125,17 +124,17 @@ Existing scenes keep slots 1-3 and their order. Slots are append-only, like the 
 | 4 | 1 | Двор, второй круг | `scene0.png` | **new** | 75 |
 | 5 | 1 | Библиотека, второй круг | `scene1.png` | **new** | 90 |
 | T1 | 1 | Тайник: Дверь под крылатым солнцем | `scene2.png` | existing targets | clues |
-| 6 | 2 | Хранилище под храмом | **new** A | new | 130 |
-| 7 | 2 | Ниломер | **new** B | new | 140 |
-| 8 | 2 | Хранилище, второй круг | A | new | 165 |
-| 9 | 2 | Перерезанная дамба | **new** C | new | 195 |
-| 10 | 2 | Ниломер, второй круг | B | new | 220 |
+| 6 | 2 | Хранилище под храмом | **new** A | new | 100 |
+| 7 | 2 | Ниломер | **new** B | new | 120 |
+| 8 | 2 | Хранилище, второй круг | A | new | 145 |
+| 9 | 2 | Перерезанная дамба | **new** C | new | 170 |
+| 10 | 2 | Ниломер, второй круг | B | new | 200 |
 | T2 | 2 | Тайник: След киля | C | C's targets + 1 | clues |
-| 11 | 3 | Затопленные амбары | **new** D | new | 255 |
-| 12 | 3 | Дом надзирателя | **new** E | new | 265 |
+| 11 | 3 | Затопленные амбары | **new** D | new | 230 |
+| 12 | 3 | Дом надзирателя | **new** E | new | 260 |
 | 13 | 3 | Амбары, второй круг | D | new | 295 |
-| 14 | 3 | Дом надзирателя, второй круг | E | new | 320 |
-| 15 | 3 | Мастерская печатей | **new** F | new | 350 |
+| 14 | 3 | Дом надзирателя, второй круг | E | new | 330 |
+| 15 | 3 | Мастерская печатей | **new** F | new | 370 |
 | T3 | 3 | Тайник: Последняя вещь | F | F's targets | clues |
 
 ### 2.3 Clue and Star rules
@@ -174,7 +173,9 @@ The reference's rate works because it has other Flower sources (`official`) and 
 
 **Decoration Star unlocks scale by 5.** Today's thresholds are 0-9. With 3 Stars per scene, every decoration would unlock by slot 3. Multiplying by 5 at `lua/archive_content.lua:63-64` (the catalogue itself is generated, do not edit) spreads them over the 45 Stars available.
 
-### 2.5 Gates, checked against minimum income
+### 2.5 Historical gate estimate
+
+The following 2026-11-02 calculation describes a superseded draft with gates 130–350. Use the later candidate gates and their separate route accounting in [progression and economy](progression-economy.md). These historical numbers do not validate the new schedule.
 
 Minimum coins before a slot is `140 + 260 × (slot − 2) + 150 × Тайники done`. Cost is the cheapest purchase set: restorations first, then 10 coins per Influence.
 
@@ -198,7 +199,7 @@ Minimum coins before a slot is `140 + 260 × (slot − 2) + 150 × Тайник�
 - **Slots 2 and 3 keep today's gates** of 20 and 50 (`lua/archive_economy.lua:4`), so existing saves are not re-locked.
 - **Shape from the reference (`player*`):** the 2nd scene of a chapter is cheapest and a chapter's opener costs about what its 5th does. So slots 7 and 12 are +10 and openers are +35-40. Absolute values are not comparable: 1,300-1,970 Flowers per chapter there, 80-130 Influence here.
 - **Early-chapter generosity (`player*`, 170 against 1,420):** slot 5's gate needs only the restorations, so chapter 1 asks for no decoration at all.
-- **Nothing can strand the player.** Every leftover covers the optional shores (540 in all) by slot 15, and a replay always pays at least 80. Total minimum income for the run is **4,230 coins**, and the catalogue costs 15,555. At least 76% of it stays unbought at the end (3,780 coins at most go to decorations), which is the post-game.
+- **In this historical estimate,** every leftover covers the optional shores (540 in all) by slot 15, and a replay always pays at least 80. This did not test the revised gates or actual placement constraints. Total minimum income for the run is **4,230 coins**, and the catalogue costs 15,555. At least 76% of it stays unbought at the end (3,780 coins at most go to decorations), which is the post-game.
 - **Shores keep their prices** of 120/180/240 (`lua/archive_economy.lua:12`). Requirements move from 1/2/3 completed scenes to **3/6/11**, one per chapter (`lua/archive_island.lua:38`). All three would otherwise open in the first ten minutes.
 - All of this is starting data. It has not been simulated in the game or played.
 
@@ -233,9 +234,9 @@ Item lists are in section 3 at each scene. The list for a new painting is its ar
 | Beat group | Clue beats | Тайник beats | Lines |
 | --- | ---: | ---: | ---: |
 | Chapter 1 (with the prologue) | 9 | 2 | 70 |
-| Chapter 2 | 10 | 2 | 68 |
+| Chapter 2 | 10 | 2 | 70 |
 | Chapter 3 | 10 | 2 | 68 |
-| **Total** | **29** | **6** | **206** |
+| **Total** | **29** | **6** | **208** |
 
 Reference: 49-70 labelled lines per chapter (`player`), 3-10 per clue (`player`). The prologue is counted in chapter 1. Side lines (shores and so on) are counted separately in "Small lines".
 
@@ -258,10 +259,11 @@ The player learns this in pieces. Writers need it whole.
 1. **Two centuries.** Нефра's family keeps the island's archive and its nilometer. The great book, **Книга разливов**, holds the river's height for every year. Since the size of the flood sets the harvest and the tax, those numbers are power. Хорем brought up his daughter on **Игра восьми**: he hid eight things around the house, the last always leading to the next room, and a swapped thing was always a hint.
 2. **Twenty years of theft.** **Ликон**, the royal grain overseer, cuts false marks into the nilometer two cubits low. He reports poor floods to the crown, collects as for good ones from the farmers, and keeps the difference in unrecorded barns on the low northern branch. Only the Book can prove it. He comes to dinner, smiles, and asks for it "for the royal census". Хорем refuses and writes the smile down.
 3. **The sum.** Хорем's tables say the coming flood will top every mark. If the dyke on the northern branch holds, the water takes seven villages on the right bank. If it is cut, the water goes down the northern branch instead, across the lower island and Ликон's barns. He warns the grain office. Ликон's office answers: "Разлив ожидается слабый".
-4. **The week before.** Хорем moves 239 chests to a vault under the old temple, works it with a water-balance door tied to the fountain, leaves household accounts on the library shelves as a decoy, and sets the Игра восьми through the estate for the one person who could read it.
+4. **The week before.** Хорем moves all 240 inventoried chests to a vault under the old temple, works it with a water-balance door tied to the fountain, leaves household accounts on the library shelves as a decoy, and sets the Игра восьми through the estate for the one person who could read it.
 5. **The night.** He sends the whole island and the people of the northern branch to a feast across the river, in the seven villages he is saving. In a hood, silent, he hires Мерит's boat for the night, with six men from the seven villages. They say they were told to dig or drown. He pays her with his family's gold **seal-token**, deliberately: to him that is a signature, the mark he uses only for what he answers for. She thinks they are mending the dyke, and sees only dark hands. Later he writes the night down on a nilometer tablet, truthfully, without saying who ordered it or where he stood. Nobody drowns. By morning Мерит's house, on the same branch, is silt.
-6. **The months since.** He goes upriver with no word. Ликон, ruined, catches one of the six, hears about the token, works it out and goes hunting. Хорем comes back in secret by a crawlway from the nilometer, takes the Book, feeds the cat, ties a new knot in her collar, watches the fountain start again and leaves. His sums go further than he can check: **the next flood will be higher still**.
-7. **Now, nine months on.** Нефра was copying a royal decree in Мемфис when the water came, and has waited there for a letter. She comes home and Мерит, whose map's top fold shows the branch where her house stood, who carries a coin in her ear and a guilt she will not name, rows her over.
+6. **The months since.** He goes upriver with no word. Ликон, ruined, catches one of the six, hears about the token, works it out and goes hunting. Хорем returns secretly more than once through a crawlway from the nilometer and feeds Миу, including before Нефра arrives. During a later visit after the fountain starts, he takes the Book in its small numbered chest through the same crawlway, ties a fresh knot in Миу’s collar and leaves. The inventory still lists all 240 chests; Нефра finds 239 sealed chests and an empty space when she opens the vault. His sums go further than he can check: **the next flood will be higher still**.
+7. **The traces.** Flood silt and reeds cover one sheltered inner face of the cut and the mooring stake. The dried bank beneath preserves spade cuts; the stake preserves a paired gouge from the repaired metal edge of Мерит’s keel. The rope fragment remains around the buried stake. The current has erased exposed marks, so the investigation depends on uncovering the sheltered face, not on footprints remaining in open mud for nine months.
+8. **Now, nine months on.** Нефра was copying a royal decree in Мемфис when the water came, and has waited there for a letter. She comes home and Мерит, whose map's top fold shows the branch where her house stood, who carries a coin in her ear and a guilt she will not name, rows her over.
 
 ### Cast arcs
 
@@ -297,27 +299,66 @@ The player learns this in pieces. Writers need it whole.
 | Clue | Leads to |
 | --- | --- |
 | Eight familiar things, "Карта" in the list | It's the childhood game, and a boat is needed |
+| Family seal and later pre-flood inventory | The seal first prompts Нефра’s hypothesis; the dated inventory in `c2s1a` confirms the archive was packed before the flood |
+| Channel, marked scales and vault mechanism | `c1s4a` proposes the water mechanism; `c1s5a` supports it and the exposed counterweight in `c2s1b` confirms it |
 | "Яблоко" in the list | Gardener's apple tree, the jar, the dry channel |
 | Scales marked in cubits + channel | The slab is a water balance |
 | Empty slot in the inventory + wet clay | Someone came after the flood, by another way |
-| Two scales on the nilometer + Мемфис reports | Ликон's fraud, and what the Book proves |
-| Clean cut edges + spade marks | The dyke was cut (wrong theory: by Ликон) |
-| Knot on the stake + keel track | Мерит's boat |
-| Ликон's own barns on that branch | It wasn't Ликон |
+| Two scales on the nilometer + Мемфис reports | The scales and signed reports disagree; the Book may establish the measurements |
+| Buried cut face + sheltered spade marks | The dyke was deliberately cut (wrong theory: by Ликон) |
+| Knot and paired gouges on the buried stake + Мерит’s admission | Her boat was at the stake |
+| Ликон's own barns on that branch | His loss makes him a less certain suspect; it does not eliminate him |
 | Feast in the villages + where the water would go | Who gained, and how it was planned |
-| "Тростник и вода" + interrogation + empty hiding place + earring in clay | Хорем |
-| Tablet + dark hands | He was in the boat |
+| "Тростник и вода" + witnessed payment + empty hiding place + earring in clay | The employer used Horem’s token; its owner is a suspect, not yet proven present |
+| Tablet + dark hands | Horem could have observed from the boat; the collar note confirms his role |
 | Fresh knot on the collar + note in the bead | He is alive, and where |
 
 ### Knowledge ledger
 
 | After | Player and Нефра know | Мерит also knows | Still believed, wrongly |
 | --- | --- | --- | --- |
-| Chapter 1 | Books are safe, one is gone, someone came back | She carried men with spades, and the token | Хорем is a victim who planned well |
-| Chapter 2 | The fraud, the cut dyke, Мерит's night | Nothing more | Ликон ordered it |
+| Chapter 1 | Books are safe, one is gone, someone came back; the pre-flood packing and water-door mechanism remain Нефра’s theories | She carried men with spades, and the token | Хорем is a victim who planned well |
+| Chapter 2 | Mismatched records, the cut dyke and Мерит's night | Nothing more | Ликон ordered it |
 | Slot 12 | Ликон accuses Хорем | Nothing more | Нефра: "Ликон лжёт" |
 | Slot 13 | The villages were the choice | Her kin were saved | Нефра still refuses the sum |
 | Chapter 3 | All of it, and the next flood | The same | Nothing: the open questions are where he is and what he will do |
+
+### Chapter 2–3 production handoff · 2026-11-12
+
+Chapter 1 and its existing IDs are retained. These later searches are implemented. The numbered `cNsMa` and `cNsMb` IDs below address the
+first discovery and the later discovery for that scene. `cNt1` is the cache
+entry beat and `cNt2` its one-time completion beat. The Influence values in
+section 2.2 are candidates from [progression and economy](progression-economy.md), subject to a complete
+playthrough. Each scene after the first needs the previous scene's last clue;
+chapter 2 starts after `c1t2`, chapter 3 after `c2t2`. Each B beat needs a
+clear after that scene's best was already three Stars. Every cache needs all
+its chapter's clue beats; scene 15 additionally requires the restored workshop.
+The existing fountain gate remains before scene 5.
+
+| Slot · location | A · find and immediate change | B · find and next action | Required painting |
+| --- | --- | --- | --- |
+| 6 · Хранилище | `c2s1a` counts 239 chests and explains the Book's tax records | `c2s1b` finds a crawlway and fresh collar knot; go to the nilometer | A · new vault |
+| 7 · Ниломер | `c2s2a` finds a newer, lower scale | `c2s2b` connects official numbers to Ликон; inspect the vault letters | B · new nilometer |
+| 8 · Хранилище | `c2s3a` finds Ликон's request for the Book | `c2s3b` finds Horem's warning and the office's refusal; inspect the dyke | A · second object list |
+| 9 · Дамба | `c2s4a` uncovers protected spade marks | `c2s4b` takes a rope fragment beside paired keel gouges; ask about the knot | C · new dyke, protected cut and stake |
+| 10 · Ниломер | `c2s5a` finds the tablet's account of boat and six spades | `c2s5b` confronts Мерит about her knot; return to the dyke | B · second object list |
+| T2 · След киля | `c2t1` sets the search for stake, rope, oar and keel mark | `c2t2` Мерит admits the boat and payment, while the employer stays unknown | C · one extra cache target |
+| 11 · Амбары | `c3s1a` finds Ликон's ruined grain | `c3s1b` questions why he would flood his own barns; inspect his house | D · new barns |
+| 12 · Дом надзирателя | `c3s2a` finds Ликон's accusation against Horem | `c3s2b` contrasts it with the protected books and feast; calculate the water's path | E · new house |
+| 13 · Амбары | `c3s3a` counts seven villages protected by the diversion | `c3s3b` Мерит learns the diggers came from those villages; read Ликон's interview | D · second object list |
+| 14 · Дом надзирателя | `c3s4a` finds testimony about a reed-and-water token | `c3s4b` links the mark to Horem's seal; inspect the workshop hiding place | E · second object list |
+| 15 · Мастерская | `c3s5a` matches Мерит's earring to the missing token | `c3s5b` proposes Horem was in the boat and confronts the possible cost; examine Миу's collar | F · new workshop, workshop restored |
+| T3 · Последняя вещь | `c3t1` points to the collar as the last object | `c3t2` the letter confirms Horem's choice and points upstream | F · workshop cache |
+
+For production, each row needs a stable scene key, background and measured hit
+regions, a first-clear and B beat key, journal note, and preconditions checked
+before launch. Use the existing `c2s*`, `c3s*`, `c2t*` and `c3t*` keys shown
+above. These keys are the runtime story beat IDs. A clue completion and
+its journal record must be saved together; replay or skipping the dialogue must
+not award a second clue or discard the fact. Keep visited chapter-1 searches
+accessible when adding later gates. The cache target in C is the paired gouge
+on the stake; the rest of that chain uses existing targets. Validate actual
+artwork and hit regions in-game before claiming those searches implemented.
 
 ### Crossing the story with the systems
 
@@ -327,7 +368,7 @@ The player learns this in pieces. Writers need it whole.
 | Queued beats | A placement can fire a restoration line and a milestone line together. Queue restoration first and milestones on the next return to the island. `c3t2` must clear before `MODAL_END` |
 | Skip | Each beat's Запись restates its fact in the win dialog and Journal, so a skipped line costs nothing |
 | Old saves | See Saves in section 5 |
-| Waiting | No real-time deadline. "В прошлом месяце" is story time |
+| Waiting | No real-time deadline. The final note is dated by Horem seeing the restored fountain, not by elapsed wall-clock time |
 | Placement order | Restoration lines never say where the building stands. `c1s5a` and `c3s5a` assume people have returned, which the gates guarantee |
 | Fountain before `c1s5b` | "Фонтан бьёт" assumes it is built, but a decoration route can reach 90 Influence without one. **Require the fountain for the Тайник** |
 | Workshop before slot 15 | Slot 15 assumes it, and a decoration route can skip it. **Require it for slot 15** |
@@ -496,18 +537,20 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 *New painting A, a dry vault of sealed chests under lamplight, with Миу. Teaser: «Архив найден, но одной книги нет. Пересчитайте всё.» Items: Опись, Кошка, Светильник, Печать, Мешочек, Ключ, Амфора, Тростинка.*
 
-**Beat `c2s1a` · first clear** · *Запись: Книга разливов — высота воды за двести лет. Она решает налог.*
+**Beat `c2s1a` · first clear** · *Запись: Опись составлена до разлива. Книга разливов хранила двухсотлетние записи воды.*
 
-- **Нефра:** Считаю в третий раз. Двести тридцать девять. Книги разливов нет.
+- **Нефра:** Опись до разлива: двести сорок сундуков перенесены под храм.
+- **Нефра:** Считаю в третий раз: здесь двести тридцать девять. Книги разливов нет.
 - **Мерит:** Да кому она нужна? Цифры про воду. Вода и так приходит каждый год.
 - **Нефра:** Разлив решает всё. Вода высокая — поле родит, и царь берёт больше.
 - **Нефра:** Двести лет наш дом записывал высоту реки. Каждый локоть, каждый год.
 - **Мерит:** Значит, там записано, кто сколько должен был отдать. Тут у любого зачешутся руки.
 
-**Beat `c2s1b` · clear after the third Star** · *Запись: За сундуками лаз. Он ведёт наверх, к ниломеру. На ошейнике Миу свежий узел.*
+**Beat `c2s1b` · clear after the third Star** · *Запись: У противовеса труба фонтана. За сундуками лаз к ниломеру, у Миу свежий узел.*
 
 - **Нефра:** Следы идут не к двери, а к стене. Из-за сундуков тянет рекой.
-- **Мерит:** Лаз. Узкий, еле плечи пройдут. И кошка твоя сидит возле него, как сторож.
+- **Мерит:** Лаз. Узкий, но маленький сундук протащить можно. Миу у входа сторожит.
+- **Нефра:** Труба от фонтана входит в противовес. Значит, плиту подняла вода.
 - **Нефра:** Миу, иди сюда. Ошейник у тебя тот же, а узел свежий. Странно.
 - **Мерит:** Кошки сами узлов не вяжут. Лаз идёт вверх, на север. Там только ниломер.
 - **Нефра:** Значит, следующий вопрос задаст ниломер.
@@ -524,7 +567,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 - **Мерит:** Кто-то подправлял реку? Смелый человек.
 - **Нефра:** Они ниже настоящих на два локтя. По ним выходит, что разливы были плохие.
 
-**Beat `c2s2b` · clear after the third Star** · *Запись: Надзиратель зерна Ликон занижал разливы двадцать лет. Книга могла это доказать.*
+**Beat `c2s2b` · clear after the third Star** · *Запись: Отчёты с подписью Ликона расходятся со шкалой. Книга могла бы их проверить.*
 
 - **Нефра:** В столицу пишут: воды мало, зерна мало. А с крестьян берут как за большую воду.
 - **Мерит:** Брали. Брат мой платил, пока поле не отдал.
@@ -537,13 +580,13 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 *Painting A. Teaser: «В податных сундуках могут быть письма. Вернитесь в хранилище.» Items (new): Письмо, Счётные камни, Сандалия, Кувшин, Ларец, Чернильница, Лесенка, Весы.*
 
-**Beat `c2s3a` · first clear** · *Запись: Ликон просил Книгу «для царской переписи». Полки наверху были приманкой для него.*
+**Beat `c2s3a` · first clear** · *Запись: Ликон просил Книгу «для царской переписи». Нефра подозревает, что полки — приманка.*
 
 - **Нефра:** Вот письмо в податном сундуке. Рука Ликона: просит Книгу «для царской переписи».
 - **Хорем (thought):** Ответил: книга не покидает острова. Он улыбнулся. Такие улыбки я записываю.
 - **Нефра:** Записывает. Вот его день, вот вино, вот улыбка. Всё с датой.
-- **Мерит:** Так вот для кого твои полки с маслом и верёвками.
-- **Нефра:** Для него. Чтобы искал счета за верёвку, пока вода не спадёт.
+- **Мерит:** Думаешь, твои полки с маслом и верёвками были для Ликона?
+- **Нефра:** Возможно. Они отвлекли бы любого, кто искал Книгу.
 
 **Beat `c2s3b` · clear after the third Star** · *Запись: Отец рассчитал небывалую воду и предупредил палату. Ответ: «Разлив ожидается слабый».*
 
@@ -553,24 +596,24 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 - **Мерит:** Вот как он успел! Тоже мне тайна.
 - **Нефра:** Знал и написал в палату. А вот ответ: «Разлив ожидается слабый».
 - **Мерит:** Подпись можешь не читать.
-- **Нефра:** Ликон. Он прочёл это предупреждение и промолчал. Запишем.
+- **Нефра:** Ликон. Он ответил, что воды будет мало. Запишем.
 
 ### Slot 9 · Перерезанная дамба
 
-*New painting C, a broken earth dyke on the northern branch, reeds and a mooring stake. Teaser: «Отец боялся за дамбу. Надо увидеть её своими глазами.» Items: Лопата, Кошка, Кол, Канат, Весло, Мотыга, Сандалия, Кувшин.*
+*New painting C, a broken earth dyke on the northern branch, reeds and a mooring stake. Show a sheltered cut face, a rope fragment and paired gouges on the stake; the silt that protected them has recently washed away. Teaser: «Отец боялся за дамбу. Надо увидеть её своими глазами.» Items: Лопата, Кошка, Кол, Канат, Весло, Мотыга, Сандалия, Кувшин.*
 
 **Beat `c2s4a` · first clear** · *Запись: Края пролома ровные. Дамбу перерезали лопатами. Это не разлив.*
 
-- **Мерит:** Вот она, дамба. Где размыло, там сейчас уже тростник. Что тут смотреть?
-- **Нефра:** Размыло? Посмотри на края. Ровные, будто хлеб резали.
-- **Нефра:** И следы вдоль края, от лопат. Много лопат.
-- **Нефра:** Мерит, дамбу перерезали. Вода сама сюда не приходила. Её привели.
+- **Мерит:** Ил укрывал дамбу после разлива. Теперь вода его смыла.
+- **Нефра:** Срез твёрдый. Видишь борозды от лопат?
+- **Мерит:** Вода их не смыла. Эта сторона была укрыта.
+- **Нефра:** Дамбу перерезали. Воду сюда привели.
 - **Мерит:** Поехали отсюда. Комары.
 
 **Beat `c2s4b` · clear after the third Star** · *Запись: На колу обрывок каната с речным узлом. Мерит не хочет на него смотреть.*
 
-- **Нефра:** На колу обрывок каната. Кто-то швартовался прямо здесь в ту ночь.
-- **Мерит:** Мало ли канатов на реке.
+- **Нефра:** На колу канат. Рядом две борозды, словно от киля.
+- **Мерит:** Мало ли лодок на реке.
 - **Нефра:** Помоги снять. Не развязывается, сколько ни тяни.
 - **Мерит:** Брось, говорю. Режь, если так нужен.
 - **Нефра (thought):** Она ни разу не взглянула на этот кол. А ведь она смотрит на всё.
@@ -586,9 +629,9 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 - **Хорем (thought):** На северном рукаве одна лодка и шесть лопат. На кормовом конце речной узел. Записано.
 - **Нефра:** Он видел. Стоял тут и видел, и записал.
 - **Мерит:** А что он мог один, против шестерых?
-- **Нефра:** Людей он отослал ещё днём. Значит, знал, что Ликон пришлёт лопаты. Откуда?
+- **Нефра:** Людей он отослал ещё днём. Совпадение? Или он ждал беды?
 
-**Beat `c2s5b` · clear after the third Star** · *Запись: На дамбе узел Мерит. Она обещает всё сказать на месте.*
+**Beat `c2s5b` · clear after the third Star** · *Запись: Узел на дамбе похож на узел Мерит. Она обещает всё сказать на месте.*
 
 - **Нефра:** Речной узел. Я весь вечер его тянула. Кто на реке так вяжет?
 - **Мерит:** Многие.
@@ -599,7 +642,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 ### Тайник 2 · След киля
 
-*Chain on painting C: Кол, Канат, Весло, then one extra target, След киля (cache only, +1 ellipse).*
+*Chain on painting C: Кол, Канат, Весло, then the paired gouges on the stake, След киля (cache only, +1 ellipse). The paired marks were protected by silt until recently and are visible in the illustration.*
 
 **Beat `c2t1` · on entering**
 
@@ -608,8 +651,8 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 **Beat `c2t2` · chain solved · hook** · *Запись: Лодка в ту ночь была лодкой Мерит. Её нанял человек в капюшоне. Плата — золото в её ухе.*
 
-- **Нефра:** След киля узкий. Такая лодка на этом рукаве одна. Твоя.
-- **Мерит:** Моя.
+- **Нефра:** Две борозды на колу. Твой киль мог их оставить?
+- **Мерит:** Мог. Я сама его чинила: два гвоздя так и торчат. Лодка была моя.
 - **Нефра:** Ты возила меня по острову. Ты смеялась. И всё это время ты знала?
 - **Мерит:** Человек в капюшоне нанял меня на ночь. Шестеро парней с лопатами. Они сказали: чинить дамбу.
 - **Мерит:** Заплатил золотом. Я такой платы в жизни не видела и вопросов не задавала.
@@ -626,21 +669,21 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 *New painting D, huge drowned barns on the low bank, silt to the beams, a grain measure on a hook. Teaser: «Амбары Ликона стоят на том же рукаве. Что там осталось?» Items: Кошка, Мерка, Серп, Мешок, Весы, Табличка, Совок, Крыса.*
 
-**Beat `c3s1a` · first clear** · *Запись: Здесь лежало краденое зерно Ликона. Всё сгнило.*
+**Beat `c3s1a` · first clear** · *Запись: Амбары Ликона затоплены, зерно сгнило.*
 
 - **Мерит:** Амбары Ликона. Гребла молча, как ты просила.
-- **Нефра:** Ил по самые балки. Здесь лежало зерно, которого в отчётах никогда не было.
-- **Нефра:** Всё, что он не успел продать. Чужие урожаи. И всё сгнило.
+- **Нефра:** Ил по самые балки. Здесь хранилось зерно Ликона.
+- **Нефра:** Всё, что осталось в амбарах, сгнило.
 - **Мерит:** Брат бы порадовался. Поделом ему, надзирателю.
 - **Нефра:** Я не просила тебя радоваться. Я просила грести.
 
-**Beat `c3s1b` · clear after the third Star** · *Запись: Амбары затопило той же водой. Ликон не стал бы топить своё зерно. Дамбу резал не он.*
+**Beat `c3s1b` · clear after the third Star** · *Запись: Вода затопила амбары Ликона. Нефра сомневается, что он приказал резать дамбу.*
 
 - **Нефра:** Постой. Амбары стоят на северном рукаве. Куда и пустили воду.
 - **Мерит:** И что? Амбары как амбары.
 - **Нефра:** Ликон велел утопить собственное зерно? Весь свой запас?
 - **Мерит:** Нет. Такой за горсть ячменя удавится.
-- **Нефра:** Значит, дамбу резал не он. Кто-то одной водой накрыл и архив, и амбары Ликона.
+- **Нефра:** Значит, вряд ли это он. Одна вода накрыла архив и его амбары.
 - **Мерит:** Кто же меня тогда нанял?
 
 ### Slot 12 · Дом надзирателя
@@ -676,7 +719,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 - **Мерит:** А они целы. Тётка говорит, в ту ночь у них даже зерно не намокло. Весь остров там плясал.
 - **Нефра:** Семь селений за ночь не увезёшь. А один остров можно отпустить на праздник.
 
-**Beat `c3s3b` · clear after the third Star** · *Запись: Шестеро с лопатами были из тех селений. Их звал «старый писец».*
+**Beat `c3s3b` · clear after the third Star** · *Запись: Шестеро с лопатами были из тех селений. Они скрывают, кто их позвал.*
 
 - **Мерит:** Я спросила родню. Те шестеро с лопатами были оттуда, из селений.
 - **Мерит:** Кто их позвал, молчат. Говорят только: «Велели копать или тонуть».
@@ -692,7 +735,7 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 - **Нефра:** Ликон поймал одного из шестерых. Вот его допрос, слово в слово.
 - **Мерит:** И что сказал парень?
-- **Нефра:** «Лодочнице заплатили золотым знаком. На знаке тростник и вода».
+- **Нефра:** «Я видел, как он платил лодочнице. На золотом знаке — тростник и вода».
 - **Мерит:** Тростника на реке хватает.
 - **Нефра (thought):** Она закрыла ухо платком. Вряд ли заметила, что закрыла.
 
@@ -715,15 +758,15 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 - **Мерит:** Зачем? Ну, на.
 - **Нефра:** Прижимаю к глине. Это не монета. Тростник и вода.
 - **Мерит:** Это та плата. Он заплатил мне печатью вашего дома?
-- **Нефра:** Он не заплатил. Он подписался. За всё, что сделал той ночью.
+- **Нефра:** Этим знаком он отвечал за свои поступки. Но кто вынес его из тайника?
 
-**Beat `c3s5b` · clear after the third Star** · *Запись: Человек в капюшоне — сам Хорем. Он нанял Мерит и перерезал дамбу.*
+**Beat `c3s5b` · clear after the third Star** · *Запись: Печать и руки человека в капюшоне указывают на Хорема. Нефре нужно подтверждение.*
 
-- **Мерит:** Он всю ночь молчал. Руки тёмные, я думала, смола. А это чернила.
-- **Нефра:** Это был он. Сам нанял тебя, сам привёл лопаты. Сам назначил воде час.
-- **Нефра:** И та табличка: лодка, лопаты, узел. Ни слова лжи. Только стоял он не на ниломере.
-- **Мерит:** Твой отец утопил твой дом. И мой. Мой, писарша!
-- **Нефра:** И спас семь селений. Знаю. И то и другое записано.
+- **Мерит:** Он всю ночь молчал. Руки тёмные. Я думала, смола. А вдруг чернила?
+- **Нефра:** Это мог быть он. Печать, чернила, заранее спасённые люди. Но нам нужно знать.
+- **Нефра:** Табличка говорит о лодке и узле. Он мог видеть их и с лодки.
+- **Мерит:** Если это он, он утопил твой дом. И мой. Мой, писарша!
+- **Нефра:** И спас семь селений. Если это он, записать придётся и то и другое.
 - **Мерит:** Меня-то почему не спросил?
 - **Нефра:** Меня тоже. Садись. Будем злиться вдвоём.
 
@@ -738,11 +781,11 @@ Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THO
 
 **Beat `c3t2` · chain solved · hook · last beat of the game** · *Запись: Хорем жив. Он ушёл к первому порогу с Книгой. Следующая вода будет выше.*
 
-- **Нефра:** Ошейник. Узел писца, и в бусине свиток. Мерит, он написан в прошлом месяце!
+- **Нефра:** Ошейник. Тот самый свежий узел. А в бусине — его записка.
 - **Хорем (thought):** Нефра. Раз ты здесь, ты всё сосчитала. Дамбу велел резать я. Записано моей рукой.
 - **Хорем (thought):** Семь селений или наш остров. Я выбрал и выбрал бы снова. Прощения не прошу.
 - **Хорем (thought):** Я вернулся за Книгой, пока ты строила. Увидел, как забил фонтан. Дальше смотреть не смог.
-- **Нефра:** Он был здесь. Стоял на тех ступенях, в двух шагах от меня. И ушёл.
+- **Нефра:** Он был здесь. Видел, как заработал фонтан. И ушёл.
 - **Хорем (thought):** По Книге следующая вода будет выше. Иду сверять к первому порогу.
 - **Хорем (thought):** И на этот раз я не знаю, что резать.
 - **Нефра:** Ты слышала. Ликон тоже идёт вверх по реке.
@@ -799,7 +842,7 @@ Shown once, right after `c3t2`, as a new `MODAL_END` popup over the island, usin
 
 ## 5. Implementation notes
 
-This is the original implementation sketch against `c3b507b`. Chapter 1 now uses `archive_story.lua` for dialogue and journal notes. Chapters 2 and 3 still need their paintings, searches and cache chains.
+This is the historical implementation sketch against `c3b507b`. All three chapters now use `archive_story.lua` for dialogue and journal notes, with the new paintings, searches and cache chains.
 
 ### Code
 
@@ -871,32 +914,37 @@ Add a catalogue row per painting and list as `AGENTS.md` requires for a visual a
 2. First painting (A). Measure the real cost and correct 2.6.
 3. Remaining paintings, chapters 2-3, end screen.
 
-## Decisions the owner must make
+## Historical decisions and current status
 
-1. **Energy:** none, full clone or replays only (1.2). Recommendation: none.
-2. **Chapter count and art budget:** 3 chapters and 6 paintings (2.1, 2.6).
-3. **Decorations grant Influence** at 10 coins each, reversing the current rule (2.4).
-4. **Second clue behind the third Star**, with the play-count floor, reversing "no mandatory replays" (2.3).
-5. **Restorations once per save** (2.4).
-6. **The final twist:** the father deliberately drowns his own home. It's the most consequential story choice, and everything is built around it.
-7. **"Гранат" label** in slots 1-2: keep it as a clue or fix it as a bug.
-8. **Tone of the historical anchor:** Мемфис, royal grain office, nilometer tax. See below.
+The November 2026 draft proposed three chapters, six paintings and the final
+reveal written above. These remain production plans, with chapter 2–3 art and
+implementation outstanding. Chapter 1 already gives Influence for decorations,
+uses the third-Star clue condition with a play-count floor, and restricts
+restorations to once per save. Its present searches use no energy. The fruit
+label is retained in chapter 1's story. Historical details of the setting still
+need expert review; no approval step is implied by this list.
 
 ## Changelog
 
+**2026-11-12 (implementation).** The dyke scene shows marks exposed after the protective silt washed away. Its dialogue now matches that view.
+
+**2026-11-12.** Counted scripted lines, excluding journal notes and small lines. Chapter 1 has 70 lines (longest 93 characters), chapter 2 has 70 (99) and chapter 3 has 68 (89). Speakers are Нефра, Мерит and Хорем, with thought/shout annotations. A sequential cold reader reviewed all three chapters and re-read the corrections. At the time of this cold read, later chapters had not been staged in-game. Reconciled the 240-chest inventory and the missing Book: Хорем removed its small chest through the crawlway. Gave the cut, rope and keel evidence a sheltered silt-covered location, and made Мерит identify her repaired keel rather than having Нефра deduce a unique boat from width. The dated inventory and visible counterweight in chapter 2 corroborate Нефра’s opening theories. A separate reader examined the chapters in order and identified unsupported conclusions; chapter 2–3 dialogue, notes and clue chain now keep them provisional until supported, and the witness states they saw the token handed over. The reader rechecked the revised script. At that point, artwork, in-game staging and native-language editing still needed review. Reconciled the future gate table with the current economy handoff. Chapters 2–3 were subsequently implemented and reviewed in game.
+
 **2026-11-04.** Implemented Chapter 1 with existing paintings and portraits. The revisit labels distinguish similar objects, the cache uses existing temple hit regions, and the fountain gate comes before the library revisit. The story dialogue follows the reviewed script.
 
-**2026-11-02.** First draft, written to `docs/STORY_WRITING.md`, which appeared in the repo during the work. One cold read by a separate agent, chapter by chapter, with no notes. It reached the final reveal at about 55-60% by the end of chapter 2 and found it mostly fair. **Fixed from the read:** the island contradicted "drowned"; Хорем was in two places on the night; the villages and the seal motif had no plant; inky hands had no plant; a broken seal on a jar made no sense and is gone; the token's use is now motivated (a signature); no clock (now nine months); why a game at all; "никогда не спросишь" contradicted an earlier ask; "матрица" and other stiff Russian; several confirmations of the reveal trimmed. **The fixed version has not had a second cold read.**
+**2026-11-02.** First draft, written to `docs/STORY_WRITING.md`, which appeared in the repo during the work. One cold read by a separate agent, chapter by chapter, with no notes. It reached the final reveal at about 55-60% by the end of chapter 2 and found it mostly fair. **Fixed from the read:** the island contradicted "drowned"; Хорем was in two places on the night; the villages and the seal motif had no plant; inky hands had no plant; a broken seal on a jar made no sense and is gone; the token's use is now motivated (a signature); no clock (now nine months); why a game at all; "никогда не спросишь" contradicted an earlier ask; "матрица" and other stiff Russian; several confirmations of the reveal trimmed. At that time the fixed version had not had a second cold read; see the 2026-11-12 entry for the later review.
 
-**Still owed:** the father never appears, so the climax is a note; that is deliberate for "to be continued" but it is the read's main complaint. The reveal is guessable early, by design under the guide's small-cast rule, since the surprise is why and what it cost. Why Ликон was not exposed earlier by the record, the keel track surviving a flood, and a Russian-language pass by a native editor all remain open. Мерит still sometimes acts as a prompter for Нефра.
+**Still owed:** the father never appears, so the climax is a note; that is deliberate for "to be continued" but it is the read's main complaint. The reveal is guessable early, by design under the guide's small-cast rule, since the surprise is why and what it cost. Why Ликон was not exposed earlier by the record and a Russian-language pass by a native editor remain open. The silt-covered stake and cut were a production requirement for the dyke painting; the implemented scene uses a mark exposed by receding silt. Мерит still sometimes acts as a prompter for Нефра.
 
 ## Not verified
 
-- **The cold read** covered the first draft, not this version.
-- **Chapters 2 and 3 are unimplemented.** Chapter 1's longest line is 93 characters and has been captured at 1200×900 and 1368×1026. [Chapter 1 captures](UI_CATALOGUE.md#chapter-1-captures).
+- **The cold read** covered the revised text. Representative later-chapter dialogue is reviewed in game at both supported sizes.
+- **Chapter dialogue and the new scenes are implemented.** Chapter 1's longest line is 93 characters; representative scenes and interface were captured at 1200×900 and 1368×1026. [Chapter 1 captures](UI_CATALOGUE.md#chapter-1-captures).
 - **June's Journey numbers** are as weak as their labels. `wiki*` and `player*` come from search excerpts.
 - **Play time and art hours** are estimates. Human session length is not measured anywhere in the repo.
 - **Extra targets on existing paintings** were identified by eye, with no measurement.
 - **Land capacity** for about 25-30 buildings across the opened zones is not checked.
 - **`texture.load` caching** when several scenes share a painting.
 - **History.** Nilometers, flood-based tax, the first cataract and a royal decree copied at Memphis around 196 BC are from general knowledge, not checked. `docs/PROJECT.md:44` already says the setting has had no expert review. Likon and his office are invented.
+
+**2026-11-12, implementation.** Added all 15 searches, three caches, reviewed chapter 2–3 dialogue, saved clue and cache progression, ten one-time island works and six new scene illustrations. Preserved prior search IDs and migrated the first-cache flag. Scene 9 wording now says receding silt exposed the previously protected cut and marks, matching its painting. The economy implementation and test route are in [progression and economy](progression-economy.md).

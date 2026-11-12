@@ -206,7 +206,7 @@ function M.step()
         assert(G.modal == MODAL_WIN, "search did not open the result")
         app.inject_click(G.spots.continue); step = 46
     elseif step == 46 then
-        if G.clues[search] == 2 then search = search + 1 end
+        if G.clues[search] == 2 then search = search == 5 and content.CACHE or search + 1 end
         if G.tray then
             assert(search == 4 or search == 5, "unexpected construction gate")
             buy(search == 4 and 3 or 5); step = 47
@@ -242,7 +242,24 @@ function M.step()
         press(G.spots.browser, "journal"); step = 57
     elseif step == 57 then
         assert(G.modal == G.MODAL_JOURNAL and #G.spots.journal.nodes.notes.children == 10, "journal must list nine clues and the cache")
-        print("Nile smoke: search, placement, both revisit lists, ordered cache and journal passed")
+        G.modal = MODAL_NONE
+        island.open_tray("projects")
+        purchase_coins = G.wallet[COINS]
+        step = 58
+    elseif step == 58 then
+        click_row(G.spots.build_form, "project-1", "buy"); step = 59
+    elseif step == 59 then
+        assert(G.wallet[COINS] == purchase_coins and G.projects[1] == 0, "project preview must not charge")
+        press(G.spots.project_form, "cancel"); step = 60
+    elseif step == 60 then
+        assert(G.wallet[COINS] == purchase_coins and G.projects[1] == 0, "project cancellation must not charge")
+        click_row(G.spots.build_form, "project-1", "buy"); step = 61
+    elseif step == 61 then
+        press(G.spots.project_form, "confirm"); step = 62
+    elseif step == 62 then
+        assert(G.wallet[COINS] == purchase_coins - 100 and G.projects[1] == 1, "project must charge once")
+        assert(not row_button(G.spots.build_form, "project-1", "buy").enabled, "completed project cannot be repeated")
+        print("Nile smoke: search, placement, cache, journal and project confirmation passed")
         app.quit()
     end
 end

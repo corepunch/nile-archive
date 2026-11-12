@@ -23,7 +23,7 @@ local G = {
     -- progress
     wallet = purse(),
     wins = {}, stars = {}, clues = {}, restored = {},
-    cache_done = false,
+    cache_done = false, caches = {0, 0, 0}, projects = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     island = nil,                 -- the engine city
     buildings = nil,              -- the city's building defs, with the sprites loaded
 

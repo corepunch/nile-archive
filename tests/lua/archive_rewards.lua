@@ -78,13 +78,60 @@ res = {complete = true, stars = 3}
 check(archive.claim(G, 3, res) and not res.clue, "a legacy replay cannot spoil a later clue")
 save.inject("unused", "")
 
-for i = 1, content.SCENES do G.clues[i] = archive.clue_count(i) end
+-- Version 4 had five search slots and one cache flag. Extend without replaying
+-- its reward, losing its prior clues, or treating zero-valued project flags as owned.
+progress.new_game()
+save.inject("progress", [[version=4
+coins=321
+influence=90
+wins=1 2 2 2 2
+stars=3 3 3 3 3
+clues=1 2 2 2 2
+cache_done=1
+city.count=2
+city.0.pos=850 650
+city.0.type=0
+city.1.pos=910 700
+city.1.type=3
+]])
+progress.read()
+check(G.caches[1] == 1 and G.cache_done and G.caches[2] == 0 and G.caches[3] == 0,
+    "v4 completed first cache migrates to the correct chapter")
+check(G.wins[5] == 2 and G.clues[5] == 2 and G.wins[6] == 0 and G.stars[15] == 0 and G.clues[15] == 0,
+    "v4 search records survive and later searches initialize empty")
+check(G.wallet[1] == 321 and G.wallet[2] == 90 and G.projects[1] == 0,
+    "v4 wallet survives without granting future projects")
+check(not archive.claim_cache(G, 1) and G.wallet[1] == 321,
+    "v4 completed cache cannot pay again")
+check(archive.lock(G, 6) == "influence", "v4 completed cache unlocks the next chapter gate")
+progress.save()
+save.inject("unused", "")
+progress.new_game()
+progress.read()
+check(G.caches[1] == 1 and G.cache_done and G.wins[6] == 0 and G.projects[1] == 0,
+    "migrated v5 save preserves chapter and project flags")
+
+-- Reset only the cache flag to exercise a fresh first-cache claim below.
+G.cache_done, G.caches[1] = false, 0
+
+for i = 1, 5 do G.clues[i] = archive.clue_count(i) end
 check(archive.claim_cache(G), "the restored cache is payable")
 local saved_coins, saved_influence = G.wallet[1], G.wallet[2]
 progress.save()
 progress.new_game()
 progress.read()
-check(G.cache_done and #progress.journal() == 10 and not G.migrated, "v4 restores the solved cache and journal")
+check(G.cache_done and G.caches[1] == 1 and #progress.journal() == 10 and not G.migrated, "saved first cache and journal survive reload")
 check(G.wallet[1] == saved_coins and G.wallet[2] == saved_influence and G.restored[archive.FOUNTAIN],
     "reload preserves the reward and restoration without double credit")
 check(not archive.claim_cache(G), "reloading cannot make the cache payable again")
+G.wallet[1] = 100
+check(archive.claim_project(G, 1), "first project is available after first cache")
+progress.save()
+local after_project = G.wallet[2]
+progress.new_game()
+progress.read()
+check(G.projects[1] == 1 and G.wallet[1] == 0 and G.wallet[2] == after_project,
+    "project purchase and wallet survive reload")
+G.wallet[1] = 100
+check(not archive.claim_project(G, 1) and G.wallet[1] == 100 and G.wallet[2] == after_project,
+    "reloading cannot make a project payable again")
