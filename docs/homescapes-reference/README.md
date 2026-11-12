@@ -6,6 +6,8 @@ Inspected 2026-11-12: the App Store package matching the connected iPhone's
 player-guide study, not an extracted campaign or a playthrough. Spoilers are
 limited to the premise. Player guides can change independently of this build.
 
+See the [opening story study](STORY.md) and [match-3 icon gallery and art audit](ART.md).
+
 ## Source and reproducibility
 
 The ignored local source is `reference/Homescapes.app/`. It was downloaded via
