@@ -1,4 +1,34 @@
-# Homescapes match-3 art: first visual inventory
+# Homescapes match-3 resources
+
+## Bundled resource export
+
+[Browse the local export](../../reference/homescapes-analysis/match3-export/index.html)
+or open the [source manifest](../../reference/homescapes-analysis/match3-export/manifest.json).
+The export contains **620 original files (22.0 MB)**, including **98 readable
+WebPs** and **65 DDS resources**. The browser page previews the WebPs and
+filters all files by path or encoding. It covers board and UI texture
+containers, animation, particles, shaders, a sound bank, haptics, and level
+and tuning data. The manifest records each original archive and member,
+the output path, byte length, encoding signature, and SHA-256.
+
+The selection includes every file with `match3` in its bundled path, the
+dedicated `unique/MX/` haptic tree, and the complete `Match3_Settings.zip`
+and `local_DoubleRainbow.zip` packs. This is an export of identifiable
+match-3 resources in the local bundle. It does not resolve references inside
+encoded files or include assets supplied only by the live game. A resource
+may be bundled as a fallback or variant even if it is not used on a current
+board. See the [mechanics comparison](MECHANICS.md) and
+[board ID inventory](BOARD_IDS.md) for the rules and their evidence.
+
+Regenerate from the repository root into a new directory:
+
+```sh
+python3 tools/homescapes-reference/export_match3.py
+# Or choose a new location when the default export already exists:
+python3 tools/homescapes-reference/export_match3.py --output /tmp/homescapes-match3-export
+```
+
+## Goal icons
 
 Open the [local goal-icon gallery](../../reference/homescapes-analysis/goal-icons.html)
 to browse and filter the 45 images; it is generated from the installed app and
@@ -41,11 +71,27 @@ complete set the game uses.
 Each tested `Match3_00.dds` through `Match3_04.dds` starts in a `BLK` wrapper
 with a Zstandard frame at byte 40. Decompression recovers a DDS header tagged
 `etc2` (1576×1576 for these five), but the remaining data is shorter than a
-raw ETC2 image of that size. Direct ETC1, ETC2 and ETC2 punch-through decoding,
-including 2-, 4- and 8-byte word reversals, produced noise rather than recognizable
-art. The data therefore cannot safely be treated as a raw texture; the exact
-additional encoding and the mapping from atlas regions to game states remain
-unknown. No invalid render is shown as an asset.
+raw ETC2 image with alpha of that size. Direct ETC1, ETC2 and ETC2
+punch-through decoding produced noise. The payload is a second packing layer:
+all five DDS files have three streams, with no gaps or trailing bytes.
+
+Each stream begins with four little-endian 32-bit counts: total words after
+the first count, command words, dictionary entries and literal words.
+The invariant is `total = 3 + commands + 2 × entries + literals`. The command
+bytes immediately follow the counts, then the dictionary (60 eight-byte
+entries in each of these 15 streams), then literal data. In page 00 the
+streams start at offsets 128, 611508 and 905396. The dictionary and literals
+contain recognizably structured ETC/EAC blocks; their placement in the image
+is determined by the separate command stream. Small controls in the same
+bundle (`whitebox.dds` and `logo_mask.dds`) store a single literal block for
+a uniform color plane, so copying the literals without interpreting the
+commands cannot recover the texture. This layout is specific to these five
+pages; other bundled DDS files can contain different stream layouts.
+
+`python3 tools/homescapes-reference/inspect_board_atlases.py` checks all
+stream boundaries and reports sizes from the existing extraction. The command
+grammar, plane composition and PLXE sprite-region metadata are still
+unresolved. No decoded board sprites are claimed.
 
 ## Explore bundled board definitions
 
