@@ -3,10 +3,9 @@
 ## Chapter 1 quest objects
 
 The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
-contain eight recognizable objects. The objects are drawn on their actual excavation cells,
-in the goal, and alongside the first-clear exchange. Covered and partial cells retain their
-authored sand layer. Recovering the whole footprint exposes the same sprite and completes
-the expedition. The object art is independent of the selected match piece pack.
+contain eight recognizable objects. Their icons appear alongside the first-clear
+story exchanges; the objects are found by the characters after the match-3 level.
+They are independent of the selected match piece pack.
 
 | Atlas slot | Quest object | Board and use |
 | --- | --- | --- |
@@ -22,7 +21,7 @@ the expedition. The object art is independent of the selected match piece pack.
 Run `python3 tools/relic_quest_art.py` from the repository root to register the source
 into `data/quest-objects.png`. The tool only crops, resizes and centers the original RGBA art.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
-[review captures](review/quest-campaign/README.md) show the artwork and its handoff at both phone sizes.
+[historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 
 ## Additional board elements
 
@@ -42,16 +41,16 @@ states against the canonical mask.
 
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
+| Sand goal | `sand` | Existing full-cell artwork marks each remaining sand goal beneath its piece. Matching over it clears the cell. |
 | Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
 | Coloured crate | `crate-0-1` through `crate-5-2` | Six matching kinds, each with one- and two-hit authored states; an adjacent matching colour or a direct effect damages it. |
 | Tunnel | `tunnel-in`, `tunnel-out` | Fixed entry and exit; pieces transfer between them during a fall. |
-| Hidden object | `hidden-covered`, `hidden-partial`, `hidden-revealed`, `object-goal` | One image per footprint, beneath the covering; its goal completes when all footprint cells are cleared. |
 | Growth | `growth` | One-hit overlay on a piece; it spreads after a turn in which no growth was damaged. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review all strengths, colours and object states on the actual board with
+Review all strengths and colours on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/relic-rush-states.png)
 and [narrow](../../../docs/review/match3-elements/relic-rush-state-narrow.png).

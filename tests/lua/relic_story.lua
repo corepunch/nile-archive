@@ -27,19 +27,18 @@ for level=1,30 do
         p.story_seen[before.key]=true
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
+    check(#g.objects==0 and not g.object_only, 'campaign board has no hidden-object goal')
     if level<=10 then
-        local object=rules.level_of(g).quest_object
-        check(object and g.objects[1].art==object.key,'the requested object is present on the actual board')
-        g.score,g.relics,g.dug,g.obstacles=99999,999,999,0
-        rules.game_check_end(g)
-        check(not g.won,'score and ordinary relics cannot substitute for the requested object')
-        g.moves,g.score,g.relics=1,0,0
-        for _, cell in ipairs(g.objects[1].cells) do g.soil[cell]=0 end
-        rules.game_apply(g,rules.new_match())
-        rules.game_check_end(g)
-        check(g.won,'recovering the requested object wins the board')
-        g.moves=0
+        check(rules.level_of(g).quest_object, 'first-clear story retains its quest object')
     end
+    g.score,g.relics,g.dug,g.obstacles=0,0,0,0
+    rules.game_check_end(g)
+    check(not g.won, 'ordinary match-3 goals must be met')
+    g.score,g.relics,g.dug=99999,999,999
+    g.delivered=g.delivery_total
+    rules.game_check_end(g)
+    check(g.won, 'completing the match-3 goals wins without an object')
+    g.moves=0
     local reveal=journey.result_beat(p,g)
     check(level==10 and reveal==nil or reveal and reveal.level==level,
         'the first-clear exchange precedes results except the town choice')

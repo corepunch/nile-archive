@@ -306,7 +306,6 @@ levels[9].lesson = "Match the seal's colour beside it."
 levels[11].tunnels = {{entrance=cell(0,-2),exit=cell(1,1)}}
 levels[11].lesson = "Pieces travel between paired conduits."
 levels[12].crates = {{cell=cell(2,0),hp=1,kind=1}}
-levels[13].objects = {{cells={cell(2,-1),cell(2,0)}}}
 levels[14].crates = {{cell=cell(2,0),hp=1,kind=2}}
 levels[15].stones = {{cell=cell(0,0),hp=3}}
 levels[15].lesson = "Break the three-layer stone."
@@ -315,38 +314,25 @@ levels[16].lesson = "Stop the vines before they spread."
 levels[17].crates = {{cell=cell(2,0),hp=2,kind=3}}
 levels[17].lesson = "Some coloured seals take two hits."
 levels[19].hazards = {cell(2,0)}
-levels[20].objects = {{cells={cell(2,-1),cell(2,0)}}}
 levels[21].deliveries = {tokens={cell(0,-2)},exits={cell(0,2)}}
 levels[21].lesson = "Clear below the tablet to deliver it."
 levels[22].stones = {{cell=cell(2,0),hp=2}}
 levels[23].crates = {{cell=cell(2,0),hp=1,kind=4}}
 levels[24].tunnels = {{entrance=cell(0,-2),exit=cell(1,1)}}
 levels[25].hazards = {cell(2,0)}
-levels[26].objects = {{cells={cell(2,-1),cell(2,0)}}}
 levels[27].crates = {{cell=cell(2,0),hp=2,kind=5}}
 levels[29].stones = {{cell=cell(2,0),hp=3}}
 levels[30].tunnels = {{entrance=cell(1,-1),exit=cell(1,1)}}
 
--- These expeditions end when the requested thing has been recovered. The
--- existing shapes, terrain, chains and ice determine how to reach each find.
-local function find(level_number, key, name, lesson, ...)
-    local entry = levels[level_number]
-    entry.quest_object = {key=key, name=name}
-    entry.object_only = true
-    entry.objects = {{cells={...}, art=key}}
-    entry.lesson = lesson
-end
-
-find(1, "timber", "Camp timber", "Match over the sand to uncover the timber.", cell(0,0))
-find(2, "lens", "Lamp lens", "Clear the sand over both parts of the lens.", cell(0,-1), cell(1,-1))
-find(3, "cable", "Relay cable", "Break stone with adjacent matches. Uncover the cable.", cell(-2,0), cell(-2,1))
-find(4, "chart", "Tide chart", "Match to break chains and uncover the chart.", cell(0,-1), cell(0,0))
-find(5, "marker", "Quay marker", "Match over both halves to uncover the quay marker.", cell(0,-1), cell(1,-1))
-find(6, "marker", "Shore marker", "Match to break ice and uncover the shore marker.", cell(-2,-1), cell(-2,0))
-find(7, "tools", "Tool roll", "Some stones need two hits. Uncover the tool roll.", cell(2,-2), cell(2,-1))
-find(8, "cable", "Broken cable", "Match five for a prism to help uncover the cable.", cell(0,0), cell(1,0))
-find(9, "supplies", "Supply crate", "Match a seal’s colour beside it. Uncover the supplies.", cell(-2,0), cell(-2,1))
-find(10, "crank", "Shutter crank", "Clear the covering to recover the shutter crank.", cell(0,-1), cell(0,0))
+-- Quest objects belong to the story after the first clear, not to the board goals.
+local quest_objects = {
+    {key="timber", name="Camp timber"}, {key="lens", name="Lamp lens"},
+    {key="cable", name="Relay cable"}, {key="chart", name="Tide chart"},
+    {key="marker", name="Quay marker"}, {key="marker", name="Shore marker"},
+    {key="tools", name="Tool roll"}, {key="cable", name="Broken cable"},
+    {key="supplies", name="Supply crate"}, {key="crank", name="Shutter crank"},
+}
+for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Send the tablet through the conduit."
 

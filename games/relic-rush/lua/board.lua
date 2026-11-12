@@ -174,14 +174,17 @@ function R.board_screen(inp, dt)
     draw_backdrop()
     local intro = R.intro
     R.draw_board_hud()
-    local object = rules.level_of(R.g).quest_object
-    if object and R.g.objects[1] and R.g.objects[1].art and not story.active()
-        and R.overlay == R.OV_NONE and not intro then
-        show_object(object, R.g.discovered > 0)
-    end
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx, false)
     elements.ground(R, rules, sx)
+    -- Soil is a goal in the campaign, so show its remaining cells beneath pieces.
+    for i = 0, CELLS - 1 do
+        if cell_active(R.g, i) and R.g.soil[i] > 0 then
+            local fade = intro and intro:fade() or 1
+            local dst = rect.centered(cell_pos(i) + vec2(sx, 0), size2.splat(2 * (HEX_R - .65)))
+            gfx.image(R.board_art.sand, dst, rgba(255, 255, 255, 255 * fade))
+        end
+    end
     draw_cells(sx, true)
     draw_relics(sx)
     draw_blockers(sx)

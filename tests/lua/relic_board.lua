@@ -275,10 +275,8 @@ do
     for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
     R.g=rules.game_start(0,123)
     local opening=R.goal_entries()
-    if rules.level_of(R.g).object_only then
-        check(#opening==1 and opening[1].icon=="timber" and opening[1].remaining==1,
-              "the opening HUD shows the timber that the camp needs")
-    else check(#opening==2,"opening HUD omits absent sand/lock objectives") end
+    check(#opening==2 and opening[1].id=="score" and opening[2].id=="idols",
+          "opening HUD shows the ordinary score and collection goals")
 end
 
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,

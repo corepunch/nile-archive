@@ -69,7 +69,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-On boards 1–10 the named quest object is the win condition. The same object appears in the goal and in the first-clear exchange. Each first clear plays a short exchange before the reward card. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+On boards 1–10 the characters find the named quest object in the first-clear exchange after the match-3 goals are met. Each first clear plays a short exchange before the reward card. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Chapter 1: A Light Below
 

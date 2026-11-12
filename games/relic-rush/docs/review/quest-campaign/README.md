@@ -1,4 +1,7 @@
-# A Light Below
+# A Light Below — historical review
+
+These captures document the retired hidden-object board mechanic. Current boards use
+normal match-3 goals; the quest objects appear in the first-clear story.
 
 Chapter 1 boards win when the quest object is fully recovered. The goal and
 first-clear dialogue use the same object art. The island tracks confirmed
@@ -26,6 +29,6 @@ optional purchase earns one. The supported phone sizes are 480×900 and
 From the repository root, use the existing test binary to reproduce the review:
 
 ```sh
-build/test/relic-rush 'shot quest-' 'shot debug-' 'smoke campaign' 'smoke walkthrough-pointer'
+build/test/relic-rush 'shot quest-handoff' 'shot debug-' 'smoke campaign' 'smoke walkthrough-pointer'
 build/test/christmas-market 'shot debug-' 'smoke campaign' 'smoke walkthrough-pointer'
 ```

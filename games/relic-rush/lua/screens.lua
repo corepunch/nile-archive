@@ -139,8 +139,6 @@ local guide_entries = {
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Stones and coloured crates", description="Match beside stones; crates need their colour or a special.",
      icon={front="box-2",tiles={}}},
-    {id="discover", title="Uncover a hidden object", description="Clear every covered cell in its footprint.",
-     icon={front="carpet",tiles={}}},
     {id="tunnels", title="Tunnels and deliveries", description="Pieces enter a tunnel and reappear at its exit. Bring delivery pieces to their exits.",
      icon={front="delivery",tiles={}}},
     {id="growth", title="Spreading growth", description="Clear growth each turn to stop it spreading.",

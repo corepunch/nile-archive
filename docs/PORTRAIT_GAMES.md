@@ -51,8 +51,8 @@ dialogue. Cast art faces right and the engine mirrors the right slot.
 
 Relic Rush defines its chapters and ordered tasks in `quests.lua`. A board task
 completes on first clear and a restoration task completes on confirmed placement.
-The board can name a hidden object and use it as the only win condition with
-`object_only`. The rules record discovery when all of its footprint is uncovered.
+Relic Rush boards use their match-3 goals; first-clear story scenes show the
+characters finding the named quest objects.
 
 A journey can show first-clear dialogue before Results with `clear_before_result`
 and schedule a separate `restore` scene after placement. A beat with choices

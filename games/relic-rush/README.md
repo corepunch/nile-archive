@@ -144,9 +144,9 @@ camp and follows the signal through the Lost Valley. The opening chapter, **A Li
 uses boards 1–10 and four island upgrades to lead to the tide room. The player chooses
 whether Mara or Tomas answers the signal. Their replies differ, and both advance the expedition.
 
-In Chapter 1 the requested object is the board goal. Recover timber for the camp, find the
-lamp lens to answer the light, and uncover the tide chart that leads to the quay. The same
-object appears with the first-clear dialogue.
+In Chapter 1, complete each board’s match-3 goals to advance the quest. In the
+first-clear dialogue, the crew finds timber for the camp, the lamp lens, the tide
+chart and other objects that take them towards the quay.
 
 The island shows the active chapter, quest, next task and decoration progress. First clears
 award Amulets and Discovery Stars, and fund the scheduled story upgrades. Each confirmed
