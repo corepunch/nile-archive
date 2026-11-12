@@ -550,7 +550,18 @@ function E.new(config)
         end
     end
 
-    function M.game_matches(g, m, preferred)
+    -- A swap can complete a line at either endpoint. Prefer the cell the
+    -- player moved into, then the other swapped cell if its gem matched.
+    -- For cascades (no swap), keep the deterministic first eligible cell.
+    local function choose_match_special(g, pick, cell, preferred, alternate)
+        if g.tiles[cell].special ~= NORMAL or locked(g, cell) then return pick end
+        if cell == preferred then return cell end
+        if cell == alternate and pick ~= preferred then return cell end
+        if pick < 0 then return cell end
+        return pick
+    end
+
+    function M.game_matches(g, m, preferred, alternate)
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         if flags & E.LINE_MATCHES ~= 0 then
             -- Process maximal runs independently: touching branches never count
@@ -569,8 +580,7 @@ function E.new(config)
                                 local pick = -1
                                 for _, a in ipairs(cells) do
                                     m.mask[a], m.ordinary[a] = true, true
-                                    if g.tiles[a].special == NORMAL and not locked(g, a)
-                                        and (pick < 0 or a == preferred) then pick = a end
+                                    pick = choose_match_special(g, pick, a, preferred, alternate)
                                 end
                                 local sp = n >= MATCH_MIN + 2 and PRISM
                                     or n == MATCH_MIN + 1 and ray_for_axis(axis) or NORMAL
@@ -596,7 +606,7 @@ function E.new(config)
                         local a = cells[k]
                         m.mask[a], m.ordinary[a] = true, true
                         m.hits = m.hits + 1
-                        if g.tiles[a].special == NORMAL and not locked(g, a) and (pick < 0 or a == preferred) then pick = a end
+                        pick = choose_match_special(g, pick, a, preferred, alternate)
                         for axis = 0, 2 do
                             if not equal(g, a, hex_neighbor(a, axis + 3)) then   -- count each run from its start
                                 local run, c = 0, a
@@ -660,7 +670,7 @@ function E.new(config)
                 for z = 0, 2 do mark_line(g, m, b, z) end
             end
         else
-            game_matches(g, m, b)
+            game_matches(g, m, b, a)
             if not m.mask[a] and not m.mask[b] then
                 swap_tiles(g, a, b)
                 m.mask, m.make, m.hits = {}, {}, 0
