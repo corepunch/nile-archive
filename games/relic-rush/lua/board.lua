@@ -107,16 +107,18 @@ local function draw_cells(sx, foreground)
     local g,intro=R.g,R.intro
     local fade=intro and intro:fade() or 1
     for i=0,CELLS-1 do
-        local scale,turn,lift,flash=1,0,0,0
-        if intro then scale,turn,lift,flash=intro:cell(i) end
-        if cell_active(g,i) and scale>.02 then
-            local at=cell_pos(i)+vec2(sx,lift)
-            if not foreground then
-                -- Plain flat hex ground: no authored frame, bevel or edge trim.
-                local face=(hex_q(i)-hex_r(i))%2==1 and rgba(72,72,72) or rgba(84,84,84)
-                gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(face,fade))
-            elseif flash>0 then
-                R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
+        if cell_active(g,i) then
+            local scale,turn,lift,flash=1,0,0,0
+            if intro then scale,turn,lift,flash=intro:cell(i) end
+            if scale>.02 then
+                local at=cell_pos(i)+vec2(sx,lift)
+                if not foreground then
+                    -- Plain flat hex ground: no authored frame, bevel or edge trim.
+                    local face=(hex_q(i)-hex_r(i))%2==1 and rgba(72,72,72) or rgba(84,84,84)
+                    gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(face,fade))
+                elseif flash>0 then
+                    R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
+                end
             end
         end
     end
