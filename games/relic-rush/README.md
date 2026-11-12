@@ -29,6 +29,12 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
+The campaign now includes layered stones, color crates, buried tablets,
+spreading vines, tunnels and relic deliveries. Each family has original
+authored artwork and an introduction in the [board progression](docs/board-progression.md).
+See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
+and [in-game art review](../../docs/review/match3-elements/README.md).
+
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
 input/timing. This game provides campaign data, graphics and integer behavior

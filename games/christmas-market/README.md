@@ -31,6 +31,12 @@ limits of the current difficulty tuning.
 
 ## Shared match engine and atlas
 
+The campaign now includes packed-snow blocks, color gifts, buried star displays,
+spreading ribbon, delivery chutes and present deliveries. Each family has
+original authored artwork and a different introduction order from Relic Rush.
+See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
+and [in-game art review](../../docs/review/match3-elements/README.md).
+
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
 input/timing. This game provides campaign data, graphics and integer behavior

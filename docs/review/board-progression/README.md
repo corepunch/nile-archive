@@ -1,9 +1,14 @@
 # Independent campaign progressions
 
+This is the first-pass checkpoint. The user's later shape references replaced
+its per-level uniqueness requirement with deliberate recurring families; see
+the [current shapes and element review](../match3-elements/README.md).
+
 The first checkpoint replaces the shared campaign contours with 60 distinct
 silhouettes, including under hex rotations/reflections, and individually ranked
 terrain. It preserves story order and building milestones. Relic Rush emphasizes
-excavation seams and interrupted approaches; Christmas Market emphasizes courts,+ribbon boundaries and patterned clearing. See each game's
+excavation seams and interrupted approaches; Christmas Market emphasizes courts,
+ribbon boundaries and patterned clearing. See each game's
 [Relic progression](../../../games/relic-rush/docs/board-progression.md) and
 [Christmas progression](../../../games/christmas-market/docs/board-progression.md).
 

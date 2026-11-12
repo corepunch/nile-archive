@@ -6,6 +6,7 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
+local elements = require("match3.elements_view")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json
@@ -34,6 +35,7 @@ local cell_pos = R.cell_pos
 -------------------------------------------------------------------- drawing
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
+    if elements.delivery(R, rules, t, at, scale, alpha, aspect, ART_CELL_SIZE * .95 * (board and BOARD_SCALE or 1)) then return end
     if t.kind < 0 then return end
     -- Preserve the original piece canvas, including its transparent gutter.
     -- Filling the cell with the opaque interior makes pieces crowd its edges.
@@ -92,7 +94,7 @@ local function draw_backdrop()
     end
 end
 
-local function draw_cells(sx)
+local function draw_cells(sx, foreground)
     local g = R.g
     local intro = R.intro
     local fade = intro and intro:fade() or 1
@@ -101,36 +103,34 @@ local function draw_cells(sx)
         if intro and active then scale, turn, lift, flash = intro:cell(i) end
         if active and scale > .02 then
             local at = cell_pos(i) + vec2(sx, lift)
-            gfx.ngon(at + vec2(0, 2), (HEX_R + .7) * scale, 6, turn, rgba(7, 37, 34, 255 * fade))
-            for d = 0, 5 do   -- a gold rim where the board ends
-                if not cell_active(g, hex_neighbor(i, d)) then
-                    local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
-                    gfx.line(at + vec2.polar(a, (HEX_R - .5) * scale), at + vec2.polar(b, (HEX_R - .5) * scale), 2, rgba(212, 175, 95, 255 * fade))
+            if not foreground then
+                gfx.ngon(at + vec2(0, 2), (HEX_R + .7) * scale, 6, turn, rgba(7, 37, 34, 255 * fade))
+                for d = 0, 5 do   -- a gold rim where the board ends
+                    if not cell_active(g, hex_neighbor(i, d)) then
+                        local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
+                        gfx.line(at + vec2.polar(a, (HEX_R - .5) * scale), at + vec2.polar(b, (HEX_R - .5) * scale), 2, rgba(212, 175, 95, 255 * fade))
+                    end
                 end
-            end
-            local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
-            local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
-                              or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
-            local tile = has_state and rgba(13, 47, 41)
-                      or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73)
-            gfx.ngon_grad(at, CELL_FACE_R * scale, 6, turn, color.alpha(color.shade(tile, 1.26), fade),
-                          color.alpha(color.shade(tile, .77), fade))
-            if g.soil[i] > 0 then
-                local edge = R.board_art["sand-edge"]
-                local size = g.ice[i] > 0 and INSET_SAND_SIZE or EDGE_SIZE
-                local sand = edge and rect.centered(at, size2.splat(size * scale)) or dst
-                gfx.image_rot(edge or R.board_art.sand, sand, turn, color.alpha(color.WHITE, fade))
-            end
-            if flash > 0 then   -- it opens glowing
-                R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
-                gfx.additive(true)
-                gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
-                gfx.additive(false)
-            end
-            if i == R.selected then
-                gfx.image(R.board_art.selected, dst, color.WHITE)
-            elseif (i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE then
-                gfx.image(R.board_art.hint, dst, rgba(255, 255, 255, R.reduced_motion and 220 or 170 + 60 * math.sin(R.now * 5)))
+                local has_state = g.soil[i] > 0 or g.ice[i] > 0 or g.tiles[i].special ~= NORMAL or i == R.selected
+                                  or ((i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE)
+                local tile = has_state and rgba(13, 47, 41)
+                          or (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(29, 82, 67) or rgba(35, 94, 73)
+                gfx.ngon_grad(at, CELL_FACE_R * scale, 6, turn, color.alpha(color.shade(tile, 1.26), fade),
+                              color.alpha(color.shade(tile, .77), fade))
+            else
+                local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
+                if g.soil[i] > 0 then
+                    local edge = R.board_art["sand-edge"]
+                    local size = g.ice[i] > 0 and INSET_SAND_SIZE or EDGE_SIZE
+                    local sand = edge and rect.centered(at, size2.splat(size * scale)) or dst
+                    gfx.image_rot(edge or R.board_art.sand, sand, turn, color.alpha(color.WHITE, fade))
+                end
+                if flash > 0 then
+                    R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
+                    gfx.additive(true)
+                    gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
+                    gfx.additive(false)
+                end
             end
         end
     end
@@ -143,7 +143,7 @@ local function draw_relics(sx)
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
             if clip then gfx.clip(clip) end
-            draw_relic(t, at, scale, alpha, aspect, true)
+            draw_relic(t, at, scale * elements.piece_scale(g, i), alpha, aspect, true)
             if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end
@@ -185,9 +185,13 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    draw_cells(sx)
+    draw_cells(sx, false)
+    elements.ground(R, rules, sx)
+    draw_cells(sx, true)
     draw_relics(sx)
     draw_blockers(sx)
+    elements.blockers(R, rules, sx)
+    elements.highlights(R, rules, sx, STATE_SIZE)
     if intro then draw_sheen(sx) end
     for i = 0, CELLS - 1 do
         if cell_active(R.g,i) and R.g.ice[i] > 0 then

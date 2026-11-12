@@ -76,8 +76,23 @@ local function campaign()
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
         local g, l = R.g, rules.level_of(R.g)
-        for i = 0, rules.CELLS - 1 do g.ice[i], g.chain[i], g.soil[i] = 0, 0, 0 end
-        g.score, g.relics, g.dug, g.obstacles = l.score, l.relics, l.soil, 0
+        for i = 0, rules.CELLS - 1 do
+            g.ice[i], g.chain[i], g.soil[i], g.stone_hp[i], g.crate_hp[i], g.hazard[i] = 0, 0, 0, 0, 0, 0
+            if g.tiles[i].kind == rules.DELIVERY then
+                -- The smoke tests progression, so complete delivery while preserving
+                -- a stable match-free starting board for the next real swap.
+                local match = rules.new_match()
+                for kind = 0, rules.COLORS - 1 do
+                    g.tiles[i] = rules.tile(kind)
+                    rules.game_matches(g, match, -1)
+                    if match.hits == 0 then break end
+                end
+                assert(match.hits == 0, "campaign smoke cannot replace delivered token")
+            end
+        end
+        for _, object in ipairs(g.objects) do object.state = "revealed" end
+        g.discovered, g.delivered = #g.objects, g.delivery_total
+        g.score, g.relics, g.dug, g.obstacles = l.score, l.relics, g.initial_soil, 0
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b
@@ -134,7 +149,7 @@ function R.smoke()
         app.inject_click(R.pause_form.boxes.guide:center() + vec2(0, R.drop / 2)); stage = -1
     elseif stage == -1 and R.overlay == R.OV_GUIDE and R.dialog_settled() then
         local done = R.guide_form.boxes.done
-        assert(done and #R.guide_form.nodes.topics.children == 5, "smoke: guide data source was not laid out")
+        assert(done and #R.guide_form.nodes.topics.children == 9, "smoke: guide data source was not laid out")
         app.inject_click(done:center() + vec2(0, R.drop / 2)); stage = 0
     elseif stage == 0 then
         if R.overlay == R.OV_RESULT then

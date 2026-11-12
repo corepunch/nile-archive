@@ -64,8 +64,8 @@ flags are a separate integer bitmask and may be combined for one kind.
 
 The current topology is an axial hexagon, configurable from radius 1 to 16,
 with arbitrary missing cells. `match_min` defaults to three connected pieces;
-Relic Rush selects three with `LINE_MATCHES`; Christmas Market retains four
-connected pieces. Rewards derive from the configured minimum plus one/two.
+Relic Rush and Christmas Market select three with `LINE_MATCHES`.
+Rewards derive from the configured minimum plus one/two.
 In line mode each maximal run is evaluated separately; adjacent branches,
 triangles and rings do not extend it. Crossing runs clear their union, counting
 each cell once, without creating a shape-based bomb. Four in a line creates
@@ -79,6 +79,10 @@ is a string of `CELLS` zero/one entries in axial column order; optional
 strong ice. The games' `campaign.lua` files contain these data; their
 `rules.lua` modules only configure the engine, name kinds and handle the
 restoration economy. Matching and input do not live in either game.
+
+Optional stones, color crates, hidden-object footprints, growth, tunnels and
+delivery objectives extend these descriptors. Their exact schema, timing,
+artwork and board-design rationale are in [Match-3 elements](MATCH3_ELEMENTS.md).
 
 ## Diagonal refill
 
@@ -101,7 +105,10 @@ inactive or locked. Pieces never cross a missing cell or a locked donor.
 `game_collapse(g)` fills the board and returns `from, steps`. `from[cell]` is
 its original source ID (negative for a new gem). Each animation step contains
 `tiles` and immediate `from` maps: every move is a single neighboring edge,
-and negative sources enter from above that inlet. The controller displays all
+except a directed tunnel transfer; negative sources enter from above that inlet.
+Tunnel steps fade between endpoints instead of crossing unrelated cells.
+Delivery tokens fall vertically or through tunnels, never diagonally.
+The controller displays all
 steps at `FALL_STEP` seconds per step, then the landing interval, before it
 checks another cascade or a terminal result. Reduced motion shortens the
 same schedule; it does not skip rule steps.
@@ -152,7 +159,7 @@ Call `state.layout()` once per frame. It is measured up from the bottom edge, at
 - **`hud_rect`:** a 64-unit band 782 units above the bottom edge, holding the Moves medallion, the goal row and Pause, all centred on its midline. Toasts sit just below it (`board_toast`).
 - **`backdrop_rect(size, full)`:** where to draw the backdrop painting. It keeps at least its 1040-tall scale, covers the screen and stands on the bottom edge, so the painting's scenery always ends just above the HUD. Paint a backdrop's scenery in the top 22% of its height.
 
-`match3.bind_board_ui` supplies the measured goal row, Moves medallion, Pause button
+`match3.bind_board_ui` supplies the measured goal row (two rows above four goals), Moves medallion, Pause button
 and tool row. Input checks use the same `board_pause` and `board_tool_bounds(k)`
 rectangles. The Settings and Guide forms and the Results panel geometry also
 come from `match3`. Games provide the skin, guide content and screen actions.
@@ -166,7 +173,7 @@ outputs. Games own story, city and screen navigation.
 ```sh
 python3 -m pip install -r tools/requirements-assets.txt  # pinned authoring toolchain
 python3 tools/match3_atlas.py       # defaults + both game atlases/frame data
-make gen                          # embeds Lua, frame data and default PNG
+make gen                          # only needed when engine/api.xml changes
 make CFLAGS="-O2 -g -Werror"
 make test
 make lint

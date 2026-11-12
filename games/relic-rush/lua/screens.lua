@@ -133,6 +133,14 @@ local guide_entries = {
      icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
     {id="ice", title="Frozen gems", description="Ice rims the cell. The number shows hits left; matches and nearby fire thaw it.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
+    {id="stones", title="Stones and coloured crates", description="Match beside stones; crates need their colour or a special.",
+     icon={front="crate-0-2",tiles={}}},
+    {id="discover", title="Uncover a hidden object", description="Clear every covered cell in its footprint.",
+     icon={front="hidden-revealed",tiles={}}},
+    {id="tunnels", title="Tunnels and deliveries", description="Pieces enter a tunnel and reappear at its exit. Bring delivery pieces to their exits.",
+     icon={front="tunnel-in",tiles={}}},
+    {id="growth", title="Spreading growth", description="Clear growth each turn to stop it spreading.",
+     icon={front="growth",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

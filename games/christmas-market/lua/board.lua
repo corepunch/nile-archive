@@ -6,6 +6,7 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
+local elements = require("match3.elements_view")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json
@@ -14,7 +15,6 @@ R.locked_notice = words.locked
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local PH_IDLE = R.PH_IDLE
 local NORMAL, PRISM = rules.NORMAL, rules.PRISM
 local hex_q, hex_r, hex_neighbor, cell_active = rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.game_cell_active
 local rgba = color
@@ -36,6 +36,7 @@ local cell_pos = R.cell_pos
 -------------------------------------------------------------------- drawing
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
+    if elements.delivery(R, rules, t, at, scale, alpha, aspect, ART_CELL_SIZE * .95) then return end
     if t.kind < 0 then return end
     -- Same piece size as Relic Rush: the whole 128px canvas, gutter included,
     -- spans 95% of the authored cell, so pieces never crowd the cell edges.
@@ -78,7 +79,7 @@ local function draw_backdrop()
     end
 end
 
-local function draw_cells(sx)
+local function draw_cells(sx, foreground)
     local g = R.g
     local intro = R.intro
     local fade = intro and intro:fade() or 1
@@ -91,36 +92,32 @@ local function draw_cells(sx)
             -- had its own bevel, doubling the rim around every treat.
             local face = (hex_q(i) - hex_r(i)) % 2 == 1 and rgba(24, 65, 58) or rgba(29, 73, 63)
             local radius = CELL_FACE_R * scale
-            gfx.ngon(at + vec2(0, scale), (HEX_R + .25) * scale, 6, turn, rgba(11, 34, 36, 255 * fade))
-            if g.soil[i] > 0 and not FESTIVE then
-                gfx.image_hex(R.board_art.sand, art.snow_source, at, radius, turn, rgba(255, 255, 255, 255 * fade))
-            else
+            if not foreground then
+                gfx.ngon(at + vec2(0, scale), (HEX_R + .25) * scale, 6, turn, rgba(11, 34, 36, 255 * fade))
                 gfx.ngon_grad(at, radius, 6, turn, color.alpha(color.shade(face, 1.26), fade),
                               color.alpha(color.shade(face, .77), fade))
-            end
-            for d = 0, 5 do   -- a fine champagne rim along the exposed sides
-                if not cell_active(g, hex_neighbor(i, d)) then
-                    local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
-                    gfx.line(at + vec2.polar(a, radius), at + vec2.polar(b, radius),
-                             1.1 * scale, rgba(239, 212, 154, 220 * fade))
+                for d = 0, 5 do   -- a fine champagne rim along the exposed sides
+                    if not cell_active(g, hex_neighbor(i, d)) then
+                        local a, b = turn + d * PI / 3, turn + (d + 1) * PI / 3
+                        gfx.line(at + vec2.polar(a, radius), at + vec2.polar(b, radius),
+                                 1.1 * scale, rgba(239, 212, 154, 220 * fade))
+                    end
                 end
-            end
-            if FESTIVE and g.soil[i] > 0 then
-                local size = (g.ice[i] > 0 or g.chain[i] > 0) and INSET_SNOW_SIZE or EDGE_SIZE
-                local snow = rect.centered(at, size2.splat(size * scale))
-                gfx.image_rot(R.board_art["sand-edge"], snow, turn, color.alpha(color.WHITE, fade))
-            end
-            local dst = rect.centered(at, size2.splat(FESTIVE and 2 * radius or STATE_SIZE * scale))
-            if flash > 0 then   -- it opens glowing
-                R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
-                gfx.additive(true)
-                gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
-                gfx.additive(false)
-            end
-            if i == R.selected then
-                gfx.image_rot(R.board_art.selected, dst, turn, color.WHITE)
-            elseif (i == R.hint_a or i == R.hint_b) and R.phase == PH_IDLE then
-                gfx.image_rot(R.board_art.hint, dst, turn, rgba(255, 255, 255, R.reduced_motion and 220 or 170 + 60 * math.sin(R.now * 5)))
+            else
+                if not FESTIVE and g.soil[i] > 0 then
+                    gfx.image_hex(R.board_art.sand, art.snow_source, at, radius, turn, rgba(255, 255, 255, 255 * fade))
+                end
+                if FESTIVE and g.soil[i] > 0 then
+                    local size = (g.ice[i] > 0 or g.chain[i] > 0) and INSET_SNOW_SIZE or EDGE_SIZE
+                    local snow = rect.centered(at, size2.splat(size * scale))
+                    gfx.image_rot(R.board_art["sand-edge"], snow, turn, color.alpha(color.WHITE, fade))
+                end
+                if flash > 0 then
+                    R.vfx_halo(at, HEX_R * 1.6 * scale, rgba(255, 226, 150, 120 * flash))
+                    gfx.additive(true)
+                    gfx.ngon(at, (HEX_R - .5) * scale, 6, turn, rgba(255, 226, 150, 110 * flash))
+                    gfx.additive(false)
+                end
             end
         end
     end
@@ -133,7 +130,7 @@ local function draw_relics(sx)
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
             if clip then gfx.clip(clip) end
-            draw_relic(t, at, scale * BOARD_SCALE, alpha, aspect, true)
+            draw_relic(t, at, scale * BOARD_SCALE * elements.piece_scale(g, i), alpha, aspect, true)
             if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end
@@ -180,11 +177,15 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    draw_cells(sx)
+    draw_cells(sx, false)
+    elements.ground(R, rules, sx)
+    draw_cells(sx, true)
     -- Overhanging blockers sit below treats, including those in adjacent cells.
     if FESTIVE then draw_blockers(sx) end
     draw_relics(sx)
     if not FESTIVE then draw_blockers(sx) end
+    elements.blockers(R, rules, sx)
+    elements.highlights(R, rules, sx, FESTIVE and 2 * CELL_FACE_R or STATE_SIZE)
     if intro then draw_sheen(sx) end
     R.draw_board_tools(inp)
     if app.arg("art-states") then art.draw_catalogue(R) end

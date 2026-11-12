@@ -38,7 +38,8 @@ for seed=1,12 do
     g.rng = seed
     local sp = 1
     for i=0,rules.CELLS-1 do
-        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and sp<=rules.PRISM then
+        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and g.hazard[i]==0 and g.stone_hp[i]==0
+            and g.crate_hp[i]==0 and g.tiles[i].kind>=0 and sp<=rules.PRISM then
             g.tiles[i].special = sp
             sp = sp+1
         end
@@ -80,8 +81,11 @@ for level = 0, rules.LEVELS - 1 do
     end
     for i = 0, rules.CELLS - 1 do
         check(g.active[i] == before.active[i] and g.soil[i] == before.soil[i]
-              and g.chain[i] == before.chain[i] and g.ice[i] == before.ice[i], "terrain survives recovery")
-        if g.chain[i] > 0 or g.ice[i] > 0 or not g.active[i] then
+              and g.chain[i] == before.chain[i] and g.ice[i] == before.ice[i]
+              and g.stone_hp[i] == before.stone_hp[i] and g.crate_hp[i] == before.crate_hp[i]
+              and g.hazard[i] == before.hazard[i], "terrain survives recovery")
+        if g.chain[i] > 0 or g.ice[i] > 0 or g.hazard[i] > 0 or g.stone_hp[i] > 0
+            or g.crate_hp[i] > 0 or g.tiles[i].kind == rules.DELIVERY or not g.active[i] then
             check(g.tiles[i].kind == before.tiles[i].kind and g.tiles[i].special == before.tiles[i].special,
                   "locked relics and holes survive recovery")
         end
@@ -161,7 +165,8 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     if mode == "fall" then R.phase, R.phase_time = R.PH_FALL, 1
     elseif mode == "won" then
         local l = rules.level_of(g)
-        g.score, g.relics, g.dug, g.obstacles, g.moves = l.score, l.relics, l.soil, 0, 0
+        g.score, g.relics, g.dug, g.obstacles, g.moves = l.score, l.relics, g.initial_soil, 0, 0
+        g.discovered, g.delivered = #g.objects, g.delivery_total
     else g.moves = 0 end
     R.board_update(.02)
     if mode == "fall" then
@@ -232,9 +237,12 @@ do
     local g=rules.game_start(6,123)
     R.g=g
     local goals=R.goal_entries()
-    check(#goals==4 and goals[1].remaining==3800 and goals[2].remaining==16
-          and goals[3].remaining==15 and goals[4].remaining==g.obstacles,"late HUD exposes all four remaining goals")
+    local l = rules.level_of(g)
+    check(goals[1].id=="score" and goals[1].remaining==l.score and goals[2].id=="idols" and goals[2].remaining==l.relics
+          and goals[3].id=="sand" and goals[3].remaining==g.initial_soil
+          and goals[#goals].id=="locks" and goals[#goals].remaining==g.obstacles,"late HUD exposes the actual remaining goals")
     g.score,g.relics,g.dug,g.obstacles=9000,99,99,0
+    g.discovered,g.delivered=#g.objects,g.delivery_total
     for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
     R.g=rules.game_start(0,123)
     check(#R.goal_entries()==2,"opening HUD omits absent sand/lock objectives")

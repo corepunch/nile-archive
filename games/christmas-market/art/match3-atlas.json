@@ -47,297 +47,441 @@
       128,
       128
     ],
-    "dynamite-disabled": [
+    "crate-0-1": [
       1590,
       2,
       128,
       128
     ],
-    "dynamite-hover": [
+    "crate-0-2": [
       1722,
       2,
       128,
       128
     ],
-    "dynamite-normal": [
+    "crate-1-1": [
       1854,
       2,
       128,
       128
     ],
-    "dynamite-pressed": [
+    "crate-1-2": [
       2,
+      906,
+      128,
+      128
+    ],
+    "crate-2-1": [
+      134,
+      906,
+      128,
+      128
+    ],
+    "crate-2-2": [
+      266,
+      906,
+      128,
+      128
+    ],
+    "crate-3-1": [
+      398,
+      906,
+      128,
+      128
+    ],
+    "crate-3-2": [
+      530,
+      906,
+      128,
+      128
+    ],
+    "crate-4-1": [
+      662,
+      906,
+      128,
+      128
+    ],
+    "crate-4-2": [
+      794,
+      906,
+      128,
+      128
+    ],
+    "crate-5-1": [
+      926,
+      906,
+      128,
+      128
+    ],
+    "crate-5-2": [
+      1058,
+      906,
+      128,
+      128
+    ],
+    "delivery": [
+      1190,
+      906,
+      128,
+      128
+    ],
+    "delivery-exit": [
+      1322,
+      906,
+      128,
+      128
+    ],
+    "dynamite-disabled": [
+      1454,
+      906,
+      128,
+      128
+    ],
+    "dynamite-hover": [
+      1586,
+      906,
+      128,
+      128
+    ],
+    "dynamite-normal": [
+      1718,
+      906,
+      128,
+      128
+    ],
+    "dynamite-pressed": [
+      1850,
       906,
       128,
       128
     ],
     "dynamite-selected": [
-      134,
-      906,
+      2,
+      1038,
       128,
       128
     ],
     "festive-0": [
-      266,
-      906,
+      134,
+      1038,
       128,
       128
     ],
     "festive-1": [
-      398,
-      906,
+      266,
+      1038,
       128,
       128
     ],
     "festive-2": [
-      530,
-      906,
+      398,
+      1038,
       128,
       128
     ],
     "festive-3": [
-      662,
-      906,
+      530,
+      1038,
       128,
       128
     ],
     "festive-4": [
-      794,
-      906,
+      662,
+      1038,
       128,
       128
     ],
     "festive-5": [
+      794,
+      1038,
+      128,
+      128
+    ],
+    "growth": [
       926,
-      906,
+      1038,
       128,
       128
     ],
     "guide": [
       1058,
-      906,
+      1038,
+      128,
+      128
+    ],
+    "hidden-covered": [
+      1190,
+      1038,
+      128,
+      128
+    ],
+    "hidden-partial": [
+      1322,
+      1038,
+      128,
+      128
+    ],
+    "hidden-revealed": [
+      1454,
+      1038,
       128,
       128
     ],
     "hint": [
-      1190,
-      906,
+      1586,
+      1038,
       128,
       128
     ],
     "ice-1": [
-      1322,
-      906,
+      1718,
+      1038,
       128,
       128
     ],
     "ice-1-edge": [
-      1454,
-      906,
+      1850,
+      1038,
       128,
       128
     ],
     "ice-2": [
-      1586,
-      906,
+      2,
+      1170,
       128,
       128
     ],
     "ice-2-edge": [
-      1718,
-      906,
+      134,
+      1170,
       128,
       128
     ],
     "life": [
-      1850,
-      906,
+      266,
+      1170,
+      128,
+      128
+    ],
+    "object-goal": [
+      398,
+      1170,
       128,
       128
     ],
     "pause-disabled": [
-      2,
-      1038,
+      530,
+      1170,
       128,
       128
     ],
     "pause-hover": [
-      134,
-      1038,
+      662,
+      1170,
       128,
       128
     ],
     "pause-normal": [
-      266,
-      1038,
+      794,
+      1170,
       128,
       128
     ],
     "pause-pressed": [
-      398,
-      1038,
+      926,
+      1170,
       128,
       128
     ],
     "pause-selected": [
-      530,
-      1038,
+      1058,
+      1170,
       128,
       128
     ],
     "pickaxe-disabled": [
-      662,
-      1038,
+      1190,
+      1170,
       128,
       128
     ],
     "pickaxe-hover": [
-      794,
-      1038,
+      1322,
+      1170,
       128,
       128
     ],
     "pickaxe-normal": [
-      926,
-      1038,
+      1454,
+      1170,
       128,
       128
     ],
     "pickaxe-pressed": [
-      1058,
-      1038,
+      1586,
+      1170,
       128,
       128
     ],
     "pickaxe-selected": [
-      1190,
-      1038,
+      1718,
+      1170,
       128,
       128
     ],
     "prism": [
-      1322,
-      1038,
+      1850,
+      1170,
       128,
       128
     ],
     "ray-column": [
-      1454,
-      1038,
+      2,
+      1302,
       128,
       128
     ],
     "ray-diagonal": [
-      1586,
-      1038,
+      134,
+      1302,
       128,
       128
     ],
     "ray-row": [
-      1718,
-      1038,
+      266,
+      1302,
       128,
       128
     ],
     "sand": [
-      1850,
-      1038,
+      398,
+      1302,
       128,
       128
     ],
     "sand-edge": [
-      2,
-      1170,
+      530,
+      1302,
       128,
       128
     ],
     "selected": [
-      134,
-      1170,
+      662,
+      1302,
       128,
       128
     ],
     "shop-built": [
-      266,
-      1170,
+      794,
+      1302,
       128,
       128
     ],
     "shop-locked": [
-      398,
-      1170,
+      926,
+      1302,
+      128,
+      128
+    ],
+    "stone-1": [
+      1058,
+      1302,
+      128,
+      128
+    ],
+    "stone-2": [
+      1190,
+      1302,
+      128,
+      128
+    ],
+    "stone-3": [
+      1322,
+      1302,
       128,
       128
     ],
     "sunburst-disabled": [
-      530,
-      1170,
+      1454,
+      1302,
       128,
       128
     ],
     "sunburst-hover": [
-      662,
-      1170,
+      1586,
+      1302,
       128,
       128
     ],
     "sunburst-normal": [
-      794,
-      1170,
+      1718,
+      1302,
       128,
       128
     ],
     "sunburst-pressed": [
-      926,
-      1170,
+      1850,
+      1302,
       128,
       128
     ],
     "sunburst-selected": [
-      1058,
-      1170,
+      2,
+      1434,
+      128,
+      128
+    ],
+    "tunnel-in": [
+      134,
+      1434,
+      128,
+      128
+    ],
+    "tunnel-out": [
+      266,
+      1434,
       128,
       128
     ],
     "glow": [
-      1190,
-      1170,
+      398,
+      1434,
       64,
       64
     ],
     "kind-0": [
-      266,
-      906,
+      134,
+      1038,
       128,
       128
     ],
     "kind-1": [
-      398,
-      906,
+      266,
+      1038,
       128,
       128
     ],
     "kind-2": [
-      530,
-      906,
+      398,
+      1038,
       128,
       128
     ],
     "kind-3": [
-      662,
-      906,
+      530,
+      1038,
       128,
       128
     ],
     "kind-4": [
-      794,
-      906,
+      662,
+      1038,
       128,
       128
     ],
     "kind-5": [
-      926,
-      906,
+      794,
+      1038,
       128,
       128
     ],
@@ -371,17 +515,36 @@
     "cell-mask": "data/board-states/cell-mask.png",
     "chain-board": "data/board-states/chain-board.png",
     "chain": "data/board-states/chain.png",
+    "crate-0-1": "data/board-states/crate-0-1.png",
+    "crate-0-2": "data/board-states/crate-0-2.png",
+    "crate-1-1": "data/board-states/crate-1-1.png",
+    "crate-1-2": "data/board-states/crate-1-2.png",
+    "crate-2-1": "data/board-states/crate-2-1.png",
+    "crate-2-2": "data/board-states/crate-2-2.png",
+    "crate-3-1": "data/board-states/crate-3-1.png",
+    "crate-3-2": "data/board-states/crate-3-2.png",
+    "crate-4-1": "data/board-states/crate-4-1.png",
+    "crate-4-2": "data/board-states/crate-4-2.png",
+    "crate-5-1": "data/board-states/crate-5-1.png",
+    "crate-5-2": "data/board-states/crate-5-2.png",
+    "delivery-exit": "data/board-states/delivery-exit.png",
+    "delivery": "data/board-states/delivery.png",
     "dynamite-disabled": "data/board-states/dynamite-disabled.png",
     "dynamite-hover": "data/board-states/dynamite-hover.png",
     "dynamite-normal": "data/board-states/dynamite-normal.png",
     "dynamite-pressed": "data/board-states/dynamite-pressed.png",
     "dynamite-selected": "data/board-states/dynamite-selected.png",
+    "growth": "data/board-states/growth.png",
     "guide": "data/board-states/guide.png",
+    "hidden-covered": "data/board-states/hidden-covered.png",
+    "hidden-partial": "data/board-states/hidden-partial.png",
+    "hidden-revealed": "data/board-states/hidden-revealed.png",
     "hint": "data/board-states/hint.png",
     "ice-1-edge": "data/board-states/ice-1-edge.png",
     "ice-1": "data/board-states/ice-1.png",
     "ice-2-edge": "data/board-states/ice-2-edge.png",
     "ice-2": "data/board-states/ice-2.png",
+    "object-goal": "data/board-states/object-goal.png",
     "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
     "pickaxe-hover": "data/board-states/pickaxe-hover.png",
     "pickaxe-normal": "data/board-states/pickaxe-normal.png",
@@ -394,11 +557,16 @@
     "sand-edge": "data/board-states/sand-edge.png",
     "sand": "data/board-states/sand.png",
     "selected": "data/board-states/selected.png",
+    "stone-1": "data/board-states/stone-1.png",
+    "stone-2": "data/board-states/stone-2.png",
+    "stone-3": "data/board-states/stone-3.png",
     "sunburst-disabled": "data/board-states/sunburst-disabled.png",
     "sunburst-hover": "data/board-states/sunburst-hover.png",
     "sunburst-normal": "data/board-states/sunburst-normal.png",
     "sunburst-pressed": "data/board-states/sunburst-pressed.png",
     "sunburst-selected": "data/board-states/sunburst-selected.png",
+    "tunnel-in": "data/board-states/tunnel-in.png",
+    "tunnel-out": "data/board-states/tunnel-out.png",
     "complete": "data/expedition-hud/complete.png",
     "life": "data/expedition-hud/life.png",
     "pause-disabled": "data/expedition-hud/pause-disabled.png",
@@ -416,23 +584,42 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "bdf0b6e000cf154182e0070d6de4c76bdf5a57f6adee3d18df061265b2b28e89",
+    "recipe": "267e485f69583bb2718531541456c4e74eeb316c934811244044240f3c00466b",
     "inputs": {
       "games/christmas-market/data/board-states/bomb.png": "ed81b5bdc22716892ea1510be38c268e2580908002ff35a0be630f9868907d6e",
       "games/christmas-market/data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
       "games/christmas-market/data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
       "games/christmas-market/data/board-states/chain.png": "ae805d47172a2179d0840850ed5e171e98298044f36fa1d6f73d7a158cf77339",
+      "games/christmas-market/data/board-states/crate-0-1.png": "055bbd7afde7351b1d7d72865820f50f8b1d9cf388c0bf7ad50541adf804b9b7",
+      "games/christmas-market/data/board-states/crate-0-2.png": "518d04a93a506a94791b9659b766e70879e8be37565fb7aa237a3038fb36603b",
+      "games/christmas-market/data/board-states/crate-1-1.png": "f38fe84d9f5b887da91e2605933b7b978ee6c7c3185c6e1768710791420d1897",
+      "games/christmas-market/data/board-states/crate-1-2.png": "becb9776dda032766c9f679d48885e85c793e562a8cd6406006f13a483d48cda",
+      "games/christmas-market/data/board-states/crate-2-1.png": "b61aa487478adf43bcdf22604ba0f9c5e327d2fb63e0cab0311b3fd3b9d3964d",
+      "games/christmas-market/data/board-states/crate-2-2.png": "82cef18e9807dc4119d0cb268af5c3109c6c7f4ccf71d22f6d473f6bb90826b8",
+      "games/christmas-market/data/board-states/crate-3-1.png": "6cf95c72ff53d29fa0c34b9f5dc507def36b2638c5d8200c282af56c35839dce",
+      "games/christmas-market/data/board-states/crate-3-2.png": "0b677a187a5abd8218ee1ce5385a884a108191863b15fc469e728ed5fa818d24",
+      "games/christmas-market/data/board-states/crate-4-1.png": "ec0a39d634c923c3b963e28baecb160a73a061a4c48d84ad9894ef17b40dfe15",
+      "games/christmas-market/data/board-states/crate-4-2.png": "540418118a88a2c72cd8f2f23969809006114298184b1aca23b44bbe249c4863",
+      "games/christmas-market/data/board-states/crate-5-1.png": "a25bf33640c9e736dc8d0dbbda486f4be24ff78f59f005b9a8568a123e622a92",
+      "games/christmas-market/data/board-states/crate-5-2.png": "602591d37a0cc1dd16d1c016192cba6b338407952f92dc678543ca65bd1a6830",
+      "games/christmas-market/data/board-states/delivery-exit.png": "466df7e04619cf906702ec1f6087e1a74e2b145d48c44d0c0ee195565cf09a67",
+      "games/christmas-market/data/board-states/delivery.png": "0487d638343be5690e652bf59976a758378c524ab6586345cd131ecc985c2cd9",
       "games/christmas-market/data/board-states/dynamite-disabled.png": "b1de17dae5b084c824a8faeebd6a4d7cd543494ba0e5b6af07c0690cf0a0e86c",
       "games/christmas-market/data/board-states/dynamite-hover.png": "0bd70e5b9fd9a37633e9d9cc8f0597a139fc6f79958dd2ed4a7ad9d3908dcdad",
       "games/christmas-market/data/board-states/dynamite-normal.png": "3af8e04f293dcea94a8fb01633bc728732e2a6b759e5b4e1b0533b8008608b93",
       "games/christmas-market/data/board-states/dynamite-pressed.png": "f9e796dbc159bc61314ad17ff051f022955872742ec64f0ce6aedcdaeb73cf5e",
       "games/christmas-market/data/board-states/dynamite-selected.png": "1668adfc3def009501e83d94779123d90ac22c54e871850c794b68a6832d50a6",
+      "games/christmas-market/data/board-states/growth.png": "12bbd6e9bcfe21acb396bad8361c2865dc6120c5a8d718c682703351a2c927f5",
       "games/christmas-market/data/board-states/guide.png": "05f60d162d516c9e1f9f2ef71ba1c0c1db4febdc78e1b36f354013c25f3e0c5c",
+      "games/christmas-market/data/board-states/hidden-covered.png": "60c9c3f79f153ae01bbc1ab84778d25bcada33fef53eca78bbc36fa8aee4e213",
+      "games/christmas-market/data/board-states/hidden-partial.png": "c2f831ac21088d9ddf2599ed1cbfe0b207dd68b026f68ce2bdd954a2e9a71d74",
+      "games/christmas-market/data/board-states/hidden-revealed.png": "f8f792802f3d37683b0c5b65dc5a6d32179b6c3b7258b4cea8cce2edc9aa42d4",
       "games/christmas-market/data/board-states/hint.png": "96f06c48b50d785931e7df3b4fd3285dea52423fac9350f2acbfb5941358e835",
       "games/christmas-market/data/board-states/ice-1-edge.png": "c2a651fe017e1bc286fef7a45c2cf417ea617860486debe19887ac6b94b9ab98",
       "games/christmas-market/data/board-states/ice-1.png": "1ed161ee728e23d8c761e3a912f53490320b0db68bac2a1b20909722c8112301",
       "games/christmas-market/data/board-states/ice-2-edge.png": "bc772e71db065f4e0722fa333971766148ec42f33675aeb0bded7835f7f8742f",
       "games/christmas-market/data/board-states/ice-2.png": "6449681d9d24607e45b8d01ce4c6078e9513d335d69890fb3281a29bafe25bdf",
+      "games/christmas-market/data/board-states/object-goal.png": "f3c051b1b3b07d292f3fcbdaa3a7f669c9fb09789aa042a273776f0fe9a94a2d",
       "games/christmas-market/data/board-states/pickaxe-disabled.png": "a71fc0e42f010cdffadf3c42c552790b91425c82ea2c14209caf9c343112dc4d",
       "games/christmas-market/data/board-states/pickaxe-hover.png": "9364d2fd0f89da6d9b79622f0b8dd643c18806d13e222b689bf4d4129683db86",
       "games/christmas-market/data/board-states/pickaxe-normal.png": "4a804a5c510e6e64bbfacdeea8f6132561f07eed4dd69f7a3e21ecc67777c26a",
@@ -445,11 +632,16 @@
       "games/christmas-market/data/board-states/sand-edge.png": "52a4bcc9f2fa76c8b511db7eb852913ecb53e5d37580f3b9a347bbbfd78be728",
       "games/christmas-market/data/board-states/sand.png": "d2dddd90b4f8b5791a8dfc07d3572c62a4cf3ea22f1d92652c54c0897d1e2cd0",
       "games/christmas-market/data/board-states/selected.png": "3fce0d388034f7d7b45a83e66a46f32bbb83ac5f73500a8b0a50f3f5d7e61fd5",
+      "games/christmas-market/data/board-states/stone-1.png": "5878a8835b6a159be473b2aeb2f044512453fa1fa97df7c3fb7c1512e37dafa0",
+      "games/christmas-market/data/board-states/stone-2.png": "e74589be9e08c844e52f5e438e0ed1f9093f7f63119dc5441100746a2d79c337",
+      "games/christmas-market/data/board-states/stone-3.png": "4de3d35bcfe876b27ab6bb4bdd219c3140e997f30d396bbcfc54bceae6de366e",
       "games/christmas-market/data/board-states/sunburst-disabled.png": "da7ca8366477b51b4f60449a64f5093375db74aa20656c6f2b2a3f03d81cd8ed",
       "games/christmas-market/data/board-states/sunburst-hover.png": "979f91a39b3689e150d9cc988086089955b90862173c09b3ad14452c664f9814",
       "games/christmas-market/data/board-states/sunburst-normal.png": "082084a6d8a5e8f9b519d996e085a22118a1941d3a4425672ec63a05a9c39299",
       "games/christmas-market/data/board-states/sunburst-pressed.png": "431a29a858bc098cec92d20b7e30c29a4d046509bc6dd788742b6f1a40710c5b",
       "games/christmas-market/data/board-states/sunburst-selected.png": "b265a8b8f0935b2c7444032f60176c7ab934f742f9e5dde103adf9afedae9ce9",
+      "games/christmas-market/data/board-states/tunnel-in.png": "8cf92ce80309bdd821d3081a6a71c2e7e95078f5d8448ff5518106bd044d91fc",
+      "games/christmas-market/data/board-states/tunnel-out.png": "31b36a24c74d79f58abbd17dedd4dd09c1f2ee7a2889fc3cd5acff084ef4284c",
       "games/christmas-market/data/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
       "games/christmas-market/data/expedition-hud/complete.png": "5187914f965d5a88e879106862f7dbca79dd74b43b1286e7b40bd3bb052db8e4",
       "games/christmas-market/data/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
@@ -469,8 +661,8 @@
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "e20391f3193369ad5a82b61881b38dd06ed5faac2a65912c1f7e24f5caece1f5",
-      "games/christmas-market/lua/match3_skin.lua": "128715ff3b785a0244785319446bcf71a1465bd2efaa433b5a5adc9938f0b730"
+      "games/christmas-market/data/match3.png": "c707f2466fb29ae73da3aec4c796426b066ee62da9be5a0e70a17b6d95d4be3a",
+      "games/christmas-market/lua/match3_skin.lua": "56c692c60bcb0add654b571197db9c59b0814ffb14fe88bc9eb35ca9e59139bb"
     }
   }
 }

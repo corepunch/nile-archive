@@ -1232,21 +1232,285 @@
         128,
         128
       ]
+    },
+    "stone-1": {
+      "source": "games/relic-rush/data/board-states/stone-1.png",
+      "runtime": [
+        0,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "stone-2": {
+      "source": "games/relic-rush/data/board-states/stone-2.png",
+      "runtime": [
+        128,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "stone-3": {
+      "source": "games/relic-rush/data/board-states/stone-3.png",
+      "runtime": [
+        256,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-0-1": {
+      "source": "games/relic-rush/data/board-states/crate-0-1.png",
+      "runtime": [
+        384,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-0-2": {
+      "source": "games/relic-rush/data/board-states/crate-0-2.png",
+      "runtime": [
+        512,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-1-1": {
+      "source": "games/relic-rush/data/board-states/crate-1-1.png",
+      "runtime": [
+        640,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-1-2": {
+      "source": "games/relic-rush/data/board-states/crate-1-2.png",
+      "runtime": [
+        768,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-2-1": {
+      "source": "games/relic-rush/data/board-states/crate-2-1.png",
+      "runtime": [
+        896,
+        1024,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-2-2": {
+      "source": "games/relic-rush/data/board-states/crate-2-2.png",
+      "runtime": [
+        0,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-3-1": {
+      "source": "games/relic-rush/data/board-states/crate-3-1.png",
+      "runtime": [
+        128,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-3-2": {
+      "source": "games/relic-rush/data/board-states/crate-3-2.png",
+      "runtime": [
+        256,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-4-1": {
+      "source": "games/relic-rush/data/board-states/crate-4-1.png",
+      "runtime": [
+        384,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-4-2": {
+      "source": "games/relic-rush/data/board-states/crate-4-2.png",
+      "runtime": [
+        512,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-5-1": {
+      "source": "games/relic-rush/data/board-states/crate-5-1.png",
+      "runtime": [
+        640,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "crate-5-2": {
+      "source": "games/relic-rush/data/board-states/crate-5-2.png",
+      "runtime": [
+        768,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "tunnel-in": {
+      "source": "games/relic-rush/data/board-states/tunnel-in.png",
+      "runtime": [
+        896,
+        1152,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "tunnel-out": {
+      "source": "games/relic-rush/data/board-states/tunnel-out.png",
+      "runtime": [
+        0,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "hidden-covered": {
+      "source": "games/relic-rush/data/board-states/hidden-covered.png",
+      "runtime": [
+        128,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "hidden-partial": {
+      "source": "games/relic-rush/data/board-states/hidden-partial.png",
+      "runtime": [
+        256,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "hidden-revealed": {
+      "source": "games/relic-rush/data/board-states/hidden-revealed.png",
+      "runtime": [
+        384,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "growth": {
+      "source": "games/relic-rush/data/board-states/growth.png",
+      "runtime": [
+        512,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "delivery": {
+      "source": "games/relic-rush/data/board-states/delivery.png",
+      "runtime": [
+        640,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "delivery-exit": {
+      "source": "games/relic-rush/data/board-states/delivery-exit.png",
+      "runtime": [
+        768,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
+    },
+    "object-goal": {
+      "source": "games/relic-rush/data/board-states/object-goal.png",
+      "runtime": [
+        896,
+        1280,
+        128,
+        128
+      ],
+      "transform": "RGBA canvas copied without change"
     }
   },
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "bdf0b6e000cf154182e0070d6de4c76bdf5a57f6adee3d18df061265b2b28e89",
+    "recipe": "267e485f69583bb2718531541456c4e74eeb316c934811244044240f3c00466b",
     "inputs": {
       "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
-      "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee"
+      "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee",
+      "games/relic-rush/data/board-states/crate-0-1.png": "63f6b974478ac2ebbccaad4fa5ba1d932d89293582dbdf515a3b958712e72e4e",
+      "games/relic-rush/data/board-states/crate-0-2.png": "b552d2ca1fbdbb2d65546f088e36981eabfd0b42283db03a13d7d5080482926e",
+      "games/relic-rush/data/board-states/crate-1-1.png": "9d5b23d82242fae7791890b4d036afc95958337ab54ce58df3be4ae13f749a66",
+      "games/relic-rush/data/board-states/crate-1-2.png": "3950c99feaab31d02534ef0fbb6a1046badfc0c9d29e0949ecb939ec955ef87b",
+      "games/relic-rush/data/board-states/crate-2-1.png": "bcd0ebb1bca07a23bf17144c65989244ca42fcd3259a60c1e67d19d14d76a148",
+      "games/relic-rush/data/board-states/crate-2-2.png": "1b9fec30fe4cb86570ba3e98ebb9ab80882f24ad9d0e193d762857f65b5c741b",
+      "games/relic-rush/data/board-states/crate-3-1.png": "fd89a1668bd707c94c84087632381a825a42b4574e4c6fb0016fafd96f97d570",
+      "games/relic-rush/data/board-states/crate-3-2.png": "d4f7702c205e6aaf357e92bba2d04ed2d33e57806a791267954207aa949f921d",
+      "games/relic-rush/data/board-states/crate-4-1.png": "708bd6f564cc2e7d6399074cc69c3fd4aa8dea97f043d6de75ce72905638c436",
+      "games/relic-rush/data/board-states/crate-4-2.png": "ca8f37096a20ec71ba991f47f344942eeb2881fc7b305e00755562bdc4b4a8ce",
+      "games/relic-rush/data/board-states/crate-5-1.png": "f29cf9dc270c5515cf130d506117b26dc46a0c6f8162937122efbbb191d1d9cf",
+      "games/relic-rush/data/board-states/crate-5-2.png": "dc173da98dd6a73f6f9ee412af4151bc3aba7847e3f74e82f33051a5d7c254dd",
+      "games/relic-rush/data/board-states/delivery-exit.png": "df14674ded59969438e1fc73a51b841c55f9f166482db6866406a6e90b4c636b",
+      "games/relic-rush/data/board-states/delivery.png": "beee8c50597fca44605761f636d9d2b4861c0aee4c22fff27d36ed5d7f05ed24",
+      "games/relic-rush/data/board-states/growth.png": "d76979ce3304ff1ea4a367f0c4e64f410c3fbf07680c07247d3b10d03de3206c",
+      "games/relic-rush/data/board-states/hidden-covered.png": "510754e69f1e4843d34bde87aca169f57b8e85e0417a8a2e42116c94fbadef5f",
+      "games/relic-rush/data/board-states/hidden-partial.png": "22a1ea0ced58e262d12ff141da4c5c88cc4e7498a479040b925fc21c219987fd",
+      "games/relic-rush/data/board-states/hidden-revealed.png": "618d67b456d9e47fcbb8702defd6c56fdd84a6ead4ecbc52c6398e2a73208bd0",
+      "games/relic-rush/data/board-states/object-goal.png": "77e01e8bea36b96f0fba7f135dc853c9dccad553d7dae310eff095ba18a28963",
+      "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
+      "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
+      "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
+      "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
+      "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae"
     },
     "outputs": {
-      "engine/data/match3.png": "1f4409258eb59581a1bc0d27027ad58c62c433bcc02520821bfbc2ae7c5d7e54",
-      "engine/match3_frames.lua": "0f5a3ea5ad99d3135e39e5e64215a6977777c282e6b103a630b0cbf5e4e4ef68"
+      "engine/data/match3.png": "7fead825f16e47c0cd34ea5225b845af0565b1d97a9660822bc02e1620acb450",
+      "engine/match3_frames.lua": "fb83407325afc6ddba1f0eded25ecfe642d495536007b1f0d6ea468ca4f303ce"
     }
   }
 }

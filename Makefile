@@ -108,7 +108,7 @@ gen-check:
 # .luacheckrc declares the engine's globals, so an undefined global is a typo
 # or a missing import and an unused local is dead code.
 lint:
-	luacheck -q games/*/lua engine/tween.lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua engine/match3.lua engine/match3_frames.lua engine/board_intro.lua engine/json.lua engine/town.lua engine/leaderboard.lua engine/match3_vfx.lua engine/match3_debug.lua engine/match3_game.lua tests/lua tests/games tests/fixtures tools/*.lua
+	luacheck -q games/*/lua engine/tween.lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua engine/match3.lua engine/match3_frames.lua engine/board_intro.lua engine/json.lua engine/town.lua engine/leaderboard.lua engine/match3_vfx.lua engine/match3_elements_view.lua engine/match3_debug.lua engine/match3_game.lua tests/lua tests/games tests/fixtures tools/*.lua
 
 # --- Xcode projects -------------------------------------------------------
 # One committed project per game with a macOS and an iOS target (iPad for Nile
@@ -171,6 +171,8 @@ test-assets:
 	python3 games/relic-rush/tools/prepare_story.py --check
 	python3 tools/buildings.py --check
 	python3 tools/match3_atlas.py --check
+	python3 tools/match3_elements_art.py --check
+	python3 tests/test_hex_tile_art.py
 # Budget is test execution only: build prerequisites finish before the timer.
 TEST_BUDGET ?= 5
 TEST_WORKERS ?= 4

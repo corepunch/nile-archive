@@ -86,6 +86,8 @@ def checks(fast=False, arguments=()):
         ("Relic Rush story", "games/relic-rush/tools/prepare_story.py", "--check"),
         ("building registration", "tools/buildings.py", "--check"),
         ("match-3 atlases", "tools/match3_atlas.py", "--check"),
+        ("match-3 element artwork", "tools/match3_elements_art.py", "--check"),
+        ("hex tile geometry", "tests/test_hex_tile_art.py"),
         ("test runner contracts", "tools/test_run_tests.py"),
         ("iOS deploy contracts", "tools/xcode/test_deploy.py"),
     ]

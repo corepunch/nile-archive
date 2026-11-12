@@ -140,6 +140,7 @@ void script_open(const char *dir)
         {"ui_skin.lua", NULL},
         {"city_smoke.lua", NULL},
         {"match3.lua", "match3"},
+        {"match3_elements_view.lua", "match3.elements_view"},
         {"match3_frames.lua", "match3.frames"},
         {"board_intro.lua", NULL},
         {"json.lua", "json"},

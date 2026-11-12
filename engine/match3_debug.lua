@@ -4,6 +4,7 @@
 -- --level, --city, --showcase, --placing, --zone, --victory, --card, --fx,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
 -- --kudos, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
+-- --element-states populates a board with the new authored element states.
 -- Nothing here runs in a normal game.
 local D = {}
 
@@ -190,6 +191,55 @@ function D.bind(R, W)
             R.inspect = kind; R.overlay = R.OV_WONDER; R.toast_time = 0
         end
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
+        if app.arg("tunnel-hop") then
+            -- One genuine fall step between distant endpoints for animation review.
+            R.g = rules.game_start(0, 123478)
+            R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, false
+            local g, entry, exit = R.g, rules.hex_index(-3, 0), rules.hex_index(2, 0)
+            g.active[entry], g.active[exit] = true, true
+            g.tunnel_to[entry], g.tunnel_from[exit] = exit, entry
+            local step = {tiles={}, from={}}
+            for i = 0, rules.CELLS - 1 do step.tiles[i], step.from[i] = g.tiles[i], i end
+            step.tiles[exit], step.from[exit] = rules.tile(0, rules.NORMAL), entry
+            step.tiles[entry] = rules.tile(-1, rules.NORMAL)
+            g.tiles[entry], g.tiles[exit] = step.tiles[entry], step.tiles[exit]
+            R.fall_steps, R.phase, R.phase_time = {step}, R.PH_FALL, 0
+        end
+        if app.arg("element-states") then
+            -- Populate a real board with every authored strength and colour.
+            R.g = rules.game_start(0, 123478)
+            R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, true
+            local g = R.g
+            g.stone_hp, g.crate_hp, g.crate_kind, g.hazard = {}, {}, {}, {}
+            g.tunnel_to, g.tunnel_from, g.delivery_exits = {}, {}, {}
+            for i = 0, rules.CELLS - 1 do
+                g.active[i], g.soil[i], g.chain[i], g.ice[i] = true, 0, 0, 0
+                g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, -1, 0
+            end
+            for hp = 1, 3 do
+                local cell = rules.hex_index(hp - 3, -1)
+                g.stone_hp[cell], g.tiles[cell] = hp, rules.tile(-1, rules.NORMAL)
+            end
+            for kind = 0, 5 do
+                for hp = 1, 2 do
+                    local q, r = kind - 3, hp
+                    local cell = rules.hex_index(q, r)
+                    g.crate_hp[cell], g.crate_kind[cell] = hp, kind
+                    g.tiles[cell] = rules.tile(-1, rules.NORMAL)
+                end
+            end
+            local covered, partial, revealed = rules.hex_index(-3, 0), rules.hex_index(-1, 0), rules.hex_index(1, 0)
+            g.objects = {{cells={covered}, state="hidden"}, {cells={partial}, state="partial"},
+                         {cells={revealed}, state="revealed"}}
+            g.soil[covered], g.soil[partial] = 1, 1
+            g.initial_soil, g.initial_obstacles, g.obstacles = 2, 16, 16
+            g.delivery_total, g.delivered = 1, 0
+            local entry, exit = rules.hex_index(-4, 0), rules.hex_index(3, -3)
+            g.tunnel_to[entry], g.tunnel_from[exit] = exit, entry
+            g.hazard[rules.hex_index(2, -1)] = 1
+            g.delivery_exits[rules.hex_index(3, -2)] = true
+            g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY, rules.NORMAL)
+        end
         if app.arg("art-board") then
             R.g = rules.game_start(8, 123478)
             R.pending = rules.new_match()

@@ -109,6 +109,14 @@ local guide_entries = {
      icon={back="sand",front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
     {id="ice", title="Ice & candy canes", description="Match on ice. Nearby candy canes thaw it.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
+    {id="stones", title="Snow blocks and colour gifts", description="Match beside blocks; gifts need their colour or a special.",
+     icon={front="crate-0-2",tiles={}}},
+    {id="discover", title="Uncover a star display", description="Clear every covered cell in its footprint.",
+     icon={front="hidden-revealed",tiles={}}},
+    {id="tunnels", title="Chutes and presents", description="Pieces travel through chutes. Bring special presents to their baskets.",
+     icon={front="tunnel-in",tiles={}}},
+    {id="growth", title="Tangled ribbon", description="Clear ribbon each turn to stop it spreading.",
+     icon={front="growth",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

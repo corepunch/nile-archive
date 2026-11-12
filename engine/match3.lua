@@ -118,10 +118,12 @@ function E.bind_board_ui(R, rules, tool_art)
     function R.goal_entries()
         local g, l = R.g, rules.level_of(R.g)
         local entries = {
-            {id="score", icon="score", remaining=math.max(0, l.score-g.score)},
-            {id="idols", icon="idols", remaining=math.max(0, l.relics-g.relics)},
+            {id="score",icon="score",remaining=math.max(0,l.score-g.score)},
+            {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)},
         }
-        if l.soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,l.soil-g.dug)} end
+        if g.initial_soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,g.initial_soil-g.dug)} end
+        if #g.objects>0 then entries[#entries+1]={id="discoveries",icon="hidden-revealed",remaining=#g.objects-g.discovered} end
+        if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
         return entries
     end
@@ -138,16 +140,18 @@ function E.bind_board_ui(R, rules, tool_art)
             icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
             done=met})   -- one tick, the same in every capsule
     end
-    local hud_form=ui.form{kind="row",gap=6,align="center",children={
-        {kind="spacer",width=82},    -- the Moves medallion
-        {kind="spacer",grow=1},
-        {kind="list",id="goals",direction="row",gap=6,item=function(entry)
-            -- Every goal is the same capsule: one width, one height, one tick.
-            return {kind="custom",width=E.GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
-        end},
-        {kind="spacer",grow=1},
-        {kind="spacer",width=64},    -- Pause
-    }}
+    local function goal_form()
+        return ui.form{kind="row",gap=6,align="center",children={
+            {kind="spacer",width=82},    -- the Moves medallion
+            {kind="spacer",grow=1},
+            {kind="list",id="goals",direction="row",gap=6,item=function(entry)
+                return {kind="custom",width=E.GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
+            end},
+            {kind="spacer",grow=1},
+            {kind="spacer",width=64},    -- Pause
+        }}
+    end
+    local hud_form, hud_second = goal_form(), goal_form()
 
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
@@ -182,9 +186,20 @@ function E.bind_board_ui(R, rules, tool_art)
         local top = R.intro and R.intro:arrive(0, 2.8, .58) or 1
         if top <= 0 then return end
         local offset = vec2(0, (top - 1) * (R.hud_rect.y + 110))
-        assert(hud_form:set_items("goals",R.goal_entries()))
-        -- Medallion, goals and Pause all centre on the band's midline.
-        hud_form:draw(rect.centered(R.hud_rect:center(), size2(R.hud_rect.w - 28, 44)):offset(offset),R.skin,{interactive=false})
+        local entries, first, second = R.goal_entries(), {}, {}
+        for i, entry in ipairs(entries) do
+            local row = #entries > 4 and i > math.ceil(#entries / 2) and second or first
+            row[#row + 1] = entry
+        end
+        assert(hud_form:set_items("goals",first))
+        local centre = R.hud_rect:center()
+        if #second == 0 then
+            hud_form:draw(rect.centered(centre, size2(R.hud_rect.w - 28, 44)):offset(offset),R.skin,{interactive=false})
+        else
+            assert(hud_second:set_items("goals",second))
+            hud_form:draw(rect.centered(centre + vec2(0,-16), size2(R.hud_rect.w - 28, 30)):offset(offset),R.skin,{interactive=false})
+            hud_second:draw(rect.centered(centre + vec2(0,16), size2(R.hud_rect.w - 28, 30)):offset(offset),R.skin,{interactive=false})
+        end
         local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
         if medallion > .05 then draw_moves(medallion) end
         if E.pause_button(R, R.board_pause, offset) then R.overlay = R.OV_PAUSE end
@@ -300,10 +315,10 @@ function E.guide_form(copy, guide_icon)
         {kind="label",text=copy.title,height=44,em=34},
         {kind="label",text=copy.instructions,height=26,em=13,text_style="white"},
         {kind="spacer",height=14},
-        {kind="list",id="topics",gap=12,item=function(entry)
+        {kind="list",id="topics",gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
-            return {kind="row",gap=14,align="center",children={
-                {kind="custom",width=64,height=64,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
+            return {kind="row",gap=10,align="center",children={
+                {kind="custom",width=52,height=52,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
                 {kind="column",grow=1,gap=4,children={
                     {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
                     {kind="label",text=entry.description,wrap=true,text_align=align,em=16,text_style="cream"},
@@ -429,6 +444,7 @@ function E.new(config)
     assert(M.LEVELS > 0, "match3 needs a level")
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
     M.NORMAL, M.ROW, M.COLUMN, M.DIAGONAL, M.BOMB, M.PRISM = 0, 1, 2, 3, 4, 5
+    M.DELIVERY = -2
     local NORMAL, ROW, COLUMN, DIAGONAL, BOMB, PRISM = 0, 1, 2, 3, 4, 5
     function M.level_of(g) return M.levels[g.level + 1] end
     --------------------------------------------------------------------- rules
@@ -449,7 +465,8 @@ function E.new(config)
     M.tile = tile
 
     local function swap_tiles(g, a, b) g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a] end
-    local function locked(g, i) return g.chain[i] > 0 or g.ice[i] > 0 end
+    local function solid(g, i) return (g.stone_hp[i] or 0) > 0 or (g.crate_hp[i] or 0) > 0 end
+    local function locked(g, i) return (g.chain[i] or 0) > 0 or (g.ice[i] or 0) > 0 or (g.hazard[i] or 0) > 0 or solid(g, i) end
 
     local function cell_active(g, cell) return cell >= 0 and cell < CELLS and g.active[cell] end
     M.game_cell_active = cell_active
@@ -462,7 +479,7 @@ function E.new(config)
     local function axis_of_ray(sp) return sp == ROW and 0 or sp == COLUMN and 1 or 2 end
 
     -- An empty match: which cells clear (mask) and which specials appear (make).
-    local function new_match() return {mask = {}, make = {}, hits = 0} end
+    local function new_match() return {mask = {}, make = {}, direct = {}, ordinary = {}, hits = 0} end
     M.new_match = new_match
 
     local function count_hits(m)
@@ -509,12 +526,12 @@ function E.new(config)
     end
 
     local function mark_line(g, m, cell, axis)
-        if cell_active(g, cell) then m.mask[cell] = true end
+        if cell_active(g, cell) then m.mask[cell], m.direct[cell] = true, true end
         for sign = 0, 1 do
             local d = axis + (sign == 1 and 3 or 0)
             local c = hex_neighbor(cell, d)
             while c >= 0 do
-                if cell_active(g, c) then m.mask[c] = true end
+                if cell_active(g, c) then m.mask[c], m.direct[c] = true, true end
                 c = hex_neighbor(c, d)
             end
         end
@@ -522,18 +539,18 @@ function E.new(config)
 
     local function mark_area(g, m, cell, blast_radius)
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and hex_distance(cell, i) <= blast_radius then m.mask[i] = true end
+            if cell_active(g, i) and hex_distance(cell, i) <= blast_radius then m.mask[i], m.direct[i] = true, true end
         end
     end
 
     local function mark_color(g, m, kind)
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and g.tiles[i].kind == kind then m.mask[i] = true end
+            if cell_active(g, i) and g.tiles[i].kind == kind then m.mask[i], m.direct[i] = true, true end
         end
     end
 
     function M.game_matches(g, m, preferred)
-        m.mask, m.make, m.hits = {}, {}, 0
+        m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         if flags & E.LINE_MATCHES ~= 0 then
             -- Process maximal runs independently: touching branches never count
             -- toward their length or receive an unrelated run's reward.
@@ -550,7 +567,7 @@ function E.new(config)
                             if n >= MATCH_MIN then
                                 local pick = -1
                                 for _, a in ipairs(cells) do
-                                    m.mask[a] = true
+                                    m.mask[a], m.ordinary[a] = true, true
                                     if g.tiles[a].special == NORMAL and not locked(g, a)
                                         and (pick < 0 or a == preferred) then pick = a end
                                 end
@@ -576,7 +593,7 @@ function E.new(config)
                 if n >= MATCH_MIN then
                     for k = 1, n do
                         local a = cells[k]
-                        m.mask[a] = true
+                        m.mask[a], m.ordinary[a] = true, true
                         m.hits = m.hits + 1
                         if g.tiles[a].special == NORMAL and not locked(g, a) and (pick < 0 or a == preferred) then pick = a end
                         for axis = 0, 2 do
@@ -610,26 +627,26 @@ function E.new(config)
     function M.game_swap(g, a, b, m)
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
         swap_tiles(g, a, b)
-        m.mask, m.make, m.hits = {}, {}, 0
+        m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         local sa, sb = g.tiles[a].special, g.tiles[b].special
         if sa == PRISM or sb == PRISM then
             local p = sa == PRISM and a or b
             local o = p == a and b or a
             if sa == PRISM and sb == PRISM then
-                for i = 0, CELLS - 1 do if cell_active(g, i) then m.mask[i] = true end end
+                for i = 0, CELLS - 1 do if cell_active(g, i) then m.mask[i], m.direct[i] = true, true end end
             else
                 local kind = g.tiles[o].kind
                 mark_color(g, m, kind)
                 if g.tiles[o].special ~= NORMAL then   -- prism + special: that colour turns special first
                     for i = 0, CELLS - 1 do
-                        if g.tiles[i].kind == kind then g.tiles[i].special = g.tiles[o].special end
+                        if g.tiles[i].kind == kind then g.tiles[i] = tile(kind, g.tiles[o].special) end
                     end
                 end
             end
-            m.mask[p], m.mask[o] = true, true
-            g.tiles[p].special = NORMAL
+            m.mask[p], m.mask[o], m.direct[p], m.direct[o] = true, true, true, true
+            g.tiles[p] = tile(g.tiles[p].kind, NORMAL)
         elseif sa ~= NORMAL and sb ~= NORMAL then
-            m.mask[a], m.mask[b] = true, true
+            m.mask[a], m.mask[b], m.direct[a], m.direct[b] = true, true, true, true
             if sa == BOMB and sb == BOMB then
                 mark_area(g, m, b, 2)
             elseif sa == BOMB or sb == BOMB then
@@ -654,7 +671,7 @@ function E.new(config)
             return false
         end
         g.moves = g.moves - 1
-        g.combo = 0
+        g.combo, g.turn_pending, g.hazard_damaged = 0, true, false
         return true
     end
     local game_swap = M.game_swap
@@ -662,6 +679,8 @@ function E.new(config)
     -- Clear one wave, fire specials; returns the relics cleared.
     function M.game_apply(g, m)
         local fired, thaw = {}, {}
+        g.hazard_damaged_cell = {}
+        m.direct, m.ordinary = m.direct or {}, m.ordinary or {}
         local more = true
         while more do   -- specials hit by the wave fire, possibly hitting more specials
             more = false
@@ -684,13 +703,42 @@ function E.new(config)
                 end
             end
         end
+        -- A wave deals at most one hit per blocker, even when several matches touch it.
+        local damage, colors = {}, {}
+        for i = 0, CELLS - 1 do
+            if m.mask[i] then
+                if m.direct[i] or g.hazard[i] > 0 then damage[i] = true end
+                if (m.ordinary[i] or not next(m.ordinary) and not m.direct[i]) and g.tiles[i].kind >= 0 then
+                    for d = 0, 5 do
+                        local j = hex_neighbor(i, d)
+                        if j >= 0 then
+                            damage[j] = true
+                            colors[j] = colors[j] or {}
+                            colors[j][g.tiles[i].kind] = true
+                        end
+                    end
+                end
+            end
+        end
+        for i = 0, CELLS - 1 do
+            if damage[i] then
+                if g.stone_hp[i] > 0 then
+                    g.stone_hp[i], g.obstacles = g.stone_hp[i] - 1, g.obstacles - 1
+                elseif g.crate_hp[i] > 0 and (m.direct[i] or colors[i] and colors[i][g.crate_kind[i]]) then
+                    g.crate_hp[i], g.obstacles = g.crate_hp[i] - 1, g.obstacles - 1
+                elseif g.hazard[i] > 0 then
+                    g.hazard[i], g.obstacles, g.hazard_damaged = 0, g.obstacles - 1, true
+                    g.hazard_damaged_cell[i] = true
+                end
+            end
+        end
         local cleared = 0
         g.last_gold, g.last_wood, g.last_stone = 0, 0, 0
         g.combo = g.combo + 1
         for i = 0, CELLS - 1 do
             if cell_active(g, i) then
                 if thaw[i] then g.ice[i], g.obstacles = g.ice[i] - 1, g.obstacles - 1 end
-                if m.mask[i] then
+                if m.mask[i] and not solid(g, i) and not (damage[i] and (g.hazard_damaged_cell or {})[i]) and g.tiles[i].kind ~= M.DELIVERY then
                     if g.ice[i] > 0 then
                         g.ice[i], g.obstacles, g.score = g.ice[i] - 1, g.obstacles - 1, g.score + 20
                     elseif g.chain[i] > 0 then
@@ -709,6 +757,14 @@ function E.new(config)
                         end
                     end
                 end
+            end
+        end
+        for _, object in ipairs(g.objects) do
+            if object.state ~= "revealed" then
+                local remaining = 0
+                for _, cell in ipairs(object.cells) do if g.soil[cell] > 0 then remaining = remaining + 1 end end
+                if remaining == 0 then object.state, g.discovered = "revealed", g.discovered + 1
+                elseif remaining < #object.cells then object.state = "partial" end
             end
         end
         g.cleared = g.cleared + cleared
@@ -732,12 +788,20 @@ function E.new(config)
     function M.game_collapse(g)
         local from, steps, spawned = {}, {}, 0
         for i = 0, CELLS - 1 do from[i] = i end
+        local function collect_deliveries()
+            for i = 0, CELLS - 1 do
+                if g.delivery_exits[i] and g.tiles[i].kind == M.DELIVERY then
+                    g.tiles[i], g.delivered = tile(-1), g.delivered + 1
+                end
+            end
+        end
+        collect_deliveries()
         local function movable(i) return cell_active(g, i) and not locked(g, i) end
-        local function donor(i) return movable(i) and g.tiles[i].kind >= 0 end
+        local function donor(i) return movable(i) and g.tiles[i].kind ~= -1 and not g.tunnel_to[i] end
         local function side_donor(i)
-            if not donor(i) then return false end
+            if not donor(i) or g.tiles[i].kind == M.DELIVERY then return false end
             local down = hex_neighbor(i, 1)
-            return not movable(down) or g.tiles[down].kind >= 0
+            return not movable(down) or g.tiles[down].kind ~= -1
         end
         while true do
             local step, used, empty = {tiles = {}, from = {}}, {}, 0
@@ -746,15 +810,18 @@ function E.new(config)
                 step.tiles[i], step.from[i], next_from[i] = g.tiles[i], i, from[i]
             end
             for _, i in ipairs(fall_order) do
-                if movable(i) and g.tiles[i].kind < 0 then
+                if movable(i) and g.tiles[i].kind == -1 then
                     empty = empty + 1
                     -- Alternate equal left/right choices spatially, without using RNG.
                     local left, right = -1, -1
                     if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
-                    local inlet = not cell_active(g, above)
-                    if not inlet then
+                    local entrance = g.tunnel_from[i]
+                    local inlet = not cell_active(g, above) and not entrance
+                    if entrance then
+                        if movable(entrance) and g.tiles[entrance].kind ~= -1 and not used[entrance] then source = entrance end
+                    elseif not inlet then
                         if donor(above) and not used[above] then source = above
                         elseif side_donor(left) and not used[left] then source = left
                         elseif side_donor(right) and not used[right] then source = right end
@@ -762,7 +829,8 @@ function E.new(config)
                     if source then
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
-                    elseif inlet or not movable(left) and not movable(right) and not movable(above) then
+                    elseif not entrance and (inlet or not movable(left) and not movable(right)
+                        and (not movable(above) or g.tunnel_to[above])) then
                         spawned = spawned + 1
                         step.tiles[i], step.from[i], next_from[i] = tile(randn(g, COLORS)), -1, -spawned
                     end
@@ -771,6 +839,16 @@ function E.new(config)
             if empty == 0 then break end
             steps[#steps + 1] = step
             g.tiles, from = step.tiles, next_from
+            local has_delivery = false
+            for i = 0, CELLS - 1 do
+                if g.delivery_exits[i] and g.tiles[i].kind == M.DELIVERY then has_delivery = true; break end
+            end
+            if has_delivery then
+                local next_tiles = {}
+                for i = 0, CELLS - 1 do next_tiles[i] = g.tiles[i] end
+                g.tiles = next_tiles
+                collect_deliveries()
+            end
             assert(#steps <= CELLS * CELLS, "gravity failed to settle")
         end
         return from, steps
@@ -789,20 +867,42 @@ function E.new(config)
         c.tiles = {}
         for i = 0, CELLS - 1 do c.tiles[i] = tile(g.tiles[i].kind, g.tiles[i].special) end
         c.active, c.soil, c.chain, c.ice = copy_array(g.active), copy_array(g.soil), copy_array(g.chain), copy_array(g.ice)
+        c.stone_hp, c.crate_hp, c.crate_kind, c.hazard = copy_array(g.stone_hp), copy_array(g.crate_hp), copy_array(g.crate_kind), copy_array(g.hazard)
+        c.objects = {}
+        for i, object in ipairs(g.objects) do
+            c.objects[i] = {state=object.state, cells={table.unpack(object.cells)}}
+        end
         c.tools = {g.tools[1], g.tools[2], g.tools[3]}
         return c
     end
     local game_copy = M.game_copy
 
-    -- Any move that clears something: ok, a, b.
+    -- Any move that clears something: ok, a, b. Only matches containing a
+    -- swapped cell make a normal swap legal, so inspect those two cells rather
+    -- than cloning and resolving the entire board for each candidate.
     function M.game_hint(g)
-        local m = new_match()
+        if g.won or g.lost then return false end
+        local cells = {}
         for i = 0, CELLS - 1 do
             for d = 0, 2 do
                 local j = hex_neighbor(i, d)
                 if game_can_swap(g, i, j) then
-                    local copy = game_copy(g)
-                    if game_swap(copy, i, j, m) then return true, i, j end
+                    local sa, sb = g.tiles[i].special, g.tiles[j].special
+                    if sa == PRISM or sb == PRISM or sa ~= NORMAL and sb ~= NORMAL then return true, i, j end
+                    swap_tiles(g, i, j)
+                    local matched = false
+                    if flags & E.LINE_MATCHES ~= 0 then
+                        for axis = 0, 2 do
+                            if run_length(g, i, axis) >= MATCH_MIN or run_length(g, j, axis) >= MATCH_MIN then
+                                matched = true
+                                break
+                            end
+                        end
+                    else
+                        matched = collect_group(g, i, cells) >= MATCH_MIN or collect_group(g, j, cells) >= MATCH_MIN
+                    end
+                    swap_tiles(g, i, j)
+                    if matched then return true, i, j end
                 end
             end
         end
@@ -813,10 +913,10 @@ function E.new(config)
     local function fill_without_matches(g)
         local cells = {}
         for i = 0, CELLS - 1 do
-            if not locked(g, i) then g.tiles[i] = tile(-1, NORMAL) end
+            if not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then g.tiles[i] = tile(-1, NORMAL) end
         end
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and not locked(g, i) then
+            if cell_active(g, i) and not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then
                 local choices, n = {}, 0
                 for k = 0, COLORS - 1 do
                     g.tiles[i] = tile(k, NORMAL)
@@ -851,7 +951,7 @@ function E.new(config)
     function M.game_shuffle(g)
         local cells, pieces, original = {}, {}, {}
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and not locked(g, i) then
+            if cell_active(g, i) and not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then
                 cells[#cells + 1], pieces[#pieces + 1] = i, g.tiles[i]
                 original[i] = g.tiles[i]
             end
@@ -875,6 +975,8 @@ function E.new(config)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
             tiles = {}, active = {}, soil = {}, chain = {}, ice = {},
+            stone_hp = {}, crate_hp = {}, crate_kind = {}, hazard = {}, objects = {},
+            tunnel_to = {}, tunnel_from = {}, delivery_exits = {}, delivered = 0, delivery_total = 0, discovered = 0,
             level = lvl, moves = 0, score = 0, relics = 0, dug = 0, obstacles = 0, initial_obstacles = 0, initial_soil = 0,
             combo = 0, cleared = 0, last_gold = 0, last_wood = 0, last_stone = 0, wood = 0, stone = 0,
             rng = (seed and seed ~= 0) and (seed & 0xFFFFFFFF) or 12345,
@@ -887,21 +989,101 @@ function E.new(config)
         for i = 0, CELLS - 1 do
             g.active[i] = not l.mask or l.mask:sub(i + 1, i + 1) == "1"
             g.tiles[i] = tile(-1, NORMAL)
-            g.soil[i], g.chain[i], g.ice[i] = 0, 0, 0
+            g.soil[i], g.chain[i], g.ice[i], g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, 0, 0, 0, -1, 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
+        local used = {}
+        local function valid_cell(cell)
+            assert(math.type(cell) == "integer" and cell_active(g, cell), "element cell must be active")
+        end
+        local function reserve(cell)
+            valid_cell(cell)
+            assert(not used[cell], "overlapping elements")
+            used[cell] = true
+        end
+        for _, entry in ipairs(l.stones or {}) do
+            reserve(entry.cell)
+            assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 3, "stone hp")
+            g.stone_hp[entry.cell] = entry.hp
+        end
+        for _, entry in ipairs(l.crates or {}) do
+            reserve(entry.cell)
+            assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 2, "crate hp")
+            assert(math.type(entry.kind) == "integer" and entry.kind >= 0 and entry.kind < COLORS, "crate kind")
+            g.crate_hp[entry.cell], g.crate_kind[entry.cell] = entry.hp, entry.kind
+        end
+        for _, entry in ipairs(l.tunnels or {}) do
+            reserve(entry.entrance); reserve(entry.exit)
+            assert(2 * hex_r(entry.exit) + hex_q(entry.exit) > 2 * hex_r(entry.entrance) + hex_q(entry.entrance), "tunnel must descend")
+            g.tunnel_to[entry.entrance], g.tunnel_from[entry.exit] = entry.exit, entry.entrance
+        end
+        for _, cell in ipairs(l.hazards or {}) do reserve(cell) end
+        local delivery = l.deliveries or {}
+        for _, cell in ipairs(delivery.exits or {}) do reserve(cell); g.delivery_exits[cell] = true end
+        for _, cell in ipairs(delivery.tokens or {}) do reserve(cell); g.delivery_total = g.delivery_total + 1 end
+        if g.delivery_total > 0 then
+            assert(#(delivery.exits or {}) > 0, "delivery requires an exit")
+            -- Delivery tokens fall vertically; tunnel entrances redirect them
+            -- exclusively to the paired exit. Check the route after removable
+            -- locks clear, without relying on sideways trickling.
+            for _, token in ipairs(delivery.tokens) do
+                local seen, queue, head = {[token]=true}, {token}, 1
+                local reachable = false
+                while head <= #queue do
+                    local here = queue[head]
+                    head = head + 1
+                    if g.delivery_exits[here] then reachable = true; break end
+                    local targets = {g.tunnel_to[here] or hex_neighbor(here, 1)}
+                    for _, next_cell in ipairs(targets) do
+                        if cell_active(g, next_cell) and not seen[next_cell] then
+                            seen[next_cell] = true
+                            queue[#queue + 1] = next_cell
+                        end
+                    end
+                end
+                assert(reachable, "delivery exit is unreachable")
+            end
+        end
+        local object_cells = {}
+        for _, entry in ipairs(l.objects or {}) do
+            assert(#entry.cells > 0, "empty hidden object")
+            local object = {cells = {}, state = "hidden"}
+            for _, cell in ipairs(entry.cells) do
+                valid_cell(cell)
+                assert(not used[cell] and not object_cells[cell], "overlapping hidden object")
+                object_cells[cell] = true
+                object.cells[#object.cells + 1] = cell
+            end
+            g.objects[#g.objects + 1] = object
+        end
+        -- Solid cells cannot receive terrain or generated pieces.
+        local eligible = {}
+        for _, cell in ipairs(order) do if not solid(g, cell) then eligible[#eligible + 1] = cell end end
+        order, n = eligible, #eligible
+        assert(n > 0, "empty playable board")
         generate_board(g)
+        for _, cell in ipairs(delivery.tokens or {}) do g.tiles[cell] = tile(M.DELIVERY) end
         for i = 1, n do   -- selection sort, exactly as the original orders ties
             for j = i + 1, n do
                 if l.terrain and l.terrain[order[j] + 1] < l.terrain[order[i] + 1] then order[i], order[j] = order[j], order[i] end
             end
         end
-        for i = 1, math.min(l.soil, n) do g.soil[order[i]] = 1 end
-        local taken = {}
-        for i = 0, math.min(l.chains, n) - 1 do
-            local cell = order[(i * 3 + 1) % n + 1]
-            g.chain[cell], taken[cell] = 1, true
+        local soil_count = 0
+        for _, cell in ipairs(order) do
+            if soil_count >= l.soil then break end
+            if not used[cell] then g.soil[cell], soil_count = 1, soil_count + 1 end
         end
+        assert(soil_count == l.soil, "not enough soil cells")
+        for cell in pairs(object_cells) do g.soil[cell] = 1 end
+        local taken = {}
+        for cell in pairs(used) do taken[cell] = true end
+        local chain_count = 0
+        for k = 0, n * 3 - 1 do
+            if chain_count >= l.chains then break end
+            local cell = order[(k * 3 + 1) % n + 1]
+            if not taken[cell] then g.chain[cell], taken[cell], chain_count = 1, true, chain_count + 1 end
+        end
+        assert(chain_count == l.chains, "not enough chain cells")
         local count = 0
         for k = 0, n - 1 do
             if count >= l.ice then break end
@@ -912,18 +1094,51 @@ function E.new(config)
                 count = count + 1
             end
         end
-        for i = 0, CELLS - 1 do g.initial_obstacles = g.initial_obstacles + g.ice[i] + g.chain[i] end
+        assert(count == l.ice, "not enough ice cells")
+        for _, cell in ipairs(l.hazards or {}) do
+            valid_cell(cell)
+            assert(not object_cells[cell] and g.soil[cell] == 0, "invalid hazard overlap")
+            g.hazard[cell], used[cell] = 1, true
+        end
+        for i = 0, CELLS - 1 do
+            g.initial_obstacles = g.initial_obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i] + g.crate_hp[i] + g.hazard[i]
+            g.initial_soil = g.initial_soil + g.soil[i]
+        end
         g.obstacles = g.initial_obstacles
-        g.initial_soil = l.soil
         local m = new_match()
         game_matches(g, m, -1)
         if m.hits > 0 or not game_hint(g) then generate_board(g) end
         return g
     end
 
+    function M.game_end_turn(g)
+        if not g.turn_pending then return false end
+        g.turn_pending = false
+        if g.hazard_damaged then return false end
+        local object_cells = {}
+        for _, object in ipairs(g.objects) do for _, cell in ipairs(object.cells) do object_cells[cell] = true end end
+        for i = 0, CELLS - 1 do
+            if g.hazard[i] > 0 then
+                for d = 0, 5 do
+                    local j = hex_neighbor(i, d)
+                    if cell_active(g, j) and not locked(g, j) and g.soil[j] == 0 and not object_cells[j]
+                        and not g.tunnel_to[j] and not g.tunnel_from[j] and not g.delivery_exits[j]
+                        and g.tiles[j].kind >= 0 and (kind_flags[g.tiles[j].kind] or 0) & E.GOAL == 0
+                        and g.tiles[j].special == NORMAL then
+                        g.hazard[j], g.obstacles = 1, g.obstacles + 1
+                        return true
+                    end
+                end
+            end
+        end
+        return false
+    end
+
     function M.game_check_end(g)
+        M.game_end_turn(g)
         local l = M.levels[g.level + 1]
-        g.won = g.score >= l.score and g.relics >= l.relics and g.dug >= l.soil and g.obstacles == 0
+        g.won = g.score >= l.score and g.relics >= l.relics and g.dug >= g.initial_soil and g.obstacles == 0
+            and g.discovered == #g.objects and g.delivered == g.delivery_total
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
             return game_shuffle(g)   -- discard stale selection/hints only after recovery
@@ -934,10 +1149,10 @@ function E.new(config)
     -- Tools: 0 pickaxe (one cell), 1 dynamite (radius 1), 2 sunburst (three axes).
     function M.game_tool(g, tool, cell, m)
         if flags & E.NO_TOOLS ~= 0 or tool < 0 or tool > 2 or g.tools[tool + 1] <= 0 or g.won or g.lost or not cell_active(g, cell) then return false end
-        m.mask, m.make, m.hits = {}, {}, 0
+        m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         g.tools[tool + 1] = g.tools[tool + 1] - 1
         g.combo = 0
-        if tool == 0 then m.mask[cell] = true
+        if tool == 0 then m.mask[cell], m.direct[cell] = true, true
         elseif tool == 1 then mark_area(g, m, cell, 1)
         else for z = 0, 2 do mark_line(g, m, cell, z) end end
         count_hits(m)
@@ -953,7 +1168,16 @@ function E.new(config)
         game_apply(c, m)
         local goal = M.levels[g.level + 1].relics
         local relics = math.min(c.relics, goal) - math.min(g.relics, goal)
-        return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200 + (g.obstacles - c.obstacles) * 220
+        local delivery_access = 0
+        for i = 0, CELLS - 1 do
+            if g.tiles[i].kind == M.DELIVERY then
+                local below = hex_neighbor(i, 1)
+                if cell_active(c, below) and not locked(c, below) and c.tiles[below].kind == -1
+                    and g.tiles[below].kind ~= -1 then delivery_access = delivery_access + 1 end
+            end
+        end
+        return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200
+            + (g.obstacles - c.obstacles) * 220 + delivery_access * 350
     end
 
 
@@ -1254,7 +1478,8 @@ function E.new(config)
         end
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]
-        if R.wave_chain[i] == 0 and R.wave_ice[i] == 0 and not R.pending.make[i] then   -- a small pop, then shrink away
+        if R.wave_chain[i] == 0 and R.wave_ice[i] == 0 and not R.pending.make[i]
+            and t.kind ~= M.DELIVERY and not (R.g.hazard_damaged_cell or {})[i] then   -- a small pop, then shrink away
             local f = num.saturate(R.phase_time / .24)
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)
             alpha = 255 * (1 - f * f)
@@ -1269,7 +1494,13 @@ function E.new(config)
             local from = step.from[i]
             local f = num.saturate(elapsed / rules.FALL_STEP - (step_index - 1))
             local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, HEX_DY)
-            at = (source + vec2(sx, 0)):lerp(at, f)
+            if from >= 0 and g.tunnel_to[from] == i then
+                -- A tunnel is a discontinuous move, not a flight over the board.
+                at = f < .5 and source + vec2(sx, 0) or at
+                alpha = 255 * math.abs(2 * f - 1)
+            else
+                at = (source + vec2(sx, 0)):lerp(at, f)
+            end
             if from < 0 then
                 -- Clip only the inlet; sideways moves need the whole board.
                 local top = cell_pos(i).y - HEX_DY / 2

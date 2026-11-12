@@ -9,6 +9,8 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- shooting-star ray frames stay in the atlas for the guide's legacy previews only.
 A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
 A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+-- Authored element states shared by live boards, goals and the guide.
+A.elements = require("match3.elements_view").assets
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.hud_icons = {"complete"}
@@ -70,6 +72,8 @@ end
 function A.load()
     local textures = {}
     local function load(name) textures[name] = A.skin()[name] end
+    -- New mechanic art uses this game's authored atlas even with the neutral skin.
+    require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then

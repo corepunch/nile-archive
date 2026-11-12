@@ -1037,9 +1037,9 @@ function G.app(R)
         if not talking then R.overlays(dt) end   -- a dialogue comes first; dialogs wait for it
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
-        -- The top row (wallet in the town, goals and moves on a board) stays crisp above every
-        -- popup, blur and dialogue; it is only drawn again here, so it takes no input.
-        if (R.overlay ~= R.OV_NONE or talking) and not board then   -- a leaderboard covers the top row too
+        -- The top row stays crisp above popups and dialogue. The tall guide
+        -- and leaderboard cover it so their content remains readable.
+        if (R.overlay ~= R.OV_NONE or talking) and R.overlay ~= R.OV_GUIDE and not board then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end
             ui.set_enabled(true)

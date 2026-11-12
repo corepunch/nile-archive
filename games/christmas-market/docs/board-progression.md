@@ -1,53 +1,106 @@
 # Winter wish board progression
 
-Each wish has an individual court contour and two focal points for the initial
-snow and blockers. The broad working areas and courtyard openings are intended
-to reward clearing snow, untying tinsel, thawing ice and building cascades.
-Openings interrupt ordinary match lines; striped treats can reach across them.
-Every active cell belongs to a possible straight three-cell line, and every
-court is connected. These are geometric checks, not proof of a winning game.
+The market's courts move from uncovering displays to delivering parcels between
+working areas. The first two wishes teach matches and striped treats. Wishes 18
+and 28 are lighter intervals. Roles below are design intentions rather than
+measured human difficulty.
 
-Snow, tinsel and ice share one ranked list of cells: snow takes the first
-ranks, tinsel takes spaced ranks, and ice takes eligible inner ranks not already
-occupied by tinsel. Snow can lie beneath a blocker. All tinsel and ice must be
-cleared, as well as the snow and collection targets. Each exposed top refills;
-fully blocked upstream pockets can also spawn. Consequently a narrow area is a
-matching constraint, not a guaranteed gate for falling pieces.
+Four recurring silhouettes give the player readable working areas: parallel
+channels frame a narrow centre spine with bridges at both ends; a tapered cap
+opens into a broad bowl; two substantial chambers sit on opposite sides of a
+wide empty channel and connect at one end; and a compact court limits setup
+space. Relic's two chambers join at the top, the market's at the bottom. On
+the parallel-channel boards, mandatory terrain avoids the isolated central
+spine so its narrowness does not create inaccessible cleanup. Blockers and
+objectives move the emphasis within each family.
 
-| Wish | Role and intended decision |
-| --- | --- |
-| 1 Welcome Lights | Introduce line matching in a broad court around an opening. |
-| 2 Lumber Lane | Introduce snow on a court with a different edge and a striped-treat reminder. |
-| 3 Gingerbread Swirl | Repeat snow clearing around a shifted opening. |
-| 4 Cocoa Corner | Introduce tinsel among snow, with access from both sides. |
-| 5 Toymaker Lane | Remix tinsel and snow; striped lines reward planning across the court. |
-| 6 Ribbon Wishes | Introduce ice alongside snow without tinsel. |
-| 7 Candlelight Circle | Combine all three coverings and introduce the possibility of thicker ice. |
-| 8 Carousel Stars | Practice five-in-line while clearing coverings concentrated near the centre. |
-| 9 Skating Evening | Use long striped lines to reach the court's interrupted spaces. |
-| 10 Under the Big Fir | Synthesis of snow, tinsel and layered ice for the first episode. |
-| 11 Carols and Crumbs | Reopen with snow alone and a smaller move and target budget. |
-| 12 Word from Fenwick | Reintroduce tinsel through a shifted snowy space. |
-| 13 Sawdust Row | Use long lines against a second snow and tinsel arrangement. |
-| 14 The Bench by the Fir | Approach a different two-sided court with the known blockers. |
-| 15 Tangled Tinsel | Increase the tinsel emphasis while retaining working space. |
-| 16 Paper and String | Return to single-layer ice with fewer chains. |
-| 17 Twelve Horses | Remix snow, tinsel and ice around new focal points. |
-| 18 Fairy Lights | A lighter snow and blocker workload before the final pair. |
-| 19 A Hundred Flames | Return to layered ice alongside snow and tinsel. |
-| 20 A Letter Forty Years Late | Combine the episode's coverings on a new court. |
-| 21 Carolers Court | A snow-only restart gives the third episode breathing room. |
-| 22 Many Hands | Reintroduce tinsel beside a shifted opening. |
-| 23 Painted Horses | Add single-layer ice and revisit the rainbow star. |
-| 24 Frozen Fountain | Bring back layered ice in a compact combined layout with fewer snow targets. |
-| 25 Snow on the Line | Combine all coverings on another interrupted court. |
-| 26 Lantern Ice | Emphasize ice while keeping extra moves for the workload. |
-| 27 Every Light in Bellmere | Spread the combined task across two focal areas. |
-| 28 The Last Train | A lighter snow and blocker workload before the finale. |
-| 29 The Big Fir | Larger combined workload with room to work the two focal areas. |
-| 30 Light the Christmas Tree | Final synthesis of snow, tinsel and layered ice. |
+| Level | Board | Family | Lesson and focus | Moves |
+| ---: | --- | --- | --- | ---: |
+| 1 | Welcome Lights | Tapered bowl | Match three treats in a line. (line matching) | 24 |
+| 2 | Lumber Lane | Tapered bowl | Match four to make a striped treat. (familiar coverings) | 28 |
+| 3 | Gingerbread Swirl | Tapered bowl | Clear both snow cells to reveal a display. (hidden display) | 32 |
+| 4 | Cocoa Corner | Twin lanes | Match through tinsel to free treats. (familiar coverings) | 34 |
+| 5 | Toymaker Lane | Two chambers | Match beside the snowdrift to clear it. (snowdrift) | 36 |
+| 6 | Ribbon Wishes | Compact court | Match on ice to crack it. (familiar coverings) | 38 |
+| 7 | Candlelight Circle | Two chambers | Some snowdrifts need two hits. (snowdrift) | 40 |
+| 8 | Carousel Stars | Tapered bowl | Match the ribbon colour beside its parcel. (ribbon parcel) | 42 |
+| 9 | Skating Evening | Twin lanes | Striped treats clear a whole line. (familiar coverings) | 44 |
+| 10 | Under the Big Fir | Tapered bowl | Clear snow, tinsel and ice. (ribbon parcel) | 46 |
+| 11 | Carols and Crumbs | Two chambers | Clear the snow around the square. (hidden display) | 32 |
+| 12 | Word from Fenwick | Tapered bowl | Treats travel between paired chutes. (chute) | 35 |
+| 13 | Sawdust Row | Twin lanes | Use a striped treat to reach across. (ribbon parcel) | 36 |
+| 14 | The Bench by the Fir | Tapered bowl | Clear the three-layer snowdrift. (snowdrift) | 37 |
+| 15 | Tangled Tinsel | Tapered bowl | Untangle tinsel through the snow. (hidden display) | 38 |
+| 16 | Paper and String | Twin lanes | Some ribbon parcels take two hits. (ribbon parcel) | 40 |
+| 17 | Twelve Horses | Tapered bowl | Clear below the parcel to deliver it. (delivery) | 41 |
+| 18 | Fairy Lights | Tapered bowl | Take a breath and clear the snow. (familiar coverings) | 42 |
+| 19 | A Hundred Flames | Two chambers | Remember: thick ice takes two hits. (snowdrift) | 44 |
+| 20 | A Letter Forty Years Late | Tapered bowl | Open both sides of the court. (chute) | 46 |
+| 21 | Carolers Court | Tapered bowl | Clear the snow for the carolers. (familiar coverings) | 34 |
+| 22 | Many Hands | Tapered bowl | Free tinsel along the passage. (ribbon parcel) | 38 |
+| 23 | Painted Horses | Twin lanes | Untangle the ribbon before it spreads. (spreading ribbon) | 39 |
+| 24 | Frozen Fountain | Tapered bowl | Thaw the ice around the fountain. (hidden display) | 40 |
+| 25 | Snow on the Line | Tapered bowl | Clear the snow and free the treats. (spreading ribbon) | 42 |
+| 26 | Lantern Ice | Tapered bowl | Thaw the ice around the lanterns. (ribbon parcel) | 44 |
+| 27 | Every Light in Bellmere | Two chambers | Clear the snow across the court. (snowdrift) | 38 |
+| 28 | The Last Train | Tapered bowl | A little snow before the finale. (familiar coverings) | 44 |
+| 29 | The Big Fir | Twin lanes | Untangle and thaw the snowy court. (spreading ribbon) | 47 |
+| 30 | Light the Christmas Tree | Tapered bowl | Send the parcel through the chute. (chute, delivery) | 48 |
 
-Moves and targets are initial tuning, not a measured difficulty curve. A bot
-win establishes a possible run rather than a human win rate; player testing
-should still check openings, missed blockers, cascades and failures. Story scenes,
-stall grants and region milestones retain their existing schedule.
+Packed drifts and colour parcels are solid cells. An adjacent match or direct
+special removes one layer per wave; adjacent parcel hits must match its colour,
+while a direct special bypasses colour. A display is credited after every snow
+cell in its footprint is uncovered. Ribbon spreads after a settled move that
+has not damaged ribbon, and all ribbon must be cleared. Chutes carry pieces from
+entrance to exit. Delivery parcels fall to a marked exit and cannot be matched or
+destroyed. Holes interrupt ordinary matches; striped treats can cross them.
+
+Starting positions and targets are authored in `lua/campaign.lua`. The terrain
+ranks snow and locks; display cells gain snow if needed, and solid cells and other
+reserved positions are excluded from ranked placement. All locks, solids and
+ribbon, the full snow count, every display and every delivery must be completed
+along with score and collection goals. Every exposed top refills and blocked
+upstream pockets can spawn, so a narrow court does not guarantee a blocked
+supply. A board has at most one chute pair. Story scenes and building milestones
+are unchanged. Seeded bot wins are not human balance; playtesting should inspect
+openings, late cleanup and delivery paths.
+
+## Starting coverings
+
+Coordinates are axial `(q,r)`. Ice marked ² starts with two layers; all other
+ice and chain cells start with one. Footprint cells already appear among the
+soil cells. Solid, hazard, conduit and delivery positions are specified
+explicitly in the campaign data.
+
+| Level | Soil | Chains | Ice |
+| ---: | --- | --- | --- |
+| 1 | — | — | — |
+| 2 | 0,-1; 1,-2; 1,-1; 1,0; 1,1; 2,-1; 2,0 | — | — |
+| 3 | -3,1; -3,2; -2,0; -2,1; -2,2; -1,0; -1,1; 0,-1; 0,0; 0,1; 1,-1; 1,0; 1,1 | — | — |
+| 4 | -2,1; -2,2; 1,-4; 2,-4; 2,-3; 2,-2; 2,-1; 3,-4; 3,-3; 3,-2 | 2,-3; 3,-2; 2,-1; 0,-3 | — |
+| 5 | -4,0; -4,1; -4,2; -3,-1; -3,0; -3,1; -2,-1; -2,0; -2,1; 2,-2; 2,-1; 3,-2; 3,-1 | 2,-1; -2,-1; 3,-2; -4,1 | — |
+| 6 | -1,2; 0,-2; 0,-1; 0,0; 0,1; 0,2; 1,-3; 1,-2; 1,-1; 1,0; 1,1; 2,-3; 2,-2 | — | 1,1; 1,0; 1,-1; 0,2; 1,-3 |
+| 7 | -3,1; -3,2; -3,3; -2,0; -2,1; -2,2; -2,3; -1,3; 2,-3; 2,-2; 2,-1; 2,1; 3,-3; 3,-2; 3,-1 | -2,1; 3,-2; -3,2; -2,3 | 3,-1²; -3,1; -3,3; -2,0²; -1,3 |
+| 8 | -2,-1; -2,0; -2,1; -2,2; -2,3; -1,-1; -1,1; -1,2; 0,-2; 0,-1; 0,0; 0,1; 0,2; 1,-2; 1,-1; 1,0; 1,1 | 0,1; -1,2; 0,2; 1,0 | 0,-2²; 0,0; 1,-2; 1,-1²; 1,1; -2,-1 |
+| 9 | -4,1; -4,2; -4,3; -3,0; -3,1; -3,2; -3,3; -2,-1; -2,0; -2,1; -2,2; -2,3; 2,-4; 2,-3; 2,-2; 2,-1; 2,0; 3,-3; 3,-2 | 2,-2; -2,0; 2,-1; -4,1; -3,0 | -2,2²; 2,-3; 3,-3; 3,-2²; -3,3; -2,-1 |
+| 10 | -1,-2; -1,-1; -1,1; -1,2; 0,-3; 0,-2; 0,-1; 0,0; 0,1; 0,2; 0,3; 1,-3; 1,-2; 1,-1; 1,0; 1,1; 1,2; 2,-3; 2,-2; 2,-1; 2,0; 2,1 | 0,-2; 1,-2; 0,0; 0,-3; -1,-2; 2,-1 | 0,2²; 1,-3; 0,-1; -1,2²; -1,1; -1,-1 |
+| 11 | -3,-1; -3,0; -3,1; -2,-2; -2,-1; -2,0; -2,1; -1,3; 0,3; 1,2; 1,3; 2,-1; 2,0; 2,1 | — | — |
+| 12 | -3,1; -3,2; -2,0; -2,1; -2,2; -1,0; -1,1; 0,-1; 0,0; 1,-2; 1,-1; 1,0; 2,-2; 2,-1; 3,-1 | -2,1; 1,0; 0,-1; -2,2; -3,1 | — |
+| 13 | -3,1; -3,2; -3,3; -2,0; -2,1; -2,2; -2,3; 0,-3; 1,-4; 2,-4; 2,-3; 2,-2; 2,-1; 3,-4; 3,-3; 3,-2 | -2,2; -3,1; -2,0; 1,-4; 3,-4; -4,1 | — |
+| 14 | -3,0; -3,1; -2,-1; -2,0; -2,1; -1,-1; -1,0; 1,-1; 1,0; 2,-2; 2,-1; 3,-2; 3,-1; 3,0; 4,-3; 4,-2; 4,-1 | -2,0; 2,-2; -1,0; -2,-1; 4,-1; 3,0; 2,-3 | — |
+| 15 | -2,-1; -2,0; -1,-2; -1,-1; 0,-3; 0,-2; 0,-1; 0,1; 0,2; 1,-3; 1,-2; 1,0; 1,1; 1,2; 2,0; 2,1 | 1,1; 0,-3; 0,2; 1,0; 2,1; -1,-3; 0,-4; 0,0; 1,-1 | — |
+| 16 | -3,1; -3,2; -3,3; -2,0; -2,1; -2,2; -2,3; 2,-3; 2,-2; 2,-1; 3,-3; 3,-2; 3,-1; 3,0; 4,-4; 4,-3; 4,-2; 4,-1 | 2,-2; 3,-1; 2,-3; -3,3 | 3,-2; 3,-3; -2,3; -2,0; -3,2; -3,1; 3,0 |
+| 17 | -4,1; -4,2; -4,3; -3,0; -3,1; -3,2; -3,3; -2,-1; -2,0; -2,1; -2,2; -1,0; -1,1; 1,-1; 1,0; 2,-1; 2,0; 3,-2; 3,-1 | 2,-1; -2,0; -1,1; 3,-1; -4,3 | -2,2; -1,0; 1,-1; 1,0; 2,0; 3,-2; -3,0 |
+| 18 | -1,0; -1,1; 0,-2; 0,-1; 0,0; 0,1; 1,-3; 1,-2; 1,-1; 1,0; 2,-3; 2,-2 | 0,0; 1,0 | 1,-1; 1,-3; 0,1; 0,-1 |
+| 19 | -4,0; -4,1; -3,-1; -3,0; -3,1; -2,-2; -2,-1; -2,0; -2,1; 2,-3; 2,-2; 2,-1; 2,0; 3,-3; 3,-2; 3,-1; 3,0; 4,-3; 4,-2; 4,-1 | -2,-1; 2,0; -3,-1; -2,-2; 3,-3; 4,-2 | 3,-2²; 3,-1; -3,0; -3,1²; -2,1; 2,-3; 3,0²; -3,2 |
+| 20 | -3,1; -3,2; -2,0; -2,1; -2,2; -1,0; -1,1; 0,-1; 0,0; 0,1; 0,2; 1,-2; 1,-1; 1,0; 1,2; 2,-2; 2,-1; 2,0; 2,1; 3,-2; 3,-1; 3,0 | -2,1; 0,0; -2,2; -3,1; 3,-2; 1,2; 0,-1 | 1,-1²; 0,1; -1,1; -1,0²; -2,0; -3,2; 3,0²; 3,-1; 2,1 |
+| 21 | -2,-1; -1,-1; -1,0; 0,-2; 0,-1; 0,0; 0,1; 0,2; 1,-2; 1,-1; 1,0; 1,1; 1,2; 2,0; 2,1 | — | — |
+| 22 | -3,0; -3,1; -2,-1; -2,0; -2,1; -1,-1; 0,-1; 0,0; 1,-2; 1,-1; 1,0; 2,-2; 2,-1; 3,-3; 3,-2; 3,-1 | -2,0; 1,0; 0,-1; -2,-1; 3,-1; 2,0 | — |
+| 23 | -3,1; -3,2; -3,3; -2,0; -2,1; -2,2; -2,3; 2,-4; 2,-3; 2,-2; 2,-1; 3,-4; 3,-3; 3,-2; 3,-1; 4,-4 | -2,1; 2,-1; -3,1; -2,0; 4,-4 | 3,-3; 3,-2; -3,2; -3,3; -2,3 |
+| 24 | -2,-1; -2,0; -2,1; -1,-1; -1,0; -1,1; -1,2; 0,-2; 0,-1; 0,0; 0,1; 0,2; 1,-2; 1,-1; 1,0; 1,1 | 0,1; -1,1; 0,0; 1,-1 | -1,2²; 0,-2; 0,2; 1,-2²; 1,0 |
+| 25 | -4,1; -4,2; -4,3; -3,0; -3,1; -3,2; -2,0; -2,1; -2,2; -1,0; -1,1; 0,-1; 0,0; 1,-2; 1,-1; 1,0; 2,-2; 2,-1 | 1,-1; -2,0; -1,1; 1,-2; 2,-1; -4,3 | -2,2²; -1,0; 0,-1; 0,0²; 1,0; 2,-2 |
+| 26 | -2,0; -2,1; -1,-1; -1,0; -1,1; -1,2; 0,-2; 0,-1; 0,0; 0,1; 1,-4; 1,-3; 1,-2; 1,-1; 1,0; 2,-3; 2,-2; 2,-1; 3,-3; 3,-2 | -1,0; 1,-1; 0,-1; -1,-1 | 1,-3²; 0,0; 0,-2; -1,1²; -2,1; -2,0; 3,-2²; 3,-3; 2,-1 |
+| 27 | -4,1; -4,2; -4,3; -3,0; -3,1; -3,2; -3,3; -2,-1; -2,0; -2,1; -2,2; -2,3; 2,-2; 2,-1; 3,-2; 3,-1 | 2,-1; -2,0; 3,-2; -4,2; -3,3 | -2,2²; 2,-2; 3,-1; -3,0²; -2,-1; -2,3 |
+| 28 | -1,0; -1,1; 0,-1; 0,0; 0,1; 1,-2; 1,-1; 1,0; 2,-2; 2,-1; 3,-3; 3,-2; 3,-1 | 0,0; 1,0 | 1,-2; 0,1; 0,-1; -1,1 |
+| 29 | -4,1; -4,2; -4,3; -4,4; -3,0; -3,1; -3,2; -3,3; -2,0; -2,1; -2,2; -2,3; 2,-3; 2,-2; 2,-1; 2,1; 3,-3; 3,-2; 3,-1; 3,0; 4,-3; 4,-2; 4,-1 | -2,1; -3,1; -2,0; 2,1; 4,-3; -4,1; -4,4; -2,-1 | 3,-2²; 3,-1; -3,2; -3,3²; -2,3; 2,-3; 3,-3²; 3,0; -3,0; 0,3² |
+| 30 | -1,-2; -1,-1; -1,2; -1,3; 0,-3; 0,-2; 0,-1; 0,0; 0,1; 0,2; 0,3; 1,-4; 1,-3; 1,-2; 1,-1; 1,0; 1,1; 1,2; 1,3; 2,-3; 2,0; 3,-1; 3,0; 3,1 | 0,-2; 1,2; 0,2; 0,-1; -1,-2; 3,-1; 1,3; 1,-1 | 1,0²; 1,-2; 1,-3; 0,1²; 0,-3; -1,-1; 3,0²; 2,-3; 0,3; 0,0² |

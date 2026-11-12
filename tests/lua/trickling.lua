@@ -1,6 +1,16 @@
 -- Shared regressions, run against both portrait games' real rule modules.
 local rules = require("rules")
 local index, tile = rules.hex_index, rules.tile
+-- These regressions audit ordinary three-edge trickling on every silhouette.
+-- Portal routing, solid blockers and delivery pieces have their own rule tests.
+local function ordinary_gravity(g)
+    g.tunnel_to, g.tunnel_from, g.delivery_exits = {}, {}, {}
+    for i = 0, rules.CELLS - 1 do
+        g.stone_hp[i], g.crate_hp[i], g.hazard[i] = 0, 0, 0
+        if g.tiles[i].kind == rules.DELIVERY then g.tiles[i] = tile(i % rules.COLORS) end
+    end
+    return g
+end
 local function board(cells)
     local g = rules.game_start(0, 123)
     for i = 0, rules.CELLS - 1 do
@@ -67,7 +77,7 @@ do
 end
 -- The whole stepped top edge refills together, rather than from one apex.
 for level = 0, rules.LEVELS - 1 do
-    local g = rules.game_start(level, 123)
+    local g = ordinary_gravity(rules.game_start(level, 123))
     for i = 0, rules.CELLS - 1 do
         g.chain[i], g.ice[i], g.tiles[i] = 0, 0, tile(-1)
     end
@@ -94,7 +104,7 @@ end
 -- on every campaign silhouette, and repeat to check determinism.
 for level = 0, rules.LEVELS - 1 do
     for seed = 1, 12 do
-        local g = rules.game_start(level, seed)
+        local g = ordinary_gravity(rules.game_start(level, seed))
         for i = 0, rules.CELLS - 1 do
             if g.active[i] and g.chain[i] == 0 and g.ice[i] == 0 and (i + seed) % 3 ~= 0 then g.tiles[i] = tile(-1) end
         end

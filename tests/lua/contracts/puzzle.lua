@@ -248,8 +248,13 @@ return function(R, options)
         for _,missing in ipairs({'none','score','relics','dug','obstacles'}) do
             t:case(('last move level=%d missing=%s'):format(level,missing),function()
                 local g=blank();g.level=level;local l=R.levels[level+1]
-                g.score,g.relics,g.dug,g.obstacles,g.moves=l.score,l.relics,l.soil,0,0
+                -- The actual initial covering is the excavation goal. For a
+                -- zero-soil level, add one covered cell when testing the missing
+                -- excavation case instead of inventing a negative dug count.
+                g.initial_soil=math.max(l.soil,missing=='dug' and 1 or 0)
+                g.score,g.relics,g.dug,g.obstacles,g.moves=l.score,l.relics,g.initial_soil,0,0
                 if missing=='obstacles' then g.obstacles=1
+                elseif missing=='dug' then g.dug=g.initial_soil-1;g.soil[0]=1
                 elseif missing~='none' then g[missing]=g[missing]-1 end
                 local rng=g.rng
                 R.game_check_end(g)

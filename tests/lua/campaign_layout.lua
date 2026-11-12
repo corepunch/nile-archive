@@ -3,12 +3,9 @@ local rules = require('rules')
 local campaign = require('campaign')
 local other = require('games/' .. (campaign.levels[1].name == 'First Light'
     and 'christmas-market' or 'relic-rush') .. '/lua/campaign')
-local seen = {}
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)
     check(#entry.mask == rules.CELLS and not entry.mask:find('[^01]'), label .. 'valid cell mask')
-    check(not seen[entry.mask], label .. 'distinct campaign silhouette')
-    seen[entry.mask] = true
     for _, peer in ipairs(other.levels) do
         check(entry.mask ~= peer.mask, label .. 'not copied from the other campaign')
     end
@@ -41,8 +38,13 @@ for level, entry in ipairs(campaign.levels) do
                 label .. 'no target or piece in a hole')
         end
     end
-    check(soil == entry.soil and chains == entry.chains and ice == entry.ice,
+    check(soil == g.initial_soil and soil >= entry.soil and chains == entry.chains and ice == entry.ice,
         label .. 'every authored target actually places')
+    for _, object in ipairs(g.objects) do
+        for _, i in ipairs(object.cells) do
+            check(g.active[i] and g.soil[i] > 0, label .. 'object begins under an active covered cell')
+        end
+    end
     local queue, reached, head = {start}, {[start]=true}, 1
     while head <= #queue do
         local i = queue[head]

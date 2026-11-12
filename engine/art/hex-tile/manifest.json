@@ -1,0 +1,16 @@
+{
+  "geometry": "Regular flat-top hex; centre (0,0); vertices (±R,0), (±R/2,±sqrt(3)R/2)",
+  "engine_definition": "engine/gfx.c:draw_ngon and draw_image_hex",
+  "portrait_game_face_radius": "HEX_R - 0.65",
+  "runtime_draw_size": "2 * face radius for both width and height",
+  "alpha_rasterization": "4x supersampling, Lanczos downsampling",
+  "runtime_mask": "engine/art/hex-tile/hex-mask-128.png",
+  "source_mask": "engine/art/hex-tile/hex-mask-181.png",
+  "preview": "engine/art/hex-tile/hex-mask-preview.png",
+  "atlas_template": "engine/art/hex-tile/atlas-template-8x6-181.png",
+  "atlas_dimensions": [1448, 1086],
+  "atlas_grid": [8, 6],
+  "regenerate": "python3 tools/hex_tile_art.py --write-reference",
+  "check": "python3 tools/hex_tile_art.py ART.png --mode fill --strict --overlay-dir /tmp/hex-review",
+  "test": "python3 tests/test_hex_tile_art.py"
+}

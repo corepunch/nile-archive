@@ -34,12 +34,15 @@ end
 
 function M.board(rules)
     local g = {tiles={}, active={}, soil={}, chain={}, ice={}, tools={2,2,2},
+        stone_hp={}, crate_hp={}, crate_kind={}, hazard={}, objects={},
+        tunnel_to={}, tunnel_from={}, delivery_exits={}, delivered=0, delivery_total=0, discovered=0,
         level=0, moves=20, score=0, relics=0, dug=0, obstacles=0, initial_obstacles=0,
         initial_soil=0, combo=0, cleared=0, last_gold=0, last_wood=0, last_stone=0,
         wood=0, stone=0, rng=12345, won=false, lost=false}
     for i=0,rules.CELLS-1 do
         g.tiles[i] = rules.tile(-1)
         g.active[i], g.soil[i], g.chain[i], g.ice[i] = true, 0, 0, 0
+        g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, -1, 0
     end
     return g
 end

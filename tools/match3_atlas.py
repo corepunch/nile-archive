@@ -14,6 +14,7 @@ import math
 from pathlib import Path
 
 from PIL import Image
+from match3_elements_art import NAMES as ELEMENT_NAMES
 
 ROOT = Path(__file__).resolve().parents[1]
 STATES = ['normal', 'selected', 'pressed', 'hover', 'disabled']
@@ -82,7 +83,7 @@ def build_default(check):
     brick = Image.open(ROOT / 'engine/art/match3/source-brick.png').convert('RGBA')
     rows = [0, 167, 338, 499, 644, 795, 947, 1103, 1254]
     assert source.size == (1254, 1254)
-    image = Image.new('RGBA', (1024, 1024))
+    image = Image.new('RGBA', (1024, 2048))
     frames, registration = {}, {}
     for i, name in enumerate(NAMES):
         row, col = divmod(i, 8)
@@ -102,6 +103,18 @@ def build_default(check):
         if name == 'kind-1':
             registration[name]['source'] = 'engine/art/match3/source-brick.png'
             registration[name]['prompt'] = 'engine/art/match3/brick.prompt.txt'
+    element_sources = []
+    for i, name in enumerate(ELEMENT_NAMES):
+        path = ROOT / 'games/relic-rush/data/board-states' / f'{name}.png'
+        element_sources.append(path)
+        sprite = Image.open(path).convert('RGBA')
+        assert sprite.size == (128, 128)
+        row, col = divmod(i, 8)
+        x, y = col * 128, 1024 + row * 128
+        image.paste(sprite, (x, y))
+        frames[name] = [x, y, 128, 128]
+        registration[name] = {'source': str(path.relative_to(ROOT)), 'runtime': frames[name],
+                              'transform': 'RGBA canvas copied without change'}
     frames["glow"] = frames["spark-0"]
     raw = png(image)
     write_asset(ROOT / 'engine/data/match3.png', raw)
@@ -113,7 +126,7 @@ def build_default(check):
                 'runtime': 'engine/data/match3.png', 'registration': registration,
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
-        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']],
+        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']] + element_sources,
         [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
     return raw

@@ -11,13 +11,15 @@ local tile = rules.tile
 
 
 local function blank()
-    local g = {tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, level = 0, moves = 80, score = 0, relics = 0, dug = 0,
+    local g = {tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, stone_hp = {}, crate_hp = {}, crate_kind = {},
+               hazard = {}, objects = {}, tunnel_to = {}, tunnel_from = {}, delivery_exits = {},
+               discovered = 0, delivered = 0, delivery_total = 0, level = 0, moves = 80, score = 0, relics = 0, dug = 0,
                obstacles = 0, initial_obstacles = 0, initial_soil = 0, combo = 0, cleared = 0, last_gold = 0, last_wood = 0,
                last_stone = 0, wood = 0, stone = 0, rng = 123, won = false, lost = false, tools = {0, 0, 0}}
     for i = 0, CELLS - 1 do
         g.active[i] = true
         g.tiles[i] = tile(-1, NORMAL)
-        g.soil[i], g.chain[i], g.ice[i] = 0, 0, 0
+        g.soil[i], g.chain[i], g.ice[i], g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, 0, 0, 0, -1, 0
     end
     return g
 end
@@ -78,10 +80,16 @@ local function test_matching()
             local g = rules.game_start(lvl, seed)
             rules.game_matches(g, m, -1)
             check(m.hits == 0 and rules.game_hint(g), "fresh board has a move and no match")
-            check(g.initial_soil == rules.levels[lvl + 1].soil, "soil count")
-            local obstacles = 0
-            for i = 0, CELLS - 1 do obstacles = obstacles + g.ice[i] + g.chain[i] end
-            check(g.obstacles == obstacles, "obstacle count")
+            local soil, obstacles = 0, 0
+            for i = 0, CELLS - 1 do
+                soil = soil + g.soil[i]
+                obstacles = obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i] + g.crate_hp[i] + g.hazard[i]
+            end
+            check(g.initial_soil == soil and soil >= rules.levels[lvl + 1].soil, "soil count includes every covered object cell")
+            for _, object in ipairs(g.objects) do
+                for _, cell in ipairs(object.cells) do check(g.soil[cell] > 0, "object starts fully covered") end
+            end
+            check(g.obstacles == obstacles and g.initial_obstacles == obstacles, "obstacle count includes every blocker layer")
         end
     end
     for axis = 0, 2 do
@@ -166,21 +174,18 @@ local function test_holes_and_shapes()
     for i = 0, CELLS - 1 do if from[i] == below then preserved = true end end
     check(g.tiles[c].kind == -1 and preserved, "hole stays empty and lower gem survives trickling")
 
-    local shapes = {}
-    for lvl = 0, LEVELS - 1 do   -- ten unique connected masks, nothing in the voids
+    local shapes, family_count = {}, 0
+    for lvl = 0, LEVELS - 1 do   -- connected masks and empty voids across the campaign
         g = rules.game_start(lvl, 31)
-        shapes[lvl] = {}
+        local mask = {}
         local n_active, start = 0, -1
         for i = 0, CELLS - 1 do
-            shapes[lvl][i] = g.active[i]
+            mask[#mask + 1] = g.active[i] and "1" or "0"
             if g.active[i] then n_active, start = n_active + 1, i
             else check(g.tiles[i].kind == -1 and g.soil[i] == 0 and g.ice[i] == 0 and g.chain[i] == 0 and not rules.game_tool(g, 0, i, m), "void is empty") end
         end
-        for earlier = 0, lvl - 1 do
-            local same = true
-            for i = 0, CELLS - 1 do if shapes[lvl][i] ~= shapes[earlier][i] then same = false end end
-            check(not same, "shapes are unique")
-        end
+        local key = table.concat(mask)
+        if not shapes[key] then shapes[key], family_count = true, family_count + 1 end
         local queue, head, n, seen = {start}, 1, 1, {[start] = true}
         while head <= n do
             local i = queue[head]
@@ -192,8 +197,14 @@ local function test_holes_and_shapes()
         end
         check(n == n_active, "shape is connected")
         rules.game_collapse(g)
-        for i = 0, CELLS - 1 do check(g.active[i] and g.tiles[i].kind >= 0 or not g.active[i] and g.tiles[i].kind == -1, "collapse fills only the shape") end
+        for i = 0, CELLS - 1 do
+            local kind = g.tiles[i].kind
+            local fixed = g.stone_hp[i] > 0 or g.crate_hp[i] > 0
+            check(g.active[i] and (fixed and kind == -1 or not fixed and (kind >= 0 or kind == rules.DELIVERY))
+                or not g.active[i] and kind == -1, "collapse fills playable cells and leaves solids and voids empty")
+        end
     end
+    check(family_count >= 4, "campaign has at least four recognizable board families")
 end
 
 local function test_moves_and_blockers()

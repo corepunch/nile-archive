@@ -1,5 +1,10 @@
 # Applying the reference to Relic Rush and Christmas Market
 
+**Implementation update, 2026-11-12:** the capability/overlap audit below is
+the historical research baseline. Six proposed families and redesigned
+campaign shapes are now implemented; use [Match-3 elements](../MATCH3_ELEMENTS.md)
+and the linked current campaign documents for shipped rules and board data.
+
 This is a design reference and a set of proposals, not a change to either game's
 rules or story. Tropicats facts are separated from recommendations throughout.
 Use the [mechanics dictionary](MECHANICS.md), [board examples](BOARD_DESIGN.md)

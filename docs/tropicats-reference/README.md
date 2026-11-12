@@ -11,6 +11,7 @@ and **1,217 story tasks**. Story spoilers throughout.
 | [Board design](BOARD_DESIGN.md) | How shape, placement, supply, objectives and constraints make different decisions; concrete level examples and easy/medium/hard comparisons |
 | [Complete story](STORY.md) | Every chapter and quest, its setup/outcome, each task, exact level/tier gates, world targets and associated scenes |
 | [Applying it to our games](ADAPTATION.md) | Current capabilities and campaign overlap, proposed mechanic translations, board authoring briefs and story/reward pacing |
+| [Implemented elements and board shapes](../MATCH3_ELEMENTS.md) | Current six-family implementation, King counterparts, original artwork, shared tile mask and campaign progressions |
 | [Local level viewer](../../tools/tropicats-viewer/README.md) | Browse the extracted boards and inspect all three variants with original game artwork |
 | [Artwork catalogue and limitations](../../tools/tropicats-viewer/ART.md) | Which sprites, shaders and skeletons supply the viewer; disclosed reconstruction limits |
 | [Initial technical analysis](../TROPICATS_ANALYSIS.md) | Asset delivery, progression implementation, content counts and source inventory |
