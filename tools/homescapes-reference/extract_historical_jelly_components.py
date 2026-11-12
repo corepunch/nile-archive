@@ -22,6 +22,8 @@ COMPONENTS = (
     ('jelly-flower-three-pale-source', 4, (367, 1, 478, 111)),
     ('jelly-flower-five-pale-source', 4, (483, 1, 594, 111)),
     ('jelly-flower-dark-source', 4, (599, 1, 710, 111)),
+    ('jelly-cherry-clear-source', 4, (769, 653, 863, 743)),
+    ('jelly-cherry-soft-source', 4, (871, 651, 969, 745)),
 )
 
 
