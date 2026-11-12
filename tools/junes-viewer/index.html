@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>June’s Journey · Scene explorer</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="June’s Journey scene explorer">
+      <span class="brand-mark">J</span>
+      <span>June’s Journey <small>SCENE EXPLORER</small></span>
+    </a>
+    <span class="top-note">CHAPTER ONE <i></i> SCENE 01</span>
+  </header>
+  <main class="page">
+    <div id="status" class="status" role="status">Opening the scene…</div>
+    <div id="content" hidden>
+      <section class="intro">
+        <div>
+          <div class="eyebrow">THE OPENING INVESTIGATION</div>
+          <h1>At the estate</h1>
+          <p>Explore the objects and clues authored for June’s first scene.</p>
+        </div>
+        <div class="intro-meta"><span>CHAPTER 01</span><span>ESTATE EXTERIOR</span></div>
+      </section>
+      <div class="explorer">
+        <section class="scene-panel" aria-labelledby="scene-title">
+          <div class="panel-bar">
+            <div><span class="overline">SCENE VIEW</span><h2 id="scene-title">The estate</h2></div>
+            <label class="toggle"><input type="checkbox" id="show-regions" checked><span>Show object regions</span></label>
+          </div>
+          <div class="scene-wrap">
+            <div id="scene" class="scene">
+              <img id="background" class="background" src="/assets/scene-001-01/background.png" alt="The estate exterior with a yellow car and fountain">
+              <div id="sprite-layer" class="sprite-layer"></div>
+              <svg id="regions" class="regions" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-label="Selectable object regions"></svg>
+            </div>
+          </div>
+          <div class="scene-caption">
+            <span><i class="dot"></i> Select a region or an object from the list</span>
+            <span>Reconstruction · authored objects shown together</span>
+          </div>
+        </section>
+        <aside class="inspect-panel" aria-live="polite">
+          <div class="panel-bar"><div><span class="overline">OBJECT INSPECTOR</span><h2 id="detail-title">Explore the scene</h2></div></div>
+          <div id="detail" class="detail empty">
+            <div class="empty-mark">✧</div>
+            <p>Select a region in the scene or choose an object below to see its extracted artwork and data.</p>
+          </div>
+        </aside>
+      </div>
+      <section class="objects-section" aria-labelledby="objects-title">
+        <div class="section-heading">
+          <div>
+            <span class="overline">SCENE 01</span>
+            <h2 id="objects-title">Objects in the scene</h2>
+            <p>Search the authored object definitions and select one to locate it.</p>
+          </div>
+          <span class="count" id="object-count"></span>
+        </div>
+        <div class="filters">
+          <label class="search-wrap">
+            <span>Search objects</span><input id="search" type="search" placeholder="Search by name…" autocomplete="off">
+          </label>
+          <label class="select-wrap">
+            <span>Serialized difficulty</span>
+            <select id="difficulty">
+              <option value="">All values</option>
+              <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+              <option value="3">3</option><option value="4">4</option>
+            </select>
+          </label>
+        </div>
+        <div id="object-list" class="object-list"></div>
+        <p id="no-results" hidden>No objects match these filters.</p>
+        <p class="footnote">Difficulty is an authored value. Its effect on object selection is not established.</p>
+      </section>
+      <section class="clue-section" aria-labelledby="clue-title">
+        <div class="section-heading">
+          <div><span class="overline">CHAPTER 01</span><h2 id="clue-title">The clues</h2><p>Artwork extracted from the chapter’s clue bundle.</p></div>
+        </div>
+        <div id="clue-list" class="clue-list"></div>
+        <p class="footnote">Scene 1 contains Mrs. Talbot and placeholder clue artwork. Its numbered clues are not linked to these images in the extracted data. Later scene images are included for context.</p>
+      </section>
+      <section class="story-section">
+        <span class="overline">THE STORY SO FAR</span>
+        <h2>June arrives at the estate</h2>
+        <p>June has come to care for her niece Virginia and investigate the deaths of her sister Clare and Clare’s husband Harry. Mrs. Talbot tells her that Virginia is in the parlor.</p>
+        <details class="opening-dialogue"><summary>Read the opening dialogue</summary><div id="dialogue-list"></div></details>
+        <p class="footnote">Based on the bundled opening captions and dialogue. Full chapter dialogue and exact playback order are unavailable.</p>
+      </section>
+      <footer>June’s Journey 4.17.7 · Local extracted assets · Reconstructed scene · gameplay selection is unverified</footer>
+    </div>
+  </main>
+  <dialog id="clue-dialog" aria-labelledby="clue-dialog-title">
+    <div class="dialog-head">
+      <div><span class="overline" id="clue-dialog-context"></span><h2 id="clue-dialog-title"></h2></div>
+      <button id="close-clue" type="button" aria-label="Close clue details">×</button>
+    </div>
+    <div class="dialog-art"><img id="clue-dialog-image" alt=""></div>
+    <p id="clue-dialog-note"></p>
+  </dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
