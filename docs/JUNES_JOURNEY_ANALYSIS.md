@@ -61,3 +61,20 @@ To recopy the manifests, use:
 cp -R /Users/igor/Developer/nile-archive/reference/junesjourney.app/Data/Raw/iOS/manifests \
   reference/junes-journey-analysis/progression/
 ```
+
+## Follow-up phone and asset inspection
+
+A follow-up inspection loaded all 784 bundled `Data/level*` and
+`Data/*.assets` files. The 12 TextAssets found are listed in
+`progression/unity-textassets-inventory.json`; none identifies the requested
+campaign tables. Other serialized object types were not exhaustively decoded.
+Additional guessed CDN paths returned HTTP 403, so the actual content path and
+remote access requirements remain unknown.
+
+The connected iPhone's app-container file listing failed with CoreDevice
+ActionError 3. A selective backup attempt used a separate temporary directory
+and retained only the June's Journey app domain, but the phone rejected the
+backup before transfer, reporting that 164.7 GB of space was required and
+the Mac had 3.5 GB available. A backup also excludes `Library/Caches`, so its contents
+would depend on where the game stores downloaded data. No additional scene,
+story or progression content was recovered from the phone in this attempt.
