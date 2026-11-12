@@ -74,7 +74,7 @@ buttons remain centred independently of asymmetric source masks.
 | `TARGET_GEN` | `apple-platter-1..9`, once per four-cell footprint | Original platter and isolated original goal apple. Placement/removal order is a documented hex adaptation, not decoded prefab geometry. Nine apples use a 3×3 arrangement. |
 | `SHUTTERS` | Original `blind-body` on covered cells plus `blind-top` at the anchor | Remaining height follows the existing rule group; no `BL` counter. Source square material is cropped/masked to each hex. |
 | Visible `ARTIFACT_GEN` | Original `generator-shell` plus the next original piece/element | Reading the queue for drawing does not advance its cursor or RNG. Random units show the shell without pretending a specific next color is known. |
-| `CARRY_GEN` | `donut-maker-0..3` over the group footprint | Named base and two glass layers use their original shared-frame offsets. Exact dough poses and output indicator placement remain open. |
+| `CARRY_GEN` | `donut-maker-0..3` over the group footprint | Original raw and heated dough textures follow the verified opening stage groups. Their placement on the hex composite follows the official clip. Glaze, sprinkle stages and output indicator placement remain open. |
 | Goal panel | Original goal icons, including `goal-color-box` | Uses original board sprites for nuts, statues, tiles and blinds. |
 | `COLOR_BOX` | Existing ordinary-box image plus `C<color>` | **Unresolved:** six colors × six original strengths; ordinary boxes are not accepted as finished colored-box art. |
 | `HONEY` | `jelly-1..6`, with clear and soft cherry variants for strengths 1 and 2 | Original square, flowers and cherries matched to Playrix's six-state illustration. A mask derived from the authored opening clips the soft cherry. |
@@ -108,7 +108,8 @@ The PLXE decoder verifies the original named rectangles in the 1.1.0.900,
 9.2.601 file map identifies the corresponding 1,887,362-byte pack and its
 SHA-1. CDN requests returned HTTP 403, so the 36 field images still need to
 be recovered and checked. The native client also confirms the maker's
-animation groups and the output-capacity indicators.
+animation groups and the output-capacity indicators. The official tutorial
+shows the five successive maker poses and the last dough leaving the tray.
 [Pack and arrow evidence](homescapes-reference/board-pack-evidence.json) · [Maker source evidence](homescapes-reference/GENERATOR_ART_SOURCES.md)
 
 ## Reproduction and validation
@@ -149,9 +150,10 @@ cannot consume pieces. Fourteen registered cell/object states pass the
 canonical strict fill/object tests. Group composites span four cells and are
 reviewed as objects, not certified as single-hex fills.
 
-[Jelly and portal captures](review/homescapes-jelly-portals/README.md) and
-[donut exit and maker captures](review/homescapes-arrow-maker/README.md)
-show the recovered states in both games. The 36 colored-box field states,
-maker charge poses and output indicator placement still require original
-resources or matching runtime evidence.
+[Jelly and portal captures](review/homescapes-jelly-portals/README.md),
+[donut exit captures](review/homescapes-arrow-maker/README.md) and
+[maker pose captures](review/homescapes-maker-poses/README.md) show the
+recovered states in both games. The 36 colored-box field states, later maker
+poses and output indicator placement still require original resources or
+matching runtime evidence.
 [Issue #98](https://github.com/corepunch/nile-archive/issues/98)

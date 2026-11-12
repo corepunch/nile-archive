@@ -39,7 +39,20 @@ python3 tools/homescapes-reference/decode_plxe.py \
 
 The official [element index](https://playrix.helpshift.com/hc/en/14-homescapes/section/151-match-3-elements/) links individual articles. Raw HTML in the English, Russian, German, French, Spanish, Japanese, Korean, Chinese, Portuguese and Turkish pages points to the same original PNGs: [apples](https://d2duuy9yo5pldo.cloudfront.net/playrix/c7182d99-71d3-4cd2-a521-2be37cadd21b-t.png), [generator](https://d2duuy9yo5pldo.cloudfront.net/playrix/534a4ae6-6492-455b-b4c0-b3e0acc52ae9-t.png), [donut maker](https://d2duuy9yo5pldo.cloudfront.net/playrix/f225407e-3b7c-413a-a5de-29f6cd9334dc-t.png), and [window blinds](https://d2duuy9yo5pldo.cloudfront.net/playrix/7fe73a6f-562e-45d1-bf63-f953c14f08e2-t.png). The first three are 130 × 130 pixels, the last 423 × 130; all are RGBA illustrations composited onto blue board backgrounds. The apple image depicts eight apples, the generator includes four board pieces, and the blinds show four adjacent columns. They do not isolate sprites or cover all damage and charge states, so they were not registered as runtime state art.
 
-The English articles also embed official YouTube videos for [apples](https://www.youtube.com/watch?v=DM95WJKchfU), [donut maker](https://www.youtube.com/watch?v=6XNxRO7CMs0), and [window blinds](https://www.youtube.com/watch?v=jxR7FYsesFg). The community wiki links images for [apples](https://static.wikia.nocookie.net/playrix-homescapes/images/9/99/Apples.png/revision/latest?cb=20210624033947) and [window blinds](https://static.wikia.nocookie.net/playrix-homescapes/images/e/ec/Window_Blinds.png/revision/latest?cb=20210624034707). Those image requests returned Cloudflare challenge HTML, so their pixels, transparency and state coverage could not be inspected.
+The English articles also embed official YouTube videos for [apples](https://www.youtube.com/watch?v=DM95WJKchfU), [donut maker](https://www.youtube.com/watch?v=6XNxRO7CMs0), and [window blinds](https://www.youtube.com/watch?v=jxR7FYsesFg).
+
+The 11-second donut maker tutorial shows the empty heater at 0.50 s, raw
+dough at 2.00 s, heated dough at 4.83 s, orange glaze at 6.50 s, green
+sprinkles at 8.50 s and added yellow sprinkles at 9.83 s. The donut leaves
+the heater at 10.00 s. These are observed video times. The game engine's
+animation durations and frame count need separate verification.
+[Official donut maker tutorial](https://www.youtube.com/watch?v=6XNxRO7CMs0)
+
+The official colored-box clip shows red damage stages in the intro and
+cyan and pink boxes being hit and cleared on the field. It supplies visual
+reference for those appearances. The original downloadable atlas is still
+needed to verify all 36 named textures.
+[Official colored boxes tutorial](https://www.youtube.com/watch?v=FaMduRjYcsA)
 
 ## Historical APK atlases
 
@@ -52,9 +65,16 @@ from remaining output capacity. Their board placement remains open.
 [3.5.9 APK archive](https://apk.gold/download?file_id=1370034/homescapes) · [Named rectangles](../../tools/homescapes-reference/maker-named-regions.json) · [Native indicator evidence](maker-native-evidence.json)
 
 The 1.1.0.900 and 3.5.9 PBI files name five stage animations. The 6.8.5 native
-dispatch groups them by activation period. The named `_0034_01` and
-`_0033_02` dough textures are present in both historical atlases. The
-searched atlases lack named `_0032_03`, `_0018_04` and `_0017_05` textures,
-and the PBI references alone do not establish the retained pose after an
-activation. Runtime dough still uses the documented preview placement.
+dispatch groups them by activation period. The runtime uses named textures
+`_0034_01` and `_0033_02` from 3.5.9 for raw and heated dough. Their source
+rectangles are also independently named in the 1.2.0.900 and 1.3.0.900 atlas
+metadata. Makers with periods 4–5 reach these poses after hits 1 and 2.
+Makers with periods 2–3 combine the two opening stages on hit 1 and show
+heated dough. The source clip confirms the visual sequence. The crop
+placement inside the hex composite is estimated from the clip.
+
+Later PBI stages genuinely reference `_0032_03`, `_0018_04` and
+`_0017_05`. Every stage also references `_0035_back`. These names are absent
+from the inspected historical atlases. The renderer retains its existing
+preview selection for the remaining stages pending the original source art.
 [Animation groups and source evidence](maker-animation-evidence.json)

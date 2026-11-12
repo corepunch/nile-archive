@@ -2973,7 +2973,7 @@
         "maker-source-match3carrygeneratorbase.png",
         "maker-source-match3carrygeneratorglassback.png",
         "maker-source-match3carrygeneratorglassfront.png",
-        "donut-maker-dough-1"
+        "engine/art/homescapes/sprites/donut-maker-dough-1.png"
       ],
       "canvas": [
         256,
@@ -3019,7 +3019,7 @@
         "maker-source-match3carrygeneratorbase.png",
         "maker-source-match3carrygeneratorglassback.png",
         "maker-source-match3carrygeneratorglassfront.png",
-        "donut-maker-dough-2"
+        "engine/art/homescapes/maker-source/maker-source--0033-02.png"
       ],
       "canvas": [
         256,
@@ -3040,7 +3040,7 @@
         ],
         "dough": [
           175,
-          168
+          148
         ]
       },
       "source_canvas": [
@@ -3065,7 +3065,7 @@
         "maker-source-match3carrygeneratorbase.png",
         "maker-source-match3carrygeneratorglassback.png",
         "maker-source-match3carrygeneratorglassfront.png",
-        "donut-maker-dough-3"
+        "engine/art/homescapes/maker-source/maker-source--0034-01.png"
       ],
       "canvas": [
         256,
@@ -3085,8 +3085,8 @@
           151
         ],
         "dough": [
-          174,
-          168
+          175,
+          148
         ]
       },
       "source_canvas": [
@@ -3328,6 +3328,8 @@
     "recipe": "3fd352407067913f262c6fd1baa5f52ae319753cc3d8d0f6a39b6edcf88e97f9",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
+      "engine/art/homescapes/maker-source/maker-source--0033-02.png": "445a5bf78334f1e950e00b60a8721232ff449aec757d1d6bb50046332af64e39",
+      "engine/art/homescapes/maker-source/maker-source--0034-01.png": "4b1fabcc116aab13269ad210f7ab1f6441b41537502097a7144cfacb3385042a",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassback.png": "1985e7a943b1a5ac423bf2841e6f382a4862d520efe1daac2958b7c946b53a8f",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassfront.png": "d27fcfe884371a573646c1b02bc504520a5d9cb63e762c09b584822449871536",
@@ -3471,10 +3473,10 @@
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
-      "tools/homescapes_composites.py": "572c557f109580207ef13fe1c8194fca52c20191e08179abd071f72080ead291"
+      "tools/homescapes_composites.py": "82f7d7763ec7fdae3f5ec370ccc2c961b65d051d4ffab3fdadfaae7de7f33411"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "0af4e55081950b98aed0e8132e3be3dd97aedf672afbccb8c2014b24d9951de2",
+      "games/christmas-market/data/match3.png": "bcc3420991704741f0e7688aef3b159f0be0e63d4eccfc5195e21ac0dac98d9c",
       "games/christmas-market/lua/match3_skin.lua": "ccf9c3bcd67ab496f7353c77e8a378ec3f9c685b12064a323254bbb957736468"
     }
   }

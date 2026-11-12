@@ -300,18 +300,18 @@ function D.bind(R, W)
                 g.hs.goals={{type="COLLECT_PIGGY",max=6,current=0}}
             elseif app.arg("homescapes-art")=="generators" then
                 for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
-                local function group(q,r,kind,count,hits)
+                local function group(q,r,kind,count,hits,period)
                     local cells={rules.hex_index(q,r),rules.hex_index(q+1,r),rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}
                     local anchor=cells[1]
-                    g.hs.groups[anchor]={kind=kind,count=count,cells=cells,hits=hits or 0,period=3,batch=3}
+                    g.hs.groups[anchor]={kind=kind,count=count,cells=cells,hits=hits or 0,period=period or 3,batch=3}
                     for _,i in ipairs(cells) do assert(i>=0,"art footprint");g.hs.cells[i].group=anchor;g.tiles[i]=rules.tile(-1) end
                 end
                 group(-3,0,"TARGET_GEN",9)
                 group(-1,-2,"TARGET_GEN",4)
                 group(1,-3,"CARRY_GEN",1,0)
-                group(1,-1,"CARRY_GEN",1,1)
-                group(-1,1,"CARRY_GEN",1,2)
-                group(1,1,"CARRY_GEN",1,3)
+                group(1,-1,"CARRY_GEN",1,1,5)
+                group(-1,1,"CARRY_GEN",1,2,5)
+                group(1,1,"CARRY_GEN",1,1,3)
                 local anchor=rules.hex_index(-3,2)
                 g.hs.groups[anchor]={kind="SHUTTERS",count=3,cells={}}
                 for r=2,4 do

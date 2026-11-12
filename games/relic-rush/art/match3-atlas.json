@@ -3034,7 +3034,7 @@
         "maker-source-match3carrygeneratorbase.png",
         "maker-source-match3carrygeneratorglassback.png",
         "maker-source-match3carrygeneratorglassfront.png",
-        "donut-maker-dough-1"
+        "engine/art/homescapes/sprites/donut-maker-dough-1.png"
       ],
       "canvas": [
         256,
@@ -3080,7 +3080,7 @@
         "maker-source-match3carrygeneratorbase.png",
         "maker-source-match3carrygeneratorglassback.png",
         "maker-source-match3carrygeneratorglassfront.png",
-        "donut-maker-dough-2"
+        "engine/art/homescapes/maker-source/maker-source--0033-02.png"
       ],
       "canvas": [
         256,
@@ -3101,7 +3101,7 @@
         ],
         "dough": [
           175,
-          168
+          148
         ]
       },
       "source_canvas": [
@@ -3126,7 +3126,7 @@
         "maker-source-match3carrygeneratorbase.png",
         "maker-source-match3carrygeneratorglassback.png",
         "maker-source-match3carrygeneratorglassfront.png",
-        "donut-maker-dough-3"
+        "engine/art/homescapes/maker-source/maker-source--0034-01.png"
       ],
       "canvas": [
         256,
@@ -3146,8 +3146,8 @@
           151
         ],
         "dough": [
-          174,
-          168
+          175,
+          148
         ]
       },
       "source_canvas": [
@@ -3389,6 +3389,8 @@
     "recipe": "3fd352407067913f262c6fd1baa5f52ae319753cc3d8d0f6a39b6edcf88e97f9",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
+      "engine/art/homescapes/maker-source/maker-source--0033-02.png": "445a5bf78334f1e950e00b60a8721232ff449aec757d1d6bb50046332af64e39",
+      "engine/art/homescapes/maker-source/maker-source--0034-01.png": "4b1fabcc116aab13269ad210f7ab1f6441b41537502097a7144cfacb3385042a",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassback.png": "1985e7a943b1a5ac423bf2841e6f382a4862d520efe1daac2958b7c946b53a8f",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassfront.png": "d27fcfe884371a573646c1b02bc504520a5d9cb63e762c09b584822449871536",
@@ -3536,10 +3538,10 @@
       "games/relic-rush/tools/prepare_assets.py": "e08cbe315f015e6e101e08cf8451516fa171a4dfaef85a7b0f2f0f5f990f530d",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
-      "tools/homescapes_composites.py": "572c557f109580207ef13fe1c8194fca52c20191e08179abd071f72080ead291"
+      "tools/homescapes_composites.py": "82f7d7763ec7fdae3f5ec370ccc2c961b65d051d4ffab3fdadfaae7de7f33411"
     },
     "outputs": {
-      "games/relic-rush/data/match3.png": "02184e3be7fa623f439fdc431a2fb9b14354c547e3b5d23a6ac2885fa2b45c0f",
+      "games/relic-rush/data/match3.png": "57cbc6b448ca867db72ad8791cbb3aef926b3f0e1c8c9640a29eedf11bcbcbf0",
       "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",

@@ -432,3 +432,6 @@ Original atlas orientation: statues, nuts, cookie stacks, platter, maker base, b
 The donut exit uses the original `CarryExitForAnim` sprite. The maker base and
 both glass layers use the original shared-frame offsets. See the [source
 registration and portrait review](../../../docs/review/homescapes-arrow-maker/README.md).
+
+The donut maker uses the named original raw and heated textures at the opening
+stages documented in the [pose and portrait review](../../../docs/review/homescapes-maker-poses/README.md).

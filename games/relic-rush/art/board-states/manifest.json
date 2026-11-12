@@ -1198,15 +1198,20 @@
       ],
       "carry_exit": [
         "original arrow with three staggered copies"
+      ],
+      "donut_maker_opening_poses": [
+        "raw after hit 1 for periods 4–5",
+        "heated after hit 2 for periods 4–5 and hit 1 for periods 2–3"
       ]
     },
     "restoration_review": "../../docs/review/homescapes-restored-art/README.md",
     "remaining": [
       "colored-box board colors/strengths",
-      "exact maker charge poses and output indicator placement",
+      "maker glaze and sprinkle poses, exact animation timing and output indicator placement",
       "exact original group composition"
     ],
     "followup_review": "../../docs/review/homescapes-jelly-portals/README.md",
-    "arrow_and_maker_review": "../../docs/review/homescapes-arrow-maker/README.md"
+    "arrow_and_maker_review": "../../docs/review/homescapes-arrow-maker/README.md",
+    "maker_pose_review": "../../docs/review/homescapes-maker-poses/README.md"
   }
 }

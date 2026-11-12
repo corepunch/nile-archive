@@ -59,5 +59,58 @@
     ],
     "initial_frame_lookup": "0x45a5e81",
     "ordinary_box_name": "Match3Box{health} for a negative color argument"
+  },
+  "color_box_level_sample": {
+    "source": "9.2.601 decoded match3levels archive (base and packs)",
+    "level_xml_count": 6184,
+    "color_box_model_count": 3771,
+    "distinct_color_health_pairs": 27,
+    "health_by_zero_based_color": {
+      "0": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "1": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "2": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "3": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "4": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "5": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "color_box_official_gameplay": {
+    "url": "https://www.youtube.com/watch?v=FaMduRjYcsA",
+    "video_format": 398,
+    "video_sha256": "775dee854907edf687724847b6874110db20bd450670efd8058f93f3c9bc3751",
+    "observations": "Red damage stages are visible in the intro, and cyan and pink blockers are hit and cleared in gameplay. The clip does not cover the 36 named sprites."
   }
 }

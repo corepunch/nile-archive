@@ -429,6 +429,16 @@ do
     local cells={a,rules.hex_index(1,0),rules.hex_index(0,1),rules.hex_index(1,1)}
     g.hs.groups[a]={kind="TARGET_GEN",count=8,cells=cells}
     for _,i in ipairs(cells) do g.hs.cells[i].group=a end
+    local function maker(q,r,period,hits)
+        local footprint={rules.hex_index(q,r),rules.hex_index(q+1,r),
+            rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}
+        local anchor=footprint[1]
+        g.hs.groups[anchor]={kind="CARRY_GEN",cells=footprint,period=period,hits=hits}
+        for _,i in ipairs(footprint) do g.hs.cells[i].group=anchor end
+    end
+    maker(-2,-2,5,1)
+    maker(0,-3,5,2)
+    maker(2,-3,3,1)
     local inlet=rules.hex_index(-3,0)
     g.hs.cells[inlet].visibleGenerator=true
     local queue={cursor=1,spawns=0,units={{element="cookie",hp=2}}}
@@ -451,6 +461,8 @@ do
     local goals = R.goal_entries()
     gfx.image,R.g,R.board_art,R.intro=saved_image,saved_game,saved_art,saved_intro -- luacheck: ignore 122
     check(draws["apple-platter-8"]==1,"one source image spans a shared four-cell group")
+    check(draws["donut-maker-3"]==1,"the first hit in a five-hit maker holds the original raw pose")
+    check(draws["donut-maker-2"]==2,"the heated pose follows either two individual stages or one combined stage")
     check(draws["generator-shell"]==1 and draws["cookie-2"]==1,"inlet shows its exact next authored object state")
     check(queue.cursor==1 and queue.spawns==0,"rendering the source queue does not advance simulation")
     check(draws["membrane-fill-2"]==1,"covered source floor uses its authored intact material")

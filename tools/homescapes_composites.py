@@ -8,6 +8,8 @@ SOURCE = ROOT / 'engine/art/homescapes/sprites'
 MAKER_SOURCE = SOURCE.parent / 'maker-source'
 MAKER_REGIONS = ROOT / 'tools/homescapes-reference/maker-named-regions.json'
 MAKER_SHELL = ('Match3CarryGeneratorBase', 'Match3CarryGeneratorGlassBack', 'Match3CarryGeneratorGlassFront')
+MAKER_DOUGH = {2: 'textures/particles/Match3/CarryGenerator/_0033_02',
+               3: 'textures/particles/Match3/CarryGenerator/_0034_01'}
 JELLY_FLOWERS = (
     None,
     'jelly-flower-frame-source',
@@ -41,14 +43,18 @@ def maker(charge, regions):
     stack.alpha_composite(base[1], base[2])
     stack.alpha_composite(back[1], back[2])
     if charge:
-        name = f'donut-maker-dough-{charge}'
+        source = regions[MAKER_DOUGH[charge]]['output'] if charge in MAKER_DOUGH else None
+        path = MAKER_SOURCE / source if source else SOURCE / 'donut-maker-dough-1.png'
         # The dough crops are stored in the same bottom-origin atlas as the shell.
-        with Image.open(SOURCE / (name + '.png')) as raw:
+        with Image.open(path) as raw:
             dough = raw.convert('RGBA').transpose(Image.Transpose.FLIP_TOP_BOTTOM)
-        at = (base[2][0] + (base[1].width - dough.width) // 2, base[2][1] + 11)
+        # The raw and heated rings sit above the heating surface in the
+        # official tutorial. Their placement is measured against that view.
+        top = 148 if source else base[2][1] + 11
+        at = (base[2][0] + (base[1].width - dough.width) // 2, top)
         stack.alpha_composite(dough, at)
         layers['dough'] = list(at)
-        sources.append(name)
+        sources.append(str(path.relative_to(ROOT)))
     stack.alpha_composite(front[1], front[2])
     crop = stack.getchannel('A').getbbox()
     stack = stack.crop(crop)
@@ -126,7 +132,8 @@ def registered():
 
 def inputs():
     regions = json.loads(MAKER_REGIONS.read_text())['records']
-    shell = [MAKER_SOURCE / record['output'] for record in regions if record['id'] in MAKER_SHELL]
-    return [Path(__file__), MAKER_REGIONS, *shell] + [SOURCE / (n+'.png') for n in ['apple-platter-base','goal-target-generator',
-            'donut-maker-dough-1','donut-maker-dough-2','donut-maker-dough-3',
+    maker_layers = [MAKER_SOURCE / record['output'] for record in regions
+                    if record['id'] in MAKER_SHELL or record['id'] in MAKER_DOUGH.values()]
+    return [Path(__file__), MAKER_REGIONS, *maker_layers] + [SOURCE / (n+'.png') for n in ['apple-platter-base','goal-target-generator',
+            'donut-maker-dough-1',
             'jelly-square-source', 'jelly-cherry-clear-source', 'jelly-cherry-soft-source', *JELLY_FLOWERS[1:]]]

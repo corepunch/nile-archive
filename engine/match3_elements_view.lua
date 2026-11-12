@@ -96,6 +96,12 @@ function E.ground(R, rules, sx)
     end
 end
 
+-- Shorter periods combine stages 1 and 2 into the first hit. The original
+-- atlas provides the dough textures for these two resting poses.
+local maker_opening_poses = {
+    [2] = {2}, [3] = {2}, [4] = {3, 2}, [5] = {3, 2},
+}
+
 local function group_art(R,group,sx)
     local cx,cy,minx,maxx,miny,maxy=0,0,math.huge,-math.huge,math.huge,-math.huge
     for _,cell in ipairs(group.cells) do
@@ -103,8 +109,14 @@ local function group_art(R,group,sx)
         cx,cy=cx+p.x,cy+p.y
         minx,maxx,miny,maxy=math.min(minx,p.x),math.max(maxx,p.x),math.min(miny,p.y),math.max(maxy,p.y)
     end
-    local name=group.kind=='TARGET_GEN' and 'apple-platter-'..group.count
-        or 'donut-maker-'..math.min(3,math.floor(group.hits*3/group.period))
+    local name
+    if group.kind=='TARGET_GEN' then
+        name='apple-platter-'..group.count
+    else
+        local poses=maker_opening_poses[group.period]
+        local pose=poses and poses[group.hits] or math.min(3,math.floor(group.hits*3/group.period))
+        name='donut-maker-'..pose
+    end
     assert(R.board_art[name],"missing original group art: "..name)
     local size=math.min(maxx-minx+2*R.HEX_R,maxy-miny+math.sqrt(3)*R.HEX_R)
     image(R,name,vec2(cx/#group.cells+sx,cy/#group.cells),size,1)

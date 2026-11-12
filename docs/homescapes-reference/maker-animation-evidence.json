@@ -64,7 +64,7 @@
     ]
   },
   "reference_prefix": "Match3/CarryGenerator/",
-  "interpretation": "Native 6.8.5 dispatch verifies groups per activation period. PBI records list endpoint textures and intervening particles; exact retained frames still require animation curves or equivalent runtime evidence.",
+  "interpretation": "Native 6.8.5 dispatch verifies the stage groups per activation period. Playrix tutorial frames confirm the sequence for the illustrated five-hit maker. Exact animation timing and all source layers remain incomplete.",
   "visual_comparison": {
     "runtime_atlas_version": "3.5.9",
     "rectangles_source": "tools/homescapes-reference/generator-historical-regions.json",
@@ -146,5 +146,39 @@
         "5"
       ]
     ]
+  },
+  "shared_particle_texture": "_0035_back",
+  "official_gameplay": {
+    "url": "https://www.youtube.com/watch?v=6XNxRO7CMs0",
+    "date": "2020-04-20",
+    "video_format": 247,
+    "video_sha256": "21e0d9b914750116e6400affdc5cf6edd4ac0d99fbe70ce7e8fe910b7e2b49bd",
+    "observed_poses_seconds": {
+      "empty": 0.5,
+      "raw": 2.0,
+      "heated": 4.83,
+      "glazed": 6.5,
+      "green_sprinkles": 8.5,
+      "yellow_sprinkles": 9.83,
+      "release": 10.0
+    }
+  },
+  "additional_named_atlas_metadata": {
+    "1.2.0.900": {
+      "listing": "https://apk.gold/download?file_id=503285/homescapes",
+      "decoded_sha256": "a46a0771ca62afac2611357125c64dfbda29f2518eb8b3d21517720e45d27a31",
+      "named_dough": [
+        "_0034_01",
+        "_0033_02"
+      ]
+    },
+    "1.3.0.900": {
+      "listing": "https://apk.gold/download?file_id=544300/homescapes",
+      "decoded_sha256": "7eafb626282a447887fe75cf8bfe21d8a2ece13a8c1f8ec9ab33c4af5af98f34",
+      "named_dough": [
+        "_0034_01",
+        "_0033_02"
+      ]
+    }
   }
 }
