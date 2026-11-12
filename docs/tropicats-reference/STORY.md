@@ -2,8 +2,37 @@
 
 This is a navigable reference to the **bundled authored campaign**, not a playthrough or proof of the behavior of the live service. It records 70 chapters, 274 quests and 1,217 configured tasks. Start with a chapter below; each page lists every quest and task in serialized order, the associated scene triggers and the attributed localized quest setup and journal outcome. These entries preserve evidence but are not complete dialogue or a substitute for reading the linked source keys.
 
+## Start here when writing a new campaign
+
+Read [chapter 1](story/chapter-01.md) for the first playable repair, [chapter 3](story/chapter-03.md) for the regular quest structure, [chapter 5](story/chapter-05.md) for a consequence that creates the next quest, and [chapter 70](story/chapter-70.md) for the ending. Read each quest's setup, task rows, and journal outcome together. This shows what the character wanted, what the player did, and what became possible afterward.
+
+| Unit | What it does in Tropicats | What to decide for an original story |
+| --- | --- | --- |
+| Arc | A question or relationship that carries across chapters. The arc map below groups the authored events for reading. | Decide what question carries the player forward and where it is answered. |
+| Chapter | A configured group with a first level and opening quest. Chapters 1 and 2 each have one five-level quest. Chapters 3–70 each have four ten-level quests. | Give this stretch of play a local result and a reason to start the next stretch. |
+| Quest | A character's request with a title, setup, task list and journal outcome. The next quest's opening level can be gated on completion. | Give someone a concrete need, then decide what changes when the need is addressed. |
+| Task | One action inside a quest. It can use puzzle items to repair a world target or advance an interaction, or it can require a village rank. | Pick a player action and its visible consequence. Several boards can feed one action. |
+| Puzzle and tier | A numbered match-3 board has `a`, `b` and `c` variants. The quest table references a particular tier of each numbered campaign board. | Place a first clear or other existing game event where it can earn the action. Choose the board mechanics separately. |
+| Scene | Dialogue attached to a configured event, such as quest start, task completion or tapping claim. The scene has its own speakers and staging. | Write the reaction, reveal, or next request at the event where the player has earned it. |
+
+### Follow the opening from puzzle to world change
+
+Elsie asks the Chief to restore the Great Totem. In `chp1_q1`, level `1a` is listed for the shovel task that clears `ch1_rubble`. `2a` is listed for the bamboo task that restores `ch1_totem_place`. `3a,4a,5a` supply the gates for the three-log repair of `ch1_totem`. The repair task is `chp1_q1.3`, and `t3chp1_q1` is configured to react to its completion. The journal records restored protection, and level 6 has `unlocked_at_quest_completed: chp1_q1`. The first five boards serve a visible goal with three distinct world changes. [Opening quest](story/chapter-01.md)
+
+Chapter 3 shows three different ways to advance. Repairing Cubby's grill gives him a reason to start his investigation. Inspecting the totem in `chp3_q3.1` uses `31a,32b` and leads to Cubby's report about unusual tracks. Its target field is `none`, but it still advances the story through an interaction and a completion scene. The breakfast quest `chp3_q2` also requires Village Rank 2 independently of its puzzle items. The task array places the table repair before the grill repair, while the listed puzzle tiers put the grill first. The page retains both the source array and the display order override. [Regular quest structure](story/chapter-03.md)
+
+Chapter 5 turns a failed event into a new request. The player helps prepare a tea party and restore Lily's hut, but Ava tries to use the party as a trap. The next quest starts with Lily refusing to help, so the player has a reason to repair the relationship before meeting Taka. Chapter 70 closes with a sequence of visits to friends after resolving the crown. These examples show how an action can change a relationship or make space for a farewell even when it adds no building. [Tea party and aftermath](story/chapter-05.md) · [Finale](story/chapter-70.md)
+
+### Take the structure into Relic Rush or Christmas Market
+
+Outline each new quest before writing dialogue. Record **who asks, why now, which first clear or town action earns progress, what changes in the world, who reacts, and what the player wants next**. Mark which scene depends on confirmed placement and which can play on returning from a board. Start by outlining a few consecutive quests so every outcome can be checked against the next request.
+
+Use the games' existing first-clear milestones, construction and before/after story beats as the implementation points. A multi-board request can span several existing beats, and an interaction can work without a new building. A Tropicats item or rank gate is an example of a progression dependency. Adding a corresponding system to either game is a separate design choice. Use each game's own cast and premise, then fill out the truth timeline, knowledge ledger, plant and payoff sheet, and level/scene table from the writing guide. [Writing guide](../STORY_WRITING.md) · [Relic Rush script](../../games/relic-rush/docs/story.md) · [Christmas Market script](../../games/christmas-market/docs/story.md)
+
 ## How to read a chapter
 
+- `chapterconfig.chapters[]` gives chapter starts. In `questconfig.quests[]`, `level` is the quest's configured level marker. For an individual task, use the same array index across `task_type`, `task_item`, `task_count`, `task_levels` and `task_action_target`. The numbered level entry in `areasconfig.json` carries `unlocked_at_quest_completed` and, where present, `wait_for_dialog`. For example, level 851 is tied to completion of `chp23_q4` and names `ftchp23_q4` in `wait_for_dialog`.
+- There are **194 repair tasks**, **887 interaction tasks**, and **136 village rank tasks**. Record the required item count and tier list separately. Across the item tasks, **37** have different counts and tier-list lengths. For example, `chp7_q4.2` asks for four herbs and lists `205b,206b,207c`. The tables cannot establish a one-item-per-listed-win payout rule or how the client resolves the difference. [Example](story/chapter-07.md)
 - Chapter first levels and quest `level` fields come from `chapterconfig` and `questconfig`; each task lists its individual level/tier tokens exactly as serialized. A suffix such as `b` is a tier identifier. A `reach_rank` task has `none` for level tokens and its count is the rank gate. Do not infer a strict runtime sequence from array order, especially where `visual_order` is present.
 - The action, item and target are distinct fields. `none` is the literal target and does not establish that the world never changes. A repair target identifies an encoded target, not independently verified on-screen behavior. Quest journal outcomes express the authored story; the runtime sequence and delivery are unverified.
 - Task IDs in the tables use `quest ID`.`one-based index`, matching the configured dialogue `trigger_value`; these are a convenient address, not a separate questconfig field. Scene trigger entries may be stale or belong to an earlier task version. In particular `t5chp3_q3` and `t5chp5_q3` refer to task 5 although the current arrays have four tasks; do not count them as additional configured tasks.
@@ -109,6 +138,17 @@ Chapter names come from `quest.chapter.name_<N>`. Level ranges run from each con
 - [Existing extraction analysis](../TROPICATS_ANALYSIS.md) explains inventory, tiers, evidence limits and extraction. [Earlier research](../../research_notes/Прогрессия%20June%20Journey%20и%20Tropicats/tropicats_story.md) is secondary context and should not override the bundled tables.
 
 The last configured chapter starts at level 2691; its final quest includes tier `2730c` and rank 137. The inspected campaign tables have no chapter 71. This establishes the bundle endpoint, not the absence of events, post-story level rotation, server content or alternate releases. Collection events and post-story level selection have separate bundled configuration and are outside this quest-by-quest campaign reference. The extracted configuration establishes authored data, not what an encrypted client or live account actually showed.
+
+## Look up a board or scene
+
+The chapter pages work from a checkout. For exact dialogue wording and board files, the commands below use the ignored local extraction listed in the [source inventory](README.md#source-inventory). Run from the repository root.
+
+```sh
+python3 tools/tropicats_story_reference.py --level 32
+python3 tools/tropicats_story_reference.py --scene t1chp3_q3
+```
+
+The level lookup returns `32b`, the matching task `chp3_q3.1`, its other tier gates and the chapter and board paths. Use that chapter's configured scene list to pick a scene. The scene lookup keeps every setup row and the staging rows in serialized order. It resolves numbered sentences through the English localization table, retaining the localization key. `localized_text: null` means the key is absent. Rows without a sentence are staging commands. A scene ID or an English string can survive from an older version, so use its trigger and task match before treating it as a current story event.
 
 ## Reproduce and verify
 

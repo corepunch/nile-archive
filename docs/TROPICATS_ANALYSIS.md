@@ -51,6 +51,9 @@ Puzzle victories supply specific quest items. Completing a task can repair an
 object, play a conversation, or satisfy a village-rank requirement. Claiming a
 quest moves the story forward and unlocks subsequent puzzles.
 
+For a campaign rewrite, the story handoff explains each unit and follows a
+quest from setup to tasks, world changes and dialogue. [Story handoff](tropicats-reference/STORY.md#start-here-when-writing-a-new-campaign)
+
 ```mermaid
 flowchart LR
     Q[Start quest / dialogue] --> P[Win specified level and tier]
@@ -69,6 +72,8 @@ numbers and tiers. Across the complete quest table, every campaign number occurs
 exactly once with a required tier: **714 a, 975 b, and 1,041 c** references. That
 does not establish the minimum number of attempts or wins needed by a player;
 tier unlocking and village-rank work can add play.
+Required item quantities differ from the number of listed tier tokens in 37
+tasks. Keep the two values separate when interpreting the extract. [Task fields](tropicats-reference/STORY.md#how-to-read-a-chapter)
 
 For example, the opening quest `chp1_q1` requires:
 

@@ -4,6 +4,8 @@ How to write the story of a city or match-3 game in this repository. A game's sc
 
 The craft rules come from Infocom's practice, as collected in the [zilscript](https://github.com/corepunch/zilscript) writing guide (`docs/WRITING_ADVENTURES.md`, `skills/source_design_lessons.md`, `PROSE.md`). The pacing comes from [June's Journey and Tropicats](../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md). Those games have parsers and transcripts; ours has short dialogue between levels, so the rules below are the part that survives the move.
 
+For a new match-3 campaign, read the extracted Tropicats opening, a regular quest and the finale before outlining your own quest sequence. Use the worked examples to connect a character's request, the puzzle or town action, and the resulting scene or world change. The handoff links all 70 chapters and explains how to retrieve exact dialogue and board data. [Tropicats story handoff](tropicats-reference/STORY.md#start-here-when-writing-a-new-campaign)
+
 ## Order of work
 
 Do these in order, and keep each one in the script document.

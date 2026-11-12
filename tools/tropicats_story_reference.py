@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the serialized Tropicats campaign index and check task coverage."""
+"""Generate the Tropicats campaign reference or look up a level or scene."""
 import argparse
 import json
 import re
@@ -10,18 +10,86 @@ BASE = ROOT / 'reference/tropicats-analysis'
 OUT = ROOT / 'docs/tropicats-reference/story'
 
 def read(path):
-    return json.loads((BASE / path).read_text())
+    source = BASE / path
+    try:
+        return json.loads(source.read_text(encoding='utf-8'))
+    except FileNotFoundError:
+        raise SystemExit(f'Missing local extraction: {source}\n'
+                         'See docs/tropicats-reference/README.md for the source inventory.') from None
 
 def safe(s):
     return str(s).replace('|', '\\|').replace('\n', ' ').strip()
 
+def task_action(english, quest, index):
+    key = f"quest.task{index+1}.action.{quest['id']}"
+    override = quest.get('loca_override')
+    if override and f'{key}.{override}' in english:
+        return english[f'{key}.{override}']
+    return english.get(key, '[missing]')
+
+def find_level(quests, english, level):
+    for quest in quests:
+        for index, group in enumerate(quest['task_levels']):
+            tokens = group.split(',')
+            for token in tokens:
+                if token == 'none' or int(token[:-1]) != level:
+                    continue
+                quest_id = quest['id']
+                chapter = int(quest_id.split('_')[0][3:])
+                return {
+                    'level_tier': token,
+                    'board_file': str((BASE / 'levels' / f'{level:04d}{token[-1]}').relative_to(ROOT)),
+                    'chapter_page': str((OUT / f'chapter-{chapter:02}.md').relative_to(ROOT)),
+                    'quest': quest_id,
+                    'quest_title': english.get(f'quest.title.{quest_id}'),
+                    'task': f'{quest_id}.{index+1}',
+                    'action': task_action(english, quest, index),
+                    'type': quest['task_type'][index],
+                    'item': quest['task_item'][index],
+                    'count': quest['task_count'][index],
+                    'task_level_tiers': tokens,
+                    'target': quest['task_action_target'][index],
+                }
+    return None
+
+def find_scene(story, english, scene_id):
+    setup = [row for row in story['dialogue_setup'] if row['dialogue_id'] == scene_id]
+    details = []
+    for row in story['dialogue_details']:
+        if row['dialogue_id'] != scene_id:
+            continue
+        # Staging may carry stale draft text. Expose only the localized line.
+        detail = {key: value for key, value in row.items() if key not in ('text', 'dialogue_id')}
+        if 'sentence' in row:
+            key = f"dialogue.story.{scene_id}.{row['sentence']}"
+            detail.update(localization_key=key, localized_text=english.get(key))
+        details.append(detail)
+    if setup or details:
+        return {'scene': scene_id, 'setup': setup, 'details': details}
+    return None
+
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--check', action='store_true')
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--check', action='store_true', help='check the generated chapter pages')
+    mode.add_argument('--level', type=int, help='look up a campaign number and its quest task')
+    mode.add_argument('--scene', help='show a scene’s triggers, staging and localized lines')
     args = parser.parse_args()
-    chapters = read('config/chapterconfig.json')['chapters']
-    quests = read('bundled/157_questconfig')['quests']
     english = read('bundled/english.json')
+    if args.scene is not None:
+        scene = find_scene(read('config/storydialogueconfig.json'), english, args.scene)
+        if scene is None:
+            parser.error(f'unknown configured scene {args.scene!r}')
+        print(json.dumps(scene, ensure_ascii=False, indent=2))
+        return
+    quests = read('bundled/157_questconfig')['quests']
+    if args.level is not None:
+        level = find_level(quests, english, args.level)
+        if level is None:
+            parser.error(f'no campaign quest task for level {args.level}')
+        print(json.dumps(level, ensure_ascii=False, indent=2))
+        return
+    chapters = read('config/chapterconfig.json')['chapters']
     scenes = read('config/storydialogueconfig.json')['dialogue_setup']
     narratives = json.loads((OUT / 'narratives.json').read_text())
     assert set(narratives) == {str(c['chapter']) for c in chapters}
@@ -65,9 +133,7 @@ def main():
                 lines += ['', f"Localization override: `{q['loca_override']}`; action labels below use matching overridden keys when present."]
             lines += ['', '| Task | Localized action | Type; item × count | Level/tier tokens | Encoded target |', '| --- | --- | --- | --- | --- |']
             for i in range(count):
-                key = f'quest.task{i+1}.action.{qid}'
-                override = key + '.' + q.get('loca_override', '')
-                action = english.get(override, english.get(key, '[missing]'))
+                action = task_action(english, q, i)
                 lines.append(f"| `{qid}.{i+1}` | {safe(action)} | `{q['task_type'][i]}`; `{q['task_item'][i]}` × {q['task_count'][i]} | `{q['task_levels'][i]}` | `{q['task_action_target'][i]}` |")
                 tasks += 1
             lines += ['']
