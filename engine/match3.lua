@@ -842,7 +842,8 @@ function E.new(config)
         end
         collect_deliveries()
         local function movable(i) return cell_active(g, i) and not locked(g, i) and g.tiles[i].element ~= "cherry" end
-        local function donor(i) return movable(i) and g.tiles[i].kind ~= -1 and not g.tunnel_to[i] end
+        local function can_feed(i) return movable(i) and not g.tunnel_to[i] end
+        local function donor(i) return can_feed(i) and g.tiles[i].kind ~= -1 end
         local function side_donor(i)
             if not donor(i) or g.tiles[i].kind == M.DELIVERY then return false end
             local down = hex_neighbor(i, 1)
@@ -874,8 +875,8 @@ function E.new(config)
                     if source then
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
-                    elseif not entrance and (inlet or not movable(left) and not movable(right)
-                        and (not movable(above) or g.tunnel_to[above])) then
+                    elseif not entrance and (inlet or not can_feed(left) and not can_feed(right)
+                        and not can_feed(above)) then
                         spawned = spawned + 1
                         step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(randn(g, COLORS)), -1, -spawned
                     end

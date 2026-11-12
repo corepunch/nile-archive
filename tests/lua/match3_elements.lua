@@ -154,6 +154,28 @@ do
     check(steps[1].from[exit]==entrance and count==1, 'portal priority transfers a piece without duplication')
 end
 
+-- A tunnel entrance cannot feed a diagonal neighbour. If its other parents
+-- are blocked, that neighbour must spawn instead of waiting forever.
+for _, side in ipairs{{-1,0}, {1,-1}} do
+    local g=R.game_start(0,733)
+    for i=0,R.CELLS-1 do
+        g.active[i]=false;g.tiles[i]=R.tile(-1);g.chain[i]=0;g.ice[i]=0
+        g.hazard[i]=0;g.stone_hp[i]=0;g.crate_hp[i]=0
+    end
+    local target,above,entrance,exit=cell(0,0),cell(0,-1),cell(side[1],side[2]),cell(0,1)
+    g.active[target],g.active[above],g.active[entrance],g.active[exit]=true,true,true,true
+    g.tiles[above],g.tiles[entrance],g.tiles[exit]=R.tile(2),R.tile(1,R.ROW),R.tile(3)
+    g.chain[above]=1
+    g.tunnel_to,g.tunnel_from={[entrance]=exit},{[exit]=entrance}
+    g.delivery_exits={}
+    local _,steps=R.game_collapse(g)
+    check(steps[1].from[target]<0 and g.tiles[target].kind>=0,
+        'isolated cell refills beside a redirected tunnel entrance')
+    check(g.tiles[entrance].special==R.ROW, 'refill does not steal from the tunnel entrance')
+    local _,idle=R.game_collapse(g)
+    check(#idle==0, 'refilled tunnel neighbour remains settled')
+end
+
 do
     local g=R.game_start(0,456);local before=g.obstacles
     g.turn_pending,g.hazard_damaged=true,false
