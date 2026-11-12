@@ -1,0 +1,90 @@
+{
+  "scope": "Evidence for maker animation texture references, not a decoded mapping of atlas rectangles to texture names or runtime charge values.",
+  "versions": {
+    "1.1.0.900": {
+      "archive": "reference/homescapes-analysis/historical/homescapes-1.1.0.900.apk",
+      "member": "assets/base_mm/effects/Match3Effects.pbi",
+      "sha256": "60f6d3a6f05416cc03b9c6cbe1aed61a474cb8fd798235b191b0f510a6ea72fa",
+      "encoding": "uncompressed PBI",
+      "effect_atlas": "assets/base_mm/effects/Match3Effects_atlas1.webp",
+      "atlas_size": [
+        1544,
+        1392
+      ],
+      "atlas_sha256": "f6d63c4fbbb4de054b4acf8ab003922d08a4117424cec3bd4a6303c4b6f64610",
+      "atlas_metadata": "assets/base_mm/effects/Match3Effects_atlas1.xml",
+      "atlas_metadata_status": "PLXE 0x00020003; sprite region names not decoded"
+    },
+    "3.5.9": {
+      "archive": "reference/homescapes-analysis/historical/homescapes-3.5.9.apk",
+      "member": "assets/base_mm/effects/Match3Effects.pbi",
+      "packed_sha256": "596639a520cbfa5072bd0cbf9490c8c6a1f4bb79cfb0bfd6ccbcadc1b85d29ca",
+      "decoded_sha256": "5d6be4fe300a7c6a4981714a7f4ce76acee828b6a1811b8cc1d89be5b46d4fa6",
+      "encoding": "BLK zstd via sprite_metadata.unwrap",
+      "effect_atlas_status": "No Match3Effects atlas member in APK ZIP; core Match3 atlas pages hold the runtime crops, but their name-to-region metadata remains undecoded."
+    },
+    "6.8.5": {
+      "status": "Native binary contains effect names; PBI unavailable in local selected-member cache, and remote range fetch failed DNS. No cross-version PBI comparison claimed."
+    }
+  },
+  "common_effect_texture_references": {
+    "CarryGenerator_1": [
+      "_0034_01"
+    ],
+    "CarryGenerator_2": [
+      "_0034_01",
+      "_0033_02"
+    ],
+    "CarryGenerator_3": [
+      "_0033_02",
+      "_0032_03",
+      "_0031_glaze through _0023_glaze"
+    ],
+    "CarryGenerator_4": [
+      "_0032_03",
+      "_0018_04",
+      "_0016_Green-1 through _0012_Green-3"
+    ],
+    "CarryGenerator_5": [
+      "_0018_04",
+      "_0017_05",
+      "_0011_Yelow-1",
+      "_0010_Yelow-2",
+      "_0009_Yelow-3"
+    ],
+    "CarryGenerator_1+2": [
+      "_0033_02",
+      "_0034_01"
+    ],
+    "CarryGenerator_3+4+5": [
+      "_0033_02",
+      "_0032_03",
+      "glaze",
+      "green and yellow decoration particles"
+    ]
+  },
+  "reference_prefix": "Match3/CarryGenerator/",
+  "interpretation": "Effect records name both endpoint textures and intervening particles. Their order in the record is not proof of exact temporal endpoints; animation curves and the runtime selection for arbitrary activation periods are not decoded.",
+  "visual_comparison": {
+    "runtime_atlas_version": "3.5.9",
+    "rectangles_source": "tools/homescapes-reference/generator-historical-regions.json",
+    "crops": [
+      {
+        "file": "engine/art/homescapes/sprites/donut-maker-dough-1.png",
+        "appearance": "dark golden",
+        "sha256": "3e984d7fcf42477412cb4fdc4bee78a971da344ab3a23fe20c69ec32986c8dd2"
+      },
+      {
+        "file": "engine/art/homescapes/sprites/donut-maker-dough-2.png",
+        "appearance": "pale golden",
+        "sha256": "cdcde252d7cf39d4f337827709f0d8911873f421b855e9015b176faf221c2c3c"
+      },
+      {
+        "file": "engine/art/homescapes/sprites/donut-maker-dough-3.png",
+        "appearance": "white",
+        "sha256": "2440fa6e48b5c5aa140d29292d3f6e50bb13a66d82e9791d87d3f11d953db3dd"
+      }
+    ],
+    "bounded_conclusion": "The three recovered original crops differ in browning. The effect names and imagery support a possible white-to-golden visual progression, but do not identify which numbered texture names correspond to the pale versus darker golden crops. Do not claim exact order or arbitrary-period charge equivalence without metadata or gameplay frames."
+  }
+}
