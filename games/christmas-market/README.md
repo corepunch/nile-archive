@@ -24,6 +24,11 @@ Haptics accompany matches, special activations, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
+The thirty winter wishes each use an authored court contour and terrain focus,
+with snow, tinsel and ice introduced and revisited across the three episodes.
+See the [board progression](docs/board-progression.md) for each wish and the
+limits of the current difficulty tuning.
+
 ## Shared match engine and atlas
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,

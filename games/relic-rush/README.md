@@ -170,40 +170,40 @@ Hex amulets pay for restorations and decorations. Each scheduled first-clear gra
 
 ## Campaign: thirty hex levels
 
-Every stage uses its own connected active-cell mask within a radius-four hex grid. The original ten layouts are preserved and twenty lane variants add terrace, stair and seal excavations. See [current match-3 rules and the original ten board shapes](docs/match4-rules.md). Objectives below are taken from the current level configuration; all listed blockers must be cleared.
+Every stage uses its own connected active-cell mask within a radius-four hex grid. Their sand and lock placements make seams, interrupted approaches and thawing excavations; [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Objectives below are taken from the current level configuration; all listed blockers must be cleared.
 
 | # | Expedition | Moves | Score | Idols | Sand | Chains | Ice cells | Focus |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | 1 | First Light | 24 | 1100 | 8 | 0 | 0 | 0 | Match 3 in a row. |
-| 2 | The Jade Crescent | 28 | 1800 | 10 | 7 | 0 | 0 | Match 4 for a sun ray. |
-| 3 | Sunstone Spiral | 32 | 2300 | 12 | 12 | 0 | 0 | Dig out the spiral. |
-| 4 | The Vine Constellation | 34 | 2700 | 12 | 10 | 4 | 0 | Match to break chains. |
-| 5 | Three Paths Meet | 36 | 3100 | 14 | 13 | 4 | 0 | Combine sun rays. |
-| 6 | Winter Lotus | 38 | 3400 | 14 | 13 | 0 | 5 | Break the ice. |
-| 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Fire melts nearby ice. |
-| 8 | Prism Hollow | 42 | 4200 | 16 | 17 | 4 | 6 | Match 5 for a prism. |
-| 9 | The Sixfold Seal | 44 | 4600 | 18 | 19 | 5 | 6 | Combine rays. |
-| 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the ancient sun. |
-| 11 | The Long Terrace | 32 | 2500 | 12 | 14 | 0 | 0 | Dig terrace by terrace. |
-| 12 | Twelve Crates | 35 | 2900 | 13 | 15 | 5 | 0 | Chains first, then crates. |
-| 13 | Names in the Stone | 36 | 3200 | 14 | 16 | 6 | 0 | Sun rays reach the names. |
-| 14 | Static | 37 | 3500 | 14 | 17 | 7 | 0 | Pair rays to clear lines. |
-| 15 | The Frost Line | 38 | 3700 | 15 | 18 | 4 | 6 | Break the frost. |
-| 16 | Supper for Twelve | 40 | 4000 | 15 | 18 | 4 | 7 | Flames thaw their neighbours. |
-| 17 | The Torn Log | 41 | 4200 | 16 | 19 | 5 | 7 | Old ice takes two hits. |
-| 18 | Lantern Steps | 42 | 3000 | 12 | 12 | 2 | 4 | Nearly clear. Breathe. |
-| 19 | Under the Vines | 44 | 4600 | 18 | 20 | 6 | 8 | Vines above, frost below. |
-| 20 | The Archivist's Key | 46 | 5100 | 20 | 22 | 7 | 9 | Clear to the centre. |
-| 21 | Tomas's Trail | 34 | 2800 | 12 | 15 | 0 | 0 | Follow the prints. |
-| 22 | The Frozen Stair | 38 | 3400 | 14 | 16 | 2 | 8 | Thaw the stair. |
-| 23 | The Star Road | 39 | 3700 | 15 | 16 | 5 | 5 | Aim your prism well. |
-| 24 | Noon Shadow | 40 | 3900 | 16 | 20 | 4 | 5 | Dig in the shadow. |
-| 25 | Smoke on the Water | 36 | 4000 | 16 | 18 | 6 | 6 | Make every swap count. |
-| 26 | The Jade Deep | 42 | 4300 | 17 | 20 | 4 | 9 | Free the spring. |
-| 27 | Six Sun Gates | 44 | 4600 | 18 | 20 | 7 | 8 | Clear all six gates. |
-| 28 | The Last Terrace | 44 | 3200 | 13 | 13 | 2 | 4 | The board is on your side. |
-| 29 | The Silent Temple | 46 | 5200 | 20 | 23 | 8 | 10 | Every blocker, one floor. |
-| 30 | The Song Returns | 48 | 5500 | 22 | 24 | 8 | 10 | Clear the way to the socket. |
+| 2 | The Jade Crescent | 29 | 1800 | 10 | 7 | 0 | 0 | Match 4 for a sun ray. |
+| 3 | Sunstone Spiral | 32 | 2300 | 12 | 12 | 0 | 0 | Dig along the seam. |
+| 4 | The Vine Constellation | 35 | 2700 | 12 | 10 | 4 | 0 | Match to break chains. |
+| 5 | Three Paths Meet | 35 | 3100 | 14 | 13 | 4 | 0 | Rays cross gaps. |
+| 6 | Winter Lotus | 37 | 3400 | 14 | 13 | 0 | 5 | Match to break ice. |
+| 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Flames thaw nearby ice. |
+| 8 | Prism Hollow | 40 | 4200 | 16 | 17 | 4 | 6 | Match 5 for a prism. |
+| 9 | The Sixfold Seal | 43 | 4600 | 18 | 19 | 5 | 6 | Use rays across the seal. |
+| 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the buried centre. |
+| 11 | The Long Terrace | 33 | 2500 | 12 | 14 | 0 | 0 | Dig the long terrace. |
+| 12 | Twelve Crates | 36 | 2900 | 13 | 15 | 5 | 0 | Free chained relics. |
+| 13 | Names in the Stone | 37 | 3200 | 14 | 16 | 6 | 0 | Aim rays along the stone. |
+| 14 | Static | 38 | 3500 | 14 | 17 | 7 | 0 | Work around the broken seam. |
+| 15 | The Frost Line | 39 | 3700 | 15 | 18 | 4 | 6 | Clear chains and ice. |
+| 16 | Supper for Twelve | 40 | 4000 | 15 | 18 | 4 | 7 | Flames thaw nearby ice. |
+| 17 | The Torn Log | 42 | 4200 | 16 | 19 | 5 | 7 | Some ice takes two hits. |
+| 18 | Lantern Steps | 40 | 3000 | 12 | 12 | 2 | 4 | Clear the open terrace. |
+| 19 | Under the Vines | 45 | 4600 | 18 | 20 | 6 | 8 | Dig beneath the locks. |
+| 20 | The Archivist's Key | 46 | 5100 | 20 | 22 | 7 | 9 | Open the central approach. |
+| 21 | Tomas's Trail | 35 | 2800 | 12 | 15 | 0 | 0 | Follow the buried seam. |
+| 22 | The Frozen Stair | 40 | 3400 | 14 | 16 | 2 | 8 | Thaw the frozen approach. |
+| 23 | The Star Road | 40 | 3700 | 15 | 16 | 5 | 5 | Choose a colour for the prism. |
+| 24 | Noon Shadow | 41 | 3900 | 16 | 20 | 4 | 5 | Excavate across the shadow. |
+| 25 | Smoke on the Water | 38 | 4000 | 16 | 18 | 6 | 6 | Work through the locks. |
+| 26 | The Jade Deep | 43 | 4300 | 17 | 20 | 4 | 9 | Thaw the buried ground. |
+| 27 | Six Sun Gates | 45 | 4600 | 18 | 20 | 7 | 8 | Clear the scattered locks. |
+| 28 | The Last Terrace | 42 | 3200 | 13 | 13 | 2 | 4 | Clear the open terrace. |
+| 29 | The Silent Temple | 47 | 5200 | 20 | 23 | 8 | 10 | Dig through the temple floor. |
+| 30 | The Song Returns | 49 | 5500 | 22 | 24 | 8 | 10 | Uncover the final approach. |
 
 Ice can require more than one hit. Board patterns progress from the introductory field to crescents, spirals, branching lines, rings and the final central seal.
 
@@ -254,7 +254,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 ## Play
 
-- Ten distinct hex board masks with 43–61 active cells. Contiguous straight lines of three or more identical relics match along the three hex axes; bends, diamonds and rings do not count. Swaps without a match animate back and do not spend a move.
+- Thirty distinct hex board masks with 48–58 active cells. Contiguous straight lines of three or more identical relics match along the three hex axes; bends, diamonds and rings do not count. Swaps without a match animate back and do not spend a move.
 - Three in a line → ordinary match; four → directional lightning relic; five or more → sun prism. Crossing lines do not create bombs; existing bombs and dynamite retain their effects.
 - Swap two specials for a combination attack; prism + special converts that color before detonation.
 - Ancient sand is excavated by matches above it. Sand and ice have [thin rims around the cell](docs/asset-catalogue.md#terrain-blockers-and-board-interaction). Chained and frozen relics cannot move until matched or hit. Double ice needs two hits. Matched flame relics also thaw adjacent ice.
@@ -304,7 +304,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Verification
 
-- `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, ten distinct connected board masks, 1,000 opening boards (100 seeds × 10 levels) without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 120 greedy campaign trials (extended: `make test-extended`). The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
+- `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, connected board masks and seeded opening boards without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 120 greedy campaign trials (extended: `make test-extended`). The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
 - `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. Every one of the 36 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
@@ -367,7 +367,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-Current scope is an offline prototype: ten hex levels, ten story wonders plus 86 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
+Current scope is an offline prototype: thirty hex levels, ten story wonders plus 86 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
 
 ## Fast rule tests
 

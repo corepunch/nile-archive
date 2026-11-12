@@ -1,79 +1,120 @@
--- Campaign content only; all match mechanics live in engine/match3.lua.
-local function level(name, lesson, moves, score, relics, soil, chains, ice)
-    return {name=name, lesson=lesson, moves=moves, score=score, relics=relics, soil=soil, chains=chains, ice=ice}
+-- Campaign data. Each court has its own contour and terrain priority.
+local function level(name, lesson, moves, score, relics, soil, chains, ice, ice_layers, mask, terrain)
+    return {name=name, lesson=lesson, moves=moves, score=score, relics=relics,
+        soil=soil, chains=chains, ice=ice, ice_layers=ice_layers, mask=mask, terrain=terrain}
 end
-local levels = {
-    level("Welcome Lights", "Match 3 in a row.", 24, 1100, 8, 0, 0, 0),
-    level("Lumber Lane", "Match 4 for a striped treat.", 28, 1800, 10, 7, 0, 0),
-    level("Gingerbread Swirl", "Clear the snow.", 32, 2300, 12, 12, 0, 0),
-    level("Cocoa Corner", "Match to free the tinsel.", 34, 2700, 12, 10, 4, 0),
-    level("Toymaker Lane", "Combine striped treats.", 36, 3100, 14, 13, 4, 0),
-    level("Ribbon Wishes", "Break the ice.", 38, 3400, 14, 13, 0, 5),
-    level("Candlelight Circle", "Candy canes melt ice.", 40, 3800, 16, 15, 4, 5),
-    level("Carousel Stars", "Match 5 for a rainbow star.", 42, 4200, 16, 17, 4, 6),
-    level("Skating Evening", "Combine rays.", 44, 4600, 18, 19, 5, 6),
-    level("Under the Big Fir", "Clear the big fir.", 46, 5000, 20, 22, 6, 6),
-}
-local shapes = {"Hexagon", "Crescent", "Diamond", "Butterfly", "Hourglass", "Lotus", "Ring", "Twin courts", "Crossroads", "Sun crown"}
 
-local masks = {
-    "1111111111111111111111111111111111111111111111111111111111111",
-    "1111111111111111111111111111111111111111111111100011110011100",
-    "0000011111011111101111111001111111001111111011111101111100000",
-    "1000111001111000111111111111111111111111111110001111001110001",
-    "0111000110011111111111111111111111111111111111111100110001110",
-    "1000101111001111100111111011111111101111110011111001111010001",
-    "1111111111111111111110011111100011111100111111111111111111111",
-    "1111111111111111111111111100011100011111111111111111111111111",
-    "1101111111101111101111111111111111111111111011111011111111011",
-    "1111111111111111110011111100011111100011111111111111111111111",
-}
-local terrain = {
-    {84,83,82,81,80,80,65,64,63,62,81,82,61,40,45,44,63,82,84,63,42,21,20,45,64,83,80,65,44,23,2,21,40,65,84,81,60,45,24,23,42,61,80,82,61,40,45,44,63,82,83,62,61,60,65,84,84,83,82,81,80},
-    {40,39,38,37,36,41,20,19,18,17,38,42,21,0,-1,-2,19,40,43,22,1,20,19,0,21,42,44,23,2,21,40,21,2,23,44,44,23,2,21,22,3,24,45,44,23,2,3,4,25,46,44,23,24,25,26,47,44,45,46,47,48},
-    {50,49,48,54,53,52,39,38,37,36,54,54,41,28,27,26,37,48,49,36,30,17,16,27,38,49,51,38,25,12,6,17,28,39,50,52,39,26,13,12,30,41,52,53,40,27,26,25,36,54,54,41,40,39,38,49,48,54,53,52,51},
-    {4,54,54,54,4,54,3,53,53,3,54,54,53,2,52,2,53,54,54,53,52,1,1,52,53,54,4,3,2,1,0,1,2,3,4,54,53,52,1,1,52,53,54,54,53,2,52,2,53,54,54,3,53,53,3,54,4,54,54,54,4},
-    {44,44,44,44,4,44,43,43,43,3,44,44,43,42,42,2,43,44,44,43,42,41,1,42,43,44,4,3,2,1,0,1,2,3,4,44,43,42,1,41,42,43,44,44,43,2,42,42,43,44,44,3,43,43,43,44,4,44,44,44,44},
-    {44,44,44,44,44,43,23,23,23,23,43,42,22,2,2,2,22,42,41,21,1,21,21,1,21,41,40,20,0,20,40,20,0,20,40,41,21,1,21,21,1,21,41,42,22,2,2,2,22,42,43,23,23,23,23,43,44,44,44,44,44},
-    {40,41,42,43,44,41,20,21,22,23,44,42,21,0,1,2,23,44,43,22,1,20,21,2,23,44,44,23,2,21,40,21,2,23,44,44,23,2,21,20,1,22,43,44,23,2,1,0,21,42,44,23,22,21,20,41,44,43,42,41,40},
-    {4,44,44,44,4,44,3,43,43,3,44,4,43,2,42,2,43,44,44,43,2,1,1,42,43,44,44,43,42,41,0,41,42,43,44,44,43,42,1,1,2,43,44,44,43,2,42,2,43,4,44,3,43,43,3,44,4,44,44,44,4},
-    {21,20,24,23,22,23,2,1,0,4,23,20,4,23,22,21,0,24,22,1,20,44,43,22,1,20,24,3,22,41,60,44,23,2,21,20,4,23,42,41,20,4,23,21,0,24,23,22,1,20,22,1,0,4,3,22,23,22,21,20,24},
-    {84,83,82,81,80,80,65,64,63,62,81,82,61,40,45,44,63,82,84,63,42,21,20,45,64,83,80,65,44,23,2,21,40,65,84,81,60,45,24,23,42,61,80,82,61,40,45,44,63,82,83,62,61,60,65,84,84,83,82,81,80},
-}
-for i, entry in ipairs(levels) do
-    entry.mask, entry.terrain = masks[i], terrain[i]
-    entry.ice_layers = i >= 7 and 2 or 1
+-- Rank cells around two authored focal points. Snow uses the first ranks;
+-- the engine interleaves tinsel and then places ice within the inner court.
+local function terrain(aq, ar, bq, br, direction)
+    local ranks, index = {}, 1
+    local function distance(q, r, x, y)
+        return math.max(math.abs(q-x), math.abs(r-y), math.abs(q+r-x-y))
+    end
+    for q = -4, 4 do
+        for r = math.max(-4, -q-4), math.min(4, -q+4) do
+            ranks[index] = math.min(distance(q, r, aq, ar), distance(q, r, bq, br)) * 100
+                + direction * (q * 5 + r) + index / 100
+            index = index + 1
+        end
+    end
+    return ranks
 end
--- Episodes two and three (docs/story.md#levels): authored lane variants, with a
--- gentler restart and a breather before each final stretch. All contours stay connected.
-local later = {
-    {level("Carols and Crumbs", "Dig out the square.", 32, 2500, 12, 14, 0, 0), "1111111111111111111111111111111111011111111111111111111111111", 1},
-    {level("Word from Fenwick", "Unwrap the tangled treats.", 35, 2900, 13, 15, 5, 0), "0000001111101111110111111101111111001111110111111011111000000", 1},
-    {level("Sawdust Row", "Shooting stars reach far.", 36, 3200, 14, 16, 6, 0), "1111111111011110001111100011011101000011111000111101111111111", 1},
-    {level("The Bench by the Fir", "Pair specials for a crossing.", 37, 3500, 14, 17, 7, 0), "1111111111111111111111111100011100001111111111111111111111111", 1},
-    {level("Tangled Tinsel", "Work from the outside in.", 38, 3700, 15, 16, 9, 0), "1000101111001111100111111011111111001111110011111001111010001", 1},
-    {level("Paper and String", "Break the ice.", 40, 4000, 15, 18, 4, 7), "1111111111111111111111111101111111111111111111111111111111111", 1},
-    {level("Twelve Horses", "Candy canes melt ice.", 41, 4200, 16, 19, 5, 7), "1111111111111111111110011111100011011100111111111111111111111", 1},
-    {level("Fairy Lights", "Nearly clear. Have a cocoa.", 42, 3000, 12, 12, 2, 4), "1110011110111111110111111100111110001111110111111110111100111", 1},
-    {level("A Hundred Flames", "Old ice takes two hits.", 44, 4600, 18, 20, 6, 8), "1000111001111000111111111111111111011111111110001111001110001", 2},
-    {level("A Letter Forty Years Late", "Clear between the doors.", 46, 5100, 20, 22, 7, 9), "1111111111111111111110011111100011111100111111111111111111111", 2},
-    {level("Carolers Court", "The tuba's watching.", 34, 2800, 12, 15, 0, 0), "1111111111011111101111110011111100011111110111111111111111111", 1},
-    {level("Many Hands", "Thread the narrow path.", 38, 3400, 14, 16, 6, 0), "0011110111111111111111111000111110001111111011111111110111100", 1},
-    {level("Painted Horses", "Rainbow stars clear a colour.", 39, 3700, 15, 16, 5, 5), "1101111111101111101111111111111111011111111011111011111111011", 1},
-    {level("Frozen Fountain", "Free the ribbons.", 40, 3900, 16, 20, 4, 6), "0111001111001111100111111001111111001111110011111001111000110", 2},
-    {level("Snow on the Line", "Make every swap count.", 36, 4000, 16, 18, 6, 6), "0111110111111011111111111111111111011111111111101111110111110", 2},
-    {level("Lantern Ice", "Clear the rink.", 34, 4300, 17, 20, 4, 9), "1000101111001111100111111001111111101111110011111001111010001", 2},
-    {level("Every Light in Bellmere", "Light every corner.", 38, 4800, 18, 21, 7, 8), "1111111111111111101111100011111100011111100111111111111111111", 2},
-    {level("The Last Train", "The board is on your side.", 44, 3200, 13, 13, 2, 4), "1111111111111111111111111111111111101111111111111111111111111", 1},
-    {level("The Big Fir", "One last drift.", 37, 5200, 20, 23, 8, 10), "1101111111101111101111111011111111111111111011111011111111011", 2},
-    {level("Light the Christmas Tree", "Light our Christmas tree!", 33, 5500, 22, 24, 8, 10), masks[10], 2},
+
+local levels = {
+    -- 01: Welcome Lights
+    level("Welcome Lights", "Match three treats in a line.", 24, 1100, 8, 0, 0, 0, 1,
+        "0011101111111111111111111111110111111111111111111111111101111", terrain(-1, 0, 1, -1, 1)),
+    -- 02: Lumber Lane
+    level("Lumber Lane", "Match four to make a striped treat.", 28, 1800, 10, 7, 0, 0, 1,
+        "0111101111101111110110111111111111111111111111111111111101111", terrain(0, -1, 1, 0, -1)),
+    -- 03: Gingerbread Swirl
+    level("Gingerbread Swirl", "Match on snow to clear it.", 32, 2300, 12, 12, 0, 0, 1,
+        "1110011110011111011111111111111111111110111111111111111100111", terrain(-2, 1, 1, 0, 1)),
+    -- 04: Cocoa Corner
+    level("Cocoa Corner", "Match through tinsel to free treats.", 34, 2700, 12, 10, 4, 0, 1,
+        "0111101111101111111110011101100111011101111111111111111100111", terrain(1, -2, -1, 1, -1)),
+    -- 05: Toymaker Lane
+    level("Toymaker Lane", "Use striped treats across the court.", 36, 3100, 14, 13, 4, 0, 1,
+        "1001111011111111111111111111111111011101111111111111101111000", terrain(-2, 0, 2, -1, 1)),
+    -- 06: Ribbon Wishes
+    level("Ribbon Wishes", "Match on ice to crack it.", 38, 3400, 14, 13, 0, 5, 1,
+        "0011101111011111101111111111111011111111111111111011111011111", terrain(0, 1, 1, -2, -1)),
+    -- 07: Candlelight Circle
+    level("Candlelight Circle", "Candy canes also thaw nearby ice.", 40, 3800, 16, 15, 4, 5, 2,
+        "1110011110111111010111111101101111111111111111111111111101111", terrain(-1, 1, 2, -1, 1)),
+    -- 08: Carousel Stars
+    level("Carousel Stars", "Match five to make a rainbow star.", 42, 4200, 16, 17, 4, 6, 2,
+        "0111101111101111111111110011100011011100011111111111111101111", terrain(0, -1, 0, 1, 0)),
+    -- 09: Skating Evening
+    level("Skating Evening", "Striped treats clear a whole line.", 44, 4600, 18, 19, 5, 6, 2,
+        "0011101111111111110101111101111111111111111111111011111011110", terrain(-2, 1, 2, -2, 1)),
+    -- 10: Under the Big Fir
+    level("Under the Big Fir", "Clear snow, tinsel and ice.", 46, 5000, 20, 22, 6, 6, 2,
+        "0111101111101111111111011101110011011100111111111011111011111", terrain(0, 1, 0, -2, -1)),
+    -- 11: Carols and Crumbs
+    level("Carols and Crumbs", "Clear the snow around the square.", 32, 2500, 12, 14, 0, 0, 1,
+        "1110011110011111101111111111111111111110111111111111111100111", terrain(-1, -1, 1, 1, 1)),
+    -- 12: Word from Fenwick
+    level("Word from Fenwick", "Free tinsel along the snowy court.", 35, 2900, 13, 15, 5, 0, 1,
+        "0011101111101111110110111111111111011111111111111111111011111", terrain(-2, 1, 1, -1, -1)),
+    -- 13: Sawdust Row
+    level("Sawdust Row", "Use a striped treat to reach across.", 36, 3200, 14, 16, 6, 0, 1,
+        "0111101111101111110111111101111011011111111111111011111011111", terrain(1, -2, -1, 1, 1)),
+    -- 14: The Bench by the Fir
+    level("The Bench by the Fir", "Open the court from either side.", 37, 3500, 14, 17, 7, 0, 1,
+        "0011101111011111101110011111110011111100111011111101111111111", terrain(-2, 0, 2, -1, -1)),
+    -- 15: Tangled Tinsel
+    level("Tangled Tinsel", "Untangle tinsel through the snow.", 38, 3700, 15, 16, 9, 0, 1,
+        "1110011111111111011110011011110011011111111111111101111101111", terrain(0, -2, 1, 1, 1)),
+    -- 16: Paper and String
+    level("Paper and String", "Crack the ice around the paper.", 40, 4000, 15, 18, 4, 7, 1,
+        "0111101111101111110111111101101111111111110111111011111011111", terrain(-1, 1, 1, -1, -1)),
+    -- 17: Twelve Horses
+    level("Twelve Horses", "Thaw ice across the court.", 41, 4200, 16, 19, 5, 7, 1,
+        "0011101111011111101110011101100111111111011011111111111111111", terrain(-2, 1, 2, -1, 1)),
+    -- 18: Fairy Lights
+    level("Fairy Lights", "Take a breath and clear the snow.", 42, 3000, 12, 12, 2, 4, 1,
+        "0111101111101111111101111011111111011111111111111011111011111", terrain(0, 0, 1, -2, -1)),
+    -- 19: A Hundred Flames
+    level("A Hundred Flames", "Remember: thick ice takes two hits.", 44, 4600, 18, 20, 6, 8, 2,
+        "1110011110111111011111111101110111111111111011111101111101111", terrain(-1, -1, 2, -1, 1)),
+    -- 20: A Letter Forty Years Late
+    level("A Letter Forty Years Late", "Open both sides of the court.", 46, 5100, 20, 22, 7, 9, 2,
+        "0011101111111111110110111101100111011100111111111011111111111", terrain(-2, 1, 1, 0, -1)),
+    -- 21: Carolers Court
+    level("Carolers Court", "Clear the snow for the carolers.", 34, 2800, 12, 15, 0, 0, 1,
+        "0111101111101111110110111101111111111111111111111111111100111", terrain(0, -1, 1, 1, 1)),
+    -- 22: Many Hands
+    level("Many Hands", "Free tinsel along the passage.", 38, 3400, 14, 16, 6, 0, 1,
+        "1110011111111111011111111011100011011100111111111101111100111", terrain(-2, 0, 1, -1, -1)),
+    -- 23: Painted Horses
+    level("Painted Horses", "Rainbow stars clear one colour.", 39, 3700, 15, 16, 5, 5, 1,
+        "0011101111011111101111111111111111111101111011111101111101111", terrain(-1, 1, 2, -2, 1)),
+    -- 24: Frozen Fountain
+    level("Frozen Fountain", "Thaw the ice around the fountain.", 40, 3900, 16, 16, 4, 5, 2,
+        "0111101111101111110111011111110011011100110111111011111111111", terrain(0, -1, 0, 1, 0)),
+    -- 25: Snow on the Line
+    level("Snow on the Line", "Clear the snow and free the treats.", 42, 4000, 16, 18, 6, 6, 2,
+        "1110011110111111011111111101101111111111111011111101111111111", terrain(-2, 1, 1, -1, 1)),
+    -- 26: Lantern Ice
+    level("Lantern Ice", "Thaw the ice around the lanterns.", 44, 4300, 17, 20, 4, 9, 2,
+        "0011101111111111110111011101110011011110011111111011111011111", terrain(-1, 0, 1, -2, -1)),
+    -- 27: Every Light in Bellmere
+    level("Every Light in Bellmere", "Clear the snow across the court.", 38, 4800, 18, 21, 7, 8, 2,
+        "0111101111101111111100011011100011011111111011111101111101111", terrain(-2, 1, 2, -1, 1)),
+    -- 28: The Last Train
+    level("The Last Train", "A little snow before the finale.", 44, 3200, 13, 13, 2, 4, 1,
+        "1110011110011111101111111111110111111111111011111101111111111", terrain(0, 0, 1, -1, -1)),
+    -- 29: The Big Fir
+    level("The Big Fir", "Untangle and thaw the snowy court.", 47, 5200, 20, 23, 8, 10, 2,
+        "0011101111101111110110011101100111111110111111111011111011111", terrain(-1, 1, 2, -1, 1)),
+    -- 30: Light the Christmas Tree
+    level("Light the Christmas Tree", "Clear the snow, tinsel and ice.", 48, 5500, 22, 24, 8, 10, 2,
+        "1110011111111111011110111011100111011100111011111101111110111", terrain(0, -2, 1, 1, -1)),
 }
-for i, entry in ipairs(later) do
-    local l = entry[1]
-    l.mask, l.ice_layers = entry[2], entry[3]
-    l.terrain = terrain[(i - 1) % 10 + 1]
-    levels[#levels + 1] = l
-    shapes[#shapes + 1] = l.name
-end
+
+local shapes = {}
+for i, entry in ipairs(levels) do shapes[i] = entry.name end
 
 return {levels=levels, shapes=shapes, wonder_levels={1,4,7,9,13,16,19,23,26,29}}

@@ -113,7 +113,10 @@ end
 do
     local g = dead_board(0)
     setup(g)
-    for q = 2-rules.MATCH_MIN, 1 do g.tiles[rules.hex_index(q, 0)] = rules.tile(rules.RELIC_IDOL) end
+    for q = 2-rules.MATCH_MIN, 1 do
+        local i = rules.hex_index(q, 0)
+        g.active[i], g.tiles[i] = true, rules.tile(rules.RELIC_IDOL)
+    end
     local rng, moves = g.rng, g.moves
     R.board_update(.02)
     check(R.phase == R.PH_CLEAR and g.rng == rng and g.moves == moves, "ready group clears before hints/recovery")
@@ -129,7 +132,8 @@ do
         local q = column - 5
         for offset = 1, #kinds do
             local i = rules.hex_index(q, math.max(-4, -q - 4) + offset - 1)
-            if g.active[i] then g.tiles[i] = rules.tile(tonumber(kinds:sub(offset, offset))) end
+            local kind = tonumber(kinds:sub(offset, offset))
+            g.active[i], g.tiles[i] = kind ~= nil, rules.tile(kind or -1)
             g.chain[i], g.ice[i] = 0, 0
         end
     end
@@ -257,7 +261,11 @@ do
         check(R.intro.t == 0, "island pauses entrance")
         R.on_island = false; R.board_update(.1)
         check(R.intro.t > 0, "entrance advances when visible")
-        local at = R.cell_pos(rules.hex_center())
+        local resting = rules.hex_center()
+        for i = 0, rules.CELLS-1 do
+            if g.active[i] and g.chain[i] == 0 and g.ice[i] == 0 then resting = i; break end
+        end
+        local at = R.cell_pos(resting)
         R.board_input{released=true,pos=at,press_pos=at}
         check(not R.intro:done(), "opening release cannot skip the entrance")
         R.board_input{pressed=true,down=true,pos=at,press_pos=at}
@@ -267,11 +275,11 @@ do
         check(R.phase == R.PH_IDLE and not R.intro, "completed entrance returns to idle")
         R.present_board(); R.board_update(3)
         check(R.phase == R.PH_IDLE and not R.intro, "natural completion releases the entrance too")
-        local _, pos, scale, _, aspect = R.piece_pose(rules.hex_center(), 0)
+        local _, pos, scale, _, aspect = R.piece_pose(resting, 0)
         near(scale, 1, "finished gem has no enlargement")
         near(aspect, 1, "finished gem has no squash")
         near((pos-at):len(), 0, "finished gem sits at its cell centre")
-        check(R.cell_at(pos) == rules.hex_center(), "resting cell input matches its pose")
+        check(R.cell_at(pos) == resting, "resting cell input matches its pose")
         if testing.game == "relic-rush" then
             local left = R.cell_pos(rules.hex_index(-4, 0)).x - R.HEX_R
             local right = R.SCREEN_W - R.cell_pos(rules.hex_index(4, 0)).x - R.HEX_R
