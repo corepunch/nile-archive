@@ -14,11 +14,11 @@ public enum Special: String {
 }
 
 public enum Piece: Equatable {
-    case gem(Int), special(Special), donut, cherry
+    case gem(Int), special(Special), donut, cherry, cookie(Int), hazelnut(Int)
     var canSwap: Bool {
         switch self {
-        case .gem, .special: return true
-        case .donut, .cherry: return false
+        case .gem, .special, .donut, .cookie, .hazelnut: return true
+        case .cherry: return false
         }
     }
 
@@ -36,25 +36,48 @@ public enum Piece: Equatable {
 public struct Cell {
     public var piece: Piece?
     public var box = 0
-    public var cookie = 0
+    public var cookie: Int {
+        get { if case .cookie(let strength) = piece { return strength }; return 0 }
+        set { piece = newValue > 0 ? .cookie(newValue) : nil }
+    }
+    public var jelly = 0
+    public var boxColor: Int?
+    public var platter: Position?
+    public var born = false
+    public var statue = 0
+    public var cookieStack = 0
+    public var maker: Position?
+    public var carrySpawn = false
     public var ice = 0
     public var chain = 0
     public var mirror = false
     public var carpet = false
     public var exit = false
 
-    var solid: Bool { box > 0 || cookie > 0 }
-    var held: Bool { ice > 0 || chain > 0 }
+    var solid: Bool { box > 0 || jelly > 0 || platter != nil || statue > 0 || cookieStack > 0 || maker != nil }
+    var held: Bool { solid || ice > 0 || chain > 0 }
+    var matchColor: Int? { solid ? nil : piece?.color }
     var canFall: Bool { !solid && !held && piece != .cherry }
 
     public var artModels: [Attributes] {
         var models: [Attributes] = []
         if carpet { models.append(["modelId": "JELLY"]) }
-        if box > 0 { models.append(["modelId": "BOX", "level": String(box)]) }
+
         if cookie > 0 { models.append(["modelId": "TRASH", "level": String(cookie)]) }
         if case .gem(let color) = piece { models.append(["modelId": "NORMAL", "color": String(color)]) }
         if piece == .donut { models.append(["modelId": "CARRY"]) }
         if piece == .cherry { models.append(["modelId": "CHERRY"]) }
+        if case .hazelnut(let strength) = piece { models.append(["modelId": "TRASH_STONE", "level": String(strength)]) }
+        if jelly > 0 { models.append(["modelId": "HONEY", "level": String(jelly)]) }
+        if box > 0 {
+            var model = ["modelId": boxColor == nil ? "BOX" : "COLOR_BOX", "level": String(box)]
+            if let color = boxColor { model["color"] = String(color) }
+            models.append(model)
+        }
+        if platter != nil { models.append(["modelId": "TARGET_GEN"]) }
+        if maker != nil { models.append(["modelId": "CARRY_GEN"]) }
+        if statue > 0 { models.append(["modelId": "STATUE", "level": String(statue)]) }
+        if cookieStack > 0 { models.append(["modelId": "COOKIE_BOX", "level": String(cookieStack)]) }
         if ice > 0 { models.append(["modelId": "ICE", "level": String(ice)]) }
         if chain > 0 {
             models.append(["modelId": "LOCK", "level": String(chain), "mirror": mirror ? "true" : "false"])
@@ -85,14 +108,23 @@ struct Match {
 
 public struct Board {
     public static let supportedModels: Set<String> = ["NORMAL", "RANDOM_CHIP", "BOX", "TRASH", "ICE", "LOCK",
-        "JELLY", "CARRY", "CARRY_EXIT", "CHERRY", "BOMB", "LINE", "LIGHTNING", "BORN", "NONE_CHIP"]
-    public static let supportedGoals: Set<String> = ["CHIPS", "CELL_JELLY", "BOX", "TRASH", "ICE", "LOCK", "CARRY", "COLLECT_PIGGY"]
+        "JELLY", "CARRY", "CARRY_EXIT", "CHERRY", "BOMB", "LINE", "LIGHTNING", "BORN", "NONE_CHIP", "FISH", "HONEY", "COLOR_BOX", "TRASH_STONE", "TARGET_GEN", "STATUE", "COOKIE_BOX", "CARRY_GEN", "CARRY_GEN_CELLS"]
+    public static let supportedGoals: Set<String> = ["CHIPS", "CELL_JELLY", "BOX", "TRASH", "ICE", "LOCK", "CARRY", "COLLECT_PIGGY", "COLOR_BOX", "TRASHSTONE", "TARGET_GENERATOR", "STATUE"]
 
     public let level: Level
     public private(set) var cells: [Position: Cell] = [:]
     public private(set) var remaining: Int
     public private(set) var goals: [Progress]
     public private(set) var stalled = false
+    public struct CarryMaker {
+        public let period: Int
+        public let batch: Int
+        public var hits = 0
+    }
+    public private(set) var makers: [Position: CarryMaker] = [:]
+    private var pendingCookies = 0
+    public private(set) var platters: [Position: Int] = [:]
+    private var refillRules: [RefillRule] = []
     private var seed: UInt64
     private let positions: [Position]
     private let weights: [(color: Int, weight: Int)]
@@ -111,6 +143,7 @@ public struct Board {
         let unsupportedGoals = Set(level.goals.map(\.type)).subtracting(Self.supportedGoals)
         if !unsupportedGoals.isEmpty { throw BoardError.unsupported(unsupportedGoals.sorted()) }
 
+        refillRules = try RefillRule.read(level)
         var random: [Position: [Int]] = [:]
         for source in level.cells {
             var cell = Cell()
@@ -124,6 +157,35 @@ public struct Board {
                         random[source.position] = level.patterns[index]
                     }
                 case "BOX": cell.box = strength
+                case "COLOR_BOX":
+                    guard let color = model["color"].flatMap(Int.init), (0...5).contains(color) else {
+                        throw BoardError.unsupported(["COLOR_BOX color"])
+                    }
+                    cell.box = strength; cell.boxColor = color
+                case "HONEY": cell.jelly = strength
+                case "TRASH_STONE": cell.piece = .hazelnut(strength)
+                case "STATUE": cell.statue = strength
+                case "COOKIE_BOX": cell.cookieStack = strength
+                case "CARRY_GEN_CELLS": cell.carrySpawn = true
+                case "CARRY_GEN":
+                    if let x = model["mainX"].flatMap(Int.init), let y = model["mainY"].flatMap(Int.init) {
+                        cell.maker = Position(x, y)
+                    } else {
+                        guard let period = model["carryGenActivatePer"].flatMap(Int.init), period > 0,
+                              let batch = model["carryGenMax"].flatMap(Int.init), batch > 0 else {
+                            throw BoardError.unsupported(["CARRY_GEN configuration"])
+                        }
+                        cell.maker = source.position
+                        makers[source.position] = CarryMaker(period: period, batch: batch)
+                    }
+                case "TARGET_GEN":
+                    if let x = model["mainX"].flatMap(Int.init), let y = model["mainY"].flatMap(Int.init) {
+                        cell.platter = Position(x, y)
+                    } else {
+                        cell.platter = source.position
+                        platters[source.position] = strength
+                    }
+                case "FISH": cell.piece = .special(.plane)
                 case "TRASH": cell.cookie = strength
                 case "ICE": cell.ice = strength
                 case "LOCK": cell.chain = strength; cell.mirror = model["mirror"] == "true"
@@ -134,12 +196,42 @@ public struct Board {
                 case "BOMB": cell.piece = .special(.bomb)
                 case "LINE": cell.piece = .special(model["line_orient"] == "0" ? .horizontal : .vertical)
                 case "LIGHTNING": cell.piece = .special(.rainbow)
-                case "BORN", "NONE_CHIP": break
+                case "BORN": cell.born = true
+                case "NONE_CHIP": break
                 default: throw BoardError.unsupported([model["modelId"] ?? "(missing model ID)"])
                 }
             }
             cells[source.position] = cell
         }
+        // Legacy XML stores only the top-left anchor; newer files also name the other three cells.
+        for anchor in platters.keys.sorted() {
+            for p in [anchor, anchor.offset(1, 0), anchor.offset(0, -1), anchor.offset(1, -1)] {
+                guard let cell = cells[p], cell.platter == nil || cell.platter == anchor,
+                      cell.piece == nil, cell.box == 0, cell.jelly == 0 else {
+                    throw BoardError.unsupported(["TARGET_GEN footprint at \(anchor.x),\(anchor.y)"])
+                }
+                cells[p]?.platter = anchor
+            }
+        }
+        for cell in cells.values {
+            if let anchor = cell.platter, platters[anchor] == nil {
+                throw BoardError.unsupported(["TARGET_GEN missing anchor"])
+            }
+        }
+        for anchor in makers.keys.sorted() {
+            for p in [anchor, anchor.offset(1, 0), anchor.offset(0, -1), anchor.offset(1, -1)] {
+                guard let cell = cells[p], cell.maker == nil || cell.maker == anchor,
+                      cell.piece == nil, cell.box == 0, cell.jelly == 0, cell.platter == nil else {
+                    throw BoardError.unsupported(["CARRY_GEN footprint"])
+                }
+                cells[p]?.maker = anchor
+            }
+        }
+        if cells.values.contains(where: { cell in cell.maker.map { makers[$0] == nil } ?? false }) {
+            throw BoardError.unsupported(["CARRY_GEN missing anchor"])
+        }
+        // Maker-controlled boards must not also create the same donuts through normal refill.
+        if !makers.isEmpty { refillRules.removeAll { $0.goal == "CARRY" } }
         for p in positions where cells[p]?.piece == nil && cells[p]?.solid == false {
             let color = nextColor(at: p, restricted: random[p], avoidMatch: true)
             cells[p]?.piece = .gem(color)
@@ -201,7 +293,7 @@ public struct Board {
     private func hasMove() -> Bool { hint() != nil }
 
     private mutating func reshuffle() {
-        let movable = positions.filter { cells[$0]?.held == false && cells[$0]?.piece?.color != nil }
+        let movable = positions.filter { cells[$0]?.held == false && cells[$0]?.matchColor != nil }
         let old = cells
         for _ in 0..<24 {
             for p in movable { cells[p]?.piece = nil }
@@ -230,12 +322,12 @@ public struct Board {
     }
 
     private func matchesAt(_ p: Position, placing color: Int? = nil) -> Bool {
-        guard let color = color ?? cells[p]?.piece?.color else { return false }
+        guard let color = color ?? cells[p]?.matchColor else { return false }
         for (dx, dy) in [(1, 0), (0, 1)] {
             var count = 1
             for sign in [-1, 1] {
                 var q = p.offset(dx * sign, dy * sign)
-                while cells[q]?.piece?.color == color {
+                while cells[q]?.matchColor == color {
                     count += 1
                     q = q.offset(dx * sign, dy * sign)
                 }
@@ -244,7 +336,7 @@ public struct Board {
         }
         for dx in [-1, 1] {
             for dy in [-1, 1] where [p.offset(dx, 0), p.offset(0, dy), p.offset(dx, dy)]
-                .allSatisfy({ cells[$0]?.piece?.color == color }) { return true }
+                .allSatisfy({ cells[$0]?.matchColor == color }) { return true }
         }
         return false
     }
@@ -269,11 +361,11 @@ public struct Board {
         }
 
         for p in positions {
-            guard let color = cells[p]?.piece?.color else { continue }
+            guard let color = cells[p]?.matchColor else { continue }
             for (dx, dy, special) in [(1, 0, Special.horizontal), (0, 1, .vertical)] {
-                if cells[p.offset(-dx, -dy)]?.piece?.color == color { continue }
+                if cells[p.offset(-dx, -dy)]?.matchColor == color { continue }
                 var q = p.offset(dx, dy), line: Set<Position> = [p]
-                while cells[q]?.piece?.color == color {
+                while cells[q]?.matchColor == color {
                     line.insert(q)
                     q = q.offset(dx, dy)
                 }
@@ -282,7 +374,7 @@ public struct Board {
                 }
             }
             let square = [p.offset(1, 0), p.offset(0, 1), p.offset(1, 1)]
-            if square.allSatisfy({ cells[$0]?.piece?.color == color }) {
+            if square.allSatisfy({ cells[$0]?.matchColor == color }) {
                 add(Match(cells: Set(square + [p]), longest: 0, straight: nil, square: true, intersection: false))
             }
         }
@@ -342,7 +434,7 @@ public struct Board {
         } else if a == .rainbow || b == .rainbow {
             let replacement = a == .rainbow ? b : a
             if let color = mostCommonColor() {
-                for p in positions where cells[p]?.piece?.color == color && cells[p]?.held == false {
+                for p in positions where cells[p]?.matchColor == color && cells[p]?.held == false {
                     cells[p]?.piece = .special(replacement)
                     footprint.insert(p)
                 }
@@ -382,8 +474,19 @@ public struct Board {
 
     private func area(of special: Special, at p: Position) -> Set<Position> {
         switch special {
-        case .horizontal: return Set(positions.filter { $0.y == p.y })
-        case .vertical: return Set(positions.filter { $0.x == p.x })
+        case .horizontal, .vertical:
+            let dx = special == .horizontal ? 1 : 0
+            var hits: Set<Position> = [p]
+            for sign in [-1, 1] {
+                let line = positions.filter { q in dx == 1 ? q.y == p.y && (q.x - p.x) * sign > 0
+                    : q.x == p.x && (q.y - p.y) * sign > 0 }
+                    .sorted { abs($0.x - p.x) + abs($0.y - p.y) < abs($1.x - p.x) + abs($1.y - p.y) }
+                for q in line {
+                    hits.insert(q)
+                    if cells[q]?.cookie ?? 0 > 0 { break }
+                }
+            }
+            return hits
         case .bomb: return Set(positions.filter { abs($0.x - p.x) <= 1 && abs($0.y - p.y) <= 1 })
         default: return [p]
         }
@@ -404,7 +507,7 @@ public struct Board {
                 if let target { hits.insert(target) }
             case .rainbow:
                 if let color = rainbowColors[p] ?? mostCommonColor() {
-                    hits.formUnion(positions.filter { cells[$0]?.piece?.color == color })
+                    hits.formUnion(positions.filter { cells[$0]?.matchColor == color })
                 }
             }
         }
@@ -412,11 +515,22 @@ public struct Board {
         apply(hits, spread: spread, isBlast: true)
     }
 
-    private mutating func apply(_ hits: Set<Position>, spread: Set<Position>, isBlast: Bool) {
-        let adjacent: Set<Position> = isBlast ? [] : Set(hits.flatMap(\.neighbors))
+    mutating func apply(_ hits: Set<Position>, spread: Set<Position>, isBlast: Bool) {
+        let adjacent = Set(hits.flatMap(\.neighbors))
+        let matchingColors = Dictionary(uniqueKeysWithValues: hits.compactMap { p in
+            cells[p]?.matchColor.map { (p, $0) }
+        })
+        var hitPlatters = Set<Position>(), hitMakers = Set<Position>()
         for p in hits.union(adjacent).sorted() {
             guard var cell = cells[p] else { continue }
             let direct = hits.contains(p)
+            // Only jelly's original settings enable damage from a neighbouring explosion.
+            if isBlast && !direct && cell.jelly == 0 { continue }
+            if let anchor = cell.maker { hitMakers.insert(anchor); continue }
+            if let anchor = cell.platter {
+                hitPlatters.insert(anchor)
+                continue
+            }
             if cell.ice > 0 {
                 if direct {
                     cell.ice -= 1
@@ -427,12 +541,34 @@ public struct Board {
                     cell.chain -= 1
                     if cell.chain == 0 { credit("LOCK") }
                 }
+            } else if cell.jelly > 0 {
+                cell.jelly -= 1
+                if cell.jelly == 0 && cell.piece == .cherry {
+                    cell.piece = nil
+                    credit("COLLECT_PIGGY")
+                }
             } else if cell.box > 0 {
-                cell.box -= 1
-                if cell.box == 0 { credit("BOX") }
+                let matching = cell.boxColor == nil || p.neighbors.contains { matchingColors[$0] == cell.boxColor }
+                if isBlast || matching {
+                    cell.box -= 1
+                    if cell.box == 0 { credit(cell.boxColor == nil ? "BOX" : "COLOR_BOX") }
+                }
+            } else if cell.statue > 0 {
+                if isBlast && direct {
+                    cell.statue -= 1
+                    if cell.statue == 0 { credit("STATUE") }
+                }
+            } else if cell.cookieStack > 0 {
+                cell.cookieStack -= 1
+                if cell.cookieStack == 0 { pendingCookies += 3 }
             } else if cell.cookie > 0 {
                 cell.cookie -= 1
                 if cell.cookie == 0 { credit("TRASH") }
+            } else if case .hazelnut(let strength) = cell.piece {
+                if isBlast && direct {
+                    cell.piece = strength > 1 ? .hazelnut(strength - 1) : nil
+                    if strength == 1 { credit("TRASHSTONE") }
+                }
             } else if cell.piece == .cherry {
                 cell.piece = nil
                 credit("COLLECT_PIGGY")
@@ -446,9 +582,18 @@ public struct Board {
             }
             cells[p] = cell
         }
+        for anchor in hitMakers { makers[anchor]?.hits += 1 }
+        for anchor in hitPlatters.sorted() {
+            guard let count = platters[anchor], count > 0 else { continue }
+            credit("TARGET_GENERATOR")
+            if count == 1 {
+                platters.removeValue(forKey: anchor)
+                for p in positions where cells[p]?.platter == anchor { cells[p]?.platter = nil }
+            } else { platters[anchor] = count - 1 }
+        }
     }
 
-    private mutating func fallAndRefill() {
+    mutating func fallAndRefill() {
         // Exits empty a cell again: settle existing pieces before inserting random refill.
         // Every repeated pass collects at least one donut, so this loop is bounded by the board size.
         while true {
@@ -474,9 +619,46 @@ public struct Board {
             }
         }
         for p in positions where cells[p]?.canFall == true && cells[p]?.piece == nil {
-            let color = nextColor(at: p)
-            cells[p]?.piece = .gem(color)
+            if let generated = generatedPiece(at: p) { cells[p]?.piece = generated }
+            else { let color = nextColor(at: p); cells[p]?.piece = .gem(color) }
         }
+        releaseGeneratedPieces()
+    }
+
+    mutating func releaseGeneratedPieces() {
+        for p in positions where pendingCookies > 0 && cells[p]?.held == false && cells[p]?.piece?.color != nil {
+            cells[p]?.piece = .cookie(1)
+            pendingCookies -= 1
+        }
+        for anchor in makers.keys.sorted() {
+            guard var maker = makers[anchor], maker.hits >= maker.period else { continue }
+            let onBoard = cells.values.filter { $0.piece == .donut }.count
+            let needed = goals.filter { $0.goal.type == "CARRY" }.reduce(0) { $0 + max(0, $1.goal.maximum - $1.count) } - onBoard
+            let eligible = positions.filter { cells[$0]?.carrySpawn == true && cells[$0]?.held == false && cells[$0]?.piece?.color != nil }
+            let count = min(maker.batch, max(0, needed), eligible.count)
+            guard count > 0 else { continue }
+            for p in eligible.prefix(count) { cells[p]?.piece = .donut }
+            maker.hits = 0
+            makers[anchor] = maker
+        }
+    }
+
+    private mutating func generatedPiece(at p: Position) -> Piece? {
+        var q = p
+        var hasSource = false
+        while let cell = cells[q], cell.canFall {
+            if cell.born { hasSource = true; break }
+            q = q.offset(0, 1)
+        }
+        guard hasSource else { return nil }
+        for rule in refillRules {
+            let onBoard = cells.values.filter { rule.matches($0.piece) }.count
+            let remaining = goals.filter { $0.goal.type == rule.goal }.reduce(0) { $0 + max(0, $1.goal.maximum - $1.count) }
+            guard onBoard < rule.maximum && (!rule.limited || onBoard < remaining) else { continue }
+            seed = seed &* 6364136223846793005 &+ 1442695040888963407
+            if Int((seed >> 32) % 100) < rule.chance { return rule.piece }
+        }
+        return nil
     }
 
     private mutating func credit(_ type: String, subtype: String = "") {

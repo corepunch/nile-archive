@@ -1,23 +1,23 @@
 # Homescapes lab coverage — 2026-11-12
 
-The full local 9.2.601 corpus audit loaded 6,184 files without parse or construction errors on the attempted boards. Only 232 boards initialize; the remaining 5,952 contain unsupported vocabulary. Initialization does not establish original-game behavior. There are 130 model IDs and 82 goal types in the corpus; 115 model IDs and 75 goal types are not accepted by the lab.
+All **6,184** local 9.2.601 level files parse. **753** boards initialize (previously 232); **747** played at least one legal move in the 12-turn exercise, totalling **8,791 moves**. Goals advanced on 665 boards. Six boards start stalled. No attempted construction or hint execution failed. The other 5,431 boards retain unsupported vocabulary.
 
-Run the `--audit` command in the [lab README](../../prototypes/homescapes-match3/README.md#full-corpus-audit) for the current machine-readable report, including every path. Counts below are files containing an identifier, not individual instances.
+The corpus has 130 model IDs and 82 goal types. The lab rejects 106 model IDs and 71 goal types. Accepted identifiers do not establish complete scripting, routing, art or original-runtime equivalence. See the [blocker implementation record](BLOCKERS.md) for exact rules, evidence, limitations, verification timings and captures.
 
-## Implemented in this batch
+Run `HomescapesLab --root "$PWD" --audit --exercise` to regenerate the machine report; local results are retained in `reference/homescapes-analysis/lab-audit.json`. Every entry records unsupported model/goal IDs, initialization, turns, progress, stalled state and errors. `originalRuntimeVerified` remains false.
 
-- Double bomb, double plane, plane carrying bomb/rocket, rainbow conversion to bomb/rocket/plane, and double rainbow combination dispatch.
-- Ice and chains protect a covered cookie; removal credits the restraint goal.
-- Donut stacks settle through marked exits before random refill.
-- Full corpus reporting retains every unsupported model and goal rather than just the first error.
+## Stalled at startup
 
-The [lab README](../../prototypes/homescapes-match3/README.md#additional-rules-and-verification) links publisher evidence and documents unverified geometry, targeting, conversion and hit scheduling. The original iPhoneOS executable was not run. No original-game equivalence is claimed. Existing assets and mappings are unchanged.
-
-## Verification
-
-Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preserving every local level. Complete corpus audit: 6.57 s. Eight sample boards, 12 moves each: 0.70 s. Archive reader tests (5), including byte-for-byte comparison of all extracted levels: 1.48 s. Repository lint: 1.14 s, no warnings or errors.
+- `base/st/st0049.xml`
+- `packs/contest/contest_004_15.xml`
+- `packs/contest/contest_030_03.xml`
+- `packs/contest/contest_047_08.xml`
+- `packs/contest/contest_107_03.xml`
+- `packs/contest/contest_136_15.xml`
 
 ## Remaining model vocabulary
+
+Counts are files containing each identifier.
 
 | Identifier | Files | Example |
 | --- | ---: | --- |
@@ -39,8 +39,6 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `BUCKET` | 188 | `base/View/ply-water.xml` |
 | `BUCKET_WATER` | 188 | `base/View/ply-water.xml` |
 | `CAKE` | 91 | `packs/contest/contest_181_14.xml` |
-| `CARRY_GEN` | 166 | `base/st/st0251.xml` |
-| `CARRY_GEN_CELLS` | 196 | `base/st/st0251.xml` |
 | `CATS_HOUSE` | 169 | `packs/contest/contest_088_04.xml` |
 | `CAT_ON_RUG` | 66 | `packs/contest/contest_401_05.xml` |
 | `CHAIN_BOX` | 394 | `base/beta/beta006.xml` |
@@ -51,8 +49,6 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `CHOCO_B` | 346 | `base/st/st0091.xml` |
 | `CHOCO_GEN` | 61 | `packs/contest/contest_005_10.xml` |
 | `CHOCO_W` | 219 | `base/st/st0476.xml` |
-| `COLOR_BOX` | 161 | `packs/contest/contest_020_08.xml` |
-| `COOKIE_BOX` | 112 | `packs/contest/contest_026_01.xml` |
 | `CORN_POT` | 113 | `packs/contest/contest_402_04.xml` |
 | `CUPCAKES` | 66 | `packs/contest/contest_402_09.xml` |
 | `CURTAIN` | 127 | `packs/contest/contest_401_03.xml` |
@@ -66,14 +62,12 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `EXPLOSIVE_BARREL` | 60 | `packs/contest/contest_404_07.xml` |
 | `FAN` | 131 | `packs/contest/contest_023_02.xml` |
 | `FEATHER` | 100 | `packs/contest/contest_036_06.xml` |
-| `FISH` | 289 | `base/View/ply-water.xml` |
 | `FLOWER_BOX` | 129 | `packs/contest/contest_081_10.xml` |
 | `FOAM` | 61 | `packs/contest/contest_402_09.xml` |
 | `FRIDGE` | 228 | `packs/contest/contest_063_12.xml` |
 | `GARBAGE_PLATE` | 115 | `base/beta/beta004.xml` |
 | `GARBAGE_VASE` | 128 | `base/beta/beta003.xml` |
 | `GONG` | 128 | `packs/contest/contest_016_01.xml` |
-| `HONEY` | 832 | `base/View/st0101.xml` |
 | `HONEY_GENERATOR` | 77 | `packs/contest/contest_035_03.xml` |
 | `ICE_BOMB` | 142 | `packs/contest/contest_001_13.xml` |
 | `IVY` | 89 | `packs/contest/contest_019_08.xml` |
@@ -115,7 +109,6 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `SHUTTERS` | 341 | `base/st/st0401.xml` |
 | `SOAP` | 77 | `packs/contest/contest_080_06.xml` |
 | `STAINED_GLASS` | 34 | `packs/contest/contest_072_09.xml` |
-| `STATUE` | 477 | `base/st/st0221.xml` |
 | `STEAM` | 178 | `packs/contest/contest_015_02.xml` |
 | `STEAM_GEN` | 78 | `packs/contest/contest_137_05.xml` |
 | `STONE_TAPE_MEASURE` | 138 | `packs/contest/contest_058_15.xml` |
@@ -124,12 +117,10 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `SUITCASE_HAT_UNWANTED_CELLS` | 2 | `packs/contest/contest_144_01.xml` |
 | `TABLETS` | 1 | `base/View/ply-water.xml` |
 | `TAPE_MEASURE` | 216 | `base/beta/beta003.xml` |
-| `TARGET_GEN` | 379 | `base/st/st0051.xml` |
 | `TIMER` | 63 | `packs/contest/contest_074_10.xml` |
 | `TIN_CAN` | 306 | `packs/contest/contest_020_06.xml` |
 | `TIN_CAN_APPEAR_CELLS` | 179 | `packs/contest/contest_023_11.xml` |
 | `TOY_BOX` | 169 | `packs/contest/contest_023_03.xml` |
-| `TRASH_STONE` | 456 | `base/st/st0351.xml` |
 | `VACUUM` | 86 | `packs/contest/contest_102_13.xml` |
 | `VACUUM_WAYPOINT` | 163 | `packs/contest/contest_102_13.xml` |
 | `WATCH` | 80 | `packs/contest/contest_170_05.xml` |
@@ -138,6 +129,8 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `YARN_BASKET` | 201 | `packs/contest/contest_070_06.xml` |
 
 ## Remaining goal vocabulary
+
+Counts are files containing each identifier.
 
 | Identifier | Files | Example |
 | --- | ---: | --- |
@@ -163,7 +156,6 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `CHEESE` | 113 | `packs/contest/contest_043_06.xml` |
 | `CHESS` | 62 | `packs/contest/contest_402_03.xml` |
 | `CHOCOLATE` | 428 | `base/st/st0091.xml` |
-| `COLOR_BOX` | 133 | `packs/contest/contest_020_08.xml` |
 | `CORN_FROM_POT` | 113 | `packs/contest/contest_402_04.xml` |
 | `CUPCAKES` | 66 | `packs/contest/contest_402_09.xml` |
 | `DESSERT` | 101 | `base/beta/beta001.xml` |
@@ -200,7 +192,6 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `RUG` | 167 | `base/beta/beta002.xml` |
 | `SEASHELL` | 91 | `base/beta/beta005.xml` |
 | `SHUTTERS` | 19 | `base/st/st0401.xml` |
-| `STATUE` | 477 | `base/st/st0221.xml` |
 | `STEAM` | 13 | `packs/contest/contest_401_06.xml` |
 | `STEAM_GEN` | 78 | `packs/contest/contest_137_05.xml` |
 | `STONE_TAPE_MEASURE` | 124 | `packs/contest/contest_173_09.xml` |
@@ -209,17 +200,15 @@ Swift build: 3.94 s. All 18 Swift tests: 5.77 s, including loading and preservin
 | `SUPER_BONUS` | 42 | `packs/contest/contest_016_03.xml` |
 | `TABLETS` | 1 | `base/View/ply-water.xml` |
 | `TAPE_MEASURE` | 153 | `base/beta/beta003.xml` |
-| `TARGET_GENERATOR` | 379 | `base/st/st0051.xml` |
 | `TIMER` | 63 | `packs/contest/contest_074_10.xml` |
 | `TIN_CAN` | 306 | `packs/contest/contest_020_06.xml` |
 | `TOY_BOX` | 175 | `packs/contest/contest_023_03.xml` |
-| `TRASHSTONE` | 355 | `base/st/st0351.xml` |
 | `WATCH` | 80 | `packs/contest/contest_170_05.xml` |
 | `YARN_BALL` | 201 | `packs/contest/contest_070_06.xml` |
 
-## Configuration sections requiring further interpretation
+## Configuration sections
 
-Even an accepted model list does not imply complete configuration support. The loader preserves all sections; the simulator currently interprets cells, basic targets, chip weights and random-chip color lists. Other sections below remain evidence to decode and implement.
+Cells, basic goals, chip weights and random-chip color lists are interpreted. Refill sections now have partial support documented in BLOCKERS.md. Other sections remain evidence to decode rather than implemented behavior.
 
 | Section | Files |
 | --- | ---: |

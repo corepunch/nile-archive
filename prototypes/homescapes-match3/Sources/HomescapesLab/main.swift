@@ -8,13 +8,36 @@ struct LabFiles {
     let root: URL
     let mappings: [String: SpriteMapping]
     let levels: [Level]
+    let levelNames: [String]
 
     init(root: URL) throws {
         self.root = root
         let mapURL = root.appendingPathComponent("tools/homescapes-reference/model_sprites.json")
         mappings = try JSONDecoder().decode([String: SpriteMapping].self, from: Data(contentsOf: mapURL))
-        let directory = root.appendingPathComponent("reference/homescapes-analysis/decoded/match3levels/Match3/Levels/base/st")
-        levels = try sampleIDs.map { try Level.load(directory.appendingPathComponent($0 + ".xml")) }
+        let directory = root.appendingPathComponent("reference/homescapes-analysis/decoded/match3levels/Match3/Levels")
+        if CommandLine.arguments.contains("--all-levels") || Bundle.main.object(forInfoDictionaryKey: "LabAllLevels") as? Bool == true {
+            let files = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: nil)?
+                .compactMap { $0 as? URL }.filter { $0.pathExtension == "xml" }.sorted { $0.path < $1.path } ?? []
+            var accepted: [Level] = [], names: [String] = []
+            for file in files {
+                let level = try Level.load(file)
+                if (try? Board(level: level)) != nil {
+                    accepted.append(level)
+                    names.append(String(file.path.dropFirst(directory.path.count + 1)))
+                }
+            }
+            levels = accepted; levelNames = names
+        } else if let index = CommandLine.arguments.firstIndex(of: "--level"), index + 1 < CommandLine.arguments.count {
+            let path = CommandLine.arguments[index + 1]
+            let url = directory.appendingPathComponent(path).standardizedFileURL
+            guard url.path.hasPrefix(directory.path + "/"), url.pathExtension == "xml" else { throw CocoaError(.fileReadInvalidFileName) }
+            levels = [try Level.load(url)]; levelNames = [path]
+        } else {
+            levels = try sampleIDs.map { try Level.load(directory.appendingPathComponent("base/st/" + $0 + ".xml")) }
+            levelNames = sampleIDs
+        }
+        guard !levels.isEmpty else { throw CocoaError(.fileNoSuchFile) }
+
     }
 
     func spriteURL(_ id: String) -> URL {
@@ -143,6 +166,26 @@ final class BoardScene: SKScene {
                 }
             }
             if case .special(let special) = cell.piece { addSprite(special.sprite, at: point, layer: "piece") }
+            var diagnostic: [String] = []
+            if cell.jelly > 0 { diagnostic.append("Jelly \(cell.jelly)") }
+            if let color = cell.boxColor, cell.box > 0 { diagnostic.append("Box C\(color):\(cell.box)") }
+            if case .hazelnut(let n) = cell.piece { diagnostic.append("Nut \(n)") }
+            if cell.statue > 0 { diagnostic.append("Statue \(cell.statue)") }
+            if cell.cookieStack > 0 { diagnostic.append("Stack \(cell.cookieStack)") }
+            if let anchor = cell.platter { diagnostic.append("Apples \(board.platters[anchor] ?? 0)") }
+            if let anchor = cell.maker, let maker = board.makers[anchor] {
+                diagnostic.append("Maker \(maker.hits)/\(maker.period)")
+            }
+            if !diagnostic.isEmpty {
+                let label = SKLabelNode(text: diagnostic.joined(separator: " / "))
+                label.fontName = "Menlo-Bold"
+                label.fontSize = max(7, tile * 0.16)
+                label.fontColor = .white
+                label.position = point
+                label.verticalAlignmentMode = .center
+                label.zPosition = 6
+                addChild(label)
+            }
             if cell.exit {
                 let arrow = SKLabelNode(text: "↓")
                 arrow.fontSize = tile * 0.25
@@ -184,11 +227,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 760, height: 720),
                               styleMask: [.titled, .closable, .miniaturizable, .resizable],
                               backing: .buffered, defer: false)
-        window.title = "Homescapes Match-3 Lab"
+        window.title = "Homescapes Match-3 Lab — diagnostic blocker labels"
         window.minSize = NSSize(width: 480, height: 510)
         window.center()
 
-        picker.addItems(withTitles: files.levels.map(\.id))
+        picker.addItems(withTitles: files.levelNames)
         picker.target = self
         picker.action = #selector(changeLevel)
         let reset = NSButton(title: "Restart", target: self, action: #selector(resetBoard))
@@ -272,12 +315,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 let arguments = CommandLine.arguments
 let root = arguments.firstIndex(of: "--root").flatMap { arguments.indices.contains($0 + 1) ? arguments[$0 + 1] : nil }
+    ?? Bundle.main.object(forInfoDictionaryKey: "LabRoot") as? String
     ?? FileManager.default.currentDirectoryPath
 do {
     if arguments.contains("--audit") {
         let directory = URL(fileURLWithPath: root).appendingPathComponent(
             "reference/homescapes-analysis/decoded/match3levels/Match3/Levels")
-        let audit = try LevelAudit.run(directory: directory)
+        let audit = try LevelAudit.run(directory: directory, turnLimit: arguments.contains("--exercise") ? 12 : 0)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         FileHandle.standardOutput.write(try encoder.encode(audit))

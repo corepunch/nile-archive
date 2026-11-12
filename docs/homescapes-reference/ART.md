@@ -200,3 +200,13 @@ are ignored local third-party reference data. The manually assembled contact
 sheet is a spatial preview of the 22 goal icons and is not produced by the
 extractor. No conclusion is made that these images exhaust the in-game sprite
 states, animations, or remote assets.
+
+## Lab blocker and generator states
+
+The lab now simulates additional original models and labels unresolved artwork
+explicitly. `HONEY` is the jelly covering cherries, and `TARGET_GEN` is an apple
+platter (the prefab names `ModelToTargetApple`), not a toaster. `FISH` is the
+paper plane and uses the existing decoded plane sprite. See the
+[blocker visual catalogue and reviewed captures](BLOCKERS.md#runtime-visual-catalogue)
+for supported states, diagnostic presentations, source references and commands.
+Missing authored states remain tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98).

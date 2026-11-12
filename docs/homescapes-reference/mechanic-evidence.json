@@ -1,0 +1,238 @@
+{
+  "ElementBonusFishSettings": {
+    "archive": "base.zip",
+    "bytes": 151,
+    "identifiers": [
+      "BONUS",
+      "Billiard",
+      "CanClearByExplosion",
+      "CanFall",
+      "CanSwap",
+      "IsBonus",
+      "Lemonade",
+      "elementBonusFishSettings",
+      "plane"
+    ],
+    "offset": 15504,
+    "section": "M3Settings.vso",
+    "sha256": "16eaeeec5d7b09777a88f1b51b744b2c69dcbe17dd53ad0b3c7125556d4fbb4c"
+  },
+  "ElementBornPointSettings": {
+    "archive": "base.zip",
+    "bytes": 74,
+    "identifiers": [
+      "IsBornPoint",
+      "Special",
+      "elementBornPointSettings"
+    ],
+    "offset": 47591,
+    "section": "M3Settings.vso",
+    "sha256": "e7dbb83f4f63b51db3ffb0678b0cfd705d13c13638501987c7a2b186e509a868"
+  },
+  "ElementCarryGeneratorSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 186,
+    "identifiers": [
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "CanClearByNearMatch",
+      "CanClearBySideMatch",
+      "Carry",
+      "IsBig",
+      "IsTargetGenerator",
+      "elementCarryGeneratorSettings"
+    ],
+    "offset": 33476,
+    "section": "M3Settings.vso",
+    "sha256": "3cb79ab3a035b0727e0d5b5d641403ee67a75eca6f4e8bbe538e556d14b53e4a"
+  },
+  "ElementCarrySettings": {
+    "archive": "base.zip",
+    "bytes": 191,
+    "identifiers": [
+      "CARRY",
+      "CanFall",
+      "CanSwap",
+      "Indestructable",
+      "IsCarry",
+      "elementCarrySettings"
+    ],
+    "offset": 48104,
+    "section": "M3Settings.vso",
+    "sha256": "f707d08b83edc1d29f5387041b02b9895a00ef77f21a737fcec2f4c2a0a6260d"
+  },
+  "ElementColorBoxSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 196,
+    "identifiers": [
+      "BlocksFall",
+      "BlocksMatch",
+      "BlocksSwap",
+      "COLOR_BOX",
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "HangChip",
+      "HasColor",
+      "HidesChip",
+      "elementColorBoxSettings"
+    ],
+    "offset": 37004,
+    "section": "M3Settings.vso",
+    "sha256": "da2e2e3fe3c204d616a57fac46784f518b5fb7090bce18c982a44bbebd15f23b"
+  },
+  "ElementCookieBoxSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 194,
+    "identifiers": [
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "CanClearByNearMatch",
+      "CanClearBySideMatch",
+      "IsTargetGenerator",
+      "StopsLineExplosion",
+      "Trash",
+      "elementCookieBoxSettings"
+    ],
+    "offset": 39284,
+    "section": "M3Settings.vso",
+    "sha256": "3d266a47aaba689146fd0189d8d6fd082b1a4152f4173eae3386cbd5c73b7a92"
+  },
+  "ElementHoneySettings": {
+    "archive": "base.zip",
+    "bytes": 328,
+    "identifiers": [
+      "BlocksFall",
+      "BlocksMatch",
+      "BlocksSwap",
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "CanClearByNearExplosion",
+      "CanClearByNearMatch",
+      "CanClearBySideMatch",
+      "EFFECT_LAYER_UP2",
+      "HangChip",
+      "elementHoneySettings"
+    ],
+    "offset": 48977,
+    "section": "M3Settings.vso",
+    "sha256": "b01c8fc771ec9dbe1019268f7964a1c06047c7af2dc811af18a0646e16212acf"
+  },
+  "ElementStatueSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 125,
+    "identifiers": [
+      "CanClearByExplosion",
+      "IsTarget",
+      "STATUE",
+      "elementStatueSettings"
+    ],
+    "offset": 73511,
+    "section": "M3Settings.vso",
+    "sha256": "8b133c0b13522581bafc9453fd566b5e235fb602c222a8375f54965e365ff68f"
+  },
+  "ElementTargetGeneratorSettings": {
+    "archive": "base.zip",
+    "bytes": 273,
+    "identifiers": [
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "CanClearByNearMatch",
+      "CanClearBySideMatch",
+      "IsBig",
+      "IsTargetGenerator",
+      "TARGET_GENERATOR",
+      "elementTargetGeneratorSettings"
+    ],
+    "offset": 51368,
+    "section": "M3Settings.vso",
+    "sha256": "5e077a807537d5a100e871e1e8fce6337e3068c15a79de6de1b9ec061b9e1290"
+  },
+  "ElementTrashSettings": {
+    "archive": "base.zip",
+    "bytes": 190,
+    "identifiers": [
+      "CanClearByExplosion",
+      "CanClearByNearColoredMatch",
+      "CanClearByNearMatch",
+      "CanClearBySideMatch",
+      "CanFall",
+      "CanSwap",
+      "StopsLineExplosion",
+      "TRASH",
+      "elementTrashSettings"
+    ],
+    "offset": 51816,
+    "section": "M3Settings.vso",
+    "sha256": "b2c2fef8074422e4d06094110f415c44e2c021e3e2217371d07d8da2c0bd8d4c"
+  },
+  "ElementTrashStoneSettings": {
+    "archive": "packs/Match3_Settings.zip",
+    "bytes": 313,
+    "identifiers": [
+      "CanClearByExplosion",
+      "CanFall",
+      "CanSwap",
+      "DESTROY_ELEMENT",
+      "DESTROY_ELEMENT_UPPER",
+      "SHADOWS",
+      "TRASHSTONE",
+      "TrashStone_1to0",
+      "TrashStone_2to0",
+      "TrashStone_3to0",
+      "elementTrashStoneSettings"
+    ],
+    "offset": 78491,
+    "section": "M3Settings.vso",
+    "sha256": "1d67f501432f0a3f907ceb1d8199391494acc694237b09faca5e8377bd43fb11"
+  },
+  "TargetGenerator": {
+    "archive": "base.zip",
+    "bytes": 2498,
+    "identifiers": [
+      "CHIP_REVERT_SORT_Y",
+      "CONTROLLER_LAYER_WITH_FLYING_TO_INTERFACE_FIELD",
+      "CONTROLLER_LAYER_WITH_FLYING_TO_INTERFACE_SHADOWS",
+      "Chip",
+      "ElementCount",
+      "Finish",
+      "Left",
+      "LeftColumns",
+      "Match3TargetGeneratorElement",
+      "ModelToTarget",
+      "ModelToTargetApple",
+      "ModelToTargetAppleShort",
+      "ModelToTargetAppleTop",
+      "ModelToTargetShort",
+      "ModelToTargetTop",
+      "TopRows",
+      "Visual",
+      "anchoredElement",
+      "animation",
+      "animationClip",
+      "color",
+      "diffuse",
+      "event",
+      "flightTimeCurveEvaluator",
+      "flyObjectInterfaceBounceAction",
+      "flyObjectSoundAction",
+      "layout",
+      "match3FieldMaxRect",
+      "match3FlyObjectBehavior",
+      "match3FlyObjectPriorityModifier",
+      "match3FlyParamsAreaModifier",
+      "match3TimeFactor",
+      "priority",
+      "root",
+      "sceneObject",
+      "shadow",
+      "sprite",
+      "trajectory",
+      "true",
+      "update_priority",
+      "worldPositionLocation"
+    ],
+    "offset": 168241,
+    "section": "Vso.vso",
+    "sha256": "5dbb39ca0495e27f4ae124f0f90b6495d35e9e6935918b8c093f51b53b50cfd2"
+  }
+}

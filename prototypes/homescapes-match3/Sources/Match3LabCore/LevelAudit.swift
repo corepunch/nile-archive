@@ -8,6 +8,9 @@ public struct LevelAudit: Codable {
         public let unknownGoals: [String]
         public let error: String?
         public let initialized: Bool
+        public let turns: Int
+        public let stalled: Bool
+        public let goalProgress: Int
     }
     public let entries: [Entry]
     public let models: [String: Int]
@@ -16,7 +19,7 @@ public struct LevelAudit: Codable {
     public let initialized: Int
     public let originalRuntimeVerified: Bool
 
-    public static func run(directory: URL) throws -> Self {
+    public static func run(directory: URL, turnLimit: Int = 0) throws -> Self {
         guard let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: nil) else {
             throw CocoaError(.fileNoSuchFile, userInfo: [NSFilePathErrorKey: directory.path])
         }
@@ -35,16 +38,28 @@ public struct LevelAudit: Codable {
                 for section in sections { configurations[section, default: 0] += 1 }
                 let unknownModels = modelIDs.subtracting(Board.supportedModels).sorted()
                 let unknownGoals = goalIDs.subtracting(Board.supportedGoals).sorted()
-                var error: String?, initialized = false
+                var error: String?, initialized = false, turns = 0, stalled = false, goalProgress = 0
                 if unknownModels.isEmpty && unknownGoals.isEmpty {
-                    do { _ = try Board(level: level); initialized = true }
+                    do {
+                        var board = try Board(level: level)
+                        initialized = true
+                        while turns < turnLimit && !board.finished, let (a, b) = board.hint() {
+                            guard a == b ? board.activate(a) : board.swap(a, b) else {
+                                throw NSError(domain: "HomescapesLab.Audit", code: 1,
+                                    userInfo: [NSLocalizedDescriptionKey: "Hint could not be played"])
+                            }
+                            turns += 1
+                        }
+                        stalled = board.stalled
+                        goalProgress = board.goals.reduce(0) { $0 + $1.count - $1.goal.initial }
+                    }
                     catch let failure { error = failure.localizedDescription }
                 }
                 entries.append(Entry(path: path, unknownModels: unknownModels, unknownGoals: unknownGoals,
-                                     error: error, initialized: initialized))
+                                     error: error, initialized: initialized, turns: turns, stalled: stalled, goalProgress: goalProgress))
             } catch {
                 entries.append(Entry(path: path, unknownModels: [], unknownGoals: [], error: error.localizedDescription,
-                                     initialized: false))
+                                     initialized: false, turns: 0, stalled: false, goalProgress: 0))
             }
         }
         return Self(entries: entries, models: models, goals: goals, configurations: configurations,

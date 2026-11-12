@@ -1,9 +1,10 @@
 # Homescapes Match-3 Lab
 
-This standalone macOS Swift package opens eight match-3 boards from the
+This standalone macOS Swift package opens match-3 boards from the
 Homescapes 9.2.601 bundle. It reads the extracted XML, including the board
 shape, fixed pieces, blocker strengths, goals and move budget, and displays
-the decoded art in SpriteKit. The game has no animation.
+the decoded art in SpriteKit. The game has no animation. Eight sample boards open by default; `--all-levels`
+loads every board accepted by the simulator (currently 753).
 
 Run from the Nile Archive checkout root with Xcode's Swift toolchain:
 
@@ -28,7 +29,9 @@ cookies, carpet spread and donut exits. Sprite states use the same
 explorer. The original refill algorithm, level scripting, spawn routing,
 the exact hit and targeting order remain
 unverified. The lab uses seeded weighted fills and straight gravity.
-Unsupported models and goals are rejected when loading a playable board.
+Unsupported models, goals and malformed supported configurations are rejected
+when loading a playable board. Newly simulated blockers use explicit diagnostic
+labels wherever verified original state artwork is unavailable.
 
 ```sh
 swift test --package-path prototypes/homescapes-match3
@@ -100,7 +103,8 @@ Restraints now protect cookies until cleared. This follows the publisher's
 [chains](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1079-chains/) rules.
 Stacked donuts settle through marked exits before refill, following the
 [donut collection rule](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1085-donuts/).
-Donut generation, portal routing and alternate gravity remain unimplemented.
+Source-configured donut generation is now implemented with documented limits;
+portal routing and alternate gravity remain unimplemented.
 
 ## Full corpus audit
 
@@ -117,3 +121,30 @@ exit; unsupported vocabulary is report data. `originalRuntimeVerified` is
 explicitly false. A successful initialization is not proof of full simulation
 support: serialized generators, scripts and routing can still be ignored.
 See [the coverage record](../../docs/homescapes-reference/LAB_COVERAGE.md).
+
+## Blockers, generators and access to more boards
+
+The current source audit accepts **753 boards**, up from 232. A 12-turn exercise
+played 8,791 legal moves on 747 of them; six start without a legal move. This is
+execution coverage, not a claim of exact reproduction or guaranteed solvability.
+
+The new rules cover jelly around cherries, colored boxes, movable hazelnuts,
+fixed statues, shared apple platters, donut makers and cookie stacks. Source
+`FISH` pieces now load as planes. Cookies move with their strength and stop
+rocket beams. Refill reads the original chance/capacity/strength/goal-limit
+configuration for cookies, hazelnuts and donuts. See the
+[blocker evidence, limitations and visual catalogue](../../docs/homescapes-reference/BLOCKERS.md).
+
+```sh
+swift run --package-path prototypes/homescapes-match3 HomescapesLab --root "$PWD" --all-levels
+swift run --package-path prototypes/homescapes-match3 HomescapesLab --root "$PWD" --level base/st/st0051.xml
+swift run --package-path prototypes/homescapes-match3 HomescapesLab --root "$PWD" --audit --exercise > /tmp/homescapes-level-audit.json
+```
+
+The picker lists source paths to distinguish files with the same basename.
+App bundles can set `LabRoot` and `LabAllLevels` in Info.plist for the same
+behavior without command-line arguments. Command-line root takes precedence.
+
+The missing authored blocker/generator states are tracked in
+[issue #98](https://github.com/corepunch/nile-archive/issues/98). The labels and
+material preview are intentional diagnostics, not finished game artwork.
