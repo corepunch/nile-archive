@@ -34,6 +34,14 @@ public struct Goal {
     public let maximum: Int
 }
 
+/// The source document remains available even when a mechanic is not implemented.
+public struct SourceElement {
+    public let name: String
+    public let attributes: Attributes
+    public var children: [SourceElement] = []
+    public var text: String = ""
+}
+
 public struct Level {
     public let id: String
     public let seed: UInt64
@@ -42,9 +50,25 @@ public struct Level {
     public let goals: [Goal]
     public let colors: [Int: Int]
     public let patterns: [[Int]]
+    public let sourceXML: Data
+    public let source: SourceElement?
+
+    public init(id: String, seed: UInt64, moves: Int, cells: [SourceCell], goals: [Goal],
+                colors: [Int: Int], patterns: [[Int]], sourceXML: Data = Data(), source: SourceElement? = nil) {
+        self.id = id
+        self.seed = seed
+        self.moves = moves
+        self.cells = cells
+        self.goals = goals
+        self.colors = colors
+        self.patterns = patterns
+        self.sourceXML = sourceXML
+        self.source = source
+    }
 
     public static func load(_ url: URL) throws -> Self {
-        let parser = XMLParser(data: try Data(contentsOf: url))
+        let data = try Data(contentsOf: url)
+        let parser = XMLParser(data: data)
         let reader = LevelReader()
         parser.delegate = reader
         guard parser.parse(), let attrs = reader.level, let moves = attrs["movesLimitLocal"].flatMap(Int.init),
@@ -54,7 +78,8 @@ public struct Level {
         }
         return Self(id: url.deletingPathExtension().lastPathComponent,
                     seed: UInt64(attrs["LevelLocalSeed"] ?? "") ?? 0, moves: moves,
-                    cells: reader.cells, goals: reader.goals, colors: reader.colors, patterns: reader.patterns)
+                    cells: reader.cells, goals: reader.goals, colors: reader.colors, patterns: reader.patterns,
+                    sourceXML: data, source: reader.source)
     }
 }
 
@@ -76,11 +101,14 @@ private final class LevelReader: NSObject, XMLParserDelegate {
     private var cell: Position?
     private var models: [Attributes] = []
     private var stack: [String] = []
+    private var elements: [SourceElement] = []
+    var source: SourceElement?
 
     func parser(_ parser: XMLParser, didStartElement name: String, namespaceURI: String?,
                 qualifiedName: String?, attributes: Attributes) {
         let parent = stack.last
         stack.append(name)
+        elements.append(SourceElement(name: name, attributes: attributes))
         switch (parent, name) {
         case ("root", "Level"): level = attributes
         case ("Line", "Cell"):
@@ -107,6 +135,10 @@ private final class LevelReader: NSObject, XMLParserDelegate {
         }
     }
 
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        if !elements.isEmpty { elements[elements.count - 1].text += string }
+    }
+
     func parser(_ parser: XMLParser, didEndElement name: String, namespaceURI: String?, qualifiedName: String?) {
         if name == "Cell" {
             if let cell { cells.append(SourceCell(position: cell, models: models)) }
@@ -114,6 +146,9 @@ private final class LevelReader: NSObject, XMLParserDelegate {
             models.removeAll(keepingCapacity: true)
         }
         stack.removeLast()
+        let element = elements.removeLast()
+        if elements.isEmpty { source = element }
+        else { elements[elements.count - 1].children.append(element) }
     }
 }
 

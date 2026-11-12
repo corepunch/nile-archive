@@ -27,6 +27,18 @@ class ArchiveTest(unittest.TestCase):
         self.assertEqual(str(name), 'Match3/Levels/base/View/ply-water.xml')
         self.assertTrue(self.codec.unpack(data, size, dictionary).startswith(b'<root>'))
 
+    @unittest.skipUnless(LEVELS.exists(), 'Decoded levels unavailable')
+    def test_all_level_files_match_archive(self):
+        dictionary, entries = read_archive(self.archive, self.codec)
+        decoded = LEVELS.parents[1]
+        expected = set()
+        for name, data, size in entries:
+            path = decoded.joinpath(*name.parts)
+            expected.add(path)
+            self.assertTrue(path.is_file(), str(name))
+            self.assertEqual(path.read_bytes(), self.codec.unpack(data, size, dictionary), str(name))
+        self.assertEqual(expected, set(LEVELS.rglob('*.xml')))
+
     def test_first_screenplay(self):
         dictionary, entries = read_archive(self.script_archive, self.codec)
         self.assertEqual(len(entries), 1329)

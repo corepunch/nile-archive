@@ -37,3 +37,9 @@ swift run --package-path prototypes/homescapes-match3 HomescapesLab --root "$PWD
 
 The first command verifies special creation and held-piece damage. The
 second loads the eight local boards and plays up to 12 legal moves on each.
+
+The loader also retains the exact source XML and a generic element tree, including
+unknown configuration and nested model data, for future mechanic implementation.
+Retention does not imply that those mechanics are understood or playable. The
+corpus test checks every locally extracted XML file; the archive test checks the
+extracted bytes against the original bundled archive.

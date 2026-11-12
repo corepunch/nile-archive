@@ -17,6 +17,45 @@ final class BoardTests: XCTestCase {
         return try Board(level: level)
     }
 
+    func testPreservesUnimplementedSourceData() throws {
+        let xml = """
+        <root><Level movesLimitLocal="3"><Line><Cell x="1" y="2" extra="yes">
+        <Model modelId="MYSTERY"><settings value="kept"/></Model></Cell></Line>
+        <Targets/><ChipSet/><Unknown flag="1"><nested>hello</nested></Unknown>
+        </Level></root>
+        """
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".xml")
+        defer { try? FileManager.default.removeItem(at: url) }
+        try Data(xml.utf8).write(to: url)
+        let level = try Level.load(url)
+        XCTAssertEqual(level.sourceXML, Data(xml.utf8))
+        let sourceLevel = try XCTUnwrap(level.source?.children.first)
+        let unknown = try XCTUnwrap(sourceLevel.children.first { $0.name == "Unknown" })
+        XCTAssertEqual(unknown.attributes["flag"], "1")
+        XCTAssertEqual(unknown.children.first?.text, "hello")
+        let cell = try XCTUnwrap(sourceLevel.children.first { $0.name == "Line" }?.children.first)
+        XCTAssertEqual(cell.attributes["extra"], "yes")
+        XCTAssertEqual(cell.children.first?.children.first?.attributes["value"], "kept")
+        XCTAssertThrowsError(try Board(level: level))
+    }
+
+    func testAllBundledLevelsPreserveSource() throws {
+        let root = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+            .deletingLastPathComponent().deletingLastPathComponent()
+        let directory = root.appendingPathComponent("reference/homescapes-analysis/decoded/match3levels/Match3/Levels")
+        guard let files = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: nil) else {
+            throw XCTSkip("Local Homescapes levels unavailable")
+        }
+        let levels = files.compactMap { $0 as? URL }.filter { $0.pathExtension == "xml" }
+        XCTAssertEqual(levels.count, 6184)
+        for url in levels {
+            let level = try Level.load(url)
+            XCTAssertEqual(level.sourceXML, try Data(contentsOf: url), url.path)
+            XCTAssertEqual(level.source?.name, "root", url.path)
+        }
+    }
+
     func testSpecialsFromFourShapes() throws {
         let scenarios: [([[Int]], Position, Position, Special)] = [
             ([[0, 0, 1], [0, 1, 0], [1, 2, 2]], Position(1, 1), Position(2, 1), .plane),
