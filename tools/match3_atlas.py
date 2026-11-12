@@ -118,7 +118,13 @@ def build_default(check):
                               'transform': 'RGBA canvas copied without change'}
     originals, registration_h = homescapes_atlas.registered()
     start = 11 * 8
-    for n, (name, sprite) in enumerate(sorted(originals.items())):
+    end = start + sum(name not in frames for name in originals)
+    required_height = ((end + 7) // 8) * 128
+    if required_height > image.height:
+        expanded = Image.new('RGBA', (image.width, 1 << (required_height - 1).bit_length()))
+        expanded.paste(image, (0, 0))
+        image = expanded
+    for name, sprite in sorted(originals.items()):
         if name in frames:
             x,y,_,_ = frames[name]
         else:

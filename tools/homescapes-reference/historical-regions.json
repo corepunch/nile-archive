@@ -1,0 +1,106 @@
+{
+  "source": "Homescapes Android 3.5.9 (2020), APK archive from https://apk.gold/download?file_id=1370034/homescapes",
+  "apk_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+  "note": "Rectangles are [left, top, right, bottom] in the decoded 1408px atlas. Strength ordering is inferred from progressive visible damage, not decoded prefab data. Cookie stack order and 180-degree registration checked against https://playrix.helpshift.com/hc/en/14-homescapes/faq/2383-cookie-stack/.",
+  "regions": [
+    {
+      "id": "statue-1",
+      "page": 2,
+      "rect": [
+        420,
+        580,
+        550,
+        710
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "statue-2",
+      "page": 2,
+      "rect": [
+        700,
+        580,
+        835,
+        710
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "statue-3",
+      "page": 2,
+      "rect": [
+        560,
+        580,
+        690,
+        710
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "hazelnut-1",
+      "page": 3,
+      "rect": [
+        880,
+        260,
+        1008,
+        385
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "hazelnut-2",
+      "page": 3,
+      "rect": [
+        0,
+        260,
+        125,
+        390
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "hazelnut-3",
+      "page": 3,
+      "rect": [
+        130,
+        260,
+        255,
+        390
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "cookie-stack-1",
+      "page": 2,
+      "rect": [
+        125,
+        575,
+        265,
+        710
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "cookie-stack-2",
+      "page": 2,
+      "rect": [
+        270,
+        575,
+        410,
+        710
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "cookie-stack-3",
+      "page": 2,
+      "rect": [
+        1260,
+        145,
+        1408,
+        290
+      ],
+      "rotation": 180
+    }
+  ]
+}

@@ -7,7 +7,6 @@ local R = require("state")
 local rules = require("rules")
 local art = require("art")
 local elements = require("match3.elements_view")
-if app.arg("homescapes") then R.HEX_R=32*4/rules.HEX_RADIUS end
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json

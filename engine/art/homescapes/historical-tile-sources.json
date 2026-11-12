@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ceramic-tile-2",
+    "version": "3.5.9",
+    "archive": "homescapes-3.5.9.apk",
+    "archive_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+    "member": "assets/base_mm/atlases/Match3_04.dds",
+    "member_sha256": "1daab9b80216aa83b7b055a6750cf657e063857c0f44110cfa4b1c34666abca5",
+    "plane_sha256": [
+      "0efb1ecac554cad44053836c23a07506c2ce385ed74594dad465cc8d0dbc9323",
+      "43fe89bfa1fdef0ef3b7cb89482d413a465fdb7d6ab4290a245fe2616a454a54",
+      "20a4c71e1751831b7ed9906a01c3e6d1ed1d7e9ee3dc141e0b962a012d4bd10a"
+    ],
+    "rect": [
+      264,
+      1276,
+      341,
+      1353
+    ],
+    "transform": "crop decoded color and original opacity plane",
+    "output": "sprites/ceramic-tile-2.png",
+    "sha256": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
+    "mapping_evidence": "https://homescapes.fandom.com/wiki/Ceramic_Tiles",
+    "mapping_status": "inferred from intact/fractured appearance; atlas names undecoded"
+  },
+  {
+    "id": "ceramic-tile-1",
+    "version": "3.5.9",
+    "archive": "homescapes-3.5.9.apk",
+    "archive_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+    "member": "assets/base_mm/atlases/Match3_04.dds",
+    "member_sha256": "1daab9b80216aa83b7b055a6750cf657e063857c0f44110cfa4b1c34666abca5",
+    "plane_sha256": [
+      "0efb1ecac554cad44053836c23a07506c2ce385ed74594dad465cc8d0dbc9323",
+      "43fe89bfa1fdef0ef3b7cb89482d413a465fdb7d6ab4290a245fe2616a454a54",
+      "20a4c71e1751831b7ed9906a01c3e6d1ed1d7e9ee3dc141e0b962a012d4bd10a"
+    ],
+    "rect": [
+      344,
+      1276,
+      416,
+      1353
+    ],
+    "transform": "crop decoded color and original opacity plane",
+    "output": "sprites/ceramic-tile-1.png",
+    "sha256": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
+    "mapping_evidence": "https://homescapes.fandom.com/wiki/Ceramic_Tiles",
+    "mapping_status": "inferred from intact/fractured appearance; atlas names undecoded"
+  },
+  {
+    "id": "membrane-fill-2",
+    "version": "3.5.9",
+    "archive": "homescapes-3.5.9.apk",
+    "archive_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+    "member": "assets/base_mm/atlases/Match3_04.dds",
+    "member_sha256": "1daab9b80216aa83b7b055a6750cf657e063857c0f44110cfa4b1c34666abca5",
+    "plane_sha256": [
+      "0efb1ecac554cad44053836c23a07506c2ce385ed74594dad465cc8d0dbc9323",
+      "43fe89bfa1fdef0ef3b7cb89482d413a465fdb7d6ab4290a245fe2616a454a54",
+      "20a4c71e1751831b7ed9906a01c3e6d1ed1d7e9ee3dc141e0b962a012d4bd10a"
+    ],
+    "rect": [
+      275,
+      1287,
+      331,
+      1343
+    ],
+    "transform": "crop decoded color and original opacity plane",
+    "output": "sprites/membrane-fill-2.png",
+    "sha256": "2867f3b6c61ccc4c5cb1d9add33e704f5922c98cb2e70649c77965a37e1231e5",
+    "mapping_evidence": "https://homescapes.fandom.com/wiki/Ceramic_Tiles",
+    "mapping_status": "inferred from intact/fractured appearance; atlas names undecoded"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "honey-swatch",
+    "archive": "reference/Homescapes.app/base.zip",
+    "member": "base_mm/Match3/vso/textures/Elements/Honey/Border.dds",
+    "source_sha256": "255e20e7fac71f9032636cd7265878814c6954ce69cc87ba7e7be47474280675",
+    "decoded_plane_sha256": [
+      "e44f7b20d989d1c393f1de519b1c9b8b3064cd1e51af4cdfc432513afff6f43d",
+      "9c990d83071360c4e72c1e94ae69cb7fc178641cf0ce4cb02d62c3e21350fff3",
+      "6c97ddb6c8db2d439b669c739cb9d0a955884e00869d3035e53e08ca9c4046f6"
+    ],
+    "flipped_rect": [
+      480,
+      240,
+      599,
+      359
+    ],
+    "transform": "vertically flip decoded texture, then crop; preserve RGBA",
+    "alpha_range": [
+      111,
+      255
+    ],
+    "output": "sprites/honey-swatch.png",
+    "sha256": "66d65742cec7372ed3333265e2138931e5d02f5fa5a0212ad661f0c3aa95f4a5"
+  },
+  {
+    "id": "carpet-swatch",
+    "archive": "reference/Homescapes.app/base.zip",
+    "member": "base_mm/Match3/vso/textures/Elements/Carpet/Border.dds",
+    "source_sha256": "2e4b4006ef3e14bd88f494d8d2a48edb9d4ffde67af0a4a487e6c358070ba00c",
+    "decoded_plane_sha256": [
+      "6cadfbfc0f83c934a2011a22845851ee38f821ffd7e03b6cd4a7cbd7eae84e31",
+      "77fa8474df55d81b9cebc1b66dd5f16bff70a71a11c35bb3fcf2bf146c75a25c",
+      "e87632b4fd2c555727e7e7c5cf0ed8a308ee276fd428df03cb54c72e5e9dcc3a"
+    ],
+    "flipped_rect": [
+      481,
+      241,
+      599,
+      359
+    ],
+    "transform": "vertically flip decoded texture, then crop; preserve RGBA",
+    "alpha_range": [
+      255,
+      255
+    ],
+    "output": "sprites/carpet-swatch.png",
+    "sha256": "92008c0e25e0fc45ba5d741bcabc1382686a84432710183587115b4a623528fe"
+  }
+]

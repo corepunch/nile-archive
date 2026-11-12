@@ -118,6 +118,12 @@ shot("dialogue-bar-480", "480x900", "--story-beat before-01 --talk-through 270 -
 shot("dialogue-bar-390", "390x844", "--story-beat before-01 --talk-through 270 --frames 535 --safe-area 0,47,0,34")
 
 shot("homescapes-queue", "480x900", "--homescapes st0065")
+shot("phone-homescapes-queue", "390x844", "--homescapes st0065 --safe-area 0,47,0,34")
 shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
 reel("fx-plane",18,2,"480x900","--fx plane --reel")
 shot("phone-specials-board","390x844","--art-board --safe-area 0,47,0,34")
+
+shot("homescapes-art", "480x900", "--homescapes-art")
+shot("phone-homescapes-art", "390x844", "--homescapes-art --safe-area 0,47,0,34")
+shot("homescapes-art-generators", "480x900", "--homescapes-art generators")
+shot("phone-homescapes-art-generators", "390x844", "--homescapes-art generators --safe-area 0,47,0,34")

@@ -1,0 +1,174 @@
+{
+  "reproduce": "python3 tools/homescapes-reference/extract_generator_goals.py",
+  "sprites": [
+    {
+      "id": "goal-box",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/box.webp",
+      "source_sha256": "34eeee12ff90d2819848ebff69dde5ed91af7de684b64e784049ac40dc072945",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "b1c083bfd529b59ee4d2630e90b2f9d3dcd687633162304da104a9614c6b6f8f",
+      "png_sha256": "65014904f089b2623a73f9f428b632b0b1537e4632ccab4eb8443e9ac5d739c0",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-carry",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/carry.webp",
+      "source_sha256": "fe96b97d188b31e8753348cea13ac899ec06efad1bb465115f7db22f7ee66aaa",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "aa84b03548e0a3b134514e1087094588060c10cc2c436b24d2c62f4b5cb7c858",
+      "png_sha256": "184b2cf9e3abf6b6acfa869274ae4e9b7db213715029fb514a81bf7363bc8445",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-chip-0",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/chip_0.webp",
+      "source_sha256": "4e0c426ccbff0837c1617d4db177142ca0ea1cce917ceeb866e2aec7d8da1fe1",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "4cedf54194bdaf8b5f5c56d5633d16ee47871ff744336e0e8524399848a609dc",
+      "png_sha256": "66e347f81858a7c9f4fdafda0ace5bcdcacaa4785d3fa53aed1aadd772af004b",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-chip-1",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/chip_1.webp",
+      "source_sha256": "5feccab3a87fe54d29cf659654efbf6e4e28d61a54daa36fd97fd2c08cb9c4ed",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "9a70a1993bb4ae2c18f1c997ff83cfd11d6bbdceb9a13d3c8516d887234fc89c",
+      "png_sha256": "5e12b05bf3e1c910a5896d8769835f4cc9b25c4cbb7f41d3441fc1ac644c7f30",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-chip-2",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/chip_2.webp",
+      "source_sha256": "db4ccc75d8719457bdaceb962f5b7cbcc5349c9d7ce118ce323c733680b694cf",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "cb0ec1af6367c9862bfd0218d5d45fa8bb8af4ab1e04c2e92420ba23ddc0cf04",
+      "png_sha256": "a86415bd8cf60b6507ae7942732bad45bf3795a800b948062f9c9397db52ec92",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-chip-3",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/chip_3.webp",
+      "source_sha256": "43eeee3153f251804afd6bf27db36030d87aa25471d74f667d8ccbe64a96fe54",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "e3ff350ba0146e7acd17781c2471ded5e0578572526f1695197d1fa8d1ad7f95",
+      "png_sha256": "27d7b3cf8d7f060c29f0b64912b721b5ccd63a9aac33dda1d37180107e5b1b1d",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-chip-4",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/chip_4.webp",
+      "source_sha256": "a6fc366a058ec94ac273bfadb822e9b544542ce3c5cf3bd69f36f9c9da66ec8a",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "99cac261c94020ce92a766e9cc1d730e27a60eebbd63d4fe9d0f9129630a6465",
+      "png_sha256": "fb07ab43b6d935ddfc2e475f1bea31dd5cc740199038837a152c76a52ab900e8",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-chip-5",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/chip_5.webp",
+      "source_sha256": "e19575b4b94a133fd7176b70f3617f4465e221ba033f21a6a0ae476e51aaaf94",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "342d58461abe68e279c352c0c3a391c6dee53d280b52851208aa450dd64df483",
+      "png_sha256": "2ae16905149659526218e431574c64d7ef1c8ccd2f54eb3cfc91e609a369d3d9",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-jelly",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/jelly.webp",
+      "source_sha256": "b38e5577b17c1c2029942602bc05bc73e8098a0e17b7bc557007863d30e55780",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "2eae8a7589422430f34501bf9a35f15666ddda9b415ec12f679dc22990e2ac2e",
+      "png_sha256": "8cfa9a42cad588c49e25293b8c3935436a94a6ebec44c29cdb575024fe76d19f",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-lock",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/lock.webp",
+      "source_sha256": "87d6b351bd3be0a2ad7aac48031b4556803da3c2af2d88db7425b10a9c3a1240",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "4ee2ccfd9b42ca0e56469227702907c7dfc94a0c81ad7727445b25db8fba71e4",
+      "png_sha256": "b5fecce7c60e9d340285b98b83312e51b79058208bfb5cb4aeb3583afd4d01d0",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-piggy",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/piggy.webp",
+      "source_sha256": "e983d6fedbd8252a143e6353dc407dac18c5d5c99c050611096842b22fa6cd1b",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "cccff9bc8aaa312229b6d638b44a559af3f76111ae9bba3bfab2d3b628d1b887",
+      "png_sha256": "58cd8577712c2848fcd69420bec28b2addeee6c20b2ff7a41f3537e26d01494e",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-target-generator",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/target_generator.webp",
+      "source_sha256": "ab497af0f8bfaa11f0e5fceb92c8344aff8430f08cd2a0ef47f8561ae1903044",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "eea306afa1b0ad5c74ce6915c5d6a24e3f58cee5ab17fbd1ad6dd2d7614d8bb4",
+      "png_sha256": "b97acb65fcdfc08b8a33a87843066b92db845a7559ba6cea920b6febf4a7fc88",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    },
+    {
+      "id": "goal-trash",
+      "archive": "reference/Homescapes.app/base.zip",
+      "member": "base_mm/Match3/vso/textures/UI/Match3TargetsBase/trash.webp",
+      "source_sha256": "e8b901daefaa72a325987e123ab49d82ddc34237dba4cfeebcad7effc228ce8c",
+      "size": [
+        240,
+        240
+      ],
+      "rgba_sha256": "c8101c11278fd2a930b768cad2237d05b256a1941221c1b99fc1024b9525cd07",
+      "png_sha256": "5804ad34c6701fc9870145d91c0a7306d9a8c308e19c167eb5008a684577923a",
+      "transform": "WebP decoded to RGBA PNG; no pixel edits"
+    }
+  ]
+}

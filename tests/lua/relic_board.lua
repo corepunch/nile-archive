@@ -17,6 +17,35 @@ local function setup(g)
     R.fall_steps = nil
 end
 
+-- Imported source masks fill the phone area, not their mostly empty enclosing
+-- grid. Drawing and pointer lookup must retain the same shifted origin.
+do
+    local match3=require("match3")
+    for _,spec in pairs(require("match3.reference")) do
+        local model=match3.new{radius=spec.radius,levels={spec.level},colors=6}
+        for _,width in ipairs{480,390} do
+            local view=match3.view{SCREEN_W=width}
+            model.bind_view(view)
+            view.g=model.game_start(0,spec.seed)
+            local minx,maxx,miny,maxy=math.huge,-math.huge,math.huge,-math.huge
+            for i=0,model.CELLS-1 do if model.game_cell_active(view.g,i) then
+                local p=view.cell_pos(i)
+                check(view.cell_at(p)==i,"fitted source cell remains hit-testable")
+                minx,maxx=math.min(minx,p.x-view.HEX_R),math.max(maxx,p.x+view.HEX_R)
+                miny,maxy=math.min(miny,p.y-math.sqrt(3)*view.HEX_R/2),math.max(maxy,p.y+math.sqrt(3)*view.HEX_R/2)
+            end end
+            local top,bottom=view.hud_rect.y+view.hud_rect.h+16,view.tools_y-18
+            check(minx>=8-.001 and maxx<=width-8+.001 and miny>=top-.001 and maxy<=bottom+.001,
+                  "all source hex faces fit between HUD, tools and screen edges")
+            check(math.abs(maxx-minx-(width-16))<.001 or math.abs(maxy-miny-(bottom-top))<.001,
+                  "source board uses the maximum unclipped scale")
+            near((minx+maxx)/2,width/2,"source field is horizontally centred")
+            near((miny+maxy)/2,(top+bottom)/2,"source field is vertically centred")
+            near(view.board_tool_bounds(1):center().x,width/2,"tools stay centred for asymmetric source masks")
+        end
+    end
+end
+
 local function inventory(g)
     local counts = {}
     for i=0,rules.CELLS-1 do
@@ -383,4 +412,37 @@ do
     local _,height=R.guide_form:measure(432,R.skin)
     check(height<=800,"mechanics guide fits the portrait screen")
     check(R.guide_form:scroll_to("topics","growth"),"last mechanic remains reachable by scrolling")
+end
+
+-- A shared source obstacle is drawn once, and looking at a queue never consumes it.
+do
+    local elements=require("match3.elements_view")
+    local saved_game,saved_art,saved_intro,saved_image=R.g,R.board_art,R.intro,gfx.image
+    local g=rules.game_start(0,123478)
+    g.hs={cells={},groups={},queues={}}
+    g.objects={};g.tunnel_to={};g.tunnel_from={};g.delivery_exits={}
+    for i=0,rules.CELLS-1 do
+        g.active[i]=true;g.hs.cells[i]={}
+        g.stone_hp[i]=0;g.crate_hp[i]=0;g.hazard[i]=0
+    end
+    local a=rules.hex_index(0,0)
+    local cells={a,rules.hex_index(1,0),rules.hex_index(0,1),rules.hex_index(1,1)}
+    g.hs.groups[a]={kind="TARGET_GEN",count=8,cells=cells}
+    for _,i in ipairs(cells) do g.hs.cells[i].group=a end
+    local inlet=rules.hex_index(-3,0)
+    g.hs.cells[inlet].visibleGenerator=true
+    local queue={cursor=1,spawns=0,units={{element="cookie",hp=2}}}
+    g.hs.queues[inlet]=queue
+    local floor=rules.hex_index(3,0);g.hs.cells[floor].tile=2
+    local draws={}
+    R.g,R.intro,R.board_art=g,nil,{}
+    for _,name in ipairs(elements.assets) do R.board_art[name]=name end
+    gfx.image=function(frame) draws[frame]=(draws[frame] or 0)+1 end -- luacheck: ignore 122
+    elements.ground(R,rules,0)
+    elements.blockers(R,rules,0)
+    gfx.image,R.g,R.board_art,R.intro=saved_image,saved_game,saved_art,saved_intro -- luacheck: ignore 122
+    check(draws["apple-platter-8"]==1,"one source image spans a shared four-cell group")
+    check(draws["generator-shell"]==1 and draws["cookie-2"]==1,"inlet shows its exact next authored object state")
+    check(queue.cursor==1 and queue.spawns==0,"rendering the source queue does not advance simulation")
+    check(draws["membrane-fill-2"]==1,"covered source floor uses its authored intact material")
 end

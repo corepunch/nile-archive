@@ -1127,6 +1127,61 @@
     "registration": "art/match3-atlas.json",
     "source": "../../engine/art/homescapes/source-regions.json",
     "documentation": "../../docs/HOMESCAPES_HEX.md",
-    "gaps": "https://github.com/corepunch/nile-archive/issues/98"
+    "gaps": "https://github.com/corepunch/nile-archive/issues/98",
+    "state_inventory": "../../docs/HOMESCAPES_ART.md",
+    "restored_states": {
+      "hazelnut": [
+        1,
+        2,
+        3
+      ],
+      "statue": [
+        1,
+        2,
+        3
+      ],
+      "cookie-stack": [
+        1,
+        2,
+        3
+      ],
+      "membrane-fill": [
+        1,
+        2
+      ],
+      "apple-platter": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "donut-maker_preview": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "blind": [
+        "body",
+        "top"
+      ],
+      "generator": [
+        "shell",
+        "next-queued-original-piece"
+      ]
+    },
+    "restoration_review": "../../docs/review/homescapes-restored-art/README.md",
+    "remaining": [
+      "colored-box colors/strengths",
+      "six-layer jelly mapping",
+      "maker dome and exact charge poses",
+      "portal/exit markers",
+      "exact original group composition"
+    ]
   }
 }

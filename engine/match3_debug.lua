@@ -260,6 +260,58 @@ function D.bind(R, W)
             R.tool, R.toast_time, R.on_island = 1, 0, false
             R.art_review = true
         end
+        if app.arg("homescapes-art") then
+            -- Real board drawing paths, with every recovered blocker strength.
+            R.g=rules.game_start(0,123478)
+            local g=R.g
+            g.objects={};g.object_only=false
+            g.hs={cells={},groups={},queues={},palettes={},sources={},goals={
+                {type="STATUE",max=3,current=0},{type="TRASHSTONE",max=3,current=0},
+                {type="TRASH",max=3,current=0},{type="BUBBLE_MEMBRANE",max=3,current=0}}}
+            for i=0,rules.CELLS-1 do
+                g.active[i]=true;g.soil[i]=0;g.chain[i]=0;g.ice[i]=0
+                g.stone_hp[i]=0;g.crate_hp[i]=0;g.hazard[i]=0;g.hs.cells[i]={}
+            end
+            g.tunnel_to={};g.tunnel_from={};g.delivery_exits={}
+            for hp=1,3 do
+                local statue=rules.hex_index(hp-2,-2)
+                local nut=rules.hex_index(hp-2,-1)
+                local stack=rules.hex_index(hp-2,0)
+                g.hs.cells[statue].statue=hp;g.tiles[statue]=rules.tile(-1)
+                g.tiles[nut]={kind=0,special=rules.NORMAL,element="hazelnut",hp=hp}
+                g.hs.cells[stack].stack=hp;g.tiles[stack]=rules.tile(-1)
+            end
+            for hp=1,2 do
+                local i=rules.hex_index(hp-2,1);g.hs.cells[i].tile=hp
+                g.tiles[i]=rules.tile(-1)
+            end
+            if app.arg("homescapes-art")=="generators" then
+                for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
+                local function group(q,r,kind,count,hits)
+                    local cells={rules.hex_index(q,r),rules.hex_index(q+1,r),rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}
+                    local anchor=cells[1]
+                    g.hs.groups[anchor]={kind=kind,count=count,cells=cells,hits=hits or 0,period=3,batch=3}
+                    for _,i in ipairs(cells) do assert(i>=0,"art footprint");g.hs.cells[i].group=anchor;g.tiles[i]=rules.tile(-1) end
+                end
+                group(-3,0,"TARGET_GEN",9)
+                group(-1,-2,"TARGET_GEN",4)
+                group(1,-3,"CARRY_GEN",1,0)
+                group(1,-1,"CARRY_GEN",1,1)
+                group(-1,1,"CARRY_GEN",1,2)
+                group(1,1,"CARRY_GEN",1,3)
+                local anchor=rules.hex_index(-3,2)
+                g.hs.groups[anchor]={kind="SHUTTERS",count=3,cells={}}
+                for r=2,4 do
+                    local i=rules.hex_index(-3,r);g.hs.cells[i].group=anchor
+                    table.insert(g.hs.groups[anchor].cells,i)
+                end
+                local inlet=rules.hex_index(-1,-3)
+                g.hs.cells[inlet].visibleGenerator=true;g.tiles[inlet]=rules.tile(-1)
+                g.hs.queues[inlet]={cursor=1,units={{element="cookie",hp=3}}}
+                g.hs.goals={{type="TARGET_GENERATOR",max=13,current=0},{type="CARRY",max=12,current=0},{type="SHUTTERS",max=1,current=0}}
+            end
+            R.pending=rules.new_match();R.on_island=false;R.overlay=R.OV_NONE;R.toast_time=0;R.art_review=true
+        end
         if app.arg("homescapes") then
             R.g=rules.game_start(0,require("match3.reference")[app.arg("homescapes")].seed)
             assert(R.g.hs,"source preview must load source mechanics")

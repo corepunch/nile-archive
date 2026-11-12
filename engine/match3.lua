@@ -118,11 +118,11 @@ function E.bind_board_ui(R, rules, tool_art)
     function R.goal_entries()
         local g, l = R.g, rules.level_of(R.g)
         if g.hs then
-            local icons={CELL_JELLY="carpet",BOX="box-1",TRASH="cookie-1",ICE="ice-1",LOCK="chain",CARRY="delivery",COLLECT_PIGGY="cherry"}
-            local labels={COLOR_BOX="CBox",TRASHSTONE="Nut",TARGET_GENERATOR="Apple",STATUE="Statue",BUBBLE_MEMBRANE="Tile",SHUTTERS="Blind"}
+            local icons={CELL_JELLY="goal-jelly",BOX="goal-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
+            local labels={COLOR_BOX="CBox"}
             local entries={}
             for n,goal in ipairs(g.hs.goals) do entries[#entries+1]={id="source-"..n,
-                icon=goal.type=='CHIPS' and 'kind-'..goal.subtype or icons[goal.type],label=labels[goal.type],
+                icon=goal.type=='CHIPS' and 'goal-chip-'..goal.subtype or icons[goal.type],label=labels[goal.type],
                 remaining=math.max(0,goal.max-goal.current)} end
             return entries
         end
@@ -1310,8 +1310,6 @@ function E.new(config)
         R.kudos, R.kudos_level, R.mission_banner = nil, 0, nil
     end
     local rules = M
-    local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
-
     -- One board-screen layout for every match-3 game. Games paint into its
     -- bands but cannot move them. It is measured up from the bottom edge, at
     -- the size it has on a 480x1040 phone: the tool row, the board above it,
@@ -1321,6 +1319,28 @@ function E.new(config)
     -- the painting; the board is never squeezed.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
+    -- Imported boards can occupy only part of their enclosing hex grid. Fit
+    -- their actual cells, including the hex faces, into the space between HUD
+    -- and tools; empty grid padding must not shrink or displace the field.
+    local fitted, offset = nil, vec2(0,0)
+    if #M.levels==1 and M.levels[1].homescapes then
+        local mask=M.levels[1].mask
+        local minx,maxx,miny,maxy=math.huge,-math.huge,math.huge,-math.huge
+        for i=0,CELLS-1 do if mask:sub(i+1,i+1)=='1' then
+            local x,y=hex_q(i)*1.5,(hex_r(i)+hex_q(i)*.5)*math.sqrt(3)
+            minx,maxx=math.min(minx,x-1),math.max(maxx,x+1)
+            miny,maxy=math.min(miny,y-math.sqrt(3)/2),math.max(maxy,y+math.sqrt(3)/2)
+        end end
+        assert(minx<maxx,"source board has no active cells")
+        local width,height=maxx-minx,maxy-miny
+        local available_h=HUD_FROM_BOTTOM-HUD_H-16-TOOLS_FROM_BOTTOM-18
+        local face_radius=math.min(((R.SCREEN_W or 480)-16)/width,available_h/height)
+        if R.piece_width then R.piece_width=R.piece_width*face_radius/R.HEX_R end
+        R.HEX_R=face_radius
+        offset=vec2((minx+maxx)*face_radius/2,(miny+maxy)*face_radius/2)
+        fitted=size2(width*face_radius,height*face_radius)
+    end
+    local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
     local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
@@ -1332,6 +1352,12 @@ function E.new(config)
         R.tools_y = h - TOOLS_FROM_BOTTOM
         R.board_origin = vec2(w / 2, h - BOARD_FROM_BOTTOM)
         R.BOARD_CLIP = rect.centered(R.board_origin, board_size)
+        if fitted then
+            local top,bottom=R.hud_rect.y+HUD_H+16,R.tools_y-18
+            local center=vec2(w/2,(top+bottom)/2)
+            R.board_origin=center-offset
+            R.BOARD_CLIP=rect.centered(center,size2(fitted.w+12,fitted.h+12))
+        end
     end
     -- Where a backdrop of this pixel size goes in the bleed rect `full`:
     -- at least its 1040-tall scale, covering the screen, on the bottom edge.
@@ -1341,7 +1367,7 @@ function E.new(config)
         return rect(full.x + (full.w - sw) / 2, full.y + full.h - sh, sw, sh)
     end
     function R.board_tool_bounds(k)
-        local x = R.board_origin.x + (k - 1) * 120
+        local x = (R.SCREEN_W or 480) / 2 + (k - 1) * 120
         return rect(x - E.TOOL_SIZE / 2, R.tools_y, E.TOOL_SIZE, E.TOOL_SIZE)
     end
     R.layout = layout

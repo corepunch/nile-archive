@@ -1,0 +1,81 @@
+{
+  "source": "Homescapes Android 3.5.9, https://apk.gold/download?file_id=1370034/homescapes",
+  "apk_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+  "note": "Spatial crops of decoded original atlas components; composition positions inferred from official help illustrations, not recovered prefab data.",
+  "regions": [
+    {
+      "id": "apple-platter-base",
+      "page": 0,
+      "rect": [
+        820,
+        770,
+        1118,
+        1035
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "donut-maker-base",
+      "page": 1,
+      "rect": [
+        692,
+        0,
+        960,
+        211
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "blind-top",
+      "page": 3,
+      "rect": [
+        1200,
+        1358,
+        1338,
+        1408
+      ],
+      "rotation": 180
+    },
+    {
+      "id": "donut-maker-dough-1",
+      "page": 4,
+      "rect": [
+        668,
+        224,
+        795,
+        333
+      ]
+    },
+    {
+      "id": "donut-maker-dough-2",
+      "page": 4,
+      "rect": [
+        800,
+        224,
+        923,
+        333
+      ]
+    },
+    {
+      "id": "donut-maker-dough-3",
+      "page": 4,
+      "rect": [
+        927,
+        224,
+        1053,
+        333
+      ]
+    },
+    {
+      "id": "generator-shell",
+      "page": 3,
+      "rect": [
+        996,
+        518,
+        1120,
+        635
+      ],
+      "rotation": 180
+    }
+  ]
+}

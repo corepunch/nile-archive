@@ -46,19 +46,19 @@ These are explicit hex adaptation choices, not original replay results.
 | `NORMAL`, `RANDOM_CHIP` | Six original colored pieces; source weights/restricted initial palettes |
 | `BOX`, `COLOR_BOX` | Fixed layered obstacle; adjacent matches or direct hits, color restriction for colored boxes. Six original ordinary-box states; colored identity uses a diagnostic label |
 | `TRASH` | Swappable/falling cookies, three original damage states; adjacent matches or direct hits |
-| `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; diagnostic strength label |
+| `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
 | `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. Original cherry, source material preview for jelly |
 | `JELLY` | Carpet floor spreads through a matching group or carried power-up wave; source carpet texture |
 | `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection; original donut |
-| `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; diagnostic count |
-| `STATUE` | Fixed, power-up-only layered statue; diagnostic strength |
-| `COOKIE_BOX` | Fixed stack releases three movable cookies when destroyed; diagnostic stack strength, then original cookies |
-| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap; diagnostic charge counter |
-| `BUBBLE_MEMBRANE` | Two layers require a direct hit first; single layer accepts a match; held cells protect the floor; diagnostic layer count |
-| `SHUTTERS` | Shared vertical blind opens one bottom cell per wave; diagnostic remaining height |
+| `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
+| `STATUE` | Fixed, power-up-only layered statue; original raw/cut/carved states |
+| `COOKIE_BOX` | Fixed stack releases three movable cookies when destroyed; original bow/strap/plain stack states, then original cookies |
+| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap; original base/dough charge preview; intact dome and exact poses remain unresolved |
+| `BUBBLE_MEMBRANE` | Two layers require a direct hit first; single layer accepts a match; held cells protect the floor; original intact/cracked ceramic fills |
+| `SHUTTERS` | Shared vertical blind opens one bottom cell per wave; original shutter fabric and header, sized to remaining covered cells |
 | `BOMB`, `LINE`, `LIGHTNING`, `FISH` | Bomb, rocket, rainbow and plane, each original standalone sprite |
-| `BORN`, `ARTIFACT_GEN`, `PATTERN_COLOR_BORN` | Ordinary refill inlet, per-cell queue and restricted palette; visible generator marker is diagnostic |
+| `BORN`, `ARTIFACT_GEN`, `PATTERN_COLOR_BORN` | Ordinary refill inlet, per-cell queue and restricted palette; visible inlets use an original shell and next queued original object |
 | `NONE_CHIP` | Initially empty cell, filled through its permitted source |
 
 Goals: `CHIPS` (color subtype), `CELL_JELLY`, `BOX`, `TRASH`, `ICE`, `LOCK`,
@@ -119,7 +119,11 @@ Available IDs: `st0001`, `st0037`, `st0051`, `st0065`, `st0255`, `st0401`,
 These are verification fixtures, not a replacement campaign or a claim that
 all 6,184 original levels can run. Their previews fit the existing portrait HUD.
 
-## Single board atlas and remaining art gaps
+## Single board atlas and artwork restoration
+
+See [the current original-art state inventory](HOMESCAPES_ART.md) for the recovered
+blocker/generator art, exact source versions, inferred mappings and unresolved
+requirements. The following paragraph describes the initial source set.
 
 The 32 extracted original PNGs are preserved byte-for-byte in
 `engine/art/homescapes/sprites/`; `source-regions.json` records their original
@@ -136,11 +140,12 @@ piece pack aliases the same six originals; sprites are not repainted or tinted
 for power-up states. Existing separate scene, character, town and particle
 textures remain. The old striped-gem shader is no longer used for power-ups.
 
-Missing source artwork is tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98):
-colored box identities, hazelnut strengths, apple platters, statues, stack
-strengths, maker charging/release, visible queues, tile layers and blind stages.
-Acceptance requires the original artwork/state mapping, removal of the relevant
-diagnostic labels, and reviewed in-game captures at both portrait sizes.
+Remaining source artwork is tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98):
+colored boxes, six-layer jelly composition, complete maker dome/poses and
+portal/exit markers. Original source sprites now replace nuts, statues, stacks,
+tile states, blind labels and visible queue labels; platters use original parts
+with explicitly adapted spatial registration. This does not close all original
+artwork requirements. See the current inventory rather than the initial gap list.
 The source sprite set does not establish original animation timing or effects;
 our existing animations/effects are intentionally retained.
 

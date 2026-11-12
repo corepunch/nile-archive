@@ -1,0 +1,17 @@
+{
+  "version": "3.5.9",
+  "archive": "homescapes-3.5.9.apk",
+  "archive_sha256": "8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093",
+  "member": "assets/base_mm/textures/Match3/BubbleMembrane/fill.webp",
+  "member_sha256": "3b6f71793e79e88e3520d0d21358e3b1827f40aad48ccd54771c77bb8db2f3cd",
+  "rect": [
+    462,
+    222,
+    539,
+    299
+  ],
+  "transform": "crop decoded WebP, retain original RGBA",
+  "output": "sprites/membrane-fill-1.png",
+  "sha256": "2f37cbeb76261c777210e3091f0608ef5fa081eabdabc4dfe23bf0ee2733c2bf",
+  "meaning": "cracked membrane fill; one-layer association inferred from ceramic tile descriptions"
+}
