@@ -1,5 +1,8 @@
 # June's Journey bundled content
 
+For the development handoff on story, progression and building prices, see the
+[June’s Journey reference for Nile Archive](junes-journey-reference/README.md).
+
 This inspection covers the iPhone app version 4.17.7, build 120. The source
 app was supplied locally at `/Users/igor/Developer/nile-archive/reference/junesjourney.app`.
 The extracted game content is in the ignored `reference/junes-journey-analysis/`
