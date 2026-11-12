@@ -215,11 +215,15 @@ per cell from one clock, with callbacks at the landing times, and its tests
 drive that clock (`intro:update(dt)`, `intro.t`). As tweens it would be one
 custom-eased tween per cell per effect, so it keeps its clock. The town <-> board
 dive in `engine/match3_game.lua` also keeps a small clock of its own: game state
-switches at once, and for 0.32 s the screen being left (the town zooming into its
-newest building) blurs into a warm flash through `gfx.backdrop`, then the other
-screen settles out of it in 0.38 s while the board's entrance plays. It takes no
-input (`R.diving()`), and reduced motion skips it. Capture with
-`--city 3 --dive --reel` (the `*-town-dive` reels). The particle
+switches at once, the screen being left is covered, then the other screen is
+uncovered while the board's entrance plays. It takes no input (`R.diving()`),
+and reduced motion skips it. The styles live in `engine/match3_dive.lua`:
+`flash` (the default: the town zooms into its newest building and blurs into a
+warm flash), `hex`, `drift`, `iris` and `bands`. game.json's `dive` block picks
+one (`style`) and dresses it in the game's theme: a `motif` (`snow`, `leaves`)
+and its colours. Capture with `--city 3 --dive --reel` (the `*-town-dive`
+reels); `--dive-style NAME --dive-back F` films a style there and back (the
+`*-dive-<style>` reels). The particle
 pools in `engine/match3_vfx.lua` and the continuous hint pulse are likewise not tweens.
 
 ## Writing juice with it

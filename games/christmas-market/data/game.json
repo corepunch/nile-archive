@@ -1,6 +1,9 @@
 {
   "app": {"title": "Christmas Market - Winter Wishes", "id": "christmas-market", "clear": "#09211F"},
   "start_on_town": true,
+  "dive": {"motif": "snow", "face": ["#C62F35", "#7A1420"], "face_alt": ["#2E8B4F", "#15532D"], "rim": "#F2C14E", "accent": "#FFFFFF",
+           "bands": ["#F2C14E", "#FFF8EE", "#1E6B3E", "#B3202A"], "lights": ["#FF4A4A", "#4FE06A", "#FFD25A", "#59B8FF"],
+           "drift": "#F4F8FF", "drift_shade": "#C6D5EA", "drift_light": "#FFFFFF", "badge": "#8E1A22"},
   "packs": ["festive"],
   "speech": {"scale": 1, "name": 15},
   "region_speaker": "pip",

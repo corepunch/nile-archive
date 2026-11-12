@@ -152,6 +152,7 @@ void script_open(const char *dir)
         {"leaderboard.lua", "leaderboard"},
         {"match3_vfx.lua", "match3.vfx"},
         {"match3_debug.lua", "match3.debug"},
+        {"match3_dive.lua", "match3.dive"},
         {"match3_game.lua", "match3.game"},
     };
     for (size_t i = 0; i < sizeof files / sizeof files[0]; i++) {

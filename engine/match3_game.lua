@@ -1049,12 +1049,11 @@ function G.app(R)
     local journey = require("journey")
     local LEVELS = rules.LEVELS
 
-    -- Town <-> board: the screen being left rushes into a blur and a warm flash
-    -- (the town's camera dives into its newest building), then the other screen
-    -- settles out of it while the board's pieces start to fall. Game state
-    -- switches at once; only drawing and input wait for the dive.
-    local DIVE_OUT, DIVE_IN = .32, .38
-    local DIVE_FLASH = {255, 247, 224}
+    -- Town <-> board: the screen being left is covered (the town's camera dives
+    -- into its newest building), then the other screen is uncovered while the
+    -- board's pieces start to fall. engine/match3_dive.lua holds the styles.
+    -- Game state switches at once; only drawing and input wait for the dive.
+    local dive_styles = require("match3.dive")
     local dive, shown_island
     local function dive_focus()   -- the screen point the town zooms about
         local c, screen = R.island, app.screen()
@@ -1068,27 +1067,24 @@ function G.app(R)
     local function dive_watch()
         if shown_island ~= nil and shown_island ~= R.on_island and not R.reduced_motion
            and (not R.quiet or app.arg("dive")) then
-            dive = {t = 0, from_island = shown_island, focus = dive_focus()}
+            local label = R.on_island and nil or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
+            dive = {t = 0, from_island = shown_island, town = dive_focus(), board = R.BOARD_CLIP:center(),
+                    style = dive_styles.get(app.arg("dive-style") or (W.dive and W.dive.style)),
+                    theme = dive_styles.theme(W.dive), label = label, say = R.say}
         end
         shown_island = R.on_island
     end
-    -- Zoom of the town camera, blur radius and flash alpha at the dive's time.
-    local function dive_look(d)
-        if d.t < DIVE_OUT then
-            local e = ease.in_cubic(d.t / DIVE_OUT)
-            return d.from_island and 1 + 2.4 * e or 1, 16 * e, 110 * num.saturate((d.t / DIVE_OUT - .55) / .45)
-        end
-        local u = num.saturate((d.t - DIVE_OUT) / DIVE_IN)
-        local settle = 1 - ease.out_cubic(u)
-        return d.from_island and 1 or 1 + 2 * settle, 14 * settle, 110 * (1 - u) * (1 - u)
-    end
     local function dive_screen(world, dt)
-        local leaving = dive.t < DIVE_OUT
+        local s = dive.style
+        local leaving = dive.t < s.out
+        local u = leaving and dive.t / s.out or num.saturate((dive.t - s.out) / s.inn)
         local island_view = leaving == dive.from_island
-        local zoom, blur, flash = dive_look(dive)
+        dive.focus = island_view and dive.town or dive.board
         if island_view then
             local cam = R.island.cam
-            if zoom ~= 1 then R.island.cam = cam:zoom_at(zoom, dive.focus) end
+            local zoom, pan = s.look(dive, leaving, u)
+            local view = zoom ~= 1 and cam:zoom_at(zoom, dive.focus) or cam
+            R.island.cam = pan and view:pan(pan) or view
             R.island_screen(world, dt)
             R.island.cam = cam
         else
@@ -1097,10 +1093,10 @@ function G.app(R)
             R.vfx_particles()
         end
         gfx.bleed(true)
-        gfx.backdrop(blur, color(DIVE_FLASH[1], DIVE_FLASH[2], DIVE_FLASH[3], flash))
+        s.draw(dive, leaving, u)
         gfx.bleed(false)
         dive.t = dive.t + dt
-        if dive.t >= DIVE_OUT + DIVE_IN then dive = nil end
+        if dive.t >= s.out + s.inn then dive = nil end
     end
 
     local function frame(dt)
@@ -1124,7 +1120,7 @@ function G.app(R)
         if not talking then R.toast_time = R.toast_time - dt end
         if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
-        if not (dive and dive.t < DIVE_OUT) then R.board_update(dt) end   -- the board waits behind the dive
+        if not (dive and dive.t < dive.style.out) then R.board_update(dt) end   -- the board waits behind the dive
         local now = app.clock()   -- lives return on the clock; a lost board costs one at once
         rules.refill_lives(R.prog, now)
         if rules.lose_life(R.prog, R.g, now) then R.save_progress() end

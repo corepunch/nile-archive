@@ -40,6 +40,7 @@ function D.bind(R, W)
         if app.arg("dive") then   -- --city N --dive: Play is pressed on the third frame (the town -> board dive)
             dive_frames = dive_frames + 1
             if dive_frames == 3 then R.play_level(R.prog.level); R.present_board() end
+            if dive_frames == tonumber(app.arg("dive-back")) then R.on_island = true end   -- --dive-back F: and back to town
         end
         if app.arg("scroll-review") then
             scroll_frames = scroll_frames + 1
