@@ -2000,6 +2000,20 @@
       ],
       "mask": false
     },
+    "carry-exit-arrow": {
+      "source": "engine/art/homescapes/sprites/carry-exit-arrow.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        80,
+        32
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
     "ceramic-tile-1": {
       "source": "engine/art/homescapes/sprites/ceramic-tile-1.png",
       "rotation": 0,
@@ -2269,24 +2283,39 @@
     "donut-maker-0": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2295,29 +2324,44 @@
     "donut-maker-1": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dough-1",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png",
+        "donut-maker-dough-1"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ],
         "dough": [
-          70,
-          85
+          173,
+          168
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2326,29 +2370,44 @@
     "donut-maker-2": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dough-2",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png",
+        "donut-maker-dough-2"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ],
         "dough": [
-          72,
-          85
+          175,
+          168
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2357,29 +2416,44 @@
     "donut-maker-3": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dough-3",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png",
+        "donut-maker-dough-3"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ],
         "dough": [
-          71,
-          85
+          174,
+          168
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2448,6 +2522,20 @@
       "registered_size": [
         112,
         97
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "donut-maker-legacy-progress-back-source": {
+      "source": "engine/art/homescapes/sprites/donut-maker-legacy-progress-back-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        102
       ],
       "canvas": [
         128,
@@ -3250,6 +3338,9 @@
     "recipe": "3fd352407067913f262c6fd1baa5f52ae319753cc3d8d0f6a39b6edcf88e97f9",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
+      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
+      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassback.png": "1985e7a943b1a5ac423bf2841e6f382a4862d520efe1daac2958b7c946b53a8f",
+      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassfront.png": "d27fcfe884371a573646c1b02bc504520a5d9cb63e762c09b584822449871536",
       "engine/art/homescapes/sprites/apple-platter-base.png": "9f255fb0c7b602ca501f1072fd5a2a0dd48ed97372b4cd99ca1c8129f7243050",
       "engine/art/homescapes/sprites/blind-body.png": "c25d99b31eadce8e84cebf5d6af366ac4b51d6afa0ca92145797fac1b9cffbb4",
       "engine/art/homescapes/sprites/blind-top.png": "f9148124ea1c5df62cb53e55cc0947cc9575afab822d9f575c0264ece0a31d8a",
@@ -3263,6 +3354,7 @@
       "engine/art/homescapes/sprites/carpet-roll.png": "bc19ce532d3efe05cd827aa4d21b3ec8b75102f5d30b79bb74af2dfc3d7265b4",
       "engine/art/homescapes/sprites/carpet-swatch.png": "92008c0e25e0fc45ba5d741bcabc1382686a84432710183587115b4a623528fe",
       "engine/art/homescapes/sprites/carpet.png": "ebf3be34de7d341224782c6ac8973efd7b47e518b2e0240026074e5bac874038",
+      "engine/art/homescapes/sprites/carry-exit-arrow.png": "ab748d9b2d5d108b0fa7dddcb6ff1711640ae0afc43ebb64615d496d79b945e4",
       "engine/art/homescapes/sprites/ceramic-tile-1.png": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
       "engine/art/homescapes/sprites/ceramic-tile-2.png": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
       "engine/art/homescapes/sprites/chain-1-mirror.png": "4a8d55a723c47232842840593784e8037be59466fe4e9595d0190030f6904b3e",
@@ -3286,6 +3378,7 @@
       "engine/art/homescapes/sprites/donut-maker-dough-1.png": "3e984d7fcf42477412cb4fdc4bee78a971da344ab3a23fe20c69ec32986c8dd2",
       "engine/art/homescapes/sprites/donut-maker-dough-2.png": "cdcde252d7cf39d4f337827709f0d8911873f421b855e9015b176faf221c2c3c",
       "engine/art/homescapes/sprites/donut-maker-dough-3.png": "2440fa6e48b5c5aa140d29292d3f6e50bb13a66d82e9791d87d3f11d953db3dd",
+      "engine/art/homescapes/sprites/donut-maker-legacy-progress-back-source.png": "b74b0a42be2f14debdf9189ac84c04fc51b1c2ea3a38c5e2b343669b3c53dc63",
       "engine/art/homescapes/sprites/donut.png": "6430452c03918a5541a79f8d5f6d07f9958f54fb5fb38f8a1c5a263ce47a0253",
       "engine/art/homescapes/sprites/generator-shell.png": "9967588063202a30d63d473a334ca0eb1b92c3380a7fd5ffb1d904e3339d5a52",
       "engine/art/homescapes/sprites/goal-box.png": "65014904f089b2623a73f9f428b632b0b1537e4632ccab4eb8443e9ac5d739c0",
@@ -3358,12 +3451,13 @@
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
       "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
+      "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
-      "tools/homescapes_composites.py": "dd2b9be95f4875934a6cee636b6652161f9b7a512236057fb2f0b24e7da82865"
+      "tools/homescapes_composites.py": "43ac6fa9505fbcbded3fe3532c476ffbfb45043cd0546a022324344796066a53"
     },
     "outputs": {
-      "engine/data/match3.png": "f89333410b6e20a996f46c37c9fb1d8ef6d66515f4a13a400e6f96f3a8b284de",
-      "engine/match3_frames.lua": "f6d006e695f45976917ec3d7d9d3a30f75ee4bc91391cf131a8a550270390919"
+      "engine/data/match3.png": "770babe8a8ff01e5e67366587687f27141a62b2f9db399ad693f7cc1196d8d1d",
+      "engine/match3_frames.lua": "a777c34ece3f5dc8d9511f76bbdfdfa89b2e76e15ade380c8734c61c826b19fb"
     }
   }
 }

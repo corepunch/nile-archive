@@ -3,7 +3,7 @@
 local E = {}
 
 E.assets = {"stone-1", "stone-2", "stone-3", "tunnel-in", "tunnel-out",
-    "hidden-covered", "hidden-partial", "hidden-revealed", "growth", "delivery", "delivery-exit", "object-goal"}
+    "hidden-covered", "hidden-partial", "hidden-revealed", "growth", "delivery", "delivery-exit", "carry-exit-arrow", "object-goal"}
 for kind = 0, 5 do
     for hp = 1, 2 do E.assets[#E.assets + 1] = ("crate-%d-%d"):format(kind, hp) end
 end
@@ -83,7 +83,15 @@ function E.ground(R, rules, sx)
             if g.tunnel_from and g.tunnel_from[i] then
                 image(R, "tunnel-out", at - portal_offset, R.HEX_R * 1.55, alpha)
             end
-            if g.delivery_exits and g.delivery_exits[i] then R.say_at("EXIT",at+vec2(0,R.HEX_R*.6),10,R.PAL_WHITE,50) end
+            if g.delivery_exits and g.delivery_exits[i] then
+                -- Original CarryArrows uses three staggered copies with a cosine fade.
+                local elapsed = R.reduced_motion and 0 or R.now
+                for n=0,2 do
+                    local phase = (elapsed + n) % 3 / 3
+                    local fade = (1 - math.cos(2 * math.pi * phase)) * .5 * (180 / 255)
+                    image(R, "carry-exit-arrow", at + vec2(0, R.HEX_R * (.42 + phase * .5)), R.HEX_R * 1.5, alpha * fade)
+                end
+            end
         end
     end
 end

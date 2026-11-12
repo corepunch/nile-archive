@@ -1,0 +1,63 @@
+{
+  "bundle": "Homescapes iOS 9.2.601 base.zip",
+  "members": {
+    "base_mm/cds_file_map.xml": "769535dbb491357186981994305e9590ede340e1bf0bac6da48e709ea91247c0",
+    "base_mm/atlases/Match3_00.xml": "9e7693e7003cd2384c22b582f1f43aa0c3b08fd1e43cab8129ba85839cbf3c5a",
+    "base_mm/CdsSettings.json": "e44fb081ce3d9000ebf715cfad8ac60baad20397376494f4680a490c5d1d326a",
+    "base_mm/DownloadableFiles.xml": "a0b81f86b9eaa63d45b9f195ec8d6a282953378db5be15a5558f8c8bd8d95ad0",
+    "base_mm/Assets/CDS/CdsPack.xml": "8e5318c4a713a2a69f9504c92cfec715cb84ed13d2eb2283bde8d9acf5b38592"
+  },
+  "carry_exit_frame": {
+    "x": "1021",
+    "y": "322",
+    "width": "80",
+    "height": "32",
+    "innerX": "44",
+    "innerY": "64",
+    "frameWidth": "167",
+    "frameHeight": "167",
+    "path": "Match3/vso/textures/Elements/Carry/ExitForAnim.png",
+    "id": "CarryExitForAnim"
+  },
+  "downloadable_packs": {
+    "Match3_CarryGenerator.zip": {
+      "relative_path": "Match3_CarryGenerator/Match3_CarryGenerator-db1bbb6688f41447.zip",
+      "size": 446774,
+      "sha1": "d9dfc19a450261913869791648592d88921f755c"
+    },
+    "Match3_ColorBox.zip": {
+      "relative_path": "Match3_ColorBox/Match3_ColorBox-c85ec1a6d3fbd0c6.zip",
+      "size": 1887362,
+      "sha1": "b559aa916c5122b41463bdae9a0d88a1f6e05584"
+    },
+    "Match3_DonutMaker.zip": {
+      "relative_path": "Match3_DonutMaker/Match3_DonutMaker-f4c3a216509ac0eb.zip",
+      "size": 377132,
+      "sha1": "49f67917f47308ef8dc92c1c542241b877121bb2"
+    }
+  },
+  "color_box_native": {
+    "binary": "Homescapes Android 6.8.5 x86 libgame.so",
+    "sha256": "a7bd9db806df2bdd9fe5cc74d980812e2e587664c68e55f82d9907719941722c",
+    "constructor": "0x45a5bd8",
+    "texture_name": "Match3ColorBox{health}{color+1}",
+    "health": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "color": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "initial_frame_lookup": "0x45a5e81",
+    "ordinary_box_name": "Match3Box{health} for a negative color argument"
+  }
+}

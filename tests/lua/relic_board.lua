@@ -436,6 +436,7 @@ do
     local floor=rules.hex_index(3,0);g.hs.cells[floor].tile=2
     local portal_in, portal_out = rules.hex_index(-4,0), rules.hex_index(4,0)
     g.tunnel_to[portal_in], g.tunnel_from[portal_out] = portal_out, portal_in
+    g.delivery_exits[rules.hex_index(3,1)] = true
     local cherry_cell, empty_jelly = rules.hex_index(-2,1), rules.hex_index(-2,2)
     g.hs.cells[cherry_cell].jelly, g.hs.cells[empty_jelly].jelly = 2, 2
     g.tiles[cherry_cell] = {kind=0, special=rules.NORMAL, element="cherry", hp=1}
@@ -454,6 +455,7 @@ do
     check(queue.cursor==1 and queue.spawns==0,"rendering the source queue does not advance simulation")
     check(draws["membrane-fill-2"]==1,"covered source floor uses its authored intact material")
     check(draws["tunnel-in"]==1 and draws["tunnel-out"]==1,"both source portal roles use their own sprite")
+    check(draws["carry-exit-arrow"]==3,"donut exit draws three staggered copies of its original arrow")
     check(draws["jelly-2-cherry"]==1 and draws["jelly-2"]==1,"jelly displays a soft cherry only when one is present")
     check(elements.covers_cherry(g,cherry_cell,g.tiles[cherry_cell]),"the covered cherry is not drawn twice")
     check(goals[1].icon=="goal-color-box" and goals[1].remaining==2,"colored-box goal uses its source icon and rule count")

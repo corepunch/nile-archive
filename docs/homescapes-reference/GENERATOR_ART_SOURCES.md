@@ -17,22 +17,23 @@ verify them against the source bundle.
 
 ## Downloadable content metadata
 
-`base_mm/Assets/CDS/CdsCdnServer.vso` is a BLK container decoded by
-`tools/homescapes-reference/sprite_metadata.py`. Its production entry names
-`https://homescapes-cdn.playrix.com` and path `cds`; it does not identify the
-required packs. `base_mm/Assets/CDS/CdsPack.xml` and
-`base_mm/DownloadableFiles.xml` have PLXE headers with flags `0x00050005` and
-little-endian declared output lengths 1,329,000 and 373,426 bytes. Starting a
-Zstandard decoder at byte 12 fails with unsupported format for both. An older
-[public PLXE description](https://www.zenhax.com/viewtopic.php%40t%3D16964.html)
-describes raw Zstandard payloads for flag `0x00040004`; it does not decode these
-files. No conclusion about the newer payload's algorithm follows from this test.
+`decode_plxe.py` reads the archived Android x86 library's key table and
+decodes the original metadata for both iOS and Android. PLXE v3 uses raw
+DEFLATE and v5 uses Zstandard after decoding the payload. The library is read
+as data. The decoded iOS 9.2.601 `CdsSettings.json` names the production host,
+and `cds_file_map.xml` identifies the original pack paths, sizes and SHA-1
+values. Requests for the maker and colored-box packs returned HTTP 403.
+[File map evidence](board-pack-evidence.json)
 
-The bundled iOS executable `h` has `LC_ENCRYPTION_INFO_64` with `cryptid=1`,
-covering 112,263,168 bytes, so its protected code cannot be inspected as plain
-client instructions. Exact content URLs, pack contents, state artwork, source
-layer coordinates and animation timing remain unresolved. No CDN download or
-unverified extraction was used.
+```sh
+python3 tools/homescapes-reference/decode_plxe.py --library /path/to/6.8.5/libgame.so \
+  --archive reference/Homescapes.app/base.zip --output /tmp/homescapes-9.2.601 \
+  base_mm/CdsSettings.json base_mm/cds_file_map.xml base_mm/atlases/Match3_00.xml
+python3 tools/homescapes-reference/decode_plxe.py \
+  --key-apk reference/homescapes-analysis/historical/homescapes-1.1.0.900.apk \
+  --archive reference/homescapes-analysis/historical/homescapes-1.1.0.900.apk \
+  --output /tmp/homescapes-1.1.0 assets/base_mm/effects/Match3Effects_atlas1.xml
+```
 
 ## Public help and wiki media
 
@@ -42,16 +43,18 @@ The English articles also embed official YouTube videos for [apples](https://www
 
 ## Historical APK atlases
 
-A Homescapes 3.5.9 APK from [APK.Gold](https://apk.gold/download?file_id=1370034/homescapes) contains six decoded `Match3` atlas pages. They contain separate aqua platter, apple, donut-maker and blind components, rather than complete registered count/charge compositions. The six adjacent atlas XML files use PLXE flag `0x00050005`, whose payload does not expose the older raw-Zstandard format. Source-layer coordinates, the order of apple removal, charge poses, and how a nine-apple group is drawn remain unverified. These components alone cannot substantiate complete state mappings.
+The 3.5.9 APK contains six `Match3` atlas pages and matching PLXE v5 XML.
+The named base and glass crops share a 460 × 420 frame and use the original
+trim offsets in the runtime composite. The extracted switch positions 0–4,
+lamp-on and lamp-off states, raw dough, pale dough and glaze are preserved as
+source components. The native 6.8.5 renderer selects the switch and lamps
+from remaining output capacity. Their board placement remains open.
+[3.5.9 APK archive](https://apk.gold/download?file_id=1370034/homescapes) · [Named rectangles](../../tools/homescapes-reference/maker-named-regions.json) · [Native indicator evidence](maker-native-evidence.json)
 
-The historical atlas crops for `apple-platter-base`, `donut-maker-base`,
-`blind-top`, and `generator-shell` are rotated 180° during extraction. This
-orients the platter lip, maker heating ring, blind header and inlet latch to
-match the official help illustrations linked above. The transforms are recorded
-per crop in `tools/homescapes-reference/generator-historical-regions.json`;
-reproduce them with `extract_generator_historical.py --apk <3.5.9.apk>`. The
-maker dough is positioned over the corrected heating ring in the composite.
-The intact glass overlay is recovered from the same historical atlas.
-Its crop preserves the transparent highlight artwork. The glass, dough and
-apple coordinates are spatial adaptations checked against the official art.
-The exact maker progress-indicator poses remain open.
+The 1.1.0.900 and 3.5.9 PBI files name five stage animations. The 6.8.5 native
+dispatch groups them by activation period. The named `_0034_01` and
+`_0033_02` dough textures are present in both historical atlases. The
+searched atlases lack named `_0032_03`, `_0018_04` and `_0017_05` textures,
+and the PBI references alone do not establish the retained pose after an
+activation. Runtime dough still uses the documented preview placement.
+[Animation groups and source evidence](maker-animation-evidence.json)

@@ -1,13 +1,13 @@
-"""Spatially assemble original Homescapes components for the hex adaptation.
-
-Positions follow the original help illustrations, not recovered prefab geometry.
-No source component is recoloured or repainted.
-"""
+"""Spatially assemble original Homescapes components for the hex adaptation."""
+import json
 from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'engine/art/homescapes/sprites'
+MAKER_SOURCE = SOURCE.parent / 'maker-source'
+MAKER_REGIONS = ROOT / 'tools/homescapes-reference/maker-named-regions.json'
+MAKER_SHELL = ('Match3CarryGeneratorBase', 'Match3CarryGeneratorGlassBack', 'Match3CarryGeneratorGlassFront')
 JELLY_FLOWERS = (
     None,
     'jelly-flower-frame-source',
@@ -24,30 +24,38 @@ def part(name, size):
     return im
 
 
-def maker(charge):
-    base = Image.open(SOURCE / 'donut-maker-base.png').convert('RGBA')
-    dome = Image.open(SOURCE / 'donut-maker-dome.png').convert('RGBA')
-    # The isolated glass overlay and base share native scale. Their offset
-    # aligns the glass lip with the rim in Playrix's maker illustration.
-    base_y = 74
-    stack = Image.new('RGBA', (base.width, base.height + base_y))
-    stack.alpha_composite(base, (0, base_y))
-    sources = ['donut-maker-base']
-    layers = {'base': [0, base_y], 'dome': [15, 0]}
+def maker(charge, regions):
+    shell = []
+    for name in MAKER_SHELL:
+        region = regions[name]
+        attrs = region['attributes']
+        with Image.open(MAKER_SOURCE / region['output']) as raw:
+            sprite = raw.convert('RGBA').transpose(Image.Transpose.FLIP_TOP_BOTTOM)
+        frame = int(attrs['frameWidth']), int(attrs['frameHeight'])
+        at = int(attrs['innerX']), frame[1] - int(attrs['innerY']) - sprite.height
+        shell.append((region['output'], sprite, at, frame))
+    base, back, front = shell
+    stack = Image.new('RGBA', base[3])
+    sources = [item[0] for item in shell]
+    layers = {item[0]: list(item[2]) for item in shell}
+    stack.alpha_composite(base[1], base[2])
+    stack.alpha_composite(back[1], back[2])
     if charge:
         name = f'donut-maker-dough-{charge}'
         dough = Image.open(SOURCE / (name + '.png')).convert('RGBA')
-        at = ((base.width - dough.width) // 2, base_y + 11)
+        at = (base[2][0] + (base[1].width - dough.width) // 2, base[2][1] + 11)
         stack.alpha_composite(dough, at)
         layers['dough'] = list(at)
         sources.append(name)
-    stack.alpha_composite(dome, tuple(layers['dome']))
-    sources.append('donut-maker-dome')
+    stack.alpha_composite(front[1], front[2])
+    crop = stack.getchannel('A').getbbox()
+    stack = stack.crop(crop)
     stack.thumbnail((244, 244), Image.Resampling.LANCZOS)
     canvas = Image.new('RGBA', (256, 256))
     canvas.alpha_composite(stack, ((256 - stack.width) // 2, (256 - stack.height) // 2))
     return canvas, {'sources': sources, 'canvas': [256, 256], 'native_layer_offsets': layers,
-                    'registration': 'source parts aligned to Playrix illustration; charge poses inferred'}
+                    'source_canvas': list(base[3]), 'source_crop': list(crop),
+                    'registration': 'native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred'}
 
 
 def jelly(flower, cherry=None):
@@ -101,9 +109,10 @@ def registered():
                        'plate_size':list(plate.size), 'apple_size':list(apple.size),
                        'apple_positions':[list(p) for p in positions[:count]],
                        'registration':'manual spatial approximation of official illustration; ninth position is a hex adaptation'}
+    regions = {record['id']: record for record in json.loads(MAKER_REGIONS.read_text())['records']}
     for charge in range(4):
         name = f'donut-maker-{charge}'
-        images[name], records[name] = maker(charge)
+        images[name], records[name] = maker(charge, regions)
     for strength, flower in enumerate(JELLY_FLOWERS, 1):
         name = f'jelly-{strength}'
         images[name], records[name] = jelly(flower)
@@ -114,6 +123,8 @@ def registered():
 
 
 def inputs():
-    return [Path(__file__)] + [SOURCE / (n+'.png') for n in ['apple-platter-base','goal-target-generator',
-            'donut-maker-base','donut-maker-dome','donut-maker-dough-1','donut-maker-dough-2','donut-maker-dough-3',
+    regions = json.loads(MAKER_REGIONS.read_text())['records']
+    shell = [MAKER_SOURCE / record['output'] for record in regions if record['id'] in MAKER_SHELL]
+    return [Path(__file__), MAKER_REGIONS, *shell] + [SOURCE / (n+'.png') for n in ['apple-platter-base','goal-target-generator',
+            'donut-maker-dough-1','donut-maker-dough-2','donut-maker-dough-3',
             'jelly-square-source', 'jelly-cherry-clear-source', 'jelly-cherry-soft-source', *JELLY_FLOWERS[1:]]]

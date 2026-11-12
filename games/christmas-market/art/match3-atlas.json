@@ -149,926 +149,938 @@
       128,
       128
     ],
-    "cell-mask": [
+    "carry-exit-arrow": [
       1850,
       906,
       128,
       128
     ],
-    "ceramic-tile-1": [
+    "cell-mask": [
       2,
+      1038,
+      128,
+      128
+    ],
+    "ceramic-tile-1": [
+      134,
       1038,
       128,
       128
     ],
     "ceramic-tile-2": [
-      134,
+      266,
       1038,
       128,
       128
     ],
     "chain": [
-      266,
+      398,
       1038,
       128,
       128
     ],
     "chain-1": [
-      398,
+      530,
       1038,
       128,
       128
     ],
     "chain-1-mirror": [
-      530,
+      662,
       1038,
       128,
       128
     ],
     "chain-2": [
-      662,
+      794,
       1038,
       128,
       128
     ],
     "chain-board": [
-      794,
+      926,
       1038,
       128,
       128
     ],
     "cherry": [
-      926,
+      1058,
       1038,
       128,
       128
     ],
     "chip-0": [
-      1058,
+      1190,
       1038,
       128,
       128
     ],
     "chip-1": [
-      1190,
+      1322,
       1038,
       128,
       128
     ],
     "chip-2": [
-      1322,
+      1454,
       1038,
       128,
       128
     ],
     "chip-3": [
-      1454,
+      1586,
       1038,
       128,
       128
     ],
     "chip-4": [
-      1586,
+      1718,
       1038,
       128,
       128
     ],
     "chip-5": [
-      1718,
+      1850,
       1038,
       128,
       128
     ],
     "complete": [
-      1850,
-      1038,
+      2,
+      1170,
       128,
       128
     ],
     "cookie-1": [
-      2,
+      134,
       1170,
       128,
       128
     ],
     "cookie-2": [
-      134,
+      266,
       1170,
       128,
       128
     ],
     "cookie-3": [
-      266,
+      398,
       1170,
       128,
       128
     ],
     "cookie-stack-1": [
-      398,
+      530,
       1170,
       128,
       128
     ],
     "cookie-stack-2": [
-      530,
+      662,
       1170,
       128,
       128
     ],
     "cookie-stack-3": [
-      662,
+      794,
       1170,
       128,
       128
     ],
     "crate-0-1": [
-      794,
+      926,
       1170,
       128,
       128
     ],
     "crate-0-2": [
-      926,
+      1058,
       1170,
       128,
       128
     ],
     "crate-1-1": [
-      1058,
+      1190,
       1170,
       128,
       128
     ],
     "crate-1-2": [
-      1190,
+      1322,
       1170,
       128,
       128
     ],
     "crate-2-1": [
-      1322,
+      1454,
       1170,
       128,
       128
     ],
     "crate-2-2": [
-      1454,
+      1586,
       1170,
       128,
       128
     ],
     "crate-3-1": [
-      1586,
+      1718,
       1170,
       128,
       128
     ],
     "crate-3-2": [
-      1718,
+      1850,
       1170,
       128,
       128
     ],
     "crate-4-1": [
-      1850,
-      1170,
+      2,
+      1302,
       128,
       128
     ],
     "crate-4-2": [
-      2,
+      134,
       1302,
       128,
       128
     ],
     "crate-5-1": [
-      134,
+      266,
       1302,
       128,
       128
     ],
     "crate-5-2": [
-      266,
+      398,
       1302,
       128,
       128
     ],
     "delivery": [
-      398,
+      530,
       1302,
       128,
       128
     ],
     "delivery-exit": [
-      530,
+      662,
       1302,
       128,
       128
     ],
     "donut": [
-      662,
+      794,
       1302,
       128,
       128
     ],
     "donut-maker-0": [
-      794,
+      926,
       1302,
       128,
       128
     ],
     "donut-maker-1": [
-      926,
+      1058,
       1302,
       128,
       128
     ],
     "donut-maker-2": [
-      1058,
+      1190,
       1302,
       128,
       128
     ],
     "donut-maker-3": [
-      1190,
+      1322,
       1302,
       128,
       128
     ],
     "donut-maker-base": [
-      1322,
+      1454,
       1302,
       128,
       128
     ],
     "donut-maker-dome": [
-      1454,
+      1586,
       1302,
       128,
       128
     ],
     "donut-maker-dough-1": [
-      1586,
+      1718,
       1302,
       128,
       128
     ],
     "donut-maker-dough-2": [
-      1718,
+      1850,
       1302,
       128,
       128
     ],
     "donut-maker-dough-3": [
-      1850,
-      1302,
+      2,
+      1434,
+      128,
+      128
+    ],
+    "donut-maker-legacy-progress-back-source": [
+      134,
+      1434,
       128,
       128
     ],
     "dynamite-disabled": [
-      2,
+      266,
       1434,
       128,
       128
     ],
     "dynamite-hover": [
-      134,
+      398,
       1434,
       128,
       128
     ],
     "dynamite-normal": [
-      266,
+      530,
       1434,
       128,
       128
     ],
     "dynamite-pressed": [
-      398,
+      662,
       1434,
       128,
       128
     ],
     "dynamite-selected": [
-      530,
+      794,
       1434,
       128,
       128
     ],
     "generator-shell": [
-      662,
+      926,
       1434,
       128,
       128
     ],
     "goal-box": [
-      794,
+      1058,
       1434,
       128,
       128
     ],
     "goal-carry": [
-      926,
+      1190,
       1434,
       128,
       128
     ],
     "goal-chip-0": [
-      1058,
+      1322,
       1434,
       128,
       128
     ],
     "goal-chip-1": [
-      1190,
+      1454,
       1434,
       128,
       128
     ],
     "goal-chip-2": [
-      1322,
+      1586,
       1434,
       128,
       128
     ],
     "goal-chip-3": [
-      1454,
+      1718,
       1434,
       128,
       128
     ],
     "goal-chip-4": [
-      1586,
+      1850,
       1434,
       128,
       128
     ],
     "goal-chip-5": [
-      1718,
-      1434,
+      2,
+      1566,
       128,
       128
     ],
     "goal-color-box": [
-      1850,
-      1434,
+      134,
+      1566,
       128,
       128
     ],
     "goal-jelly": [
-      2,
+      266,
       1566,
       128,
       128
     ],
     "goal-lock": [
-      134,
+      398,
       1566,
       128,
       128
     ],
     "goal-piggy": [
-      266,
+      530,
       1566,
       128,
       128
     ],
     "goal-target-generator": [
-      398,
+      662,
       1566,
       128,
       128
     ],
     "goal-trash": [
-      530,
+      794,
       1566,
       128,
       128
     ],
     "gold-rainbow-ball": [
-      662,
+      926,
       1566,
       128,
       128
     ],
     "growth": [
-      794,
+      1058,
       1566,
       128,
       128
     ],
     "guide": [
-      926,
+      1190,
       1566,
       128,
       128
     ],
     "hazelnut-1": [
-      1058,
+      1322,
       1566,
       128,
       128
     ],
     "hazelnut-2": [
-      1190,
+      1454,
       1566,
       128,
       128
     ],
     "hazelnut-3": [
-      1322,
+      1586,
       1566,
       128,
       128
     ],
     "hidden-covered": [
-      1454,
+      1718,
       1566,
       128,
       128
     ],
     "hidden-partial": [
-      1586,
+      1850,
       1566,
       128,
       128
     ],
     "hidden-revealed": [
-      1718,
-      1566,
+      2,
+      1698,
       128,
       128
     ],
     "hint": [
-      1850,
-      1566,
+      134,
+      1698,
       128,
       128
     ],
     "honey-material": [
-      2,
+      266,
       1698,
       128,
       128
     ],
     "honey-swatch": [
-      134,
+      398,
       1698,
       128,
       128
     ],
     "ice-1": [
-      266,
+      530,
       1698,
       128,
       128
     ],
     "ice-1-edge": [
-      398,
+      662,
       1698,
       128,
       128
     ],
     "ice-2": [
-      530,
+      794,
       1698,
       128,
       128
     ],
     "ice-2-edge": [
-      662,
+      926,
       1698,
       128,
       128
     ],
     "jelly-1": [
-      794,
+      1058,
       1698,
       128,
       128
     ],
     "jelly-1-cherry": [
-      926,
+      1190,
       1698,
       128,
       128
     ],
     "jelly-2": [
-      1058,
+      1322,
       1698,
       128,
       128
     ],
     "jelly-2-cherry": [
-      1190,
+      1454,
       1698,
       128,
       128
     ],
     "jelly-3": [
-      1322,
+      1586,
       1698,
       128,
       128
     ],
     "jelly-4": [
-      1454,
+      1718,
       1698,
       128,
       128
     ],
     "jelly-5": [
-      1586,
+      1850,
       1698,
       128,
       128
     ],
     "jelly-6": [
-      1718,
-      1698,
+      2,
+      1830,
       128,
       128
     ],
     "jelly-cherry-clear-source": [
-      1850,
-      1698,
+      134,
+      1830,
       128,
       128
     ],
     "jelly-cherry-soft-source": [
-      2,
+      266,
       1830,
       128,
       128
     ],
     "jelly-flower-dark-source": [
-      134,
+      398,
       1830,
       128,
       128
     ],
     "jelly-flower-fill-source": [
-      266,
+      530,
       1830,
       128,
       128
     ],
     "jelly-flower-five-pale-source": [
-      398,
+      662,
       1830,
       128,
       128
     ],
     "jelly-flower-frame-source": [
-      530,
+      794,
       1830,
       128,
       128
     ],
     "jelly-flower-three-pale-source": [
-      662,
+      926,
       1830,
       128,
       128
     ],
     "jelly-square-source": [
-      794,
+      1058,
       1830,
       128,
       128
     ],
     "kind-0": [
-      926,
+      1190,
       1830,
       128,
       128
     ],
     "kind-1": [
-      1058,
+      1322,
       1830,
       128,
       128
     ],
     "kind-2": [
-      1190,
+      1454,
       1830,
       128,
       128
     ],
     "kind-3": [
-      1322,
+      1586,
       1830,
       128,
       128
     ],
     "kind-4": [
-      1454,
+      1718,
       1830,
       128,
       128
     ],
     "kind-5": [
-      1586,
+      1850,
       1830,
       128,
       128
     ],
     "life": [
-      1718,
-      1830,
+      2,
+      1962,
       128,
       128
     ],
     "membrane-fill-1": [
-      1850,
-      1830,
+      134,
+      1962,
       128,
       128
     ],
     "membrane-fill-2": [
-      2,
+      266,
       1962,
       128,
       128
     ],
     "object-goal": [
-      134,
+      398,
       1962,
       128,
       128
     ],
     "pause-disabled": [
-      266,
+      530,
       1962,
       128,
       128
     ],
     "pause-hover": [
-      398,
+      662,
       1962,
       128,
       128
     ],
     "pause-normal": [
-      530,
+      794,
       1962,
       128,
       128
     ],
     "pause-pressed": [
-      662,
+      926,
       1962,
       128,
       128
     ],
     "pause-selected": [
-      794,
+      1058,
       1962,
       128,
       128
     ],
     "pickaxe-disabled": [
-      926,
+      1190,
       1962,
       128,
       128
     ],
     "pickaxe-hover": [
-      1058,
+      1322,
       1962,
       128,
       128
     ],
     "pickaxe-normal": [
-      1190,
+      1454,
       1962,
       128,
       128
     ],
     "pickaxe-pressed": [
-      1322,
+      1586,
       1962,
       128,
       128
     ],
     "pickaxe-selected": [
-      1454,
+      1718,
       1962,
       128,
       128
     ],
     "plane": [
-      1586,
+      1850,
       1962,
       128,
       128
     ],
     "portal-entrance-source": [
-      1718,
-      1962,
+      2,
+      2094,
       128,
       128
     ],
     "portal-output-source": [
-      1850,
-      1962,
+      134,
+      2094,
       128,
       128
     ],
     "prism": [
-      2,
+      266,
       2094,
       128,
       128
     ],
     "rainbow-ball": [
-      134,
+      398,
       2094,
       128,
       128
     ],
     "ray-column": [
-      266,
+      530,
       2094,
       128,
       128
     ],
     "ray-diagonal": [
-      398,
+      662,
       2094,
       128,
       128
     ],
     "ray-row": [
-      530,
+      794,
       2094,
       128,
       128
     ],
     "rocket-horizontal": [
-      662,
+      926,
       2094,
       128,
       128
     ],
     "rocket-vertical": [
-      794,
+      1058,
       2094,
       128,
       128
     ],
     "sand": [
-      926,
+      1190,
       2094,
       128,
       128
     ],
     "sand-edge": [
-      1058,
+      1322,
       2094,
       128,
       128
     ],
     "selected": [
-      1190,
+      1454,
       2094,
       128,
       128
     ],
     "shop-built": [
-      1322,
+      1586,
       2094,
       128,
       128
     ],
     "shop-locked": [
-      1454,
-      2094,
-      128,
-      128
-    ],
-    "statue-1": [
-      1586,
-      2094,
-      128,
-      128
-    ],
-    "statue-2": [
       1718,
       2094,
       128,
       128
     ],
-    "statue-3": [
+    "statue-1": [
       1850,
       2094,
       128,
       128
     ],
-    "stone-1": [
+    "statue-2": [
       2,
       2226,
       128,
       128
     ],
-    "stone-2": [
+    "statue-3": [
       134,
       2226,
       128,
       128
     ],
-    "stone-3": [
+    "stone-1": [
       266,
       2226,
       128,
       128
     ],
-    "sunburst-disabled": [
+    "stone-2": [
       398,
       2226,
       128,
       128
     ],
-    "sunburst-hover": [
+    "stone-3": [
       530,
       2226,
       128,
       128
     ],
-    "sunburst-normal": [
+    "sunburst-disabled": [
       662,
       2226,
       128,
       128
     ],
-    "sunburst-pressed": [
+    "sunburst-hover": [
       794,
       2226,
       128,
       128
     ],
-    "sunburst-selected": [
+    "sunburst-normal": [
       926,
+      2226,
+      128,
+      128
+    ],
+    "sunburst-pressed": [
+      1058,
+      2226,
+      128,
+      128
+    ],
+    "sunburst-selected": [
+      1190,
       2226,
       128,
       128
     ],
     "tunnel-in": [
-      1058,
+      1322,
       2226,
       128,
       128
     ],
     "tunnel-out": [
-      1190,
+      1454,
       2226,
       128,
       128
     ],
     "web-2": [
-      1322,
+      1586,
       2226,
       128,
       128
     ],
     "glow": [
-      1454,
+      1718,
       2226,
       64,
       64
     ],
     "festive-0": [
-      926,
-      1830,
-      128,
-      128
-    ],
-    "festive-1": [
-      1058,
-      1830,
-      128,
-      128
-    ],
-    "festive-2": [
       1190,
       1830,
       128,
       128
     ],
-    "festive-3": [
+    "festive-1": [
       1322,
       1830,
       128,
       128
     ],
-    "festive-4": [
+    "festive-2": [
       1454,
       1830,
       128,
       128
     ],
-    "festive-5": [
+    "festive-3": [
       1586,
+      1830,
+      128,
+      128
+    ],
+    "festive-4": [
+      1718,
+      1830,
+      128,
+      128
+    ],
+    "festive-5": [
+      1850,
       1830,
       128,
       128
@@ -1086,8 +1098,8 @@
       900
     ],
     "score": [
-      1850,
-      1038,
+      2,
+      1170,
       128,
       128
     ]
@@ -1337,6 +1349,20 @@
         128
       ],
       "mask": true
+    },
+    "carry-exit-arrow": {
+      "source": "engine/art/homescapes/sprites/carry-exit-arrow.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        80,
+        32
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
     },
     "ceramic-tile-1": {
       "source": "engine/art/homescapes/sprites/ceramic-tile-1.png",
@@ -1751,6 +1777,20 @@
       "registered_size": [
         112,
         97
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "donut-maker-legacy-progress-back-source": {
+      "source": "engine/art/homescapes/sprites/donut-maker-legacy-progress-back-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        102
       ],
       "canvas": [
         128,
@@ -2889,24 +2929,39 @@
     "donut-maker-0": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2915,29 +2970,44 @@
     "donut-maker-1": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dough-1",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png",
+        "donut-maker-dough-1"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ],
         "dough": [
-          70,
-          85
+          173,
+          168
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2946,29 +3016,44 @@
     "donut-maker-2": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dough-2",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png",
+        "donut-maker-dough-2"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ],
         "dough": [
-          72,
-          85
+          175,
+          168
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -2977,29 +3062,44 @@
     "donut-maker-3": {
       "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base",
-        "donut-maker-dough-3",
-        "donut-maker-dome"
+        "maker-source-match3carrygeneratorbase.png",
+        "maker-source-match3carrygeneratorglassback.png",
+        "maker-source-match3carrygeneratorglassfront.png",
+        "donut-maker-dough-3"
       ],
       "canvas": [
         256,
         256
       ],
       "native_layer_offsets": {
-        "base": [
-          0,
-          74
+        "maker-source-match3carrygeneratorbase.png": [
+          99,
+          157
         ],
-        "dome": [
-          15,
-          0
+        "maker-source-match3carrygeneratorglassback.png": [
+          117,
+          90
+        ],
+        "maker-source-match3carrygeneratorglassfront.png": [
+          117,
+          151
         ],
         "dough": [
-          71,
-          85
+          174,
+          168
         ]
       },
-      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
+      "source_canvas": [
+        460,
+        420
+      ],
+      "source_crop": [
+        99,
+        90,
+        375,
+        364
+      ],
+      "registration": "native base and glass offsets; bottom-origin atlas sprites flipped vertically; charge preview alignment inferred",
       "registered_size": [
         128,
         128
@@ -3228,6 +3328,9 @@
     "recipe": "3fd352407067913f262c6fd1baa5f52ae319753cc3d8d0f6a39b6edcf88e97f9",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
+      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
+      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassback.png": "1985e7a943b1a5ac423bf2841e6f382a4862d520efe1daac2958b7c946b53a8f",
+      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassfront.png": "d27fcfe884371a573646c1b02bc504520a5d9cb63e762c09b584822449871536",
       "engine/art/homescapes/sprites/apple-platter-base.png": "9f255fb0c7b602ca501f1072fd5a2a0dd48ed97372b4cd99ca1c8129f7243050",
       "engine/art/homescapes/sprites/blind-body.png": "c25d99b31eadce8e84cebf5d6af366ac4b51d6afa0ca92145797fac1b9cffbb4",
       "engine/art/homescapes/sprites/blind-top.png": "f9148124ea1c5df62cb53e55cc0947cc9575afab822d9f575c0264ece0a31d8a",
@@ -3241,6 +3344,7 @@
       "engine/art/homescapes/sprites/carpet-roll.png": "bc19ce532d3efe05cd827aa4d21b3ec8b75102f5d30b79bb74af2dfc3d7265b4",
       "engine/art/homescapes/sprites/carpet-swatch.png": "92008c0e25e0fc45ba5d741bcabc1382686a84432710183587115b4a623528fe",
       "engine/art/homescapes/sprites/carpet.png": "ebf3be34de7d341224782c6ac8973efd7b47e518b2e0240026074e5bac874038",
+      "engine/art/homescapes/sprites/carry-exit-arrow.png": "ab748d9b2d5d108b0fa7dddcb6ff1711640ae0afc43ebb64615d496d79b945e4",
       "engine/art/homescapes/sprites/ceramic-tile-1.png": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
       "engine/art/homescapes/sprites/ceramic-tile-2.png": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
       "engine/art/homescapes/sprites/chain-1-mirror.png": "4a8d55a723c47232842840593784e8037be59466fe4e9595d0190030f6904b3e",
@@ -3264,6 +3368,7 @@
       "engine/art/homescapes/sprites/donut-maker-dough-1.png": "3e984d7fcf42477412cb4fdc4bee78a971da344ab3a23fe20c69ec32986c8dd2",
       "engine/art/homescapes/sprites/donut-maker-dough-2.png": "cdcde252d7cf39d4f337827709f0d8911873f421b855e9015b176faf221c2c3c",
       "engine/art/homescapes/sprites/donut-maker-dough-3.png": "2440fa6e48b5c5aa140d29292d3f6e50bb13a66d82e9791d87d3f11d953db3dd",
+      "engine/art/homescapes/sprites/donut-maker-legacy-progress-back-source.png": "b74b0a42be2f14debdf9189ac84c04fc51b1c2ea3a38c5e2b343669b3c53dc63",
       "engine/art/homescapes/sprites/donut.png": "6430452c03918a5541a79f8d5f6d07f9958f54fb5fb38f8a1c5a263ce47a0253",
       "engine/art/homescapes/sprites/generator-shell.png": "9967588063202a30d63d473a334ca0eb1b92c3380a7fd5ffb1d904e3339d5a52",
       "engine/art/homescapes/sprites/goal-box.png": "65014904f089b2623a73f9f428b632b0b1537e4632ccab4eb8443e9ac5d739c0",
@@ -3364,12 +3469,13 @@
       "games/christmas-market/data/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
       "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
+      "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
-      "tools/homescapes_composites.py": "dd2b9be95f4875934a6cee636b6652161f9b7a512236057fb2f0b24e7da82865"
+      "tools/homescapes_composites.py": "43ac6fa9505fbcbded3fe3532c476ffbfb45043cd0546a022324344796066a53"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "dc183d287da824821f179754d9c17fc4f7c7f95229cc0778b87a160384fd93b9",
-      "games/christmas-market/lua/match3_skin.lua": "7d4ad2fde6091fb007274ec25328c473f1854321c9173648b648ac6df2ff2215"
+      "games/christmas-market/data/match3.png": "ff068e16a6ceae2c3c905cdd447abbaa066239245ac31459f6661337ba9acb7d",
+      "games/christmas-market/lua/match3_skin.lua": "ccf9c3bcd67ab496f7353c77e8a378ec3f9c685b12064a323254bbb957736468"
     }
   }
 }

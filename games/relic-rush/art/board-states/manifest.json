@@ -1191,19 +1191,22 @@
         "blue output"
       ],
       "donut_maker_glass": [
-        "all four charge previews"
+        "original back and front layers registered at source offsets"
       ],
       "goal_color_box": [
         "HUD"
+      ],
+      "carry_exit": [
+        "original arrow with three staggered copies"
       ]
     },
     "restoration_review": "../../docs/review/homescapes-restored-art/README.md",
     "remaining": [
       "colored-box board colors/strengths",
-      "exact maker charge poses and indicators",
-      "carry-exit arrow",
+      "exact maker charge poses and output indicator placement",
       "exact original group composition"
     ],
-    "followup_review": "../../docs/review/homescapes-jelly-portals/README.md"
+    "followup_review": "../../docs/review/homescapes-jelly-portals/README.md",
+    "arrow_and_maker_review": "../../docs/review/homescapes-arrow-maker/README.md"
   }
 }

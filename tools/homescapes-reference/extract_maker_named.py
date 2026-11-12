@@ -19,7 +19,9 @@ def main():
     manifest = json.loads(MANIFEST.read_text())
     if sha256(args.apk.read_bytes()).hexdigest() != manifest['archive_sha256']:
         raise ValueError('Unexpected APK')
-    output = ROOT / 'engine/art/homescapes/sprites'
+    output = ROOT / 'engine/art/homescapes/maker-source'
+    if not args.check:
+        output.mkdir(parents=True, exist_ok=True)
     pages = {}
     with ZipFile(args.apk) as archive:
         for record in manifest['records']:

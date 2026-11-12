@@ -50,11 +50,11 @@ These are explicit hex adaptation choices, not original replay results.
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
 | `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. All six original layer appearances and both visible cherry variants |
 | `JELLY` | Carpet floor spreads through a matching group or carried power-up wave; source carpet texture |
-| `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection; original donut |
+| `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection. Original donut and animated white exit arrow |
 | `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
 | `STATUE` | Fixed, power-up-only layered statue; original raw/cut/carved states |
 | `COOKIE_BOX` | Fixed stack releases three movable cookies when destroyed; original bow/strap/plain stack states, then original cookies |
-| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap. Original base, dough and glass dome with adapted charge preview placement |
+| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap. Original base and two registered glass layers with adapted dough previews |
 | `BUBBLE_MEMBRANE` | Two layers require a direct hit first; single layer accepts a match; held cells protect the floor; original intact/cracked ceramic fills |
 | `SHUTTERS` | Shared vertical blind opens one bottom cell per wave; original shutter fabric and header, sized to remaining covered cells |
 | `BOMB`, `LINE`, `LIGHTNING`, `FISH` | Bomb, rocket, rainbow and plane, each original standalone sprite |
@@ -141,10 +141,10 @@ for power-up states. Existing separate scene, character, town and particle
 textures remain. The old striped-gem shader is no longer used for power-ups.
 
 Original source artwork covers nuts, statues, stacks, ceramic tiles, blinds,
-visible queues, six jelly strengths and both portal ends. The maker uses the
-recovered glass layer. Platters and makers use original parts positioned for the
-hex board. The colored-box goal icon is original. Field sprites for colored
-boxes, the donut collection arrow and exact maker charge poses remain open.
+visible queues, six jelly strengths, both portal ends and the donut exit arrow.
+The maker uses the original shared-frame alignment for the base and both glass
+layers. The colored-box goal icon is original. The 36 field sprites, exact
+maker charge poses and output indicator placement remain open.
 [Current inventory](HOMESCAPES_ART.md) · [Issue #98](https://github.com/corepunch/nile-archive/issues/98)
 
 Review captures are under [review/homescapes-port](review/homescapes-port/).

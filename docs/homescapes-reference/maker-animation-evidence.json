@@ -1,5 +1,5 @@
 {
-  "scope": "Evidence for maker animation texture references, not a decoded mapping of atlas rectangles to texture names or runtime charge values.",
+  "scope": "Original animation references, confirmed named source crops, and remaining endpoint evidence.",
   "versions": {
     "1.1.0.900": {
       "archive": "reference/homescapes-analysis/historical/homescapes-1.1.0.900.apk",
@@ -13,7 +13,7 @@
       ],
       "atlas_sha256": "f6d63c4fbbb4de054b4acf8ab003922d08a4117424cec3bd4a6303c4b6f64610",
       "atlas_metadata": "assets/base_mm/effects/Match3Effects_atlas1.xml",
-      "atlas_metadata_status": "PLXE 0x00020003; sprite region names not decoded"
+      "atlas_metadata_status": "PLXE v3 decoded; named _0034_01, _0033_02 and _0031_glaze present."
     },
     "3.5.9": {
       "archive": "reference/homescapes-analysis/historical/homescapes-3.5.9.apk",
@@ -21,7 +21,7 @@
       "packed_sha256": "596639a520cbfa5072bd0cbf9490c8c6a1f4bb79cfb0bfd6ccbcadc1b85d29ca",
       "decoded_sha256": "5d6be4fe300a7c6a4981714a7f4ce76acee828b6a1811b8cc1d89be5b46d4fa6",
       "encoding": "BLK zstd via sprite_metadata.unwrap",
-      "effect_atlas_status": "No Match3Effects atlas member in APK ZIP; core Match3 atlas pages hold the runtime crops, but their name-to-region metadata remains undecoded."
+      "effect_atlas_status": "PLXE v5 core Match3 metadata decoded; named source crops recorded in maker-named-regions.json."
     },
     "6.8.5": {
       "status": "Native binary contains effect names; PBI unavailable in local selected-member cache, and remote range fetch failed DNS. No cross-version PBI comparison claimed."
@@ -64,7 +64,7 @@
     ]
   },
   "reference_prefix": "Match3/CarryGenerator/",
-  "interpretation": "Effect records name both endpoint textures and intervening particles. Their order in the record is not proof of exact temporal endpoints; animation curves and the runtime selection for arbitrary activation periods are not decoded.",
+  "interpretation": "Native 6.8.5 dispatch verifies groups per activation period. PBI records list endpoint textures and intervening particles; exact retained frames still require animation curves or equivalent runtime evidence.",
   "visual_comparison": {
     "runtime_atlas_version": "3.5.9",
     "rectangles_source": "tools/homescapes-reference/generator-historical-regions.json",
@@ -85,6 +85,66 @@
         "sha256": "2440fa6e48b5c5aa140d29292d3f6e50bb13a66d82e9791d87d3f11d953db3dd"
       }
     ],
-    "bounded_conclusion": "The three recovered original crops differ in browning. The effect names and imagery support a possible white-to-golden visual progression, but do not identify which numbered texture names correspond to the pale versus darker golden crops. Do not claim exact order or arbitrary-period charge equivalence without metadata or gameplay frames."
+    "bounded_conclusion": "Named metadata identifies the pale and white crops as _0033_02 and _0034_01. The dark golden crop is the effect component 1_00239. The searched historical atlas XMLs do not define _0032_03, _0018_04 or _0017_05."
+  },
+  "activation_period_effects": {
+    "1": [
+      [
+        "1+2",
+        "3+4+5"
+      ]
+    ],
+    "2": [
+      [
+        "1+2"
+      ],
+      [
+        "3+4+5"
+      ]
+    ],
+    "3": [
+      [
+        "1+2"
+      ],
+      [
+        "3"
+      ],
+      [
+        "4",
+        "5"
+      ]
+    ],
+    "4": [
+      [
+        "1"
+      ],
+      [
+        "2"
+      ],
+      [
+        "3"
+      ],
+      [
+        "4",
+        "5"
+      ]
+    ],
+    "5": [
+      [
+        "1"
+      ],
+      [
+        "2"
+      ],
+      [
+        "3"
+      ],
+      [
+        "4"
+      ],
+      [
+        "5"
+      ]
+    ]
   }
 }
