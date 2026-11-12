@@ -1,0 +1,53 @@
+{
+  "binary": "Homescapes Android 6.8.5 libgame.so, x86, selected member downloaded by byte ranges",
+  "sha256": "a7bd9db806df2bdd9fe5cc74d980812e2e587664c68e55f82d9907719941722c",
+  "address_note": "ELF virtual addresses; 32-bit x86 disassembly; object and settings offsets are unlabelled native fields. Interpret semantics only to the extent shown.",
+  "constructor": {
+    "address": "0x461b0fc",
+    "base_glass": [
+      "Match3CarryGeneratorBase",
+      "Match3CarryGeneratorGlassBack",
+      "Match3CarryGeneratorGlassFront"
+    ],
+    "common_input_point": [
+      -116.5,
+      -104.0
+    ],
+    "input_point_note": "Passed through 0x56c23b0 before common sprite initialization.",
+    "sprite_initializer": "0x5ff4f92",
+    "sprite_scale_argument": 0.5,
+    "switch_assets": "Match3CarryGeneratorSwitch0 through Switch4",
+    "switch_initialization_point": [
+      -50,
+      -73
+    ],
+    "lamp_assets": [
+      "Match3CarryGeneratorLampOff",
+      "Match3CarryGeneratorLampOn"
+    ],
+    "lamp_initialization_point": [
+      0,
+      0
+    ],
+    "lamp_position_count": "object+0xe4",
+    "lamp_position_formula": {
+      "x": "13*i - 6",
+      "y": "0.2*i*i - 63",
+      "index": "i = 0 .. object+0xe4-1"
+    },
+    "coordinate_caveat": "Local native coordinates before caller matrix transforms; do not substitute as pixel offsets without establishing transforms."
+  },
+  "draw_indicators": {
+    "address": "0x461fc4c",
+    "remaining": "object+0xe4 - object+0x64",
+    "switch_index": "clamp(remaining, 0, 4)",
+    "lamp_count": "min(number of stored positions, 4)",
+    "lamp_selection": "LampOn when zero-based i < remaining, otherwise LampOff",
+    "proof": "0x461fcc5/0x461fccf load LampOff/LampOn objects; 0x461fce0-0x461fcf7 compare i against the difference and select on; 0x461fc67-0x461fc8b clamps the same difference for Switch array.",
+    "related": "0x461e9ae returns the same difference; 0x461e2c0-0x461e2d2 copies settings+0x84 into object+0xe4."
+  },
+  "limitations": [
+    "The native field names are inferred from behavior and external gameplay descriptions; object+0x64 was not independently traced to a source variable name.",
+    "No sprite matrix, effect endpoint, or full compositing order is asserted here."
+  ]
+}
