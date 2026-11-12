@@ -94,3 +94,35 @@ valid texture. This only rules out those exact trials for this one texture; it
 does not identify the format of the atlas pixels.
 
 The icon mapping currently covers `BOX`, `TRASH`, `JELLY`, `LOCK`, `RUG`, `CARRY`, `CHERRY`, `TAPE_MEASURE`, `JAR`, `TARGET_GEN`, `BOMB`, `LINE` and `LIGHTNING`. `CHERRY` uses the cherry-looking `piggy.webp`; that association is visual inference. Icons are read directly from the original app archive and served from a filename whitelist.
+
+## Extracted gem sources
+
+[Open the gem image gallery](../../reference/homescapes-analysis/gems/index.html)
+or the [contact sheet](../../reference/homescapes-analysis/gems/contact-sheet.png).
+The local extraction contains **22 directly readable goal-panel images**: six
+numbered piece icons, four distinct special icons and one combined-special icon,
+each in two bundled variants. It also contains **13** matching tutorial chip
+and result images, with source names preserved. These are original WebP files,
+not converted or recolored assets; the files named `facelift` are not proof of
+a specific runtime state or release order.
+
+The `board-atlases/` subdirectory contains five Zstandard-unwrapped DDS files
+and their original encoded XML metadata. The DDS headers identify 1576×1576
+textures, but their pixels and sprite regions are still undecoded; the metadata
+remains PLXE-encoded. They are source material for further investigation, not
+extracted individual board gems. The manifest records source paths, SHA-256
+hashes and output sizes for all 45 files. The original app bundle remains in
+`reference/Homescapes.app`.
+
+From the repository root, with `zstd` available:
+
+```sh
+python3 tools/homescapes-reference/extract_gems.py
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/homescapes-reference -p 'test_gems.py'
+```
+
+The extractor refuses to overwrite its destination. The gallery and outputs
+are ignored local third-party reference data. The manually assembled contact
+sheet is a spatial preview of the 22 goal icons and is not produced by the
+extractor. No conclusion is made that these images exhaust the in-game sprite
+states, animations, or remote assets.
