@@ -411,6 +411,7 @@ rect text_box(text_style s, rect box, vec2 align, const char *utf8);
 /* text_box showing only the first `visible` codepoints, every line already in
  * its final place: a typewriter that never re-wraps. */
 rect text_box_reveal(text_style s, rect box, vec2 align, const char *utf8, int visible);
+void text_box_reveal_ink(text_style s, rect box, vec2 align, const char *utf8, int visible);
 size2 text_box_size(text_style s, float width, const char *utf8);   /* wrapped size at that width */
 int text_length(const char *utf8);                                   /* in codepoints */
 /* Visible ink of one line, relative to where text_draw with pivot (0,0) puts its box. */

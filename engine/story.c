@@ -546,11 +546,11 @@ void story_frame(float dt)
     bool framed_narrow = has_face && !beside && S.style.framed;
     bool centered = has_face && !beside && !framed_narrow && S.style.centered;
     bool edge_to_edge = !beside && !S.style.framed && S.style.edge_to_edge;
-    float reach = bubble_reach(kind, rc(0, 0, 400, 100));
+    float reach = edge_to_edge ? 0 : bubble_reach(kind, rc(0, 0, 400, 100));
 
     /* the bubble hugs its text: balanced lines no wider than a comfortable measure */
     float max_w = beside ? minf(560, screen.size.w * .45f)
-                : edge_to_edge ? screen.size.w - 2 * reach
+                : edge_to_edge ? screen.size.w
                 : has_face ? screen.size.w - 2 * (m + reach)
                 : minf(screen.size.w - 2 * (m + reach), maxf(560, screen.size.w * .62f));
     float arrow = ts.size * .8f;   /* room for the "tap to continue" arrow after the last word */
@@ -558,12 +558,13 @@ void story_frame(float dt)
     float width = centered || edge_to_edge ? max_w
                 : minf(max_w, maxf(body.w + 2 * pad + arrow, maxf(tag_w + 64, ts.size * 9)));
     float top_gap = vpad + (who ? tag * .35f : 0);
-    float top_pad = top_gap, bottom_pad = vpad;
+    float top_pad = edge_to_edge ? vpad + OUTLINE : top_gap;
+    float bottom_pad = edge_to_edge ? top_pad : vpad;
     float height = body.h + top_pad + bottom_pad;
     /* Puffs and spikes already provide padding outside the core rectangle.
      * Reserve only the remaining space inside it. Thought-puff radius depends
      * on height; this contraction converges below a pixel in eight passes. */
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; !edge_to_edge && i < 8; i++) {
         rect bounds = speech_bubble_bounds(rc(0, 0, width, height), kind);
         top_pad = maxf(4, top_gap + bounds.pos.y);
         bottom_pad = maxf(4, vpad - (rect_max(bounds).y - height));
@@ -651,20 +652,29 @@ void story_frame(float dt)
     if (has_face) portrait_stage(who, portrait, right, true);
     portraits_frame(dt);
 
-    /* the bubble springs out of its tail when a speaker arrives */
-    float pop = lerpf(.55f, 1, ease_out_cubic(S.arrive / POP_TIME));
-    rect drawn = scale_about(bubble, grow_from, pop);
-    speech_bubble_shape(drawn, tip, S.style.bubble, S.style.edge, kind);
+    if (edge_to_edge) {
+        draw_rect(bubble, S.style.edge);
+        draw_rect(rect_inflate2(bubble, v2(0, -OUTLINE)), S.style.bubble);
+    } else {
+        /* The bubble springs out of its tail when a speaker arrives. */
+        float pop = lerpf(.55f, 1, ease_out_cubic(S.arrive / POP_TIME));
+        speech_bubble_shape(scale_about(bubble, grow_from, pop), tip, S.style.bubble, S.style.edge, kind);
+    }
 
     float settle = saturate((S.arrive - POP_TIME * .5f) / (POP_TIME * .5f));
     if (who && settle > 0) {   /* name tag on the bubble's top edge, on the speaker's side */
-        vec2 at = v2(right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, speech_bubble_bounds(bubble, kind).pos.y);
-        name_tag(who, vec2_add(at, v2(0, (1 - settle) * 6)), v2(right ? 1 : 0, .5f), tag);
+        float y = edge_to_edge ? bubble.pos.y - 2 - (1 - settle) * 6
+                : speech_bubble_bounds(bubble, kind).pos.y + (1 - settle) * 6;
+        vec2 at = v2(right ? rect_max(bubble).x - 22 : bubble.pos.x + 22, y);
+        name_tag(who, at, v2(right ? 1 : 0, edge_to_edge ? 1 : .5f), tag);
     }
     rect inner = rc(bubble.pos.x + pad, bubble.pos.y + top_pad, bubble.size.w - 2 * pad - arrow, body.h);
-    text_box_reveal(ts, inner, v2(who ? 0 : .5f, .5f), text, (int)S.shown);
+    vec2 align = v2(who ? 0 : .5f, .5f);
+    if (edge_to_edge) text_box_reveal_ink(ts, inner, align, text, (int)S.shown);
+    else text_box_reveal(ts, inner, align, text, (int)S.shown);
     if (S.shown >= length) {   /* waiting for a tap: a bobbing arrow in the corner */
         vec2 at = vec2_sub(rect_max(bubble), v2(pad * .75f, vpad * .7f - sinf(S.line_time * 6) * 3));
+        if (edge_to_edge) at.y = rect_center(bubble).y + sinf(S.line_time * 6) * 3;
         draw_poly((vec2[]){vec2_sub(at, v2(8, 6)), vec2_add(at, v2(8, -6)), vec2_add(at, v2(0, 4))}, 3, S.style.edge);
     }
     S.last = who;

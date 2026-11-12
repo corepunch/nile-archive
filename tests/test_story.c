@@ -188,12 +188,27 @@ static void check_facing_pixels(rect left, rect right)
         /* Source is blue on the left. The right portrait reverses the order. */
         CHECK((half==side ? ink[2] : ink[1])>80 && (half==side ? ink[1] : ink[2])<40);
     }
-    int rim_y=(int)((rect_max(left).y-left.size.h*.08f+30-screen.pos.y)*h/screen.size.h);
-    for (int side=0;side<2;side++) {
-        int x=side ? w-2 : 1;
-        const unsigned char *ink=pixels+((size_t)rim_y*w+x)*4;
-        CHECK(ink[0]>120 && ink[1]<65 && ink[2]<65);
+    int bar_top=h, bar_bottom=-1;
+    bool full_width=true;
+    const unsigned char cream[] = {250,230,200};
+    for (int y=0;y<h;y++) {
+        const unsigned char *row=pixels+(size_t)y*w*4;
+        if (memcmp(row+w/2*4,cream,3)) continue;
+        bar_top=imin(bar_top,y);
+        bar_bottom=imax(bar_bottom,y);
+        full_width=full_width && !memcmp(row+4,cream,3) && !memcmp(row+(w-2)*4,cream,3);
     }
+    CHECK(full_width);
+    int ink_top=h, ink_bottom=-1;
+    for (int y=bar_top;y<=bar_bottom;y++) for (int x=w/20;x<3*w/4;x++) {
+        const unsigned char *ink=pixels+((size_t)y*w+x)*4;
+        if (ink[0]<80 && ink[1]<80 && ink[2]<80) {
+            ink_top=imin(ink_top,y);
+            ink_bottom=imax(ink_bottom,y);
+        }
+    }
+    CHECK(bar_top<ink_top && ink_top<=ink_bottom && ink_bottom<bar_bottom);
+    CHECK(abs((ink_top-bar_top)-(bar_bottom-ink_bottom))<=2*axGetScaling());
     free(pixels);
 }
 
@@ -212,9 +227,10 @@ static void inward_facing_pair(void)
     test_style.framed=false;
     test_style.centered=test_style.inward=test_style.edge_to_edge=true;
     story_setup(cast,2,&test_style);
-    story_say("ann","The same line.");
-    story_say("other","The same line.");
-    story_say("ann","The same line.");
+    const char *wrapped="The same line\nAnother line below";
+    story_say("ann",wrapped);
+    story_say("other",wrapped);
+    story_say("ann",wrapped);
     story_frame(1);
     story_next();
     draw_rect(app_bleed(),rgba(10,20,70,255));

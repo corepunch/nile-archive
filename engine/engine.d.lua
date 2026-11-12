@@ -133,7 +133,7 @@
 ---@field framed boolean Portraits are busts: show them in a medallion.
 ---@field centered boolean Narrow screens: a full-width bubble at mid-screen with the speaker and listener standing on it at full size.
 ---@field inward boolean All source portraits face right. Stage conversation partners on opposite sides and mirror portraits on the right.
----@field edge_to_edge boolean On narrow unframed screens, align the speech outline and the centered portraits to the safe screen edges.
+---@field edge_to_edge boolean On narrow unframed screens, place centered portraits at the safe screen edges and use a rectangular dialogue bar with vertically centered text.
 ---@field skip string Label of a skip button, nil for none.
 
 ---@class building_def A building type.
