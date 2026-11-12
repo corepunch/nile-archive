@@ -285,7 +285,20 @@ function D.bind(R, W)
                 local i=rules.hex_index(hp-2,1);g.hs.cells[i].tile=hp
                 g.tiles[i]=rules.tile(-1)
             end
-            if app.arg("homescapes-art")=="generators" then
+            if app.arg("homescapes-art") == "jelly" then
+                for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
+                for hp=1,6 do
+                    local i=rules.hex_index(3-hp,0)
+                    g.hs.cells[i].jelly=hp
+                    g.tiles[i]={kind=0,special=rules.NORMAL,element="cherry",hp=1}
+                end
+                for hp=1,2 do
+                    local i=rules.hex_index(1-hp,2)
+                    g.hs.cells[i].jelly=hp
+                    g.tiles[i]=rules.tile(-1)
+                end
+                g.hs.goals={{type="COLLECT_PIGGY",max=6,current=0}}
+            elseif app.arg("homescapes-art")=="generators" then
                 for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
                 local function group(q,r,kind,count,hits)
                     local cells={rules.hex_index(q,r),rules.hex_index(q+1,r),rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}

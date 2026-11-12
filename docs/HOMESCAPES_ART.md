@@ -1,10 +1,9 @@
 # Homescapes board artwork: recovered states and source limits
 
-The missing-art work is **not complete**. Original graphics now replace the
-nut, statue, cookie-stack and tile diagnostics. Apple platters, blinds and
-visible queues also render original components. Maker charge previews use
-original base/dough components, but the intact dome and exact source poses have
-not been recovered. Colored boxes and six jelly strengths remain unresolved.
+The hex board uses original graphics for all six jelly strengths, both portal
+ends and the donut maker's glass dome. The goal panel uses the original
+colored-box icon. The colored-box field sprites and the separate donut exit
+arrow remain open in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
 
 ## Sources and registration
 
@@ -12,12 +11,29 @@ not been recovered. Colored boxes and six jelly strengths remain unresolved.
   pieces/power-ups and 13 added original goal icons. The goal images are lossless
   WebP-to-PNG conversions, verified against the archive and decoded pixel hashes.
 - Original Android **3.5.9** art supplies nine blocker states, tile materials,
-  the apple platter, blind header/body, queue inlet and maker components. The
+  the apple platter, blind header/body, queue inlet, maker components, the
+  jelly layers and the portal rings. The
   source archive is preserved locally at
   `reference/homescapes-analysis/historical/homescapes-3.5.9.apk` (ignored source,
   not a runtime dependency). SHA-256:
   `8b1a2ac9b4bbf7c4cd3122fcde18e806d3623695c841c6af0c7e14148e1cb093`.
   Its public archive listing is [APK.Gold 3.5.9](https://apk.gold/download?file_id=1370034/homescapes).
+- Android **1.1.0.900** independently identifies portal direction and placement
+  via `textures/Match3/Elements/portal/in.webp` and `out.webp`. The ignored
+  source archive is
+  `reference/homescapes-analysis/historical/homescapes-1.1.0.900.apk` with
+  SHA-256 `e796ea6b8da7d1645845f0217b2a731f9babe327665f9a4e011c68960d3c64c2`.
+  The archive listing is [APK.Gold 1.1.0](https://apk.gold/download?file_id=397849/homescapes).
+- Android **6.3.2** supplies the colored-box goal icon as the original WebP.
+  The original member and pixel hashes are in
+  `engine/art/homescapes/color-box-goal-source.json`. Its four core Match3
+  pages lack identifiable colored-box board sprites.
+- Android **8.8.602** supplies independent portal evidence in the named
+  `Match3_Portal.dds` pack. Byte ranges from the [8.8.602 XAPK](https://apkpure.net/homescapes-android/com.playrix.homescapes/download/8.8.602)
+  covered five core Match3 pages, the pack directory and selected members.
+  The shipped Match3 packs cover Bookshelf, GarbagePlate, Portal, Rug,
+  Settings, SwapWall, TapeMeasure and TargetGenerator. None supplies a named
+  colored-box art pack in that archive.
 - A **6.8.5** APK was inspected through HTTP byte ranges. Only selected members
   were downloaded. Its four core Match3 pages, four named element pages and 24
   plausible shared/UI/Match3/playable pages did not establish the colored-box
@@ -36,8 +52,8 @@ checked against official Playrix illustrations. The source ceramic interiors and
 resized and masked to the canonical flat-top hex. The shutter crop excludes
 transparent side margins; it does not invent alpha. Source PNGs remain intact.
 
-The atlas contains 68 source PNGs and 93 registered names including aliases and
-spatial composites. All three skins retain a single board texture. The default
+The atlas packs source PNGs, aliases and spatial composites. All three skins
+use a single board texture. The default
 packer now expands its canvas when additional frames exceed the old height;
 Christmas Market now uses a 2048×4096 atlas.
 
@@ -58,11 +74,31 @@ buttons remain centred independently of asymmetric source masks.
 | `TARGET_GEN` | `apple-platter-1..9`, once per four-cell footprint | Original platter and isolated original goal apple. Placement/removal order is a documented hex adaptation, not decoded prefab geometry. Nine apples use a 3×3 arrangement. |
 | `SHUTTERS` | Original `blind-body` on covered cells plus `blind-top` at the anchor | Remaining height follows the existing rule group; no `BL` counter. Source square material is cropped/masked to each hex. |
 | Visible `ARTIFACT_GEN` | Original `generator-shell` plus the next original piece/element | Reading the queue for drawing does not advance its cursor or RNG. Random units show the shell without pretending a specific next color is known. |
-| `CARRY_GEN` | `donut-maker-0..3` over the group footprint | Original base and dough sprites; charging-stage association is inferred. The intact dome and exact charge poses remain missing, so this is **not complete original maker artwork**. |
-| Goal panel | Original goal icons, with original board sprites for nuts/statues/tiles/blinds | `COLOR_BOX` is still a diagnostic label. |
+| `CARRY_GEN` | `donut-maker-0..3` over the group footprint | Original base, dough and transparent dome. The dome is aligned to the heating ring using the Playrix illustration. Exact charge poses and indicators remain unverified. |
+| Goal panel | Original goal icons, including `goal-color-box` | Uses original board sprites for nuts, statues, tiles and blinds. |
 | `COLOR_BOX` | Existing ordinary-box image plus `C<color>` | **Unresolved:** six colors × six original strengths; ordinary boxes are not accepted as finished colored-box art. |
-| `HONEY` | Existing material preview plus `J<hits>` | **Unresolved:** six-layer original composition. A new exact source swatch is archived, but does not establish six states and is not substituted as a claimed fix. |
-| Legacy tunnel/exit markers | Existing `IN`/`OUT`/`EXIT` text | **Unresolved original imagery.** Tutorial masks and unrelated arrow icons were not relabeled as portal/exit sprites. |
+| `HONEY` | `jelly-1..6`, with clear and soft cherry variants for strengths 1 and 2 | Original square, flowers and cherries matched to Playrix's six-state illustration. A mask derived from the authored opening clips the soft cherry. |
+| Portal pair | `tunnel-in` and `tunnel-out` | Original yellow entrance and blue output. Render at the lower and upper cell edges respectively, with insets for the hex layout. |
+| `CARRY_EXIT` | Existing `EXIT` text | The separate white arrow for donut collection still needs an identified source sprite. |
+
+The jelly illustration shows strengths six through one, left to right. The
+center overlay progresses from a dark red flower through five pale petals,
+three pale petals, pink petals, an open frame and a plain square. The first two
+strengths render the corresponding original cherry only if the cell contains
+`CHERRY`. Board rendering suppresses the covered piece so the cherry appears
+once. The clip, scale and offsets adapt the reference to the hex layout.
+[Playrix's six-state jelly illustration](https://d2duuy9yo5pldo.cloudfront.net/playrix/e387050a-8acc-410b-a29e-52cb2c67cb14-t.png)
+
+The extracted glass is a transparent highlight layer. Its holes are part of
+the source alpha plane, and its straight bottom edge meets the base. The
+historical crop avoids the neighboring sprite above the dome. The glass is
+registered at native scale over the base at relative offset `(+15, -74)`.
+[Playrix's donut maker illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1333-donut-maker/)
+
+The portal rings in the 3.5.9 atlas match the colors and silhouettes of the
+named portal textures and the official image. Gameplay continues to use the
+existing discontinuous transfer animation.
+[Playrix's portal illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1084-portals/)
 
 The original app's atlas/prefab metadata uses PLXE 5 payloads. The older raw
 Zstandard recipe does not decode these payloads. That prevents verification of
@@ -84,6 +120,9 @@ python3 tools/homescapes-reference/extract_historical_tiles.py reference/homesca
 python3 tools/homescapes-reference/extract_historical_membrane.py reference/homescapes-analysis/historical/homescapes-3.5.9.apk
 python3 tools/homescapes-reference/extract_shutter_texture.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk
 python3 tools/homescapes-reference/extract_surface_swatches.py
+python3 tools/homescapes-reference/extract_portal_historical.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk
+python3 tools/homescapes-reference/extract_historical_jelly_components.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk
+python3 tools/homescapes-reference/extract_color_box_goal.py --check
 python3 tools/match3_atlas.py
 python3 tools/match3_atlas.py --check
 ```
@@ -103,9 +142,8 @@ cannot consume pieces. Fourteen registered cell/object states pass the
 canonical strict fill/object tests. Group composites span four cells and are
 reviewed as objects, not certified as single-hex fills.
 
-Remaining acceptance criteria stay tracked in
-[issue #98](https://github.com/corepunch/nile-archive/issues/98): source-supported
-colored boxes, six jelly layers, complete maker artwork/poses, original
-portal/exit markers, and exact source group composition where 1:1 parity is
-required. Removing a diagnostic without obtaining its original artwork does
-not close that requirement.
+[Jelly, portals and maker follow-up captures](review/homescapes-jelly-portals/README.md)
+show the recovered states in both games. Remaining acceptance criteria are
+the 36 colored-box board states, the separate donut exit arrow and exact
+original group and maker charge composition.
+[Issue #98](https://github.com/corepunch/nile-archive/issues/98)

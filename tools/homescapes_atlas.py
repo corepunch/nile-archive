@@ -11,7 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'engine/art/homescapes/sprites'
 ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
-           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut'}
+           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut',
+           'tunnel-in': 'portal-entrance-source', 'tunnel-out': 'portal-output-source'}
 
 
 def registered():
@@ -45,8 +46,8 @@ def registered():
     composite_images, composite_records = homescapes_composites.registered()
     for name, original in composite_images.items():
         images[name] = original.resize((128,128), Image.Resampling.LANCZOS)
-        registrations[name] = {**composite_records[name], 'registered_size':[128,128],
-                               'placement':'shared four-cell footprint; not a single-cell fill'}
+        registrations[name] = {'placement':'shared four-cell footprint',
+                               **composite_records[name], 'registered_size':[128,128]}
     return images, registrations
 
 

@@ -1,0 +1,123 @@
+[
+  {
+    "name": "jelly-1",
+    "coverage": 0.7442705422023477,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 11003,
+    "alpha_max_error": 255,
+    "inside_pixels": 7989,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-2",
+    "coverage": 0.7588038010061486,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 11003,
+    "alpha_max_error": 255,
+    "inside_pixels": 8145,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-3",
+    "coverage": 0.7944848146077883,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 7172,
+    "alpha_max_error": 255,
+    "inside_pixels": 8528,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-4",
+    "coverage": 0.7944848146077883,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 7207,
+    "alpha_max_error": 255,
+    "inside_pixels": 8528,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-5",
+    "coverage": 0.7944848146077883,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 7207,
+    "alpha_max_error": 255,
+    "inside_pixels": 8528,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-6",
+    "coverage": 0.7944848146077883,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 7207,
+    "alpha_max_error": 255,
+    "inside_pixels": 8528,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-1-cherry",
+    "coverage": 0.7944848146077883,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 8155,
+    "alpha_max_error": 255,
+    "inside_pixels": 8528,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "jelly-2-cherry",
+    "coverage": 0.7943916526923793,
+    "spill": 0.0,
+    "edge_coverage": 0.15834218916046758,
+    "alpha_error_pixels": 9711,
+    "alpha_max_error": 255,
+    "inside_pixels": 8527,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "tunnel-in",
+    "coverage": 0.3357555431339668,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 8400,
+    "alpha_max_error": 255,
+    "inside_pixels": 3604,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "tunnel-out",
+    "coverage": 0.33985466741196196,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 8329,
+    "alpha_max_error": 255,
+    "inside_pixels": 3648,
+    "outside_pixels": 0,
+    "pass": true
+  },
+  {
+    "name": "goal-color-box",
+    "coverage": 0.28414384199739146,
+    "spill": 0.0,
+    "edge_coverage": 0.0,
+    "alpha_error_pixels": 8626,
+    "alpha_max_error": 255,
+    "inside_pixels": 3050,
+    "outside_pixels": 0,
+    "pass": true
+  }
+]

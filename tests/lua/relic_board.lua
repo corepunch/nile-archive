@@ -434,15 +434,27 @@ do
     local queue={cursor=1,spawns=0,units={{element="cookie",hp=2}}}
     g.hs.queues[inlet]=queue
     local floor=rules.hex_index(3,0);g.hs.cells[floor].tile=2
+    local portal_in, portal_out = rules.hex_index(-4,0), rules.hex_index(4,0)
+    g.tunnel_to[portal_in], g.tunnel_from[portal_out] = portal_out, portal_in
+    local cherry_cell, empty_jelly = rules.hex_index(-2,1), rules.hex_index(-2,2)
+    g.hs.cells[cherry_cell].jelly, g.hs.cells[empty_jelly].jelly = 2, 2
+    g.tiles[cherry_cell] = {kind=0, special=rules.NORMAL, element="cherry", hp=1}
+    g.tiles[empty_jelly] = rules.tile(-1)
+    g.hs.goals = {{type="COLOR_BOX", max=3, current=1}}
     local draws={}
     R.g,R.intro,R.board_art=g,nil,{}
     for _,name in ipairs(elements.assets) do R.board_art[name]=name end
     gfx.image=function(frame) draws[frame]=(draws[frame] or 0)+1 end -- luacheck: ignore 122
     elements.ground(R,rules,0)
     elements.blockers(R,rules,0)
+    local goals = R.goal_entries()
     gfx.image,R.g,R.board_art,R.intro=saved_image,saved_game,saved_art,saved_intro -- luacheck: ignore 122
     check(draws["apple-platter-8"]==1,"one source image spans a shared four-cell group")
     check(draws["generator-shell"]==1 and draws["cookie-2"]==1,"inlet shows its exact next authored object state")
     check(queue.cursor==1 and queue.spawns==0,"rendering the source queue does not advance simulation")
     check(draws["membrane-fill-2"]==1,"covered source floor uses its authored intact material")
+    check(draws["tunnel-in"]==1 and draws["tunnel-out"]==1,"both source portal roles use their own sprite")
+    check(draws["jelly-2-cherry"]==1 and draws["jelly-2"]==1,"jelly displays a soft cherry only when one is present")
+    check(elements.covers_cherry(g,cherry_cell,g.tiles[cherry_cell]),"the covered cherry is not drawn twice")
+    check(goals[1].icon=="goal-color-box" and goals[1].remaining==2,"colored-box goal uses its source icon and rule count")
 end

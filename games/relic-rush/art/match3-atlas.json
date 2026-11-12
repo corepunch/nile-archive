@@ -401,633 +401,753 @@
       128,
       128
     ],
-    "donut-maker-dough-1": [
+    "donut-maker-dome": [
       1190,
+      2710,
+      128,
+      128
+    ],
+    "donut-maker-dough-1": [
+      1322,
       2710,
       128,
       128
     ],
     "donut-maker-dough-2": [
-      1322,
+      1454,
       2710,
       128,
       128
     ],
     "donut-maker-dough-3": [
-      1454,
+      1586,
       2710,
       128,
       128
     ],
     "dynamite-disabled": [
-      1586,
+      1718,
       2710,
       128,
       128
     ],
     "dynamite-hover": [
-      1718,
+      1850,
       2710,
       128,
       128
     ],
     "dynamite-normal": [
-      1850,
-      2710,
+      2,
+      2842,
       128,
       128
     ],
     "dynamite-pressed": [
-      2,
+      134,
       2842,
       128,
       128
     ],
     "dynamite-selected": [
-      134,
+      266,
       2842,
       128,
       128
     ],
     "generator-shell": [
-      266,
+      398,
       2842,
       128,
       128
     ],
     "goal-box": [
-      398,
+      530,
       2842,
       128,
       128
     ],
     "goal-carry": [
-      530,
+      662,
       2842,
       128,
       128
     ],
     "goal-chip-0": [
-      662,
+      794,
       2842,
       128,
       128
     ],
     "goal-chip-1": [
-      794,
+      926,
       2842,
       128,
       128
     ],
     "goal-chip-2": [
-      926,
+      1058,
       2842,
       128,
       128
     ],
     "goal-chip-3": [
-      1058,
+      1190,
       2842,
       128,
       128
     ],
     "goal-chip-4": [
-      1190,
+      1322,
       2842,
       128,
       128
     ],
     "goal-chip-5": [
-      1322,
+      1454,
+      2842,
+      128,
+      128
+    ],
+    "goal-color-box": [
+      1586,
       2842,
       128,
       128
     ],
     "goal-jelly": [
-      1454,
+      1718,
       2842,
       128,
       128
     ],
     "goal-lock": [
-      1586,
+      1850,
       2842,
       128,
       128
     ],
     "goal-piggy": [
-      1718,
-      2842,
+      2,
+      2974,
       128,
       128
     ],
     "goal-target-generator": [
-      1850,
-      2842,
+      134,
+      2974,
       128,
       128
     ],
     "goal-trash": [
-      2,
+      266,
       2974,
       128,
       128
     ],
     "gold-rainbow-ball": [
-      134,
+      398,
       2974,
       128,
       128
     ],
     "growth": [
-      266,
+      530,
       2974,
       128,
       128
     ],
     "guide": [
-      398,
+      662,
       2974,
       128,
       128
     ],
     "hazelnut-1": [
-      530,
+      794,
       2974,
       128,
       128
     ],
     "hazelnut-2": [
-      662,
+      926,
       2974,
       128,
       128
     ],
     "hazelnut-3": [
-      794,
+      1058,
       2974,
       128,
       128
     ],
     "hidden-covered": [
-      926,
+      1190,
       2974,
       128,
       128
     ],
     "hidden-partial": [
-      1058,
+      1322,
       2974,
       128,
       128
     ],
     "hidden-revealed": [
-      1190,
+      1454,
       2974,
       128,
       128
     ],
     "hint": [
-      1322,
+      1586,
       2974,
       128,
       128
     ],
     "honey-material": [
-      1454,
+      1718,
       2974,
       128,
       128
     ],
     "honey-swatch": [
-      1586,
+      1850,
       2974,
       128,
       128
     ],
     "ice-1": [
-      1718,
-      2974,
+      2,
+      3106,
       128,
       128
     ],
     "ice-1-edge": [
-      1850,
-      2974,
+      134,
+      3106,
       128,
       128
     ],
     "ice-2": [
-      2,
+      266,
       3106,
       128,
       128
     ],
     "ice-2-edge": [
-      134,
+      398,
       3106,
+      128,
+      128
+    ],
+    "jelly-1": [
+      530,
+      3106,
+      128,
+      128
+    ],
+    "jelly-1-cherry": [
+      662,
+      3106,
+      128,
+      128
+    ],
+    "jelly-2": [
+      794,
+      3106,
+      128,
+      128
+    ],
+    "jelly-2-cherry": [
+      926,
+      3106,
+      128,
+      128
+    ],
+    "jelly-3": [
+      1058,
+      3106,
+      128,
+      128
+    ],
+    "jelly-4": [
+      1190,
+      3106,
+      128,
+      128
+    ],
+    "jelly-5": [
+      1322,
+      3106,
+      128,
+      128
+    ],
+    "jelly-6": [
+      1454,
+      3106,
+      128,
+      128
+    ],
+    "jelly-cherry-clear-source": [
+      1586,
+      3106,
+      128,
+      128
+    ],
+    "jelly-cherry-soft-source": [
+      1718,
+      3106,
+      128,
+      128
+    ],
+    "jelly-flower-dark-source": [
+      1850,
+      3106,
+      128,
+      128
+    ],
+    "jelly-flower-fill-source": [
+      2,
+      3238,
+      128,
+      128
+    ],
+    "jelly-flower-five-pale-source": [
+      134,
+      3238,
+      128,
+      128
+    ],
+    "jelly-flower-frame-source": [
+      266,
+      3238,
+      128,
+      128
+    ],
+    "jelly-flower-three-pale-source": [
+      398,
+      3238,
+      128,
+      128
+    ],
+    "jelly-square-source": [
+      530,
+      3238,
       128,
       128
     ],
     "kind-0": [
-      266,
-      3106,
+      662,
+      3238,
       128,
       128
     ],
     "kind-1": [
-      398,
-      3106,
+      794,
+      3238,
       128,
       128
     ],
     "kind-2": [
-      530,
-      3106,
+      926,
+      3238,
       128,
       128
     ],
     "kind-3": [
-      662,
-      3106,
+      1058,
+      3238,
       128,
       128
     ],
     "kind-4": [
-      794,
-      3106,
+      1190,
+      3238,
       128,
       128
     ],
     "kind-5": [
-      926,
-      3106,
+      1322,
+      3238,
       128,
       128
     ],
     "life": [
-      1058,
-      3106,
+      1454,
+      3238,
       128,
       128
     ],
     "membrane-fill-1": [
-      1190,
-      3106,
+      1586,
+      3238,
       128,
       128
     ],
     "membrane-fill-2": [
-      1322,
-      3106,
+      1718,
+      3238,
       128,
       128
     ],
     "object-goal": [
-      1454,
-      3106,
+      1850,
+      3238,
       128,
       128
     ],
     "pause-disabled": [
-      1586,
-      3106,
+      2,
+      3370,
       128,
       128
     ],
     "pause-hover": [
-      1718,
-      3106,
+      134,
+      3370,
       128,
       128
     ],
     "pause-normal": [
-      1850,
-      3106,
+      266,
+      3370,
       128,
       128
     ],
     "pause-pressed": [
-      2,
-      3238,
+      398,
+      3370,
       128,
       128
     ],
     "pause-selected": [
-      134,
-      3238,
+      530,
+      3370,
       128,
       128
     ],
     "pickaxe-disabled": [
-      266,
-      3238,
+      662,
+      3370,
       128,
       128
     ],
     "pickaxe-hover": [
-      398,
-      3238,
+      794,
+      3370,
       128,
       128
     ],
     "pickaxe-normal": [
-      530,
-      3238,
+      926,
+      3370,
       128,
       128
     ],
     "pickaxe-pressed": [
-      662,
-      3238,
+      1058,
+      3370,
       128,
       128
     ],
     "pickaxe-selected": [
-      794,
-      3238,
+      1190,
+      3370,
       128,
       128
     ],
     "plane": [
-      926,
-      3238,
+      1322,
+      3370,
+      128,
+      128
+    ],
+    "portal-entrance-source": [
+      1454,
+      3370,
+      128,
+      128
+    ],
+    "portal-output-source": [
+      1586,
+      3370,
       128,
       128
     ],
     "prism": [
-      1058,
-      3238,
+      1718,
+      3370,
       128,
       128
     ],
     "rainbow-ball": [
-      1190,
-      3238,
+      1850,
+      3370,
       128,
       128
     ],
     "ray-column": [
-      1322,
-      3238,
+      2,
+      3502,
       128,
       128
     ],
     "ray-diagonal": [
-      1454,
-      3238,
+      134,
+      3502,
       128,
       128
     ],
     "ray-row": [
-      1586,
-      3238,
+      266,
+      3502,
       128,
       128
     ],
     "rocket-horizontal": [
-      1718,
-      3238,
+      398,
+      3502,
       128,
       128
     ],
     "rocket-vertical": [
-      1850,
-      3238,
+      530,
+      3502,
       128,
       128
     ],
     "sand": [
-      2,
-      3370,
+      662,
+      3502,
       128,
       128
     ],
     "sand-edge": [
-      134,
-      3370,
+      794,
+      3502,
       128,
       128
     ],
     "score": [
-      266,
-      3370,
+      926,
+      3502,
       128,
       128
     ],
     "selected": [
-      398,
-      3370,
+      1058,
+      3502,
       128,
       128
     ],
     "shop-built": [
-      530,
-      3370,
+      1190,
+      3502,
       128,
       128
     ],
     "shop-locked": [
-      662,
-      3370,
+      1322,
+      3502,
       128,
       128
     ],
     "statue-1": [
-      794,
-      3370,
+      1454,
+      3502,
       128,
       128
     ],
     "statue-2": [
-      926,
-      3370,
+      1586,
+      3502,
       128,
       128
     ],
     "statue-3": [
-      1058,
-      3370,
+      1718,
+      3502,
       128,
       128
     ],
     "stone-1": [
-      1190,
-      3370,
+      1850,
+      3502,
       128,
       128
     ],
     "stone-2": [
-      1322,
-      3370,
+      2,
+      3634,
       128,
       128
     ],
     "stone-3": [
-      1454,
-      3370,
+      134,
+      3634,
       128,
       128
     ],
     "sunburst-disabled": [
-      1586,
-      3370,
+      266,
+      3634,
       128,
       128
     ],
     "sunburst-hover": [
-      1718,
-      3370,
+      398,
+      3634,
       128,
       128
     ],
     "sunburst-normal": [
-      1850,
-      3370,
+      530,
+      3634,
       128,
       128
     ],
     "sunburst-pressed": [
-      2,
-      3502,
+      662,
+      3634,
       128,
       128
     ],
     "sunburst-selected": [
-      134,
-      3502,
+      794,
+      3634,
       128,
       128
     ],
     "tunnel-in": [
-      266,
-      3502,
+      926,
+      3634,
       128,
       128
     ],
     "tunnel-out": [
-      398,
-      3502,
+      1058,
+      3634,
       128,
       128
     ],
     "web-2": [
-      530,
-      3502,
+      1190,
+      3634,
       128,
       128
     ],
     "glow": [
-      662,
-      3502,
+      1322,
+      3634,
       64,
       64
     ],
     "relics-0": [
-      266,
-      3106,
+      662,
+      3238,
       128,
       128
     ],
     "jewels-0": [
-      266,
-      3106,
+      662,
+      3238,
       128,
       128
     ],
     "resources-0": [
-      266,
-      3106,
+      662,
+      3238,
       128,
       128
     ],
     "relics-1": [
-      398,
-      3106,
+      794,
+      3238,
       128,
       128
     ],
     "jewels-1": [
-      398,
-      3106,
+      794,
+      3238,
       128,
       128
     ],
     "resources-1": [
-      398,
-      3106,
+      794,
+      3238,
       128,
       128
     ],
     "relics-2": [
-      530,
-      3106,
+      926,
+      3238,
       128,
       128
     ],
     "jewels-2": [
-      530,
-      3106,
+      926,
+      3238,
       128,
       128
     ],
     "resources-2": [
-      530,
-      3106,
+      926,
+      3238,
       128,
       128
     ],
     "relics-3": [
-      662,
-      3106,
+      1058,
+      3238,
       128,
       128
     ],
     "jewels-3": [
-      662,
-      3106,
+      1058,
+      3238,
       128,
       128
     ],
     "resources-3": [
-      662,
-      3106,
+      1058,
+      3238,
       128,
       128
     ],
     "relics-4": [
-      794,
-      3106,
+      1190,
+      3238,
       128,
       128
     ],
     "jewels-4": [
-      794,
-      3106,
+      1190,
+      3238,
       128,
       128
     ],
     "resources-4": [
-      794,
-      3106,
+      1190,
+      3238,
       128,
       128
     ],
     "relics-5": [
-      926,
-      3106,
+      1322,
+      3238,
       128,
       128
     ],
     "jewels-5": [
-      926,
-      3106,
+      1322,
+      3238,
       128,
       128
     ],
     "resources-5": [
-      926,
-      3106,
+      1322,
+      3238,
       128,
       128
     ]
@@ -1077,8 +1197,6 @@
     "sunburst-normal": "data/board-states/sunburst-normal.png",
     "sunburst-pressed": "data/board-states/sunburst-pressed.png",
     "sunburst-selected": "data/board-states/sunburst-selected.png",
-    "tunnel-in": "data/board-states/tunnel-in.png",
-    "tunnel-out": "data/board-states/tunnel-out.png",
     "complete": "data/expedition-hud/complete.png",
     "life": "data/expedition-hud/life.png",
     "pause-disabled": "data/expedition-hud/pause-disabled.png",
@@ -1645,6 +1763,20 @@
       ],
       "mask": false
     },
+    "donut-maker-dome": {
+      "source": "engine/art/homescapes/sprites/donut-maker-dome.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        104,
+        63
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
     "donut-maker-dough-1": {
       "source": "engine/art/homescapes/sprites/donut-maker-dough-1.png",
       "rotation": 0,
@@ -1841,6 +1973,20 @@
       ],
       "mask": false
     },
+    "goal-color-box": {
+      "source": "engine/art/homescapes/sprites/goal-color-box.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        107
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
     "goal-jelly": {
       "source": "engine/art/homescapes/sprites/goal-jelly.png",
       "rotation": 0,
@@ -2023,6 +2169,118 @@
       ],
       "mask": false
     },
+    "jelly-cherry-clear-source": {
+      "source": "engine/art/homescapes/sprites/jelly-cherry-clear-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        90,
+        86
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-cherry-soft-source": {
+      "source": "engine/art/homescapes/sprites/jelly-cherry-soft-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        98,
+        94
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-flower-dark-source": {
+      "source": "engine/art/homescapes/sprites/jelly-flower-dark-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        106,
+        105
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-flower-fill-source": {
+      "source": "engine/art/homescapes/sprites/jelly-flower-fill-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        106,
+        105
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-flower-five-pale-source": {
+      "source": "engine/art/homescapes/sprites/jelly-flower-five-pale-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        106,
+        105
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-flower-frame-source": {
+      "source": "engine/art/homescapes/sprites/jelly-flower-frame-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        110,
+        109
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-flower-three-pale-source": {
+      "source": "engine/art/homescapes/sprites/jelly-flower-three-pale-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        106,
+        105
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "jelly-square-source": {
+      "source": "engine/art/homescapes/sprites/jelly-square-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        100,
+        100
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
     "membrane-fill-1": {
       "source": "engine/art/homescapes/sprites/membrane-fill-1.png",
       "rotation": 0,
@@ -2058,6 +2316,62 @@
       "registered_size": [
         112,
         110
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "portal-entrance-source": {
+      "source": "engine/art/homescapes/sprites/portal-entrance-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        59
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "tunnel-in": {
+      "source": "engine/art/homescapes/sprites/portal-entrance-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        59
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "portal-output-source": {
+      "source": "engine/art/homescapes/sprites/portal-output-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        59
+      ],
+      "canvas": [
+        128,
+        128
+      ],
+      "mask": false
+    },
+    "tunnel-out": {
+      "source": "engine/art/homescapes/sprites/portal-output-source.png",
+      "rotation": 0,
+      "crop": null,
+      "registered_size": [
+        112,
+        59
       ],
       "canvas": [
         128,
@@ -2220,6 +2534,7 @@
       "mask": false
     },
     "apple-platter-1": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2246,10 +2561,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-2": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2280,10 +2595,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-3": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2318,10 +2633,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-4": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2360,10 +2675,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-5": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2406,10 +2721,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-6": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2456,10 +2771,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-7": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2510,10 +2825,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-8": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2568,10 +2883,10 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "apple-platter-9": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "apple-platter-base",
         "goal-target-generator"
@@ -2630,71 +2945,340 @@
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "donut-maker-0": {
+      "placement": "shared four-cell footprint",
       "sources": [
-        "donut-maker-base"
+        "donut-maker-base",
+        "donut-maker-dome"
       ],
       "canvas": [
         256,
         256
       ],
-      "registration": "manual spatial approximation; charge mapping inferred, dome not recovered",
+      "native_layer_offsets": {
+        "base": [
+          0,
+          74
+        ],
+        "dome": [
+          15,
+          0
+        ]
+      },
+      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "donut-maker-1": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "donut-maker-base",
-        "donut-maker-dough-1"
+        "donut-maker-dough-1",
+        "donut-maker-dome"
       ],
       "canvas": [
         256,
         256
       ],
-      "registration": "manual spatial approximation; charge mapping inferred, dome not recovered",
+      "native_layer_offsets": {
+        "base": [
+          0,
+          74
+        ],
+        "dome": [
+          15,
+          0
+        ],
+        "dough": [
+          70,
+          85
+        ]
+      },
+      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "donut-maker-2": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "donut-maker-base",
-        "donut-maker-dough-2"
+        "donut-maker-dough-2",
+        "donut-maker-dome"
       ],
       "canvas": [
         256,
         256
       ],
-      "registration": "manual spatial approximation; charge mapping inferred, dome not recovered",
+      "native_layer_offsets": {
+        "base": [
+          0,
+          74
+        ],
+        "dome": [
+          15,
+          0
+        ],
+        "dough": [
+          72,
+          85
+        ]
+      },
+      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
       "registered_size": [
         128,
         128
-      ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      ]
     },
     "donut-maker-3": {
+      "placement": "shared four-cell footprint",
       "sources": [
         "donut-maker-base",
-        "donut-maker-dough-3"
+        "donut-maker-dough-3",
+        "donut-maker-dome"
       ],
       "canvas": [
         256,
         256
       ],
-      "registration": "manual spatial approximation; charge mapping inferred, dome not recovered",
+      "native_layer_offsets": {
+        "base": [
+          0,
+          74
+        ],
+        "dome": [
+          15,
+          0
+        ],
+        "dough": [
+          71,
+          85
+        ]
+      },
+      "registration": "source parts aligned to Playrix illustration; charge poses inferred",
       "registered_size": [
         128,
         128
+      ]
+    },
+    "jelly-1": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source"
       ],
-      "placement": "shared four-cell footprint; not a single-cell fill"
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": null,
+      "cherry_transform": null,
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-2": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-flower-frame-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": null,
+      "cherry_transform": null,
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-3": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-flower-fill-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": null,
+      "cherry_transform": null,
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-4": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-flower-three-pale-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": null,
+      "cherry_transform": null,
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-5": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-flower-five-pale-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": null,
+      "cherry_transform": null,
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-6": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-flower-dark-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": null,
+      "cherry_transform": null,
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-1-cherry": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-cherry-clear-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": [
+        86,
+        86
+      ],
+      "cherry_transform": "horizontal mirror",
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
+    },
+    "jelly-2-cherry": {
+      "placement": "single-cell object",
+      "sources": [
+        "jelly-square-source",
+        "jelly-cherry-soft-source",
+        "jelly-flower-frame-source"
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "base_size": [
+        200,
+        200
+      ],
+      "flower_size_limit": [
+        94,
+        94
+      ],
+      "cherry_size_limit": [
+        86,
+        86
+      ],
+      "cherry_transform": "horizontal mirror; clip soft cherry to authored flower hole",
+      "registration": "original square and centered source layers, matched to Playrix illustration",
+      "registered_size": [
+        128,
+        128
+      ]
     }
   },
   "procedural_glow": "Original 64px white cubic radial alpha; transient light, packed alongside sprites",
@@ -2737,6 +3321,7 @@
       "engine/art/homescapes/sprites/cookie-stack-2.png": "daf3fce71bc3f4f2fb99dee65e3679c22b31276a2bb5b938f04beb7f6f791c6d",
       "engine/art/homescapes/sprites/cookie-stack-3.png": "d95aa8993d933557a10af0ca04a9a62e247bf312311ab463eb059062b8a48268",
       "engine/art/homescapes/sprites/donut-maker-base.png": "9c9c2771a5ba4df4972f2ba09c00819bb3d0b2aa55ebb9c33233bac24c93d3dd",
+      "engine/art/homescapes/sprites/donut-maker-dome.png": "a23ba2efd48638ac58c759f9b2716632015647d442c00d70d8ddbd733aaf3069",
       "engine/art/homescapes/sprites/donut-maker-dough-1.png": "3e984d7fcf42477412cb4fdc4bee78a971da344ab3a23fe20c69ec32986c8dd2",
       "engine/art/homescapes/sprites/donut-maker-dough-2.png": "cdcde252d7cf39d4f337827709f0d8911873f421b855e9015b176faf221c2c3c",
       "engine/art/homescapes/sprites/donut-maker-dough-3.png": "2440fa6e48b5c5aa140d29292d3f6e50bb13a66d82e9791d87d3f11d953db3dd",
@@ -2750,6 +3335,7 @@
       "engine/art/homescapes/sprites/goal-chip-3.png": "27d7b3cf8d7f060c29f0b64912b721b5ccd63a9aac33dda1d37180107e5b1b1d",
       "engine/art/homescapes/sprites/goal-chip-4.png": "fb07ab43b6d935ddfc2e475f1bea31dd5cc740199038837a152c76a52ab900e8",
       "engine/art/homescapes/sprites/goal-chip-5.png": "2ae16905149659526218e431574c64d7ef1c8ccd2f54eb3cfc91e609a369d3d9",
+      "engine/art/homescapes/sprites/goal-color-box.png": "e55470afeca57bc6cd54eb1291a0ca29a707beef9afb62ed3ae5458e5346d68f",
       "engine/art/homescapes/sprites/goal-jelly.png": "8cfa9a42cad588c49e25293b8c3935436a94a6ebec44c29cdb575024fe76d19f",
       "engine/art/homescapes/sprites/goal-lock.png": "b5fecce7c60e9d340285b98b83312e51b79058208bfb5cb4aeb3583afd4d01d0",
       "engine/art/homescapes/sprites/goal-piggy.png": "58cd8577712c2848fcd69420bec28b2addeee6c20b2ff7a41f3537e26d01494e",
@@ -2763,9 +3349,19 @@
       "engine/art/homescapes/sprites/honey-swatch.png": "66d65742cec7372ed3333265e2138931e5d02f5fa5a0212ad661f0c3aa95f4a5",
       "engine/art/homescapes/sprites/ice-1.png": "aa335d52106e6e41e63a8cfd20f3d0337be0105714f5c54ba4dd7dc44a79e389",
       "engine/art/homescapes/sprites/ice-2.png": "971b2c451a4d04df9a62075cd7c6896bb741bfdeb51a0e688698aba5976e5d1f",
+      "engine/art/homescapes/sprites/jelly-cherry-clear-source.png": "cccef2c0d24ad54d04eadeb29694489e977e787617e055ebfe550df662f64f18",
+      "engine/art/homescapes/sprites/jelly-cherry-soft-source.png": "47e66cc9955aa41fb9d43743bef73d7b3707bbb14e8dd79440d542264b078f7f",
+      "engine/art/homescapes/sprites/jelly-flower-dark-source.png": "637cf95b8754e6ec4c4670dc557484268c91ae28eb6ea38414a31781b075c896",
+      "engine/art/homescapes/sprites/jelly-flower-fill-source.png": "f36c76f3e6c7afa8989d37a176c587598ecce4ea66402302c189a4d5f9d81f09",
+      "engine/art/homescapes/sprites/jelly-flower-five-pale-source.png": "717947516b6613496dd4f437d96c2007100105811839c9b29b4b0565279f478c",
+      "engine/art/homescapes/sprites/jelly-flower-frame-source.png": "8e2e25d6fbb813d4388a3f4d255c9d16ddf76639bdc114d1050479662db7ae74",
+      "engine/art/homescapes/sprites/jelly-flower-three-pale-source.png": "69c4e26e63a2fba0e17bdbf24bf8e2c5dba0e13be57dc0a6c6350877dc9896b3",
+      "engine/art/homescapes/sprites/jelly-square-source.png": "9242a1db622d53b6b0dfb9f84f347d32151789db119b5c5798b089cd893249c4",
       "engine/art/homescapes/sprites/membrane-fill-1.png": "2f37cbeb76261c777210e3091f0608ef5fa081eabdabc4dfe23bf0ee2733c2bf",
       "engine/art/homescapes/sprites/membrane-fill-2.png": "2867f3b6c61ccc4c5cb1d9add33e704f5922c98cb2e70649c77965a37e1231e5",
       "engine/art/homescapes/sprites/plane.png": "5986a288603f4d5e711620092ee74bfd1ace896861aed046fefb58441bf6aa4b",
+      "engine/art/homescapes/sprites/portal-entrance-source.png": "8ba9e5ef5a52e0b5620776daac302479208211f2c468bc5e33c874777fc4b26c",
+      "engine/art/homescapes/sprites/portal-output-source.png": "151c72a1c7c667b2186d4313ca47146593fcc24436388bbcc9be9871028ad0fc",
       "engine/art/homescapes/sprites/rainbow-ball.png": "7f7e33828421498f3658e0588c37712b12a72344ac15aa597e96a3fba796a04b",
       "engine/art/homescapes/sprites/rocket-horizontal.png": "634ae885dfb7be9f17adf1a4ac9dcb2af86a5fbb32028c24b373d7015fbd9ae6",
       "engine/art/homescapes/sprites/rocket-vertical.png": "f4910c53b06207d53b234533edf4f7dd8cdb7f8e971048e6fc75f86d53a583e5",
@@ -2819,8 +3415,6 @@
       "games/relic-rush/data/board-states/sunburst-normal.png": "e275397437e2538fa765a0faa644a69568efc71bafcb99bd7cc90747beef46cf",
       "games/relic-rush/data/board-states/sunburst-pressed.png": "a5064eb46874e6ac5fbccc89fab171b3f8506f21c494cc943ba7f7d741f38976",
       "games/relic-rush/data/board-states/sunburst-selected.png": "6db450213241f00a69e0b59af0081cf01bbcee59789ac39934d942323654d1bc",
-      "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
-      "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
       "games/relic-rush/data/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
       "games/relic-rush/data/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
       "games/relic-rush/data/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
@@ -2835,15 +3429,15 @@
       "games/relic-rush/data/scene-lagoon.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
       "games/relic-rush/data/scene-temple.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
       "games/relic-rush/tools/prepare_assets.py": "e08cbe315f015e6e101e08cf8451516fa171a4dfaef85a7b0f2f0f5f990f530d",
-      "tools/homescapes_atlas.py": "a4852bad8b7ea6527eccc559f7c46bdf23a49cf8cb94dd9d0331c5d457c2d47b",
-      "tools/homescapes_composites.py": "224e06891c667b71db35ae1f804fe41377f340b8c46ab75dd2a45dbe02048497"
+      "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
+      "tools/homescapes_composites.py": "dd2b9be95f4875934a6cee636b6652161f9b7a512236057fb2f0b24e7da82865"
     },
     "outputs": {
-      "games/relic-rush/data/match3.png": "34926a07c01c710174d79d8350c442d1073571f9a54c7e6bb0614f8517445120",
+      "games/relic-rush/data/match3.png": "e0c93525b0869511e1d4af75d3c9e09415abe154036e48159ce78df025639d3c",
       "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
-      "games/relic-rush/lua/match3_skin.lua": "b584a8733a74d5e2ab40cbe12b19a7b451945dbf196081cf70675de7b8f50db3"
+      "games/relic-rush/lua/match3_skin.lua": "b752f3f09d9f24c5fc02af7210087201ef495ed485ff03d4827f5e70536426e4"
     }
   }
 }

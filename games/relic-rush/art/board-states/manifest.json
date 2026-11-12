@@ -1173,15 +1173,37 @@
       "generator": [
         "shell",
         "next-queued-original-piece"
+      ],
+      "jelly": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "jelly_cherry": [
+        "clear at strength 1",
+        "soft at strength 2"
+      ],
+      "portal": [
+        "yellow entrance",
+        "blue output"
+      ],
+      "donut_maker_glass": [
+        "all four charge previews"
+      ],
+      "goal_color_box": [
+        "HUD"
       ]
     },
     "restoration_review": "../../docs/review/homescapes-restored-art/README.md",
     "remaining": [
-      "colored-box colors/strengths",
-      "six-layer jelly mapping",
-      "maker dome and exact charge poses",
-      "portal/exit markers",
+      "colored-box board colors/strengths",
+      "exact maker charge poses and indicators",
+      "carry-exit arrow",
       "exact original group composition"
-    ]
+    ],
+    "followup_review": "../../docs/review/homescapes-jelly-portals/README.md"
   }
 }

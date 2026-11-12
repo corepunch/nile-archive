@@ -91,9 +91,11 @@ local function draw_relics(sx)
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
-            if clip then gfx.clip(clip) end
-            draw_relic(t, at, scale * BOARD_SCALE * elements.piece_scale(g, i) * elements.selection_scale(R,i), alpha, aspect, true)
-            if clip then gfx.clip(R.BOARD_CLIP) end
+            if not elements.covers_cherry(g, i, t) then
+                if clip then gfx.clip(clip) end
+                draw_relic(t, at, scale * BOARD_SCALE * elements.piece_scale(g, i) * elements.selection_scale(R,i), alpha, aspect, true)
+                if clip then gfx.clip(R.BOARD_CLIP) end
+            end
         end
     end
     gfx.unclip()

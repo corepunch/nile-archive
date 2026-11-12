@@ -48,13 +48,13 @@ These are explicit hex adaptation choices, not original replay results.
 | `TRASH` | Swappable/falling cookies, three original damage states; adjacent matches or direct hits |
 | `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
-| `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. Original cherry, source material preview for jelly |
+| `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. All six original layer appearances and both visible cherry variants |
 | `JELLY` | Carpet floor spreads through a matching group or carried power-up wave; source carpet texture |
 | `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection; original donut |
 | `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
 | `STATUE` | Fixed, power-up-only layered statue; original raw/cut/carved states |
 | `COOKIE_BOX` | Fixed stack releases three movable cookies when destroyed; original bow/strap/plain stack states, then original cookies |
-| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap; original base/dough charge preview; intact dome and exact poses remain unresolved |
+| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap. Original base, dough and glass dome with adapted charge preview placement |
 | `BUBBLE_MEMBRANE` | Two layers require a direct hit first; single layer accepts a match; held cells protect the floor; original intact/cracked ceramic fills |
 | `SHUTTERS` | Shared vertical blind opens one bottom cell per wave; original shutter fabric and header, sized to remaining covered cells |
 | `BOMB`, `LINE`, `LIGHTNING`, `FISH` | Bomb, rocket, rainbow and plane, each original standalone sprite |
@@ -140,14 +140,12 @@ piece pack aliases the same six originals; sprites are not repainted or tinted
 for power-up states. Existing separate scene, character, town and particle
 textures remain. The old striped-gem shader is no longer used for power-ups.
 
-Remaining source artwork is tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98):
-colored boxes, six-layer jelly composition, complete maker dome/poses and
-portal/exit markers. Original source sprites now replace nuts, statues, stacks,
-tile states, blind labels and visible queue labels; platters use original parts
-with explicitly adapted spatial registration. This does not close all original
-artwork requirements. See the current inventory rather than the initial gap list.
-The source sprite set does not establish original animation timing or effects;
-our existing animations/effects are intentionally retained.
+Original source artwork covers nuts, statues, stacks, ceramic tiles, blinds,
+visible queues, six jelly strengths and both portal ends. The maker uses the
+recovered glass layer. Platters and makers use original parts positioned for the
+hex board. The colored-box goal icon is original. Field sprites for colored
+boxes, the donut collection arrow and exact maker charge poses remain open.
+[Current inventory](HOMESCAPES_ART.md) · [Issue #98](https://github.com/corepunch/nile-archive/issues/98)
 
 Review captures are under [review/homescapes-port](review/homescapes-port/).
 Verification includes shape/combination outcomes, blocker precedence, generated
@@ -164,11 +162,11 @@ scale the original piece. Only Homescapes sprites
 are used for board pieces and blockers. Existing quest-resource artwork is the
 explicit temporary exception. Surrounding backgrounds, panels, tool buttons and
 interface remain, as do the requested particle effects and animation transforms.
-Legacy campaign portal/exit locations use diagnostic text; old stone/crate/growth
-art is replaced by source box/jelly material previews. Legacy floor-cover
-objectives have no decorative rim. These campaign adapters are not proof of
-original Homescapes rules. The source-preview boards use the dedicated source
-model handlers and goals described above.
+Campaign portals use the original yellow and blue rings. The separate donut
+collection exit still uses diagnostic text. Legacy stone, crate and growth
+use source box and jelly material previews. Legacy floor-cover objectives use
+flat hex ground. The source-preview boards use the dedicated source model
+handlers and goals described above.
 
 The longer guide uses the engine's existing scrolling list, keeping Done within
 the screen. Source-level launch options are now available while Lua modules load,

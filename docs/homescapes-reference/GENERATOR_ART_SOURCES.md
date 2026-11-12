@@ -50,6 +50,8 @@ orients the platter lip, maker heating ring, blind header and inlet latch to
 match the official help illustrations linked above. The transforms are recorded
 per crop in `tools/homescapes-reference/generator-historical-regions.json`;
 reproduce them with `extract_generator_historical.py --apk <3.5.9.apk>`. The
-maker dough is positioned over the corrected heating ring in the composite;
-its placement and the apple layout are manual approximations, not recovered
-prefab coordinates. The maker's intact glass dome remains unavailable.
+maker dough is positioned over the corrected heating ring in the composite.
+The intact glass overlay is recovered from the same historical atlas.
+Its crop preserves the transparent highlight artwork. The glass, dough and
+apple coordinates are spatial adaptations checked against the official art.
+The exact maker progress-indicator poses remain open.
