@@ -21,8 +21,8 @@ DISTANCE_FORMATS = {61: (5, 1), 64: (13, 33), 62: (16, 8225), 63: (20, 73761)}
 
 
 def read_streams(data, *, allow_trailer=False):
-    if len(data) < 128 or data[:4] != b'DDS ' or data[84:88] != b'etc2':
-        raise ValueError('Expected an ETC2-tagged DDS')
+    if len(data) < 128 or data[:4] != b'DDS ' or data[84:88] not in (b'etc2', b'bc7 '):
+        raise ValueError('Expected a packed ETC2 or BC7 DDS')
     height, width, _, planes = struct.unpack_from('<4I', data, 12)
     if not (0 < width <= 8192 and 0 < height <= 8192 and 1 <= planes <= 3):
         raise ValueError('Unsupported texture size or plane count')
@@ -128,6 +128,9 @@ def unpack_blocks(commands, dictionary, literals, block_count):
 def unpack_dds(data, *, allow_trailer=False):
     width, height, streams = read_streams(data, allow_trailer=allow_trailer)
     count = ((width + 3) // 4) * ((height + 3) // 4)
+    if data[84:88] == b'bc7 ':
+        # Windows BC7 blocks are two consecutive 8-byte codec units.
+        count *= 2
     return width, height, [unpack_blocks(cmd, entries, literals, count)
                            for _, cmd, entries, literals in streams]
 
@@ -137,12 +140,16 @@ def render_page(data, *, allow_trailer=False):
     import texture2ddecoder as texture
 
     width, height, planes = unpack_dds(data, allow_trailer=allow_trailer)
-    if len(planes) < 2:
-        raise ValueError('Expected Match3 color and opacity planes')
 
     def image(decoder, plane):
         return Image.frombytes('RGBA', (width, height), decoder(plane, width, height), 'raw', 'BGRA')
 
+    if data[84:88] == b'bc7 ':
+        if len(planes) != 1:
+            raise ValueError('Expected one Windows BC7 RGBA plane')
+        return image(texture.decode_bc7, planes[0]), None, [sha256(planes[0]).hexdigest()]
+    if len(planes) < 2:
+        raise ValueError('Expected Match3 color and opacity planes')
     color = image(texture.decode_etc2, planes[0])
     color.putalpha(image(texture.decode_eacr, planes[1]).getchannel('R'))
     auxiliary = image(texture.decode_etc2, planes[2]).convert('RGB') if len(planes) == 3 else None

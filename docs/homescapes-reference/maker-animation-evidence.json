@@ -25,6 +25,17 @@
     },
     "6.8.5": {
       "status": "Native binary contains effect names; PBI unavailable in local selected-member cache, and remote range fetch failed DNS. No cross-version PBI comparison claimed."
+    },
+    "9.2.601.0 Windows x64": {
+      "classic_pack": "Match3_CarryGenerator",
+      "alternate_oven_pack": "Match3_DonutMaker",
+      "layer_inventory": "engine/art/homescapes/maker-charge-sources.json",
+      "classic_pbi": {
+        "member": "res_base/res/packs/Match3_CarryGenerator/Match3Downloads/Match3_CarryGenerator/effects/Match3_CarryGenerator.pbi",
+        "sha256": "bbba53cfd11a772dfd971ef58b3460b9100fc7177b3666846012bf3168fe48b8",
+        "encoding": "Zstandard stream at byte 8"
+      },
+      "later_pose_note": "The classic atlas includes source glaze and decoration layers. Emitter names _0032_03, _0018_04, _0017_05 and _0035_back do not identify standalone atlas images."
     }
   },
   "common_effect_texture_references": {
@@ -64,7 +75,7 @@
     ]
   },
   "reference_prefix": "Match3/CarryGenerator/",
-  "interpretation": "Native 6.8.5 dispatch verifies the stage groups per activation period. Playrix tutorial frames confirm the sequence for the illustrated five-hit maker. Exact animation timing and all source layers remain incomplete.",
+  "interpretation": "Native 6.8.5 dispatch verifies the stage groups per activation period. Playrix tutorial frames confirm the sequence for the illustrated five-hit maker. The Windows source atlas supplies the visual layers, with exact original particle timing still unverified.",
   "visual_comparison": {
     "runtime_atlas_version": "3.5.9",
     "rectangles_source": "tools/homescapes-reference/generator-historical-regions.json",

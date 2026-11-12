@@ -22,7 +22,8 @@ decodes the original metadata for both iOS and Android. PLXE v3 uses raw
 DEFLATE and v5 uses Zstandard after decoding the payload. The library is read
 as data. The decoded iOS 9.2.601 `CdsSettings.json` names the production host,
 and `cds_file_map.xml` identifies the original pack paths, sizes and SHA-1
-values. Requests for the maker and colored-box packs returned HTTP 403.
+values. Requests to that CDN returned HTTP 403. The corresponding
+Windows 9.2.601.0 atlases were recovered from the x64 MSIX using byte ranges.
 [File map evidence](board-pack-evidence.json)
 
 ```sh
@@ -49,9 +50,8 @@ animation durations and frame count need separate verification.
 [Official donut maker tutorial](https://www.youtube.com/watch?v=6XNxRO7CMs0)
 
 The official colored-box clip shows red damage stages in the intro and
-cyan and pink boxes being hit and cleared on the field. It supplies visual
-reference for those appearances. The original downloadable atlas is still
-needed to verify all 36 named textures.
+cyan and pink boxes being hit and cleared on the field. The Windows atlas
+independently supplies the 36 named health/color images.
 [Official colored boxes tutorial](https://www.youtube.com/watch?v=FaMduRjYcsA)
 
 ## Historical APK atlases
@@ -64,17 +64,33 @@ source components. The native 6.8.5 renderer selects the switch and lamps
 from remaining output capacity. Their board placement remains open.
 [3.5.9 APK archive](https://apk.gold/download?file_id=1370034/homescapes) · [Named rectangles](../../tools/homescapes-reference/maker-named-regions.json) · [Native indicator evidence](maker-native-evidence.json)
 
-The 1.1.0.900 and 3.5.9 PBI files name five stage animations. The 6.8.5 native
-dispatch groups them by activation period. The runtime uses named textures
-`_0034_01` and `_0033_02` from 3.5.9 for raw and heated dough. Their source
-rectangles are also independently named in the 1.2.0.900 and 1.3.0.900 atlas
-metadata. Makers with periods 4–5 reach these poses after hits 1 and 2.
-Makers with periods 2–3 combine the two opening stages on hit 1 and show
-heated dough. The source clip confirms the visual sequence. The crop
-placement inside the hex composite is estimated from the clip.
+## Windows 9.2.601 classic charge atlas
 
-Later PBI stages genuinely reference `_0032_03`, `_0018_04` and
-`_0017_05`. Every stage also references `_0035_back`. These names are absent
-from the inspected historical atlases. The renderer retains its existing
-preview selection for the remaining stages pending the original source art.
-[Animation groups and source evidence](maker-animation-evidence.json)
+The 1.1.0.900 and 3.5.9 PBI files name five stage animations. The 6.8.5 native
+dispatch groups them by activation period. The Windows `Match3_CarryGenerator`
+atlas supplies `_0034_01`, `_0033_02`, `_0031_glaze` and the five green and
+three yellow decoration images. The charged images share an authored
+276 × 274 frame. The extractor applies each original triangle mesh to
+isolate its pixels and converts to top-origin coordinates.
+
+The classic held poses use the raw texture, heated texture, heated with
+glaze, glazed with green decorations, and green plus yellow decorations.
+The latter three are composites of the source layers, registered at their
+authored relative offsets. One common placement over the heater was
+matched visually to the official clip for the hex adaptation. The names
+`_0032_03`, `_0018_04` and `_0017_05` still appear in the Windows PBI as
+emitter names. The atlas has no independent sprites with those IDs.
+The renderer uses the last pose of each original per-hit group, without
+reproducing the original particle transitions or timing.
+
+| Hit threshold | Held pose after each hit |
+| --- | --- |
+| 1 | Yellow sprinkles |
+| 2 | Heated, yellow sprinkles |
+| 3 | Heated, glazed, yellow sprinkles |
+| 4 | Raw, heated, glazed, yellow sprinkles |
+| 5 | Raw, heated, glazed, green sprinkles, yellow sprinkles |
+
+The separate Windows `Match3_DonutMaker` pack depicts a green rectangular
+oven with different resources. The purple generator uses the classic pack.
+[Animation groups and source evidence](maker-animation-evidence.json) · [Named layer inventory](../../engine/art/homescapes/maker-charge-sources.json)

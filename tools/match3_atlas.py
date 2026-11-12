@@ -191,15 +191,19 @@ def build_game(game, check):
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
     loaded["glow"] = glow
-    width, x, y, row_h, frames = 2048, 2, 2, 0, {}
     order = sorted(loaded, key=lambda key: (-loaded[key].height, key))
-    for name in order:
-        sprite = loaded[name]
-        if x + sprite.width + 2 > width:
-            x, y, row_h = 2, y + row_h + 4, 0
-        frames[name] = [x, y, sprite.width, sprite.height]
-        x, row_h = x + sprite.width + 4, max(row_h, sprite.height)
-    height = 1 << (y + row_h + 3).bit_length()
+    # Widen the atlas before letting new board states push it past 4096 px high.
+    for width in (2048, 4096):
+        x, y, row_h, frames = 2, 2, 0, {}
+        for name in order:
+            sprite = loaded[name]
+            if x + sprite.width + 2 > width:
+                x, y, row_h = 2, y + row_h + 4, 0
+            frames[name] = [x, y, sprite.width, sprite.height]
+            x, row_h = x + sprite.width + 4, max(row_h, sprite.height)
+        height = 1 << (y + row_h + 3).bit_length()
+        if height <= 4096:
+            break
     image = Image.new('RGBA', (width, height))
     for name in order:
         image.paste(loaded[name], tuple(frames[name][:2]))

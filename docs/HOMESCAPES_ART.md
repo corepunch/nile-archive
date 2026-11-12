@@ -1,9 +1,10 @@
 # Homescapes board artwork
 
 The hex board uses original graphics for all six jelly strengths, both portal
-ends, the donut exit arrow and the donut maker's two glass layers. The goal
-panel uses the original colored-box icon. The colored-box field sprites and
-exact maker charge poses remain open in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
+ends, the donut exit arrow and all 36 colored-box field states. The classic
+maker's five charge poses use original dough, glaze and topping layers.
+Original particle timing, indicator placement and exact group composition
+remain open in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
 
 ## Sources and registration
 
@@ -39,6 +40,11 @@ exact maker charge poses remain open in [issue #98](https://github.com/corepunch
   plausible shared/UI/Match3/playable pages did not establish the colored-box
   family. `Match3_ColorBox.pbi` references `Box_1_blue` and the `ColoredBox`
   particle texture tree, but those files are absent from the ZIP directory.
+- The **9.2.601.0 Windows x64** package supplies the complete colored-box
+  field atlas and the classic maker's authored charge layers. Only selected
+  files were fetched by byte range. The ignored originals are preserved under
+  `reference/homescapes-analysis/windows-9.2.601/`.
+  [Windows source inventory](homescapes-reference/board-pack-evidence.json) · [Microsoft Store](https://apps.microsoft.com/detail/9NQ9KLZNV9SH)
 - A complete local `reference/` filename, hidden-file, symlink and archive
   inventory found no additional Homescapes cache. Before the historical source
   was added, 34 ZIP-format archives were present; the archives outside the app
@@ -53,9 +59,8 @@ resized and masked to the canonical flat-top hex. The shutter crop excludes
 transparent side margins; it does not invent alpha. Source PNGs remain intact.
 
 The atlas packs source PNGs, aliases and spatial composites. All three skins
-use a single board texture. The default
-packer now expands its canvas when additional frames exceed the old height;
-Christmas Market now uses a 2048×4096 atlas.
+use a single board texture. Relic Rush uses a 4096×4096 atlas and Christmas
+Market uses a 2048×4096 atlas.
 
 Imported source fields now fit their actual active-cell bounds to the available
 phone area between HUD and tools. Empty cells in the enclosing grid no longer
@@ -74,9 +79,9 @@ buttons remain centred independently of asymmetric source masks.
 | `TARGET_GEN` | `apple-platter-1..9`, once per four-cell footprint | Original platter and isolated original goal apple. Placement/removal order is a documented hex adaptation, not decoded prefab geometry. Nine apples use a 3×3 arrangement. |
 | `SHUTTERS` | Original `blind-body` on covered cells plus `blind-top` at the anchor | Remaining height follows the existing rule group; no `BL` counter. Source square material is cropped/masked to each hex. |
 | Visible `ARTIFACT_GEN` | Original `generator-shell` plus the next original piece/element | Reading the queue for drawing does not advance its cursor or RNG. Random units show the shell without pretending a specific next color is known. |
-| `CARRY_GEN` | `donut-maker-0..3` over the group footprint | Original raw and heated dough textures follow the verified opening stage groups. Their placement on the hex composite follows the official clip. Glaze, sprinkle stages and output indicator placement remain open. |
+| `CARRY_GEN` | `donut-maker-0..5` over the group footprint | Empty, raw, heated, glazed, green sprinkles and added yellow sprinkles. Mesh registration comes from the source atlas. Placement over the heater follows the clip. |
 | Goal panel | Original goal icons, including `goal-color-box` | Uses original board sprites for nuts, statues, tiles and blinds. |
-| `COLOR_BOX` | Existing ordinary-box image plus `C<color>` | **Unresolved:** six colors × six original strengths; ordinary boxes are not accepted as finished colored-box art. |
+| `COLOR_BOX` | `color-box-{color}-{health}` | All 36 named Windows sprites, original color 0–5 and health 1–6. |
 | `HONEY` | `jelly-1..6`, with clear and soft cherry variants for strengths 1 and 2 | Original square, flowers and cherries matched to Playrix's six-state illustration. A mask derived from the authored opening clips the soft cherry. |
 | Portal pair | `tunnel-in` and `tunnel-out` | Original yellow entrance and blue output. Render at the lower and upper cell edges respectively, with insets for the hex layout. |
 | `CARRY_EXIT` | `carry-exit-arrow` with three staggered copies | Original 9.2.601 `CarryExitForAnim`. Uses the original three-second period, one-second spacing and cosine fade, with hex-relative positioning. Reduced motion holds the arrows in place. |
@@ -91,10 +96,10 @@ once. The clip, scale and offsets adapt the reference to the hex layout.
 
 The original base and glass layers share a 460 × 420 source frame. The three
 top-origin positions are `(99,157)` for the base, `(117,90)` for the rear
-glass and `(117,151)` for the front glass. The atlas recipe flips the shell
-and all three dough crops vertically to convert from the bottom-origin atlas.
-It layers the dough between the glass planes and scales the result to the
-shared hex footprint. [Dough orientation review](review/homescapes-dough/README.md)
+glass and `(117,151)` for the front glass. The charge parts share a 276 × 274
+source frame, placed at `(99,102)` between the glass planes. The atlas recipe
+scales the completed image to the shared hex footprint.
+[Field review](review/homescapes-windows-art/README.md)
 [Playrix's donut maker illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1333-donut-maker/)
 
 The portal rings in the 3.5.9 atlas match the colors and silhouettes of the
@@ -105,9 +110,8 @@ existing discontinuous transfer animation.
 The PLXE decoder verifies the original named rectangles in the 1.1.0.900,
 3.5.9 and 9.2.601 archives. The 6.8.5 Android client requests
 `Match3ColorBox{health}{color+1}` with six values in each dimension. The
-9.2.601 file map identifies the corresponding 1,887,362-byte pack and its
-SHA-1. CDN requests returned HTTP 403, so the 36 field images still need to
-be recovered and checked. The native client also confirms the maker's
+9.2.601 Windows atlas contains all 36 named, distinct RGBA images. The
+native client also confirms the maker's
 animation groups and the output-capacity indicators. The official tutorial
 shows the five successive maker poses and the last dough leaving the tray.
 [Pack and arrow evidence](homescapes-reference/board-pack-evidence.json) · [Maker source evidence](homescapes-reference/GENERATOR_ART_SOURCES.md)
@@ -131,6 +135,8 @@ python3 tools/homescapes-reference/extract_historical_jelly_components.py --apk 
 python3 tools/homescapes-reference/extract_color_box_goal.py --check
 python3 tools/homescapes-reference/extract_carry_exit.py --check
 python3 tools/homescapes-reference/extract_maker_named.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk --check
+python3 tools/homescapes-reference/extract_windows_color_boxes.py --library /path/to/6.8.5/libgame.so --check
+python3 tools/homescapes-reference/extract_windows_maker_poses.py --library /path/to/6.8.5/libgame.so --check
 python3 tools/match3_atlas.py
 python3 tools/match3_atlas.py --check
 ```
@@ -152,8 +158,8 @@ reviewed as objects, not certified as single-hex fills.
 
 [Jelly and portal captures](review/homescapes-jelly-portals/README.md),
 [donut exit captures](review/homescapes-arrow-maker/README.md) and
-[maker pose captures](review/homescapes-maker-poses/README.md) show the
-recovered states in both games. The 36 colored-box field states, later maker
-poses and output indicator placement still require original resources or
-matching runtime evidence.
+[Windows box and maker captures](review/homescapes-windows-art/README.md)
+show the recovered states in both games. Maker particle timing, output
+indicator placement and exact group composition still require source
+rendering evidence.
 [Issue #98](https://github.com/corepunch/nile-archive/issues/98)

@@ -1,0 +1,687 @@
+{
+  "source": "Homescapes 9.2.601.0 Windows x64, Microsoft Store 9NQ9KLZNV9SH",
+  "source_folder": "res_base/res/packs/Match3_CarryGenerator/atlases",
+  "source_sha256": {
+    "Match3_CarryGenerator.dds": "db0d49b775bfc44b60b42b89d4e1c4b20bf75f70201e4bcf016b982a0ea9a643",
+    "Match3_CarryGenerator.xml": "6cfe01cd03380be31b9c5319872567bd46e81866eb2a647278b6e0615000ae34"
+  },
+  "unpacked_bc7_sha256": "8e72b7d97707cb769d80de4f1fb02494c308b6adc44082a21b3835ec377267d7",
+  "decoded_xml_sha256": "5f62fb706a419178514fa4d4f2b3a2d081e3f42f6f2f1617bd56412cac600406",
+  "coordinate_transform": "crop in raw DDS coordinates, apply source mesh, then flip vertically",
+  "reference": "https://www.youtube.com/watch?v=6XNxRO7CMs0",
+  "stages": [
+    [],
+    [
+      "_0034_01"
+    ],
+    [
+      "_0033_02"
+    ],
+    [
+      "_0033_02",
+      "_0031_glaze"
+    ],
+    [
+      "_0033_02",
+      "_0031_glaze",
+      "_0012_Green-3",
+      "_0013_Green-4",
+      "_0014_Green-5",
+      "_0015_Green-6",
+      "_0016_Green-1"
+    ],
+    [
+      "_0033_02",
+      "_0031_glaze",
+      "_0012_Green-3",
+      "_0013_Green-4",
+      "_0014_Green-5",
+      "_0015_Green-6",
+      "_0016_Green-1",
+      "_0009_Yelow-3",
+      "_0010_Yelow-2",
+      "_0011_Yelow-1"
+    ]
+  ],
+  "layers": {
+    "_0034_01": {
+      "output": "windows-charge_0034_01.png",
+      "frame": {
+        "x": "713",
+        "y": "153",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0034_01.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0034_01",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          64,
+          172
+        ],
+        [
+          82,
+          136
+        ],
+        [
+          116,
+          118
+        ],
+        [
+          85,
+          218
+        ],
+        [
+          148,
+          233
+        ],
+        [
+          169,
+          122
+        ],
+        [
+          198,
+          202
+        ],
+        [
+          198,
+          154
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          0,
+          2,
+          5
+        ],
+        [
+          0,
+          4,
+          5
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          5,
+          7,
+          6
+        ]
+      ],
+      "rgba_sha256": "3a4ebd3f332d8c001caf01c5e77ebbc8e8b0f8c1ee1399035a188c5b25e77b18"
+    },
+    "_0033_02": {
+      "output": "windows-charge_0033_02.png",
+      "frame": {
+        "x": "598",
+        "y": "98",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0033_02.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0033_02",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          70,
+          149
+        ],
+        [
+          70,
+          197
+        ],
+        [
+          103,
+          121
+        ],
+        [
+          105,
+          227
+        ],
+        [
+          200,
+          190
+        ],
+        [
+          169,
+          119
+        ],
+        [
+          171,
+          227
+        ],
+        [
+          196,
+          153
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          5,
+          4
+        ],
+        [
+          3,
+          6,
+          4
+        ],
+        [
+          5,
+          7,
+          4
+        ]
+      ],
+      "rgba_sha256": "fc575ba9a4c0721e7aa6c008f27a74e2d5e0d5303f2e4487bfa57b60358030c0"
+    },
+    "_0031_glaze": {
+      "output": "windows-charge_0031_glaze.png",
+      "frame": {
+        "x": "823",
+        "y": "86",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0031_glaze.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0031_glaze",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          67,
+          192
+        ],
+        [
+          71,
+          141
+        ],
+        [
+          119,
+          139
+        ],
+        [
+          86,
+          221
+        ],
+        [
+          136,
+          245
+        ],
+        [
+          114,
+          122
+        ],
+        [
+          166,
+          122
+        ],
+        [
+          198,
+          215
+        ],
+        [
+          168,
+          138
+        ],
+        [
+          198,
+          165
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          5,
+          2,
+          6
+        ],
+        [
+          2,
+          4,
+          7
+        ],
+        [
+          2,
+          6,
+          8
+        ],
+        [
+          2,
+          8,
+          7
+        ],
+        [
+          8,
+          9,
+          7
+        ]
+      ],
+      "rgba_sha256": "9881e86d801b7c88d181fb7fb687a80c122cb3de273a6533d878a501e3cd6467"
+    },
+    "_0012_Green-3": {
+      "output": "windows-charge_0012_Green-3.png",
+      "frame": {
+        "x": "915",
+        "y": "43",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0012_Green-3.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0012_Green-3",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          81,
+          172
+        ],
+        [
+          81,
+          189
+        ],
+        [
+          105,
+          174
+        ],
+        [
+          109,
+          192
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "rgba_sha256": "cc03cbd2cf1038fcaa3b6a8d191d18f387968f74a5418395b2ffbe9dce482d83"
+    },
+    "_0013_Green-4": {
+      "output": "windows-charge_0013_Green-4.png",
+      "frame": {
+        "x": "780",
+        "y": "51",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0013_Green-4.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0013_Green-4",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          85,
+          222
+        ],
+        [
+          87,
+          206
+        ],
+        [
+          107,
+          223
+        ],
+        [
+          109,
+          206
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "rgba_sha256": "b1101e7f8d3c0d8eff12b814a07bc510bcc7c61025d6090476d2324596d4b692"
+    },
+    "_0014_Green-5": {
+      "output": "windows-charge_0014_Green-5.png",
+      "frame": {
+        "x": "120",
+        "y": "-41",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0014_Green-5.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0014_Green-5",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          155,
+          189
+        ],
+        [
+          174,
+          217
+        ],
+        [
+          192,
+          191
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "rgba_sha256": "06426ed60b3a45e85b7a5ea93e57cbc870cfbd522de5228a19e32912679174d1"
+    },
+    "_0015_Green-6": {
+      "output": "windows-charge_0015_Green-6.png",
+      "frame": {
+        "x": "-24",
+        "y": "87",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0015_Green-6.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0015_Green-6",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          139,
+          229
+        ],
+        [
+          152,
+          201
+        ],
+        [
+          173,
+          223
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "rgba_sha256": "8b4bb18f23638ad1c15030079438d1fc0da0d0127e2d459c924db34ae8bbd74d"
+    },
+    "_0016_Green-1": {
+      "output": "windows-charge_0016_Green-1.png",
+      "frame": {
+        "x": "172",
+        "y": "171",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0016_Green-1.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0016_Green-1",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          108,
+          211
+        ],
+        [
+          110,
+          223
+        ],
+        [
+          122,
+          212
+        ],
+        [
+          137,
+          215
+        ],
+        [
+          137,
+          232
+        ],
+        [
+          172,
+          220
+        ],
+        [
+          171,
+          232
+        ],
+        [
+          165,
+          212
+        ],
+        [
+          179,
+          196
+        ],
+        [
+          197,
+          210
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          4,
+          6,
+          5
+        ],
+        [
+          7,
+          8,
+          9
+        ]
+      ],
+      "rgba_sha256": "943148284fed03524ba65c496f09f6fb349673494ba8c5940812e9ef244896ed"
+    },
+    "_0009_Yelow-3": {
+      "output": "windows-charge_0009_Yelow-3.png",
+      "frame": {
+        "x": "875",
+        "y": "-50",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0009_Yelow-3.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0009_Yelow-3",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          87,
+          189
+        ],
+        [
+          87,
+          202
+        ],
+        [
+          103,
+          202
+        ],
+        [
+          121,
+          186
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ]
+      ],
+      "rgba_sha256": "9a12e82bdc6edf800bc34d41a7634d9b50e33636cc93e600b14a65fb8db3f51f"
+    },
+    "_0010_Yelow-2": {
+      "output": "windows-charge_0010_Yelow-2.png",
+      "frame": {
+        "x": "677",
+        "y": "49",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0010_Yelow-2.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0010_Yelow-2",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          119,
+          210
+        ],
+        [
+          121,
+          238
+        ],
+        [
+          152,
+          220
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "rgba_sha256": "68b403122561c24dea64df91f583011391a3a19f537be8abe7c1129690849178"
+    },
+    "_0011_Yelow-1": {
+      "output": "windows-charge_0011_Yelow-1.png",
+      "frame": {
+        "x": "866",
+        "y": "-24",
+        "width": "276",
+        "height": "274",
+        "frameWidth": "276",
+        "frameHeight": "274",
+        "path": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0011_Yelow-1.png",
+        "id": "textures/particles/Match3/Match3_CarryGenerator/Match3/CarryGenerator/_0011_Yelow-1",
+        "prescale_x": "0.5",
+        "prescale_y": "0.5"
+      },
+      "vertices": [
+        [
+          127,
+          173
+        ],
+        [
+          131,
+          157
+        ],
+        [
+          155,
+          160
+        ],
+        [
+          155,
+          179
+        ]
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ]
+      ],
+      "rgba_sha256": "5772ee2485b5261e18ec162ee787520ada83c9687f969dee825b47ecd0a652b0"
+    }
+  }
+}

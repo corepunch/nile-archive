@@ -6,6 +6,7 @@ E.assets = {"stone-1", "stone-2", "stone-3", "tunnel-in", "tunnel-out",
     "hidden-covered", "hidden-partial", "hidden-revealed", "growth", "delivery", "delivery-exit", "carry-exit-arrow", "object-goal"}
 for kind = 0, 5 do
     for hp = 1, 2 do E.assets[#E.assets + 1] = ("crate-%d-%d"):format(kind, hp) end
+    for hp = 1, 6 do E.assets[#E.assets + 1] = ("color-box-%d-%d"):format(kind, hp) end
 end
 
 for i=0,5 do
@@ -27,7 +28,7 @@ for hp=1,6 do E.assets[#E.assets+1]="jelly-"..hp end
 for hp=1,2 do E.assets[#E.assets+1]="jelly-"..hp.."-cherry" end
 
 for n=1,9 do E.assets[#E.assets+1]="apple-platter-"..n end
-for n=0,3 do E.assets[#E.assets+1]="donut-maker-"..n end
+for n=0,5 do E.assets[#E.assets+1]="donut-maker-"..n end
 for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.assets+1]=name end
 
 function E.load(art, skin)
@@ -96,10 +97,9 @@ function E.ground(R, rules, sx)
     end
 end
 
--- Shorter periods combine stages 1 and 2 into the first hit. The original
--- atlas provides the dough textures for these two resting poses.
-local maker_opening_poses = {
-    [2] = {2}, [3] = {2}, [4] = {3, 2}, [5] = {3, 2},
+-- Final visible stage in each of the source client's per-hit effect groups.
+local maker_poses = {
+    {5}, {2,5}, {2,3,5}, {1,2,3,5}, {1,2,3,4,5},
 }
 
 local function group_art(R,group,sx)
@@ -113,8 +113,9 @@ local function group_art(R,group,sx)
     if group.kind=='TARGET_GEN' then
         name='apple-platter-'..group.count
     else
-        local poses=maker_opening_poses[group.period]
-        local pose=poses and poses[group.hits] or math.min(3,math.floor(group.hits*3/group.period))
+        local hits=math.min(group.hits,group.period)
+        local poses=maker_poses[group.period]
+        local pose=poses and poses[hits] or math.floor(hits*5/group.period)
         name='donut-maker-'..pose
     end
     assert(R.board_art[name],"missing original group art: "..name)
@@ -144,10 +145,11 @@ function E.blockers(R, rules, sx)
             if hp > 0 then name = "box-" .. math.min(hp, 6)
             elseif crate > 0 then name = "box-"..math.min(crate,6)
             elseif g.hazard and (g.hazard[i] or 0) > 0 then name = "honey-material" end
-            local label
             if g.hs then
                 local c=g.hs.cells[i]
-                if (c.box or 0)>0 then name="box-"..math.min(6,c.box);if c.color then label="C"..c.color end
+                if (c.box or 0)>0 then
+                    local health=math.min(6,c.box)
+                    name=c.color and ("color-box-%d-%d"):format(c.color,health) or "box-"..health
                 elseif (c.jelly or 0)>0 then
                     local cherry = c.jelly <= 2 and g.tiles[i].element == "cherry"
                     name = "jelly-" .. c.jelly .. (cherry and "-cherry" or "")
@@ -173,7 +175,6 @@ function E.blockers(R, rules, sx)
                     image(R,"blind-top",R.cell_pos(i)+vec2(sx,-R.HEX_R*.7),2*R.HEX_R,1)
                 end
             end
-            if label then R.say_at(label,R.cell_pos(i)+vec2(sx,0),13,R.PAL_WHITE,50) end
         end
     end
 end

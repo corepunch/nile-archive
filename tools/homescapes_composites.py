@@ -7,9 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'engine/art/homescapes/sprites'
 MAKER_SOURCE = SOURCE.parent / 'maker-source'
 MAKER_REGIONS = ROOT / 'tools/homescapes-reference/maker-named-regions.json'
+MAKER_CHARGE = SOURCE.parent / 'maker-charge-sources.json'
 MAKER_SHELL = ('Match3CarryGeneratorBase', 'Match3CarryGeneratorGlassBack', 'Match3CarryGeneratorGlassFront')
-MAKER_DOUGH = {2: 'textures/particles/Match3/CarryGenerator/_0033_02',
-               3: 'textures/particles/Match3/CarryGenerator/_0034_01'}
 JELLY_FLOWERS = (
     None,
     'jelly-flower-frame-source',
@@ -26,7 +25,7 @@ def part(name, size):
     return im
 
 
-def maker(charge, regions):
+def maker(charge, regions, stages):
     shell = []
     for name in MAKER_SHELL:
         region = regions[name]
@@ -42,18 +41,15 @@ def maker(charge, regions):
     layers = {item[0]: list(item[2]) for item in shell}
     stack.alpha_composite(base[1], base[2])
     stack.alpha_composite(back[1], back[2])
-    if charge:
-        source = regions[MAKER_DOUGH[charge]]['output'] if charge in MAKER_DOUGH else None
-        path = MAKER_SOURCE / source if source else SOURCE / 'donut-maker-dough-1.png'
-        # The dough crops are stored in the same bottom-origin atlas as the shell.
+    for layer in stages['stages'][charge]:
+        path = MAKER_SOURCE / stages['layers'][layer]['output']
         with Image.open(path) as raw:
-            dough = raw.convert('RGBA').transpose(Image.Transpose.FLIP_TOP_BOTTOM)
-        # The raw and heated rings sit above the heating surface in the
-        # official tutorial. Their placement is measured against that view.
-        top = 148 if source else base[2][1] + 11
-        at = (base[2][0] + (base[1].width - dough.width) // 2, top)
-        stack.alpha_composite(dough, at)
-        layers['dough'] = list(at)
+            sprite = raw.convert('RGBA')
+        # The authored dough and toppings use the same frame. Register that
+        # frame once over the heating surface using the official board view.
+        at = (base[2][0] + (base[1].width - sprite.width) // 2, 102)
+        stack.alpha_composite(sprite, at)
+        layers[layer] = list(at)
         sources.append(str(path.relative_to(ROOT)))
     stack.alpha_composite(front[1], front[2])
     crop = stack.getchannel('A').getbbox()
@@ -63,7 +59,7 @@ def maker(charge, regions):
     canvas.alpha_composite(stack, ((256 - stack.width) // 2, (256 - stack.height) // 2))
     return canvas, {'sources': sources, 'canvas': [256, 256], 'native_layer_offsets': layers,
                     'source_canvas': list(base[3]), 'source_crop': list(crop),
-                    'registration': 'native base and glass offsets; shell and dough crops flipped vertically from the bottom-origin atlas; charge preview alignment inferred'}
+                    'registration': 'native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay'}
 
 
 def jelly(flower, cherry=None):
@@ -118,9 +114,10 @@ def registered():
                        'apple_positions':[list(p) for p in positions[:count]],
                        'registration':'manual spatial approximation of official illustration; ninth position is a hex adaptation'}
     regions = {record['id']: record for record in json.loads(MAKER_REGIONS.read_text())['records']}
-    for charge in range(4):
+    stages = json.loads(MAKER_CHARGE.read_text())
+    for charge in range(len(stages['stages'])):
         name = f'donut-maker-{charge}'
-        images[name], records[name] = maker(charge, regions)
+        images[name], records[name] = maker(charge, regions, stages)
     for strength, flower in enumerate(JELLY_FLOWERS, 1):
         name = f'jelly-{strength}'
         images[name], records[name] = jelly(flower)
@@ -132,8 +129,8 @@ def registered():
 
 def inputs():
     regions = json.loads(MAKER_REGIONS.read_text())['records']
-    maker_layers = [MAKER_SOURCE / record['output'] for record in regions
-                    if record['id'] in MAKER_SHELL or record['id'] in MAKER_DOUGH.values()]
-    return [Path(__file__), MAKER_REGIONS, *maker_layers] + [SOURCE / (n+'.png') for n in ['apple-platter-base','goal-target-generator',
-            'donut-maker-dough-1',
+    stages = json.loads(MAKER_CHARGE.read_text())
+    shell = [MAKER_SOURCE / record['output'] for record in regions if record['id'] in MAKER_SHELL]
+    charge = [MAKER_SOURCE / record['output'] for record in stages['layers'].values()]
+    return [Path(__file__), MAKER_REGIONS, MAKER_CHARGE, *shell, *charge] + [SOURCE / (n+'.png') for n in ['apple-platter-base','goal-target-generator',
             'jelly-square-source', 'jelly-cherry-clear-source', 'jelly-cherry-soft-source', *JELLY_FLOWERS[1:]]]

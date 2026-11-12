@@ -112,5 +112,27 @@
     "video_format": 398,
     "video_sha256": "775dee854907edf687724847b6874110db20bd450670efd8058f93f3c9bc3751",
     "observations": "Red damage stages are visible in the intro, and cyan and pink blockers are hit and cleared in gameplay. The clip does not cover the 36 named sprites."
+  },
+  "windows_x64": {
+    "official_store": "https://apps.microsoft.com/detail/9NQ9KLZNV9SH",
+    "bundle": "PLRWorldwideSales.Homescapes_2026.1028.1333.0_neutral_~_1feq88045d2v2.msixbundle",
+    "bundle_bytes": 8690442412,
+    "package": "Homescapes_9.2.601.0_x64.msix",
+    "member_prefix": "res_base/res/packs/",
+    "acquisition": "Bounded HTTP byte ranges through the official Microsoft CDN. Full bundle not downloaded.",
+    "original_local_folder": "reference/homescapes-analysis/windows-9.2.601",
+    "atlas_members": {
+      "Match3_CarryGenerator/atlases/Match3_CarryGenerator.dds": "db0d49b775bfc44b60b42b89d4e1c4b20bf75f70201e4bcf016b982a0ea9a643",
+      "Match3_CarryGenerator/atlases/Match3_CarryGenerator.xml": "6cfe01cd03380be31b9c5319872567bd46e81866eb2a647278b6e0615000ae34",
+      "Match3_CarryGenerator/atlases/Match3_CarryGenerator_Sheets.xml": "d7364573e685b8c0c66cbafad45160875af24b046b0af4410791ff45a87b4c39",
+      "Match3_ColorBox/atlases/Match3_ColorBox.dds": "ac330b6d52b02a7d6a3a0bca9a15b4de14097ec59359dc9affbd51f050b9abf1",
+      "Match3_ColorBox/atlases/Match3_ColorBox.xml": "bc1752f19dacf9391360a1e7163593dc8984882fdb7358d1c32b956553711eee",
+      "Match3_ColorBox/atlases/Match3_ColorBox_Sheets.xml": "36162105345cc5ced827e4d358cd9fe6a1136f7b7627624c1a298728e3885f31",
+      "Match3_DonutMaker/atlases/Match3_DonutMaker.dds": "dcfb8b7c2464b1e041368d1dfeeda274c786f5c3b1295a93f552d715901d0afd",
+      "Match3_DonutMaker/atlases/Match3_DonutMaker.xml": "f307527151ff01a2e8119f0a64c29f717be48882621d0aec0db32eb51e368906",
+      "Match3_DonutMaker/atlases/Match3_DonutMaker_Sheets.xml": "1fa23336b1e800d323112ae5916df37fef4668a8fbfbcbe1fb4785053e3603b6"
+    },
+    "color_box_inventory": "engine/art/homescapes/color-box-board-sources.json",
+    "maker_inventory": "engine/art/homescapes/maker-charge-sources.json"
   }
 }

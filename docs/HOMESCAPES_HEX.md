@@ -44,7 +44,7 @@ These are explicit hex adaptation choices, not original replay results.
 | Source model | Shared-engine behavior and current artwork |
 | --- | --- |
 | `NORMAL`, `RANDOM_CHIP` | Six original colored pieces; source weights/restricted initial palettes |
-| `BOX`, `COLOR_BOX` | Fixed layered obstacle; adjacent matches or direct hits, color restriction for colored boxes. Six original ordinary-box states; colored identity uses a diagnostic label |
+| `BOX`, `COLOR_BOX` | Fixed layered obstacle; adjacent matches or direct hits, color restriction for colored boxes. Six ordinary-box states and all 36 original colored-box states |
 | `TRASH` | Swappable/falling cookies, three original damage states; adjacent matches or direct hits |
 | `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
@@ -54,7 +54,7 @@ These are explicit hex adaptation choices, not original replay results.
 | `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
 | `STATUE` | Fixed, power-up-only layered statue; original raw/cut/carved states |
 | `COOKIE_BOX` | Fixed stack releases three movable cookies when destroyed; original bow/strap/plain stack states, then original cookies |
-| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap. Original base and two registered glass layers with adapted dough previews |
+| `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap. Original shell and source layers for all five held charge stages |
 | `BUBBLE_MEMBRANE` | Two layers require a direct hit first; single layer accepts a match; held cells protect the floor; original intact/cracked ceramic fills |
 | `SHUTTERS` | Shared vertical blind opens one bottom cell per wave; original shutter fabric and header, sized to remaining covered cells |
 | `BOMB`, `LINE`, `LIGHTNING`, `FISH` | Bomb, rocket, rainbow and plane, each original standalone sprite |
@@ -143,8 +143,10 @@ textures remain. The old striped-gem shader is no longer used for power-ups.
 Original source artwork covers nuts, statues, stacks, ceramic tiles, blinds,
 visible queues, six jelly strengths, both portal ends and the donut exit arrow.
 The maker uses the original shared-frame alignment for the base and both glass
-layers. The colored-box goal icon is original. The 36 field sprites, exact
-maker charge poses and output indicator placement remain open.
+layers. Its five held poses use original charge components and the source
+client's per-hit groups. All 36 colored-box field states and the goal icon use
+original artwork. Maker animation timing and output indicator placement
+remain open.
 [Current inventory](HOMESCAPES_ART.md) · [Issue #98](https://github.com/corepunch/nile-archive/issues/98)
 
 Review captures are under [review/homescapes-port](review/homescapes-port/).

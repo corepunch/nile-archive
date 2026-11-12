@@ -260,7 +260,8 @@ function D.bind(R, W)
             R.tool, R.toast_time, R.on_island = 1, 0, false
             R.art_review = true
         end
-        if app.arg("homescapes-art") then
+        local art=app.arg("homescapes-art")
+        if art then
             -- Real board drawing paths, with every recovered blocker strength.
             R.g=rules.game_start(0,123478)
             local g=R.g
@@ -285,7 +286,20 @@ function D.bind(R, W)
                 local i=rules.hex_index(hp-2,1);g.hs.cells[i].tile=hp
                 g.tiles[i]=rules.tile(-1)
             end
-            if app.arg("homescapes-art") == "jelly" then
+            if art == "colors" then
+                for i=0,rules.CELLS-1 do g.active[i]=false;g.hs.cells[i]={};g.tiles[i]=rules.tile(-1) end
+                local radius=rules.HEX_RADIUS
+                for color=0,5 do
+                    local q=color-3
+                    local first=math.floor((math.max(-radius,-radius-q)+math.min(radius,radius-q)-5)/2)
+                    for health=1,6 do
+                        local i=rules.hex_index(q,first+health-1)
+                        assert(i>=0,"colored box review footprint")
+                        g.active[i]=true;g.hs.cells[i]={box=health,color=color}
+                    end
+                end
+                g.hs.goals={{type="COLOR_BOX",max=36,current=0}}
+            elseif art == "jelly" then
                 for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
                 for hp=1,6 do
                     local i=rules.hex_index(3-hp,0)
@@ -298,7 +312,7 @@ function D.bind(R, W)
                     g.tiles[i]=rules.tile(-1)
                 end
                 g.hs.goals={{type="COLLECT_PIGGY",max=6,current=0}}
-            elseif app.arg("homescapes-art")=="generators" then
+            elseif art=="generators" or art=="maker" then
                 for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
                 local function group(q,r,kind,count,hits,period)
                     local cells={rules.hex_index(q,r),rules.hex_index(q+1,r),rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}
@@ -306,22 +320,32 @@ function D.bind(R, W)
                     g.hs.groups[anchor]={kind=kind,count=count,cells=cells,hits=hits or 0,period=period or 3,batch=3}
                     for _,i in ipairs(cells) do assert(i>=0,"art footprint");g.hs.cells[i].group=anchor;g.tiles[i]=rules.tile(-1) end
                 end
-                group(-3,0,"TARGET_GEN",9)
-                group(-1,-2,"TARGET_GEN",4)
-                group(1,-3,"CARRY_GEN",1,0)
-                group(1,-1,"CARRY_GEN",1,1,5)
-                group(-1,1,"CARRY_GEN",1,2,5)
-                group(1,1,"CARRY_GEN",1,1,3)
-                local anchor=rules.hex_index(-3,2)
-                g.hs.groups[anchor]={kind="SHUTTERS",count=3,cells={}}
-                for r=2,4 do
-                    local i=rules.hex_index(-3,r);g.hs.cells[i].group=anchor
-                    table.insert(g.hs.groups[anchor].cells,i)
+                if art=="maker" then
+                    group(1,-3,"CARRY_GEN",1,0,5)
+                    group(-1,-2,"CARRY_GEN",1,1,5)
+                    group(-3,0,"CARRY_GEN",1,2,5)
+                    group(1,-1,"CARRY_GEN",1,3,5)
+                    group(-1,0,"CARRY_GEN",1,4,5)
+                    group(-3,2,"CARRY_GEN",1,5,5)
+                    g.hs.goals={{type="CARRY",max=6,current=0}}
+                else
+                    group(-3,0,"TARGET_GEN",9)
+                    group(-1,-2,"TARGET_GEN",4)
+                    group(1,-3,"CARRY_GEN",1,0)
+                    group(1,-1,"CARRY_GEN",1,1,5)
+                    group(-1,1,"CARRY_GEN",1,2,5)
+                    group(1,1,"CARRY_GEN",1,1,3)
+                    local anchor=rules.hex_index(-3,2)
+                    g.hs.groups[anchor]={kind="SHUTTERS",count=3,cells={}}
+                    for r=2,4 do
+                        local i=rules.hex_index(-3,r);g.hs.cells[i].group=anchor
+                        table.insert(g.hs.groups[anchor].cells,i)
+                    end
+                    local inlet=rules.hex_index(-1,-3)
+                    g.hs.cells[inlet].visibleGenerator=true;g.tiles[inlet]=rules.tile(-1)
+                    g.hs.queues[inlet]={cursor=1,units={{element="cookie",hp=3}}}
+                    g.hs.goals={{type="TARGET_GENERATOR",max=13,current=0},{type="CARRY",max=12,current=0},{type="SHUTTERS",max=1,current=0}}
                 end
-                local inlet=rules.hex_index(-1,-3)
-                g.hs.cells[inlet].visibleGenerator=true;g.tiles[inlet]=rules.tile(-1)
-                g.hs.queues[inlet]={cursor=1,units={{element="cookie",hp=3}}}
-                g.hs.goals={{type="TARGET_GENERATOR",max=13,current=0},{type="CARRY",max=12,current=0},{type="SHUTTERS",max=1,current=0}}
             end
             R.pending=rules.new_match();R.on_island=false;R.overlay=R.OV_NONE;R.toast_time=0;R.art_review=true
         end

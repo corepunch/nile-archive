@@ -1160,12 +1160,6 @@
         8,
         9
       ],
-      "donut-maker_preview": [
-        0,
-        1,
-        2,
-        3
-      ],
       "blind": [
         "body",
         "top"
@@ -1199,19 +1193,41 @@
       "carry_exit": [
         "original arrow with three staggered copies"
       ],
-      "donut_maker_opening_poses": [
-        "raw after hit 1 for periods 4–5",
-        "heated after hit 2 for periods 4–5 and hit 1 for periods 2–3"
-      ]
+      "donut_maker_charge": [
+        "empty",
+        "raw",
+        "heated",
+        "glazed",
+        "green sprinkles",
+        "yellow sprinkles"
+      ],
+      "color_box_field": {
+        "colors": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "health": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      }
     },
     "restoration_review": "../../docs/review/homescapes-restored-art/README.md",
     "remaining": [
-      "colored-box board colors/strengths",
-      "maker glaze and sprinkle poses, exact animation timing and output indicator placement",
-      "exact original group composition"
+      "exact original group composition",
+      "original maker animation timing and output indicator placement"
     ],
     "followup_review": "../../docs/review/homescapes-jelly-portals/README.md",
     "arrow_and_maker_review": "../../docs/review/homescapes-arrow-maker/README.md",
-    "maker_pose_review": "../../docs/review/homescapes-maker-poses/README.md"
+    "maker_pose_review": "../../docs/review/homescapes-maker-poses/README.md",
+    "windows_art_review": "../../docs/review/homescapes-windows-art/README.md"
   }
 }
