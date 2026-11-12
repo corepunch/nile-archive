@@ -159,7 +159,9 @@ public struct Board {
             return false
         }
         remaining -= 1
-        if !specialPositions.isEmpty {
+        if combine(first, second) {
+            // Both power-ups have been consumed by the combined effect.
+        } else if !specialPositions.isEmpty {
             let colors = [first: left.color, second: right.color]
             blast(Set(specialPositions), rainbowColors: colors.compactMapValues { $0 })
         } else {
@@ -313,8 +315,29 @@ public struct Board {
         for (p, reward) in rewards where cells[p]?.piece == nil { cells[p]?.piece = .special(reward) }
     }
 
-    private mutating func blast(_ starting: Set<Position>, rainbowColors: [Position: Int] = [:]) {
-        var hits = starting, fired = Set<Position>()
+    /// Returns false for pairs whose combined behavior is not implemented yet.
+    /// The moved power-up's destination is the lab's combination centre.
+    @discardableResult
+    mutating func combine(_ first: Position, _ second: Position) -> Bool {
+        guard let a = cells[first]?.piece?.power, let b = cells[second]?.piece?.power else { return false }
+        let rockets: Set<Special> = [.horizontal, .vertical]
+        let width: Int
+        if rockets.contains(a) && rockets.contains(b) { width = 0 }
+        else if (a == .bomb && rockets.contains(b)) || (b == .bomb && rockets.contains(a)) { width = 1 }
+        else { return false }
+        let footprint = Set(positions.filter {
+            abs($0.x - second.x) <= width || abs($0.y - second.y) <= width
+        }).union([first, second])
+        // Consumed ingredients must not fire again at their separate locations.
+        cells[first]?.piece = nil
+        cells[second]?.piece = nil
+        blast([first, second], additionalHits: footprint)
+        return true
+    }
+
+    private mutating func blast(_ starting: Set<Position>, rainbowColors: [Position: Int] = [:],
+                                additionalHits: Set<Position> = []) {
+        var hits = starting.union(additionalHits), fired = Set<Position>()
         while let p = hits.sorted().first(where: { !fired.contains($0) && cells[$0]?.held == false
                                                   && cells[$0]?.piece?.power != nil }) {
             fired.insert(p)
@@ -341,7 +364,7 @@ public struct Board {
     }
 
     private mutating func apply(_ hits: Set<Position>, spread: Set<Position>, isBlast: Bool) {
-        let adjacent = Set(hits.flatMap(\.neighbors))
+        let adjacent: Set<Position> = isBlast ? [] : Set(hits.flatMap(\.neighbors))
         for p in hits.union(adjacent).sorted() {
             guard var cell = cells[p] else { continue }
             let direct = hits.contains(p)

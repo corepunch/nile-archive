@@ -26,7 +26,7 @@ bombs and rainbow balls, gravity, refill, cascades, locks, ice, boxes,
 cookies, carpet spread and donut exits. Sprite states use the same
 [model map](../../tools/homescapes-reference/model_sprites.json) as the web
 explorer. The original refill algorithm, level scripting, spawn routing,
-special pair combinations and the exact hit and targeting order remain
+other special pair combinations and the exact hit and targeting order remain
 unverified. The lab uses seeded weighted fills and straight gravity.
 Unsupported models and goals are rejected when loading a playable board.
 
@@ -43,3 +43,32 @@ unknown configuration and nested model data, for future mechanic implementation.
 Retention does not imply that those mechanics are understood or playable. The
 corpus test checks every locally extracted XML file; the archive test checks the
 extracted bytes against the original bundled archive.
+
+## Power-up combination coverage
+
+The lab combines two rockets into a one-row/one-column cross, regardless of
+rocket orientation. A bomb and rocket clear three rows and three columns.
+Both ingredients are consumed once, other power-ups inside the footprint chain,
+and the swap costs one move. Blasts now damage only cells in their footprint;
+adjacent-match damage still applies to boxes and cookies.
+
+These shapes follow Playrix's [combination rules](https://playrix.helpshift.com/hc/en/14-homescapes/faq/16363-what-power-up-combinations-are-available-in-the-game/)
+and [rocket rules](https://playrix.helpshift.com/hc/en/14-homescapes/faq/16313-power-ups-and-how-to-use-them/),
+checked on 2026-11-12. The local 9.2.601 XML corpus contains 1,227 `LINE`
+instances (678 with `line_orient=0`, 471 with `2`, and 78 with `-2`),
+1,131 `BOMB` instances and 292 `LIGHTNING` instances. The tests exercise all
+three serialized rocket orientations and both ingredient orders.
+
+This is verification against publisher documentation and source identifiers,
+not an original-runtime replay. The bundled executable targets iPhoneOS and
+was not run for this change. The publisher describes the current game, which
+may differ from this bundle. The lab centres combinations at the dragged
+piece's destination; the original centre and hit scheduling still need
+recorded gameplay confirmation. Other pairs retain the lab's independent
+activation approximation. Bomb radius, plane targeting, refill and cascades
+also retain the limitations described above. No new artwork or state mapping
+was introduced.
+
+`CombinationTests` checks footprint boundaries, single-layer damage, both
+ingredient orders, all bundled rocket orientations, chain activation and the
+public swap path. The full Swift test suite also checks all 6,184 source files.
