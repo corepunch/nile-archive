@@ -7,6 +7,11 @@ look through the engine's SDF patch (engine/match3_elements_view.lua):
   oil-material.png  golden liquid with slow swirls; tiles seamlessly
   oil-bubbles.png   translucent bubbles on transparency; tiles seamlessly
   goal-oil.png      HUD goal icon, the carpet icon's rounded hex in oil
+  oil-can-2.png     oil can blocker, two hits left: sealed red can, brass fittings
+  oil-can-1.png     one hit left: the same can dented, cap off, oil dripping
+
+Homescapes' oil can (OIL_CAN) art is not in our extract, so both can states
+are drawn here together, from one shape, so they stay registered.
 
     python3 tools/oil_art.py          # write them
     python3 tools/oil_art.py --check  # fail if any is stale
@@ -16,7 +21,7 @@ import io
 import math
 from pathlib import Path
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageChops
 
 from carpet_goal_icon import hex_distance
 
@@ -112,6 +117,98 @@ def icon(size=TILE, ss=4):
     return Image.alpha_composite(moved, out).resize((size, size), Image.Resampling.LANCZOS)
 
 
+RED, BRASS, OIL = (214, 58, 42), (226, 176, 70), (240, 178, 50)
+
+
+def cylinder(mask, rgb, left, right, light=.32, floor=.5):
+    """Fill mask with rgb shaded as a vertical cylinder spanning left..right."""
+    w, h = mask.size
+    shade = Image.new('RGB', (w, h))
+    px = shade.load()
+    for x in range(w):
+        t = (x - left) / max(1, right - left)
+        k = floor + (1.25 - floor) * max(0., math.cos((t - light) * math.pi * .9)) + .35 * max(0., 1 - abs(t - light) / .05)
+        col = tuple(min(255, int(c * k)) for c in rgb)
+        for y in range(h): px[x, y] = col
+    out = Image.new('RGBA', (w, h))
+    out.paste(shade, (0, 0), mask)
+    return out
+
+
+def oil_can(hp, size=TILE, ss=4):
+    S = size * ss
+    def P(x, y): return (x * S, y * S)
+    def mask(draw_fn):
+        m = Image.new('L', (S, S)); draw_fn(ImageDraw.Draw(m)); return m
+    layers = []
+    body_l, body_r, top, bottom = .22, .70, .44, .84
+    # Handle behind the body, then the spout.
+    handle = mask(lambda d: d.arc([*P(.08, .46), *P(.36, .80)], 90, 270, fill=255, width=int(.055 * S)))
+    layers.append(cylinder(handle, BRASS, .08 * S, .3 * S))
+    spout_pts = [P(.60, .44), P(.66, .38), P(.93, .13), P(.95, .17), P(.70, .47)]
+    if hp == 1: spout_pts = [P(.60, .44), P(.66, .38), P(.88, .20), P(.92, .27), P(.70, .47)]   # bent
+    spout = mask(lambda d: d.polygon(spout_pts, fill=255))
+    layers.append(cylinder(spout, BRASS, .6 * S, .95 * S, light=.4))
+    # Body: cylinder with a rounded bottom rim.
+    body = mask(lambda d: d.rounded_rectangle([*P(body_l, top), *P(body_r, bottom)], radius=int(.05 * S), fill=255))
+    layers.append(cylinder(body, RED, body_l * S, body_r * S))
+    # Shoulder cone up to the neck, with the top ellipse.
+    cone = mask(lambda d: (d.polygon([P(body_l + .01, top + .02), P(.39, .29), P(.53, .29), P(body_r - .01, top + .02)], fill=255),
+                            d.ellipse([*P(body_l, top - .035), *P(body_r, top + .045)], fill=255)))
+    layers.append(cylinder(cone, (196, 50, 38), body_l * S, body_r * S, light=.3, floor=.55))
+    neck = mask(lambda d: d.rectangle([*P(.40, .22), *P(.52, .31)], fill=255))
+    layers.append(cylinder(neck, BRASS, .40 * S, .52 * S))
+    if hp == 2:   # sealed: a brass cap knob
+        cap = mask(lambda d: d.rounded_rectangle([*P(.38, .15), *P(.54, .23)], radius=int(.025 * S), fill=255))
+        layers.append(cylinder(cap, BRASS, .38 * S, .54 * S))
+    # Label band with an oil drop.
+    band = mask(lambda d: d.rectangle([*P(body_l, .58), *P(body_r, .71)], fill=255))
+    layers.append(cylinder(ImageChops.multiply(band, body), (238, 196, 92), body_l * S, body_r * S))
+    drop = mask(lambda d: (d.ellipse([*P(.415, .615), *P(.475, .685)], fill=255), d.polygon([P(.418, .64), P(.445, .585), P(.472, .64)], fill=255)))
+    layers.append(cylinder(drop, (176, 92, 18), .41 * S, .48 * S, floor=.8))
+    # Bottom rim shadow line.
+    rim = mask(lambda d: d.rounded_rectangle([*P(body_l, bottom - .035), *P(body_r, bottom)], radius=int(.03 * S), fill=255))
+    layers.append(cylinder(rim, (150, 36, 28), body_l * S, body_r * S))
+    if hp == 1:
+        # Dent: a dark crescent with a lit lip, and a scratch.
+        dent = mask(lambda d: d.ellipse([*P(.50, .47), *P(.66, .57)], fill=255))
+        dent = ImageChops.multiply(dent, body)
+        layers.append(cylinder(dent, (168, 40, 30), .5 * S, .66 * S, light=.8, floor=.75))
+        lip = mask(lambda d: d.arc([*P(.50, .47), *P(.66, .57)], 200, 330, fill=255, width=int(.012 * S)))
+        layers.append(cylinder(ImageChops.multiply(lip, body), (255, 150, 120), .5 * S, .66 * S, floor=.9))
+        scratch = mask(lambda d: d.line([P(.28, .74), P(.36, .79)], fill=255, width=int(.01 * S)))
+        layers.append(cylinder(ImageChops.multiply(scratch, body), (250, 190, 170), .2 * S, .7 * S, floor=.9))
+        # Oil: a glint in the open neck, a drip from the bent spout, a puddle.
+        glint = mask(lambda d: d.ellipse([*P(.41, .205), *P(.51, .245)], fill=255))
+        layers.append(cylinder(glint, OIL, .41 * S, .51 * S, floor=.8))
+        drip = mask(lambda d: (d.ellipse([*P(.885, .27), *P(.935, .33)], fill=255), d.polygon([P(.888, .29), P(.91, .24), P(.932, .29)], fill=255)))
+        layers.append(cylinder(drip, OIL, .885 * S, .935 * S, light=.3, floor=.75))
+        puddle = mask(lambda d: (d.ellipse([*P(.52, .80), *P(.90, .89)], fill=255), d.ellipse([*P(.78, .76), *P(.94, .84)], fill=255)))
+        under = Image.new('RGBA', (S, S)); under.paste(cylinder(puddle, OIL, .52 * S, .94 * S, light=.35, floor=.75), (0, 0))
+        layers.insert(0, under)
+    art = Image.new('RGBA', (S, S))
+    for layer in layers: art = Image.alpha_composite(art, layer)
+    # Gloss: a soft vertical streak down the body's lit side, as on the pieces.
+    streak = mask(lambda d: d.rounded_rectangle([*P(.30, top + .03), *P(.34, bottom - .05)], radius=int(.02 * S), fill=120))
+    streak = ImageChops.multiply(streak.filter(ImageFilter.GaussianBlur(.008 * S)), body)
+    gloss = Image.new('RGBA', (S, S), (255, 255, 255, 0)); gloss.putalpha(streak)
+    art = Image.alpha_composite(art, gloss)
+    # Chunky dark outline around the whole silhouette, like the board art.
+    edge = art.getchannel('A').point(lambda v: 255 if v > 40 else 0).filter(ImageFilter.MaxFilter(int(.022 * S) | 1))
+    outline = Image.new('RGBA', (S, S), (70, 22, 14, 0)); outline.putalpha(edge)
+    art = Image.alpha_composite(outline, art)
+    # Soft contact shadow under the can.
+    shadow = mask(lambda d: d.ellipse([*P(.16, .80), *P(.80, .90)], fill=110)).filter(ImageFilter.GaussianBlur(.02 * S))
+    base = Image.new('RGBA', (S, S), (40, 20, 10, 0)); base.putalpha(shadow)
+    art = Image.alpha_composite(base, art)
+    art = art.resize((size, size), Image.Resampling.LANCZOS)
+    # Free-standing: keep the drawing inside the board's 112px object box.
+    box = art.getchannel('A').getbbox()
+    crop = art.crop(box); crop.thumbnail((108, 108), Image.Resampling.LANCZOS)
+    out = Image.new('RGBA', (size, size)); out.paste(crop, ((size - crop.width) // 2, (size - crop.height) // 2))
+    return out
+
+
 def encode(image):
     buf = io.BytesIO()
     image.save(buf, 'PNG', optimize=True)
@@ -122,7 +219,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--check', action='store_true')
     check = parser.parse_args().check
-    for name, image in (('oil-material', material().convert('RGBA')), ('oil-bubbles', bubble_layer()), ('goal-oil', icon())):
+    for name, image in (('oil-material', material().convert('RGBA')), ('oil-bubbles', bubble_layer()), ('goal-oil', icon()),
+                        ('oil-can-2', oil_can(2)), ('oil-can-1', oil_can(1))):
         path, data = OUT / f'{name}.png', encode(image)
         if check:
             assert path.read_bytes() == data, f'{path.relative_to(ROOT)} is stale: run python3 tools/oil_art.py'

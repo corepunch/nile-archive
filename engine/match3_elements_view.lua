@@ -16,7 +16,7 @@ end
 for _,name in ipairs{"box","carry","color-box","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
-for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
+for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","oil-can-1","oil-can-2","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
     E.assets[#E.assets+1]=name
 end
 
@@ -57,8 +57,9 @@ local function patch_cells(R, rules, layer)
         local on
         if layer == "carpet" then
             on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
-        else
-            on = g.oil and (g.oil[i] or 0) > 0
+        else   -- a drop still in flight from a broken can has not landed yet
+            local landing = R.oil_landing and R.oil_landing[i]
+            on = g.oil and (g.oil[i] or 0) > 0 and not (landing and (R.now or 0) < landing)
         end
         if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
     end
@@ -279,6 +280,7 @@ function E.blockers(R, rules, sx)
             local crate = g.crate_hp and g.crate_hp[i] or 0
             if hp > 0 then name = "box-" .. math.min(hp, 6)
             elseif crate > 0 then name = "box-"..math.min(crate,6)
+            elseif g.can_hp and (g.can_hp[i] or 0) > 0 then name = "oil-can-" .. math.min(g.can_hp[i], 2)
             elseif g.hazard and (g.hazard[i] or 0) > 0 then name = "honey-material" end
             if g.hs then
                 local c=g.hs.cells[i]
@@ -301,6 +303,9 @@ function E.blockers(R, rules, sx)
                 if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
                 if visible then
                     local radius = (hp > 0 or crate > 0) and R.HEX_R - .65 or R.HEX_R
+                    -- The can's long spout makes its art wide and short; enlarge it so
+                    -- the body matches a piece, the spout overhanging the cell.
+                    if name:find("^oil%-can") then radius = radius * 1.22 end
                     image(R, name, R.cell_pos(i) + vec2(sx, 0), 2 * radius * scale, alpha)
                 end
             end

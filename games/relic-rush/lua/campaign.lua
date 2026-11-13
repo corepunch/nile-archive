@@ -344,6 +344,8 @@ levels[28].carpet = {cell(0,-1), cell(0,0)}
 -- turn that clears none of it.
 levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), cell(-3,3)}
 levels[20].lesson = "Mop up the lamp oil before it spreads."
+-- An oil can holds more: break it with matches beside it and it throws 9 drops.
+levels[26].oil_cans = {{cell=cell(-3,1), hp=1}, {cell=cell(0,4), hp=2}}
 levels[26].oil = {cell(3,-4), cell(3,-3), cell(3,-2), cell(4,-4), cell(4,-3), cell(4,-2)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only

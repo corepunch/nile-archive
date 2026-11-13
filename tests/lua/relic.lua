@@ -199,7 +199,7 @@ local function test_holes_and_shapes()
         rules.game_collapse(g)
         for i = 0, CELLS - 1 do
             local kind = g.tiles[i].kind
-            local fixed = g.stone_hp[i] > 0 or g.crate_hp[i] > 0
+            local fixed = g.stone_hp[i] > 0 or g.crate_hp[i] > 0 or (g.can_hp and g.can_hp[i] or 0) > 0
             check(g.active[i] and (fixed and kind == -1 or not fixed and (kind >= 0 or kind == rules.DELIVERY))
                 or not g.active[i] and kind == -1, "collapse fills playable cells and leaves solids and voids empty")
         end

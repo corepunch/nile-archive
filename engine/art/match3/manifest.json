@@ -3892,6 +3892,22 @@
       ],
       "generator": "python3 tools/oil_art.py"
     },
+    "oil-can-1": {
+      "source": "engine/art/match3/oil-can-1.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
+    "oil-can-2": {
+      "source": "engine/art/match3/oil-can-2.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
     "oil-material": {
       "source": "engine/art/match3/oil-material.png",
       "canvas": [
@@ -4184,6 +4200,8 @@
       "engine/art/match3/goal-carpet.png": "513b2a02163ce5f2c04dddff35e1ed6707a37f1baac71292671d6d38408d9358",
       "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
       "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
+      "engine/art/match3/oil-can-1.png": "baf0339e41cea11651bc0537920f3d33657148e694915e8a7a921fc50734e131",
+      "engine/art/match3/oil-can-2.png": "b23e99921755b31dfced62fbcddc4289caea0f287b8d6a2f60408a880357560b",
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
@@ -4213,12 +4231,12 @@
       "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
       "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "24b00c258846c0bfa94de9d4dbad16488f9ec3269273c8636eb82313fdbbcee1",
+      "tools/homescapes_atlas.py": "063425492c8320a5535735ca0d9d03b0c5fcc983520cea5c657500996141e50e",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "engine/data/match3.png": "f0865be64bfe704520c5877c9dbda12ad504c71479e65b6a632c0a5ea782d368",
-      "engine/match3_frames.lua": "31d2a0dad638b2072a28332ced0da8c2a24ce5247d5f108f37959e655094b1b0"
+      "engine/data/match3.png": "e5a625ce7f19bc608cecbc41f4a778e3d4290f892a7e2396603d3ff3d2382a78",
+      "engine/match3_frames.lua": "d0b0ba943915f723b167e760964a8f7ee8cd4710dfad11f6cdcacb37132465f5"
     }
   }
 }

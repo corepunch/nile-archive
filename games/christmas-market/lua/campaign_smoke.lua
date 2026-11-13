@@ -62,6 +62,7 @@ function R.campaign_smoke()
         local g, l = R.g, rules.level_of(R.g)
         for i = 0, rules.CELLS - 1 do
             g.ice[i], g.chain[i], g.soil[i], g.stone_hp[i], g.crate_hp[i], g.hazard[i] = 0, 0, 0, 0, 0, 0
+            if g.can_hp then g.can_hp[i] = 0 end
             if g.tiles[i].kind == rules.DELIVERY then
                 -- The smoke tests progression, so complete delivery while preserving
                 -- a stable match-free starting board for the next real swap.
@@ -76,7 +77,7 @@ function R.campaign_smoke()
         end
         for _, object in ipairs(g.objects) do object.state = "revealed" end
         g.discovered, g.delivered = #g.objects, g.delivery_total
-        g.score, g.relics, g.dug, g.obstacles, g.carpeted, g.oil_left = l.score, l.relics, g.initial_soil, 0, g.carpet_total, 0
+        g.score, g.relics, g.dug, g.obstacles, g.carpeted, g.oil_left, g.cans_left = l.score, l.relics, g.initial_soil, 0, g.carpet_total, 0, 0
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b

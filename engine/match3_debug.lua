@@ -157,7 +157,7 @@ function D.bind(R, W)
         end
         a = app.arg("fx")
         if a then   -- fire one special in the middle of level nine
-            local mode = a == "ray" and 0 or a == "bomb" and 1 or 2
+            local mode = a == "ray" and 0 or (a == "bomb" or a == "spill") and 1 or 2
             local c = rules.hex_center()
             R.g = rules.game_start(8, 123478)
             R.pending = rules.new_match()
@@ -167,6 +167,11 @@ function D.bind(R, W)
             R.g.chain[c], R.g.ice[c] = 0, 0
             R.g.active[c]=true;R.g.stone_hp[c]=0;R.g.crate_hp[c]=0;R.g.hazard[c]=0
             R.g.tiles[c] = rules.tile(mode == 2 and 0 or 3, mode == 0 and rules.ROW or mode == 1 and rules.BOMB or a=="plane" and rules.PLANE or rules.PRISM)
+            if a == "spill" then   -- the bomb breaks an oil can beside it, which throws its drops
+                local can = rules.hex_neighbor(c, 0)
+                R.g.chain[can], R.g.ice[can], R.g.can_hp[can], R.g.cans_left = 0, 0, 1, 1
+                R.g.tiles[can] = rules.tile(-1)
+            end
             R.pending.mask[c] = true
             R.pending.hits = 1
             R.finish_wave()

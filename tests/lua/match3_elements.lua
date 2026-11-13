@@ -257,5 +257,26 @@ do
     check(g.won, 'clearing the oil wins an oil-only level')
 end
 
-print('match3 elements: blocker provenance, discoveries, tunnels, deliveries, hazard turns, carpet and oil passed')
+-- An oil can takes a hit from a match beside it and, broken, throws its oil.
+do
+    local can = cell(0,0)
+    local C = rules{name='can',moves=20,score=0,relics=0,soil=0,chains=0,ice=0,oil_cans={{cell=can,hp=2}},goals={'oil'}}
+    local g = C.game_start(0,11)
+    check(g.can_hp[can]==2 and g.cans_left==1 and C.oil_remaining(g)==C.CAN_SPILL, 'a standing can counts its oil in the goal')
+    check(not C.game_can_swap(g,can,cell(1,0)), 'the can does not swap')
+    local function match_beside()
+        for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
+        for _,i in ipairs({cell(-1,1),cell(0,1),cell(1,1)}) do g.tiles[i]=C.tile(2) end
+        local m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
+    end
+    match_beside()
+    check(g.can_hp[can]==1 and g.cans_left==1 and g.oil_left==0, 'a match beside the can costs it one hit')
+    match_beside()
+    check(g.can_hp[can]==0 and g.cans_left==0 and g.oil_left==C.CAN_SPILL, 'the broken can throws its oil')
+    check(C.oil_remaining(g)==C.CAN_SPILL, 'the goal count does not jump when the can breaks')
+    check(#g.spills==1 and g.spills[1].from==can and #g.spills[1].cells==C.CAN_SPILL, 'the spill is recorded for the view')
+    check(C.game_copy(g).can_hp ~= g.can_hp, 'copy owns the cans')
+end
+
+print('match3 elements: blocker provenance, discoveries, tunnels, deliveries, hazard turns, carpet, oil and oil cans passed')
 return 0

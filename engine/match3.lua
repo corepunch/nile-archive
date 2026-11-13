@@ -139,7 +139,9 @@ function E.bind_board_ui(R, rules, tool_art)
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
         if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
-        if (g.oil_left or 0)>0 or l.oil and #l.oil>0 then entries[#entries+1]={id="oil",icon="goal-oil",remaining=g.oil_left or 0} end
+        if rules.oil_remaining(g)>0 or l.oil and #l.oil>0 or l.oil_cans and #l.oil_cans>0 then
+            entries[#entries+1]={id="oil",icon="goal-oil",remaining=rules.oil_remaining(g)}
+        end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}
             for _, entry in ipairs(entries) do by_id[entry.id] = entry end
@@ -495,11 +497,36 @@ function E.new(config)
     M.tile = tile
 
     local function swap_tiles(g, a, b) g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a] end
-    local function solid(g, i) return home.solid(g,i) or (g.stone_hp[i] or 0) > 0 or (g.crate_hp[i] or 0) > 0 end
+    local function solid(g, i)
+        return home.solid(g,i) or (g.stone_hp[i] or 0) > 0 or (g.crate_hp[i] or 0) > 0 or g.can_hp and (g.can_hp[i] or 0) > 0
+    end
+    -- An oil can (Homescapes' OIL_CAN) throws this many drops when it breaks.
+    M.CAN_SPILL = 9
+    -- Oil still to clear: on the board, plus what each standing can will throw.
+    local function oil_remaining(g) return (g.oil_left or 0) + (g.cans_left or 0) * M.CAN_SPILL end
+    M.oil_remaining = oil_remaining
     local function locked(g, i) return (g.chain[i] or 0) > 0 or (g.ice[i] or 0) > 0 or (g.hazard[i] or 0) > 0 or solid(g, i) end
 
     local function cell_active(g, cell) return cell >= 0 and cell < CELLS and g.active[cell] end
     M.game_cell_active = cell_active
+    -- The can throws its oil onto random free cells, its own included, but not
+    -- onto cells this wave is clearing, which would wipe it at once.
+    local function spill(g, can, clearing)
+        local options = {}
+        for i = 0, CELLS - 1 do
+            if cell_active(g, i) and g.oil[i] == 0 and not solid(g, i) and not clearing[i] then options[#options + 1] = i end
+        end
+        local cells = {}
+        for _ = 1, math.min(M.CAN_SPILL, #options) do
+            local k = randn(g, #options) + 1
+            cells[#cells + 1] = options[k]
+            options[k] = options[#options]; options[#options] = nil
+        end
+        for _, i in ipairs(cells) do g.oil[i] = 1 end
+        g.oil_left, g.cans_left = g.oil_left + #cells, g.cans_left - 1
+        g.spills = g.spills or {}
+        g.spills[#g.spills + 1] = {from = can, cells = cells}   -- for the view's flying drops
+    end
 
     local function equal(g, a, b)
         return cell_active(g, a) and cell_active(g, b) and not solid(g,a) and not solid(g,b)
@@ -788,6 +815,9 @@ function E.new(config)
                     g.stone_hp[i], g.obstacles = g.stone_hp[i] - 1, g.obstacles - 1
                 elseif g.crate_hp[i] > 0 and (m.direct[i] or colors[i] and colors[i][g.crate_kind[i]]) then
                     g.crate_hp[i], g.obstacles = g.crate_hp[i] - 1, g.obstacles - 1
+                elseif g.can_hp and (g.can_hp[i] or 0) > 0 then
+                    g.can_hp[i] = g.can_hp[i] - 1
+                    if g.can_hp[i] == 0 then spill(g, i, m.mask) end
                 elseif g.hazard[i] > 0 then
                     g.hazard[i], g.obstacles, g.hazard_damaged = 0, g.obstacles - 1, true
                     g.hazard_damaged_cell[i] = true
@@ -957,6 +987,7 @@ function E.new(config)
         c.active, c.soil, c.chain, c.ice = copy_array(g.active), copy_array(g.soil), copy_array(g.chain), copy_array(g.ice)
         c.carpet = g.carpet and copy_array(g.carpet)
         c.oil = g.oil and copy_array(g.oil)
+        c.can_hp = g.can_hp and copy_array(g.can_hp)
         c.stone_hp, c.crate_hp, c.crate_kind, c.hazard = copy_array(g.stone_hp), copy_array(g.crate_hp), copy_array(g.crate_kind), copy_array(g.hazard)
         c.objects = {}
         for i, object in ipairs(g.objects) do
@@ -1103,7 +1134,7 @@ function E.new(config)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
             tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
-            oil = {}, oil_left = 0, oil_cleared = false,
+            oil = {}, oil_left = 0, oil_cleared = false, can_hp = {}, cans_left = 0,
             stone_hp = {}, crate_hp = {}, crate_kind = {}, hazard = {}, objects = {},
             tunnel_to = {}, tunnel_from = {}, delivery_exits = {}, delivered = 0, delivery_total = 0, discovered = 0,
             level = lvl, moves = 0, score = 0, relics = 0, dug = 0, obstacles = 0, initial_obstacles = 0, initial_soil = 0,
@@ -1121,7 +1152,7 @@ function E.new(config)
             g.active[i] = not l.mask or l.mask:sub(i + 1, i + 1) == "1"
             g.tiles[i] = tile(-1, NORMAL)
             g.soil[i], g.chain[i], g.ice[i], g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, 0, 0, 0, -1, 0
-            g.carpet[i], g.oil[i] = 0, 0
+            g.carpet[i], g.oil[i], g.can_hp[i] = 0, 0, 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
         if l.homescapes then home.init(g,l.homescapes);return g end
@@ -1138,6 +1169,11 @@ function E.new(config)
             reserve(entry.cell)
             assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 3, "stone hp")
             g.stone_hp[entry.cell] = entry.hp
+        end
+        for _, entry in ipairs(l.oil_cans or {}) do
+            reserve(entry.cell)
+            assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 2, "oil can hp")
+            g.can_hp[entry.cell], g.cans_left = entry.hp, g.cans_left + 1
         end
         for _, entry in ipairs(l.crates or {}) do
             reserve(entry.cell)
@@ -1311,7 +1347,7 @@ function E.new(config)
         local l = M.levels[g.level + 1]
         local done = {score = g.score >= l.score, idols = g.relics >= l.relics, sand = g.dug >= g.initial_soil,
             locks = g.obstacles == 0, discoveries = g.discovered == #g.objects, deliveries = g.delivered == g.delivery_total,
-            carpet = (g.carpeted or 0) >= (g.carpet_total or 0), oil = (g.oil_left or 0) == 0}
+            carpet = (g.carpeted or 0) >= (g.carpet_total or 0), oil = oil_remaining(g) == 0}
         -- A level's own goal list is all it needs; otherwise every counter must be done.
         local cleared = true
         if not g.object_only then
@@ -1368,7 +1404,7 @@ function E.new(config)
             end
         end
         return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200 + ((c.carpeted or 0) - (g.carpeted or 0)) * 160
-            + ((g.oil_left or 0) - (c.oil_left or 0)) * 200
+            + (oil_remaining(g) - oil_remaining(c)) * 200
             + (g.obstacles - c.obstacles) * 220 + delivery_access * 350 + object_progress * 900
     end
 

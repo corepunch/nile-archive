@@ -180,6 +180,8 @@ levels[28].lesson = "Roll out the carpet before the finale."
 -- after any turn that clears none of it.
 levels[13].oil = {cell(4,-4), cell(4,-3), cell(4,-2), cell(4,-1), cell(4,0), cell(3,-1), cell(3,0)}
 levels[13].lesson = "Clear the spilled caramel before it spreads."
+-- A caramel can holds more: break it with matches beside it and it throws 9 drops.
+levels[25].oil_cans = {{cell=cell(-2,-1), hp=1}, {cell=cell(1,2), hp=2}}
 levels[25].oil = {cell(2,-3), cell(3,-3), cell(3,-2), cell(3,-1), cell(4,-3), cell(4,-2), cell(4,-1)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only

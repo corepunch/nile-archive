@@ -7,6 +7,7 @@ local function ordinary_gravity(g)
     g.tunnel_to, g.tunnel_from, g.delivery_exits = {}, {}, {}
     for i = 0, rules.CELLS - 1 do
         g.stone_hp[i], g.crate_hp[i], g.hazard[i] = 0, 0, 0
+        if g.can_hp then g.can_hp[i] = 0 end
         if g.tiles[i].kind == rules.DELIVERY then g.tiles[i] = tile(i % rules.COLORS) end
     end
     return g

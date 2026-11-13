@@ -1055,248 +1055,260 @@
       128,
       128
     ],
-    "oil-material": [
+    "oil-can-1": [
       2,
+      2358,
+      128,
+      128
+    ],
+    "oil-can-2": [
+      134,
+      2358,
+      128,
+      128
+    ],
+    "oil-material": [
+      266,
       2358,
       128,
       128
     ],
     "pause-disabled": [
-      134,
+      398,
       2358,
       128,
       128
     ],
     "pause-hover": [
-      266,
+      530,
       2358,
       128,
       128
     ],
     "pause-normal": [
-      398,
+      662,
       2358,
       128,
       128
     ],
     "pause-pressed": [
-      530,
+      794,
       2358,
       128,
       128
     ],
     "pause-selected": [
-      662,
+      926,
       2358,
       128,
       128
     ],
     "pickaxe-disabled": [
-      794,
+      1058,
       2358,
       128,
       128
     ],
     "pickaxe-hover": [
-      926,
+      1190,
       2358,
       128,
       128
     ],
     "pickaxe-normal": [
-      1058,
+      1322,
       2358,
       128,
       128
     ],
     "pickaxe-pressed": [
-      1190,
+      1454,
       2358,
       128,
       128
     ],
     "pickaxe-selected": [
-      1322,
+      1586,
       2358,
       128,
       128
     ],
     "plane": [
-      1454,
+      1718,
       2358,
       128,
       128
     ],
     "portal-entrance-source": [
-      1586,
+      1850,
       2358,
       128,
       128
     ],
     "portal-output-source": [
-      1718,
-      2358,
+      2,
+      2490,
       128,
       128
     ],
     "prism": [
-      1850,
-      2358,
+      134,
+      2490,
       128,
       128
     ],
     "rainbow-ball": [
-      2,
+      266,
       2490,
       128,
       128
     ],
     "ray-column": [
-      134,
+      398,
       2490,
       128,
       128
     ],
     "ray-diagonal": [
-      266,
+      530,
       2490,
       128,
       128
     ],
     "ray-row": [
-      398,
+      662,
       2490,
       128,
       128
     ],
     "rocket-horizontal": [
-      530,
+      794,
       2490,
       128,
       128
     ],
     "rocket-vertical": [
-      662,
+      926,
       2490,
       128,
       128
     ],
     "sand": [
-      794,
+      1058,
       2490,
       128,
       128
     ],
     "sand-edge": [
-      926,
+      1190,
       2490,
       128,
       128
     ],
     "selected": [
-      1058,
+      1322,
       2490,
       128,
       128
     ],
     "shop-built": [
-      1190,
-      2490,
-      128,
-      128
-    ],
-    "shop-locked": [
-      1322,
-      2490,
-      128,
-      128
-    ],
-    "statue-1": [
       1454,
       2490,
       128,
       128
     ],
-    "statue-2": [
+    "shop-locked": [
       1586,
       2490,
       128,
       128
     ],
-    "statue-3": [
+    "statue-1": [
       1718,
       2490,
       128,
       128
     ],
-    "stone-1": [
+    "statue-2": [
       1850,
       2490,
       128,
       128
     ],
-    "stone-2": [
+    "statue-3": [
       2,
       2622,
       128,
       128
     ],
-    "stone-3": [
+    "stone-1": [
       134,
       2622,
       128,
       128
     ],
-    "sunburst-disabled": [
+    "stone-2": [
       266,
       2622,
       128,
       128
     ],
-    "sunburst-hover": [
+    "stone-3": [
       398,
       2622,
       128,
       128
     ],
-    "sunburst-normal": [
+    "sunburst-disabled": [
       530,
       2622,
       128,
       128
     ],
-    "sunburst-pressed": [
+    "sunburst-hover": [
       662,
       2622,
       128,
       128
     ],
-    "sunburst-selected": [
+    "sunburst-normal": [
       794,
       2622,
       128,
       128
     ],
-    "tunnel-in": [
+    "sunburst-pressed": [
       926,
       2622,
       128,
       128
     ],
-    "tunnel-out": [
+    "sunburst-selected": [
       1058,
       2622,
       128,
       128
     ],
-    "web-2": [
+    "tunnel-in": [
       1190,
       2622,
       128,
       128
     ],
-    "glow": [
+    "tunnel-out": [
       1322,
+      2622,
+      128,
+      128
+    ],
+    "web-2": [
+      1454,
+      2622,
+      128,
+      128
+    ],
+    "glow": [
+      1586,
       2622,
       64,
       64
@@ -3301,6 +3313,22 @@
       ],
       "generator": "python3 tools/oil_art.py"
     },
+    "oil-can-1": {
+      "source": "engine/art/match3/oil-can-1.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
+    "oil-can-2": {
+      "source": "engine/art/match3/oil-can-2.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
     "apple-platter-1": {
       "placement": "shared four-cell footprint",
       "sources": [
@@ -4425,6 +4453,8 @@
       "engine/art/match3/goal-carpet.png": "513b2a02163ce5f2c04dddff35e1ed6707a37f1baac71292671d6d38408d9358",
       "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
       "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
+      "engine/art/match3/oil-can-1.png": "baf0339e41cea11651bc0537920f3d33657148e694915e8a7a921fc50734e131",
+      "engine/art/match3/oil-can-2.png": "b23e99921755b31dfced62fbcddc4289caea0f287b8d6a2f60408a880357560b",
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "games/christmas-market/data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
       "games/christmas-market/data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
@@ -4483,12 +4513,12 @@
       "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "24b00c258846c0bfa94de9d4dbad16488f9ec3269273c8636eb82313fdbbcee1",
+      "tools/homescapes_atlas.py": "063425492c8320a5535735ca0d9d03b0c5fcc983520cea5c657500996141e50e",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "9025547244d3683061132eeeb513819f741c283a11c46b644714d17d72267cad",
-      "games/christmas-market/lua/match3_skin.lua": "0a7156c73dbff59d688dae167781e473c27a0ac30896fe56fb3e71233e9ddcf3"
+      "games/christmas-market/data/match3.png": "e9d669fc2f3814930105e6fa576fde11924954096e29d9b0b09f0cd52d4c10d7",
+      "games/christmas-market/lua/match3_skin.lua": "5c65f0fdbfeb95db23a73c35d91e3684df6cf7c38ed16b34d4e829147e4ba62f"
     }
   }
 }
