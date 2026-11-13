@@ -1,7 +1,7 @@
 # Homescapes board artwork
 
-The hex board uses original graphics for all six jelly strengths, both portal
-ends, the donut exit arrow and all 36 colored-box field states. The classic
+The hex board uses original graphics for all six jelly strengths, the donut
+exit arrow and all 36 colored-box field states. The classic
 maker's five charge poses use original dough, glaze and topping layers.
 Original particle timing, indicator placement and exact group composition
 remain open in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
@@ -83,7 +83,7 @@ buttons remain centred independently of asymmetric source masks.
 | Goal panel | Original goal icons, including `goal-color-box` | Uses original board sprites for nuts, statues, tiles and blinds. |
 | `COLOR_BOX` | `color-box-{color}-{health}` | All 36 named Windows sprites, original color 0–5 and health 1–6. |
 | `HONEY` | `jelly-1..6`, with clear and soft cherry variants for strengths 1 and 2 | Original square, flowers and cherries matched to Playrix's six-state illustration. A mask derived from the authored opening clips the soft cherry. |
-| Portal pair | `tunnel-in` and `tunnel-out` | Original yellow entrance and blue output. Render at the lower and upper cell edges respectively, with insets for the hex layout. |
+| Portal pair | none (retired) | Original yellow entrance and blue output, extracted to `portal-entrance-source.png` / `portal-output-source.png`. The engine has no portals (not in Homescapes' story levels), so they are not registered in any atlas. |
 | `CARRY_EXIT` | `carry-exit-arrow` with three staggered copies | Original 9.2.601 `CarryExitForAnim`. Uses the original three-second period, one-second spacing and cosine fade, with hex-relative positioning. Reduced motion holds the arrows in place. |
 
 The jelly illustration shows strengths six through one, left to right. The
@@ -103,8 +103,8 @@ scales the completed image to the shared hex footprint.
 [Playrix's donut maker illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1333-donut-maker/)
 
 The portal rings in the 3.5.9 atlas match the colors and silhouettes of the
-named portal textures and the official image. Gameplay continues to use the
-existing discontinuous transfer animation.
+named portal textures and the official image. They are kept as extracted
+sources only.
 [Playrix's portal illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1084-portals/)
 
 The PLXE decoder verifies the original named rectangles in the 1.1.0.900,

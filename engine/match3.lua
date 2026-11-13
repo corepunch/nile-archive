@@ -81,7 +81,7 @@ function E.skin(override)
         skin[name] = image
     end
     for _, name in ipairs({"kind-0", "kind-1", "kind-2", "kind-3", "kind-4", "kind-5", "ray-row", "ray-column", "ray-diagonal",
-        "bomb", "prism", "sand", "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "score", "complete", "background"}) do
+        "bomb", "prism", "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "score", "complete", "background"}) do
         assert(skin[name], "missing match3 frame: " .. name)
     end
     for _, tool in ipairs({"pickaxe", "dynamite", "sunburst", "pause"}) do

@@ -25,7 +25,10 @@ NAMES = ([f'kind-{i}' for i in range(8)] +
          [f'{tool}-{state}' for tool in ['pickaxe', 'dynamite', 'sunburst', 'pause'] for state in STATES] +
          ['hud-panel', 'tool-tray', 'board-frame', 'background'] +
          [f'spark-{i}' for i in range(8)] + [f'ice-puff-{i}' for i in range(4)] + [f'impact-{i}' for i in range(4)])
-HEX = {'sand', 'chain', 'ice-2', 'ice-1', 'selected', 'hint', 'cell-mask', 'board-frame'}
+# Cells of the authored source in grid order. The excavation tile ('sand')
+# served a mechanic the engine no longer has; its cell stays, unregistered.
+UNREGISTERED = {'sand'}
+HEX = {'chain', 'ice-2', 'ice-1', 'selected', 'hint', 'cell-mask', 'board-frame'}
 
 
 def lua_table(frames, path=None):
@@ -87,6 +90,7 @@ def build_default(check):
     image = Image.new('RGBA', (1024, 2048))
     frames, registration = {}, {}
     for i, name in enumerate(NAMES):
+        if name in UNREGISTERED: continue
         row, col = divmod(i, 8)
         box = [round(col * source.width / 8), rows[row], round((col + 1) * source.width / 8), rows[row + 1]]
         sprite = source.crop(box)

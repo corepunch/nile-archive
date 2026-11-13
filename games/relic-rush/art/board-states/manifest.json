@@ -68,16 +68,6 @@
       "fit": "free-object",
       "registration": "art/match3-atlas.json"
     },
-    "sand": {
-      "box": [
-        1156,
-        48,
-        1368,
-        233
-      ],
-      "runtime": "data/board-states/sand.png",
-      "fit": "hex-slot"
-    },
     "chain": {
       "box": [
         0,
@@ -361,18 +351,6 @@
     "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
     "data/board-states/chain.png",
-    "data/board-states/crate-0-1.png",
-    "data/board-states/crate-0-2.png",
-    "data/board-states/crate-1-1.png",
-    "data/board-states/crate-1-2.png",
-    "data/board-states/crate-2-1.png",
-    "data/board-states/crate-2-2.png",
-    "data/board-states/crate-3-1.png",
-    "data/board-states/crate-3-2.png",
-    "data/board-states/crate-4-1.png",
-    "data/board-states/crate-4-2.png",
-    "data/board-states/crate-5-1.png",
-    "data/board-states/crate-5-2.png",
     "data/board-states/delivery-exit.png",
     "data/board-states/delivery.png",
     "data/board-states/dynamite-disabled.png",
@@ -380,17 +358,10 @@
     "data/board-states/dynamite-normal.png",
     "data/board-states/dynamite-pressed.png",
     "data/board-states/dynamite-selected.png",
-    "data/board-states/growth.png",
     "data/board-states/guide.png",
-    "data/board-states/hidden-covered.png",
-    "data/board-states/hidden-partial.png",
-    "data/board-states/hidden-revealed.png",
     "data/board-states/hint.png",
-    "data/board-states/ice-1-edge.png",
     "data/board-states/ice-1.png",
-    "data/board-states/ice-2-edge.png",
     "data/board-states/ice-2.png",
-    "data/board-states/object-goal.png",
     "data/board-states/pickaxe-disabled.png",
     "data/board-states/pickaxe-hover.png",
     "data/board-states/pickaxe-normal.png",
@@ -400,8 +371,6 @@
     "data/board-states/ray-column.png",
     "data/board-states/ray-diagonal.png",
     "data/board-states/ray-row.png",
-    "data/board-states/sand-edge.png",
-    "data/board-states/sand.png",
     "data/board-states/selected.png",
     "data/board-states/stone-1.png",
     "data/board-states/stone-2.png",
@@ -411,8 +380,6 @@
     "data/board-states/sunburst-normal.png",
     "data/board-states/sunburst-pressed.png",
     "data/board-states/sunburst-selected.png",
-    "data/board-states/tunnel-in.png",
-    "data/board-states/tunnel-out.png",
     "data/building-shadows/amphitheater.png",
     "data/building-shadows/apothecary.png",
     "data/building-shadows/archive.png",
@@ -705,17 +672,6 @@
       ]
     ],
     "overscan": 144
-  },
-  "board_edges": {
-    "runtime": {
-      "sand": "data/board-states/sand-edge.png",
-      "ice-1": "data/board-states/ice-1-edge.png",
-      "ice-2": "data/board-states/ice-2-edge.png"
-    },
-    "source": "The matching authored sand and ice crops in data/board-states",
-    "transform": "Spatial edge-band crop on a flat-top hex with a 46px centreline radius in a 128px canvas",
-    "reproduction": "python3 tools/fit_match3_edges.py",
-    "review": "docs/screenshots/review/frost-edges/after-480x900.jpg"
   },
   "cell_mask": {
     "source": "art/board-states/cell-mask.png",
@@ -1065,27 +1021,8 @@
       "stone-1": "data/board-states/stone-1.png",
       "stone-2": "data/board-states/stone-2.png",
       "stone-3": "data/board-states/stone-3.png",
-      "crate-0-1": "data/board-states/crate-0-1.png",
-      "crate-0-2": "data/board-states/crate-0-2.png",
-      "crate-1-1": "data/board-states/crate-1-1.png",
-      "crate-1-2": "data/board-states/crate-1-2.png",
-      "crate-2-1": "data/board-states/crate-2-1.png",
-      "crate-2-2": "data/board-states/crate-2-2.png",
-      "crate-3-1": "data/board-states/crate-3-1.png",
-      "crate-3-2": "data/board-states/crate-3-2.png",
-      "crate-4-1": "data/board-states/crate-4-1.png",
-      "crate-4-2": "data/board-states/crate-4-2.png",
-      "crate-5-1": "data/board-states/crate-5-1.png",
-      "crate-5-2": "data/board-states/crate-5-2.png",
-      "tunnel-in": "data/board-states/tunnel-in.png",
-      "tunnel-out": "data/board-states/tunnel-out.png",
-      "hidden-covered": "data/board-states/hidden-covered.png",
-      "hidden-partial": "data/board-states/hidden-partial.png",
-      "hidden-revealed": "data/board-states/hidden-revealed.png",
-      "growth": "data/board-states/growth.png",
       "delivery": "data/board-states/delivery.png",
-      "delivery-exit": "data/board-states/delivery-exit.png",
-      "object-goal": "data/board-states/object-goal.png"
+      "delivery-exit": "data/board-states/delivery-exit.png"
     },
     "review": [
       "../../docs/review/match3-elements/relic-rush-states.png",
@@ -1094,7 +1031,8 @@
     "delivery_source": "../../engine/art/match3-elements/source-v1.png",
     "delivery_prompt": "../../engine/art/match3-elements/prompt-v1.txt",
     "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
-    "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states."
+    "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states.",
+    "retired": "Crate, tunnel, hidden-object and growth cells stay in the master but are not registered: the engine no longer has those mechanics (not in Homescapes story levels)."
   },
   "quest_objects": {
     "source": "art/quest-objects/source.png",
@@ -1122,7 +1060,7 @@
       "goal",
       "story handoff"
     ],
-    "transform": "One authored object sprite per slot. The board uses the authored sand over the covered cells, preserving the object alpha and palette. The same sprite appears in the goal and handoff."
+    "transform": "One authored object sprite per slot. The same sprite appears in the goal and handoff."
   },
   "homescapes": {
     "registration": "art/match3-atlas.json",

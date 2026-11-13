@@ -144,19 +144,6 @@
       ]
     },
     {
-      "path": "board-states/sand.png",
-      "crop": [
-        595,
-        232,
-        793,
-        422
-      ],
-      "output": [
-        128,
-        128
-      ]
-    },
-    {
       "path": "board-states/chain.png",
       "crop": [
         793,

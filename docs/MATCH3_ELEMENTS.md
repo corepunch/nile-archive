@@ -109,7 +109,7 @@ The two freestanding delivery icons retain the first atlas's authored alpha.
 The [master](../engine/art/match3-elements/source.png),
 [exact prompt](../engine/art/match3-elements/prompt.txt), and
 [registration manifest](../engine/art/match3-elements/manifest.json) are retained.
-These are historical assets, no longer drawn on the field; only the stone and delivery frames are still loaded. The current atlases use original Homescapes sprites; see [the port contract](HOMESCAPES_HEX.md) for replacements and missing states.
+These are historical assets. Only the stone and delivery cells are still registered (ten runtime files for the two games); the crate, tunnel, hidden-object and growth cells stay in the master image, unregistered. The current atlases use original Homescapes sprites; see [the port contract](HOMESCAPES_HEX.md) for replacements and missing states.
 
 ```sh
 python3 tools/match3_elements_art.py
@@ -124,7 +124,7 @@ Registration crops the fixed 8×6 master grid and resizes each cell uniformly.
 The full-bleed painted surfaces are cut with the authoritative
 [engine tile mask](../engine/art/hex-tile/README.md); this fixes geometry without
 recoloring artwork or deriving one strength from another. Delivery icons keep
-their original alpha. Every one of the 46 tile surfaces passes the strict
+their original alpha. Every registered tile surface passes the strict
 coverage, edge and spill check. The archived registration checks describe that former art set. The default atlas
 is now 1024×2048 with original Homescapes frame aliases. Each game's inventory
 and asset catalogue records the replacement. See the [historical review](review/match3-elements/README.md)

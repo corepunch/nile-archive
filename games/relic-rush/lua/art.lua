@@ -11,7 +11,7 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- The neutral skin's filled ice uses 0.52 opacity. Live rim art has open centres.
 A.indicators = {source="art/board-states/clear-indicators.png", ice_opacity=133}
 A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
-A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"}
@@ -72,9 +72,6 @@ function A.load()
     end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
-    if not app.arg("default-match3") then
-        for _, name in ipairs{"sand-edge", "ice-1-edge", "ice-2-edge"} do load(name) end
-    end
     for _, tool in ipairs(A.tools) do
         for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
     end
@@ -92,7 +89,7 @@ function A.draw_catalogue(R)
             gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
         end
     end
-    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "sand",
+    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85

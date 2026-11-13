@@ -30,7 +30,7 @@ def main():
     for path in manifest['prompts']:
         assert (ROOT/path).is_file(), path
     registration = json.loads((ROOT/'art/registration.json').read_text())
-    assert 'buildings' not in registration and len(registration['icons']) == 40
+    assert 'buildings' not in registration and len(registration['icons']) == 39
     for entry in registration['icons']:
         assert png(ROOT/'data'/entry['path']) == ((128,128),6), entry['path']
     for tool, folder in [('pickaxe','board-states'),('dynamite','board-states'),('sunburst','board-states'),('pause','expedition-hud')]:
@@ -67,7 +67,7 @@ def main():
         assert (ROOT/particles['source']/f'{source}.png').is_file(), source
         assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
     subprocess.run([sys.executable, str(ROOT.parents[1]/'tools/pack_particles.py'), 'christmas-market', '--check'], check=True)
-    print(f'Christmas Market: {len(inventory)} runtime files, 40 atlas crops, {len(buildings)} Blender buildings, 11 native icon slots verified')
+    print(f'Christmas Market: {len(inventory)} runtime files, 39 atlas crops, {len(buildings)} Blender buildings, 11 native icon slots verified')
 
 if __name__ == '__main__':
     main()

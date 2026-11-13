@@ -4,7 +4,7 @@ The shared engine and both portrait games use original Homescapes pieces and
 color-independent power-ups. The existing swap/reject, pop, fall, landing,
 cascade, score-flight, particle, sound, haptic and reduced-motion paths remain.
 A plane adds a flight to that same effects pool. Towns, campaigns, restoration
-rewards, tools and campaign-specific floor/portal objectives remain available.
+rewards, tools and the campaigns' carpet and oil floors remain available.
 
 This is a source-based starting point, **not verified 1:1 original gameplay**.
 The source executable has not been replayed. Square-to-hex geometry changes
@@ -145,7 +145,9 @@ for power-up states. Existing separate scene, character, town and particle
 textures remain. The old striped-gem shader is no longer used for power-ups.
 
 Original source artwork covers nuts, statues, stacks, ceramic tiles, blinds,
-visible queues, six jelly strengths, both portal ends and the donut exit arrow.
+visible queues, six jelly strengths and the donut exit arrow. The extracted
+portal, honey and carpet-hex sprites stay in `engine/art/homescapes/sprites`
+but are not registered: no board draws them.
 The maker uses the original shared-frame alignment for the base and both glass
 layers. Its five held poses use original charge components and the source
 client's per-hit groups. All 36 colored-box field states and the goal icon use

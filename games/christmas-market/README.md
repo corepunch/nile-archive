@@ -63,7 +63,7 @@ The board and Settings panel share Relic Rush's layout. The puzzle backdrop
 uses the space above the goals for a lantern-lit Christmas market, with open
 snow behind the spruce-green wells and their thin champagne edge. Each well
 shades from light at the top to dark at the bottom. Both ice
-strengths use [thin hex rims](docs/asset-catalogue.md#snow-and-ice-rims).
+strengths use the [original Homescapes shells](docs/asset-catalogue.md#ice).
 Goal icons sit slightly left over their capsule edges. See the
 [cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
 Thin gold tinsel straddles the cell edge. The bomb, the rainbow star and

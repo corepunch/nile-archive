@@ -11,7 +11,7 @@ from prepare_story_cast import prepare as prepare_story_cast
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
-from fit_match3_edges import build_edges, thin_ring
+from fit_match3_edges import thin_ring
 
 DATA = ROOT / 'data'
 REGISTRATION = ROOT / 'art' / 'registration.json'
@@ -102,13 +102,16 @@ def fit_board_art(sheet, registration):
         im.putalpha(ImageChops.multiply(im.getchannel('A'), mask))
         save(im, f'board-states/{name}.png')
     save(thin_ring(original('chain'), (63.5, 59.5), (46, 43)), 'board-states/chain-board.png')
-    build_edges('christmas-market')
     registration['board_fit'] = {
         'mask': '128px regular flat-top hex, radius 64px',
         'gold_frame_source_boxes': GOLD_FRAMES,
         'chain-board': {'wire_center': [63.5, 59.5], 'wire_size': [92, 86],
                         'radius': 46, 'radial_thickness_scale': .5},
     }
+
+# The sheet's excavation tile served the engine's former snow layer; its cell
+# keeps its place in the reading order but is no longer registered.
+UNREGISTERED = {'board-states/sand'}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -157,6 +160,7 @@ def main():
         f = family_of[name]
         side[f] = max(side.get(f, 0), box[2]-box[0], box[3]-box[1])
     for i, name in enumerate(names):
+        if name in UNREGISTERED: continue
         bounds = cells[i]
         if name in art:
             cx, cy = centre(art[name])

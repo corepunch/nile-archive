@@ -14,10 +14,14 @@ PROMPT = SOURCE.with_name('prompt.txt')
 MANIFEST = SOURCE.with_name('manifest.json')
 OBJECT_SOURCE = SOURCE.with_name('source-v1.png')
 MASK = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
-NAMES = ([f'stone-{hp}' for hp in (1, 2, 3)] +
+# The master's 24 cells per game, in grid order. Crates, tunnels, hidden
+# objects and growth belong to mechanics the engine no longer has (they are not
+# in Homescapes' story levels): their cells stay in the master, unregistered.
+CELLS = ([f'stone-{hp}' for hp in (1, 2, 3)] +
          [f'crate-{kind}-{hp}' for kind in range(6) for hp in (1, 2)] +
          ['tunnel-in', 'tunnel-out', 'hidden-covered', 'hidden-partial',
           'hidden-revealed', 'growth', 'delivery', 'delivery-exit', 'object-goal'])
+NAMES = ['stone-1', 'stone-2', 'stone-3', 'delivery', 'delivery-exit']
 GAMES = ('relic-rush', 'christmas-market')
 
 
@@ -39,18 +43,18 @@ def main():
                 assert image.getchannel('A').getextrema() == (0, 255)
                 if row['name'] != 'delivery':
                     assert inspect(image, strict=True)['pass'], f'Tile does not fill canonical mask: {row["runtime"]}'
-        print('48 element states verified; all 46 tile surfaces pass strict canonical mask fit')
+        print(f'{len(spec["assets"])} element states verified; every tile surface passes strict canonical mask fit')
         return
     source = Image.open(SOURCE).convert('RGBA')
     objects = Image.open(OBJECT_SOURCE).convert('RGBA')
     mask = Image.open(MASK).getchannel('A')
     assert source.size == objects.size == (1448, 1086)
-    assert len(NAMES) == 24
+    assert len(CELLS) == 24
     assets, paths = [], [SOURCE, PROMPT, OBJECT_SOURCE, SOURCE.with_name('prompt-v1.txt'), MASK,
                         ROOT / 'engine/art/hex-tile/atlas-template-8x6-181.png', Path(__file__)]
     for theme, game in enumerate(GAMES):
-        for index, name in enumerate(NAMES):
-            row, column = divmod(theme * 24 + index, 8)
+        for name in NAMES:
+            row, column = divmod(theme * 24 + CELLS.index(name), 8)
             box = [column * 181, row * 181, (column + 1) * 181, (row + 1) * 181]
             image = (objects if name == 'delivery' else source).crop(box).resize((128, 128), Image.Resampling.LANCZOS)
             if name != 'delivery':
@@ -74,7 +78,7 @@ def main():
             'review': 'docs/review/match3-elements/README.md', 'assets': assets,
             'fingerprints': {str(p.relative_to(ROOT)): digest(p) for p in paths}}
     MANIFEST.write_text(json.dumps(spec, indent=2) + '\n')
-    print('Registered 48 original sprites for both game atlases')
+    print(f'Registered {len(assets)} original sprites for both game atlases')
 
 
 if __name__ == '__main__':

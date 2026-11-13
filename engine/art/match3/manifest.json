@@ -207,25 +207,6 @@
       ],
       "mask": false
     },
-    "sand": {
-      "crop": [
-        784,
-        167,
-        940,
-        338
-      ],
-      "rotation": 30,
-      "size": [
-        121,
-        124
-      ],
-      "runtime": [
-        640,
-        128,
-        128,
-        128
-      ]
-    },
     "chain": {
       "source": "engine/art/homescapes/sprites/chain-1.png",
       "rotation": 0,
@@ -1192,194 +1173,6 @@
       ],
       "transform": "RGBA canvas copied without change"
     },
-    "crate-0-1": {
-      "source": "games/relic-rush/data/board-states/crate-0-1.png",
-      "runtime": [
-        384,
-        1024,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-0-2": {
-      "source": "games/relic-rush/data/board-states/crate-0-2.png",
-      "runtime": [
-        512,
-        1024,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-1-1": {
-      "source": "games/relic-rush/data/board-states/crate-1-1.png",
-      "runtime": [
-        640,
-        1024,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-1-2": {
-      "source": "games/relic-rush/data/board-states/crate-1-2.png",
-      "runtime": [
-        768,
-        1024,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-2-1": {
-      "source": "games/relic-rush/data/board-states/crate-2-1.png",
-      "runtime": [
-        896,
-        1024,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-2-2": {
-      "source": "games/relic-rush/data/board-states/crate-2-2.png",
-      "runtime": [
-        0,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-3-1": {
-      "source": "games/relic-rush/data/board-states/crate-3-1.png",
-      "runtime": [
-        128,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-3-2": {
-      "source": "games/relic-rush/data/board-states/crate-3-2.png",
-      "runtime": [
-        256,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-4-1": {
-      "source": "games/relic-rush/data/board-states/crate-4-1.png",
-      "runtime": [
-        384,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-4-2": {
-      "source": "games/relic-rush/data/board-states/crate-4-2.png",
-      "runtime": [
-        512,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-5-1": {
-      "source": "games/relic-rush/data/board-states/crate-5-1.png",
-      "runtime": [
-        640,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "crate-5-2": {
-      "source": "games/relic-rush/data/board-states/crate-5-2.png",
-      "runtime": [
-        768,
-        1152,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "tunnel-in": {
-      "source": "engine/art/homescapes/sprites/portal-entrance-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        59
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "tunnel-out": {
-      "source": "engine/art/homescapes/sprites/portal-output-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        59
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "hidden-covered": {
-      "source": "games/relic-rush/data/board-states/hidden-covered.png",
-      "runtime": [
-        128,
-        1280,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "hidden-partial": {
-      "source": "games/relic-rush/data/board-states/hidden-partial.png",
-      "runtime": [
-        256,
-        1280,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "hidden-revealed": {
-      "source": "games/relic-rush/data/board-states/hidden-revealed.png",
-      "runtime": [
-        384,
-        1280,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "growth": {
-      "source": "games/relic-rush/data/board-states/growth.png",
-      "runtime": [
-        512,
-        1280,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
     "delivery": {
       "source": "engine/art/homescapes/sprites/donut.png",
       "rotation": 0,
@@ -1397,18 +1190,8 @@
     "delivery-exit": {
       "source": "games/relic-rush/data/board-states/delivery-exit.png",
       "runtime": [
-        768,
-        1280,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "object-goal": {
-      "source": "games/relic-rush/data/board-states/object-goal.png",
-      "runtime": [
-        896,
-        1280,
+        512,
+        1024,
         128,
         128
       ],
@@ -1958,20 +1741,6 @@
         128
       ],
       "mask": false
-    },
-    "carpet": {
-      "source": "engine/art/homescapes/sprites/carpet.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        128,
-        128
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": true
     },
     "carpet-roll": {
       "source": "engine/art/homescapes/sprites/carpet-roll.png",
@@ -3502,20 +3271,6 @@
       ],
       "mask": false
     },
-    "honey-material": {
-      "source": "engine/art/homescapes/sprites/honey-material.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        128,
-        128
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": true
-    },
     "honey-swatch": {
       "source": "engine/art/homescapes/sprites/honey-swatch.png",
       "rotation": 0,
@@ -3914,34 +3669,6 @@
       ],
       "mask": false
     },
-    "portal-entrance-source": {
-      "source": "engine/art/homescapes/sprites/portal-entrance-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        59
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "portal-output-source": {
-      "source": "engine/art/homescapes/sprites/portal-output-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        59
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "rainbow-ball": {
       "source": "engine/art/homescapes/sprites/rainbow-ball.png",
       "rotation": 0,
@@ -4044,7 +3771,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "0cf21e5bb649fb7bbf678c46f20239973052ea96c8820b30663ded32d12d510f",
+    "recipe": "b7bced113713bd5debb9ec1da7a7285a93fcb17b97cce74f93f111f2516d7fa4",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",
@@ -4074,7 +3801,6 @@
       "engine/art/homescapes/sprites/box-6.png": "b3822d10d2107dcbb075e7273968bf9941a94524808333b872c3a2ec66672795",
       "engine/art/homescapes/sprites/carpet-roll.png": "bc19ce532d3efe05cd827aa4d21b3ec8b75102f5d30b79bb74af2dfc3d7265b4",
       "engine/art/homescapes/sprites/carpet-swatch.png": "92008c0e25e0fc45ba5d741bcabc1382686a84432710183587115b4a623528fe",
-      "engine/art/homescapes/sprites/carpet.png": "ebf3be34de7d341224782c6ac8973efd7b47e518b2e0240026074e5bac874038",
       "engine/art/homescapes/sprites/carry-exit-arrow.png": "ab748d9b2d5d108b0fa7dddcb6ff1711640ae0afc43ebb64615d496d79b945e4",
       "engine/art/homescapes/sprites/ceramic-tile-1.png": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
       "engine/art/homescapes/sprites/ceramic-tile-2.png": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
@@ -4156,7 +3882,6 @@
       "engine/art/homescapes/sprites/hazelnut-1.png": "0216a9ac530146be7b9d272a6c68a31a73743cb522157c566bc4e1d217d89aeb",
       "engine/art/homescapes/sprites/hazelnut-2.png": "0656948a81190c39e141b7a95bdb34dd69f0b7310d11a7eaa75df8e1cde54fa0",
       "engine/art/homescapes/sprites/hazelnut-3.png": "fcdc99550be5fd2bc6e9243d9fc0864ef6c71d2e477f432ec26fd5b202efd062",
-      "engine/art/homescapes/sprites/honey-material.png": "9cf454541cc62620a3fe0e6a2555d953235596494d7d4b68baeede04d6011f54",
       "engine/art/homescapes/sprites/honey-swatch.png": "66d65742cec7372ed3333265e2138931e5d02f5fa5a0212ad661f0c3aa95f4a5",
       "engine/art/homescapes/sprites/ice-1.png": "aa335d52106e6e41e63a8cfd20f3d0337be0105714f5c54ba4dd7dc44a79e389",
       "engine/art/homescapes/sprites/ice-2.png": "971b2c451a4d04df9a62075cd7c6896bb741bfdeb51a0e688698aba5976e5d1f",
@@ -4171,8 +3896,6 @@
       "engine/art/homescapes/sprites/membrane-fill-1.png": "2f37cbeb76261c777210e3091f0608ef5fa081eabdabc4dfe23bf0ee2733c2bf",
       "engine/art/homescapes/sprites/membrane-fill-2.png": "2867f3b6c61ccc4c5cb1d9add33e704f5922c98cb2e70649c77965a37e1231e5",
       "engine/art/homescapes/sprites/plane.png": "5986a288603f4d5e711620092ee74bfd1ace896861aed046fefb58441bf6aa4b",
-      "engine/art/homescapes/sprites/portal-entrance-source.png": "8ba9e5ef5a52e0b5620776daac302479208211f2c468bc5e33c874777fc4b26c",
-      "engine/art/homescapes/sprites/portal-output-source.png": "151c72a1c7c667b2186d4313ca47146593fcc24436388bbcc9be9871028ad0fc",
       "engine/art/homescapes/sprites/rainbow-ball.png": "7f7e33828421498f3658e0588c37712b12a72344ac15aa597e96a3fba796a04b",
       "engine/art/homescapes/sprites/rocket-horizontal.png": "634ae885dfb7be9f17adf1a4ac9dcb2af86a5fbb32028c24b373d7015fbd9ae6",
       "engine/art/homescapes/sprites/rocket-vertical.png": "f4910c53b06207d53b234533edf4f7dd8cdb7f8e971048e6fc75f86d53a583e5",
@@ -4188,37 +3911,18 @@
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
       "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee",
-      "games/relic-rush/data/board-states/crate-0-1.png": "63f6b974478ac2ebbccaad4fa5ba1d932d89293582dbdf515a3b958712e72e4e",
-      "games/relic-rush/data/board-states/crate-0-2.png": "b552d2ca1fbdbb2d65546f088e36981eabfd0b42283db03a13d7d5080482926e",
-      "games/relic-rush/data/board-states/crate-1-1.png": "9d5b23d82242fae7791890b4d036afc95958337ab54ce58df3be4ae13f749a66",
-      "games/relic-rush/data/board-states/crate-1-2.png": "3950c99feaab31d02534ef0fbb6a1046badfc0c9d29e0949ecb939ec955ef87b",
-      "games/relic-rush/data/board-states/crate-2-1.png": "bcd0ebb1bca07a23bf17144c65989244ca42fcd3259a60c1e67d19d14d76a148",
-      "games/relic-rush/data/board-states/crate-2-2.png": "1b9fec30fe4cb86570ba3e98ebb9ab80882f24ad9d0e193d762857f65b5c741b",
-      "games/relic-rush/data/board-states/crate-3-1.png": "fd89a1668bd707c94c84087632381a825a42b4574e4c6fb0016fafd96f97d570",
-      "games/relic-rush/data/board-states/crate-3-2.png": "d4f7702c205e6aaf357e92bba2d04ed2d33e57806a791267954207aa949f921d",
-      "games/relic-rush/data/board-states/crate-4-1.png": "708bd6f564cc2e7d6399074cc69c3fd4aa8dea97f043d6de75ce72905638c436",
-      "games/relic-rush/data/board-states/crate-4-2.png": "ca8f37096a20ec71ba991f47f344942eeb2881fc7b305e00755562bdc4b4a8ce",
-      "games/relic-rush/data/board-states/crate-5-1.png": "f29cf9dc270c5515cf130d506117b26dc46a0c6f8162937122efbbb191d1d9cf",
-      "games/relic-rush/data/board-states/crate-5-2.png": "dc173da98dd6a73f6f9ee412af4151bc3aba7847e3f74e82f33051a5d7c254dd",
       "games/relic-rush/data/board-states/delivery-exit.png": "df14674ded59969438e1fc73a51b841c55f9f166482db6866406a6e90b4c636b",
       "games/relic-rush/data/board-states/delivery.png": "beee8c50597fca44605761f636d9d2b4861c0aee4c22fff27d36ed5d7f05ed24",
-      "games/relic-rush/data/board-states/growth.png": "d76979ce3304ff1ea4a367f0c4e64f410c3fbf07680c07247d3b10d03de3206c",
-      "games/relic-rush/data/board-states/hidden-covered.png": "510754e69f1e4843d34bde87aca169f57b8e85e0417a8a2e42116c94fbadef5f",
-      "games/relic-rush/data/board-states/hidden-partial.png": "22a1ea0ced58e262d12ff141da4c5c88cc4e7498a479040b925fc21c219987fd",
-      "games/relic-rush/data/board-states/hidden-revealed.png": "618d67b456d9e47fcbb8702defd6c56fdd84a6ead4ecbc52c6398e2a73208bd0",
-      "games/relic-rush/data/board-states/object-goal.png": "77e01e8bea36b96f0fba7f135dc853c9dccad553d7dae310eff095ba18a28963",
       "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
       "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
-      "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
-      "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "24b00c258846c0bfa94de9d4dbad16488f9ec3269273c8636eb82313fdbbcee1",
+      "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "engine/data/match3.png": "f0865be64bfe704520c5877c9dbda12ad504c71479e65b6a632c0a5ea782d368",
-      "engine/match3_frames.lua": "31d2a0dad638b2072a28332ced0da8c2a24ce5247d5f108f37959e655094b1b0"
+      "engine/data/match3.png": "6dd46800bca9a6fe76d07ca8ad75c734e50d428a864870c76775d077e6371d18",
+      "engine/match3_frames.lua": "417bca2288eec6a1114d637a2946e13412df68dd2c3a1ae58dd651f30a830868"
     }
   }
 }

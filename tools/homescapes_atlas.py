@@ -15,14 +15,18 @@ ENGINE_MADE = {'goal-carpet': 'python3 tools/carpet_goal_icon.py', 'goal-oil': '
 def engine_made(name): return ROOT / 'engine/art/match3' / f'{name}.png'
 ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
-           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut',
-           'tunnel-in': 'portal-entrance-source', 'tunnel-out': 'portal-output-source'}
+           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut'}
+# Extracted originals no board draws: the portals (the engine has no tunnels),
+# honey (HONEY draws as jelly-N) and the carpet hex (carpet draws as one patch
+# of carpet-swatch). The source PNGs stay; they are not registered.
+UNREGISTERED = {'portal-entrance-source', 'portal-output-source', 'honey-material', 'carpet'}
 
 
 def registered():
     images, registrations = {}, {}
     mask = Image.open(ROOT / 'engine/art/hex-tile/hex-mask-128.png').getchannel('A')
     for path in sorted(SOURCE.glob('*.png')):
+        if path.stem in UNREGISTERED: continue
         source = Image.open(path).convert('RGBA')
         for name in [path.stem] + [alias for alias, original in ALIASES.items() if original == path.stem]:
             crop = [13,0,115,128] if name == 'blind-body' else None
@@ -42,14 +46,14 @@ def registered():
             if name == 'carpet-swatch':
                 # A tiling material: the board repeats it under an SDF patch mask.
                 canvas = original.resize((128,128), Image.Resampling.LANCZOS)
-            if name in ('carpet', 'honey-material', 'membrane-fill-1', 'membrane-fill-2', 'blind-body'):
+            if name in ('membrane-fill-1', 'membrane-fill-2', 'blind-body'):
                 # Register source materials to the hex without manufacturing opaque pixels.
                 canvas = original.resize((128,128), Image.Resampling.LANCZOS)
                 canvas.putalpha(ImageChops.multiply(canvas.getchannel('A'),mask))
             images[name] = canvas
             registrations[name] = {'source': str(path.relative_to(ROOT)), 'rotation': angle,
-                                   'crop': crop, 'registered_size': [128,128] if name in ('carpet','carpet-swatch','honey-material','membrane-fill-1','membrane-fill-2','blind-body') else list(candidate.size), 'canvas': [128,128],
-                                   'mask': name in ('carpet','honey-material','membrane-fill-1','membrane-fill-2', 'blind-body')}
+                                   'crop': crop, 'registered_size': [128,128] if name in ('carpet-swatch','membrane-fill-1','membrane-fill-2','blind-body') else list(candidate.size), 'canvas': [128,128],
+                                   'mask': name in ('membrane-fill-1','membrane-fill-2', 'blind-body')}
             if name == 'ice-1': fragment = candidate
     # One-layer ice is the bottom of the cracked shell, not a centred band: rest
     # it on the full shell's bottom edge, as Homescapes does.
@@ -69,7 +73,7 @@ def registered():
 
 
 def inputs():
-    return [Path(__file__), ROOT/'engine/art/hex-tile/hex-mask-128.png'] + [engine_made(n) for n in ENGINE_MADE] + sorted(SOURCE.glob('*.png')) + homescapes_composites.inputs()
+    return [Path(__file__), ROOT/'engine/art/hex-tile/hex-mask-128.png'] + [engine_made(n) for n in ENGINE_MADE] + [p for p in sorted(SOURCE.glob('*.png')) if p.stem not in UNREGISTERED] + homescapes_composites.inputs()
 
 
 if __name__ == '__main__':

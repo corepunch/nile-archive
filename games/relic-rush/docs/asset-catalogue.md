@@ -44,9 +44,9 @@ states against the canonical mask.
 | Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
 
-The master's crate, tunnel, hidden-object and growth states belong to mechanics
-the engine no longer has (they are not in Homescapes' story levels); they stay
-in the master but are not loaded.
+The master's crate, tunnel, hidden-object and growth cells belong to mechanics
+the engine no longer has (they are not in Homescapes' story levels). They stay
+in the master image but are not registered, and their frames left the atlas.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
@@ -206,7 +206,6 @@ See [match rules](match4-rules.md) for special-combination resolution.
 
 | Authored name | State and meaning |
 | --- | --- |
-| `sand` | Former excavation layer; kept in the atlas and catalogue, no longer drawn on the board |
 | `chain` | Crossed linked chains and padlock; one hit unlocks the piece |
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
@@ -218,22 +217,17 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The live board and guide use `sand-edge`, `ice-1-edge` and `ice-2-edge`.
-Each takes an edge band from its corresponding authored crop. Sand sits
-slightly inward when ice shares its cell. The two ice states keep the dynamic
-1/2 remaining-hit count. Ice and chain are independent layers and a blocker hit
-removes a layer before collecting its piece. Selected/hint frames are under
-pieces, blockers over them, and sand beneath both. Board cells and outer edge lines remain
-simple intentional layout geometry. Empty/inactive cells have no piece artwork.
+The two ice states keep the dynamic 1/2 remaining-hit count. Ice and chain are
+independent layers and a blocker hit removes a layer before collecting its
+piece. Selected/hint frames are under pieces, blockers over them. Board cells
+and outer edge lines remain simple intentional layout geometry. Empty/inactive
+cells have no piece artwork.
 
-Regenerate the spatial crops and atlases with `python3 tools/fit_match3_edges.py`.
-
-| Size | Before | After |
-| --- | --- | --- |
-| 480×900 | ![Filled sand and ice](screenshots/review/frost-edges/before-480x900.jpg) | ![Sand and ice rims](screenshots/review/frost-edges/after-480x900.jpg) |
-| 390×844 | ![Earlier terrain on a narrower phone](screenshots/review/frost-edges/before-390x844.jpg) | ![Sand and ice rims on a narrower phone](screenshots/review/frost-edges/after-390x844.jpg) |
-
-[Explorer’s Guide](screenshots/review/frost-edges/guide.jpg) · [Narrower phone guide](screenshots/review/frost-edges/phone-guide.jpg)
+The excavation layer (`sand`) and the sand and ice rims (`sand-edge`,
+`ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels have no
+excavation, and no screen drew the rims. Their runtime files and frames left
+the atlas; the earlier [frost-edge review](screenshots/review/frost-edges/after-480x900.jpg)
+shows them.
 
 Hint opacity pulses; reduced motion uses a steady frame. There are no hover/pressed
 states for individual pieces: a touch selects a piece or initiates a swap.
@@ -285,7 +279,7 @@ The header floats on the painting with no band or plate behind it. It holds a
 hexagonal Moves medallion, one resource panel per goal (the engine's
 `skin:draw_resource`, the same element as the island wallet) and the authored
 pause medallion. Score remains a win condition, represented by the star seal;
-idols, sand and lock counts use their existing artwork. A met goal dims its icon
+idols and lock counts use their existing artwork. A met goal dims its icon
 and replaces the count with the completed seal. Collections landing on a goal
 make its icon bounce. Over the last five moves the medallion face turns red and
 glows. The panels and medallion are drawn with engine shapes; the goal panels
@@ -343,7 +337,7 @@ pause, guide and the island.
 | --- | --- |
 | PRESENT | The board's entrance after any dialogue: existing HUD, tool, cell, piece and blocker artwork move on the shared timeline in `engine/board_intro.lua`, with transient glows, sparks and a sheen. No new art. Tap skips it. Capture: `build/test/relic-rush board-intro` (`--level 5 --present --reel`), frames in `build/shots/frames/` |
 | DIVE | Town <-> board transition: the screen being left blurs into a warm flash (the town's camera zooms into its newest building), the other settles out of it; procedural (`gfx.backdrop`, camera zoom) in `engine/match3_game.lua`, no art. Input waits for it; reduced motion skips it. Capture: `build/test/relic-rush relic-rush-town-dive` (`--city 3 --dive --reel`), frames in `build/shots/frames/` |
-| Idle | Base or special frame, optional sand/selection/hint/blocker layers |
+| Idle | Base or special frame, optional selection/hint/blocker layers |
 | SWAP | Existing piece artwork moves to neighbour |
 | REJECT | Same artwork returns; no move spent |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |

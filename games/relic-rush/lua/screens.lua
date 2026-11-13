@@ -149,10 +149,6 @@ local guide_entries = {
 local function guide_icon(box, icon)
     local at=box:center()
     local layer=rect.centered(at,size2(52,52))
-    if icon.back then
-        local edge = R.board_art[icon.back .. "-edge"]
-        picture(edge or R.board_art[icon.back],edge and layer:inflate(4) or layer,255)
-    end
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end

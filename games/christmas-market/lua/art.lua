@@ -8,7 +8,7 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- bands masked to the treat's own alpha, along the axis they clear. The
 -- shooting-star ray frames stay in the atlas for the guide's legacy previews only.
 A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
-A.layers = {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.tools = {"pickaxe", "dynamite", "sunburst"}
@@ -22,9 +22,6 @@ A.navigation = {source="art/navigation/controls.png", roles={"navigation_build",
 -- bell 0 (gold body ~84/128 under its bow), holly 2 (alpha centroid ~71/128),
 -- ornaments 3 and 4 (ball centre ~75/128 under the cap).
 A.piece_lift = {[0] = 12 / 128, [2] = 7 / 128, [3] = 11 / 128, [4] = 11 / 128}
--- Sample the opaque interior of each 128px terrain sprite. The board supplies
--- the hex silhouette, while the goal icon keeps the original painted edge.
-A.snow_source = app.arg("default-match3") and rect(32, 35, 63, 58) or rect(18, 14, 96, 95)
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
 
@@ -76,9 +73,6 @@ function A.load()
     require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
-    if not app.arg("default-match3") then
-        for _, name in ipairs{"sand-edge", "ice-1-edge", "ice-2-edge"} do load(name) end
-    end
     if not app.arg("default-match3") then load("chain-board") end
     for _, tool in ipairs(A.tools) do
         for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
@@ -97,7 +91,7 @@ function A.draw_catalogue(R)
             gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
         end
     end
-    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "sand",
+    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85

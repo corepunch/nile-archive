@@ -21,9 +21,9 @@ states against the canonical mask.
 | Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
 
-The master's crate, tunnel, hidden-object and growth states belong to mechanics
-the engine no longer has (they are not in Homescapes' story levels); they stay
-in the master but are not loaded.
+The master's crate, tunnel, hidden-object and growth cells belong to mechanics
+the engine no longer has (they are not in Homescapes' story levels). They stay
+in the master image but are not registered, and their frames left the atlas.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
@@ -282,17 +282,7 @@ There is a single oil state.
 | --- | --- | --- |
 | ![Oil levels](screenshots/review/oil/levels.jpg) | ![Reference](screenshots/review/oil/homescapes-161-162.jpg) | ![Art](screenshots/review/oil/art.jpg) |
 
-## Snow and ice rims
-
-`sand-edge` takes a narrow white band from the authored powder-snow texture.
-`ice-1-edge` compresses the broken ice ring and `ice-2-edge` compresses the
-solid blue ice ring. All three share tinsel's flat-top centreline. Snow moves
-inward when ice or tinsel shares its cell, leaving both materials visible.
-The guide illustrates the rims and the goal capsule uses the full snow icon.
-
-The snow floor (the engine's former `soil` layer) has been removed: Homescapes'
-story levels have only carpet and oil floors. The `sand` and `sand-edge`
-frames remain in the atlas and the artwork catalogue, but no board draws them.
+## Ice
 
 The live board's one-layer ice is the original Homescapes shell fragment. It is
 the lower part of the full shell, so `tools/homescapes_atlas.py` rests it on
@@ -300,17 +290,13 @@ the full shell's bottom edge (`ice-2`) instead of centring it. The piece shows
 above the cracked cup, as in Homescapes. Regenerate with
 `python3 tools/match3_atlas.py`.
 
-Regenerate the board edges and atlases with `python3 tools/fit_match3_edges.py`.
-The source is `art/icons.png` through the registered `sand` and `ice-1` /
-`ice-2` board-state crops. The transform preserves the original paint and
-uses a transparent hex-band mask for the filled snow.
-
-| Size | Before | After |
-| --- | --- | --- |
-| 480×900 | ![Filled snow and thicker ice](screenshots/review/frost-edges/before-480x900.jpg) | ![Snow and ice rims](screenshots/review/frost-edges/after-480x900.jpg) |
-| 390×844 | ![Earlier blockers on a narrower phone](screenshots/review/frost-edges/before-390x844.jpg) | ![Snow and ice rims on a narrower phone](screenshots/review/frost-edges/after-390x844.jpg) |
-
-[Market Keeper’s Guide](screenshots/review/frost-edges/guide.jpg)
+The snow floor (the engine's former `soil` layer) and the snow and ice rims
+(`sand-edge`, `ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels
+have only carpet and oil floors, and no screen drew the rims. Their frames
+left the atlas. The `art/icons.png` cell for snow keeps its place on the sheet
+but is no longer registered. The earlier
+[frost-edge review](screenshots/review/frost-edges/after-480x900.jpg) shows the
+retired rims.
 
 ## Story cast
 

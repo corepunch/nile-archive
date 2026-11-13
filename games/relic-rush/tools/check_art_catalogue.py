@@ -22,7 +22,7 @@ assert specials == list(manifest["specials"]), "Rule specials need artwork and c
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
 assert kinds == manifest["kinds"], "Rule kinds need artwork and catalogue entries"
 expected = {v for v in manifest["specials"].values() if v}
-expected |= {"sand", "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+expected |= {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 for tool in manifest["tools"]:
     for state in manifest["tool_states"]:
         expected.add(tool + "-" + state)
@@ -44,17 +44,8 @@ for name, asset in manifest["assets"].items():
     assert data[25] == 6, f"Expected RGBA authored state: {name}"
     if name in {"ice-1", "ice-2"}:
         alpha = Image.open(ROOT / asset["runtime"]).getchannel("A")
-        # Filled source sheets supply the separate live edge-band crops.
         assert all(alpha.getpixel((x, y)) > 128 for x in range(40, 89, 8)
                    for y in range(40, 89, 8)), f"Ice must cover the whole face: {name}"
-edges = manifest["board_edges"]["runtime"]
-assert set(edges) == {"sand", "ice-1", "ice-2"}
-for path in edges.values():
-    assert path in manifest["runtime_inventory"]
-    with Image.open(ROOT / path) as image:
-        assert image.size == (128, 128) and image.mode == "RGBA"
-        alpha = image.getchannel("A")
-        assert not alpha.crop((44, 44, 84, 84)).getbbox() and alpha.getpixel((64, 24)) > 128
 for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
 buttons = manifest["tool_buttons"]
@@ -105,7 +96,7 @@ assert '96' in doc and 'building-catalogue.md' in doc
 assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows', 'placement-guides'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
-print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 27 board states, 7 HUD icons, 96 buildings covered")
+print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 26 board states, 7 HUD icons, 96 buildings covered")
 
 # Compare actual piece silhouettes with the renderer-authored cell. The sun
 # face remains upright: geometry is authored, not a runtime sprite rotation.
