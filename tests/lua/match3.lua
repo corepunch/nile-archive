@@ -4,7 +4,7 @@ check(match3 == require("match3"), "built-in module is cached")
 local function empty(rules)
     local g = rules.game_start(0, 123)
     for i = 0, rules.CELLS - 1 do
-        g.active[i], g.tiles[i], g.chain[i], g.ice[i], g.soil[i] = true, rules.tile(-1), 0, 0, 0
+        g.active[i], g.tiles[i], g.chain[i], g.ice[i] = true, rules.tile(-1), 0, 0
     end
     return g
 end

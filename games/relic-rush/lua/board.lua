@@ -12,7 +12,7 @@ rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
--- Lamp oil is darker than Homescapes' gold so it stands apart from the gold dig sites.
+-- Lamp oil is tinted darker than Homescapes' gold.
 R.patch_tint = {oil = color(178, 112, 66)}
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
@@ -179,14 +179,6 @@ function R.board_screen(inp, dt)
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx, false)
     elements.ground(R, rules, sx)
-    -- Soil is a goal in the campaign, so show its remaining cells beneath pieces.
-    for i = 0, CELLS - 1 do
-        if cell_active(R.g, i) and R.g.soil[i] > 0 then
-            local fade = intro and intro:fade() or 1
-            local dst = rect.centered(cell_pos(i) + vec2(sx, 0), size2.splat(2 * (HEX_R - .65)))
-            gfx.image(R.board_art.sand, dst, rgba(255, 255, 255, 255 * fade))
-        end
-    end
     draw_cells(sx, true)
     draw_relics(sx)
     draw_blockers(sx)

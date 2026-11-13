@@ -4,7 +4,7 @@ return function(level)
     local rules = require("rules")
     local g = rules.game_start(level or 6, 123)
     for i = 0, rules.CELLS - 1 do
-        if g.active[i] and g.stone_hp[i] == 0 and g.crate_hp[i] == 0 and g.tiles[i].kind ~= rules.DELIVERY then
+        if g.active[i] and g.stone_hp[i] == 0 and g.tiles[i].kind ~= rules.DELIVERY then
             g.tiles[i] = rules.tile((rules.hex_q(i) + 2 * rules.hex_r(i) + 12) % rules.COLORS)
         end
     end

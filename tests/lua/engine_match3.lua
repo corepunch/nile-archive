@@ -4,8 +4,8 @@ local H=require('support')
 local t=H.suite('engine match3 factory and flags')
 local function config(flags)
     return {flags=flags, radius=4, colors=6, match_min=4,
-        levels={{name='Test',moves=20,score=1000,relics=3,soil=2,chains=0,ice=0}},
-        kind_flags={[0]=E.GOAL,[1]=E.THAW,[2]=E.WOOD,[4]=E.STONE}}
+        levels={{name='Test',moves=20,score=1000,relics=3,chains=0,ice=0}},
+        kind_flags={[0]=E.GOAL,[2]=E.WOOD,[4]=E.STONE}}
 end
 for _,bad in ipairs({-1,128,1.5,'1'}) do
     t:case('invalid flags '..tostring(bad),function()
@@ -68,7 +68,7 @@ for _, extra in ipairs({0,E.NO_SPECIALS}) do
     end)
 end
 -- Every combination exercises interactions between all six behavior bits.
-for flags=0,63 do
+for flags=0,31 do
     local R=E.new(config(flags))
     t:case('flags='..flags..' special creation',function()
         local g,m=H.board(R),R.new_match()
@@ -82,16 +82,6 @@ for flags=0,63 do
         local allowed=flags&E.NO_TOOLS==0
         t:check(R.game_tool(g,0,R.hex_center(),m)==allowed,'NO_TOOLS blocks use')
         t:check(g.tools[1]==(allowed and 1 or 2),'blocked tool retains charge')
-    end)
-    t:case('flags='..flags..' thaw',function()
-        local g,m=H.board(R),R.new_match()
-        local center=R.hex_center();local neighbor=R.hex_neighbor(center,0)
-        g.tiles[center]=R.tile(1);g.tiles[neighbor]=R.tile(3)
-        g.ice[neighbor],g.obstacles=1,1
-        m.mask[center]=true
-        R.game_apply(g,m)
-        t:check(g.ice[neighbor]==(flags&E.NO_THAW~=0 and 1 or 0),'NO_THAW controls adjacent ice damage')
-        t:check(g.tiles[neighbor].kind==3,'thaw leaves the adjacent gem')
     end)
     t:case('flags='..flags..' diagonal or vertical gravity',function()
         local g=H.board(R)

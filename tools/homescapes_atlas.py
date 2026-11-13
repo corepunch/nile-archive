@@ -11,8 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'engine/art/homescapes/sprites'
 # Engine-made art for Homescapes mechanics, from their generator tools.
 ENGINE_MADE = {'goal-carpet': 'python3 tools/carpet_goal_icon.py', 'goal-oil': 'python3 tools/oil_art.py',
-               'oil-material': 'python3 tools/oil_art.py', 'oil-bubbles': 'python3 tools/oil_art.py',
-               'oil-can-1': 'python3 tools/oil_art.py', 'oil-can-2': 'python3 tools/oil_art.py'}
+               'oil-material': 'python3 tools/oil_art.py', 'oil-bubbles': 'python3 tools/oil_art.py'}
 def engine_made(name): return ROOT / 'engine/art/match3' / f'{name}.png'
 ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',

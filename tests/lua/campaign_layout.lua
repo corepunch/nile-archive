@@ -11,11 +11,10 @@ for level, entry in ipairs(campaign.levels) do
     end
     check(#entry.terrain == rules.CELLS, label .. 'terrain covers the envelope')
     local g = rules.game_start(level - 1, 1)
-    local count, soil, chains, ice, start = 0, 0, 0, 0
+    local count, chains, ice, start = 0, 0, 0
     for i = 0, rules.CELLS - 1 do
         if g.active[i] then
             count, start = count + 1, i
-            soil = soil + g.soil[i]
             chains = chains + g.chain[i]
             ice = ice + (g.ice[i] > 0 and 1 or 0)
             check(type(entry.terrain[i+1]) == 'number', label .. 'authored terrain rank')
@@ -34,17 +33,11 @@ for level, entry in ipairs(campaign.levels) do
             end
             check(supported, label .. 'cell ' .. i .. ' belongs to a match line')
         else
-            check(g.tiles[i].kind < 0 and g.soil[i]+g.chain[i]+g.ice[i] == 0,
+            check(g.tiles[i].kind < 0 and g.chain[i]+g.ice[i] == 0,
                 label .. 'no target or piece in a hole')
         end
     end
-    check(soil == g.initial_soil and soil >= (entry.soil or 0) and chains == entry.chains and ice == entry.ice,
-        label .. 'every authored target actually places')
-    for _, object in ipairs(g.objects) do
-        for _, i in ipairs(object.cells) do
-            check(g.active[i] and g.soil[i] > 0, label .. 'object begins under an active covered cell')
-        end
-    end
+    check(chains == entry.chains and ice == entry.ice, label .. 'every authored target actually places')
     local queue, reached, head = {start}, {[start]=true}, 1
     while head <= #queue do
         local i = queue[head]

@@ -99,7 +99,6 @@ for level = 1, 10 do frame("shape-" .. level, "480x900", "--level " .. level .. 
 reel("fx-ray", 18, 2, "480x900", "--fx ray --reel")
 reel("fx-bomb", 18, 2, "480x900", "--fx bomb --reel")
 reel("fx-prism", 18, 2, "480x900", "--fx prism --reel")
-reel("tunnel-hop", 10, 1, "480x900", "--tunnel-hop --reel")
 reel("result", 36, 3, "480x900", "--victory --reel")
 frame("ui-skins", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --frames 3")
 frame("ui-layers", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --nested --frames 3")

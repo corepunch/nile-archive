@@ -1,8 +1,8 @@
 -- Reusable deterministic hex match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
 local E = {
-    NO_TRICKLE=1, NO_SPECIALS=2, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, NO_THAW=32, LINE_MATCHES=64,
-    GOAL=1, THAW=2, WOOD=4, STONE=8, -- per-kind behavior bits
+    NO_TRICKLE=1, NO_SPECIALS=2, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64,
+    GOAL=1, WOOD=4, STONE=8, -- per-kind behavior bits
 }
 
 -- Engine-owned interaction state; a game adds only its screen/presentation data.
@@ -129,18 +129,13 @@ function E.bind_board_ui(R, rules, tool_art)
                 remaining=math.max(0,goal.max-goal.current)} end
             return entries
         end
-        local discoveries = {id="discoveries", icon=g.objects[1] and g.objects[1].art or "hidden-revealed",
-            remaining=#g.objects-g.discovered}
-        if g.object_only and g.objects[1] and g.objects[1].art then return {discoveries} end
         local entries = {{id="score",icon="score",remaining=math.max(0,l.score-g.score)},
             {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)}}
-        if g.initial_soil>0 then entries[#entries+1]={id="sand",icon="sand",remaining=math.max(0,g.initial_soil-g.dug)} end
-        if #g.objects>0 then entries[#entries+1]=discoveries end
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
         if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
-        if rules.oil_remaining(g)>0 or l.oil and #l.oil>0 or l.oil_cans and #l.oil_cans>0 then
-            entries[#entries+1]={id="oil",icon="goal-oil",remaining=rules.oil_remaining(g)}
+        if g.oil_left>0 or l.oil and #l.oil>0 then
+            entries[#entries+1]={id="oil",icon="goal-oil",remaining=g.oil_left}
         end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}
@@ -469,7 +464,7 @@ function E.new(config)
     M.COLORS, M.MATCH_MIN = config.colors or 6, config.match_min or 3
     assert(math.type(M.COLORS) == "integer" and M.COLORS >= 3, "at least three match3 kinds required")
     assert(math.type(M.MATCH_MIN) == "integer" and M.MATCH_MIN >= 3, "match minimum must be at least three")
-    M.levels = config.levels or {{name="Resources", lesson="Connect matching resources.", moves=30, score=1000, relics=0, soil=0, chains=0, ice=0}}
+    M.levels = config.levels or {{name="Resources", lesson="Connect matching resources.", moves=30, score=1000, relics=0, chains=0, ice=0}}
     M.LEVELS, M.level_shapes = #M.levels, config.level_shapes or {}
     assert(M.LEVELS > 0, "match3 needs a level")
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
@@ -497,36 +492,11 @@ function E.new(config)
     M.tile = tile
 
     local function swap_tiles(g, a, b) g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a] end
-    local function solid(g, i)
-        return home.solid(g,i) or (g.stone_hp[i] or 0) > 0 or (g.crate_hp[i] or 0) > 0 or g.can_hp and (g.can_hp[i] or 0) > 0
-    end
-    -- An oil can (Homescapes' OIL_CAN) throws this many drops when it breaks.
-    M.CAN_SPILL = 9
-    -- Oil still to clear: on the board, plus what each standing can will throw.
-    local function oil_remaining(g) return (g.oil_left or 0) + (g.cans_left or 0) * M.CAN_SPILL end
-    M.oil_remaining = oil_remaining
-    local function locked(g, i) return (g.chain[i] or 0) > 0 or (g.ice[i] or 0) > 0 or (g.hazard[i] or 0) > 0 or solid(g, i) end
+    local function solid(g, i) return home.solid(g,i) or (g.stone_hp[i] or 0) > 0 end
+    local function locked(g, i) return (g.chain[i] or 0) > 0 or (g.ice[i] or 0) > 0 or solid(g, i) end
 
     local function cell_active(g, cell) return cell >= 0 and cell < CELLS and g.active[cell] end
     M.game_cell_active = cell_active
-    -- The can throws its oil onto random free cells, its own included, but not
-    -- onto cells this wave is clearing, which would wipe it at once.
-    local function spill(g, can, clearing)
-        local options = {}
-        for i = 0, CELLS - 1 do
-            if cell_active(g, i) and g.oil[i] == 0 and not solid(g, i) and not clearing[i] then options[#options + 1] = i end
-        end
-        local cells = {}
-        for _ = 1, math.min(M.CAN_SPILL, #options) do
-            local k = randn(g, #options) + 1
-            cells[#cells + 1] = options[k]
-            options[k] = options[#options]; options[#options] = nil
-        end
-        for _, i in ipairs(cells) do g.oil[i] = 1 end
-        g.oil_left, g.cans_left = g.oil_left + #cells, g.cans_left - 1
-        g.spills = g.spills or {}
-        g.spills[#g.spills + 1] = {from = can, cells = cells}   -- for the view's flying drops
-    end
 
     local function equal(g, a, b)
         return cell_active(g, a) and cell_active(g, b) and not solid(g,a) and not solid(g,b)
@@ -626,7 +596,7 @@ function E.new(config)
         for _=1,count or 1 do
             local target,priority=-1,-1
             for i=0,CELLS-1 do if cell_active(g,i) and not m.mask[i] then
-                local score=locked(g,i) and 4 or g.soil[i]>0 and 3 or (kind_flags[g.tiles[i].kind] or 0)&E.GOAL~=0 and 2 or 1
+                local score=locked(g,i) and 4 or (kind_flags[g.tiles[i].kind] or 0)&E.GOAL~=0 and 2 or 1
                 if g.hs and g.hs.cells[i] and next(g.hs.cells[i]) then score=5 end
                 if score>priority then target,priority=i,score end
             end end
@@ -749,7 +719,7 @@ function E.new(config)
             return false
         end
         g.moves = g.moves - 1
-        g.combo, g.turn_pending, g.hazard_damaged, g.oil_cleared = 0, true, false, false
+        g.combo, g.turn_pending, g.oil_cleared = 0, true, false
         return true
     end
     local game_swap = M.game_swap
@@ -758,15 +728,14 @@ function E.new(config)
         m.mask,m.make,m.direct,m.ordinary,m.hits={[cell]=true},{},{[cell]=true},{},1
         m.consumed,m.flights,m.spread={},{},{}
         m.carrycarpet=g.hs and (g.hs.cells[cell] or {}).carpet or g.carpet and (g.carpet[cell] or 0) > 0 or false
-        g.moves,g.combo,g.turn_pending,g.hazard_damaged,g.oil_cleared=g.moves-1,0,true,false,false
+        g.moves,g.combo,g.turn_pending,g.oil_cleared=g.moves-1,0,true,false
         return true
     end
 
     -- Clear one wave, fire specials; returns the relics cleared.
     function M.game_apply(g, m)
-        local fired, thaw = {}, {}
+        local fired = {}
         m.activations={}
-        g.hazard_damaged_cell = {}
         m.direct, m.ordinary = m.direct or {}, m.ordinary or {}
         local more = true
         while more do   -- specials hit by the wave fire, possibly hitting more specials
@@ -784,45 +753,21 @@ function E.new(config)
                 end
             end
         end
-        for i = 0, CELLS - 1 do   -- matched thaw-enabled kinds clear neighboring ice
-            if cell_active(g, i) and m.mask[i] and (kind_flags[g.tiles[i].kind] or 0) & E.THAW ~= 0 and flags & E.NO_THAW == 0 and not locked(g, i) then
-                for d = 0, 5 do
-                    local j = hex_neighbor(i, d)
-                    if cell_active(g, j) and g.ice[j] > 0 and not m.mask[j] then thaw[j] = true end
-                end
-            end
-        end
         -- A wave deals at most one hit per blocker, even when several matches touch it.
-        local damage, colors = {}, {}
+        local damage = {}
         for i = 0, CELLS - 1 do
             if m.mask[i] then
-                if m.direct[i] or g.hazard[i] > 0 then damage[i] = true end
+                if m.direct[i] then damage[i] = true end
                 if (m.ordinary[i] or not next(m.ordinary) and not m.direct[i]) and g.tiles[i].kind >= 0 then
                     for d = 0, 5 do
                         local j = hex_neighbor(i, d)
-                        if j >= 0 then
-                            damage[j] = true
-                            colors[j] = colors[j] or {}
-                            colors[j][g.tiles[i].kind] = true
-                        end
+                        if j >= 0 then damage[j] = true end
                     end
                 end
             end
         end
         for i = 0, CELLS - 1 do
-            if damage[i] then
-                if g.stone_hp[i] > 0 then
-                    g.stone_hp[i], g.obstacles = g.stone_hp[i] - 1, g.obstacles - 1
-                elseif g.crate_hp[i] > 0 and (m.direct[i] or colors[i] and colors[i][g.crate_kind[i]]) then
-                    g.crate_hp[i], g.obstacles = g.crate_hp[i] - 1, g.obstacles - 1
-                elseif g.can_hp and (g.can_hp[i] or 0) > 0 then
-                    g.can_hp[i] = g.can_hp[i] - 1
-                    if g.can_hp[i] == 0 then spill(g, i, m.mask) end
-                elseif g.hazard[i] > 0 then
-                    g.hazard[i], g.obstacles, g.hazard_damaged = 0, g.obstacles - 1, true
-                    g.hazard_damaged_cell[i] = true
-                end
-            end
+            if damage[i] and g.stone_hp[i] > 0 then g.stone_hp[i], g.obstacles = g.stone_hp[i] - 1, g.obstacles - 1 end
         end
         local protected = home.apply(g,m)
         local cleared = 0
@@ -830,19 +775,17 @@ function E.new(config)
         g.combo = g.combo + 1
         for i = 0, CELLS - 1 do
             if cell_active(g, i) then
-                if thaw[i] then g.ice[i], g.obstacles = g.ice[i] - 1, g.obstacles - 1 end
                 -- A match touching carpet, or a move begun on it, carpets every cell it hits.
                 if not g.hs and g.carpet and m.mask[i] and g.carpet[i] == 0 and not solid(g, i)
                     and (m.carrycarpet or (m.spread or {})[i]) then
                     g.carpet[i], g.carpeted = 1, g.carpeted + 1
                 end
-                if m.mask[i] and not protected[i] and not solid(g, i) and not (damage[i] and (g.hazard_damaged_cell or {})[i]) and g.tiles[i].kind ~= M.DELIVERY then
+                if m.mask[i] and not protected[i] and not solid(g, i) and g.tiles[i].kind ~= M.DELIVERY then
                     if g.ice[i] > 0 then
                         g.ice[i], g.obstacles, g.score = g.ice[i] - 1, g.obstacles - 1, g.score + 20
                     elseif g.chain[i] > 0 then
                         g.chain[i], g.obstacles, g.score = g.chain[i] - 1, g.obstacles - 1, g.score + 20
                     else
-                        if g.soil[i] > 0 then g.soil[i], g.dug, g.score = g.soil[i] - 1, g.dug + 1, g.score + 30 end
                         if g.oil and g.oil[i] > 0 then
                             g.oil[i], g.oil_left, g.oil_cleared, g.score = 0, g.oil_left - 1, true, g.score + 30
                             if g.hs then home.credit(g, 'CELL_OIL') end
@@ -859,14 +802,6 @@ function E.new(config)
                         end
                     end
                 end
-            end
-        end
-        for _, object in ipairs(g.objects) do
-            if object.state ~= "revealed" then
-                local remaining = 0
-                for _, cell in ipairs(object.cells) do if g.soil[cell] > 0 then remaining = remaining + 1 end end
-                if remaining == 0 then object.state, g.discovered = "revealed", g.discovered + 1
-                elseif remaining < #object.cells then object.state = "partial" end
             end
         end
         g.cleared = g.cleared + cleared
@@ -900,8 +835,7 @@ function E.new(config)
         end
         collect_deliveries()
         local function movable(i) return cell_active(g, i) and not locked(g, i) and g.tiles[i].element ~= "cherry" end
-        local function can_feed(i) return movable(i) and not g.tunnel_to[i] end
-        local function donor(i) return can_feed(i) and g.tiles[i].kind ~= -1 end
+        local function donor(i) return movable(i) and g.tiles[i].kind ~= -1 end
         local function side_donor(i)
             if not donor(i) or g.tiles[i].kind == M.DELIVERY then return false end
             local down = hex_neighbor(i, 1)
@@ -921,11 +855,8 @@ function E.new(config)
                     if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
-                    local entrance = g.tunnel_from[i]
-                    local inlet = home.source(g,i) or not cell_active(g, above) and not entrance
-                    if entrance then
-                        if movable(entrance) and g.tiles[entrance].kind ~= -1 and not used[entrance] then source = entrance end
-                    elseif not inlet then
+                    local inlet = home.source(g,i) or not cell_active(g, above)
+                    if not inlet then
                         if donor(above) and not used[above] then source = above
                         elseif side_donor(left) and not used[left] then source = left
                         elseif side_donor(right) and not used[right] then source = right end
@@ -933,8 +864,7 @@ function E.new(config)
                     if source then
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
-                    elseif not entrance and (inlet or not can_feed(left) and not can_feed(right)
-                        and not can_feed(above)) then
+                    elseif inlet or not movable(left) and not movable(right) and not movable(above) then
                         spawned = spawned + 1
                         step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(randn(g, COLORS)), -1, -spawned
                     end
@@ -984,15 +914,10 @@ function E.new(config)
         c.tiles = {}
         for i = 0, CELLS - 1 do c.tiles[i] = home.copy(g.tiles[i]) end
         c.hs = home.copy(g.hs)
-        c.active, c.soil, c.chain, c.ice = copy_array(g.active), copy_array(g.soil), copy_array(g.chain), copy_array(g.ice)
+        c.active, c.chain, c.ice = copy_array(g.active), copy_array(g.chain), copy_array(g.ice)
         c.carpet = g.carpet and copy_array(g.carpet)
         c.oil = g.oil and copy_array(g.oil)
-        c.can_hp = g.can_hp and copy_array(g.can_hp)
-        c.stone_hp, c.crate_hp, c.crate_kind, c.hazard = copy_array(g.stone_hp), copy_array(g.crate_hp), copy_array(g.crate_kind), copy_array(g.hazard)
-        c.objects = {}
-        for i, object in ipairs(g.objects) do
-            c.objects[i] = {state=object.state, art=object.art, cells={table.unpack(object.cells)}}
-        end
+        c.stone_hp = copy_array(g.stone_hp)
         c.tools = {g.tools[1], g.tools[2], g.tools[3]}
         return c
     end
@@ -1133,26 +1058,22 @@ function E.new(config)
     function M.game_start(lvl, seed)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
-            tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
-            oil = {}, oil_left = 0, oil_cleared = false, can_hp = {}, cans_left = 0,
-            stone_hp = {}, crate_hp = {}, crate_kind = {}, hazard = {}, objects = {},
-            tunnel_to = {}, tunnel_from = {}, delivery_exits = {}, delivered = 0, delivery_total = 0, discovered = 0,
-            level = lvl, moves = 0, score = 0, relics = 0, dug = 0, obstacles = 0, initial_obstacles = 0, initial_soil = 0,
+            tiles = {}, active = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
+            oil = {}, oil_left = 0, oil_cleared = false, stone_hp = {},
+            delivery_exits = {}, delivered = 0, delivery_total = 0,
+            level = lvl, moves = 0, score = 0, relics = 0, obstacles = 0, initial_obstacles = 0,
             combo = 0, cleared = 0, last_gold = 0, last_wood = 0, last_stone = 0, wood = 0, stone = 0,
             rng = (seed and seed ~= 0) and (seed & 0xFFFFFFFF) or 12345,
             won = false, lost = false,
             tools = {2, 2, 2},   -- pickaxe, dynamite, sunburst charges
         }
         local l = M.levels[lvl + 1]
-        g.object_only = l.object_only
-        assert(not g.object_only or l.objects and #l.objects > 0, "recovery board needs a hidden object")
         g.moves = l.moves
         local order, n = {}, 0
         for i = 0, CELLS - 1 do
             g.active[i] = not l.mask or l.mask:sub(i + 1, i + 1) == "1"
             g.tiles[i] = tile(-1, NORMAL)
-            g.soil[i], g.chain[i], g.ice[i], g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, 0, 0, 0, -1, 0
-            g.carpet[i], g.oil[i], g.can_hp[i] = 0, 0, 0
+            g.chain[i], g.ice[i], g.stone_hp[i], g.carpet[i], g.oil[i] = 0, 0, 0, 0, 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
         if l.homescapes then home.init(g,l.homescapes);return g end
@@ -1170,60 +1091,18 @@ function E.new(config)
             assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 3, "stone hp")
             g.stone_hp[entry.cell] = entry.hp
         end
-        for _, entry in ipairs(l.oil_cans or {}) do
-            reserve(entry.cell)
-            assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 2, "oil can hp")
-            g.can_hp[entry.cell], g.cans_left = entry.hp, g.cans_left + 1
-        end
-        for _, entry in ipairs(l.crates or {}) do
-            reserve(entry.cell)
-            assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 2, "crate hp")
-            assert(math.type(entry.kind) == "integer" and entry.kind >= 0 and entry.kind < COLORS, "crate kind")
-            g.crate_hp[entry.cell], g.crate_kind[entry.cell] = entry.hp, entry.kind
-        end
-        for _, entry in ipairs(l.tunnels or {}) do
-            reserve(entry.entrance); reserve(entry.exit)
-            assert(2 * hex_r(entry.exit) + hex_q(entry.exit) > 2 * hex_r(entry.entrance) + hex_q(entry.entrance), "tunnel must descend")
-            g.tunnel_to[entry.entrance], g.tunnel_from[entry.exit] = entry.exit, entry.entrance
-        end
-        for _, cell in ipairs(l.hazards or {}) do reserve(cell) end
         local delivery = l.deliveries or {}
         for _, cell in ipairs(delivery.exits or {}) do reserve(cell); g.delivery_exits[cell] = true end
         for _, cell in ipairs(delivery.tokens or {}) do reserve(cell); g.delivery_total = g.delivery_total + 1 end
         if g.delivery_total > 0 then
             assert(#(delivery.exits or {}) > 0, "delivery requires an exit")
-            -- Delivery tokens fall vertically; tunnel entrances redirect them
-            -- exclusively to the paired exit. Check the route after removable
+            -- Delivery tokens fall vertically. Check the route after removable
             -- locks clear, without relying on sideways trickling.
             for _, token in ipairs(delivery.tokens) do
-                local seen, queue, head = {[token]=true}, {token}, 1
-                local reachable = false
-                while head <= #queue do
-                    local here = queue[head]
-                    head = head + 1
-                    if g.delivery_exits[here] then reachable = true; break end
-                    local targets = {g.tunnel_to[here] or hex_neighbor(here, 1)}
-                    for _, next_cell in ipairs(targets) do
-                        if cell_active(g, next_cell) and not seen[next_cell] then
-                            seen[next_cell] = true
-                            queue[#queue + 1] = next_cell
-                        end
-                    end
-                end
-                assert(reachable, "delivery exit is unreachable")
+                local here = token
+                while cell_active(g, here) and not g.delivery_exits[here] do here = hex_neighbor(here, 1) end
+                assert(g.delivery_exits[here], "delivery exit is unreachable")
             end
-        end
-        local object_cells = {}
-        for _, entry in ipairs(l.objects or {}) do
-            assert(#entry.cells > 0, "empty hidden object")
-            local object = {cells = {}, state = "hidden", art = entry.art}
-            for _, cell in ipairs(entry.cells) do
-                valid_cell(cell)
-                assert(not used[cell] and not object_cells[cell], "overlapping hidden object")
-                object_cells[cell] = true
-                object.cells[#object.cells + 1] = cell
-            end
-            g.objects[#g.objects + 1] = object
         end
         -- Solid cells cannot receive terrain or generated pieces.
         local eligible = {}
@@ -1237,13 +1116,6 @@ function E.new(config)
                 if l.terrain and l.terrain[order[j] + 1] < l.terrain[order[i] + 1] then order[i], order[j] = order[j], order[i] end
             end
         end
-        local soil_count = 0
-        for _, cell in ipairs(order) do
-            if soil_count >= (l.soil or 0) then break end
-            if not used[cell] then g.soil[cell], soil_count = 1, soil_count + 1 end
-        end
-        assert(soil_count == (l.soil or 0), "not enough soil cells")
-        for cell in pairs(object_cells) do g.soil[cell] = 1 end
         local taken = {}
         for cell in pairs(used) do taken[cell] = true end
         local chain_count = 0
@@ -1264,14 +1136,8 @@ function E.new(config)
             end
         end
         assert(count == l.ice, "not enough ice cells")
-        for _, cell in ipairs(l.hazards or {}) do
-            valid_cell(cell)
-            assert(not object_cells[cell] and g.soil[cell] == 0, "invalid hazard overlap")
-            g.hazard[cell], used[cell] = 1, true
-        end
         for i = 0, CELLS - 1 do
-            g.initial_obstacles = g.initial_obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i] + g.crate_hp[i] + g.hazard[i]
-            g.initial_soil = g.initial_soil + g.soil[i]
+            g.initial_obstacles = g.initial_obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i]
         end
         g.obstacles = g.initial_obstacles
         -- Carpet (Homescapes' CELL_JELLY): seed cells start covered and every
@@ -1321,39 +1187,18 @@ function E.new(config)
     function M.game_end_turn(g)
         if not g.turn_pending then return false end
         g.turn_pending = false
-        local oil = grow_oil(g)
-        if g.hazard_damaged then return oil end
-        local object_cells = {}
-        for _, object in ipairs(g.objects) do for _, cell in ipairs(object.cells) do object_cells[cell] = true end end
-        for i = 0, CELLS - 1 do
-            if g.hazard[i] > 0 then
-                for d = 0, 5 do
-                    local j = hex_neighbor(i, d)
-                    if cell_active(g, j) and not locked(g, j) and g.soil[j] == 0 and not object_cells[j]
-                        and not g.tunnel_to[j] and not g.tunnel_from[j] and not g.delivery_exits[j]
-                        and g.tiles[j].kind >= 0 and (kind_flags[g.tiles[j].kind] or 0) & E.GOAL == 0
-                        and g.tiles[j].special == NORMAL then
-                        g.hazard[j], g.obstacles = 1, g.obstacles + 1
-                        return true
-                    end
-                end
-            end
-        end
-        return oil
+        return grow_oil(g)
     end
 
     function M.game_check_end(g)
         M.game_end_turn(g)
         local l = M.levels[g.level + 1]
-        local done = {score = g.score >= l.score, idols = g.relics >= l.relics, sand = g.dug >= g.initial_soil,
-            locks = g.obstacles == 0, discoveries = g.discovered == #g.objects, deliveries = g.delivered == g.delivery_total,
-            carpet = (g.carpeted or 0) >= (g.carpet_total or 0), oil = oil_remaining(g) == 0}
+        local done = {score = g.score >= l.score, idols = g.relics >= l.relics,
+            locks = g.obstacles == 0, deliveries = g.delivered == g.delivery_total,
+            carpet = g.carpeted >= g.carpet_total, oil = g.oil_left == 0}
         -- A level's own goal list is all it needs; otherwise every counter must be done.
         local cleared = true
-        if not g.object_only then
-            for _, id in ipairs(l.goals or {"score", "idols", "sand", "locks"}) do cleared = cleared and done[id] end
-        end
-        if not l.goals then cleared = cleared and done.discoveries and done.deliveries and done.carpet and done.oil end
+        for _, id in ipairs(l.goals or {"score", "idols", "locks", "deliveries", "carpet", "oil"}) do cleared = cleared and done[id] end
         g.won = g.hs and home.won(g) or not g.hs and cleared
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
@@ -1386,15 +1231,6 @@ function E.new(config)
         local level = M.levels[g.level + 1]
         local goal = level.relics
         local relics = math.min(c.relics, goal) - math.min(g.relics, goal)
-        local object_progress = 0
-        if g.object_only then
-            for _, object in ipairs(g.objects) do
-                for _, cell in ipairs(object.cells) do
-                    object_progress = object_progress + g.soil[cell] - c.soil[cell] + g.ice[cell] - c.ice[cell]
-                        + g.chain[cell] - c.chain[cell]
-                end
-            end
-        end
         local delivery_access = 0
         for i = 0, CELLS - 1 do
             if g.tiles[i].kind == M.DELIVERY then
@@ -1403,9 +1239,8 @@ function E.new(config)
                     and g.tiles[below].kind ~= -1 then delivery_access = delivery_access + 1 end
             end
         end
-        return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200 + ((c.carpeted or 0) - (g.carpeted or 0)) * 160
-            + (oil_remaining(g) - oil_remaining(c)) * 200
-            + (g.obstacles - c.obstacles) * 220 + delivery_access * 350 + object_progress * 900
+        return c.score - g.score + relics * 90 + (c.carpeted - g.carpeted) * 160 + (g.oil_left - c.oil_left) * 200
+            + (g.obstacles - c.obstacles) * 220 + delivery_access * 350
     end
 
 
@@ -1744,7 +1579,7 @@ function E.new(config)
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]
         if R.wave_chain[i] == 0 and R.wave_ice[i] == 0 and not R.pending.make[i]
-            and t.kind ~= M.DELIVERY and not (R.g.hazard_damaged_cell or {})[i] then   -- a small pop, then shrink away
+            and t.kind ~= M.DELIVERY then   -- a small pop, then shrink away
             local delay = (R.flight_targets or {})[i] and .48 or 0
             local f = num.saturate((R.phase_time - delay) / .24)
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)
@@ -1760,13 +1595,7 @@ function E.new(config)
             local from = step.from[i]
             local f = num.saturate(elapsed / rules.FALL_STEP - (step_index - 1))
             local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, HEX_DY)
-            if from >= 0 and g.tunnel_to[from] == i then
-                -- A tunnel is a discontinuous move, not a flight over the board.
-                at = f < .5 and source + vec2(sx, 0) or at
-                alpha = 255 * math.abs(2 * f - 1)
-            else
-                at = (source + vec2(sx, 0)):lerp(at, f)
-            end
+            at = (source + vec2(sx, 0)):lerp(at, f)
             if from < 0 then
                 -- Clip only the inlet; sideways moves need the whole board.
                 local top = cell_pos(i).y - HEX_DY / 2

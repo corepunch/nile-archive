@@ -78,7 +78,6 @@ function Base.bind(M,random)
                 elseif id=='LOCK' then g.chain[i]=n;c.mirror=model.mirror=='true'
                 elseif id=='JELLY' then c.carpet=true
                 elseif id=='OIL' then g.oil[i]=1;g.oil_left=g.oil_left+1
-                elseif id=='OIL_CAN' then assert(n==1 or n==2,'invalid oil can strength');g.can_hp[i]=n;g.cans_left=g.cans_left+1;g.tiles[i]=M.tile(-1)
                 elseif id=='BUBBLE_MEMBRANE' then assert(n==1 or n==2,'invalid tile strength');c.tile=n
                 elseif id=='CARRY_GEN_CELLS' then c.carrySpawn=true
                 elseif id=='BORN' then g.hs.sources[i]=true

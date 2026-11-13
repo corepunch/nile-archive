@@ -15,8 +15,7 @@ function V.bind(R, rules)
     local PI = math.pi
 
     local FX_CAP, PARTICLES = 256, 650
-    local FX_NONE, FX_IMPACT, FX_RAY, FX_BLAST, FX_LINK, FX_BIRTH, FX_SCORE, FX_PLANE, FX_DROP = 0, 1, 2, 3, 4, 5, 6, 7, 8
-    local DROP_LIFE, DROP_STAGGER = .45, .05
+    local FX_NONE, FX_IMPACT, FX_RAY, FX_BLAST, FX_LINK, FX_BIRTH, FX_SCORE, FX_PLANE = 0, 1, 2, 3, 4, 5, 6, 7
 
     local pool, parts = {}, {}
     for i = 1, FX_CAP do pool[i] = {type = FX_NONE, kind = 0, value = 0, at = vec2(), to = vec2(), age = 0, life = 0, delay = 0} end
@@ -66,7 +65,6 @@ function V.bind(R, rules)
         R.fx_origin = -1
         R.score_display = R.g.score
         R.goal_display, R.score_pulse, R.goal_pulse = 0, 0, 0
-        R.oil_landing = {}
     end
 
     local function add(kind_of, at, to, kind, life, delay, value)
@@ -212,17 +210,6 @@ function V.bind(R, rules)
             if path.payload==BOMB then add(FX_BLAST,R.cell_pos(path.to),vec2(0,0),0,.58,.4,95)
             elseif path.payload and path.payload>=ROW and path.payload<=DIAGONAL then axis_rays(path.to,path.payload-1,0) end
         end
-        -- A broken oil can throws its drops; each cell joins the oil patch when
-        -- its drop lands (R.oil_landing, read by the board's oil patch).
-        R.oil_landing = R.oil_landing or {}
-        for _, spill in ipairs(R.g.spills or {}) do
-            for k, cell in ipairs(spill.cells) do
-                local delay = (k - 1) * DROP_STAGGER
-                add(FX_DROP, R.cell_pos(spill.from), R.cell_pos(cell), 0, DROP_LIFE, delay, 0)
-                if not R.reduced_motion then R.oil_landing[cell] = (R.now or 0) + delay + DROP_LIFE end
-            end
-        end
-        R.g.spills = nil
         if R.fx_origin >= 0 then   -- the cell a combo swap fired from
             if R.fx_combo == 3 then prism_links(R.fx_origin)
             elseif R.fx_combo == 2 then add(FX_BLAST, R.cell_pos(R.fx_origin), vec2(0, 0), 0, .65, 0, 150)
@@ -308,14 +295,6 @@ function V.bind(R, rules)
                         prev = nxt
                     end
                     vfx_halo(e.to, 24, vfx_color(e.kind, 150 * fade))
-                elseif e.type == FX_DROP then   -- an oil drop arcing from its can
-                    gfx.additive(false)
-                    local at = e.at:lerp(e.to, t) + vec2(0, -math.sin(t * PI) * R.HEX_R * 1.6)
-                    local r = R.HEX_R * (.16 + .06 * math.sin(t * PI))
-                    gfx.circle(at, r + 1.5, rgba(150, 82, 16, 230))
-                    gfx.circle(at, r, rgba(246, 186, 60, 255))
-                    gfx.circle(at + vec2(-r * .35, -r * .35), r * .35, rgba(255, 246, 200, 230))
-                    if t > .8 then vfx_halo(e.to, R.HEX_R * (1.2 - t * .4), rgba(255, 210, 110, 160 * (t - .8) / .2)) end
                 elseif e.type == FX_PLANE then
                     local at=e.at:lerp(e.to,ease.out_cubic(t))+vec2(0,-math.sin(t*PI)*35)
                     gfx.additive(false)

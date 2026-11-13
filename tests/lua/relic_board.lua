@@ -67,8 +67,8 @@ for seed=1,12 do
     g.rng = seed
     local sp = 1
     for i=0,rules.CELLS-1 do
-        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and g.hazard[i]==0 and g.stone_hp[i]==0
-            and g.crate_hp[i]==0 and g.tiles[i].kind>=0 and sp<=rules.PRISM then
+        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and g.stone_hp[i]==0
+            and g.tiles[i].kind>=0 and sp<=rules.PRISM then
             g.tiles[i].special = sp
             sp = sp+1
         end
@@ -105,16 +105,14 @@ for level = 0, rules.LEVELS - 1 do
     check(R.selected == -1 and R.tool == -1 and R.hint_a == -1 and R.hint_b == -1,
           "reshuffle discards stale selection and hints")
     check(R.toast == "No moves. Board reshuffled.", "recovery explains the changed board")
-    for _, key in ipairs({"moves", "score", "relics", "dug", "obstacles", "wood", "stone"}) do
+    for _, key in ipairs({"moves", "score", "relics", "obstacles", "wood", "stone"}) do
         check(g[key] == before[key], "reshuffle preserves " .. key)
     end
     for i = 0, rules.CELLS - 1 do
-        check(g.active[i] == before.active[i] and g.soil[i] == before.soil[i]
-              and g.chain[i] == before.chain[i] and g.ice[i] == before.ice[i]
-              and g.stone_hp[i] == before.stone_hp[i] and g.crate_hp[i] == before.crate_hp[i]
-              and g.hazard[i] == before.hazard[i], "terrain survives recovery")
-        if g.chain[i] > 0 or g.ice[i] > 0 or g.hazard[i] > 0 or g.stone_hp[i] > 0
-            or g.crate_hp[i] > 0 or g.tiles[i].kind == rules.DELIVERY or not g.active[i] then
+        check(g.active[i] == before.active[i] and g.chain[i] == before.chain[i] and g.ice[i] == before.ice[i]
+              and g.stone_hp[i] == before.stone_hp[i], "terrain survives recovery")
+        if g.chain[i] > 0 or g.ice[i] > 0 or g.stone_hp[i] > 0
+            or g.tiles[i].kind == rules.DELIVERY or not g.active[i] then
             check(g.tiles[i].kind == before.tiles[i].kind and g.tiles[i].special == before.tiles[i].special,
                   "locked relics and holes survive recovery")
         end
@@ -194,8 +192,8 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     if mode == "fall" then R.phase, R.phase_time = R.PH_FALL, 1
     elseif mode == "won" then
         local l = rules.level_of(g)
-        g.score, g.relics, g.dug, g.obstacles, g.moves, g.carpeted, g.oil_left, g.cans_left = l.score, l.relics, g.initial_soil, 0, 0, g.carpet_total, 0, 0
-        g.discovered, g.delivered = #g.objects, g.delivery_total
+        g.score, g.relics, g.obstacles, g.moves, g.carpeted, g.oil_left = l.score, l.relics, 0, 0, g.carpet_total, 0
+        g.delivered = g.delivery_total
     else g.moves = 0 end
     R.board_update(.02)
     if mode == "fall" then
@@ -261,14 +259,13 @@ end
 R.reduced_motion = false
 
 -- The compact header reports remaining win conditions from the rules, without
--- dropping score/sand/locks or exposing redundant current/target totals.
+-- dropping score/locks or exposing redundant current/target totals.
 do
     local g=rules.game_start(16,123)
     R.g=g
     local goals=R.goal_entries()
     local l = rules.level_of(g)
-    local remaining={score=l.score,idols=l.relics,sand=g.initial_soil,locks=g.obstacles,
-        discoveries=#g.objects,deliveries=g.delivery_total}
+    local remaining={score=l.score,idols=l.relics,locks=g.obstacles,deliveries=g.delivery_total}
     if l.goals then
         -- A level that names its goals shows exactly those, in its order.
         check(#goals==#l.goals,"late HUD shows only the level's own goals")
@@ -277,11 +274,10 @@ do
         end
     else
         check(goals[1].id=="score" and goals[1].remaining==l.score and goals[2].id=="idols" and goals[2].remaining==l.relics
-              and goals[3].id=="sand" and goals[3].remaining==g.initial_soil
               and goals[#goals].id=="locks" and goals[#goals].remaining==g.obstacles,"late HUD exposes the actual remaining goals")
     end
-    g.score,g.relics,g.dug,g.obstacles=9000,99,99,0
-    g.discovered,g.delivered=#g.objects,g.delivery_total
+    g.score,g.relics,g.obstacles=9000,99,0
+    g.delivered=g.delivery_total
     for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
     R.g=rules.game_start(0,123)
     local opening,first=R.goal_entries(),rules.levels[1].goals
@@ -410,7 +406,7 @@ end
 -- A real release/tap starts the existing clearing phase without selecting twice.
 do
     local g=rules.game_start(0,123);local cell=rules.hex_center()
-    g.active[cell]=true;g.chain[cell],g.ice[cell],g.stone_hp[cell],g.crate_hp[cell],g.hazard[cell]=0,0,0,0,0
+    g.active[cell]=true;g.chain[cell],g.ice[cell],g.stone_hp[cell]=0,0,0
     g.tiles[cell]=rules.tile(0,rules.PLANE)
     setup(g);R.selected,R.tool=-1,-1;R.sound=false;R.reduced_motion=false
     local moves=g.moves;local at=R.cell_pos(cell)
@@ -444,11 +440,8 @@ do
     local saved_game,saved_art,saved_intro,saved_image=R.g,R.board_art,R.intro,gfx.image
     local g=rules.game_start(0,123478)
     g.hs={cells={},groups={},queues={}}
-    g.objects={};g.tunnel_to={};g.tunnel_from={};g.delivery_exits={}
-    for i=0,rules.CELLS-1 do
-        g.active[i]=true;g.hs.cells[i]={}
-        g.stone_hp[i]=0;g.crate_hp[i]=0;g.hazard[i]=0
-    end
+    g.delivery_exits={}
+    for i=0,rules.CELLS-1 do g.active[i]=true;g.hs.cells[i]={};g.stone_hp[i]=0 end
     local a=rules.hex_index(0,0)
     local cells={a,rules.hex_index(1,0),rules.hex_index(0,1),rules.hex_index(1,1)}
     g.hs.groups[a]={kind="TARGET_GEN",count=8,cells=cells}
@@ -469,8 +462,6 @@ do
     local queue={cursor=1,spawns=0,units={{element="cookie",hp=2}}}
     g.hs.queues[inlet]=queue
     local floor=rules.hex_index(3,0);g.hs.cells[floor].tile=2
-    local portal_in, portal_out = rules.hex_index(-4,0), rules.hex_index(4,0)
-    g.tunnel_to[portal_in], g.tunnel_from[portal_out] = portal_out, portal_in
     g.delivery_exits[rules.hex_index(3,1)] = true
     local cherry_cell, empty_jelly = rules.hex_index(-2,1), rules.hex_index(-2,2)
     g.hs.cells[cherry_cell].jelly, g.hs.cells[empty_jelly].jelly = 2, 2
@@ -509,7 +500,6 @@ do
     check(draws["generator-shell"]==1 and draws["cookie-2"]==1,"inlet shows its exact next authored object state")
     check(queue.cursor==1 and queue.spawns==0,"rendering the source queue does not advance simulation")
     check(draws["membrane-fill-2"]==1,"covered source floor uses its authored intact material")
-    check(draws["tunnel-in"]==1 and draws["tunnel-out"]==1,"both source portal roles use their own sprite")
     check(draws["carry-exit-arrow"]==3,"donut exit draws three staggered copies of its original arrow")
     check(draws["jelly-2-cherry"]==1 and draws["jelly-2"]==1,"jelly displays a soft cherry only when one is present")
     check(elements.covers_cherry(g,cherry_cell,g.tiles[cherry_cell]),"the covered cherry is not drawn twice")

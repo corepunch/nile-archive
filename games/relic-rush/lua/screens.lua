@@ -139,7 +139,7 @@ local guide_entries = {
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Boxes", description="Match beside a box to break one layer.",
      icon={front="box-2",tiles={}}},
-    {id="tunnels", title="Tablets", description="Clear the cells below a tablet so it falls to its exit.",
+    {id="deliveries", title="Tablets", description="Clear the cells below a tablet so it falls to its exit.",
      icon={front="delivery",tiles={}}},
     {id="carpet", title="Spreading moss", description="Match on the moss to spread it to every cell the match clears. Cover the whole site.",
      icon={front="goal-carpet",tiles={}}},

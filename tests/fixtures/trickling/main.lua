@@ -8,7 +8,7 @@ function desc.init()
     init()
     R.g = rules.game_start(6, 123478)
     for i = 0, rules.CELLS - 1 do
-        R.g.chain[i], R.g.ice[i], R.g.soil[i] = 0, 0, 0
+        R.g.chain[i], R.g.ice[i] = 0, 0
         if R.g.active[i] then
             local q, r = rules.hex_q(i), rules.hex_r(i)
             R.g.tiles[i] = rules.tile((q + 2 * r + 12) % rules.COLORS)

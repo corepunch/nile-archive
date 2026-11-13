@@ -206,19 +206,19 @@ return function(R, options)
                 t:case(('layers kind=%d ice=%d chain=%d'):format(kind,ice,chain),function()
                     local g,m=blank(),R.new_match();local cell=R.hex_center()
                     g.tiles[cell]=R.tile(kind)
-                    g.ice[cell],g.chain[cell],g.soil[cell],g.obstacles=ice,chain,2,ice+chain
+                    g.ice[cell],g.chain[cell],g.obstacles=ice,chain,ice+chain
                     for hit=1,ice+chain do
                         m.mask={[cell]=true};m.make={}
                         t:check(R.game_apply(g,m)==0 and g.tiles[cell].kind==kind,'blocker absorbs hit before relic')
-                        t:check(g.obstacles==ice+chain-hit and g.soil[cell]==2,'one blocker layer per hit, soil untouched')
+                        t:check(g.obstacles==ice+chain-hit,'one blocker layer per hit')
                     end
                     m.mask={[cell]=true}
                     t:check(R.game_apply(g,m)==1 and g.tiles[cell].kind==-1,'unlocked piece clears')
-                    t:check(g.dug==1 and g.soil[cell]==1 and g.cleared==1,'one soil layer per clear')
+                    t:check(g.cleared==1,'one clear')
                     t:check(g.relics==(kind==goal_kind and 1 or 0),'goal accounting')
                     t:check(g.wood==(kind==wood_kind and 1 or 0),'wood accounting')
                     t:check(g.stone==(kind==stone_kind and 1 or 0),'stone accounting')
-                    t:check(g.score==20*(ice+chain)+30+50*(ice+chain+1),'blocker, soil and combo score')
+                    t:check(g.score==20*(ice+chain)+50*(ice+chain+1),'blocker and combo score')
                 end)
             end
         end
@@ -259,21 +259,16 @@ return function(R, options)
         end)
     end
     for level=0,R.LEVELS-1 do
-        for _,missing in ipairs({'none','score','relics','dug','obstacles'}) do
+        for _,missing in ipairs({'none','score','relics','obstacles'}) do
             t:case(('last move level=%d missing=%s'):format(level,missing),function()
                 local g=blank();g.level=level;local l=R.levels[level+1]
-                -- The actual initial covering is the excavation goal. For a
-                -- zero-soil level, add one covered cell when testing the missing
-                -- excavation case instead of inventing a negative dug count.
-                g.initial_soil=math.max(l.soil or 0,missing=='dug' and 1 or 0)
-                g.score,g.relics,g.dug,g.obstacles,g.moves=l.score,l.relics,g.initial_soil,0,0
+                g.score,g.relics,g.obstacles,g.moves=l.score,l.relics,0,0
                 if missing=='obstacles' then g.obstacles=1
-                elseif missing=='dug' then g.dug=g.initial_soil-1;g.soil[0]=1
                 elseif missing~='none' then g[missing]=g[missing]-1 end
                 local rng=g.rng
                 R.game_check_end(g)
                 -- A level with its own goal list ignores counters it does not name.
-                local named={score='score',relics='idols',dug='sand',obstacles='locks'}
+                local named={score='score',relics='idols',obstacles='locks'}
                 local blocks=missing~='none' and not l.goals
                 for _,id in ipairs(l.goals or {}) do blocks=blocks or id==named[missing] end
                 t:check(g.won==not blocks and g.lost==blocks,'win takes precedence on last move')

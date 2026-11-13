@@ -7,7 +7,7 @@ game.init=function()
     init()
     if app.arg("goals-complete") then
         local l=require("rules").level_of(R.g)
-        R.g.score,R.g.relics,R.g.dug=l.score,l.relics,l.soil
+        R.g.score,R.g.relics=l.score,l.relics
         R.g.obstacles=0
         R.art_review=true
     end

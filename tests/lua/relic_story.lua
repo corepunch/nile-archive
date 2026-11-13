@@ -27,15 +27,14 @@ for level=1,30 do
         p.story_seen[before.key]=true
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
-    check(#g.objects==0 and not g.object_only, 'campaign board has no hidden-object goal')
     if level<=10 then
         check(rules.level_of(g).quest_object, 'first-clear story retains its quest object')
     end
-    g.score,g.relics,g.dug,g.obstacles=0,0,0,0
+    g.score,g.relics,g.obstacles=0,0,0
     rules.game_check_end(g)
     check(not g.won, 'ordinary match-3 goals must be met')
-    g.score,g.relics,g.dug=99999,999,999
-    g.delivered,g.carpeted,g.oil_left,g.cans_left=g.delivery_total,g.carpet_total,0,0
+    g.score,g.relics=99999,999
+    g.delivered,g.carpeted,g.oil_left=g.delivery_total,g.carpet_total,0
     rules.game_check_end(g)
     check(g.won, 'completing the match-3 goals wins without an object')
     g.moves=0

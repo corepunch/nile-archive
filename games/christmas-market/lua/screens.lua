@@ -115,7 +115,7 @@ local guide_entries = {
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Boxes", description="Match beside a box to break one layer.",
      icon={front="box-2",tiles={}}},
-    {id="tunnels", title="Parcels", description="Clear the cells below a parcel so it falls to its exit.",
+    {id="deliveries", title="Parcels", description="Clear the cells below a parcel so it falls to its exit.",
      icon={front="delivery",tiles={}}},
     {id="carpet", title="Green carpet", description="Match on the carpet to spread it to every cell the match clears. Cover the whole court.",
      icon={front="goal-carpet",tiles={}}},
@@ -129,10 +129,7 @@ local function guide_icon(box, icon)
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
-    if icon.front then
-        local edge = icon.front=="sand" and R.board_art["sand-edge"]
-        picture(edge or R.board_art[icon.front],layer:inflate(edge and 6 or -2),255)
-    end
+    if icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
 end
 local guide_form = match3.guide_form({
     title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING TREATS",

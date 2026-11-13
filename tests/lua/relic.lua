@@ -11,15 +11,15 @@ local tile = rules.tile
 
 
 local function blank()
-    local g = {tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, stone_hp = {}, crate_hp = {}, crate_kind = {},
-               hazard = {}, objects = {}, tunnel_to = {}, tunnel_from = {}, delivery_exits = {},
-               discovered = 0, delivered = 0, delivery_total = 0, level = 0, moves = 80, score = 0, relics = 0, dug = 0,
-               obstacles = 0, initial_obstacles = 0, initial_soil = 0, combo = 0, cleared = 0, last_gold = 0, last_wood = 0,
+    local g = {tiles = {}, active = {}, chain = {}, ice = {}, stone_hp = {}, delivery_exits = {},
+               carpet = {}, carpeted = 0, carpet_total = 0, oil = {}, oil_left = 0, oil_cleared = false,
+               delivered = 0, delivery_total = 0, level = 0, moves = 80, score = 0, relics = 0,
+               obstacles = 0, initial_obstacles = 0, combo = 0, cleared = 0, last_gold = 0, last_wood = 0,
                last_stone = 0, wood = 0, stone = 0, rng = 123, won = false, lost = false, tools = {0, 0, 0}}
     for i = 0, CELLS - 1 do
         g.active[i] = true
         g.tiles[i] = tile(-1, NORMAL)
-        g.soil[i], g.chain[i], g.ice[i], g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, 0, 0, 0, -1, 0
+        g.chain[i], g.ice[i], g.stone_hp[i], g.carpet[i], g.oil[i] = 0, 0, 0, 0, 0
     end
     return g
 end
@@ -80,15 +80,8 @@ local function test_matching()
             local g = rules.game_start(lvl, seed)
             rules.game_matches(g, m, -1)
             check(m.hits == 0 and rules.game_hint(g), "fresh board has a move and no match")
-            local soil, obstacles = 0, 0
-            for i = 0, CELLS - 1 do
-                soil = soil + g.soil[i]
-                obstacles = obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i] + g.crate_hp[i] + g.hazard[i]
-            end
-            check(g.initial_soil == soil and soil >= (rules.levels[lvl + 1].soil or 0), "soil count includes every covered object cell")
-            for _, object in ipairs(g.objects) do
-                for _, cell in ipairs(object.cells) do check(g.soil[cell] > 0, "object starts fully covered") end
-            end
+            local obstacles = 0
+            for i = 0, CELLS - 1 do obstacles = obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i] end
             check(g.obstacles == obstacles and g.initial_obstacles == obstacles, "obstacle count includes every blocker layer")
         end
     end
@@ -182,7 +175,7 @@ local function test_holes_and_shapes()
         for i = 0, CELLS - 1 do
             mask[#mask + 1] = g.active[i] and "1" or "0"
             if g.active[i] then n_active, start = n_active + 1, i
-            else check(g.tiles[i].kind == -1 and g.soil[i] == 0 and g.ice[i] == 0 and g.chain[i] == 0 and not rules.game_tool(g, 0, i, m), "void is empty") end
+            else check(g.tiles[i].kind == -1 and g.ice[i] == 0 and g.chain[i] == 0 and not rules.game_tool(g, 0, i, m), "void is empty") end
         end
         local key = table.concat(mask)
         if not shapes[key] then shapes[key], family_count = true, family_count + 1 end
@@ -199,7 +192,7 @@ local function test_holes_and_shapes()
         rules.game_collapse(g)
         for i = 0, CELLS - 1 do
             local kind = g.tiles[i].kind
-            local fixed = g.stone_hp[i] > 0 or g.crate_hp[i] > 0 or (g.can_hp and g.can_hp[i] or 0) > 0
+            local fixed = g.stone_hp[i] > 0
             check(g.active[i] and (fixed and kind == -1 or not fixed and (kind >= 0 or kind == rules.DELIVERY))
                 or not g.active[i] and kind == -1, "collapse fills playable cells and leaves solids and voids empty")
         end
@@ -237,14 +230,14 @@ local function test_moves_and_blockers()
     rules.game_apply(g, m)
     check(g.ice[c] == 0, "ice gone")
 
-    g = pattern()   -- source yellow pieces have no privileged thaw behavior
+    g = pattern()   -- a match never damages ice on neighbouring cells
     g.tiles[c].kind = rules.RELIC_FLAME
     for d = 0, 5 do g.ice[hex_neighbor(c, d)] = 2 end
     g.obstacles = 12
     m = rules.new_match()
     m.mask[c] = true
     rules.game_apply(g, m)
-    for d = 0, 5 do check(g.ice[hex_neighbor(c, d)] == 2, "ordinary color cannot thaw adjacent ice") end
+    for d = 0, 5 do check(g.ice[hex_neighbor(c, d)] == 2, "a match leaves adjacent ice intact") end
     check(g.obstacles == 12, "ordinary color preserves adjacent obstacles")
 
     g = pattern()

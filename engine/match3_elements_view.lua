@@ -2,10 +2,8 @@
 -- rules and board layouts stay independent of this drawing code.
 local E = {}
 
-E.assets = {"stone-1", "stone-2", "stone-3", "tunnel-in", "tunnel-out",
-    "hidden-covered", "hidden-partial", "hidden-revealed", "growth", "delivery", "delivery-exit", "carry-exit-arrow", "object-goal"}
+E.assets = {"stone-1", "stone-2", "stone-3", "delivery", "delivery-exit", "carry-exit-arrow"}
 for kind = 0, 5 do
-    for hp = 1, 2 do E.assets[#E.assets + 1] = ("crate-%d-%d"):format(kind, hp) end
     for hp = 1, 6 do E.assets[#E.assets + 1] = ("color-box-%d-%d"):format(kind, hp) end
 end
 
@@ -16,7 +14,7 @@ end
 for _,name in ipairs{"box","carry","color-box","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
-for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","oil-can-1","oil-can-2","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
+for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
     E.assets[#E.assets+1]=name
 end
 
@@ -33,7 +31,6 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 
 function E.load(art, skin)
     for _, name in ipairs(E.assets) do art[name] = assert(skin[name], "missing element art: " .. name) end
-    art.object = art["object-goal"]
 end
 
 local function image(R, name, at, size, alpha)
@@ -57,10 +54,7 @@ local function patch_cells(R, rules, layer)
         local on
         if layer == "carpet" then
             on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
-        else   -- a drop still in flight from a broken can has not landed yet
-            local landing = R.oil_landing and R.oil_landing[i]
-            on = g.oil and (g.oil[i] or 0) > 0 and not (landing and (R.now or 0) < landing)
-        end
+        else on = g.oil and (g.oil[i] or 0) > 0 end
         if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
     end
     return cells
@@ -115,36 +109,11 @@ function E.patch(R, rules, layer, sx)
 end
 function E.carpet(R, rules, sx) E.patch(R, rules, "carpet", sx) end
 
--- Called after every well has been painted, before snow and pieces. A hidden
--- object's one authored image spans its complete footprint, not one per cell.
+-- Called after every well has been painted, before pieces.
 function E.ground(R, rules, sx)
     local g = R.g
     E.patch(R, rules, "carpet", sx)
     E.patch(R, rules, "oil", sx)
-    for _, object in ipairs(g.objects or {}) do
-        local x, y, minx, maxx, miny, maxy = 0, 0, math.huge, -math.huge, math.huge, -math.huge
-        for _, cell in ipairs(object.cells) do
-            local p = R.cell_pos(cell) + vec2(sx, 0)
-            x, y = x + p.x, y + p.y
-            minx, maxx, miny, maxy = math.min(minx, p.x), math.max(maxx, p.x), math.min(miny, p.y), math.max(maxy, p.y)
-        end
-        if #object.cells > 0 then
-            local size = 2 * R.HEX_R + math.max(maxx - minx, maxy - miny)
-            local cx, cy = x / #object.cells, y / #object.cells
-            local radius, height = R.HEX_R - .65, math.sqrt(3) * (R.HEX_R - .65)
-            local alpha = R.intro and R.intro:fade() or 1
-            local art = object.art and R.board_art[object.art] or R.board_art.carpet
-            -- Each hex samples its portion of the same footprint image. This
-            -- prevents a large object from spilling into holes or other wells.
-            for _, cell in ipairs(object.cells) do
-                local p = R.cell_pos(cell) + vec2(sx, 0)
-                local src = rect((p.x - cx + size / 2 - radius) * 128 / size,
-                    (p.y - cy + size / 2 - height / 2) * 128 / size,
-                    2 * radius * 128 / size, height * 128 / size)
-                gfx.image_hex(art, src, p, radius, 0, color(255, 255, 255, 255 * alpha))
-            end
-        end
-    end
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
@@ -152,13 +121,6 @@ function E.ground(R, rules, sx)
             if g.hs then
                 local c=g.hs.cells[i]
                 if (c.tile or 0)>0 then image(R,"membrane-fill-"..c.tile,at,2*R.HEX_R,alpha) end
-            end
-            local portal_offset = vec2(0, R.HEX_R * .54)
-            if g.tunnel_to and g.tunnel_to[i] then
-                image(R, "tunnel-in", at + portal_offset, R.HEX_R * 1.55, alpha)
-            end
-            if g.tunnel_from and g.tunnel_from[i] then
-                image(R, "tunnel-out", at - portal_offset, R.HEX_R * 1.55, alpha)
             end
             if g.delivery_exits and g.delivery_exits[i] then
                 -- Original CarryArrows uses three staggered copies with a cosine fade.
@@ -270,18 +232,14 @@ local function generator_art(R,g,i,at,alpha)
     if name then image(R,name,at-vec2(0,R.HEX_R*.12),R.HEX_R*.95,alpha) end
 end
 
--- Fixed blockers cover the piece area; growth covers a still-present piece.
+-- Fixed blockers cover the piece area.
 function E.blockers(R, rules, sx)
     local g = R.g
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local name
             local hp = g.stone_hp and g.stone_hp[i] or 0
-            local crate = g.crate_hp and g.crate_hp[i] or 0
-            if hp > 0 then name = "box-" .. math.min(hp, 6)
-            elseif crate > 0 then name = "box-"..math.min(crate,6)
-            elseif g.can_hp and (g.can_hp[i] or 0) > 0 then name = "oil-can-" .. math.min(g.can_hp[i], 2)
-            elseif g.hazard and (g.hazard[i] or 0) > 0 then name = "honey-material" end
+            if hp > 0 then name = "box-" .. math.min(hp, 6) end
             if g.hs then
                 local c=g.hs.cells[i]
                 if (c.box or 0)>0 then
@@ -302,10 +260,7 @@ function E.blockers(R, rules, sx)
                 local visible, scale, alpha = true, 1, 1
                 if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
                 if visible then
-                    local radius = (hp > 0 or crate > 0) and R.HEX_R - .65 or R.HEX_R
-                    -- The can's long spout makes its art wide and short; enlarge it so
-                    -- the body matches a piece, the spout overhanging the cell.
-                    if name:find("^oil%-can") then radius = radius * 1.22 end
+                    local radius = hp > 0 and R.HEX_R - .65 or R.HEX_R
                     image(R, name, R.cell_pos(i) + vec2(sx, 0), 2 * radius * scale, alpha)
                 end
             end
@@ -334,12 +289,7 @@ end
 
 -- Leave room to see artwork underneath pieces on special floor cells.
 function E.piece_scale(g, cell)
-    if (g.tunnel_to and g.tunnel_to[cell]) or (g.tunnel_from and g.tunnel_from[cell])
-        or (g.delivery_exits and g.delivery_exits[cell]) then return .58 end
-    for _, object in ipairs(g.objects or {}) do
-        for _, i in ipairs(object.cells) do if i == cell then return .58 end end
-    end
-    return 1
+    return g.delivery_exits and g.delivery_exits[cell] and .58 or 1
 end
 
 function E.chain(R,g,i)

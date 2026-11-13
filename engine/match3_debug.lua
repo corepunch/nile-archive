@@ -157,7 +157,7 @@ function D.bind(R, W)
         end
         a = app.arg("fx")
         if a then   -- fire one special in the middle of level nine
-            local mode = a == "ray" and 0 or (a == "bomb" or a == "spill") and 1 or 2
+            local mode = a == "ray" and 0 or a == "bomb" and 1 or 2
             local c = rules.hex_center()
             R.g = rules.game_start(8, 123478)
             R.pending = rules.new_match()
@@ -165,13 +165,8 @@ function D.bind(R, W)
             R.vfx_reset()
             R.g.obstacles = R.g.obstacles - R.g.chain[c] - R.g.ice[c]
             R.g.chain[c], R.g.ice[c] = 0, 0
-            R.g.active[c]=true;R.g.stone_hp[c]=0;R.g.crate_hp[c]=0;R.g.hazard[c]=0
+            R.g.active[c]=true;R.g.stone_hp[c]=0
             R.g.tiles[c] = rules.tile(mode == 2 and 0 or 3, mode == 0 and rules.ROW or mode == 1 and rules.BOMB or a=="plane" and rules.PLANE or rules.PRISM)
-            if a == "spill" then   -- the bomb breaks an oil can beside it, which throws its drops
-                local can = rules.hex_neighbor(c, 0)
-                R.g.chain[can], R.g.ice[can], R.g.can_hp[can], R.g.cans_left = 0, 0, 1, 1
-                R.g.tiles[can] = rules.tile(-1)
-            end
             R.pending.mask[c] = true
             R.pending.hits = 1
             R.finish_wave()
@@ -223,52 +218,20 @@ function D.bind(R, W)
             R.inspect = kind; R.overlay = R.OV_WONDER; R.toast_time = 0
         end
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
-        if app.arg("tunnel-hop") then
-            -- One genuine fall step between distant endpoints for animation review.
-            R.g = rules.game_start(0, 123478)
-            R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, false
-            local g, entry, exit = R.g, rules.hex_index(-3, 0), rules.hex_index(2, 0)
-            g.active[entry], g.active[exit] = true, true
-            g.tunnel_to[entry], g.tunnel_from[exit] = exit, entry
-            local step = {tiles={}, from={}}
-            for i = 0, rules.CELLS - 1 do step.tiles[i], step.from[i] = g.tiles[i], i end
-            step.tiles[exit], step.from[exit] = rules.tile(0, rules.NORMAL), entry
-            step.tiles[entry] = rules.tile(-1, rules.NORMAL)
-            g.tiles[entry], g.tiles[exit] = step.tiles[entry], step.tiles[exit]
-            R.fall_steps, R.phase, R.phase_time = {step}, R.PH_FALL, 0
-        end
         if app.arg("element-states") then
-            -- Populate a real board with every authored strength and colour.
+            -- Populate a real board with every authored box strength and a delivery.
             R.g = rules.game_start(0, 123478)
             R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, true
             local g = R.g
-            g.stone_hp, g.crate_hp, g.crate_kind, g.hazard = {}, {}, {}, {}
-            g.tunnel_to, g.tunnel_from, g.delivery_exits = {}, {}, {}
+            g.stone_hp, g.delivery_exits = {}, {}
             for i = 0, rules.CELLS - 1 do
-                g.active[i], g.soil[i], g.chain[i], g.ice[i] = true, 0, 0, 0
-                g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, -1, 0
+                g.active[i], g.chain[i], g.ice[i], g.stone_hp[i] = true, 0, 0, 0
             end
             for hp = 1, 3 do
                 local cell = rules.hex_index(hp - 3, -1)
                 g.stone_hp[cell], g.tiles[cell] = hp, rules.tile(-1, rules.NORMAL)
             end
-            for kind = 0, 5 do
-                for hp = 1, 2 do
-                    local q, r = kind - 3, hp
-                    local cell = rules.hex_index(q, r)
-                    g.crate_hp[cell], g.crate_kind[cell] = hp, kind
-                    g.tiles[cell] = rules.tile(-1, rules.NORMAL)
-                end
-            end
-            local covered, partial, revealed = rules.hex_index(-3, 0), rules.hex_index(-1, 0), rules.hex_index(1, 0)
-            g.objects = {{cells={covered}, state="hidden"}, {cells={partial}, state="partial"},
-                         {cells={revealed}, state="revealed"}}
-            g.soil[covered], g.soil[partial] = 1, 1
-            g.initial_soil, g.initial_obstacles, g.obstacles = 2, 16, 16
-            g.delivery_total, g.delivered = 1, 0
-            local entry, exit = rules.hex_index(-4, 0), rules.hex_index(3, -3)
-            g.tunnel_to[entry], g.tunnel_from[exit] = exit, entry
-            g.hazard[rules.hex_index(2, -1)] = 1
+            g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 6, 6, 1, 0
             g.delivery_exits[rules.hex_index(3, -2)] = true
             g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY, rules.NORMAL)
         end
@@ -276,10 +239,7 @@ function D.bind(R, W)
             R.g = rules.game_start(8, 123478)
             R.pending = rules.new_match()
             local cells = {rules.hex_index(-3,0),rules.hex_index(-2,0),rules.hex_index(-1,0),rules.hex_index(0,0),rules.hex_index(1,0),rules.hex_index(2,0)}
-            R.g.objects={};R.g.object_only=false
-            for _,cell in ipairs(cells) do
-                R.g.active[cell]=true;R.g.soil[cell]=0;R.g.stone_hp[cell]=0;R.g.crate_hp[cell]=0;R.g.hazard[cell]=0
-            end
+            for _,cell in ipairs(cells) do R.g.active[cell]=true;R.g.stone_hp[cell]=0 end
             for k, cell in ipairs(cells) do
                 R.g.tiles[cell] = rules.tile(k - 1, k)
                 R.g.chain[cell], R.g.ice[cell] = 0, 0
@@ -294,15 +254,14 @@ function D.bind(R, W)
             -- Real board drawing paths, with every recovered blocker strength.
             R.g=rules.game_start(0,123478)
             local g=R.g
-            g.objects={};g.object_only=false
             g.hs={cells={},groups={},queues={},palettes={},sources={},goals={
                 {type="STATUE",max=3,current=0},{type="TRASHSTONE",max=3,current=0},
                 {type="TRASH",max=3,current=0},{type="BUBBLE_MEMBRANE",max=3,current=0}}}
             for i=0,rules.CELLS-1 do
-                g.active[i]=true;g.soil[i]=0;g.chain[i]=0;g.ice[i]=0
-                g.stone_hp[i]=0;g.crate_hp[i]=0;g.hazard[i]=0;g.hs.cells[i]={}
+                g.active[i]=true;g.chain[i]=0;g.ice[i]=0
+                g.stone_hp[i]=0;g.hs.cells[i]={}
             end
-            g.tunnel_to={};g.tunnel_from={};g.delivery_exits={}
+            g.delivery_exits={}
             for hp=1,3 do
                 local statue=rules.hex_index(hp-2,-2)
                 local nut=rules.hex_index(hp-2,-1)
@@ -428,14 +387,6 @@ function D.bind(R, W)
             island_with(journey.earned(beat.level))
             R.on_island, R.toast_time = true, 0
             R.open_story_choice(beat, true)
-        end
-        local object_state = app.arg("quest-object-state")
-        if object_state then
-            local object = assert(R.g.objects[1], "quest object preview needs a recovery board")
-            assert(object.art and (object_state == "partial" or object_state == "revealed"), "unknown quest object preview")
-            local count = object_state == "partial" and #object.cells - 1 or #object.cells
-            for i = 1, count do R.g.soil[object.cells[i]] = 0 end
-            rules.game_apply(R.g, rules.new_match())
         end
         -- A debug screen may have replaced the board, or shown something else instead.
         if R.intro then

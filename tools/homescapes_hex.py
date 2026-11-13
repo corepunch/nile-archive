@@ -79,7 +79,7 @@ def convert(data, path):
     return {'radius':radius,'source':path,'sha256':hashlib.sha256(data).hexdigest(),
             'seed':int(level.get('LevelLocalSeed','0')),
             'level':{'name':Path(path).stem,'lesson':'Homescapes source board on hexes','moves':int(level.get('movesLimitLocal')),
-                     'score':0,'relics':0,'soil':0,'chains':0,'ice':0,
+                     'score':0,'relics':0,'chains':0,'ice':0,
                      'mask':''.join('1' if i in spec['cells'] else '0' for i in range(len(axial))), 'homescapes':spec}}
 
 
