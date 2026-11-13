@@ -4,7 +4,8 @@
 -- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
 -- --kudos, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
--- --element-states populates a board with the new authored element states.
+-- --element-states reviews the authored surfaces. Add "specials" to show
+-- all power-ups beside a connected stone formation.
 -- Nothing here runs in a normal game.
 local D = {}
 
@@ -220,6 +221,7 @@ function D.bind(R, W)
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
         if app.arg("element-states") then
             -- Review mixed stone strengths, both floor materials and a delivery.
+            local with_specials = app.arg("element-states") == "specials"
             R.g = rules.game_start(0, 123478)
             R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, true
             local g = R.g
@@ -232,19 +234,29 @@ function D.bind(R, W)
                 local cell = rules.hex_index(hp - 3, -1)
                 g.stone_hp[cell], g.tiles[cell] = hp, rules.tile(-1, rules.NORMAL)
             end
-            g.stone_hp[rules.hex_index(-2, 0)] = 3
-            g.tiles[rules.hex_index(-2, 0)] = rules.tile(-1, rules.NORMAL)
-            g.carpet, g.oil = {}, {}
-            for _, cell in ipairs({rules.hex_index(-2,1), rules.hex_index(-1,1), rules.hex_index(-1,2)}) do
-                g.carpet[cell] = 1
+            if with_specials then
+                local specials = {rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM, rules.PLANE}
+                for i, special in ipairs(specials) do
+                    local q = ((i - 1) % 3 - 1) * 2
+                    local r = 1 + (i - 1) // 3 - q // 2
+                    g.tiles[rules.hex_index(q, r)] = rules.tile(i - 1, special)
+                end
+                g.initial_obstacles, g.obstacles = 6, 6
+            else
+                g.stone_hp[rules.hex_index(-2, 0)] = 3
+                g.tiles[rules.hex_index(-2, 0)] = rules.tile(-1, rules.NORMAL)
+                g.carpet, g.oil = {}, {}
+                for _, cell in ipairs({rules.hex_index(-2,1), rules.hex_index(-1,1), rules.hex_index(-1,2)}) do
+                    g.carpet[cell] = 1
+                end
+                for _, cell in ipairs({rules.hex_index(1,0), rules.hex_index(2,0), rules.hex_index(2,1)}) do
+                    g.oil[cell] = 1
+                end
+                g.carpet_total, g.carpeted, g.oil_left = 6, 3, 3
+                g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 9, 9, 1, 0
+                g.delivery_exits[rules.hex_index(3, -2)] = true
+                g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY, rules.NORMAL)
             end
-            for _, cell in ipairs({rules.hex_index(1,0), rules.hex_index(2,0), rules.hex_index(2,1)}) do
-                g.oil[cell] = 1
-            end
-            g.carpet_total, g.carpeted, g.oil_left = 6, 3, 3
-            g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 9, 9, 1, 0
-            g.delivery_exits[rules.hex_index(3, -2)] = true
-            g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY, rules.NORMAL)
         end
         if app.arg("art-board") then
             R.g = rules.game_start(8, 123478)
