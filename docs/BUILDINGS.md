@@ -251,15 +251,18 @@ Nothing is saved and nothing is placed by hand.
 - **The plan follows the buildings.** It is rebuilt when a building is added, moved
   or picked up, or a zone opens. The building in hand has no road until it lands.
 
-The atlas is 4 × 4 cells. A cell's index is the mask of the neighbours its tile
-joins: bit 0 +u, bit 1 +v, bit 2 -u, bit 3 -v. Cell 0 is unused. A cell is 1.6 tile
-sides wide and its centre is the tile's centre.
+The atlas is 8 × 4 cells. In the left half a cell's index is the mask of the
+neighbours its tile joins: bit 0 +u, bit 1 +v, bit 2 -u, bit 3 -v. Cell 0 is unused.
+The right half holds eight more looks of each straight road (rows 0–1 along u, rows
+2–3 along v); the engine picks one by the tile's position, so a long street does not
+repeat and a tile always looks the same. A cell is 1.6 tile sides wide and its
+centre is the tile's centre.
 
 ```sh
 python3 tools/roads.py christmas-market    # writes games/christmas-market/data/roads.png
 ```
 
-`tools/roads.py` models the fifteen pieces and renders each with Scener
+`tools/roads.py` models the pieces and renders each with Scener
 through the city camera. A road is three stones wide and a tile is five stones
 long. A turn is a quarter ring of three courses about the tile's corner, the inside
 corners of a junction are rounded with the same radius, and a dead end is rounded

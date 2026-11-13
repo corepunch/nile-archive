@@ -7,9 +7,11 @@
 The engine lays roads on whole tiles (engine/city.c): every building gets a flag tile
 against its front, and the flags are joined by the shortest tile routes. A road
 tile is drawn by which of its four neighbours it joins, so the atlas holds one piece
-per combination: 4 x 4 cells, cell = mask, bit 0 +u (down-right), bit 1 +v (down-left),
-bit 2 -u, bit 3 -v. Cell 0 stays empty. A cell is CELL_TILES tile sides wide and its
-centre is the tile's centre; the engine relies on both.
+per combination: 8 x 4 cells, the left half with cell = mask, bit 0 +u (down-right),
+bit 1 +v (down-left), bit 2 -u, bit 3 -v. Cell 0 stays empty. The right half holds
+eight more looks of each straight road, which the engine picks from by tile so a long
+street does not repeat: rows 0-1 along u, rows 2-3 along v. A cell is CELL_TILES tile
+sides wide and its centre is the tile's centre; the engine relies on both.
 
 The pavement is modelled, not painted: setts a fifth of a tile wide (so pieces meet
 without a seam), kerb stones along every open side and, when the game's
@@ -37,6 +39,13 @@ N = 5                # stones per tile side
 ROAD = 3             # the road's width in stones
 SPACING = 8          # tiles between pieces in the scene
 DIRS = ((1, 0), (0, 1), (-1, 0), (0, -1))   # bit order: +u, +v, -u, -v
+COLUMNS, VARIANTS = 8, 8   # the atlas is 8 x 4 cells; a straight road has VARIANTS looks
+STRAIGHT = (5, 10)         # along u, along v (engine/city.c: road_cell)
+# (camera name, mask, seed, (column, row)): the fifteen pieces in the left half, cell = mask,
+# then each straight's variants in the right half, two rows of four per direction
+PIECES = [('road%d' % m, m, 1000 + m, (m % 4, m // 4)) for m in range(1, 16)] + [
+    ('road%d-%d' % (m, k), m, 2000 + 100 * m + k, (4 + k % 4, 2 * n + k // 4))
+    for n, m in enumerate(STRAIGHT) for k in range(VARIANTS)]
 
 DEFAULTS = {
     'ppt': 100,                      # sprite pixels per tile side
@@ -223,16 +232,16 @@ def scene(cfg):
              '<scene ambient="%s" background="0 0 0">' % ' '.join(f(c) for c in cfg['ambient']),
              '  <include src="utilities.xml"/>',
              '  <sun dir="%s" color="1 0.97 0.92" intensity="0.95" castShadows="1"/>' % ' '.join('%.4f' % (c / length) for c in sun)]
-    for mask in range(1, 16):
-        origin = (mask * SPACING, 0., 0.)
+    for index, (name, mask, seed, _) in enumerate(PIECES):
+        origin = (index * SPACING, 0., 0.)
         cx, cy = dot(origin, right), dot(origin, up)
         target = tuple(right[k] * cx + up[k] * cy for k in range(3))
         eye = tuple(target[k] + back[k] * 120. for k in range(3))
-        lines.append('  <camera name="road%d" pos="%s" look="%s" ortho="%s" size="%d %d"/>' % (
-            mask, ' '.join(f(c) for c in to_scener(eye)), ' '.join(f(c) for c in to_scener(target)),
+        lines.append('  <camera name="%s" pos="%s" look="%s" ortho="%s" size="%d %d"/>' % (
+            name, ' '.join(f(c) for c in to_scener(eye)), ' '.join(f(c) for c in to_scener(target)),
             '%.4f' % (height / cfg['ppt'] * TILE), width, height))
-        lines.append('  <group pos="%s 0 0" name="road%d">' % (f(origin[0] * TILE), mask))
-        lines += ['    ' + l for l in piece(mask, cfg, random.Random(1000 + mask))]
+        lines.append('  <group pos="%s 0 0" name="%s">' % (f(origin[0] * TILE), name))
+        lines += ['    ' + l for l in piece(mask, cfg, random.Random(seed))]
         lines.append('  </group>')
     return '\n'.join(lines + ['</scene>', '']), width, height
 
@@ -274,19 +283,19 @@ def main():
     text, width, height = scene(cfg)
     (work / 'roads.blks').write_text(text)
     shutil.copy(utilities(scener), work / 'utilities.xml')
-    atlas = Image.new('RGBA', (width * 4, height * 4), (0, 0, 0, 0))
-    for mask in range(1, 16):
-        subprocess.run([str(scener), '--render', str(work / 'roads.blks'), '--camera', f'road{mask}', '--format', 'png',
+    atlas = Image.new('RGBA', (width * COLUMNS, height * 4), (0, 0, 0, 0))
+    for name, mask, seed, (column, row) in PIECES:
+        subprocess.run([str(scener), '--render', str(work / 'roads.blks'), '--camera', name, '--format', 'png',
                         '--transparent', '--supersample', '4', '--output-dir', str(work)], check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         shot = max(work.glob('*.png'), key=lambda q: q.stat().st_mtime)
         image = Image.open(shot).convert('RGBA')
         if image.size != (width, height): sys.exit(f'{shot}: {image.size}, expected {(width, height)}')
-        atlas.paste(image, (mask % 4 * width, mask // 4 * height))
-        shot.rename(work / f'road{mask:02d}.png')
+        atlas.paste(image, (column * width, row * height))
+        shot.rename(work / f'{name}.png')
     out = game / 'data/roads.png'
     atlas.save(out, optimize=True)
-    print(f'{out.relative_to(ROOT)}: 15 pieces, {width}x{height} each')
+    print(f'{out.relative_to(ROOT)}: {len(PIECES)} pieces, {width}x{height} each')
     if not args.keep: shutil.rmtree(work)
 
 

@@ -444,8 +444,10 @@ static void draw_building_shadow(const city *c, building b, float alpha)
  * them, so a street exactly fills the tile between two neighbours. The plan
  * depends only on the buildings and the open land, and is kept until they
  * change. A tile is drawn by the neighbours it joins: the atlas `road` is
- * 4 x 4 cells, cell = mask (bit 0 +u, 1 +v, 2 -u, 3 -v); a cell spans
- * ROAD_CELL_TILES tile sides and is centred on its tile (tools/roads.py). */
+ * 8 x 4 cells, the left half with cell = mask (bit 0 +u, 1 +v, 2 -u, 3 -v).
+ * The right half is eight looks of each straight road, so a long street does
+ * not repeat. A cell spans ROAD_CELL_TILES tile sides and is centred on its
+ * tile (tools/roads.py). */
 enum { ROAD_GRID = 192 };
 #define ROAD_CELL_TILES 1.6f
 
@@ -608,7 +610,7 @@ static void road_plan(const city *c)
 static void draw_roads(const city *c)
 {
     road_plan(c);
-    size2 cell = sz2(c->road.size.w / 4, c->road.size.h / 4);
+    size2 cell = sz2(c->road.size.w / 8, c->road.size.h / 4);
     float world = ROAD_CELL_TILES * tile_side(c);
     size2 size = sz2(world, world * cell.h / cell.w);
     for (int i = 0; i < roads.nu * roads.nv; i++) {
@@ -616,7 +618,13 @@ static void draw_roads(const city *c)
         if (!m) continue;
         rect dst = camera_rect_to_screen(c->cam, rect_centered(road_center(c, i), size));
         if (!rect_overlaps(dst, c->cam.view)) continue;
-        draw_image_part(c->road, rect_make(v2((m & 3) * cell.w, (m >> 2) * cell.h), cell), dst, WHITE);
+        int column = m & 3, row = m >> 2;
+        if (m == 5 || m == 10) {   /* a straight road: one of its eight looks, fixed by the tile */
+            unsigned u = (unsigned)(i % roads.nu + roads.u0), v = (unsigned)(i / roads.nu + roads.v0);
+            unsigned look = (u * 73856093u ^ v * 19349663u) >> 4 & 7;
+            column = 4 + (int)(look & 3), row = (m == 10 ? 2 : 0) + (int)(look >> 2);
+        }
+        draw_image_part(c->road, rect_make(v2(column * cell.w, row * cell.h), cell), dst, WHITE);
     }
 }
 
