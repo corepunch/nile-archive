@@ -267,16 +267,30 @@ do
     R.g=g
     local goals=R.goal_entries()
     local l = rules.level_of(g)
-    check(goals[1].id=="score" and goals[1].remaining==l.score and goals[2].id=="idols" and goals[2].remaining==l.relics
-          and goals[3].id=="sand" and goals[3].remaining==g.initial_soil
-          and goals[#goals].id=="locks" and goals[#goals].remaining==g.obstacles,"late HUD exposes the actual remaining goals")
+    local remaining={score=l.score,idols=l.relics,sand=g.initial_soil,locks=g.obstacles,
+        discoveries=#g.objects,deliveries=g.delivery_total}
+    if l.goals then
+        -- A level that names its goals shows exactly those, in its order.
+        check(#goals==#l.goals,"late HUD shows only the level's own goals")
+        for n,id in ipairs(l.goals) do
+            check(goals[n].id==id and goals[n].remaining==remaining[id],"late HUD exposes the actual remaining goals")
+        end
+    else
+        check(goals[1].id=="score" and goals[1].remaining==l.score and goals[2].id=="idols" and goals[2].remaining==l.relics
+              and goals[3].id=="sand" and goals[3].remaining==g.initial_soil
+              and goals[#goals].id=="locks" and goals[#goals].remaining==g.obstacles,"late HUD exposes the actual remaining goals")
+    end
     g.score,g.relics,g.dug,g.obstacles=9000,99,99,0
     g.discovered,g.delivered=#g.objects,g.delivery_total
     for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
     R.g=rules.game_start(0,123)
-    local opening=R.goal_entries()
-    check(#opening==2 and opening[1].id=="score" and opening[2].id=="idols",
-          "opening HUD shows the ordinary score and collection goals")
+    local opening,first=R.goal_entries(),rules.levels[1].goals
+    if first then
+        check(#opening==#first and opening[1].id==first[1],"opening HUD shows the first level's own goals")
+    else
+        check(#opening==2 and opening[1].id=="score" and opening[2].id=="idols",
+              "opening HUD shows the ordinary score and collection goals")
+    end
 end
 
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,

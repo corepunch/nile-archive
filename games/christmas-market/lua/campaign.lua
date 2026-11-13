@@ -171,6 +171,20 @@ levels[30].tunnels = {{entrance=cell(2,-1),exit=cell(2,1)}}
 levels[30].deliveries = {tokens={cell(2,-2)},exits={cell(2,2)}}
 levels[30].lesson = "Send the parcel through the chute."
 
+-- Goals, as in Homescapes: one to three per level, never score (points only
+-- rank a clear). The early levels ask for at most two, led by the lesson.
+-- "locks" counts every blocker: tinsel, ice, snowdrifts, parcels and ribbon.
+local goals = {
+    {"idols"}, {"idols", "sand"}, {"discoveries"}, {"locks", "sand"}, {"locks", "idols"},
+    {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"idols", "sand"}, {"sand", "locks"},
+    {"discoveries", "idols"}, {"idols", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"discoveries", "locks"},
+    {"locks", "idols"}, {"deliveries", "sand"}, {"sand"}, {"locks", "sand", "idols"}, {"sand", "locks"},
+    {"sand", "idols"}, {"locks", "sand"}, {"locks", "idols"}, {"discoveries", "locks"}, {"sand", "locks"},
+    {"locks", "idols"}, {"sand", "locks", "idols"}, {"sand"}, {"locks", "sand", "idols"}, {"deliveries", "sand", "locks"},
+}
+assert(#goals == #levels, "one goal list per level")
+for i, board in ipairs(levels) do board.goals = goals[i] end
+
 -- Keep the one-cell central spine clear for swapping: the two openings are
 -- passage, not unreachable mandatory cleanup. Locks can occupy the bridges.
 for _, board in ipairs(levels) do

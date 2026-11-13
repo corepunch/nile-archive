@@ -134,6 +134,12 @@ function E.bind_board_ui(R, rules, tool_art)
         if #g.objects>0 then entries[#entries+1]=discoveries end
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
+        if l.goals then   -- a level that names its goals shows only those, in its order
+            local by_id = {}
+            for _, entry in ipairs(entries) do by_id[entry.id] = entry end
+            entries = {}
+            for _, id in ipairs(l.goals) do entries[#entries+1] = assert(by_id[id], "level goal not on the board: " .. id) end
+        end
         return entries
     end
     local goal_centers = {}
@@ -1239,9 +1245,15 @@ function E.new(config)
     function M.game_check_end(g)
         M.game_end_turn(g)
         local l = M.levels[g.level + 1]
-        local cleared = g.object_only or
-            (g.score >= l.score and g.relics >= l.relics and g.dug >= g.initial_soil and g.obstacles == 0)
-        g.won = g.hs and home.won(g) or not g.hs and cleared and g.discovered == #g.objects and g.delivered == g.delivery_total
+        local done = {score = g.score >= l.score, idols = g.relics >= l.relics, sand = g.dug >= g.initial_soil,
+            locks = g.obstacles == 0, discoveries = g.discovered == #g.objects, deliveries = g.delivered == g.delivery_total}
+        -- A level's own goal list is all it needs; otherwise every counter must be done.
+        local cleared = true
+        if not g.object_only then
+            for _, id in ipairs(l.goals or {"score", "idols", "sand", "locks"}) do cleared = cleared and done[id] end
+        end
+        if not l.goals then cleared = cleared and done.discoveries and done.deliveries end
+        g.won = g.hs and home.won(g) or not g.hs and cleared
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
             return game_shuffle(g)   -- discard stale selection/hints only after recovery

@@ -272,7 +272,11 @@ return function(R, options)
                 elseif missing~='none' then g[missing]=g[missing]-1 end
                 local rng=g.rng
                 R.game_check_end(g)
-                t:check(g.won==(missing=='none') and g.lost==(missing~='none'),'win takes precedence on last move')
+                -- A level with its own goal list ignores counters it does not name.
+                local named={score='score',relics='idols',dug='sand',obstacles='locks'}
+                local blocks=missing~='none' and not l.goals
+                for _,id in ipairs(l.goals or {}) do blocks=blocks or id==named[missing] end
+                t:check(g.won==not blocks and g.lost==blocks,'win takes precedence on last move')
                 t:check(g.rng==rng,'terminal board never shuffles')
             end)
         end

@@ -14,38 +14,38 @@ the parallel-channel boards, mandatory terrain avoids the isolated central
 spine so its narrowness does not create inaccessible cleanup. Blockers and
 objectives move the emphasis within each family.
 
-| Level | Board | Family | Lesson and focus | Moves |
-| ---: | --- | --- | --- | ---: |
-| 1 | Welcome Lights | Tapered bowl | Match three treats in a line. (line matching) | 24 |
-| 2 | Lumber Lane | Tapered bowl | Match four to make a striped treat. (familiar coverings) | 28 |
-| 3 | Gingerbread Swirl | Tapered bowl | Clear both snow cells to reveal a display. (hidden display) | 32 |
-| 4 | Cocoa Corner | Twin lanes | Match through tinsel to free treats. (familiar coverings) | 34 |
-| 5 | Toymaker Lane | Two chambers | Match beside the snowdrift to clear it. (snowdrift) | 36 |
-| 6 | Ribbon Wishes | Compact court | Match on ice to crack it. (familiar coverings) | 38 |
-| 7 | Candlelight Circle | Two chambers | Some snowdrifts need two hits. (snowdrift) | 40 |
-| 8 | Carousel Stars | Tapered bowl | Match the ribbon colour beside its parcel. (ribbon parcel) | 42 |
-| 9 | Skating Evening | Twin lanes | Striped treats clear a whole line. (familiar coverings) | 44 |
-| 10 | Under the Big Fir | Tapered bowl | Clear snow, tinsel and ice. (ribbon parcel) | 46 |
-| 11 | Carols and Crumbs | Two chambers | Clear the snow around the square. (hidden display) | 32 |
-| 12 | Word from Fenwick | Tapered bowl | Treats travel between paired chutes. (chute) | 35 |
-| 13 | Sawdust Row | Twin lanes | Use a striped treat to reach across. (ribbon parcel) | 36 |
-| 14 | The Bench by the Fir | Tapered bowl | Clear the three-layer snowdrift. (snowdrift) | 37 |
-| 15 | Tangled Tinsel | Tapered bowl | Untangle tinsel through the snow. (hidden display) | 38 |
-| 16 | Paper and String | Twin lanes | Some ribbon parcels take two hits. (ribbon parcel) | 40 |
-| 17 | Twelve Horses | Tapered bowl | Clear below the parcel to deliver it. (delivery) | 41 |
-| 18 | Fairy Lights | Tapered bowl | Take a breath and clear the snow. (familiar coverings) | 42 |
-| 19 | A Hundred Flames | Two chambers | Remember: thick ice takes two hits. (snowdrift) | 44 |
-| 20 | A Letter Forty Years Late | Tapered bowl | Open both sides of the court. (chute) | 46 |
-| 21 | Carolers Court | Tapered bowl | Clear the snow for the carolers. (familiar coverings) | 34 |
-| 22 | Many Hands | Tapered bowl | Free tinsel along the passage. (ribbon parcel) | 38 |
-| 23 | Painted Horses | Twin lanes | Untangle the ribbon before it spreads. (spreading ribbon) | 39 |
-| 24 | Frozen Fountain | Tapered bowl | Thaw the ice around the fountain. (hidden display) | 40 |
-| 25 | Snow on the Line | Tapered bowl | Clear the snow and free the treats. (spreading ribbon) | 42 |
-| 26 | Lantern Ice | Tapered bowl | Thaw the ice around the lanterns. (ribbon parcel) | 44 |
-| 27 | Every Light in Bellmere | Two chambers | Clear the snow across the court. (snowdrift) | 38 |
-| 28 | The Last Train | Tapered bowl | A little snow before the finale. (familiar coverings) | 44 |
-| 29 | The Big Fir | Twin lanes | Untangle and thaw the snowy court. (spreading ribbon) | 47 |
-| 30 | Light the Christmas Tree | Tapered bowl | Send the parcel through the chute. (chute, delivery) | 48 |
+| Level | Board | Family | Lesson and focus | Goals | Moves |
+| ---: | --- | --- | --- | --- | ---: |
+| 1 | Welcome Lights | Tapered bowl | Match three treats in a line. (line matching) | bows | 24 |
+| 2 | Lumber Lane | Tapered bowl | Match four to make a striped treat. (familiar coverings) | bows, snow | 28 |
+| 3 | Gingerbread Swirl | Tapered bowl | Clear both snow cells to reveal a display. (hidden display) | display | 32 |
+| 4 | Cocoa Corner | Twin lanes | Match through tinsel to free treats. (familiar coverings) | blockers, snow | 34 |
+| 5 | Toymaker Lane | Two chambers | Match beside the snowdrift to clear it. (snowdrift) | blockers, bows | 36 |
+| 6 | Ribbon Wishes | Compact court | Match on ice to crack it. (familiar coverings) | blockers, snow | 38 |
+| 7 | Candlelight Circle | Two chambers | Some snowdrifts need two hits. (snowdrift) | blockers, bows | 40 |
+| 8 | Carousel Stars | Tapered bowl | Match the ribbon colour beside its parcel. (ribbon parcel) | blockers, snow | 42 |
+| 9 | Skating Evening | Twin lanes | Striped treats clear a whole line. (familiar coverings) | bows, snow | 44 |
+| 10 | Under the Big Fir | Tapered bowl | Clear snow, tinsel and ice. (ribbon parcel) | snow, blockers | 46 |
+| 11 | Carols and Crumbs | Two chambers | Clear the snow around the square. (hidden display) | display, bows | 32 |
+| 12 | Word from Fenwick | Tapered bowl | Treats travel between paired chutes. (chute) | bows, snow | 35 |
+| 13 | Sawdust Row | Twin lanes | Use a striped treat to reach across. (ribbon parcel) | blockers, bows | 36 |
+| 14 | The Bench by the Fir | Tapered bowl | Clear the three-layer snowdrift. (snowdrift) | blockers, snow | 37 |
+| 15 | Tangled Tinsel | Tapered bowl | Untangle tinsel through the snow. (hidden display) | display, blockers | 38 |
+| 16 | Paper and String | Twin lanes | Some ribbon parcels take two hits. (ribbon parcel) | blockers, bows | 40 |
+| 17 | Twelve Horses | Tapered bowl | Clear below the parcel to deliver it. (delivery) | delivery, snow | 41 |
+| 18 | Fairy Lights | Tapered bowl | Take a breath and clear the snow. (familiar coverings) | snow | 42 |
+| 19 | A Hundred Flames | Two chambers | Remember: thick ice takes two hits. (snowdrift) | blockers, snow, bows | 44 |
+| 20 | A Letter Forty Years Late | Tapered bowl | Open both sides of the court. (chute) | snow, blockers | 46 |
+| 21 | Carolers Court | Tapered bowl | Clear the snow for the carolers. (familiar coverings) | snow, bows | 34 |
+| 22 | Many Hands | Tapered bowl | Free tinsel along the passage. (ribbon parcel) | blockers, snow | 38 |
+| 23 | Painted Horses | Twin lanes | Untangle the ribbon before it spreads. (spreading ribbon) | blockers, bows | 39 |
+| 24 | Frozen Fountain | Tapered bowl | Thaw the ice around the fountain. (hidden display) | display, blockers | 40 |
+| 25 | Snow on the Line | Tapered bowl | Clear the snow and free the treats. (spreading ribbon) | snow, blockers | 42 |
+| 26 | Lantern Ice | Tapered bowl | Thaw the ice around the lanterns. (ribbon parcel) | blockers, bows | 44 |
+| 27 | Every Light in Bellmere | Two chambers | Clear the snow across the court. (snowdrift) | snow, blockers, bows | 38 |
+| 28 | The Last Train | Tapered bowl | A little snow before the finale. (familiar coverings) | snow | 44 |
+| 29 | The Big Fir | Twin lanes | Untangle and thaw the snowy court. (spreading ribbon) | blockers, snow, bows | 47 |
+| 30 | Light the Christmas Tree | Tapered bowl | Send the parcel through the chute. (chute, delivery) | delivery, snow, blockers | 48 |
 
 Packed drifts and colour parcels are solid cells. An adjacent match or direct
 special removes one layer per wave; adjacent parcel hits must match its colour,
@@ -58,8 +58,11 @@ destroyed. Holes interrupt ordinary matches; striped treats can cross them.
 Starting positions and targets are authored in `lua/campaign.lua`. The terrain
 ranks snow and locks; display cells gain snow if needed, and solid cells and other
 reserved positions are excluded from ranked placement. All locks, solids and
-ribbon, the full snow count, every display and every delivery must be completed
-along with score and collection goals. Every exposed top refills and blocked
+ribbon, the full snow count, every display and every delivery are on the board,
+but a level is won by its own goals only. As in Homescapes, each level names
+one to three (at most two up to level 12) and score is never one: points only
+rank a clear. "Blockers" counts tinsel, ice, snowdrifts, parcels and ribbon
+together. Every exposed top refills and blocked
 upstream pockets can spawn, so a narrow court does not guarantee a blocked
 supply. A board has at most one chute pair. Story scenes and building milestones
 are unchanged. Seeded bot wins are not human balance; playtesting should inspect
