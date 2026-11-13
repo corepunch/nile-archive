@@ -1,8 +1,9 @@
 # Adjacent painted foundations
 
-Lantern Firs and Snowman Bench occupy adjacent 2 × 2 plots. The fixture
-confirms both through the city placement API and checks that moving the second
-plot toward the first creates a collision. The before captures show a step
+Lantern Firs and Snowman Bench occupy adjacent 2 × 2 plots. The fixture sets
+clearance to zero so the slab edges meet, confirms both plots through the city
+placement API, and checks that moving the second toward the first creates a
+collision. The before captures show a step
 where the painted slabs meet. In the after captures the front edge continues
 across the join.
 

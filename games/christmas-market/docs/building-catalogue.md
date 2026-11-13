@@ -51,7 +51,7 @@ stock. The category arrows stay above the list.
   corners at ground level and resamples the painted stone and snow onto the
   visible contact edges. It rejects gaps in the projected slab and edge errors
   greater than one source pixel. `city.tile` is 56 with
-  `clearance = size2(0, 0)`.
+  `clearance = size2(1, 1)`, reserving half a tile around each base.
 
 `art/building-catalogue/painted-v1/` retains every input/output atlas, prompt, cell
 layout, original render registration and per-key crop/scale/translation in

@@ -54,7 +54,7 @@ end
 
 function M.restore_saved(c,level)
     -- Purchased decorations do not count toward campaign restoration progress.
-    -- Rehome old, larger footprints onto valid tiles without charging again.
+    -- Rehome saved buildings whose footprints no longer fit without charging again.
     local items,seen=c.items,{}
     local needs_relocation=false
     c.count=0
@@ -176,7 +176,7 @@ function M.island_setup(c)
     c.zone_at = function(_, p) return M.island_zone(p) end
     c.zone_touches = function(_, z, open) return M.island_zone_touches(z, open) end
     c.tile = M.TILE
-    c.clearance = size2(0, 0)   -- adjacent bases may share an edge
+    c.clearance = size2(1, 1)   -- half a tile of ground around every base
     c.fog = color(217, 228, 248, 235)
     c.fog_on_land_only = true
     c.path = color(202, 210, 220, 180)

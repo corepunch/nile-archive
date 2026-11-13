@@ -5,6 +5,7 @@ local init = desc.init
 function desc.init()
     init()
     local c = R.island
+    c.clearance = size2(0, 0) -- let the painted slab edges meet for the art check
     local firs, bench = 10, 11
     c.count, c.open = 0, 63
     local first = c:snap(vec2(760, 1650), firs)
