@@ -741,3 +741,9 @@ The maker plays queued, approximate source-video stage transitions on the field;
 [durations, uncertainty and review command](../../../docs/HOMESCAPES_ART.md)
 are recorded in the shared inventory. Original particle curves remain open in
 [issue #98](https://github.com/corepunch/nile-archive/issues/98).
+
+## Island streets
+
+| Asset | Source | Runtime | States and use |
+|---|---|---|---|
+| Sandstone streets | `python3 tools/roads.py relic-rush` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours (4 × 4 atlas, cell = mask): warm sandstone setts with pale kerbs. The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); they replace the curved connectors removed in [the earlier review](review/no-auto-roads/README.md). No interaction states. Captures: `screenshots/island-village.jpg` (`--showcase`), `screenshots/phone-island.jpg` (`--city 3`) |

@@ -106,10 +106,17 @@ no ImageGen prompt or added runtime texture.
 
 ## Island roads
 
-`archive_island.lua` explicitly disables automatic building connectors with
-a transparent `city.path` (matching the previous default). Paths painted into
-`data/island.png` remain part of the terrain. Reviewed iPad and 16:9 captures
-are in [the road removal comparison](review/no-auto-roads/README.md).
+`archive_island.lua` loads `data/roads.png` as `city.road`: the engine paves a
+flag tile against every building's front and joins the flags along whole tiles
+([Roads](../../../docs/BUILDINGS.md#roads)). The atlas holds fifteen limestone
+pieces, one per combination of joined neighbours, modelled and rendered with
+Scener by `python3 tools/roads.py nile-archive` from the palette in
+`art/roads.json`; it has no interaction states. Paths painted into
+`data/island.png` remain part of the terrain, and a road is drawn on the
+ground, so it passes over painted scenery inside the buildable lawn. The curved
+connectors these replace were removed in
+[the earlier comparison](review/no-auto-roads/README.md). Reviewed capture:
+`screenshots/island.jpg`.
 
 ## Placement alignment guides
 
