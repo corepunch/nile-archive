@@ -133,10 +133,7 @@ end
 reel("portrait-transitions", 42, 2, "390x844", "--lua tests/fixtures/dialogue;games/relic-rush/lua;. --safe-area 0,47,0,34")
 frame("portrait-same-side-390x844", "390x844", "--lua tests/fixtures/dialogue;games/relic-rush/lua;. --safe-area 0,47,0,34 --same-side --frames 45")
 reel("relic-rush-board-intro", 18, 6, "480x900", "--level 5 --present --reel")
-reel("relic-rush-town-dive", 16, 3, "480x900", "--city 3 --dive --reel")   -- Play: the town dives into the board
-for _, style in ipairs{"hex", "drift", "iris", "bands"} do   -- town -> board -> town, every frame
-    reel("relic-rush-dive-"..style, 220, 1, "480x900", "--city 3 --dive --dive-back 120 --dive-style "..style.." --reel")
-end
+reel("relic-rush-town-dive", 48, 4, "480x900", "--city 3 --dive --dive-back 120 --reel")   -- Play: the town dives into the board and back
 reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --reel --safe-area 0,47,0,34")
 reel("dialogue-to-board", 30, 8, "480x900", "--dialog intro --talk-through 45 --reel")
 frame("entrance-settled-relic-rush-480x900", "480x900", "--level 5 --present --frames 180")

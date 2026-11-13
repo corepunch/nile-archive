@@ -218,12 +218,14 @@ dive in `engine/match3_game.lua` also keeps a small clock of its own: game state
 switches at once, the screen being left is covered, then the other screen is
 uncovered while the board's entrance plays. It takes no input (`R.diving()`),
 and reduced motion skips it. The styles live in `engine/match3_dive.lua`:
-`flash` (the default: the town zooms into its newest building and blurs into a
-warm flash), `hex`, `drift`, `iris` and `bands`. game.json's `dive` block picks
-one (`style`) and dresses it in the game's theme: a `motif` (`snow`, `leaves`)
-and its colours. Capture with `--city 3 --dive --reel` (the `*-town-dive`
-reels); `--dive-style NAME --dive-back F` films a style there and back (the
-`*-dive-<style>` reels). The particle
+`flash` (the engine's default: the town zooms into its newest building and
+blurs into a warm flash), `hex`, `drift`, `iris` and `bands`. game.json's `dive`
+block picks one (`style`) and dresses it in the game's theme: a `motif` (`snow`,
+`leaves`) and its colours. Christmas Market and Relic Rush use `bands`: diagonal
+bands sweep across with the level's name on a tag, as a wrapped present or a
+treasure map. Capture with `--city 3 --dive --dive-back 120 --reel` (the
+`*-town-dive` reels, there and back); `--dive-style NAME` films another style.
+The particle
 pools in `engine/match3_vfx.lua` and the continuous hint pulse are likewise not tweens.
 
 ## Writing juice with it

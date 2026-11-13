@@ -1,7 +1,7 @@
 {
   "app": {"title": "Relic Rush - The Lost Valley", "id": "relic-rush", "clear": "#09211F"},
   "packs": ["relics", "jewels", "resources"],
-  "dive": {"motif": "leaves", "face": ["#3F7D5C", "#163A2C"], "face_alt": ["#2F6E73", "#123A3E"], "rim": "#E5B24A", "accent": "#FFE7A3",
+  "dive": {"style": "bands", "motif": "leaves", "face": ["#3F7D5C", "#163A2C"], "face_alt": ["#2F6E73", "#123A3E"], "rim": "#E5B24A", "accent": "#FFE7A3",
            "bands": ["#E5B24A", "#EBD9A8", "#3F7D5C", "#163A2C"], "lights": ["#FFE7A3", "#C8452E"],
            "drift": "#4E9A4F", "drift_shade": "#1F5132", "drift_light": "#7CC35E", "badge": "#163A2C"},
   "speech": {"scale": 1.5, "name": 22.5},
