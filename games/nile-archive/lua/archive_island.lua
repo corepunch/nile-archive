@@ -28,7 +28,7 @@ function M.setup()
     c.tile = content.TILE
     c.fog_clouds = true
     c.fog = rgba(239, 241, 228, 240)
-    c.clearance = size2(0, 0)   -- adjacent bases may share an edge
+    c.clearance = size2(1, 1)   -- half a tile of ground around every base: a street fits between neighbours
     c.spacing = 120
     c.movable = true
     c.buildable = buildable
