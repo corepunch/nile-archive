@@ -336,6 +336,21 @@ for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Send the tablet through the conduit."
 
+-- Goals, as in Homescapes: one to three per level, never score (points only
+-- rank a clear). The early levels ask for at most two, led by the lesson.
+-- "idols" are relics, "sand" is dig sites, "locks" counts every blocker:
+-- chains, ice, stones, seals and vines.
+local goals = {
+    {"idols"}, {"idols", "sand"}, {"locks", "sand"}, {"locks", "idols"}, {"idols", "sand"},
+    {"locks", "sand"}, {"locks", "idols"}, {"idols", "sand"}, {"locks", "sand"}, {"sand", "locks"},
+    {"idols", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"},
+    {"locks", "idols"}, {"locks", "sand"}, {"sand"}, {"sand", "locks", "idols"}, {"sand", "locks"},
+    {"deliveries", "sand"}, {"locks", "sand"}, {"idols", "locks"}, {"sand", "idols"}, {"locks", "sand"},
+    {"locks", "sand", "idols"}, {"locks", "idols"}, {"sand"}, {"sand", "locks", "idols"}, {"deliveries", "sand", "locks"},
+}
+assert(#goals == #levels, "one goal list per level")
+for i, board in ipairs(levels) do board.goals = goals[i] end
+
 -- Keep the one-cell central spine clear for swapping: the two openings are
 -- passage, not unreachable mandatory cleanup. Locks can occupy the bridges.
 for _, board in ipairs(levels) do
