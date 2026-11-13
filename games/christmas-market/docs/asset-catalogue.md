@@ -252,6 +252,12 @@ solid blue ice ring. All three share tinsel's flat-top centreline. Snow moves
 inward when ice or tinsel shares its cell, leaving both materials visible.
 The guide illustrates the rims and the goal capsule uses the full snow icon.
 
+The live board's one-layer ice is the original Homescapes shell fragment. It is
+the lower part of the full shell, so `tools/homescapes_atlas.py` rests it on
+the full shell's bottom edge (`ice-2`) instead of centring it. The piece shows
+above the cracked cup, as in Homescapes. Regenerate with
+`python3 tools/match3_atlas.py`.
+
 Regenerate the board edges and atlases with `python3 tools/fit_match3_edges.py`.
 The source is `art/icons.png` through the registered `sand` and `ice-1` /
 `ice-2` board-state crops. The transform preserves the original paint and

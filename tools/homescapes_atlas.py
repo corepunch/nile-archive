@@ -43,6 +43,13 @@ def registered():
             registrations[name] = {'source': str(path.relative_to(ROOT)), 'rotation': angle,
                                    'crop': crop, 'registered_size': [128,128] if name in ('carpet','honey-material','membrane-fill-1','membrane-fill-2','blind-body') else list(candidate.size), 'canvas': [128,128],
                                    'mask': name in ('carpet','honey-material','membrane-fill-1','membrane-fill-2', 'blind-body')}
+            if name == 'ice-1': fragment = candidate
+    # One-layer ice is the bottom of the cracked shell, not a centred band: rest
+    # it on the full shell's bottom edge, as Homescapes does.
+    shell_bottom = images['ice-2'].getchannel('A').getbbox()[3]
+    images['ice-1'] = Image.new('RGBA', (128,128))
+    images['ice-1'].paste(fragment, ((128-fragment.width)//2, shell_bottom-fragment.height))
+    registrations['ice-1']['placement'] = 'bottom-aligned to ice-2'
     composite_images, composite_records = homescapes_composites.registered()
     for name, original in composite_images.items():
         images[name] = original.resize((128,128), Image.Resampling.LANCZOS)

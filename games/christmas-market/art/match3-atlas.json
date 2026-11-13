@@ -2864,7 +2864,8 @@
         128,
         128
       ],
-      "mask": false
+      "mask": false,
+      "placement": "bottom-aligned to ice-2"
     },
     "ice-2": {
       "source": "engine/art/homescapes/sprites/ice-2.png",
@@ -4422,11 +4423,11 @@
       "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
+      "tools/homescapes_atlas.py": "d403ff9c407c5219e607794d73e82c2666f18eebb4a00479f5621d2b6f0c5cef",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "1157abf211961a9110815454a40fd7f16e0b467bce812aaff7dd7894681ea0c1",
+      "games/christmas-market/data/match3.png": "a010ae846ca4aac353cba9317dde530536738fcd9e0cb9efd53f4a8fb0282208",
       "games/christmas-market/lua/match3_skin.lua": "1a1475b9168bae9b27e570f8227cab078f34b03d4f4c5189b3523240cc1fb8ab"
     }
   }

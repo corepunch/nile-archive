@@ -266,7 +266,8 @@
         128,
         128
       ],
-      "mask": false
+      "mask": false,
+      "placement": "bottom-aligned to ice-2"
     },
     "selected": {
       "crop": [
@@ -4176,11 +4177,11 @@
       "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
       "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "004db78d94d25ff8e748517a9b790674d987147c7dbfdb3dacdbcd5727390d46",
+      "tools/homescapes_atlas.py": "d403ff9c407c5219e607794d73e82c2666f18eebb4a00479f5621d2b6f0c5cef",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "engine/data/match3.png": "1956917a18fd55cfc5145a7e49a883a29c3b998e1a9a8cff13fef150b878d561",
+      "engine/data/match3.png": "d484821d96946d86489bb4ee76a27f43efbd244cd7e198c10215b7e997a1f973",
       "engine/match3_frames.lua": "c92e759810d22968860e2fd7757fd4f31b170af4db58cd04bb36298eba522819"
     }
   }
