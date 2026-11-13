@@ -96,6 +96,10 @@ end
 -- The same board controls use the authored images from either skin.
 E.TOOL_SIZE = 76
 E.GOAL_W = 70   -- every goal capsule; fits a four-digit score
+-- Each goal's icon hangs past its capsule's left end and swells when it pulses,
+-- so the gap keeps it off the capsule before it. A narrow screen with four
+-- goals closes it towards GOAL_GAP_MIN rather than run under Pause.
+local GOAL_GAP, GOAL_GAP_MIN = 16, 6
 
 function E.tool_state(charges, selected, inside, down, started_inside, hover, idle)
     if charges <= 0 or not idle then return "disabled" end
@@ -160,7 +164,7 @@ function E.bind_board_ui(R, rules, tool_art)
         return ui.form{kind="row",gap=6,align="center",children={
             {kind="spacer",width=82},    -- the Moves medallion
             {kind="spacer",grow=1},
-            {kind="list",id="goals",direction="row",gap=6,item=function(entry)
+            {kind="list",id="goals",direction="row",gap=GOAL_GAP,item=function(entry)
                 return {kind="custom",width=E.GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
             end},
             {kind="spacer",grow=1},
@@ -206,6 +210,12 @@ function E.bind_board_ui(R, rules, tool_art)
         for i, entry in ipairs(entries) do
             local row = #entries > 4 and i > math.ceil(#entries / 2) and second or first
             row[#row + 1] = entry
+        end
+        -- Row width less the Moves and Pause spacers and the row's four gaps.
+        local room = R.hud_rect.w - 28 - 82 - 64 - 4 * 6
+        for form, row in pairs{[hud_form]=first, [hud_second]=second} do
+            local gap = #row > 1 and num.clamp((room - #row * E.GOAL_W) / (#row - 1), GOAL_GAP_MIN, GOAL_GAP) or GOAL_GAP
+            if form.nodes.goals.gap ~= gap then form.nodes.goals.gap = gap; form:invalidate_layout() end
         end
         assert(hud_form:set_items("goals",first))
         local centre = R.hud_rect:center()
