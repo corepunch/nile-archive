@@ -109,7 +109,8 @@ no ImageGen prompt or added runtime texture.
 `archive_island.lua` loads `data/roads.png` as `city.road`: the engine paves a
 flag tile against every building's front and joins the flags along whole tiles
 ([Roads](../../../docs/BUILDINGS.md#roads)). The atlas holds fifteen limestone
-pieces, one per combination of joined neighbours, modelled and rendered with
+pieces, one per combination of joined neighbours (rounded turns and junction
+corners), modelled and rendered with
 Scener by `python3 tools/roads.py nile-archive` from the palette in
 `art/roads.json`; it has no interaction states. Paths painted into
 `data/island.png` remain part of the terrain, and a road is drawn on the
@@ -122,7 +123,7 @@ connectors these replace were removed in
 
 `placement-guides` uses the shared `engine/city.c` renderer. While moving or
 placing a building, other buildings show neutral cream outlines with dark
-contrast edges around their occupied ground. Adjacent bases may share an edge.
+contrast edges around their occupied ground. Bases keep half a tile of clearance, as in the other city games, so a street fits between neighbours.
 The building in hand retains its green/red footprint; its original location
 is omitted. Guides stay visible after release until Confirm/Cancel, then hide.
 The guides use the existing camera and tile measurements; artwork, alpha,

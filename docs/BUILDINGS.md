@@ -41,8 +41,8 @@ its buildings:
 keep apart: with `size2(1, 1)` a 2 × 2 base takes a 3 × 3 footprint, half a
 tile of open ground on each side. It changes the footprint (snapping,
 collision, the green/red tiles), never the sprite's size: `size` is always
-the base the art shows. Relic Rush and Christmas Market leave one tile
-between bases. In Nile Archive, neighbouring bases may share an edge.
+the base the art shows. Relic Rush, Christmas Market and Nile Archive leave one tile
+between bases.
 
 ## A building
 
@@ -259,9 +259,12 @@ sides wide and its centre is the tile's centre.
 python3 tools/roads.py christmas-market    # writes games/christmas-market/data/roads.png
 ```
 
-`tools/roads.py` models the fifteen pieces (setts on a 1/10-tile lattice so pieces
-meet without a seam, kerb stones on every open side) and renders each with Scener
-through the city camera. `games/<game>/art/roads.json` overrides the palette:
+`tools/roads.py` models the fifteen pieces and renders each with Scener
+through the city camera. A road is three stones wide and a tile is five stones
+long. A turn is a quarter ring of three courses about the tile's corner, the inside
+corners of a junction are rounded with the same radius, and a dead end is rounded
+off, so every piece meets its neighbour square at the tile's edge. Kerb stones run
+along every open side. `games/<game>/art/roads.json` overrides the palette:
 `setts` (a list of stone colours), `kerb`, `grout`, `shoulder` (a soft bank outside
 the kerb, snow in Christmas Market; omit for none), `ambient`, `sun` and `ppt`. Then
 load it in the game: `c.road = texture.load("roads.png")`.
