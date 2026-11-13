@@ -62,7 +62,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Lamp Lens", "Match 4 for a sun ray.", 29, 1800, 10, 0, 0)
+        local l = level("The Lamp Lens", "Match 4 for a rocket.", 29, 1800, 10, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
         l.ice_layers = 1
@@ -70,7 +70,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Buried Cable", "Match beside a box to break it.", 32, 2300, 12, 0, 0)
+        local l = level("The Buried Cable", "Match beside a stone to crack it.", 32, 2300, 12, 0, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -110,7 +110,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Broken Cable", "Match 5 for a prism.", 40, 4200, 16, 4, 6)
+        local l = level("The Broken Cable", "Match 5 for a rainbow ball.", 40, 4200, 16, 4, 6)
         l.mask = compact_mask
         l.terrain = seam(0, 1, -1, -1, 0)
         l.ice_layers = 2
@@ -150,7 +150,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Names in the Stone", "Aim rays along the chains.", 37, 3200, 14, 6, 0)
+        local l = level("Names in the Stone", "Aim rockets along the chains.", 37, 3200, 14, 6, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -230,7 +230,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Star Road", "Choose a colour for the prism.", 40, 3700, 15, 3, 4)
+        local l = level("The Star Road", "Choose a colour for the rainbow ball.", 40, 3700, 15, 3, 4)
         l.mask = lanes_mask
         l.terrain = seam(0, 1, 1, 1, 0)
         l.ice_layers = 1
@@ -298,13 +298,13 @@ local levels = {
 
 -- Teach each new problem alone, then combine it with a familiar one.
 levels[3].stones = {{cell=cell(2,0),hp=1}}
-levels[3].lesson = "Match beside a box to break it."
+levels[3].lesson = "Match beside a stone to crack it."
 levels[7].stones = {{cell=cell(2,0),hp=2}}
-levels[7].lesson = "Some boxes need two hits."
+levels[7].lesson = "Some stones need two hits."
 levels[9].lesson = "Clear the chains and the ice."
 levels[11].lesson = "Collect the relics."
 levels[15].stones = {{cell=cell(0,0),hp=3}}
-levels[15].lesson = "Break the three-layer box."
+levels[15].lesson = "Break the three-layer stone."
 levels[16].lesson = "Clear the frozen gems."
 levels[17].lesson = "Thick ice takes two hits."
 levels[21].deliveries = {tokens={cell(0,-2)},exits={cell(0,2)}}
@@ -340,7 +340,7 @@ levels[26].oil = {cell(3,-4), cell(3,-3), cell(3,-2), cell(4,-4), cell(4,-3), ce
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "idols" are relics, "locks" counts every blocker: chains, ice and boxes; "carpet" counts the cells the moss has yet to cover;
+-- "idols" are relics, "locks" counts every blocker: chains, ice and stone; "carpet" counts the cells the moss has yet to cover;
 -- "oil" counts the lamp oil left.
 local goals = {
     {"idols"}, {"idols"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet"},

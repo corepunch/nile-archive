@@ -3253,7 +3253,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "b7bced113713bd5debb9ec1da7a7285a93fcb17b97cce74f93f111f2516d7fa4",
+    "recipe": "eaf428786f95197382eee56c191daff674bf1bd6f4f94d2f49a5321fe3e95a16",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",

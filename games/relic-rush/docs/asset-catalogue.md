@@ -1,5 +1,19 @@
 # Relic Rush artwork and state catalogue
 
+## Themed board art
+
+The original Relics, Jewels and Resources chips are back on the board and in chip goals. The six standalone power-ups use the shapes of the Homescapes sprites as references. Moss, lamp oil and weathered sandstone give the three connected surfaces distinct colors and materials.
+
+| Runtime frames | Rule and artwork |
+| --- | --- |
+| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Each clears its axis. |
+| `bomb`, `prism`, `plane` | Round fuse bomb for area damage, segmented rainbow ball for a single color, and a folded plane that flies to a target. |
+| `carpet-swatch`, `goal-carpet` | Continuous carpet that spreads through matches touching it, plus its HUD and guide icon. |
+| `oil-material`, `oil-bubbles`, `goal-oil` | Continuous oil patch that spreads if a move clears none, animated highlights and the HUD and guide icon. |
+| `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | One connected surface. A branching fissure, two smaller fissures and an intact raised knot indicate one, two and three hits remaining. Matches beside a stone or direct hits remove one layer per wave from that cell. The stone icon appears in the guide and on stone-only blocker goals. |
+
+All 16 frames come from one built-in ImageGen atlas. The [source PNG](../art/board-theme/source.png), [prompts](../art/board-theme/prompt.txt) and [crop and registration manifest](../art/match3-atlas.json) document the import into `data/match3.png`. The crop and rotation align the authored artwork and preserve object alpha. A board-anchored, mirrored material repeat fills the shared distance field for each surface. Rebuild with `python3 tools/match3_atlas.py`. [Reviewed phone captures](screenshots/review/board-theme/README.md).
+
 ## Chapter 1 quest objects
 
 The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
@@ -715,7 +729,7 @@ Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.jso
 
 ## Original Homescapes board atlas
 
-Current board art supersedes the earlier striped-gem and themed-piece mappings below/above. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` are standalone original power-ups; all piece packs alias `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
+Before the themed board art above, the Homescapes import replaced the earlier striped-gem and themed-piece mappings. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` were standalone original power-ups and all piece packs aliased `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
 
 See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
 

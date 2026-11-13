@@ -1,5 +1,19 @@
 # Christmas art direction catalogue
 
+## Themed board art
+
+The original Festive chips are back on the board and in chip goals. The six standalone power-ups use the shapes of the Homescapes sprites as references. A woven holiday runner, spilled caramel and frosted slate give the three connected surfaces distinct colors and materials.
+
+| Runtime frames | Rule and artwork |
+| --- | --- |
+| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Each clears its axis. |
+| `bomb`, `prism`, `plane` | Round fuse bomb for area damage, segmented rainbow ball for a single color, and a folded plane that flies to a target. |
+| `carpet-swatch`, `goal-carpet` | Continuous carpet that spreads through matches touching it, plus its HUD and guide icon. |
+| `oil-material`, `oil-bubbles`, `goal-oil` | Continuous oil patch that spreads if a move clears none, animated highlights and the HUD and guide icon. |
+| `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | One connected surface. A branching fissure, two smaller fissures and an intact raised knot indicate one, two and three hits remaining. Matches beside a stone or direct hits remove one layer per wave from that cell. The stone icon appears in the guide and on stone-only blocker goals. |
+
+All 16 frames come from one built-in ImageGen atlas. The [source PNG](../art/board-theme/source.png), [prompts](../art/board-theme/prompt.txt) and [crop and registration manifest](../art/match3-atlas.json) document the import into `data/match3.png`. The crop and rotation align the authored artwork and preserve object alpha. A board-anchored, mirrored material repeat fills the shared distance field for each surface. Rebuild with `python3 tools/match3_atlas.py`. [Reviewed phone captures](screenshots/review/board-theme/README.md).
+
 ## Additional board elements
 
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
@@ -33,15 +47,7 @@ The reviewed captures are [full size](../../../docs/review/match3-elements/chris
 and [narrow](../../../docs/review/match3-elements/christmas-market-state-narrow.png).
 
 
-Current puzzle rules: adjacent swaps create straight runs of 3+ along the three
-hex axes, matching Relic Rush. Four creates a striped treat (engine stripes
-masked to the treat, as in Relic Rush; the old shooting-star frames remain in
-the atlas but are no longer drawn on the board); five or more creates the existing rainbow-star state. Bent clusters do
-not match. Existing bomb artwork remains available to review boards and tools;
-there is no bent-group bomb recipe. Stones and deliveries use the authored
-state atlas described below. The guide and campaign lessons describe the rules.
-Reviewed board and guide captures are in the
-[straight-line match-3 review](review/straight-line-match3/README.md).
+The earlier straight-line rules and striped treat artwork are recorded in the [straight-line match-3 review](review/straight-line-match3/README.md).
 
 Status: the buildings are Blender renders with projected registration (see the [building catalogue](building-catalogue.md)); the board, HUD and character art are directional ImageGen artwork. The planned ImageGen repaint of the renders and special-colour readability remain in [#34](https://github.com/corepunch/nile-archive/issues/34).
 
@@ -453,7 +459,7 @@ building being moved is free. Confirm or Cancel hides the guides. Debug
 
 ## Original Homescapes board atlas
 
-Current board art supersedes the earlier striped-gem and themed-piece mappings below/above. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` are standalone original power-ups; all piece packs alias `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
+Before the themed board art above, the Homescapes import replaced the earlier striped-gem and themed-piece mappings. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` were standalone original power-ups and all piece packs aliased `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
 
 See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
 

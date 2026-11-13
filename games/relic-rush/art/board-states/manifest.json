@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Homescapes on hexes: straight 3 clear, straight 4 color-independent rocket, 5 rainbow, crossing lines bomb, four-cell rhombus plane.",
+  "matching_rules": "Three hex axes: straight 3 clears, 4 makes an axis rocket, 5+ makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a plane.",
   "source": "art/board-states/source.png",
   "prompt": "art/board-states.prompt.txt",
   "generator": "built-in image_gen, 2026-10-30; first full-atlas geometry edit selected; user requested 30-degree tool rotation of original ornate selected/hint frames",
@@ -18,7 +18,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "ray-diagonal",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "art/board-theme/source.png",
+      "atlas_section": "board_theme"
     },
     "ray-column": {
       "box": [
@@ -30,7 +32,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "ray-column",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "art/board-theme/source.png",
+      "atlas_section": "board_theme"
     },
     "ray-row": {
       "box": [
@@ -42,7 +46,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "ray-row",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "art/board-theme/source.png",
+      "atlas_section": "board_theme"
     },
     "bomb": {
       "box": [
@@ -54,7 +60,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "bomb",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "art/board-theme/source.png",
+      "atlas_section": "board_theme"
     },
     "prism": {
       "box": [
@@ -66,7 +74,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "prism",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "art/board-theme/source.png",
+      "atlas_section": "board_theme"
     },
     "chain": {
       "box": [
@@ -309,8 +319,10 @@
       ],
       "runtime": "data/match3.png",
       "atlas_frame": "plane",
-      "source": "../../engine/art/homescapes/sprites/plane.png",
-      "fit": "free-object"
+      "source": "art/board-theme/source.png",
+      "fit": "free-object",
+      "atlas_section": "board_theme",
+      "registration": "art/match3-atlas.json"
     }
   },
   "packs": [
@@ -1168,5 +1180,45 @@
     "arrow_and_maker_review": "../../docs/review/homescapes-arrow-maker/README.md",
     "maker_pose_review": "../../docs/review/homescapes-maker-poses/README.md",
     "windows_art_review": "../../docs/review/homescapes-windows-art/README.md"
+  },
+  "board_theme": {
+    "source": "art/board-theme/source.png",
+    "prompt": "art/board-theme/prompt.txt",
+    "registration": "art/match3-atlas.json",
+    "runtime": "data/match3.png",
+    "reproduction": "python3 tools/match3_atlas.py",
+    "review": "docs/screenshots/review/board-theme/README.md",
+    "states": {
+      "rocket": [
+        "ray-row",
+        "ray-column",
+        "ray-diagonal"
+      ],
+      "bomb": [
+        "bomb"
+      ],
+      "rainbow": [
+        "prism"
+      ],
+      "plane": [
+        "plane"
+      ],
+      "carpet": [
+        "carpet-swatch",
+        "goal-carpet"
+      ],
+      "oil": [
+        "oil-material",
+        "oil-bubbles",
+        "goal-oil"
+      ],
+      "stone": [
+        "stone-material",
+        "stone-mark-1",
+        "stone-mark-2",
+        "stone-mark-3",
+        "goal-stone"
+      ]
+    }
   }
 }

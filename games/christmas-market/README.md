@@ -31,11 +31,11 @@ limits of the current difficulty tuning.
 
 ## Shared match engine and atlas
 
-The campaign uses only elements found in Homescapes' story levels: boxes,
+The campaign uses only elements found in Homescapes' story levels: stone,
 tinsel (chains), ice, present deliveries, green carpet and spilled caramel
 (oil). Each has a different introduction order from Relic Rush.
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
-and [in-game art review](../../docs/review/match3-elements/README.md).
+and [in-game art review](docs/screenshots/review/board-theme/README.md).
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
@@ -51,13 +51,11 @@ previews it. `python3 tools/match3_atlas.py` reproduces both skins while
 preserving authored alpha and every control state. See the
 [review captures](docs/review/trickling/README.md).
 
-Swap adjacent treats, or tap two neighbours, to make a straight line of three
-or more matching kinds along any of the three hex axes. Bent clusters and
-unselected branches do not count. Four in a line creates a striped treat (cream
-stripes along the axis it clears, as in Relic Rush); five or more creates a
-rainbow star. Pieces have one ordinary state rather
-than flower growth stages. Blockers, tools, cascades and restoration rewards
-retain their existing rules. Both portrait games use this same matching mode.
+Swap adjacent treats, or tap two neighbours, to match three or more along a
+hex axis. Four in a line makes a rocket along that axis. Five or more makes a
+rainbow ball. Crossing lines make a bomb, and a four-cell rhombus makes a
+paper plane. An adjacent match or a direct power-up hit removes one stone
+layer per wave. Neighboring stones share one continuous surface.
 
 The board and Settings panel share Relic Rush's layout. The puzzle backdrop
 uses the space above the goals for a lantern-lit Christmas market, with open
@@ -66,8 +64,8 @@ shades from light at the top to dark at the bottom. Both ice
 strengths use the [original Homescapes shells](docs/asset-catalogue.md#ice).
 Goal icons sit slightly left over their capsule edges. See the
 [cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
-Thin gold tinsel straddles the cell edge. The bomb, the rainbow star and
-selection highlights use the [same hex silhouette](docs/asset-catalogue.md#fitted-specials-and-thin-tinsel).
+The original festive chips and the themed power-ups are shown in the
+[asset catalogue](docs/asset-catalogue.md#themed-board-art).
 Open Pause to reach Sound, Reduce Motion, Resume and the Market Guide.
 
 Each wish opens with its mission on a banner that slides across the middle of

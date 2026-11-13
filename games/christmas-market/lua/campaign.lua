@@ -65,10 +65,10 @@ local levels = {
     level("Candlelight Circle", "Hit frozen pieces with matches or power-ups.", 40, 3800, 16, 4, 5, 2,
         chambers_mask, terrain(-1, 1, 2, -1, 1)),
     -- 08: Carousel Stars
-    level("Carousel Stars", "Match five to make a rainbow star.", 42, 4200, 16, 4, 6, 2,
+    level("Carousel Stars", "Match five to make a rainbow ball.", 42, 4200, 16, 4, 6, 2,
         bowl_mask, terrain(0, -1, 0, 1, 0)),
     -- 09: Skating Evening
-    level("Skating Evening", "Striped treats clear a whole line.", 44, 4600, 18, 5, 6, 2,
+    level("Skating Evening", "Rockets clear a whole line.", 44, 4600, 18, 5, 6, 2,
         lanes_mask, terrain(-2, 1, 2, -2, 1)),
     -- 10: Under the Big Fir
     level("Under the Big Fir", "Clear the tinsel and the ice.", 46, 5000, 20, 6, 6, 2,
@@ -110,7 +110,7 @@ local levels = {
     level("Many Hands", "Free tinsel along the passage.", 38, 3400, 14, 6, 0, 1,
         bowl_mask, terrain(-2, 0, 1, -1, -1)),
     -- 23: Painted Horses
-    level("Painted Horses", "Rainbow stars clear one colour.", 39, 3700, 15, 5, 5, 1,
+    level("Painted Horses", "Rainbow balls clear one colour.", 39, 3700, 15, 5, 5, 1,
         lanes_mask, terrain(-1, 1, 2, -2, 1)),
     -- 24: Frozen Fountain
     level("Frozen Fountain", "Thaw the ice around the fountain.", 40, 3900, 16, 4, 5, 2,
@@ -136,15 +136,15 @@ local levels = {
 }
 
 
--- Teach boxes and deliveries alone before combining them.
+-- Teach stone and deliveries alone before combining them.
 levels[5].stones = {{cell=cell(2,0),hp=1}}
-levels[5].lesson = "Match beside a box to break it."
+levels[5].lesson = "Match beside a stone to crack it."
 levels[7].stones = {{cell=cell(2,0),hp=2}}
-levels[7].lesson = "Some boxes need two hits."
+levels[7].lesson = "Some stones need two hits."
 levels[8].lesson = "Clear the tinsel and the ice."
-levels[12].lesson = "Match five in a line for a rainbow star."
+levels[12].lesson = "Match five in a line for a rainbow ball."
 levels[14].stones = {{cell=cell(2,0),hp=3}}
-levels[14].lesson = "Break the three-layer box."
+levels[14].lesson = "Break the three-layer stone."
 levels[16].lesson = "Thick ice takes two hits."
 levels[17].deliveries = {tokens={cell(2,-2)},exits={cell(2,2)}}
 levels[17].lesson = "Clear below the parcel to deliver it."
@@ -172,7 +172,7 @@ levels[25].oil = {cell(2,-3), cell(3,-3), cell(3,-2), cell(3,-1), cell(4,-3), ce
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "locks" counts every blocker: tinsel, ice and boxes;
+-- "locks" counts every blocker: tinsel, ice and stone;
 -- "carpet" counts the cells the green carpet has yet to cover; "oil" counts
 -- the spilled caramel left.
 local goals = {

@@ -58,6 +58,22 @@ do
 end
 
 do
+    local l = level()
+    local stone, neighbor = cell(-1, 0), cell(-1, 1)
+    l.stones[2] = {cell=neighbor, hp=3}
+    local ruleset = rules(l)
+    local g = ruleset.game_start(0, 789)
+    for hp = 1, 0, -1 do
+        local m = ruleset.new_match()
+        m.mask[stone], m.direct[stone] = true, true
+        ruleset.game_apply(g, m)
+        check(g.stone_hp[stone] == hp, 'each direct special hit removes one stone layer')
+        check(g.stone_hp[neighbor] == 3, 'connected stone cells retain independent durability')
+    end
+    check(g.obstacles == 3, 'clearing one connected cell preserves the other cell in the goal')
+end
+
+do
     local g=R.game_start(0,987)
     g.obstacles=0
     R.game_check_end(g)

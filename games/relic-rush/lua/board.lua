@@ -12,8 +12,6 @@ rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
--- Lamp oil is tinted darker than Homescapes' gold.
-R.patch_tint = {oil = color(178, 112, 66)}
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R

@@ -88,11 +88,13 @@ the turn's `oil_cleared` flag. Delivery exits remain fixed. `game_copy` isolates
 mutable state for hint/bot search. A wave deals at most one hit to each stone.
 
 `engine/match3_elements_view.lua` loads and draws the shared presentation.
-Carpet and oil are each one patch (`E.patch`); oil adds two drifting bubble
-layers, and `R.patch_tint` lets a game recolour one. For carpet, `E.patch` builds a signed distance field of the carpeted
-hexes with rounded outer corners and filleted inner ones (`texture.hex_field`),
-rebuilt only when the carpet changes, and draws the tiled swatch through it with
-a shaded rim (`gfx.sdf_mask`), as SDF fonts are drawn.
+Carpet, oil and campaign stone each use a signed distance field of their
+occupied hexes (`texture.hex_field`). It rounds the exterior and blends the
+joins between adjacent cells. The renderer anchors each tiled material to the
+board and masks it with a shaded rim (`gfx.sdf_mask`). The field is rebuilt
+when its occupied cells or layout change. Stone uses one authored mark per
+remaining hit count. Cracking a stone changes its mark, and breaking it opens
+its cell in the shared surface. Oil adds two drifting bubble layers.
 Smaller pieces leave special floor artwork visible; this is spatial scaling
 of the original sprite, not a recolored state. The guide uses the same atlas keys
 as the board and HUD.
@@ -109,7 +111,11 @@ The two freestanding delivery icons retain the first atlas's authored alpha.
 The [master](../engine/art/match3-elements/source.png),
 [exact prompt](../engine/art/match3-elements/prompt.txt), and
 [registration manifest](../engine/art/match3-elements/manifest.json) are retained.
-These are historical assets. Only the stone and delivery cells are still registered (ten runtime files for the two games); the crate, tunnel, hidden-object and growth cells stay in the master image, unregistered. The current atlases use original Homescapes sprites; see [the port contract](HOMESCAPES_HEX.md) for replacements and missing states.
+These are historical assets. The two games now supply their own board materials
+and standalone power-ups. The catalogues document the
+[Relic Rush](../games/relic-rush/docs/asset-catalogue.md#themed-board-art) and
+[Christmas Market](../games/christmas-market/docs/asset-catalogue.md#themed-board-art)
+atlases. The [port contract](HOMESCAPES_HEX.md) lists the remaining source elements.
 
 ```sh
 python3 tools/match3_elements_art.py

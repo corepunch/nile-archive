@@ -125,14 +125,18 @@ function E.bind_board_ui(R, rules, tool_art)
             local icons={CELL_JELLY="goal-carpet",CELL_OIL="goal-oil",BOX="goal-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
             local entries={}
             for n,goal in ipairs(g.hs.goals) do entries[#entries+1]={id="source-"..n,
-                icon=goal.type=='CHIPS' and 'goal-chip-'..goal.subtype or icons[goal.type],
+                kind=goal.type=='CHIPS' and goal.subtype or nil, icon=icons[goal.type],
                 remaining=math.max(0,goal.max-goal.current)} end
             return entries
         end
         local entries = {{id="score",icon="score",remaining=math.max(0,l.score-g.score)},
             {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)}}
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
-        if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
+        if g.initial_obstacles>0 then
+            local stone_only = (l.chains or 0)==0 and (l.ice or 0)==0 and l.stones and #l.stones>0
+            local icon = stone_only and R.board_art["goal-stone"] and "goal-stone" or "chain"
+            entries[#entries+1]={id="locks",icon=icon,remaining=math.max(0,g.obstacles)}
+        end
         if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
         if g.oil_left>0 or l.oil and #l.oil>0 then
             entries[#entries+1]={id="oil",icon="goal-oil",remaining=g.oil_left}
@@ -150,6 +154,7 @@ function E.bind_board_ui(R, rules, tool_art)
         goal_centers[entry.id] = R.skin:resource_icon_box(box, "goal"):center()
         local icon = entry.icon=="score" and R.hud_art.score
             or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
+            or entry.kind and R.relics[entry.kind+1]
             or R.board_art[entry.icon]
         -- Collections landing on a goal make it bounce.
         local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0

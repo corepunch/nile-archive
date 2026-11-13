@@ -35,7 +35,7 @@ for name, asset in manifest["assets"].items():
     assert len(asset["box"]) == 4
     if asset.get("atlas_frame"):
         atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
-        assert asset["atlas_frame"] in atlas["homescapes"]
+        assert asset["atlas_frame"] in atlas[asset.get("atlas_section", "homescapes")]
         assert asset["runtime"] == "data/match3.png"
         continue
     data = (ROOT / asset["runtime"]).read_bytes()

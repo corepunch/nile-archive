@@ -1,7 +1,8 @@
 # Homescapes mechanics in the shared hex engine
 
-The shared engine and both portrait games use original Homescapes pieces and
-color-independent power-ups. The existing swap/reject, pop, fall, landing,
+The shared engine uses the Homescapes rules for color-independent power-ups.
+Relic Rush and Christmas Market use their own chips and themed sprites based
+on the original power-up silhouettes. The existing swap/reject, pop, fall, landing,
 cascade, score-flight, particle, sound, haptic and reduced-motion paths remain.
 A plane adds a flight to that same effects pool. Towns, campaigns, restoration
 rewards, tools and the campaigns' carpet and oil floors remain available.
@@ -138,11 +139,10 @@ sprite (Homescapes paints it in a shader), so `oil-material`, `oil-bubbles` and
 full-bleed hex art. All transforms and input/output hashes are recorded in the
 engine and games' `match3-atlas.json` manifests.
 
-`python3 tools/match3_atlas.py` packs original pieces, specials, blockers and
-retained interface controls into **one board atlas per active skin**. Every selectable
-piece pack aliases the same six originals; sprites are not repainted or tinted
-for power-up states. Existing separate scene, character, town and particle
-textures remain. The old striped-gem shader is no longer used for power-ups.
+`python3 tools/match3_atlas.py` packs chips, specials, blockers and interface
+controls into **one board atlas per active skin**. The game atlases include
+the original themed chip packs and the authored board-theme sprites. The
+engine default atlas retains the Homescapes sprites and source materials.
 
 Original source artwork covers nuts, statues, stacks, ceramic tiles, blinds,
 visible queues, six jelly strengths and the donut exit arrow. The extracted
@@ -166,12 +166,9 @@ At the user's request, the live field has no legacy gold edges, snow/sand rims,
 bevels, authored selection/hint frames or numeric ice badges. Flat hex ground
 uses neutral grays `#484848` and `#545454` (alternating cells), with no green tint.
 See the [gray-field review](review/gray-hex-ground/README.md). Selection and hints
-scale the original piece. Only Homescapes sprites
-are used for board pieces and blockers. Existing quest-resource artwork is the
-explicit temporary exception. Surrounding backgrounds, panels, tool buttons and
-interface remain, as do the requested particle effects and animation transforms.
-The donut collection exit uses the original animated arrow. Campaign stones
-use the source box states. The source-preview boards use the dedicated source model
+scale the piece. The donut collection exit uses the original animated arrow.
+Campaign stones use a continuous surface with authored per-cell damage marks.
+The source-preview boards use the dedicated source model
 handlers and goals described above.
 
 The longer guide uses the engine's existing scrolling list, keeping Done within

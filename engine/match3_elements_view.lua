@@ -3,11 +3,8 @@
 local E = {}
 
 E.assets = {"stone-1", "stone-2", "stone-3", "delivery", "delivery-exit", "carry-exit-arrow"}
+local stone_art = {"stone-material", "stone-mark-1", "stone-mark-2", "stone-mark-3", "goal-stone"}
 
-for i=0,5 do
-    E.assets[#E.assets+1]="kind-"..i
-    E.assets[#E.assets+1]="goal-chip-"..i
-end
 for _,name in ipairs{"box","carry","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
@@ -28,13 +25,16 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 
 function E.load(art, skin)
     for _, name in ipairs(E.assets) do art[name] = assert(skin[name], "missing element art: " .. name) end
+    if skin["stone-material"] then
+        for _, name in ipairs(stone_art) do art[name] = assert(skin[name], "missing stone art: " .. name) end
+    end
 end
 
 local function image(R, name, at, size, alpha)
     gfx.image(R.board_art[name], rect.centered(at, size2.splat(size)), color(255, 255, 255, alpha * 255))
 end
 
--- Carpet and oil are each one continuous patch, as in Homescapes: a signed
+-- Carpet, oil and stone each form a continuous patch: a signed
 -- distance field of their cells (texture.hex_field, rounded outside corners,
 -- filleted inside ones) masks a tiled material, and the rim is shaded. A field
 -- is rebuilt only when its cells change. Oil also carries two layers of
@@ -44,6 +44,7 @@ local PATCH = {
     carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.15, rim = 5, shade = .5},
     oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 4, shade = .35,
         bubbles = {{"oil-bubbles", 4, -9, 1.6, 200}, {"oil-bubbles", -3, -14, 1.1, 150}}},   -- art, drift x/y (px/s), size, opacity
+    stone = {material = "stone-material", corner = .20, fillet = .64, range = .6, texel = 2, tile = 1.6, rim = 6, shade = .48},
 }
 local function patch_cells(R, rules, layer)
     local g, cells = R.g, {}
@@ -51,6 +52,9 @@ local function patch_cells(R, rules, layer)
         local on
         if layer == "carpet" then
             on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
+        elseif layer == "stone" then
+            on = g.stone_hp and (g.stone_hp[i] or 0) > 0
+                and (not R.intro or R.intro:blocker(i))
         else on = g.oil and (g.oil[i] or 0) > 0 end
         if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
     end
@@ -58,7 +62,8 @@ local function patch_cells(R, rules, layer)
 end
 local function patch_field(R, layer, cells)
     local spec = PATCH[layer]
-    local key = R.HEX_R .. ":" .. table.concat(cells, ",")
+    local origin = R.board_origin
+    local key = table.concat({R.HEX_R, origin.x, origin.y, table.concat(cells, ",")}, ":")
     R.patch_fields = R.patch_fields or {}
     local cache = R.patch_fields[layer]
     if cache and cache.key == key then return cache end
@@ -79,30 +84,47 @@ local function patch_field(R, layer, cells)
     R.patch_fields[layer] = {key = key, texture = field, area = area, range = range}
     return R.patch_fields[layer]
 end
--- Tile t over area in squares of side, shifted by offset (wrapping).
-local function tile(t, area, side, offset, tint)
-    local src = rect(1, 1, 126, 126)   -- clear of the atlas cell's border texels
-    local ox, oy = offset.x % side - side, offset.y % side - side
-    for y = area.y + oy, area.y + area.h, side do
-        for x = area.x + ox, area.x + area.w, side do gfx.image_part(t, src, rect(x, y, side, side), tint) end
+-- Anchor material to the board so growing or clearing a patch leaves the
+-- surviving surface in place. Mirrored UVs meet without a hard repeat seam.
+local function tile(t, area, side, origin, tint, mirror)
+    local first_col, last_col = math.floor((area.x - origin.x) / side), math.ceil((area.x + area.w - origin.x) / side) - 1
+    local first_row, last_row = math.floor((area.y - origin.y) / side), math.ceil((area.y + area.h - origin.y) / side) - 1
+    for row = first_row, last_row do
+        local y, h = 1, 126
+        if mirror and row % 2 ~= 0 then y, h = 127, -126 end
+        for col = first_col, last_col do
+            local x, w = 1, 126
+            if mirror and col % 2 ~= 0 then x, w = 127, -126 end
+            gfx.image_part(t, rect(x, y, w, h), rect(origin.x + col * side, origin.y + row * side, side, side), tint)
+        end
     end
 end
-function E.patch(R, rules, layer, sx)
-    local cells = patch_cells(R, rules, layer)
-    if #cells == 0 then return end
+local function draw_patch(R, layer, cells, sx)
     local spec, field = PATCH[layer], patch_field(R, layer, cells)
     local area = field.area:offset(vec2(sx, 0))
     local alpha = R.intro and R.intro:fade() or 1
     local side = 2 * R.HEX_R * spec.tile
-    local tint = R.patch_tint and R.patch_tint[layer] or color.WHITE   -- a game may recolour a patch to suit its board
+    local origin = R.board_origin + vec2(sx, 0)
     gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade)
-    tile(R.board_art[spec.material], area, side, vec2(0, 0), color(tint.r, tint.g, tint.b, 255 * alpha))
+    tile(R.board_art[spec.material], area, side, origin, color(255, 255, 255, 255 * alpha), true)
     local now = R.reduced_motion and 0 or (R.now or 0)
     for _, layer_spec in ipairs(spec.bubbles or {}) do
         local art, dx, dy, scale, opacity = table.unpack(layer_spec)
-        tile(R.board_art[art], area, side * scale, vec2(dx * now, dy * now), color(255, 255, 255, opacity * alpha))
+        tile(R.board_art[art], area, side * scale, origin + vec2(dx * now, dy * now), color(255, 255, 255, opacity * alpha))
     end
     gfx.sdf_unmask()
+end
+function E.patch(R, rules, layer, sx)
+    local cells = patch_cells(R, rules, layer)
+    if #cells == 0 then return end
+    draw_patch(R, layer, cells, sx)
+    if layer == "stone" then
+        local alpha = R.intro and R.intro:fade() or 1
+        for _, cell in ipairs(cells) do
+            local hp = R.g.stone_hp[cell]
+            image(R, "stone-mark-" .. hp, R.cell_pos(cell) + vec2(sx, 0), 2 * R.HEX_R, alpha)
+        end
+    end
 end
 function E.carpet(R, rules, sx) E.patch(R, rules, "carpet", sx) end
 
@@ -225,18 +247,23 @@ local function generator_art(R,g,i,at,alpha)
     if not unit then return end
     local powers={b='bomb',f='plane',z='prism',l='ray-column',lh='ray-row',lv='ray-column'}
     local name=unit.element and unit.element..'-'..unit.hp or unit.special and powers[unit.special]
-        or unit.color and 'kind-'..unit.color
-    if name then image(R,name,at-vec2(0,R.HEX_R*.12),R.HEX_R*.95,alpha) end
+    local pos = at-vec2(0,R.HEX_R*.12)
+    if name then image(R,name,pos,R.HEX_R*.95,alpha)
+    elseif unit.color then
+        gfx.image(R.relics[unit.color+1],rect.centered(pos,size2.splat(R.HEX_R*.95)),color(255,255,255,alpha*255))
+    end
 end
 
 -- Fixed blockers cover the piece area.
 function E.blockers(R, rules, sx)
     local g = R.g
+    local themed_stone = R.board_art["stone-material"]
+    if themed_stone then E.patch(R, rules, "stone", sx) end
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local name
             local hp = g.stone_hp and g.stone_hp[i] or 0
-            if hp > 0 then name = "box-" .. math.min(hp, 6) end
+            if hp > 0 and not themed_stone then name = "box-" .. math.min(hp, 6) end
             if g.hs then
                 local c=g.hs.cells[i]
                 if (c.box or 0)>0 then

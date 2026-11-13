@@ -4,10 +4,7 @@
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
--- Line specials are striped treats, as in Relic Rush: engine-rendered cream
--- bands masked to the treat's own alpha, along the axis they clear. The
--- shooting-star ray frames stay in the atlas for the guide's legacy previews only.
-A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
+-- Standalone power-ups, with one authored rocket per hex axis.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
@@ -91,11 +88,10 @@ function A.draw_catalogue(R)
             gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
         end
     end
-    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism",
+    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85
-        if i <= 4 then gfx.image(R.relics[i], rect(x + 9, y + 9, 30, 30), color.WHITE) end
         gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end

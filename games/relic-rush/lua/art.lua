@@ -6,11 +6,9 @@ local A = {}
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
--- Color-independent original Homescapes power-ups replace the ordinary piece.
--- Bomb and prism replace the gem with their full-size authored sprite.
+-- Standalone power-ups, with one authored rocket per hex axis.
 -- The neutral skin's filled ice uses 0.52 opacity. Live rim art has open centres.
 A.indicators = {source="art/board-states/clear-indicators.png", ice_opacity=133}
-A.stripes = {repeats=4, width=.44, ink=color(255,250,224)}
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
@@ -89,11 +87,11 @@ function A.draw_catalogue(R)
             gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
         end
     end
-    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism",
+    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85
-        if i <= 5 then
+        if i <= 6 then
             R.draw_relic({kind=i-1,special=i},vec2(x+24,y+24),1,255,1)
         else gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE) end
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
@@ -113,7 +111,7 @@ end
 function A.draw_stripe_catalogue(R)
     gfx.round_rect(rect(16,130,448,640),18,color(12,47,41,250))
     R.say_at("SPECIAL PIECES",vec2(240,160),25,R.PAL_GOLD,420)
-    local labels={"NORMAL","30 DEGREE STRIPES","VERTICAL STRIPES","150 DEGREE STRIPES","FULL BOMB"}
+    local labels={"NORMAL","30 DEGREE ROCKET","VERTICAL ROCKET","150 DEGREE ROCKET","BOMB"}
     for row=0,4 do
         R.say_at(labels[row+1],vec2(240,205+row*106),13,R.PAL_CREAM,420)
         for kind=0,5 do R.draw_relic({kind=kind,special=row},vec2(62+kind*71,252+row*106),1,255,1,true) end
