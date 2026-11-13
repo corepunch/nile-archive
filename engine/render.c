@@ -101,8 +101,13 @@ bool render_init(void)
          * positive, range is the distance one half of the encoding spans. */
         "if(mask_params.x>0.){vec2 m=mask_uv.xy+(point-mask_rect.xy)/mask_rect.zw*mask_uv.zw;"
         "float d=(texture(mask,m).r-.5)*2.*mask_params.x;float aa=max(fwidth(d),.001)*.7;"
-        "base.rgb*=1.-mask_params.z*smoothstep(-mask_params.y,0.,d);"
-        "base.a*=1.-smoothstep(-aa,aa,d);}"
+        "if(mask_params.w<0.){base.a*=1.-smoothstep(-aa,-mask_params.w+aa,d);}"
+        "else{float edge=mask_params.y>0.?smoothstep(-mask_params.y,0.,d):0.;"
+        "float light=0.;if(mask_params.w>0.){vec2 gradient=vec2(dFdx(d),-dFdy(d));"
+        "light=dot(gradient,vec2(-.55,-.835))/max(length(gradient),.001);}"
+        "base.rgb*=1.-edge*mask_params.z*(1.-max(light,0.));"
+        "base.rgb=mix(base.rgb,vec3(1.),edge*max(light,0.)*mask_params.w);"
+        "base.a*=1.-smoothstep(-aa,aa,d);}}"
         "pixel=base*tint;}\n");
     if (!vs || !fs) { glDeleteShader(vs); glDeleteShader(fs); return false; }
     R.program = glCreateProgram();
@@ -280,8 +285,9 @@ void render_image_striped(texture t, rect dst, float angle, float repeats, float
 }
 
 /* Until render_mask with an empty texture, every draw is cut to the signed distance field
- * in t, spread over area (logical units); rim darkens the inside edge. */
-void render_mask(texture t, rect area, float range, float rim, float shade)
+ * in t, spread over area (logical units). A soft mask extends past the edge
+ * for a shadow pass. A beveled mask lights the inner edge from the upper left. */
+void render_mask(texture t, rect area, float range, float rim, float shade, float bevel, float softness)
 {
     if (!render_ready()) return;
     if (!t.tex || range <= 0 || area.size.w <= 0 || area.size.h <= 0) {
@@ -295,7 +301,8 @@ void render_mask(texture t, rect area, float range, float rim, float shade)
     glActiveTexture(GL_TEXTURE0);
     glUniform4f(R.mask_rect, area.pos.x, area.pos.y, area.size.w, area.size.h);
     glUniform4f(R.mask_uv, uv.pos.x, uv.pos.y, uv.size.w, uv.size.h);
-    glUniform4f(R.mask_params, range, maxf(rim, 0), saturate(shade), 0);
+    glUniform4f(R.mask_params, range, maxf(rim, 0), saturate(shade),
+                softness > 0 ? -minf(softness, range * .9f) : saturate(bevel));
 }
 
 /* The area drawing may reach: the logical screen, or the whole display. */

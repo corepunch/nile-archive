@@ -6,6 +6,7 @@
 -- --kudos, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces. Add "specials" to show
 -- all power-ups beside a connected stone formation.
+-- --floor-reel carpet|oil plays three swaps on the chosen campaign level.
 -- Nothing here runs in a normal game.
 local D = {}
 
@@ -37,7 +38,66 @@ function D.bind(R, W)
     -- --talk-through N moves the dialogue on every N frames, to film it;
     -- --scroll-review drags the open shop or level list.
     local talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
+    local floor_reel = app.arg("floor-reel")
+    local floor_frames, floor_turn = 0, 0
+
+    local function floor_move()
+        local g = R.g
+        local best, first, second, expected = 0
+        for a = 0, rules.CELLS - 1 do
+            for d = 0, 2 do
+                local b = rules.hex_neighbor(a, d)
+                if rules.game_can_swap(g, a, b) and g.tiles[a].special == rules.NORMAL and g.tiles[b].special == rules.NORMAL then
+                    local copy, match = rules.game_copy(g), rules.new_match()
+                    if rules.game_swap(copy, a, b, match) then
+                        local duration = .17
+                        repeat
+                            rules.game_apply(copy, match)
+                            local _, falls = rules.game_collapse(copy)
+                            -- Clear, fall, and one frame of slack at each phase boundary.
+                            duration = duration + .36 + #falls * rules.FALL_STEP
+                            rules.game_matches(copy, match, -1)
+                        until match.hits == 0 or duration > 1.7
+                        if match.hits == 0 and duration <= 1.7 then
+                            rules.game_end_turn(copy)
+                            local delta = copy.carpeted - g.carpeted
+                            if floor_reel == "oil" then
+                                delta = floor_turn == 0 and copy.oil_left - g.oil_left or g.oil_left - copy.oil_left
+                            end
+                            local score = delta * 10 - duration
+                            if score > best then
+                                best, first, second = score, a, b
+                                expected = floor_reel == "oil" and copy.oil_left or copy.carpeted
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        assert(first, "floor reel needs a swap showing the requested change")
+        R.attempt_swap(first, second)
+        assert(R.phase == R.PH_SWAP, "floor reel swap did not start")
+        return expected
+    end
+
+    local floor_expected
     function R.debug_frame()
+        if floor_reel then
+            floor_frames = floor_frames + 1
+            if floor_expected and R.phase == R.PH_IDLE then
+                local current = floor_reel == "oil" and R.g.oil_left or R.g.carpeted
+                assert(current == floor_expected, "floor reel differed from the predicted move")
+                print(("floor reel %s move %d, frame %d, %d covered cells"):format(floor_reel, floor_turn, floor_frames, current))
+                floor_expected = nil
+            end
+            if floor_turn < 3 and floor_frames == 20 + floor_turn * 120 then
+                assert(R.phase == R.PH_IDLE and not floor_expected, "floor reel move has not settled")
+                floor_expected = floor_move()
+                floor_turn = floor_turn + 1
+            elseif floor_frames == 361 then
+                assert(floor_turn == 3 and not floor_expected, "floor reel ended before the last swap settled")
+            end
+        end
         if app.arg("dive") then   -- --city N --dive: Play is pressed on the third frame (the town -> board dive)
             dive_frames = dive_frames + 1
             if dive_frames == 3 then R.play_level(R.prog.level); R.present_board() end
@@ -76,10 +136,15 @@ function D.bind(R, W)
 
     function R.debug_screens()
         talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
+        floor_frames, floor_turn, floor_expected = 0, 0, nil
         if app.arg("stripe-states") then R.art_review = true end
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
         if a then R.g = rules.game_start(tonumber(a) - 1, 123478); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
+        if floor_reel then
+            assert(a and ((floor_reel == "carpet" and R.g.carpeted > 0)
+                or (floor_reel == "oil" and R.g.oil_left > 0)), "floor reel needs a level with the named patch")
+        end
         a = app.arg("city")
         if a then island_with(num.clampi(tonumber(a), 0, WONDERS)); R.on_island = true; R.toast_time = 0 end
         if app.arg("showcase") then

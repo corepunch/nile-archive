@@ -404,12 +404,42 @@ static float smooth_min(float a, float b, float k)
     return minf(a, b) - h * h * k * .25f;
 }
 
+typedef struct { vec2 start, step; } hex_edge;
+
+/* Shared cell edges are interior to the patch, even where the top is inset. */
+static int hex_perimeter(const char *centres, int count, float radius, hex_edge *edges)
+{
+    const vec2 corners[] = {{1, 0}, {.5f, .866025404f}, {-.5f, .866025404f},
+                            {-1, 0}, {-.5f, -.866025404f}, {.5f, -.866025404f}};
+    int used = 0;
+    for (int i = 0; i < count; i++) {
+        vec2 centre;
+        memcpy(&centre, centres + i * 8, 8);
+        for (int e = 0; e < 6; e++) {
+            vec2 a = vec2_scale(corners[e], radius), b = vec2_scale(corners[(e + 1) % 6], radius);
+            vec2 neighbor = vec2_add(centre, vec2_add(a, b));
+            bool exposed = true;
+            for (int j = 0; j < count && exposed; j++) {
+                vec2 other;
+                memcpy(&other, centres + j * 8, 8);
+                vec2 delta = vec2_sub(neighbor, other);
+                exposed = vec2_dot(delta, delta) > .001f;
+            }
+            if (exposed) edges[used++] = (hex_edge){vec2_add(centre, a), vec2_sub(b, a)};
+        }
+    }
+    return used;
+}
+
 texture tex_hex_field(const char *centres, int count, float radius, float corner, float fillet,
-                      rect area, int w, int h, float range)
+                      rect area, int w, int h, float range, float inset)
 {
     if (count < 0 || w <= 0 || h <= 0 || w > 2048 || h > 2048 || radius <= 0 || range <= 0) return (texture){0};
+    hex_edge *edges = inset > 0 && count > 0 ? malloc((size_t)count * 6 * sizeof *edges) : NULL;
+    if (inset > 0 && count > 0 && !edges) return (texture){0};
     unsigned char *px = malloc((size_t)w * h * 4);
-    if (!px) return (texture){0};
+    if (!px) { free(edges); return (texture){0}; }
+    int perimeter = edges ? hex_perimeter(centres, count, radius, edges) : 0;
     float apothem = radius * .866025404f;
     corner = clampf(corner, 0, apothem * .9f);
     float reach = radius + range + fillet;   /* cells further away cannot change the encoded value */
@@ -417,12 +447,26 @@ texture tex_hex_field(const char *centres, int count, float radius, float corner
         for (int x = 0; x < w; x++) {
             vec2 p = v2(area.pos.x + (x + .5f) * area.size.w / w, area.pos.y + (y + .5f) * area.size.h / h);
             float d = range;
+            bool inside = false;
             for (int i = 0; i < count; i++) {
                 float c[2];
                 memcpy(c, centres + i * 8, sizeof c);
                 vec2 q = v2(p.x - c[0], p.y - c[1]);
                 if (fabsf(q.x) > reach || fabsf(q.y) > reach) continue;
                 d = smooth_min(d, hex_distance(q, apothem - corner) - corner, fillet);
+                if (perimeter && !inside) inside = hex_distance(q, apothem) <= 0;
+            }
+            if (perimeter && d < range) {
+                float limit = range + inset;
+                float closest = limit * limit;
+                for (int i = 0; i < perimeter; i++) {
+                    vec2 q = vec2_sub(p, edges[i].start);
+                    if (fabsf(q.x) > radius + limit || fabsf(q.y) > radius + limit) continue;
+                    float along = saturate(vec2_dot(q, edges[i].step) / (radius * radius));
+                    vec2 delta = vec2_sub(q, vec2_scale(edges[i].step, along));
+                    closest = minf(closest, vec2_dot(delta, delta));
+                }
+                d = inset + (inside ? -1.f : 1.f) * sqrtf(closest);
             }
             unsigned char v = (unsigned char)(saturate(.5f + d / (2 * range)) * 255 + .5f);
             unsigned char *o = px + ((size_t)y * w + x) * 4;
@@ -431,15 +475,16 @@ texture tex_hex_field(const char *centres, int count, float radius, float corner
     }
     texture t = tex_from_pixels(px, w, h);
     free(px);
+    free(edges);
     return t;
 }
 
-void gfx_sdf_mask(texture t, rect area, float range, float rim, float shade)
+void gfx_sdf_mask(texture t, rect area, float range, float rim, float shade, float bevel, float softness)
 {
-    render_mask(t, area, range, rim, shade);
+    render_mask(t, area, range, rim, shade, bevel, softness);
 }
 
-void gfx_sdf_unmask(void) { render_mask((texture){0}, rc(0, 0, 0, 0), 0, 0, 0); }
+void gfx_sdf_unmask(void) { render_mask((texture){0}, rc(0, 0, 0, 0), 0, 0, 0, 0, 0); }
 
 void gfx_clip(rect r)
 {

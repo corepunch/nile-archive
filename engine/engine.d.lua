@@ -778,7 +778,7 @@ texture = {}
 ---@return texture
 function texture.region(atlas, source) end
 
----A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centres packs count float pairs (string.pack("ff", x, y) each) in logical units; radius is a cell's centre-to-vertex size. Convex corners round by corner, and the inside corners where cells meet fillet over fillet. The w x h texture spans area; it encodes -range..range, so keep range above the rim and the fillet.
+---A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centres packs count float pairs (string.pack("ff", x, y) each) in logical units; radius is a cell's centre-to-vertex size. Convex corners round by corner, and the inside corners where cells meet fillet over fillet. A positive inset clips the field to that distance inside the union's exposed edges, preserving interior joins. The w x h texture spans area; it encodes -range..range.
 ---@param centres string
 ---@param count integer
 ---@param radius number
@@ -788,8 +788,9 @@ function texture.region(atlas, source) end
 ---@param w integer
 ---@param h integer
 ---@param range number
+---@param inset? number
 ---@return texture
-function texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range) end
+function texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range, inset) end
 
 ---Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web.
 ---@return texture
@@ -970,13 +971,15 @@ function gfx.star(center, radius, inner, points, angle, c) end
 ---@param on boolean
 function gfx.additive(on) end
 
----Until sdf_unmask, cut every drawing to the inside of the distance field t (from texture.hex_field) spread over area, with an anti-aliased edge at any scale. rim darkens a band that wide inside the edge by shade (0..1). range must match the field's.
+---Until sdf_unmask, mask drawing with the signed distance field t spread over area. range must match the field's. rim is the width of an inner edge band, shade darkens it, and bevel (0..1) adds upper-left lighting. Positive softness fades the mask outward over that distance for a shadow pass.
 ---@param t texture
 ---@param area rect
 ---@param range number
 ---@param rim number
 ---@param shade number
-function gfx.sdf_mask(t, area, range, rim, shade) end
+---@param bevel? number
+---@param softness? number
+function gfx.sdf_mask(t, area, range, rim, shade, bevel, softness) end
 
 function gfx.sdf_unmask() end
 

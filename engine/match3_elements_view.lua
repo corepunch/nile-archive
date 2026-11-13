@@ -41,10 +41,12 @@ end
 -- bubbles drifting at different speeds, as Homescapes' oil shader does.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
 local PATCH = {
-    carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.15, rim = 5, shade = .5},
+    carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
+        inset = 1.4, rim = 4, shade = .55, bevel = .27, shadow_y = 2.5, softness = 4, opacity = 115},
     oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 4, shade = .35,
         bubbles = {{"oil-bubbles", 4, -9, 1.6, 200}, {"oil-bubbles", -3, -14, 1.1, 150}}},   -- art, drift x/y (px/s), size, opacity
-    stone = {material = "stone-material", corner = .20, fillet = .64, range = .6, texel = 2, tile = 1.6, rim = 6, shade = .48},
+    stone = {material = "stone-material", corner = .20, fillet = .64, range = .6, texel = 1.5, tile = 1.6,
+        inset = 3.5, rim = 6, shade = .57, bevel = .34, shadow_y = 3, softness = 4.5, opacity = 135},
 }
 local function patch_cells(R, rules, layer)
     local g, cells = R.g, {}
@@ -80,7 +82,7 @@ local function patch_field(R, layer, cells)
     local area = rect(minx - pad, miny - pad, maxx - minx + 2 * pad, maxy - miny + 2 * pad)
     local w, h = math.ceil(area.w / spec.texel), math.ceil(area.h / spec.texel)
     local field = texture.hex_field(string.pack(("ff"):rep(#cells), table.unpack(xy)), #cells, r,
-        spec.corner * r, spec.fillet * r, area, w, h, range)
+        spec.corner * r, spec.fillet * r, area, w, h, range, spec.inset or 0)
     R.patch_fields[layer] = {key = key, texture = field, area = area, range = range}
     return R.patch_fields[layer]
 end
@@ -105,7 +107,12 @@ local function draw_patch(R, layer, cells, sx)
     local alpha = R.intro and R.intro:fade() or 1
     local side = 2 * R.HEX_R * spec.tile
     local origin = R.board_origin + vec2(sx, 0)
-    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade)
+    if spec.shadow_y then
+        local shadow = area:offset(vec2(1, spec.shadow_y))
+        gfx.sdf_mask(field.texture, shadow, field.range, 0, 0, 0, spec.softness)
+        gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
+    end
+    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel or 0)
     tile(R.board_art[spec.material], area, side, origin, color(255, 255, 255, 255 * alpha), true)
     local now = R.reduced_motion and 0 or (R.now or 0)
     for _, layer_spec in ipairs(spec.bubbles or {}) do

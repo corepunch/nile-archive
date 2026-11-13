@@ -125,6 +125,30 @@ static void draw_and_check(void)
     CHECK(pixel(81, 12).r == 0);
     tex_free(atlas);
 
+    /* A raised patch insets only exposed edges and leaves the shared edge
+     * solid. Its bevel catches light above and its shadow lands below. */
+    const float centres[][2] = {{44, 35}, {44, 35 + 18 * 1.7320508f}};
+    rect field = rc(10, 6, 68, 90), shadow = rect_offset(field, v2(1, 3));
+    texture patch = tex_hex_field((const char *)centres, 2, 18, 3, 8, field, 136, 180, 12, 3);
+    CHECK(patch.tex);
+    draw_rect(rc(0, 0, 100, 100), hex(0x969696));
+    gfx_sdf_mask(patch, shadow, 12, 0, 0, 0, 4);
+    draw_rect(shadow, rgba(0, 0, 0, 120));
+    gfx_sdf_mask(patch, field, 12, 5, .55f, .40f, 0);
+    draw_rect(field, hex(0x788CB4));
+    gfx_sdf_unmask();
+    draw_rect(rc(78, 15, 10, 10), WHITE);
+    CHECK(render_read_pixels(pixels, width, height));
+    c = pixel(44, 50.5f);
+    CHECKF(c.b > 175 && c.r < 125, "shared edge keeps the top color, got %u,%u,%u", c.r, c.g, c.b);
+    CHECK(pixel(44, 20).r == 150 && pixel(44, 20).b == 150); /* inset from the hex edge */
+    color top = pixel(44, 23.5f), bottom = pixel(44, 77.5f);
+    CHECKF(top.g > bottom.g + 35 && bottom.g < 130,
+           "bevel lights the top (%u) and shades the bottom (%u)", top.g, bottom.g);
+    CHECK(pixel(44, 83).r < 125 && pixel(44, 89).r == 150); /* contact shadow fades away */
+    CHECK(pixel(83, 20).r == 255); /* no leaked mask state */
+    tex_free(patch);
+
     /* Off the logical screen, drawing is clipped until bleed lets it reach the display. */
     rect bleed = app_bleed(), screen = app_screen();
     CHECK(bleed.pos.x < 0 && bleed.pos.y <= 0 && rect_max(bleed).x > rect_max(screen).x && rect_max(bleed).y >= rect_max(screen).y);

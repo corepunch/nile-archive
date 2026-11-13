@@ -1070,9 +1070,9 @@ Borrow a pixel rectangle of an atlas as a normal texture. Supports nested region
 
 **Returns:** `texture`
 
-### `texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range)`
+### `texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range, inset?)`
 
-A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centres packs count float pairs (string.pack("ff", x, y) each) in logical units; radius is a cell's centre-to-vertex size. Convex corners round by corner, and the inside corners where cells meet fillet over fillet. The w x h texture spans area; it encodes -range..range, so keep range above the rim and the fillet.
+A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centres packs count float pairs (string.pack("ff", x, y) each) in logical units; radius is a cell's centre-to-vertex size. Convex corners round by corner, and the inside corners where cells meet fillet over fillet. A positive inset clips the field to that distance inside the union's exposed edges, preserving interior joins. The w x h texture spans area; it encodes -range..range.
 
 | Argument | Type | |
 |---|---|---|
@@ -1085,6 +1085,7 @@ A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centre
 | `w` | `integer` |  |
 | `h` | `integer` |  |
 | `range` | `number` |  |
+| `inset` | `number?` | Default 0. |
 
 **Returns:** `texture`
 
@@ -1377,9 +1378,9 @@ Additive blending for shapes (glows, sparks) until switched off.
 |---|---|---|
 | `on` | `boolean` |  |
 
-### `gfx.sdf_mask(t, area, range, rim, shade)`
+### `gfx.sdf_mask(t, area, range, rim, shade, bevel?, softness?)`
 
-Until sdf_unmask, cut every drawing to the inside of the distance field t (from texture.hex_field) spread over area, with an anti-aliased edge at any scale. rim darkens a band that wide inside the edge by shade (0..1). range must match the field's.
+Until sdf_unmask, mask drawing with the signed distance field t spread over area. range must match the field's. rim is the width of an inner edge band, shade darkens it, and bevel (0..1) adds upper-left lighting. Positive softness fades the mask outward over that distance for a shadow pass.
 
 | Argument | Type | |
 |---|---|---|
@@ -1388,6 +1389,8 @@ Until sdf_unmask, cut every drawing to the inside of the distance field t (from 
 | `range` | `number` |  |
 | `rim` | `number` |  |
 | `shade` | `number` |  |
+| `bevel` | `number?` | Default 0. |
+| `softness` | `number?` | Default 0. |
 
 ### `gfx.sdf_unmask()`
 

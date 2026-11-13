@@ -2644,7 +2644,7 @@ static int l_texture_region(lua_State *L)
     return 1;
 }
 
-/* texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range) */
+/* texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range, inset?) */
 static int l_texture_hex_field(lua_State *L)
 {
     size_t len_centres;
@@ -2657,8 +2657,9 @@ static int l_texture_hex_field(lua_State *L)
     int a_w = (int)luaL_checkinteger(L, 7);
     int a_h = (int)luaL_checkinteger(L, 8);
     float a_range = (float)luaL_checknumber(L, 9);
+    float a_inset = (float)luaL_optnumber(L, 10, 0);
     luaL_argcheck(L, (size_t)(a_count * 8) <= len_centres, 1, "too few bytes");
-    texture r = tex_hex_field(a_centres, a_count, a_radius, a_corner, a_fillet, a_area, a_w, a_h, a_range);
+    texture r = tex_hex_field(a_centres, a_count, a_radius, a_corner, a_fillet, a_area, a_w, a_h, a_range, a_inset);
     api_push_texture(L, r);
     return 1;
 }
@@ -2970,7 +2971,7 @@ static int l_gfx_additive(lua_State *L)
     return 0;
 }
 
-/* gfx.sdf_mask(t, area, range, rim, shade) */
+/* gfx.sdf_mask(t, area, range, rim, shade, bevel?, softness?) */
 static int l_gfx_sdf_mask(lua_State *L)
 {
     texture a_t = api_check_texture(L, 1);
@@ -2978,7 +2979,9 @@ static int l_gfx_sdf_mask(lua_State *L)
     float a_range = (float)luaL_checknumber(L, 3);
     float a_rim = (float)luaL_checknumber(L, 4);
     float a_shade = (float)luaL_checknumber(L, 5);
-    gfx_sdf_mask(a_t, a_area, a_range, a_rim, a_shade);
+    float a_bevel = (float)luaL_optnumber(L, 6, 0);
+    float a_softness = (float)luaL_optnumber(L, 7, 0);
+    gfx_sdf_mask(a_t, a_area, a_range, a_rim, a_shade, a_bevel, a_softness);
     return 0;
 }
 

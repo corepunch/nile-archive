@@ -91,8 +91,10 @@ mutable state for hint/bot search. A wave deals at most one hit to each stone.
 Carpet, oil and campaign stone each use a signed distance field of their
 occupied hexes (`texture.hex_field`). It rounds the exterior and blends the
 joins between adjacent cells. The renderer anchors each tiled material to the
-board and masks it with a shaded rim (`gfx.sdf_mask`). The field is rebuilt
-when its occupied cells or layout change. Stone uses one authored mark per
+board and masks it with `gfx.sdf_mask`. Carpet and stone have inset top faces
+with a lit bevel and a soft contact shadow. The inset follows the outside
+edges of the entire patch, preserving the joins between neighboring cells.
+The field is rebuilt when its occupied cells or layout change. Stone uses one authored mark per
 remaining hit count. Cracking a stone changes its mark, and breaking it opens
 its cell in the shared surface. Oil adds two drifting bubble layers.
 Smaller pieces leave special floor artwork visible; this is spatial scaling
