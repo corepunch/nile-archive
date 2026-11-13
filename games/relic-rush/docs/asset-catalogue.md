@@ -18,6 +18,8 @@ Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and t
 
 The revised specials use the [ImageGen sheet](../art/board-theme/power-ups.png) and [exact shape and color prompt](../art/board-theme/power-ups-prompt.txt). The packed frames were reviewed at both phone sizes. [Power-up comparison](screenshots/review/power-ups/README.md).
 
+The default chips, delivery and six specials use the Homescapes alpha masks as area references. The atlas manifest records each fit inside the inset hex. [Board size comparison](screenshots/review/sprite-fit/README.md).
+
 ## Chapter 1 quest objects
 
 The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)

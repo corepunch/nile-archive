@@ -70,8 +70,17 @@ the plane by its broad wing and curled underside.
 
 ## Register and review
 
-1. Crop and scale uniformly. Rotate the independently painted rockets to the
-   exact +30°, 90° and −30° axes. Preserve authored alpha on objects. Apply
+1. Crop and scale uniformly. The atlas importer measures visible pixels at
+   half opacity or greater in the native Homescapes alpha masks. It uses the
+   median of the six chip masks as a common chip target and the median of
+   the two rocket masks for all three axes. Bomb, rainbow, plane and delivery
+   each have their own reference. Target areas account for the smaller chip
+   and delivery draw quads. Fit each silhouette inside the inset hex and
+   favor centered placement. Narrow or asymmetric shapes can land below the
+   area target to preserve their shape and clearance. The manifest records
+   the target, fitted area and placement for review.
+   Rotate the independently painted rockets to the exact +30°, 90° and −30°
+   axes. Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
    sprites. Keep carpet, oil and stone as swatches for the board's continuous
    surface mask. Keep carpet and stone's bevel and soft contact shadow in the
