@@ -29,6 +29,7 @@ enum { MAX_C_TESTS = 128, MAX_JOBS = 512, MAX_NOTES = 12, MAX_ARGS = 64, TIME_LI
 static struct { const char *name; void (*fn)(void); } c_tests[MAX_C_TESTS];
 static int c_test_count;
 static const char *current_suite = "engine";
+static bool shared_instance;   /* test_all: one process and one window for every suite */
 const char *test_suite(void) { return current_suite; }
 
 static struct {
@@ -284,6 +285,7 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         checks_only |= !strcmp(argv[i], "--check");
         if (!strcmp(argv[i], "--extended")) setenv("SPRITE_TEST_EXTENDED", "1", 1);
     }
+    failures[0] = 0;
     snprintf(spec, sizeof spec, "tests/games/%s.lua", suite);
     int job_count = access(spec, R_OK) ? 0 : test_read_jobs(spec, jobs, MAX_JOBS);
     if (job_count < 0) return 2;
@@ -301,6 +303,7 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
     for (int i = 0; i < total; i++) {
         const test_job *j = i < c_test_count ? NULL : &jobs[i - c_test_count];
         const char *kind = j ? j->kind : "", *name = j ? j->name : c_tests[i].name;
+        if (!j && shared_instance && strcmp(suite, "engine")) continue;   /* the C tests are the engine suite's */
         if ((fast || checks_only) && j && strcmp(kind, "rules")) continue;
         if (fast && !j && (
             !strcmp(name, "platform") || !strcmp(name, "platform_safe_area") ||
@@ -329,7 +332,7 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         checks += T.checks;
         report(kind, name, seconds_now() - T.started, log, &passed, &failed, failures, sizeof failures);
     }
-    app_test_close_window();
+    if (!shared_instance) app_test_close_window();
     DIR *dir = opendir(home);
     if (dir) {
         struct dirent *entry;
@@ -345,4 +348,32 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         passed, failed, colour ? "\033[0m" : "", checks, seconds_now() - began);
     if (failed) say("failed:\n%s", failures);
     return failed ? 1 : 0;
+}
+
+/* Every suite in one start: the engine's, then each game named in `games`
+ * (space-separated), all in the one process and window. --suite=NAME, which
+ * may repeat, keeps only those suites; every other argument is test_main's. */
+int test_all(const char *games, int argc, char **argv)
+{
+    static char names[512], lua_dir[160], data_dir[160];
+    snprintf(names, sizeof names, "engine %s", games);
+    bool chosen = false, list = false;
+    for (int i = 1; i < argc; i++) chosen |= !strncmp(argv[i], "--suite=", 8), list |= !strcmp(argv[i], "--list");
+    shared_instance = true;
+    int status = 0, ran = 0;
+    char *rest = names;   /* strtok_r: running a game tokenises its own arguments with strtok */
+    for (char *name = strtok_r(rest, " ", &rest); name; name = strtok_r(rest, " ", &rest)) {
+        bool run = !chosen;
+        for (int i = 1; i < argc; i++) run |= !strncmp(argv[i], "--suite=", 8) && !strcmp(argv[i] + 8, name);
+        if (!run) continue;
+        bool engine = !strcmp(name, "engine");
+        snprintf(lua_dir, sizeof lua_dir, engine ? "tests/lua" : "games/%s/lua", name);
+        snprintf(data_dir, sizeof data_dir, "games/%s/data", engine ? "relic-rush" : name);
+        if (list) printf("%s:\n", name), fflush(stdout);
+        status |= test_main(name, lua_dir, data_dir, argc, argv);
+        ran++;
+    }
+    app_test_close_window();
+    if (!ran) { fprintf(stderr, "no such suite; choose from: engine %s\n", games); return 2; }
+    return status;
 }

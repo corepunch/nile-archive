@@ -35,22 +35,24 @@ Use either script's `--existing` option to export a completed run without
 rendering again. Avoid adding another manifest entry just to give an existing
 view a different review filename.
 
-`make test` builds the test binaries, then runs correctness checks within a
-five-second wall-clock budget. Four independent workers run every rule suite,
-the engine's real-renderer/input assertions, audio, generated-code/project checks, asset audits and launcher contracts.
-Each game suite starts once. Results are grouped by suite, every invocation
-executes the checks again, and failures or budget overruns fail the target.
+`make test` builds one test binary, `build/test/all`, and starts it once. That one
+instance runs the engine's suite and then every game's, one after another, in a
+single process and a single window, so a run opens one app instead of one per
+suite. Beside it, worker processes run audio, the generated-code/project checks,
+the asset audits and the launcher contracts; none of those opens a window.
+Results are grouped by suite, every invocation executes the checks again, and
+failures or budget overruns fail the target.
 
-Build time is separate: the five-second timer starts after compilation. The
-timer includes test process startup, waiting for workers, preflight checks,
-reporting and teardown. Timed-out jobs and their children are terminated.
-`TEST_WORKERS` defaults to four; `TEST_BUDGET` defaults to five seconds.
+Build time is separate: the timer starts after compilation. It includes process
+startup, waiting for workers, preflight checks, reporting and teardown. Timed-out
+jobs and their children are terminated. `TEST_WORKERS` defaults to four;
+`TEST_BUDGET` defaults to fifteen seconds.
 
-Measured on the development Mac: `make test` passed in 3.66 seconds (the
-launcher measured 3.54 seconds); the separate test-binary build took 4.19
-seconds, and `make lint` took 0.88 seconds. No prior passing results were
-cached. The previous 215-second workflow also exported the complete capture
-library and ran long game smoke scenarios, now selected with `test-full`.
+Measured on the development Mac: `make test` passed in 9.3 to 9.8 seconds. The
+suites take the same time as before (engine 3.4 to 3.8 s, Relic Rush 2.5 s,
+Christmas Market 2.4 s, Emergency 0.5 s, Nile Archive 0.1 s); running them in one
+instance means one after another, where five separate apps used to overlap and
+finish in about 3 seconds.
 
 Bulk screenshot/reel exports and long game smoke scenarios are explicit
 integration checks. `make test-full` retains them all and is used by cloud CI;
@@ -58,7 +60,8 @@ integration checks. `make test-full` retains them all and is used by cloud CI;
 check dimensions and non-flat pixels; repeatedly exporting them adds little to
 the rule and renderer assertions on every local edit.
 
-Direct test binaries retain their complete integration manifest by default:
+`build/test/all` runs the complete integration manifest by default; `--suite=<name>`
+(repeatable) keeps only those suites. A binary per suite still builds on request:
 
 | Binary | Runs |
 |---|---|
@@ -73,11 +76,12 @@ Clayfight and its native/JavaScript checks
 now live in the [standalone repository](https://github.com/corepunch/clayfight).
 
 ```sh
-make test                       # correctness + renderer + preflight, budget 5s
+make test                       # correctness + renderer + preflight, one instance, budget 15s
 make test-fast                  # same checks without a window/GPU
 make test-full                  # complete smoke/capture integration, deliberately slow
 make test-full ONLY=smoke        # only smoke jobs, in every suite
-make test TEST_BUDGET=10         # explicit allowance for slower hardware
+make test TEST_BUDGET=30         # explicit allowance for slower hardware
+build/test/all --suite=relic-rush --suite=christmas-market "shot island"   # some suites, one start
 build/test/relic-rush           # one suite
 build/test/relic-rush --check   # rules only; engine --check also retains all C tests
 build/test/relic-rush rules     # part of one suite

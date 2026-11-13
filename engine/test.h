@@ -57,5 +57,6 @@ bool story_test_portrait(const character *who, rect *r, color *tint);
 const char *test_suite(void);
 
 int test_main(const char *suite, const char *lua_dir, const char *data_dir, int argc, char **argv);
+int test_all(const char *games, int argc, char **argv);   /* every suite in one process and window */
 
 #endif

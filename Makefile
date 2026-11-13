@@ -154,6 +154,10 @@ ENGINE_TEST_SRC := tests/test_main.c tests/test_platform.c tests/test_backdrop.c
 build/test/engine: $(ENGINE_TEST_SRC) $(TEST_OBJ) $(TEST_DEPS)
 	@mkdir -p build/test
 	$(CC) $(ALL_CFLAGS) -DENGINE_TEST -o $@ $(ENGINE_TEST_SRC) $(TEST_OBJ) $(LIBS)
+# Every suite in one process and one window: what `make test` and `make test-full` start.
+build/test/all: $(ENGINE_TEST_SRC) $(TEST_OBJ) $(TEST_DEPS)
+	@mkdir -p build/test
+	$(CC) $(ALL_CFLAGS) -DENGINE_TEST -DTEST_ALL_GAMES='"$(TEST_GAMES)"' -o $@ $(ENGINE_TEST_SRC) $(TEST_OBJ) $(LIBS)
 
 build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
 	@mkdir -p build
@@ -174,36 +178,36 @@ test-assets:
 	python3 tools/match3_elements_art.py --check
 	python3 tests/test_hex_tile_art.py
 # Budget is test execution only: build prerequisites finish before the timer.
-TEST_BUDGET ?= 5
+TEST_BUDGET ?= 15
 TEST_WORKERS ?= 4
 TEST_AUX_BINS := build/test-audio
 .PHONY: test-full test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
-test test-fast: $(TEST_BINS) $(TEST_AUX_BINS)
+test test-fast: build/test/all $(TEST_AUX_BINS)
 	python3 tools/run_tests.py --budget $(TEST_BUDGET) --jobs $(TEST_WORKERS) $(if $(filter test-fast,$@),--fast) -- $(ONLY) $(TEST_ARGS)
 
 # Full integration/capture export is deliberate; keep it complete in cloud CI.
-test-full: gen-check xcode-check test-assets $(TEST_BINS) $(TEST_AUX_BINS)
+test-full: gen-check xcode-check test-assets build/test/all $(TEST_AUX_BINS)
 	./build/test-audio
-	@status=0; for t in $(TEST_BINS); do ./$$t $(ONLY) $(TEST_ARGS) || status=1; done; exit $$status
+	./build/test/all $(ONLY) $(TEST_ARGS)
 
-$(TEST_GAMES:%=test-%): test-%: build/test/%
-	./build/test/$* --fast $(TEST_ARGS)
-test-engine: build/test/engine build/test-audio
-	./build/test/engine --fast $(TEST_ARGS)
+$(TEST_GAMES:%=test-%): test-%: build/test/all
+	./build/test/all --suite=$* --fast $(TEST_ARGS)
+test-engine: build/test/all build/test-audio
+	./build/test/all --suite=engine --fast $(TEST_ARGS)
 	./build/test-audio
 test-extended:
 	$(MAKE) test-fast TEST_ARGS=--extended TEST_BUDGET=60
 MATCH3_LUA_DIR ?= engine
-test-match3: build/test/engine
+test-match3: build/test/all
 	test -f "$(MATCH3_LUA_DIR)/match3.lua"
-	SPRITE_MATCH3_ROOT="$(MATCH3_LUA_DIR)" ./build/test/engine engine_match3 $(TEST_ARGS)
+	SPRITE_MATCH3_ROOT="$(MATCH3_LUA_DIR)" ./build/test/all --suite=engine engine_match3 $(TEST_ARGS)
 
-shots: $(TEST_BINS)
-	@for t in $(TEST_GAMES); do ./build/test/$$t shot frame reel hold || exit 1; done
+shots: build/test/all
+	./build/test/all $(TEST_GAMES:%=--suite=%) shot frame reel hold
 	python3 tools/screenshots.py
 
-smoke: $(TEST_BINS)
-	@status=0; for t in $(TEST_GAMES); do ./build/test/$$t smoke || status=1; done; exit $$status
+smoke: build/test/all
+	./build/test/all $(TEST_GAMES:%=--suite=%) smoke
 
 buildings:
 	python3 tools/buildings.py $(GAME) $(KEYS) $(if $(REBUILD),--rebuild) $(if $(BLENDER),--blender)
@@ -238,5 +242,5 @@ clean:
 
 # Exercises the real renderer/event queue; run under Xvfb on Linux.
 .PHONY: test-platform
-test-platform: build/test/engine
-	./build/test/engine platform backdrop story_layouts city_render
+test-platform: build/test/all
+	./build/test/all --suite=engine platform backdrop story_layouts city_render

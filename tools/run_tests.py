@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run every assertion suite once, in parallel, within a wall-clock budget.
+"""Run every assertion suite once, in one app instance beside the script checks, within a wall-clock budget.
 
 Screenshot/reel exports and long game smoke scenarios remain in make test-full.
 No successful results are cached; every invocation executes every selected check.
@@ -69,8 +69,8 @@ def run_jobs(jobs, budget, workers=4, output=None):
 
 def checks(fast=False, arguments=()):
     mode = "--fast" if fast else "--check"
-    games = ("engine", "relic-rush", "christmas-market", "emergency", "nile-archive")
-    jobs = [(game, [f"./build/test/{game}", mode, *arguments]) for game in games]
+    # One instance runs the engine's suite and every game's: no app starts per suite.
+    jobs = [("suites", ["./build/test/all", mode, *arguments])]
     jobs += [(name, [f"./build/{name}"]) for name in
              ("test-audio",)]
     scripts = [
@@ -97,7 +97,7 @@ def checks(fast=False, arguments=()):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--budget", type=float, default=5)
+    parser.add_argument("--budget", type=float, default=15)
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
