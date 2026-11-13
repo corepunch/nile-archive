@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT/'tools/homescapes-reference'))
 from extract_archives import Zstd, read_archive
 from story_index import SOURCE
 
-SELECTED = ['base/st/'+x+'.xml' for x in ['st0001','st0037','st0051','st0065','st0255','st0401']] + [
+SELECTED = ['base/st/'+x+'.xml' for x in ['st0001','st0037','st0051','st0065','st0161','st0162','st0255','st0401']] + [
     'packs/contest/'+x+'.xml' for x in ['contest_005_06','contest_026_01','contest_172_04','contest_011_15']]
 OUT = ROOT/'engine/match3_reference.lua'
 
@@ -102,4 +102,4 @@ if __name__=='__main__':
     if args.check:
         assert OUT.read_text()==content, 'source reference pack is stale'
     else: OUT.write_text(content)
-    print('Verified 10 source boards against original archive' if args.check else 'Compiled 10 source boards')
+    print(('Verified %d source boards against original archive' if args.check else 'Compiled %d source boards') % len(SELECTED))

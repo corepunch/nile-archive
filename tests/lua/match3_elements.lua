@@ -236,5 +236,26 @@ do
     check(C.game_copy(g).carpet ~= g.carpet, 'copy owns the carpet layer')
 end
 
-print('match3 elements: blocker provenance, discoveries, tunnels, deliveries, hazard turns and carpet passed')
+-- Oil clears under a match on it and spreads after a move that clears none.
+do
+    local C = rules{name='oil',moves=20,score=0,relics=0,soil=0,chains=0,ice=0,oil={cell(0,0),cell(0,1)},goals={'oil'}}
+    local g = C.game_start(0,9)
+    check(g.oil_left==2, 'oil seeds count')
+    for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
+    for _,i in ipairs({cell(-1,0),cell(0,0),cell(1,0)}) do g.tiles[i]=C.tile(3) end
+    g.turn_pending,g.oil_cleared = true,false
+    local m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
+    check(g.oil[cell(0,0)]==0 and g.oil_left==1 and g.oil_cleared, 'a match on oil clears it')
+    check(not C.game_end_turn(g) and g.oil_left==1, 'oil does not spread after a move that cleared some')
+    g.turn_pending,g.oil_cleared = true,false
+    check(C.game_end_turn(g) and g.oil_left==2, 'oil spreads after a move that cleared none')
+    local grown = g.oil_grew
+    check(grown and g.oil[grown]==1 and grown~=cell(0,1), 'it spreads into a new cell')
+    check(C.game_copy(g).oil ~= g.oil, 'copy owns the oil layer')
+    g.oil_left = 0; g.turn_pending = false
+    C.game_check_end(g)
+    check(g.won, 'clearing the oil wins an oil-only level')
+end
+
+print('match3 elements: blocker provenance, discoveries, tunnels, deliveries, hazard turns, carpet and oil passed')
 return 0

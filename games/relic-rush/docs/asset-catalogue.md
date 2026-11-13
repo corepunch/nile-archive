@@ -211,6 +211,8 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
 | `carpet-swatch` | Moss (Homescapes' carpet), levels 18, 24 and 28: tiled under one rounded patch over every covered cell (`texture.hex_field` + `gfx.sdf_mask`); a match touching it spreads it. Original swatch, resized full-bleed by `tools/homescapes_atlas.py`. [Review](../../christmas-market/docs/screenshots/review/carpet/levels.jpg) |
+| `oil-material`, `oil-bubbles` | Lamp oil (Homescapes' oil), levels 20 and 26: one rounded patch with drifting bubbles, tinted darker than Homescapes' gold (`R.patch_tint`) to stand apart from the gold dig sites. Cleared by a match on it; spreads after a move that clears none. `python3 tools/oil_art.py`. [Review](../../christmas-market/docs/screenshots/review/oil/levels.jpg) |
+| `goal-oil` | Lamp oil goal and guide icon; `python3 tools/oil_art.py` |
 | `goal-carpet` | Moss goal and guide icon: rounded hex, smooth rim, pebbles set in, soft shadow; `python3 tools/carpet_goal_icon.py` |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |

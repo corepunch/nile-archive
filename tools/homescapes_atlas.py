@@ -9,7 +9,10 @@ import homescapes_composites
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'engine/art/homescapes/sprites'
-GOAL_CARPET = ROOT / 'engine/art/match3/goal-carpet.png'
+# Engine-made art for Homescapes mechanics, from their generator tools.
+ENGINE_MADE = {'goal-carpet': 'python3 tools/carpet_goal_icon.py', 'goal-oil': 'python3 tools/oil_art.py',
+               'oil-material': 'python3 tools/oil_art.py', 'oil-bubbles': 'python3 tools/oil_art.py'}
+def engine_made(name): return ROOT / 'engine/art/match3' / f'{name}.png'
 ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
            'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut',
@@ -54,10 +57,9 @@ def registered():
     images['ice-1'] = Image.new('RGBA', (128,128))
     images['ice-1'].paste(fragment, ((128-fragment.width)//2, shell_bottom-fragment.height))
     registrations['ice-1']['placement'] = 'bottom-aligned to ice-2'
-    # Engine-made goal icon from the swatch's paint (tools/carpet_goal_icon.py).
-    images['goal-carpet'] = Image.open(GOAL_CARPET).convert('RGBA')
-    registrations['goal-carpet'] = {'source': str(GOAL_CARPET.relative_to(ROOT)), 'canvas': [128,128],
-                                    'generator': 'python3 tools/carpet_goal_icon.py'}
+    for name, generator in ENGINE_MADE.items():   # 128px canvases, copied unchanged
+        images[name] = Image.open(engine_made(name)).convert('RGBA')
+        registrations[name] = {'source': str(engine_made(name).relative_to(ROOT)), 'canvas': [128,128], 'generator': generator}
     composite_images, composite_records = homescapes_composites.registered()
     for name, original in composite_images.items():
         images[name] = original.resize((128,128), Image.Resampling.LANCZOS)
@@ -67,7 +69,7 @@ def registered():
 
 
 def inputs():
-    return [Path(__file__), ROOT/'engine/art/hex-tile/hex-mask-128.png', GOAL_CARPET] + sorted(SOURCE.glob('*.png')) + homescapes_composites.inputs()
+    return [Path(__file__), ROOT/'engine/art/hex-tile/hex-mask-128.png'] + [engine_made(n) for n in ENGINE_MADE] + sorted(SOURCE.glob('*.png')) + homescapes_composites.inputs()
 
 
 if __name__ == '__main__':

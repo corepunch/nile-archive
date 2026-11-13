@@ -28,7 +28,7 @@ objectives move the emphasis within each family.
 | 10 | Under the Big Fir | Tapered bowl | Clear snow, tinsel and ice. (ribbon parcel) | snow, blockers | 46 |
 | 11 | Carols and Crumbs | Two chambers | Clear the snow around the square. (hidden display) | display, bows | 32 |
 | 12 | Word from Fenwick | Tapered bowl | Treats travel between paired chutes. (chute) | bows, snow | 35 |
-| 13 | Sawdust Row | Twin lanes | Use a striped treat to reach across. (ribbon parcel) | blockers, bows | 36 |
+| 13 | Sawdust Row | Twin lanes | Clear the spilled caramel before it spreads. (ribbon parcel) | caramel, blockers | 36 |
 | 14 | The Bench by the Fir | Tapered bowl | Clear the three-layer snowdrift. (snowdrift) | blockers, snow | 37 |
 | 15 | Tangled Tinsel | Tapered bowl | Untangle tinsel through the snow. (hidden display) | display, blockers | 38 |
 | 16 | Paper and String | Twin lanes | Some ribbon parcels take two hits. (ribbon parcel) | blockers, bows | 40 |
@@ -40,7 +40,7 @@ objectives move the emphasis within each family.
 | 22 | Many Hands | Tapered bowl | Free tinsel along the passage. (ribbon parcel) | blockers, snow | 38 |
 | 23 | Painted Horses | Twin lanes | Untangle the ribbon before it spreads. (spreading ribbon) | blockers, bows | 39 |
 | 24 | Frozen Fountain | Tapered bowl | Thaw the ice around the fountain. (hidden display) | display, blockers | 40 |
-| 25 | Snow on the Line | Tapered bowl | Clear the snow and free the treats. (spreading ribbon) | snow, blockers | 42 |
+| 25 | Snow on the Line | Tapered bowl | Clear the snow and free the treats. (spreading ribbon) | caramel, snow, blockers | 42 |
 | 26 | Lantern Ice | Tapered bowl | Thaw the ice around the lanterns. (ribbon parcel) | blockers, bows | 44 |
 | 27 | Every Light in Bellmere | Two chambers | Clear the snow across the court. (snowdrift) | snow, blockers, bows | 38 |
 | 28 | The Last Train | Tapered bowl | Roll out the carpet before the finale. (familiar coverings) | carpet | 44 |

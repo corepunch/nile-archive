@@ -81,7 +81,7 @@ is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
 strong ice. Optional `goals` lists the HUD goals that win the level, in order,
 from `score`, `idols`, `sand`, `locks` (every blocker), `discoveries`,
-`deliveries` and `carpet`. Without it, every counter on the board must be finished. Relic Rush
+`deliveries`, `carpet` and `oil`. Without it, every counter on the board must be finished. Relic Rush
 and Christmas Market name one to three per level and never `score`, as in
 Homescapes. The
 games' `campaign.lua` files contain these data; their

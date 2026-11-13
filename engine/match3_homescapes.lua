@@ -46,7 +46,7 @@ function Base.bind(M,random)
         for _,goal in ipairs(g.hs.goals) do
             assert(({CHIPS=true,CELL_JELLY=true,BOX=true,TRASH=true,ICE=true,LOCK=true,CARRY=true,
                 COLLECT_PIGGY=true,COLOR_BOX=true,TRASHSTONE=true,TARGET_GENERATOR=true,STATUE=true,
-                BUBBLE_MEMBRANE=true,SHUTTERS=true})[goal.type],'unsupported source goal '..goal.type)
+                BUBBLE_MEMBRANE=true,SHUTTERS=true,CELL_OIL=true})[goal.type],'unsupported source goal '..goal.type)
             goal.current=goal.current or 0
         end
         for i=0,M.CELLS-1 do if active(g,i) then
@@ -77,6 +77,7 @@ function Base.bind(M,random)
                 elseif id=='ICE' then g.ice[i]=n
                 elseif id=='LOCK' then g.chain[i]=n;c.mirror=model.mirror=='true'
                 elseif id=='JELLY' then c.carpet=true
+                elseif id=='OIL' then g.oil[i]=1;g.oil_left=g.oil_left+1
                 elseif id=='BUBBLE_MEMBRANE' then assert(n==1 or n==2,'invalid tile strength');c.tile=n
                 elseif id=='CARRY_GEN_CELLS' then c.carrySpawn=true
                 elseif id=='BORN' then g.hs.sources[i]=true

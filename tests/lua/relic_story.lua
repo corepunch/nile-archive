@@ -35,7 +35,7 @@ for level=1,30 do
     rules.game_check_end(g)
     check(not g.won, 'ordinary match-3 goals must be met')
     g.score,g.relics,g.dug=99999,999,999
-    g.delivered,g.carpeted=g.delivery_total,g.carpet_total
+    g.delivered,g.carpeted,g.oil_left=g.delivery_total,g.carpet_total,0
     rules.game_check_end(g)
     check(g.won, 'completing the match-3 goals wins without an object')
     g.moves=0

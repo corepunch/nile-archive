@@ -16,7 +16,7 @@ end
 for _,name in ipairs{"box","carry","color-box","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
-for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
+for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
     E.assets[#E.assets+1]=name
 end
 
@@ -40,27 +40,39 @@ local function image(R, name, at, size, alpha)
     gfx.image(R.board_art[name], rect.centered(at, size2.splat(size)), color(255, 255, 255, alpha * 255))
 end
 
--- Carpet is one continuous patch, as in Homescapes: a signed distance field of
--- its cells (texture.hex_field, rounded outside corners, filleted inside ones)
--- masks the tiled swatch, and its rim is shaded. The field is rebuilt only
--- when the carpet changes.
+-- Carpet and oil are each one continuous patch, as in Homescapes: a signed
+-- distance field of their cells (texture.hex_field, rounded outside corners,
+-- filleted inside ones) masks a tiled material, and the rim is shaded. A field
+-- is rebuilt only when its cells change. Oil also carries two layers of
+-- bubbles drifting at different speeds, as Homescapes' oil shader does.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
-local CARPET = {corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.15, rim = 5, shade = .5}
-local function carpet_cells(R, rules)
+local PATCH = {
+    carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.15, rim = 5, shade = .5},
+    oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 4, shade = .35,
+        bubbles = {{"oil-bubbles", 4, -9, 1.6, 200}, {"oil-bubbles", -3, -14, 1.1, 150}}},   -- art, drift x/y (px/s), size, opacity
+}
+local function patch_cells(R, rules, layer)
     local g, cells = R.g, {}
     for i = 0, rules.CELLS - 1 do
-        local on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
+        local on
+        if layer == "carpet" then
+            on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
+        else
+            on = g.oil and (g.oil[i] or 0) > 0
+        end
         if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
     end
     return cells
 end
-local function carpet_field(R, cells)
+local function patch_field(R, layer, cells)
+    local spec = PATCH[layer]
     local key = R.HEX_R .. ":" .. table.concat(cells, ",")
-    local cache = R.carpet_field
+    R.patch_fields = R.patch_fields or {}
+    local cache = R.patch_fields[layer]
     if cache and cache.key == key then return cache end
     if cache and cache.texture then texture.free(cache.texture) end
     local r = R.HEX_R
-    local range = CARPET.range * r
+    local range = spec.range * r
     local minx, miny, maxx, maxy, xy = math.huge, math.huge, -math.huge, -math.huge, {}
     for _, cell in ipairs(cells) do
         local p = R.cell_pos(cell)
@@ -69,34 +81,45 @@ local function carpet_field(R, cells)
     end
     local pad = r + range
     local area = rect(minx - pad, miny - pad, maxx - minx + 2 * pad, maxy - miny + 2 * pad)
-    local w, h = math.ceil(area.w / CARPET.texel), math.ceil(area.h / CARPET.texel)
+    local w, h = math.ceil(area.w / spec.texel), math.ceil(area.h / spec.texel)
     local field = texture.hex_field(string.pack(("ff"):rep(#cells), table.unpack(xy)), #cells, r,
-        CARPET.corner * r, CARPET.fillet * r, area, w, h, range)
-    R.carpet_field = {key = key, texture = field, area = area, range = range}
-    return R.carpet_field
+        spec.corner * r, spec.fillet * r, area, w, h, range)
+    R.patch_fields[layer] = {key = key, texture = field, area = area, range = range}
+    return R.patch_fields[layer]
 end
-function E.carpet(R, rules, sx)
-    local cells = carpet_cells(R, rules)
-    if #cells == 0 then return end
-    local field = carpet_field(R, cells)
-    local area = field.area:offset(vec2(sx, 0))
-    local swatch, alpha = R.board_art["carpet-swatch"], R.intro and R.intro:fade() or 1
-    local side = 2 * R.HEX_R * CARPET.tile
+-- Tile t over area in squares of side, shifted by offset (wrapping).
+local function tile(t, area, side, offset, tint)
     local src = rect(1, 1, 126, 126)   -- clear of the atlas cell's border texels
-    gfx.sdf_mask(field.texture, area, field.range, CARPET.rim, CARPET.shade)
-    for y = area.y, area.y + area.h, side do
-        for x = area.x, area.x + area.w, side do
-            gfx.image_part(swatch, src, rect(x, y, side, side), color(255, 255, 255, 255 * alpha))
-        end
+    local ox, oy = offset.x % side - side, offset.y % side - side
+    for y = area.y + oy, area.y + area.h, side do
+        for x = area.x + ox, area.x + area.w, side do gfx.image_part(t, src, rect(x, y, side, side), tint) end
+    end
+end
+function E.patch(R, rules, layer, sx)
+    local cells = patch_cells(R, rules, layer)
+    if #cells == 0 then return end
+    local spec, field = PATCH[layer], patch_field(R, layer, cells)
+    local area = field.area:offset(vec2(sx, 0))
+    local alpha = R.intro and R.intro:fade() or 1
+    local side = 2 * R.HEX_R * spec.tile
+    local tint = R.patch_tint and R.patch_tint[layer] or color.WHITE   -- a game may recolour a patch to suit its board
+    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade)
+    tile(R.board_art[spec.material], area, side, vec2(0, 0), color(tint.r, tint.g, tint.b, 255 * alpha))
+    local now = R.reduced_motion and 0 or (R.now or 0)
+    for _, layer_spec in ipairs(spec.bubbles or {}) do
+        local art, dx, dy, scale, opacity = table.unpack(layer_spec)
+        tile(R.board_art[art], area, side * scale, vec2(dx * now, dy * now), color(255, 255, 255, opacity * alpha))
     end
     gfx.sdf_unmask()
 end
+function E.carpet(R, rules, sx) E.patch(R, rules, "carpet", sx) end
 
 -- Called after every well has been painted, before snow and pieces. A hidden
 -- object's one authored image spans its complete footprint, not one per cell.
 function E.ground(R, rules, sx)
     local g = R.g
-    E.carpet(R, rules, sx)
+    E.patch(R, rules, "carpet", sx)
+    E.patch(R, rules, "oil", sx)
     for _, object in ipairs(g.objects or {}) do
         local x, y, minx, maxx, miny, maxy = 0, 0, math.huge, -math.huge, math.huge, -math.huge
         for _, cell in ipairs(object.cells) do

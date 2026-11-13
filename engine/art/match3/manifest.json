@@ -3396,6 +3396,14 @@
       ],
       "mask": false
     },
+    "goal-oil": {
+      "source": "engine/art/match3/goal-oil.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
     "goal-piggy": {
       "source": "engine/art/homescapes/sprites/goal-piggy.png",
       "rotation": 0,
@@ -3876,6 +3884,22 @@
       ],
       "mask": true
     },
+    "oil-bubbles": {
+      "source": "engine/art/match3/oil-bubbles.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
+    "oil-material": {
+      "source": "engine/art/match3/oil-material.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
     "plane": {
       "source": "engine/art/homescapes/sprites/plane.png",
       "rotation": 0,
@@ -4158,6 +4182,9 @@
       "engine/art/homescapes/sprites/web-2.png": "54bc25ae19d5f7e5aa9770347ad0d04bc9eba8ab945a73786c819728d75cd8b3",
       "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",
       "engine/art/match3/goal-carpet.png": "513b2a02163ce5f2c04dddff35e1ed6707a37f1baac71292671d6d38408d9358",
+      "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
+      "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
+      "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
       "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee",
@@ -4186,12 +4213,12 @@
       "games/relic-rush/data/board-states/tunnel-in.png": "3afcef76e72af5a3a4c54365741f24f4ff7f19fc80f375e6d9110cd7a1a2d72a",
       "games/relic-rush/data/board-states/tunnel-out.png": "4d6bc9b92b33abe4f5588025ef45430c6d98e1098e81a69a38299da3791fcbae",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "2db98f82fd21f39b8e06956070759f341e7ca0d8d19f41694917577b2051522f",
+      "tools/homescapes_atlas.py": "24b00c258846c0bfa94de9d4dbad16488f9ec3269273c8636eb82313fdbbcee1",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "engine/data/match3.png": "870f548b4ed0efef291bde613c4f331ae1fdb35bb349c7880a28f2d73b00962e",
-      "engine/match3_frames.lua": "48120981446eca8a6a0a7f00ca3e7e6de7bc30199fc2b7034db391f1b1df5a26"
+      "engine/data/match3.png": "f0865be64bfe704520c5877c9dbda12ad504c71479e65b6a632c0a5ea782d368",
+      "engine/match3_frames.lua": "31d2a0dad638b2072a28332ced0da8c2a24ce5247d5f108f37959e655094b1b0"
     }
   }
 }

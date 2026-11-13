@@ -262,6 +262,26 @@ There is a single carpet state; it has no strength or interaction states.
 | --- | --- | --- |
 | ![Carpet levels](screenshots/review/carpet/levels.jpg) | ![Patch](screenshots/review/carpet/homescapes-patch.jpg) | ![Icon](screenshots/review/carpet/goal-icon.jpg) |
 
+## Spilled caramel
+
+Homescapes' oil (`CELL_OIL`), seeded in levels 13 and 25. One layer under a
+piece, cleared by a match on its cell or a blast. After a move that clears none
+of it, it spreads to one neighbouring cell, and the goal counts what is left.
+Homescapes paints oil in a shader, so the art is engine-made after it.
+
+| Asset | State and meaning | Source | Runtime |
+| --- | --- | --- | --- |
+| `oil-material` | Golden liquid, tiled under the oil patch mask | `python3 tools/oil_art.py`, colours around Homescapes' `OIL_COLOR` | `data/match3.png` |
+| `oil-bubbles` | Bubbles, two layers drifting at different speeds (still with reduced motion) | `python3 tools/oil_art.py` | `data/match3.png` |
+| `goal-oil` | HUD goal and guide icon in the carpet icon's style | `python3 tools/oil_art.py` | `data/match3.png` |
+| Board patch | One rounded patch over every oil cell, amber rim | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
+
+There is a single oil state. The Homescapes oil can is not ported.
+
+| Oil levels (Christmas 13, 25; Relic Rush 20, 26) | Homescapes levels 161 and 162 | Art |
+| --- | --- | --- |
+| ![Oil levels](screenshots/review/oil/levels.jpg) | ![Reference](screenshots/review/oil/homescapes-161-162.jpg) | ![Art](screenshots/review/oil/art.jpg) |
+
 ## Snow and ice rims
 
 `sand-edge` takes a narrow white band from the authored powder-snow texture.

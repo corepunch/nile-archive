@@ -176,17 +176,23 @@ levels[9].lesson = "Match on the green carpet to spread it."
 levels[21].carpet = {cell(-2,1), cell(-2,2)}
 levels[28].carpet = {cell(-1,-1), cell(0,-2)}
 levels[28].lesson = "Roll out the carpet before the finale."
+-- Spilled caramel (Homescapes' oil): clear it by matching on it; it spreads
+-- after any turn that clears none of it.
+levels[13].oil = {cell(4,-4), cell(4,-3), cell(4,-2), cell(4,-1), cell(4,0), cell(3,-1), cell(3,0)}
+levels[13].lesson = "Clear the spilled caramel before it spreads."
+levels[25].oil = {cell(2,-3), cell(3,-3), cell(3,-2), cell(3,-1), cell(4,-3), cell(4,-2), cell(4,-1)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
 -- "locks" counts every blocker: tinsel, ice, snowdrifts, parcels and ribbon;
--- "carpet" counts the cells the green carpet has yet to cover.
+-- "carpet" counts the cells the green carpet has yet to cover; "oil" counts
+-- the spilled caramel left on the board.
 local goals = {
     {"idols"}, {"idols", "sand"}, {"discoveries"}, {"locks", "sand"}, {"locks", "idols"},
     {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"carpet"}, {"sand", "locks"},
-    {"discoveries", "idols"}, {"idols", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"discoveries", "locks"},
+    {"discoveries", "idols"}, {"idols", "sand"}, {"oil", "locks"}, {"locks", "sand"}, {"discoveries", "locks"},
     {"locks", "idols"}, {"deliveries", "sand"}, {"sand"}, {"locks", "sand", "idols"}, {"sand", "locks"},
-    {"carpet", "sand"}, {"locks", "sand"}, {"locks", "idols"}, {"discoveries", "locks"}, {"sand", "locks"},
+    {"carpet", "sand"}, {"locks", "sand"}, {"locks", "idols"}, {"discoveries", "locks"}, {"oil", "sand", "locks"},
     {"locks", "idols"}, {"sand", "locks", "idols"}, {"carpet"}, {"locks", "sand", "idols"}, {"deliveries", "sand", "locks"},
 }
 assert(#goals == #levels, "one goal list per level")

@@ -773,548 +773,566 @@
       128,
       128
     ],
-    "goal-piggy": [
+    "goal-oil": [
       1718,
+      1830,
+      128,
+      128
+    ],
+    "goal-piggy": [
+      1850,
       1830,
       128,
       128
     ],
     "goal-target-generator": [
-      1850,
-      1830,
+      2,
+      1962,
       128,
       128
     ],
     "goal-trash": [
-      2,
+      134,
       1962,
       128,
       128
     ],
     "gold-rainbow-ball": [
-      134,
+      266,
       1962,
       128,
       128
     ],
     "growth": [
-      266,
+      398,
       1962,
       128,
       128
     ],
     "guide": [
-      398,
+      530,
       1962,
       128,
       128
     ],
     "hazelnut-1": [
-      530,
+      662,
       1962,
       128,
       128
     ],
     "hazelnut-2": [
-      662,
+      794,
       1962,
       128,
       128
     ],
     "hazelnut-3": [
-      794,
+      926,
       1962,
       128,
       128
     ],
     "hidden-covered": [
-      926,
+      1058,
       1962,
       128,
       128
     ],
     "hidden-partial": [
-      1058,
+      1190,
       1962,
       128,
       128
     ],
     "hidden-revealed": [
-      1190,
+      1322,
       1962,
       128,
       128
     ],
     "hint": [
-      1322,
+      1454,
       1962,
       128,
       128
     ],
     "honey-material": [
-      1454,
+      1586,
       1962,
       128,
       128
     ],
     "honey-swatch": [
-      1586,
+      1718,
       1962,
       128,
       128
     ],
     "ice-1": [
-      1718,
+      1850,
       1962,
       128,
       128
     ],
     "ice-1-edge": [
-      1850,
-      1962,
+      2,
+      2094,
       128,
       128
     ],
     "ice-2": [
-      2,
+      134,
       2094,
       128,
       128
     ],
     "ice-2-edge": [
-      134,
+      266,
       2094,
       128,
       128
     ],
     "jelly-1": [
-      266,
+      398,
       2094,
       128,
       128
     ],
     "jelly-1-cherry": [
-      398,
+      530,
       2094,
       128,
       128
     ],
     "jelly-2": [
-      530,
+      662,
       2094,
       128,
       128
     ],
     "jelly-2-cherry": [
-      662,
+      794,
       2094,
       128,
       128
     ],
     "jelly-3": [
-      794,
+      926,
       2094,
       128,
       128
     ],
     "jelly-4": [
-      926,
+      1058,
       2094,
       128,
       128
     ],
     "jelly-5": [
-      1058,
+      1190,
       2094,
       128,
       128
     ],
     "jelly-6": [
-      1190,
+      1322,
       2094,
       128,
       128
     ],
     "jelly-cherry-clear-source": [
-      1322,
+      1454,
       2094,
       128,
       128
     ],
     "jelly-cherry-soft-source": [
-      1454,
+      1586,
       2094,
       128,
       128
     ],
     "jelly-flower-dark-source": [
-      1586,
+      1718,
       2094,
       128,
       128
     ],
     "jelly-flower-fill-source": [
-      1718,
+      1850,
       2094,
       128,
       128
     ],
     "jelly-flower-five-pale-source": [
-      1850,
-      2094,
+      2,
+      2226,
       128,
       128
     ],
     "jelly-flower-frame-source": [
-      2,
+      134,
       2226,
       128,
       128
     ],
     "jelly-flower-three-pale-source": [
-      134,
+      266,
       2226,
       128,
       128
     ],
     "jelly-square-source": [
-      266,
+      398,
       2226,
       128,
       128
     ],
     "kind-0": [
-      398,
+      530,
       2226,
       128,
       128
     ],
     "kind-1": [
-      530,
+      662,
       2226,
       128,
       128
     ],
     "kind-2": [
-      662,
+      794,
       2226,
       128,
       128
     ],
     "kind-3": [
-      794,
+      926,
       2226,
       128,
       128
     ],
     "kind-4": [
-      926,
+      1058,
       2226,
       128,
       128
     ],
     "kind-5": [
-      1058,
+      1190,
       2226,
       128,
       128
     ],
     "life": [
-      1190,
+      1322,
       2226,
       128,
       128
     ],
     "membrane-fill-1": [
-      1322,
+      1454,
       2226,
       128,
       128
     ],
     "membrane-fill-2": [
-      1454,
+      1586,
       2226,
       128,
       128
     ],
     "object-goal": [
-      1586,
-      2226,
-      128,
-      128
-    ],
-    "pause-disabled": [
       1718,
       2226,
       128,
       128
     ],
-    "pause-hover": [
+    "oil-bubbles": [
       1850,
       2226,
       128,
       128
     ],
-    "pause-normal": [
+    "oil-material": [
       2,
+      2358,
+      128,
+      128
+    ],
+    "pause-disabled": [
+      134,
+      2358,
+      128,
+      128
+    ],
+    "pause-hover": [
+      266,
+      2358,
+      128,
+      128
+    ],
+    "pause-normal": [
+      398,
       2358,
       128,
       128
     ],
     "pause-pressed": [
-      134,
+      530,
       2358,
       128,
       128
     ],
     "pause-selected": [
-      266,
+      662,
       2358,
       128,
       128
     ],
     "pickaxe-disabled": [
-      398,
+      794,
       2358,
       128,
       128
     ],
     "pickaxe-hover": [
-      530,
+      926,
       2358,
       128,
       128
     ],
     "pickaxe-normal": [
-      662,
+      1058,
       2358,
       128,
       128
     ],
     "pickaxe-pressed": [
-      794,
+      1190,
       2358,
       128,
       128
     ],
     "pickaxe-selected": [
-      926,
+      1322,
       2358,
       128,
       128
     ],
     "plane": [
-      1058,
+      1454,
       2358,
       128,
       128
     ],
     "portal-entrance-source": [
-      1190,
+      1586,
       2358,
       128,
       128
     ],
     "portal-output-source": [
-      1322,
+      1718,
       2358,
       128,
       128
     ],
     "prism": [
-      1454,
+      1850,
       2358,
       128,
       128
     ],
     "rainbow-ball": [
-      1586,
-      2358,
+      2,
+      2490,
       128,
       128
     ],
     "ray-column": [
-      1718,
-      2358,
+      134,
+      2490,
       128,
       128
     ],
     "ray-diagonal": [
-      1850,
-      2358,
+      266,
+      2490,
       128,
       128
     ],
     "ray-row": [
-      2,
+      398,
       2490,
       128,
       128
     ],
     "rocket-horizontal": [
-      134,
+      530,
       2490,
       128,
       128
     ],
     "rocket-vertical": [
-      266,
+      662,
       2490,
       128,
       128
     ],
     "sand": [
-      398,
+      794,
       2490,
       128,
       128
     ],
     "sand-edge": [
-      530,
+      926,
       2490,
       128,
       128
     ],
     "selected": [
-      662,
+      1058,
       2490,
       128,
       128
     ],
     "shop-built": [
-      794,
-      2490,
-      128,
-      128
-    ],
-    "shop-locked": [
-      926,
-      2490,
-      128,
-      128
-    ],
-    "statue-1": [
-      1058,
-      2490,
-      128,
-      128
-    ],
-    "statue-2": [
       1190,
       2490,
       128,
       128
     ],
-    "statue-3": [
+    "shop-locked": [
       1322,
       2490,
       128,
       128
     ],
-    "stone-1": [
+    "statue-1": [
       1454,
       2490,
       128,
       128
     ],
-    "stone-2": [
+    "statue-2": [
       1586,
       2490,
       128,
       128
     ],
-    "stone-3": [
+    "statue-3": [
       1718,
       2490,
       128,
       128
     ],
-    "sunburst-disabled": [
+    "stone-1": [
       1850,
       2490,
       128,
       128
     ],
-    "sunburst-hover": [
+    "stone-2": [
       2,
       2622,
       128,
       128
     ],
-    "sunburst-normal": [
+    "stone-3": [
       134,
       2622,
       128,
       128
     ],
-    "sunburst-pressed": [
+    "sunburst-disabled": [
       266,
       2622,
       128,
       128
     ],
-    "sunburst-selected": [
+    "sunburst-hover": [
       398,
+      2622,
+      128,
+      128
+    ],
+    "sunburst-normal": [
+      530,
+      2622,
+      128,
+      128
+    ],
+    "sunburst-pressed": [
+      662,
+      2622,
+      128,
+      128
+    ],
+    "sunburst-selected": [
+      794,
       2622,
       128,
       128
     ],
     "tunnel-in": [
-      530,
+      926,
       2622,
       128,
       128
     ],
     "tunnel-out": [
-      662,
+      1058,
       2622,
       128,
       128
     ],
     "web-2": [
-      794,
+      1190,
       2622,
       128,
       128
     ],
     "glow": [
-      926,
+      1322,
       2622,
       64,
       64
     ],
     "festive-0": [
-      398,
-      2226,
-      128,
-      128
-    ],
-    "festive-1": [
       530,
       2226,
       128,
       128
     ],
-    "festive-2": [
+    "festive-1": [
       662,
       2226,
       128,
       128
     ],
-    "festive-3": [
+    "festive-2": [
       794,
       2226,
       128,
       128
     ],
-    "festive-4": [
+    "festive-3": [
       926,
       2226,
       128,
       128
     ],
-    "festive-5": [
+    "festive-4": [
       1058,
+      2226,
+      128,
+      128
+    ],
+    "festive-5": [
+      1190,
       2226,
       128,
       128
@@ -3259,6 +3277,30 @@
       ],
       "generator": "python3 tools/carpet_goal_icon.py"
     },
+    "goal-oil": {
+      "source": "engine/art/match3/goal-oil.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
+    "oil-material": {
+      "source": "engine/art/match3/oil-material.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
+    "oil-bubbles": {
+      "source": "engine/art/match3/oil-bubbles.png",
+      "canvas": [
+        128,
+        128
+      ],
+      "generator": "python3 tools/oil_art.py"
+    },
     "apple-platter-1": {
       "placement": "shared four-cell footprint",
       "sources": [
@@ -4381,6 +4423,9 @@
       "engine/art/homescapes/sprites/statue-3.png": "38cb145d2b8e8cd7f34fca18f1a8ec17a1bd0f158d45f6cd256fb12377b7691c",
       "engine/art/homescapes/sprites/web-2.png": "54bc25ae19d5f7e5aa9770347ad0d04bc9eba8ab945a73786c819728d75cd8b3",
       "engine/art/match3/goal-carpet.png": "513b2a02163ce5f2c04dddff35e1ed6707a37f1baac71292671d6d38408d9358",
+      "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
+      "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
+      "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "games/christmas-market/data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
       "games/christmas-market/data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
       "games/christmas-market/data/board-states/crate-0-1.png": "055bbd7afde7351b1d7d72865820f50f8b1d9cf388c0bf7ad50541adf804b9b7",
@@ -4438,12 +4483,12 @@
       "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "2db98f82fd21f39b8e06956070759f341e7ca0d8d19f41694917577b2051522f",
+      "tools/homescapes_atlas.py": "24b00c258846c0bfa94de9d4dbad16488f9ec3269273c8636eb82313fdbbcee1",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "d6e02e2880a8fe507494af4e47089d562cfc839df142ee538159b19c88ac8fda",
-      "games/christmas-market/lua/match3_skin.lua": "7eb740918c3e59e83de4d88b7a7f641e2efdaef545c48a4297c33fe3e7b55066"
+      "games/christmas-market/data/match3.png": "9025547244d3683061132eeeb513819f741c283a11c46b644714d17d72267cad",
+      "games/christmas-market/lua/match3_skin.lua": "0a7156c73dbff59d688dae167781e473c27a0ac30896fe56fb3e71233e9ddcf3"
     }
   }
 }

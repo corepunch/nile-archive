@@ -34,13 +34,13 @@ objectives move the emphasis within each family.
 | 17 | The Torn Log | Tapered bowl | Some coloured seals take two hits. (colour seal) | blockers, dig sites | 42 |
 | 18 | Lantern Steps | Tapered bowl | Match on the moss to spread it. (familiar coverings) | moss | 40 |
 | 19 | Under the Vines | Twin lanes | Dig beneath the locks. (vines) | dig sites, blockers, relics | 45 |
-| 20 | The Archivist's Key | Twin lanes | Open the central approach. | dig sites, blockers | 46 |
+| 20 | The Archivist's Key | Twin lanes | Mop up the lamp oil before it spreads. | lamp oil, blockers | 46 |
 | 21 | Tomas's Trail | Tapered bowl | Clear below the tablet to deliver it. (delivery) | delivery, dig sites | 35 |
 | 22 | The Frozen Stair | Twin lanes | Thaw the frozen approach. (stone) | blockers, dig sites | 40 |
 | 23 | The Star Road | Twin lanes | Choose a colour for the prism. (colour seal) | relics, blockers | 40 |
 | 24 | Noon Shadow | Tapered bowl | Excavate across the shadow. (conduit) | moss, dig sites | 41 |
 | 25 | Smoke on the Water | Tapered bowl | Work through the locks. (vines) | blockers, dig sites | 38 |
-| 26 | The Jade Deep | Twin lanes | Thaw the buried ground. | blockers, dig sites, relics | 43 |
+| 26 | The Jade Deep | Twin lanes | Thaw the buried ground. | lamp oil, blockers, dig sites | 43 |
 | 27 | Six Sun Gates | Twin lanes | Clear the scattered locks. (colour seal) | blockers, relics | 45 |
 | 28 | The Last Terrace | Tapered bowl | Clear the open terrace. (familiar coverings) | moss, dig sites | 42 |
 | 29 | The Silent Temple | Twin lanes | Dig through the temple floor. (stone) | dig sites, blockers, relics | 47 |
