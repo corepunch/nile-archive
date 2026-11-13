@@ -25,15 +25,15 @@ results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 The thirty winter wishes each use an authored court contour and terrain focus,
-with snow, tinsel and ice introduced and revisited across the three episodes.
+with tinsel, ice, boxes, carpet and caramel introduced and revisited across the three episodes.
 See the [board progression](docs/board-progression.md) for each wish and the
 limits of the current difficulty tuning.
 
 ## Shared match engine and atlas
 
-The campaign now includes packed-snow blocks, color gifts, buried star displays,
-spreading ribbon, delivery chutes and present deliveries. Each family has
-original authored artwork and a different introduction order from Relic Rush.
+The campaign uses only elements found in Homescapes' story levels: boxes,
+tinsel (chains), ice, present deliveries, green carpet and spilled caramel
+(oil). Each has a different introduction order from Relic Rush.
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
 and [in-game art review](../../docs/review/match3-elements/README.md).
 
@@ -62,7 +62,7 @@ retain their existing rules. Both portrait games use this same matching mode.
 The board and Settings panel share Relic Rush's layout. The puzzle backdrop
 uses the space above the goals for a lantern-lit Christmas market, with open
 snow behind the spruce-green wells and their thin champagne edge. Each well
-shades from light at the top to dark at the bottom. Powder snow and both ice
+shades from light at the top to dark at the bottom. Both ice
 strengths use [thin hex rims](docs/asset-catalogue.md#snow-and-ice-rims).
 Goal icons sit slightly left over their capsule edges. See the
 [cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).

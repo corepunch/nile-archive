@@ -19,15 +19,15 @@ states against the canonical mask.
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
 | Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
-| Coloured crate | `crate-0-1` through `crate-5-2` | Six matching kinds, each with one- and two-hit authored states; an adjacent matching colour or a direct effect damages it. |
-| Tunnel | `tunnel-in`, `tunnel-out` | Fixed entry and exit; pieces transfer between them during a fall. |
-| Hidden object | `hidden-covered`, `hidden-partial`, `hidden-revealed`, `object-goal` | One image per footprint, beneath the covering; its goal completes when all footprint cells are cleared. |
-| Growth | `growth` | One-hit overlay on a piece; it spreads after a turn in which no growth was damaged. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
+
+The master's crate, tunnel, hidden-object and growth states belong to mechanics
+the engine no longer has (they are not in Homescapes' story levels); they stay
+in the master but are not loaded.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review all strengths, colours and object states on the actual board with
+Review the stone strengths and the delivery on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/christmas-market-states.png)
 and [narrow](../../../docs/review/match3-elements/christmas-market-state-narrow.png).
@@ -38,7 +38,7 @@ hex axes, matching Relic Rush. Four creates a striped treat (engine stripes
 masked to the treat, as in Relic Rush; the old shooting-star frames remain in
 the atlas but are no longer drawn on the board); five or more creates the existing rainbow-star state. Bent clusters do
 not match. Existing bomb artwork remains available to review boards and tools;
-there is no bent-group bomb recipe. New obstacles, discoveries, tunnels, growth and deliveries use the authored
+there is no bent-group bomb recipe. Stones and deliveries use the authored
 state atlas described below. The guide and campaign lessons describe the rules.
 Reviewed board and guide captures are in the
 [straight-line match-3 review](review/straight-line-match3/README.md).
@@ -50,7 +50,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | 37 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/buildings/<key>.png` | Ten sequential construction milestones, 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
-| Six festive puzzle kinds | `art/icons.png`, cells 0–5 | `data/tile-sets/festive/` | Bell, candy cane, holly, blue ornament, purple bauble, gingerbread; bell objective, candy canes thaw nearby ice. On the board the bell (12/128), holly (7/128) and both ornaments (11/128) are drawn higher (`art.piece_lift`) so the main shape, not its bow, leaves or hanging cap, is centred in the hex |
+| Six festive puzzle kinds | `art/icons.png`, cells 0–5 | `data/tile-sets/festive/` | Bell, candy cane, holly, blue ornament, purple bauble, gingerbread; bell objective. On the board the bell (12/128), holly (7/128) and both ornaments (11/128) are drawn higher (`art.piece_lift`) so the main shape, not its bow, leaves or hanging cap, is centred in the hex |
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
@@ -276,7 +276,7 @@ Homescapes paints oil in a shader, so the art is engine-made after it.
 | `goal-oil` | HUD goal and guide icon in the carpet icon's style | `python3 tools/oil_art.py` | `data/match3.png` |
 | Board patch | One rounded patch over every oil cell, amber rim | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
 
-There is a single oil state. The Homescapes oil can is not ported.
+There is a single oil state.
 
 | Oil levels (Christmas 13, 25; Relic Rush 20, 26) | Homescapes levels 161 and 162 | Art |
 | --- | --- | --- |
@@ -290,12 +290,9 @@ solid blue ice ring. All three share tinsel's flat-top centreline. Snow moves
 inward when ice or tinsel shares its cell, leaving both materials visible.
 The guide illustrates the rims and the goal capsule uses the full snow icon.
 
-Snow (the `soil` layer) is no longer used by the campaign: Homescapes' story
-levels have only carpet and oil floors. The engine still draws it with the original Homescapes
-one-layer floor tile, `membrane-fill-1`. Homescapes' tile (`BUBBLE_MEMBRANE`)
-follows the same rule: a match or hit on top breaks the layer. `art.load`
-points `sand` at that tile, so the board cell and the HUD goal icon match.
-The level lessons still call it snow.
+The snow floor (the engine's former `soil` layer) has been removed: Homescapes'
+story levels have only carpet and oil floors. The `sand` and `sand-edge`
+frames remain in the atlas and the artwork catalogue, but no board draws them.
 
 The live board's one-layer ice is the original Homescapes shell fragment. It is
 the lower part of the full shell, so `tools/homescapes_atlas.py` rests it on
@@ -474,7 +471,7 @@ Current board art supersedes the earlier striped-gem and themed-piece mappings b
 
 See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
 
-Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. Portals use the original yellow entrance and blue output rings. The donut collection exit remains diagnostic under issue #98.
+Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. The donut collection exit remains diagnostic under issue #98.
 
 ## Recovered original blocker and generator artwork
 

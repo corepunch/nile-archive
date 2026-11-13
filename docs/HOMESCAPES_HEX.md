@@ -49,7 +49,7 @@ These are explicit hex adaptation choices, not original replay results.
 | `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
 | `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. All six original layer appearances and both visible cherry variants |
-| `OIL` | One layer under a piece (`TunerUnder`), cleared by a match on its cell or a blast; after a move that clears none it spreads to one neighbouring cell (`GrowsByInactivity`). Drawn as one SDF patch of engine-made golden liquid with two drifting bubble layers, after Homescapes' `oil.fsh`; goal `CELL_OIL` uses `goal-oil`. Levels 161 and 162 are in the reference pack. The oil can (`OIL_CAN`, throws 9 oil when broken) is not ported: no original art for it is extracted |
+| `OIL` | One layer under a piece (`TunerUnder`), cleared by a match on its cell or a blast; after a move that clears none it spreads to one neighbouring cell (`GrowsByInactivity`). Drawn as one SDF patch of engine-made golden liquid with two drifting bubble layers, after Homescapes' `oil.fsh`; goal `CELL_OIL` uses `goal-oil`. Levels 161 and 162 are in the reference pack |
 | `JELLY` | Carpet floor spreads through a matching group or carried power-up wave. All carpeted cells draw as one rounded patch: a signed distance field of their hexes (`texture.hex_field`) masks the tiled source swatch (`gfx.sdf_mask`). The goal uses `goal-carpet` |
 | `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection. Original donut and animated white exit arrow |
 | `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
@@ -69,9 +69,8 @@ conversion and are shown in the existing goal HUD. No goal is silently dropped.
 Missing goal icons use explicit text. Source preview wins do not grant campaign
 rewards. Regular campaigns retain their authored objective counts and economy.
 
-Ordinary colored pieces no longer thaw adjacent ice just because they occupy
-the former flame/candy-cane color slot. The explicit legacy engine `THAW` flag
-remains available to old callers, but neither portrait game enables it.
+Ordinary colored pieces never damage adjacent ice; only a match on the frozen
+piece or a direct hit removes a layer.
 
 ## Generators and data contract
 
@@ -169,10 +168,8 @@ scale the original piece. Only Homescapes sprites
 are used for board pieces and blockers. Existing quest-resource artwork is the
 explicit temporary exception. Surrounding backgrounds, panels, tool buttons and
 interface remain, as do the requested particle effects and animation transforms.
-Campaign portals use the original yellow and blue rings. The separate donut
-collection exit still uses diagnostic text. Legacy stone, crate and growth
-use source box and jelly material previews. Legacy floor-cover objectives use
-flat hex ground. The source-preview boards use the dedicated source model
+The donut collection exit uses the original animated arrow. Campaign stones
+use the source box states. The source-preview boards use the dedicated source model
 handlers and goals described above.
 
 The longer guide uses the engine's existing scrolling list, keeping Done within

@@ -1,6 +1,6 @@
 # Shared match-3 engine
 
-The current default rules and original-art atlas are documented in [Homescapes on hexes](HOMESCAPES_HEX.md). Legacy opt-in flags and campaign-only elements below remain supported.
+The current default rules and original-art atlas are documented in [Homescapes on hexes](HOMESCAPES_HEX.md). Legacy opt-in flags below remain supported; board elements are limited to those in Homescapes' story levels.
 
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
 `engine/match3.lua` owns the hex grid, matching, specials, swaps, blockers,
@@ -15,8 +15,7 @@ local rules = match3.new{
     flags = 0,          -- all standard engine behaviors
     radius = 4, colors = 6, match_min = 4,
     levels = require("campaign").levels,
-    kind_flags = {[0]=match3.GOAL, [1]=match3.THAW,
-                  [2]=match3.WOOD, [4]=match3.STONE},
+    kind_flags = {[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE},
 }
 local skin = match3.skin()  -- no override: embedded neutral resources
 -- Or match3.skin(require("match3_skin")): one game atlas + frame rectangles.
@@ -54,13 +53,11 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `NO_TOOLS` | Disable tool use and preserve charges |
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
-| `NO_THAW` | Disable neighboring ice damage from thawing kinds |
 | `LINE_MATCHES` | Default: straight runs along three hex axes, plus four-cell rhombi at minimum three |
 
 | Kind flag | Meaning |
 | --- | --- |
 | `GOAL` | Count toward the collection objective and last-wave collection |
-| `THAW` | Clear neighboring ice when this kind is matched |
 | `WOOD` | Count the piece toward the second resource total |
 | `STONE` | Count it toward the third resource total |
 
@@ -76,20 +73,19 @@ and do not participate in ordinary color matches. See the current
 [shape and combination contract](HOMESCAPES_HEX.md) for the hex adaptation.
 
 Level descriptors are content: name/lesson, moves, score, collection target
-(`relics`), excavation target (`soil`), chains and ice counts. Optional `mask`
+(`relics`), chains and ice counts. Optional `mask`
 is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
 strong ice. Optional `goals` lists the HUD goals that win the level, in order,
-from `score`, `idols`, `sand`, `locks` (every blocker), `discoveries`,
-`deliveries`, `carpet` and `oil`. Without it, every counter on the board must be finished. Relic Rush
+from `score`, `idols`, `locks` (every blocker), `deliveries`, `carpet` and
+`oil`. Without it, every counter on the board must be finished. Relic Rush
 and Christmas Market name one to three per level and never `score`, as in
 Homescapes. The
 games' `campaign.lua` files contain these data; their
 `rules.lua` modules only configure the engine, name kinds and handle the
 restoration economy. Matching and input do not live in either game.
 
-Optional stones, color crates, hidden-object footprints, growth, tunnels and
-delivery objectives extend these descriptors. Their exact schema, timing,
+Optional stones, deliveries, carpet and oil extend these descriptors. Their exact schema, timing,
 artwork and board-design rationale are in [Match-3 elements](MATCH3_ELEMENTS.md).
 
 ## Diagonal refill
@@ -112,10 +108,9 @@ inactive or locked. Pieces never cross a missing cell or a locked donor.
 
 `game_collapse(g)` fills the board and returns `from, steps`. `from[cell]` is
 its original source ID (negative for a new gem). Each animation step contains
-`tiles` and immediate `from` maps: every move is a single neighboring edge,
-except a directed tunnel transfer; negative sources enter from above that inlet.
-Tunnel steps fade between endpoints instead of crossing unrelated cells.
-Delivery tokens fall vertically or through tunnels, never diagonally.
+`tiles` and immediate `from` maps: every move is a single neighboring edge;
+negative sources enter from above that inlet. Delivery tokens fall vertically,
+never diagonally.
 The controller displays all
 steps at `FALL_STEP` seconds per step, then the landing interval, before it
 checks another cascade or a terminal result. Reduced motion shortens the

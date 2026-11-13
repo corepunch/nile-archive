@@ -41,16 +41,16 @@ states against the canonical mask.
 
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
-| Sand goal | `sand` | Existing full-cell artwork marks each remaining sand goal beneath its piece. Matching over it clears the cell. |
 | Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
-| Coloured crate | `crate-0-1` through `crate-5-2` | Six matching kinds, each with one- and two-hit authored states; an adjacent matching colour or a direct effect damages it. |
-| Tunnel | `tunnel-in`, `tunnel-out` | Fixed entry and exit; pieces transfer between them during a fall. |
-| Growth | `growth` | One-hit overlay on a piece; it spreads after a turn in which no growth was damaged. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
+
+The master's crate, tunnel, hidden-object and growth states belong to mechanics
+the engine no longer has (they are not in Homescapes' story levels); they stay
+in the master but are not loaded.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review all strengths and colours on the actual board with
+Review the stone strengths and the delivery on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/relic-rush-states.png)
 and [narrow](../../../docs/review/match3-elements/relic-rush-state-narrow.png).
@@ -147,7 +147,7 @@ the game does not recolour one gem into other kinds.
 | ID / rule name | Relics (default) | Jewels | Resources | Rule meaning |
 | --- | --- | --- | --- | --- |
 | 0 / IDOL | Gold sun idol | Yellow hex gem | Coins | Idol objective and score; reused Gold purse icon |
-| 1 / FLAME | Coral flame | Red heart | Terracotta amphora | A matched, unlocked flame thaws adjacent ice |
+| 1 / FLAME | Coral flame | Red heart | Terracotta amphora | Ordinary matching kind |
 | 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
 | 4 / CRYSTAL | Purple crystal cluster | Purple diamond | Stone | Ordinary matching kind; reused Stone purse icon |
@@ -206,12 +206,12 @@ See [match rules](match4-rules.md) for special-combination resolution.
 
 | Authored name | State and meaning |
 | --- | --- |
-| `sand` | One excavation layer under a piece; cleared by a match above it |
+| `sand` | Former excavation layer; kept in the atlas and catalogue, no longer drawn on the board |
 | `chain` | Crossed linked chains and padlock; one hit unlocks the piece |
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
 | `carpet-swatch` | Moss (Homescapes' carpet), levels 5, 8, 10, 13, 18, 22, 24 and 28 (never with lamp oil): tiled under one rounded patch over every covered cell (`texture.hex_field` + `gfx.sdf_mask`); a match touching it spreads it. Original swatch, resized full-bleed by `tools/homescapes_atlas.py`. [Review](../../christmas-market/docs/screenshots/review/carpet/levels.jpg) |
-| `oil-material`, `oil-bubbles` | Lamp oil (Homescapes' oil), levels 20 and 26: one rounded patch with drifting bubbles, tinted darker than Homescapes' gold (`R.patch_tint`) to stand apart from the gold dig sites. Cleared by a match on it; spreads after a move that clears none. `python3 tools/oil_art.py`. [Review](../../christmas-market/docs/screenshots/review/oil/levels.jpg) |
+| `oil-material`, `oil-bubbles` | Lamp oil (Homescapes' oil), levels 20 and 26: one rounded patch with drifting bubbles, tinted darker than Homescapes' gold (`R.patch_tint`). Cleared by a match on it; spreads after a move that clears none. `python3 tools/oil_art.py`. [Review](../../christmas-market/docs/screenshots/review/oil/levels.jpg) |
 | `goal-oil` | Lamp oil goal and guide icon; `python3 tools/oil_art.py` |
 | `goal-carpet` | Moss goal and guide icon: rounded hex, smooth rim, pebbles set in, soft shadow; `python3 tools/carpet_goal_icon.py` |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
@@ -725,7 +725,7 @@ Current board art supersedes the earlier striped-gem and themed-piece mappings b
 
 See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
 
-Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. Portals use the original yellow entrance and blue output rings. The donut collection exit remains diagnostic under issue #98.
+Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. The donut collection exit remains diagnostic under issue #98.
 
 ## Recovered original blocker and generator artwork
 

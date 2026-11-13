@@ -6,7 +6,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the score / idol / excavation / lock objectives within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
+Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the level's goals within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
@@ -29,9 +29,9 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-The campaign now includes layered stones, color crates, buried tablets,
-spreading vines, tunnels and relic deliveries. Each family has original
-authored artwork and an introduction in the [board progression](docs/board-progression.md).
+The campaign uses only elements found in Homescapes' story levels: layered
+boxes, chains, ice, tablet deliveries, moss (carpet) and lamp oil. Each has an
+introduction in the [board progression](docs/board-progression.md).
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
 and [in-game art review](../../docs/review/match3-elements/README.md).
 
@@ -173,7 +173,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 ## Expedition and restoration loop
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
-2. Complete its score, idol, excavation and blocker objectives within the move budget.
+2. Complete its goals within the move budget.
 3. Claim the first win once: 80–120 spare amulets and 3 discovery stars, plus a restoration grant at a wonder milestone.
 4. Return to the island. At a wonder milestone, choose a location and confirm construction; otherwise the next story clue plays immediately.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
@@ -183,40 +183,40 @@ Hex amulets pay for restorations and decorations. Each scheduled first-clear gra
 
 ## Campaign: thirty hex levels
 
-Every stage uses its own connected active-cell mask within a radius-four hex grid. Their sand and lock placements make seams, interrupted approaches and thawing excavations; [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Objectives below are taken from the current level configuration; all listed blockers must be cleared.
+Every stage uses its own connected active-cell mask within a radius-four hex grid. Their lock placements make seams and interrupted approaches; [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Goals below are taken from the current level configuration; a level is won by its own goals.
 
-| # | Expedition | Moves | Score | Idols | Sand | Chains | Ice cells | Focus |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| 1 | First Light | 24 | 1100 | 8 | 0 | 0 | 0 | Match 3 in a row. |
-| 2 | The Jade Crescent | 29 | 1800 | 10 | 7 | 0 | 0 | Match 4 for a sun ray. |
-| 3 | Sunstone Spiral | 32 | 2300 | 12 | 12 | 0 | 0 | Dig along the seam. |
-| 4 | The Vine Constellation | 35 | 2700 | 12 | 10 | 4 | 0 | Match to break chains. |
-| 5 | Three Paths Meet | 35 | 3100 | 14 | 13 | 4 | 0 | Rays cross gaps. |
-| 6 | Winter Lotus | 37 | 3400 | 14 | 13 | 0 | 5 | Match to break ice. |
-| 7 | The Ember Ring | 40 | 3800 | 16 | 15 | 4 | 5 | Flames thaw nearby ice. |
-| 8 | Prism Hollow | 40 | 4200 | 16 | 17 | 4 | 6 | Match 5 for a prism. |
-| 9 | The Sixfold Seal | 43 | 4600 | 18 | 19 | 5 | 6 | Use rays across the seal. |
-| 10 | Heart of the Hexagon | 46 | 5000 | 20 | 22 | 6 | 6 | Uncover the buried centre. |
-| 11 | The Long Terrace | 33 | 2500 | 12 | 14 | 0 | 0 | Dig the long terrace. |
-| 12 | Twelve Crates | 36 | 2900 | 13 | 15 | 5 | 0 | Free chained relics. |
-| 13 | Names in the Stone | 37 | 3200 | 14 | 16 | 6 | 0 | Aim rays along the stone. |
-| 14 | Static | 38 | 3500 | 14 | 17 | 7 | 0 | Work around the broken seam. |
-| 15 | The Frost Line | 39 | 3700 | 15 | 18 | 4 | 6 | Clear chains and ice. |
-| 16 | Supper for Twelve | 40 | 4000 | 15 | 18 | 4 | 7 | Flames thaw nearby ice. |
-| 17 | The Torn Log | 42 | 4200 | 16 | 19 | 5 | 7 | Some ice takes two hits. |
-| 18 | Lantern Steps | 40 | 3000 | 12 | 12 | 2 | 4 | Clear the open terrace. |
-| 19 | Under the Vines | 45 | 4600 | 18 | 20 | 6 | 8 | Dig beneath the locks. |
-| 20 | The Archivist's Key | 46 | 5100 | 20 | 22 | 7 | 9 | Open the central approach. |
-| 21 | Tomas's Trail | 35 | 2800 | 12 | 15 | 0 | 0 | Follow the buried seam. |
-| 22 | The Frozen Stair | 40 | 3400 | 14 | 16 | 2 | 8 | Thaw the frozen approach. |
-| 23 | The Star Road | 40 | 3700 | 15 | 16 | 5 | 5 | Choose a colour for the prism. |
-| 24 | Noon Shadow | 41 | 3900 | 16 | 20 | 4 | 5 | Excavate across the shadow. |
-| 25 | Smoke on the Water | 38 | 4000 | 16 | 18 | 6 | 6 | Work through the locks. |
-| 26 | The Jade Deep | 43 | 4300 | 17 | 20 | 4 | 9 | Thaw the buried ground. |
-| 27 | Six Sun Gates | 45 | 4600 | 18 | 20 | 7 | 8 | Clear the scattered locks. |
-| 28 | The Last Terrace | 42 | 3200 | 13 | 13 | 2 | 4 | Clear the open terrace. |
-| 29 | The Silent Temple | 47 | 5200 | 20 | 23 | 8 | 10 | Dig through the temple floor. |
-| 30 | The Song Returns | 49 | 5500 | 22 | 24 | 8 | 10 | Uncover the final approach. |
+| # | Expedition | Moves | Goals | Chains | Ice cells | Focus |
+| --- | --- | ---: | --- | ---: | ---: | --- |
+| 1 | First Light | 24 | Relics | 0 | 0 | Match 3 in a row. |
+| 2 | The Lamp Lens | 29 | Relics | 0 | 0 | Match 4 for a sun ray. |
+| 3 | The Buried Cable | 32 | Blockers, Relics | 0 | 0 | Match beside a box to break it. |
+| 4 | Under the Pump | 35 | Blockers, Relics | 4 | 0 | Match to break chains. |
+| 5 | The Quay Marker | 35 | Moss | 4 | 0 | Match on the moss to spread it. |
+| 6 | The Shore Marker | 37 | Blockers, Relics | 0 | 5 | Match to break ice. |
+| 7 | The Tool Roll | 40 | Blockers, Relics | 3 | 4 | Some boxes need two hits. |
+| 8 | The Broken Cable | 40 | Moss, Relics | 4 | 6 | Match 5 for a prism. |
+| 9 | The Supply Crate | 43 | Blockers, Relics | 5 | 6 | Clear the chains and the ice. |
+| 10 | The Shutter Crank | 46 | Moss, Blockers | 6 | 6 | Spread the moss over the centre. |
+| 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |
+| 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free chained relics. |
+| 13 | Names in the Stone | 37 | Moss, Blockers | 6 | 0 | Aim rays along the chains. |
+| 14 | Static | 38 | Blockers, Relics | 7 | 0 | Work around the broken seam. |
+| 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Break the three-layer box. |
+| 16 | Supper for Twelve | 40 | Blockers, Relics | 4 | 7 | Clear the frozen gems. |
+| 17 | The Torn Log | 42 | Blockers, Relics | 5 | 7 | Thick ice takes two hits. |
+| 18 | Lantern Steps | 40 | Moss | 2 | 4 | Spread the moss across the terrace. |
+| 19 | Under the Vines | 45 | Blockers, Relics | 4 | 6 | Work beneath the locks. |
+| 20 | The Archivist's Key | 46 | Lamp oil, Blockers | 5 | 7 | Mop up the lamp oil before it spreads. |
+| 21 | Tomas's Trail | 35 | Delivery | 0 | 0 | Clear below the tablet to deliver it. |
+| 22 | The Frozen Stair | 40 | Moss, Blockers | 2 | 8 | Thaw the frozen approach. |
+| 23 | The Star Road | 40 | Relics, Blockers | 3 | 4 | Choose a colour for the prism. |
+| 24 | Noon Shadow | 41 | Moss, Relics | 4 | 5 | Spread the moss across the shadow. |
+| 25 | Smoke on the Water | 38 | Blockers, Relics | 6 | 6 | Work through the locks. |
+| 26 | The Jade Deep | 43 | Lamp oil, Blockers | 4 | 7 | Clear the oil before it spreads. |
+| 27 | Six Sun Gates | 45 | Blockers, Relics | 7 | 8 | Clear the scattered locks. |
+| 28 | The Last Terrace | 42 | Moss | 2 | 4 | Spread the moss across the terrace. |
+| 29 | The Silent Temple | 47 | Blockers, Relics | 8 | 10 | Break through the temple floor. |
+| 30 | The Warning Returns | 49 | Delivery, Blockers | 8 | 10 | Bring the tablet down to its exit. |
 
 Ice can require more than one hit. Board patterns progress from the introductory field to crescents, spirals, branching lines, rings and the final central seal.
 
@@ -270,7 +270,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 - Thirty distinct hex board masks with 48–58 active cells. Contiguous straight lines of three or more identical relics match along the three hex axes; bends, diamonds and rings do not count. Swaps without a match animate back and do not spend a move.
 - Three in a line → ordinary match; four → directional lightning relic; five or more → sun prism. Crossing lines do not create bombs; existing bombs and dynamite retain their effects.
 - Swap two specials for a combination attack; prism + special converts that color before detonation.
-- Ancient sand is excavated by matches above it. Sand and ice have [thin rims around the cell](docs/asset-catalogue.md#terrain-blockers-and-board-interaction). Chained and frozen relics cannot move until matched or hit. Double ice needs two hits. Matched flame relics also thaw adjacent ice.
+- Boxes break one layer per adjacent match or hit; moss spreads through matches on it; lamp oil spreads after a move that clears none; a tablet falls to its exit. Ice has [thin rims around the cell](docs/asset-catalogue.md#terrain-blockers-and-board-interaction). Chained and frozen relics cannot move until matched or hit. Double ice needs two hits.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
@@ -317,7 +317,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Verification
 
-- `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, fire thawing, tools, prism colour clears, connected board masks and seeded opening boards without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 120 greedy campaign trials (extended: `make test-extended`). The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
+- `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, tools, prism colour clears, connected board masks and seeded opening boards without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 120 greedy campaign trials (extended: `make test-extended`). The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
 - `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. Every one of the 46 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
