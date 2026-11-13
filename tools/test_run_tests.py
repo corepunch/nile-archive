@@ -27,14 +27,11 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(run_jobs([("missing", ["/nonexistent-test-tool"])], 1, output=out), 1)
         self.assertIn("exit 127", out.getvalue())
 
-    def test_all_suites_once_and_renderer_checks_are_default(self):
+    def test_one_instance_runs_every_suite_and_renderer_checks_are_default(self):
         jobs = checks(arguments=["rules", "--extended"])
-        games = [command for _, command in jobs if command[0].startswith("./build/test/")]
-        self.assertEqual(len(games), 5)
-        self.assertEqual(len({command[0] for command in games}), 5)
-        self.assertTrue(all(command[1:] == ["--check", "rules", "--extended"] for command in games))
-        self.assertTrue(all(command[1] == "--fast" for _, command in checks(True)
-                            if command[0].startswith("./build/test/")))
+        apps = [command for _, command in jobs if command[0].startswith("./build/test/")]
+        self.assertEqual(apps, [["./build/test/all", "--check", "rules", "--extended"]])
+        self.assertEqual([command[1] for _, command in checks(True) if command[0].startswith("./build/test/")], ["--fast"])
 
 
 if __name__ == "__main__":

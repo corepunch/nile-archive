@@ -500,5 +500,9 @@ int main(int argc, char **argv)
         if (test_failures()) fprintf(stderr, "%s\n", T.notes[0]);
         return test_failures() != 0;
     }
+#ifdef TEST_ALL_GAMES   /* build/test/all: the engine's suite and every game's, in this one instance */
+    return test_all(TEST_ALL_GAMES, argc, argv);
+#else
     return test_main("engine", "tests/lua", "games/relic-rush/data", argc, argv);
+#endif
 }
