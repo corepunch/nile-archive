@@ -28,7 +28,13 @@ def main():
             sources[path] = Image.open(ROOT / path).convert("RGBA")
     mask = Image.open(ROOT / manifest["cell_mask"]["source"]).convert("L")
     assert list(source.size) == manifest["source_size"]
+    verified = 0
     for name, asset in manifest["assets"].items():
+        if asset.get("atlas_frame"):
+            # Registered into the shared atlas by tools/match3_atlas.py, which
+            # checks it; writing it here would overwrite data/match3.png.
+            continue
+        verified += 1
         im = sources[asset.get("source", manifest["source"])].crop(asset["box"])
         if asset.get("rotation_degrees"):
             # Align authored directional artwork with its board axis.
@@ -88,7 +94,7 @@ def main():
         assert Image.open(mask_path).tobytes() == mask_rgba.tobytes(), "Stale cell mask"
     else:
         mask_rgba.save(mask_path, optimize=True)
-    print("Relic Rush authored atlas: 27 crops verified" if args.check else "Relic Rush atlas imported")
+    print(f"Relic Rush authored atlas: {verified} crops verified" if args.check else f"Relic Rush atlas: {verified} crops imported")
 
 
 if __name__ == "__main__":

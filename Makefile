@@ -167,6 +167,7 @@ build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
 test-assets:
 	python3 games/emergency/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
+	python3 games/relic-rush/tools/board_assets.py --check
 	python3 games/christmas-market/tools/prepare_catalogue.py --check
 	python3 games/christmas-market/tools/check_assets.py
 	python3 games/christmas-market/tools/prepare_story.py --check
