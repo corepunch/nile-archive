@@ -70,7 +70,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Buried Cable", "Match beside the stone to break it.", 32, 2300, 12, 0, 0)
+        local l = level("The Buried Cable", "Match beside a box to break it.", 32, 2300, 12, 0, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -118,7 +118,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Supply Crate", "Use rays across the seal.", 43, 4600, 18, 5, 6)
+        local l = level("The Supply Crate", "Clear the chains and the ice.", 43, 4600, 18, 5, 6)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -134,7 +134,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Long Terrace", "Pieces travel between paired conduits.", 33, 2500, 12, 0, 0)
+        local l = level("The Long Terrace", "Collect the relics.", 33, 2500, 12, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 1, 1, 0)
         l.ice_layers = 1
@@ -150,7 +150,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Names in the Stone", "Aim rays along the stone.", 37, 3200, 14, 6, 0)
+        local l = level("Names in the Stone", "Aim rays along the chains.", 37, 3200, 14, 6, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -254,7 +254,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Jade Deep", "Clear the oil and its cans.", 43, 4300, 17, 4, 7)
+        local l = level("The Jade Deep", "Clear the oil before it spreads.", 43, 4300, 17, 4, 7)
         l.mask = lanes_mask
         l.terrain = central_seam(-1)
         l.ice_layers = 2
@@ -298,31 +298,19 @@ local levels = {
 
 -- Teach each new problem alone, then combine it with a familiar one.
 levels[3].stones = {{cell=cell(2,0),hp=1}}
-levels[3].lesson = "Match beside the stone to break it."
+levels[3].lesson = "Match beside a box to break it."
 levels[7].stones = {{cell=cell(2,0),hp=2}}
-levels[7].lesson = "Some stones need two hits."
-levels[9].crates = {{cell=cell(2,0),hp=1,kind=0}}
-levels[9].lesson = "Match the seal's colour beside it."
-levels[11].tunnels = {{entrance=cell(0,-2),exit=cell(1,1)}}
-levels[11].lesson = "Pieces travel between paired conduits."
-levels[12].crates = {{cell=cell(2,0),hp=1,kind=1}}
-levels[14].crates = {{cell=cell(2,0),hp=1,kind=2}}
+levels[7].lesson = "Some boxes need two hits."
+levels[9].lesson = "Clear the chains and the ice."
+levels[11].lesson = "Collect the relics."
 levels[15].stones = {{cell=cell(0,0),hp=3}}
-levels[15].lesson = "Break the three-layer stone."
-levels[16].hazards = {cell(2,0)}
-levels[16].lesson = "Stop the vines before they spread."
-levels[17].crates = {{cell=cell(2,0),hp=2,kind=3}}
-levels[17].lesson = "Some coloured seals take two hits."
-levels[19].hazards = {cell(2,0)}
+levels[15].lesson = "Break the three-layer box."
+levels[16].lesson = "Clear the frozen gems."
+levels[17].lesson = "Thick ice takes two hits."
 levels[21].deliveries = {tokens={cell(0,-2)},exits={cell(0,2)}}
 levels[21].lesson = "Clear below the tablet to deliver it."
 levels[22].stones = {{cell=cell(2,0),hp=2}}
-levels[23].crates = {{cell=cell(2,0),hp=1,kind=4}}
-levels[24].tunnels = {{entrance=cell(0,-2),exit=cell(1,1)}}
-levels[25].hazards = {cell(2,0)}
-levels[27].crates = {{cell=cell(2,0),hp=2,kind=5}}
 levels[29].stones = {{cell=cell(2,0),hp=3}}
-levels[30].tunnels = {{entrance=cell(1,-1),exit=cell(1,1)}}
 
 -- Quest objects belong to the story after the first clear, not to the board goals.
 local quest_objects = {
@@ -334,7 +322,7 @@ local quest_objects = {
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
-levels[30].lesson = "Send the tablet through the conduit."
+levels[30].lesson = "Bring the tablet down to its exit."
 -- Floors, as in Homescapes: moss (its carpet) or lamp oil, never both, in
 -- about a third of the levels; dig sites are gone.
 -- Moss: matches touching it spread it.
@@ -348,15 +336,12 @@ for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
 -- turn that clears none of it.
 levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), cell(-3,3)}
 levels[20].lesson = "Mop up the lamp oil before it spreads."
--- An oil can holds more: break it with matches beside it and it throws 9 drops.
-levels[26].oil_cans = {{cell=cell(-3,1), hp=1}, {cell=cell(0,4), hp=2}}
 levels[26].oil = {cell(3,-4), cell(3,-3), cell(3,-2), cell(4,-4), cell(4,-3), cell(4,-2)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "idols" are relics, "locks" counts every blocker: chains, ice, stones,
--- seals and vines; "carpet" counts the cells the moss has yet to cover;
--- "oil" counts the lamp oil left, with what its cans will throw.
+-- "idols" are relics, "locks" counts every blocker: chains, ice and boxes; "carpet" counts the cells the moss has yet to cover;
+-- "oil" counts the lamp oil left.
 local goals = {
     {"idols"}, {"idols"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet"},
     {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks"},

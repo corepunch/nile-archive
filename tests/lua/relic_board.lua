@@ -435,7 +435,7 @@ end
 do
     local _,height=R.guide_form:measure(432,R.skin)
     check(height<=800,"mechanics guide fits the portrait screen")
-    check(R.guide_form:scroll_to("topics","growth"),"last mechanic remains reachable by scrolling")
+    check(R.guide_form:scroll_to("topics",R.guide_entries[#R.guide_entries].id),"last mechanic remains reachable by scrolling")
 end
 
 -- A shared source obstacle is drawn once, and looking at a queue never consumes it.
