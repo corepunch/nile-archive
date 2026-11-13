@@ -2644,6 +2644,25 @@ static int l_texture_region(lua_State *L)
     return 1;
 }
 
+/* texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range) */
+static int l_texture_hex_field(lua_State *L)
+{
+    size_t len_centres;
+    const char *a_centres = luaL_checklstring(L, 1, &len_centres);
+    int a_count = (int)luaL_checkinteger(L, 2);
+    float a_radius = (float)luaL_checknumber(L, 3);
+    float a_corner = (float)luaL_checknumber(L, 4);
+    float a_fillet = (float)luaL_checknumber(L, 5);
+    rect a_area = api_check_rect(L, 6);
+    int a_w = (int)luaL_checkinteger(L, 7);
+    int a_h = (int)luaL_checkinteger(L, 8);
+    float a_range = (float)luaL_checknumber(L, 9);
+    luaL_argcheck(L, (size_t)(a_count * 8) <= len_centres, 1, "too few bytes");
+    texture r = tex_hex_field(a_centres, a_count, a_radius, a_corner, a_fillet, a_area, a_w, a_h, a_range);
+    api_push_texture(L, r);
+    return 1;
+}
+
 /* texture.match3_default() */
 static int l_texture_match3_default(lua_State *L)
 {
@@ -2948,6 +2967,25 @@ static int l_gfx_additive(lua_State *L)
 {
     bool a_on = lua_toboolean(L, 1);
     gfx_additive(a_on);
+    return 0;
+}
+
+/* gfx.sdf_mask(t, area, range, rim, shade) */
+static int l_gfx_sdf_mask(lua_State *L)
+{
+    texture a_t = api_check_texture(L, 1);
+    rect a_area = api_check_rect(L, 2);
+    float a_range = (float)luaL_checknumber(L, 3);
+    float a_rim = (float)luaL_checknumber(L, 4);
+    float a_shade = (float)luaL_checknumber(L, 5);
+    gfx_sdf_mask(a_t, a_area, a_range, a_rim, a_shade);
+    return 0;
+}
+
+/* gfx.sdf_unmask() */
+static int l_gfx_sdf_unmask(lua_State *L)
+{
+    gfx_sdf_unmask();
     return 0;
 }
 
@@ -4307,6 +4345,7 @@ static void open_texture(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
         {"region", l_texture_region},
+        {"hex_field", l_texture_hex_field},
         {"match3_default", l_texture_match3_default},
         {"load", l_texture_load},
         {"from_pixels", l_texture_from_pixels},
@@ -4351,6 +4390,8 @@ static void open_gfx(lua_State *L)
         {"ngon_grad", l_gfx_ngon_grad},
         {"star", l_gfx_star},
         {"additive", l_gfx_additive},
+        {"sdf_mask", l_gfx_sdf_mask},
+        {"sdf_unmask", l_gfx_sdf_unmask},
         {"clip", l_gfx_clip},
         {"unclip", l_gfx_unclip},
         {"bleed", l_gfx_bleed},

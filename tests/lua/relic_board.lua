@@ -194,7 +194,7 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     if mode == "fall" then R.phase, R.phase_time = R.PH_FALL, 1
     elseif mode == "won" then
         local l = rules.level_of(g)
-        g.score, g.relics, g.dug, g.obstacles, g.moves = l.score, l.relics, g.initial_soil, 0, 0
+        g.score, g.relics, g.dug, g.obstacles, g.moves, g.carpeted = l.score, l.relics, g.initial_soil, 0, 0, g.carpet_total
         g.discovered, g.delivered = #g.objects, g.delivery_total
     else g.moves = 0 end
     R.board_update(.02)

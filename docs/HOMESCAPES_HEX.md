@@ -49,7 +49,7 @@ These are explicit hex adaptation choices, not original replay results.
 | `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
 | `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. All six original layer appearances and both visible cherry variants |
-| `JELLY` | Carpet floor spreads through a matching group or carried power-up wave; source carpet texture |
+| `JELLY` | Carpet floor spreads through a matching group or carried power-up wave. All carpeted cells draw as one rounded patch: a signed distance field of their hexes (`texture.hex_field`) masks the tiled source swatch (`gfx.sdf_mask`). The goal uses `goal-carpet` |
 | `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection. Original donut and animated white exit arrow |
 | `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
 | `STATUE` | Fixed, power-up-only layered statue; original raw/cut/carved states |
@@ -130,7 +130,9 @@ The 32 extracted original PNGs are preserved byte-for-byte in
 atlas regions. `tools/homescapes_atlas.py` uniformly resizes and, for the two
 sloped rocket axes, rotates them. Object alpha stays authored. Carpet and jelly
 material previews use the canonical hex mask, without filling transparent
-pixels or inventing damage artwork. These material previews are not certified
+pixels or inventing damage artwork. `carpet-swatch` is the exception: it is
+resized full-bleed so the board can tile it. `goal-carpet` is engine-made from
+the swatch's paint by `python3 tools/carpet_goal_icon.py`. These material previews are not certified
 full-bleed hex art. All transforms and input/output hashes are recorded in the
 engine and games' `match3-atlas.json` manifests.
 

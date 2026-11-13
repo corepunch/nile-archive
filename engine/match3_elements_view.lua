@@ -16,7 +16,7 @@ end
 for _,name in ipairs{"box","carry","color-box","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
-for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
+for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet","carpet-swatch","goal-carpet","cookie-1","cookie-2","cookie-3","cherry","honey-material","box-1","box-2","box-3","box-4","box-5","box-6"} do
     E.assets[#E.assets+1]=name
 end
 
@@ -40,10 +40,63 @@ local function image(R, name, at, size, alpha)
     gfx.image(R.board_art[name], rect.centered(at, size2.splat(size)), color(255, 255, 255, alpha * 255))
 end
 
+-- Carpet is one continuous patch, as in Homescapes: a signed distance field of
+-- its cells (texture.hex_field, rounded outside corners, filleted inside ones)
+-- masks the tiled swatch, and its rim is shaded. The field is rebuilt only
+-- when the carpet changes.
+-- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
+local CARPET = {corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.15, rim = 5, shade = .5}
+local function carpet_cells(R, rules)
+    local g, cells = R.g, {}
+    for i = 0, rules.CELLS - 1 do
+        local on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
+        if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
+    end
+    return cells
+end
+local function carpet_field(R, cells)
+    local key = R.HEX_R .. ":" .. table.concat(cells, ",")
+    local cache = R.carpet_field
+    if cache and cache.key == key then return cache end
+    if cache and cache.texture then texture.free(cache.texture) end
+    local r = R.HEX_R
+    local range = CARPET.range * r
+    local minx, miny, maxx, maxy, xy = math.huge, math.huge, -math.huge, -math.huge, {}
+    for _, cell in ipairs(cells) do
+        local p = R.cell_pos(cell)
+        xy[#xy + 1], xy[#xy + 2] = p.x, p.y
+        minx, miny, maxx, maxy = math.min(minx, p.x), math.min(miny, p.y), math.max(maxx, p.x), math.max(maxy, p.y)
+    end
+    local pad = r + range
+    local area = rect(minx - pad, miny - pad, maxx - minx + 2 * pad, maxy - miny + 2 * pad)
+    local w, h = math.ceil(area.w / CARPET.texel), math.ceil(area.h / CARPET.texel)
+    local field = texture.hex_field(string.pack(("ff"):rep(#cells), table.unpack(xy)), #cells, r,
+        CARPET.corner * r, CARPET.fillet * r, area, w, h, range)
+    R.carpet_field = {key = key, texture = field, area = area, range = range}
+    return R.carpet_field
+end
+function E.carpet(R, rules, sx)
+    local cells = carpet_cells(R, rules)
+    if #cells == 0 then return end
+    local field = carpet_field(R, cells)
+    local area = field.area:offset(vec2(sx, 0))
+    local swatch, alpha = R.board_art["carpet-swatch"], R.intro and R.intro:fade() or 1
+    local side = 2 * R.HEX_R * CARPET.tile
+    local src = rect(1, 1, 126, 126)   -- clear of the atlas cell's border texels
+    gfx.sdf_mask(field.texture, area, field.range, CARPET.rim, CARPET.shade)
+    for y = area.y, area.y + area.h, side do
+        for x = area.x, area.x + area.w, side do
+            gfx.image_part(swatch, src, rect(x, y, side, side), color(255, 255, 255, 255 * alpha))
+        end
+    end
+    gfx.sdf_unmask()
+end
+
 -- Called after every well has been painted, before snow and pieces. A hidden
 -- object's one authored image spans its complete footprint, not one per cell.
 function E.ground(R, rules, sx)
     local g = R.g
+    E.carpet(R, rules, sx)
     for _, object in ipairs(g.objects or {}) do
         local x, y, minx, maxx, miny, maxy = 0, 0, math.huge, -math.huge, math.huge, -math.huge
         for _, cell in ipairs(object.cells) do
@@ -74,7 +127,6 @@ function E.ground(R, rules, sx)
             local alpha = R.intro and R.intro:fade() or 1
             if g.hs then
                 local c=g.hs.cells[i]
-                if c.carpet then image(R,"carpet",at,2*(R.HEX_R-.65),alpha) end
                 if (c.tile or 0)>0 then image(R,"membrane-fill-"..c.tile,at,2*R.HEX_R,alpha) end
             end
             local portal_offset = vec2(0, R.HEX_R * .54)

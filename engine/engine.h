@@ -314,6 +314,10 @@ void draw_star(vec2 center, float radius, float inner, int points, float angle, 
 /* Coloured triangles: one colour per vertex, three 0-based indices per triangle. */
 void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m);
 void gfx_additive(bool on);   /* additive blending for shapes (glows, sparks) */
+texture tex_hex_field(const char *centres, int count, float radius, float corner, float fillet,
+                      rect area, int w, int h, float range);
+void gfx_sdf_mask(texture t, rect area, float range, float rim, float shade);
+void gfx_sdf_unmask(void);
 void gfx_clip(rect r);
 void gfx_unclip(void);
 void gfx_bleed(bool on);        /* let drawing reach app_bleed() (backgrounds), not only app_screen(); resets the clip */

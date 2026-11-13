@@ -990,7 +990,7 @@ function G.bind(R, over)
         if R.on_island or not R.g or R.g.won or R.g.lost or R.overlay ~= R.OV_NONE then return false end
         local g = R.g
         g.score = math.max(g.score, rules.level_of(g).score)
-        g.discovered, g.delivered = #g.objects, g.delivery_total
+        g.discovered, g.delivered, g.carpeted = #g.objects, g.delivery_total, g.carpet_total
         for _, object in ipairs(g.objects) do object.state = "revealed" end
         g.won = true
         R.overlay = R.OV_RESULT

@@ -244,6 +244,24 @@ and `python3 tools/match3_atlas.py`. Review with
 
 [Fitted art in the Market Keeper’s Guide](screenshots/review/fitted-gold/guide.jpg)
 
+## Green carpet
+
+Homescapes' carpet (`CELL_JELLY`). Seeded in levels 9, 21 and 28. A match touching it,
+or a move begun on it, carpets every cell it hits; the goal counts the cells
+still uncovered. Snow tiles draw over it until they are cleared.
+
+| Asset | State and meaning | Source | Runtime |
+| --- | --- | --- | --- |
+| `carpet-swatch` | Carpet material, tiled under the board's patch mask | Original Homescapes swatch, resized full-bleed by `tools/homescapes_atlas.py` | `data/match3.png` |
+| `goal-carpet` | HUD goal and guide icon: rounded hex, smooth rim, pebbles set in, soft shadow | `python3 tools/carpet_goal_icon.py` from the swatch's paint | `data/match3.png` |
+| Board patch | One rounded patch over every carpeted cell, rim shaded | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
+
+There is a single carpet state; it has no strength or interaction states.
+
+| Carpet levels at 480×900 | Patch on Homescapes levels 37 and 65 | Goal icon |
+| --- | --- | --- |
+| ![Carpet levels](screenshots/review/carpet/levels.jpg) | ![Patch](screenshots/review/carpet/homescapes-patch.jpg) | ![Icon](screenshots/review/carpet/goal-icon.jpg) |
+
 ## Snow and ice rims
 
 `sand-edge` takes a narrow white band from the authored powder-snow texture.

@@ -175,6 +175,7 @@ test-assets:
 	python3 games/relic-rush/tools/prepare_story.py --check
 	python3 tools/buildings.py --check
 	python3 tools/match3_atlas.py --check
+	python3 tools/carpet_goal_icon.py --check
 	python3 tools/match3_elements_art.py --check
 	python3 tests/test_hex_tile_art.py
 # Budget is test execution only: build prerequisites finish before the timer.

@@ -170,17 +170,24 @@ levels[29].hazards = {cell(2,0)}
 levels[30].tunnels = {{entrance=cell(2,-1),exit=cell(2,1)}}
 levels[30].deliveries = {tokens={cell(2,-2)},exits={cell(2,2)}}
 levels[30].lesson = "Send the parcel through the chute."
+-- Green carpet (Homescapes' carpet): matches touching it spread it.
+levels[9].carpet = {cell(-3,-1), cell(3,0)}   -- one in each lane, not on the narrow spine
+levels[9].lesson = "Match on the green carpet to spread it."
+levels[21].carpet = {cell(-2,1), cell(-2,2)}
+levels[28].carpet = {cell(-1,-1), cell(0,-2)}
+levels[28].lesson = "Roll out the carpet before the finale."
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "locks" counts every blocker: tinsel, ice, snowdrifts, parcels and ribbon.
+-- "locks" counts every blocker: tinsel, ice, snowdrifts, parcels and ribbon;
+-- "carpet" counts the cells the green carpet has yet to cover.
 local goals = {
     {"idols"}, {"idols", "sand"}, {"discoveries"}, {"locks", "sand"}, {"locks", "idols"},
-    {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"idols", "sand"}, {"sand", "locks"},
+    {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"carpet"}, {"sand", "locks"},
     {"discoveries", "idols"}, {"idols", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"discoveries", "locks"},
     {"locks", "idols"}, {"deliveries", "sand"}, {"sand"}, {"locks", "sand", "idols"}, {"sand", "locks"},
-    {"sand", "idols"}, {"locks", "sand"}, {"locks", "idols"}, {"discoveries", "locks"}, {"sand", "locks"},
-    {"locks", "idols"}, {"sand", "locks", "idols"}, {"sand"}, {"locks", "sand", "idols"}, {"deliveries", "sand", "locks"},
+    {"carpet", "sand"}, {"locks", "sand"}, {"locks", "idols"}, {"discoveries", "locks"}, {"sand", "locks"},
+    {"locks", "idols"}, {"sand", "locks", "idols"}, {"carpet"}, {"locks", "sand", "idols"}, {"deliveries", "sand", "locks"},
 }
 assert(#goals == #levels, "one goal list per level")
 for i, board in ipairs(levels) do board.goals = goals[i] end

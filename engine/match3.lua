@@ -122,7 +122,7 @@ function E.bind_board_ui(R, rules, tool_art)
     function R.goal_entries()
         local g, l = R.g, rules.level_of(R.g)
         if g.hs then
-            local icons={CELL_JELLY="goal-jelly",BOX="goal-box",COLOR_BOX="goal-color-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
+            local icons={CELL_JELLY="goal-carpet",BOX="goal-box",COLOR_BOX="goal-color-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
             local entries={}
             for n,goal in ipairs(g.hs.goals) do entries[#entries+1]={id="source-"..n,
                 icon=goal.type=='CHIPS' and 'goal-chip-'..goal.subtype or icons[goal.type],
@@ -138,6 +138,7 @@ function E.bind_board_ui(R, rules, tool_art)
         if #g.objects>0 then entries[#entries+1]=discoveries end
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then entries[#entries+1]={id="locks",icon="chain",remaining=math.max(0,g.obstacles)} end
+        if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}
             for _, entry in ipairs(entries) do by_id[entry.id] = entry end
@@ -677,7 +678,8 @@ function E.new(config)
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
         local sa, sb = g.tiles[a].special, g.tiles[b].special
-        m.carrycarpet=g.hs and ((g.hs.cells[a] or {}).carpet or (g.hs.cells[b] or {}).carpet) or false
+        m.carrycarpet=g.hs and ((g.hs.cells[a] or {}).carpet or (g.hs.cells[b] or {}).carpet)
+            or g.carpet and ((g.carpet[a] or 0) > 0 or (g.carpet[b] or 0) > 0) or false
         if sa == PRISM or sb == PRISM then
             local p=sa==PRISM and a or b
             local o=p==a and b or a
@@ -727,7 +729,7 @@ function E.new(config)
         if g.won or g.lost or not cell_active(g,cell) or locked(g,cell) or g.tiles[cell].special==NORMAL then return false end
         m.mask,m.make,m.direct,m.ordinary,m.hits={[cell]=true},{},{[cell]=true},{},1
         m.consumed,m.flights,m.spread={},{},{}
-        m.carrycarpet=g.hs and (g.hs.cells[cell] or {}).carpet or false
+        m.carrycarpet=g.hs and (g.hs.cells[cell] or {}).carpet or g.carpet and (g.carpet[cell] or 0) > 0 or false
         g.moves,g.combo,g.turn_pending,g.hazard_damaged=g.moves-1,0,true,false
         return true
     end
@@ -798,6 +800,11 @@ function E.new(config)
         for i = 0, CELLS - 1 do
             if cell_active(g, i) then
                 if thaw[i] then g.ice[i], g.obstacles = g.ice[i] - 1, g.obstacles - 1 end
+                -- A match touching carpet, or a move begun on it, carpets every cell it hits.
+                if not g.hs and g.carpet and m.mask[i] and g.carpet[i] == 0 and not solid(g, i)
+                    and (m.carrycarpet or (m.spread or {})[i]) then
+                    g.carpet[i], g.carpeted = 1, g.carpeted + 1
+                end
                 if m.mask[i] and not protected[i] and not solid(g, i) and not (damage[i] and (g.hazard_damaged_cell or {})[i]) and g.tiles[i].kind ~= M.DELIVERY then
                     if g.ice[i] > 0 then
                         g.ice[i], g.obstacles, g.score = g.ice[i] - 1, g.obstacles - 1, g.score + 20
@@ -943,6 +950,7 @@ function E.new(config)
         for i = 0, CELLS - 1 do c.tiles[i] = home.copy(g.tiles[i]) end
         c.hs = home.copy(g.hs)
         c.active, c.soil, c.chain, c.ice = copy_array(g.active), copy_array(g.soil), copy_array(g.chain), copy_array(g.ice)
+        c.carpet = g.carpet and copy_array(g.carpet)
         c.stone_hp, c.crate_hp, c.crate_kind, c.hazard = copy_array(g.stone_hp), copy_array(g.crate_hp), copy_array(g.crate_kind), copy_array(g.hazard)
         c.objects = {}
         for i, object in ipairs(g.objects) do
@@ -1088,7 +1096,7 @@ function E.new(config)
     function M.game_start(lvl, seed)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
-            tiles = {}, active = {}, soil = {}, chain = {}, ice = {},
+            tiles = {}, active = {}, soil = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
             stone_hp = {}, crate_hp = {}, crate_kind = {}, hazard = {}, objects = {},
             tunnel_to = {}, tunnel_from = {}, delivery_exits = {}, delivered = 0, delivery_total = 0, discovered = 0,
             level = lvl, moves = 0, score = 0, relics = 0, dug = 0, obstacles = 0, initial_obstacles = 0, initial_soil = 0,
@@ -1106,6 +1114,7 @@ function E.new(config)
             g.active[i] = not l.mask or l.mask:sub(i + 1, i + 1) == "1"
             g.tiles[i] = tile(-1, NORMAL)
             g.soil[i], g.chain[i], g.ice[i], g.stone_hp[i], g.crate_hp[i], g.crate_kind[i], g.hazard[i] = 0, 0, 0, 0, 0, -1, 0
+            g.carpet[i] = 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
         if l.homescapes then home.init(g,l.homescapes);return g end
@@ -1222,6 +1231,16 @@ function E.new(config)
             g.initial_soil = g.initial_soil + g.soil[i]
         end
         g.obstacles = g.initial_obstacles
+        -- Carpet (Homescapes' CELL_JELLY): seed cells start covered and every
+        -- active cell must be covered by spreading it.
+        if l.carpet and #l.carpet > 0 then
+            for _, cell in ipairs(l.carpet) do
+                valid_cell(cell)
+                assert(cell_active(g, cell), "carpet seed outside the board")
+                if g.carpet[cell] == 0 then g.carpet[cell], g.carpeted = 1, g.carpeted + 1 end
+            end
+            for i = 0, CELLS - 1 do if cell_active(g, i) then g.carpet_total = g.carpet_total + 1 end end
+        end
         if l.homescapes then home.init(g,l.homescapes); return g end
         local m = new_match()
         game_matches(g, m, -1)
@@ -1256,13 +1275,14 @@ function E.new(config)
         M.game_end_turn(g)
         local l = M.levels[g.level + 1]
         local done = {score = g.score >= l.score, idols = g.relics >= l.relics, sand = g.dug >= g.initial_soil,
-            locks = g.obstacles == 0, discoveries = g.discovered == #g.objects, deliveries = g.delivered == g.delivery_total}
+            locks = g.obstacles == 0, discoveries = g.discovered == #g.objects, deliveries = g.delivered == g.delivery_total,
+            carpet = (g.carpeted or 0) >= (g.carpet_total or 0)}
         -- A level's own goal list is all it needs; otherwise every counter must be done.
         local cleared = true
         if not g.object_only then
             for _, id in ipairs(l.goals or {"score", "idols", "sand", "locks"}) do cleared = cleared and done[id] end
         end
-        if not l.goals then cleared = cleared and done.discoveries and done.deliveries end
+        if not l.goals then cleared = cleared and done.discoveries and done.deliveries and done.carpet end
         g.won = g.hs and home.won(g) or not g.hs and cleared
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
@@ -1312,7 +1332,7 @@ function E.new(config)
                     and g.tiles[below].kind ~= -1 then delivery_access = delivery_access + 1 end
             end
         end
-        return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200
+        return c.score - g.score + relics * 90 + (c.dug - g.dug) * 200 + ((c.carpeted or 0) - (g.carpeted or 0)) * 160
             + (g.obstacles - c.obstacles) * 220 + delivery_access * 350 + object_progress * 900
     end
 

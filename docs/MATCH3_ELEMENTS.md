@@ -84,6 +84,7 @@ objects = {{cells={object_a, object_b, object_c}}}
 hazards = {growth_cell}
 tunnels = {{entrance=upper_cell, exit=lower_cell}}
 deliveries = {tokens={token_cell}, exits={destination_cell}}
+carpet = {seed_cell, another_seed}
 ```
 
 Every element must occupy an active cell; incompatible overlaps, invalid
@@ -92,6 +93,9 @@ creation. Endpoint reservations precede ranked terrain placement. Hidden
 footprints can also receive chain/ice but cannot overlap another explicit
 element. The optional scalar `soil` requests ranked excavation cells; a
 footprint can add further covered cells. Use `g.initial_soil` for the goal.
+`carpet` seeds Homescapes' carpet: a match group touching a carpeted cell, or a
+move begun on one, carpets every cell it hits (`g.carpet`). The `carpet` goal
+counts the active cells still uncovered (`g.carpet_total - g.carpeted`).
 
 `engine/match3.lua` owns all rules. Mutable state lives on each game instance:
 `stone_hp`, `crate_hp`, `crate_kind`, `hazard`, `objects`, `discovered`,
@@ -102,6 +106,10 @@ cannot damage a crate while a ray can.
 
 `engine/match3_elements_view.lua` loads and draws the shared presentation.
 Object artwork is sampled across its footprint and clipped to those hexes.
+Carpet is one patch: `E.carpet` builds a signed distance field of the carpeted
+hexes with rounded outer corners and filleted inner ones (`texture.hex_field`),
+rebuilt only when the carpet changes, and draws the tiled swatch through it with
+a shaded rim (`gfx.sdf_mask`), as SDF fonts are drawn.
 Smaller pieces leave special floor artwork visible; this is spatial scaling
 of the original sprite, not a recolored state. Tunnels use a fade between their
 endpoints during the existing fall step. The guide uses the same atlas keys

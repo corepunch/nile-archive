@@ -51,7 +51,7 @@ function S.matches(M,g,m,preferred,alternate,minimum,no_specials,eligible,equal)
             if eligible(g,i) then
                 if i==preferred or i==alternate and pick~=preferred or pick<0 then pick=i end
             end
-            carpet=carpet or g.hs and g.hs.cells[i] and g.hs.cells[i].carpet
+            carpet=carpet or g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or g.carpet and (g.carpet[i] or 0)>0
         end end
         local sp=group.length>=minimum+2 and M.PRISM or group.cross and count>=5 and M.BOMB
             or group.length==minimum+1 and (group.axis==0 and M.ROW or group.axis==1 and M.COLUMN or M.DIAGONAL)

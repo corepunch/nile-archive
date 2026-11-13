@@ -28,7 +28,7 @@ struct render_texture {
 };
 static struct {
     GLuint program, vao, vertices, indices, white;
-    GLint screen, origin, stripes, stripe_rect, stripe_color;
+    GLint screen, origin, stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params;
     size2 pixels, logical;
     float scale;
     vec2 offset;
@@ -90,13 +90,19 @@ bool render_init(void)
         "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;point=position;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
-        "uniform vec4 stripes, stripe_rect, stripe_color;\n"
+        "uniform vec4 stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params; uniform sampler2D mask;\n"
         "void main(){vec4 base=texture(image,texcoord);"
         "if(stripes.z>0.){vec2 q=(point-stripe_rect.xy)/stripe_rect.zw-.5;"
         "float phase=dot(q,stripes.xy)*stripes.z;float aa=max(fwidth(phase),.001);"
         "float band=1.-smoothstep(stripes.w*.5-aa,stripes.w*.5+aa,abs(fract(phase+.5)-.5));"
         "float shade=.65+.35*dot(base.rgb,vec3(.2126,.7152,.0722));"
         "base.rgb=mix(base.rgb,stripe_color.rgb*shade,band*stripe_color.a);}"
+        /* Signed distance mask, as for SDF fonts: 0.5 is the edge, outside is
+         * positive, range is the distance one half of the encoding spans. */
+        "if(mask_params.x>0.){vec2 m=mask_uv.xy+(point-mask_rect.xy)/mask_rect.zw*mask_uv.zw;"
+        "float d=(texture(mask,m).r-.5)*2.*mask_params.x;float aa=max(fwidth(d),.001)*.7;"
+        "base.rgb*=1.-mask_params.z*smoothstep(-mask_params.y,0.,d);"
+        "base.a*=1.-smoothstep(-aa,aa,d);}"
         "pixel=base*tint;}\n");
     if (!vs || !fs) { glDeleteShader(vs); glDeleteShader(fs); return false; }
     R.program = glCreateProgram();
@@ -118,8 +124,12 @@ bool render_init(void)
     R.stripes = glGetUniformLocation(R.program, "stripes");
     R.stripe_rect = glGetUniformLocation(R.program, "stripe_rect");
     R.stripe_color = glGetUniformLocation(R.program, "stripe_color");
+    R.mask_rect = glGetUniformLocation(R.program, "mask_rect");
+    R.mask_uv = glGetUniformLocation(R.program, "mask_uv");
+    R.mask_params = glGetUniformLocation(R.program, "mask_params");
     glUseProgram(R.program);
     glUniform1i(glGetUniformLocation(R.program, "image"), 0);
+    glUniform1i(glGetUniformLocation(R.program, "mask"), 1);
     glGenVertexArrays(1, &R.vao); glBindVertexArray(R.vao);
     glGenBuffers(1, &R.vertices); glBindBuffer(GL_ARRAY_BUFFER, R.vertices);
     glGenBuffers(1, &R.indices);
@@ -131,6 +141,7 @@ bool render_init(void)
     struct render_texture *t = render_texture_create(1, 1, &white);
     if (!t) { render_shutdown(); return false; }
     R.white = t->id; texture_forget(t); free(t);
+    glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, R.white); glActiveTexture(GL_TEXTURE0);   /* the unused mask */
     return true;
 }
 
@@ -165,6 +176,7 @@ void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
     R.scale = viewport.size.w / logical.w;
     R.offset = viewport.pos;
     R.bleed = false;
+    if (R.program) { glUseProgram(R.program); glUniform4f(R.mask_params, 0, 0, 0, 0); }   /* a frame never starts masked */
     glDisable(GL_SCISSOR_TEST); glDisable(GL_DEPTH_TEST); glDisable(GL_CULL_FACE);
     glViewport(0, 0, (int)pixels.w, (int)pixels.h);
     glClearColor(clear.r / 255.f, clear.g / 255.f, clear.b / 255.f, 1);
@@ -265,6 +277,25 @@ void render_image_striped(texture t, rect dst, float angle, float repeats, float
     glUniform4f(R.stripe_color, ink.r / 255.f, ink.g / 255.f, ink.b / 255.f, ink.a / 255.f);
     render_image(t, tex_rect(t), dst, 0, tint);
     glUniform4f(R.stripes, 0, 0, 0, 0);   /* following ordinary images/shapes stay unstriped */
+}
+
+/* Until render_mask with an empty texture, every draw is cut to the signed distance field
+ * in t, spread over area (logical units); rim darkens the inside edge. */
+void render_mask(texture t, rect area, float range, float rim, float shade)
+{
+    if (!render_ready()) return;
+    if (!t.tex || range <= 0 || area.size.w <= 0 || area.size.h <= 0) {
+        glUniform4f(R.mask_params, 0, 0, 0, 0);
+        glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, R.white); glActiveTexture(GL_TEXTURE0);
+        return;
+    }
+    rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, t.tex->id);
+    glActiveTexture(GL_TEXTURE0);
+    glUniform4f(R.mask_rect, area.pos.x, area.pos.y, area.size.w, area.size.h);
+    glUniform4f(R.mask_uv, uv.pos.x, uv.pos.y, uv.size.w, uv.size.h);
+    glUniform4f(R.mask_params, range, maxf(rim, 0), saturate(shade), 0);
 }
 
 /* The area drawing may reach: the logical screen, or the whole display. */

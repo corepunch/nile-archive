@@ -24,7 +24,7 @@ objectives move the emphasis within each family.
 | 6 | Ribbon Wishes | Compact court | Match on ice to crack it. (familiar coverings) | blockers, snow | 38 |
 | 7 | Candlelight Circle | Two chambers | Some snowdrifts need two hits. (snowdrift) | blockers, bows | 40 |
 | 8 | Carousel Stars | Tapered bowl | Match the ribbon colour beside its parcel. (ribbon parcel) | blockers, snow | 42 |
-| 9 | Skating Evening | Twin lanes | Striped treats clear a whole line. (familiar coverings) | bows, snow | 44 |
+| 9 | Skating Evening | Twin lanes | Match on the green carpet to spread it. (familiar coverings) | carpet | 44 |
 | 10 | Under the Big Fir | Tapered bowl | Clear snow, tinsel and ice. (ribbon parcel) | snow, blockers | 46 |
 | 11 | Carols and Crumbs | Two chambers | Clear the snow around the square. (hidden display) | display, bows | 32 |
 | 12 | Word from Fenwick | Tapered bowl | Treats travel between paired chutes. (chute) | bows, snow | 35 |
@@ -36,14 +36,14 @@ objectives move the emphasis within each family.
 | 18 | Fairy Lights | Tapered bowl | Take a breath and clear the snow. (familiar coverings) | snow | 42 |
 | 19 | A Hundred Flames | Two chambers | Remember: thick ice takes two hits. (snowdrift) | blockers, snow, bows | 44 |
 | 20 | A Letter Forty Years Late | Tapered bowl | Open both sides of the court. (chute) | snow, blockers | 46 |
-| 21 | Carolers Court | Tapered bowl | Clear the snow for the carolers. (familiar coverings) | snow, bows | 34 |
+| 21 | Carolers Court | Tapered bowl | Clear the snow for the carolers. (familiar coverings) | carpet, snow | 34 |
 | 22 | Many Hands | Tapered bowl | Free tinsel along the passage. (ribbon parcel) | blockers, snow | 38 |
 | 23 | Painted Horses | Twin lanes | Untangle the ribbon before it spreads. (spreading ribbon) | blockers, bows | 39 |
 | 24 | Frozen Fountain | Tapered bowl | Thaw the ice around the fountain. (hidden display) | display, blockers | 40 |
 | 25 | Snow on the Line | Tapered bowl | Clear the snow and free the treats. (spreading ribbon) | snow, blockers | 42 |
 | 26 | Lantern Ice | Tapered bowl | Thaw the ice around the lanterns. (ribbon parcel) | blockers, bows | 44 |
 | 27 | Every Light in Bellmere | Two chambers | Clear the snow across the court. (snowdrift) | snow, blockers, bows | 38 |
-| 28 | The Last Train | Tapered bowl | A little snow before the finale. (familiar coverings) | snow | 44 |
+| 28 | The Last Train | Tapered bowl | Roll out the carpet before the finale. (familiar coverings) | carpet | 44 |
 | 29 | The Big Fir | Twin lanes | Untangle and thaw the snowy court. (spreading ribbon) | blockers, snow, bows | 47 |
 | 30 | Light the Christmas Tree | Tapered bowl | Send the parcel through the chute. (chute, delivery) | delivery, snow, blockers | 48 |
 

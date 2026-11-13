@@ -216,5 +216,25 @@ for _, flags in ipairs({0,E.LINE_MATCHES}) do
         check(found==expected and (not found or x==a and y==b), 'fast hint agrees with full swap oracle')
     end
 end
-print('match3 elements: blocker provenance, discoveries, tunnels, deliveries and hazard turns passed')
+-- Carpet spreads only through a match that touches it, and counts down the
+-- cells left to cover.
+do
+    local C = rules{name='carpet',moves=20,score=0,relics=0,soil=0,chains=0,ice=0,carpet={cell(0,0)},goals={'carpet'}}
+    local g = C.game_start(0,7)
+    check(g.carpeted==1 and g.carpet_total==C.CELLS - (function() local n=0 for i=0,C.CELLS-1 do if not g.active[i] then n=n+1 end end return n end)(),
+        'carpet goal covers every active cell')
+    for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
+    local away = {cell(2,-2),cell(2,-1),cell(2,0)}
+    for _,i in ipairs(away) do g.tiles[i]=C.tile(1) end
+    local m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
+    check(g.carpeted==1 and g.carpet[away[2]]==0, 'a match away from the carpet does not spread it')
+    local line = {cell(0,-1),cell(0,0),cell(0,1)}
+    for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
+    for _,i in ipairs(line) do g.tiles[i]=C.tile(2) end
+    m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
+    check(g.carpeted==3 and g.carpet[line[1]]==1 and g.carpet[line[3]]==1, 'a match through the carpet carpets every matched cell')
+    check(C.game_copy(g).carpet ~= g.carpet, 'copy owns the carpet layer')
+end
+
+print('match3 elements: blocker provenance, discoveries, tunnels, deliveries, hazard turns and carpet passed')
 return 0

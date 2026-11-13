@@ -97,7 +97,7 @@ local function campaign()
         end
         for _, object in ipairs(g.objects) do object.state = "revealed" end
         g.discovered, g.delivered = #g.objects, g.delivery_total
-        g.score, g.relics, g.dug, g.obstacles = l.score, l.relics, g.initial_soil, 0
+        g.score, g.relics, g.dug, g.obstacles, g.carpeted = l.score, l.relics, g.initial_soil, 0, g.carpet_total
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b

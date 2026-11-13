@@ -143,6 +143,8 @@ local guide_entries = {
      icon={front="delivery",tiles={}}},
     {id="growth", title="Spreading growth", description="Clear growth each turn to stop it spreading.",
      icon={front="honey-material",tiles={}}},
+    {id="carpet", title="Spreading moss", description="Match on the moss to spread it to every cell the match clears. Cover the whole site.",
+     icon={front="goal-carpet",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

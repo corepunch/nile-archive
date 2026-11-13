@@ -778,6 +778,19 @@ texture = {}
 ---@return texture
 function texture.region(atlas, source) end
 
+---A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centres packs count float pairs (string.pack("ff", x, y) each) in logical units; radius is a cell's centre-to-vertex size. Convex corners round by corner, and the inside corners where cells meet fillet over fillet. The w x h texture spans area; it encodes -range..range, so keep range above the rim and the fillet.
+---@param centres string
+---@param count integer
+---@param radius number
+---@param corner number
+---@param fillet number
+---@param area rect
+---@param w integer
+---@param h integer
+---@param range number
+---@return texture
+function texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range) end
+
 ---Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web.
 ---@return texture
 function texture.match3_default() end
@@ -956,6 +969,16 @@ function gfx.star(center, radius, inner, points, angle, c) end
 ---Additive blending for shapes (glows, sparks) until switched off.
 ---@param on boolean
 function gfx.additive(on) end
+
+---Until sdf_unmask, cut every drawing to the inside of the distance field t (from texture.hex_field) spread over area, with an anti-aliased edge at any scale. rim darkens a band that wide inside the edge by shade (0..1). range must match the field's.
+---@param t texture
+---@param area rect
+---@param range number
+---@param rim number
+---@param shade number
+function gfx.sdf_mask(t, area, range, rim, shade) end
+
+function gfx.sdf_unmask() end
 
 ---Draw only inside r until unclip.
 ---@param r rect

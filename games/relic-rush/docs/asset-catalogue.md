@@ -210,6 +210,8 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `chain` | Crossed linked chains and padlock; one hit unlocks the piece |
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
+| `carpet-swatch` | Moss (Homescapes' carpet), levels 18, 24 and 28: tiled under one rounded patch over every covered cell (`texture.hex_field` + `gfx.sdf_mask`); a match touching it spreads it. Original swatch, resized full-bleed by `tools/homescapes_atlas.py`. [Review](../../christmas-market/docs/screenshots/review/carpet/levels.jpg) |
+| `goal-carpet` | Moss goal and guide icon: rounded hex, smooth rim, pebbles set in, soft shadow; `python3 tools/carpet_goal_icon.py` |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |

@@ -2,6 +2,7 @@
 #include "render.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -379,6 +380,66 @@ void draw_mesh(const vec2 *pts, const color *cols, int n, const int *idx, int m)
 }
 
 void gfx_additive(bool on) { render_additive(on); }
+
+/* ------------------------------------------------------ signed distance */
+
+/* Flat-top hexagon with its vertices at +-x, as engine cells are; r is the
+ * apothem (centre to the flat top). Inigo Quilez's exact distance. */
+static float hex_distance(vec2 p, float r)
+{
+    const float kx = -0.866025404f, ky = 0.5f, kz = 0.577350269f;
+    p = v2(fabsf(p.x), fabsf(p.y));
+    float dot = minf(kx * p.x + ky * p.y, 0);
+    p.x -= 2 * dot * kx; p.y -= 2 * dot * ky;
+    p.x -= clampf(p.x, -kz * r, kz * r); p.y -= r;
+    return sqrtf(p.x * p.x + p.y * p.y) * (p.y < 0 ? -1.f : 1.f);
+}
+
+/* Polynomial smooth minimum: blends two fields over k, filleting the
+ * inside corner where two shapes meet. */
+static float smooth_min(float a, float b, float k)
+{
+    if (k <= 0) return minf(a, b);
+    float h = maxf(k - fabsf(a - b), 0) / k;
+    return minf(a, b) - h * h * k * .25f;
+}
+
+texture tex_hex_field(const char *centres, int count, float radius, float corner, float fillet,
+                      rect area, int w, int h, float range)
+{
+    if (count < 0 || w <= 0 || h <= 0 || w > 2048 || h > 2048 || radius <= 0 || range <= 0) return (texture){0};
+    unsigned char *px = malloc((size_t)w * h * 4);
+    if (!px) return (texture){0};
+    float apothem = radius * .866025404f;
+    corner = clampf(corner, 0, apothem * .9f);
+    float reach = radius + range + fillet;   /* cells further away cannot change the encoded value */
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            vec2 p = v2(area.pos.x + (x + .5f) * area.size.w / w, area.pos.y + (y + .5f) * area.size.h / h);
+            float d = range;
+            for (int i = 0; i < count; i++) {
+                float c[2];
+                memcpy(c, centres + i * 8, sizeof c);
+                vec2 q = v2(p.x - c[0], p.y - c[1]);
+                if (fabsf(q.x) > reach || fabsf(q.y) > reach) continue;
+                d = smooth_min(d, hex_distance(q, apothem - corner) - corner, fillet);
+            }
+            unsigned char v = (unsigned char)(saturate(.5f + d / (2 * range)) * 255 + .5f);
+            unsigned char *o = px + ((size_t)y * w + x) * 4;
+            o[0] = o[1] = o[2] = v; o[3] = 255;
+        }
+    }
+    texture t = tex_from_pixels(px, w, h);
+    free(px);
+    return t;
+}
+
+void gfx_sdf_mask(texture t, rect area, float range, float rim, float shade)
+{
+    render_mask(t, area, range, rim, shade);
+}
+
+void gfx_sdf_unmask(void) { render_mask((texture){0}, rc(0, 0, 0, 0), 0, 0, 0); }
 
 void gfx_clip(rect r)
 {

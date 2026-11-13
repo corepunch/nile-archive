@@ -335,18 +335,24 @@ local quest_objects = {
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Send the tablet through the conduit."
+-- Moss (Homescapes' carpet): matches touching it spread it.
+levels[18].carpet = {cell(-1,0), cell(0,0)}
+levels[18].lesson = "Match on the moss to spread it."
+levels[24].carpet = {cell(2,-1), cell(3,-1)}
+levels[28].carpet = {cell(0,-1), cell(0,0)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
 -- "idols" are relics, "sand" is dig sites, "locks" counts every blocker:
--- chains, ice, stones, seals and vines.
+-- chains, ice, stones, seals and vines; "carpet" counts the cells the moss
+-- has yet to cover.
 local goals = {
     {"idols"}, {"idols", "sand"}, {"locks", "sand"}, {"locks", "idols"}, {"idols", "sand"},
     {"locks", "sand"}, {"locks", "idols"}, {"idols", "sand"}, {"locks", "sand"}, {"sand", "locks"},
     {"idols", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"},
-    {"locks", "idols"}, {"locks", "sand"}, {"sand"}, {"sand", "locks", "idols"}, {"sand", "locks"},
-    {"deliveries", "sand"}, {"locks", "sand"}, {"idols", "locks"}, {"sand", "idols"}, {"locks", "sand"},
-    {"locks", "sand", "idols"}, {"locks", "idols"}, {"sand"}, {"sand", "locks", "idols"}, {"deliveries", "sand", "locks"},
+    {"locks", "idols"}, {"locks", "sand"}, {"carpet"}, {"sand", "locks", "idols"}, {"sand", "locks"},
+    {"deliveries", "sand"}, {"locks", "sand"}, {"idols", "locks"}, {"carpet", "sand"}, {"locks", "sand"},
+    {"locks", "sand", "idols"}, {"locks", "idols"}, {"carpet", "sand"}, {"sand", "locks", "idols"}, {"deliveries", "sand", "locks"},
 }
 assert(#goals == #levels, "one goal list per level")
 for i, board in ipairs(levels) do board.goals = goals[i] end

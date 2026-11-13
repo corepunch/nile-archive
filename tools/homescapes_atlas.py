@@ -9,6 +9,7 @@ import homescapes_composites
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'engine/art/homescapes/sprites'
+GOAL_CARPET = ROOT / 'engine/art/match3/goal-carpet.png'
 ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
            'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut',
@@ -35,13 +36,16 @@ def registered():
                 outside = ImageChops.subtract(canvas.getchannel('A'), mask).point(lambda v: 255 if v >= 128 else 0)
                 if not outside.getbbox(): break
                 side -= 2
+            if name == 'carpet-swatch':
+                # A tiling material: the board repeats it under an SDF patch mask.
+                canvas = original.resize((128,128), Image.Resampling.LANCZOS)
             if name in ('carpet', 'honey-material', 'membrane-fill-1', 'membrane-fill-2', 'blind-body'):
                 # Register source materials to the hex without manufacturing opaque pixels.
                 canvas = original.resize((128,128), Image.Resampling.LANCZOS)
                 canvas.putalpha(ImageChops.multiply(canvas.getchannel('A'),mask))
             images[name] = canvas
             registrations[name] = {'source': str(path.relative_to(ROOT)), 'rotation': angle,
-                                   'crop': crop, 'registered_size': [128,128] if name in ('carpet','honey-material','membrane-fill-1','membrane-fill-2','blind-body') else list(candidate.size), 'canvas': [128,128],
+                                   'crop': crop, 'registered_size': [128,128] if name in ('carpet','carpet-swatch','honey-material','membrane-fill-1','membrane-fill-2','blind-body') else list(candidate.size), 'canvas': [128,128],
                                    'mask': name in ('carpet','honey-material','membrane-fill-1','membrane-fill-2', 'blind-body')}
             if name == 'ice-1': fragment = candidate
     # One-layer ice is the bottom of the cracked shell, not a centred band: rest
@@ -50,6 +54,10 @@ def registered():
     images['ice-1'] = Image.new('RGBA', (128,128))
     images['ice-1'].paste(fragment, ((128-fragment.width)//2, shell_bottom-fragment.height))
     registrations['ice-1']['placement'] = 'bottom-aligned to ice-2'
+    # Engine-made goal icon from the swatch's paint (tools/carpet_goal_icon.py).
+    images['goal-carpet'] = Image.open(GOAL_CARPET).convert('RGBA')
+    registrations['goal-carpet'] = {'source': str(GOAL_CARPET.relative_to(ROOT)), 'canvas': [128,128],
+                                    'generator': 'python3 tools/carpet_goal_icon.py'}
     composite_images, composite_records = homescapes_composites.registered()
     for name, original in composite_images.items():
         images[name] = original.resize((128,128), Image.Resampling.LANCZOS)
@@ -59,7 +67,7 @@ def registered():
 
 
 def inputs():
-    return [Path(__file__), ROOT/'engine/art/hex-tile/hex-mask-128.png'] + sorted(SOURCE.glob('*.png')) + homescapes_composites.inputs()
+    return [Path(__file__), ROOT/'engine/art/hex-tile/hex-mask-128.png', GOAL_CARPET] + sorted(SOURCE.glob('*.png')) + homescapes_composites.inputs()
 
 
 if __name__ == '__main__':
