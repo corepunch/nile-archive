@@ -30,7 +30,6 @@ function M.setup()
     c.fog = rgba(239, 241, 228, 240)
     c.clearance = size2(0, 0)   -- adjacent bases may share an edge
     c.spacing = 120
-    c.path = color(0, 0, 0, 0)   -- no automatic roads between buildings
     c.movable = true
     c.buildable = buildable
     local zones = {{area = rect(580, 200, 600, 1050)}}

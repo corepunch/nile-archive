@@ -89,6 +89,24 @@ static void frame(float dt)
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(guide_at(old_edge) && guide_at(neighbour_edge));
     city_cancel(&c);
+    /* Roads pave a flag tile against each building's front (+v) and join the
+     * flags; without a road atlas the ground stays bare. */
+    c.items[0].pos = city_snap(&c, v2(40, 70), 1); c.items[1].pos = city_snap(&c, v2(110, 100), 1);
+    vec2 flags[2] = {vec2_add(c.items[0].pos, city_tile_to_world(&c, v2(0, 1))),
+                     vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(0, 1)))};
+    vec2 street = vec2_add(c.items[0].pos, city_tile_to_world(&c, v2(3, 1)));   /* the straight run between them */
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    CHECK(at((int)flags[0].x, (int)flags[0].y).b < 100 && at((int)street.x, (int)street.y).b < 100);
+    color paving[16];
+    for (int i = 0; i < 16; i++) paving[i] = rgba(20, 30, 240, 255);
+    c.road = tex_from_pixels(paving, 4, 4);
+    city_draw(&c, (input){0}, 0);
+    CHECK(render_read_pixels(pixels, w, h));
+    for (int i = 0; i < 2; i++) CHECK(at((int)flags[i].x, (int)flags[i].y).b > 200);
+    CHECK(at((int)street.x, (int)street.y).b > 200);
+    CHECK(at((int)c.items[0].pos.x, (int)c.items[0].pos.y - 3).r > 200);   /* never over a building */
+    tex_free(c.road); c.road = (texture){0};
     /* cloud fog moves on frame time alone, and unlocking clears it at once */
     c.count = 0;
     c.zone_count = 2; c.zones[0].area = rc(0, 0, 160, 40); c.zones[1].area = rc(0, 40, 160, 120);
