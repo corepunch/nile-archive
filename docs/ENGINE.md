@@ -169,7 +169,7 @@ HTML version's `localStorage["nile-v1"]` JSON.
 ```c
 typedef struct { const char *name, *about, *sprite_path; texture sprite;
                  size2 size; vec2 pivot; float base_width, height;
-                 purse cost, reward, needs, income; float income_period; } building_def;
+                 purse cost, reward, needs, income; float income_period; bool decoration; } building_def;
 ```
 
 - `cost` is paid on placement, `reward` granted once, `needs` must be owned

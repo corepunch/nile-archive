@@ -1,7 +1,7 @@
 -- match3_debug.lua — the entry points tools/screenshots.py, the test manifests
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
--- --level, --city, --showcase, --placing, --zone, --victory, --card, --fx,
+-- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
 -- --kudos, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states populates a board with the new authored element states.
@@ -94,6 +94,18 @@ function D.bind(R, W)
                     p = spot
                 end
                 R.island:add(p, i, 0)
+            end
+            local decor = tonumber(app.arg("decorations") or "")   -- --decorations N: N decorations among the buildings
+            if decor then
+                local spot = 1
+                for kind = WONDERS, #island.buildings - 1 do
+                    if decor <= 0 then break end
+                    if island.buildings[kind + 1].decoration then
+                        local hint = spots[(spot - 1) % #spots + 1] + vec2(spot % 2 == 0 and 110 or -110, 60)
+                        local ok, p = R.island:find_spot(kind, hint)
+                        if ok then R.island:add(p, kind, 0); decor, spot = decor - 1, spot + 1 end
+                    end
+                end
             end
             R.island_focus(vec2(850, 1650), .52)
             R.on_island = true

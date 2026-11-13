@@ -1149,7 +1149,7 @@ static int l_story_style_new(lua_State *L)
 
 void api_push_building_def(lua_State *L, building_def v)
 {
-    lua_createtable(L, 0, 17);
+    lua_createtable(L, 0, 18);
     lua_pushstring(L, v.name); lua_setfield(L, -2, "name");
     lua_pushstring(L, v.about); lua_setfield(L, -2, "about");
     lua_pushstring(L, v.sprite_path); lua_setfield(L, -2, "sprite_path");
@@ -1167,6 +1167,7 @@ void api_push_building_def(lua_State *L, building_def v)
     api_push_purse(L, v.needs); lua_setfield(L, -2, "needs");
     api_push_purse(L, v.income); lua_setfield(L, -2, "income");
     lua_pushnumber(L, v.income_period); lua_setfield(L, -2, "income_period");
+    lua_pushboolean(L, v.decoration); lua_setfield(L, -2, "decoration");
     luaL_setmetatable(L, "engine.building_def");
 }
 
@@ -1227,6 +1228,9 @@ building_def api_get_building_def(lua_State *L, int i)
     lua_getfield(L, i, "income_period");
     v.income_period = (float)lua_tonumber(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "decoration");
+    v.decoration = lua_toboolean(L, -1);
+    lua_pop(L, 1);
     return v;
 }
 
@@ -1250,6 +1254,7 @@ void api_store_building_def(lua_State *L, int i, building_def v)
     api_push_purse(L, v.needs); lua_setfield(L, i, "needs");
     api_push_purse(L, v.income); lua_setfield(L, i, "income");
     lua_pushnumber(L, v.income_period); lua_setfield(L, i, "income_period");
+    lua_pushboolean(L, v.decoration); lua_setfield(L, i, "decoration");
 }
 
 building_def api_check_building_def(lua_State *L, int i)

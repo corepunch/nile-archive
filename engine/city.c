@@ -579,7 +579,7 @@ static void road_plan(const city *c)
     }
     int waiting = 0;
     for (int i = 0; i < c->count; i++) {
-        if (road_skips(c, i)) continue;
+        if (road_skips(c, i) || c->defs[c->items[i].type].decoration) continue;   /* roads lead only to buildings */
         size2 s = road_base(c, c->items[i].type);
         vec2 t = vec2_sub(to_tile(c, c->items[i].pos), roads.off);
         /* the front first; a blocked front falls back to the other sides */

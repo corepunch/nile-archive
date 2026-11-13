@@ -534,6 +534,7 @@
     <field name="needs" type="purse" doc="Must be owned (not spent) to build."/>
     <field name="income" type="purse" doc="Collected by tapping when ready."/>
     <field name="income_period" type="float" doc="Seconds; 0 = no income."/>
+    <field name="decoration" type="bool" doc="A tree, statue, garden...: it keeps roads off its base, but no road leads to it."/>
   </struct>
   <struct name="building" c="building" doc="A placed building.">
     <field name="pos" type="vec2"/><field name="type" type="int" doc="Index into the city's defs (0-based)."/><field name="stamp" type="double" doc="When income last started growing."/>

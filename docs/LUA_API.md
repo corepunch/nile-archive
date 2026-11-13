@@ -2795,6 +2795,7 @@ A building type.
 | `needs` | `purse` | Must be owned (not spent) to build. |
 | `income` | `purse` | Collected by tapping when ready. |
 | `income_period` | `number` | Seconds; 0 = no income. |
+| `decoration` | `boolean` | A tree, statue, garden...: it keeps roads off its base, but no road leads to it. |
 
 ### building
 

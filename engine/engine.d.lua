@@ -154,6 +154,7 @@
 ---@field needs purse Must be owned (not spent) to build.
 ---@field income purse Collected by tapping when ready.
 ---@field income_period number Seconds; 0 = no income.
+---@field decoration boolean A tree, statue, garden...: it keeps roads off its base, but no road leads to it.
 
 ---@class building A placed building.
 ---@field pos vec2

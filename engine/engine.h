@@ -641,6 +641,7 @@ typedef struct {
     purse needs;         /* must be owned (not spent) to build */
     purse income;        /* collected by tapping when ready */
     float income_period; /* seconds; 0 = no income */
+    bool decoration;     /* trees, statues, gardens...: no road leads to it */
 } building_def;
 
 typedef struct { vec2 pos; int type; double stamp; } building;

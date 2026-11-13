@@ -84,7 +84,8 @@ for i = 1, M.RESTORATIONS do M.kinds[i] = {category = "story", stars = 0} end
 for _, e in ipairs(catalogue) do
     M.buildings[#M.buildings + 1] = {name = e.name, sprite_path = e.sprite_path, size = e.size, pivot = e.pivot,
         base_width = e.base_width, shadow_path = e.shadow_path, shadow_pivot = e.shadow_pivot, shadow_base_width = e.shadow_base_width,
-        cost = purse(e.coins), reward = purse(0, economy.decoration_influence(e.coins)), needs = purse(0, 0, 0, e.stars)}
+        cost = purse(e.coins), reward = purse(0, economy.decoration_influence(e.coins)), needs = purse(0, 0, 0, e.stars),
+        decoration = true}   -- no road leads to a decoration
     M.kinds[#M.buildings] = {category = e.category, stars = e.stars, key = e.key}
 end
 
