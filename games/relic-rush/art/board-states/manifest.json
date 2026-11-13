@@ -19,7 +19,7 @@
       "atlas_frame": "ray-diagonal",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/accent-revision.png",
+      "source": "art/board-theme/power-ups.png",
       "atlas_section": "board_theme"
     },
     "ray-column": {
@@ -33,7 +33,7 @@
       "atlas_frame": "ray-column",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/accent-revision.png",
+      "source": "art/board-theme/power-ups.png",
       "atlas_section": "board_theme"
     },
     "ray-row": {
@@ -47,7 +47,7 @@
       "atlas_frame": "ray-row",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/accent-revision.png",
+      "source": "art/board-theme/power-ups.png",
       "atlas_section": "board_theme"
     },
     "bomb": {
@@ -61,7 +61,7 @@
       "atlas_frame": "bomb",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/source.png",
+      "source": "art/board-theme/power-ups.png",
       "atlas_section": "board_theme"
     },
     "prism": {
@@ -321,7 +321,7 @@
       ],
       "runtime": "data/match3.png",
       "atlas_frame": "plane",
-      "source": "art/board-theme/source.png",
+      "source": "art/board-theme/power-ups.png",
       "fit": "free-object",
       "atlas_section": "board_theme",
       "registration": "art/match3-atlas.json"
@@ -1238,6 +1238,9 @@
       ]
     },
     "accent_source": "art/board-theme/accent-revision.png",
-    "accent_prompt": "art/board-theme/accent-prompt.txt"
+    "accent_prompt": "art/board-theme/accent-prompt.txt",
+    "power_up_source": "art/board-theme/power-ups.png",
+    "power_up_prompt": "art/board-theme/power-ups-prompt.txt",
+    "power_up_review": "docs/screenshots/review/power-ups/README.md"
   }
 }

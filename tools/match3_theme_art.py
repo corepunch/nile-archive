@@ -1,5 +1,7 @@
-"""Register the single authored board-theme atlas for each portrait game."""
+"""Register the authored board-theme sheets for each portrait game."""
 
+from contextlib import ExitStack
+from pathlib import Path
 from PIL import Image, ImageChops
 
 SLOTS = (
@@ -14,35 +16,46 @@ MATERIALS = {
     'oil-material': (782, 550, 956, 724),
     'stone-material': (1026, 550, 1200, 724),
 }
-# Measured from the major axis of the authored rocket's alpha silhouette.
-ACCENT_ROTATION = {'relic-rush': (13.5, -.1, -14.8), 'christmas-market': (18.7, .2, -19.6)}
-ROCKET_SLOTS = (6, 7, 8)
+POWER_UPS = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'plane')
+# Align the line through the two painted tip centers to the board's axes.
+ROCKET_ROTATION = {'relic-rush': (10.5, .3, -14.4), 'christmas-market': (2.8, .2, -4.5)}
 OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38}
 SIZE = 128
 
 
 def inputs(root):
     return [root / 'art/board-theme' / name for name in (
-        'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt')]
+        'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt',
+        'power-ups.png', 'power-ups-prompt.txt')]
 
 
 def registered(root, mask):
-    path, prompt, accent_path, accent_prompt = inputs(root)
+    path, prompt, accent_path, accent_prompt, power_path, power_prompt = inputs(root)
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
-    with Image.open(path) as source, Image.open(accent_path) as accent:
-        assert source.mode == 'RGBA' and source.size == (1254, 1254), path
-        assert accent.mode == source.mode and accent.size == source.size, accent_path
+    with ExitStack() as stack:
+        source, accent, power = [stack.enter_context(Image.open(p)) for p in (path, accent_path, power_path)]
+        for sheet in (source, accent, power):
+            assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
         frames, records = {}, {}
         for i, slot in enumerate(SLOTS):
             name = f'{pack}-{i}' if i < 6 else slot
             row, col = divmod(i, 5)
-            revised = i in ROCKET_SLOTS or (pack == 'festive' and i == 1)
-            crop = MATERIALS.get(name, (
-                round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
-                round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
-            ))
-            sprite = (accent if revised else source).crop(crop)
-            angle = ACCENT_ROTATION[root.name][i - 6] if i in ROCKET_SLOTS else 0
+            angle = 0
+            if name in POWER_UPS and (name != 'plane' or pack == 'relics'):
+                index = POWER_UPS.index(name)
+                power_row, power_col = divmod(index, 3)
+                width, height = power.width // 3, power.height // 2
+                crop = (power_col * width, power_row * height, (power_col + 1) * width, (power_row + 1) * height)
+                sheet, sprite_prompt = power, power_prompt
+                if index < 3:
+                    angle = ROCKET_ROTATION[root.name][index]
+            else:
+                crop = MATERIALS.get(name, (
+                    round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
+                    round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
+                ))
+                sheet, sprite_prompt = (accent, accent_prompt) if pack == 'festive' and i == 1 else (source, prompt)
+            sprite = sheet.crop(crop)
             if name in MATERIALS or name == 'oil-bubbles':
                 if name in MATERIALS:
                     # The authored swatches are solid surfaces. ImageGen's
@@ -72,8 +85,8 @@ def registered(root, mask):
                 assert side > 0, name
                 fit = 'centered inside canonical hex with authored alpha'
             frames[name] = frame
-            records[name] = {'source': str((accent_path if revised else path).relative_to(root)),
-                             'prompt': str((accent_prompt if revised else prompt).relative_to(root)),
+            records[name] = {'source': str(Path(sheet.filename).relative_to(root)),
+                             'prompt': str(sprite_prompt.relative_to(root)),
                              'crop': list(crop), 'rotation': angle, 'fit': fit,
                              'fitted_size': list(fitted.size) if fit.startswith('centered') else [SIZE, SIZE]}
     return frames, records

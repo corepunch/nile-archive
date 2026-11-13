@@ -20,12 +20,9 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
   Avoid bands, stripes, motifs, contrasting threads and light trim. Oil is quiet
   amber-brown with soft glints. Stone is subdued gray with small same-hue cracks.
   Goal icons use the material's own hue.
-- Keep the Homescapes power-up silhouettes. Rockets are short capped cylinders
-  with clearly readable axes. The bomb is round with a short fuse. The plane has
-  a broad triangular fold. In Homescapes the rocket reads purple first, with
-  yellow on the stripe and ends. Use that hierarchy for a dark red rocket
-  with a small gold accent. The rainbow ball is the deliberate exception to
-  the two-hue limit, with a few large color panels.
+- Keep the Homescapes power-up silhouettes and color placement. Use broad,
+  distinct color areas that survive phone-size rendering. The rainbow ball
+  is the deliberate exception to the two-hue limit.
 
 | Chip color | Christmas Market | Relic Rush |
 | --- | --- | --- |
@@ -35,6 +32,19 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 | Cyan-blue | Ornament | Scarab |
 | Violet | Bauble | Crystal cluster |
 | Orange | Gingerbread person | Amphora |
+
+## Rocket, bomb and plane briefs
+
+| Sprite | Homescapes shape and color placement | Christmas Market | Relic Rush |
+| --- | --- | --- | --- |
+| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two shallow domed tips. Put one broad contrasting diagonal band on the waist. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
+| Bomb | A low, round sphere with a wide curved belt, a small inset socket and a short off-center fuse. The belt, socket and fuse share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
+| Relic Rush plane | A broad, compact folded glider angled up-left. Show a raised center crease, two large wing panels and two small rolled paper folds under the tail. Use the secondary on the folds and narrow wing rims so the triangular silhouette stays legible. | The existing icy-blue plane uses its own atlas slot. | Pale parchment `#EAC985` over about 80% of the sprite, honey ochre `#B07732` on the rims and curled folds. |
+
+The hex colors specify midtones. Model the surfaces with light and dark values
+within those two hue families. Read the rocket axis from the line joining its
+two tips. Distinguish the bomb by its spherical outline and short fuse, and
+the plane by its broad wing and curled underside.
 
 ## Author the atlas
 

@@ -3146,67 +3146,67 @@
       ]
     },
     "ray-row": {
-      "source": "art/board-theme/accent-revision.png",
-      "prompt": "art/board-theme/accent-prompt.txt",
+      "source": "art/board-theme/power-ups.png",
+      "prompt": "art/board-theme/power-ups-prompt.txt",
       "crop": [
-        251,
-        265,
-        502,
-        502
+        0,
+        0,
+        418,
+        627
       ],
-      "rotation": 18.7,
+      "rotation": 2.8,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        119,
-        120
+        110,
+        101
       ]
     },
     "ray-column": {
-      "source": "art/board-theme/accent-revision.png",
-      "prompt": "art/board-theme/accent-prompt.txt",
+      "source": "art/board-theme/power-ups.png",
+      "prompt": "art/board-theme/power-ups-prompt.txt",
       "crop": [
-        502,
-        265,
-        752,
-        502
+        418,
+        0,
+        836,
+        627
       ],
       "rotation": 0.2,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        85,
-        118
+        79,
+        116
       ]
     },
     "ray-diagonal": {
-      "source": "art/board-theme/accent-revision.png",
-      "prompt": "art/board-theme/accent-prompt.txt",
+      "source": "art/board-theme/power-ups.png",
+      "prompt": "art/board-theme/power-ups-prompt.txt",
       "crop": [
-        752,
-        265,
-        1003,
-        502
+        836,
+        0,
+        1254,
+        627
       ],
-      "rotation": -19.6,
+      "rotation": -4.5,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        120,
-        120
+        112,
+        104
       ]
     },
     "bomb": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
+      "source": "art/board-theme/power-ups.png",
+      "prompt": "art/board-theme/power-ups-prompt.txt",
       "crop": [
-        1003,
-        265,
-        1254,
-        502
+        0,
+        627,
+        418,
+        1254
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        91,
-        104
+        90,
+        92
       ]
     },
     "prism": {
@@ -3556,6 +3556,8 @@
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "games/christmas-market/art/board-theme/accent-prompt.txt": "d7f8d00289e283dba3384eae2e3da47210088d108c575a91be1009520c550d2c",
       "games/christmas-market/art/board-theme/accent-revision.png": "a90785b9ced29a203a0f8ace5dfd2fd7a4f62fbb367a3b349ff4767070eb2ac7",
+      "games/christmas-market/art/board-theme/power-ups-prompt.txt": "0d9a2b7b24cb0e57d85a65d97e0aea8fdf5bd198a0bd652ae3cbbae62bd5ee88",
+      "games/christmas-market/art/board-theme/power-ups.png": "9fa5d365b9c81eabeb77a1eae86ff64bfe17d317ab2df82306cc24b4edeb00bb",
       "games/christmas-market/art/board-theme/prompt.txt": "bfab7d3f1308d3564a354e4ef2feda166846ddb195c1c482ccaa1a24f8b6ad3e",
       "games/christmas-market/art/board-theme/source.png": "a2a4bc81ba3a816350a823447dd1149c899b1a80d0b7f47d1768e116c288f6c2",
       "games/christmas-market/data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
@@ -3596,10 +3598,10 @@
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_theme_art.py": "0871b2fc3d51adf3f44b052564a9e52e455a64fdefc44f4cfdb0814a1672cf76"
+      "tools/match3_theme_art.py": "12a03a5447867ded64428c3bec8228b7a1f9e6000181f374f5cf28e474a4bbd6"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "ca75adac8e097dc6bee4eb3cdc7e886bfb7cd0775383dd9c29e4451d2d560c03",
+      "games/christmas-market/data/match3.png": "2374498f606e4b78245dcb2238feb3a9aaae8454030c5d7fa9ddc0817da14bb5",
       "games/christmas-market/lua/match3_skin.lua": "85492e3e97b6317fb8d8e15d847c893bc0e0ced0acec8363de743fedc0756fec"
     }
   }

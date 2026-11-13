@@ -7,14 +7,16 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
-| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Red body with a gold accent. |
-| `bomb`, `prism`, `plane` | Round fuse bomb, segmented rainbow ball, folded targeting plane. The rainbow ball has several hues to convey its color-clearing rule. |
+| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Cranberry-red collars and waist, with vanilla-ivory domed tips and a broad diagonal band. |
+| `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt, socket and fuse. The folded plane is icy blue. The segmented rainbow ball uses several hues. |
 | `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
 | `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
 | `delivery`, `chain`, `chain-2` | The campaign's red parcel and silver one- and two-layer chains. The source-board donut and mirrored chain retain their original art. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
+
+The revised specials use the [ImageGen sheet](../art/board-theme/power-ups.png) and [exact shape and color prompt](../art/board-theme/power-ups-prompt.txt). The packed frames were reviewed at both phone sizes. [Power-up comparison](screenshots/review/power-ups/README.md).
 
 ## Additional board elements
 
