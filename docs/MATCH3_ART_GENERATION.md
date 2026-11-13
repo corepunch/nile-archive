@@ -22,9 +22,10 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
   Goal icons use the material's own hue.
 - Keep the Homescapes power-up silhouettes and color placement. Use broad,
   distinct color areas that survive phone-size rendering. The rainbow ball
-  uses multiple hues. Its enamel tiles are discrete rounded squares arranged
-  in staggered rows across a dark violet sphere. Tiles foreshorten toward
-  the edges, with a dark gap around each tile. Keep the round silhouette.
+  uses multiple hues. Its enamel tiles are discrete rounded squares in three
+  rows of six around a dark violet sphere, with bare poles. Tiles foreshorten
+  toward the edges, with a dark gap around each tile. Keep the round
+  silhouette.
 
 | Chip color | Christmas Market | Relic Rush |
 | --- | --- | --- |
@@ -39,14 +40,51 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 
 | Sprite | Homescapes shape and color placement | Christmas Market | Relic Rush |
 | --- | --- | --- | --- |
-| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two shallow domed tips. Put one broad contrasting diagonal band on the waist. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
-| Bomb | A low, round sphere with a wide curved belt, a small inset socket and a short off-center fuse. The belt, socket and fuse share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
+| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two shallow domed tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
+| Bomb | A round sphere seen from near its pole, with a belt just above the equator, a raised socket at the pole and a short fuse with a lit tip. The belt and socket share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
 | Relic Rush plane | A broad, compact folded glider angled up-left. Show a raised center crease, two large wing panels and two small rolled paper folds under the tail. Use the secondary on the folds and narrow wing rims so the triangular silhouette stays legible. | The existing icy-blue plane uses its own atlas slot. | Pale parchment `#EAC985` over about 80% of the sprite, honey ochre `#B07732` on the rims and curled folds. |
 
 The hex colors specify midtones. Model the surfaces with light and dark values
 within those two hue families. Read the rocket axis from the line joining its
 two tips. Distinguish the bomb by its spherical outline and short fuse, and
 the plane by its broad wing and curled underside.
+
+## Model the power-ups
+
+The rockets, bomb and rainbow ball are solids of revolution and tiles on a
+sphere, so `tools/match3_specials.py` models them for
+[Scener](https://github.com/corepunch/orion-ui) and renders them. This keeps
+their geometry exact where painted versions drifted. The plane stays painted.
+
+- **Rocket.** One lathe with domes, collars and a banded waist. Each board
+  axis is the same model turned about the view direction, so the three
+  sprites are identical apart from the rotation. The upper tip leans 13°
+  towards the viewer to show its dome.
+- **Bomb.** A sphere whose pole points up and to the left, 38° off the view
+  direction. The belt is a band of latitude standing proud of the sphere. The
+  socket, bore, rope fuse and lit tip sit on the pole.
+- **Rainbow ball.** Each tile is a rounded square in the sphere's own
+  latitude and longitude, raised along a bevel profile. A tile narrows towards
+  the pole and foreshortens at the edge as the sphere does.
+
+A game supplies its palette, gloss and tile bevel in `THEMES`. Christmas
+Market's tiles are pillows and Relic Rush's have a flat face and a chamfer.
+The lighting is a bright ambient with a key from the upper left, so midtones
+match the briefs above. No light casts shadows. The rocket waist is cut into
+rings that darken under each collar, since a Scener shape takes one gradient.
+
+```sh
+python3 tools/match3_specials.py                 # both games; needs scener on PATH
+python3 tools/match3_specials.py relic-rush --sheet /tmp/specials.png
+python3 tools/match3_specials.py --check         # the committed scenes are current
+python3 tools/match3_atlas.py                    # register the renders
+```
+
+Each game keeps the generated scene and its five 512 px transparent renders in
+`art/board-theme/specials/`. Commit them with the tool. `--check` compares the
+scene text only, so `make test` needs no Scener. Change the tool to change a
+model, and review the sheet against the
+[Homescapes sprites](../engine/art/homescapes/sprites/) before the board.
 
 ## Author the atlas
 
@@ -81,8 +119,8 @@ the plane by its broad wing and curled underside.
    favor centered placement. Narrow or asymmetric shapes can land below the
    area target to preserve their shape and clearance. The manifest records
    the target, fitted area and placement for review.
-   Rotate the independently painted rockets to the exact +30°, 90° and −30°
-   axes. Preserve authored alpha on objects. Apply
+   The rendered rockets already lie on the exact +30°, 90° and −30° axes.
+   Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
    sprites. Keep carpet, oil and stone as swatches for the board's continuous
    surface mask. Keep carpet and stone's bevel and soft contact shadow in the

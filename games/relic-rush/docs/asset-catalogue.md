@@ -7,8 +7,8 @@ The default chips retain the original identities (sun idol, flame, jade leaf, sc
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `relics-0` through `relics-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
-| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Terracotta-red collars and waist, with old-gold domed tips and a broad diagonal band. |
-| `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt, socket and fuse. Pale parchment plane with honey-ochre wing rims and two rolled folds. The rainbow ball has raised enamel squares in staggered rows on a dark violet sphere. |
+| `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Terracotta-red collars and waist, with old-gold domed tips and diagonal bands. |
+| `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt and socket, a rope fuse and a lit tip. Pale parchment plane with honey-ochre wing rims and two rolled folds. The rainbow ball has chamfered enamel tiles in three rows of six on a dark violet sphere. The bomb and ball are Scener models. |
 | `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
 | `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
@@ -16,11 +16,11 @@ The default chips retain the original identities (sun idol, flame, jade leaf, sc
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
-The revised specials use the [ImageGen sheet](../art/board-theme/power-ups.png) and [exact shape and color prompt](../art/board-theme/power-ups-prompt.txt). The packed frames were reviewed at both phone sizes. [Power-up comparison](screenshots/review/power-ups/README.md).
+`python3 tools/match3_specials.py relic-rush` models the rockets, bomb and rainbow ball, writes the [Scener scene](../art/board-theme/specials/specials.blks) and renders the five sprites beside it. Its palette, gloss and tile bevel are the `relic-rush` entry of `THEMES` in that tool. The plane keeps its painted [ImageGen sheet](../art/board-theme/power-ups.png) and [prompt](../art/board-theme/power-ups-prompt.txt). The packed frames were reviewed at both phone sizes. [Models, Homescapes references and boards](screenshots/review/scener-power-ups/README.md). The [earlier painted comparison](screenshots/review/power-ups/README.md) shows the sprites they replace.
 
 The default chips, delivery and six specials use the Homescapes alpha masks as area references. The atlas manifest records each fit inside the inset hex. [Board size comparison](screenshots/review/sprite-fit/README.md).
 
-The [rainbow ball source strip](../../../engine/art/rainbow-ball/source.png) and [ImageGen prompt](../../../engine/art/rainbow-ball/prompt.txt) cover both games. Each ball uses the existing Homescapes alpha-area target. [Before and after on the board](screenshots/review/rainbow-ball/README.md).
+Each rendered ball uses the existing Homescapes alpha-area target. The [painted ball it replaces](screenshots/review/rainbow-ball/README.md) is kept for comparison.
 
 ## Chapter 1 quest objects
 

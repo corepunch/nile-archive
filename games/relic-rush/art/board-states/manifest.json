@@ -19,7 +19,7 @@
       "atlas_frame": "ray-diagonal",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/power-ups.png",
+      "source": "art/board-theme/specials/ray-diagonal.png",
       "atlas_section": "board_theme"
     },
     "ray-column": {
@@ -33,7 +33,7 @@
       "atlas_frame": "ray-column",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/power-ups.png",
+      "source": "art/board-theme/specials/ray-column.png",
       "atlas_section": "board_theme"
     },
     "ray-row": {
@@ -47,7 +47,7 @@
       "atlas_frame": "ray-row",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/power-ups.png",
+      "source": "art/board-theme/specials/ray-row.png",
       "atlas_section": "board_theme"
     },
     "bomb": {
@@ -61,7 +61,7 @@
       "atlas_frame": "bomb",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/power-ups.png",
+      "source": "art/board-theme/specials/bomb.png",
       "atlas_section": "board_theme"
     },
     "prism": {
@@ -75,7 +75,7 @@
       "atlas_frame": "prism",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "../../engine/art/rainbow-ball/source.png",
+      "source": "art/board-theme/specials/prism.png",
       "atlas_section": "board_theme"
     },
     "chain": {
@@ -1241,11 +1241,18 @@
     "accent_prompt": "art/board-theme/accent-prompt.txt",
     "power_up_source": "art/board-theme/power-ups.png",
     "power_up_prompt": "art/board-theme/power-ups-prompt.txt",
-    "power_up_review": "docs/screenshots/review/power-ups/README.md",
-    "rainbow_ball": {
-      "source": "../../engine/art/rainbow-ball/source.png",
-      "prompt": "../../engine/art/rainbow-ball/prompt.txt",
-      "review": "docs/screenshots/review/rainbow-ball/README.md"
+    "power_up_review": "docs/screenshots/review/scener-power-ups/README.md",
+    "power_up_models": {
+      "generator": "tools/match3_specials.py",
+      "scene": "art/board-theme/specials/specials.blks",
+      "renders": [
+        "art/board-theme/specials/ray-row.png",
+        "art/board-theme/specials/ray-column.png",
+        "art/board-theme/specials/ray-diagonal.png",
+        "art/board-theme/specials/bomb.png",
+        "art/board-theme/specials/prism.png"
+      ],
+      "reproduction": "python3 tools/match3_specials.py && python3 tools/match3_atlas.py"
     }
   }
 }

@@ -7,6 +7,7 @@ from statistics import median
 from PIL import Image, ImageChops, ImageFilter
 
 from homescapes_atlas import SOURCE as HOMESCAPES
+from match3_specials import SPRITES as RENDERED
 
 SLOTS = (
     'chip-0', 'chip-1', 'chip-2', 'chip-3', 'chip-4',
@@ -20,9 +21,8 @@ MATERIALS = {
     'oil-material': (782, 550, 956, 724),
     'stone-material': (1026, 550, 1200, 724),
 }
-POWER_UPS = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'plane')
-# Align the line through the two painted tip centers to the board's axes.
-ROCKET_ROTATION = {'relic-rush': (10.5, .3, -14.4), 'christmas-market': (2.8, .2, -4.5)}
+# RENDERED sprites are modelled on the board's axes by tools/match3_specials.py.
+PLANE_CROP = (418, 627, 836, 1254)   # Relic Rush's painted plane in power-ups.png
 OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38}
 SIZE = 128
 
@@ -103,16 +103,24 @@ def fit_object(sprite, mask, max_side, target_area):
     raise ValueError('empty registered sprite')
 
 
-def inputs(root):
-    game_inputs = [root / 'art/board-theme' / name for name in (
+def painted(root):
+    return [root / 'art/board-theme' / name for name in (
         'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt',
         'power-ups.png', 'power-ups-prompt.txt')]
-    rainbow = root.parents[1] / 'engine/art/rainbow-ball'
-    return game_inputs + [rainbow / 'source.png', rainbow / 'prompt.txt']
+
+
+def rendered(root):
+    specials = root / 'art/board-theme/specials'
+    return [specials / 'specials.blks'] + [specials / f'{name}.png' for name in RENDERED]
+
+
+def inputs(root):
+    return painted(root) + rendered(root) + [Path(__file__).with_name('match3_specials.py')]
 
 
 def registered(root, mask):
-    path, prompt, accent_path, accent_prompt, power_path, power_prompt, rainbow_path, rainbow_prompt = inputs(root)
+    path, prompt, accent_path, accent_prompt, power_path, power_prompt = painted(root)
+    scene = rendered(root)[0]
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
     areas = reference_areas()
     hex_silhouette = mask.point(lambda alpha: 255 if alpha >= 128 else 0)
@@ -121,26 +129,16 @@ def registered(root, mask):
         source, accent, power = [stack.enter_context(Image.open(p)) for p in (path, accent_path, power_path)]
         for sheet in (source, accent, power):
             assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
-        rainbow = stack.enter_context(Image.open(rainbow_path))
-        assert rainbow.mode == 'RGBA' and rainbow.width % 2 == 0, rainbow_path
         frames, records = {}, {}
         for i, slot in enumerate(SLOTS):
             name = f'{pack}-{i}' if i < 6 else slot
             row, col = divmod(i, 5)
-            angle = 0
-            if name == 'prism':
-                half = rainbow.width // 2
-                left = half if pack == 'relics' else 0
-                crop = (left, 0, left + half, rainbow.height)
-                sheet, sprite_prompt = rainbow, rainbow_prompt
-            elif name in POWER_UPS and (name != 'plane' or pack == 'relics'):
-                index = POWER_UPS.index(name)
-                power_row, power_col = divmod(index, 3)
-                width, height = power.width // 3, power.height // 2
-                crop = (power_col * width, power_row * height, (power_col + 1) * width, (power_row + 1) * height)
-                sheet, sprite_prompt = power, power_prompt
-                if index < 3:
-                    angle = ROCKET_ROTATION[root.name][index]
+            if name in RENDERED:
+                sheet = stack.enter_context(Image.open(scene.with_name(f'{name}.png')))
+                assert sheet.mode == 'RGBA', sheet.filename
+                crop, sprite_prompt = (0, 0) + sheet.size, scene
+            elif name == 'plane' and pack == 'relics':
+                crop, sheet, sprite_prompt = PLANE_CROP, power, power_prompt
             else:
                 crop = MATERIALS.get(name, (
                     round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
@@ -165,22 +163,20 @@ def registered(root, mask):
                 left, top, right, bottom = ink
                 sprite = sprite.crop((max(0, left - 5), max(0, top - 5),
                                       min(sprite.width, right + 5), min(sprite.height, bottom + 5)))
-                if angle:
-                    sprite = sprite.rotate(angle, Image.Resampling.BICUBIC, expand=True)
                 if target:
                     frame, fitted_size, offset = fit_object(sprite, inset, SIZE, target)
                 else:
                     frame, fitted_size, offset = fit_object(sprite, mask, OBJECT_SIZE.get(name, 120), None)
                 fit = 'centered inside canonical hex with authored alpha'
             frames[name] = frame
-            source_path = Path(sheet.filename)
-            # Store provenance paths relative to the game, including shared sources.
-            base = root if source_path.is_relative_to(root) else root.parents[1]
-            prefix = '' if base == root else '../../'
-            records[name] = {'source': prefix + str(source_path.relative_to(base)),
-                             'prompt': prefix + str(sprite_prompt.relative_to(base)),
-                             'crop': list(crop), 'rotation': angle, 'fit': fit,
+            # A painted sprite records its prompt, a rendered one its Scener scene.
+            recipe = 'scene' if name in RENDERED else 'prompt'
+            records[name] = {'source': str(Path(sheet.filename).relative_to(root)),
+                             recipe: str(sprite_prompt.relative_to(root)),
+                             'crop': list(crop), 'rotation': 0, 'fit': fit,
                              'fitted_size': fitted_size}
+            if name in RENDERED:
+                records[name]['generator'] = 'tools/match3_specials.py'
             if target:
                 records[name]['offset'] = offset
                 records[name]['homescapes_target_area_px'] = target
