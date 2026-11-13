@@ -108,8 +108,9 @@ no ImageGen prompt or added runtime texture.
 
 `archive_island.lua` loads `data/roads.png` as `city.road`: the engine paves a
 flag tile against every building's front and joins the flags along whole tiles
-([Roads](../../../docs/BUILDINGS.md#roads)). The atlas holds fifteen limestone
-pieces, one per combination of joined neighbours (rounded turns and junction
+([Roads](../../../docs/BUILDINGS.md#roads)). The atlas holds worn limestone
+flagstones, without kerbs and with the sand showing in the joints, as an ancient
+path would be: fifteen pieces, one per combination of joined neighbours (rounded turns and junction
 corners) and eight looks of each straight direction, modelled and rendered with
 Scener by `python3 tools/roads.py nile-archive` from the palette in
 `art/roads.json`; it has no interaction states. Paths painted into

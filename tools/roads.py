@@ -2,6 +2,7 @@
 """Render a game's road tiles for the city camera with Scener.
 
     python3 tools/roads.py christmas-market            # writes games/<game>/data/roads.png
+    python3 tools/roads.py christmas-market --style sandstone   # a second look: data/roads-sandstone.png
     python3 tools/roads.py christmas-market --keep DIR  # keep the scene and the single renders
 
 The engine lays roads on whole tiles (engine/city.c): every building gets a flag tile
@@ -12,6 +13,10 @@ bit 1 +v (down-left), bit 2 -u, bit 3 -v. Cell 0 stays empty. The right half hol
 eight more looks of each straight road, which the engine picks from by tile so a long
 street does not repeat: rows 0-1 along u, rows 2-3 along v. A cell is CELL_TILES tile
 sides wide and its centre is the tile's centre; the engine relies on both.
+
+The game's art/roads.json sets the period as well as the palette: sawn setts with kerbs
+suit a town, while `rough`, a wide `gap`, `missing` and no `kerb` or `grout` give worn old
+flagstones with the ground showing between them.
 
 The pavement is modelled, not painted: setts a fifth of a tile wide (so pieces meet
 without a seam), kerb stones along every open side and, when the game's
@@ -54,6 +59,10 @@ DEFAULTS = {
     'kerb': [.76, .75, .74],
     'grout': [.36, .34, .35],
     'shoulder': None,                # e.g. snow: [.93, .96, 1.]
+    'gap': [1.8, 2.8],               # joint width in cm, from .. to
+    'rough': 0.,                     # cm a stone's corners wander: 0 is sawn paving, 2 is worn old flagstones
+    'missing': 0.,                   # chance that a stone is gone and the ground shows
+    'heights': [3., 4.2],            # stone heights in cm, from .. to
     'ambient': [.34, .38, .50],
     'sun': [-.779, .45, -1.5],       # Blender axes, as art/buildings.json's shadow sun
 }
@@ -103,7 +112,7 @@ def ring(out, c, r, a0, a1, outward, cfg, rng):
     """Kerb stones, and the shoulder behind them, along an arc of radius r about c.
     outward is +1 when the ground lies outside the circle, -1 when inside it."""
     lo, hi = (r, r + KERB) if outward > 0 else (r - KERB, r)
-    count = max(1, round(abs(a1 - a0) * r / (TILE / N)))
+    count = max(1, round(abs(a1 - a0) * r / (TILE / N))) if cfg['kerb'] else 0
     for k in range(count):
         b0, b1 = a0 + (a1 - a0) * k / count, a0 + (a1 - a0) * (k + 1) / count
         out.append(poly(band(c, lo, hi, b0, b1, .8), KERB_H, tinted(cfg['kerb'], rng, .025), bevel=1.2))
@@ -121,7 +130,19 @@ def piece(mask, cfg, rng):
     out = []
 
     def sett(points, fillet=3.2):
-        out.append(poly(points, rng.uniform(3., 4.2), tinted(rng.choice(cfg['setts']), rng, cfg['jitter']), fillet))
+        colour = tinted(rng.choice(cfg['setts']), rng, cfg['jitter'])
+        height = rng.uniform(*cfg['heights'])
+        rough = cfg['rough']
+        if rough:
+            if rng.random() < cfg['missing']: return
+            if len(points) <= 4:   # a slab: every corner wanders, and a long side may break
+                points = [(u + rng.uniform(-rough, rough), v + rng.uniform(-rough, rough)) for u, v in points]
+            else:                  # a curved stone keeps its arc and shrinks a little about its middle
+                cu, cv = sum(q[0] for q in points) / len(points), sum(q[1] for q in points) / len(points)
+                k = 1 - rng.uniform(0, rough) / 30
+                points = [(cu + (u - cu) * k, cv + (v - cv) * k) for u, v in points]
+            fillet = fillet and fillet + rough * 1.5
+        out.append(poly(points, height, colour, fillet, 1.3 + rough * .4))
 
     def edge(u0, v0, u1, v1, nu, nv):
         """A straight kerb stone on the side from (u0, v0) to (u1, v1), ground towards (nu, nv)."""
@@ -130,7 +151,7 @@ def piece(mask, cfg, rng):
         along = .4
         pts = rect(min(a[0], b[0]) + along * abs(nv), min(a[1], b[1]) + along * abs(nu),
                    max(a[0], b[0]) - along * abs(nv), max(a[1], b[1]) - along * abs(nu))
-        out.append(poly(pts, KERB_H, tinted(cfg['kerb'], rng, .025), 1.4, 1.2))
+        if cfg['kerb']: out.append(poly(pts, KERB_H, tinted(cfg['kerb'], rng, .025), 1.4, 1.2))
         if cfg['shoulder']:
             a, b = (u0 + nu * (KERB - 2), v0 + nv * (KERB - 2)), (u1 + nu * (KERB + BANK - 2), v1 + nv * (KERB + BANK - 2))
             out.append(poly(rect(min(a[0], b[0]), min(a[1], b[1]), max(a[0], b[0]), max(a[1], b[1])), BANK_H, cfg['shoulder'], 0, 2.6))
@@ -144,11 +165,11 @@ def piece(mask, cfg, rng):
         if a1 - a0 > math.pi: a1 -= 2 * math.pi
         if a0 - a1 > math.pi: a1 += 2 * math.pi
         r0 = half - h
-        out.append(poly(band(c, r0, r0 + 2 * h, a0, a1), 1.6, cfg['grout'], bevel=.3))
+        if cfg['grout']: out.append(poly(band(c, r0, r0 + 2 * h, a0, a1), 1.6, cfg['grout'], bevel=.3))
         for course, count in enumerate((2, 3, 5)):
             for k in range(count):
                 b0, b1 = a0 + (a1 - a0) * k / count, a0 + (a1 - a0) * (k + 1) / count
-                sett(band(c, r0 + course * p, r0 + (course + 1) * p, b0, b1, rng.uniform(1.8, 2.8)), 0)
+                sett(band(c, r0 + course * p, r0 + (course + 1) * p, b0, b1, rng.uniform(*cfg['gap'])), 0)
         ring(out, c, r0, a0, a1, -1, cfg, rng)
         ring(out, c, r0 + 2 * h, a0, a1, 1, cfg, rng)
         return out
@@ -166,7 +187,7 @@ def piece(mask, cfg, rng):
         rounds = [(-du * -lo + k * abs(dv) * -lo, -dv * -lo + k * abs(du) * -lo) for k in (-1, 1)]
     special = {(su * (-lo + 1), sv * (-lo + 1)) for su, sv in fillets} | set(rounds)
     # the bed the setts sit in shows through the joints
-    for (i, j) in sorted(cells - set(rounds)):
+    for (i, j) in sorted(cells - set(rounds)) if cfg['grout'] else ():
         out.append(poly(rect((i - .5) * p, (j - .5) * p, (i + .5) * p, (j + .5) * p), 1.6, cfg['grout'], 0, .3))
     # setts: single cells, and pairs so the joints don't line up into a grid
     used = set(rounds)
@@ -176,7 +197,7 @@ def piece(mask, cfg, rng):
         pair = rng.random() < .45 and (i + di, j + dj) in cells and (i + di, j + dj) not in used
         used.add((i, j))
         if pair: used.add((i + di, j + dj))
-        gap = rng.uniform(1.8, 2.8) / 2
+        gap = rng.uniform(*cfg['gap']) / 2
         sett(rect((i - .5) * p + gap, (j - .5) * p + gap, (i + .5 + (di if pair else 0)) * p - gap, (j + .5 + (dj if pair else 0)) * p - gap))
     for su, sv in fillets:
         c = (su * half, sv * half)
@@ -184,7 +205,7 @@ def piece(mask, cfg, rng):
         if a1 - a0 > math.pi: a1 -= 2 * math.pi
         if a0 - a1 > math.pi: a1 += 2 * math.pi
         r, corner = half - h, (su * h, sv * h)
-        out.append(poly([corner] + arc(c, r, a0, a1), 1.6, cfg['grout'], 0, .3))
+        if cfg['grout']: out.append(poly([corner] + arc(c, r, a0, a1), 1.6, cfg['grout'], 0, .3))
         middle = (a0 + a1) / 2
         for b0, b1 in ((a0, middle), (middle, a1)):   # two wedge stones about the diagonal
             pts = [corner] + arc(c, r, b0, b1)
@@ -201,7 +222,7 @@ def piece(mask, cfg, rng):
         a1 = math.atan2(far[1] - c[1] + dv * p, far[0] - c[0] + du * p)
         if a1 - a0 > math.pi: a1 -= 2 * math.pi
         if a0 - a1 > math.pi: a1 += 2 * math.pi
-        out.append(poly([c] + arc(c, p, a0, a1), 1.6, cfg['grout'], 0, .3))
+        if cfg['grout']: out.append(poly([c] + arc(c, p, a0, a1), 1.6, cfg['grout'], 0, .3))
         sett([c] + arc(c, p - 1.2, a0, a1), 0)
         ring(out, c, p, a0, a1, 1, cfg, rng)
     # kerbs and shoulders along every straight side that is not a join to the next tile
@@ -270,13 +291,16 @@ def utilities(scener):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('game')
+    ap.add_argument('--style', help='a second look: reads art/roads-STYLE.json and writes data/roads-STYLE.png')
     ap.add_argument('--keep', help='keep the scene and single renders in this directory')
     args = ap.parse_args()
     from PIL import Image
 
     game = ROOT / 'games' / args.game
     cfg = dict(DEFAULTS)
-    if (game / 'art/roads.json').exists(): cfg.update(json.loads((game / 'art/roads.json').read_text()))
+    stem = 'roads-' + args.style if args.style else 'roads'
+    if args.style and not (game / f'art/{stem}.json').exists(): sys.exit(f'no such style: {game.name}/art/{stem}.json')
+    if (game / f'art/{stem}.json').exists(): cfg.update(json.loads((game / f'art/{stem}.json').read_text()))
     scener = find_scener()
     work = Path(args.keep or tempfile.mkdtemp(prefix='roads-'))
     work.mkdir(parents=True, exist_ok=True)
@@ -293,7 +317,7 @@ def main():
         if image.size != (width, height): sys.exit(f'{shot}: {image.size}, expected {(width, height)}')
         atlas.paste(image, (column * width, row * height))
         shot.rename(work / f'{name}.png')
-    out = game / 'data/roads.png'
+    out = game / f'data/{stem}.png'
     atlas.save(out, optimize=True)
     print(f'{out.relative_to(ROOT)}: {len(PIECES)} pieces, {width}x{height} each')
     if not args.keep: shutil.rmtree(work)

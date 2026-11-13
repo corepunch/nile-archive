@@ -272,6 +272,16 @@ along every open side. `games/<game>/art/roads.json` overrides the palette:
 the kerb, snow in Christmas Market; omit for none), `ambient`, `sun` and `ppt`. Then
 load it in the game: `c.road = texture.load("roads.png")`.
 
+**Match the game's period.** Sawn setts with kerbs suit a town such as Christmas
+Market. Relic Rush and Nile Archive are ancient places and use worn flagstones:
+`"kerb": null` and `"grout": null` drop the kerb and the bed so the ground shows in
+the joints, `rough` (cm) lets every stone's corners wander, `gap` widens the joints,
+`missing` leaves the odd stone out and `heights` makes them uneven.
+
+A game can keep a second look beside its own: `--style NAME` reads
+`art/roads-NAME.json` and writes `data/roads-NAME.png`. Christmas Market has
+`sandstone`, shown with `--roads sandstone`.
+
 ## Ground shadows
 
 `building_def.shadow_path` loads a low-resolution ground PNG independently of the
