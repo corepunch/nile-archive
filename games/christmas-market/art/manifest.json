@@ -12,8 +12,7 @@
     "art/building-catalogue/painted-v1/wonder-prompt.txt",
     "art/navigation/prompt.txt",
     "art/board-theme/prompt.txt",
-    "art/board-theme/accent-prompt.txt",
-    "art/board-theme/power-ups-prompt.txt"
+    "art/board-theme/accent-prompt.txt"
   ],
   "states": [
     "normal",
@@ -149,7 +148,7 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/game.json": "ffd7e3752c748bc578e356947a7b1774e668b1e0f1b7d0245986abfc335bdc28",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
-    "data/match3.png": "dff42a1245b83a0d06264b5f41141dd851a05b63f579f333ffb6b24fb01356d0",
+    "data/match3.png": "e6c4074974fe2b13af5a3f251610aef61aaf771f59dedbe7729fe15ef3372e8b",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -431,8 +430,6 @@
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
-    "power_up_source": "art/board-theme/power-ups.png",
-    "power_up_prompt": "art/board-theme/power-ups-prompt.txt",
     "power_up_review": "docs/screenshots/review/scener-power-ups/README.md",
     "power_up_models": {
       "generator": "tools/match3_specials.py",
@@ -442,7 +439,8 @@
         "art/board-theme/specials/ray-column.png",
         "art/board-theme/specials/ray-diagonal.png",
         "art/board-theme/specials/bomb.png",
-        "art/board-theme/specials/prism.png"
+        "art/board-theme/specials/prism.png",
+        "art/board-theme/specials/plane.png"
       ],
       "reproduction": "python3 tools/match3_specials.py && python3 tools/match3_atlas.py"
     }

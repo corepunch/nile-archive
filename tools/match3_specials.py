@@ -5,7 +5,7 @@
     python3 tools/match3_specials.py relic-rush --sheet /tmp/specials.png
     python3 tools/match3_specials.py --check          # the committed scenes are this tool's (no Scener needed)
 
-Rockets, the bomb and the rainbow ball are solids of revolution and tiles on a sphere, so they are
+Rockets, the bomb, the rainbow ball and the paper plane are simple solids, so they are
 modelled once and rendered rather than painted three times: every rocket axis is the same lathe turned
 about the view direction, the bomb's belt is a real band around its sphere, and each rainbow tile is a
 patch of the sphere's own latitude and longitude. A game supplies only its palette and tile bevel.
@@ -23,15 +23,16 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SPRITES = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')
+SPRITES = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism', 'plane')
 SIZE = 512          # px per render; the atlas importer scales it to the board
-VIEW = 124.         # cm across each orthographic view
+VIEW = 150.         # cm across each orthographic view
 SPACING = 400.      # cm between models, so no light or shadow reaches a neighbour
 # Screen angle of each rocket's upper tip from vertical (counter-clockwise), on the flat-top board's axes.
 ROCKET_TURN = {'ray-row': 60., 'ray-column': 0., 'ray-diagonal': -60.}
-ROCKET_LEAN = 13.   # the upper tip leans this far towards the viewer, so its dome shows
-BOMB_POSE = (40., 52.)   # the fuse: turned to the upper left, then leaning towards the viewer
+ROCKET_LEAN = 8.    # the upper tip leans this far towards the viewer, so its dome shows
+BOMB_POSE = (40., 54.)   # the fuse: turned to the upper left, then leaning towards the viewer
 BALL_LEAN = 14.
+PLANE_POSE = (30., -10.)  # the nose: turned to the upper left, then leaning away, so the tail is nearest
 RAINBOW = {'red': (.94, .09, .11), 'yellow': (1., .80, .03), 'green': (.13, .78, .10), 'cyan': (.06, .70, 1.),
            'blue': (.08, .33, .96), 'pink': (.98, .17, .62), 'orange': (1., .47, .04)}
 # Tile rows from the upper pole down: latitude, tile height in degrees, tiles around, longitude of the first
@@ -44,11 +45,13 @@ BALL_ROWS = (   # the poles stay bare, as on the Homescapes ball
 THEMES = {
     'relic-rush': dict(
         rocket=(.72, .19, .14), rocket_trim=(.95, .70, .24), bomb=(.05, .47, .49), bomb_trim=(.95, .69, .22),
+        plane=(.93, .80, .54), plane_trim=(.72, .48, .19),
         fuse=(.86, .66, .40), fuse_dark=(.60, .38, .18), core=(.15, .03, .28), gloss=19,
         # a cut-stone plaque: a flat face and a chamfer
         tile=((0, 1.05), (.40, 1.03), (.64, .99), (.72, .93), (.93, .44), (.985, .28), (1.0, -.25))),
     'christmas-market': dict(
         rocket=(.80, .10, .22), rocket_trim=(.99, .88, .64), bomb=(.06, .50, .29), bomb_trim=(.95, .68, .22),
+        plane=(.22, .60, .96), plane_trim=(.90, .96, 1.),
         fuse=(.88, .70, .44), fuse_dark=(.62, .40, .20), core=(.16, .03, .30), gloss=22,
         # a glass sweet: a pillow that rolls over to its edge
         tile=((0, 1.06), (.35, 1.03), (.60, .95), (.78, .80), (.90, .58), (.97, .30), (1.0, -.25))),
@@ -79,56 +82,107 @@ def lathe(name, profile, attrs, inner=''):
 
 
 def rocket(key, theme):
-    """A capped cylinder along Y: dome, collar, banded waist, collar, dome."""
+    """A capped cylinder along Y: cone tip, collar, banded waist, collar, cone tip."""
     body, trim, gloss = vec(theme['rocket']), vec(theme['rocket_trim']), theme['gloss']
     look = f'shininess="{gloss}" specular="1"'
     lines = []
     for sign, side in ((-1, 'low'), (1, 'high')):
-        dome = arc(0, 38, 25, 12, 0, 90)                         # rim out at the collar, pole on the axis
-        collar = [(24, 15)] + arc(34, 22, 7, 7, -90, 0) + arc(34, 33, 7, 7, 0, 90) + [(24, 40)]
+        dome = [(26.5, 37), (26, 40.5), (18, 45.5), (9.5, 50), (4, 52), (0, 52.6)]   # a blunt cone, as Homescapes' tips
+        collar = [(24, 14)] + arc(33, 22, 8, 8, -90, 0) + arc(33, 32, 8, 8, 0, 90) + [(24, 40)]
         for part, profile, colour in (('dome', dome, trim), ('collar', collar, body)):
             profile = [(x, y * sign) for x, y in profile]
             if sign < 0:
                 profile.reverse()
             lines += lathe(f'{key}-{part}-{side}', profile, f'color="{colour}" {look}')
-    # Four bands wound round the waist, two of them in view: half of every turn of 4u + 0.74v is trim. A shape takes one
+    # Five bands wound round the waist, two or three of them in view: half of every turn of 5u + 0.8v is trim. A shape takes one
     # gradient, so the waist is cut into rings that darken towards each collar, where its shadow falls;
     # every ring continues its neighbour's band.
-    half, rings, wind = 16., 14, .74
+    half, rings, wind = 15., 14, .8
     for i in range(rings):
         y0, y1 = -half + 2 * half * i / rings, -half + 2 * half * (i + 1) / rings
         shade = 1 - .5 * (abs(y0 + y1) / 2 / half) ** 2.5
         tint = lambda c: vec([x * shade for x in c])
-        lines += lathe(f'{key}-waist-{i}', [(28, y0), (28, y1)], f'color="1 1 1" {look}',
-                       f'<gradient type="uv" tile="4 {f(wind / rings)}" offset="{f(.30 + wind * i / rings)}" repeat="1" edge="0.5" '
+        lines += lathe(f'{key}-waist-{i}', [(26.5, y0), (26.5, y1)], f'color="1 1 1" {look}',
+                       f'<gradient type="uv" tile="5 {f(wind / rings)}" offset="{f(.30 + wind * i / rings)}" repeat="1" edge="0.5" '
                        f'from="{tint(theme["rocket"])}" to="{tint(theme["rocket_trim"])}"/>')
     return lines, (ROCKET_TURN[key], ROCKET_LEAN)
 
 
+def fuse(name, theme, length, radius):
+    """A rope along Y from the origin, with a lit tip."""
+    rope = f'<gradient type="uv" tile="1 2.5" repeat="1" edge="0.5" from="{vec(theme["fuse"])}" to="{vec(theme["fuse_dark"])}"/>'
+    k = radius / 7
+    return lathe(f'{name}-fuse', [(radius, 0), (radius, length)], 'color="1 1 1" shininess="12"', rope) + [
+        f'<sphere pos="0 {f(length + k)} 0" radius="{f(radius * 1.06)}" scale="1 0.72 1" color="0.96 0.33 0.08" shininess="20"/>',
+        f'<sphere pos="0 {f(length + 4.4 * k)} 0" radius="{f(radius * .54)}" color="1 0.86 0.36" unlit="1" castShadow="0"/>']
+
+
 def bomb(theme):
-    """A sphere seen from near its pole: a belt above the equator, a socket at the pole and a short fuse."""
+    """A sphere seen from near its pole: a belt above the equator, and at the pole a raised ring round an
+    inset disc of the trim colour, where the fuse stands."""
     body, trim, gloss = vec(theme['bomb']), vec(theme['bomb_trim']), theme['gloss']
     look = f'shininess="{gloss}" specular="1"'
     r = 44.
     lines = [f'<sphere radius="{f(r)}" rings="48" slices="72" color="{body}" {look}/>']
-    lo, hi, lift = 7., 24., 2.2          # the belt: latitudes on the sphere, standing proud of it
+    lo, hi, lift = 9., 21., 2.2             # the belt: latitudes on the sphere, standing proud of it
     belt = ([(r * math.cos(math.radians(lo)), r * math.sin(math.radians(lo)))] +
             [((r + lift) * math.cos(math.radians(a)), (r + lift) * math.sin(math.radians(a)))
              for a in [lo + 1.5 + (hi - lo - 3) * i / 12 for i in range(13)]] +
             [(r * math.cos(math.radians(hi)), r * math.sin(math.radians(hi)))])
     lines += lathe('bomb-belt', belt, f'color="{trim}" {look}')
-    # the socket: a collar sunk into the pole, its bore darker, and the fuse standing in it
-    top = r * math.cos(math.radians(22))
-    socket = [(21, top - 4)] + arc(15.5, top + 3, 5.6, 4.4, -20, 90, 8) + arc(15.5, top + 3, 5.6, 4.4, 90, 180, 6) + [(9.9, top - 2)]
-    lines += lathe('bomb-socket', socket, f'color="{trim}" {look}')
-    lines.append(f'<cylinder pos="0 {f(top - 1.4)} 0" radius="10.6" height="4" sides="48" color="{vec([c * .45 for c in theme["bomb"]])}" shininess="4" specular="0"/>')
-    rope = f'<gradient type="uv" tile="1 2.5" repeat="1" edge="0.5" from="{vec(theme["fuse"])}" to="{vec(theme["fuse_dark"])}"/>'
-    lines.append(f'<group pos="0 {f(top)} 0" rot="-26 0 0">')
-    lines += ['  ' + l for l in lathe('bomb-fuse', [(7, 0), (7, 24)], 'color="1 1 1" shininess="12"', rope)]
-    lines += ['  <sphere pos="0 25 0" radius="7.4" scale="1 0.72 1" color="0.96 0.33 0.08" shininess="20"/>',
-              '  <sphere pos="0 28.4 0" radius="3.8" color="1 0.86 0.36" unlit="1" castShadow="0"/>',
-              '</group>']
+    ring = 18.
+    top = math.sqrt(r * r - ring * ring)
+    lines.append(f'<torus pos="0 {f(top + 1)} 0" majorRadius="{f(ring)}" minorRadius="7" majorSegments="64" minorSegments="20" '
+                 f'color="{vec([min(1., c * 1.25 + .04) for c in theme["bomb"]])}" {look}/>')
+    lines.append(f'<cylinder pos="0 {f(top)} 0" radius="{f(ring - 1)}" height="6" sides="48" color="{trim}" {look}/>')
+    lines.append(f'<group pos="0 {f(top + 2)} 0" rot="-24 0 0">')
+    lines += ['  ' + l for l in fuse('bomb', theme, 26, 7.4)]
+    lines.append('</group>')
     return lines, BOMB_POSE
+
+
+def tube(a, b, radius, attrs, around=16):
+    """A round bar from a to b, as a surface closed around its axis, with a ball on each end."""
+    axis = [q - p for p, q in zip(a, b)]
+    n = math.sqrt(sum(c * c for c in axis))
+    axis = [c / n for c in axis]
+    side = (1, 0, 0) if abs(axis[0]) < .9 else (0, 1, 0)
+    u = [axis[1] * side[2] - axis[2] * side[1], axis[2] * side[0] - axis[0] * side[2], axis[0] * side[1] - axis[1] * side[0]]
+    k = math.sqrt(sum(c * c for c in u))
+    u = [c / k for c in u]
+    w = [axis[1] * u[2] - axis[2] * u[1], axis[2] * u[0] - axis[0] * u[2], axis[0] * u[1] - axis[1] * u[0]]
+    pts = [[p[i] + radius * (math.cos(t) * u[i] + math.sin(t) * w[i]) for i in range(3)]
+           for p in (a, b) for t in [2 * math.pi * j / around for j in range(around + 1)]]
+    return [f'<surface segments="{around} 1" closed="u" twoSided="1" {attrs} points="{" ".join(vec(q) for q in pts)}"/>'] + [
+        f'<sphere pos="{vec(p)}" radius="{f(radius)}" rings="10" slices="16" {attrs}/>' for p in (a, b)]
+
+
+def plane(theme):
+    """A folded paper dart, as Homescapes': nose along Y, upper side towards Z. One sheet folds into two
+    wing panels and a raised centre ridge, a thick rim follows the notched trailing edge, and two rolled
+    tubes with fuses sit under the tail."""
+    body, trim, gloss = theme['plane'], vec(theme['plane_trim']), theme['gloss']
+    look = f'shininess="{gloss}" specular="0.8"'
+    nose, apex = (0, 50, 0), (0, -20, 14)                         # the ridge rises from the nose to the tail
+    tip, notch, foot, tail = (56, -24, -9), (27, -34, -3), (9, -24, 2), (0, -19, 4)
+    bow, fold = (42, 10, -5), (0, 16, 8)                           # the leading edge bows out; the rim crosses the ridge here
+    left = lambda p: (-p[0], p[1], p[2])
+    shade = lambda k: vec([min(1., c * k) for c in body])
+    sheet = lambda pts, k: (f'<mesh twoSided="1" color="{shade(k)}" {look} v="{" ".join(vec(q) for q in pts)}" '
+                            f'f="{", ".join(f"0 {i} {i + 1}" for i in range(1, len(pts) - 1))}"/>')   # a fan from the first point
+    lines = [sheet([nose, left(bow), left(tip), left(notch), left(foot)], 1.04),   # the panel towards the light
+             sheet([nose, foot, notch, tip, bow], .9),
+             sheet([nose, left(foot), apex], .8), sheet([nose, apex, foot], .68), sheet([apex, left(foot), foot], .6)]
+    rim = f'color="{trim}" shininess="{gloss}" specular="1"'
+    path = [fold, left(tip), left(notch), tail, notch, tip, fold]   # round the rear fold and its notched edge
+    for a, b in zip(path, path[1:]):
+        lines += tube(a, b, 4.8, rim)
+    for side, name in ((1, 'right'), (-1, 'left')):
+        lines += [f'<group name="tube-{name}" pos="{f(23 * side)} -38 -13">',
+                  f'  <cylinder radius="10.5" height="20" sides="40" {rim}/>',
+                  f'  <cylinder pos="0 -9.6 0" radius="7.6" height="1.6" sides="32" color="{vec([c * .5 for c in theme["plane_trim"]])}" shininess="4" specular="0"/>',
+                  '  <group pos="0 -9 0" rot="180 0 0">'] + ['    ' + l for l in fuse(f'plane-{name}', theme, 6, 4.6)] + ['  </group>', '</group>']
+    return lines, PLANE_POSE
 
 
 def tile_points(lat, lon, dlat, dlon, radius, height, profile, around=40):
@@ -175,7 +229,8 @@ def scene(game):
            '  <sun dir="-0.8 0.3 -0.5" color="0.75 0.82 1" intensity="0.2" castShadows="0"/>',       # fill, right
            '  <sun dir="-0.55 0.6 0.55" color="1 0.8 0.6" intensity="0.3" castShadows="0"/>']        # bounce, behind and below
     for n, key in enumerate(SPRITES):
-        lines, (turn, lean) = rocket(key, theme) if key in ROCKET_TURN else bomb(theme) if key == 'bomb' else ball(theme)
+        build = {'bomb': bomb, 'prism': ball, 'plane': plane}
+        lines, (turn, lean) = rocket(key, theme) if key in ROCKET_TURN else build[key](theme)
         x = n * SPACING
         out.append(f'  <camera name="{key}" pos="{f(x)} 0 600" look="{f(x)} 0 0" ortho="{f(VIEW)}" size="{SIZE} {SIZE}"/>')
         # lean about the screen's horizontal first, then turn in the screen plane: the axis keeps its screen angle

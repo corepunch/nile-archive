@@ -1,6 +1,6 @@
 # Christmas Market power-ups modelled in Scener
 
-The rockets, bomb and rainbow ball are now 3D models rendered by
+The rockets, bomb, rainbow ball and plane are now 3D models rendered by
 [Scener](../../../../../../docs/MATCH3_ART_GENERATION.md#model-the-power-ups).
 The Homescapes references are on the top row and this game's renders are below.
 
@@ -9,10 +9,11 @@ The Homescapes references are on the top row and this game's renders are below.
 The three rockets are one lathe turned about the view direction, so their
 silhouettes are identical apart from the rotation. The bomb's belt is a band
 around its sphere and each rainbow tile is a patch of the sphere's own
-latitude and longitude.
+latitude and longitude. The plane is one folded sheet with a rim round its
+rear fold and two rolled tubes under the tail.
 
 Each board shows the previous painted sprites on the left and the renders on
-the right. The plane is unchanged.
+the right.
 
 | Board size | Before and after |
 | --- | --- |

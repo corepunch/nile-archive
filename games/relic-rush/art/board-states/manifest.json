@@ -321,7 +321,7 @@
       ],
       "runtime": "data/match3.png",
       "atlas_frame": "plane",
-      "source": "art/board-theme/power-ups.png",
+      "source": "art/board-theme/specials/plane.png",
       "fit": "free-object",
       "atlas_section": "board_theme",
       "registration": "art/match3-atlas.json"
@@ -1239,8 +1239,6 @@
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
-    "power_up_source": "art/board-theme/power-ups.png",
-    "power_up_prompt": "art/board-theme/power-ups-prompt.txt",
     "power_up_review": "docs/screenshots/review/scener-power-ups/README.md",
     "power_up_models": {
       "generator": "tools/match3_specials.py",
@@ -1250,7 +1248,8 @@
         "art/board-theme/specials/ray-column.png",
         "art/board-theme/specials/ray-diagonal.png",
         "art/board-theme/specials/bomb.png",
-        "art/board-theme/specials/prism.png"
+        "art/board-theme/specials/prism.png",
+        "art/board-theme/specials/plane.png"
       ],
       "reproduction": "python3 tools/match3_specials.py && python3 tools/match3_atlas.py"
     }

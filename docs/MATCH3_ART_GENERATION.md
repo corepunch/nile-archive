@@ -40,9 +40,9 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 
 | Sprite | Homescapes shape and color placement | Christmas Market | Relic Rush |
 | --- | --- | --- | --- |
-| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two shallow domed tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
-| Bomb | A round sphere seen from near its pole, with a belt just above the equator, a raised socket at the pole and a short fuse with a lit tip. The belt and socket share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
-| Relic Rush plane | A broad, compact folded glider angled up-left. Show a raised center crease, two large wing panels and two small rolled paper folds under the tail. Use the secondary on the folds and narrow wing rims so the triangular silhouette stays legible. | The existing icy-blue plane uses its own atlas slot. | Pale parchment `#EAC985` over about 80% of the sprite, honey ochre `#B07732` on the rims and curled folds. |
+| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two blunt cone tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
+| Bomb | A round sphere seen from near its pole, with a narrow belt just above the equator. At the pole a raised ring of the body color surrounds an inset disc, where a short rope fuse with a lit tip stands. The belt and disc share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
+| Plane | A broad, compact folded glider angled up-left. Show a raised center crease, two large wing panels and two small rolled tubes with fuses under the tail. Use the secondary on the tubes and on a thick rim round the rear fold, so the triangular silhouette stays legible. | Icy blue `#3899F5` with frost-white `#E6F5FF` rim and tubes. | Pale parchment `#EAC985` over about 80% of the sprite, honey ochre `#B07732` on the rims and curled folds. |
 
 The hex colors specify midtones. Model the surfaces with light and dark values
 within those two hue families. Read the rocket axis from the line joining its
@@ -51,21 +51,26 @@ the plane by its broad wing and curled underside.
 
 ## Model the power-ups
 
-The rockets, bomb and rainbow ball are solids of revolution and tiles on a
-sphere, so `tools/match3_specials.py` models them for
+The rockets, bomb, rainbow ball and plane are simple solids, so
+`tools/match3_specials.py` models them for
 [Scener](https://github.com/corepunch/orion-ui) and renders them. This keeps
-their geometry exact where painted versions drifted. The plane stays painted.
+their geometry exact where painted versions drifted.
 
-- **Rocket.** One lathe with domes, collars and a banded waist. Each board
+- **Rocket.** One lathe with cone tips, collars and a banded waist. Each board
   axis is the same model turned about the view direction, so the three
-  sprites are identical apart from the rotation. The upper tip leans 13°
-  towards the viewer to show its dome.
-- **Bomb.** A sphere whose pole points up and to the left, 38° off the view
+  sprites are identical apart from the rotation. The upper tip leans 8°
+  towards the viewer.
+- **Bomb.** A sphere whose pole points up and to the left, 36° off the view
   direction. The belt is a band of latitude standing proud of the sphere. The
-  socket, bore, rope fuse and lit tip sit on the pole.
+  ring, inset disc, rope fuse and lit tip sit on the pole.
 - **Rainbow ball.** Each tile is a rounded square in the sphere's own
   latitude and longitude, raised along a bevel profile. A tile narrows towards
   the pole and foreshortens at the edge as the sphere does.
+- **Plane.** One sheet folded into two wing panels and a raised center
+  ridge, with bowed leading edges. Round bars follow the rear fold and its
+  notched trailing edge. Two tubes with rope fuses sit under the tail. The
+  board draws the sprite without turning it, so the nose always points up
+  and to the left.
 
 A game supplies its palette, gloss and tile bevel in `THEMES`. Christmas
 Market's tiles are pillows and Relic Rush's have a flat face and a chamfer.
@@ -80,7 +85,7 @@ python3 tools/match3_specials.py --check         # the committed scenes are curr
 python3 tools/match3_atlas.py                    # register the renders
 ```
 
-Each game keeps the generated scene and its five 512 px transparent renders in
+Each game keeps the generated scene and its six 512 px transparent renders in
 `art/board-theme/specials/`. Commit them with the tool. `--check` compares the
 scene text only, so `make test` needs no Scener. Change the tool to change a
 model, and review the sheet against the

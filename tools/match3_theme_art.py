@@ -22,7 +22,6 @@ MATERIALS = {
     'stone-material': (1026, 550, 1200, 724),
 }
 # RENDERED sprites are modelled on the board's axes by tools/match3_specials.py.
-PLANE_CROP = (418, 627, 836, 1254)   # Relic Rush's painted plane in power-ups.png
 OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38}
 SIZE = 128
 
@@ -105,8 +104,7 @@ def fit_object(sprite, mask, max_side, target_area):
 
 def painted(root):
     return [root / 'art/board-theme' / name for name in (
-        'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt',
-        'power-ups.png', 'power-ups-prompt.txt')]
+        'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt')]
 
 
 def rendered(root):
@@ -119,15 +117,15 @@ def inputs(root):
 
 
 def registered(root, mask):
-    path, prompt, accent_path, accent_prompt, power_path, power_prompt = painted(root)
+    path, prompt, accent_path, accent_prompt = painted(root)
     scene = rendered(root)[0]
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
     areas = reference_areas()
     hex_silhouette = mask.point(lambda alpha: 255 if alpha >= 128 else 0)
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
-        source, accent, power = [stack.enter_context(Image.open(p)) for p in (path, accent_path, power_path)]
-        for sheet in (source, accent, power):
+        source, accent = [stack.enter_context(Image.open(p)) for p in (path, accent_path)]
+        for sheet in (source, accent):
             assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
         frames, records = {}, {}
         for i, slot in enumerate(SLOTS):
@@ -137,8 +135,6 @@ def registered(root, mask):
                 sheet = stack.enter_context(Image.open(scene.with_name(f'{name}.png')))
                 assert sheet.mode == 'RGBA', sheet.filename
                 crop, sprite_prompt = (0, 0) + sheet.size, scene
-            elif name == 'plane' and pack == 'relics':
-                crop, sheet, sprite_prompt = PLANE_CROP, power, power_prompt
             else:
                 crop = MATERIALS.get(name, (
                     round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
