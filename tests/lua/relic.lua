@@ -85,7 +85,7 @@ local function test_matching()
                 soil = soil + g.soil[i]
                 obstacles = obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i] + g.crate_hp[i] + g.hazard[i]
             end
-            check(g.initial_soil == soil and soil >= rules.levels[lvl + 1].soil, "soil count includes every covered object cell")
+            check(g.initial_soil == soil and soil >= (rules.levels[lvl + 1].soil or 0), "soil count includes every covered object cell")
             for _, object in ipairs(g.objects) do
                 for _, cell in ipairs(object.cells) do check(g.soil[cell] > 0, "object starts fully covered") end
             end

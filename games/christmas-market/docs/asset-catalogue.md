@@ -246,9 +246,9 @@ and `python3 tools/match3_atlas.py`. Review with
 
 ## Green carpet
 
-Homescapes' carpet (`CELL_JELLY`). Seeded in levels 9, 21 and 28. A match touching it,
+Homescapes' carpet (`CELL_JELLY`). Seeded in levels 3, 6, 9, 11, 15, 18, 21, 24 and 28; a level has carpet or caramel, never both. A match touching it,
 or a move begun on it, carpets every cell it hits; the goal counts the cells
-still uncovered. Snow tiles draw over it until they are cleared.
+still uncovered.
 
 | Asset | State and meaning | Source | Runtime |
 | --- | --- | --- | --- |
@@ -290,7 +290,8 @@ solid blue ice ring. All three share tinsel's flat-top centreline. Snow moves
 inward when ice or tinsel shares its cell, leaving both materials visible.
 The guide illustrates the rims and the goal capsule uses the full snow icon.
 
-Snow (the `soil` goal) is drawn on the live board with the original Homescapes
+Snow (the `soil` layer) is no longer used by the campaign: Homescapes' story
+levels have only carpet and oil floors. The engine still draws it with the original Homescapes
 one-layer floor tile, `membrane-fill-1`. Homescapes' tile (`BUBBLE_MEMBRANE`)
 follows the same rule: a match or hit on top breaks the layer. `art.load`
 points `sand` at that tile, so the board cell and the HUD goal icon match.

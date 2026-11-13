@@ -38,7 +38,7 @@ for level, entry in ipairs(campaign.levels) do
                 label .. 'no target or piece in a hole')
         end
     end
-    check(soil == g.initial_soil and soil >= entry.soil and chains == entry.chains and ice == entry.ice,
+    check(soil == g.initial_soil and soil >= (entry.soil or 0) and chains == entry.chains and ice == entry.ice,
         label .. 'every authored target actually places')
     for _, object in ipairs(g.objects) do
         for _, i in ipairs(object.cells) do

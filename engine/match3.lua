@@ -1239,10 +1239,10 @@ function E.new(config)
         end
         local soil_count = 0
         for _, cell in ipairs(order) do
-            if soil_count >= l.soil then break end
+            if soil_count >= (l.soil or 0) then break end
             if not used[cell] then g.soil[cell], soil_count = 1, soil_count + 1 end
         end
-        assert(soil_count == l.soil, "not enough soil cells")
+        assert(soil_count == (l.soil or 0), "not enough soil cells")
         for cell in pairs(object_cells) do g.soil[cell] = 1 end
         local taken = {}
         for cell in pairs(used) do taken[cell] = true end

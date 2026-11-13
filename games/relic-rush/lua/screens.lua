@@ -133,7 +133,7 @@ local guide_entries = {
      icon={tiles={{kind=0,special=rules.PLANE}}}},
     {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells. Combine power-ups for larger effects.",
      icon={tiles={{kind=0,special=rules.BOMB}}}},
-    {id="blockers", title="Chains & ancient sand", description="Match on them to break or excavate.",
+    {id="blockers", title="Chains", description="Match the chained gem to break its chain.",
      icon={front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
     {id="ice", title="Frozen gems", description="Match the frozen piece or hit it with a power-up. Each hit removes one layer.",
      icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},

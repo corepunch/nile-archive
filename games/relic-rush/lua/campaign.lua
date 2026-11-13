@@ -1,11 +1,11 @@
 -- Campaign content only; all match mechanics live in engine/match3.lua.
-local function level(name, lesson, moves, score, relics, soil, chains, ice)
-    return {name=name, lesson=lesson, moves=moves, score=score, relics=relics, soil=soil, chains=chains, ice=ice}
+local function level(name, lesson, moves, score, relics, chains, ice)
+    return {name=name, lesson=lesson, moves=moves, score=score, relics=relics, chains=chains, ice=ice}
 end
 
 -- Masks are ordered by axial q, then r, exactly as the engine enumerates cells.
 -- Terrain priorities trace an authored axial seam and then sweep along it.
--- Soil uses the first ranks; locks sample those ranks as documented in
+-- Locks sample the first ranks as documented in
 -- docs/board-progression.md. The priority values are unique, including ties.
 local function seam(a, b, offset, c, d)
     local ranks, i = {}, 0
@@ -54,7 +54,7 @@ local compact_mask = "1111011111011111101111111001111110001111100011110000000000
 
 local levels = {
     (function()
-        local l = level("First Light", "Match 3 in a row.", 24, 1100, 8, 0, 0, 0)
+        local l = level("First Light", "Match 3 in a row.", 24, 1100, 8, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -62,7 +62,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Lamp Lens", "Match 4 for a sun ray.", 29, 1800, 10, 7, 0, 0)
+        local l = level("The Lamp Lens", "Match 4 for a sun ray.", 29, 1800, 10, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
         l.ice_layers = 1
@@ -70,7 +70,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Buried Cable", "Dig along the seam.", 32, 2300, 12, 12, 0, 0)
+        local l = level("The Buried Cable", "Match beside the stone to break it.", 32, 2300, 12, 0, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -78,7 +78,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Under the Pump", "Match to break chains.", 35, 2700, 12, 10, 4, 0)
+        local l = level("Under the Pump", "Match to break chains.", 35, 2700, 12, 4, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, 1)
         l.ice_layers = 1
@@ -86,7 +86,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Quay Marker", "Rays cross gaps.", 35, 3100, 14, 13, 4, 0)
+        local l = level("The Quay Marker", "Match on the moss to spread it.", 35, 3100, 14, 4, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -94,7 +94,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shore Marker", "Match to break ice.", 37, 3400, 14, 13, 0, 5)
+        local l = level("The Shore Marker", "Match to break ice.", 37, 3400, 14, 0, 5)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -102,7 +102,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Tool Roll", "Hit frozen pieces with matches or power-ups.", 40, 3800, 16, 12, 3, 4)
+        local l = level("The Tool Roll", "Hit frozen pieces with matches or power-ups.", 40, 3800, 16, 3, 4)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -110,7 +110,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Broken Cable", "Match 5 for a prism.", 40, 4200, 16, 17, 4, 6)
+        local l = level("The Broken Cable", "Match 5 for a prism.", 40, 4200, 16, 4, 6)
         l.mask = compact_mask
         l.terrain = seam(0, 1, -1, -1, 0)
         l.ice_layers = 2
@@ -118,7 +118,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Supply Crate", "Use rays across the seal.", 43, 4600, 18, 19, 5, 6)
+        local l = level("The Supply Crate", "Use rays across the seal.", 43, 4600, 18, 5, 6)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -126,7 +126,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shutter Crank", "Uncover the buried centre.", 46, 5000, 20, 22, 6, 6)
+        local l = level("The Shutter Crank", "Spread the moss over the centre.", 46, 5000, 20, 6, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, -1)
         l.ice_layers = 2
@@ -134,7 +134,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Long Terrace", "Dig the long terrace.", 33, 2500, 12, 14, 0, 0)
+        local l = level("The Long Terrace", "Pieces travel between paired conduits.", 33, 2500, 12, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 1, 1, 0)
         l.ice_layers = 1
@@ -142,7 +142,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Twelve Crates", "Free chained relics.", 36, 2900, 13, 15, 5, 0)
+        local l = level("Twelve Crates", "Free chained relics.", 36, 2900, 13, 5, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 1, -1, -1, 0)
         l.ice_layers = 1
@@ -150,7 +150,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Names in the Stone", "Aim rays along the stone.", 37, 3200, 14, 16, 6, 0)
+        local l = level("Names in the Stone", "Aim rays along the stone.", 37, 3200, 14, 6, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -158,7 +158,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Static", "Work around the broken seam.", 38, 3500, 14, 17, 7, 0)
+        local l = level("Static", "Work around the broken seam.", 38, 3500, 14, 7, 0)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -166,7 +166,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Frost Line", "Clear chains and ice.", 39, 3700, 15, 18, 4, 6)
+        local l = level("The Frost Line", "Clear chains and ice.", 39, 3700, 15, 4, 6)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -174,7 +174,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Supper for Twelve", "Hit frozen pieces with matches or power-ups.", 40, 4000, 15, 18, 4, 7)
+        local l = level("Supper for Twelve", "Hit frozen pieces with matches or power-ups.", 40, 4000, 15, 4, 7)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, -1)
         l.ice_layers = 2
@@ -182,7 +182,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Torn Log", "Some ice takes two hits.", 42, 4200, 16, 19, 5, 7)
+        local l = level("The Torn Log", "Some ice takes two hits.", 42, 4200, 16, 5, 7)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
         l.ice_layers = 2
@@ -190,7 +190,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Lantern Steps", "Clear the open terrace.", 40, 3000, 12, 12, 2, 4)
+        local l = level("Lantern Steps", "Spread the moss across the terrace.", 40, 3000, 12, 2, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -198,7 +198,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Under the Vines", "Dig beneath the locks.", 45, 4600, 18, 15, 4, 6)
+        local l = level("Under the Vines", "Work beneath the locks.", 45, 4600, 18, 4, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 1, 0, 1)
         l.ice_layers = 2
@@ -206,7 +206,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Archivist's Key", "Open the central approach.", 46, 5100, 20, 18, 5, 7)
+        local l = level("The Archivist's Key", "Open the central approach.", 46, 5100, 20, 5, 7)
         l.mask = lanes_mask
         l.terrain = central_seam(0)
         l.ice_layers = 2
@@ -214,7 +214,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Tomas's Trail", "Follow the buried seam.", 35, 2800, 12, 15, 0, 0)
+        local l = level("Tomas's Trail", "Follow the buried seam.", 35, 2800, 12, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, -1, 1, 0)
         l.ice_layers = 1
@@ -222,7 +222,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Frozen Stair", "Thaw the frozen approach.", 40, 3400, 14, 16, 2, 8)
+        local l = level("The Frozen Stair", "Thaw the frozen approach.", 40, 3400, 14, 2, 8)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, 1)
         l.ice_layers = 2
@@ -230,7 +230,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Star Road", "Choose a colour for the prism.", 40, 3700, 15, 12, 3, 4)
+        local l = level("The Star Road", "Choose a colour for the prism.", 40, 3700, 15, 3, 4)
         l.mask = lanes_mask
         l.terrain = seam(0, 1, 1, 1, 0)
         l.ice_layers = 1
@@ -238,7 +238,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Noon Shadow", "Excavate across the shadow.", 41, 3900, 16, 20, 4, 5)
+        local l = level("Noon Shadow", "Spread the moss across the shadow.", 41, 3900, 16, 4, 5)
         l.mask = bowl_mask
         l.terrain = central_seam(1)
         l.ice_layers = 2
@@ -246,7 +246,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Smoke on the Water", "Work through the locks.", 38, 4000, 16, 18, 6, 6)
+        local l = level("Smoke on the Water", "Work through the locks.", 38, 4000, 16, 6, 6)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 0, 0, -1)
         l.ice_layers = 2
@@ -254,7 +254,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Jade Deep", "Thaw the buried ground.", 43, 4300, 17, 17, 4, 7)
+        local l = level("The Jade Deep", "Clear the oil and its cans.", 43, 4300, 17, 4, 7)
         l.mask = lanes_mask
         l.terrain = central_seam(-1)
         l.ice_layers = 2
@@ -262,7 +262,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Six Sun Gates", "Clear the scattered locks.", 45, 4600, 18, 20, 7, 8)
+        local l = level("Six Sun Gates", "Clear the scattered locks.", 45, 4600, 18, 7, 8)
         l.mask = lanes_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -270,7 +270,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Last Terrace", "Clear the open terrace.", 42, 3200, 13, 13, 2, 4)
+        local l = level("The Last Terrace", "Spread the moss across the terrace.", 42, 3200, 13, 2, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 1, 0, -1)
         l.ice_layers = 1
@@ -278,7 +278,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Silent Temple", "Dig through the temple floor.", 47, 5200, 20, 23, 8, 10)
+        local l = level("The Silent Temple", "Break through the temple floor.", 47, 5200, 20, 8, 10)
         l.mask = lanes_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -286,7 +286,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Warning Returns", "Uncover the final approach.", 49, 5500, 22, 24, 8, 10)
+        local l = level("The Warning Returns", "Uncover the final approach.", 49, 5500, 22, 8, 10)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 0, -1, 0)
         l.ice_layers = 2
@@ -335,11 +335,15 @@ local quest_objects = {
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Send the tablet through the conduit."
--- Moss (Homescapes' carpet): matches touching it spread it.
-levels[18].carpet = {cell(-1,0), cell(0,0)}
-levels[18].lesson = "Match on the moss to spread it."
-levels[24].carpet = {cell(2,-1), cell(3,-1)}
-levels[28].carpet = {cell(0,-1), cell(0,0)}
+-- Floors, as in Homescapes: moss (its carpet) or lamp oil, never both, in
+-- about a third of the levels; dig sites are gone.
+-- Moss: matches touching it spread it.
+local carpet = {
+    [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = {cell(-2,1), cell(-2,2)},
+    [13] = {cell(-2,1), cell(-2,2)}, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0)},
+    [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
+}
+for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
 -- Lamp oil (Homescapes' oil): clear it by matching on it; it spreads after any
 -- turn that clears none of it.
 levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), cell(-3,3)}
@@ -350,16 +354,16 @@ levels[26].oil = {cell(3,-4), cell(3,-3), cell(3,-2), cell(4,-4), cell(4,-3), ce
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "idols" are relics, "sand" is dig sites, "locks" counts every blocker:
--- chains, ice, stones, seals and vines; "carpet" counts the cells the moss
--- has yet to cover; "oil" counts the lamp oil left on the board.
+-- "idols" are relics, "locks" counts every blocker: chains, ice, stones,
+-- seals and vines; "carpet" counts the cells the moss has yet to cover;
+-- "oil" counts the lamp oil left, with what its cans will throw.
 local goals = {
-    {"idols"}, {"idols", "sand"}, {"locks", "sand"}, {"locks", "idols"}, {"idols", "sand"},
-    {"locks", "sand"}, {"locks", "idols"}, {"idols", "sand"}, {"locks", "sand"}, {"sand", "locks"},
-    {"idols", "sand"}, {"locks", "idols"}, {"locks", "sand"}, {"locks", "idols"}, {"locks", "sand"},
-    {"locks", "idols"}, {"locks", "sand"}, {"carpet"}, {"sand", "locks", "idols"}, {"oil", "locks"},
-    {"deliveries", "sand"}, {"locks", "sand"}, {"idols", "locks"}, {"carpet", "sand"}, {"locks", "sand"},
-    {"oil", "locks", "sand"}, {"locks", "idols"}, {"carpet", "sand"}, {"sand", "locks", "idols"}, {"deliveries", "sand", "locks"},
+    {"idols"}, {"idols"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet"},
+    {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks"},
+    {"idols"}, {"locks", "idols"}, {"carpet", "locks"}, {"locks", "idols"}, {"locks", "idols"},
+    {"locks", "idols"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"oil", "locks"},
+    {"deliveries"}, {"carpet", "locks"}, {"idols", "locks"}, {"carpet", "idols"}, {"locks", "idols"},
+    {"oil", "locks"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"deliveries", "locks"},
 }
 assert(#goals == #levels, "one goal list per level")
 for i, board in ipairs(levels) do board.goals = goals[i] end
