@@ -22,7 +22,9 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
   Goal icons use the material's own hue.
 - Keep the Homescapes power-up silhouettes and color placement. Use broad,
   distinct color areas that survive phone-size rendering. The rainbow ball
-  is the deliberate exception to the two-hue limit.
+  uses multiple hues. Its enamel tiles are discrete rounded squares arranged
+  in staggered rows across a dark violet sphere. Tiles foreshorten toward
+  the edges, with a dark gap around each tile. Keep the round silhouette.
 
 | Chip color | Christmas Market | Relic Rush |
 | --- | --- | --- |

@@ -8,7 +8,7 @@ The default chips retain the original identities (sun idol, flame, jade leaf, sc
 | --- | --- |
 | `relics-0` through `relics-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Terracotta-red collars and waist, with old-gold domed tips and a broad diagonal band. |
-| `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt, socket and fuse. Pale parchment plane with honey-ochre wing rims and two rolled folds. The segmented rainbow ball uses several hues. |
+| `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt, socket and fuse. Pale parchment plane with honey-ochre wing rims and two rolled folds. The rainbow ball has raised enamel squares in staggered rows on a dark violet sphere. |
 | `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
 | `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
@@ -19,6 +19,8 @@ Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and t
 The revised specials use the [ImageGen sheet](../art/board-theme/power-ups.png) and [exact shape and color prompt](../art/board-theme/power-ups-prompt.txt). The packed frames were reviewed at both phone sizes. [Power-up comparison](screenshots/review/power-ups/README.md).
 
 The default chips, delivery and six specials use the Homescapes alpha masks as area references. The atlas manifest records each fit inside the inset hex. [Board size comparison](screenshots/review/sprite-fit/README.md).
+
+The [rainbow ball source strip](../../../engine/art/rainbow-ball/source.png) and [ImageGen prompt](../../../engine/art/rainbow-ball/prompt.txt) cover both games. Each ball uses the existing Homescapes alpha-area target. [Before and after on the board](screenshots/review/rainbow-ball/README.md).
 
 ## Chapter 1 quest objects
 

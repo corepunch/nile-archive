@@ -3270,26 +3270,26 @@
       "silhouette_area_px": 5152
     },
     "prism": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
+      "source": "../../engine/art/rainbow-ball/source.png",
+      "prompt": "../../engine/art/rainbow-ball/prompt.txt",
       "crop": [
         0,
-        502,
-        251,
-        752
+        0,
+        887,
+        887
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
         88,
-        89
+        85
       ],
       "offset": [
         20,
-        19
+        21
       ],
       "homescapes_target_area_px": 5606,
-      "silhouette_area_px": 5597
+      "silhouette_area_px": 5541
     },
     "plane": {
       "source": "art/board-theme/source.png",
@@ -3632,6 +3632,8 @@
       "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
       "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
+      "engine/art/rainbow-ball/prompt.txt": "81cb748996746db822f53cb8b41bd941eb9e13566230cc88327a8dcee2aa20dd",
+      "engine/art/rainbow-ball/source.png": "7be1d793484ef6b4adb8ae42f9f954e9a0f0704dcb29febb138d93087fbfbd4c",
       "games/christmas-market/art/board-theme/accent-prompt.txt": "d7f8d00289e283dba3384eae2e3da47210088d108c575a91be1009520c550d2c",
       "games/christmas-market/art/board-theme/accent-revision.png": "a90785b9ced29a203a0f8ace5dfd2fd7a4f62fbb367a3b349ff4767070eb2ac7",
       "games/christmas-market/art/board-theme/power-ups-prompt.txt": "0d9a2b7b24cb0e57d85a65d97e0aea8fdf5bd198a0bd652ae3cbbae62bd5ee88",
@@ -3676,10 +3678,10 @@
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_theme_art.py": "879e6326e41812b3157fde41d98ad71586794535d2bfb3b6348c0bb39e77689a"
+      "tools/match3_theme_art.py": "277f8007bb7e442dde16d003504478886b6bfdf7b7722e4ef3ec3d81e9f8116e"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "3ca13df024e2ea36f7e920339542b5080fca8de38bec9e52d3cc813b978123d5",
+      "games/christmas-market/data/match3.png": "be07aceaa14537282048f1e2832fd43d5d0f94bcbf6df4dccaeeea51f52617e3",
       "games/christmas-market/lua/match3_skin.lua": "85492e3e97b6317fb8d8e15d847c893bc0e0ced0acec8363de743fedc0756fec"
     }
   }

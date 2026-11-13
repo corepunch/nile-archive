@@ -104,13 +104,15 @@ def fit_object(sprite, mask, max_side, target_area):
 
 
 def inputs(root):
-    return [root / 'art/board-theme' / name for name in (
+    game_inputs = [root / 'art/board-theme' / name for name in (
         'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt',
         'power-ups.png', 'power-ups-prompt.txt')]
+    rainbow = root.parents[1] / 'engine/art/rainbow-ball'
+    return game_inputs + [rainbow / 'source.png', rainbow / 'prompt.txt']
 
 
 def registered(root, mask):
-    path, prompt, accent_path, accent_prompt, power_path, power_prompt = inputs(root)
+    path, prompt, accent_path, accent_prompt, power_path, power_prompt, rainbow_path, rainbow_prompt = inputs(root)
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
     areas = reference_areas()
     hex_silhouette = mask.point(lambda alpha: 255 if alpha >= 128 else 0)
@@ -119,12 +121,19 @@ def registered(root, mask):
         source, accent, power = [stack.enter_context(Image.open(p)) for p in (path, accent_path, power_path)]
         for sheet in (source, accent, power):
             assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
+        rainbow = stack.enter_context(Image.open(rainbow_path))
+        assert rainbow.mode == 'RGBA' and rainbow.width % 2 == 0, rainbow_path
         frames, records = {}, {}
         for i, slot in enumerate(SLOTS):
             name = f'{pack}-{i}' if i < 6 else slot
             row, col = divmod(i, 5)
             angle = 0
-            if name in POWER_UPS and (name != 'plane' or pack == 'relics'):
+            if name == 'prism':
+                half = rainbow.width // 2
+                left = half if pack == 'relics' else 0
+                crop = (left, 0, left + half, rainbow.height)
+                sheet, sprite_prompt = rainbow, rainbow_prompt
+            elif name in POWER_UPS and (name != 'plane' or pack == 'relics'):
                 index = POWER_UPS.index(name)
                 power_row, power_col = divmod(index, 3)
                 width, height = power.width // 3, power.height // 2
@@ -164,8 +173,12 @@ def registered(root, mask):
                     frame, fitted_size, offset = fit_object(sprite, mask, OBJECT_SIZE.get(name, 120), None)
                 fit = 'centered inside canonical hex with authored alpha'
             frames[name] = frame
-            records[name] = {'source': str(Path(sheet.filename).relative_to(root)),
-                             'prompt': str(sprite_prompt.relative_to(root)),
+            source_path = Path(sheet.filename)
+            # Store provenance paths relative to the game, including shared sources.
+            base = root if source_path.is_relative_to(root) else root.parents[1]
+            prefix = '' if base == root else '../../'
+            records[name] = {'source': prefix + str(source_path.relative_to(base)),
+                             'prompt': prefix + str(sprite_prompt.relative_to(base)),
                              'crop': list(crop), 'rotation': angle, 'fit': fit,
                              'fitted_size': fitted_size}
             if target:
