@@ -16,6 +16,12 @@ local function press_tile(key)
     if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
     return node
 end
+-- Every guide topic from the screen's data source is built, and the list
+-- lays out its visible rows (it skips the ones scrolled out of view).
+local function guide_laid_out()
+    local rows = R.guide_form.nodes.topics.children
+    return #rows > 0 and #rows == #R.guide_entries and rows[1].box ~= nil and rows[1].box.h > 0
+end
 function R.smoke()
     smoke_frames = smoke_frames + 1
     if smoke_frames > 8000 or R.g.lost then
@@ -57,7 +63,7 @@ function R.smoke()
         app.inject_click(R.pause_form.boxes.guide:center()+vec2(0,R.drop/2));smoke_stage=-1
     elseif smoke_stage == -1 and R.overlay==R.OV_GUIDE and R.dialog_settled() then
         local done=R.guide_form.boxes.done
-        assert(done and #R.guide_form.nodes.topics.children==9,"smoke: guide data source was not laid out")
+        assert(done and guide_laid_out(),"smoke: guide data source was not laid out")
         app.inject_click(done:center()+vec2(0,R.drop/2));smoke_stage=0
     elseif smoke_stage == 0 then
         if R.overlay == R.OV_RESULT then

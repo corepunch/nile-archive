@@ -163,7 +163,7 @@ local guide_form = match3.guide_form({
     done = "LET'S EXPLORE",
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))
-R.guide_form=guide_form -- measured control bounds are also used by the input smoke test
+R.guide_form,R.guide_entries=guide_form,guide_entries -- measured bounds and the source rows are checked by the input smoke test
 local function guide_screen() match3.draw_guide(R, guide_form) end
 R.dialogs[R.OV_GUIDE] = guide_screen
 
