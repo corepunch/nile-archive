@@ -332,6 +332,11 @@ function D.bind(R, W)
                 R.g.tiles[cell] = rules.tile(k - 1, k)
                 R.g.chain[cell], R.g.ice[cell] = 0, 0
             end
+            for hits = 1, 2 do
+                local cell = rules.hex_index(3 - hits, 1)
+                R.g.active[cell], R.g.stone_hp[cell], R.g.ice[cell] = true, 0, 0
+                R.g.chain[cell], R.g.tiles[cell] = hits, rules.tile(hits)
+            end
             R.selected, R.hint_a, R.hint_b = rules.hex_index(-2, 1), rules.hex_index(1, 1), rules.hex_index(2, 1)
             R.g.tools = {2, 2, 0}
             R.tool, R.toast_time, R.on_island = 1, 0, false

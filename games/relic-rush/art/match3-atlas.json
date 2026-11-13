@@ -1063,12 +1063,6 @@
     ]
   },
   "sources": {
-    "relics-0": "data/tile-sets/relics/0.png",
-    "relics-1": "data/tile-sets/relics/1.png",
-    "relics-2": "data/tile-sets/relics/2.png",
-    "relics-3": "data/tile-sets/relics/3.png",
-    "relics-4": "data/tile-sets/relics/4.png",
-    "relics-5": "data/tile-sets/relics/5.png",
     "jewels-0": "data/tile-sets/jewels/0.png",
     "jewels-1": "data/tile-sets/jewels/1.png",
     "jewels-2": "data/tile-sets/jewels/2.png",
@@ -1327,34 +1321,6 @@
       "registered_size": [
         90,
         89
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chain": {
-      "source": "engine/art/homescapes/sprites/chain-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        89
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chain-2": {
-      "source": "engine/art/homescapes/sprites/chain-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        88
       ],
       "canvas": [
         128,
@@ -1629,20 +1595,6 @@
       "mask": false
     },
     "donut": {
-      "source": "engine/art/homescapes/sprites/donut.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        111
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "delivery": {
       "source": "engine/art/homescapes/sprites/donut.png",
       "rotation": 0,
       "crop": null,
@@ -3170,51 +3122,147 @@
     }
   },
   "board_theme": {
-    "ray-row": {
+    "relics-0": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
         0,
         0,
-        314,
-        314
+        251,
+        270
       ],
-      "rotation": 19.3,
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        110,
+        102
+      ]
+    },
+    "relics-1": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        251,
+        0,
+        502,
+        270
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        95,
+        110
+      ]
+    },
+    "relics-2": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        502,
+        0,
+        752,
+        270
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        92,
+        98
+      ]
+    },
+    "relics-3": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        752,
+        0,
+        1003,
+        270
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        103,
+        110
+      ]
+    },
+    "relics-4": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        1003,
+        0,
+        1254,
+        270
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        103,
+        110
+      ]
+    },
+    "relics-5": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        0,
+        265,
+        251,
+        502
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        98,
+        110
+      ]
+    },
+    "ray-row": {
+      "source": "art/board-theme/accent-revision.png",
+      "prompt": "art/board-theme/accent-prompt.txt",
+      "crop": [
+        251,
+        265,
+        502,
+        502
+      ],
+      "rotation": 13.5,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
         120,
-        120
+        118
       ]
     },
     "ray-column": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
+      "source": "art/board-theme/accent-revision.png",
+      "prompt": "art/board-theme/accent-prompt.txt",
       "crop": [
-        314,
-        0,
-        627,
-        314
+        502,
+        265,
+        752,
+        502
       ],
-      "rotation": 0.2,
+      "rotation": -0.1,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        67,
+        87,
         118
       ]
     },
     "ray-diagonal": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
+      "source": "art/board-theme/accent-revision.png",
+      "prompt": "art/board-theme/accent-prompt.txt",
       "crop": [
-        627,
-        0,
-        940,
-        314
+        752,
+        265,
+        1003,
+        502
       ],
-      "rotation": -19.1,
+      "rotation": -14.8,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        119,
+        120,
         120
       ]
     },
@@ -3222,16 +3270,16 @@
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        940,
-        0,
+        1003,
+        265,
         1254,
-        314
+        502
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        101,
-        116
+        97,
+        102
       ]
     },
     "prism": {
@@ -3239,41 +3287,41 @@
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
         0,
-        314,
-        314,
-        627
+        502,
+        251,
+        752
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        116,
-        115
+        115,
+        116
       ]
     },
     "plane": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        314,
-        314,
-        627,
-        627
+        251,
+        502,
+        502,
+        752
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        90,
-        74
+        92,
+        80
       ]
     },
     "carpet-swatch": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        647,
-        336,
-        913,
-        602
+        540,
+        550,
+        714,
+        724
       ],
       "rotation": 0,
       "fit": "tiled material",
@@ -3286,10 +3334,10 @@
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        963,
-        335,
-        1228,
-        600
+        782,
+        550,
+        956,
+        724
       ],
       "rotation": 0,
       "fit": "tiled material",
@@ -3302,10 +3350,10 @@
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        24,
-        650,
-        290,
-        916
+        1026,
+        550,
+        1200,
+        724
       ],
       "rotation": 0,
       "fit": "tiled material",
@@ -3318,15 +3366,15 @@
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        314,
-        627,
-        627,
-        940
+        0,
+        752,
+        251,
+        1003
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        75,
+        81,
         86
       ]
     },
@@ -3334,26 +3382,26 @@
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        627,
-        627,
-        940,
-        940
+        251,
+        752,
+        502,
+        1003
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
         65,
-        62
+        59
       ]
     },
     "stone-mark-3": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        940,
-        627,
-        1254,
-        940
+        502,
+        752,
+        752,
+        1003
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
@@ -3366,57 +3414,57 @@
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        0,
-        940,
-        314,
-        1254
+        752,
+        752,
+        1003,
+        1003
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        86,
-        83
+        116,
+        118
       ]
     },
     "goal-oil": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        314,
-        940,
-        627,
-        1254
+        1003,
+        752,
+        1254,
+        1003
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        88,
-        116
+        91,
+        118
       ]
     },
     "goal-stone": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        627,
-        940,
-        940,
+        0,
+        1003,
+        251,
         1254
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        110,
-        99
+        112,
+        107
       ]
     },
     "oil-bubbles": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        940,
-        940,
-        1254,
+        251,
+        1003,
+        502,
         1254
       ],
       "rotation": 0,
@@ -3424,6 +3472,54 @@
       "fitted_size": [
         128,
         128
+      ]
+    },
+    "delivery": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        502,
+        1003,
+        752,
+        1254
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        96,
+        89
+      ]
+    },
+    "chain": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        752,
+        1003,
+        1003,
+        1254
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        88,
+        86
+      ]
+    },
+    "chain-2": {
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
+      "crop": [
+        1003,
+        1003,
+        1254,
+        1254
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        90,
+        87
       ]
     }
   },
@@ -3531,8 +3627,10 @@
       "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
       "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
-      "games/relic-rush/art/board-theme/prompt.txt": "4f443473e8d348d8ea933d7b39fe08bb517c6a8340fd9e03c45d1cc57a5a1cc7",
-      "games/relic-rush/art/board-theme/source.png": "16e6b96fd10b12a15d6e7ffe91eb12413c4e22ac14da458ecc72e4a426c23bea",
+      "games/relic-rush/art/board-theme/accent-prompt.txt": "3da0d30298bb275e8ad1c80540357046ab28e127328e53aaa316b1c9d6b2a514",
+      "games/relic-rush/art/board-theme/accent-revision.png": "226f1676aa38431ed251dbdb0dfb0e7a1843c2ff275776cd56750da8962de763",
+      "games/relic-rush/art/board-theme/prompt.txt": "ab3d29904c627723bc330ee18b19038f4fcab2df7563e9730e05e3fa7278c8ef",
+      "games/relic-rush/art/board-theme/source.png": "0e99c824709016e8a7d6ecd5453be23627e0c77edfe951177737b991d3375764",
       "games/relic-rush/art/tile-sets/source-flat-hex.png": "9af886c7b92ac0dd340e6cc18c21c7e1abaf5b401c6788d011e6f17f1e87961c",
       "games/relic-rush/art/tile-sets/source.png": "2cd534c2ad89c431a043e9182c21366569c6883e5e4a2579c62c4a3664b0e50c",
       "games/relic-rush/data/board-states/cell-mask.png": "e51da6f444ca0f877436eb32bb3d3de943f8a1739a39a333c02ab7cff73ad719",
@@ -3577,12 +3675,6 @@
       "games/relic-rush/data/tile-sets/jewels/3.png": "7ba31f2140da12bdf28761dc9ab39b689df77cc492d96fbe430c5f9544eb27f9",
       "games/relic-rush/data/tile-sets/jewels/4.png": "a1a438c51f69fa221926f7b6b55ea85c406b008c0da5105a36d9d5c08669ff31",
       "games/relic-rush/data/tile-sets/jewels/5.png": "d8066d88f2d8f1631c71e1d3814f27187784e6eeb4db051d6ad2deaa1f943b78",
-      "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
-      "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
-      "games/relic-rush/data/tile-sets/relics/2.png": "0de85840923d944f325ce0c2cc1b8590ef6965f491a62ab952745413c51c713e",
-      "games/relic-rush/data/tile-sets/relics/3.png": "5a34492d2c6df70550e2bb884038be4568fda04b0e53a73dce0726d96b47743c",
-      "games/relic-rush/data/tile-sets/relics/4.png": "0f28aaa753520d5f17f47455ab1df532910598263bce385e6f11ac5101dfd570",
-      "games/relic-rush/data/tile-sets/relics/5.png": "e0c404e1e6663edb4ba2270c745205792112be0d2f61767024ec5951de9eb1e7",
       "games/relic-rush/data/tile-sets/resources/0.png": "65133c9abf22da14476ae78119e90412b00439c93cbedda1a7695b5e22f19428",
       "games/relic-rush/data/tile-sets/resources/1.png": "45b22014f34398f145a308f00a8ba94e5befa008abff21056f3c3a24e6c33e63",
       "games/relic-rush/data/tile-sets/resources/2.png": "f377eb36b0c4052e55a5f0d2b0875b869bf62e97816f42d06d94eceb7dd2c1a2",
@@ -3593,10 +3685,10 @@
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_theme_art.py": "701570c57ba3dd9dad79c84c239c8932c2ed47a43ccf510c7498731debcea5bd"
+      "tools/match3_theme_art.py": "0871b2fc3d51adf3f44b052564a9e52e455a64fdefc44f4cfdb0814a1672cf76"
     },
     "outputs": {
-      "games/relic-rush/data/match3.png": "cc19fc207b0178bb6392b4f4a5f068de8d934b116a1958fc355319f79cb1d7fb",
+      "games/relic-rush/data/match3.png": "1985b3f1365d6a44e6b0a2d1142f3743cc6e75826c7b50f169f6ea6809e3c901",
       "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",

@@ -2,7 +2,7 @@
 -- rules and board layouts stay independent of this drawing code.
 local E = {}
 
-E.assets = {"stone-1", "stone-2", "stone-3", "delivery", "delivery-exit", "carry-exit-arrow"}
+E.assets = {"stone-1", "stone-2", "stone-3", "delivery", "donut", "delivery-exit", "carry-exit-arrow"}
 local stone_art = {"stone-material", "stone-mark-1", "stone-mark-2", "stone-mark-3", "goal-stone"}
 
 for _,name in ipairs{"box","carry","jelly","lock","piggy","target-generator","trash"} do
@@ -44,7 +44,7 @@ local PATCH = {
     carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
         inset = 1.4, rim = 4, shade = .55, bevel = .27, shadow_y = 2.5, softness = 4, opacity = 115},
     oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 4, shade = .35,
-        bubbles = {{"oil-bubbles", 4, -9, 1.6, 200}, {"oil-bubbles", -3, -14, 1.1, 150}}},   -- art, drift x/y (px/s), size, opacity
+        bubbles = {{"oil-bubbles", 4, -9, 1.6, 100}, {"oil-bubbles", -3, -14, 1.1, 65}}},   -- art, drift x/y (px/s), size, opacity
     stone = {material = "stone-material", corner = .20, fillet = .64, range = .6, texel = 1.5, tile = 1.6,
         inset = 3.5, rim = 6, shade = .57, bevel = .34, shadow_y = 3, softness = 4.5, opacity = 135},
 }
@@ -337,7 +337,8 @@ function E.delivery(R, rules, t, at, scale, alpha, aspect, size)
     end
     if t.kind ~= rules.DELIVERY then return false end
     local box = rect.centered(at, size2(size * scale * aspect, size * scale / aspect))
-    gfx.image(R.board_art.delivery, box, color(255, 255, 255, alpha))
+    local art = R.g and R.g.hs and R.board_art.donut or R.board_art.delivery
+    gfx.image(art, box, color(255, 255, 255, alpha))
     return true
 end
 

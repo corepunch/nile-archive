@@ -19,7 +19,7 @@
       "atlas_frame": "ray-diagonal",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/source.png",
+      "source": "art/board-theme/accent-revision.png",
       "atlas_section": "board_theme"
     },
     "ray-column": {
@@ -33,7 +33,7 @@
       "atlas_frame": "ray-column",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/source.png",
+      "source": "art/board-theme/accent-revision.png",
       "atlas_section": "board_theme"
     },
     "ray-row": {
@@ -47,7 +47,7 @@
       "atlas_frame": "ray-row",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/source.png",
+      "source": "art/board-theme/accent-revision.png",
       "atlas_section": "board_theme"
     },
     "bomb": {
@@ -88,7 +88,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "chain",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "art/board-theme/source.png",
+      "atlas_section": "board_theme"
     },
     "ice-2": {
       "box": [
@@ -1187,7 +1189,7 @@
     "registration": "art/match3-atlas.json",
     "runtime": "data/match3.png",
     "reproduction": "python3 tools/match3_atlas.py",
-    "review": "docs/screenshots/review/board-theme/README.md",
+    "review": "docs/screenshots/review/board-palette/README.md",
     "states": {
       "rocket": [
         "ray-row",
@@ -1218,7 +1220,24 @@
         "stone-mark-2",
         "stone-mark-3",
         "goal-stone"
+      ],
+      "chips": [
+        "relics-0",
+        "relics-1",
+        "relics-2",
+        "relics-3",
+        "relics-4",
+        "relics-5"
+      ],
+      "delivery": [
+        "delivery"
+      ],
+      "chains": [
+        "chain",
+        "chain-2"
       ]
-    }
+    },
+    "accent_source": "art/board-theme/accent-revision.png",
+    "accent_prompt": "art/board-theme/accent-prompt.txt"
   }
 }

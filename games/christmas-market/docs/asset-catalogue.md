@@ -2,17 +2,19 @@
 
 ## Themed board art
 
-The original Festive chips are back on the board and in chip goals. The six standalone power-ups use the shapes of the Homescapes sprites as references. A woven holiday runner, spilled caramel and frosted slate give the three connected surfaces distinct colors and materials.
+The default chips retain the original identities (bell, candy cane, holly, ornament, bauble and gingerbread). Each has one dominant hue and at most one accent hue. The new surfaces are plain pine-green felt, amber caramel and cool slate.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
-| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Each clears its axis. |
-| `bomb`, `prism`, `plane` | Round fuse bomb for area damage, segmented rainbow ball for a single color, and a folded plane that flies to a target. |
-| `carpet-swatch`, `goal-carpet` | Continuous carpet that spreads through matches touching it, plus its HUD and guide icon. |
-| `oil-material`, `oil-bubbles`, `goal-oil` | Continuous oil patch that spreads if a move clears none, animated highlights and the HUD and guide icon. |
-| `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | One connected surface. A branching fissure, two smaller fissures and an intact raised knot indicate one, two and three hits remaining. Matches beside a stone or direct hits remove one layer per wave from that cell. The stone icon appears in the guide and on stone-only blocker goals. |
+| `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
+| `ray-row`, `ray-column`, `ray-diagonal` | Three independently painted capped rockets registered to +30°, 90° and −30°. Red body with a gold accent. |
+| `bomb`, `prism`, `plane` | Round fuse bomb, segmented rainbow ball, folded targeting plane. The rainbow ball has several hues to convey its color-clearing rule. |
+| `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
+| `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
+| `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
+| `delivery`, `chain`, `chain-2` | The campaign's red parcel and silver one- and two-layer chains. The source-board donut and mirrored chain retain their original art. |
 
-All 16 frames come from one built-in ImageGen atlas. The [source PNG](../art/board-theme/source.png), [prompts](../art/board-theme/prompt.txt) and [crop and registration manifest](../art/match3-atlas.json) document the import into `data/match3.png`. The crop and rotation align the authored artwork and preserve object alpha. A board-anchored, mirrored material repeat fills the shared distance field for each surface. Carpet and stone have a raised bevel and a soft contact shadow. Stone sits inside the exposed hex edges. [Carpet and oil move comparison](../../../docs/review/raised-board-surfaces/README.md). Rebuild with `python3 tools/match3_atlas.py`. [Reviewed phone captures](screenshots/review/board-theme/README.md).
+Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
 ## Additional board elements
 
