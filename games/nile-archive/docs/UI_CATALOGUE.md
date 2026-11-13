@@ -110,7 +110,7 @@ no ImageGen prompt or added runtime texture.
 flag tile against every building's front and joins the flags along whole tiles
 ([Roads](../../../docs/BUILDINGS.md#roads)). The atlas holds fifteen limestone
 pieces, one per combination of joined neighbours (rounded turns and junction
-corners), modelled and rendered with
+corners) and eight looks of each straight direction, modelled and rendered with
 Scener by `python3 tools/roads.py nile-archive` from the palette in
 `art/roads.json`; it has no interaction states. Paths painted into
 `data/island.png` remain part of the terrain, and a road is drawn on the

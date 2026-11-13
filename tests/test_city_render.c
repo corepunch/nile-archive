@@ -98,9 +98,9 @@ static void frame(float dt)
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(at((int)flags[0].x, (int)flags[0].y).b < 100 && at((int)street.x, (int)street.y).b < 100);
-    color paving[16];
-    for (int i = 0; i < 16; i++) paving[i] = rgba(20, 30, 240, 255);
-    c.road = tex_from_pixels(paving, 4, 4);
+    color paving[32];   /* 8 x 4 cells: the pieces, then the straights' looks */
+    for (int i = 0; i < 32; i++) paving[i] = rgba(20, 30, 240, 255);
+    c.road = tex_from_pixels(paving, 8, 4);
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     for (int i = 0; i < 2; i++) CHECK(at((int)flags[i].x, (int)flags[i].y).b > 200);
