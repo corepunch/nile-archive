@@ -80,6 +80,9 @@ function A.load()
         for _, name in ipairs{"sand-edge", "ice-1-edge", "ice-2-edge"} do load(name) end
     end
     if not app.arg("default-match3") then load("chain-board") end
+    -- Snow is drawn with the original Homescapes one-layer floor tile, which
+    -- has the same rule, so the board cell and its goal icon match.
+    textures.sand = textures["membrane-fill-1"]
     for _, tool in ipairs(A.tools) do
         for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
     end

@@ -145,6 +145,15 @@ function R.board_screen(inp, dt)
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx, false)
     elements.ground(R, rules, sx)
+    -- Snow is a goal, so show its remaining cells beneath pieces. It is the
+    -- Homescapes floor tile: one layer, broken by a match or hit on top.
+    for i = 0, CELLS - 1 do
+        if cell_active(R.g, i) and R.g.soil[i] > 0 then
+            local fade = intro and intro:fade() or 1
+            gfx.image(R.board_art.sand, rect.centered(cell_pos(i) + vec2(sx, 0), size2.splat(STATE_SIZE)),
+                rgba(255, 255, 255, 255 * fade))
+        end
+    end
     draw_cells(sx, true)
     -- Overhanging blockers sit below treats, including those in adjacent cells.
     draw_relics(sx)

@@ -252,6 +252,12 @@ solid blue ice ring. All three share tinsel's flat-top centreline. Snow moves
 inward when ice or tinsel shares its cell, leaving both materials visible.
 The guide illustrates the rims and the goal capsule uses the full snow icon.
 
+Snow (the `soil` goal) is drawn on the live board with the original Homescapes
+one-layer floor tile, `membrane-fill-1`. Homescapes' tile (`BUBBLE_MEMBRANE`)
+follows the same rule: a match or hit on top breaks the layer. `art.load`
+points `sand` at that tile, so the board cell and the HUD goal icon match.
+The level lessons still call it snow.
+
 The live board's one-layer ice is the original Homescapes shell fragment. It is
 the lower part of the full shell, so `tools/homescapes_atlas.py` rests it on
 the full shell's bottom edge (`ice-2`) instead of centring it. The piece shows
