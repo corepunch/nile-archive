@@ -41,6 +41,7 @@
         0
       ],
       "about": "Every great discovery begins with a little canvas.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/camp.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -80,6 +81,7 @@
         0
       ],
       "about": "Fresh water brings the lost valley back to life.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/well.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -119,6 +121,7 @@
         0
       ],
       "about": "A home for the hands that rebuild the valley.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/workshop.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -158,6 +161,7 @@
         0
       ],
       "about": "Stories, spices and treasures from far away.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/market.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -197,6 +201,7 @@
         0
       ],
       "about": "A sunlit gathering place brings the valley together.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/gateway.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -236,6 +241,7 @@
         0
       ],
       "about": "A warm light after a long day of adventure.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lodge.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -275,6 +281,7 @@
         0
       ],
       "about": "Protect the knowledge buried beneath the vines.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/archive.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -314,6 +321,7 @@
         0
       ],
       "about": "Follow the stars to the next discovery.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/observatory.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -353,6 +361,7 @@
         0
       ],
       "about": "Let the ancient spring flow once more.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/fountain.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -392,6 +401,7 @@
         0
       ],
       "about": "The heart of the valley shines again.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/temple.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -431,6 +441,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/log_cabin.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -470,6 +481,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/apothecary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -509,6 +521,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/mess_hall.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -548,6 +561,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/stilt_house.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -587,6 +601,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/map_room.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -626,6 +641,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/greenhouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -665,6 +681,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/trading_post.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -704,6 +721,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/water_mill.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -743,6 +761,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/clock_tower.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -782,6 +801,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lighthouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -821,6 +841,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/treehouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -860,6 +881,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/aviary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -899,6 +921,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/beached_ship.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -938,6 +961,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/amphitheater.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -977,6 +1001,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/museum.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1016,6 +1041,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/hanging_gardens.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1055,6 +1081,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/palm_young.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1094,6 +1121,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/jungle_tree.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1133,6 +1161,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/cypress.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1172,6 +1201,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/banana.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1211,6 +1241,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/fan_palm.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1250,6 +1281,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/papaya.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1289,6 +1321,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/frangipani.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1328,6 +1361,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/bamboo.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1367,6 +1401,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/twin_palms.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1406,6 +1441,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/mango.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1445,6 +1481,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/kapok.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1484,6 +1521,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/shrub.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1523,6 +1561,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/fern.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1562,6 +1601,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/monstera.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1601,6 +1641,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/flower_shrub.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1640,6 +1681,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/berry.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1679,6 +1721,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/reeds.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1718,6 +1761,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/topiary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1757,6 +1801,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/hedge.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1796,6 +1841,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/orchid.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1835,6 +1881,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/hibiscus.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1874,6 +1921,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/daisies.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1913,6 +1961,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/blue_lily.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1952,6 +2001,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/flower_box.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -1991,6 +2041,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/bromeliad.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2030,6 +2081,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": true,
       "shadow": {
         "runtime": "data/building-shadows/flower_bed.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2069,6 +2121,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": true,
       "shadow": {
         "runtime": "data/building-shadows/rainbow_bed.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2108,6 +2161,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/broken_column.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2147,6 +2201,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/idol_head.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2186,6 +2241,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/jaguar.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2225,6 +2281,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/obelisk.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2264,6 +2321,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/sundial.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2303,6 +2361,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/explorer.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2342,6 +2401,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/gold_idol.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2381,6 +2441,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/stone_arch.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2420,6 +2481,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/giant_head.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2459,6 +2521,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/birdbath.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2498,6 +2561,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/small_fountain.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2537,6 +2601,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": true,
       "shadow": {
         "runtime": "data/building-shadows/lily_pond.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2576,6 +2641,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/duck_pond.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2615,6 +2681,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/spring_rocks.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2654,6 +2721,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/bench.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2693,6 +2761,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lantern.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2732,6 +2801,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/tiki.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2771,6 +2841,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/signpost.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2810,6 +2881,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/flagpole.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2849,6 +2921,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/pump.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2888,6 +2961,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/picnic.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2927,6 +3001,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/hammock.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -2966,6 +3041,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/pergola.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3005,6 +3081,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/swing.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3044,6 +3121,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": true,
       "shadow": {
         "runtime": "data/building-shadows/gazebo.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3083,6 +3161,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/crates.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3122,6 +3201,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/barrels.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3161,6 +3241,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/campfire.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3200,6 +3281,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/field_scope.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3239,6 +3321,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/globe.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3278,6 +3361,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/chest.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3317,6 +3401,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/supply_tent.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3356,6 +3441,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/dig_site.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3395,6 +3481,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/rowboat.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3434,6 +3521,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/cart.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3473,6 +3561,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/turtle.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3512,6 +3601,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/toucan.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3551,6 +3641,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/parrot.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3590,6 +3681,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/monkey.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3629,6 +3721,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/capybara.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3668,6 +3761,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/boulder.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3707,6 +3801,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/crystal.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
@@ -3746,6 +3841,7 @@
         0
       ],
       "about": "Place this treasure anywhere on open grass.",
+      "road": false,
       "shadow": {
         "runtime": "data/building-shadows/mossy_rocks.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",

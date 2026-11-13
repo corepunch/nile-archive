@@ -30,6 +30,7 @@
    ],
    "stars": 0,
    "about": "A warm welcome for every winter visitor.",
+   "road": false,
    "image": [
     416,
     432
@@ -57,6 +58,7 @@
    ],
    "stars": 0,
    "about": "Fresh timber for a market full of wishes.",
+   "road": false,
    "image": [
     417,
     455
@@ -84,6 +86,7 @@
    ],
    "stars": 0,
    "about": "Follow the smell of cinnamon and warm gingerbread.",
+   "road": false,
    "image": [
     416,
     452
@@ -111,6 +114,7 @@
    ],
    "stars": 0,
    "about": "A warm cup and a sweet candy cane for cold hands.",
+   "road": false,
    "image": [
     415,
     461
@@ -138,6 +142,7 @@
    ],
    "stars": 0,
    "about": "Little wooden toys, made with Christmas care.",
+   "road": false,
    "image": [
     417,
     467
@@ -165,6 +170,7 @@
    ],
    "stars": 0,
    "about": "Tie every winter wish with a bright red ribbon.",
+   "road": false,
    "image": [
     417,
     445
@@ -192,6 +198,7 @@
    ],
    "stars": 0,
    "about": "Let a hundred little candles light the snowy evening.",
+   "road": false,
    "image": [
     417,
     456
@@ -219,6 +226,7 @@
    ],
    "stars": 0,
    "about": "Take a magical ride beneath the fairy lights.",
+   "road": false,
    "image": [
     417,
     438
@@ -246,6 +254,7 @@
    ],
    "stars": 0,
    "about": "A place to skate, laugh and make winter memories.",
+   "road": false,
    "image": [
     427,
     383
@@ -273,6 +282,7 @@
    ],
    "stars": 0,
    "about": "The star on top lights up our Christmas square.",
+   "road": false,
    "image": [
     423,
     466
@@ -300,6 +310,7 @@
    ],
    "stars": 0,
    "about": "Snowy firs and a lantern make the paths feel like home.",
+   "road": true,
    "image": [
     278,
     277
@@ -327,6 +338,7 @@
    ],
    "stars": 0,
    "about": "A friendly snowman is saving you a seat.",
+   "road": true,
    "image": [
     278,
     260
@@ -354,6 +366,7 @@
    ],
    "stars": 0,
    "about": "Carrot nose, coal buttons, red scarf.",
+   "road": false,
    "image": [
     83,
     104
@@ -381,6 +394,7 @@
    ],
    "stars": 0,
    "about": "No peeking before Christmas morning.",
+   "road": false,
    "image": [
     95,
     86
@@ -408,6 +422,7 @@
    ],
    "stars": 0,
    "about": "Peppermint stripes in a snow drift.",
+   "road": false,
    "image": [
     69,
     104
@@ -435,6 +450,7 @@
    ],
    "stars": 0,
    "about": "A warm light with a wreath on its post.",
+   "road": false,
    "image": [
     35,
     126
@@ -462,6 +478,7 @@
    ],
    "stars": 0,
    "about": "A seat for watching the snow fall.",
+   "road": false,
    "image": [
     116,
     118
@@ -489,6 +506,7 @@
    ],
    "stars": 3,
    "about": "Post your wish list here.",
+   "road": false,
    "image": [
     58,
     114
@@ -516,6 +534,7 @@
    ],
    "stars": 0,
    "about": "Granite under a soft white cap.",
+   "road": false,
    "image": [
     92,
     80
@@ -543,6 +562,7 @@
    ],
    "stars": 3,
    "about": "One bauble too big for any tree.",
+   "road": false,
    "image": [
     80,
     107
@@ -570,6 +590,7 @@
    ],
    "stars": 6,
    "about": "Carved from the frozen lake.",
+   "road": false,
    "image": [
     86,
     115
@@ -597,6 +618,7 @@
    ],
    "stars": 6,
    "about": "Standing to attention all season.",
+   "road": false,
    "image": [
     48,
     108
@@ -624,6 +646,7 @@
    ],
    "stars": 9,
    "about": "Ready for the long flight.",
+   "road": false,
    "image": [
     59,
     101
@@ -651,6 +674,7 @@
    ],
    "stars": 9,
    "about": "Visitors from the other pole, in scarves.",
+   "road": false,
    "image": [
     68,
     95
@@ -678,6 +702,7 @@
    ],
    "stars": 6,
    "about": "Walk under the evergreen and bells.",
+   "road": false,
    "image": [
     171,
     166
@@ -705,6 +730,7 @@
    ],
    "stars": 12,
    "about": "Polished runners, a sack of toys and room for one more.",
+   "road": false,
    "image": [
     154,
     129
@@ -732,6 +758,7 @@
    ],
    "stars": 9,
    "about": "Snow blocks outside, a warm glow within.",
+   "road": false,
    "image": [
     187,
     162
@@ -759,6 +786,7 @@
    ],
    "stars": 0,
    "about": "A fir heavy with fresh snow.",
+   "road": false,
    "image": [
     113,
     153
@@ -786,6 +814,7 @@
    ],
    "stars": 0,
    "about": "White bark and snow on every twig.",
+   "road": false,
    "image": [
     100,
     147
@@ -813,6 +842,7 @@
    ],
    "stars": 3,
    "about": "Baubles, a golden star and twinkling lights.",
+   "road": false,
    "image": [
     100,
     164
@@ -840,6 +870,7 @@
    ],
    "stars": 6,
    "about": "Four firs keep each other warm.",
+   "road": false,
    "image": [
     239,
     265
@@ -867,6 +898,7 @@
    ],
    "stars": 6,
    "about": "A crackling fire and boots drying by the door.",
+   "road": false,
    "image": [
     278,
     291
@@ -894,6 +926,7 @@
    ],
    "stars": 9,
    "about": "Sweet enough to eat, if the icing holds.",
+   "road": false,
    "image": [
     285,
     284
@@ -921,6 +954,7 @@
    ],
    "stars": 12,
    "about": "Every letter finds its way north.",
+   "road": false,
    "image": [
     279,
     276
@@ -948,6 +982,7 @@
    ],
    "stars": 15,
    "about": "Its bell rings the carols in.",
+   "road": false,
    "image": [
     282,
     305
@@ -975,6 +1010,7 @@
    ],
    "stars": 18,
    "about": "Hay, harness bells and nine sleepy reindeer.",
+   "road": false,
    "image": [
     377,
     334
@@ -1002,6 +1038,7 @@
    ],
    "stars": 21,
    "about": "Hammers, ribbons and cocoa until the last toy is wrapped.",
+   "road": false,
    "image": [
     427,
     437

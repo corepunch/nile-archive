@@ -54,8 +54,8 @@
 ["blue_lily", "Blue lilies", "flower", 1, 1, 30, 6, "Lovely Lupines"],
 ["flower_box", "Flower planter", "flower", 1, 1, 30, 6, "Planter"],
 ["bromeliad", "Blooming bromeliad", "flower", 1, 1, 30, 9, "Blooming Bromeliad"],
-["flower_bed", "Flower bed", "flower", 2, 2, 90, 6, "Blossoming Nook"],
-["rainbow_bed", "Rainbow garden", "flower", 2, 2, 180, 15, "Rainbow Grove"],
+["flower_bed", "Flower bed", "flower", 2, 2, 90, 6, "Blossoming Nook", {"road": true}],
+["rainbow_bed", "Rainbow garden", "flower", 2, 2, 180, 15, "Rainbow Grove", {"road": true}],
 
 ["broken_column", "Broken column", "statue", 1, 1, 30, 3, "Column Arch"],
 ["idol_head", "Stone idol", "statue", 1, 1, 45, 3, "Statue"],
@@ -69,7 +69,7 @@
 
 ["birdbath", "Birdbath", "water", 1, 1, 45, 3, "Watering Post"],
 ["small_fountain", "Little fountain", "water", 1, 1, 90, 9, "Flowing Fountain"],
-["lily_pond", "Lily pond", "water", 2, 2, 120, 6, "Giant Water Lilies"],
+["lily_pond", "Lily pond", "water", 2, 2, 120, 6, "Giant Water Lilies", {"road": true}],
 ["duck_pond", "Duck pond", "water", 2, 2, 150, 9, "Duck Pond"],
 ["spring_rocks", "Rock spring", "water", 2, 2, 240, 15, "Sunny Spring"],
 
@@ -83,7 +83,7 @@
 ["hammock", "Palm hammock", "garden", 2, 2, 150, 6, "Summer Swing"],
 ["pergola", "Vine pergola", "garden", 2, 2, 180, 9, "Shaded Respite"],
 ["swing", "Garden swing", "garden", 2, 2, 240, 12, "Summer Swing"],
-["gazebo", "Jade gazebo", "garden", 2, 2, 300, 12, "Gilded Gazebo"],
+["gazebo", "Jade gazebo", "garden", 2, 2, 300, 12, "Gilded Gazebo", {"road": true}],
 
 ["crates", "Supply crates", "camp", 1, 1, 15, 0, "Barrel-Aged Bounty"],
 ["barrels", "Barrels", "camp", 1, 1, 15, 0, "Barrel-Aged Bounty"],

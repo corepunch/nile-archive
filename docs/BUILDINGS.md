@@ -245,7 +245,11 @@ Nothing is saved and nothing is placed by hand.
   no road leads to it. Relic Rush sets it for every catalogue category but `wonder`
   and `building`; Christmas Market for all but `wonder` and `cottage` (its
   `building` category holds benches, lamps and other props); Nile Archive for its
-  whole decoration catalogue.
+  whole decoration catalogue. A row of `art/building-catalogue/catalogue.json` that
+  ends with `{"road": true}` gets a road whatever its category (the game's
+  `tools/prepare_*.py` writes it to `lua/buildings.lua` as `road=true`): use it for
+  big pieces on a foundation slab, such as Christmas Market's lantern firs and
+  snowman bench and Relic Rush's flower beds, lily pond and gazebo.
 - **Flags are joined as a spanning tree.** The flag nearest to the laid roads joins
   them next, by a shortest route over free tiles that keeps its heading while it can,
   so the network does not depend on the order of building. Roads never run under a

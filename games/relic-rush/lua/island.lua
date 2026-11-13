@@ -20,9 +20,10 @@ M.TILE = 56   -- a tile's side on the ground, in world units
 -- The catalogue owns sprite registration, prices, descriptions and unlocks.
 M.catalogue = require("buildings")
 M.buildings, M.wonders = M.catalogue, {}
--- Roads lead only to buildings; trees, statues, camp props and the rest are decorations.
+-- Roads lead to buildings, and to any catalogue row marked road=true (big pieces
+-- on a foundation); trees, statues, camp props and the rest are decorations.
 local HOUSES = {wonder = true, building = true}
-for _, d in ipairs(M.buildings) do d.decoration = not HOUSES[d.category] end
+for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
 for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
 
 function M.wonder_count(c)

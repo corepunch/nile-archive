@@ -100,7 +100,8 @@ function D.bind(R, W)
                 local spot = 1
                 for kind = WONDERS, #island.buildings - 1 do
                     if decor <= 0 then break end
-                    if island.buildings[kind + 1].decoration then
+                    local d = island.buildings[kind + 1]
+                    if d.decoration or d.road then   -- props, with or without a road
                         local hint = spots[(spot - 1) % #spots + 1] + vec2(spot % 2 == 0 and 110 or -110, 60)
                         local ok, p = R.island:find_spot(kind, hint)
                         if ok then R.island:add(p, kind, 0); decor, spot = decor - 1, spot + 1 end
