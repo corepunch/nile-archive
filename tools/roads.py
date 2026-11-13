@@ -196,7 +196,7 @@ def main():
     for mask in range(1, 16):
         subprocess.run([str(scener), '--render', str(work / 'roads.blks'), '--camera', f'road{mask}', '--format', 'png',
                         '--transparent', '--supersample', '4', '--output-dir', str(work)], check=True,
-                       stdout=subprocess.DEVNULL)
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         shot = max(work.glob('*.png'), key=lambda q: q.stat().st_mtime)
         image = Image.open(shot).convert('RGBA')
         if image.size != (width, height): sys.exit(f'{shot}: {image.size}, expected {(width, height)}')

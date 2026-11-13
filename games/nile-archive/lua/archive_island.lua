@@ -42,6 +42,7 @@ function M.setup()
     c.zones = zones
     c.cam = camera{center = vec2(900, 650), zoom = .8, min_zoom = .35, max_zoom = 2, cover = true}
     c:init("island.png")
+    c.road = texture.load("roads.png")   -- tools/roads.py nile-archive
     G.island = c
     G.buildings = c.defs   -- with the sprites loaded
     M.town_setup()
