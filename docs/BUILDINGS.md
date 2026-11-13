@@ -242,9 +242,10 @@ Nothing is saved and nothing is placed by hand.
   land falls back to +u, then -u, then -v.
 - **Decorations have none.** A type with `decoration` set (trees, bushes, flowers,
   rocks, statues, gardens, water, animals, camp props) keeps roads off its base, but
-  no road leads to it. Relic Rush and Christmas Market set it for every catalogue
-  category but `wonder`, `building` and `cottage`; Nile Archive for its whole
-  decoration catalogue.
+  no road leads to it. Relic Rush sets it for every catalogue category but `wonder`
+  and `building`; Christmas Market for all but `wonder` and `cottage` (its
+  `building` category holds benches, lamps and other props); Nile Archive for its
+  whole decoration catalogue.
 - **Flags are joined as a spanning tree.** The flag nearest to the laid roads joins
   them next, by a shortest route over free tiles that keeps its heading while it can,
   so the network does not depend on the order of building. Roads never run under a

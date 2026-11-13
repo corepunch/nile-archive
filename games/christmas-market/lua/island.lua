@@ -20,8 +20,9 @@ M.TILE = 56   -- a tile's side on the ground, in world units
 -- The catalogue owns sprite registration, prices, descriptions and unlocks.
 M.catalogue = require("buildings")
 M.buildings, M.wonders = M.catalogue, {}
--- Roads lead only to buildings; trees, statues and the rest are decorations.
-local HOUSES = {wonder = true, building = true, cottage = true}
+-- Roads lead only to the stalls and cottages; the "building" catalogue here is
+-- props (benches, lamps, snowmen, presents), so it counts as decoration too.
+local HOUSES = {wonder = true, cottage = true}
 for _, d in ipairs(M.buildings) do d.decoration = not HOUSES[d.category] end
 for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
 
