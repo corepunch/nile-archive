@@ -44,8 +44,9 @@ function Base.bind(M,random)
         g.hs={cells={},groups={},queues={},palettes={},sources={},goals=H.copy(spec.goals or {}),
             colors=H.copy(spec.colors),refill=H.copy(spec.refill or {}),pendingCookies=0}
         for _,goal in ipairs(g.hs.goals) do
+            if goal.type=='COLOR_BOX' then goal.type='BOX' end -- colored boxes are not part of the game
             assert(({CHIPS=true,CELL_JELLY=true,BOX=true,TRASH=true,ICE=true,LOCK=true,CARRY=true,
-                COLLECT_PIGGY=true,COLOR_BOX=true,TRASHSTONE=true,TARGET_GENERATOR=true,STATUE=true,
+                COLLECT_PIGGY=true,TRASHSTONE=true,TARGET_GENERATOR=true,STATUE=true,
                 BUBBLE_MEMBRANE=true,SHUTTERS=true,CELL_OIL=true})[goal.type],'unsupported source goal '..goal.type)
             goal.current=goal.current or 0
         end
@@ -63,9 +64,7 @@ function Base.bind(M,random)
                 elseif id=='FISH' then g.tiles[i]=M.tile(0,M.PLANE)
                 elseif id=='LIGHTNING' then g.tiles[i]=M.tile(0,M.PRISM)
                 elseif id=='LINE' then g.tiles[i]=M.tile(0,model.line_orient=='0' and M.ROW or M.COLUMN)
-                elseif id=='BOX' or id=='COLOR_BOX' then
-                    c.box=n;c.color=id=='COLOR_BOX' and assert(tonumber(model.color),'missing box color') or nil
-                    assert(not c.color or c.color>=0 and c.color<6,'invalid box color')
+                elseif id=='BOX' or id=='COLOR_BOX' then c.box=n -- imported colored boxes become plain ones
                 elseif id=='HONEY' then c.jelly=n
                 elseif id=='STATUE' then c.statue=n
                 elseif id=='COOKIE_BOX' then c.stack=n
@@ -158,12 +157,10 @@ function Base.bind(M,random)
     end
     function H.apply(g,m)
         if not g.hs then return {} end
-        local protected,hitgroups,adjacent,colors={},{},{},{}
+        local protected,hitgroups,adjacent={},{},{}
         for i=0,M.CELLS-1 do if m.mask[i] then
             if m.ordinary[i] then
-                for d=0,5 do local n=M.hex_neighbor(i,d);if active(g,n) then
-                    adjacent[n]=true;colors[n]=colors[n] or {};colors[n][g.tiles[i].kind]=true
-                end end
+                for d=0,5 do local n=M.hex_neighbor(i,d);if active(g,n) then adjacent[n]=true end end
             end
             if m.direct[i] then
                 for d=0,5 do local n=M.hex_neighbor(i,d);if active(g,n) and (g.hs.cells[n].jelly or 0)>0 then adjacent[n]=true end end
@@ -182,10 +179,8 @@ function Base.bind(M,random)
                 if c.jelly==0 and t.element=='cherry' then g.tiles[i]=M.tile(-1);H.credit(g,'COLLECT_PIGGY') end
             elseif (c.box or 0)>0 then
                 protected[i]=true
-                if not c.color or direct or (colors[i] or {})[c.color] then
-                    c.box=c.box-1;m.mask[i]=true
-                    if c.box==0 then H.credit(g,c.color and 'COLOR_BOX' or 'BOX') end
-                end
+                c.box=c.box-1;m.mask[i]=true
+                if c.box==0 then H.credit(g,'BOX') end
             elseif (c.statue or 0)>0 then
                 protected[i]=true
                 if direct then c.statue=c.statue-1;if c.statue==0 then H.credit(g,'STATUE') end end

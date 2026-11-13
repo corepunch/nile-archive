@@ -122,7 +122,7 @@ function E.bind_board_ui(R, rules, tool_art)
     function R.goal_entries()
         local g, l = R.g, rules.level_of(R.g)
         if g.hs then
-            local icons={CELL_JELLY="goal-carpet",CELL_OIL="goal-oil",BOX="goal-box",COLOR_BOX="goal-color-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
+            local icons={CELL_JELLY="goal-carpet",CELL_OIL="goal-oil",BOX="goal-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
             local entries={}
             for n,goal in ipairs(g.hs.goals) do entries[#entries+1]={id="source-"..n,
                 icon=goal.type=='CHIPS' and 'goal-chip-'..goal.subtype or icons[goal.type],

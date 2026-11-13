@@ -44,7 +44,7 @@ These are explicit hex adaptation choices, not original replay results.
 | Source model | Shared-engine behavior and current artwork |
 | --- | --- |
 | `NORMAL`, `RANDOM_CHIP` | Six original colored pieces; source weights/restricted initial palettes |
-| `BOX`, `COLOR_BOX` | Fixed layered obstacle; adjacent matches or direct hits, color restriction for colored boxes. Six ordinary-box states and all 36 original colored-box states |
+| `BOX` | Fixed layered obstacle; adjacent matches or direct hits. Six box states. Colored boxes are not supported: an imported `COLOR_BOX` loads as a plain box |
 | `TRASH` | Swappable/falling cookies, three original damage states; adjacent matches or direct hits |
 | `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE`, `LOCK` | Hold pieces; one layer per hit, ice before chain before piece. Original ice and chain variants, including mirrored single chain |
@@ -150,7 +150,7 @@ portal, honey and carpet-hex sprites stay in `engine/art/homescapes/sprites`
 but are not registered: no board draws them.
 The maker uses the original shared-frame alignment for the base and both glass
 layers. Its five held poses use original charge components and the source
-client's per-hit groups. All 36 colored-box field states and the goal icon use
+client's per-hit groups. The goal icons use
 original artwork. Maker animation timing and output indicator placement
 remain open.
 [Current inventory](HOMESCAPES_ART.md) · [Issue #98](https://github.com/corepunch/nile-archive/issues/98)

@@ -467,7 +467,7 @@ do
     g.hs.cells[cherry_cell].jelly, g.hs.cells[empty_jelly].jelly = 2, 2
     g.tiles[cherry_cell] = {kind=0, special=rules.NORMAL, element="cherry", hp=1}
     g.tiles[empty_jelly] = rules.tile(-1)
-    g.hs.goals = {{type="COLOR_BOX", max=3, current=1}}
+    g.hs.goals = {{type="BOX", max=3, current=1}}
     local draws={}
     R.g,R.intro,R.board_art=g,nil,{}
     for _,name in ipairs(elements.assets) do R.board_art[name]=name end
@@ -478,11 +478,9 @@ do
     local first_draws=draws
     draws={}
     local box=rules.hex_index(3,1)
-    for color=0,5 do
-        for health=1,6 do
-            g.hs.cells[box]={box=health,color=color}
-            elements.blockers(R,rules,0)
-        end
+    for health=1,6 do
+        g.hs.cells[box]={box=health}
+        elements.blockers(R,rules,0)
     end
     local box_draws=draws
     draws={}
@@ -503,12 +501,9 @@ do
     check(draws["carry-exit-arrow"]==3,"donut exit draws three staggered copies of its original arrow")
     check(draws["jelly-2-cherry"]==1 and draws["jelly-2"]==1,"jelly displays a soft cherry only when one is present")
     check(elements.covers_cherry(g,cherry_cell,g.tiles[cherry_cell]),"the covered cherry is not drawn twice")
-    check(goals[1].icon=="goal-color-box" and goals[1].remaining==2,"colored-box goal uses its source icon and rule count")
-    for color=0,5 do
-        for health=1,6 do
-            local name=("color-box-%d-%d"):format(color,health)
-            check(box_draws[name]==1,"colored box uses its own original frame: "..name)
-        end
+    check(goals[1].icon=="goal-box" and goals[1].remaining==2,"box goal uses its source icon and rule count")
+    for health=1,6 do
+        check(box_draws["box-"..health]==1,"box uses its own frame: box-"..health)
     end
 end
 

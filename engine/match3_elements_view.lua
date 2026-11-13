@@ -3,15 +3,12 @@
 local E = {}
 
 E.assets = {"stone-1", "stone-2", "stone-3", "delivery", "delivery-exit", "carry-exit-arrow"}
-for kind = 0, 5 do
-    for hp = 1, 6 do E.assets[#E.assets + 1] = ("color-box-%d-%d"):format(kind, hp) end
-end
 
 for i=0,5 do
     E.assets[#E.assets+1]="kind-"..i
     E.assets[#E.assets+1]="goal-chip-"..i
 end
-for _,name in ipairs{"box","carry","color-box","jelly","lock","piggy","target-generator","trash"} do
+for _,name in ipairs{"box","carry","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
 for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","cookie-1","cookie-2","cookie-3","cherry","box-1","box-2","box-3","box-4","box-5","box-6"} do
@@ -244,7 +241,7 @@ function E.blockers(R, rules, sx)
                 local c=g.hs.cells[i]
                 if (c.box or 0)>0 then
                     local health=math.min(6,c.box)
-                    name=c.color and ("color-box-%d-%d"):format(c.color,health) or "box-"..health
+                    name="box-"..health
                 elseif (c.jelly or 0)>0 then
                     local cherry = c.jelly <= 2 and g.tiles[i].element == "cherry"
                     name = "jelly-" .. c.jelly .. (cherry and "-cherry" or "")

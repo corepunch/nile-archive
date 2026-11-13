@@ -731,7 +731,7 @@ The donut exit uses the original `CarryExitForAnim` sprite. The maker base and
 both glass layers use the original shared-frame offsets. See the [source
 registration and portrait review](../../../docs/review/homescapes-arrow-maker/README.md).
 
-The Windows 9.2.601 x64 atlas supplies all 36 colored-box states and the
+The Windows 9.2.601 x64 atlas supplies the
 classic donut maker charge layers. See the [source registration and portrait
 review](../../../docs/review/homescapes-windows-art/README.md).
 

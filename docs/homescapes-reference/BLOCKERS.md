@@ -21,7 +21,7 @@ tests protect the identities and capability names relied on by the Swift code.
 | Serialized model | Source record/evidence | Implemented behavior |
 | --- | --- | --- |
 | `HONEY` | `ElementHoneySettings`: blocks match/fall/swap; adjacent-match and near-explosion damage | Jelly covering a cell, strengths 1–6; hides its gem from matching and releases a cherry when the last layer is removed |
-| `COLOR_BOX` | `ElementColorBoxSettings`: `HasColor`, `CanClearByNearColoredMatch`, explosion damage | Colors 0–5 and serialized strengths; matching-color neighbor or explosion removes a layer; final removal credits `COLOR_BOX` |
+| `COLOR_BOX` | `ElementColorBoxSettings`: `HasColor`, `CanClearByNearColoredMatch`, explosion damage | Not implemented: the game has only colorless boxes. An imported `COLOR_BOX` loads as a plain `BOX` (any adjacent match or hit removes a layer) and its goal counts as `BOX` |
 | `TRASH_STONE` | `ElementTrashStoneSettings`: fall/swap, explosion-only damage, `TRASHSTONE` target | Movable hazelnut strengths 1–3; ordinary neighboring matches do not damage it |
 | `STATUE` | `ElementStatueSettings`: target and explosion-only damage | Fixed strengths 1–3; final explosion credits `STATUE` |
 | `TARGET_GEN` | `TargetGenerator` prefab names `ModelToTargetApple`; settings name `TARGET_GENERATOR` | Apple platter, not toaster; shared 2×2 occupancy, one apple per resolution, disappears at zero |
@@ -82,7 +82,6 @@ tracked by [issue #98](https://github.com/corepunch/nile-archive/issues/98).
 | Maker idle/charging/release counter and statue strengths 1–3 | `Maker H/P` and `Statue N` labels | `--level base/st/st0255.xml`; original counters/strengths | [Makers/statues](screenshots/lab-makers-statues.jpg) |
 | Hazelnut strengths 1–3 and restrained plane | `Nut N` labels; existing plane and restraint sprites | `--level packs/contest/contest_005_06.xml`; `FISH` prefab identity | [Hazelnuts/plane](screenshots/lab-hazelnuts-plane.jpg) |
 | Cookie stack strengths 3→2→1 and generated cookies | `Stack N` labels, then original cookie sprites | `--level packs/contest/contest_026_01.xml` | [Stacks](screenshots/lab-cookie-stacks.jpg) |
-| Colored-box colors 0–5 × strengths 1–6 | `Box Ccolor:strength` labels; no tint-based replacement art | `--level packs/contest/contest_172_04.xml` | [Normal window](screenshots/lab-colored-boxes.jpg), [wide window](screenshots/lab-colored-boxes-wide.jpg) |
 | Birth points and refill policies | No added generator sprite; generated piece uses its existing art or diagnostic label | Original `BORN` and refill sections; `RefillTests` | Covered by blocker boards above |
 
 The default Mac window captures are 1520×1496 physical pixels; the zoomed window

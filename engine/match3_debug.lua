@@ -274,20 +274,7 @@ function D.bind(R, W)
                 local i=rules.hex_index(hp-2,1);g.hs.cells[i].tile=hp
                 g.tiles[i]=rules.tile(-1)
             end
-            if art == "colors" then
-                for i=0,rules.CELLS-1 do g.active[i]=false;g.hs.cells[i]={};g.tiles[i]=rules.tile(-1) end
-                local radius=rules.HEX_RADIUS
-                for color=0,5 do
-                    local q=color-3
-                    local first=math.floor((math.max(-radius,-radius-q)+math.min(radius,radius-q)-5)/2)
-                    for health=1,6 do
-                        local i=rules.hex_index(q,first+health-1)
-                        assert(i>=0,"colored box review footprint")
-                        g.active[i]=true;g.hs.cells[i]={box=health,color=color}
-                    end
-                end
-                g.hs.goals={{type="COLOR_BOX",max=36,current=0}}
-            elseif art == "jelly" then
+            if art == "jelly" then
                 for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
                 for hp=1,6 do
                     local i=rules.hex_index(3-hp,0)

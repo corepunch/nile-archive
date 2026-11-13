@@ -1,7 +1,7 @@
 # Homescapes board artwork
 
 The hex board uses original graphics for all six jelly strengths, the donut
-exit arrow and all 36 colored-box field states. The classic
+exit arrow. Colored boxes are not part of the game. The classic
 maker's five charge poses use original dough, glaze and topping layers.
 Original particle timing, indicator placement and exact group composition
 remain open in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
@@ -25,23 +25,13 @@ remain open in [issue #98](https://github.com/corepunch/nile-archive/issues/98).
   `reference/homescapes-analysis/historical/homescapes-1.1.0.900.apk` with
   SHA-256 `e796ea6b8da7d1645845f0217b2a731f9babe327665f9a4e011c68960d3c64c2`.
   The archive listing is [APK.Gold 1.1.0](https://apk.gold/download?file_id=397849/homescapes).
-- Android **6.3.2** supplies the colored-box goal icon as the original WebP.
-  The original member and pixel hashes are in
-  `engine/art/homescapes/color-box-goal-source.json`. Its four core Match3
-  pages lack identifiable colored-box board sprites.
 - Android **8.8.602** supplies independent portal evidence in the named
   `Match3_Portal.dds` pack. Byte ranges from the [8.8.602 XAPK](https://apkpure.net/homescapes-android/com.playrix.homescapes/download/8.8.602)
   covered five core Match3 pages, the pack directory and selected members.
   The shipped Match3 packs cover Bookshelf, GarbagePlate, Portal, Rug,
-  Settings, SwapWall, TapeMeasure and TargetGenerator. None supplies a named
-  colored-box art pack in that archive.
-- A **6.8.5** APK was inspected through HTTP byte ranges. Only selected members
-  were downloaded. Its four core Match3 pages, four named element pages and 24
-  plausible shared/UI/Match3/playable pages did not establish the colored-box
-  family. `Match3_ColorBox.pbi` references `Box_1_blue` and the `ColoredBox`
-  particle texture tree, but those files are absent from the ZIP directory.
-- The **9.2.601.0 Windows x64** package supplies the complete colored-box
-  field atlas and the classic maker's authored charge layers. Only selected
+  Settings, SwapWall, TapeMeasure and TargetGenerator.
+- The **9.2.601.0 Windows x64** package supplies the classic maker's
+  authored charge layers. Only selected
   files were fetched by byte range. The ignored originals are preserved under
   `reference/homescapes-analysis/windows-9.2.601/`.
   [Windows source inventory](homescapes-reference/board-pack-evidence.json) · [Microsoft Store](https://apps.microsoft.com/detail/9NQ9KLZNV9SH)
@@ -80,8 +70,7 @@ buttons remain centred independently of asymmetric source masks.
 | `SHUTTERS` | Original `blind-body` on covered cells plus `blind-top` at the anchor | Remaining height follows the existing rule group; no `BL` counter. Source square material is cropped/masked to each hex. |
 | Visible `ARTIFACT_GEN` | Original `generator-shell` plus the next original piece/element | Reading the queue for drawing does not advance its cursor or RNG. Random units show the shell without pretending a specific next color is known. |
 | `CARRY_GEN` | `donut-maker-0..5` over the group footprint | Empty, raw, heated, glazed, green sprinkles and added yellow sprinkles. Mesh registration comes from the source atlas. Placement over the heater follows the clip. |
-| Goal panel | Original goal icons, including `goal-color-box` | Uses original board sprites for nuts, statues, tiles and blinds. |
-| `COLOR_BOX` | `color-box-{color}-{health}` | All 36 named Windows sprites, original color 0–5 and health 1–6. |
+| Goal panel | Original goal icons | Uses original board sprites for nuts, statues, tiles and blinds. |
 | `HONEY` | `jelly-1..6`, with clear and soft cherry variants for strengths 1 and 2 | Original square, flowers and cherries matched to Playrix's six-state illustration. A mask derived from the authored opening clips the soft cherry. |
 | Portal pair | none (retired) | Original yellow entrance and blue output, extracted to `portal-entrance-source.png` / `portal-output-source.png`. The engine has no portals (not in Homescapes' story levels), so they are not registered in any atlas. |
 | `CARRY_EXIT` | `carry-exit-arrow` with three staggered copies | Original 9.2.601 `CarryExitForAnim`. Uses the original three-second period, one-second spacing and cosine fade, with hex-relative positioning. Reduced motion holds the arrows in place. |
@@ -108,10 +97,7 @@ sources only.
 [Playrix's portal illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/1084-portals/)
 
 The PLXE decoder verifies the original named rectangles in the 1.1.0.900,
-3.5.9 and 9.2.601 archives. The 6.8.5 Android client requests
-`Match3ColorBox{health}{color+1}` with six values in each dimension. The
-9.2.601 Windows atlas contains all 36 named, distinct RGBA images. The
-native client also confirms the maker's
+3.5.9 and 9.2.601 archives. The native client confirms the maker's
 animation groups and the output-capacity indicators. The official tutorial
 shows the five successive maker poses and the last dough leaving the tray.
 [Pack and arrow evidence](homescapes-reference/board-pack-evidence.json) · [Maker source evidence](homescapes-reference/GENERATOR_ART_SOURCES.md)
@@ -132,10 +118,8 @@ python3 tools/homescapes-reference/extract_shutter_texture.py --apk reference/ho
 python3 tools/homescapes-reference/extract_surface_swatches.py
 python3 tools/homescapes-reference/extract_portal_historical.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk
 python3 tools/homescapes-reference/extract_historical_jelly_components.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk
-python3 tools/homescapes-reference/extract_color_box_goal.py --check
 python3 tools/homescapes-reference/extract_carry_exit.py --check
 python3 tools/homescapes-reference/extract_maker_named.py --apk reference/homescapes-analysis/historical/homescapes-3.5.9.apk --check
-python3 tools/homescapes-reference/extract_windows_color_boxes.py --library /path/to/6.8.5/libgame.so --check
 python3 tools/homescapes-reference/extract_windows_maker_poses.py --library /path/to/6.8.5/libgame.so --check
 python3 tools/match3_atlas.py
 python3 tools/match3_atlas.py --check

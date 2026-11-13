@@ -51,11 +51,10 @@ over the thin jelly at strength one.
 - Lua lint passed with **0 warnings or errors** across 146 files (**2.91 s**).
 - Six final captures per game passed in **9.46 s** for Relic Rush and
   **6.20 s** for Christmas Market. Both game runs used one process each.
-- The eight jelly objects, two portal rings and original colored-box goal icon
+- The eight jelly objects, and two portal rings
   passed strict hex bounds. The maker is a four-cell object.
   [Registration report](registration.json)
 - The shared render test checks distinct portal sprites, both variants of
-  strength-two jelly and the original colored-box goal icon and counter.
+  strength-two jelly.
 
-Source paths, extraction steps and the outstanding colored-box field states
-are listed in the [art inventory](../../HOMESCAPES_ART.md).
+Source paths and extraction steps are listed in the [art inventory](../../HOMESCAPES_ART.md).
