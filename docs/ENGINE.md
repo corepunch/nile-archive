@@ -209,8 +209,8 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
   Release snaps the preview; games expose Confirm/Cancel and save only on
   `CITY_MOVED`. Keep calling update with an idle pointer while a modal blocks
   the city, so pending/held gestures are cleared. `city_find_spot` searches outwards from a hint.
-- **Drawing.** Ground, optional curved paths linking each building to its
-  nearest older neighbour, fog over closed zones (under the buildings, which
+- **Drawing.** Ground, optional paved roads on the tile grid (`road`, see
+  [BUILDINGS.md](BUILDINGS.md#roads)), fog over closed zones (under the buildings, which
   always stand on open land, so a tall sprite near the border is never
   veiled), buildings depth-sorted by their anchor's y (the newest one bounces
   in), income bubbles, a `draw_over` hook for the game's labels, then the

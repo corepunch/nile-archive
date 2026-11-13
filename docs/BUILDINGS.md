@@ -231,6 +231,41 @@ directly at a fixed 128 pixels per tile, so its pivots and base widths are
 projected analytically (`base_width = (w + h) × 64`). `tools/footprint.py`
 confirms them to within a few pixels on slab buildings.
 
+## Roads
+
+A city with a `road` atlas paves streets by itself, in the manner of The Settlers II.
+Nothing is saved and nothing is placed by hand.
+
+- **Every building has a flag.** It is the road tile against the middle of the base's
+  front, the +v side (down-left on screen), where the camera shows a building's
+  facade and door. The paving runs up to the base. A front that is blocked or off the
+  land falls back to +u, then -u, then -v.
+- **Flags are joined as a spanning tree.** The flag nearest to the laid roads joins
+  them next, by a shortest route over free tiles that keeps its heading while it can,
+  so the network does not depend on the order of building. Roads never run under a
+  base, on closed zones or off buildable land; a flag that cannot be reached starts
+  its own road.
+- **Road tiles line up with the bases.** With an odd `clearance` the bases sit half a
+  tile off the tile centres, and the road grid moves with them: the one tile of
+  clearance between two neighbours is exactly one street.
+- **The plan follows the buildings.** It is rebuilt when a building is added, moved
+  or picked up, or a zone opens. The building in hand has no road until it lands.
+
+The atlas is 4 × 4 cells. A cell's index is the mask of the neighbours its tile
+joins: bit 0 +u, bit 1 +v, bit 2 -u, bit 3 -v. Cell 0 is unused. A cell is 1.6 tile
+sides wide and its centre is the tile's centre.
+
+```sh
+python3 tools/roads.py christmas-market    # writes games/christmas-market/data/roads.png
+```
+
+`tools/roads.py` models the fifteen pieces (setts on a 1/10-tile lattice so pieces
+meet without a seam, kerb stones on every open side) and renders each with Scener
+through the city camera. `games/<game>/art/roads.json` overrides the palette:
+`setts` (a list of stone colours), `kerb`, `grout`, `shoulder` (a soft bank outside
+the kerb, snow in Christmas Market; omit for none), `ambient`, `sun` and `ppt`. Then
+load it in the game: `c.road = texture.load("roads.png")`.
+
 ## Ground shadows
 
 `building_def.shadow_path` loads a low-resolution ground PNG independently of the

@@ -6,8 +6,8 @@
  * and, optionally, their own region map (`zone_at`, `zone_touches`); they
  * decide what the resources mean. The city handles the camera, placement
  * (instant or with a confirmable ghost), moving buildings, depth-sorted
- * drawing, soft fog over closed zones (under the buildings), decorative
- * paths, income and saving. */
+ * drawing, soft fog over closed zones (under the buildings), paved roads
+ * on the tile grid, income and saving. */
 #include "render.h"
 
 #include <stdio.h>
@@ -433,31 +433,190 @@ static void draw_building_shadow(const city *c, building b, float alpha)
         draw_image(d->shadow, camera_rect_to_screen(c->cam, city_shadow_rect(c, b)), color_alpha(WHITE, alpha));
 }
 
-/* Gently curved paths from every building to its nearest older neighbour. */
-static void draw_paths(const city *c)
+/* ------------------------------------------------------------------- roads */
+
+/* Roads are streets on the tile grid, as in The Settlers II. Every building has
+ * a flag: the road tile against the middle of its front (+v, the side its door
+ * faces), paved up to the base. Each flag then joins the roads of the buildings
+ * placed before it by a shortest route over free tiles, running straight while
+ * it can. Road tiles line up with the bases, not with the footprints: an odd
+ * clearance leaves bases half a tile off the grid, and the roads move with
+ * them, so a street exactly fills the tile between two neighbours. The plan
+ * depends only on the buildings and the open land, and is kept until they
+ * change. A tile is drawn by the neighbours it joins: the atlas `road` is
+ * 4 x 4 cells, cell = mask (bit 0 +u, 1 +v, 2 -u, 3 -v); a cell spans
+ * ROAD_CELL_TILES tile sides and is centred on its tile (tools/roads.py). */
+enum { ROAD_GRID = 192 };
+#define ROAD_CELL_TILES 1.6f
+
+static struct {
+    unsigned long long key;
+    int u0, v0, nu, nv;                       /* the road tiles that can lie in the world */
+    vec2 off;                                 /* a road tile's centre, off the city's tile centres */
+    unsigned char mask[ROAD_GRID * ROAD_GRID];
+    unsigned char state[ROAD_GRID * ROAD_GRID];
+    unsigned short dist[ROAD_GRID * ROAD_GRID];
+    int queue[ROAD_GRID * ROAD_GRID];
+    int heading[ROAD_GRID * ROAD_GRID];       /* at a flag: the way out of its building */
+} roads;
+enum { ROAD_BLOCKED, ROAD_FREE, ROAD_FLAG, ROAD_LAID };   /* a flag waits to be joined */
+static const int road_du[4] = {1, 0, -1, 0}, road_dv[4] = {0, 1, 0, -1};
+
+static unsigned long long road_hash(unsigned long long h, const void *data, size_t n)
 {
-    enum { STEPS = 24 };
-    color edge = color_alpha(color_shade(c->path, .8f), .85f);
-    for (int i = 1; i < c->count; i++) {
-        if (i == c->moving && c->placing >= 0) continue;
-        int near = 0;
-        float best = 1e30f;
-        for (int j = 0; j < i; j++) {
-            float d = vec2_dist(c->items[i].pos, c->items[j].pos);
-            if (d < best) best = d, near = j;
+    const unsigned char *p = data;
+    for (size_t i = 0; i < n; i++) h = (h ^ p[i]) * 1099511628211ull;
+    return h;
+}
+
+static bool road_skips(const city *c, int i) { return c->placing >= 0 && i == c->moving; }
+
+static int road_at(int u, int v)
+{
+    u -= roads.u0, v -= roads.v0;
+    return u >= 0 && v >= 0 && u < roads.nu && v < roads.nv ? v * roads.nu + u : -1;
+}
+
+static void road_join(int a, int dir)
+{
+    int b = a + road_du[dir] + road_dv[dir] * roads.nu;
+    roads.mask[a] |= (unsigned char)(1 << dir);
+    roads.mask[b] |= (unsigned char)(1 << (dir ^ 2));
+}
+
+/* Join the waiting flag nearest to the laid roads, as a spanning tree grows:
+ * the result does not depend on the order the buildings were placed in. The
+ * route keeps its heading while that is still a shortest way. False when no
+ * waiting flag can be reached. */
+static bool road_grow(const int *heading)
+{
+    int n = roads.nu * roads.nv, head = 0, tail = 0, flag = -1;
+    for (int i = 0; i < n; i++) {
+        roads.dist[i] = 0xffff;
+        if (roads.state[i] == ROAD_LAID) roads.dist[i] = 0, roads.queue[tail++] = i;
+    }
+    while (head < tail && flag < 0) {
+        int a = roads.queue[head++], u = a % roads.nu + roads.u0, v = a / roads.nu + roads.v0;
+        for (int d = 0; d < 4 && flag < 0; d++) {
+            int b = road_at(u + road_du[d], v + road_dv[d]);
+            if (b < 0 || roads.state[b] == ROAD_BLOCKED || roads.dist[b] != 0xffff) continue;
+            roads.dist[b] = (unsigned short)(roads.dist[a] + 1);
+            roads.queue[tail++] = b;
+            if (roads.state[b] == ROAD_FLAG) flag = b;
         }
-        vec2 a = c->items[i].pos, b = c->items[near].pos;
-        if (best < 1) continue;
-        vec2 dir = vec2_scale(vec2_sub(b, a), 1 / best), n = v2(-dir.y, dir.x);
-        vec2 ctrl = vec2_add(vec2_lerp(a, b, .5f), vec2_scale(n, minf(70, best * .16f) * (i % 2 ? 1 : -1)));
-        vec2 pts[STEPS + 1];
-        for (int k = 0; k <= STEPS; k++) {
-            float t = (float)k / STEPS, u = 1 - t;
-            vec2 w = vec2_add(vec2_add(vec2_scale(a, u * u), vec2_scale(ctrl, 2 * u * t)), vec2_scale(b, t * t));
-            pts[k] = camera_to_screen(c->cam, w);
+    }
+    if (flag < 0) return false;
+    for (int a = flag, facing = heading[flag]; roads.dist[a] > 0;) {
+        int u = a % roads.nu + roads.u0, v = a / roads.nu + roads.v0, next = -1, dir = facing;
+        for (int k = 0; k < 4 && next < 0; k++) {
+            int d = (facing + (k == 1 ? 1 : k == 2 ? 3 : k == 3 ? 2 : 0)) & 3;   /* ahead, the sides, back */
+            int b = road_at(u + road_du[d], v + road_dv[d]);
+            if (b >= 0 && roads.dist[b] == roads.dist[a] - 1) next = b, dir = d;
         }
-        draw_polyline(pts, STEPS + 1, 12 * c->cam.zoom, edge);
-        draw_polyline(pts, STEPS + 1, 8 * c->cam.zoom, c->path);
+        if (next < 0) break;
+        road_join(a, dir);
+        roads.state[a] = ROAD_LAID;
+        a = next, facing = dir;
+    }
+    roads.state[flag] = ROAD_LAID;
+    return true;
+}
+
+static vec2 road_center(const city *c, int i)
+{
+    return from_tile(c, vec2_add(v2(i % roads.nu + roads.u0, i / roads.nu + roads.v0), roads.off));
+}
+
+/* What a road must keep off: the base, or the one tile of a building without a size. */
+static size2 road_base(const city *c, int type)
+{
+    size2 s = c->defs[type].size;
+    return s.w > 0 && s.h > 0 ? s : sz2(1, 1);
+}
+
+static void road_plan(const city *c)
+{
+    unsigned long long key = 1469598103934665603ull;
+    float setup[] = {tile_side(c), c->clearance.w, c->clearance.h, c->cam.world.w, c->cam.world.h};
+    key = road_hash(key, setup, sizeof setup);
+    key = road_hash(key, &c->open, sizeof c->open);
+    key = road_hash(key, &c, sizeof c);
+    for (int i = 0; i < c->count; i++) {
+        if (road_skips(c, i)) continue;
+        key = road_hash(key, &c->items[i].pos, sizeof c->items[i].pos);
+        key = road_hash(key, &c->items[i].type, sizeof c->items[i].type);
+        key = road_hash(key, &c->defs[c->items[i].type].size, sizeof(size2));
+    }
+    if (key == roads.key) return;
+    roads.key = key;
+
+    /* the tile range is the world's corners seen in tile coordinates */
+    vec2 lo = to_tile(c, v2(0, 0)), hi = lo;
+    for (int k = 1; k < 4; k++) {
+        vec2 t = to_tile(c, v2(k & 1 ? c->cam.world.w : 0, k & 2 ? c->cam.world.h : 0));
+        lo = v2(minf(lo.x, t.x), minf(lo.y, t.y)), hi = v2(maxf(hi.x, t.x), maxf(hi.y, t.y));
+    }
+    roads.off = v2((int)c->clearance.w & 1 ? .5f : 0, (int)c->clearance.h & 1 ? .5f : 0);
+    roads.u0 = (int)floorf(lo.x), roads.v0 = (int)floorf(lo.y);
+    roads.nu = (int)ceilf(hi.x) - roads.u0 + 1, roads.nv = (int)ceilf(hi.y) - roads.v0 + 1;
+    if (roads.nu > ROAD_GRID || roads.nv > ROAD_GRID) roads.nu = roads.nv = 0;
+    int n = roads.nu * roads.nv;
+    memset(roads.mask, 0, (size_t)n);
+    for (int i = 0; i < n; i++)
+        roads.state[i] = open_land(c, road_center(c, i)) ? ROAD_FREE : ROAD_BLOCKED;
+    /* a road never runs under a base; the clearance around it is street */
+    for (int i = 0; i < c->count; i++) {
+        if (road_skips(c, i)) continue;
+        size2 s = road_base(c, c->items[i].type);
+        vec2 t = vec2_sub(to_tile(c, c->items[i].pos), roads.off);
+        for (int v = (int)floorf(t.y - s.h * .5f); v <= (int)ceilf(t.y + s.h * .5f); v++)
+            for (int u = (int)floorf(t.x - s.w * .5f); u <= (int)ceilf(t.x + s.w * .5f); u++) {
+                int a = road_at(u, v);
+                if (a >= 0 && fabsf(u - t.x) < s.w * .5f + .49f && fabsf(v - t.y) < s.h * .5f + .49f) roads.state[a] = ROAD_BLOCKED;
+            }
+    }
+    int waiting = 0;
+    for (int i = 0; i < c->count; i++) {
+        if (road_skips(c, i)) continue;
+        size2 s = road_base(c, c->items[i].type);
+        vec2 t = vec2_sub(to_tile(c, c->items[i].pos), roads.off);
+        /* the front first; a blocked front falls back to the other sides */
+        static const int sides[4] = {1, 0, 2, 3};
+        for (int k = 0; k < 4; k++) {
+            int d = sides[k], du = road_du[d], dv = road_dv[d];
+            float along = du ? t.x : t.y, across = du ? t.y : t.x, base = (du ? s.w : s.h) * .5f;
+            int lane = (int)roundf(across - .01f);   /* an even side's middle is a tile edge */
+            int out = du + dv > 0 ? (int)ceilf(along + base + .49f) : (int)floorf(along - base - .49f);
+            int flag = du ? road_at(out, lane) : road_at(lane, out);
+            if (flag < 0 || roads.state[flag] == ROAD_BLOCKED) continue;
+            roads.mask[flag] |= (unsigned char)(1 << (d ^ 2));   /* paved up to the door */
+            if (roads.state[flag] == ROAD_FREE) roads.state[flag] = ROAD_FLAG, roads.heading[flag] = d, waiting++;
+            break;
+        }
+    }
+    while (waiting > 0) {
+        if (road_grow(roads.heading)) { waiting--; continue; }
+        /* nothing laid yet, or the rest is cut off: the next flag starts its own road */
+        int seed = 0;
+        while (seed < n && roads.state[seed] != ROAD_FLAG) seed++;
+        if (seed == n) break;
+        roads.state[seed] = ROAD_LAID;
+        waiting--;
+    }
+}
+
+static void draw_roads(const city *c)
+{
+    road_plan(c);
+    size2 cell = sz2(c->road.size.w / 4, c->road.size.h / 4);
+    float world = ROAD_CELL_TILES * tile_side(c);
+    size2 size = sz2(world, world * cell.h / cell.w);
+    for (int i = 0; i < roads.nu * roads.nv; i++) {
+        int m = roads.mask[i];
+        if (!m) continue;
+        rect dst = camera_rect_to_screen(c->cam, rect_centered(road_center(c, i), size));
+        if (!rect_overlaps(dst, c->cam.view)) continue;
+        draw_image_part(c->road, rect_make(v2((m & 3) * cell.w, (m >> 2) * cell.h), cell), dst, WHITE);
     }
 }
 
@@ -480,7 +639,7 @@ static struct {
 } fog;
 
 #ifdef ENGINE_TEST
-void city_restart(void) { fog.c = NULL; }   /* a new city may reuse the old one's address */
+void city_restart(void) { fog.c = NULL; roads.key = 0; }   /* a new city may reuse the old one's address */
 #endif
 
 /* One box-blur pass along rows (dx = 1) or columns (dx = nx), edges clamped. */
@@ -698,7 +857,7 @@ void city_draw(const city *c, input in, double now)
     camera cam = c->cam;
     gfx_clip(cam.view);
     camera_draw_texture(cam, c->ground);
-    if (c->path.a) draw_paths(c);
+    if (c->road.tex) draw_roads(c);
     /* A separate ground pass prevents a tall neighbour's shadow from being
      * painted over a building. Omit the old position of the building in hand. */
     for (int i = 0; i < c->count; i++)
