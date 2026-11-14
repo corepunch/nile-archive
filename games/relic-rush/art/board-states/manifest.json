@@ -1051,14 +1051,17 @@
     "retired": "Crate, tunnel, hidden-object and growth cells stay in the master but are not registered: the engine no longer has those mechanics (not in Homescapes story levels)."
   },
   "story_mosaics": {
-    "status": "prototype; placeholder art",
-    "generator": "../../tools/relic_reveal_art.py",
+    "generator": "built-in ImageGen",
+    "registration": "tools/prepare_story_mosaics.py",
     "pictures": {
       "reveal-08": {
+        "source": "art/story-mosaics/broken-relay.png",
+        "prompt": "art/story-mosaics/broken-relay.prompt.txt",
         "runtime": "data/reveal-08.jpg",
         "level": 8,
-        "states": ["covered", "uncovered", "won"],
-        "transform": "Laid once across the board bounds, cropped to cover; masked by the engine's mosaic patch."
+        "states": ["covered", "uncovered", "won", "replay"],
+        "size": [720, 800],
+        "transform": "Center crop to 9:10, resize with Lanczos and encode as JPEG. At runtime, center crop to the board bounds and mask through the restored mosaic cells."
       }
     }
   },
