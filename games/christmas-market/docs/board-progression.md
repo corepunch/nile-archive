@@ -39,11 +39,11 @@ objectives move the emphasis within each family.
 | 21 | Carolers Court | Tapered bowl | Light the way for the carolers. (lanternlight) | lanternlight, bows | 34 |
 | 22 | Many Hands | Tapered bowl | Free tinsel along the passage. | blockers, bows | 38 |
 | 23 | Painted Horses | Twin lanes | Untangle the tinsel and thaw the ice. | blockers, bows | 39 |
-| 24 | Frozen Fountain | Tapered bowl | Thaw the ice around the fountain. (lanternlight) | lanternlight, blockers | 40 |
+| 24 | Frozen Fountain | Tapered bowl | Spread lanternlight across the frozen fountain. | lanternlight, blockers | 40 |
 | 25 | Snow on the Line | Tapered bowl | Clear the powder snow before it spreads. (powder snow) | powder snow, blockers | 42 |
 | 26 | Lantern Ice | Tapered bowl | Thaw the ice around the lanterns. | blockers, bows | 44 |
 | 27 | Every Light in Bellmere | Two chambers | Clear the locks across the court. (stone) | blockers, bows | 38 |
-| 28 | The Last Train | Tapered bowl | Light the square before the finale. (lanternlight) | lanternlight | 44 |
+| 28 | The Last Train | Tapered bowl | Spread lanternlight along the tracks. | lanternlight | 44 |
 | 29 | The Big Fir | Twin lanes | Untangle and thaw the court. | blockers, bows | 47 |
 | 30 | Light the Christmas Tree | Tapered bowl | Bring the parcel down to the tree. (delivery) | delivery, blockers | 48 |
 
@@ -60,8 +60,8 @@ own goals only. As in Homescapes, each level names
 one to three (at most two up to level 12) and score is never one: points only
 rank a clear. "Blockers" counts tinsel, ice and stone together. Every exposed top refills and blocked
 upstream pockets can spawn, so a narrow court does not guarantee a blocked
-supply. Story scenes and building milestones
-are unchanged. Seeded bot wins are not human balance; playtesting should inspect
+supply. On first clears of 24, 25 and 28, the floor reveals a [story painting](asset-catalogue.md#story-floors)
+and the associated scene plays over the board before the reward card. Seeded bot wins are not human balance; playtesting should inspect
 openings, late cleanup and delivery paths.
 
 ## Starting coverings

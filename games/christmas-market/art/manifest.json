@@ -12,7 +12,10 @@
     "art/building-catalogue/painted-v1/wonder-prompt.txt",
     "art/navigation/prompt.txt",
     "art/board-theme/prompt.txt",
-    "art/board-theme/accent-prompt.txt"
+    "art/board-theme/accent-prompt.txt",
+    "art/story-floors/wish-ribbon.prompt.txt",
+    "art/story-floors/telegram.prompt.txt",
+    "art/story-floors/last-train.prompt.txt"
   ],
   "states": [
     "normal",
@@ -167,6 +170,9 @@
     "data/navigation/play-selected.png": "f6a34447cb1c7925d45c5d9f7178c1baf002b5e17bb06f4f0e7c9f2d4aa5c3f8",
     "data/roads-sandstone.png": "a4da1560f4c0f9f9bce791a4a15399ed99482226558531327b455fec51ed8381",
     "data/roads.png": "a9341c19a5e03f829a84601615ccd7f9d3c48f97f0e07372d10bbed435b41373",
+    "data/story-floors/last-train.jpg": "6ab848dc7e192cfbd41f6988d082e7835a1b2158704d09f40385b239e9e00926",
+    "data/story-floors/telegram.jpg": "a46376e609ce500b723e16256f94cadb9783abaf4972f8d05437f462b822be7c",
+    "data/story-floors/wish-ribbon.jpg": "c5073a610b2ba986a4bdf24358f37a3e4d7a1d9f539b6d10213dc6a47e4e565c",
     "data/tile-sets/festive/0.png": "28cd171e2f2f9483e6e32db868ec9128fe28b50c5cbe2a10a718d7daea4f3827",
     "data/tile-sets/festive/1.png": "19359f37f0f01043962a366734a046300d6193075952e1e00b7adabae568ddc4",
     "data/tile-sets/festive/2.png": "6a28dbbd5120a604f4ad8d2744d95570e5d70a80a05fe0eb9511df234619cc55",

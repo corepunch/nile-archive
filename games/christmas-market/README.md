@@ -29,6 +29,11 @@ with tinsel, ice, carved stones, lanternlight and powder snow introduced and rev
 See the [board progression](docs/board-progression.md) for each wish and the
 limits of the current difficulty tuning.
 
+On the first clears of Frozen Fountain, Snow on the Line and The Last Train,
+the floor reveals a painting that leads into the next scene. Lanternlight
+brings the fountain and railway into view, while clearing powder snow uncovers
+Pip's telegram. See the [story paintings and board captures](docs/asset-catalogue.md#story-floors).
+
 ## Shared match engine and atlas
 
 The campaign uses only elements found in Homescapes' story levels: stone,
