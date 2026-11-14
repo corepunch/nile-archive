@@ -106,7 +106,9 @@ end
 -- The same board controls use the authored images from either skin.
 E.TOOL_SIZE = 76
 E.GOAL_W = 70   -- every goal capsule; fits a four-digit score
--- A narrow screen closes the gap towards GOAL_GAP_MIN to fit beside Pause.
+-- Each goal's icon hangs past its capsule's left end and swells when it pulses,
+-- so the gap keeps it off the capsule before it. A narrow screen with four
+-- goals closes it towards GOAL_GAP_MIN rather than run under Pause.
 local GOAL_GAP, GOAL_GAP_MIN = 16, 6
 
 function E.tool_state(charges, selected, inside, down, started_inside, hover, idle)

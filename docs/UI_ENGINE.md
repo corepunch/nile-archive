@@ -245,12 +245,9 @@ holding a figure, with an icon larger than the panel overhanging its left end.
 It returns true when tapped. The look is the skin's `resource` control, with
 `normal` and `pressed` layers (`radius_scale = 1` makes a pill), `text`, `em`,
 `icon_ratio` (default 1.4 of the panel's height) and `icon_overhang` (default
-.12, with a negative value placing the icon inside the left edge).
-`square_left = true` keeps the left end flat on the resource panel's shadow,
-fill and border. `icon` is a texture, a function painting into a logical box,
-or nil. The `role` option selects a control variant such as the larger wallet
-or the flat-left match-3 goal.
-Other options include
+.12). `icon` is a texture, a function painting into a logical box, or nil.
+`opts`: `role` for one of the control's `variants` (a larger wallet or a
+match-3 goal with more icon overhang),
 `interactive = false` for a read-only panel that never takes input, `hit` (the
 touch area, default the panel), `hit_offset`, `icon_scale` (a landing bounce), `icon_alpha`, `value_icon` (a
 texture replacing the figure, such as a met goal's seal) and `reserve` (width

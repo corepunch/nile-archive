@@ -63,7 +63,7 @@ return ui.skin{
             }},
             pressed = {offset = {0, 1}},
             variants = {
-                goal = {square_left = true, icon_ratio = 1.1, icon_overhang = -.1},
+                goal = {icon_overhang = .24},
                 wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
             },
         },

@@ -96,10 +96,8 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 Live green wells use the engine's flat-top hex geometry and a light-to-dark
 vertical gradient. The atlas cell mask remains the registration reference for
-authored art. Goal icons sit inside the flat left ends of their capsules.
-Collection flights land at each icon's centre. The current shape is shown
-in the [objective capsule review](../../../docs/review/match3-objective-capsules.jpg).
-The comparison below shows the earlier cell and goal alignment pass.
+authored art. Goal icons sit 3.6 logical units farther left over their
+capsules, with collection flights landing at the same position.
 
 Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot art-specials"`.
 

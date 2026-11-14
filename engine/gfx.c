@@ -135,7 +135,7 @@ static int arc_segments(float radius)
 }
 
 /* Perimeter of a rounded rect, clockwise from the top-left corner. */
-static int round_rect_path(rect r, float radius, bool square_left, vec2 *out)
+static int round_rect_path(rect r, float radius, vec2 *out)
 {
     radius = clampf(radius, 0, minf(r.size.w, r.size.h) * .5f);
     if (radius <= 0) {
@@ -149,10 +149,6 @@ static int round_rect_path(rect r, float radius, bool square_left, vec2 *out)
     rect inner = rect_inflate(r, -radius);
     const vec2 corners[4] = {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
     for (int c = 0; c < 4; c++) {
-        if (square_left && (c == 0 || c == 3)) {
-            out[n++] = rect_point(r, corners[c]);
-            continue;
-        }
         vec2 center = rect_point(inner, corners[c]);
         float a0 = ENGINE_PI * (1 + c * .5f);
         for (int i = 0; i <= seg; i++) {
@@ -239,47 +235,27 @@ void draw_rect_grad(rect r, color top, color bottom)
     flush();
 }
 
-void draw_round_rect_grad_corners(rect r, float radius, color top, color bottom, bool square_left)
-{
-    vec2 p[MAX_PATH];
-    int n = round_rect_path(r, radius, square_left, p);
-    fill_path(p, n, (grad){top, bottom, r.pos.y, rect_max(r).y}, feather());
-}
-
 void draw_round_rect_grad(rect r, float radius, color top, color bottom)
 {
-    draw_round_rect_grad_corners(r, radius, top, bottom, false);
-}
-
-void draw_round_rect_corners(rect r, float radius, color c, bool square_left)
-{
-    draw_round_rect_grad_corners(r, radius, c, c, square_left);
+    vec2 p[MAX_PATH];
+    int n = round_rect_path(r, radius, p);
+    fill_path(p, n, (grad){top, bottom, r.pos.y, rect_max(r).y}, feather());
 }
 
 void draw_round_rect(rect r, float radius, color c) { draw_round_rect_grad(r, radius, c, c); }
 
-void draw_round_rect_line_corners(rect r, float radius, float thickness, color c, bool square_left)
-{
-    vec2 p[MAX_PATH];
-    stroke_path(p, round_rect_path(r, radius, square_left, p), thickness, c);
-}
-
 void draw_round_rect_line(rect r, float radius, float thickness, color c)
 {
-    draw_round_rect_line_corners(r, radius, thickness, c, false);
-}
-
-void draw_shadow_corners(rect r, float radius, float blur, color c, bool square_left)
-{
     vec2 p[MAX_PATH];
-    rect inner = rect_inflate(r, -blur * .5f);
-    int n = round_rect_path(inner, maxf(0, radius - blur * .5f), square_left, p);
-    fill_path(p, n, (grad){c, c, 0, 0}, blur);
+    stroke_path(p, round_rect_path(r, radius, p), thickness, c);
 }
 
 void draw_shadow(rect r, float radius, float blur, color c)
 {
-    draw_shadow_corners(r, radius, blur, c, false);
+    vec2 p[MAX_PATH];
+    rect inner = rect_inflate(r, -blur * .5f);
+    int n = round_rect_path(inner, maxf(0, radius - blur * .5f), p);
+    fill_path(p, n, (grad){c, c, 0, 0}, blur);
 }
 
 void draw_circle(vec2 center, float radius, color c)
