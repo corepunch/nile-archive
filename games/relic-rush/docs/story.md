@@ -347,6 +347,8 @@ Choice prompt: Who should answer the signal?
 
 ## Small lines
 
+**Story mosaic, board 8 (prototype).** The floor the crew restores on board 8 is the keepers' own picture of the relay: the camp lamp on its bracket, the cable torn in the middle, the tide room and a keeper with a hand on the shutter. It supports the lines that follow the win ("That's the broken end", "The room has a hand shutter") and adds no new fact. Once half of it shows, the board says: *Elena: This floor is a drawing of the relay. Uncover the rest!* The line lives in `lua/campaign.lua` and has not had a cold read.
+
 The region greetings, building tap lines, recap and finale describe the relay and the quay. Mechanics lessons remain on the boards.
 
 ## Checks and implementation notes
@@ -355,4 +357,5 @@ An independent cold read identified the need to introduce Tomas, show the floode
 
 ## Changelog
 
+- 2026-11-14: Prototype story mosaic on board 8: the restored floor uncovers a picture of the relay, with one mid-board line from Elena. Placeholder art; the line is provisional.
 - 2026-11-12: Replaced the prior campaign plan with A Light Below; mapped all 30 existing boards and ten milestones, wrote Chapter 1 and provisional continuity bridges. Added the playable quest tracker, confirmed upgrade points and a choice at the tide-room reveal.

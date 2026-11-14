@@ -77,6 +77,16 @@ reserved before the scalar `chains` and `ice` counts are placed by terrain rank.
 `carpet` seeds Homescapes' carpet: a match group touching a carpeted cell, or a
 move begun on one, carpets every cell it hits (`g.carpet`). The `carpet` goal
 counts the active cells still uncovered (`g.carpet_total - g.carpeted`).
+A carpet level may add `reveal = {picture = "art-name", bark = "Speaker: line"}`.
+The picture (a texture the game puts in `R.board_art`) then replaces the tiled
+material: it is laid once across the whole board, cropped to cover it, and the
+carpet patch uncovers it. `bark` is shown as a notice once half the floor is
+restored. Only a first clear reveals; a replay restores the plain material. On
+the win the game fades pieces and blockers by `elements.reveal_cover(R, rules)`
+and the first-clear beat waits for `elements.reveal_holding(R, rules)`, so the
+finished picture is seen before anyone speaks. `--level N --reveal F` restores
+the share `F` of the floor for review; `--reveal 1` wins the board as a first
+clear and plays its beat.
 `oil` is Homescapes' oil: one layer under a piece, cleared by a match
 on its cell or a blast (`g.oil`). After a move that clears none, it spreads to
 one random neighbouring cell. The `oil` goal counts the oil left

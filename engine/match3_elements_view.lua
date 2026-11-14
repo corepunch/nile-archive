@@ -76,6 +76,51 @@ local function tile(t, area, side, origin, tint)
         end
     end
 end
+-- A level's `reveal = {picture = art name, bark = line}` lays one picture
+-- under the whole board in place of the tiled material, so restoring the floor
+-- uncovers it. Only a first clear reveals: a replay restores the plain floor.
+-- On the win the pieces clear away (E.reveal_cover) and the finished picture
+-- holds for a moment before the first-clear beat (E.reveal_holding).
+local REVEAL_FADE, REVEAL_HOLD = .6, 1.2
+local function reveal(R, rules)
+    local g = R.g
+    if not g then return end
+    if R.reveal_game ~= g then
+        local spec = rules.level_of(g).reveal
+        R.reveal_game, R.reveal_won, R.reveal_barked = g, nil, false
+        R.reveal_spec = spec and (not R.prog or g.level >= R.prog.level) and spec or nil
+    end
+    local spec = R.reveal_spec
+    if not spec then return end
+    if g.won and not R.reveal_won then R.reveal_won = R.now end
+    if spec.bark and not R.reveal_barked and not g.won and g.carpeted * 2 >= g.carpet_total then
+        R.reveal_barked = true
+        R.notice(spec.bark)
+    end
+    return spec
+end
+-- Piece and blocker opacity, 1 until the win and 0 once the picture is clear.
+function E.reveal_cover(R, rules)
+    if not reveal(R, rules) or not R.reveal_won then return 1 end
+    return R.reduced_motion and 0 or 1 - ease.out_cubic(math.min(1, (R.now - R.reveal_won) / REVEAL_FADE))
+end
+function E.reveal_holding(R, rules)
+    return reveal(R, rules) ~= nil and R.reveal_won ~= nil and R.now - R.reveal_won < REVEAL_FADE + REVEAL_HOLD
+end
+local function draw_picture(R, rules, t, sx, tint)
+    local minx, miny, maxx, maxy = math.huge, math.huge, -math.huge, -math.huge
+    for i = 0, rules.CELLS - 1 do
+        if rules.game_cell_active(R.g, i) then
+            local p = R.cell_pos(i)
+            minx, miny, maxx, maxy = math.min(minx, p.x), math.min(miny, p.y), math.max(maxx, p.x), math.max(maxy, p.y)
+        end
+    end
+    local rx, ry = R.HEX_R, R.HEX_R * math.sqrt(3) / 2
+    local box = rect(minx - rx + sx, miny - ry, maxx - minx + 2 * rx, maxy - miny + 2 * ry)
+    local size = texture.size(t)
+    local s = math.min(size.w / box.w, size.h / box.h)   -- cover the board, cropping the longer side
+    gfx.image_part(t, rect((size.w - box.w * s) / 2, (size.h - box.h * s) / 2, box.w * s, box.h * s), box, tint)
+end
 local function draw_carpet(R, rules, sx, alpha)
     local g, cells = R.g, {}
     for i = 0, rules.CELLS - 1 do
@@ -94,7 +139,9 @@ local function draw_carpet(R, rules, sx, alpha)
         gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
     end
     gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0)
-    tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha))
+    local story = reveal(R, rules)
+    if story then draw_picture(R, rules, R.board_art[story.picture], sx, color(255, 255, 255, 255 * alpha))
+    else tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha)) end
     gfx.sdf_unmask()
 end
 

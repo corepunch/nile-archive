@@ -173,5 +173,28 @@ do
     check(g.won, 'clearing the oil wins an oil-only level')
 end
 
+-- A story mosaic reveals its picture on a first clear only, speaks once at
+-- half and holds the finished picture before the first-clear beat.
+do
+    local V = require('match3.elements_view')
+    local C = rules{name='reveal',moves=20,score=0,relics=0,chains=0,ice=0,carpet={cell(0,0)},goals={'carpet'},
+        reveal={picture='p',bark='half'}}
+    local said = {}
+    local view = {now=0, prog={level=1}, notice=function(s) said[#said+1]=s end}
+    view.g = C.game_start(0,7); view.g.won = true
+    check(V.reveal_cover(view,C)==1 and not V.reveal_holding(view,C), 'a replay keeps its pieces and does not hold')
+    view.prog.level, view.g = 0, C.game_start(0,7)
+    check(V.reveal_cover(view,C)==1 and #said==0, 'pieces stay and nobody speaks before half')
+    view.g.carpeted = math.ceil(view.g.carpet_total/2)
+    V.reveal_cover(view,C); V.reveal_cover(view,C)
+    check(#said==1 and said[1]=='half', 'the bark is said once at half')
+    view.g.won = true
+    check(V.reveal_holding(view,C) and V.reveal_cover(view,C)==1, 'the win starts the hold with pieces still shown')
+    view.now = 1
+    check(V.reveal_cover(view,C)==0 and V.reveal_holding(view,C), 'pieces are gone while the picture holds')
+    view.now = 5
+    check(not V.reveal_holding(view,C), 'the hold ends and lets the beat play')
+end
+
 print('match3 elements: stones, deliveries, carpet and oil passed')
 return 0

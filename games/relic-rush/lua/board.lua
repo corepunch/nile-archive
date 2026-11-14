@@ -131,10 +131,13 @@ end
 
 local function draw_relics(sx)
     local g = R.g
+    local cover = elements.reveal_cover(R, rules)   -- a won story mosaic clears its pieces away
+    if cover <= 0 then return end
     gfx.clip(R.BOARD_CLIP)
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
+            alpha = alpha * cover
             if not elements.covers_cherry(g, i, t) then
                 if clip then gfx.clip(clip) end
                 draw_relic(t, at, scale * elements.piece_scale(g, i) * elements.selection_scale(R,i), alpha, aspect, true)
@@ -152,6 +155,7 @@ local function draw_blockers(sx)
             local at = cell_pos(i) + vec2(sx, 0)
             local visible, scale, alpha = true, 1, 1
             if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
+            alpha = alpha * elements.reveal_cover(R, rules)
             if visible then
                 local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
