@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Register authored story mosaics and verify the decoded runtime images."""
+"""Register paintings for mosaic reveals and verify the decoded runtime images."""
 import argparse
 from io import BytesIO
 import json
@@ -32,7 +32,7 @@ def main():
                 )
         else:
             path.write_bytes(encoded.getvalue())
-        print(f"{name}: {image.width}×{image.height} authored mosaic")
+        print(f"{name}: {image.width}×{image.height} authored painting")
 
 
 if __name__ == "__main__":
