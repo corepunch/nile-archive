@@ -3255,18 +3255,18 @@
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        88,
-        87
+        70,
+        69
       ],
       "generator": "built-in ImageGen",
       "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
       "geometry": "art/board-theme/specials/ray-row.png",
       "offset": [
-        20,
-        20
+        29,
+        29
       ],
-      "homescapes_target_area_px": 4625,
-      "silhouette_area_px": 4619
+      "homescapes_target_area_px": 2960,
+      "silhouette_area_px": 2922
     },
     "ray-column": {
       "source": "../../art/match3-power-up-paint/source.png",
@@ -3280,18 +3280,18 @@
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        71,
-        99
+        56,
+        79
       ],
       "generator": "built-in ImageGen",
       "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
       "geometry": "art/board-theme/specials/ray-column.png",
       "offset": [
-        28,
-        14
+        36,
+        24
       ],
-      "homescapes_target_area_px": 4625,
-      "silhouette_area_px": 4662
+      "homescapes_target_area_px": 2960,
+      "silhouette_area_px": 2927
     },
     "ray-diagonal": {
       "source": "../../art/match3-power-up-paint/source.png",
@@ -3305,18 +3305,18 @@
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        89,
-        87
+        71,
+        69
       ],
       "generator": "built-in ImageGen",
       "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
       "geometry": "art/board-theme/specials/ray-diagonal.png",
       "offset": [
-        20,
-        20
+        28,
+        29
       ],
-      "homescapes_target_area_px": 4625,
-      "silhouette_area_px": 4642
+      "homescapes_target_area_px": 2960,
+      "silhouette_area_px": 2939
     },
     "bomb": {
       "source": "../../art/match3-power-up-paint/source.png",
@@ -3768,12 +3768,12 @@
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
-      "tools/match3_theme_art.py": "2c5f6b1fbc42292e5a6097e5a53db9a3a95da597ad9c9238df4e808507e9f98b",
+      "tools/match3_theme_art.py": "18a709b558fdb2434a2359375cd9e24331da99976a4603ee5f1cc1a4377e0f63",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "0f567983f876891f16bc919ebc10b3533c18e2a7899f889515e547e58cd96c13",
-      "games/christmas-market/data/match3.png": "fce018a041312b0157f4ad65f4b28689f756c223e2cc2644f0c37ba26ac2076c",
+      "games/christmas-market/data/match3.png": "d36498eb522992bc2bfa38b8d14f75bcdb4c8beaa3cbcd073d3ff7fc3aa5726a",
       "games/christmas-market/lua/match3_hud.lua": "ecc847b06937bdbdda49371e8d69e901b63086356fbd1e077d481e2747c2b395",
       "games/christmas-market/lua/match3_skin.lua": "d90f5c1ef629a0066884ddbd3ffbe6e811459a519d927c08988a47191e1b9e15"
     }

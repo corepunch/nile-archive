@@ -54,6 +54,8 @@ def reference_areas():
                 areas.append(silhouette(original).histogram()[255])
         # Chips and deliveries already draw on a smaller quad than specials.
         scale = .86 if family in ('chip', 'delivery') else .80
+        if family == 'rocket':
+            scale *= .80  # Reduce the painted rockets' width and height by 20%.
         result[family] = round(median(areas) * scale ** 2)
     return result
 

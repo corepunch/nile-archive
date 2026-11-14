@@ -125,7 +125,9 @@ when the geometry changes.
 1. Crop and scale uniformly. The atlas importer measures visible pixels at
    half opacity or greater in the native Homescapes alpha masks. It uses the
    median of the six chip masks as a common chip target and the median of
-   the two rocket masks for all three axes. Bomb, rainbow, plane and delivery
+   the two rocket masks for all three axes. Both games scale the painted
+   rockets to 80% of their original width and height during registration.
+   Bomb, rainbow, plane and delivery
    each have their own reference. Target areas account for the smaller chip
    and delivery draw quads. Fit each silhouette inside the inset hex and
    favor centered placement. Narrow or asymmetric shapes can land below the
