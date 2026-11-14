@@ -1055,8 +1055,8 @@
     "registration": "tools/prepare_story_mosaics.py",
     "pictures": {
       "reveal-08": {
-        "source": "art/story-mosaics/broken-relay.png",
-        "prompt": "art/story-mosaics/broken-relay.prompt.txt",
+        "source": "art/story-pictures/broken-relay.png",
+        "prompt": "art/story-pictures/broken-relay.prompt.txt",
         "runtime": "data/reveal-08.jpg",
         "level": 8,
         "states": ["covered", "uncovered", "won", "replay"],
