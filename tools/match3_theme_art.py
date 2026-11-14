@@ -17,6 +17,8 @@ CHAIN_PAINT = ART / 'match3-chain-paint'
 PAINTED_CHAINS = ('chain', 'chain-1-mirror', 'chain-2')
 FLOOR_PAINT = ART / 'match3-floor-paint'
 PAINTED_FLOORS = {'carpet-swatch': 0, 'oil-material': 1, 'goal-carpet': 3, 'goal-oil': 4, 'oil-bubbles': 9}
+CARPET_PAINT = ART / 'match3-carpet-paint'
+PAINTED_CARPET = ('carpet-swatch', 'goal-carpet')
 BLOCKER_PAINT = ART / 'match3-blockers'
 MATERIALS = {'carpet-swatch', 'oil-material'}
 
@@ -160,9 +162,12 @@ def rendered(root):
 def inputs(root):
     borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
     paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'),
-            (CHAIN_PAINT, 'edit-target.png'), (FLOOR_PAINT, 'edit-target.png'), (BLOCKER_PAINT, 'reference.png'))
+            (CHAIN_PAINT, 'edit-target.png'), (FLOOR_PAINT, 'edit-target.png'),
+            (CARPET_PAINT, 'edit-target.png'), (BLOCKER_PAINT, 'reference.png'))
              for name in ('source.png', 'prompt.txt', target)]
-    return painted(root) + borrowed + rendered(root) + paint + [Path(__file__).with_name('match3_specials.py')]
+    references = [HOMESCAPES / 'carpet-swatch.png',
+                  ART.parent / 'games/christmas-market/docs/screenshots/review/carpet/homescapes-patch.jpg']
+    return painted(root) + borrowed + rendered(root) + paint + references + [Path(__file__).with_name('match3_specials.py')]
 
 
 def registered(root, mask):
@@ -173,9 +178,9 @@ def registered(root, mask):
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
         source, accent = [stack.enter_context(Image.open(p)) for p in (path, accent_path)]
-        power_ups, chains, floors, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
-                 for folder in (POWER_UP_PAINT, CHAIN_PAINT, FLOOR_PAINT, BLOCKER_PAINT)]
-        for sheet in (power_ups, chains, floors, blockers):
+        power_ups, chains, floors, carpet, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
+                 for folder in (POWER_UP_PAINT, CHAIN_PAINT, FLOOR_PAINT, CARPET_PAINT, BLOCKER_PAINT)]
+        for sheet in (power_ups, chains, floors, carpet, blockers):
             assert sheet.mode == 'RGBA', sheet.filename
         for sheet in (source, accent):
             assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
@@ -200,12 +205,23 @@ def registered(root, mask):
                 sheet, sprite_prompt = blockers, BLOCKER_PAINT / 'prompt.txt'
                 col = int(root.name == 'christmas-market')
                 crop = (col * sheet.width // 2, 0, (col + 1) * sheet.width // 2, sheet.height)
+            elif name in PAINTED_CARPET:
+                sheet, sprite_prompt = carpet, CARPET_PAINT / 'prompt.txt'
+                col = PAINTED_CARPET.index(name)
+                crop = (col * sheet.width // 2, 0, (col + 1) * sheet.width // 2, sheet.height)
+                if name in MATERIALS:
+                    # Register the interior of the square, keeping paint clear of its edges.
+                    left, top, right, bottom = silhouette(sheet.crop(crop)).getbbox()
+                    side = min(right - left, bottom - top) - 20
+                    x = (left + right - side) // 2
+                    y = (top + bottom - side) // 2
+                    crop = (x, y, x + side, y + side)
             elif is_floor_paint:
                 row, col = divmod(PAINTED_FLOORS[name], 5)
                 sheet, sprite_prompt = floors, FLOOR_PAINT / 'prompt.txt'
                 w, h = sheet.size
                 crop = (col * w // 5, row * h // 2, (col + 1) * w // 5, (row + 1) * h // 2)
-                if name in MATERIALS:
+                if name == 'oil-material':
                     # Crop within the opaque square, clear of its painted edges.
                     x, y = crop[:2]
                     crop = (x + 56, y + 56, x + 344, y + 344)
@@ -265,6 +281,8 @@ def registered(root, mask):
                     records[name]['reference'] = os.path.relpath(BLOCKER_PAINT / 'reference.png', root)
                 else:
                     records[name]['edit_target'] = os.path.relpath(sprite_prompt.with_name('edit-target.png'), root)
+                    if name in PAINTED_CARPET:
+                        records[name]['palette_reference'] = os.path.relpath(HOMESCAPES / 'carpet-swatch.png', root)
                 if name not in MATERIALS and name != 'oil-bubbles':
                     records[name]['offset'] = offset
             if name == 'plane' and root.name != PLANE_FROM:

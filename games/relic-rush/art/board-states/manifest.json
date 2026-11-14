@@ -1289,8 +1289,6 @@
       "prompt": "../../art/match3-floor-paint/prompt.txt",
       "edit_target": "../../art/match3-floor-paint/edit-target.png",
       "frames": [
-        "carpet-swatch",
-        "goal-carpet",
         "oil-material",
         "oil-bubbles",
         "goal-oil"
@@ -1309,6 +1307,20 @@
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/board-floors/README.md"
+    },
+    "carpet_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-carpet-paint/source.png",
+      "prompt": "../../art/match3-carpet-paint/prompt.txt",
+      "edit_target": "../../art/match3-carpet-paint/edit-target.png",
+      "palette_reference": "../../engine/art/homescapes/sprites/carpet-swatch.png",
+      "frames": [
+        "carpet-swatch",
+        "goal-carpet"
+      ],
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "docs/screenshots/review/carpet-color/README.md"
     }
   }
 }

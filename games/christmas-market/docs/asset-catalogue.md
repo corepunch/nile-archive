@@ -9,7 +9,7 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
-| `carpet-swatch`, `goal-carpet` | Dark woven green carpet and a matching rolled-carpet goal icon. Carpet spreads through matches touching it. |
+| `carpet-swatch`, `goal-carpet` | Woven grass-green carpet and a matching rolled-carpet goal icon, painted to match the Homescapes palette. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's red parcel. Source boards use the original donut. |
@@ -23,7 +23,9 @@ Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together f
 
 The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
 
-[Woven carpet, oil and goal icons](../../../art/match3-floor-paint/source.png) and the [front-facing carved hex stones](../../../art/match3-blockers/source.png) were painted with built-in ImageGen. The atlas manifest records the source prompts and registration for both. [In-game before and after](screenshots/review/board-floors/README.md).
+The [woven carpet and rolled goal icon](../../../art/match3-carpet-paint/source.png) use the [Homescapes carpet swatch](../../../engine/art/homescapes/sprites/carpet-swatch.png) as their palette reference. [Carpet color at both phone sizes](screenshots/review/carpet-color/README.md).
+
+The [painted oil and drop icon](../../../art/match3-floor-paint/source.png) and [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheets. The atlas manifest records prompts and registration. [In-game before and after](screenshots/review/board-floors/README.md).
 
 ## Additional board elements
 
