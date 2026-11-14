@@ -9,8 +9,9 @@ The Homescapes references are on the top row and this game's renders are below.
 The three rockets are one lathe turned about the view direction, so their
 silhouettes are identical apart from the rotation. The bomb's belt is a band
 around its sphere and each rainbow tile is a patch of the sphere's own
-latitude and longitude. The plane is one folded sheet with a rim round its
-rear fold and two rolled tubes under the tail.
+latitude and longitude. The plane is thick folded paper with bowed
+leading edges, a rim round its darker rear fold and two rolled tubes under
+the tail.
 
 Each board shows the previous painted sprites on the left and the renders on
 the right.

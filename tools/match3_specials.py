@@ -157,31 +157,47 @@ def tube(a, b, radius, attrs, around=16):
         f'<sphere pos="{vec(p)}" radius="{f(radius)}" rings="10" slices="16" {attrs}/>' for p in (a, b)]
 
 
+def slab(top, thickness, attrs):
+    """A sheet with thickness: the outline (counter-clockwise from +Z, fanned from its first point), a copy
+    below it and the walls between them."""
+    n = len(top)
+    pts = list(top) + [(x, y, z - thickness) for x, y, z in top]
+    faces = ([f'0 {i} {i + 1}' for i in range(1, n - 1)] + [f'{n} {n + i + 1} {n + i}' for i in range(1, n - 1)] +
+             [f'{i} {n + i} {n + (i + 1) % n} {(i + 1) % n}' for i in range(n)])
+    return f'<mesh {attrs} v="{" ".join(vec(q) for q in pts)}" f="{", ".join(faces)}"/>'
+
+
 def plane(theme):
-    """A folded paper dart, as Homescapes': nose along Y, upper side towards Z. One sheet folds into two
-    wing panels and a raised centre ridge, a thick rim follows the notched trailing edge, and two rolled
-    tubes with fuses sit under the tail."""
+    """A folded paper dart, as Homescapes': nose along Y, upper side towards Z. Thick paper folds into two
+    front panels with bowed leading edges, a darker rear fold with a notched trailing edge and a raised
+    centre ridge. A thick rim runs round the rear fold, and two rolled tubes with fuses sit under the tail."""
     body, trim, gloss = theme['plane'], vec(theme['plane_trim']), theme['gloss']
-    look = f'shininess="{gloss}" specular="0.8"'
-    nose, apex = (0, 50, 0), (0, -20, 14)                         # the ridge rises from the nose to the tail
-    tip, notch, foot, tail = (56, -24, -9), (27, -34, -3), (9, -24, 2), (0, -19, 4)
-    bow, fold = (42, 10, -5), (0, 16, 8)                           # the leading edge bows out; the rim crosses the ridge here
-    left = lambda p: (-p[0], p[1], p[2])
-    shade = lambda k: vec([min(1., c * k) for c in body])
-    sheet = lambda pts, k: (f'<mesh twoSided="1" color="{shade(k)}" {look} v="{" ".join(vec(q) for q in pts)}" '
-                            f'f="{", ".join(f"0 {i} {i + 1}" for i in range(1, len(pts) - 1))}"/>')   # a fan from the first point
-    lines = [sheet([nose, left(bow), left(tip), left(notch), left(foot)], 1.04),   # the panel towards the light
-             sheet([nose, foot, notch, tip, bow], .9),
-             sheet([nose, left(foot), apex], .8), sheet([nose, apex, foot], .68), sheet([apex, left(foot), foot], .6)]
+    nose, apex = (0, 52, 0), (0, -20, 15)                         # the ridge rises from the nose to the tail
+    tip, notch, foot, tail = (58, -22, -10), (28, -35, -4), (10, -25, 1), (0, -19, 5)
+    bend, fold = (40, 24, -5), (0, 15, 8.5)                        # the leading edge bows round this; the rim crosses the ridge
+    edge = [tuple((1 - t) ** 2 * a + 2 * t * (1 - t) * b + t * t * c for a, b, c in zip(nose, bend, tip))
+            for t in (.2, .4, .6, .8)]
+    t = (nose[1] - fold[1]) / (nose[1] - foot[1])
+    hinge = tuple(a + (b - a) * t for a, b in zip(nose, foot))    # where the rear fold meets the ridge's foot
+    left = lambda pts: [(-x, y, z) for x, y, z in reversed(pts)]  # mirrored, and still counter-clockwise
+    paper = lambda k: f'color="{vec([min(1., c * k) for c in body])}" shininess="{gloss}" specular="0.8"'
+    front, rear = [nose, hinge, tip] + edge[::-1], [hinge, foot, notch, tip]
+    turn = lambda pts, i: pts[i:] + pts[:i]                       # fan from the nose, or from the hinge
+    lines = [slab(turn(left(front), 2), 5, paper(1.06)), slab(front, 5, paper(.92)),   # the left panel faces the light
+             slab(turn(left(rear), 3), 5, paper(.86)), slab(rear, 5, paper(.74)),
+             slab([nose, (-foot[0], foot[1], foot[2]), apex], 0.01, paper(.84)), slab([nose, apex, foot], 0.01, paper(.66)),
+             slab([apex, (-foot[0], foot[1], foot[2]), foot], 0.01, paper(.58))]
     rim = f'color="{trim}" shininess="{gloss}" specular="1"'
-    path = [fold, left(tip), left(notch), tail, notch, tip, fold]   # round the rear fold and its notched edge
+    mirror = lambda q: (-q[0], q[1], q[2])
+    path = [fold, mirror(tip), mirror(notch), tail, notch, tip, fold]   # round the rear fold and its notched edge
     for a, b in zip(path, path[1:]):
-        lines += tube(a, b, 4.8, rim)
+        lines += tube(a, b, 5.4, rim)
     for side, name in ((1, 'right'), (-1, 'left')):
-        lines += [f'<group name="tube-{name}" pos="{f(23 * side)} -38 -13">',
-                  f'  <cylinder radius="10.5" height="20" sides="40" {rim}/>',
-                  f'  <cylinder pos="0 -9.6 0" radius="7.6" height="1.6" sides="32" color="{vec([c * .5 for c in theme["plane_trim"]])}" shininess="4" specular="0"/>',
-                  '  <group pos="0 -9 0" rot="180 0 0">'] + ['    ' + l for l in fuse(f'plane-{name}', theme, 6, 4.6)] + ['  </group>', '</group>']
+        lines += [f'<group name="tube-{name}" pos="{f(24 * side)} -39 -15">',
+                  f'  <cylinder radius="11" height="20" sides="40" {rim}/>',
+                  f'  <torus pos="0 -9 0" majorRadius="10.4" minorRadius="2.4" majorSegments="40" minorSegments="10" {rim}/>',
+                  f'  <cylinder pos="0 -9.8 0" radius="8.4" height="1.6" sides="32" color="{vec([c * .5 for c in theme["plane_trim"]])}" shininess="4" specular="0"/>',
+                  '  <group pos="0 -9 0" rot="180 0 0">'] + ['    ' + l for l in fuse(f'plane-{name}', theme, 6.5, 5)] + ['  </group>', '</group>']
     return lines, PLANE_POSE
 
 

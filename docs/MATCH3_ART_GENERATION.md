@@ -66,9 +66,9 @@ their geometry exact where painted versions drifted.
 - **Rainbow ball.** Each tile is a rounded square in the sphere's own
   latitude and longitude, raised along a bevel profile. A tile narrows towards
   the pole and foreshortens at the edge as the sphere does.
-- **Plane.** One sheet folded into two wing panels and a raised center
-  ridge, with bowed leading edges. Round bars follow the rear fold and its
-  notched trailing edge. Two tubes with rope fuses sit under the tail. The
+- **Plane.** Thick paper folded into two front panels with bowed leading
+  edges, a darker rear fold and a raised center ridge. Round bars follow the
+  rear fold and its notched trailing edge. Two tubes with rope fuses sit under the tail. The
   board draws the sprite without turning it, so the nose always points up
   and to the left.
 
