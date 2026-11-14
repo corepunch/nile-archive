@@ -12,13 +12,16 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
 | `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
-| `delivery`, `chain`, `chain-2` | The campaign's red parcel and silver one- and two-layer chains. The source-board donut and mirrored chain retain their original art. |
+| `delivery` | The campaign's red parcel. Source boards use the original donut. |
+| `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
 `python3 tools/match3_specials.py christmas-market` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
+
+The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
 
 ## Additional board elements
 

@@ -149,7 +149,7 @@
     "data/game.json": "ffd7e3752c748bc578e356947a7b1774e668b1e0f1b7d0245986abfc335bdc28",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/match3-hud.png": "0f567983f876891f16bc919ebc10b3533c18e2a7899f889515e547e58cd96c13",
-    "data/match3.png": "d36498eb522992bc2bfa38b8d14f75bcdb4c8beaa3cbcd073d3ff7fc3aa5726a",
+    "data/match3.png": "614a911080002205073bb09f54904524b3680f59947ad7391cd4a75e7064bbcf",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -426,7 +426,8 @@
       ],
       "chains": [
         "chain",
-        "chain-2"
+        "chain-2",
+        "chain-1-mirror"
       ]
     },
     "accent_source": "art/board-theme/accent-revision.png",
@@ -458,6 +459,20 @@
       ],
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py"
+    },
+    "chain_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-chain-paint/source.png",
+      "prompt": "../../art/match3-chain-paint/prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/edit-target.png",
+      "states": {
+        "chain": "one hit remaining, silver",
+        "chain-1-mirror": "one hit remaining, gold, opposite orientation",
+        "chain-2": "two hits remaining, two silver strands"
+      },
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "docs/screenshots/review/curved-chains/README.md"
     }
   }
 }

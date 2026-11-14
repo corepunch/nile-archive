@@ -89,7 +89,7 @@
       "atlas_frame": "chain",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/source.png",
+      "source": "../../art/match3-chain-paint/source.png",
       "atlas_section": "board_theme"
     },
     "ice-2": {
@@ -1235,7 +1235,8 @@
       ],
       "chains": [
         "chain",
-        "chain-2"
+        "chain-2",
+        "chain-1-mirror"
       ]
     },
     "accent_source": "art/board-theme/accent-revision.png",
@@ -1271,6 +1272,20 @@
       ],
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py"
+    },
+    "chain_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-chain-paint/source.png",
+      "prompt": "../../art/match3-chain-paint/prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/edit-target.png",
+      "states": {
+        "chain": "one hit remaining, silver",
+        "chain-1-mirror": "one hit remaining, gold, opposite orientation",
+        "chain-2": "two hits remaining, two silver strands"
+      },
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "docs/screenshots/review/curved-chains/README.md"
     }
   }
 }

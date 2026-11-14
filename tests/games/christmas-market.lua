@@ -121,6 +121,7 @@ shot("dialogue-bar-480", "480x900", "--story-beat before-01 --talk-through 270 -
 shot("dialogue-bar-390", "390x844", "--story-beat before-01 --talk-through 270 --frames 535 --safe-area 0,47,0,34")
 
 shot("homescapes-queue", "480x900", "--homescapes st0065")
+shot("homescapes-chains", "480x900", "--homescapes contest_005_06")
 shot("phone-homescapes-queue", "390x844", "--homescapes st0065 --safe-area 0,47,0,34")
 shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
 reel("fx-plane",18,2,"480x900","--fx plane --reel")
