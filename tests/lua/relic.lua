@@ -354,6 +354,31 @@ local function test_catalogue()
     check(c:confirm(wallet,0).result==city.BLOCKED and wallet[1]==before,"invalid shop placement never charges")
 end
 
+-- The last expedition's tablet only falls straight down. A hole beside it under
+-- a locked piece once had no way to fill, and gravity never settled.
+local function test_final_level_settles()
+    local m = rules.new_match()
+    for seed = 1, 2 do
+        local g = rules.game_start(LEVELS - 1, seed)
+        for _ = 1, 12 do
+            if g.won or g.lost then break end
+            local best, ba, bb = -1, -1, -1
+            for i = 0, CELLS - 1 do
+                for d = 0, 2 do
+                    local j = hex_neighbor(i, d)
+                    local v = rules.game_evaluate_move(g, i, j)
+                    if v > best then best, ba, bb = v, i, j end
+                end
+            end
+            if ba < 0 then break end
+            rules.game_swap(g, ba, bb, m)
+            local ok = pcall(resolve, g, m)
+            check(ok, ("the last expedition settles after every move (start %d)"):format(seed))
+            if not ok then break end
+        end
+    end
+end
+
 local function test_campaign()
     local m = rules.new_match()
     local total, runs = 0, 0
@@ -394,6 +419,7 @@ test_holes_and_shapes()
 test_moves_and_blockers()
 test_island()
 test_catalogue()
+test_final_level_settles()
 if testing.extended then test_campaign() end
 -- Interaction precedence: depleted/busy controls cannot appear actionable,
 -- touch presses require an origin inside the button; touch has no hover.
