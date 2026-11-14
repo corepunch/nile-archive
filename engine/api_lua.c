@@ -2816,46 +2816,50 @@ static int l_gfx_rect_grad(lua_State *L)
     return 0;
 }
 
-/* gfx.round_rect(r, radius, c) */
+/* gfx.round_rect(r, radius, c, square_left?) */
 static int l_gfx_round_rect(lua_State *L)
 {
     rect a_r = api_check_rect(L, 1);
     float a_radius = (float)luaL_checknumber(L, 2);
     color a_c = api_check_color(L, 3);
-    draw_round_rect(a_r, a_radius, a_c);
+    bool a_square_left = (lua_isnoneornil(L, 4) ? false : lua_toboolean(L, 4));
+    draw_round_rect_corners(a_r, a_radius, a_c, a_square_left);
     return 0;
 }
 
-/* gfx.round_rect_grad(r, radius, top, bottom) */
+/* gfx.round_rect_grad(r, radius, top, bottom, square_left?) */
 static int l_gfx_round_rect_grad(lua_State *L)
 {
     rect a_r = api_check_rect(L, 1);
     float a_radius = (float)luaL_checknumber(L, 2);
     color a_top = api_check_color(L, 3);
     color a_bottom = api_check_color(L, 4);
-    draw_round_rect_grad(a_r, a_radius, a_top, a_bottom);
+    bool a_square_left = (lua_isnoneornil(L, 5) ? false : lua_toboolean(L, 5));
+    draw_round_rect_grad_corners(a_r, a_radius, a_top, a_bottom, a_square_left);
     return 0;
 }
 
-/* gfx.round_rect_line(r, radius, thickness, c) */
+/* gfx.round_rect_line(r, radius, thickness, c, square_left?) */
 static int l_gfx_round_rect_line(lua_State *L)
 {
     rect a_r = api_check_rect(L, 1);
     float a_radius = (float)luaL_checknumber(L, 2);
     float a_thickness = (float)luaL_checknumber(L, 3);
     color a_c = api_check_color(L, 4);
-    draw_round_rect_line(a_r, a_radius, a_thickness, a_c);
+    bool a_square_left = (lua_isnoneornil(L, 5) ? false : lua_toboolean(L, 5));
+    draw_round_rect_line_corners(a_r, a_radius, a_thickness, a_c, a_square_left);
     return 0;
 }
 
-/* gfx.shadow(r, radius, blur, c) */
+/* gfx.shadow(r, radius, blur, c, square_left?) */
 static int l_gfx_shadow(lua_State *L)
 {
     rect a_r = api_check_rect(L, 1);
     float a_radius = (float)luaL_checknumber(L, 2);
     float a_blur = (float)luaL_checknumber(L, 3);
     color a_c = api_check_color(L, 4);
-    draw_shadow(a_r, a_radius, a_blur, a_c);
+    bool a_square_left = (lua_isnoneornil(L, 5) ? false : lua_toboolean(L, 5));
+    draw_shadow_corners(a_r, a_radius, a_blur, a_c, a_square_left);
     return 0;
 }
 

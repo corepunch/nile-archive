@@ -1239,15 +1239,20 @@ Vertical gradient.
 | `top` | `color` |  |
 | `bottom` | `color` |  |
 
-### `gfx.round_rect(r, radius, c)`
+### `gfx.round_rect(r, radius, c, square_left?)`
+
+Set square_left to keep both left corners square.
 
 | Argument | Type | |
 |---|---|---|
 | `r` | `rect` |  |
 | `radius` | `number` |  |
 | `c` | `color` |  |
+| `square_left` | `boolean?` | Default false. |
 
-### `gfx.round_rect_grad(r, radius, top, bottom)`
+### `gfx.round_rect_grad(r, radius, top, bottom, square_left?)`
+
+Vertical gradient. Set square_left to keep both left corners square.
 
 | Argument | Type | |
 |---|---|---|
@@ -1255,10 +1260,11 @@ Vertical gradient.
 | `radius` | `number` |  |
 | `top` | `color` |  |
 | `bottom` | `color` |  |
+| `square_left` | `boolean?` | Default false. |
 
-### `gfx.round_rect_line(r, radius, thickness, c)`
+### `gfx.round_rect_line(r, radius, thickness, c, square_left?)`
 
-Outline only.
+Outline only. Set square_left to keep both left corners square.
 
 | Argument | Type | |
 |---|---|---|
@@ -1266,10 +1272,11 @@ Outline only.
 | `radius` | `number` |  |
 | `thickness` | `number` |  |
 | `c` | `color` |  |
+| `square_left` | `boolean?` | Default false. |
 
-### `gfx.shadow(r, radius, blur, c)`
+### `gfx.shadow(r, radius, blur, c, square_left?)`
 
-A blurred drop shadow under a rounded rect.
+A blurred drop shadow under a rounded rect. Set square_left to keep both left corners square.
 
 | Argument | Type | |
 |---|---|---|
@@ -1277,6 +1284,7 @@ A blurred drop shadow under a rounded rect.
 | `radius` | `number` |  |
 | `blur` | `number` |  |
 | `c` | `color` |  |
+| `square_left` | `boolean?` | Default false. |
 
 ### `gfx.circle(center, radius, c)`
 

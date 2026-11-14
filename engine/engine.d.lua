@@ -882,30 +882,36 @@ function gfx.rect(r, c) end
 ---@param bottom color
 function gfx.rect_grad(r, top, bottom) end
 
+---Set square_left to keep both left corners square.
 ---@param r rect
 ---@param radius number
 ---@param c color
-function gfx.round_rect(r, radius, c) end
+---@param square_left? boolean
+function gfx.round_rect(r, radius, c, square_left) end
 
+---Vertical gradient. Set square_left to keep both left corners square.
 ---@param r rect
 ---@param radius number
 ---@param top color
 ---@param bottom color
-function gfx.round_rect_grad(r, radius, top, bottom) end
+---@param square_left? boolean
+function gfx.round_rect_grad(r, radius, top, bottom, square_left) end
 
----Outline only.
+---Outline only. Set square_left to keep both left corners square.
 ---@param r rect
 ---@param radius number
 ---@param thickness number
 ---@param c color
-function gfx.round_rect_line(r, radius, thickness, c) end
+---@param square_left? boolean
+function gfx.round_rect_line(r, radius, thickness, c, square_left) end
 
----A blurred drop shadow under a rounded rect.
+---A blurred drop shadow under a rounded rect. Set square_left to keep both left corners square.
 ---@param r rect
 ---@param radius number
 ---@param blur number
 ---@param c color
-function gfx.shadow(r, radius, blur, c) end
+---@param square_left? boolean
+function gfx.shadow(r, radius, blur, c, square_left) end
 
 ---@param center vec2
 ---@param radius number

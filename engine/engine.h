@@ -299,9 +299,13 @@ void draw_image_striped(texture t, rect dst, float angle, float repeats, float w
 void draw_rect(rect r, color c);
 void draw_rect_grad(rect r, color top, color bottom);
 void draw_round_rect(rect r, float radius, color c);
+void draw_round_rect_corners(rect r, float radius, color c, bool square_left);
 void draw_round_rect_grad(rect r, float radius, color top, color bottom);
+void draw_round_rect_grad_corners(rect r, float radius, color top, color bottom, bool square_left);
 void draw_round_rect_line(rect r, float radius, float thickness, color c);
+void draw_round_rect_line_corners(rect r, float radius, float thickness, color c, bool square_left);
 void draw_shadow(rect r, float radius, float blur, color c);
+void draw_shadow_corners(rect r, float radius, float blur, color c, bool square_left);
 void draw_circle(vec2 center, float radius, color c);
 void draw_ring(vec2 center, float radius, float thickness, color c);
 void draw_glow(vec2 center, float radius, color inner, color outer);

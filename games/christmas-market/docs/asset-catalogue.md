@@ -158,7 +158,10 @@ samples its opaque interior and maps it to the exact centre, radius and rotation
 of the cell hex. The 128px source rectangle is `18,14,96,95` for Christmas and
 `32,35,63,58` for the embedded fallback. The atlas and its source alpha stay intact.
 Exposed green wells shade from light at the top to dark at the bottom. Goal icons
-sit 3.6 logical units farther left, and collection flights land at that same position.
+sit inside the flat left ends of their capsules, and collection flights land at
+each icon's centre. The current shape is shown in the
+[objective capsule review](../../../docs/review/match3-objective-capsules.jpg).
+The comparison below shows the earlier cell and goal alignment pass.
 
 Reproduce with `build/test/christmas-market "shot main-character-board" "shot phone-board" "shot specials-board"`.
 

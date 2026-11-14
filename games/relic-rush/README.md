@@ -114,7 +114,7 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
 Each green well shades from light at the top to dark at the bottom. The goal
-icons sit slightly left over their capsule edges. See the
+icons sit inside their capsules' flat left ends. See the
 [cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
 
 The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are thirty different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.

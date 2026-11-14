@@ -233,12 +233,13 @@ local function draw_layer(skin, layer, box, look, node, st)
     local out, scale, alpha = transformed(skin, lb)
     alpha = alpha * (look.alpha or 1)
     local radius = radius_of(layer, node) * scale
+    local square_left = node and node.square_left
     local function c(v) local parsed = parse_color(skin, v); return alpha < 1 and color.alpha(parsed, alpha) or parsed end
-    if layer.shadow then gfx.shadow(out, radius, (layer.blur or 8) * scale, c(layer.shadow))
+    if layer.shadow then gfx.shadow(out, radius, (layer.blur or 8) * scale, c(layer.shadow), square_left)
     elseif layer.fill then
-        if layer.fill2 then gfx.round_rect_grad(out, radius, c(layer.fill), c(layer.fill2))
-        else gfx.round_rect(out, radius, c(layer.fill)) end
-    elseif layer.border then gfx.round_rect_line(out, radius, (layer.width or 1) * scale, c(layer.border))
+        if layer.fill2 then gfx.round_rect_grad(out, radius, c(layer.fill), c(layer.fill2), square_left)
+        else gfx.round_rect(out, radius, c(layer.fill), square_left) end
+    elseif layer.border then gfx.round_rect_line(out, radius, (layer.width or 1) * scale, c(layer.border), square_left)
     elseif layer.image then
         local image = image_of(skin, layer.image)
         if image and image.w > 0 then
@@ -408,7 +409,7 @@ end
 -- A resource readout: a small panel holding one figure, its icon larger than the
 -- panel and overhanging the left end, as every game's HUD shows its currencies.
 -- The look is the skin's `resource` control; `icon_ratio` (of the panel's height)
--- and `icon_overhang` (of the same) place the icon.
+-- and `icon_overhang` (of the same, negative for an inset) place the icon.
 function Skin:resource_icon_box(box, role)
     local spec = control_spec(self, 'resource', {role = role}) or {}
     local side = box.h * (spec.icon_ratio or 1.4)
@@ -426,10 +427,11 @@ function Skin:draw_resource(box, icon, value, opts)
     opts = opts or {}
     local node = {kind = 'resource', radius = box.h * .5, role = opts.role}
     local spec = control_spec(self, 'resource', node) or {}
+    node.square_left = spec.square_left
     local hit = opts.hit or (opts.hit_offset and box:offset(opts.hit_offset)) or box
     local st = opts.interactive ~= false and ui.hit(hit, 0) or nil
     local look = look_for(spec, st) or {}
-    self:paint('resource', box, st, node)
+    draw_look(self, look, box, node, st)
     local shift = vec(look.offset)
     local left = box.x + box.h * .3
     if icon then

@@ -60,7 +60,7 @@ uses the space above the goals for a lantern-lit Christmas market, with open
 snow behind the spruce-green wells and their thin champagne edge. Each well
 shades from light at the top to dark at the bottom. Both ice
 strengths use the [original Homescapes shells](docs/asset-catalogue.md#ice).
-Goal icons sit slightly left over their capsule edges. See the
+Goal icons sit inside their capsules' flat left ends. See the
 [cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
 The original festive chips and the themed power-ups are shown in the
 [asset catalogue](docs/asset-catalogue.md#themed-board-art).
