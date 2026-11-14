@@ -105,11 +105,7 @@ end
 
 -- The same board controls use the authored images from either skin.
 E.TOOL_SIZE = 76
-E.GOAL_W = 70   -- every goal capsule; fits a four-digit score
--- Each goal's icon hangs past its capsule's left end and swells when it pulses,
--- so the gap keeps it off the capsule before it. A narrow screen with four
--- goals closes it towards GOAL_GAP_MIN rather than run under Pause.
-local GOAL_GAP, GOAL_GAP_MIN = 16, 6
+local GOAL_W, GOAL_GAP = 70, 16
 
 function E.tool_state(charges, selected, inside, down, started_inside, hover, idle)
     if charges <= 0 or not idle then return "disabled" end
@@ -119,10 +115,10 @@ function E.tool_state(charges, selected, inside, down, started_inside, hover, id
     return "normal"
 end
 
-function E.pause_button(R, bounds, offset)
+function E.pause_button(R, bounds, prefix)
     local st = ui.hit(bounds, 0)
     local state = st.held and "pressed" or st.hot and "hover" or "normal"
-    gfx.image(R.hud_art["pause-" .. state], offset and bounds:offset(offset) or bounds, color.WHITE)
+    gfx.image(R.hud_art[(prefix or "pause-") .. state], bounds, color.WHITE)
     return st.clicked
 end
 
@@ -166,10 +162,12 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     end
     local goal_centers = {}
     local function goal_panel(box, entry)
+        local role = R.hud_art.signboard and "signboard_goal" or "goal"
         local adjustment = icon_adjustments and icon_adjustments[entry.icon] or goal_icon_adjustments[entry.icon]
         local offset = adjustment and adjustment.x and vec2(adjustment.x, 0)
-        local center = R.skin:resource_icon_box(box, "goal"):center()
+        local center = R.skin:resource_icon_box(box, role):center()
         goal_centers[entry.id] = offset and center + offset or center
+        if entry.kind then goal_centers["chip-" .. entry.kind] = goal_centers[entry.id] end
         local icon = entry.icon=="score" and R.hud_art.score
             or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
             or entry.kind and R.relics[entry.kind+1]
@@ -177,29 +175,27 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         -- Collections landing on a goal make it bounce.
         local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
         local met = entry.remaining==0
-        R.skin:draw_resource(box, icon, tostring(entry.remaining), {role="goal", interactive=false,
+        R.skin:draw_resource(box, icon, tostring(entry.remaining), {role=role, interactive=false,
             icon_scale=(adjustment and adjustment.scale or 1) * (1 + math.sin(num.saturate(pulse / .22) * PI) * .16),
             icon_offset=offset,
-            done=met})   -- one tick, the same in every capsule
+            done=met})
         if entry.label then R.say_at(entry.label,goal_centers[entry.id],9,R.PAL_WHITE,45) end
     end
     local function goal_form()
         return ui.form{kind="row",gap=6,align="center",children={
-            {kind="spacer",width=82},    -- the Moves medallion
             {kind="spacer",grow=1},
             {kind="list",id="goals",direction="row",gap=GOAL_GAP,item=function(entry)
-                return {kind="custom",width=E.GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
+                return {kind="custom",width=GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
             end},
             {kind="spacer",grow=1},
-            {kind="spacer",width=64},    -- Pause
         }}
     end
     local hud_form, hud_second = goal_form(), goal_form()
 
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
-    local function draw_moves(arrive)
-        local c, r, a = vec2(56, R.hud_rect:center().y), 40 * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
+    local function draw_moves(c, arrive)
+        local r, a = 40 * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
         local moves = R.g.moves
         local urgent = moves <= 5 and not R.g.won
         if urgent and not R.reduced_motion then
@@ -223,35 +219,45 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
 
     function R.goal_target(kind)
         -- Collection flights land on the goal they advance.
-        return goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"] or vec2(250, R.hud_rect:center().y)
+        return goal_centers["chip-" .. kind] or goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"]
+            or R.hud_rect:center()
     end
     function R.draw_board_hud()
         local top = R.intro and R.intro:arrive(0, 2.8, .58) or 1
         if top <= 0 then return end
         local offset = vec2(0, (top - 1) * (R.hud_rect.y + 110))
+        local centre = R.hud_rect:center() + offset
+        local signboard = R.hud_art.signboard
         local entries, first, second = R.goal_entries(), {}, {}
+        goal_centers = {}
+        local moves_x = signboard and 65 or 56
+        local goals_left, goals_right = moves_x + 46, R.board_pause.x - 8
+        local room = goals_right - goals_left
+        local columns = math.max(1, math.floor((room - 12) / GOAL_W))
         for i, entry in ipairs(entries) do
-            local row = #entries > 4 and i > math.ceil(#entries / 2) and second or first
+            local row = #entries > columns and i > math.ceil(#entries / 2) and second or first
             row[#row + 1] = entry
         end
-        -- Row width less the Moves and Pause spacers and the row's four gaps.
-        local room = R.hud_rect.w - 28 - 82 - 64 - 4 * 6
-        for form, row in pairs{[hud_form]=first, [hud_second]=second} do
-            local gap = #row > 1 and num.clamp((room - #row * E.GOAL_W) / (#row - 1), GOAL_GAP_MIN, GOAL_GAP) or GOAL_GAP
-            if form.nodes.goals.gap ~= gap then form.nodes.goals.gap = gap; form:invalidate_layout() end
+        local two_rows = #second > 0
+        if signboard then
+            local width = R.hud_rect.w - 20
+            local height = width * signboard.h / signboard.w + (two_rows and 30 or 0)
+            gfx.image(signboard, rect.centered(centre, size2(width, height)), color.WHITE)
         end
-        assert(hud_form:set_items("goals",first))
-        local centre = R.hud_rect:center()
-        if #second == 0 then
-            hud_form:draw(rect.centered(centre, size2(R.hud_rect.w - 28, 44)):offset(offset),R.skin,{interactive=false})
-        else
-            assert(hud_second:set_items("goals",second))
-            hud_form:draw(rect.centered(centre + vec2(0,-16), size2(R.hud_rect.w - 28, 30)):offset(offset),R.skin,{interactive=false})
-            hud_second:draw(rect.centered(centre + vec2(0,16), size2(R.hud_rect.w - 28, 30)):offset(offset),R.skin,{interactive=false})
+        local goal_position = vec2((goals_left + goals_right) / 2, centre.y)
+        for form, row in pairs{[hud_form]=first, [hud_second]=second} do
+            if #row > 0 then
+                local gap = #row > 1 and num.clamp((room - #row * GOAL_W - 12) / (#row - 1), 0, GOAL_GAP) or GOAL_GAP
+                if form.nodes.goals.gap ~= gap then form.nodes.goals.gap = gap; form:invalidate_layout() end
+                assert(form:set_items("goals", row))
+                local dy = two_rows and (form == hud_form and -15 or 15) or 0
+                form:draw(rect.centered(goal_position + vec2(0,dy), size2(room,30)), R.skin, {interactive=false})
+            end
         end
         local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
-        if medallion > .05 then draw_moves(medallion) end
-        if E.pause_button(R, R.board_pause, offset) then R.overlay = R.OV_PAUSE end
+        if medallion > .05 then draw_moves(vec2(moves_x, centre.y), medallion) end
+        local pause_art = signboard and R.hud_art["board-pause-normal"] and "board-pause-"
+        if E.pause_button(R, R.board_pause:offset(offset), pause_art) then R.overlay = R.OV_PAUSE end
     end
 
     -- The level's mission arrives across the middle of the screen, holds,

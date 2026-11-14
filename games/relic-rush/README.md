@@ -85,9 +85,9 @@ open the dialogs.
 
 ## Shared UI and dialog layers
 
-Pause, building and guide dialogs use engine-owned form resources and one game skin. The whole look (text palettes, panels, buttons and their pressed/disabled states, focus) is data in [`lua/skin.lua`](lua/skin.lua), compiled by the engine's `ui.skin`; see [skin files](../../docs/UI_ENGINE.md#skins). The expedition screen follows the portrait match-3 layout of Royal Match, Toon Blast and Homescapes. With no band behind them, a hexagonal Moves medallion (red over the last five moves), one small resource panel per goal with its remaining count (a check seal when met) and the pause button float along the top edge, and the three tools stand along the bottom edge. Nothing else covers the painting, and the board fills the space between. Level details and the Explorer's Guide live in Pause; score/reward totals live in Results. The measured goal list retains every win condition without duplicate totals or a progress bar. The guide uses a measured data-backed list too. Menus and other closable popups dismiss on background taps through the shared engine; results retain explicit actions. Modal screens and dialogue use the engine’s cached GPU Gaussian blur. See the [match-3 HUD review](docs/review/match3-hud/README.md), the [header and popup review](docs/review/expedition-header/README.md) and [shared UI API](../../docs/UI_ENGINE.md).
+Pause, building and guide dialogs use engine-owned form resources and one game skin. The look is defined in [`lua/skin.lua`](lua/skin.lua) and compiled by the engine's `ui.skin`. The jade expedition signboard holds the hexagonal Moves medallion, objective counts and Settings. Moves turns red for the last five moves, and a check replaces each completed count. The three tools sit along the bottom edge. Settings contains level details and the Explorer's Guide, and Results contains score and rewards. The measured goal list keeps every win condition visible. Menus and other closable popups dismiss on background taps through the shared engine. Results retain explicit actions. Modal screens and dialogue use the engine's cached GPU Gaussian blur. See the [signboard and board review](../../docs/review/match3-signboards/README.md) and [shared UI API](../../docs/UI_ENGINE.md).
 
-The expedition and city headers share a 64-unit Settings gear with a matching touch area. Goal rows and city currency pills leave room beside it on both phone sizes. See the [before/after Pause review](docs/review/larger-pause/README.md).
+The expedition and city headers share a 64-unit Settings gear with a matching touch area. Goal rows and city currency pills leave room beside it on both phone sizes.
 
 ## Result screens and typography
 
@@ -113,9 +113,8 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
-Each green well shades from light at the top to dark at the bottom. The goal
-icons sit slightly left over their capsule edges. See the
-[cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
+The teal wells shade from light at the top to dark at the bottom. A brighter
+teal rim frames the hex board.
 
 The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are thirty different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
@@ -427,7 +426,7 @@ The walkthrough has its own save. Add `--fresh` to start at the opening without 
 
 The shared hex board uses original Homescapes pieces and standalone rockets, bombs, planes and rainbow balls, with the existing animations and effects. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.
 
-The field uses neutral gray hex backgrounds (`#484848` / `#545454`), without decorative borders.
+The field uses the expedition's teal hex palette.
 
 Original blocker artwork now covers nuts, statues, cookie stacks and ceramic tiles, with original components for platters, blinds and visible queues. [Source/state inventory](../../docs/HOMESCAPES_ART.md) records all six original jelly layers, both portal rings, the recovered maker dome and the remaining field artwork.
 

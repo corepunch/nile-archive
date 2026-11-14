@@ -20,6 +20,12 @@ import match3_theme_art
 import pack_particles
 
 ROOT = Path(__file__).resolve().parents[1]
+SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
+SIGNBOARD_CROPS = {
+    # Centre each crop on the painted face so live counters share its axis.
+    'relic-rush': (18, 93, 1752, 449),
+    'christmas-market': (18, 496, 1752, 786),
+}
 STATES = ['normal', 'selected', 'pressed', 'hover', 'disabled']
 TOOL_FRAMES = {f'{tool}-{state}' for tool in ('pickaxe', 'dynamite', 'sunburst') for state in STATES}
 NAMES = ([f'kind-{i}' for i in range(8)] +
@@ -218,7 +224,20 @@ def build_game(game, check):
         sources['background'] = root / 'data/winter.jpg'
         hud_sources['character'] = root / 'data/characters/noelle.png'
     loaded = {name: Image.open(path).convert('RGBA') for name, path in sources.items()}
+    # One authored Settings set goes on both signboards. Christmas Market's
+    # town continues to use its own Pause states.
+    board_pause_sources = {
+        f'board-pause-{state}': ROOT / f'games/relic-rush/data/expedition-hud/pause-{state}.png'
+        for state in STATES
+    } if game == 'christmas-market' else {}
+    hud_sources.update(board_pause_sources)
     hud_sprites = {name: Image.open(path).convert('RGBA') for name, path in hud_sources.items()}
+    signboard_source = SIGNBOARD_DIR / 'source.png'
+    signboard_crop = SIGNBOARD_CROPS[game]
+    with Image.open(signboard_source) as sheet:
+        signboard = sheet.crop(signboard_crop).convert('RGBA')
+        signboard.thumbnail((960, 200), Image.Resampling.LANCZOS)
+    hud_sprites['signboard'] = signboard
     effects, effect_sources = pack_particles.registered(root)
     loaded.update(effects)
     originals, original_registration = homescapes_atlas.registered()
@@ -251,7 +270,11 @@ def build_game(game, check):
     assert height <= 4096
     image = Image.new('RGBA', (width, height))
     paste_frames(image, loaded, frames)
-    hud_frames, bottom = frame_layout(hud_sprites, 1024)
+    # Reserve one wide strip below the existing grid of HUD icons.
+    base_hud = {name: sprite for name, sprite in hud_sprites.items() if name != 'signboard'}
+    hud_frames, bottom = frame_layout(base_hud, 1024)
+    hud_frames['signboard'] = [2, bottom + 2, signboard.width, signboard.height]
+    bottom += signboard.height + 4
     hud_image = Image.new('RGBA', (1024, 1 << (bottom - 1).bit_length()))
     paste_frames(hud_image, hud_sprites, hud_frames)
     for i in range(6):
@@ -267,13 +290,20 @@ def build_game(game, check):
                 'sources': {name: str(path.relative_to(root)) for name, path in sources.items()},
                 'effects': {name: str(path.relative_to(root)) for name, path in effect_sources.items()},
                 'hud': {'runtime': 'data/match3-hud.png', 'size': list(hud_image.size), 'frames': hud_frames,
-                        'sources': {name: str(path.relative_to(root)) for name, path in hud_sources.items()}},
+                        'sources': {name: '../../' + str(path.relative_to(ROOT)) if name in board_pause_sources
+                                    else str(path.relative_to(root)) for name, path in hud_sources.items()},
+                        'signboard': {'source': '../../art/match3-signboards/source.png',
+                                      'prompt': '../../art/match3-signboards/prompt.txt',
+                                      'reference': '../../art/match3-signboards/concept.jpg',
+                                      'crop': list(signboard_crop), 'size': list(signboard.size),
+                                      'state': 'static backplate', 'frame': 'signboard'}},
                 'homescapes': original_registration,
                 'board_theme': theme_registration,
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
     inputs = list(sources.values()) + list(hud_sources.values()) + list(effect_sources.values())
+    inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
     inputs += homescapes_atlas.inputs() + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
     outputs = [root / name for name in ('data/match3.png', 'lua/match3_skin.lua', 'data/match3-hud.png', 'lua/match3_hud.lua')]
     if game == 'relic-rush':

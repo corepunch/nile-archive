@@ -30,6 +30,10 @@ return ui.skin{
         moves_glow = "#2C7850",
         moves_low = "#80181E",
         moves_low_glow = "#C43434",
+        board_edge = "#132744",
+        board_rim = "#7898BF",
+        board_top = "#48668F",
+        board_bottom = "#293C5C",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.
@@ -64,6 +68,7 @@ return ui.skin{
             pressed = {offset = {0, 1}},
             variants = {
                 goal = {icon_overhang = .24},
+                signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
                 wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
             },
         },

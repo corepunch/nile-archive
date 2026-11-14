@@ -162,12 +162,14 @@ Call `state.layout()` once per frame. It is measured up from the bottom edge, at
 
 - **`tools_y`:** the top of the tool row, 100 units above the bottom edge.
 - **`board_origin` and `BOARD_CLIP`:** the board, centred 409 units above the bottom edge.
-- **`hud_rect`:** a 64-unit band 782 units above the bottom edge, holding the Moves medallion, the goal row and Pause, all centred on its midline. Toasts sit just below it (`board_toast`).
+- **`hud_rect`:** a 64-unit band 772 units above the bottom edge. The themed signboard joins the Moves medallion, goals and Settings on its midline. Toasts sit just below it (`board_toast`).
 - **`backdrop_rect(size, full)`:** where to draw the backdrop painting. It keeps at least its 1040-tall scale, covers the screen and stands on the bottom edge, so the painting's scenery always ends just above the HUD. Paint a backdrop's scenery in the top 22% of its height.
 
-`match3.bind_board_ui` supplies the measured goal row (two rows above four goals), Moves medallion, Pause button
-and tool row. Input checks use the same `board_pause` and `board_tool_bounds(k)`
-rectangles. The Settings and Guide forms and the Results panel geometry also
+`match3.bind_board_ui` measures the goal rows between Moves and Settings.
+Goals wrap to a second row when they exceed the available width. The
+`signboard_goal` skin variant paints the icon, count or completion tick
+directly on the atlas backplate. The Settings hit box follows its artwork
+during the entrance animation. The Settings and Guide forms and the Results panel geometry also
 come from `match3`. Games provide the skin, guide content and screen actions.
 
 Engine methods `reset_board`, `board_update`, `board_input` and `select_tool`

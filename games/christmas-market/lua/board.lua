@@ -9,6 +9,12 @@ local art = require("art")
 local elements = require("match3.elements_view")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
+if not app.arg("default-match3") then
+    local skin = require("skin")
+    for _, name in ipairs{"edge", "rim", "top", "bottom"} do
+        R.GROUND[name] = skin:color("board_" .. name)
+    end
+end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked

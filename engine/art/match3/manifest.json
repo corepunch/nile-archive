@@ -3316,7 +3316,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "c43fed2afeace3772e99f62da2619b796e647d0a0033566f3322bc26f80d0980",
+    "recipe": "b22c8b4429587663c7868469390b30a0c887e8defe9b886a09acab4ba3fd8d46",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",

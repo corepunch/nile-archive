@@ -35,7 +35,12 @@ function A.load_hud()
         local hud = match3.hud()
         return setmetatable({score=hud.complete}, {__index=hud})
     end
-    return match3.hud(require("match3_hud"))
+    local hud = match3.hud(require("match3_hud"))
+    assert(hud.signboard, "missing spruce signboard")
+    for _, state in ipairs(A.states) do
+        assert(hud["board-pause-" .. state], "missing board Settings state: " .. state)
+    end
+    return hud
 end
 
 function A.draw_hud_catalogue(R)

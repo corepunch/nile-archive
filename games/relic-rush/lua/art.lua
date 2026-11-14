@@ -32,7 +32,11 @@ function A.skin()
 end
 
 function A.load_hud()
-    return require("match3").hud(not app.arg("default-match3") and require("match3_hud") or nil)
+    local match3 = require("match3")
+    if app.arg("default-match3") then return match3.hud() end
+    local hud = match3.hud(require("match3_hud"))
+    assert(hud.signboard, "missing jade signboard")
+    return hud
 end
 
 function A.draw_hud_catalogue(R)

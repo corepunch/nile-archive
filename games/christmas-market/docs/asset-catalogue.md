@@ -73,7 +73,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
-| Goal met | Engine skin (`ui_skin.lua`, `done`) | Procedural | A met goal's count becomes a plain green tick, as in Candy Crush. Its size follows the capsule height, and every goal capsule is the same component (`match3.GOAL_W`, 70 × 30), so every tick matches. Capture: `--level 5 --goals-met`, `--hud-states` |
+| Goal met | Engine skin (`ui_skin.lua`, `done`) | Procedural | A green tick replaces the completed count on the signboard. Capture: `--level 5 --goals-met` |
 | Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
 | Market streets | `tools/roads.py christmas-market` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): grey-brown setts, stone kerbs and a snow shoulder. The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); no interaction states. Captures: `screenshots/market.jpg`, `screenshots/phone-market.jpg` |
@@ -157,12 +157,16 @@ The powder-snow goal uses the full authored sprite. On the board, the renderer
 samples its opaque interior and maps it to the exact centre, radius and rotation
 of the cell hex. The 128px source rectangle is `18,14,96,95` for Christmas and
 `32,35,63,58` for the embedded fallback. The atlas and its source alpha stay intact.
-Exposed green wells shade from light at the top to dark at the bottom. Goal
-icons overlap their rounded capsules, and collection flights land at the
-icon centres. The campaign's tinsel objective uses a 12% larger icon
-shifted 2 logical units right. The Lanternlight icon sits 2 logical units
-farther left in the HUD. The [HUD comparison](../../../docs/review/match3-objective-icons.jpg)
-shows both adjustments in play.
+Slate-blue wells shade from light at the top to dark at the bottom. The
+spruce `signboard` in `data/match3-hud.png` is one static backplate for Moves,
+goal counts and Settings. Its `board-pause-*` frames reuse the five authored
+jade-and-gold Settings states from Relic Rush. The tinsel objective uses a
+12% larger icon shifted 2 logical units right, and Lanternlight sits 2 units
+farther left. The [ImageGen source](../../../art/match3-signboards/source.png),
+[prompt](../../../art/match3-signboards/prompt.txt) and
+[atlas registration](../art/match3-atlas.json) document the crop and preserved
+alpha. Rebuild with `python3 tools/match3_atlas.py`.
+[In-game captures](../../../docs/review/match3-signboards/README.md).
 
 Reproduce with `build/test/christmas-market "shot main-character-board" "shot phone-board" "shot specials-board"`.
 

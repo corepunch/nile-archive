@@ -55,13 +55,11 @@ hex axis. Four in a line makes a rocket along that axis. Five or more makes a
 rainbow ball. Crossing lines make a bomb, and a four-cell rhombus makes a
 paper plane. An adjacent match or a direct power-up hit breaks a carved hex stone.
 
-The board and Settings panel share Relic Rush's layout. The puzzle backdrop
-uses the space above the goals for a lantern-lit Christmas market, with open
-snow behind the spruce-green wells and their thin champagne edge. Each well
-shades from light at the top to dark at the bottom. Both ice
-strengths use the [original Homescapes shells](docs/asset-catalogue.md#ice).
-Goal icons sit slightly left over their capsule edges. See the
-[cell and goal review](docs/asset-catalogue.md#cell-and-goal-alignment).
+The puzzle backdrop shows a lantern-lit Christmas market above the spruce
+signboard. Moves, objective counts and Settings share the signboard.
+Slate-blue hex wells shade from light at the top to dark at the bottom.
+Both ice strengths use the [original Homescapes shells](docs/asset-catalogue.md#ice).
+See the [signboard and board review](../../docs/review/match3-signboards/README.md).
 The original festive chips and the themed power-ups are shown in the
 [asset catalogue](docs/asset-catalogue.md#themed-board-art).
 Open Pause to reach Sound, Reduce Motion, Resume and the Market Guide.
@@ -186,7 +184,7 @@ The walkthrough has its own save. Add `--fresh` to start at the opening without 
 
 The shared hex board uses original Homescapes pieces and standalone rockets, bombs, planes and rainbow balls, with the existing animations and effects. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.
 
-The field uses neutral gray hex backgrounds (`#484848` / `#545454`), without decorative borders.
+The field uses the market's slate-blue hex palette.
 
 Original blocker artwork now covers nuts, statues, cookie stacks and ceramic tiles, with original components for platters, blinds and visible queues. [Source/state inventory](../../docs/HOMESCAPES_ART.md) records all six original jelly layers, both portal rings, the recovered maker dome and the remaining field artwork.
 

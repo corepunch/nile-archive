@@ -862,7 +862,7 @@
     "runtime": "data/match3-hud.png",
     "size": [
       1024,
-      1024
+      2048
     ],
     "frames": {
       "character": [
@@ -871,153 +871,189 @@
         320,
         480
       ],
-      "complete": [
+      "board-pause-disabled": [
         326,
         2,
         128,
         128
       ],
-      "dynamite-disabled": [
+      "board-pause-hover": [
         458,
         2,
         128,
         128
       ],
-      "dynamite-hover": [
+      "board-pause-normal": [
         590,
         2,
         128,
         128
       ],
-      "dynamite-normal": [
+      "board-pause-pressed": [
         722,
         2,
         128,
         128
       ],
-      "dynamite-pressed": [
+      "board-pause-selected": [
         854,
         2,
         128,
         128
       ],
-      "dynamite-selected": [
+      "complete": [
         2,
+        486,
+        128,
+        128
+      ],
+      "dynamite-disabled": [
+        134,
+        486,
+        128,
+        128
+      ],
+      "dynamite-hover": [
+        266,
+        486,
+        128,
+        128
+      ],
+      "dynamite-normal": [
+        398,
+        486,
+        128,
+        128
+      ],
+      "dynamite-pressed": [
+        530,
+        486,
+        128,
+        128
+      ],
+      "dynamite-selected": [
+        662,
         486,
         128,
         128
       ],
       "life": [
-        134,
+        794,
         486,
         128,
         128
       ],
       "pause-disabled": [
-        266,
-        486,
+        2,
+        618,
         128,
         128
       ],
       "pause-hover": [
-        398,
-        486,
+        134,
+        618,
         128,
         128
       ],
       "pause-normal": [
-        530,
-        486,
+        266,
+        618,
         128,
         128
       ],
       "pause-pressed": [
-        662,
-        486,
+        398,
+        618,
         128,
         128
       ],
       "pause-selected": [
-        794,
-        486,
+        530,
+        618,
         128,
         128
       ],
       "pickaxe-disabled": [
-        2,
+        662,
         618,
         128,
         128
       ],
       "pickaxe-hover": [
-        134,
-        618,
-        128,
-        128
-      ],
-      "pickaxe-normal": [
-        266,
-        618,
-        128,
-        128
-      ],
-      "pickaxe-pressed": [
-        398,
-        618,
-        128,
-        128
-      ],
-      "pickaxe-selected": [
-        530,
-        618,
-        128,
-        128
-      ],
-      "shop-built": [
-        662,
-        618,
-        128,
-        128
-      ],
-      "shop-locked": [
         794,
         618,
         128,
         128
       ],
-      "sunburst-disabled": [
+      "pickaxe-normal": [
         2,
         750,
         128,
         128
       ],
-      "sunburst-hover": [
+      "pickaxe-pressed": [
         134,
         750,
         128,
         128
       ],
-      "sunburst-normal": [
+      "pickaxe-selected": [
         266,
         750,
         128,
         128
       ],
-      "sunburst-pressed": [
+      "shop-built": [
         398,
         750,
         128,
         128
       ],
-      "sunburst-selected": [
+      "shop-locked": [
         530,
         750,
         128,
         128
       ],
-      "score": [
-        326,
+      "sunburst-disabled": [
+        662,
+        750,
+        128,
+        128
+      ],
+      "sunburst-hover": [
+        794,
+        750,
+        128,
+        128
+      ],
+      "sunburst-normal": [
         2,
+        882,
+        128,
+        128
+      ],
+      "sunburst-pressed": [
+        134,
+        882,
+        128,
+        128
+      ],
+      "sunburst-selected": [
+        266,
+        882,
+        128,
+        128
+      ],
+      "signboard": [
+        2,
+        1014,
+        960,
+        161
+      ],
+      "score": [
+        2,
+        486,
         128,
         128
       ]
@@ -1047,7 +1083,29 @@
       "pause-selected": "data/expedition-hud/pause-selected.png",
       "shop-built": "data/expedition-hud/shop-built.png",
       "shop-locked": "data/expedition-hud/shop-locked.png",
-      "character": "data/characters/noelle.png"
+      "character": "data/characters/noelle.png",
+      "board-pause-normal": "../../games/relic-rush/data/expedition-hud/pause-normal.png",
+      "board-pause-selected": "../../games/relic-rush/data/expedition-hud/pause-selected.png",
+      "board-pause-pressed": "../../games/relic-rush/data/expedition-hud/pause-pressed.png",
+      "board-pause-hover": "../../games/relic-rush/data/expedition-hud/pause-hover.png",
+      "board-pause-disabled": "../../games/relic-rush/data/expedition-hud/pause-disabled.png"
+    },
+    "signboard": {
+      "source": "../../art/match3-signboards/source.png",
+      "prompt": "../../art/match3-signboards/prompt.txt",
+      "reference": "../../art/match3-signboards/concept.jpg",
+      "crop": [
+        18,
+        496,
+        1752,
+        786
+      ],
+      "size": [
+        960,
+        161
+      ],
+      "state": "static backplate",
+      "frame": "signboard"
     }
   },
   "homescapes": {
@@ -3521,7 +3579,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "c43fed2afeace3772e99f62da2619b796e647d0a0033566f3322bc26f80d0980",
+    "recipe": "b22c8b4429587663c7868469390b30a0c887e8defe9b886a09acab4ba3fd8d46",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -3532,6 +3590,9 @@
       "art/match3-power-up-paint/prompt.txt": "8207562c2d6f8a2e3ea66e51476875394072d09f8645aeb8bc725f1b4daa5d7e",
       "art/match3-power-up-paint/scener-strip.png": "e087fe56642192a2e42885300c04da8fbc8c18433736ac9c46ad1e0340c421c0",
       "art/match3-power-up-paint/source.png": "1faeffea23711f2a82db1369793da07017089226a0973e9b86b47c0dcbf92041",
+      "art/match3-signboards/concept.jpg": "ed4c3cb83c720f6a3acf7006c4cbe0a42a353237f0f698465a3959784dcc3c13",
+      "art/match3-signboards/prompt.txt": "24afea9b1796b31f61eb28b00c301276ed8ce6643e39876dcde7732cf3e23b27",
+      "art/match3-signboards/source.png": "6756852d29a38aa1ddb51e20d3c24dcdeccc9eed146904f7d1b71ebfba5f80db",
       "art/match3-terrain/christmas-market-concepts.png": "d3c3fc5154a223de3228d490748acc583802e23433c1cd70ed991833841eadeb",
       "art/match3-terrain/prompt.txt": "9a54672874b6f41cf6a3089802eedcdea0586282c97600b9ffecf8fd97f9bc58",
       "art/match3-terrain/relic-rush-concepts.png": "f96643e7f53cb608677ba8165b6aeb8706879f915900e91b212e38cecfdaabeb",
@@ -3682,6 +3743,11 @@
       "games/christmas-market/data/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
       "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
+      "games/relic-rush/data/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
+      "games/relic-rush/data/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
+      "games/relic-rush/data/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
+      "games/relic-rush/data/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
+      "games/relic-rush/data/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
@@ -3690,9 +3756,9 @@
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
-      "games/christmas-market/data/match3-hud.png": "0f567983f876891f16bc919ebc10b3533c18e2a7899f889515e547e58cd96c13",
+      "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
       "games/christmas-market/data/match3.png": "54cb4d0bd964e786078a0f788090a34af04135347de9d16c183ca13587169622",
-      "games/christmas-market/lua/match3_hud.lua": "ecc847b06937bdbdda49371e8d69e901b63086356fbd1e077d481e2747c2b395",
+      "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
       "games/christmas-market/lua/match3_skin.lua": "c802f38e88b4fcd89a6d9d127b90eea418a529711c7f7adb15abf8284e98f5a0"
     }
   }

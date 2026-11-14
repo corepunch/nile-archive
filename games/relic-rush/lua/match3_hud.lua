@@ -27,5 +27,6 @@ return {
         ["sunburst-normal"]={134,398,128,128},
         ["sunburst-pressed"]={266,398,128,128},
         ["sunburst-selected"]={398,398,128,128},
+        ["signboard"]={2,530,960,197},
     },
 }

@@ -29,6 +29,10 @@ return ui.skin{
         moves_glow = "#247C60",
         moves_low = "#702218",
         moves_low_glow = "#B24028",
+        board_edge = "#102C2A",
+        board_rim = "#67938A",
+        board_top = "#3D6D63",
+        board_bottom = "#233F3C",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.
@@ -138,6 +142,7 @@ return ui.skin{
             -- The island wallet is prominent: 60-unit icons on 36-unit panels.
             variants = {
                 goal = {icon_overhang = .24},
+                signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
                 wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
             },
         },

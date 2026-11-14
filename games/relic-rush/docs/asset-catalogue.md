@@ -94,13 +94,12 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 ## Cell and goal alignment
 
-Live green wells use the engine's flat-top hex geometry and a light-to-dark
+The teal wells use the engine's flat-top hex geometry and a light-to-dark
 vertical gradient. The atlas cell mask remains the registration reference for
-authored art. Goal icons overlap their rounded capsules, and collection
-flights land at the icon centres. The campaign's chain objective uses a 12%
-larger icon shifted 2 logical units right. The carved-stone objective uses
-a 10% smaller icon. The [HUD comparison](../../../docs/review/match3-objective-icons.jpg)
-shows the adjusted icons in play.
+authored art. Goal icons and counts share the jade signboard. Collection
+flights land at the icon centres. The chain objective uses a 12% larger icon
+shifted 2 logical units right. The carved-stone objective uses a 10% smaller
+icon. [Current board review](../../../docs/review/match3-signboards/README.md).
 
 Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot art-specials"`.
 
@@ -303,20 +302,15 @@ buttons without captions; choosing one names it and its effect in the toast.
 
 ## Expedition header
 
-The header floats on the painting with no band or plate behind it. It holds a
-hexagonal Moves medallion, one resource panel per goal (the engine's
-`skin:draw_resource`, the same element as the island wallet) and the authored
-pause medallion. Score remains a win condition, represented by the star seal;
-idols and lock counts use their existing artwork. A met goal dims its icon
-and replaces the count with the completed seal. Collections landing on a goal
-make its icon bounce. Over the last five moves the medallion face turns red and
-glows. The panels and medallion are drawn with engine shapes; the goal panels
-and medallion are read-only and have no pressed/hover states
-([reviewed captures](../../../docs/review/resource-panels/README.md)). No score total, level title,
-progress bar or island shortcut is displayed during an expedition. Level details
-are in Pause; results retain score/reward details. Pause's Restart (confirmed)
-and Quit to island (keeps the board) are the in-round exits; win/failure screens
-provide theirs.
+The jade `signboard` is a static backplate packed in `data/match3-hud.png`.
+Moves, goal counts and Settings share its face. A green check replaces a
+completed count. Collected idol icons bounce on landing, and the Moves
+medallion turns red over the last five moves. Settings retains the existing
+authored states. The [ImageGen source](../../../art/match3-signboards/source.png),
+[prompt](../../../art/match3-signboards/prompt.txt) and
+[atlas registration](../art/match3-atlas.json) document the crop and preserved
+alpha. Rebuild with `python3 tools/match3_atlas.py`.
+[In-game captures](../../../docs/review/match3-signboards/README.md).
 
 `art/expedition-hud/controls.png` contains **all seven new icons together in one
 built-in ImageGen call**. The exact prompt is
