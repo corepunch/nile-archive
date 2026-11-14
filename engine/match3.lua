@@ -1349,16 +1349,16 @@ function E.new(config)
     -- only round the board's silhouette, as one outline. A game may replace R.GROUND's colours.
     R.GROUND = {edge = color(26, 28, 34), rim = color(198, 202, 210), seam = color(112, 114, 120),
                 top = color(84, 86, 92), bottom = color(52, 54, 60), edge_width = 1.2, rim_width = 3.4, seam_width = .8}
-    function R.draw_ground(layer, at, radius, turn, fade)
+    function R.draw_ground(layer, at, r, turn, fade)
         local look = R.GROUND
         if layer == "rim" then
             -- A hex grown by w along its edges has a corner radius 2w / sqrt(3) larger.
             local grow = 2 / math.sqrt(3)
-            gfx.ngon(at, radius + (look.rim_width + look.edge_width) * grow, 6, turn, color.alpha(look.edge, fade))
-            gfx.ngon(at, radius + look.rim_width * grow, 6, turn, color.alpha(look.rim, fade))
+            gfx.ngon(at, r + (look.rim_width + look.edge_width) * grow, 6, turn, color.alpha(look.edge, fade))
+            gfx.ngon(at, r + look.rim_width * grow, 6, turn, color.alpha(look.rim, fade))
         else
-            gfx.ngon(at, radius + .5, 6, turn, color.alpha(look.seam, fade))
-            gfx.ngon_grad(at, radius - look.seam_width, 6, turn, color.alpha(look.top, fade), color.alpha(look.bottom, fade))
+            gfx.ngon(at, r + .5, 6, turn, color.alpha(look.seam, fade))
+            gfx.ngon_grad(at, r - look.seam_width, 6, turn, color.alpha(look.top, fade), color.alpha(look.bottom, fade))
         end
     end
 
