@@ -15,7 +15,7 @@ function desc.init()
             if app.arg("review-top-edge") or 2 * r + q >= 4 and math.abs(q) <= 1 then R.g.tiles[i] = rules.tile(-1) end
         end
     end
-    R.g.obstacles, R.g.initial_obstacles = 0, 0
+    R.g.obstacles = 0   -- keep initial_obstacles: the level names locks as a goal, shown here as done
     if not app.arg("review-top-edge") then
         R.g.tiles[rules.hex_index(-1, 2)] = rules.tile(4, rules.BOMB)
         R.g.tiles[rules.hex_index(1, 1)] = rules.tile(5, rules.COLUMN)
