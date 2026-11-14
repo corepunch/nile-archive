@@ -623,6 +623,7 @@
     "data/navigation/play-pressed.png",
     "data/navigation/play-selected.png",
     "data/quest-objects.png",
+    "data/reveal-08.jpg",
     "data/roads.png",
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
@@ -1048,6 +1049,18 @@
     "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
     "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states.",
     "retired": "Crate, tunnel, hidden-object and growth cells stay in the master but are not registered: the engine no longer has those mechanics (not in Homescapes story levels)."
+  },
+  "story_mosaics": {
+    "status": "prototype; placeholder art",
+    "generator": "../../tools/relic_reveal_art.py",
+    "pictures": {
+      "reveal-08": {
+        "runtime": "data/reveal-08.jpg",
+        "level": 8,
+        "states": ["covered", "uncovered", "won"],
+        "transform": "Laid once across the board bounds, cropped to cover; masked by the engine's mosaic patch."
+      }
+    }
   },
   "quest_objects": {
     "source": "art/quest-objects/source.png",

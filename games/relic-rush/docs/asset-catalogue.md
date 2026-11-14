@@ -29,6 +29,14 @@ The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one b
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
+## Story mosaics (prototype)
+
+| Asset | Rule meaning and states | Source and runtime |
+| --- | --- | --- |
+| `reveal-08` | Board 8, The Broken Cable. On a first clear the restored mosaic uncovers this picture in place of `carpet-swatch`; a replay shows the plain mosaic. States: covered (board face), uncovered (the picture inside the mosaic patch), won (pieces and blockers fade, the whole picture holds for 1.2 s, then the first-clear exchange plays over it). One mid-board notice at half restored. | **Placeholder.** Drawn procedurally by `python3 tools/relic_reveal_art.py` into `data/reveal-08.jpg` (720×800, laid across the board and cropped to cover it; the patch mask is the engine's). No ImageGen source yet. |
+
+Missing before this counts as finished: an authored painting of the relay floor in the board's mosaic style, composed for the compact board and readable at 480×900 and 390×844 with the key details (torn cable, keeper's hand on the shutter) clear of the board's cut corners. No tracking issue has been opened yet. [In-game review](review/story-mosaic/README.md).
+
 ## Chapter 1 quest objects
 
 The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)

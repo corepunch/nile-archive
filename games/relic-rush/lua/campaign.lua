@@ -330,6 +330,9 @@ local carpet = {
     [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
 }
 for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
+-- Story mosaics: the restored floor uncovers a picture on the first clear, and
+-- a crew member reacts once half of it shows (match3.elements_view reveal).
+levels[8].reveal = {picture="reveal-08", bark="Elena: This floor is a drawing of the relay. Uncover the rest!"}
 -- River silt advances after a turn that clears none of it.
 levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), cell(-3,3)}
 levels[20].lesson = "Clear the river silt before it spreads."

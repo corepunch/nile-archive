@@ -892,6 +892,7 @@ function G.bind(R, over)
         end
         if R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
+            if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             local b = journey.result_beat(R.prog, R.g)
             if b then R.queue_story(b, false, true) end
             return

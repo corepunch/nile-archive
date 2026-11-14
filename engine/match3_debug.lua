@@ -3,7 +3,7 @@
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
 -- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
--- --kudos, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
+-- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces. Add "specials" to show
 -- all power-ups beside a connected stone formation.
 -- --floor-reel carpet|oil plays three swaps on the chosen campaign level.
@@ -141,6 +141,17 @@ function D.bind(R, W)
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
         if a then R.g = rules.game_start(tonumber(a) - 1, 123478); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
+        a = app.arg("reveal")   -- --level N --reveal F: restore that share of the mosaic; 1 wins the board
+        if a and R.g then
+            local g, share = R.g, tonumber(a)
+            for i = 0, rules.CELLS - 1 do
+                if rules.game_cell_active(g, i) and g.carpet[i] == 0 and g.carpeted < share * g.carpet_total then
+                    g.carpet[i], g.carpeted = 1, g.carpeted + 1
+                end
+            end
+            if share >= 1 then R.prog.level, R.quiet = g.level, false; R.debug_skip_level() end   -- as a first clear, with its beat
+        end
+        a = app.arg("level")
         if floor_reel then
             assert(a and ((floor_reel == "carpet" and R.g.carpeted > 0)
                 or (floor_reel == "oil" and R.g.oil_left > 0)), "floor reel needs a level with the named patch")
