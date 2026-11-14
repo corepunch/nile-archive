@@ -16,7 +16,7 @@ import io
 import math
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 from carpet_goal_icon import hex_distance
 
@@ -112,6 +112,9 @@ def icon(size=TILE, ss=4):
     return Image.alpha_composite(moved, out).resize((size, size), Image.Resampling.LANCZOS)
 
 
+TOLERANCE = 4   # --check: largest channel difference still counted as the same picture
+
+
 def encode(image):
     buf = io.BytesIO()
     image.save(buf, 'PNG', optimize=True)
@@ -125,7 +128,12 @@ def main():
     for name, image in (('oil-material', material().convert('RGBA')), ('oil-bubbles', bubble_layer()), ('goal-oil', icon())):
         path, data = OUT / f'{name}.png', encode(image)
         if check:
-            assert path.read_bytes() == data, f'{path.relative_to(ROOT)} is stale: run python3 tools/oil_art.py'
+            # Compare pixels, not bytes: PNG compression and filter rounding differ between platforms.
+            made, kept = Image.open(io.BytesIO(data)).convert('RGBA'), Image.open(path).convert('RGBA')
+            assert made.size == kept.size, f'{path.relative_to(ROOT)} is stale: run python3 tools/oil_art.py'
+            worst = max(high for _, high in ImageChops.difference(made, kept).getextrema())
+            assert worst <= TOLERANCE, (f'{path.relative_to(ROOT)} is stale (a channel differs by {worst}, '
+                                        f'limit {TOLERANCE}): run python3 tools/oil_art.py')
         else:
             path.write_bytes(data)
         print(f'{path.relative_to(ROOT)}: {"verified" if check else "written"}')
