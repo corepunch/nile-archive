@@ -7,7 +7,7 @@ E.assets = {"stone-1", "delivery", "donut", "delivery-exit", "carry-exit-arrow"}
 for _,name in ipairs{"box","carry","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
 end
-for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet-swatch","goal-carpet","oil-material","oil-bubbles","goal-oil","cookie-1","cookie-2","cookie-3","cherry","box-1","box-2","box-3","box-4","box-5","box-6"} do
+for _,name in ipairs{"plane","chain-2","chain-1-mirror","carpet-swatch","goal-carpet","oil-material","goal-oil","cookie-1","cookie-2","cookie-3","cherry","box-1","box-2","box-3","box-4","box-5","box-6"} do
     E.assets[#E.assets+1]=name
 end
 
@@ -30,16 +30,16 @@ local function image(R, name, at, size, alpha)
     gfx.image(R.board_art[name], rect.centered(at, size2.splat(size)), color(255, 255, 255, alpha * 255))
 end
 
--- Carpet and oil each form a continuous patch: a signed
+-- Each floor objective forms a continuous patch: a signed
 -- distance field of their cells (texture.hex_field, rounded outside corners,
 -- filleted inside ones) masks a tiled material, and the rim is shaded. A field
--- is rebuilt only when its cells change. Oil carries two layers of drifting glints.
+-- is rebuilt only when its cells or layout change.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
 local PATCH = {
     carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
         inset = 1.4, rim = 2.3, shade = .26, bevel = .15, shadow_y = 1.4, softness = 2.4, opacity = 76},
-    oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 2.6, shade = .34,
-        glints = {{"oil-bubbles", 3, -6, 1.25, 100}, {"oil-bubbles", -2, -9, .85, 65}}},   -- art, drift x/y (px/s), size, opacity
+    oil = {material = "oil-material", corner = .25, fillet = .75, range = .6, texel = 1.5, tile = 1.55,
+        rim = 2.2, shade = .18, bevel = .10},
 }
 local function patch_cells(R, rules, layer)
     local g, cells = R.g, {}
@@ -52,8 +52,7 @@ local function patch_cells(R, rules, layer)
     end
     return cells
 end
-local function patch_field(R, layer, cells)
-    local spec = PATCH[layer]
+local function patch_field(R, layer, cells, spec)
     local origin = R.board_origin
     local key = table.concat({R.HEX_R, origin.x, origin.y, table.concat(cells, ",")}, ":")
     R.patch_fields = R.patch_fields or {}
@@ -78,21 +77,22 @@ local function patch_field(R, layer, cells)
 end
 -- Anchor material to the board so growing or clearing a patch leaves the
 -- surviving surface in place. Mirrored UVs meet without a hard repeat seam.
-local function tile(t, area, side, origin, tint, mirror)
+local function tile(t, area, side, origin, tint)
     local first_col, last_col = math.floor((area.x - origin.x) / side), math.ceil((area.x + area.w - origin.x) / side) - 1
     local first_row, last_row = math.floor((area.y - origin.y) / side), math.ceil((area.y + area.h - origin.y) / side) - 1
     for row = first_row, last_row do
         local y, h = 1, 126
-        if mirror and row % 2 ~= 0 then y, h = 127, -126 end
+        if row % 2 ~= 0 then y, h = 127, -126 end
         for col = first_col, last_col do
             local x, w = 1, 126
-            if mirror and col % 2 ~= 0 then x, w = 127, -126 end
+            if col % 2 ~= 0 then x, w = 127, -126 end
             gfx.image_part(t, rect(x, y, w, h), rect(origin.x + col * side, origin.y + row * side, side, side), tint)
         end
     end
 end
 local function draw_patch(R, layer, cells, sx)
-    local spec, field = PATCH[layer], patch_field(R, layer, cells)
+    local spec = R.floor_patches and R.floor_patches[layer] or PATCH[layer]
+    local field = patch_field(R, layer, cells, spec)
     local area = field.area:offset(vec2(sx, 0))
     local alpha = R.intro and R.intro:fade() or 1
     local side = 2 * R.HEX_R * spec.tile
@@ -102,13 +102,8 @@ local function draw_patch(R, layer, cells, sx)
         gfx.sdf_mask(field.texture, shadow, field.range, 0, 0, 0, spec.softness)
         gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
     end
-    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel or 0)
-    tile(R.board_art[spec.material], area, side, origin, color(255, 255, 255, 255 * alpha), true)
-    local now = R.reduced_motion and 0 or (R.now or 0)
-    for _, layer_spec in ipairs(spec.glints or {}) do
-        local art, dx, dy, scale, opacity = table.unpack(layer_spec)
-        tile(R.board_art[art], area, side * scale, origin + vec2(dx * now, dy * now), color(255, 255, 255, opacity * alpha))
-    end
+    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0)
+    tile(R.board_art[spec.material], area, side, origin, color(255, 255, 255, 255 * alpha))
     gfx.sdf_unmask()
 end
 function E.patch(R, rules, layer, sx)

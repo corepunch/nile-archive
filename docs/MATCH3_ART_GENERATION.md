@@ -14,12 +14,13 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
   phone size. Use Relic Rush's first row as a reference for how much detail a
   one-hue chip can carry.
 - Use the same chip frame on the board and in color-specific goals and previews.
-  Keep chips brighter and more saturated than carpet, oil and stone. Judge this
-  with chips over the patches, including a green chip over green carpet.
-- Use a woven mid-green carpet with low-contrast fibers. Its palette sits
-  between the first olive paint and the vivid Homescapes green so green pieces
-  stay readable. Oil is quiet
-  amber-brown with small drifting glints. Carved stones face the viewer and use
+  Keep chips more saturated than floor materials. Check the jade leaf on
+  mosaic, the blue scarab on silt, and the holly and blue ornament on
+  lanternlight and powder snow.
+- Relic Rush uses a slate-blue and limestone mosaic for restored cells and
+  matte rose-brown silt for the advancing hazard. Christmas Market uses a
+  warm apricot glow with a soft inside edge for lit cells and matte
+  winter-white powder for snow. Carved stones face the viewer and use
   the board's flat-top hex outline, with sandstone in Relic Rush and cool slate
   in Christmas Market. Each stone has one hit and shares its sprite with the
   goal display and guide.
@@ -111,7 +112,8 @@ when the geometry changes.
    local Homescapes shapes as reference and the palette above. Request true
    RGBA, generous transparent gutters, no text and no baked object shadows.
    Give the generator separate slots for the opaque square material swatches,
-   their freestanding goal icons and the oil glints on alpha.
+   and their freestanding goal icons. The terrain source sheet includes both
+   games' materials and icons.
 3. For a separate set of controls, author normal, selected, pressed, hover and
    disabled in that set's single atlas. Use the existing authored interaction
    art when the controls are outside the change. A color filter or overlaid
@@ -140,9 +142,10 @@ when the geometry changes.
    The Scener target places the rockets on the +30°, 90° and −30° axes.
    Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
-   sprites. The carved stone face uses the exact canonical mask. Carpet and
-   oil use opaque swatches under continuous surface masks. The renderer follows
-   the changing patch perimeter with a shallow rim.
+   sprites. The carved stone face uses the exact canonical mask. Floor
+   objectives use opaque, board-anchored swatches under continuous surface
+   masks. The renderer follows the changing perimeter with a shallow rim or
+   a soft fade for lanternlight.
 2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png` for the board
    and its effects, and `data/match3-hud.png` for the controls and HUD. Run
    `python3 tools/match3_atlas.py --check`. Record the packed frames in the

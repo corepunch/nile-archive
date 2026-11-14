@@ -231,6 +231,9 @@ def build_game(game, check):
     for name in theme:
         sources.pop(name, None)
         original_registration.pop(name, None)
+    # The themed campaign hazards use matte surfaces. The neutral atlas retains the source glints.
+    loaded.pop('oil-bubbles')
+    original_registration.pop('oil-bubbles')
     for i in range(6):
         name = f'kind-{i}'
         loaded.pop(name)

@@ -2,15 +2,15 @@
 
 ## Themed board art
 
-The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. The new surfaces are plain muted olive moss, lamp oil and warm-gray sandstone.
+The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. The floor objectives use a dusty blue mosaic and rose-brown river silt.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `relics-0` through `relics-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Terracotta-red collars and waist, with old-gold long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt and inset socket disc, a rope fuse and a lit tip. Parchment paper plane: Christmas Market's painted plane with its blues remapped by luminance to parchment shades. The rainbow ball has chamfered enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
-| `carpet-swatch`, `goal-carpet` | Woven mid-green carpet and a matching rolled-carpet goal icon. The palette sits between the earlier olive and vivid Homescapes-green versions so green pieces read over it. Carpet spreads through matches touching it. |
-| `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
+| `carpet-swatch`, `goal-carpet` | Dusty blue tesserae and a limestone chevron mark restored floor. Matching on the mosaic restores the cells it clears. The goal shows a fragment of the restored pattern. |
+| `oil-material`, `goal-oil` | Matte rose-brown sediment gathers in shallow banks. Matching on it clears it. If the turn clears none, silt spreads to a neighbouring cell. A silt bank icon identifies the goal. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's carved tablet. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
@@ -23,9 +23,9 @@ Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together f
 
 The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
 
-The [mid-green carpet sheet](../../../art/match3-carpet-paint/mid-green.png) uses a [midpoint swatch](../../../art/match3-carpet-paint/mid-green-palette.png) between the earlier board palettes. [Carpet and green pieces at both phone sizes](screenshots/review/mid-green-carpet/README.md).
+The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one built-in ImageGen call for both games using the [approved concepts](../../../art/match3-terrain/relic-rush-concepts.png). The [prompt](../../../art/match3-terrain/prompt.txt) and [registration manifest](../art/match3-atlas.json) record the opaque swatch crops and alpha-preserving goal icon placement. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/themed-terrain/README.md).
 
-The [painted oil and drop icon](../../../art/match3-floor-paint/source.png) and [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheets. The atlas manifest records prompts and registration. [In-game before and after](screenshots/review/board-floors/README.md).
+The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
 ## Chapter 1 quest objects
 
@@ -236,10 +236,8 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `chain` | One silver chain curves around the chip; one hit unlocks the piece |
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
-| `carpet-swatch` | Woven moss carpet, painted for the continuous floor patch. It spreads through matches touching it. |
-| `oil-material`, `oil-bubbles` | Spilled lamp oil, with two layers of drifting painted glints. Cleared by a match on it; spreads after a move that clears none. |
-| `goal-oil` | Amber drop for the lamp oil goal and guide. |
-| `goal-carpet` | Rolled green carpet for the moss goal and guide. |
+| `carpet-swatch`, `goal-carpet` | Restored mosaic and its goal icon. Coverage extends through matches touching the restored floor. |
+| `oil-material`, `goal-oil` | River silt and its goal icon. Clear it under a match or it advances after a turn that clears none. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |

@@ -50,7 +50,7 @@ local levels = {
     level("Lumber Lane", "Match four to make a rocket.", 28, 1800, 10, 0, 0, 1,
         bowl_mask, terrain(0, -1, 1, 0, -1)),
     -- 03: Gingerbread Swirl
-    level("Gingerbread Swirl", "Match on the green carpet to spread it.", 32, 2300, 12, 0, 0, 1,
+    level("Gingerbread Swirl", "Match in the lanternlight to light more tiles.", 32, 2300, 12, 0, 0, 1,
         bowl_mask, terrain(-2, 1, 1, 0, 1)),
     -- 04: Cocoa Corner
     level("Cocoa Corner", "Match through tinsel to free treats.", 34, 2700, 12, 4, 0, 1,
@@ -74,7 +74,7 @@ local levels = {
     level("Under the Big Fir", "Clear the tinsel and the ice.", 46, 5000, 20, 6, 6, 2,
         bowl_mask, terrain(0, 1, 0, -2, -1)),
     -- 11: Carols and Crumbs
-    level("Carols and Crumbs", "Spread the carpet around the square.", 32, 2500, 12, 0, 0, 1,
+    level("Carols and Crumbs", "Share the lanternlight around the square.", 32, 2500, 12, 0, 0, 1,
         chambers_mask, terrain(-1, -1, 1, 1, 1)),
     -- 12: Word from Fenwick
     level("Word from Fenwick", "Free tinsel along the court.", 35, 2900, 13, 5, 0, 1,
@@ -86,7 +86,7 @@ local levels = {
     level("The Bench by the Fir", "Open the court from either side.", 37, 3500, 14, 7, 0, 1,
         bowl_mask, terrain(-2, 0, 2, -1, -1)),
     -- 15: Tangled Tinsel
-    level("Tangled Tinsel", "Untangle tinsel along the carpet.", 38, 3700, 15, 9, 0, 1,
+    level("Tangled Tinsel", "Untangle tinsel and light the square.", 38, 3700, 15, 9, 0, 1,
         bowl_mask, terrain(0, -2, 1, 1, 1)),
     -- 16: Paper and String
     level("Paper and String", "Crack the ice around the paper.", 40, 4000, 15, 4, 7, 1,
@@ -95,7 +95,7 @@ local levels = {
     level("Twelve Horses", "Thaw ice across the court.", 41, 4200, 16, 5, 7, 1,
         bowl_mask, terrain(-2, 1, 2, -1, 1)),
     -- 18: Fairy Lights
-    level("Fairy Lights", "Take a breath and roll out the carpet.", 42, 3000, 12, 2, 4, 1,
+    level("Fairy Lights", "Light the court for the evening.", 42, 3000, 12, 2, 4, 1,
         bowl_mask, terrain(0, 0, 1, -2, -1)),
     -- 19: A Hundred Flames
     level("A Hundred Flames", "Remember: thick ice takes two hits.", 44, 4600, 18, 6, 8, 2,
@@ -104,7 +104,7 @@ local levels = {
     level("A Letter Forty Years Late", "Open both sides of the court.", 46, 5100, 20, 7, 9, 2,
         bowl_mask, terrain(-2, 1, 1, 0, -1)),
     -- 21: Carolers Court
-    level("Carolers Court", "Roll out the carpet for the carolers.", 34, 2800, 12, 0, 0, 1,
+    level("Carolers Court", "Light the way for the carolers.", 34, 2800, 12, 0, 0, 1,
         bowl_mask, terrain(0, -1, 1, 1, 1)),
     -- 22: Many Hands
     level("Many Hands", "Free tinsel along the passage.", 38, 3400, 14, 6, 0, 1,
@@ -116,7 +116,7 @@ local levels = {
     level("Frozen Fountain", "Thaw the ice around the fountain.", 40, 3900, 16, 4, 5, 2,
         bowl_mask, terrain(0, -1, 0, 1, 0)),
     -- 25: Snow on the Line
-    level("Snow on the Line", "Clear the caramel before it spreads.", 42, 4000, 16, 6, 6, 2,
+    level("Snow on the Line", "Clear the powder snow before it spreads.", 42, 4000, 16, 6, 6, 2,
         bowl_mask, terrain(-2, 1, 1, -1, 1)),
     -- 26: Lantern Ice
     level("Lantern Ice", "Thaw the ice around the lanterns.", 44, 4300, 17, 4, 9, 2,
@@ -125,7 +125,7 @@ local levels = {
     level("Every Light in Bellmere", "Clear the locks across the court.", 38, 4800, 18, 5, 6, 2,
         chambers_mask, terrain(-2, 1, 2, -1, 1)),
     -- 28: The Last Train
-    level("The Last Train", "Roll out the carpet before the finale.", 44, 3200, 13, 2, 4, 1,
+    level("The Last Train", "Light the square before the finale.", 44, 3200, 13, 2, 4, 1,
         bowl_mask, terrain(0, 0, 1, -1, -1)),
     -- 29: The Big Fir
     level("The Big Fir", "Untangle and thaw the court.", 47, 5200, 20, 8, 10, 2,
@@ -153,9 +153,7 @@ levels[23].lesson = "Untangle the tinsel and thaw the ice."
 levels[27].stones = {{cell=cell(2,0)}}
 levels[30].deliveries = {tokens={cell(2,-2)},exits={cell(2,2)}}
 levels[30].lesson = "Bring the parcel down to the tree."
--- Floors, as in Homescapes: carpet or caramel (its oil), never both, in about
--- a third of the levels; snow and hidden displays are gone.
--- Green carpet: matches touching it spread it.
+-- Matches touching lanternlight extend it across the court.
 local carpet = {
     [3] = {cell(0,-1), cell(0,0)}, [6] = {cell(1,-1), cell(1,0)},
     [9] = {cell(-3,-1), cell(3,0)},   -- one in each lane, not on the narrow spine
@@ -163,18 +161,15 @@ local carpet = {
     [21] = {cell(-2,1), cell(-2,2)}, [24] = {cell(-1,-1), cell(0,-1)}, [28] = {cell(-1,-1), cell(0,-2)},
 }
 for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
-levels[3].lesson = "Match on the green carpet to spread it."
--- Spilled caramel (Homescapes' oil): clear it by matching on it; it spreads
--- after any turn that clears none of it.
+levels[3].lesson = "Match in the lanternlight to light more tiles."
+-- Powder snow advances after a turn that clears none of it.
 levels[13].oil = {cell(4,-4), cell(4,-3), cell(4,-2), cell(4,-1), cell(4,0), cell(3,-1), cell(3,0)}
-levels[13].lesson = "Clear the spilled caramel before it spreads."
+levels[13].lesson = "Clear the powder snow before it spreads."
 levels[25].oil = {cell(2,-3), cell(3,-3), cell(3,-2), cell(3,-1), cell(4,-3), cell(4,-2), cell(4,-1)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "locks" counts every blocker: tinsel, ice and stone;
--- "carpet" counts the cells the green carpet has yet to cover; "oil" counts
--- the spilled caramel left.
+-- The engine goal keys "carpet" and "oil" count unlit/unrestored and covered cells.
 local goals = {
     {"idols"}, {"idols"}, {"carpet"}, {"locks", "idols"}, {"locks", "idols"},
     {"carpet", "locks"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet", "locks"}, {"locks", "idols"},

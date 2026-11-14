@@ -141,9 +141,9 @@ local guide_entries = {
      icon={front="stone-1",tiles={}}},
     {id="deliveries", title="Tablets", description="Clear the cells below a tablet so it falls to its exit.",
      icon={front="delivery",tiles={}}},
-    {id="carpet", title="Spreading moss", description="Match on the moss to spread it to every cell the match clears. Cover the whole site.",
+    {id="carpet", title="Restore the mosaic", description="Match on the mosaic to restore every cell the match clears. Restore the whole floor.",
      icon={front="goal-carpet",tiles={}}},
-    {id="oil", title="Lamp oil", description="Match on the oil to clear it. If a move clears none, it spreads to the next cell.",
+    {id="oil", title="River silt", description="Match on the silt to clear it. If a move clears none, silt spreads to a neighbouring cell.",
      icon={front="goal-oil",tiles={}}},
 }
 local function guide_icon(box, icon)

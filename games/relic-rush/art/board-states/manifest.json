@@ -1212,7 +1212,6 @@
       ],
       "oil": [
         "oil-material",
-        "oil-bubbles",
         "goal-oil"
       ],
       "stone": [
@@ -1283,20 +1282,6 @@
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/curved-chains/README.md"
     },
-    "floor_paint": {
-      "generator": "built-in ImageGen",
-      "source": "../../art/match3-floor-paint/source.png",
-      "prompt": "../../art/match3-floor-paint/prompt.txt",
-      "edit_target": "../../art/match3-floor-paint/edit-target.png",
-      "frames": [
-        "oil-material",
-        "oil-bubbles",
-        "goal-oil"
-      ],
-      "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/board-floors/README.md"
-    },
     "stone_paint": {
       "generator": "built-in ImageGen",
       "source": "../../art/match3-blockers/source.png",
@@ -1308,19 +1293,20 @@
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/board-floors/README.md"
     },
-    "carpet_paint": {
+    "terrain_paint": {
       "generator": "built-in ImageGen",
-      "source": "../../art/match3-carpet-paint/mid-green.png",
-      "prompt": "../../art/match3-carpet-paint/mid-green.prompt.txt",
-      "edit_target": "../../art/match3-carpet-paint/source.png",
-      "palette_reference": "../../art/match3-carpet-paint/mid-green-palette.png",
-      "frames": [
-        "carpet-swatch",
-        "goal-carpet"
-      ],
+      "source": "../../art/match3-terrain/source.png",
+      "prompt": "../../art/match3-terrain/prompt.txt",
+      "reference": "../../art/match3-terrain/relic-rush-concepts.png",
+      "frames": {
+        "carpet-swatch": "Restored mosaic surface beneath pieces",
+        "goal-carpet": "Restored mosaic goal counter and guide icon",
+        "oil-material": "River silt surface beneath pieces",
+        "goal-oil": "River silt goal counter and guide icon"
+      },
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/mid-green-carpet/README.md"
+      "review": "docs/screenshots/review/themed-terrain/README.md"
     }
   }
 }

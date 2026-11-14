@@ -2,15 +2,15 @@
 
 ## Themed board art
 
-The default chips retain the original identities (bell, candy cane, holly, ornament, bauble and gingerbread). Each has one dominant hue and at most one accent hue. The new surfaces are plain pine-green felt, amber caramel and cool slate.
+The default chips retain the original identities (bell, candy cane, holly, ornament, bauble and gingerbread). Each has one dominant hue and at most one accent hue. The floor objectives use warm lanternlight and soft powder snow.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
-| `carpet-swatch`, `goal-carpet` | Woven mid-green carpet and a matching rolled-carpet goal icon. The palette sits between the earlier olive and vivid Homescapes-green versions so green pieces read over it. Carpet spreads through matches touching it. |
-| `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
+| `carpet-swatch`, `goal-carpet` | Warm apricot light spreads across the paving when a match touches a lit cell. A bronze lantern identifies the goal. |
+| `oil-material`, `goal-oil` | Pale matte snow drifts beneath treats. Matching on it clears it. If the turn clears none, snow drifts into a neighbouring cell. A snow mound identifies the goal. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's red parcel. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
@@ -23,9 +23,9 @@ Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together f
 
 The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
 
-The [mid-green carpet sheet](../../../art/match3-carpet-paint/mid-green.png) uses a [midpoint swatch](../../../art/match3-carpet-paint/mid-green-palette.png) between the earlier board palettes. [Carpet and green pieces at both phone sizes](screenshots/review/mid-green-carpet/README.md).
+The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one built-in ImageGen call for both games using the [approved concepts](../../../art/match3-terrain/christmas-market-concepts.png). The [prompt](../../../art/match3-terrain/prompt.txt) and [registration manifest](../art/match3-atlas.json) record the opaque swatch crops and alpha-preserving goal icon placement. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/themed-terrain/README.md).
 
-The [painted oil and drop icon](../../../art/match3-floor-paint/source.png) and [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheets. The atlas manifest records prompts and registration. [In-game before and after](screenshots/review/board-floors/README.md).
+The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
 ## Additional board elements
 
@@ -263,43 +263,19 @@ and `python3 tools/match3_atlas.py`. Review with
 
 [Fitted art in the Market Keeper’s Guide](screenshots/review/fitted-gold/guide.jpg)
 
-## Green carpet
+## Lanternlight and powder snow
 
-Homescapes' carpet (`CELL_JELLY`). Seeded in levels 3, 6, 9, 11, 15, 18, 21, 24 and 28; a level has carpet or caramel, never both. A match touching it,
-or a move begun on it, carpets every cell it hits; the goal counts the cells
-still uncovered.
+Lanternlight starts in levels 3, 6, 9, 11, 15, 18, 21, 24 and 28. A match touching
+the light extends it to the active cells the match clears. The goal counts
+unlit cells. Powder snow starts in levels 13 and 25. A match or blast on a
+snowy cell clears the snow. After any turn that clears none, it advances to
+one neighbouring cell, increasing the goal count.
 
-| Asset | State and meaning | Source | Runtime |
-| --- | --- | --- | --- |
-| `carpet-swatch` | Carpet material, tiled under the board's patch mask | ImageGen floor sheet, opaque square cropped under the SDF mask | `data/match3.png` |
-| `goal-carpet` | HUD goal and guide icon: rolled woven carpet | ImageGen floor sheet | `data/match3.png` |
-| Board patch | One rounded patch over every carpeted cell, rim shaded | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
-
-There is a single carpet state; it has no strength or interaction states.
-
-| Carpet levels at 480×900 | Patch on Homescapes levels 37 and 65 | Goal icon |
-| --- | --- | --- |
-| ![Carpet levels](screenshots/review/carpet/levels.jpg) | ![Patch](screenshots/review/carpet/homescapes-patch.jpg) | ![Icon](screenshots/review/carpet/goal-icon.jpg) |
-
-## Spilled caramel
-
-Homescapes' oil (`CELL_OIL`), seeded in levels 13 and 25. One layer under a
-piece, cleared by a match on its cell or a blast. After a move that clears none
-of it, it spreads to one neighbouring cell, and the goal counts what is left.
-The board uses painted amber liquid and two layers of drifting glints.
-
-| Asset | State and meaning | Source | Runtime |
-| --- | --- | --- | --- |
-| `oil-material` | Golden liquid, tiled under the oil patch mask | ImageGen floor sheet | `data/match3.png` |
-| `oil-bubbles` | Painted glints drifting at two speeds, fixed in reduced motion | ImageGen floor sheet | `data/match3.png` |
-| `goal-oil` | Amber drop for the HUD and guide | ImageGen floor sheet | `data/match3.png` |
-| Board patch | One rounded patch over every oil cell, amber rim | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
-
-There is a single oil state.
-
-| Oil levels (Christmas 13, 25; Relic Rush 20, 26) | Homescapes levels 161 and 162 | Art |
-| --- | --- | --- |
-| ![Oil levels](screenshots/review/oil/levels.jpg) | ![Reference](screenshots/review/oil/homescapes-161-162.jpg) | ![Art](screenshots/review/oil/art.jpg) |
+The renderer tiles both materials inside the connected-cell masks. Lanternlight
+uses a feathered edge inside the lit cells. Powder snow stays matte beneath
+the treats. Both objectives have one board state and a separate icon shared
+by the HUD and the Market Keeper’s Guide.
+[In-game review](screenshots/review/themed-terrain/README.md).
 
 ## Ice
 

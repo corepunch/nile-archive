@@ -25,15 +25,14 @@ results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 The thirty winter wishes each use an authored court contour and terrain focus,
-with tinsel, ice, boxes, carpet and caramel introduced and revisited across the three episodes.
+with tinsel, ice, carved stones, lanternlight and powder snow introduced and revisited across the three episodes.
 See the [board progression](docs/board-progression.md) for each wish and the
 limits of the current difficulty tuning.
 
 ## Shared match engine and atlas
 
 The campaign uses only elements found in Homescapes' story levels: stone,
-tinsel (chains), ice, present deliveries, green carpet and spilled caramel
-(oil). Each has a different introduction order from Relic Rush.
+tinsel (chains), ice, present deliveries, and two floor objectives themed as lanternlight and powder snow. Each has a different introduction order from Relic Rush.
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
 and [in-game art review](docs/screenshots/review/board-theme/README.md).
 

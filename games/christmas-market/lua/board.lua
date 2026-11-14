@@ -12,6 +12,9 @@ rules.bind_view(R)
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
+-- Lanternlight fades at the patch boundary, so neighbouring unlit cells stay gray.
+R.floor_patches = {carpet = {material = "carpet-swatch", corner = .25, fillet = .8,
+    range = .6, texel = 1.5, tile = 1.5, inset = 3.4, rim = 0, shade = 0, bevel = 0, feather = 3}}
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R

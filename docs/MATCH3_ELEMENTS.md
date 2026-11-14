@@ -21,7 +21,7 @@ matching colors: clear a route to a destination.
 
 | Family | Implemented behavior | Design purpose |
 | --- | --- | --- |
-| Stone / box | A solid cell with 1–3 hits, no piece inside. Adjacent ordinary matches or direct special/tool hits remove one layer per wave. | Gate a bridge or divide work into successive openings. A three-hit wall needs repeated access, not just more score. |
+| Carved stone | A solid cell with one hit and no piece inside. An adjacent ordinary match or direct special/tool hit breaks it. | Gate a bridge or open a connection between work areas. |
 | Relic parcel / present delivery | A nonmatching, unswappable token. It falls straight down and is consumed once at a marked exit. Blasts cannot destroy it; shuffles keep it in place. | Turn clearing into route preparation. Unlike normal pieces it cannot drift diagonally into an unintended bottom pocket. |
 
 The lock counter includes all remaining chain, ice and stone hits. Delivery,
@@ -65,7 +65,7 @@ Optional descriptor fields use **zero-based engine cell IDs**. The campaign's
 `cell(q,r)` helper converts authored axial coordinates. Omitted fields are empty.
 
 ```lua
-stones = {{cell=stone_cell, hp=3}}
+stones = {{cell=stone_cell}}
 deliveries = {tokens={token_cell}, exits={destination_cell}}
 carpet = {seed_cell, another_seed}
 oil = {oil_cell, another_oil_cell}
@@ -87,19 +87,14 @@ one random neighbouring cell. The `oil` goal counts the oil left
 the turn's `oil_cleared` flag. Delivery exits remain fixed. `game_copy` isolates
 mutable state for hint/bot search. A wave deals at most one hit to each stone.
 
-`engine/match3_elements_view.lua` loads and draws the shared presentation.
-Carpet, oil and campaign stone each use a signed distance field of their
-occupied hexes (`texture.hex_field`). It rounds the exterior and blends the
-joins between adjacent cells. The renderer anchors each tiled material to the
-board and masks it with `gfx.sdf_mask`. Carpet and stone have inset top faces
-with a lit bevel and a soft contact shadow. The inset follows the outside
-edges of the entire patch, preserving the joins between neighboring cells.
-The field is rebuilt when its occupied cells or layout change. Stone uses one authored mark per
-remaining hit count. Cracking a stone changes its mark, and breaking it opens
-its cell in the shared surface. Oil adds two drifting bubble layers.
-Smaller pieces leave special floor artwork visible; this is spatial scaling
-of the original sprite, not a recolored state. The guide uses the same atlas keys
-as the board and HUD.
+`engine/match3_elements_view.lua` draws the two floor objectives beneath the
+pieces. Relic Rush presents them as restored mosaic and river silt. Christmas
+Market uses lanternlight and powder snow. The renderer anchors each tiled
+material to the board and masks the connected patch with `texture.hex_field`
+and `gfx.sdf_mask`. The field rounds the exterior, joins neighbouring cells
+and rebuilds when the occupied cells or layout change. Lanternlight has a
+feathered boundary. Each carved stone is one face-on hex sprite. The guide
+and HUD use the same goal icons.
 
 ## Artwork and verification
 

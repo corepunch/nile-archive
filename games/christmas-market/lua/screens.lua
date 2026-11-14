@@ -117,9 +117,9 @@ local guide_entries = {
      icon={front="stone-1",tiles={}}},
     {id="deliveries", title="Parcels", description="Clear the cells below a parcel so it falls to its exit.",
      icon={front="delivery",tiles={}}},
-    {id="carpet", title="Green carpet", description="Match on the carpet to spread it to every cell the match clears. Cover the whole court.",
+    {id="carpet", title="Lanternlight", description="Match in the lanternlight to light every cell the match clears. Light the whole court.",
      icon={front="goal-carpet",tiles={}}},
-    {id="oil", title="Spilled caramel", description="Match on the caramel to clear it. If a move clears none, it spreads to the next cell.",
+    {id="oil", title="Powder snow", description="Match on the snow to clear it. If a move clears none, snow drifts into a neighbouring cell.",
      icon={front="goal-oil",tiles={}}},
 }
 local function guide_icon(box, icon)

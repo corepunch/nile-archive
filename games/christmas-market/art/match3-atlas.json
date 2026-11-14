@@ -695,104 +695,98 @@
       128,
       128
     ],
-    "oil-bubbles": [
-      134,
-      1830,
-      128,
-      128
-    ],
     "oil-material": [
-      266,
+      134,
       1830,
       128,
       128
     ],
     "plane": [
-      398,
+      266,
       1830,
       128,
       128
     ],
     "prism": [
-      530,
+      398,
       1830,
       128,
       128
     ],
     "rainbow-ball": [
-      662,
+      530,
       1830,
       128,
       128
     ],
     "ray-column": [
-      794,
+      662,
       1830,
       128,
       128
     ],
     "ray-diagonal": [
-      926,
+      794,
       1830,
       128,
       128
     ],
     "ray-row": [
-      1058,
+      926,
       1830,
       128,
       128
     ],
     "rocket-horizontal": [
-      1190,
+      1058,
       1830,
       128,
       128
     ],
     "rocket-vertical": [
-      1322,
+      1190,
       1830,
       128,
       128
     ],
     "selected": [
-      1454,
+      1322,
       1830,
       128,
       128
     ],
     "statue-1": [
-      1586,
+      1454,
       1830,
       128,
       128
     ],
     "statue-2": [
-      1718,
+      1586,
       1830,
       128,
       128
     ],
     "statue-3": [
-      1850,
+      1718,
       1830,
       128,
       128
     ],
     "stone-1": [
+      1850,
+      1830,
+      128,
+      128
+    ],
+    "web-2": [
       2,
       1962,
       128,
       128
     ],
-    "web-2": [
-      134,
-      1962,
-      128,
-      128
-    ],
     "glow": [
-      266,
+      134,
       1962,
       64,
       64
@@ -3354,13 +3348,13 @@
       "silhouette_area_px": 6579
     },
     "carpet-swatch": {
-      "source": "../../art/match3-carpet-paint/mid-green.png",
-      "prompt": "../../art/match3-carpet-paint/mid-green.prompt.txt",
+      "source": "../../art/match3-terrain/source.png",
+      "prompt": "../../art/match3-terrain/prompt.txt",
       "crop": [
-        109,
-        109,
-        778,
-        778
+        926,
+        83,
+        1282,
+        439
       ],
       "rotation": 0,
       "fit": "tiled material",
@@ -3369,17 +3363,16 @@
         128
       ],
       "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-carpet-paint/source.png",
-      "palette_reference": "../../art/match3-carpet-paint/mid-green-palette.png"
+      "reference": "../../art/match3-terrain/christmas-market-concepts.png"
     },
     "oil-material": {
-      "source": "../../art/match3-floor-paint/source.png",
-      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "source": "../../art/match3-terrain/source.png",
+      "prompt": "../../art/match3-terrain/prompt.txt",
       "crop": [
-        452,
-        56,
-        740,
-        344
+        1364,
+        83,
+        1719,
+        438
       ],
       "rotation": 0,
       "fit": "tiled material",
@@ -3388,70 +3381,51 @@
         128
       ],
       "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-floor-paint/edit-target.png"
+      "reference": "../../art/match3-terrain/christmas-market-concepts.png"
     },
     "goal-carpet": {
-      "source": "../../art/match3-carpet-paint/mid-green.png",
-      "prompt": "../../art/match3-carpet-paint/mid-green.prompt.txt",
+      "source": "../../art/match3-terrain/source.png",
+      "prompt": "../../art/match3-terrain/prompt.txt",
       "crop": [
         887,
-        0,
+        485,
+        1331,
+        887
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        77,
+        116
+      ],
+      "generator": "built-in ImageGen",
+      "reference": "../../art/match3-terrain/christmas-market-concepts.png",
+      "offset": [
+        25,
+        6
+      ]
+    },
+    "goal-oil": {
+      "source": "../../art/match3-terrain/source.png",
+      "prompt": "../../art/match3-terrain/prompt.txt",
+      "crop": [
+        1331,
+        485,
         1774,
         887
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        118,
-        82
+        114,
+        70
       ],
       "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-carpet-paint/source.png",
-      "palette_reference": "../../art/match3-carpet-paint/mid-green-palette.png",
+      "reference": "../../art/match3-terrain/christmas-market-concepts.png",
       "offset": [
-        5,
-        23
+        7,
+        29
       ]
-    },
-    "goal-oil": {
-      "source": "../../art/match3-floor-paint/source.png",
-      "prompt": "../../art/match3-floor-paint/prompt.txt",
-      "crop": [
-        1586,
-        0,
-        1983,
-        396
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        84,
-        116
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-floor-paint/edit-target.png",
-      "offset": [
-        22,
-        6
-      ]
-    },
-    "oil-bubbles": {
-      "source": "../../art/match3-floor-paint/source.png",
-      "prompt": "../../art/match3-floor-paint/prompt.txt",
-      "crop": [
-        1586,
-        396,
-        1983,
-        793
-      ],
-      "rotation": 0,
-      "fit": "tiled authored alpha",
-      "fitted_size": [
-        128,
-        128
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-floor-paint/edit-target.png"
     },
     "chain": {
       "source": "../../art/match3-chain-paint/source.png",
@@ -3547,24 +3521,21 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "a461324956973002b42fbb1883a1d23cdaac1782d7b4eb8e17408be336687bee",
+    "recipe": "c43fed2afeace3772e99f62da2619b796e647d0a0033566f3322bc26f80d0980",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
-      "art/match3-carpet-paint/mid-green-palette.png": "9b576e82026fd4e5781c5e334027a3c1c58f1e3098900fba0e88f23722635250",
-      "art/match3-carpet-paint/mid-green.png": "9aa19cd399e9f4b3026fe133247d29068deceefa0d91117fdb07304b2b58634b",
-      "art/match3-carpet-paint/mid-green.prompt.txt": "c09d93114d919eab8b9d6ac7ddac9549098dc060d16c33444321c8aa30475de4",
-      "art/match3-carpet-paint/source.png": "7af560260367fb591874df44986d1ea1d024801118a14ae76dfd202c7260bc20",
       "art/match3-chain-paint/edit-target.png": "7ee50689492c7eee47b14e77dde24351da75ac89c3d359993b7ab8a5bd35848a",
       "art/match3-chain-paint/prompt.txt": "9d911d21024a3d3c12969959e60bd5c89355fc8abf8e0f97c64a766c27865998",
       "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
-      "art/match3-floor-paint/edit-target.png": "049a58cfe0109d359a0b0486e5ca74677a60096d115a21da3e914cac75a86302",
-      "art/match3-floor-paint/prompt.txt": "2b62f632d9c6b27ddc1ac29c5345e771d14b922ccfa44895f7c3f2dda3778d36",
-      "art/match3-floor-paint/source.png": "837b13989d7c4ffafb1190e0ec12e87bccec5d893db4124b8a6d2cfaf8b7769d",
       "art/match3-power-up-paint/prompt.txt": "8207562c2d6f8a2e3ea66e51476875394072d09f8645aeb8bc725f1b4daa5d7e",
       "art/match3-power-up-paint/scener-strip.png": "e087fe56642192a2e42885300c04da8fbc8c18433736ac9c46ad1e0340c421c0",
       "art/match3-power-up-paint/source.png": "1faeffea23711f2a82db1369793da07017089226a0973e9b86b47c0dcbf92041",
+      "art/match3-terrain/christmas-market-concepts.png": "d3c3fc5154a223de3228d490748acc583802e23433c1cd70ed991833841eadeb",
+      "art/match3-terrain/prompt.txt": "9a54672874b6f41cf6a3089802eedcdea0586282c97600b9ffecf8fd97f9bc58",
+      "art/match3-terrain/relic-rush-concepts.png": "f96643e7f53cb608677ba8165b6aeb8706879f915900e91b212e38cecfdaabeb",
+      "art/match3-terrain/source.png": "f1f228a79f89d7fb38d21f672ae8964855c217833ef100170a2953f5d2bf2454",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
@@ -3715,14 +3686,14 @@
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
-      "tools/match3_theme_art.py": "252f3f6fb9e03c050a694e32c8959fc7e7d4556498215f1be36ca946b4b6c025",
+      "tools/match3_theme_art.py": "1f6b2964f4c0e25e0b9889935e8e12b874a2c9353829679ec08c9fb6007e0e46",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "0f567983f876891f16bc919ebc10b3533c18e2a7899f889515e547e58cd96c13",
-      "games/christmas-market/data/match3.png": "5f6430ec1835b284286f9bb4eb7e3783e652eaba5884162a81698bc78951ca3c",
+      "games/christmas-market/data/match3.png": "54cb4d0bd964e786078a0f788090a34af04135347de9d16c183ca13587169622",
       "games/christmas-market/lua/match3_hud.lua": "ecc847b06937bdbdda49371e8d69e901b63086356fbd1e077d481e2747c2b395",
-      "games/christmas-market/lua/match3_skin.lua": "870bf5b91dac03eb8ede124dd345fe84d94b1a932f3bd3a2ff1d1d629b9f44dd"
+      "games/christmas-market/lua/match3_skin.lua": "c802f38e88b4fcd89a6d9d127b90eea418a529711c7f7adb15abf8284e98f5a0"
     }
   }
 }

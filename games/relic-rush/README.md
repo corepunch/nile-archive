@@ -29,8 +29,8 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-The campaign uses only elements found in Homescapes' story levels: layered
-stone, chains, ice, tablet deliveries, moss (carpet) and lamp oil. Each has an
+The campaign uses only elements found in Homescapes' story levels: carved
+stone, chains, ice, tablet deliveries, and two floor objectives themed as restored mosaic and river silt. Each has an
 introduction in the [board progression](docs/board-progression.md).
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
 and [in-game art review](docs/screenshots/review/board-theme/README.md).
@@ -191,30 +191,30 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | 2 | The Lamp Lens | 29 | Relics | 0 | 0 | Match 4 for a rocket. |
 | 3 | The Buried Cable | 32 | Blockers, Relics | 0 | 0 | Match beside a stone to break it. |
 | 4 | Under the Pump | 35 | Blockers, Relics | 4 | 0 | Match to break chains. |
-| 5 | The Quay Marker | 35 | Moss | 4 | 0 | Match on the moss to spread it. |
+| 5 | The Quay Marker | 35 | Mosaic | 4 | 0 | Match on the mosaic to restore more tiles. |
 | 6 | The Shore Marker | 37 | Blockers, Relics | 0 | 5 | Match to break ice. |
 | 7 | The Tool Roll | 40 | Blockers, Relics | 3 | 4 | Break the carved stone. |
-| 8 | The Broken Cable | 40 | Moss, Relics | 4 | 6 | Match 5 for a rainbow ball. |
+| 8 | The Broken Cable | 40 | Mosaic, Relics | 4 | 6 | Match 5 for a rainbow ball. |
 | 9 | The Supply Crate | 43 | Blockers, Relics | 5 | 6 | Clear the chains and the ice. |
-| 10 | The Shutter Crank | 46 | Moss, Blockers | 6 | 6 | Spread the moss over the centre. |
+| 10 | The Shutter Crank | 46 | Mosaic, Blockers | 6 | 6 | Restore the mosaic through the centre. |
 | 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |
 | 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free chained relics. |
-| 13 | Names in the Stone | 37 | Moss, Blockers | 6 | 0 | Aim rockets along the chains. |
+| 13 | Names in the Stone | 37 | Mosaic, Blockers | 6 | 0 | Aim rockets along the chains. |
 | 14 | Static | 38 | Blockers, Relics | 7 | 0 | Work around the broken seam. |
 | 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Clear the stone to open the board. |
 | 16 | Supper for Twelve | 40 | Blockers, Relics | 4 | 7 | Clear the frozen gems. |
 | 17 | The Torn Log | 42 | Blockers, Relics | 5 | 7 | Thick ice takes two hits. |
-| 18 | Lantern Steps | 40 | Moss | 2 | 4 | Spread the moss across the terrace. |
+| 18 | Lantern Steps | 40 | Mosaic | 2 | 4 | Restore the mosaic across the terrace. |
 | 19 | Under the Vines | 45 | Blockers, Relics | 4 | 6 | Work beneath the locks. |
-| 20 | The Archivist's Key | 46 | Lamp oil, Blockers | 5 | 7 | Mop up the lamp oil before it spreads. |
+| 20 | The Archivist's Key | 46 | River silt, Blockers | 5 | 7 | Clear the river silt before it spreads. |
 | 21 | Tomas's Trail | 35 | Delivery | 0 | 0 | Clear below the tablet to deliver it. |
-| 22 | The Frozen Stair | 40 | Moss, Blockers | 2 | 8 | Thaw the frozen approach. |
+| 22 | The Frozen Stair | 40 | Mosaic, Blockers | 2 | 8 | Thaw the frozen approach. |
 | 23 | The Star Road | 40 | Relics, Blockers | 3 | 4 | Choose a colour for the rainbow ball. |
-| 24 | Noon Shadow | 41 | Moss, Relics | 4 | 5 | Spread the moss across the shadow. |
+| 24 | Noon Shadow | 41 | Mosaic, Relics | 4 | 5 | Restore the mosaic across the shaded floor. |
 | 25 | Smoke on the Water | 38 | Blockers, Relics | 6 | 6 | Work through the locks. |
-| 26 | The Jade Deep | 43 | Lamp oil, Blockers | 4 | 7 | Clear the oil before it spreads. |
+| 26 | The Jade Deep | 43 | River silt, Blockers | 4 | 7 | Clear the river silt before it spreads. |
 | 27 | Six Sun Gates | 45 | Blockers, Relics | 7 | 8 | Clear the scattered locks. |
-| 28 | The Last Terrace | 42 | Moss | 2 | 4 | Spread the moss across the terrace. |
+| 28 | The Last Terrace | 42 | Mosaic | 2 | 4 | Restore the mosaic across the terrace. |
 | 29 | The Silent Temple | 47 | Blockers, Relics | 8 | 10 | Break through the temple floor. |
 | 30 | The Warning Returns | 49 | Delivery, Blockers | 8 | 10 | Bring the tablet down to its exit. |
 
@@ -269,7 +269,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 - Thirty distinct hex board masks with 48–58 active cells. Match straight lines of three or more identical relics along any hex axis. Four makes a directional rocket, five or more makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a paper plane.
 - Swap two specials for a combination attack. A rainbow ball combined with another power-up converts matching chips into that power-up before firing them.
-- An adjacent match or a direct power-up hit breaks a carved hex stone. Moss spreads through matches on it, lamp oil spreads after a move that clears none, and a tablet falls to its exit. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits.
+- An adjacent match or a direct power-up hit breaks a carved hex stone. The mosaic extends through matches on it, river silt advances after a turn that clears none, and a tablet falls to its exit. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.

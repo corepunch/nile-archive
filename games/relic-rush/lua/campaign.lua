@@ -86,7 +86,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Quay Marker", "Match on the moss to spread it.", 35, 3100, 14, 4, 0)
+        local l = level("The Quay Marker", "Match on the mosaic to restore more tiles.", 35, 3100, 14, 4, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -126,7 +126,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shutter Crank", "Spread the moss over the centre.", 46, 5000, 20, 6, 6)
+        local l = level("The Shutter Crank", "Restore the mosaic through the centre.", 46, 5000, 20, 6, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, -1)
         l.ice_layers = 2
@@ -190,7 +190,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Lantern Steps", "Spread the moss across the terrace.", 40, 3000, 12, 2, 4)
+        local l = level("Lantern Steps", "Restore the mosaic across the terrace.", 40, 3000, 12, 2, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -238,7 +238,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Noon Shadow", "Spread the moss across the shadow.", 41, 3900, 16, 4, 5)
+        local l = level("Noon Shadow", "Restore the mosaic across the shaded floor.", 41, 3900, 16, 4, 5)
         l.mask = bowl_mask
         l.terrain = central_seam(1)
         l.ice_layers = 2
@@ -254,7 +254,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Jade Deep", "Clear the oil before it spreads.", 43, 4300, 17, 4, 7)
+        local l = level("The Jade Deep", "Clear the river silt before it spreads.", 43, 4300, 17, 4, 7)
         l.mask = lanes_mask
         l.terrain = central_seam(-1)
         l.ice_layers = 2
@@ -270,7 +270,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Last Terrace", "Spread the moss across the terrace.", 42, 3200, 13, 2, 4)
+        local l = level("The Last Terrace", "Restore the mosaic across the terrace.", 42, 3200, 13, 2, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 1, 0, -1)
         l.ice_layers = 1
@@ -323,25 +323,21 @@ local quest_objects = {
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Bring the tablet down to its exit."
--- Floors, as in Homescapes: moss (its carpet) or lamp oil, never both, in
--- about a third of the levels; dig sites are gone.
--- Moss: matches touching it spread it.
+-- Matches touching the mosaic restore more floor tiles.
 local carpet = {
     [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = {cell(-2,1), cell(-2,2)},
     [13] = {cell(-2,1), cell(-2,2)}, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0)},
     [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
 }
 for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
--- Lamp oil (Homescapes' oil): clear it by matching on it; it spreads after any
--- turn that clears none of it.
+-- River silt advances after a turn that clears none of it.
 levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), cell(-3,3)}
-levels[20].lesson = "Mop up the lamp oil before it spreads."
+levels[20].lesson = "Clear the river silt before it spreads."
 levels[26].oil = {cell(3,-4), cell(3,-3), cell(3,-2), cell(4,-4), cell(4,-3), cell(4,-2)}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- "idols" are relics, "locks" counts every blocker: chains, ice and stone; "carpet" counts the cells the moss has yet to cover;
--- "oil" counts the lamp oil left.
+-- The engine goal keys "carpet" and "oil" count unlit/unrestored and covered cells.
 local goals = {
     {"idols"}, {"idols"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet"},
     {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks"},
