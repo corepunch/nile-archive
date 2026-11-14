@@ -27,13 +27,18 @@ The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one b
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
-## Story mosaics (prototype)
+## Story mosaics
 
 | Asset | Rule meaning and states | Source and runtime |
 | --- | --- | --- |
-| `reveal-08` | Board 8, The Broken Cable. On a first clear the restored mosaic uncovers this picture in place of `carpet-swatch`; a replay shows the plain mosaic. States: covered (board face), uncovered (the picture inside the mosaic patch), won (pieces and blockers fade, the whole picture holds for 1.2 s, then the first-clear exchange plays over it). One mid-board notice at half restored. | **Placeholder.** Drawn procedurally by `python3 tools/relic_reveal_art.py` into `data/reveal-08.jpg` (720×800, laid across the board and cropped to cover it; the patch mask is the engine's). No ImageGen source yet. |
+| `reveal-08` | Board 8, The Broken Cable. Unrestored cells show the board face. Restored cells uncover the camp lamp, its severed relay cable, and a keeper operating the tide-room shutter. A notice appears at half restored. On the win the pieces fade and the painting holds for 1.2 seconds before the first-clear exchange. Replays use the plain mosaic. | Built-in ImageGen [master](../art/story-mosaics/broken-relay.png) and [prompt](../art/story-mosaics/broken-relay.prompt.txt). Runtime `data/reveal-08.jpg`. |
 
-The authored relay mosaic is tracked in [#101](https://github.com/corepunch/nile-archive/issues/101). It needs to read at 480×900 and 390×844, with the torn cable and the keeper's hand on the shutter inside the compact board's cut corners. [In-game review](review/story-mosaic/README.md).
+Run `python3 games/relic-rush/tools/prepare_story_mosaics.py` to center-crop
+and scale the 1190×1322 master to 720×800 with Lanczos, then encode it as
+JPEG at quality 91 with 4:4:4 chroma. The renderer center-crops the picture
+over the full board bounds and reveals it through the restored-cell mask.
+The [in-game comparison](review/story-mosaic/README.md) shows the partial and
+complete reveals at 480×900 and 390×844.
 
 ## Chapter 1 quest objects
 

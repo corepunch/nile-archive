@@ -141,6 +141,16 @@ for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
 
+campaign = (ROOT / "lua/campaign.lua").read_text()
+mosaics = manifest["story_mosaics"]
+assert {name: str(item["level"]) for name, item in mosaics["pictures"].items()} == {
+    name: level for level, name in re.findall(r'levels\[(\d+)\]\.reveal = \{picture="([^"]+)"', campaign)
+}
+for name, item in mosaics["pictures"].items():
+    assert item["runtime"] == f"data/{name}.jpg" and item["runtime"] in actual
+    assert (ROOT / item["prompt"]).is_file() and f"`{name}`" in doc
+subprocess.run([sys.executable, str(ROOT / mosaics["registration"]), "--check"], check=True)
+
 # Kenney particle sprites: retained CC0 sources, a fresh atlas and documented frames.
 particles = manifest['particle_sprites']
 assert (ROOT / particles['license']).is_file(), 'Particle sprites need their licence'
