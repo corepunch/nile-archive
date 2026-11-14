@@ -872,7 +872,7 @@ function E.new(config)
             return not movable(down) or g.tiles[down].kind ~= -1
         end
         while true do
-            local step, used, empty = {tiles = {}, from = {}}, {}, 0
+            local step, used, empty, progress = {tiles = {}, from = {}}, {}, 0, false
             local next_from = {}
             for i = 0, CELLS - 1 do
                 step.tiles[i], step.from[i], next_from[i] = g.tiles[i], i, from[i]
@@ -894,13 +894,25 @@ function E.new(config)
                     if source then
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
+                        progress = true
                     elseif inlet or not movable(left) and not movable(right) and not movable(above) then
+                        spawned = spawned + 1
+                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(randn(g, COLORS)), -1, -spawned
+                        progress = true
+                    end
+                end
+            end
+            if empty == 0 then break end
+            if not progress then
+                -- A whole pass moved and made nothing, so no neighbour will ever give these
+                -- holes a piece (seen on a deliveries board with locks). Fill them as blocked cells do.
+                for _, i in ipairs(fall_order) do
+                    if movable(i) and g.tiles[i].kind == -1 then
                         spawned = spawned + 1
                         step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(randn(g, COLORS)), -1, -spawned
                     end
                 end
             end
-            if empty == 0 then break end
             steps[#steps + 1] = step
             g.tiles, from = step.tiles, next_from
             local has_delivery = false
