@@ -126,7 +126,12 @@ function E.pause_button(R, bounds, offset)
     return st.clicked
 end
 
-function E.bind_board_ui(R, rules, tool_art)
+local goal_icon_adjustments = {
+    chain = {scale = 1.12, x = 2},
+    ["stone-1"] = {scale = .9},
+}
+
+function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     local rgba, PI = color, math.pi
     local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
     function R.goal_entries()
@@ -161,7 +166,10 @@ function E.bind_board_ui(R, rules, tool_art)
     end
     local goal_centers = {}
     local function goal_panel(box, entry)
-        goal_centers[entry.id] = R.skin:resource_icon_box(box, "goal"):center()
+        local adjustment = icon_adjustments and icon_adjustments[entry.icon] or goal_icon_adjustments[entry.icon]
+        local offset = adjustment and adjustment.x and vec2(adjustment.x, 0)
+        local center = R.skin:resource_icon_box(box, "goal"):center()
+        goal_centers[entry.id] = offset and center + offset or center
         local icon = entry.icon=="score" and R.hud_art.score
             or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
             or entry.kind and R.relics[entry.kind+1]
@@ -170,7 +178,8 @@ function E.bind_board_ui(R, rules, tool_art)
         local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
         local met = entry.remaining==0
         R.skin:draw_resource(box, icon, tostring(entry.remaining), {role="goal", interactive=false,
-            icon_scale=1 + math.sin(num.saturate(pulse / .22) * PI) * .16,
+            icon_scale=(adjustment and adjustment.scale or 1) * (1 + math.sin(num.saturate(pulse / .22) * PI) * .16),
+            icon_offset=offset,
             done=met})   -- one tick, the same in every capsule
         if entry.label then R.say_at(entry.label,goal_centers[entry.id],9,R.PAL_WHITE,45) end
     end

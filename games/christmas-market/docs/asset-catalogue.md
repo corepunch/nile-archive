@@ -157,8 +157,12 @@ The powder-snow goal uses the full authored sprite. On the board, the renderer
 samples its opaque interior and maps it to the exact centre, radius and rotation
 of the cell hex. The 128px source rectangle is `18,14,96,95` for Christmas and
 `32,35,63,58` for the embedded fallback. The atlas and its source alpha stay intact.
-Exposed green wells shade from light at the top to dark at the bottom. Goal icons
-sit 3.6 logical units farther left, and collection flights land at that same position.
+Exposed green wells shade from light at the top to dark at the bottom. Goal
+icons overlap their rounded capsules, and collection flights land at the
+icon centres. The campaign's tinsel objective uses a 12% larger icon
+shifted 2 logical units right. The Lanternlight icon sits 2 logical units
+farther left in the HUD. The [HUD comparison](../../../docs/review/match3-objective-icons.jpg)
+shows both adjustments in play.
 
 Reproduce with `build/test/christmas-market "shot main-character-board" "shot phone-board" "shot specials-board"`.
 

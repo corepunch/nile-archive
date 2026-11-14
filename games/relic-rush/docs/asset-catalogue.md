@@ -96,8 +96,11 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 Live green wells use the engine's flat-top hex geometry and a light-to-dark
 vertical gradient. The atlas cell mask remains the registration reference for
-authored art. Goal icons sit 3.6 logical units farther left over their
-capsules, with collection flights landing at the same position.
+authored art. Goal icons overlap their rounded capsules, and collection
+flights land at the icon centres. The campaign's chain objective uses a 12%
+larger icon shifted 2 logical units right. The carved-stone objective uses
+a 10% smaller icon. The [HUD comparison](../../../docs/review/match3-objective-icons.jpg)
+shows the adjusted icons in play.
 
 Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot art-specials"`.
 

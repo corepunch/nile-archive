@@ -249,7 +249,9 @@ It returns true when tapped. The look is the skin's `resource` control, with
 `opts`: `role` for one of the control's `variants` (a larger wallet or a
 match-3 goal with more icon overhang),
 `interactive = false` for a read-only panel that never takes input, `hit` (the
-touch area, default the panel), `hit_offset`, `icon_scale` (a landing bounce), `icon_alpha`, `value_icon` (a
+touch area, default the panel), `hit_offset`, `icon_scale` (a landing bounce),
+`icon_offset` (a logical vector that shifts the icon within the layout),
+`icon_alpha`, `value_icon` (a
 texture replacing the figure, such as a met goal's seal) and `reserve` (width
 kept free at the right end for a badge). `skin:resource_icon_box(bounds, role)` gives
 the icon's box, for effects that fly to it.

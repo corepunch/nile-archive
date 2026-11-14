@@ -418,7 +418,7 @@ end
 -- `icon` is a texture, a function painting into a logical box (it applies any
 -- skin.transform itself), or nil. Returns true when tapped. Options: role (a
 -- variant of the control), interactive (default true; false never takes input),
--- hit (the touch area, default the panel), hit_offset, icon_scale, icon_alpha,
+-- hit (the touch area, default the panel), hit_offset, icon_scale, icon_offset, icon_alpha,
 -- done (a met goal: a fixed-size tick replaces the figure), value_icon (a
 -- texture standing in for the figure) and reserve (width kept
 -- free at the right end, for a badge).
@@ -437,6 +437,7 @@ function Skin:draw_resource(box, icon, value, opts)
         left = icon_box:max().x + 1
         local scale = opts.icon_scale or 1
         if scale ~= 1 then icon_box = rect.centered(icon_box:center(), icon_box:size():scale(scale)) end
+        if opts.icon_offset then icon_box = icon_box:offset(opts.icon_offset) end
         if type(icon) == 'function' then icon(icon_box)
         else
             local out, _, alpha = transformed(self, icon_box)

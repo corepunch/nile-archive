@@ -16,7 +16,7 @@ R.locked_notice = words.locked
 R.carpet_patch = {corner = .25, fillet = .8,
     range = .6, texel = 1.5, tile = 1.5, inset = 3.4, rim = 0, shade = 0, bevel = 0, feather = 3}
 board_intro.bind(R, rules)
-require("match3").bind_board_ui(R, rules, art.tools)
+require("match3").bind_board_ui(R, rules, art.tools, {["goal-carpet"] = {x = -2}})
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local NORMAL = rules.NORMAL
 local cell_active = rules.game_cell_active
