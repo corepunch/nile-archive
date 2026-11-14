@@ -125,12 +125,13 @@ frames remain in the same atlas. The [registration manifest](../engine/art/match
 records source hashes and transforms; the retired original-art
 [prompt](../engine/art/match3/prompt.txt) remains historical provenance.
 
-An override is a data table `{path="match3.png", frames={name={x,y,w,h}, ...}}`.
-Required names cover six kinds, three special axes, bomb/prism/plane, terrain,
-selection/hint, guide/cell mask, score/completion, a background, and the five
-normal/selected/pressed/hover/disabled states of pickaxe, dynamite, sunburst
-and pause. Incomplete or out-of-bounds skins fail loudly. Optional entries
-include extra packs, scenes, portraits, panels and effect frames.
+Both game atlases use `{path="filename.png", frames={name={x,y,w,h}, ...}}`.
+`match3.skin(override)` loads the board atlas with chips, powers, floors,
+blockers, selection, backgrounds and effects. `match3.hud(override)` loads
+the HUD atlas with score, completion and the normal, selected, pressed, hover
+and disabled states of pickaxe, dynamite, sunburst and Pause. The engine
+neutral preview uses its built-in atlas for both. The loaders check frame
+bounds and required names.
 
 `texture.region(atlas, rectangle)` returns a borrowed ordinary texture view.
 Every sprite retains its own dimensions while sharing the atlas's GPU
@@ -141,15 +142,13 @@ texture. Keep the owner alive; freeing a view leaves the owner intact.
 alpha-blended pieces in one atlas. Font glyphs, engine shape primitives and
 transient beam/particle geometry remain normal renderer facilities.
 
-Relic Rush uses one 2048×4096 atlas; Christmas Market uses one 2048×2048
-atlas. All former theme-piece names alias the same six original Homescapes
-pieces. Original sprites are uniformly fitted to the canonical hex object
-bounds with alpha preserved; diagonal rocket aliases use documented rotations.
-Outside-field backgrounds, portraits, controls and HUD art remain unchanged.
-Legacy field art stays archived but is no longer drawn, except the provisional
-quest-resource image. Flat hex geometry has no decorative frame; selection and
-hints animate piece scale. Both games use overrides by default;
-`--default-match3` exercises the shared Homescapes-piece fallback.
+Relic Rush and Christmas Market each use a 2048×4096 `data/match3.png`
+for board imagery and a 1024×1024 `data/match3-hud.png` for UI. Goal displays
+can reuse the board's chip and objective frames. The generated
+`lua/match3_skin.lua` and `lua/match3_hud.lua` register both textures.
+Flat hex geometry is drawn by the renderer. Selection and hints animate piece
+scale. Both games use overrides by default. `--default-match3` exercises the
+shared Homescapes-piece fallback.
 
 For a game view, initialize presentation data with `match3.view{...}`, then
 call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authored `piece_width`;

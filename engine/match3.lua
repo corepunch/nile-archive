@@ -65,32 +65,42 @@ function E.expedition_form(title, intro, close, detail_color, paint_level)
     }}
 end
 
--- One GPU texture per skin. Every named image is a borrowed texture region,
--- so existing gfx.image, form images and particles use the same atlas directly.
-local skins = {}
-function E.skin(override)
-    local key = override or "default"
-    if skins[key] then return skins[key] end
-    local atlas = override and texture.load(override.path) or texture.match3_default()
-    assert(atlas.tex, "cannot load match3 skin atlas")
-    local frames = override and override.frames or require("match3.frames")
-    local skin = {atlas=atlas}
+-- Every named image borrows the atlas's GPU texture.
+local atlases = {}
+function E.atlas(definition)
+    local key = definition or "default"
+    if atlases[key] then return atlases[key] end
+    local atlas = definition and texture.load(definition.path) or texture.match3_default()
+    assert(atlas.tex, "cannot load match3 atlas")
+    local frames = definition and definition.frames or require("match3.frames")
+    local images = {atlas=atlas}
     for name, box in pairs(frames) do
         local image = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
         assert(image.tex, "invalid match3 frame: " .. name)
-        skin[name] = image
+        images[name] = image
     end
+    atlases[key] = images
+    return images
+end
+
+function E.skin(override)
+    local skin = E.atlas(override)
     for _, name in ipairs({"kind-0", "kind-1", "kind-2", "kind-3", "kind-4", "kind-5", "ray-row", "ray-column", "ray-diagonal",
-        "bomb", "prism", "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "score", "complete", "background"}) do
+        "bomb", "prism", "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "background", "glow"}) do
         assert(skin[name], "missing match3 frame: " .. name)
     end
+    return skin
+end
+
+function E.hud(override)
+    local hud = E.atlas(override)
+    assert(hud.score and hud.complete, "missing match3 HUD icons")
     for _, tool in ipairs({"pickaxe", "dynamite", "sunburst", "pause"}) do
         for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
-            assert(skin[tool .. "-" .. state], "missing authored match3 control state")
+            assert(hud[tool .. "-" .. state], "missing authored match3 control state")
         end
     end
-    skins[key] = skin
-    return skin
+    return hud
 end
 
 -- The same board controls use the authored images from either skin.
@@ -321,7 +331,7 @@ function E.bind_board_ui(R, rules, tool_art)
             local up = vec2(0, (1 - rise) * 120)
             local drawn = r:offset(up)
             gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
-            gfx.image(R.board_art[tool_art[k + 1] .. "-" .. state], drawn:inflate(5), color.WHITE)
+            gfx.image(R.hud_art[tool_art[k + 1] .. "-" .. state], drawn:inflate(5), color.WHITE)
             gfx.circle(vec2(x + 31, y + 4) + up, 14, rgba(116, 74, 33))
             gfx.circle(vec2(x + 31, y + 4) + up, 12, charges > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
             R.say(tostring(charges), rect(x + 18, y - 9, 26, 26):offset(up), 16, PAL_CREAM)

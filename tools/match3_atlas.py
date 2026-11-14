@@ -17,9 +17,11 @@ from PIL import Image
 from match3_elements_art import NAMES as ELEMENT_NAMES
 import homescapes_atlas
 import match3_theme_art
+import pack_particles
 
 ROOT = Path(__file__).resolve().parents[1]
 STATES = ['normal', 'selected', 'pressed', 'hover', 'disabled']
+TOOL_FRAMES = {f'{tool}-{state}' for tool in ('pickaxe', 'dynamite', 'sunburst') for state in STATES}
 NAMES = ([f'kind-{i}' for i in range(8)] +
          ['ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism', 'sand', 'chain', 'ice-2',
           'ice-1', 'selected', 'hint', 'guide', 'cell-mask', 'score', 'complete', 'moves'] +
@@ -139,6 +141,15 @@ def build_default(check):
         frames[name] = [x,y,128,128]
         registration[name] = registration_h[name]
     frames["glow"] = frames["spark-0"]
+    effects, effect_sources = pack_particles.registered(ROOT / 'games/relic-rush')
+    effect_top = max(y + h for _, y, _, h in frames.values()) + 2
+    effect_frames, bottom = frame_layout(effects, image.width, effect_top)
+    assert bottom <= image.height
+    paste_frames(image, effects, effect_frames)
+    for name, box in effect_frames.items():
+        assert name not in frames
+        frames[name] = box
+        registration[name] = {'source': str(effect_sources[name].relative_to(ROOT)), 'runtime': box}
     raw = png(image)
     write_asset(ROOT / 'engine/data/match3.png', raw)
     write_asset(ROOT / 'engine/match3_frames.lua', lua_table(frames))
@@ -149,10 +160,31 @@ def build_default(check):
                 'runtime': 'engine/data/match3.png', 'registration': registration,
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
-        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']] + element_sources + homescapes_atlas.inputs(),
+        [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']]
+        + element_sources + homescapes_atlas.inputs() + list(effect_sources.values()) + [Path(pack_particles.__file__)],
         [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
     return raw
+
+
+def frame_layout(sprites, width, y=2):
+    x, row_h, frames = 2, 0, {}
+    for name in sorted(sprites, key=lambda name: (-sprites[name].height, name)):
+        sprite = sprites[name]
+        assert sprite.width + 4 <= width, name
+        if x + sprite.width + 2 > width:
+            x, y, row_h = 2, y + row_h + 4, 0
+        frames[name] = [x, y, sprite.width, sprite.height]
+        x, row_h = x + sprite.width + 4, max(row_h, sprite.height)
+    return frames, y + row_h + 2
+
+
+def paste_frames(image, sprites, frames):
+    for name, sprite in sprites.items():
+        x, y, w, h = frames[name]
+        assert y + h <= image.height, name
+        image.paste(sprite, (x, y))
+        assert image.crop((x, y, x + w, y + h)).tobytes() == sprite.tobytes(), name
 
 
 def build_game(game, check):
@@ -175,15 +207,18 @@ def build_game(game, check):
             sources[f'{pack}-{i}'] = root / f'data/tile-sets/{pack}/{i}.png'
     for source in sorted((root / 'data/board-states').glob('*.png')):
         sources[source.stem] = source
-    for source in sorted((root / 'data/expedition-hud').glob('*.png')):
-        sources[source.stem] = source
+    hud_sources = {name: sources.pop(name) for name in sorted(TOOL_FRAMES)}
+    hud_sources.update((source.stem, source) for source in sorted((root / 'data/expedition-hud').glob('*.png')))
     if game == 'relic-rush':
         for name, source in [('background', 'jungle.jpg'), ('scene-1', 'scene-lagoon.jpg'), ('scene-2', 'scene-temple.jpg')]:
             sources[name] = root / 'data' / source
     else:
         sources['background'] = root / 'data/winter.jpg'
-        sources['character'] = root / 'data/characters/noelle.png'
+        hud_sources['character'] = root / 'data/characters/noelle.png'
     loaded = {name: Image.open(path).convert('RGBA') for name, path in sources.items()}
+    hud_sprites = {name: Image.open(path).convert('RGBA') for name, path in hud_sources.items()}
+    effects, effect_sources = pack_particles.registered(root)
+    loaded.update(effects)
     originals, original_registration = homescapes_atlas.registered()
     loaded.update(originals)
     for name in originals: sources.pop(name, None)
@@ -202,48 +237,46 @@ def build_game(game, check):
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
     loaded["glow"] = glow
-    order = sorted(loaded, key=lambda key: (-loaded[key].height, key))
     # Widen the atlas before letting new board states push it past 4096 px high.
     for width in (2048, 4096):
-        x, y, row_h, frames = 2, 2, 0, {}
-        for name in order:
-            sprite = loaded[name]
-            if x + sprite.width + 2 > width:
-                x, y, row_h = 2, y + row_h + 4, 0
-            frames[name] = [x, y, sprite.width, sprite.height]
-            x, row_h = x + sprite.width + 4, max(row_h, sprite.height)
-        height = 1 << (y + row_h + 3).bit_length()
+        frames, bottom = frame_layout(loaded, width)
+        height = 1 << (bottom - 1).bit_length()
         if height <= 4096:
             break
+    assert height <= 4096
     image = Image.new('RGBA', (width, height))
-    for name in order:
-        image.paste(loaded[name], tuple(frames[name][:2]))
+    paste_frames(image, loaded, frames)
+    hud_frames, bottom = frame_layout(hud_sprites, 1024)
+    hud_image = Image.new('RGBA', (1024, 1 << (bottom - 1).bit_length()))
+    paste_frames(hud_image, hud_sprites, hud_frames)
     for i in range(6):
         frames[f'kind-{i}'] = frames[f'{packs[0]}-{i}']
     if game == 'christmas-market':
         frames['scene-1'] = frames['scene-2'] = frames['background']
-        frames['score'] = frames['complete']
+        hud_frames['score'] = hud_frames['complete']
     write_asset(root / 'data/match3.png', png(image))
     write_asset(root / 'lua/match3_skin.lua', lua_table(frames, 'match3.png'))
+    write_asset(root / 'data/match3-hud.png', png(hud_image))
+    write_asset(root / 'lua/match3_hud.lua', lua_table(hud_frames, 'match3-hud.png'))
     manifest = {'runtime': 'data/match3.png', 'size': [width, height], 'frames': frames,
                 'sources': {name: str(path.relative_to(root)) for name, path in sources.items()},
+                'effects': {name: str(path.relative_to(root)) for name, path in effect_sources.items()},
+                'hud': {'runtime': 'data/match3-hud.png', 'size': list(hud_image.size), 'frames': hud_frames,
+                        'sources': {name: str(path.relative_to(root)) for name, path in hud_sources.items()}},
                 'homescapes': original_registration,
                 'board_theme': theme_registration,
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    inputs = list(sources.values()) + homescapes_atlas.inputs() + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__)]
-    outputs = [root / 'data/match3.png', root / 'lua/match3_skin.lua']
+    inputs = list(sources.values()) + list(hud_sources.values()) + list(effect_sources.values())
+    inputs += homescapes_atlas.inputs() + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
+    outputs = [root / name for name in ('data/match3.png', 'lua/match3_skin.lua', 'data/match3-hud.png', 'lua/match3_hud.lua')]
     if game == 'relic-rush':
         inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]
         outputs += [root / 'data/tile-sets' / pack / f'{kind}.png' for pack, kind in [('relics', 0), ('relics', 1), ('jewels', 0)]]
     manifest['provenance'] = provenance(inputs, outputs)
     write_asset(root / 'art/match3-atlas.json', json.dumps(manifest, indent=2) + '\n')
-    # Compare each packed canvas with its source, including RGB beneath alpha.
-    for name, original in loaded.items():
-        xx, yy, ww, hh = frames[name]
-        assert image.crop((xx, yy, xx + ww, yy + hh)).tobytes() == original.tobytes(), name
-    print(f'{game}: {len(sources)} images in one {width}x{height} atlas')
+    print(f'{game}: {len(loaded)} board images in {width}x{height}, {len(hud_sprites)} HUD images in {hud_image.width}x{hud_image.height}')
 
 
 def main():

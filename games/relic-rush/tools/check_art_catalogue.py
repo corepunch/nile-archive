@@ -30,11 +30,11 @@ for tool in manifest["tools"]:
 assert expected == set(manifest["assets"]), "Missing or uncatalogued atlas state"
 special_declaration = re.search(r"A\.specials = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', special_declaration) == [v for v in manifest["specials"].values() if v]
+atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
 for name, asset in manifest["assets"].items():
     assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"
     assert len(asset["box"]) == 4
     if asset.get("atlas_frame"):
-        atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
         assert asset["atlas_frame"] in atlas[asset.get("atlas_section", "homescapes")]
         assert asset["runtime"] == "data/match3.png"
         continue
@@ -53,8 +53,10 @@ assert (ROOT / buttons["source"]).is_file() and (ROOT / buttons["prompt"]).is_fi
 assert buttons["runtime_button_size"] == [int(re.search(r"E\.TOOL_SIZE = (\d+)", match3).group(1))] * 2
 for tool in manifest["tools"]:
     for state in manifest["tool_states"]:
-        asset = manifest["assets"][tool + "-" + state]
+        key = tool + "-" + state
+        asset = manifest["assets"][key]
         assert asset["source"] == buttons["source"] and asset["fit"] == "square-button"
+        assert key in atlas["hud"]["frames"] and key not in atlas["frames"]
 assert (ROOT / manifest["cell_mask"]["source"]).is_file(), "Missing renderer-authored cell mask"
 assert (ROOT / manifest["cell_mask"]["runtime"]).is_file(), "Missing runtime cell mask"
 for pack in manifest["packs"]:
@@ -143,9 +145,10 @@ subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], c
 particles = manifest['particle_sprites']
 assert (ROOT / particles['license']).is_file(), 'Particle sprites need their licence'
 for name, source in particles['frames'].items():
-    assert (ROOT / particles['source'] / f'{source}.png').is_file(), f'Missing particle source: {source}'
+    path = (Path(particles['source']) / f'{source}.png').as_posix()
+    assert (ROOT / path).is_file(), f'Missing particle source: {source}'
+    assert atlas['effects'][f'fx-{name}'] == path
     assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
-subprocess.run([sys.executable, str(ROOT.parents[1] / 'tools/pack_particles.py'), 'relic-rush', '--check'], check=True)
 
 # Exact crop freshness for the changed town controls, without re-exporting the board HUD.
 subprocess.run([sys.executable, str(ROOT/"tools/prepare_hud.py"), "--navigation-only", "--check"], check=True)

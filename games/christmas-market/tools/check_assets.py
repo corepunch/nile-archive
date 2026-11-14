@@ -31,11 +31,15 @@ def main():
         assert (ROOT/path).is_file(), path
     registration = json.loads((ROOT/'art/registration.json').read_text())
     assert 'buildings' not in registration and len(registration['icons']) == 39
+    atlas = json.loads((ROOT/'art/match3-atlas.json').read_text())
     for entry in registration['icons']:
         assert png(ROOT/'data'/entry['path']) == ((128,128),6), entry['path']
     for tool, folder in [('pickaxe','board-states'),('dynamite','board-states'),('sunburst','board-states'),('pause','expedition-hud')]:
         hashes = {digest(ROOT/'data'/folder/f'{tool}-{state}.png') for state in STATES}
         assert len(hashes) == 5, f'{tool}: every state must have its own authored artwork'
+        for state in STATES:
+            name = f'{tool}-{state}'
+            assert name in atlas['hud']['frames'] and name not in atlas['frames']
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}
@@ -64,9 +68,10 @@ def main():
     assert (ROOT/particles['license']).is_file()
     doc = (ROOT/'docs/asset-catalogue.md').read_text()
     for name, source in particles['frames'].items():
-        assert (ROOT/particles['source']/f'{source}.png').is_file(), source
+        path = (Path(particles['source']) / f'{source}.png').as_posix()
+        assert (ROOT/path).is_file(), source
+        assert atlas['effects'][f'fx-{name}'] == path
         assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
-    subprocess.run([sys.executable, str(ROOT.parents[1]/'tools/pack_particles.py'), 'christmas-market', '--check'], check=True)
     print(f'Christmas Market: {len(inventory)} runtime files, 39 atlas crops, {len(buildings)} Blender buildings, 11 native icon slots verified')
 
 if __name__ == '__main__':

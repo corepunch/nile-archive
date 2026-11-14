@@ -2,8 +2,7 @@
 -- stream and fixed pools: impacts, travelling rays, blast shockwaves, prism
 -- links, special births, score pop-ups, sparks and pieces flying to the HUD
 -- (`require("match3.vfx").bind(R, rules)`, called by match3.game).
--- Gameplay never reads anything from here. The glow comes from the game's
--- art skin and the particle sprites from its lua/particle_skin.lua.
+-- Gameplay never reads anything from here. Glow and particles use board atlas regions.
 local V = {}
 
 function V.bind(R, rules)
@@ -41,19 +40,16 @@ function V.bind(R, rules)
     end
     local vfx_color = R.vfx_color
 
-    -- A soft radial glow texture (cubic falloff) and the CC0 Kenney particle
-    -- sprites (lua/particle_skin.lua), all drawn additively with a per-kind tint.
+    -- Additive blending belongs to the texture region, so the board's other
+    -- frames keep their usual alpha blending.
     local fx_art = {}
-    function R.vfx_init()
-        R.glow = require("art").skin().glow
-        R.glow.additive = true   -- per-view blend; other atlas frames retain alpha blending
-        local skin = require("particle_skin")
-        local atlas = texture.load(skin.path)
-        assert(atlas.tex, "cannot load particle atlas")
-        for name, box in pairs(skin.frames) do
-            fx_art[name] = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
-            assert(fx_art[name].tex, "invalid particle frame: " .. name)
-            fx_art[name].additive = true
+    function R.vfx_init(board_skin)
+        R.glow = board_skin.glow
+        R.glow.additive = true
+        for _, name in ipairs{"shock", "flash", "burst", "ring", "glint", "twinkle", "streak"} do
+            local image = assert(board_skin["fx-" .. name], "missing match3 effect: " .. name)
+            image.additive = true
+            fx_art[name] = image
         end
     end
 

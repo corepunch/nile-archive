@@ -19,7 +19,7 @@
       "atlas_frame": "ray-diagonal",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/specials/ray-diagonal.png",
+      "source": "../../art/match3-power-up-paint/source.png",
       "atlas_section": "board_theme"
     },
     "ray-column": {
@@ -33,7 +33,7 @@
       "atlas_frame": "ray-column",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/specials/ray-column.png",
+      "source": "../../art/match3-power-up-paint/source.png",
       "atlas_section": "board_theme"
     },
     "ray-row": {
@@ -47,7 +47,7 @@
       "atlas_frame": "ray-row",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/specials/ray-row.png",
+      "source": "../../art/match3-power-up-paint/source.png",
       "atlas_section": "board_theme"
     },
     "bomb": {
@@ -61,7 +61,7 @@
       "atlas_frame": "bomb",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/specials/bomb.png",
+      "source": "../../art/match3-power-up-paint/source.png",
       "atlas_section": "board_theme"
     },
     "prism": {
@@ -75,7 +75,7 @@
       "atlas_frame": "prism",
       "fit": "free-object",
       "registration": "art/match3-atlas.json",
-      "source": "art/board-theme/specials/prism.png",
+      "source": "../../art/match3-power-up-paint/source.png",
       "atlas_section": "board_theme"
     },
     "chain": {
@@ -605,6 +605,7 @@
     "data/game.json",
     "data/island.jpg",
     "data/jungle.jpg",
+    "data/match3-hud.png",
     "data/match3.png",
     "data/navigation/build-disabled.png",
     "data/navigation/build-hover.png",
@@ -621,7 +622,6 @@
     "data/navigation/play-normal.png",
     "data/navigation/play-pressed.png",
     "data/navigation/play-selected.png",
-    "data/particles.png",
     "data/quest-objects.png",
     "data/roads.png",
     "data/scene-lagoon.jpg",
@@ -1010,9 +1010,9 @@
     "source": "art/particles/kenney/",
     "license": "art/particles/kenney/License.txt",
     "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
-    "runtime": "data/particles.png",
-    "contract": "lua/particle_skin.lua",
-    "renderer": "lua/vfx.lua",
+    "runtime": "data/match3.png",
+    "contract": "lua/match3_skin.lua",
+    "renderer": "../../engine/match3_vfx.lua",
     "frames": {
       "shock": "circle_03",
       "flash": "light_01",
@@ -1023,8 +1023,9 @@
       "streak": "trace_06"
     },
     "states": "transient additive effect sprites; per-kind tint at draw time; no interaction states",
-    "reproduction": "python3 tools/pack_particles.py relic-rush (from the repository root)",
-    "review": "docs/review/kenney-particles/README.md"
+    "reproduction": "python3 tools/match3_atlas.py",
+    "review": "docs/review/kenney-particles/README.md",
+    "frame_prefix": "fx-"
   },
   "additional_board_elements": {
     "source": "../../engine/art/match3-elements/source.png",
@@ -1239,7 +1240,7 @@
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
-    "power_up_review": "docs/screenshots/review/scener-power-ups/README.md",
+    "power_up_review": "docs/screenshots/review/power-up-paint/README.md",
     "power_up_models": {
       "generator": "tools/match3_specials.py",
       "scene": "art/board-theme/specials/specials.blks",
@@ -1250,11 +1251,26 @@
         "art/board-theme/specials/bomb.png",
         "art/board-theme/specials/prism.png"
       ],
-      "reproduction": "python3 tools/match3_specials.py && python3 tools/match3_atlas.py"
+      "reproduction": "python3 tools/match3_specials.py relic-rush"
     },
     "plane": {
       "source": "../christmas-market/art/board-theme/source.png",
       "recolor": "tools/match3_theme_art.py PLANE_SHADES, by luminance"
+    },
+    "power_up_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "frames": [
+        "ray-row",
+        "ray-column",
+        "ray-diagonal",
+        "bomb",
+        "prism"
+      ],
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py"
     }
   }
 }

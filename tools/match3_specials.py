@@ -11,8 +11,8 @@ about the view direction, the bomb's belt is a real band around its sphere, and 
 patch of the sphere's own latitude and longitude. A game supplies only its palette and tile bevel.
 
 Each game gets `art/board-theme/specials/specials.blks` (the scene, one orthographic camera per sprite)
-and the five transparent renders beside it. tools/match3_theme_art.py registers them into the atlas;
-run tools/match3_atlas.py afterwards.
+and the five transparent renders beside it. Use them as the geometry target for the paint-over
+documented in docs/MATCH3_ART_GENERATION.md. tools/match3_atlas.py registers the painted sprites.
 """
 import argparse
 import math
@@ -24,7 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPRITES = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')
-SIZE = 512          # px per render; the atlas importer scales it to the board
+SIZE = 512          # px per render
 VIEW = 150.         # cm across each orthographic view
 SPACING = 400.      # cm between models, so no light or shadow reaches a neighbour
 # Screen angle of each rocket's upper tip from vertical (counter-clockwise), on the flat-top board's axes.

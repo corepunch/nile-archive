@@ -53,9 +53,8 @@ the plane by its broad folded wing.
 
 The rockets, bomb and rainbow ball are solids of revolution and tiles on a
 sphere, so `tools/match3_specials.py` models them for
-[Scener](https://github.com/corepunch/orion-ui) and renders them. This keeps
-their geometry exact where painted versions drifted. The plane stays
-painted. Relic Rush registers Christmas Market's plane with its blues
+[Scener](https://github.com/corepunch/orion-ui) and renders them. The renders
+set the geometry and camera for the paint-over. Relic Rush registers Christmas Market's painted plane with its blues
 remapped by luminance to parchment (`PLANE_SHADES` in
 `tools/match3_theme_art.py`), at the user's request. The drawing and alpha
 are unchanged.
@@ -81,7 +80,7 @@ rings that darken under each collar, since a Scener shape takes one gradient.
 python3 tools/match3_specials.py                 # both games; needs scener on PATH
 python3 tools/match3_specials.py relic-rush --sheet /tmp/specials.png
 python3 tools/match3_specials.py --check         # the committed scenes are current
-python3 tools/match3_atlas.py                    # register the renders
+python3 tools/match3_atlas.py                    # register and pack the paint-over
 ```
 
 Each game keeps the generated scene and its five 512 px transparent renders in
@@ -89,6 +88,15 @@ Each game keeps the generated scene and its five 512 px transparent renders in
 scene text only, so `make test` needs no Scener. Change the tool to change a
 model, and review the sheet against the
 [Homescapes sprites](../engine/art/homescapes/sprites/) before the board.
+
+The [power-up paint sheet](../art/match3-power-up-paint/source.png) was authored
+in one built-in ImageGen edit with both games' three rocket axes, bomb and
+rainbow gem. Its [Scener target](../art/match3-power-up-paint/scener-strip.png)
+uses 336 px square cells with each render cropped to its alpha bounds, resized
+to fit within 244 px and centered. The top row is Relic Rush and the bottom row
+is Christmas Market. The [prompt](../art/match3-power-up-paint/prompt.txt) records
+the materials and pose constraints. Recreate the edit from current Scener renders
+when the geometry changes.
 
 ## Author the atlas
 
@@ -125,13 +133,14 @@ model, and review the sheet against the
    84 px on its longest side, well under its area target, so the thin shape
    stays inside the cell like the chips. The manifest records
    the target, fitted area and placement for review.
-   The rendered rockets already lie on the exact +30°, 90° and −30° axes.
+   The Scener target places the rockets on the +30°, 90° and −30° axes.
    Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
    sprites. Keep carpet, oil and stone as swatches for the board's continuous
    surface mask. Keep carpet and stone's bevel and soft contact shadow in the
    renderer so they follow the outer edge as the patch changes.
-2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png`, then
+2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png` for the board
+   and its effects, and `data/match3-hud.png` for the controls and HUD. Run
    `python3 tools/match3_atlas.py --check`. Record the packed frames in the
    [Christmas Market catalogue](../games/christmas-market/docs/asset-catalogue.md)
    or [Relic Rush catalogue](../games/relic-rush/docs/asset-catalogue.md).

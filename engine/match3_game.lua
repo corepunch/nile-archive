@@ -1181,14 +1181,14 @@ function G.app(R)
         for _, pack in ipairs(W.packs) do if app.arg("tiles") == pack then tiles = pack end end
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
         R.board_art = art.load()
-        R.shop_built_art, R.shop_locked_art = board_skin["shop-built"], board_skin["shop-locked"]   -- in the game's match3 atlas
         R.hud_art = art.load_hud()
-        R.life_art = texture.load("expedition-hud/life.png")
+        R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
+        R.life_art = R.hud_art.life or texture.load("expedition-hud/life.png")
         if app.arg("art-states") then
             R.art_packs = {}
             for _, pack in ipairs(W.packs) do R.art_packs[pack] = pack_kinds(pack) end
         end
-        R.vfx_init()
+        R.vfx_init(board_skin)
         R.island = city.new()
         island.island_setup(R.island)
         R.buildings = R.island.defs   -- with the sprites loaded

@@ -8,7 +8,7 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | --- | --- |
 | `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
-| `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and ball are Scener models. |
+| `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
 | `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
 | `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
@@ -16,11 +16,9 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
-`python3 tools/match3_specials.py christmas-market` models the rockets, bomb and rainbow ball, writes the [Scener scene](../art/board-theme/specials/specials.blks) and renders the five sprites beside it. Its palette, gloss and tile bevel are the `christmas-market` entry of `THEMES` in that tool. The packed frames were reviewed at both phone sizes. [Models, Homescapes references and boards](screenshots/review/scener-power-ups/README.md). The [earlier painted comparison](screenshots/review/power-ups/README.md) shows the sprites they replace.
+Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
-The default chips, delivery and six specials use the Homescapes alpha masks as area references. The atlas manifest records each fit inside the inset hex. [Board size comparison](screenshots/review/sprite-fit/README.md).
-
-Each rendered ball uses the existing Homescapes alpha-area target. The [painted ball it replaces](screenshots/review/rainbow-ball/README.md) is kept for comparison.
+`python3 tools/match3_specials.py christmas-market` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
 
 ## Additional board elements
 
@@ -79,7 +77,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
 | Snowfall and feedback | Lua renderer | Procedural | Two world-anchored layers of village snowfall, mission banner, kudos, collection particles, beams, lift and placement feedback |
-| Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/particles.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
+| Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/match3.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
 Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved for the original free-standing artwork and controls. The additional full-cell states use the canonical mask as described above. Control states are directly cropped from the authored atlas. The six pieces, the three tools' states, Pause and the goal star are cropped square around their own artwork, with one side per family, and scaled evenly to 128×128. That keeps their authored proportions: the earlier unequal source cells stretched them tall. Hex board states keep their whole source cell, because it registers them to the board slot.
 
@@ -363,25 +361,23 @@ with `--gamecenter-demo`.
 
 ## Engine match-3 atlas and trickling
 
-`data/match3.png`, registered by `lua/match3_skin.lua` and
-`art/match3-atlas.json`, contains all match-board backgrounds, pieces, special
-axes, blockers, selection/hint/guide frames, HUD icons and all five authored
-states of each tool and Pause. The Christmas override additionally contains
-its board portrait; Relic Rush includes all three piece packs and both scenes.
-Existing source artwork and alpha are copied without modifying states. The
-64px cubic radial light is the existing procedural transient effect, packed
-in the same atlas and drawn with a per-view additive flag.
+`data/match3.png` holds the backgrounds, piece packs, power-ups, blockers,
+materials, selection/hint frames and additive effects. `lua/match3_skin.lua`
+gives each frame's pixel rectangle. The HUD uses `data/match3-hud.png` and
+`lua/match3_hud.lua` for all five states of each tool and Pause, goal and
+wallet counters, and the shop icons. `art/match3-atlas.json` records both atlases
+and their source images. Board pieces and objectives also supply their own
+icons to the goal display.
 
 The shop's built and locked tiles use `data/expedition-hud/shop-built.png`
-(checkmark) and `shop-locked.png` (padlock), packed into the same atlas as
+(checkmark) and `shop-locked.png` (padlock), packed into the HUD atlas as
 `shop-built` and `shop-locked`. Relic Rush and Christmas Market ship the same
 two files. Their source, prompt and per-game styling are not yet recorded:
 [#90](https://github.com/corepunch/nile-archive/issues/90).
 
 The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
-registrations, and `make gen` embeds the default. No new game icon designs were
-generated. FALL uses engine-authored simultaneous one-edge movement steps,
+registrations. FALL uses engine-authored simultaneous one-edge movement steps,
 straight-down priority with blocked-down diagonal fallback, vertical spawning at every exposed column top and a short landing squash; static states
 continue to use the existing artwork. Input and animation timing are shared.
 
@@ -408,9 +404,9 @@ constant for speaker/listener, with no scale/rotation animation or idle wobble. 
 Seven sprites from Kenney's CC0 [Particle Pack](https://opengameart.org/content/particle-pack-80-sprites)
 texture the impact, spark and bomb effects, as in Relic Rush. The original
 black-background PNGs and `License.txt` are retained in `art/particles/kenney/`;
-`python3 tools/pack_particles.py christmas-market` (from the repository root)
-resizes them, turns brightness into alpha on white and writes `data/particles.png`
-with its contract `lua/particle_skin.lua`. `engine/match3_vfx.lua` draws them additively,
+`python3 tools/match3_atlas.py` packs the seven `fx-*` frames into
+`data/match3.png`. Registration resizes the sources and uses their brightness as
+alpha on white. `engine/match3_vfx.lua` draws them additively,
 tinted with each piece's effect colour. They are transient effect sprites with no
 interaction states. Shooting-star beams, prism links, special births and the
 bomb's leading ring stay procedural.

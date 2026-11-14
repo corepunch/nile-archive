@@ -10,7 +10,6 @@ A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.elements = require("match3.elements_view").assets
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
-A.hud_icons = {"complete"}
 A.navigation = {source="art/navigation/controls.png", roles={"navigation_build", "navigation_play", "navigation_levels"}, states=A.states}
 -- Board-only lift per kind, as a fraction of the piece canvas. Pieces are
 -- cropped around everything visible, so a cap, bow or leaf crown on top pushes
@@ -31,12 +30,12 @@ function A.skin()
 end
 
 function A.load_hud()
-    local textures = {}
-    for _, state in ipairs(A.states) do textures["pause-" .. state] = A.skin()["pause-" .. state] end
-    for _, name in ipairs(A.hud_icons) do textures[name] = A.skin()[name] end
-    textures.score = textures.complete
-    textures.elena = A.skin().character
-    return textures
+    local match3 = require("match3")
+    if app.arg("default-match3") then
+        local hud = match3.hud()
+        return setmetatable({score=hud.complete}, {__index=hud})
+    end
+    return match3.hud(require("match3_hud"))
 end
 
 function A.draw_hud_catalogue(R)
@@ -53,7 +52,8 @@ function A.draw_hud_catalogue(R)
     R.say_at("score",vec2(89,502),14,R.PAL_CREAM,90)
     R.say_at("stars",vec2(181,502),14,R.PAL_CREAM,90)
     R.say_at("goal met",vec2(273,502),14,R.PAL_CREAM,90)
-    if R.hud_art.elena then gfx.image(R.hud_art.elena,rect(318,398,124,125):fit(texture.size(R.hud_art.elena)),color.WHITE) end
+    local portrait = R.hud_art.character
+    if portrait then gfx.image(portrait,rect(318,398,124,125):fit(texture.size(portrait)),color.WHITE) end
     for row,kind in ipairs{"build","play","levels"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
@@ -64,16 +64,13 @@ function A.draw_hud_catalogue(R)
 end
 
 function A.load()
-    local textures = {}
-    local function load(name) textures[name] = A.skin()[name] end
+    local textures, skin = {}, A.skin()
+    local function load(name) textures[name] = skin[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
-    for _, tool in ipairs(A.tools) do
-        for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
-    end
     return textures
 end
 
@@ -100,7 +97,7 @@ function A.draw_catalogue(R)
     end
     for row, tool in ipairs(A.tools) do
         for col, state in ipairs(A.states) do
-            gfx.image(R.board_art[tool .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
+            gfx.image(R.hud_art[tool .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
         end
     end
     R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)

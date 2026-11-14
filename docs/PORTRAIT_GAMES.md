@@ -16,7 +16,7 @@ tables, and PNGs. Behaviour belongs to the engine:
 Each game's `lua/` keeps only:
 
 - **Content:** `campaign.lua`, `story_content.lua`, `buildings.lua`,
-  `building_sprites.lua`, `match3_skin.lua`, `particle_skin.lua` (generated or
+  `building_sprites.lua`, `match3_skin.lua`, `match3_hud.lua` (generated or
   authored data), `narrative.lua` (the cast), `journey.lua` (save version,
   recap, region and building lines as tables), `island.lua` (zone names,
   centres, lawn), `rules.lua` (piece names, economy slots and rewards),
@@ -120,7 +120,7 @@ Kept per game, as data or painting code:
   line, pause title, failed, region and finale text (now `data/game.json`).
 - `campaign.lua`, `story_content.lua`, `narrative.lua` cast, `journey.lua`
   recap/regions/building lines, `buildings.lua`, `building_sprites.lua`,
-  `match3_skin.lua`, `particle_skin.lua`, zone names and positions.
+  `match3_skin.lua`, `match3_hud.lua`, zone names and positions.
 - Shop categories, save version (4 vs 3), kudos words, tool notes, the locked
   notice, title and id.
 - Christmas Market opens on the market (`start_on_town`) and plays the

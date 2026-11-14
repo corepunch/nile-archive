@@ -19,8 +19,7 @@ A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
-A.hud_icons = {"score", "complete"}
-A.wallet_icons={life="expedition-hud/life.png",amulets="relics-0",stars="discovery-star"}
+A.wallet_icons={life="match3-hud.png",amulets="relics-0",stars="discovery-star"}
 A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
@@ -33,10 +32,7 @@ function A.skin()
 end
 
 function A.load_hud()
-    local textures = {}
-    for _, state in ipairs(A.states) do textures["pause-" .. state] = A.skin()["pause-" .. state] end
-    for _, name in ipairs(A.hud_icons) do textures[name] = A.skin()[name] end
-    return textures
+    return require("match3").hud(not app.arg("default-match3") and require("match3_hud") or nil)
 end
 
 function A.draw_hud_catalogue(R)
@@ -60,8 +56,8 @@ function A.draw_hud_catalogue(R)
 end
 
 function A.load()
-    local textures = {}
-    local function load(name) textures[name] = A.skin()[name] end
+    local textures, skin = {}, A.skin()
+    local function load(name) textures[name] = skin[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
     local quest_atlas = texture.load("quest-objects.png")
@@ -70,9 +66,6 @@ function A.load()
     end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
-    for _, tool in ipairs(A.tools) do
-        for _, state in ipairs(A.states) do load(tool .. "-" .. state) end
-    end
     return textures
 end
 
@@ -101,7 +94,7 @@ function A.draw_catalogue(R)
     end
     for row, tool in ipairs(A.tools) do
         for col, state in ipairs(A.states) do
-            gfx.image(R.board_art[tool .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
+            gfx.image(R.hud_art[tool .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
         end
     end
     R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)

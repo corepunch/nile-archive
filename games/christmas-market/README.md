@@ -45,11 +45,11 @@ vertically. Interior gems fall straight down whenever their cell below is
 empty and movable, and slide diagonally only when that cell is occupied,
 locked or missing. Locks still route gems around their sides.
 
-All board imagery uses one `data/match3.png` override atlas. The engine embeds
-a neutral resource atlas for games without an override; `--default-match3`
-previews it. `python3 tools/match3_atlas.py` reproduces both skins while
-preserving authored alpha and every control state. See the
-[review captures](docs/review/trickling/README.md).
+`data/match3.png` holds the board's backgrounds, pieces, blockers, materials,
+and effects. The HUD and tool controls use `data/match3-hud.png`.
+`python3 tools/match3_atlas.py` rebuilds both atlases from their source art.
+`--default-match3` previews the engine's neutral skin.
+[Power-up paint-over and board captures](docs/screenshots/review/power-up-paint/README.md).
 
 Swap adjacent treats, or tap two neighbours, to match three or more along a
 hex axis. Four in a line makes a rocket along that axis. Five or more makes a

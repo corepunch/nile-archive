@@ -148,7 +148,8 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/game.json": "ffd7e3752c748bc578e356947a7b1774e668b1e0f1b7d0245986abfc335bdc28",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
-    "data/match3.png": "bcd2e24d1ed1924b50d569f4cfbf6d6776a85182dc88f4eb8d92afca7097c46f",
+    "data/match3-hud.png": "0f567983f876891f16bc919ebc10b3533c18e2a7899f889515e547e58cd96c13",
+    "data/match3.png": "fce018a041312b0157f4ad65f4b28689f756c223e2cc2644f0c37ba26ac2076c",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -164,7 +165,6 @@
     "data/navigation/play-normal.png": "07ea5930b8b5f157f69d6e65d4a2e0ca798f4575d61d3ecaee2d1bdb4202b45a",
     "data/navigation/play-pressed.png": "8481fe1e507d3ce203cebb409b773b01c376edc2b7fefcd0418462029a50743c",
     "data/navigation/play-selected.png": "f6a34447cb1c7925d45c5d9f7178c1baf002b5e17bb06f4f0e7c9f2d4aa5c3f8",
-    "data/particles.png": "c806d583a185643c581689387706841800510104125d59dc7cbbd48880419507",
     "data/roads-sandstone.png": "a4da1560f4c0f9f9bce791a4a15399ed99482226558531327b455fec51ed8381",
     "data/roads.png": "a9341c19a5e03f829a84601615ccd7f9d3c48f97f0e07372d10bbed435b41373",
     "data/tile-sets/festive/0.png": "28cd171e2f2f9483e6e32db868ec9128fe28b50c5cbe2a10a718d7daea4f3827",
@@ -181,9 +181,9 @@
     "source": "art/particles/kenney/",
     "license": "art/particles/kenney/License.txt",
     "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
-    "runtime": "data/particles.png",
-    "contract": "lua/particle_skin.lua",
-    "renderer": "lua/vfx.lua",
+    "runtime": "data/match3.png",
+    "contract": "lua/match3_skin.lua",
+    "renderer": "../../engine/match3_vfx.lua",
     "frames": {
       "shock": "circle_03",
       "flash": "light_01",
@@ -194,8 +194,9 @@
       "streak": "trace_06"
     },
     "states": "transient additive effect sprites; per-kind tint at draw time; no interaction states",
-    "reproduction": "python3 tools/pack_particles.py christmas-market (from the repository root)",
-    "review": "docs/review/kenney-particles/README.md"
+    "reproduction": "python3 tools/match3_atlas.py",
+    "review": "docs/review/kenney-particles/README.md",
+    "frame_prefix": "fx-"
   },
   "story_cast": {
     "source": "art/story-cast.png",
@@ -430,7 +431,7 @@
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
-    "power_up_review": "docs/screenshots/review/scener-power-ups/README.md",
+    "power_up_review": "docs/screenshots/review/power-up-paint/README.md",
     "power_up_models": {
       "generator": "tools/match3_specials.py",
       "scene": "art/board-theme/specials/specials.blks",
@@ -441,7 +442,22 @@
         "art/board-theme/specials/bomb.png",
         "art/board-theme/specials/prism.png"
       ],
-      "reproduction": "python3 tools/match3_specials.py && python3 tools/match3_atlas.py"
+      "reproduction": "python3 tools/match3_specials.py christmas-market"
+    },
+    "power_up_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "frames": [
+        "ray-row",
+        "ray-column",
+        "ray-diagonal",
+        "bomb",
+        "prism"
+      ],
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py"
     }
   }
 }

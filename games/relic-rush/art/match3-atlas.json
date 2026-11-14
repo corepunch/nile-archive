@@ -23,1040 +23,932 @@
       768,
       1152
     ],
-    "apple-platter-1": [
+    "fx-burst": [
       774,
+      1158,
+      256,
+      256
+    ],
+    "fx-flash": [
+      1034,
+      1158,
+      256,
+      256
+    ],
+    "fx-shock": [
+      1294,
+      1158,
+      256,
+      256
+    ],
+    "apple-platter-1": [
+      1554,
       1158,
       128,
       128
     ],
     "apple-platter-2": [
-      906,
+      1686,
       1158,
       128,
       128
     ],
     "apple-platter-3": [
-      1038,
+      1818,
       1158,
       128,
       128
     ],
     "apple-platter-4": [
-      1170,
-      1158,
+      2,
+      2314,
       128,
       128
     ],
     "apple-platter-5": [
-      1302,
-      1158,
+      134,
+      2314,
       128,
       128
     ],
     "apple-platter-6": [
-      1434,
-      1158,
+      266,
+      2314,
       128,
       128
     ],
     "apple-platter-7": [
-      1566,
-      1158,
+      398,
+      2314,
       128,
       128
     ],
     "apple-platter-8": [
-      1698,
-      1158,
+      530,
+      2314,
       128,
       128
     ],
     "apple-platter-9": [
-      1830,
-      1158,
+      662,
+      2314,
       128,
       128
     ],
     "apple-platter-base": [
-      2,
+      794,
       2314,
       128,
       128
     ],
     "blind-body": [
-      134,
+      926,
       2314,
       128,
       128
     ],
     "blind-top": [
-      266,
+      1058,
       2314,
       128,
       128
     ],
     "bomb": [
-      398,
+      1190,
       2314,
       128,
       128
     ],
     "box-1": [
-      530,
+      1322,
       2314,
       128,
       128
     ],
     "box-2": [
-      662,
+      1454,
       2314,
       128,
       128
     ],
     "box-3": [
-      794,
+      1586,
       2314,
       128,
       128
     ],
     "box-4": [
-      926,
+      1718,
       2314,
       128,
       128
     ],
     "box-5": [
-      1058,
+      1850,
       2314,
       128,
       128
     ],
     "box-6": [
-      1190,
-      2314,
+      2,
+      2446,
       128,
       128
     ],
     "carpet-roll": [
-      1322,
-      2314,
+      134,
+      2446,
       128,
       128
     ],
     "carpet-swatch": [
-      1454,
-      2314,
+      266,
+      2446,
       128,
       128
     ],
     "carry-exit-arrow": [
-      1586,
-      2314,
+      398,
+      2446,
       128,
       128
     ],
     "cell-mask": [
-      1718,
-      2314,
+      530,
+      2446,
       128,
       128
     ],
     "ceramic-tile-1": [
-      1850,
-      2314,
+      662,
+      2446,
       128,
       128
     ],
     "ceramic-tile-2": [
-      2,
+      794,
       2446,
       128,
       128
     ],
     "chain": [
-      134,
+      926,
       2446,
       128,
       128
     ],
     "chain-1": [
-      266,
+      1058,
       2446,
       128,
       128
     ],
     "chain-1-mirror": [
-      398,
+      1190,
       2446,
       128,
       128
     ],
     "chain-2": [
-      530,
+      1322,
       2446,
       128,
       128
     ],
     "cherry": [
-      662,
+      1454,
       2446,
       128,
       128
     ],
     "chip-0": [
-      794,
+      1586,
       2446,
       128,
       128
     ],
     "chip-1": [
-      926,
+      1718,
       2446,
       128,
       128
     ],
     "chip-2": [
-      1058,
+      1850,
       2446,
       128,
       128
     ],
     "chip-3": [
-      1190,
-      2446,
+      2,
+      2578,
       128,
       128
     ],
     "chip-4": [
-      1322,
-      2446,
+      134,
+      2578,
       128,
       128
     ],
     "chip-5": [
-      1454,
-      2446,
-      128,
-      128
-    ],
-    "complete": [
-      1586,
-      2446,
+      266,
+      2578,
       128,
       128
     ],
     "cookie-1": [
-      1718,
-      2446,
+      398,
+      2578,
       128,
       128
     ],
     "cookie-2": [
-      1850,
-      2446,
+      530,
+      2578,
       128,
       128
     ],
     "cookie-3": [
-      2,
+      662,
       2578,
       128,
       128
     ],
     "cookie-stack-1": [
-      134,
+      794,
       2578,
       128,
       128
     ],
     "cookie-stack-2": [
-      266,
+      926,
       2578,
       128,
       128
     ],
     "cookie-stack-3": [
-      398,
+      1058,
       2578,
       128,
       128
     ],
     "delivery": [
-      530,
+      1190,
       2578,
       128,
       128
     ],
     "delivery-exit": [
-      662,
+      1322,
       2578,
       128,
       128
     ],
     "donut": [
-      794,
+      1454,
       2578,
       128,
       128
     ],
     "donut-maker-0": [
-      926,
+      1586,
       2578,
       128,
       128
     ],
     "donut-maker-1": [
-      1058,
+      1718,
       2578,
       128,
       128
     ],
     "donut-maker-2": [
-      1190,
+      1850,
       2578,
       128,
       128
     ],
     "donut-maker-3": [
-      1322,
-      2578,
+      2,
+      2710,
       128,
       128
     ],
     "donut-maker-4": [
-      1454,
-      2578,
+      134,
+      2710,
       128,
       128
     ],
     "donut-maker-5": [
-      1586,
-      2578,
+      266,
+      2710,
       128,
       128
     ],
     "donut-maker-base": [
-      1718,
-      2578,
+      398,
+      2710,
       128,
       128
     ],
     "donut-maker-dome": [
-      1850,
-      2578,
+      530,
+      2710,
       128,
       128
     ],
     "donut-maker-dough-1": [
-      2,
+      662,
       2710,
       128,
       128
     ],
     "donut-maker-dough-2": [
-      134,
+      794,
       2710,
       128,
       128
     ],
     "donut-maker-dough-3": [
-      266,
+      926,
       2710,
       128,
       128
     ],
     "donut-maker-legacy-progress-back-source": [
-      398,
-      2710,
-      128,
-      128
-    ],
-    "dynamite-disabled": [
-      530,
-      2710,
-      128,
-      128
-    ],
-    "dynamite-hover": [
-      662,
-      2710,
-      128,
-      128
-    ],
-    "dynamite-normal": [
-      794,
-      2710,
-      128,
-      128
-    ],
-    "dynamite-pressed": [
-      926,
-      2710,
-      128,
-      128
-    ],
-    "dynamite-selected": [
       1058,
+      2710,
+      128,
+      128
+    ],
+    "fx-glint": [
+      1190,
+      2710,
+      128,
+      128
+    ],
+    "fx-ring": [
+      1322,
+      2710,
+      128,
+      128
+    ],
+    "fx-streak": [
+      1454,
+      2710,
+      128,
+      128
+    ],
+    "fx-twinkle": [
+      1586,
       2710,
       128,
       128
     ],
     "generator-shell": [
-      1190,
+      1718,
       2710,
       128,
       128
     ],
     "goal-box": [
-      1322,
+      1850,
       2710,
       128,
       128
     ],
     "goal-carpet": [
-      1454,
-      2710,
+      2,
+      2842,
       128,
       128
     ],
     "goal-carry": [
-      1586,
-      2710,
+      134,
+      2842,
       128,
       128
     ],
     "goal-chip-0": [
-      1718,
-      2710,
+      266,
+      2842,
       128,
       128
     ],
     "goal-chip-1": [
-      1850,
-      2710,
+      398,
+      2842,
       128,
       128
     ],
     "goal-chip-2": [
-      2,
+      530,
       2842,
       128,
       128
     ],
     "goal-chip-3": [
-      134,
+      662,
       2842,
       128,
       128
     ],
     "goal-chip-4": [
-      266,
+      794,
       2842,
       128,
       128
     ],
     "goal-chip-5": [
-      398,
+      926,
       2842,
       128,
       128
     ],
     "goal-jelly": [
-      530,
+      1058,
       2842,
       128,
       128
     ],
     "goal-lock": [
-      662,
+      1190,
       2842,
       128,
       128
     ],
     "goal-oil": [
-      794,
+      1322,
       2842,
       128,
       128
     ],
     "goal-piggy": [
-      926,
+      1454,
       2842,
       128,
       128
     ],
     "goal-stone": [
-      1058,
+      1586,
       2842,
       128,
       128
     ],
     "goal-target-generator": [
-      1190,
+      1718,
       2842,
       128,
       128
     ],
     "goal-trash": [
-      1322,
+      1850,
       2842,
       128,
       128
     ],
     "gold-rainbow-ball": [
-      1454,
-      2842,
+      2,
+      2974,
       128,
       128
     ],
     "guide": [
-      1586,
-      2842,
+      134,
+      2974,
       128,
       128
     ],
     "hazelnut-1": [
-      1718,
-      2842,
+      266,
+      2974,
       128,
       128
     ],
     "hazelnut-2": [
-      1850,
-      2842,
+      398,
+      2974,
       128,
       128
     ],
     "hazelnut-3": [
-      2,
+      530,
       2974,
       128,
       128
     ],
     "hint": [
-      134,
+      662,
       2974,
       128,
       128
     ],
     "honey-swatch": [
-      266,
+      794,
       2974,
       128,
       128
     ],
     "ice-1": [
-      398,
+      926,
       2974,
       128,
       128
     ],
     "ice-2": [
-      530,
+      1058,
       2974,
       128,
       128
     ],
     "jelly-1": [
-      662,
+      1190,
       2974,
       128,
       128
     ],
     "jelly-1-cherry": [
-      794,
+      1322,
       2974,
       128,
       128
     ],
     "jelly-2": [
-      926,
+      1454,
       2974,
       128,
       128
     ],
     "jelly-2-cherry": [
-      1058,
+      1586,
       2974,
       128,
       128
     ],
     "jelly-3": [
-      1190,
+      1718,
       2974,
       128,
       128
     ],
     "jelly-4": [
-      1322,
+      1850,
       2974,
       128,
       128
     ],
     "jelly-5": [
-      1454,
-      2974,
+      2,
+      3106,
       128,
       128
     ],
     "jelly-6": [
-      1586,
-      2974,
+      134,
+      3106,
       128,
       128
     ],
     "jelly-cherry-clear-source": [
-      1718,
-      2974,
+      266,
+      3106,
       128,
       128
     ],
     "jelly-cherry-soft-source": [
-      1850,
-      2974,
+      398,
+      3106,
       128,
       128
     ],
     "jelly-flower-dark-source": [
-      2,
+      530,
       3106,
       128,
       128
     ],
     "jelly-flower-fill-source": [
-      134,
+      662,
       3106,
       128,
       128
     ],
     "jelly-flower-five-pale-source": [
-      266,
+      794,
       3106,
       128,
       128
     ],
     "jelly-flower-frame-source": [
-      398,
+      926,
       3106,
       128,
       128
     ],
     "jelly-flower-three-pale-source": [
-      530,
+      1058,
       3106,
       128,
       128
     ],
     "jelly-square-source": [
-      662,
+      1190,
       3106,
       128,
       128
     ],
     "jewels-0": [
-      794,
+      1322,
       3106,
       128,
       128
     ],
     "jewels-1": [
-      926,
+      1454,
       3106,
       128,
       128
     ],
     "jewels-2": [
-      1058,
+      1586,
       3106,
       128,
       128
     ],
     "jewels-3": [
-      1190,
+      1718,
       3106,
       128,
       128
     ],
     "jewels-4": [
-      1322,
+      1850,
       3106,
       128,
       128
     ],
     "jewels-5": [
-      1454,
-      3106,
-      128,
-      128
-    ],
-    "life": [
-      1586,
-      3106,
+      2,
+      3238,
       128,
       128
     ],
     "membrane-fill-1": [
-      1718,
-      3106,
+      134,
+      3238,
       128,
       128
     ],
     "membrane-fill-2": [
-      1850,
-      3106,
+      266,
+      3238,
       128,
       128
     ],
     "oil-bubbles": [
-      2,
+      398,
       3238,
       128,
       128
     ],
     "oil-material": [
-      134,
-      3238,
-      128,
-      128
-    ],
-    "pause-disabled": [
-      266,
-      3238,
-      128,
-      128
-    ],
-    "pause-hover": [
-      398,
-      3238,
-      128,
-      128
-    ],
-    "pause-normal": [
       530,
-      3238,
-      128,
-      128
-    ],
-    "pause-pressed": [
-      662,
-      3238,
-      128,
-      128
-    ],
-    "pause-selected": [
-      794,
-      3238,
-      128,
-      128
-    ],
-    "pickaxe-disabled": [
-      926,
-      3238,
-      128,
-      128
-    ],
-    "pickaxe-hover": [
-      1058,
-      3238,
-      128,
-      128
-    ],
-    "pickaxe-normal": [
-      1190,
-      3238,
-      128,
-      128
-    ],
-    "pickaxe-pressed": [
-      1322,
-      3238,
-      128,
-      128
-    ],
-    "pickaxe-selected": [
-      1454,
       3238,
       128,
       128
     ],
     "plane": [
-      1586,
+      662,
       3238,
       128,
       128
     ],
     "prism": [
-      1718,
+      794,
       3238,
       128,
       128
     ],
     "rainbow-ball": [
-      1850,
+      926,
       3238,
       128,
       128
     ],
     "ray-column": [
-      2,
-      3370,
+      1058,
+      3238,
       128,
       128
     ],
     "ray-diagonal": [
-      134,
-      3370,
+      1190,
+      3238,
       128,
       128
     ],
     "ray-row": [
-      266,
-      3370,
+      1322,
+      3238,
       128,
       128
     ],
     "relics-0": [
-      398,
-      3370,
+      1454,
+      3238,
       128,
       128
     ],
     "relics-1": [
-      530,
-      3370,
+      1586,
+      3238,
       128,
       128
     ],
     "relics-2": [
-      662,
-      3370,
+      1718,
+      3238,
       128,
       128
     ],
     "relics-3": [
-      794,
-      3370,
+      1850,
+      3238,
       128,
       128
     ],
     "relics-4": [
-      926,
+      2,
       3370,
       128,
       128
     ],
     "relics-5": [
-      1058,
+      134,
       3370,
       128,
       128
     ],
     "resources-0": [
-      1190,
+      266,
       3370,
       128,
       128
     ],
     "resources-1": [
-      1322,
+      398,
       3370,
       128,
       128
     ],
     "resources-2": [
-      1454,
+      530,
       3370,
       128,
       128
     ],
     "resources-3": [
-      1586,
+      662,
       3370,
       128,
       128
     ],
     "resources-4": [
-      1718,
+      794,
       3370,
       128,
       128
     ],
     "resources-5": [
-      1850,
+      926,
       3370,
       128,
       128
     ],
     "rocket-horizontal": [
-      2,
-      3502,
+      1058,
+      3370,
       128,
       128
     ],
     "rocket-vertical": [
-      134,
-      3502,
-      128,
-      128
-    ],
-    "score": [
-      266,
-      3502,
+      1190,
+      3370,
       128,
       128
     ],
     "selected": [
-      398,
-      3502,
-      128,
-      128
-    ],
-    "shop-built": [
-      530,
-      3502,
-      128,
-      128
-    ],
-    "shop-locked": [
-      662,
-      3502,
+      1322,
+      3370,
       128,
       128
     ],
     "statue-1": [
-      794,
-      3502,
+      1454,
+      3370,
       128,
       128
     ],
     "statue-2": [
-      926,
-      3502,
+      1586,
+      3370,
       128,
       128
     ],
     "statue-3": [
-      1058,
-      3502,
+      1718,
+      3370,
       128,
       128
     ],
     "stone-1": [
-      1190,
-      3502,
+      1850,
+      3370,
       128,
       128
     ],
     "stone-2": [
-      1322,
+      2,
       3502,
       128,
       128
     ],
     "stone-3": [
-      1454,
+      134,
       3502,
       128,
       128
     ],
     "stone-mark-1": [
-      1586,
+      266,
       3502,
       128,
       128
     ],
     "stone-mark-2": [
-      1718,
+      398,
       3502,
       128,
       128
     ],
     "stone-mark-3": [
-      1850,
+      530,
       3502,
       128,
       128
     ],
     "stone-material": [
-      2,
-      3634,
-      128,
-      128
-    ],
-    "sunburst-disabled": [
-      134,
-      3634,
-      128,
-      128
-    ],
-    "sunburst-hover": [
-      266,
-      3634,
-      128,
-      128
-    ],
-    "sunburst-normal": [
-      398,
-      3634,
-      128,
-      128
-    ],
-    "sunburst-pressed": [
-      530,
-      3634,
-      128,
-      128
-    ],
-    "sunburst-selected": [
       662,
-      3634,
+      3502,
       128,
       128
     ],
     "web-2": [
       794,
-      3634,
+      3502,
       128,
       128
     ],
     "glow": [
       926,
-      3634,
+      3502,
       64,
       64
     ],
     "kind-0": [
-      398,
-      3370,
+      1454,
+      3238,
       128,
       128
     ],
     "kind-1": [
-      530,
-      3370,
+      1586,
+      3238,
       128,
       128
     ],
     "kind-2": [
-      662,
-      3370,
+      1718,
+      3238,
       128,
       128
     ],
     "kind-3": [
-      794,
-      3370,
+      1850,
+      3238,
       128,
       128
     ],
     "kind-4": [
-      926,
+      2,
       3370,
       128,
       128
     ],
     "kind-5": [
-      1058,
+      134,
       3370,
       128,
       128
@@ -1077,40 +969,210 @@
     "resources-5": "data/tile-sets/resources/5.png",
     "cell-mask": "data/board-states/cell-mask.png",
     "delivery-exit": "data/board-states/delivery-exit.png",
-    "dynamite-disabled": "data/board-states/dynamite-disabled.png",
-    "dynamite-hover": "data/board-states/dynamite-hover.png",
-    "dynamite-normal": "data/board-states/dynamite-normal.png",
-    "dynamite-pressed": "data/board-states/dynamite-pressed.png",
-    "dynamite-selected": "data/board-states/dynamite-selected.png",
     "guide": "data/board-states/guide.png",
     "hint": "data/board-states/hint.png",
-    "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
-    "pickaxe-hover": "data/board-states/pickaxe-hover.png",
-    "pickaxe-normal": "data/board-states/pickaxe-normal.png",
-    "pickaxe-pressed": "data/board-states/pickaxe-pressed.png",
-    "pickaxe-selected": "data/board-states/pickaxe-selected.png",
     "selected": "data/board-states/selected.png",
     "stone-1": "data/board-states/stone-1.png",
     "stone-2": "data/board-states/stone-2.png",
     "stone-3": "data/board-states/stone-3.png",
-    "sunburst-disabled": "data/board-states/sunburst-disabled.png",
-    "sunburst-hover": "data/board-states/sunburst-hover.png",
-    "sunburst-normal": "data/board-states/sunburst-normal.png",
-    "sunburst-pressed": "data/board-states/sunburst-pressed.png",
-    "sunburst-selected": "data/board-states/sunburst-selected.png",
-    "complete": "data/expedition-hud/complete.png",
-    "life": "data/expedition-hud/life.png",
-    "pause-disabled": "data/expedition-hud/pause-disabled.png",
-    "pause-hover": "data/expedition-hud/pause-hover.png",
-    "pause-normal": "data/expedition-hud/pause-normal.png",
-    "pause-pressed": "data/expedition-hud/pause-pressed.png",
-    "pause-selected": "data/expedition-hud/pause-selected.png",
-    "score": "data/expedition-hud/score.png",
-    "shop-built": "data/expedition-hud/shop-built.png",
-    "shop-locked": "data/expedition-hud/shop-locked.png",
     "background": "data/jungle.jpg",
     "scene-1": "data/scene-lagoon.jpg",
     "scene-2": "data/scene-temple.jpg"
+  },
+  "effects": {
+    "fx-shock": "art/particles/kenney/circle_03.png",
+    "fx-flash": "art/particles/kenney/light_01.png",
+    "fx-burst": "art/particles/kenney/star_09.png",
+    "fx-ring": "art/particles/kenney/circle_02.png",
+    "fx-glint": "art/particles/kenney/star_07.png",
+    "fx-twinkle": "art/particles/kenney/star_06.png",
+    "fx-streak": "art/particles/kenney/trace_06.png"
+  },
+  "hud": {
+    "runtime": "data/match3-hud.png",
+    "size": [
+      1024,
+      1024
+    ],
+    "frames": {
+      "complete": [
+        2,
+        2,
+        128,
+        128
+      ],
+      "dynamite-disabled": [
+        134,
+        2,
+        128,
+        128
+      ],
+      "dynamite-hover": [
+        266,
+        2,
+        128,
+        128
+      ],
+      "dynamite-normal": [
+        398,
+        2,
+        128,
+        128
+      ],
+      "dynamite-pressed": [
+        530,
+        2,
+        128,
+        128
+      ],
+      "dynamite-selected": [
+        662,
+        2,
+        128,
+        128
+      ],
+      "life": [
+        794,
+        2,
+        128,
+        128
+      ],
+      "pause-disabled": [
+        2,
+        134,
+        128,
+        128
+      ],
+      "pause-hover": [
+        134,
+        134,
+        128,
+        128
+      ],
+      "pause-normal": [
+        266,
+        134,
+        128,
+        128
+      ],
+      "pause-pressed": [
+        398,
+        134,
+        128,
+        128
+      ],
+      "pause-selected": [
+        530,
+        134,
+        128,
+        128
+      ],
+      "pickaxe-disabled": [
+        662,
+        134,
+        128,
+        128
+      ],
+      "pickaxe-hover": [
+        794,
+        134,
+        128,
+        128
+      ],
+      "pickaxe-normal": [
+        2,
+        266,
+        128,
+        128
+      ],
+      "pickaxe-pressed": [
+        134,
+        266,
+        128,
+        128
+      ],
+      "pickaxe-selected": [
+        266,
+        266,
+        128,
+        128
+      ],
+      "score": [
+        398,
+        266,
+        128,
+        128
+      ],
+      "shop-built": [
+        530,
+        266,
+        128,
+        128
+      ],
+      "shop-locked": [
+        662,
+        266,
+        128,
+        128
+      ],
+      "sunburst-disabled": [
+        794,
+        266,
+        128,
+        128
+      ],
+      "sunburst-hover": [
+        2,
+        398,
+        128,
+        128
+      ],
+      "sunburst-normal": [
+        134,
+        398,
+        128,
+        128
+      ],
+      "sunburst-pressed": [
+        266,
+        398,
+        128,
+        128
+      ],
+      "sunburst-selected": [
+        398,
+        398,
+        128,
+        128
+      ]
+    },
+    "sources": {
+      "dynamite-disabled": "data/board-states/dynamite-disabled.png",
+      "dynamite-hover": "data/board-states/dynamite-hover.png",
+      "dynamite-normal": "data/board-states/dynamite-normal.png",
+      "dynamite-pressed": "data/board-states/dynamite-pressed.png",
+      "dynamite-selected": "data/board-states/dynamite-selected.png",
+      "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
+      "pickaxe-hover": "data/board-states/pickaxe-hover.png",
+      "pickaxe-normal": "data/board-states/pickaxe-normal.png",
+      "pickaxe-pressed": "data/board-states/pickaxe-pressed.png",
+      "pickaxe-selected": "data/board-states/pickaxe-selected.png",
+      "sunburst-disabled": "data/board-states/sunburst-disabled.png",
+      "sunburst-hover": "data/board-states/sunburst-hover.png",
+      "sunburst-normal": "data/board-states/sunburst-normal.png",
+      "sunburst-pressed": "data/board-states/sunburst-pressed.png",
+      "sunburst-selected": "data/board-states/sunburst-selected.png",
+      "complete": "data/expedition-hud/complete.png",
+      "life": "data/expedition-hud/life.png",
+      "pause-disabled": "data/expedition-hud/pause-disabled.png",
+      "pause-hover": "data/expedition-hud/pause-hover.png",
+      "pause-normal": "data/expedition-hud/pause-normal.png",
+      "pause-pressed": "data/expedition-hud/pause-pressed.png",
+      "pause-selected": "data/expedition-hud/pause-selected.png",
+      "score": "data/expedition-hud/score.png",
+      "shop-built": "data/expedition-hud/shop-built.png",
+      "shop-locked": "data/expedition-hud/shop-locked.png"
+    }
   },
   "homescapes": {
     "apple-platter-base": {
@@ -3255,13 +3317,13 @@
       "silhouette_area_px": 6316
     },
     "ray-row": {
-      "source": "art/board-theme/specials/ray-row.png",
-      "scene": "art/board-theme/specials/specials.blks",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
       "crop": [
         0,
         0,
-        512,
-        512
+        396,
+        396
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
@@ -3269,91 +3331,99 @@
         88,
         87
       ],
-      "generator": "tools/match3_specials.py",
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "geometry": "art/board-theme/specials/ray-row.png",
       "offset": [
-        20,
-        20
+        19,
+        21
       ],
       "homescapes_target_area_px": 4625,
-      "silhouette_area_px": 4592
+      "silhouette_area_px": 4590
     },
     "ray-column": {
-      "source": "art/board-theme/specials/ray-column.png",
-      "scene": "art/board-theme/specials/specials.blks",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
       "crop": [
+        396,
         0,
-        0,
-        512,
-        512
+        793,
+        396
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        69,
+        70,
         99
       ],
-      "generator": "tools/match3_specials.py",
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "geometry": "art/board-theme/specials/ray-column.png",
       "offset": [
         29,
         14
       ],
       "homescapes_target_area_px": 4625,
-      "silhouette_area_px": 4651
+      "silhouette_area_px": 4607
     },
     "ray-diagonal": {
-      "source": "art/board-theme/specials/ray-diagonal.png",
-      "scene": "art/board-theme/specials/specials.blks",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
       "crop": [
+        793,
         0,
-        0,
-        512,
-        512
+        1189,
+        396
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        88,
+        89,
         87
       ],
-      "generator": "tools/match3_specials.py",
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "geometry": "art/board-theme/specials/ray-diagonal.png",
       "offset": [
-        20,
+        19,
         20
       ],
       "homescapes_target_area_px": 4625,
-      "silhouette_area_px": 4592
+      "silhouette_area_px": 4641
     },
     "bomb": {
-      "source": "art/board-theme/specials/bomb.png",
-      "scene": "art/board-theme/specials/specials.blks",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
       "crop": [
+        1189,
         0,
-        0,
-        512,
-        512
+        1586,
+        396
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        84,
-        84
+        82,
+        83
       ],
-      "generator": "tools/match3_specials.py",
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "geometry": "art/board-theme/specials/bomb.png",
       "offset": [
-        22,
-        21
+        23,
+        23
       ],
       "homescapes_target_area_px": 5180,
-      "silhouette_area_px": 5253
+      "silhouette_area_px": 5089
     },
     "prism": {
-      "source": "art/board-theme/specials/prism.png",
-      "scene": "art/board-theme/specials/specials.blks",
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
       "crop": [
+        1586,
         0,
-        0,
-        512,
-        512
+        1983,
+        396
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
@@ -3361,13 +3431,15 @@
         89,
         83
       ],
-      "generator": "tools/match3_specials.py",
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "geometry": "art/board-theme/specials/prism.png",
       "offset": [
         19,
-        22
+        23
       ],
       "homescapes_target_area_px": 5606,
-      "silhouette_area_px": 5589
+      "silhouette_area_px": 5546
     },
     "plane": {
       "source": "../christmas-market/art/board-theme/source.png",
@@ -3635,8 +3707,11 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "eaf428786f95197382eee56c191daff674bf1bd6f4f94d2f49a5321fe3e95a16",
+    "recipe": "1b50fb44bf55757bd6c36c7157e9c67fe44828d059040d18bae43582e032ae09",
     "inputs": {
+      "art/match3-power-up-paint/prompt.txt": "8207562c2d6f8a2e3ea66e51476875394072d09f8645aeb8bc725f1b4daa5d7e",
+      "art/match3-power-up-paint/scener-strip.png": "e087fe56642192a2e42885300c04da8fbc8c18433736ac9c46ad1e0340c421c0",
+      "art/match3-power-up-paint/source.png": "1faeffea23711f2a82db1369793da07017089226a0973e9b86b47c0dcbf92041",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
@@ -3746,6 +3821,13 @@
       "games/relic-rush/art/board-theme/specials/ray-diagonal.png": "6c777b627935b2209da5467ce82401043a07f8c58c57bce172242eeafe5225a7",
       "games/relic-rush/art/board-theme/specials/ray-row.png": "8d73745b2055a5b2f17e3fd6753198a1897baec2103ab6a5c62f077a492bc9ec",
       "games/relic-rush/art/board-theme/specials/specials.blks": "8eef6c2bd487340da916c86a0dcf9d765d97112e66f37ce63676b853763459a5",
+      "games/relic-rush/art/particles/kenney/circle_02.png": "697e6fa5948cc35cc779ae0b22995f5b17f0e02746406d05ec8548921e82ad1b",
+      "games/relic-rush/art/particles/kenney/circle_03.png": "ecd5e1328a591878c9ad6055e551ff76a390ed5ca1a5bebee28dd850f875c00e",
+      "games/relic-rush/art/particles/kenney/light_01.png": "c9e0e947892b87cb71e110e60d85798810142b11aed154542c50b17dc93033b0",
+      "games/relic-rush/art/particles/kenney/star_06.png": "4b55a5f4e03ab541b3d6b81a1b0f41c1e30f700144e1fcf204e4bec31fa1ae73",
+      "games/relic-rush/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
+      "games/relic-rush/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
+      "games/relic-rush/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
       "games/relic-rush/art/tile-sets/source-flat-hex.png": "9af886c7b92ac0dd340e6cc18c21c7e1abaf5b401c6788d011e6f17f1e87961c",
       "games/relic-rush/art/tile-sets/source.png": "2cd534c2ad89c431a043e9182c21366569c6883e5e4a2579c62c4a3664b0e50c",
       "games/relic-rush/data/board-states/cell-mask.png": "e51da6f444ca0f877436eb32bb3d3de943f8a1739a39a333c02ab7cff73ad719",
@@ -3800,15 +3882,18 @@
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_specials.py": "0f4c9db4d9f452500288d725a631272de65063c730359d1dd9e5b611e498ccb0",
-      "tools/match3_theme_art.py": "7f762b4777c657112cb89775b678a6cc9de8f5a45265262fc3778a59d55dda2e"
+      "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
+      "tools/match3_theme_art.py": "2c5f6b1fbc42292e5a6097e5a53db9a3a95da597ad9c9238df4e808507e9f98b",
+      "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
-      "games/relic-rush/data/match3.png": "b798b99f7937a8ee0586281da6360c32de613d66ff141d8e48e11ca84c0793c4",
+      "games/relic-rush/data/match3-hud.png": "491f591044a867435420067b26ea4d4c9ac89feb5b3e0f11867fa4b65bccb7b4",
+      "games/relic-rush/data/match3.png": "3b28b181310406a20dadae893b38dc19392de17ba195055bb931ed0584e3a7f8",
       "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
-      "games/relic-rush/lua/match3_skin.lua": "581b38571f2ab1c43ea05767051cb93e5e8da92dae13054c7e0ba542cf1f641c"
+      "games/relic-rush/lua/match3_hud.lua": "2fcb054fcb4d8b30ddef0e8427df6f38da44186659f80ad3db5738251f7c3c82",
+      "games/relic-rush/lua/match3_skin.lua": "ada3ffe01684d0eb64a6ad759ab7668f1487afcb9fc01cde363dd204eb799f43"
     }
   }
 }

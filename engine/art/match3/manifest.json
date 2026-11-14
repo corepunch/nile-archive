@@ -3248,12 +3248,75 @@
         128
       ],
       "mask": false
+    },
+    "fx-burst": {
+      "source": "games/relic-rush/art/particles/kenney/star_09.png",
+      "runtime": [
+        2,
+        3074,
+        256,
+        256
+      ]
+    },
+    "fx-flash": {
+      "source": "games/relic-rush/art/particles/kenney/light_01.png",
+      "runtime": [
+        262,
+        3074,
+        256,
+        256
+      ]
+    },
+    "fx-shock": {
+      "source": "games/relic-rush/art/particles/kenney/circle_03.png",
+      "runtime": [
+        522,
+        3074,
+        256,
+        256
+      ]
+    },
+    "fx-glint": {
+      "source": "games/relic-rush/art/particles/kenney/star_07.png",
+      "runtime": [
+        782,
+        3074,
+        128,
+        128
+      ]
+    },
+    "fx-ring": {
+      "source": "games/relic-rush/art/particles/kenney/circle_02.png",
+      "runtime": [
+        2,
+        3334,
+        128,
+        128
+      ]
+    },
+    "fx-streak": {
+      "source": "games/relic-rush/art/particles/kenney/trace_06.png",
+      "runtime": [
+        134,
+        3334,
+        128,
+        128
+      ]
+    },
+    "fx-twinkle": {
+      "source": "games/relic-rush/art/particles/kenney/star_06.png",
+      "runtime": [
+        266,
+        3334,
+        128,
+        128
+      ]
     }
   },
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "eaf428786f95197382eee56c191daff674bf1bd6f4f94d2f49a5321fe3e95a16",
+    "recipe": "1b50fb44bf55757bd6c36c7157e9c67fe44828d059040d18bae43582e032ae09",
     "inputs": {
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",
@@ -3356,6 +3419,13 @@
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
       "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee",
+      "games/relic-rush/art/particles/kenney/circle_02.png": "697e6fa5948cc35cc779ae0b22995f5b17f0e02746406d05ec8548921e82ad1b",
+      "games/relic-rush/art/particles/kenney/circle_03.png": "ecd5e1328a591878c9ad6055e551ff76a390ed5ca1a5bebee28dd850f875c00e",
+      "games/relic-rush/art/particles/kenney/light_01.png": "c9e0e947892b87cb71e110e60d85798810142b11aed154542c50b17dc93033b0",
+      "games/relic-rush/art/particles/kenney/star_06.png": "4b55a5f4e03ab541b3d6b81a1b0f41c1e30f700144e1fcf204e4bec31fa1ae73",
+      "games/relic-rush/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
+      "games/relic-rush/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
+      "games/relic-rush/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
       "games/relic-rush/data/board-states/delivery-exit.png": "df14674ded59969438e1fc73a51b841c55f9f166482db6866406a6e90b4c636b",
       "games/relic-rush/data/board-states/delivery.png": "beee8c50597fca44605761f636d9d2b4861c0aee4c22fff27d36ed5d7f05ed24",
       "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
@@ -3363,11 +3433,12 @@
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
-      "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2"
+      "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
+      "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
-      "engine/data/match3.png": "b283e02ed5ce6eaca904f4875a488a2380a21abf0d41399bf52e2a9e2691ba4f",
-      "engine/match3_frames.lua": "a9f040c2f6291b6d800c6fa1c08132538f5aba17cb23b23082849c791703b71f"
+      "engine/data/match3.png": "aa6881c8e8a6125589b04815a53c6b1630447e3b20bc79cf10673d12da98f7b1",
+      "engine/match3_frames.lua": "82efa22d054245146d316bb38e1bb89606bd0e257d0da4eb6279c1abc62dd79d"
     }
   }
 }
