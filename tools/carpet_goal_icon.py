@@ -13,12 +13,13 @@ import io
 import math
 from pathlib import Path
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageChops, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 SWATCH = ROOT / 'engine/art/homescapes/sprites/carpet-swatch.png'
 OUT = ROOT / 'engine/art/match3/goal-carpet.png'
 SIZE, SS = 128, 4            # output side, supersampling
+TOLERANCE = 4                # --check: largest channel difference still counted as the same picture
 RADIUS = .45                 # centre to vertex, of the side
 CORNER = .14                 # convex corner rounding, of the side
 RIM = .06                    # smooth rim band inside the edge
@@ -91,7 +92,12 @@ def main():
     parser.add_argument('--check', action='store_true')
     data = encode(render())
     if parser.parse_args().check:
-        assert OUT.read_bytes() == data, f'{OUT.relative_to(ROOT)} is stale: run python3 tools/carpet_goal_icon.py'
+        # Compare pixels, not bytes: PNG compression and the blur's rounding differ between platforms.
+        made, kept = Image.open(io.BytesIO(data)).convert('RGBA'), Image.open(OUT).convert('RGBA')
+        assert made.size == kept.size, f'{OUT.relative_to(ROOT)} is stale: run python3 tools/carpet_goal_icon.py'
+        worst = max(high for _, high in ImageChops.difference(made, kept).getextrema())
+        assert worst <= TOLERANCE, (f'{OUT.relative_to(ROOT)} is stale (a channel differs by {worst}, '
+                                    f'limit {TOLERANCE}): run python3 tools/carpet_goal_icon.py')
         print(f'{OUT.relative_to(ROOT)}: verified')
         return
     OUT.write_bytes(data)
