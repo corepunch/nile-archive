@@ -239,7 +239,7 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
 | `carpet-swatch`, `goal-carpet` | Restored mosaic and its goal icon. Coverage extends through matches touching the restored floor. |
-| `oil-material`, `goal-oil` | River silt fills each affected hex face up to the board seam. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
+| `oil-material`, `goal-oil` | River silt fills each affected hex face. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |

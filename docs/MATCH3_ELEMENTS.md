@@ -93,8 +93,9 @@ Market uses lanternlight and powder snow. Mosaic and lanternlight use a
 board-anchored material masked by a connected field made with
 `texture.hex_field` and `gfx.sdf_mask`. Lanternlight has a feathered boundary.
 River silt and powder snow use `gfx.image_hex` to fill each affected cell's
-flat-top face and preserve the board's seams. Each carved stone is one
-face-on hex sprite. The guide and HUD use the same goal icons.
+flat-top face. The dark edge and light rim frame the board perimeter.
+Each carved stone is one face-on hex sprite. The guide and HUD use the
+same goal icons.
 
 ## Artwork and verification
 

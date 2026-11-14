@@ -113,8 +113,7 @@ function E.ground(R, rules, sx)
                 local scale, turn, lift = 1, 0, 0
                 if intro then scale, turn, lift = intro:cell(i) end
                 if scale > .02 then
-                    local radius = R.HEX_R * scale - R.GROUND.seam_width
-                    gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at + vec2(0, lift), radius, turn,
+                    gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at + vec2(0, lift), R.HEX_R * scale, turn,
                         color(255, 255, 255, 255 * alpha))
                 end
             end

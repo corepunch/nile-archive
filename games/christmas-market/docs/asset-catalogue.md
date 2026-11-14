@@ -275,7 +275,7 @@ snowy cell clears the snow. After any turn that clears none, it advances to
 one neighbouring cell, increasing the goal count.
 
 The renderer tiles lanternlight inside a connected-cell mask with a feathered
-edge. Powder snow fills each affected hex face up to the board seam. Both
+edge. Powder snow fills each affected hex face. Both
 objectives have one board state and a separate icon shared by the HUD and the
 Market Keeper’s Guide.
 [In-game review](screenshots/review/themed-terrain/README.md).

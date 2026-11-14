@@ -145,7 +145,7 @@ when the geometry changes.
    sprites. The carved stone face uses the exact canonical mask. Mosaic and
    lanternlight use board-anchored swatches under connected surface masks.
    The river silt and powder snow swatches are cropped to the flat-top face
-   of each affected cell at draw time, preserving the board's seams.
+   of each affected cell at draw time.
 2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png` for the board
    and its effects, and `data/match3-hud.png` for the controls and HUD. Run
    `python3 tools/match3_atlas.py --check`. Record the packed frames in the
