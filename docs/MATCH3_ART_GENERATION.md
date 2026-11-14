@@ -16,8 +16,9 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 - Use the same chip frame on the board and in color-specific goals and previews.
   Keep chips brighter and more saturated than carpet, oil and stone. Judge this
   with chips over the patches, including a green chip over green carpet.
-- Use the saturated grass green of the Homescapes carpet swatch with
-  low-contrast woven fibers. Oil is quiet
+- Use a woven mid-green carpet with low-contrast fibers. Its palette sits
+  between the first olive paint and the vivid Homescapes green so green pieces
+  stay readable. Oil is quiet
   amber-brown with small drifting glints. Carved stones face the viewer and use
   the board's flat-top hex outline, with sandstone in Relic Rush and cool slate
   in Christmas Market. Each stone has one hit and shares its sprite with the

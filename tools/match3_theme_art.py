@@ -163,11 +163,10 @@ def inputs(root):
     borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
     paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'),
             (CHAIN_PAINT, 'edit-target.png'), (FLOOR_PAINT, 'edit-target.png'),
-            (CARPET_PAINT, 'edit-target.png'), (BLOCKER_PAINT, 'reference.png'))
+            (BLOCKER_PAINT, 'reference.png'))
              for name in ('source.png', 'prompt.txt', target)]
-    references = [HOMESCAPES / 'carpet-swatch.png',
-                  ART.parent / 'games/christmas-market/docs/screenshots/review/carpet/homescapes-patch.jpg']
-    return painted(root) + borrowed + rendered(root) + paint + references + [Path(__file__).with_name('match3_specials.py')]
+    paint += [CARPET_PAINT / name for name in ('source.png', 'mid-green.png', 'mid-green.prompt.txt', 'mid-green-palette.png')]
+    return painted(root) + borrowed + rendered(root) + paint + [Path(__file__).with_name('match3_specials.py')]
 
 
 def registered(root, mask):
@@ -178,8 +177,9 @@ def registered(root, mask):
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
         source, accent = [stack.enter_context(Image.open(p)) for p in (path, accent_path)]
-        power_ups, chains, floors, carpet, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
-                 for folder in (POWER_UP_PAINT, CHAIN_PAINT, FLOOR_PAINT, CARPET_PAINT, BLOCKER_PAINT)]
+        power_ups, chains, floors, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
+                 for folder in (POWER_UP_PAINT, CHAIN_PAINT, FLOOR_PAINT, BLOCKER_PAINT)]
+        carpet = stack.enter_context(Image.open(CARPET_PAINT / 'mid-green.png'))
         for sheet in (power_ups, chains, floors, carpet, blockers):
             assert sheet.mode == 'RGBA', sheet.filename
         for sheet in (source, accent):
@@ -206,7 +206,7 @@ def registered(root, mask):
                 col = int(root.name == 'christmas-market')
                 crop = (col * sheet.width // 2, 0, (col + 1) * sheet.width // 2, sheet.height)
             elif name in PAINTED_CARPET:
-                sheet, sprite_prompt = carpet, CARPET_PAINT / 'prompt.txt'
+                sheet, sprite_prompt = carpet, CARPET_PAINT / 'mid-green.prompt.txt'
                 col = PAINTED_CARPET.index(name)
                 crop = (col * sheet.width // 2, 0, (col + 1) * sheet.width // 2, sheet.height)
                 if name in MATERIALS:
@@ -279,10 +279,11 @@ def registered(root, mask):
                 records[name]['generator'] = 'built-in ImageGen'
                 if is_blocker_paint:
                     records[name]['reference'] = os.path.relpath(BLOCKER_PAINT / 'reference.png', root)
+                elif name in PAINTED_CARPET:
+                    records[name]['edit_target'] = os.path.relpath(CARPET_PAINT / 'source.png', root)
+                    records[name]['palette_reference'] = os.path.relpath(CARPET_PAINT / 'mid-green-palette.png', root)
                 else:
                     records[name]['edit_target'] = os.path.relpath(sprite_prompt.with_name('edit-target.png'), root)
-                    if name in PAINTED_CARPET:
-                        records[name]['palette_reference'] = os.path.relpath(HOMESCAPES / 'carpet-swatch.png', root)
                 if name not in MATERIALS and name != 'oil-bubbles':
                     records[name]['offset'] = offset
             if name == 'plane' and root.name != PLANE_FROM:

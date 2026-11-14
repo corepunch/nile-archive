@@ -1310,17 +1310,17 @@
     },
     "carpet_paint": {
       "generator": "built-in ImageGen",
-      "source": "../../art/match3-carpet-paint/source.png",
-      "prompt": "../../art/match3-carpet-paint/prompt.txt",
-      "edit_target": "../../art/match3-carpet-paint/edit-target.png",
-      "palette_reference": "../../engine/art/homescapes/sprites/carpet-swatch.png",
+      "source": "../../art/match3-carpet-paint/mid-green.png",
+      "prompt": "../../art/match3-carpet-paint/mid-green.prompt.txt",
+      "edit_target": "../../art/match3-carpet-paint/source.png",
+      "palette_reference": "../../art/match3-carpet-paint/mid-green-palette.png",
       "frames": [
         "carpet-swatch",
         "goal-carpet"
       ],
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/carpet-color/README.md"
+      "review": "docs/screenshots/review/mid-green-carpet/README.md"
     }
   }
 }
