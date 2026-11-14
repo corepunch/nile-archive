@@ -84,7 +84,7 @@ def rocket(key, theme):
     look = f'shininess="{gloss}" specular="1"'
     lines = []
     for sign, side in ((-1, 'low'), (1, 'high')):
-        dome = [(26.5, 37), (26, 40.5), (18, 45.5), (9.5, 50), (4, 52), (0, 52.6)]   # a blunt cone, as Homescapes' tips
+        dome = [(26.5, 37), (26, 41), (20, 47), (11.5, 54.5), (4.5, 59), (0, 60)]   # a blunt cone, as Homescapes' tips
         collar = [(24, 14)] + arc(33, 22, 8, 8, -90, 0) + arc(33, 32, 8, 8, 0, 90) + [(24, 40)]
         for part, profile, colour in (('dome', dome, trim), ('collar', collar, body)):
             profile = [(x, y * sign) for x, y in profile]

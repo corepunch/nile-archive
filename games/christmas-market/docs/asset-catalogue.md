@@ -7,7 +7,7 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
-| `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory blunt cone tips and diagonal bands. |
+| `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and ball are Scener models. |
 | `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |

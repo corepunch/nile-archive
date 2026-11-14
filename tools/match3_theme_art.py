@@ -23,7 +23,8 @@ MATERIALS = {
     'stone-material': (1026, 550, 1200, 724),
 }
 # RENDERED sprites are modelled on the board's axes by tools/match3_specials.py.
-OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38}
+# Longest side in px. The plane is a thin shape: at its Homescapes area it would span the whole cell.
+OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38, 'plane': 84}
 SIZE = 128
 # Relic Rush flies Christmas Market's painted plane, its blues remapped by luminance to these parchment
 # shades (shadow, midtone, highlight). The drawing, shading and alpha are unchanged.
@@ -192,7 +193,7 @@ def registered(root, mask):
                 sprite = sprite.crop((max(0, left - 5), max(0, top - 5),
                                       min(sprite.width, right + 5), min(sprite.height, bottom + 5)))
                 if target:
-                    frame, fitted_size, offset = fit_object(sprite, inset, SIZE, target)
+                    frame, fitted_size, offset = fit_object(sprite, inset, OBJECT_SIZE.get(name, SIZE), target)
                 else:
                     frame, fitted_size, offset = fit_object(sprite, mask, OBJECT_SIZE.get(name, 120), None)
                 fit = 'centered inside canonical hex with authored alpha'

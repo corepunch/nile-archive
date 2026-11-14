@@ -7,11 +7,11 @@
   <sun dir="-0.55 0.6 0.55" color="1 0.8 0.6" intensity="0.3" castShadows="0"/>
   <camera name="ray-row" pos="0 0 600" look="0 0 0" ortho="150" size="512 512"/>
   <group name="ray-row" pos="0 0 0" rot="0 0 60"><group rot="8 0 0">
-    <shape id="ray-row-dome-low" closed="0" v="0 -52.6 4 -52 9.5 -50 18 -45.5 26 -40.5 26.5 -37"/>
+    <shape id="ray-row-dome-low" closed="0" v="0 -60 4.5 -59 11.5 -54.5 20 -47 26 -41 26.5 -37"/>
     <lathe shape="ray-row-dome-low" segments="72" color="0.95 0.7 0.24" shininess="19" specular="1"/>
     <shape id="ray-row-collar-low" closed="0" v="24 -40 33 -40 34.251 -39.902 35.472 -39.608 36.632 -39.128 37.702 -38.472 38.657 -37.657 39.472 -36.702 40.128 -35.632 40.608 -34.472 40.902 -33.251 41 -32 41 -22 40.902 -20.749 40.608 -19.528 40.128 -18.368 39.472 -17.298 38.657 -16.343 37.702 -15.528 36.632 -14.872 35.472 -14.392 34.251 -14.098 33 -14 24 -14"/>
     <lathe shape="ray-row-collar-low" segments="72" color="0.72 0.19 0.14" shininess="19" specular="1"/>
-    <shape id="ray-row-dome-high" closed="0" v="26.5 37 26 40.5 18 45.5 9.5 50 4 52 0 52.6"/>
+    <shape id="ray-row-dome-high" closed="0" v="26.5 37 26 41 20 47 11.5 54.5 4.5 59 0 60"/>
     <lathe shape="ray-row-dome-high" segments="72" color="0.95 0.7 0.24" shininess="19" specular="1"/>
     <shape id="ray-row-collar-high" closed="0" v="24 14 33 14 34.251 14.098 35.472 14.392 36.632 14.872 37.702 15.528 38.657 16.343 39.472 17.298 40.128 18.368 40.608 19.528 40.902 20.749 41 22 41 32 40.902 33.251 40.608 34.472 40.128 35.632 39.472 36.702 38.657 37.657 37.702 38.472 36.632 39.128 35.472 39.608 34.251 39.902 33 40 24 40"/>
     <lathe shape="ray-row-collar-high" segments="72" color="0.72 0.19 0.14" shininess="19" specular="1"/>
@@ -46,11 +46,11 @@
   </group></group>
   <camera name="ray-column" pos="400 0 600" look="400 0 0" ortho="150" size="512 512"/>
   <group name="ray-column" pos="400 0 0" rot="0 0 0"><group rot="8 0 0">
-    <shape id="ray-column-dome-low" closed="0" v="0 -52.6 4 -52 9.5 -50 18 -45.5 26 -40.5 26.5 -37"/>
+    <shape id="ray-column-dome-low" closed="0" v="0 -60 4.5 -59 11.5 -54.5 20 -47 26 -41 26.5 -37"/>
     <lathe shape="ray-column-dome-low" segments="72" color="0.95 0.7 0.24" shininess="19" specular="1"/>
     <shape id="ray-column-collar-low" closed="0" v="24 -40 33 -40 34.251 -39.902 35.472 -39.608 36.632 -39.128 37.702 -38.472 38.657 -37.657 39.472 -36.702 40.128 -35.632 40.608 -34.472 40.902 -33.251 41 -32 41 -22 40.902 -20.749 40.608 -19.528 40.128 -18.368 39.472 -17.298 38.657 -16.343 37.702 -15.528 36.632 -14.872 35.472 -14.392 34.251 -14.098 33 -14 24 -14"/>
     <lathe shape="ray-column-collar-low" segments="72" color="0.72 0.19 0.14" shininess="19" specular="1"/>
-    <shape id="ray-column-dome-high" closed="0" v="26.5 37 26 40.5 18 45.5 9.5 50 4 52 0 52.6"/>
+    <shape id="ray-column-dome-high" closed="0" v="26.5 37 26 41 20 47 11.5 54.5 4.5 59 0 60"/>
     <lathe shape="ray-column-dome-high" segments="72" color="0.95 0.7 0.24" shininess="19" specular="1"/>
     <shape id="ray-column-collar-high" closed="0" v="24 14 33 14 34.251 14.098 35.472 14.392 36.632 14.872 37.702 15.528 38.657 16.343 39.472 17.298 40.128 18.368 40.608 19.528 40.902 20.749 41 22 41 32 40.902 33.251 40.608 34.472 40.128 35.632 39.472 36.702 38.657 37.657 37.702 38.472 36.632 39.128 35.472 39.608 34.251 39.902 33 40 24 40"/>
     <lathe shape="ray-column-collar-high" segments="72" color="0.72 0.19 0.14" shininess="19" specular="1"/>
@@ -85,11 +85,11 @@
   </group></group>
   <camera name="ray-diagonal" pos="800 0 600" look="800 0 0" ortho="150" size="512 512"/>
   <group name="ray-diagonal" pos="800 0 0" rot="0 0 -60"><group rot="8 0 0">
-    <shape id="ray-diagonal-dome-low" closed="0" v="0 -52.6 4 -52 9.5 -50 18 -45.5 26 -40.5 26.5 -37"/>
+    <shape id="ray-diagonal-dome-low" closed="0" v="0 -60 4.5 -59 11.5 -54.5 20 -47 26 -41 26.5 -37"/>
     <lathe shape="ray-diagonal-dome-low" segments="72" color="0.95 0.7 0.24" shininess="19" specular="1"/>
     <shape id="ray-diagonal-collar-low" closed="0" v="24 -40 33 -40 34.251 -39.902 35.472 -39.608 36.632 -39.128 37.702 -38.472 38.657 -37.657 39.472 -36.702 40.128 -35.632 40.608 -34.472 40.902 -33.251 41 -32 41 -22 40.902 -20.749 40.608 -19.528 40.128 -18.368 39.472 -17.298 38.657 -16.343 37.702 -15.528 36.632 -14.872 35.472 -14.392 34.251 -14.098 33 -14 24 -14"/>
     <lathe shape="ray-diagonal-collar-low" segments="72" color="0.72 0.19 0.14" shininess="19" specular="1"/>
-    <shape id="ray-diagonal-dome-high" closed="0" v="26.5 37 26 40.5 18 45.5 9.5 50 4 52 0 52.6"/>
+    <shape id="ray-diagonal-dome-high" closed="0" v="26.5 37 26 41 20 47 11.5 54.5 4.5 59 0 60"/>
     <lathe shape="ray-diagonal-dome-high" segments="72" color="0.95 0.7 0.24" shininess="19" specular="1"/>
     <shape id="ray-diagonal-collar-high" closed="0" v="24 14 33 14 34.251 14.098 35.472 14.392 36.632 14.872 37.702 15.528 38.657 16.343 39.472 17.298 40.128 18.368 40.608 19.528 40.902 20.749 41 22 41 32 40.902 33.251 40.608 34.472 40.128 35.632 39.472 36.702 38.657 37.657 37.702 38.472 36.632 39.128 35.472 39.608 34.251 39.902 33 40 24 40"/>
     <lathe shape="ray-diagonal-collar-high" segments="72" color="0.72 0.19 0.14" shininess="19" specular="1"/>

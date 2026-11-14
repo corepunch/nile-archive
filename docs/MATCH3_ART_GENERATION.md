@@ -40,7 +40,7 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 
 | Sprite | Homescapes shape and color placement | Christmas Market | Relic Rush |
 | --- | --- | --- | --- |
-| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two blunt cone tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
+| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two long cone tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
 | Bomb | A round sphere seen from near its pole, with a narrow belt just above the equator. At the pole a raised ring of the body color surrounds an inset disc, where a short rope fuse with a lit tip stands. The belt and disc share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
 | Plane | A plain folded paper plane angled up-right, with a center crease and one wing panel folded under. One hue, shaded by the folds alone. Both games use the same painting. | Icy blue. | The same painting in parchment: `#EAC985` midtones, `#96622C` shadows. |
 
@@ -121,7 +121,9 @@ model, and review the sheet against the
    each have their own reference. Target areas account for the smaller chip
    and delivery draw quads. Fit each silhouette inside the inset hex and
    favor centered placement. Narrow or asymmetric shapes can land below the
-   area target to preserve their shape and clearance. The manifest records
+   area target to preserve their shape and clearance. The plane is capped at
+   84 px on its longest side, well under its area target, so the thin shape
+   stays inside the cell like the chips. The manifest records
    the target, fitted area and placement for review.
    The rendered rockets already lie on the exact +30°, 90° and −30° axes.
    Preserve authored alpha on objects. Apply
