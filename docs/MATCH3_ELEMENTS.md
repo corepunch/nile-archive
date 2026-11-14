@@ -89,12 +89,12 @@ mutable state for hint/bot search. A wave deals at most one hit to each stone.
 
 `engine/match3_elements_view.lua` draws the two floor objectives beneath the
 pieces. Relic Rush presents them as restored mosaic and river silt. Christmas
-Market uses lanternlight and powder snow. The renderer anchors each tiled
-material to the board and masks the connected patch with `texture.hex_field`
-and `gfx.sdf_mask`. The field rounds the exterior, joins neighbouring cells
-and rebuilds when the occupied cells or layout change. Lanternlight has a
-feathered boundary. Each carved stone is one face-on hex sprite. The guide
-and HUD use the same goal icons.
+Market uses lanternlight and powder snow. Mosaic and lanternlight use a
+board-anchored material masked by a connected field made with
+`texture.hex_field` and `gfx.sdf_mask`. Lanternlight has a feathered boundary.
+River silt and powder snow use `gfx.image_hex` to fill each affected cell's
+flat-top face and preserve the board's seams. Each carved stone is one
+face-on hex sprite. The guide and HUD use the same goal icons.
 
 ## Artwork and verification
 

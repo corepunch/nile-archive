@@ -30,33 +30,19 @@ local function image(R, name, at, size, alpha)
     gfx.image(R.board_art[name], rect.centered(at, size2.splat(size)), color(255, 255, 255, alpha * 255))
 end
 
--- Each floor objective forms a continuous patch: a signed
+-- The spreading coverage objective forms a continuous patch: a signed
 -- distance field of their cells (texture.hex_field, rounded outside corners,
 -- filleted inside ones) masks a tiled material, and the rim is shaded. A field
 -- is rebuilt only when its cells or layout change.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
-local PATCH = {
-    carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
-        inset = 1.4, rim = 2.3, shade = .26, bevel = .15, shadow_y = 1.4, softness = 2.4, opacity = 76},
-    oil = {material = "oil-material", corner = .25, fillet = .75, range = .6, texel = 1.5, tile = 1.55,
-        rim = 2.2, shade = .18, bevel = .10},
+local CARPET_PATCH = {
+    corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
+    inset = 1.4, rim = 2.3, shade = .26, bevel = .15, shadow_y = 1.4, softness = 2.4, opacity = 76,
 }
-local function patch_cells(R, rules, layer)
-    local g, cells = R.g, {}
-    for i = 0, rules.CELLS - 1 do
-        local on
-        if layer == "carpet" then
-            on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
-        else on = g.oil and (g.oil[i] or 0) > 0 end
-        if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
-    end
-    return cells
-end
-local function patch_field(R, layer, cells, spec)
+local function patch_field(R, cells, spec)
     local origin = R.board_origin
     local key = table.concat({R.HEX_R, origin.x, origin.y, table.concat(cells, ",")}, ":")
-    R.patch_fields = R.patch_fields or {}
-    local cache = R.patch_fields[layer]
+    local cache = R.carpet_field
     if cache and cache.key == key then return cache end
     if cache and cache.texture then texture.free(cache.texture) end
     local r = R.HEX_R
@@ -72,8 +58,8 @@ local function patch_field(R, layer, cells, spec)
     local w, h = math.ceil(area.w / spec.texel), math.ceil(area.h / spec.texel)
     local field = texture.hex_field(string.pack(("ff"):rep(#cells), table.unpack(xy)), #cells, r,
         spec.corner * r, spec.fillet * r, area, w, h, range, spec.inset or 0)
-    R.patch_fields[layer] = {key = key, texture = field, area = area, range = range}
-    return R.patch_fields[layer]
+    R.carpet_field = {key = key, texture = field, area = area, range = range}
+    return R.carpet_field
 end
 -- Anchor material to the board so growing or clearing a patch leaves the
 -- surviving surface in place. Mirrored UVs meet without a hard repeat seam.
@@ -90,11 +76,16 @@ local function tile(t, area, side, origin, tint)
         end
     end
 end
-local function draw_patch(R, layer, cells, sx)
-    local spec = R.floor_patches and R.floor_patches[layer] or PATCH[layer]
-    local field = patch_field(R, layer, cells, spec)
+local function draw_carpet(R, rules, sx, alpha)
+    local g, cells = R.g, {}
+    for i = 0, rules.CELLS - 1 do
+        local on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
+        if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
+    end
+    if #cells == 0 then return end
+    local spec = R.carpet_patch or CARPET_PATCH
+    local field = patch_field(R, cells, spec)
     local area = field.area:offset(vec2(sx, 0))
-    local alpha = R.intro and R.intro:fade() or 1
     local side = 2 * R.HEX_R * spec.tile
     local origin = R.board_origin + vec2(sx, 0)
     if spec.shadow_y then
@@ -103,25 +94,30 @@ local function draw_patch(R, layer, cells, sx)
         gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
     end
     gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0)
-    tile(R.board_art[spec.material], area, side, origin, color(255, 255, 255, 255 * alpha))
+    tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha))
     gfx.sdf_unmask()
 end
-function E.patch(R, rules, layer, sx)
-    local cells = patch_cells(R, rules, layer)
-    if #cells == 0 then return end
-    draw_patch(R, layer, cells, sx)
-end
-function E.carpet(R, rules, sx) E.patch(R, rules, "carpet", sx) end
+
+-- Sample the material at its painted proportions inside the flat-top face.
+local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
 
 -- Called after every well has been painted, before pieces.
 function E.ground(R, rules, sx)
-    local g = R.g
-    E.patch(R, rules, "carpet", sx)
-    E.patch(R, rules, "oil", sx)
+    local g, intro = R.g, R.intro
+    local alpha = intro and intro:fade() or 1
+    draw_carpet(R, rules, sx, alpha)
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
-            local alpha = R.intro and R.intro:fade() or 1
+            if g.oil and (g.oil[i] or 0) > 0 then
+                local scale, turn, lift = 1, 0, 0
+                if intro then scale, turn, lift = intro:cell(i) end
+                if scale > .02 then
+                    local radius = R.HEX_R * scale - R.GROUND.seam_width
+                    gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at + vec2(0, lift), radius, turn,
+                        color(255, 255, 255, 255 * alpha))
+                end
+            end
             if g.hs then
                 local c=g.hs.cells[i]
                 if (c.tile or 0)>0 then image(R,"membrane-fill-"..c.tile,at,2*R.HEX_R,alpha) end

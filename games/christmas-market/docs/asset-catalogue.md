@@ -271,10 +271,10 @@ unlit cells. Powder snow starts in levels 13 and 25. A match or blast on a
 snowy cell clears the snow. After any turn that clears none, it advances to
 one neighbouring cell, increasing the goal count.
 
-The renderer tiles both materials inside the connected-cell masks. Lanternlight
-uses a feathered edge inside the lit cells. Powder snow stays matte beneath
-the treats. Both objectives have one board state and a separate icon shared
-by the HUD and the Market Keeper’s Guide.
+The renderer tiles lanternlight inside a connected-cell mask with a feathered
+edge. Powder snow fills each affected hex face up to the board seam. Both
+objectives have one board state and a separate icon shared by the HUD and the
+Market Keeper’s Guide.
 [In-game review](screenshots/review/themed-terrain/README.md).
 
 ## Ice

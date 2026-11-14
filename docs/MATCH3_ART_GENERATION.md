@@ -142,10 +142,10 @@ when the geometry changes.
    The Scener target places the rockets on the +30°, 90° and −30° axes.
    Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
-   sprites. The carved stone face uses the exact canonical mask. Floor
-   objectives use opaque, board-anchored swatches under continuous surface
-   masks. The renderer follows the changing perimeter with a shallow rim or
-   a soft fade for lanternlight.
+   sprites. The carved stone face uses the exact canonical mask. Mosaic and
+   lanternlight use board-anchored swatches under connected surface masks.
+   The river silt and powder snow swatches are cropped to the flat-top face
+   of each affected cell at draw time, preserving the board's seams.
 2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png` for the board
    and its effects, and `data/match3-hud.png` for the controls and HUD. Run
    `python3 tools/match3_atlas.py --check`. Record the packed frames in the
