@@ -16,7 +16,7 @@ board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local NORMAL = rules.NORMAL
-local hex_q, hex_r, cell_active = rules.hex_q, rules.hex_r, rules.game_cell_active
+local cell_active = rules.game_cell_active
 local rgba = color
 
 -- Keep the guide's icon size; only live board pieces use the enlarged board scale.
