@@ -1345,16 +1345,17 @@ function E.new(config)
 
     -- The board's ground. Every cell carries the same vertical gradient, so a cell's dark foot meets its
     -- neighbour's light head and the bounds read without alternating colours; a thin seam separates
-    -- them. Drawing every cell's "rim" layer first and its "face" layer after leaves the rim showing
-    -- only round the board's silhouette, as one outline. A game may replace R.GROUND's colours.
+    -- them. Each layer is drawn for every cell before the next: "edge", then "rim", then "face". Only what
+    -- sticks out past the board's silhouette stays visible, so the dark edge and the light rim are two clean
+    -- outlines and no cell's edge covers a neighbour's rim. A game may replace R.GROUND's colours.
     R.GROUND = {edge = color(26, 28, 34), rim = color(198, 202, 210), seam = color(112, 114, 120),
-                top = color(84, 86, 92), bottom = color(52, 54, 60), edge_width = 1.2, rim_width = 3.4, seam_width = .8}
+                top = color(84, 86, 92), bottom = color(52, 54, 60), edge_width = 2, rim_width = 3, seam_width = 1}
     function R.draw_ground(layer, at, r, turn, fade)
         local look = R.GROUND
-        if layer == "rim" then
-            -- A hex grown by w along its edges has a corner radius 2w / sqrt(3) larger.
-            local grow = 2 / math.sqrt(3)
+        local grow = 2 / math.sqrt(3)   -- a hex grown by w along its edges has a corner radius this much larger
+        if layer == "edge" then
             gfx.ngon(at, r + (look.rim_width + look.edge_width) * grow, 6, turn, color.alpha(look.edge, fade))
+        elseif layer == "rim" then
             gfx.ngon(at, r + look.rim_width * grow, 6, turn, color.alpha(look.rim, fade))
         else
             gfx.ngon(at, r + .5, 6, turn, color.alpha(look.seam, fade))

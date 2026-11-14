@@ -10,6 +10,11 @@ two alternating grays. Pieces, blockers, input and layout are unchanged.
 | Relic Rush | ![Relic Rush at 480 × 900](relic-rush-480.jpg) | ![Relic Rush at 390 × 844](relic-rush-390.jpg) |
 | Christmas Market | ![Christmas Market at 480 × 900](christmas-market-480.jpg) | ![Christmas Market at 390 × 844](christmas-market-390.jpg) |
 
+The dark edge and the light rim are separate passes over the whole board, so
+neither overlaps the other. Detail at device resolution:
+
+![Rim detail in both games](rim-detail.jpg)
+
 The colours and widths are `R.GROUND` in `engine/match3.lua`, drawn by
 `R.draw_ground`. Capture the boards with the existing art-board shots.
 

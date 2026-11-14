@@ -66,7 +66,7 @@ local function draw_backdrop()
     end
 end
 
--- layer: "rim" (the board's outline, under every face), "face" (the cells) or "flash" (the intro's halo).
+-- layer: "edge" and "rim" (the board's two outlines, under every face), "face" (the cells) or "flash" (the intro's halo).
 local function draw_cells(sx, layer)
     local g,intro=R.g,R.intro
     local fade=intro and intro:fade() or 1
@@ -142,6 +142,7 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
+    draw_cells(sx, "edge")
     draw_cells(sx, "rim")
     draw_cells(sx, "face")
     elements.ground(R, rules, sx)
