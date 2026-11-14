@@ -1343,6 +1343,25 @@ function E.new(config)
     function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
     local cell_pos = R.cell_pos
 
+    -- The board's ground. Every cell carries the same vertical gradient, so a cell's dark foot meets its
+    -- neighbour's light head and the bounds read without alternating colours; a thin seam separates
+    -- them. Drawing every cell's "rim" layer first and its "face" layer after leaves the rim showing
+    -- only round the board's silhouette, as one outline. A game may replace R.GROUND's colours.
+    R.GROUND = {edge = color(26, 28, 34), rim = color(198, 202, 210), seam = color(112, 114, 120),
+                top = color(84, 86, 92), bottom = color(52, 54, 60), edge_width = 1.2, rim_width = 3.4, seam_width = .8}
+    function R.draw_ground(layer, at, radius, turn, fade)
+        local look = R.GROUND
+        if layer == "rim" then
+            -- A hex grown by w along its edges has a corner radius 2w / sqrt(3) larger.
+            local grow = 2 / math.sqrt(3)
+            gfx.ngon(at, radius + (look.rim_width + look.edge_width) * grow, 6, turn, color.alpha(look.edge, fade))
+            gfx.ngon(at, radius + look.rim_width * grow, 6, turn, color.alpha(look.rim, fade))
+        else
+            gfx.ngon(at, radius + .5, 6, turn, color.alpha(look.seam, fade))
+            gfx.ngon_grad(at, radius - look.seam_width, 6, turn, color.alpha(look.top, fade), color.alpha(look.bottom, fade))
+        end
+    end
+
     -- Screen point to the active cell under it, by rounding cube coordinates.
     function R.cell_at(p)
         local d = p - R.board_origin

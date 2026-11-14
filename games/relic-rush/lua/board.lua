@@ -103,7 +103,8 @@ local function draw_backdrop()
     end
 end
 
-local function draw_cells(sx, foreground)
+-- layer: "rim" (the board's outline, under every face), "face" (the cells) or "flash" (the intro's halo).
+local function draw_cells(sx, layer)
     local g,intro=R.g,R.intro
     local fade=intro and intro:fade() or 1
     for i=0,CELLS-1 do
@@ -112,10 +113,8 @@ local function draw_cells(sx, foreground)
             if intro then scale,turn,lift,flash=intro:cell(i) end
             if scale>.02 then
                 local at=cell_pos(i)+vec2(sx,lift)
-                if not foreground then
-                    -- Plain flat hex ground: no authored frame, bevel or edge trim.
-                    local face=(hex_q(i)-hex_r(i))%2==1 and rgba(72,72,72) or rgba(84,84,84)
-                    gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(face,fade))
+                if layer~="flash" then
+                    R.draw_ground(layer,at,HEX_R*scale,turn,fade)
                 elseif flash>0 then
                     R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
                 end
@@ -175,9 +174,10 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    draw_cells(sx, false)
+    draw_cells(sx, "rim")
+    draw_cells(sx, "face")
     elements.ground(R, rules, sx)
-    draw_cells(sx, true)
+    draw_cells(sx, "flash")
     draw_relics(sx)
     draw_blockers(sx)
     elements.blockers(R, rules, sx)

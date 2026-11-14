@@ -163,9 +163,12 @@ fixture, alongside the existing shared-engine and game tests.
 ## Field-only visual replacement
 
 At the user's request, the live field has no legacy gold edges, snow/sand rims,
-bevels, authored selection/hint frames or numeric ice badges. Flat hex ground
-uses neutral grays `#484848` and `#545454` (alternating cells), with no green tint.
-See the [gray-field review](review/gray-hex-ground/README.md). Selection and hints
+bevels, authored selection/hint frames or numeric ice badges. The hex ground
+is neutral gray with no green tint. Every cell has the same top-to-bottom
+gradient and a thin seam, so cell bounds read without alternating colors, and
+a light rim outlines the board's silhouette (`R.GROUND` and `R.draw_ground`
+in `engine/match3.lua`). See the [outline review](review/board-outline/README.md)
+and the earlier [gray-field review](review/gray-hex-ground/README.md). Selection and hints
 scale the piece. The donut collection exit uses the original animated arrow.
 Each campaign stone is a front-facing flat-top hex with one hit.
 The source-preview boards use the dedicated source model
