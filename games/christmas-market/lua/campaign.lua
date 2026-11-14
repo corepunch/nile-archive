@@ -113,7 +113,7 @@ local levels = {
     level("Painted Horses", "Rainbow balls clear one colour.", 39, 3700, 15, 5, 5, 1,
         lanes_mask, terrain(-1, 1, 2, -2, 1)),
     -- 24: Frozen Fountain
-    level("Frozen Fountain", "Thaw the ice around the fountain.", 40, 3900, 16, 4, 5, 2,
+    level("Frozen Fountain", "Spread lanternlight across the frozen fountain.", 40, 3900, 16, 4, 5, 2,
         bowl_mask, terrain(0, -1, 0, 1, 0)),
     -- 25: Snow on the Line
     level("Snow on the Line", "Clear the powder snow before it spreads.", 42, 4000, 16, 6, 6, 2,
@@ -125,7 +125,7 @@ local levels = {
     level("Every Light in Bellmere", "Clear the locks across the court.", 38, 4800, 18, 5, 6, 2,
         chambers_mask, terrain(-2, 1, 2, -1, 1)),
     -- 28: The Last Train
-    level("The Last Train", "Light the square before the finale.", 44, 3200, 13, 2, 4, 1,
+    level("The Last Train", "Spread lanternlight along the tracks.", 44, 3200, 13, 2, 4, 1,
         bowl_mask, terrain(0, 0, 1, -1, -1)),
     -- 29: The Big Fir
     level("The Big Fir", "Untangle and thaw the court.", 47, 5200, 20, 8, 10, 2,
@@ -166,6 +166,11 @@ levels[3].lesson = "Match in the lanternlight to light more tiles."
 levels[13].oil = {cell(4,-4), cell(4,-3), cell(4,-2), cell(4,-1), cell(4,0), cell(3,-1), cell(3,0)}
 levels[13].lesson = "Clear the powder snow before it spreads."
 levels[25].oil = {cell(2,-3), cell(3,-3), cell(3,-2), cell(3,-1), cell(4,-3), cell(4,-2), cell(4,-1)}
+
+-- The first clear puts the picture on the floor before the scene it belongs to.
+levels[24].reveal = {picture="wish-ribbon"}
+levels[25].reveal = {picture="telegram", floor="oil"}
+levels[28].reveal = {picture="last-train"}
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.

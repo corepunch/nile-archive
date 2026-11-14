@@ -78,9 +78,11 @@ for level = 1, rules.LEVELS do
     assert(won, ('bot failed all four starts on level %d'):format(level))
     wins = wins + 1
     local after = ('after-%02d'):format(level)
-    local first_exchange = journey.result_beat(R.prog, R.g)
+    local first_exchange = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
     if first_exchange then
         R.overlay = R.OV_RESULT
+        R.story_tick()
+        R.now = R.now + 2   -- let a level's finished picture hold before its scene
         scene(after, true)
     end
     local reward = rules.reward_breakdown(R.g, R.wonders, R.prog)
@@ -96,7 +98,7 @@ for level = 1, rules.LEVELS do
         assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
         if journey.clear_before_result then scene(('restore-%02d'):format(level)) end
     end
-    if not journey.clear_before_result then scene(after) end
+    if not journey.clear_before_result and not first_exchange then scene(after) end
 end
 check(#played == #journey.beats, 'every story beat played')
 for i, beat in ipairs(journey.beats) do check(played[i] == beat.key, 'story order: ' .. beat.key) end

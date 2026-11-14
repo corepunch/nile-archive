@@ -27,6 +27,18 @@ shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
 shot("main-character-board", "480x900", "--level 4")
 shot("campaign-access", "480x900", "--level 13")
 shot("campaign-thaw", "480x900", "--level 22")
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    for _, level in ipairs{24, 25, 28} do
+        shot("story-floor-" .. level .. "-" .. size, size,
+            "--level " .. level .. " --reveal 1 --frames 95" .. safe)
+    end
+end
+shot("story-floor-ribbon-half", "480x900", "--level 24 --reveal .5 --frames 95")
+shot("story-floor-telegram-half", "480x900", "--level 25 --reveal .5 --frames 95")
+shot("story-floor-train-half", "480x900", "--level 28 --reveal .5 --frames 95")
+shot("story-floor-train-scene", "480x900", "--level 28 --reveal 1 --frames 270")
+reel("story-floor-train-win", 12, 12, "480x900", "--level 28 --reveal 1 --reel")
 shot("element-states", "480x900", "--element-states")
 shot("specials-and-stone", "480x900", "--element-states specials")
 reel("christmas-market-floor-carpet", 25, 15, "480x900", "--level 3 --floor-reel carpet --reel")

@@ -188,8 +188,8 @@ function G.journey(content)
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
     end
 
-    function M.result_beat(p, g)
-        if not M.clear_before_result or not g.won or g.level ~= p.level then return end
+    function M.result_beat(p, g, level)
+        if not g.won or g.level ~= p.level or not (M.clear_before_result or level and level.reveal) then return end
         local beat = M.find(("after-%02d"):format(p.level + 1))
         if beat and not beat.choices and not p.story_seen[beat.key] and g.story_clear ~= beat.key then return beat end
     end
@@ -893,7 +893,7 @@ function G.bind(R, over)
         if R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
-            local b = journey.result_beat(R.prog, R.g)
+            local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
             if b then R.queue_story(b, false, true) end
             return
         end
@@ -1146,8 +1146,10 @@ function G.app(R)
         end
         R.draw_toast()
         ui.set_enabled(true)
-        local clear_due = not R.quiet and R.overlay == R.OV_RESULT and journey.result_beat(R.prog, R.g)
-        if not talking and not clear_due then R.overlays(dt) end   -- the first-clear beat precedes the result
+        local at_result = R.overlay == R.OV_RESULT
+        local revealing = at_result and require("match3.elements_view").reveal_holding(R, rules)
+        local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
+        if not talking and not revealing and not clear_due then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
         if story.active() and R.draw_story_item then R.draw_story_item() end

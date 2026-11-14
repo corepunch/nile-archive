@@ -86,3 +86,27 @@ island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy Christmas tree')
 check(journey.building_about(4,19,'ordinary')~=journey.building_about(4,20,'ordinary'),'the market answers the letter at level 20')
 empty_queue()
+
+-- The picture holds on its own, then its existing scene plays before Collect.
+for _, level in ipairs{24, 25, 28} do
+    local key = ('after-%02d'):format(level)
+    local index = level - 1
+    R.g, R.overlay, R.now = rules.game_start(index, 1), R.OV_RESULT, 0
+    R.g.won = true
+    R.prog = {level=index, wallet=purse(), story_seen={}}
+    R.story_tick()
+    check(not story.active(), 'level ' .. level .. ' holds its finished picture before speaking')
+    R.now = 2
+    R.story_tick()
+    check(story.active() and R.story_current.key == key, 'the picture hands off to ' .. key)
+    empty_queue(); R.story_tick()
+    check(R.g.story_clear == key and not R.prog.story_seen[key], 'the scene waits for reward collection')
+    R.wonders = island.wonders
+    R.claim_reward()
+    check(R.prog.level == level and R.prog.story_seen[key], 'Collect banks the scene with the win')
+    R.g, R.overlay = rules.game_start(index, 1), R.OV_RESULT
+    R.g.won = true
+    R.story_tick()
+    check(not story.active() and not require('match3.elements_view').reveal_holding(R, rules),
+          'a replay skips the picture and its scene')
+end

@@ -141,15 +141,27 @@ function D.bind(R, W)
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
         if a then R.g = rules.game_start(tonumber(a) - 1, 123478); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
-        a = app.arg("reveal")   -- --level N --reveal F: restore that share of the mosaic; 1 wins the board
+        a = app.arg("reveal")   -- --level N --reveal F: restore/clear that share of the floor; 1 wins the board
         if a and R.g then
             local g, share = R.g, tonumber(a)
-            for i = 0, rules.CELLS - 1 do
-                if rules.game_cell_active(g, i) and g.carpet[i] == 0 and g.carpeted < share * g.carpet_total then
-                    g.carpet[i], g.carpeted = 1, g.carpeted + 1
+            local l = rules.level_of(g)
+            if l.reveal and l.reveal.floor == "oil" then
+                for j = 1, math.min(#l.oil, math.ceil(share * #l.oil)) do
+                    g.oil[l.oil[j]], g.oil_left = 0, g.oil_left - 1
+                end
+            else
+                for i = 0, rules.CELLS - 1 do
+                    if rules.game_cell_active(g, i) and g.carpet[i] == 0 and g.carpeted < share * g.carpet_total then
+                        g.carpet[i], g.carpeted = 1, g.carpeted + 1
+                    end
                 end
             end
-            if share >= 1 then R.prog.level, R.quiet = g.level, false; R.debug_skip_level() end   -- as a first clear, with its beat
+            if share >= 1 then
+                for i = 0, rules.CELLS - 1 do g.chain[i], g.ice[i], g.stone_hp[i] = 0, 0, 0 end
+                g.obstacles = 0
+                R.prog.level, R.quiet = g.level, false
+                R.debug_skip_level()   -- first clear, with its beat
+            end
         end
         a = app.arg("level")
         if floor_reel then

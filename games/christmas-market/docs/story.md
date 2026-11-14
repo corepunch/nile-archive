@@ -331,14 +331,14 @@ Order: result → market → place the wonder → beat → next goal. A level wi
 - **Noelle:** I'm leaving on the twenty-sixth, Theo.
 - **Theo:** I know. Somebody told me.
 
-**Level 24 · Frozen Fountain**
+**Level 24 · Frozen Fountain** · *Board painting: the spreading lanternlight picks out Noelle's red wish ribbon among the others in the thawing fountain.*
 
 - **Noelle:** The fountain's thawing at the edges. All the ribbons are bobbing up.
 - **Mr Wren:** That one's yours, I think. It came up first.
 - **Noelle:** I never tied one. It's got my name on, in a child's writing.
 - **Agnes:** You were six. You came here with Rosa, one Christmas. You told it you wanted to live in the bakery.
 
-**Level 25 · Snow on the Line**
+**Level 25 · Snow on the Line** · *Board painting: powder snow gives way to the railway telegram, with Pip's unfinished-looking scarf and the stamp beside it.*
 
 - **Pip:** The steamer's in! Mum's telegram says she's on the last train, Christmas Eve!
 - **Theo:** There's a big one coming in off the sea. They might stop the line at Fenwick.
@@ -367,7 +367,7 @@ Order: result → market → place the wonder → beat → next goal. A level wi
 - **Agnes:** You daft girl. Whose market do you think it is? Now, where do we put the lamps?
 - **Noelle:** Along the line. All the way to the cutting. Let's bring that train home!
 
-**Level 28 · The Last Train** *(easier level)* · *Panel: a mile of lanterns along a snowy track, and a small train coming slowly down between them.*
+**Level 28 · The Last Train** *(easier level)* · *Board painting: a mile of lanterns along a snowy track, and a small train coming slowly down between them.*
 
 - **Pip (shout):** I can hear it! It's coming! It's coming down the lamps!
 - **Noelle:** Run, Pip. Go on. Run!
@@ -478,7 +478,8 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 
 - **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. A first clear without a stall pays Gold and Christmas Stars.
 - **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. Players open regions from their markers and keep their Stars. Pip's region lines replace Noelle's one repeated line.
-- **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). The eight panels are optional, and scenes play over the live market.
+- **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). Most scenes play over the live market.
+- **Story floors:** The first clears of 24, 25 and 28 show the finished board painting, then play the existing scene over it before the reward card. Collecting the reward acknowledges the scene. Replaying the wish uses the ordinary floor. The paintings and stage captures are in the [asset catalogue](asset-catalogue.md#story-floors).
 - **The cast** is in `lua/narrative.lua`. Noelle's automatic line when a stall is placed is gone; the tap card and bubble carry `about`, and the five changing bubbles above.
 - **`R.finale`** is the level 30 scene. Its end leads to the "To be continued" screen.
 - **Saves:** stable `narrative.v1.<phase>-<level>` keys are written only when a scene finishes or is skipped, so an unfinished scene replays after a reload. Replays are silent. Version 2 saves keep their level, wallet, regions and every stall, already-built later stalls count when their scene arrives, and a short recap bridges the old lines.
@@ -493,3 +494,4 @@ Levels 1–9 keep their boards and lessons. **Level 10 is renamed** from *Light 
 - 2026-11-02: Fresh read: it felt like a Christmas film, most at levels 20, 26, 27, 28 and 29. Fixed the calendar (arrives 4 December; level 18 is the 15th), the oven, Henrik's introduction, who says what about the parcel, and overused phrases. Added parcel and rule reminders for play with long gaps. Episode 3 runs to 74 lines, over the usual 70, on purpose. Levels 12, 15, 21 and 22 are the lightest beats. Not re-read since these fixes.
 - 2026-11-03: Cold read by a separate reader, one episode at a time. The tone held throughout, Theo was readable as Someone by level 14 (as intended), and the payoffs landed. Fixes: Agnes's "still got her chin" now hints that Noelle has been to Bellmere before; Henrik introduces himself before he judges the arch; Theo asks about offcuts, not price; Pip hands Noelle the note at level 20, linking it to the next morning. The reader's date complaint was a misreading (nine days to Christmas Eve is eleven days to the 26th). Implemented all three episodes with keyed delivery, recovery, legacy recaps and the 4+3+3 schedule.
 - 2026-11-04: Replaced the five supporting speakers’ name cards with painted busts. Reviewed each speaker at both phone sizes.
+- 2026-11-14: Put the wish ribbon, telegram and last train on their boards and moved their existing first-clear scenes to the board. The spoken script is unchanged.

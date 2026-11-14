@@ -76,9 +76,8 @@ local function tile(t, area, side, origin, tint)
         end
     end
 end
--- A level's `reveal = {picture = art name, bark = line}` lays one picture
--- under the whole board in place of the tiled material, so restoring the floor
--- uncovers it. Only a first clear reveals: a replay restores the plain floor.
+-- A first-clear picture replaces restored carpet, or peeks through the
+-- original hazard cells as they are cleared (`reveal.floor = "oil"`).
 -- On the win the pieces clear away (E.reveal_cover) and the finished picture
 -- holds for a moment before the first-clear beat (E.reveal_holding).
 local REVEAL_FADE, REVEAL_HOLD = .6, 1.2
@@ -93,7 +92,7 @@ local function reveal(R, rules)
     local spec = R.reveal_spec
     if not spec then return end
     if g.won and not R.reveal_won then R.reveal_won = R.now end
-    if spec.bark and not R.reveal_barked and not g.won and g.carpeted * 2 >= g.carpet_total then
+    if spec.bark and spec.floor ~= "oil" and not R.reveal_barked and not g.won and g.carpeted * 2 >= g.carpet_total then
         R.reveal_barked = true
         R.notice(spec.bark)
     end
@@ -107,7 +106,7 @@ end
 function E.reveal_holding(R, rules)
     return reveal(R, rules) ~= nil and R.reveal_won ~= nil and R.now - R.reveal_won < REVEAL_FADE + REVEAL_HOLD
 end
-local function draw_picture(R, rules, t, sx, tint)
+local function picture_crop(R, rules, t)
     local minx, miny, maxx, maxy = math.huge, math.huge, -math.huge, -math.huge
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(R.g, i) then
@@ -116,12 +115,12 @@ local function draw_picture(R, rules, t, sx, tint)
         end
     end
     local rx, ry = R.HEX_R, R.HEX_R * math.sqrt(3) / 2
-    local box = rect(minx - rx + sx, miny - ry, maxx - minx + 2 * rx, maxy - miny + 2 * ry)
+    local box = rect(minx - rx, miny - ry, maxx - minx + 2 * rx, maxy - miny + 2 * ry)
     local size = texture.size(t)
     local s = math.min(size.w / box.w, size.h / box.h)   -- cover the board, cropping the longer side
-    gfx.image_part(t, rect((size.w - box.w * s) / 2, (size.h - box.h * s) / 2, box.w * s, box.h * s), box, tint)
+    return box, rect((size.w - box.w * s) / 2, (size.h - box.h * s) / 2, box.w * s, box.h * s)
 end
-local function draw_carpet(R, rules, sx, alpha)
+local function draw_carpet(R, rules, story, sx, alpha, cover)
     local g, cells = R.g, {}
     for i = 0, rules.CELLS - 1 do
         local on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
@@ -139,10 +138,41 @@ local function draw_carpet(R, rules, sx, alpha)
         gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
     end
     gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0)
-    local story = reveal(R, rules)
-    if story then draw_picture(R, rules, R.board_art[story.picture], sx, color(255, 255, 255, 255 * alpha))
+    if story and story.floor ~= "oil" then
+        local t = R.board_art[story.picture]
+        local box, src = picture_crop(R, rules, t)
+        local opacity = 1 - cover * (1 - (R.reveal_play_opacity or 1))
+        gfx.image_part(t, src, box:offset(vec2(sx, 0)), color(255, 255, 255, 255 * alpha * opacity))
     else tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha)) end
     gfx.sdf_unmask()
+end
+
+local function draw_buried_picture(R, rules, story, sx, alpha, cover)
+    local g, cells = R.g, {}
+    local t = R.board_art[story.picture]
+    local box, src = picture_crop(R, rules, t)
+    if cover < 1 then
+        for i = 0, rules.CELLS - 1 do
+            if rules.game_cell_active(g, i) then cells[#cells + 1] = i end
+        end
+        local field = patch_field(R, cells, CARPET_PATCH)
+        gfx.sdf_mask(field.texture, field.area:offset(vec2(sx, 0)), field.range, 0, 0, 0, 1)
+        gfx.image_part(t, src, box:offset(vec2(sx, 0)), color(255, 255, 255, 255 * alpha * (1 - cover)))
+        gfx.sdf_unmask()
+    end
+    if cover == 0 then return end
+    -- Snow can spread back over these cells. Read the live mask every frame.
+    local scale = src.w / box.w
+    local radius = R.HEX_R
+    local face = size2(2 * radius * scale, math.sqrt(3) * radius * scale)
+    local tint = color(255, 255, 255, 255 * alpha * (R.reveal_play_opacity or 1) * cover)
+    for _, i in ipairs(rules.level_of(g).oil) do
+        if g.oil[i] == 0 then
+            local p = R.cell_pos(i)
+            local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
+            gfx.image_hex(t, rect.centered(uv, face), p + vec2(sx, 0), radius, 0, tint)
+        end
+    end
 end
 
 -- Sample the material at its painted proportions inside the flat-top face.
@@ -152,7 +182,10 @@ local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
 function E.ground(R, rules, sx)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    draw_carpet(R, rules, sx, alpha)
+    local story = reveal(R, rules)
+    local cover = story and E.reveal_cover(R, rules) or 1
+    draw_carpet(R, rules, story, sx, alpha, cover)
+    if story and story.floor == "oil" then draw_buried_picture(R, rules, story, sx, alpha, cover) end
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
@@ -284,6 +317,8 @@ end
 -- Fixed blockers cover the piece area.
 function E.blockers(R, rules, sx)
     local g = R.g
+    local cover = E.reveal_cover(R, rules)
+    if cover <= 0 then return end
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local name
@@ -310,7 +345,7 @@ function E.blockers(R, rules, sx)
                 if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
                 if visible then
                     local radius = hp > 0 and R.HEX_R - .65 or R.HEX_R
-                    image(R, name, R.cell_pos(i) + vec2(sx, 0), 2 * radius * scale, alpha)
+                    image(R, name, R.cell_pos(i) + vec2(sx, 0), 2 * radius * scale, alpha * cover)
                 end
             end
             if g.hs then

@@ -62,6 +62,8 @@ function R.campaign_smoke()
         local g, l = R.g, rules.level_of(R.g)
         for i = 0, rules.CELLS - 1 do
             g.ice[i], g.chain[i], g.stone_hp[i] = 0, 0, 0
+            g.oil[i] = 0
+            if l.carpet and rules.game_cell_active(g, i) then g.carpet[i] = 1 end
             if g.tiles[i].kind == rules.DELIVERY then
                 -- The smoke tests progression, so complete delivery while preserving
                 -- a stable match-free starting board for the next real swap.

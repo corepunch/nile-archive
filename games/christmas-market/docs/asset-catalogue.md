@@ -125,6 +125,46 @@ for the level 4 captures.
 | 480×900 | ![Snow clearing](screenshots/review/winter-market/before-480x900.jpg) | ![Lantern-lit market](screenshots/review/winter-market/after-480x900.jpg) |
 | 390×844 with safe areas | ![Snow clearing on a narrower phone](screenshots/review/winter-market/before-390x844.jpg) | ![Lantern-lit market on a narrower phone](screenshots/review/winter-market/after-390x844.jpg) |
 
+## Story floors
+
+The three static paintings lead into existing first-clear scenes. The
+landmarks stay fixed as the floor changes. During a match the painting is
+muted beneath the pieces. On a win, pieces and any remaining cover fade out
+over 0.6 seconds and the completed picture holds for 1.2 seconds before
+dialogue. Replays use the usual material. Reduce Motion shows the full reveal
+without the fade.
+
+| Level | Rule and story | Built-in ImageGen master and prompt | Runtime |
+| --- | --- | --- | --- |
+| 24, Frozen Fountain | Lanternlight brings Noelle’s childhood wish ribbon into view. Agnes remembers who brought her to Bellmere. | [Painting](../art/story-floors/wish-ribbon.png), [prompt](../art/story-floors/wish-ribbon.prompt.txt) | `data/story-floors/wish-ribbon.jpg` |
+| 25, Snow on the Line | Clearing the original snow patch uncovers parts of the telegram. Spreading snow can cover those parts again. On the win, the whole telegram shows Pip’s mother is on the last train. | [Painting](../art/story-floors/telegram.png), [prompt](../art/story-floors/telegram.prompt.txt) | `data/story-floors/telegram.jpg` |
+| 28, The Last Train | Lanternlight picks out the track and lamps guiding the train home. The completed picture leads into Pip’s reunion. | [Painting](../art/story-floors/last-train.png), [prompt](../art/story-floors/last-train.prompt.txt) | `data/story-floors/last-train.jpg` |
+
+The three 1190×1322 RGB masters are downsampled without cropping to fit 720×800
+with Lanczos, then encoded as JPEG (quality 91, 4:4:4, optimized). Reproduce
+from the repository root with Pillow.
+
+```sh
+python3 - <<'PY'
+from pathlib import Path
+from PIL import Image
+
+game = Path("games/christmas-market")
+for master in (game / "art/story-floors").glob("*.png"):
+    with Image.open(master) as source:
+        image = source.convert("RGB")
+        image.thumbnail((720, 800), Image.Resampling.LANCZOS)
+        image.save(game / "data/story-floors" / f"{master.stem}.jpg",
+                   quality=91, subsampling=0, optimize=True)
+PY
+```
+
+The renderer center-crops each painting to the active board bounds and masks
+it against the connected flat-top cells. The individual snow openings sample
+the same crop through the engine’s hex face before the full board appears.
+[In-game before, partial and win captures](screenshots/review/story-floors/README.md)
+cover both supported phone sizes.
+
 ## Board trim and village snow
 
 The live board paints flat spruce-green hex wells with a fine champagne edge
