@@ -5,7 +5,7 @@
     python3 tools/match3_specials.py relic-rush --sheet /tmp/specials.png
     python3 tools/match3_specials.py --check          # the committed scenes are this tool's (no Scener needed)
 
-Rockets, the bomb, the rainbow ball and the paper plane are simple solids, so they are
+Rockets, the bomb and the rainbow ball are solids of revolution and tiles on a sphere, so they are
 modelled once and rendered rather than painted three times: every rocket axis is the same lathe turned
 about the view direction, the bomb's belt is a real band around its sphere, and each rainbow tile is a
 patch of the sphere's own latitude and longitude. A game supplies only its palette and tile bevel.
@@ -23,7 +23,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SPRITES = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism', 'plane')
+SPRITES = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')
 SIZE = 512          # px per render; the atlas importer scales it to the board
 VIEW = 150.         # cm across each orthographic view
 SPACING = 400.      # cm between models, so no light or shadow reaches a neighbour
@@ -32,7 +32,6 @@ ROCKET_TURN = {'ray-row': 60., 'ray-column': 0., 'ray-diagonal': -60.}
 ROCKET_LEAN = 8.    # the upper tip leans this far towards the viewer, so its dome shows
 BOMB_POSE = (40., 54.)   # the fuse: turned to the upper left, then leaning towards the viewer
 BALL_LEAN = 14.
-PLANE_POSE = (30., -10.)  # the nose: turned to the upper left, then leaning away, so the tail is nearest
 RAINBOW = {'red': (.94, .09, .11), 'yellow': (1., .80, .03), 'green': (.13, .78, .10), 'cyan': (.06, .70, 1.),
            'blue': (.08, .33, .96), 'pink': (.98, .17, .62), 'orange': (1., .47, .04)}
 # Tile rows from the upper pole down: latitude, tile height in degrees, tiles around, longitude of the first
@@ -45,13 +44,11 @@ BALL_ROWS = (   # the poles stay bare, as on the Homescapes ball
 THEMES = {
     'relic-rush': dict(
         rocket=(.72, .19, .14), rocket_trim=(.95, .70, .24), bomb=(.05, .47, .49), bomb_trim=(.95, .69, .22),
-        plane=(.93, .80, .54), plane_trim=(.72, .48, .19),
         fuse=(.86, .66, .40), fuse_dark=(.60, .38, .18), core=(.15, .03, .28), gloss=19,
         # a cut-stone plaque: a flat face and a chamfer
         tile=((0, 1.05), (.40, 1.03), (.64, .99), (.72, .93), (.93, .44), (.985, .28), (1.0, -.25))),
     'christmas-market': dict(
         rocket=(.80, .10, .22), rocket_trim=(.99, .88, .64), bomb=(.06, .50, .29), bomb_trim=(.95, .68, .22),
-        plane=(.22, .60, .96), plane_trim=(.90, .96, 1.),
         fuse=(.88, .70, .44), fuse_dark=(.62, .40, .20), core=(.16, .03, .30), gloss=22,
         # a glass sweet: a pillow that rolls over to its edge
         tile=((0, 1.06), (.35, 1.03), (.60, .95), (.78, .80), (.90, .58), (.97, .30), (1.0, -.25))),
@@ -141,66 +138,6 @@ def bomb(theme):
     return lines, BOMB_POSE
 
 
-def tube(a, b, radius, attrs, around=16):
-    """A round bar from a to b, as a surface closed around its axis, with a ball on each end."""
-    axis = [q - p for p, q in zip(a, b)]
-    n = math.sqrt(sum(c * c for c in axis))
-    axis = [c / n for c in axis]
-    side = (1, 0, 0) if abs(axis[0]) < .9 else (0, 1, 0)
-    u = [axis[1] * side[2] - axis[2] * side[1], axis[2] * side[0] - axis[0] * side[2], axis[0] * side[1] - axis[1] * side[0]]
-    k = math.sqrt(sum(c * c for c in u))
-    u = [c / k for c in u]
-    w = [axis[1] * u[2] - axis[2] * u[1], axis[2] * u[0] - axis[0] * u[2], axis[0] * u[1] - axis[1] * u[0]]
-    pts = [[p[i] + radius * (math.cos(t) * u[i] + math.sin(t) * w[i]) for i in range(3)]
-           for p in (a, b) for t in [2 * math.pi * j / around for j in range(around + 1)]]
-    return [f'<surface segments="{around} 1" closed="u" twoSided="1" {attrs} points="{" ".join(vec(q) for q in pts)}"/>'] + [
-        f'<sphere pos="{vec(p)}" radius="{f(radius)}" rings="10" slices="16" {attrs}/>' for p in (a, b)]
-
-
-def slab(top, thickness, attrs):
-    """A sheet with thickness: the outline (counter-clockwise from +Z, fanned from its first point), a copy
-    below it and the walls between them."""
-    n = len(top)
-    pts = list(top) + [(x, y, z - thickness) for x, y, z in top]
-    faces = ([f'0 {i} {i + 1}' for i in range(1, n - 1)] + [f'{n} {n + i + 1} {n + i}' for i in range(1, n - 1)] +
-             [f'{i} {n + i} {n + (i + 1) % n} {(i + 1) % n}' for i in range(n)])
-    return f'<mesh {attrs} v="{" ".join(vec(q) for q in pts)}" f="{", ".join(faces)}"/>'
-
-
-def plane(theme):
-    """A folded paper dart, as Homescapes': nose along Y, upper side towards Z. Thick paper folds into two
-    front panels with bowed leading edges, a darker rear fold with a notched trailing edge and a raised
-    centre ridge. A thick rim runs round the rear fold, and two rolled tubes with fuses sit under the tail."""
-    body, trim, gloss = theme['plane'], vec(theme['plane_trim']), theme['gloss']
-    nose, apex = (0, 52, 0), (0, -20, 15)                         # the ridge rises from the nose to the tail
-    tip, notch, foot, tail = (58, -22, -10), (28, -35, -4), (10, -25, 1), (0, -19, 5)
-    bend, fold = (40, 24, -5), (0, 15, 8.5)                        # the leading edge bows round this; the rim crosses the ridge
-    edge = [tuple((1 - t) ** 2 * a + 2 * t * (1 - t) * b + t * t * c for a, b, c in zip(nose, bend, tip))
-            for t in (.2, .4, .6, .8)]
-    t = (nose[1] - fold[1]) / (nose[1] - foot[1])
-    hinge = tuple(a + (b - a) * t for a, b in zip(nose, foot))    # where the rear fold meets the ridge's foot
-    left = lambda pts: [(-x, y, z) for x, y, z in reversed(pts)]  # mirrored, and still counter-clockwise
-    paper = lambda k: f'color="{vec([min(1., c * k) for c in body])}" shininess="{gloss}" specular="0.8"'
-    front, rear = [nose, hinge, tip] + edge[::-1], [hinge, foot, notch, tip]
-    turn = lambda pts, i: pts[i:] + pts[:i]                       # fan from the nose, or from the hinge
-    lines = [slab(turn(left(front), 2), 5, paper(1.06)), slab(front, 5, paper(.92)),   # the left panel faces the light
-             slab(turn(left(rear), 3), 5, paper(.86)), slab(rear, 5, paper(.74)),
-             slab([nose, (-foot[0], foot[1], foot[2]), apex], 0.01, paper(.84)), slab([nose, apex, foot], 0.01, paper(.66)),
-             slab([apex, (-foot[0], foot[1], foot[2]), foot], 0.01, paper(.58))]
-    rim = f'color="{trim}" shininess="{gloss}" specular="1"'
-    mirror = lambda q: (-q[0], q[1], q[2])
-    path = [fold, mirror(tip), mirror(notch), tail, notch, tip, fold]   # round the rear fold and its notched edge
-    for a, b in zip(path, path[1:]):
-        lines += tube(a, b, 5.4, rim)
-    for side, name in ((1, 'right'), (-1, 'left')):
-        lines += [f'<group name="tube-{name}" pos="{f(24 * side)} -39 -15">',
-                  f'  <cylinder radius="11" height="20" sides="40" {rim}/>',
-                  f'  <torus pos="0 -9 0" majorRadius="10.4" minorRadius="2.4" majorSegments="40" minorSegments="10" {rim}/>',
-                  f'  <cylinder pos="0 -9.8 0" radius="8.4" height="1.6" sides="32" color="{vec([c * .5 for c in theme["plane_trim"]])}" shininess="4" specular="0"/>',
-                  '  <group pos="0 -9 0" rot="180 0 0">'] + ['    ' + l for l in fuse(f'plane-{name}', theme, 6.5, 5)] + ['  </group>', '</group>']
-    return lines, PLANE_POSE
-
-
 def tile_points(lat, lon, dlat, dlon, radius, height, profile, around=40):
     """One enamel tile: a rounded square in latitude and longitude, raised off the sphere along its profile.
 
@@ -245,7 +182,7 @@ def scene(game):
            '  <sun dir="-0.8 0.3 -0.5" color="0.75 0.82 1" intensity="0.2" castShadows="0"/>',       # fill, right
            '  <sun dir="-0.55 0.6 0.55" color="1 0.8 0.6" intensity="0.3" castShadows="0"/>']        # bounce, behind and below
     for n, key in enumerate(SPRITES):
-        build = {'bomb': bomb, 'prism': ball, 'plane': plane}
+        build = {'bomb': bomb, 'prism': ball}
         lines, (turn, lean) = rocket(key, theme) if key in ROCKET_TURN else build[key](theme)
         x = n * SPACING
         out.append(f'  <camera name="{key}" pos="{f(x)} 0 600" look="{f(x)} 0 0" ortho="{f(VIEW)}" size="{SIZE} {SIZE}"/>')

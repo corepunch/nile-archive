@@ -3297,27 +3297,26 @@
       "silhouette_area_px": 5520
     },
     "plane": {
-      "source": "art/board-theme/specials/plane.png",
-      "scene": "art/board-theme/specials/specials.blks",
+      "source": "art/board-theme/source.png",
+      "prompt": "art/board-theme/prompt.txt",
       "crop": [
-        0,
-        0,
-        512,
-        512
+        251,
+        502,
+        502,
+        752
       ],
       "rotation": 0,
       "fit": "centered inside canonical hex with authored alpha",
       "fitted_size": [
-        95,
-        94
+        103,
+        90
       ],
-      "generator": "tools/match3_specials.py",
       "offset": [
-        20,
-        16
+        5,
+        26
       ],
       "homescapes_target_area_px": 5089,
-      "silhouette_area_px": 5100
+      "silhouette_area_px": 4824
     },
     "carpet-swatch": {
       "source": "art/board-theme/source.png",
@@ -3643,12 +3642,11 @@
       "games/christmas-market/art/board-theme/prompt.txt": "bfab7d3f1308d3564a354e4ef2feda166846ddb195c1c482ccaa1a24f8b6ad3e",
       "games/christmas-market/art/board-theme/source.png": "a2a4bc81ba3a816350a823447dd1149c899b1a80d0b7f47d1768e116c288f6c2",
       "games/christmas-market/art/board-theme/specials/bomb.png": "7b1a0a03c39c1d0f0931e859610c10edc365122511a4b94c7d3f8eb2b7896d71",
-      "games/christmas-market/art/board-theme/specials/plane.png": "8aa54dc8c27fe2917665ee96887117cf081577fbe5984538c7e0095f4518545d",
       "games/christmas-market/art/board-theme/specials/prism.png": "789de46177684960292a53bf94b1cd7c4cd0ea13bc43123fb8abb2f41210bcd0",
       "games/christmas-market/art/board-theme/specials/ray-column.png": "628189a4fe43ce6ca50479905eacfb4f4981bf69cfa3ba8f98b649f5d6bb0f7e",
       "games/christmas-market/art/board-theme/specials/ray-diagonal.png": "8b507854fd58b21c2f2a44d4f7cf3c965a768dd8e01f2043c8977162749de6a8",
       "games/christmas-market/art/board-theme/specials/ray-row.png": "0afa00c49e6dead62950c2517dfea4aabc46fc3b48356ab7169381204236f9de",
-      "games/christmas-market/art/board-theme/specials/specials.blks": "dccfec1543bb0d289f59d55a51e2e25711e6cec8b84b4b7b837f2b64586bd5a6",
+      "games/christmas-market/art/board-theme/specials/specials.blks": "679da81d69a539078acc58a80968664c204af1585910f62ad86e1365d4ebd62c",
       "games/christmas-market/data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
       "games/christmas-market/data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
       "games/christmas-market/data/board-states/delivery-exit.png": "466df7e04619cf906702ec1f6087e1a74e2b145d48c44d0c0ee195565cf09a67",
@@ -3687,11 +3685,11 @@
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_specials.py": "e204a5c8b96ba6b136de22bdcb8430fbbaa7f2b261d7f4bbd184bc4bec5fce0d",
-      "tools/match3_theme_art.py": "64536663f8cc098d5911187e356f08bd16dc0846267ef1dc94ba7b3cd9379a7b"
+      "tools/match3_specials.py": "6528c8a94c4fd78a9632a8b3e59edc414c8347119b7d1b11349f0868e72d6d7c",
+      "tools/match3_theme_art.py": "b5f8d70142bf4803a3536aad5b6286c1f24ecd82f553b60a618330aacf817c27"
     },
     "outputs": {
-      "games/christmas-market/data/match3.png": "0e2efcad980f9c88480b9964578bbb22a1de1b69957ed671fe70c0c2a8916b13",
+      "games/christmas-market/data/match3.png": "7c9b146f888fbacd90d763a2c48131d31f34562e551fb23b4c085ae116afb8d0",
       "games/christmas-market/lua/match3_skin.lua": "85492e3e97b6317fb8d8e15d847c893bc0e0ced0acec8363de743fedc0756fec"
     }
   }

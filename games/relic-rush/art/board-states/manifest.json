@@ -321,7 +321,7 @@
       ],
       "runtime": "data/match3.png",
       "atlas_frame": "plane",
-      "source": "art/board-theme/specials/plane.png",
+      "source": "../christmas-market/art/board-theme/source.png",
       "fit": "free-object",
       "atlas_section": "board_theme",
       "registration": "art/match3-atlas.json"
@@ -1248,10 +1248,13 @@
         "art/board-theme/specials/ray-column.png",
         "art/board-theme/specials/ray-diagonal.png",
         "art/board-theme/specials/bomb.png",
-        "art/board-theme/specials/prism.png",
-        "art/board-theme/specials/plane.png"
+        "art/board-theme/specials/prism.png"
       ],
       "reproduction": "python3 tools/match3_specials.py && python3 tools/match3_atlas.py"
+    },
+    "plane": {
+      "source": "../christmas-market/art/board-theme/source.png",
+      "recolor": "tools/match3_theme_art.py PLANE_SHADES, by luminance"
     }
   }
 }

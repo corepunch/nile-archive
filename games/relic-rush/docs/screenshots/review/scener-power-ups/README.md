@@ -1,6 +1,6 @@
 # Relic Rush power-ups modelled in Scener
 
-The rockets, bomb, rainbow ball and plane are now 3D models rendered by
+The rockets, bomb and rainbow ball are now 3D models rendered by
 [Scener](../../../../../../docs/MATCH3_ART_GENERATION.md#model-the-power-ups).
 The Homescapes references are on the top row and this game's renders are below.
 
@@ -9,12 +9,10 @@ The Homescapes references are on the top row and this game's renders are below.
 The three rockets are one lathe turned about the view direction, so their
 silhouettes are identical apart from the rotation. The bomb's belt is a band
 around its sphere and each rainbow tile is a patch of the sphere's own
-latitude and longitude. The plane is thick folded paper with bowed
-leading edges, a rim round its darker rear fold and two rolled tubes under
-the tail.
+latitude and longitude.
 
 Each board shows the previous painted sprites on the left and the renders on
-the right.
+the right. The plane is Christmas Market's painted paper plane in parchment shades, replacing the earlier glider.
 
 | Board size | Before and after |
 | --- | --- |

@@ -1,5 +1,6 @@
 """Register the authored board-theme sheets for each portrait game."""
 
+import os
 from contextlib import ExitStack
 from math import sqrt
 from pathlib import Path
@@ -24,6 +25,10 @@ MATERIALS = {
 # RENDERED sprites are modelled on the board's axes by tools/match3_specials.py.
 OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38}
 SIZE = 128
+# Relic Rush flies Christmas Market's painted plane, its blues remapped by luminance to these parchment
+# shades (shadow, midtone, highlight). The drawing, shading and alpha are unchanged.
+PLANE_FROM = 'christmas-market'
+PLANE_SHADES = ((150, 98, 44), (234, 201, 133), (255, 240, 200))
 
 
 def silhouette(image):
@@ -102,6 +107,26 @@ def fit_object(sprite, mask, max_side, target_area):
     raise ValueError('empty registered sprite')
 
 
+def repaint(sprite, shades):
+    """Remap a one-hue sprite's luminance onto three shades: its 5th, 50th and 95th percentiles."""
+    grey, alpha = sprite.convert('L'), sprite.getchannel('A')
+    levels = sorted(g for g, a in zip(grey.getdata(), alpha.getdata()) if a >= 128)
+    low, mid, high = (levels[len(levels) * k // 100] for k in (5, 50, 95))
+    def ramp(channel):
+        dark, base, light = (shade[channel] for shade in shades)
+        def at(g):
+            if g <= mid:
+                return round(base + (dark - base) * min(1.3, (mid - g) / max(1, mid - low)))
+            return round(base + (light - base) * min(1., (g - mid) / max(1, high - mid)))
+        return grey.point([max(0, min(255, at(g))) for g in range(256)])
+    return Image.merge('RGBA', (ramp(0), ramp(1), ramp(2), alpha))
+
+
+def borrowed_plane(root):
+    theme = root.parent / PLANE_FROM / 'art/board-theme'
+    return [theme / 'source.png', theme / 'prompt.txt']
+
+
 def painted(root):
     return [root / 'art/board-theme' / name for name in (
         'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt')]
@@ -113,7 +138,8 @@ def rendered(root):
 
 
 def inputs(root):
-    return painted(root) + rendered(root) + [Path(__file__).with_name('match3_specials.py')]
+    borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
+    return painted(root) + borrowed + rendered(root) + [Path(__file__).with_name('match3_specials.py')]
 
 
 def registered(root, mask):
@@ -141,7 +167,13 @@ def registered(root, mask):
                     round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
                 ))
                 sheet, sprite_prompt = (accent, accent_prompt) if pack == 'festive' and i == 1 else (source, prompt)
+                if name == 'plane' and root.name != PLANE_FROM:
+                    plane_path, sprite_prompt = borrowed_plane(root)
+                    sheet = stack.enter_context(Image.open(plane_path))
+                    assert sheet.mode == 'RGBA' and sheet.size == source.size, plane_path
             sprite = sheet.crop(crop)
+            if name == 'plane' and root.name != PLANE_FROM:
+                sprite = repaint(sprite, PLANE_SHADES)
             family = 'chip' if i < 6 else 'rocket' if name.startswith('ray-') else name
             target = areas.get(family)
             if name in MATERIALS or name == 'oil-bubbles':
@@ -167,12 +199,14 @@ def registered(root, mask):
             frames[name] = frame
             # A painted sprite records its prompt, a rendered one its Scener scene.
             recipe = 'scene' if name in RENDERED else 'prompt'
-            records[name] = {'source': str(Path(sheet.filename).relative_to(root)),
-                             recipe: str(sprite_prompt.relative_to(root)),
+            records[name] = {'source': os.path.relpath(sheet.filename, root),
+                             recipe: os.path.relpath(sprite_prompt, root),
                              'crop': list(crop), 'rotation': 0, 'fit': fit,
                              'fitted_size': fitted_size}
             if name in RENDERED:
                 records[name]['generator'] = 'tools/match3_specials.py'
+            if name == 'plane' and root.name != PLANE_FROM:
+                records[name]['recolor'] = {'luminance_percentiles': [5, 50, 95], 'shades': [list(c) for c in PLANE_SHADES]}
             if target:
                 records[name]['offset'] = offset
                 records[name]['homescapes_target_area_px'] = target

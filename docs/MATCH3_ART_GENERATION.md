@@ -42,19 +42,23 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 | --- | --- | --- | --- |
 | Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two blunt cone tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
 | Bomb | A round sphere seen from near its pole, with a narrow belt just above the equator. At the pole a raised ring of the body color surrounds an inset disc, where a short rope fuse with a lit tip stands. The belt and disc share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
-| Plane | A broad, compact folded glider angled up-left. Show a raised center crease, two large wing panels and two small rolled tubes with fuses under the tail. Use the secondary on the tubes and on a thick rim round the rear fold, so the triangular silhouette stays legible. | Icy blue `#3899F5` with frost-white `#E6F5FF` rim and tubes. | Pale parchment `#EAC985` over about 80% of the sprite, honey ochre `#B07732` on the rims and curled folds. |
+| Plane | A plain folded paper plane angled up-right, with a center crease and one wing panel folded under. One hue, shaded by the folds alone. Both games use the same painting. | Icy blue. | The same painting in parchment: `#EAC985` midtones, `#96622C` shadows. |
 
 The hex colors specify midtones. Model the surfaces with light and dark values
 within those two hue families. Read the rocket axis from the line joining its
 two tips. Distinguish the bomb by its spherical outline and short fuse, and
-the plane by its broad wing and curled underside.
+the plane by its broad folded wing.
 
 ## Model the power-ups
 
-The rockets, bomb, rainbow ball and plane are simple solids, so
-`tools/match3_specials.py` models them for
+The rockets, bomb and rainbow ball are solids of revolution and tiles on a
+sphere, so `tools/match3_specials.py` models them for
 [Scener](https://github.com/corepunch/orion-ui) and renders them. This keeps
-their geometry exact where painted versions drifted.
+their geometry exact where painted versions drifted. The plane stays
+painted. Relic Rush registers Christmas Market's plane with its blues
+remapped by luminance to parchment (`PLANE_SHADES` in
+`tools/match3_theme_art.py`), at the user's request. The drawing and alpha
+are unchanged.
 
 - **Rocket.** One lathe with cone tips, collars and a banded waist. Each board
   axis is the same model turned about the view direction, so the three
@@ -66,11 +70,6 @@ their geometry exact where painted versions drifted.
 - **Rainbow ball.** Each tile is a rounded square in the sphere's own
   latitude and longitude, raised along a bevel profile. A tile narrows towards
   the pole and foreshortens at the edge as the sphere does.
-- **Plane.** Thick paper folded into two front panels with bowed leading
-  edges, a darker rear fold and a raised center ridge. Round bars follow the
-  rear fold and its notched trailing edge. Two tubes with rope fuses sit under the tail. The
-  board draws the sprite without turning it, so the nose always points up
-  and to the left.
 
 A game supplies its palette, gloss and tile bevel in `THEMES`. Christmas
 Market's tiles are pillows and Relic Rush's have a flat face and a chamfer.
@@ -85,7 +84,7 @@ python3 tools/match3_specials.py --check         # the committed scenes are curr
 python3 tools/match3_atlas.py                    # register the renders
 ```
 
-Each game keeps the generated scene and its six 512 px transparent renders in
+Each game keeps the generated scene and its five 512 px transparent renders in
 `art/board-theme/specials/`. Commit them with the tool. `--check` compares the
 scene text only, so `make test` needs no Scener. Change the tool to change a
 model, and review the sheet against the
