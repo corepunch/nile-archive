@@ -9,19 +9,21 @@ The default chips retain the original identities (sun idol, flame, jade leaf, sc
 | `relics-0` through `relics-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Terracotta-red collars and waist, with old-gold long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt and inset socket disc, a rope fuse and a lit tip. Parchment paper plane: Christmas Market's painted plane with its blues remapped by luminance to parchment shades. The rainbow ball has chamfered enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
-| `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
+| `carpet-swatch`, `goal-carpet` | Dark woven green carpet and a matching rolled-carpet goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
-| `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
+| `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's carved tablet. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
 
-Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
+Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
 `python3 tools/match3_specials.py relic-rush` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
 
 The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
+
+[Woven carpet, oil and goal icons](../../../art/match3-floor-paint/source.png) and the [front-facing carved hex stones](../../../art/match3-blockers/source.png) were painted with built-in ImageGen. The atlas manifest records the source prompts and registration for both. [In-game before and after](screenshots/review/board-floors/README.md).
 
 ## Chapter 1 quest objects
 
@@ -64,7 +66,7 @@ states against the canonical mask.
 
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
-| Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
+| Carved stone | `stone-1` | Solid; one adjacent match or direct power-up hit breaks it. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
 
 The master's crate, tunnel, hidden-object and growth cells belong to mechanics
@@ -73,7 +75,7 @@ in the master image but are not registered, and their frames left the atlas.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review the stone strengths and the delivery on the actual board with
+Review the carved stone and the delivery on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/relic-rush-states.png)
 and [narrow](../../../docs/review/match3-elements/relic-rush-state-narrow.png).
@@ -232,10 +234,10 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `chain` | One silver chain curves around the chip; one hit unlocks the piece |
 | `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
 | `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
-| `carpet-swatch` | Moss (Homescapes' carpet), levels 5, 8, 10, 13, 18, 22, 24 and 28 (never with lamp oil): tiled under one rounded patch over every covered cell (`texture.hex_field` + `gfx.sdf_mask`); a match touching it spreads it. Original swatch, resized full-bleed by `tools/homescapes_atlas.py`. [Review](../../christmas-market/docs/screenshots/review/carpet/levels.jpg) |
-| `oil-material`, `oil-bubbles` | Lamp oil (Homescapes' oil), levels 20 and 26: one rounded patch with drifting bubbles, tinted darker than Homescapes' gold (`R.patch_tint`). Cleared by a match on it; spreads after a move that clears none. `python3 tools/oil_art.py`. [Review](../../christmas-market/docs/screenshots/review/oil/levels.jpg) |
-| `goal-oil` | Lamp oil goal and guide icon; `python3 tools/oil_art.py` |
-| `goal-carpet` | Moss goal and guide icon: rounded hex, smooth rim, pebbles set in, soft shadow; `python3 tools/carpet_goal_icon.py` |
+| `carpet-swatch` | Woven moss carpet, painted for the continuous floor patch. It spreads through matches touching it. |
+| `oil-material`, `oil-bubbles` | Spilled lamp oil, with two layers of drifting painted glints. Cleared by a match on it; spreads after a move that clears none. |
+| `goal-oil` | Amber drop for the lamp oil goal and guide. |
+| `goal-carpet` | Rolled green carpet for the moss goal and guide. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |

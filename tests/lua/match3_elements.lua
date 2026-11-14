@@ -3,20 +3,20 @@ local geo = E.new{radius=2}
 local function cell(q,r) return geo.hex_index(q,r) end
 local function level()
     return {name='elements',moves=20,score=0,relics=0,chains=0,ice=0,
-        stones={{cell=cell(-1,0),hp=2}},
+        stones={{cell=cell(-1,0)}},
         deliveries={tokens={cell(1,-2)},exits={cell(1,1)}}}
 end
 local function rules(l) return E.new{radius=2,flags=E.LINE_MATCHES,levels={l}} end
 local R = rules(level())
 do
     local g, m = R.game_start(0,123), R.new_match()
-    check(g.obstacles==2, 'obstacles count actual layers')
+    check(g.obstacles==1, 'one obstacle per stone')
     check(not R.game_can_swap(g,cell(-1,0),cell(0,0)), 'stone blocks swaps')
     m.mask[cell(0,0)] = true; g.tiles[cell(0,0)] = R.tile(0)
     R.game_apply(g,m)
-    check(g.stone_hp[cell(-1,0)]==1, 'adjacency damages stone')
-    local copy=R.game_copy(g);copy.stone_hp[cell(-1,0)]=3
-    check(g.stone_hp[cell(-1,0)]==1, 'copy owns mutable element state')
+    check(g.stone_hp[cell(-1,0)]==0 and g.obstacles==0, 'an adjacent match breaks the stone')
+    local copy=R.game_copy(g);copy.stone_hp[cell(-1,0)]=1
+    check(g.stone_hp[cell(-1,0)]==0, 'copy owns mutable element state')
 end
 
 do
@@ -39,7 +39,7 @@ do
     local g = R.game_start(0, 357)
     local token, stone = cell(1,-2),cell(-1,0)
     R.game_shuffle(g)
-    check(g.tiles[token].kind==R.DELIVERY and g.stone_hp[stone]==2,
+    check(g.tiles[token].kind==R.DELIVERY and g.stone_hp[stone]==1,
         'shuffle preserves fixed blockers and delivery token')
 end
 
@@ -49,7 +49,7 @@ do
     g.tiles[left], g.tiles[upper] = R.tile(0), R.tile(0)
     m.mask[left], m.mask[upper] = true, true
     R.game_apply(g,m)
-    check(g.stone_hp[blocker]==1, 'two adjacent hits damage a stone only once per wave')
+    check(g.stone_hp[blocker]==0 and g.obstacles==0, 'two adjacent hits clear one obstacle')
     local token=cell(1,-2)
     g.tiles[token]=R.tile(R.DELIVERY)
     m=R.new_match();m.mask[token],m.direct[token]=true,true
@@ -60,17 +60,14 @@ end
 do
     local l = level()
     local stone, neighbor = cell(-1, 0), cell(-1, 1)
-    l.stones[2] = {cell=neighbor, hp=3}
+    l.stones[2] = {cell=neighbor}
     local ruleset = rules(l)
     local g = ruleset.game_start(0, 789)
-    for hp = 1, 0, -1 do
-        local m = ruleset.new_match()
-        m.mask[stone], m.direct[stone] = true, true
-        ruleset.game_apply(g, m)
-        check(g.stone_hp[stone] == hp, 'each direct special hit removes one stone layer')
-        check(g.stone_hp[neighbor] == 3, 'connected stone cells retain independent durability')
-    end
-    check(g.obstacles == 3, 'clearing one connected cell preserves the other cell in the goal')
+    local m = ruleset.new_match()
+    m.mask[stone], m.direct[stone] = true, true
+    ruleset.game_apply(g, m)
+    check(g.stone_hp[stone] == 0, 'a direct special hit breaks the stone')
+    check(g.stone_hp[neighbor] == 1 and g.obstacles == 1, 'the neighbouring stone remains in the goal')
 end
 
 do
@@ -103,7 +100,7 @@ do
     g.tiles[left]=R.tile(1);g.ice[left]=1;g.obstacles=g.obstacles+1
     local m=R.new_match();m.mask[left],m.ordinary[left]=true,true
     R.game_apply(g,m)
-    check(g.ice[left]==0 and g.stone_hp[stone]==1, 'a matched frozen piece still damages an adjacent stone')
+    check(g.ice[left]==0 and g.stone_hp[stone]==0, 'a matched frozen piece still breaks an adjacent stone')
 end
 
 do

@@ -167,7 +167,7 @@ bevels, authored selection/hint frames or numeric ice badges. Flat hex ground
 uses neutral grays `#484848` and `#545454` (alternating cells), with no green tint.
 See the [gray-field review](review/gray-hex-ground/README.md). Selection and hints
 scale the piece. The donut collection exit uses the original animated arrow.
-Campaign stones use a continuous surface with authored per-cell damage marks.
+Each campaign stone is a front-facing flat-top hex with one hit.
 The source-preview boards use the dedicated source model
 handlers and goals described above.
 

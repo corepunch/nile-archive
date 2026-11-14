@@ -15,22 +15,18 @@ POWER_UP_PAINT = ART / 'match3-power-up-paint'
 PAINTED_SPECIALS = RENDERED  # The paint sheet follows the Scener render order, one row per game.
 CHAIN_PAINT = ART / 'match3-chain-paint'
 PAINTED_CHAINS = ('chain', 'chain-1-mirror', 'chain-2')
+FLOOR_PAINT = ART / 'match3-floor-paint'
+PAINTED_FLOORS = {'carpet-swatch': 0, 'oil-material': 1, 'goal-carpet': 3, 'goal-oil': 4, 'oil-bubbles': 9}
+BLOCKER_PAINT = ART / 'match3-blockers'
+MATERIALS = {'carpet-swatch', 'oil-material'}
 
 SLOTS = (
     'chip-0', 'chip-1', 'chip-2', 'chip-3', 'chip-4',
     'chip-5', 'ray-row', 'ray-column', 'ray-diagonal', 'bomb',
-    'prism', 'plane', 'carpet-swatch', 'oil-material', 'stone-material',
-    'stone-mark-1', 'stone-mark-2', 'stone-mark-3', 'goal-carpet', 'goal-oil',
-    'goal-stone', 'oil-bubbles', 'delivery',
-) + PAINTED_CHAINS
-MATERIALS = {
-    'carpet-swatch': (540, 550, 714, 724),
-    'oil-material': (782, 550, 956, 724),
-    'stone-material': (1026, 550, 1200, 724),
-}
+    'prism', 'plane', 'delivery',
+) + tuple(PAINTED_FLOORS) + PAINTED_CHAINS + ('stone-1',)
 # Longest side in px. The plane is a thin shape: at its Homescapes area it would span the whole cell.
-OBJECT_SIZE = {'stone-mark-1': 86, 'stone-mark-2': 65, 'stone-mark-3': 38, 'plane': 84,
-               'chain': 97, 'chain-1-mirror': 97, 'chain-2': 97}
+OBJECT_SIZE = {'plane': 84, 'chain': 97, 'chain-1-mirror': 97, 'chain-2': 97}
 SIZE = 128
 # Relic Rush flies Christmas Market's painted plane, its blues remapped by luminance to these parchment
 # shades (shadow, midtone, highlight). The drawing, shading and alpha are unchanged.
@@ -116,6 +112,21 @@ def fit_object(sprite, mask, max_side, target_area):
     raise ValueError('empty registered sprite')
 
 
+def register_stone(sprite, mask):
+    """Align the stone face to the board's full flat-top hex."""
+    bounds = silhouette(sprite).getbbox()
+    assert bounds, 'missing stone'
+    # Allow two pixels of face bleed on each edge before applying the exact mask.
+    top, bottom = mask.getbbox()[1::2]
+    bleed = 2
+    face = sprite.crop(bounds).resize((SIZE + 2 * bleed, bottom - top + 2 * bleed), Image.Resampling.LANCZOS)
+    canvas = Image.new('RGBA', (SIZE, SIZE))
+    offset = (-bleed, top - bleed)
+    canvas.paste(face, offset)
+    canvas.putalpha(mask)
+    return canvas, list(face.size), list(offset)
+
+
 def repaint(sprite, shades):
     """Remap a one-hue sprite's luminance onto three shades: its 5th, 50th and 95th percentiles."""
     grey, alpha = sprite.convert('L'), sprite.getchannel('A')
@@ -148,7 +159,8 @@ def rendered(root):
 
 def inputs(root):
     borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
-    paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'), (CHAIN_PAINT, 'edit-target.png'))
+    paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'),
+            (CHAIN_PAINT, 'edit-target.png'), (FLOOR_PAINT, 'edit-target.png'), (BLOCKER_PAINT, 'reference.png'))
              for name in ('source.png', 'prompt.txt', target)]
     return painted(root) + borrowed + rendered(root) + paint + [Path(__file__).with_name('match3_specials.py')]
 
@@ -161,8 +173,9 @@ def registered(root, mask):
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
         source, accent = [stack.enter_context(Image.open(p)) for p in (path, accent_path)]
-        power_ups, chains = [stack.enter_context(Image.open(folder / 'source.png')) for folder in (POWER_UP_PAINT, CHAIN_PAINT)]
-        for sheet in (power_ups, chains):
+        power_ups, chains, floors, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
+                 for folder in (POWER_UP_PAINT, CHAIN_PAINT, FLOOR_PAINT, BLOCKER_PAINT)]
+        for sheet in (power_ups, chains, floors, blockers):
             assert sheet.mode == 'RGBA', sheet.filename
         for sheet in (source, accent):
             assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
@@ -172,6 +185,8 @@ def registered(root, mask):
             row, col = divmod(i, 5)
             is_power_up_paint = name in PAINTED_SPECIALS
             is_chain_paint = name in PAINTED_CHAINS
+            is_floor_paint = name in PAINTED_FLOORS
+            is_blocker_paint = name == 'stone-1'
             if is_power_up_paint or is_chain_paint:
                 sheet, slots, folder = (chains, PAINTED_CHAINS, CHAIN_PAINT) if is_chain_paint else (
                     power_ups, PAINTED_SPECIALS, POWER_UP_PAINT)
@@ -181,11 +196,27 @@ def registered(root, mask):
                 cols = len(slots)
                 crop = (col * w // cols, row * h // 2, (col + 1) * w // cols, (row + 1) * h // 2)
                 sprite_prompt = folder / 'prompt.txt'
+            elif is_blocker_paint:
+                sheet, sprite_prompt = blockers, BLOCKER_PAINT / 'prompt.txt'
+                col = int(root.name == 'christmas-market')
+                crop = (col * sheet.width // 2, 0, (col + 1) * sheet.width // 2, sheet.height)
+            elif is_floor_paint:
+                row, col = divmod(PAINTED_FLOORS[name], 5)
+                sheet, sprite_prompt = floors, FLOOR_PAINT / 'prompt.txt'
+                w, h = sheet.size
+                crop = (col * w // 5, row * h // 2, (col + 1) * w // 5, (row + 1) * h // 2)
+                if name in MATERIALS:
+                    # Crop within the opaque square, clear of its painted edges.
+                    x, y = crop[:2]
+                    crop = (x + 56, y + 56, x + 344, y + 344)
             else:
-                crop = MATERIALS.get(name, (
+                # Delivery occupies the third cell of the base sheet's last row.
+                if name == 'delivery':
+                    row, col = 4, 2
+                crop = (
                     round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
                     round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
-                ))
+                )
                 sheet, sprite_prompt = (accent, accent_prompt) if pack == 'festive' and i == 1 else (source, prompt)
                 if name == 'plane' and root.name != PLANE_FROM:
                     plane_path, sprite_prompt = borrowed_plane(root)
@@ -205,17 +236,20 @@ def registered(root, mask):
                 frame = sprite.resize((SIZE, SIZE), Image.Resampling.LANCZOS)
                 fit = 'tiled material' if name in MATERIALS else 'tiled authored alpha'
                 fitted_size = [SIZE, SIZE]
+            elif is_blocker_paint:
+                frame, fitted_size, offset = register_stone(sprite, mask)
+                fit = 'full flat-top hex with the canonical face mask'
             else:
                 ink = silhouette(sprite).getbbox()
                 assert ink, name
                 left, top, right, bottom = ink
                 sprite = sprite.crop((max(0, left - 5), max(0, top - 5),
                                       min(sprite.width, right + 5), min(sprite.height, bottom + 5)))
+                fit = 'centered inside canonical hex with authored alpha'
                 if target:
                     frame, fitted_size, offset = fit_object(sprite, inset, OBJECT_SIZE.get(name, SIZE), target)
                 else:
                     frame, fitted_size, offset = fit_object(sprite, mask, OBJECT_SIZE.get(name, 120), None)
-                fit = 'centered inside canonical hex with authored alpha'
             frames[name] = frame
             records[name] = {'source': os.path.relpath(sheet.filename, root),
                              'prompt': os.path.relpath(sprite_prompt, root),
@@ -225,10 +259,14 @@ def registered(root, mask):
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['edit_target'] = os.path.relpath(POWER_UP_PAINT / 'scener-strip.png', root)
                 records[name]['geometry'] = f'art/board-theme/specials/{name}.png'
-            if is_chain_paint:
+            if is_chain_paint or is_floor_paint or is_blocker_paint:
                 records[name]['generator'] = 'built-in ImageGen'
-                records[name]['edit_target'] = os.path.relpath(CHAIN_PAINT / 'edit-target.png', root)
-                records[name]['offset'] = offset
+                if is_blocker_paint:
+                    records[name]['reference'] = os.path.relpath(BLOCKER_PAINT / 'reference.png', root)
+                else:
+                    records[name]['edit_target'] = os.path.relpath(sprite_prompt.with_name('edit-target.png'), root)
+                if name not in MATERIALS and name != 'oil-bubbles':
+                    records[name]['offset'] = offset
             if name == 'plane' and root.name != PLANE_FROM:
                 records[name]['recolor'] = {'luminance_percentiles': [5, 50, 95], 'shades': [list(c) for c in PLANE_SHADES]}
             if target:

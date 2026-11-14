@@ -137,20 +137,20 @@ local levels = {
 
 
 -- Teach stone and deliveries alone before combining them.
-levels[5].stones = {{cell=cell(2,0),hp=1}}
-levels[5].lesson = "Match beside a stone to crack it."
-levels[7].stones = {{cell=cell(2,0),hp=2}}
-levels[7].lesson = "Some stones need two hits."
+levels[5].stones = {{cell=cell(2,0)}}
+levels[5].lesson = "Match beside a stone to break it."
+levels[7].stones = {{cell=cell(2,0)}}
+levels[7].lesson = "Break the carved stone."
 levels[8].lesson = "Clear the tinsel and the ice."
 levels[12].lesson = "Match five in a line for a rainbow ball."
-levels[14].stones = {{cell=cell(2,0),hp=3}}
-levels[14].lesson = "Break the three-layer stone."
+levels[14].stones = {{cell=cell(2,0)}}
+levels[14].lesson = "Clear the stone to open the board."
 levels[16].lesson = "Thick ice takes two hits."
 levels[17].deliveries = {tokens={cell(2,-2)},exits={cell(2,2)}}
 levels[17].lesson = "Clear below the parcel to deliver it."
-levels[19].stones = {{cell=cell(2,1),hp=2}}
+levels[19].stones = {{cell=cell(2,1)}}
 levels[23].lesson = "Untangle the tinsel and thaw the ice."
-levels[27].stones = {{cell=cell(2,0),hp=3}}
+levels[27].stones = {{cell=cell(2,0)}}
 levels[30].deliveries = {tokens={cell(2,-2)},exits={cell(2,2)}}
 levels[30].lesson = "Bring the parcel down to the tree."
 -- Floors, as in Homescapes: carpet or caramel (its oil), never both, in about

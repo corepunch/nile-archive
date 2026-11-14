@@ -70,7 +70,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Buried Cable", "Match beside a stone to crack it.", 32, 2300, 12, 0, 0)
+        local l = level("The Buried Cable", "Match beside a stone to break it.", 32, 2300, 12, 0, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -297,20 +297,20 @@ local levels = {
 
 
 -- Teach each new problem alone, then combine it with a familiar one.
-levels[3].stones = {{cell=cell(2,0),hp=1}}
-levels[3].lesson = "Match beside a stone to crack it."
-levels[7].stones = {{cell=cell(2,0),hp=2}}
-levels[7].lesson = "Some stones need two hits."
+levels[3].stones = {{cell=cell(2,0)}}
+levels[3].lesson = "Match beside a stone to break it."
+levels[7].stones = {{cell=cell(2,0)}}
+levels[7].lesson = "Break the carved stone."
 levels[9].lesson = "Clear the chains and the ice."
 levels[11].lesson = "Collect the relics."
-levels[15].stones = {{cell=cell(0,0),hp=3}}
-levels[15].lesson = "Break the three-layer stone."
+levels[15].stones = {{cell=cell(0,0)}}
+levels[15].lesson = "Clear the stone to open the board."
 levels[16].lesson = "Clear the frozen gems."
 levels[17].lesson = "Thick ice takes two hits."
 levels[21].deliveries = {tokens={cell(0,-2)},exits={cell(0,2)}}
 levels[21].lesson = "Clear below the tablet to deliver it."
-levels[22].stones = {{cell=cell(2,0),hp=2}}
-levels[29].stones = {{cell=cell(2,0),hp=3}}
+levels[22].stones = {{cell=cell(2,0)}}
+levels[29].stones = {{cell=cell(2,0)}}
 
 -- Quest objects belong to the story after the first clear, not to the board goals.
 local quest_objects = {

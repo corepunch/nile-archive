@@ -16,10 +16,11 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 - Use the same chip frame on the board and in color-specific goals and previews.
   Keep chips brighter and more saturated than carpet, oil and stone. Judge this
   with chips over the patches, including a green chip over green carpet.
-- Keep carpet a single deep, muted green. Give it fine low-contrast texture.
-  Avoid bands, stripes, motifs, contrasting threads and light trim. Oil is quiet
-  amber-brown with soft glints. Stone is subdued gray with small same-hue cracks.
-  Goal icons use the material's own hue.
+- Keep carpet a deep, muted green with low-contrast woven fibers. Oil is quiet
+  amber-brown with small drifting glints. Carved stones face the viewer and use
+  the board's flat-top hex outline, with sandstone in Relic Rush and cool slate
+  in Christmas Market. Each stone has one hit and shares its sprite with the
+  goal display and guide.
 - Keep the Homescapes power-up silhouettes and color placement. Use broad,
   distinct color areas that survive phone-size rendering. The rainbow ball
   uses multiple hues. Its enamel tiles are discrete rounded squares in three
@@ -102,14 +103,13 @@ when the geometry changes.
 
 1. Inventory the names and states used by the rules, the board, the HUD and the
    guide. The game catalogues are the starting point. Keep all states of a
-   family together, including all three rocket axes, one to three stone hits,
+   family together, including all three rocket axes,
    one and two layers of restraints, and any mirrored layout the rules use.
 2. Use one ImageGen call per game atlas. Give it a row-by-row slot list, the
    local Homescapes shapes as reference and the palette above. Request true
    RGBA, generous transparent gutters, no text and no baked object shadows.
-   Give the generator separate slots for the three quiet, edge-to-edge square
-   material swatches and their freestanding goal icons. Request small authored
-   oil glints on alpha and separate same-hue stone damage marks.
+   Give the generator separate slots for the opaque square material swatches,
+   their freestanding goal icons and the oil glints on alpha.
 3. For a separate set of controls, author normal, selected, pressed, hover and
    disabled in that set's single atlas. Use the existing authored interaction
    art when the controls are outside the change. A color filter or overlaid
@@ -138,9 +138,9 @@ when the geometry changes.
    The Scener target places the rockets on the +30°, 90° and −30° axes.
    Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
-   sprites. Keep carpet, oil and stone as swatches for the board's continuous
-   surface mask. Keep carpet and stone's bevel and soft contact shadow in the
-   renderer so they follow the outer edge as the patch changes.
+   sprites. The carved stone face uses the exact canonical mask. Carpet and
+   oil use opaque swatches under continuous surface masks. The renderer follows
+   the changing patch perimeter with a shallow rim.
 2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png` for the board
    and its effects, and `data/match3-hud.png` for the controls and HUD. Run
    `python3 tools/match3_atlas.py --check`. Record the packed frames in the
@@ -148,8 +148,8 @@ when the geometry changes.
    or [Relic Rush catalogue](../games/relic-rush/docs/asset-catalogue.md).
 3. Run `python3 tools/hex_tile_art.py` in strict `object`, `frame`, or
    `fill` mode as appropriate. Check the actual board at 480×900 and 390×844
-   with all six kinds, chips on patches, all six power-up frames, all stone
-   strengths and any changed restraints. Use the existing capture suite.
+   with all six kinds, chips on patches, all six power-up frames, carved stones
+   and any changed restraints. Use the existing capture suite.
    Inspect each board at actual size, including the goal icons. Reject any
    swatch that is readable as a pattern before the chips are readable as colors.
 

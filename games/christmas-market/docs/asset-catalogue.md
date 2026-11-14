@@ -9,19 +9,21 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
-| `carpet-swatch`, `goal-carpet` | Unpatterned green texture and matching goal icon. Carpet spreads through matches touching it. |
+| `carpet-swatch`, `goal-carpet` | Dark woven green carpet and a matching rolled-carpet goal icon. Carpet spreads through matches touching it. |
 | `oil-material`, `oil-bubbles`, `goal-oil` | Quiet brown-amber oil, faint drifting glints and a drop icon. The patch spreads after a move that clears none. |
-| `stone-material`, `stone-mark-1`, `stone-mark-2`, `stone-mark-3`, `goal-stone` | A continuous inset stone surface. A branching fissure, two smaller fissures and a raised knot mark one, two and three hits remaining. |
+| `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's red parcel. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
 
-Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. Carpet and stone retain their continuous beveled silhouette and soft contact shadow. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
+Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
 `python3 tools/match3_specials.py christmas-market` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
 
 The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
+
+[Woven carpet, oil and goal icons](../../../art/match3-floor-paint/source.png) and the [front-facing carved hex stones](../../../art/match3-blockers/source.png) were painted with built-in ImageGen. The atlas manifest records the source prompts and registration for both. [In-game before and after](screenshots/review/board-floors/README.md).
 
 ## Additional board elements
 
@@ -41,7 +43,7 @@ states against the canonical mask.
 
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
-| Stone | `stone-1`, `stone-2`, `stone-3` | Solid; adjacent matches or direct special effects reduce its remaining hits. |
+| Carved stone | `stone-1` | Solid; one adjacent match or direct power-up hit breaks it. |
 | Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
 
 The master's crate, tunnel, hidden-object and growth cells belong to mechanics
@@ -50,7 +52,7 @@ in the master image but are not registered, and their frames left the atlas.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review the stone strengths and the delivery on the actual board with
+Review the carved stone and the delivery on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/christmas-market-states.png)
 and [narrow](../../../docs/review/match3-elements/christmas-market-state-narrow.png).
@@ -267,8 +269,8 @@ still uncovered.
 
 | Asset | State and meaning | Source | Runtime |
 | --- | --- | --- | --- |
-| `carpet-swatch` | Carpet material, tiled under the board's patch mask | Original Homescapes swatch, resized full-bleed by `tools/homescapes_atlas.py` | `data/match3.png` |
-| `goal-carpet` | HUD goal and guide icon: rounded hex, smooth rim, pebbles set in, soft shadow | `python3 tools/carpet_goal_icon.py` from the swatch's paint | `data/match3.png` |
+| `carpet-swatch` | Carpet material, tiled under the board's patch mask | ImageGen floor sheet, opaque square cropped under the SDF mask | `data/match3.png` |
+| `goal-carpet` | HUD goal and guide icon: rolled woven carpet | ImageGen floor sheet | `data/match3.png` |
 | Board patch | One rounded patch over every carpeted cell, rim shaded | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
 
 There is a single carpet state; it has no strength or interaction states.
@@ -282,13 +284,13 @@ There is a single carpet state; it has no strength or interaction states.
 Homescapes' oil (`CELL_OIL`), seeded in levels 13 and 25. One layer under a
 piece, cleared by a match on its cell or a blast. After a move that clears none
 of it, it spreads to one neighbouring cell, and the goal counts what is left.
-Homescapes paints oil in a shader, so the art is engine-made after it.
+The board uses painted amber liquid and two layers of drifting glints.
 
 | Asset | State and meaning | Source | Runtime |
 | --- | --- | --- | --- |
-| `oil-material` | Golden liquid, tiled under the oil patch mask | `python3 tools/oil_art.py`, colours around Homescapes' `OIL_COLOR` | `data/match3.png` |
-| `oil-bubbles` | Bubbles, two layers drifting at different speeds (still with reduced motion) | `python3 tools/oil_art.py` | `data/match3.png` |
-| `goal-oil` | HUD goal and guide icon in the carpet icon's style | `python3 tools/oil_art.py` | `data/match3.png` |
+| `oil-material` | Golden liquid, tiled under the oil patch mask | ImageGen floor sheet | `data/match3.png` |
+| `oil-bubbles` | Painted glints drifting at two speeds, fixed in reduced motion | ImageGen floor sheet | `data/match3.png` |
+| `goal-oil` | Amber drop for the HUD and guide | ImageGen floor sheet | `data/match3.png` |
 | Board patch | One rounded patch over every oil cell, amber rim | `texture.hex_field` + `gfx.sdf_mask` in `engine/match3_elements_view.lua` | drawn |
 
 There is a single oil state.

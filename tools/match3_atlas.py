@@ -206,6 +206,8 @@ def build_game(game, check):
         for i in range(6):
             sources[f'{pack}-{i}'] = root / f'data/tile-sets/{pack}/{i}.png'
     for source in sorted((root / 'data/board-states').glob('*.png')):
+        if source.stem in ('stone-2', 'stone-3'):
+            continue  # Archived campaign sprites from before one-hit stones.
         sources[source.stem] = source
     hud_sources = {name: sources.pop(name) for name in sorted(TOOL_FRAMES)}
     hud_sources.update((source.stem, source) for source in sorted((root / 'data/expedition-hud').glob('*.png')))

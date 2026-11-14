@@ -2,8 +2,7 @@
 -- rules and board layouts stay independent of this drawing code.
 local E = {}
 
-E.assets = {"stone-1", "stone-2", "stone-3", "delivery", "donut", "delivery-exit", "carry-exit-arrow"}
-local stone_art = {"stone-material", "stone-mark-1", "stone-mark-2", "stone-mark-3", "goal-stone"}
+E.assets = {"stone-1", "delivery", "donut", "delivery-exit", "carry-exit-arrow"}
 
 for _,name in ipairs{"box","carry","jelly","lock","piggy","target-generator","trash"} do
     E.assets[#E.assets+1]="goal-"..name
@@ -25,28 +24,22 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 
 function E.load(art, skin)
     for _, name in ipairs(E.assets) do art[name] = assert(skin[name], "missing element art: " .. name) end
-    if skin["stone-material"] then
-        for _, name in ipairs(stone_art) do art[name] = assert(skin[name], "missing stone art: " .. name) end
-    end
 end
 
 local function image(R, name, at, size, alpha)
     gfx.image(R.board_art[name], rect.centered(at, size2.splat(size)), color(255, 255, 255, alpha * 255))
 end
 
--- Carpet, oil and stone each form a continuous patch: a signed
+-- Carpet and oil each form a continuous patch: a signed
 -- distance field of their cells (texture.hex_field, rounded outside corners,
 -- filleted inside ones) masks a tiled material, and the rim is shaded. A field
--- is rebuilt only when its cells change. Oil also carries two layers of
--- bubbles drifting at different speeds, as Homescapes' oil shader does.
+-- is rebuilt only when its cells change. Oil carries two layers of drifting glints.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
 local PATCH = {
     carpet = {material = "carpet-swatch", corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
-        inset = 1.4, rim = 4, shade = .55, bevel = .27, shadow_y = 2.5, softness = 4, opacity = 115},
-    oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 4, shade = .35,
-        bubbles = {{"oil-bubbles", 4, -9, 1.6, 100}, {"oil-bubbles", -3, -14, 1.1, 65}}},   -- art, drift x/y (px/s), size, opacity
-    stone = {material = "stone-material", corner = .20, fillet = .64, range = .6, texel = 1.5, tile = 1.6,
-        inset = 3.5, rim = 6, shade = .57, bevel = .34, shadow_y = 3, softness = 4.5, opacity = 135},
+        inset = 1.4, rim = 2.3, shade = .26, bevel = .15, shadow_y = 1.4, softness = 2.4, opacity = 76},
+    oil = {material = "oil-material", corner = .25, fillet = .8, range = .6, texel = 2, tile = 1.4, rim = 2.6, shade = .34,
+        glints = {{"oil-bubbles", 3, -6, 1.25, 100}, {"oil-bubbles", -2, -9, .85, 65}}},   -- art, drift x/y (px/s), size, opacity
 }
 local function patch_cells(R, rules, layer)
     local g, cells = R.g, {}
@@ -54,9 +47,6 @@ local function patch_cells(R, rules, layer)
         local on
         if layer == "carpet" then
             on = g.hs and g.hs.cells[i] and g.hs.cells[i].carpet or not g.hs and g.carpet and (g.carpet[i] or 0) > 0
-        elseif layer == "stone" then
-            on = g.stone_hp and (g.stone_hp[i] or 0) > 0
-                and (not R.intro or R.intro:blocker(i))
         else on = g.oil and (g.oil[i] or 0) > 0 end
         if on and rules.game_cell_active(g, i) then cells[#cells + 1] = i end
     end
@@ -115,7 +105,7 @@ local function draw_patch(R, layer, cells, sx)
     gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel or 0)
     tile(R.board_art[spec.material], area, side, origin, color(255, 255, 255, 255 * alpha), true)
     local now = R.reduced_motion and 0 or (R.now or 0)
-    for _, layer_spec in ipairs(spec.bubbles or {}) do
+    for _, layer_spec in ipairs(spec.glints or {}) do
         local art, dx, dy, scale, opacity = table.unpack(layer_spec)
         tile(R.board_art[art], area, side * scale, origin + vec2(dx * now, dy * now), color(255, 255, 255, opacity * alpha))
     end
@@ -125,13 +115,6 @@ function E.patch(R, rules, layer, sx)
     local cells = patch_cells(R, rules, layer)
     if #cells == 0 then return end
     draw_patch(R, layer, cells, sx)
-    if layer == "stone" then
-        local alpha = R.intro and R.intro:fade() or 1
-        for _, cell in ipairs(cells) do
-            local hp = R.g.stone_hp[cell]
-            image(R, "stone-mark-" .. hp, R.cell_pos(cell) + vec2(sx, 0), 2 * R.HEX_R, alpha)
-        end
-    end
 end
 function E.carpet(R, rules, sx) E.patch(R, rules, "carpet", sx) end
 
@@ -264,13 +247,11 @@ end
 -- Fixed blockers cover the piece area.
 function E.blockers(R, rules, sx)
     local g = R.g
-    local themed_stone = R.board_art["stone-material"]
-    if themed_stone then E.patch(R, rules, "stone", sx) end
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local name
             local hp = g.stone_hp and g.stone_hp[i] or 0
-            if hp > 0 and not themed_stone then name = "box-" .. math.min(hp, 6) end
+            if hp > 0 then name = "stone-1" end
             if g.hs then
                 local c=g.hs.cells[i]
                 if (c.box or 0)>0 then

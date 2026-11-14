@@ -1216,11 +1216,7 @@
         "goal-oil"
       ],
       "stone": [
-        "stone-material",
-        "stone-mark-1",
-        "stone-mark-2",
-        "stone-mark-3",
-        "goal-stone"
+        "stone-1"
       ],
       "chips": [
         "relics-0",
@@ -1286,6 +1282,33 @@
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/curved-chains/README.md"
+    },
+    "floor_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-floor-paint/source.png",
+      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "edit_target": "../../art/match3-floor-paint/edit-target.png",
+      "frames": [
+        "carpet-swatch",
+        "goal-carpet",
+        "oil-material",
+        "oil-bubbles",
+        "goal-oil"
+      ],
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "docs/screenshots/review/board-floors/README.md"
+    },
+    "stone_paint": {
+      "generator": "built-in ImageGen",
+      "source": "../../art/match3-blockers/source.png",
+      "prompt": "../../art/match3-blockers/prompt.txt",
+      "reference": "../../art/match3-blockers/reference.png",
+      "frame": "stone-1",
+      "state": "one hit, same face on board and in guide and HUD",
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "docs/screenshots/review/board-floors/README.md"
     }
   }
 }

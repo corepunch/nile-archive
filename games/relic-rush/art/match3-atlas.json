@@ -491,464 +491,422 @@
       128,
       128
     ],
-    "goal-stone": [
-      1586,
-      2842,
-      128,
-      128
-    ],
     "goal-target-generator": [
-      1718,
+      1586,
       2842,
       128,
       128
     ],
     "goal-trash": [
-      1850,
+      1718,
       2842,
       128,
       128
     ],
     "gold-rainbow-ball": [
-      2,
-      2974,
+      1850,
+      2842,
       128,
       128
     ],
     "guide": [
-      134,
+      2,
       2974,
       128,
       128
     ],
     "hazelnut-1": [
-      266,
+      134,
       2974,
       128,
       128
     ],
     "hazelnut-2": [
-      398,
+      266,
       2974,
       128,
       128
     ],
     "hazelnut-3": [
-      530,
+      398,
       2974,
       128,
       128
     ],
     "hint": [
-      662,
+      530,
       2974,
       128,
       128
     ],
     "honey-swatch": [
-      794,
+      662,
       2974,
       128,
       128
     ],
     "ice-1": [
-      926,
+      794,
       2974,
       128,
       128
     ],
     "ice-2": [
-      1058,
+      926,
       2974,
       128,
       128
     ],
     "jelly-1": [
-      1190,
+      1058,
       2974,
       128,
       128
     ],
     "jelly-1-cherry": [
-      1322,
+      1190,
       2974,
       128,
       128
     ],
     "jelly-2": [
-      1454,
+      1322,
       2974,
       128,
       128
     ],
     "jelly-2-cherry": [
-      1586,
+      1454,
       2974,
       128,
       128
     ],
     "jelly-3": [
-      1718,
+      1586,
       2974,
       128,
       128
     ],
     "jelly-4": [
-      1850,
+      1718,
       2974,
       128,
       128
     ],
     "jelly-5": [
-      2,
-      3106,
+      1850,
+      2974,
       128,
       128
     ],
     "jelly-6": [
-      134,
+      2,
       3106,
       128,
       128
     ],
     "jelly-cherry-clear-source": [
-      266,
+      134,
       3106,
       128,
       128
     ],
     "jelly-cherry-soft-source": [
-      398,
+      266,
       3106,
       128,
       128
     ],
     "jelly-flower-dark-source": [
-      530,
+      398,
       3106,
       128,
       128
     ],
     "jelly-flower-fill-source": [
-      662,
+      530,
       3106,
       128,
       128
     ],
     "jelly-flower-five-pale-source": [
-      794,
+      662,
       3106,
       128,
       128
     ],
     "jelly-flower-frame-source": [
-      926,
+      794,
       3106,
       128,
       128
     ],
     "jelly-flower-three-pale-source": [
-      1058,
+      926,
       3106,
       128,
       128
     ],
     "jelly-square-source": [
-      1190,
+      1058,
       3106,
       128,
       128
     ],
     "jewels-0": [
-      1322,
+      1190,
       3106,
       128,
       128
     ],
     "jewels-1": [
-      1454,
+      1322,
       3106,
       128,
       128
     ],
     "jewels-2": [
-      1586,
+      1454,
       3106,
       128,
       128
     ],
     "jewels-3": [
-      1718,
+      1586,
       3106,
       128,
       128
     ],
     "jewels-4": [
-      1850,
+      1718,
       3106,
       128,
       128
     ],
     "jewels-5": [
-      2,
-      3238,
+      1850,
+      3106,
       128,
       128
     ],
     "membrane-fill-1": [
-      134,
+      2,
       3238,
       128,
       128
     ],
     "membrane-fill-2": [
-      266,
+      134,
       3238,
       128,
       128
     ],
     "oil-bubbles": [
-      398,
+      266,
       3238,
       128,
       128
     ],
     "oil-material": [
-      530,
+      398,
       3238,
       128,
       128
     ],
     "plane": [
-      662,
+      530,
       3238,
       128,
       128
     ],
     "prism": [
-      794,
+      662,
       3238,
       128,
       128
     ],
     "rainbow-ball": [
-      926,
+      794,
       3238,
       128,
       128
     ],
     "ray-column": [
-      1058,
+      926,
       3238,
       128,
       128
     ],
     "ray-diagonal": [
-      1190,
+      1058,
       3238,
       128,
       128
     ],
     "ray-row": [
-      1322,
+      1190,
       3238,
       128,
       128
     ],
     "relics-0": [
-      1454,
+      1322,
       3238,
       128,
       128
     ],
     "relics-1": [
-      1586,
+      1454,
       3238,
       128,
       128
     ],
     "relics-2": [
-      1718,
+      1586,
       3238,
       128,
       128
     ],
     "relics-3": [
-      1850,
+      1718,
       3238,
       128,
       128
     ],
     "relics-4": [
-      2,
-      3370,
+      1850,
+      3238,
       128,
       128
     ],
     "relics-5": [
-      134,
+      2,
       3370,
       128,
       128
     ],
     "resources-0": [
-      266,
+      134,
       3370,
       128,
       128
     ],
     "resources-1": [
-      398,
+      266,
       3370,
       128,
       128
     ],
     "resources-2": [
-      530,
+      398,
       3370,
       128,
       128
     ],
     "resources-3": [
-      662,
+      530,
       3370,
       128,
       128
     ],
     "resources-4": [
-      794,
+      662,
       3370,
       128,
       128
     ],
     "resources-5": [
-      926,
+      794,
       3370,
       128,
       128
     ],
     "rocket-horizontal": [
-      1058,
+      926,
       3370,
       128,
       128
     ],
     "rocket-vertical": [
-      1190,
+      1058,
       3370,
       128,
       128
     ],
     "selected": [
-      1322,
+      1190,
       3370,
       128,
       128
     ],
     "statue-1": [
-      1454,
+      1322,
       3370,
       128,
       128
     ],
     "statue-2": [
-      1586,
+      1454,
       3370,
       128,
       128
     ],
     "statue-3": [
-      1718,
+      1586,
       3370,
       128,
       128
     ],
     "stone-1": [
+      1718,
+      3370,
+      128,
+      128
+    ],
+    "web-2": [
       1850,
       3370,
       128,
       128
     ],
-    "stone-2": [
-      2,
-      3502,
-      128,
-      128
-    ],
-    "stone-3": [
-      134,
-      3502,
-      128,
-      128
-    ],
-    "stone-mark-1": [
-      266,
-      3502,
-      128,
-      128
-    ],
-    "stone-mark-2": [
-      398,
-      3502,
-      128,
-      128
-    ],
-    "stone-mark-3": [
-      530,
-      3502,
-      128,
-      128
-    ],
-    "stone-material": [
-      662,
-      3502,
-      128,
-      128
-    ],
-    "web-2": [
-      794,
-      3502,
-      128,
-      128
-    ],
     "glow": [
-      926,
-      3502,
+      1982,
+      3370,
       64,
       64
     ],
     "kind-0": [
-      1454,
+      1322,
       3238,
       128,
       128
     ],
     "kind-1": [
-      1586,
+      1454,
       3238,
       128,
       128
     ],
     "kind-2": [
-      1718,
+      1586,
       3238,
       128,
       128
     ],
     "kind-3": [
-      1850,
+      1718,
       3238,
       128,
       128
     ],
     "kind-4": [
-      2,
-      3370,
+      1850,
+      3238,
       128,
       128
     ],
     "kind-5": [
-      134,
+      2,
       3370,
       128,
       128
@@ -972,9 +930,6 @@
     "guide": "data/board-states/guide.png",
     "hint": "data/board-states/hint.png",
     "selected": "data/board-states/selected.png",
-    "stone-1": "data/board-states/stone-1.png",
-    "stone-2": "data/board-states/stone-2.png",
-    "stone-3": "data/board-states/stone-3.png",
     "background": "data/jungle.jpg",
     "scene-1": "data/scene-lagoon.jpg",
     "scene-2": "data/scene-temple.jpg"
@@ -3473,166 +3428,6 @@
       "homescapes_target_area_px": 5089,
       "silhouette_area_px": 3190
     },
-    "carpet-swatch": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        540,
-        550,
-        714,
-        724
-      ],
-      "rotation": 0,
-      "fit": "tiled material",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
-    "oil-material": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        782,
-        550,
-        956,
-        724
-      ],
-      "rotation": 0,
-      "fit": "tiled material",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
-    "stone-material": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        1026,
-        550,
-        1200,
-        724
-      ],
-      "rotation": 0,
-      "fit": "tiled material",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
-    "stone-mark-1": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        0,
-        752,
-        251,
-        1003
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        81,
-        86
-      ]
-    },
-    "stone-mark-2": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        251,
-        752,
-        502,
-        1003
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        65,
-        59
-      ]
-    },
-    "stone-mark-3": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        502,
-        752,
-        752,
-        1003
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        38,
-        38
-      ]
-    },
-    "goal-carpet": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        752,
-        752,
-        1003,
-        1003
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        116,
-        118
-      ]
-    },
-    "goal-oil": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        1003,
-        752,
-        1254,
-        1003
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        91,
-        118
-      ]
-    },
-    "goal-stone": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        0,
-        1003,
-        251,
-        1254
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        112,
-        107
-      ]
-    },
-    "oil-bubbles": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        251,
-        1003,
-        502,
-        1254
-      ],
-      "rotation": 0,
-      "fit": "tiled authored alpha",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
     "delivery": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
@@ -3654,6 +3449,104 @@
       ],
       "homescapes_target_area_px": 6489,
       "silhouette_area_px": 6462
+    },
+    "carpet-swatch": {
+      "source": "../../art/match3-floor-paint/source.png",
+      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "crop": [
+        56,
+        56,
+        344,
+        344
+      ],
+      "rotation": 0,
+      "fit": "tiled material",
+      "fitted_size": [
+        128,
+        128
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-floor-paint/edit-target.png"
+    },
+    "oil-material": {
+      "source": "../../art/match3-floor-paint/source.png",
+      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "crop": [
+        452,
+        56,
+        740,
+        344
+      ],
+      "rotation": 0,
+      "fit": "tiled material",
+      "fitted_size": [
+        128,
+        128
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-floor-paint/edit-target.png"
+    },
+    "goal-carpet": {
+      "source": "../../art/match3-floor-paint/source.png",
+      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "crop": [
+        1189,
+        0,
+        1586,
+        396
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        118,
+        82
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-floor-paint/edit-target.png",
+      "offset": [
+        5,
+        23
+      ]
+    },
+    "goal-oil": {
+      "source": "../../art/match3-floor-paint/source.png",
+      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "crop": [
+        1586,
+        0,
+        1983,
+        396
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        84,
+        116
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-floor-paint/edit-target.png",
+      "offset": [
+        22,
+        6
+      ]
+    },
+    "oil-bubbles": {
+      "source": "../../art/match3-floor-paint/source.png",
+      "prompt": "../../art/match3-floor-paint/prompt.txt",
+      "crop": [
+        1586,
+        396,
+        1983,
+        793
+      ],
+      "rotation": 0,
+      "fit": "tiled authored alpha",
+      "fitted_size": [
+        128,
+        128
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-floor-paint/edit-target.png"
     },
     "chain": {
       "source": "../../art/match3-chain-paint/source.png",
@@ -3720,6 +3613,28 @@
         15,
         33
       ]
+    },
+    "stone-1": {
+      "source": "../../art/match3-blockers/source.png",
+      "prompt": "../../art/match3-blockers/prompt.txt",
+      "crop": [
+        0,
+        0,
+        952,
+        825
+      ],
+      "rotation": 0,
+      "fit": "full flat-top hex with the canonical face mask",
+      "fitted_size": [
+        132,
+        120
+      ],
+      "generator": "built-in ImageGen",
+      "reference": "../../art/match3-blockers/reference.png",
+      "offset": [
+        -2,
+        4
+      ]
     }
   },
   "procedural_glow": "Original 64px white cubic radial alpha; transient light, packed alongside sprites",
@@ -3727,11 +3642,17 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "1b50fb44bf55757bd6c36c7157e9c67fe44828d059040d18bae43582e032ae09",
+    "recipe": "a461324956973002b42fbb1883a1d23cdaac1782d7b4eb8e17408be336687bee",
     "inputs": {
+      "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
+      "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
+      "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-chain-paint/edit-target.png": "7ee50689492c7eee47b14e77dde24351da75ac89c3d359993b7ab8a5bd35848a",
       "art/match3-chain-paint/prompt.txt": "9d911d21024a3d3c12969959e60bd5c89355fc8abf8e0f97c64a766c27865998",
       "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
+      "art/match3-floor-paint/edit-target.png": "049a58cfe0109d359a0b0486e5ca74677a60096d115a21da3e914cac75a86302",
+      "art/match3-floor-paint/prompt.txt": "2b62f632d9c6b27ddc1ac29c5345e771d14b922ccfa44895f7c3f2dda3778d36",
+      "art/match3-floor-paint/source.png": "837b13989d7c4ffafb1190e0ec12e87bccec5d893db4124b8a6d2cfaf8b7769d",
       "art/match3-power-up-paint/prompt.txt": "8207562c2d6f8a2e3ea66e51476875394072d09f8645aeb8bc725f1b4daa5d7e",
       "art/match3-power-up-paint/scener-strip.png": "e087fe56642192a2e42885300c04da8fbc8c18433736ac9c46ad1e0340c421c0",
       "art/match3-power-up-paint/source.png": "1faeffea23711f2a82db1369793da07017089226a0973e9b86b47c0dcbf92041",
@@ -3868,9 +3789,6 @@
       "games/relic-rush/data/board-states/pickaxe-pressed.png": "b0cb481075dd812e188ae8682aeadc3b63d5d72296918c18358a2afc99c64734",
       "games/relic-rush/data/board-states/pickaxe-selected.png": "59052520ed696b81fca7ce8a0cd3d85c9260bca94bfbcd339b1c874f23b8db00",
       "games/relic-rush/data/board-states/selected.png": "a7c3541a46c33606fd8ef2ce5a46e71db51b2eae814822a7a3ba2a4de47a9aff",
-      "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
-      "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
-      "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "games/relic-rush/data/board-states/sunburst-disabled.png": "6abfe7ade16df5949594fc18bd286e4d748828cf1d772cf913fbb50f2f407652",
       "games/relic-rush/data/board-states/sunburst-hover.png": "77491e89d7ff54452131d86754c1b4a6e3eba297f724eacb75ecf7c3744ab172",
       "games/relic-rush/data/board-states/sunburst-normal.png": "e275397437e2538fa765a0faa644a69568efc71bafcb99bd7cc90747beef46cf",
@@ -3906,17 +3824,17 @@
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
-      "tools/match3_theme_art.py": "63425ae14f17cce497603cafe3de366dbbb4dc600293bd6c3a1ecbf5b602fd33",
+      "tools/match3_theme_art.py": "0b6ef8cf0cf60f26702acf7c7716889b25296c3f1a4d206de48d403b76cb7420",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
       "games/relic-rush/data/match3-hud.png": "491f591044a867435420067b26ea4d4c9ac89feb5b3e0f11867fa4b65bccb7b4",
-      "games/relic-rush/data/match3.png": "faa9154b7aa011af4d13e641813bc4ab79bca346b570cb1a13436c19431ad3eb",
+      "games/relic-rush/data/match3.png": "6a3a69089474b7a4ff1c18fff443850e9b7b3846f6d4c5802ea6e9e6c88f53c1",
       "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
       "games/relic-rush/lua/match3_hud.lua": "2fcb054fcb4d8b30ddef0e8427df6f38da44186659f80ad3db5738251f7c3c82",
-      "games/relic-rush/lua/match3_skin.lua": "ada3ffe01684d0eb64a6ad759ab7668f1487afcb9fc01cde363dd204eb799f43"
+      "games/relic-rush/lua/match3_skin.lua": "965d6608729b4269e2bcd3954602a2465d0fb5cde59d1970a8ca3e1755a45c69"
     }
   }
 }

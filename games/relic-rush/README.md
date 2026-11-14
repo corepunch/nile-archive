@@ -189,11 +189,11 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | --- | --- | ---: | --- | ---: | ---: | --- |
 | 1 | First Light | 24 | Relics | 0 | 0 | Match 3 in a row. |
 | 2 | The Lamp Lens | 29 | Relics | 0 | 0 | Match 4 for a rocket. |
-| 3 | The Buried Cable | 32 | Blockers, Relics | 0 | 0 | Match beside a stone to crack it. |
+| 3 | The Buried Cable | 32 | Blockers, Relics | 0 | 0 | Match beside a stone to break it. |
 | 4 | Under the Pump | 35 | Blockers, Relics | 4 | 0 | Match to break chains. |
 | 5 | The Quay Marker | 35 | Moss | 4 | 0 | Match on the moss to spread it. |
 | 6 | The Shore Marker | 37 | Blockers, Relics | 0 | 5 | Match to break ice. |
-| 7 | The Tool Roll | 40 | Blockers, Relics | 3 | 4 | Some stones need two hits. |
+| 7 | The Tool Roll | 40 | Blockers, Relics | 3 | 4 | Break the carved stone. |
 | 8 | The Broken Cable | 40 | Moss, Relics | 4 | 6 | Match 5 for a rainbow ball. |
 | 9 | The Supply Crate | 43 | Blockers, Relics | 5 | 6 | Clear the chains and the ice. |
 | 10 | The Shutter Crank | 46 | Moss, Blockers | 6 | 6 | Spread the moss over the centre. |
@@ -201,7 +201,7 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free chained relics. |
 | 13 | Names in the Stone | 37 | Moss, Blockers | 6 | 0 | Aim rockets along the chains. |
 | 14 | Static | 38 | Blockers, Relics | 7 | 0 | Work around the broken seam. |
-| 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Break the three-layer stone. |
+| 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Clear the stone to open the board. |
 | 16 | Supper for Twelve | 40 | Blockers, Relics | 4 | 7 | Clear the frozen gems. |
 | 17 | The Torn Log | 42 | Blockers, Relics | 5 | 7 | Thick ice takes two hits. |
 | 18 | Lantern Steps | 40 | Moss | 2 | 4 | Spread the moss across the terrace. |
@@ -269,7 +269,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 - Thirty distinct hex board masks with 48–58 active cells. Match straight lines of three or more identical relics along any hex axis. Four makes a directional rocket, five or more makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a paper plane.
 - Swap two specials for a combination attack. A rainbow ball combined with another power-up converts matching chips into that power-up before firing them.
-- Stones break one layer per wave from adjacent matches or direct hits. Neighboring stones share one continuous surface. Moss spreads through matches on it, lamp oil spreads after a move that clears none, and a tablet falls to its exit. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits.
+- An adjacent match or a direct power-up hit breaks a carved hex stone. Moss spreads through matches on it, lamp oil spreads after a move that clears none, and a tablet falls to its exit. Chained and frozen relics cannot move until matched or hit. Double ice needs two hits.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.

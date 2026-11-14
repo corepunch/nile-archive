@@ -54,8 +54,7 @@ and effects. The HUD and tool controls use `data/match3-hud.png`.
 Swap adjacent treats, or tap two neighbours, to match three or more along a
 hex axis. Four in a line makes a rocket along that axis. Five or more makes a
 rainbow ball. Crossing lines make a bomb, and a four-cell rhombus makes a
-paper plane. An adjacent match or a direct power-up hit removes one stone
-layer per wave. Neighboring stones share one continuous surface.
+paper plane. An adjacent match or a direct power-up hit breaks a carved hex stone.
 
 The board and Settings panel share Relic Rush's layout. The puzzle backdrop
 uses the space above the goals for a lantern-lit Christmas market, with open

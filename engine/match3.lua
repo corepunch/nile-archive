@@ -144,7 +144,7 @@ function E.bind_board_ui(R, rules, tool_art)
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then
             local stone_only = (l.chains or 0)==0 and (l.ice or 0)==0 and l.stones and #l.stones>0
-            local icon = stone_only and R.board_art["goal-stone"] and "goal-stone" or "chain"
+            local icon = stone_only and "stone-1" or "chain"
             entries[#entries+1]={id="locks",icon=icon,remaining=math.max(0,g.obstacles)}
         end
         if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
@@ -782,7 +782,7 @@ function E.new(config)
             end
         end
         for i = 0, CELLS - 1 do
-            if damage[i] and g.stone_hp[i] > 0 then g.stone_hp[i], g.obstacles = g.stone_hp[i] - 1, g.obstacles - 1 end
+            if damage[i] and g.stone_hp[i] > 0 then g.stone_hp[i], g.obstacles = 0, g.obstacles - 1 end
         end
         local protected = home.apply(g,m)
         local cleared = 0
@@ -1103,8 +1103,7 @@ function E.new(config)
         end
         for _, entry in ipairs(l.stones or {}) do
             reserve(entry.cell)
-            assert(math.type(entry.hp) == "integer" and entry.hp >= 1 and entry.hp <= 3, "stone hp")
-            g.stone_hp[entry.cell] = entry.hp
+            g.stone_hp[entry.cell] = 1
         end
         local delivery = l.deliveries or {}
         for _, cell in ipairs(delivery.exits or {}) do reserve(cell); g.delivery_exits[cell] = true end

@@ -76,7 +76,9 @@ Level descriptors are content: name/lesson, moves, score, collection target
 (`relics`), chains and ice counts. Optional `mask`
 is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
-strong ice. Optional `goals` lists the HUD goals that win the level, in order,
+strong ice. Each entry in `stones` reserves a cell for one carved hex stone.
+An adjacent match or a direct hit clears that stone. Optional `goals` lists
+the HUD goals that win the level, in order,
 from `score`, `idols`, `locks` (every blocker), `deliveries`, `carpet` and
 `oil`. Without it, every counter on the board must be finished. Relic Rush
 and Christmas Market name one to three per level and never `score`, as in

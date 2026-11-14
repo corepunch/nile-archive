@@ -285,7 +285,7 @@ function D.bind(R, W)
         end
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
         if app.arg("element-states") then
-            -- Review mixed stone strengths, both floor materials and a delivery.
+            -- Review neighbouring stones, both floor materials and a delivery.
             local with_specials = app.arg("element-states") == "specials"
             R.g = rules.game_start(0, 123478)
             R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, true
@@ -295,9 +295,9 @@ function D.bind(R, W)
                 g.active[i], g.chain[i], g.ice[i], g.stone_hp[i] = true, 0, 0, 0
                 if g.tiles[i].kind < 0 then g.tiles[i] = rules.tile(i % rules.COLORS) end
             end
-            for hp = 1, 3 do
-                local cell = rules.hex_index(hp - 3, -1)
-                g.stone_hp[cell], g.tiles[cell] = hp, rules.tile(-1, rules.NORMAL)
+            for q = -2, 0 do
+                local cell = rules.hex_index(q, -1)
+                g.stone_hp[cell], g.tiles[cell] = 1, rules.tile(-1, rules.NORMAL)
             end
             if with_specials then
                 local specials = {rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM, rules.PLANE}
@@ -306,9 +306,9 @@ function D.bind(R, W)
                     local r = 1 + (i - 1) // 3 - q // 2
                     g.tiles[rules.hex_index(q, r)] = rules.tile(i - 1, special)
                 end
-                g.initial_obstacles, g.obstacles = 6, 6
+                g.initial_obstacles, g.obstacles = 3, 3
             else
-                g.stone_hp[rules.hex_index(-2, 0)] = 3
+                g.stone_hp[rules.hex_index(-2, 0)] = 1
                 g.tiles[rules.hex_index(-2, 0)] = rules.tile(-1, rules.NORMAL)
                 g.carpet, g.oil = {}, {}
                 for _, cell in ipairs({rules.hex_index(-2,1), rules.hex_index(-1,1), rules.hex_index(-1,2)}) do
@@ -318,7 +318,7 @@ function D.bind(R, W)
                     g.oil[cell] = 1
                 end
                 g.carpet_total, g.carpeted, g.oil_left = 6, 3, 3
-                g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 9, 9, 1, 0
+                g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 4, 4, 1, 0
                 g.delivery_exits[rules.hex_index(3, -2)] = true
                 g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY, rules.NORMAL)
             end

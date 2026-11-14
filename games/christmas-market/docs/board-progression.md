@@ -20,16 +20,16 @@ objectives move the emphasis within each family.
 | 2 | Lumber Lane | Tapered bowl | Match four to make a rocket. | bows | 28 |
 | 3 | Gingerbread Swirl | Tapered bowl | Match on the green carpet to spread it. (carpet) | carpet | 32 |
 | 4 | Cocoa Corner | Twin lanes | Match through tinsel to free treats. | blockers, bows | 34 |
-| 5 | Toymaker Lane | Two chambers | Match beside a stone to crack it. (stone) | blockers, bows | 36 |
+| 5 | Toymaker Lane | Two chambers | Match beside a stone to break it. (stone) | blockers, bows | 36 |
 | 6 | Ribbon Wishes | Compact court | Match on ice to crack it. (carpet) | carpet, blockers | 38 |
-| 7 | Candlelight Circle | Two chambers | Some stones need two hits. (stone) | blockers, bows | 40 |
+| 7 | Candlelight Circle | Two chambers | Break the carved stone. (stone) | blockers, bows | 40 |
 | 8 | Carousel Stars | Tapered bowl | Clear the tinsel and the ice. | blockers, bows | 42 |
 | 9 | Skating Evening | Twin lanes | Rockets clear a whole line. (carpet) | carpet, blockers | 44 |
 | 10 | Under the Big Fir | Tapered bowl | Clear the tinsel and the ice. | blockers, bows | 46 |
 | 11 | Carols and Crumbs | Two chambers | Spread the carpet around the square. (carpet) | carpet, bows | 32 |
 | 12 | Word from Fenwick | Tapered bowl | Match five in a line for a rainbow ball. | bows, blockers | 35 |
 | 13 | Sawdust Row | Twin lanes | Clear the spilled caramel before it spreads. (oil) | caramel, blockers | 36 |
-| 14 | The Bench by the Fir | Tapered bowl | Break the three-layer stone. (stone) | blockers, bows | 37 |
+| 14 | The Bench by the Fir | Tapered bowl | Clear the stone to open the board. (stone) | blockers, bows | 37 |
 | 15 | Tangled Tinsel | Tapered bowl | Untangle tinsel along the carpet. (carpet) | carpet, blockers | 38 |
 | 16 | Paper and String | Twin lanes | Thick ice takes two hits. | blockers, bows | 40 |
 | 17 | Twelve Horses | Tapered bowl | Clear below the parcel to deliver it. (delivery) | delivery, blockers | 41 |

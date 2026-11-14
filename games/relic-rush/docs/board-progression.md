@@ -17,11 +17,11 @@ objectives move the emphasis within each family.
 | ---: | --- | --- | --- | --- | ---: |
 | 1 | First Light | Tapered bowl | Match 3 in a row. | relics | 24 |
 | 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. | relics | 29 |
-| 3 | The Buried Cable | Two chambers | Match beside a stone to crack it. (stone) | blockers, relics | 32 |
+| 3 | The Buried Cable | Two chambers | Match beside a stone to break it. (stone) | blockers, relics | 32 |
 | 4 | Under the Pump | Twin lanes | Match to break chains. | blockers, relics | 35 |
 | 5 | The Quay Marker | Tapered bowl | Match on the moss to spread it. (carpet) | moss | 35 |
 | 6 | The Shore Marker | Two chambers | Match to break ice. | blockers, relics | 37 |
-| 7 | The Tool Roll | Two chambers | Some stones need two hits. (stone) | blockers, relics | 40 |
+| 7 | The Tool Roll | Two chambers | Break the carved stone. (stone) | blockers, relics | 40 |
 | 8 | The Broken Cable | Compact court | Match 5 for a rainbow ball. (carpet) | moss, relics | 40 |
 | 9 | The Supply Crate | Two chambers | Clear the chains and the ice. | blockers, relics | 43 |
 | 10 | The Shutter Crank | Twin lanes | Spread the moss over the centre. (carpet) | moss, blockers | 46 |
@@ -29,7 +29,7 @@ objectives move the emphasis within each family.
 | 12 | Twelve Crates | Twin lanes | Free chained relics. | blockers, relics | 36 |
 | 13 | Names in the Stone | Twin lanes | Aim rockets along the chains. (carpet) | moss, blockers | 37 |
 | 14 | Static | Two chambers | Work around the broken seam. | blockers, relics | 38 |
-| 15 | The Frost Line | Tapered bowl | Break the three-layer stone. (stone) | blockers, relics | 39 |
+| 15 | The Frost Line | Tapered bowl | Clear the stone to open the board. (stone) | blockers, relics | 39 |
 | 16 | Supper for Twelve | Twin lanes | Clear the frozen gems. | blockers, relics | 40 |
 | 17 | The Torn Log | Tapered bowl | Thick ice takes two hits. | blockers, relics | 42 |
 | 18 | Lantern Steps | Tapered bowl | Spread the moss across the terrace. (carpet) | moss | 40 |
