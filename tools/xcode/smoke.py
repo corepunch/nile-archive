@@ -6,7 +6,7 @@ Run on the macOS CI runner; Simulator caches stay in the cloud.
 Only one simulator runs at a time: two cold devices compete for CPU, memory and
 installation services on the runner. Log each slow simctl operation so install,
 boot and launch time are distinguishable from time spent in game code. Launches
-remain bounded, with logs and one retry on a stall.
+remain bounded, with logs and retries on a restarted device after a stall.
 """
 import json
 from pathlib import Path
@@ -15,7 +15,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[2]
 LAUNCH_TIMEOUT = 120   # seconds for `simctl launch` to return
-LAUNCH_ATTEMPTS = 2
+LAUNCH_ATTEMPTS = 3
 
 
 def sim(*args, timeout=300):
@@ -60,7 +60,13 @@ def launch(udid, game, bundle, *args):
             print(f'{game}: simctl launch did not return within {LAUNCH_TIMEOUT}s (attempt {attempt})', flush=True)
             launch_logs(udid, game)
             quiet('terminate', udid, bundle)
-            time.sleep(5)
+            if attempt < LAUNCH_ATTEMPTS:
+                # The stall is the device's launch services, not the game: it hits whichever
+                # game is first on a freshly booted device. Restart the device before retrying.
+                quiet('shutdown', udid, timeout=120)
+                sim('boot', udid)
+                sim('bootstatus', udid, '-b')
+                time.sleep(10)
     raise RuntimeError(f'{game}: simctl launch stalled {LAUNCH_ATTEMPTS} times; see the simulator logs above')
 
 
