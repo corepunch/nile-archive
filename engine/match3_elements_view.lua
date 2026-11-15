@@ -216,25 +216,51 @@ end
 
 -- Sample the material at its painted proportions inside the flat-top face.
 local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
+local FLOOR_INSET = .18
 
-local function draw_floor_cell(R, i, at, material, alpha, inset)
+local function floor_pose(R, i)
     local scale, turn, lift = 1, 0, 0
     if R.intro then scale, turn, lift = R.intro:cell(i) end
-    if scale <= .02 then return end
-    at = at + vec2(0, lift)
-    local tint = color(255, 255, 255, 255 * alpha)
-    if material then
-        local side = 2 * (R.HEX_R - (inset or .65)) * scale
-        gfx.image_rot(R.board_art[material], rect.centered(at, size2.splat(side)), turn, tint)
-    else
-        gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at, R.HEX_R * scale, turn, tint)
+    return scale, turn, lift
+end
+
+-- The full-radius backing joins edge to edge. The face leaves a hairline of
+-- backing between neighbors, with the same gap for painted and flat colors.
+local function draw_ground_backing(R, rules, sx, alpha, textured)
+    local seam = color.alpha(R.GROUND.seam, alpha)
+    local face = color.alpha(R.GROUND.face, alpha)
+    for i = 0, rules.CELLS - 1 do
+        if rules.game_cell_active(R.g, i) then
+            local scale, turn, lift = floor_pose(R, i)
+            if scale > .02 then
+                local at = R.cell_pos(i) + vec2(sx, lift)
+                gfx.ngon(at, R.HEX_R * scale, 6, turn, seam)
+                if not textured or R.g.stone_hp[i] > 0 then
+                    gfx.ngon(at, (R.HEX_R - FLOOR_INSET) * scale, 6, turn, face)
+                end
+            end
+        end
     end
 end
 
--- Called after every well has been painted, before pieces.
+local function draw_floor_cell(R, i, at, material, alpha)
+    local scale, turn, lift = floor_pose(R, i)
+    if scale <= .02 then return end
+    at = at + vec2(0, lift)
+    local tint = color(255, 255, 255, 255 * alpha)
+    local radius = (R.HEX_R - FLOOR_INSET) * scale
+    if material then
+        gfx.image_rot(R.board_art[material], rect.centered(at, size2.splat(2 * radius)), turn, tint)
+    else
+        gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at, radius, turn, tint)
+    end
+end
+
+-- Paint the full board surface before pieces and blockers.
 function E.ground(R, rules, sx, floor, sweep)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
+    draw_ground_backing(R, rules, sx, alpha, sweep or floor and floor.normal)
     -- A reveal can show during play or wait for the first clear.
     local level = rules.level_of(g)
     local story = reveal(R, rules) or level.reveal
@@ -253,10 +279,10 @@ function E.ground(R, rules, sx, floor, sweep)
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
             if g.oil and (g.oil[i] or 0) > 0 then
-                draw_floor_cell(R, i, at, floor and floor.covered, alpha, floor and floor.inset)
+                draw_floor_cell(R, i, at, floor and floor.covered, alpha)
             elseif floor and floor.normal and g.stone_hp[i] == 0 then
                 local material = level.floor_marks and not level.floor_marks[i] and floor.plain or floor.normal
-                draw_floor_cell(R, i, at, material, alpha, floor.inset)
+                draw_floor_cell(R, i, at, material, alpha)
             end
             if g.hs then
                 local c=g.hs.cells[i]
@@ -275,6 +301,16 @@ function E.ground(R, rules, sx, floor, sweep)
     end
     if story and story.floor == "oil" then
         draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])
+    end
+    if intro then
+        for i = 0, rules.CELLS - 1 do
+            if rules.game_cell_active(g, i) then
+                local scale, _, lift, flash = intro:cell(i)
+                if scale > .02 and flash > 0 then
+                    R.vfx_halo(R.cell_pos(i) + vec2(sx, lift), R.HEX_R * 1.6 * scale, color(255, 226, 150, 120 * flash))
+                end
+            end
+        end
     end
 end
 

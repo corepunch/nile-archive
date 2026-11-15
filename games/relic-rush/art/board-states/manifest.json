@@ -1436,11 +1436,12 @@
     "generator": "built-in ImageGen",
     "sources": {
       "plaques": {
-        "source": "art/board-refresh/source.png",
-        "prompt": "art/board-refresh/prompt.txt",
+        "source": "art/board-refresh/flat-ground.png",
+        "prompt": "art/board-refresh/flat-ground-prompt.txt",
         "references": [
-          "art/board-refresh/hex-template.png"
-        ]
+          "art/board-refresh/flat-ground-template.png"
+        ],
+        "finish_reference": {"revision": "f577af56", "path": "data/board-dressing.png"}
       }
     },
     "mask": "../../engine/art/hex-tile/hex-mask-128.png",
@@ -1450,12 +1451,12 @@
       "sandstone-floor": {
         "source": "plaques",
         "fit": "fill",
-        "crop": [31, 864, 391, 1224]
+        "crop": [87, 86, 799, 798]
       },
       "blue-plaque": {
         "source": "plaques",
         "fit": "fill",
-        "crop": [448, 864, 808, 1224]
+        "crop": [974, 86, 1686, 798]
       }
     },
     "registration": "tools/prepare_board_dressing.py"

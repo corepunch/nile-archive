@@ -363,13 +363,16 @@ and source-board diagnostics.
 | Frame | Meaning and use |
 | --- | --- |
 | `sandstone-floor` | Pale limestone for ordinary and cleared cells. |
-| `blue-plaque` | Deep blue glazed ceramic on cells required for a win. The Explorer’s Guide uses the same face. |
+| `blue-plaque` | Cobalt stone on cells required for a win. The Explorer’s Guide uses the same face. |
 
-Both faces share the [resource atlas](../art/board-refresh/source.png).
-The [manifest](../art/board-states/manifest.json) records their two 360 px square
-crops. The packer resizes to 128 px and applies the exact canonical flat-top
-alpha. Run `python3 games/relic-rush/tools/prepare_board_dressing.py` to repack
-`data/board-dressing.png`. See the [campaign review](review/chains-only/README.md).
+ImageGen painted the two flat faces together in one [atlas](../art/board-refresh/flat-ground.png),
+using the [prompt](../art/board-refresh/flat-ground-prompt.txt) and
+[two-slot template](../art/board-refresh/flat-ground-template.png). The
+[manifest](../art/board-states/manifest.json) records the two 712 px square
+crops. The packer resizes each to 128 px and applies the exact canonical
+flat-top alpha. Run `python3 games/relic-rush/tools/prepare_board_dressing.py`
+to repack `data/board-dressing.png`. The game draws the faces over a shared
+backing with a hairline seam between them. [In-game before and after](../../../docs/review/match3-board-seams/README.md).
 
 The earlier [cover and terrain sources](../art/board-dressing/) and
 [historical review](screenshots/review/board-dressing/README.md) document the

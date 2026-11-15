@@ -315,8 +315,8 @@ The [manifest](../art/manifest.json) records each square crop, the canonical
 mask and runtime path. Export with
 `python3 games/christmas-market/tools/prepare_lantern_panes.py`.
 Each cropped 584×584 square is downsampled to 128×128 and masked to the exact
-hex. The live artwork draws almost edge-to-edge at a 0.18-unit inset, over a
-dark walnut backing that supplies the hairline seam. The guide reuses the
+hex. The shared match-3 renderer draws it almost edge-to-edge at a 0.18-unit
+inset, over a dark walnut backing that supplies the hairline seam. The guide reuses the
 blue pane and the one-hit chain art. The board uses existing authored
 selection and hint layers and the three tools retain their five authored
 interaction states. [Reviewed board, guide and story captures](screenshots/review/lantern-panes/README.md).

@@ -10,12 +10,11 @@ local match3 = require("match3")
 local elements = require("match3.elements_view")
 local skin = require("skin")
 local neutral = app.arg("default-match3")
-local lantern_floor = {plain="lantern-plain", normal="lantern-lit", covered="lantern-blue", inset=.18}
-local seam = skin:color("board_seam")
+local lantern_floor = {plain="lantern-plain", normal="lantern-lit", covered="lantern-blue"}
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 if not neutral then
-    for _, name in ipairs{"edge", "rim", "top", "bottom"} do
+    for _, name in ipairs{"seam", "face"} do
         R.GROUND[name] = skin:color("board_" .. name)
     end
 end
@@ -79,28 +78,6 @@ local function draw_backdrop()
     end
 end
 
--- Fill the hairline seams with the board's base colour before painting the glass.
-local function draw_cells(sx, layer)
-    local g,intro=R.g,R.intro
-    local fade=intro and intro:fade() or 1
-    for i=0,CELLS-1 do
-        if cell_active(g,i) then
-            local scale,turn,lift,flash=1,0,0,0
-            if intro then scale,turn,lift,flash=intro:cell(i) end
-            if scale>.02 then
-                local at=cell_pos(i)+vec2(sx,lift)
-                if layer=="seam" then
-                    gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(seam,fade))
-                elseif layer~="flash" then
-                    R.draw_ground(layer,at,HEX_R*scale,turn,fade)
-                elseif flash>0 then
-                    R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
-                end
-            end
-        end
-    end
-end
-
 local function draw_relics(sx)
     local g = R.g
     local cover = elements.reveal_cover(R, rules)
@@ -161,15 +138,7 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    if neutral or R.g.hs then
-        draw_cells(sx, "edge")
-        draw_cells(sx, "rim")
-        draw_cells(sx, "face")
-    else
-        draw_cells(sx, "seam")
-    end
     elements.ground(R, rules, sx, not R.g.hs and lantern_floor or nil)
-    draw_cells(sx, "flash")
     -- Overhanging blockers sit below treats, including those in adjacent cells.
     draw_relics(sx)
     draw_blockers(sx)

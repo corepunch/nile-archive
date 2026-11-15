@@ -30,11 +30,8 @@ return ui.skin{
         moves_glow = "#2C7850",
         moves_low = "#80181E",
         moves_low_glow = "#C43434",
-        board_edge = "#132744",
-        board_rim = "#7898BF",
-        board_top = "#48668F",
-        board_bottom = "#293C5C",
         board_seam = "#462B26",
+        board_face = "#573A31",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.

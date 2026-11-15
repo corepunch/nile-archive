@@ -7,11 +7,12 @@ local R = require("state")
 local rules = require("rules")
 local art = require("art")
 local elements = require("match3.elements_view")
+local skin = require("skin")
+local neutral = app.arg("default-match3")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
-if not app.arg("default-match3") then
-    local skin = require("skin")
-    for _, name in ipairs{"edge", "rim", "top", "bottom"} do
+if not neutral then
+    for _, name in ipairs{"seam", "face"} do
         R.GROUND[name] = skin:color("board_" .. name)
     end
 end
@@ -22,7 +23,6 @@ board_intro.bind(R, rules)
 local match3 = require("match3")
 match3.bind_board_ui(R, rules, art.tools)
 match3.bind_town_board_hud(R)
-local neutral = app.arg("default-match3")
 
 if not neutral then
     function R.resource_target(kind)
@@ -101,26 +101,6 @@ local function draw_backdrop()
     end
 end
 
--- layer: "edge" and "rim" (the board's two outlines, under every face), "face" (the cells) or "flash" (the intro's halo).
-local function draw_cells(sx, layer)
-    local g,intro=R.g,R.intro
-    local fade=intro and intro:fade() or 1
-    for i=0,CELLS-1 do
-        if cell_active(g,i) then
-            local scale,turn,lift,flash=1,0,0,0
-            if intro then scale,turn,lift,flash=intro:cell(i) end
-            if scale>.02 then
-                local at=cell_pos(i)+vec2(sx,lift)
-                if layer~="flash" then
-                    R.draw_ground(layer,at,HEX_R*scale,turn,fade)
-                elseif flash>0 then
-                    R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
-                end
-            end
-        end
-    end
-end
-
 local function draw_relics(sx)
     local g = R.g
     local cover = elements.reveal_cover(R, rules)   -- a recovered find clears its pieces away
@@ -176,11 +156,7 @@ function R.board_screen(inp, dt)
     local dress = not R.g.hs and rules.level_of(R.g).dress
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    draw_cells(sx, "edge")
-    draw_cells(sx, "rim")
-    draw_cells(sx, "face")
     elements.ground(R, rules, sx, dress and dress.floor)
-    draw_cells(sx, "flash")
     draw_relics(sx)
     draw_blockers(sx)
     elements.blockers(R, rules, sx)

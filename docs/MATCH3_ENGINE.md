@@ -150,13 +150,20 @@ Relic Rush and Christmas Market each use a 2048×4096 `data/match3.png`
 for board imagery and a 1024×1024 `data/match3-hud.png` for UI. Goal displays
 can reuse the board's chip and objective frames. The generated
 `lua/match3_skin.lua` and `lua/match3_hud.lua` register both textures.
-Flat hex geometry is drawn by the renderer. Selection and hints animate piece
-scale. Both games use overrides by default. `--default-match3` exercises the
-shared Homescapes-piece fallback.
+The shared floor renderer in `match3.elements_view` draws an edge-to-edge
+backing and insets each face by 0.18 design units at its radius. The hairline
+seam shows the backing colour through that inset. Campaign textures use the
+canonical flat-top mask and carry their paint to the edge. Games supply the
+seam and fallback face colours through their skins. Imported and neutral boards
+use the same geometry. Selection and hints animate piece scale.
+[In-game board review](review/match3-board-seams/README.md).
 
 For a game view, initialize presentation data with `match3.view{...}`, then
 call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authored `piece_width`;
-rendering uses `cell_pos` and `piece_pose`.
+rendering uses `cell_pos` and `piece_pose`. Draw the floor with
+`elements.ground(state, rules, shake_x, floor)` before pieces and blockers.
+The floor table can supply authored texture keys for ordinary and covered
+cells. The shared renderer also draws the floor's entrance flash.
 
 The board screen's layout belongs to the engine and is the same in every game.
 A game must not define or replace `state.layout`: `bind_view` and `board_input` assert this.
