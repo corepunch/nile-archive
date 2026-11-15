@@ -25,6 +25,5 @@ void render_backdrop(float radius, color dim);
 void render_image(texture tex, rect src, rect dst, float angle, color tint);
 void render_mask(texture t, rect area, float range, float rim, float shade, float bevel, float softness);
 void render_image_striped(texture tex, rect dst, float angle, float repeats, float width, color ink, color tint);
-void render_lens(vec2 center, float radius, float bevel, vec2 per_point, float bend, float light);
 bool render_read_pixels(void *rgba, int w, int h);
 #endif

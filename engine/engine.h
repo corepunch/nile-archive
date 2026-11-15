@@ -285,7 +285,6 @@ typedef struct { struct render_texture *tex; size2 size; rect uv; bool borrowed,
 texture tex_region(texture atlas, rect source); /* borrowed view; no extra GPU texture */
 texture tex_match3_default(void);           /* built-in resource atlas */
 texture tex_load(const char *path);         /* PNG/JPG/BMP via stb_image */
-texture tex_load_blurred(const char *path, float radius); /* tex_load, Gaussian-blurred by radius image pixels */
 texture tex_from_pixels(const void *rgba, int w, int h);
 void tex_free(texture t);
 rect tex_rect(texture t);                   /* (0,0,w,h) */
@@ -296,7 +295,6 @@ void draw_image(texture t, rect dst, color tint);
 void draw_image_part(texture t, rect src, rect dst, color tint);
 void draw_image_rot(texture t, rect dst, float angle, color tint);
 void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle, color tint);
-void draw_image_glass(texture t, rect src, vec2 center, float radius, float bend, float bevel, float light, color tint);
 void draw_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint);
 void draw_rect(rect r, color c);
 void draw_rect_grad(rect r, color top, color bottom);

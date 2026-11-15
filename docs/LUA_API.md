@@ -1105,17 +1105,6 @@ PNG, JPG or BMP relative to the data root. A missing file gives a texture with t
 
 **Returns:** `texture`
 
-### `texture.load_blurred(path, radius)`
-
-Like load, blurred once at load time (Gaussian, sigma about radius image pixels); for frosted-glass backgrounds. Colour and alpha blur together, so use it for opaque images.
-
-| Argument | Type | |
-|---|---|---|
-| `path` | `string` |  |
-| `radius` | `number` |  |
-
-**Returns:** `texture`
-
 ### `texture.from_pixels(rgba, w, h)`
 
 From raw RGBA bytes, w * h * 4 of them.
@@ -1217,21 +1206,6 @@ Map a source rectangle in texture pixels to an anti-aliased flat-top hex. The he
 | `center` | `vec2` |  |
 | `radius` | `number` |  |
 | `angle` | `number` |  |
-| `tint` | `color` |  |
-
-### `gfx.image_glass(t, src, center, radius, bend, bevel, light, tint)`
-
-Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and, with a bevel, its top-left highlight and a soft streak.
-
-| Argument | Type | |
-|---|---|---|
-| `t` | `texture` |  |
-| `src` | `rect` |  |
-| `center` | `vec2` |  |
-| `radius` | `number` |  |
-| `bend` | `number` |  |
-| `bevel` | `number` |  |
-| `light` | `number` |  |
 | `tint` | `color` |  |
 
 ### `gfx.image_striped(t, dst, angle, repeats, width, ink, tint)`

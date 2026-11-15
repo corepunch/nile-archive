@@ -2681,16 +2681,6 @@ static int l_texture_load(lua_State *L)
     return 1;
 }
 
-/* texture.load_blurred(path, radius) */
-static int l_texture_load_blurred(lua_State *L)
-{
-    const char * a_path = luaL_checkstring(L, 1);
-    float a_radius = (float)luaL_checknumber(L, 2);
-    texture r = tex_load_blurred(a_path, a_radius);
-    api_push_texture(L, r);
-    return 1;
-}
-
 /* texture.from_pixels(rgba, w, h) */
 static int l_texture_from_pixels(lua_State *L)
 {
@@ -2790,21 +2780,6 @@ static int l_gfx_image_hex(lua_State *L)
     float a_angle = (float)luaL_checknumber(L, 5);
     color a_tint = api_check_color(L, 6);
     draw_image_hex(a_t, a_src, a_center, a_radius, a_angle, a_tint);
-    return 0;
-}
-
-/* gfx.image_glass(t, src, center, radius, bend, bevel, light, tint) */
-static int l_gfx_image_glass(lua_State *L)
-{
-    texture a_t = api_check_texture(L, 1);
-    rect a_src = api_check_rect(L, 2);
-    vec2 a_center = api_check_vec2(L, 3);
-    float a_radius = (float)luaL_checknumber(L, 4);
-    float a_bend = (float)luaL_checknumber(L, 5);
-    float a_bevel = (float)luaL_checknumber(L, 6);
-    float a_light = (float)luaL_checknumber(L, 7);
-    color a_tint = api_check_color(L, 8);
-    draw_image_glass(a_t, a_src, a_center, a_radius, a_bend, a_bevel, a_light, a_tint);
     return 0;
 }
 
@@ -4376,7 +4351,6 @@ static void open_texture(lua_State *L)
         {"hex_field", l_texture_hex_field},
         {"match3_default", l_texture_match3_default},
         {"load", l_texture_load},
-        {"load_blurred", l_texture_load_blurred},
         {"from_pixels", l_texture_from_pixels},
         {"free", l_texture_free},
         {"rect", l_texture_rect},
@@ -4402,7 +4376,6 @@ static void open_gfx(lua_State *L)
         {"image_part", l_gfx_image_part},
         {"image_rot", l_gfx_image_rot},
         {"image_hex", l_gfx_image_hex},
-        {"image_glass", l_gfx_image_glass},
         {"image_striped", l_gfx_image_striped},
         {"rect", l_gfx_rect},
         {"rect_grad", l_gfx_rect_grad},

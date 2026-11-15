@@ -22,25 +22,6 @@ for n=1,9 do E.assets[#E.assets+1]="apple-platter-"..n end
 for n=0,5 do E.assets[#E.assets+1]="donut-maker-"..n end
 for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.assets+1]=name end
 
--- A story mosaic's picture and its frosted copy: during play the floor shows
--- the picture as through frosted glass; the win clears it to the sharp one.
-local FROST_BLUR = 4.5                      -- image pixels
--- Each restored cell bends the picture behind it like a horizontal glass
--- cylinder (gfx.image_glass), shaded top-light to bottom-dark like the board
--- cells but far softer, with no outline or bevel. --glass N previews
--- strengths; 0 is one flat frosted pane.
-local GLASS = {
-    [0] = false,
-    {bend = .14, light = .7},    -- subtle (default)
-    {bend = .22, light = .7},    -- medium
-    {bend = .32, light = .7},    -- strong
-}
-local FROST_WASH = color(236, 244, 255, 46)  -- the glass's milky sheen
-function E.load_picture(art, name, path)
-    art[name] = texture.load(path)
-    art[name .. "-frost"] = texture.load_blurred(path, FROST_BLUR)
-end
-
 function E.load(art, skin)
     for _, name in ipairs(E.assets) do art[name] = assert(skin[name], "missing element art: " .. name) end
 end
@@ -51,12 +32,12 @@ end
 
 -- The spreading coverage objective forms a continuous patch: a signed
 -- distance field of their cells (texture.hex_field, rounded outside corners,
--- filleted inside ones) masks a tiled material, and the rim is shaded. A field
+-- filleted inside ones) masks a tiled material or picture, unshaded. A field
 -- is rebuilt only when its cells or layout change.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
 local CARPET_PATCH = {
     corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
-    inset = 1.4, rim = 2.3, shade = .26, bevel = .15, shadow_y = 1.4, softness = 2.4, opacity = 76,
+    inset = 1.4,
 }
 local function patch_field(R, cells, spec)
     local origin = R.board_origin
@@ -151,35 +132,12 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
     local area = field.area:offset(vec2(sx, 0))
     local side = 2 * R.HEX_R * spec.tile
     local origin = R.board_origin + vec2(sx, 0)
-    local picture = story and story.floor ~= "oil"   -- glass tiles shade themselves
-    if spec.shadow_y and not picture then
-        local shadow = area:offset(vec2(1, spec.shadow_y))
-        gfx.sdf_mask(field.texture, shadow, field.range, 0, 0, 0, spec.softness)
-        gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
-    end
-    if picture then gfx.sdf_mask(field.texture, area, field.range, 0, 0, 0, spec.feather or 0)
-    else gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0) end
-    if picture then
+    gfx.sdf_mask(field.texture, area, field.range, 0, 0, 0, spec.feather or 0)
+    if story and story.floor ~= "oil" then
         local t = R.board_art[story.picture]
         local box, src = picture_crop(R, rules, t)
         local opacity = 1 - cover * (1 - (R.reveal_play_opacity or 1))
-        local frost, dst = R.board_art[story.picture .. "-frost"], box:offset(vec2(sx, 0))
-        local sharp = frost and frost.tex and 1 - cover or 1
-        if sharp < 1 then
-            local pick = tonumber(app.arg("glass") or "") or 1
-            local glass = GLASS[pick]
-            if glass == nil then glass = GLASS[1] end
-            local tint, scale = color(255, 255, 255, 255 * alpha * opacity), src.w / box.w
-            local face = size2(2 * R.HEX_R * scale, math.sqrt(3) * R.HEX_R * scale)
-            if not glass then gfx.image_part(frost, src, dst, tint) end
-            for _, i in ipairs(glass and cells or {}) do
-                local p = R.cell_pos(i)
-                local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
-                gfx.image_glass(frost, rect.centered(uv, face), p + vec2(sx, 0), R.HEX_R, glass.bend, 0, glass.light, tint)
-            end
-            gfx.rect(area, color(FROST_WASH.r, FROST_WASH.g, FROST_WASH.b, FROST_WASH.a * alpha * cover))
-        end
-        if sharp > 0 then gfx.image_part(t, src, dst, color(255, 255, 255, 255 * alpha * opacity * sharp)) end
+        gfx.image_part(t, src, box:offset(vec2(sx, 0)), color(255, 255, 255, 255 * alpha * opacity))
     else tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha)) end
     gfx.sdf_unmask()
 end
@@ -203,13 +161,11 @@ local function draw_buried_picture(R, rules, story, sx, alpha, cover)
     local radius = R.HEX_R
     local face = size2(2 * radius * scale, math.sqrt(3) * radius * scale)
     local tint = color(255, 255, 255, 255 * alpha * (R.reveal_play_opacity or 1) * cover)
-    local frost = R.board_art[story.picture .. "-frost"]
-    if not (frost and frost.tex) then frost = t end
     for _, i in ipairs(rules.level_of(g).oil) do
         if g.oil[i] == 0 then
             local p = R.cell_pos(i)
             local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
-            gfx.image_hex(frost, rect.centered(uv, face), p + vec2(sx, 0), radius, 0, tint)
+            gfx.image_hex(t, rect.centered(uv, face), p + vec2(sx, 0), radius, 0, tint)
         end
     end
 end

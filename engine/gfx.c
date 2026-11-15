@@ -52,51 +52,6 @@ texture tex_load(const char *path)
     return t;
 }
 
-/* One box pass along rows (step 1) or columns (step w): a running sum over
- * 2r+1 texels, clamped at the edges. Three passes approximate a Gaussian. */
-static void box_pass(unsigned char *px, unsigned char *line, int count, int lines, int step, int stride, int r)
-{
-    for (int l = 0; l < lines; l++) {
-        unsigned char *p = px + (size_t)l * stride * 4;
-        for (int i = 0; i < count * 4; i++) line[i] = p[(size_t)(i / 4) * step * 4 + i % 4];
-        int sum[4] = {0};
-        for (int k = -r; k <= r; k++) {
-            int j = k < 0 ? 0 : k >= count ? count - 1 : k;
-            for (int c = 0; c < 4; c++) sum[c] += line[j * 4 + c];
-        }
-        for (int i = 0; i < count; i++) {
-            for (int c = 0; c < 4; c++) p[(size_t)i * step * 4 + c] = (unsigned char)(sum[c] / (2 * r + 1));
-            int out = i - r < 0 ? 0 : i - r, in = i + r + 1 >= count ? count - 1 : i + r + 1;
-            for (int c = 0; c < 4; c++) sum[c] += line[in * 4 + c] - line[out * 4 + c];
-        }
-    }
-}
-
-texture tex_load_blurred(const char *path, float radius)
-{
-    int w, h, n;
-    if (!render_ready()) return (texture){0};
-    const char *full = app_path(path);
-    unsigned char *px = stbi_load(full, &w, &h, &n, 4);
-    if (!px) {
-        fprintf(stderr, "tex_load_blurred: %s: %s\n", full, stbi_failure_reason());
-        return (texture){0};
-    }
-    /* Three box passes of width 2r+1 match a Gaussian of sigma ~ radius. */
-    int r = (int)lroundf(clampf(isfinite(radius) ? radius : 0, 0, 256) * .9f);
-    unsigned char *line = r > 0 ? malloc((size_t)(w > h ? w : h) * 4) : NULL;
-    if (line) {
-        for (int pass = 0; pass < 3; pass++) {
-            box_pass(px, line, w, h, 1, w, r);
-            box_pass(px, line, h, w, w, 1, r);
-        }
-        free(line);
-    }
-    texture t = tex_from_pixels(px, w, h);
-    stbi_image_free(px);
-    return t;
-}
-
 texture tex_region(texture atlas, rect source)
 {
     if (source.pos.x < 0 || source.pos.y < 0 || source.size.w <= 0 || source.size.h <= 0 ||
@@ -396,18 +351,6 @@ void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle,
         mesh[n++] = a; mesh[n++] = outer_b; mesh[n++] = b;
     }
     render_textured_geometry(t, mesh, n, NULL, 0);
-}
-
-void draw_image_glass(texture t, rect src, vec2 center, float radius, float bend, float bevel, float light, color tint)
-{
-    if (!t.tex || radius <= 0 || t.size.w <= 0 || t.size.h <= 0) return;
-    rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
-    /* Texcoords per logical point: src spans 2r across and sqrt(3)r down. */
-    vec2 k = v2(src.size.w / t.size.w * uv.size.w / (2 * radius),
-                src.size.h / t.size.h * uv.size.h / (sqrtf(3) * radius));
-    render_lens(center, radius, isfinite(bevel) ? bevel : 0, k, isfinite(bend) ? bend : 0, isfinite(light) ? light : 0);
-    draw_image_hex(t, src, center, radius, 0, tint);
-    render_lens(v2(0, 0), 0, 0, v2(0, 0), 0, 0);
 }
 
 void draw_star(vec2 center, float radius, float inner, int points, float angle, color c)

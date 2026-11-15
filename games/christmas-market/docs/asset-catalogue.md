@@ -129,9 +129,7 @@ for the level 4 captures.
 
 The three static paintings lead into existing first-clear scenes. The
 landmarks stay fixed as the floor changes. During a match the painting is
-muted beneath the pieces and seen as through frosted glass: the engine loads a
-blurred copy (`texture.load_blurred`, `match3.elements_view` `load_picture`)
-under a pale wash, and crossfades to the sharp painting on the win. On a win, pieces and any remaining cover fade out
+muted beneath the pieces. On a win, pieces and any remaining cover fade out
 over 0.6 seconds and the completed picture holds for 1.2 seconds before
 dialogue. Replays use the usual material. Reduce Motion shows the full reveal
 without the fade.

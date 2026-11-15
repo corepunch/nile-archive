@@ -28,7 +28,7 @@ struct render_texture {
 };
 static struct {
     GLuint program, vao, vertices, indices, white;
-    GLint screen, origin, stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params, lens, lens_k;
+    GLint screen, origin, stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params;
     size2 pixels, logical;
     float scale;
     vec2 offset;
@@ -90,26 +90,8 @@ bool render_init(void)
         "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;point=position;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
-        "uniform vec4 stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params, lens, lens_k; uniform sampler2D mask;\n"
-        /* Glass tile over one flat-top hex (lens: centre, radius, bevel width in
-         * points; lens_k: texcoord per point, bend, light). The face is a
-         * horizontal cylinder: its normal tilts with y only, compressing the
-         * lookup towards the top and bottom and shading top-light to bottom-dark.
-         * A thin, hard bevel along the edge bends further and catches the
-         * top-left light; without a bevel there is no highlight streak either. */
-        "void main(){vec2 tc=texcoord;float ny=0.,band=0.,lit=0.;"
-        "if(lens.z>0.){vec2 q=(point-lens.xy)/lens.z,a=abs(q);"
-        "float fs=(a.x*.8660254+a.y*.5)/.8660254,ft=a.y/.8660254,f=max(fs,ft);"
-        "vec2 n=ft>fs?vec2(0.,sign(q.y)):vec2(sign(q.x)*.8660254,sign(q.y)*.5);"
-        "float edge=(1.-f)*.8660254*lens.z,aa=max(fwidth(edge),.001);"
-        "band=lens.w>0.?1.-smoothstep(lens.w-aa,lens.w+aa,edge):0.;"
-        "ny=clamp(q.y/.8660254,-1.,1.);lit=dot(n,vec2(-.55,-.835));"
-        "tc+=(vec2(0.,ny)+n*band*1.5)*lens_k.z*lens.z*lens_k.xy;}"
-"vec4 base=texture(image,tc);"
-        "if(lens.z>0.){float spec=lens.w>0.?exp(-pow((ny+.55)/.2,2.))*.3*(1.-band):0.;"
-        "base.rgb*=1.-ny*.18*lens_k.w;"
-        "base.rgb=mix(base.rgb,vec3(1.),(spec+band*max(lit,0.)*.85)*lens_k.w);"
-        "base.rgb*=1.-band*max(-lit,0.)*.55*lens_k.w;}"
+        "uniform vec4 stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params; uniform sampler2D mask;\n"
+        "void main(){vec4 base=texture(image,texcoord);"
         "if(stripes.z>0.){vec2 q=(point-stripe_rect.xy)/stripe_rect.zw-.5;"
         "float phase=dot(q,stripes.xy)*stripes.z;float aa=max(fwidth(phase),.001);"
         "float band=1.-smoothstep(stripes.w*.5-aa,stripes.w*.5+aa,abs(fract(phase+.5)-.5));"
@@ -147,8 +129,6 @@ bool render_init(void)
     R.stripes = glGetUniformLocation(R.program, "stripes");
     R.stripe_rect = glGetUniformLocation(R.program, "stripe_rect");
     R.stripe_color = glGetUniformLocation(R.program, "stripe_color");
-    R.lens = glGetUniformLocation(R.program, "lens");
-    R.lens_k = glGetUniformLocation(R.program, "lens_k");
     R.mask_rect = glGetUniformLocation(R.program, "mask_rect");
     R.mask_uv = glGetUniformLocation(R.program, "mask_uv");
     R.mask_params = glGetUniformLocation(R.program, "mask_params");
@@ -211,7 +191,6 @@ void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
     glUniform2f(R.screen, pixels.w / R.scale, pixels.h / R.scale);
     glUniform2f(R.origin, R.offset.x / R.scale, R.offset.y / R.scale);
     glUniform4f(R.stripes, 0, 0, 0, 0);
-    glUniform4f(R.lens, 0, 0, 0, 0);
     glActiveTexture(GL_TEXTURE0); glBindVertexArray(R.vao);
     render_clip(NULL);
 }
@@ -303,14 +282,6 @@ void render_image_striped(texture t, rect dst, float angle, float repeats, float
     glUniform4f(R.stripe_color, ink.r / 255.f, ink.g / 255.f, ink.b / 255.f, ink.a / 255.f);
     render_image(t, tex_rect(t), dst, 0, tint);
     glUniform4f(R.stripes, 0, 0, 0, 0);   /* following ordinary images/shapes stay unstriped */
-}
-
-/* A glass lens for the next draws (radius 0 turns it off); see the shader. */
-void render_lens(vec2 center, float radius, float bevel, vec2 per_point, float bend, float light)
-{
-    if (!render_ready()) return;
-    glUniform4f(R.lens, center.x, center.y, radius > 0 ? radius : 0, bevel > 0 ? bevel : 0);
-    glUniform4f(R.lens_k, per_point.x, per_point.y, bend, light);
 }
 
 /* Until render_mask with an empty texture, every draw is cut to the signed distance field

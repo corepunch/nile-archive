@@ -801,12 +801,6 @@ function texture.match3_default() end
 ---@return texture
 function texture.load(path) end
 
----Like load, blurred once at load time (Gaussian, sigma about radius image pixels); for frosted-glass backgrounds. Colour and alpha blur together, so use it for opaque images.
----@param path string
----@param radius number
----@return texture
-function texture.load_blurred(path, radius) end
-
 ---From raw RGBA bytes, w * h * 4 of them.
 ---@param rgba string
 ---@param w integer
@@ -867,17 +861,6 @@ function gfx.image_rot(t, dst, angle, tint) end
 ---@param angle number
 ---@param tint color
 function gfx.image_hex(t, src, center, radius, angle, tint) end
-
----Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and, with a bevel, its top-left highlight and a soft streak.
----@param t texture
----@param src rect
----@param center vec2
----@param radius number
----@param bend number
----@param bevel number
----@param light number
----@param tint color
-function gfx.image_glass(t, src, center, radius, bend, bevel, light, tint) end
 
 ---Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
 ---@param t texture

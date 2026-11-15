@@ -20,7 +20,7 @@ R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or 
 R.locked_notice = words.locked
 -- Lanternlight fades at the patch boundary, so neighbouring unlit cells stay gray.
 R.carpet_patch = {corner = .25, fillet = .8,
-    range = .6, texel = 1.5, tile = 1.5, inset = 3.4, rim = 0, shade = 0, bevel = 0, feather = 3}
+    range = .6, texel = 1.5, tile = 1.5, inset = 3.4, feather = 3}
 R.reveal_play_opacity = .62   -- keep the treats readable over the paintings
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools, {["goal-carpet"] = {x = -2}})
