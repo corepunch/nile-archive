@@ -607,19 +607,12 @@
     "data/expedition-hud/shop-locked.png",
     "data/finds/cable.png",
     "data/finds/chart.png",
-    "data/finds/crank-silhouette.png",
-    "data/finds/crank.png",
-    "data/finds/laid-cable-silhouette.png",
-    "data/finds/laid-cable.png",
-    "data/finds/lens-silhouette.png",
+    "data/finds/gear.png",
     "data/finds/lens.png",
-    "data/finds/marker-silhouette.png",
     "data/finds/marker.png",
-    "data/finds/note-silhouette.png",
     "data/finds/note.png",
     "data/finds/supplies.png",
     "data/finds/timber.png",
-    "data/finds/tools-silhouette.png",
     "data/finds/tools.png",
     "data/fonts/LilitaOne-Regular.ttf",
     "data/fonts/lilitaone-OFL.txt",
@@ -650,9 +643,15 @@
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/signal-plate.png",
+    "data/story-pieces/cable.png",
     "data/story-pieces/chart.png",
+    "data/story-pieces/gear.png",
+    "data/story-pieces/lens.png",
+    "data/story-pieces/marker.png",
+    "data/story-pieces/note.png",
     "data/story-pieces/supplies.png",
     "data/story-pieces/timber.png",
+    "data/story-pieces/tools.png",
     "data/tile-sets/jewels/0.png",
     "data/tile-sets/jewels/1.png",
     "data/tile-sets/jewels/2.png",
@@ -1124,223 +1123,62 @@
       "marker",
       "tools",
       "supplies",
-      "crank"
+      "gear"
     ],
     "cell": [
       128,
       128
     ],
-    "states": [
-      "covered",
-      "partial",
-      "recovered",
-      "goal",
-      "story handoff"
-    ],
-    "board_runtime": "data/finds/<slot>.png",
-    "board_cell": [
-      320,
-      320
-    ],
-    "board": "Boards 2, 3, 5–7, 10 and 13 bury the object. Board 3 uses six cable cells and other buried finds use seven. Boards 1, 4, 8 and 9 present their object on the first-clear card.",
-    "transform": "Compact sprites for the goal and handoff, and for the standard seven-cell finds. The compact prop is uniformly resized to fit 256 px inside a 320 px transparent canvas.",
-    "crank": {
-      "source": "art/quest-objects/crank-choices.png",
-      "prompt": "art/quest-objects/crank-choices.prompt.txt",
-      "crop": [
-        768,
-        512,
-        1536,
-        1024
-      ],
-      "selection": "Lower right. Upper-right socket and lower-left grip, no rotation."
+    "states": ["first-clear award", "scenario icon"],
+    "award_runtime": "data/finds/<slot>.png",
+    "transform": "Compact props uniformly resized to fit 256 px inside a 320 px transparent canvas.",
+    "gear_reward": {
+      "source": "art/quest-objects/shutter-gear-states.png",
+      "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
+      "crop": [969, 83, 1680, 821]
     },
-    "standalone_finds": {
+    "note_reward": {
       "source": "art/quest-objects/ines-note-states.png",
       "prompt": "art/quest-objects/ines-note-states.prompt.txt",
-      "generator": "Built-in ImageGen",
-      "registration": "Tight crop with edge guard, uniformly resize and center both authored states without modifying their alpha.",
-      "items": {
-        "note": {
-          "board": 13,
-          "canvas": [320, 320],
-          "cells": [[-3, 1], [-2, 1], [-2, 0], [-3, 0], [-4, 1], [-4, 2], [-3, 2]],
-          "states": {
-            "exposed": {
-              "crop": [67, 99, 788, 787],
-              "paint_size": [228, 228],
-              "runtime": "data/finds/note.png"
-            },
-            "covered": {
-              "crop": [949, 101, 1681, 789],
-              "paint_size": [228, 228],
-              "runtime": "data/finds/note-silhouette.png"
-            }
-          }
-        }
-      }
+      "runtime": "data/finds/note.png",
+      "crop": [67, 99, 788, 787],
+      "canvas": [320, 320],
+      "paint_size": [228, 228]
     },
     "story_pieces": {
-      "generator": "Built-in ImageGen, one row of three pieces",
-      "source": "art/quest-objects/story-pieces.png",
-      "prompt": "art/quest-objects/story-pieces.prompt.txt",
+      "generator": "Built-in ImageGen, each matching set authored together",
       "canvas": [128, 128],
       "paint_size": [108, 108],
       "states": ["board", "selected", "hint", "falling", "goal", "collection flight"],
-      "items": {
-        "timber": {"board": 1, "kind": 5, "crop": [36, 20, 673, 693], "runtime": "data/story-pieces/timber.png"},
-        "chart": {"board": 4, "kind": 0, "crop": [694, 49, 1425, 680], "runtime": "data/story-pieces/chart.png"},
-        "supplies": {"board": 9, "kind": 3, "crop": [1464, 29, 2135, 687], "runtime": "data/story-pieces/supplies.png"}
-      }
-    },
-    "laid_out": {
-      "generator": "Built-in ImageGen, both finds and both states in a single atlas",
-      "source": "art/quest-objects/laid-finds-states.png",
-      "prompt": "art/quest-objects/laid-finds-states.prompt.txt",
-      "guide": "art/quest-objects/laid-finds-guide.png",
-      "registration": "Crop, rotate, resize uniformly, and position each authored state on a transparent canvas registered to its hex footprint. Preserve painted alpha.",
-      "items": {
-        "cable": {
-          "board": 3,
-          "cells": [
-            [
-              -4,
-              1
-            ],
-            [
-              -3,
-              1
-            ],
-            [
-              -4,
-              2
-            ],
-            [
-              -3,
-              2
-            ],
-            [
-              -4,
-              3
-            ],
-            [
-              -3,
-              3
-            ]
-          ],
-          "canvas": [
-            350,
-            606
-          ],
-          "states": {
-            "exposed": {
-              "crop": [
-                854,
-                20,
-                1295,
-                588
-              ],
-              "angle": -5,
-              "paint_size": [
-                310,
-                606
-              ],
-              "offset": [
-                -6,
-                -5
-              ],
-              "runtime": "data/finds/laid-cable.png"
-            },
-            "covered": {
-              "crop": [
-                855,
-                611,
-                1296,
-                1187
-              ],
-              "angle": -5,
-              "paint_size": [
-                312,
-                606
-              ],
-              "offset": [
-                -6,
-                -5
-              ],
-              "runtime": "data/finds/laid-cable-silhouette.png"
-            }
+      "atlases": [
+        {
+          "source": "art/quest-objects/story-pieces.png",
+          "prompt": "art/quest-objects/story-pieces.prompt.txt",
+          "items": {
+            "timber": {"boards": [1], "kind": 5, "crop": [36, 20, 673, 693], "runtime": "data/story-pieces/timber.png"},
+            "chart": {"boards": [4], "kind": 0, "crop": [694, 49, 1425, 680], "runtime": "data/story-pieces/chart.png"},
+            "supplies": {"boards": [9], "kind": 3, "crop": [1464, 29, 2135, 687], "runtime": "data/story-pieces/supplies.png"}
+          }
+        },
+        {
+          "source": "art/quest-objects/story-pieces-expedition.png",
+          "prompt": "art/quest-objects/story-pieces-expedition.prompt.txt",
+          "items": {
+            "lens": {"boards": [2], "kind": 3, "crop": [39, 62, 473, 449], "runtime": "data/story-pieces/lens.png"},
+            "cable": {"boards": [3], "kind": 4, "crop": [550, 87, 982, 429], "runtime": "data/story-pieces/cable.png"},
+            "marker": {"boards": [5, 6], "kind": 2, "crop": [1076, 60, 1483, 443], "runtime": "data/story-pieces/marker.png"},
+            "tools": {"boards": [7], "kind": 1, "crop": [26, 601, 483, 947], "runtime": "data/story-pieces/tools.png"},
+            "note": {"boards": [13], "kind": 0, "crop": [1081, 583, 1480, 941], "runtime": "data/story-pieces/note.png"}
+          }
+        },
+        {
+          "source": "art/quest-objects/shutter-gear-states.png",
+          "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
+          "items": {
+            "gear": {"boards": [10], "kind": 5, "crop": [79, 83, 790, 820], "runtime": "data/story-pieces/gear.png"}
           }
         }
-      }
-    },
-    "compact_silhouettes": {
-      "generator": "Built-in ImageGen",
-      "source": "art/quest-objects/compact-states.png",
-      "prompt": "art/quest-objects/compact-states.prompt.txt",
-      "reference": "3 × 2 grid of the corresponding 320 px compact runtime PNGs. The reference has a 30 px gutter on each side of every asset.",
-      "registration": "Crop the authored black state, optionally rotate, resize uniformly and offset on the same 320 px canvas as the existing painted prop. Preserve alpha.",
-      "items": {
-        "lens": {
-          "crop": [
-            199,
-            523,
-            423,
-            754
-          ],
-          "angle": 0,
-          "side": 268,
-          "offset": [
-            0,
-            0
-          ],
-          "runtime": "data/finds/lens-silhouette.png"
-        },
-        "marker": {
-          "crop": [
-            1096,
-            528,
-            1330,
-            744
-          ],
-          "angle": 0,
-          "side": 260,
-          "offset": [
-            0,
-            -3
-          ],
-          "runtime": "data/finds/marker-silhouette.png"
-        },
-        "tools": {
-          "crop": [
-            189,
-            777,
-            425,
-            997
-          ],
-          "angle": 0,
-          "side": 260,
-          "offset": [
-            0,
-            0
-          ],
-          "runtime": "data/finds/tools-silhouette.png"
-        },
-        "crank": {
-          "crop": [
-            1085,
-            791,
-            1329,
-            986
-          ],
-          "angle": 0,
-          "side": 260,
-          "offset": [
-            0,
-            0
-          ],
-          "runtime": "data/finds/crank-silhouette.png"
-        }
-      }
+      ]
     }
   },
   "homescapes": {

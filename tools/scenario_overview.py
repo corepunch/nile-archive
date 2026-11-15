@@ -32,7 +32,11 @@ GAMES = ['relic-rush', 'christmas-market', 'nile-archive']
 MATCH3 = {'relic-rush', 'christmas-market'}
 PHASES = {'before': 'Before the level', 'after': 'After the first clear', 'restore': 'After the building is restored'}
 PHASE_ORDER = {'before': 0, 'after': 1, 'restore': 2}
-STORY_PIECE_NAMES = {'timber': 'timber pieces', 'chart': 'map pieces', 'supplies': 'supply packs'}
+STORY_PIECE_NAMES = {
+    'timber': 'timber pieces', 'lens': 'lenses', 'cable': 'cable coils',
+    'chart': 'map pieces', 'marker': 'marker pieces', 'tools': 'tool rolls',
+    'supplies': 'supply packs', 'gear': 'gears', 'note': 'folded notes',
+}
 
 
 def capture(game):
@@ -67,7 +71,7 @@ def picture(path, width, fmt='JPEG'):
 
 
 def quest_icons(game):
-    """Relic Rush's quest objects, cropped from their atlas as art.lua does."""
+    """Relic Rush's recovered-object icons for the scenario cards."""
     art = (ROOT / f'games/{game}/lua/art.lua').read_text()
     m = re.search(r'A\.quest_objects = \{([^}]*)\}', art)
     atlas = ROOT / f'games/{game}/data/quest-objects.png'
@@ -188,6 +192,10 @@ def match3_section(data, title):
             if src:
                 floor = f' ({esc(lv["reveal"]["floor"])} floor)' if lv['reveal'].get('floor') else ''
                 reveal = f'<figure class="reveal"><img src="{src}" alt=""><figcaption>Story picture revealed on the board{floor}</figcaption></figure>'
+        if lv.get('quest') and (award := picture(FRAMES / f'scenario-{game}-award-{n:02d}.png', 300)):
+            name = esc(lv['quest']['name'])
+            reveal += (f'<figure class="reveal"><img src="{award}" alt="{name} recovery card">'
+                       f'<figcaption>{name} on the first-clear item card.</figcaption></figure>')
         if lv.get('signal') == 'cliff':
             reveal += '<p class="meta">First clear: the light under the cliff waits, then flashes three times.</p>'
         elif lv.get('signal') == 'landing':

@@ -1,4 +1,7 @@
-# Board 13 warning note
+# Board 13 warning note · Original excavation
+
+The [current board](../story-collection/README.md) collects folded notes. The
+images below document the original excavation and the first-clear handoff.
 
 Seven cells of dig sand hide the note in the left lane. Clearing a cell reveals
 its part of the paper. The board also asks players to sweep the drifting sand
@@ -23,7 +26,4 @@ confirms the courtyard’s restoration, Tomas identifies Ines.
 | --- | --- |
 | ![Elena reads the warning and initials](read-480x900.jpg) | ![Tomas recognizes Ines Reed](courtyard-480x900.jpg) |
 
-```sh
-SPRITE_SCENARIO=1 build/test/relic-rush 'frame scenario-relic-rush-board-13' 'frame scenario-relic-rush-find-13' 'shot note-'
-python3 tools/scenario_overview.py
-```
+Use commit `78fbe020` to reproduce the excavation captures.

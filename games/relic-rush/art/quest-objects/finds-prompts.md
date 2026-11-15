@@ -1,5 +1,10 @@
 # Buried finds: art prompts
 
+These are the original excavation prompts and registration notes. The
+excavation commands refer to commit `78fbe020`. The
+[current catalogue](../../docs/asset-catalogue.md#collectible-story-pieces)
+records the collection sprites.
+
 The [board dressing atlas](../../docs/asset-catalogue.md#story-materials) now supplies the dig
 surfaces from section 1. The laid-out timber and cable use their own footprints in section 2.
 [Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks the broader long-find work.

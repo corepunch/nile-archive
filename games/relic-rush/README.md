@@ -83,15 +83,11 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Boards 1, 4 and 9 collect 10 timber pieces, 15 map pieces and 18 supply packs
-respectively. Board 1 uses four regular kinds and a story piece. Boards 4 and 9
-use five regular kinds and a story piece.
-Boards 2, 3, 5 to 7, 10 and 13 bury their quest object in sand or tide-room silt.
-The relay cable winds through six cells.
-The covered cells show each object's black silhouette over the soil. Matches reveal
-the painted object one cell at a time. The goal shows the object and the cells left.
-Board 8 sweeps sand off the stonework and shows the broken cable on the recovered-item card.
-Use `--level 3 --reveal .5` to preview a half-uncovered find.
+Boards 1–7, 9, 10 and 13 collect story pieces that replace a matching colour.
+Boards 1, 2, 5, 10 and 13 use four regular kinds plus the story piece. Boards
+3, 4, 6, 7 and 9 use five regular kinds plus the story piece. Board 8 sweeps
+sand off the stonework and shows the broken cable on the recovered-item card.
+[Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
 A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
 recovered!** card, styled like the results card, before the story exchange about it and the
@@ -201,18 +197,18 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | # | Expedition | Moves | Goals | Locks | Cover cells | Focus |
 | --- | --- | ---: | --- | ---: | ---: | --- |
 | 1 | First Light | 24 | 10 timber pieces | 0 | 0 | Match 3 to collect timber. |
-| 2 | The Lamp Lens | 29 | Relics | 0 | 0 | Match 4 for a rocket. |
-| 3 | The Buried Cable | 32 | Blockers, Relics | 0 | 0 | Match beside a stone to break it. |
+| 2 | The Lamp Lens | 29 | 10 lenses | 0 | 0 | Match 4 for a rocket. Collect lenses. |
+| 3 | The Relay Cable | 32 | Blockers, 12 cable coils | 0 | 0 | Match beside stone to break it. Collect cable coils. |
 | 4 | Under the Pump | 35 | Blockers, 15 map pieces | 4 | 0 | Collect map pieces and break the chains. |
-| 5 | The Quay Marker | 35 | Sand | 4 | 0 | Match on cleared stone to sweep more sand. |
-| 6 | The Shore Marker | 37 | Blockers, Find | 0 | 5 | Match the piece under the salt crust to break it. |
-| 7 | The Tool Roll | 40 | Blockers, Relics | 3 | 4 | Break the carved stone. |
+| 5 | The Quay Marker | 35 | Sand, 14 marker pieces | 4 | 0 | Match on cleared stone to sweep sand. Collect marker pieces. |
+| 6 | The Shore Marker | 37 | Blockers, 14 marker pieces | 0 | 5 | Match the piece under the salt crust. Collect marker pieces. |
+| 7 | The Tool Roll | 40 | Blockers, 16 tool rolls | 3 | 4 | Clear the stone and salt crust. Collect tool rolls. |
 | 8 | The Broken Cable | 40 | Sand, Relics | 4 | 6 | Match 5 for a rainbow ball. |
 | 9 | The Supply Crate | 43 | Blockers, 18 supply packs | 5 | 6 | Collect supply packs. Clear the ropes and salt crust. |
-| 10 | The Shutter Crank | 46 | Sand, Blockers | 6 | 6 | Sweep the sand. Uncover the crank. |
+| 10 | The Shutter Gear | 46 | Sand, Blockers, 20 gears | 6 | 6 | Sweep the sand, clear blockers, and collect gears. |
 | 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |
 | 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free relics caught in the vines. |
-| 13 | Names in the Stone | 37 | Sand, Blockers, Find | 6 | 0 | Match on the sand to uncover the note. |
+| 13 | Names in the Stone | 37 | Sand, Blockers, 14 folded notes | 6 | 0 | Sweep the sand, clear vines, and collect folded notes. |
 | 14 | Static | 38 | Blockers, Relics | 7 | 0 | Work around the broken seam. |
 | 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Clear the stone to open the board. |
 | 16 | Supper for Twelve | 40 | Blockers, Relics | 4 | 7 | Hit the salt crust with matches or power-ups. |

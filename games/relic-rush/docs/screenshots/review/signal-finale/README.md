@@ -1,6 +1,8 @@
-# Sand, shutter crank and signal finale
+# Sand, shutter and signal finale
 
-The former board is on the left of each comparison. The current board is on the right.
+The former board is on the left of each comparison. The revised board is on
+the right. The shutter-crank captures document the original excavation.
+Board 10 now collects the [bronze shutter gear](../story-collection/README.md).
 
 | Screen | 480×900 | 390×844 |
 | --- | --- | --- |
@@ -13,12 +15,12 @@ The former board is on the left of each comparison. The current board is on the 
 [Board 3’s three flashes](signal-cliff.webp) set up [Ines’s reply](signal-finale.webp).
 The finale shows [the seated plate](signal-in-exit.jpg), then the lantern, followed
 by [Ines’s confirmation](phone-story-finale.jpg). The [broken cable](sand-cable.jpg)
-and [selected shutter crank](crank-award.jpg) appear on their recovered-item cards.
+and the [archived shutter crank](crank-award.jpg) have separate item cards.
 
 Reproduce the review in one run from the repository root.
 
 ```sh
-build/test/relic-rush "shot sand-" "shot crank-" "shot delivery-finale" \
+build/test/relic-rush "shot sand-" "shot delivery-finale" \
     "shot phone-story-level-30" "shot signal-" "shot phone-signal-landing" \
     "shot phone-story-finale" "reel signal-"
 ```

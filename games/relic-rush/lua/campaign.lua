@@ -62,7 +62,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Lamp Lens", "Match 4 for a rocket.", 29, 1800, 10, 0, 0)
+        local l = level("The Lamp Lens", "Match 4 for a rocket. Collect lenses.", 29, 1800, 10, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
         l.ice_layers = 1
@@ -70,7 +70,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Buried Cable", "Match beside a stone to break it.", 32, 2300, 12, 0, 0)
+        local l = level("The Relay Cable", "Match beside stone to break it. Collect cable coils.", 32, 2300, 12, 0, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -86,7 +86,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Quay Marker", "Match on cleared stone to sweep more sand.", 35, 3100, 14, 4, 0)
+        local l = level("The Quay Marker", "Match on cleared stone to sweep sand. Collect marker pieces.", 35, 3100, 14, 4, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -94,7 +94,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shore Marker", "Match the piece under the salt crust to break it.", 37, 3400, 14, 0, 5)
+        local l = level("The Shore Marker", "Match the piece under the salt crust. Collect marker pieces.", 37, 3400, 14, 0, 5)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -102,7 +102,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Tool Roll", "Hit the salt crust with matches or power-ups.", 40, 3800, 16, 3, 4)
+        local l = level("The Tool Roll", "Clear the stone and salt crust. Collect tool rolls.", 40, 3800, 16, 3, 4)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -126,7 +126,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shutter Crank", "Sweep the sand through the centre.", 46, 5000, 20, 6, 6)
+        local l = level("The Shutter Gear", "Sweep the sand, clear blockers, and collect gears.", 46, 5000, 20, 6, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, -1)
         l.ice_layers = 2
@@ -150,7 +150,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Names in the Stone", "Aim rockets along the vines.", 37, 3200, 14, 6, 0)
+        local l = level("Names in the Stone", "Sweep the sand, clear vines, and collect folded notes.", 37, 3200, 14, 6, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -315,7 +315,7 @@ local quest_objects = {
     {key="cable", name="Relay cable"}, {key="chart", name="Tide chart"},
     {key="marker", name="Quay marker"}, {key="marker", name="Shore marker"},
     {key="tools", name="Tool roll"}, {key="cable", name="Broken cable"},
-    {key="supplies", name="Supply crate"}, {key="crank", name="Shutter crank"},
+    {key="supplies", name="Supply crate"}, {key="gear", name="Shutter gear"},
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[13].quest_object = {key="note", name="Folded note"}
@@ -323,33 +323,19 @@ levels[13].quest_object = {key="note", name="Folded note"}
 -- one other slot out of a board's opening and refills.
 levels[1].story_piece, levels[1].goal_kind = "timber", 5 -- orange replaces the amphora
 levels[1].omit_kind = 0                                -- no gold sun idols in the tutorial
+levels[2].story_piece, levels[2].goal_kind = "lens", 3   -- blue replaces the scarab
+levels[2].omit_kind = 5
+levels[3].story_piece, levels[3].goal_kind = "cable", 4  -- purple replaces the crystal
 levels[4].story_piece, levels[4].goal_kind = "chart", 0  -- gold replaces the sun idol
+levels[5].story_piece, levels[5].goal_kind = "marker", 2 -- green replaces the leaf
+levels[5].omit_kind = 5
+levels[6].story_piece, levels[6].goal_kind = "marker", 2
+levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the flame
 levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
--- A recovery board buries its quest object: still oil (presented as sand,
--- mud or silt) covers the listed cells, the object lies whole beneath them and
--- uncovering every cell is the goal. Compact props fill a seven-cell cluster.
--- The relay cable has its own painting aligned to a longer path.
-local function cluster(q, r)
-    return {cell(q, r), cell(q + 1, r), cell(q + 1, r - 1), cell(q, r - 1), cell(q - 1, r), cell(q - 1, r + 1), cell(q, r + 1)}
-end
-local function bury(board, cells, lesson, bark, laid_out)
-    local l = levels[board]
-    local key = l.quest_object.key
-    local picture = (laid_out and "find-laid-" or "find-") .. key
-    l.oil, l.oil_still, l.lesson = cells, true, lesson
-    l.reveal = {picture=picture, covered_picture=picture .. "-silhouette",
-        icon=key, floor="oil", object=true, bark=bark}
-end
-bury(2, cluster(0, -1), "Match 4 for a rocket. Uncover the lens.", "Mara: Brass! That's my lens down there.")
-bury(3, {cell(-4,1), cell(-3,1), cell(-4,2), cell(-3,2), cell(-4,3), cell(-3,3)},
-    "Break the stone. Uncover the cable.", "Mara: I can see cable. Clear the rest of it!", true)
-bury(5, cluster(2, 0), levels[5].lesson, "Elena: A carved stone. Uncover the whole notch.")
-bury(6, cluster(-3, 2), levels[6].lesson, "Mara: Another marker. Clear it off!")
-bury(7, cluster(3, -2), "Break the carved stone. Uncover the tools.", "Mara: Leather and steel. That's a tool roll!")
-bury(10, cluster(-3, 2), "Sweep the sand. Uncover the crank.", "Tomas: That is the crank. Free it carefully.")
-bury(13, {cell(-3,1), cell(-2,1), cell(-2,0), cell(-3,0), cell(-4,1), cell(-4,2), cell(-3,2)},
-    "Match on the sand to uncover the note.", "Elena: There’s paper under the sand. Gently.")
-levels[13].reveal.icon = "find-note-silhouette"
+levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the amphora
+levels[10].omit_kind = 0
+levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
+levels[13].omit_kind = 5
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)},icon="signal-plate"}
 levels[30].lesson = "Clear below the signal plate to deliver it."
 levels[3].signal = "cliff"
@@ -381,21 +367,18 @@ local covers = {
     [10]="barnacle-crust", [15]="wall-rubble", [22]="ice",
     [24]="barnacle-crust", [25]="barnacle-crust", [26]="barnacle-crust", [27]="wall-rubble",
 }
-local floors = {[10]="tide-silt", [26]="well-mud"}
 for i, l in ipairs(levels) do
-    local floor = floors[i] or l.oil_still and "dig-sand"
     l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
-        floor=floor and {covered=floor, excavated=l.oil_still and "trench-earth" or nil} or nil}
+        floor=i == 26 and {covered="well-mud"} or nil}
 end
 
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
--- The engine goal keys "carpet" and "oil" count unlit/unrestored and covered cells.
--- On recovery boards "oil" is the ground over the buried quest object.
+-- The engine goal keys "carpet" and "oil" count unswept and spreading ground.
 local goals = {
-    {"idols"}, {"oil"}, {"locks", "oil"}, {"locks", "idols"}, {"carpet", "oil"},
-    {"locks", "oil"}, {"locks", "oil"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks", "oil"},
-    {"idols"}, {"locks", "idols"}, {"carpet", "locks", "oil"}, {"locks", "idols"}, {"locks", "idols"},
+    {"idols"}, {"idols"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"},
+    {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks", "idols"},
+    {"idols"}, {"locks", "idols"}, {"carpet", "locks", "idols"}, {"locks", "idols"}, {"locks", "idols"},
     {"locks", "idols"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"oil", "locks"},
     {"deliveries"}, {"carpet", "locks"}, {"idols", "locks"}, {"carpet", "idols"}, {"locks", "idols"},
     {"oil", "locks"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"deliveries", "locks"},

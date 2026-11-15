@@ -7,14 +7,22 @@ require('main')
 local function empty_queue() while story.active() do story.next() end end
 local function owned(c) return function(kind) return island.owned(c,kind)>0 end end
 
+local collections = {
+    [1]={10,"Camp timber",5,0}, [2]={10,"Lamp lens",3,5}, [3]={12,"Relay cable",4},
+    [4]={15,"Tide chart",0}, [5]={14,"Quay marker",2,5}, [6]={14,"Shore marker",2},
+    [7]={16,"Tool roll",1}, [9]={18,"Supply crate",3}, [10]={20,"Shutter gear",5,0},
+    [13]={14,"Folded note",0,5},
+}
+
 -- Story pieces occupy one palette slot and advance its matching goal.
-for _, spec in ipairs{{1,5,5,0}, {4,0,6}, {9,3,6}} do
-    local board, target, expected_count, omitted = table.unpack(spec)
+for board, spec in pairs(collections) do
+    local _, _, target, omitted = table.unpack(spec)
+    local expected_count = omitted~=nil and 5 or 6
     local g = rules.game_start(board-1,123)
     R.g = g
     local kinds, free = {}, {}
     for i=0,rules.CELLS-1 do
-        if g.active[i] then
+        if g.active[i] and g.tiles[i].kind>=0 then
             kinds[g.tiles[i].kind] = true
             if g.chain[i]==0 and g.ice[i]==0 then free[#free+1] = i end
         end
@@ -27,7 +35,7 @@ for _, spec in ipairs{{1,5,5,0}, {4,0,6}, {9,3,6}} do
         if entry.id=='idols' then check(entry.kind==target, 'the HUD tracks the story kind') end
     end
     local a,b=free[1],free[2]
-    local regular=board==9 and rules.RELIC_IDOL or rules.RELIC_FLAME
+    local regular=target~=rules.RELIC_IDOL and omitted~=rules.RELIC_IDOL and rules.RELIC_IDOL or rules.RELIC_FLAME
     g.tiles[a],g.tiles[b]=rules.tile(target),rules.tile(regular)
     local m=rules.new_match()
     m.mask[a],m.mask[b]=true,true
@@ -45,7 +53,6 @@ local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 check(rules.LEVELS==30 and #journey.beats==47,'all chapters and their restoration scenes are playable')
 check(journey.find('before-22').lines[1][2]:find('Ice',1,true),'the Frozen Stair introduces ice before play')
-local collections = {[1]={10,'Camp timber'},[4]={15,'Tide chart'},[9]={18,'Supply crate'}}
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -71,19 +78,13 @@ for level=1,30 do
     if collections[level] then
         local spec=rules.level_of(g)
         local target, reward=table.unpack(collections[level])
-        g.relics=target-1
+        g.relics,g.carpeted=target-1,g.carpet_total
         rules.game_check_end(g)
         check(spec.relics==target and not g.won and g.oil_left==0 and not spec.reveal,
             'the story piece collection is required after the other goals are met')
         check(R.award_for(g).name==reward, 'the assembled object is the first-clear reward')
     end
     g.score,g.relics=99999,999
-    if level==13 then
-        g.carpeted=g.carpet_total
-        rules.game_check_end(g)
-        check(not g.won and g.oil_left==7, 'board 13 still needs the buried note after its other goals are met')
-        check(R.award_for(g).name=='Folded note', 'board 13 has its own recovered-item card')
-    end
     g.delivered,g.carpeted,g.oil_left=g.delivery_total,g.carpet_total,0
     rules.game_check_end(g)
     check(g.won, 'completing the match-3 goals wins')

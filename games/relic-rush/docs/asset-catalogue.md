@@ -60,88 +60,54 @@ They are independent of the selected match piece pack.
 | `marker` | Quay and shore markers | 5 and 6, locate the steps below the quay |
 | `tools` | Tool roll | 7, equip the Artisan workshop |
 | `supplies` | Supply crate | 9, stock the Jungle market supply point |
-| `crank` | Shutter crank | 10, test the tide-room signal |
+| `gear` | Shutter gear | 10, operate the near shutter and read the tide-room warning |
 
-The current crank is the selected lower-right variation on the [four-option
-ImageGen sheet](../art/quest-objects/crank-choices.png). Its square socket is at the upper
-right and its wooden grip at the lower left. The [prompt](../art/quest-objects/crank-choices.prompt.txt)
-and manifest record the sheet and crop. The goal, buried find and recovered-item card
-share this crop at their respective sizes and keep its authored transparency.
+The [shutter gear sheet](../art/quest-objects/shutter-gear-states.png) pairs
+the bright orange board sprite with the weathered bronze reward. Its six
+teeth and hollow square bore identify it at both sizes. The
+[prompt](../art/quest-objects/shutter-gear-states.prompt.txt) and manifest
+record the source and crops.
 
-Run `python3 tools/relic_quest_art.py` from the repository root to register the source
-into `data/quest-objects.png` and, at board size, into `data/finds/<slot>.png` (the same crop fitted
-to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and centers the original RGBA art.
-
-**Buried on the board.** Boards 2, 3, 5–7, 10 and 13 bury their object under still sand
-or tide-room silt (10). The cable winds through six cells. Compact finds occupy seven cells each. In the covered
-state the ground covers every excavation cell, with a black silhouette over the soil.
-Each excavated cell shows its part of the painted prop on trench earth
-beneath the piece. On first clear the pieces fade and the whole object holds on the board.
-The goal uses the 128 px slot beside the remaining cell count, and the **Item recovered!**
-card shows the compact file at 210 px. `lua/campaign.lua` (`bury`) lists each find's cells. See the
-[current dig surfaces](screenshots/review/board-dressing/README.md) and the
-[recovered object and card](review/buried-finds/board-2-recovered.jpg).
-The [laid-out state atlas](../art/quest-objects/laid-finds-states.png) was painted in
-built-in ImageGen as one sheet. See the [production prompt](../art/quest-objects/laid-finds-states.prompt.txt),
-the [footprint guide](../art/quest-objects/laid-finds-guide.png) and the
-[in-game review at both phone sizes](screenshots/review/laid-finds/README.md).
-The manifest records the crops and placement for the two separate cable PNGs in
-`data/finds/`. Registration checks that each sprite fits and reaches every cell.
-
-| Board sprite | Placement and use |
-| --- | --- |
-| `laid-cable`, `laid-cable-silhouette` | Board 3. The cable runs through six cells in alternating columns in the left chamber. |
-
-The [compact state atlas](../art/quest-objects/compact-states.png) and
-[ImageGen prompt](../art/quest-objects/compact-states.prompt.txt) contain the six
-compact finds and their covered states together. The reference sheet lays out
-the existing 320 px compact PNGs in atlas order, including the selected crank.
-Registration crops the authored black shapes, aligns them with the original
-painted PNGs and saves each as a separate 320 px RGBA file in `data/finds/`.
-See the [in-game review](screenshots/review/compact-silhouettes/README.md).
-
-| Covered sprite | Boards |
-| --- | --- |
-| `lens-silhouette` | 2, The Lamp Lens |
-| `marker-silhouette` | 5 and 6, the quay and shore markers |
-| `tools-silhouette` | 7, The Tool Roll |
-| `crank-silhouette` | 10, The Shutter Crank |
-
-The goal and recovered-item cards use the compact props. Board 8 presents the
-compact broken cable on its first-clear card.
-[Issue #102](https://github.com/corepunch/nile-archive/issues/102)
-tracks the broader footprint work, including a separate plan for the shutter crank.
-Each 128×128 slot passes the canonical hex check in strict object mode. The
-[historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
+Run `python3 tools/relic_quest_art.py` to register the eight quest props
+in `data/quest-objects.png` for the scenario index and in individual
+`data/finds/<slot>.png` files for the item cards. Card props fit within
+256 px on a 320×320 canvas. Board 8 uses the broken cable card.
 
 ### Collectible story pieces
 
-Boards 1, 4 and 9 replace one colour slot with timber, a tide map or a supply
-pack. Board 1 uses four regular kinds. Boards 4 and 9 use five. The collection HUD and flying match pieces
-use the same sprite as the board. Selection, hints and refill use the existing
-piece animation and overlays. Power-ups keep their authored sprites. The
-quest-object PNGs provide the camp timber, tide chart and supply crate on
-their first-clear cards.
+The board, collection HUD, and flying match pieces all use the story sprite
+for the replaced colour slot. Selection, hints and refill use the existing
+piece animation and overlays. Power-ups use their authored sprites.
 
-The three pieces were authored together using built-in ImageGen. The
-[transparent sheet](../art/quest-objects/story-pieces.png) and
-[prompt](../art/quest-objects/story-pieces.prompt.txt) are tracked. The manifest
-records the crops and slots. Run `python3 tools/relic_quest_art.py` to register
-individual `data/story-pieces/*.png` files. Each crop fits inside 108 px on a
-centred 128×128 canvas. See the
-[board captures](screenshots/review/story-collection/README.md).
+| Slot | Boards | Collectible sprite |
+| --- | --- | --- |
+| Gold | 4, 13 | Tide map, folded note |
+| Red | 7 | Rolled leather tool wrap |
+| Green | 5, 6 | Carved marker |
+| Blue | 2, 9 | Lamp lens, supply pack |
+| Purple | 3 | Coiled relay cable |
+| Orange | 1, 10 | Timber bundle, bronze shutter gear |
+
+Built-in ImageGen authored each set together. See the [first sheet](../art/quest-objects/story-pieces.png),
+[its prompt](../art/quest-objects/story-pieces.prompt.txt), the
+[expedition sheet](../art/quest-objects/story-pieces-expedition.png) and
+[its prompt](../art/quest-objects/story-pieces-expedition.prompt.txt).
+The manifest records each crop, its boards and the colour it replaces.
+Run `python3 tools/relic_quest_art.py` to register the individual
+`data/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
+128×128 canvas. See the [in-game review](screenshots/review/story-collection/README.md).
 
 ### Board 13 warning note
 
-The `note-silhouette` lies on seven cells of still dig sand and serves as the
-goal icon. Each cleared cell shows the corresponding part of `note` on trench
-earth. On first clear the whole note reads “WALL UNSAFE” and “I. R.” on the
-board and the recovered-item card, before the courtyard scene. The states
-were authored together in [one ImageGen sheet](../art/quest-objects/ines-note-states.png)
-using [this prompt](../art/quest-objects/ines-note-states.prompt.txt). Both crops
-are fitted within 228 px and centred on separate 320×320 RGBA PNGs under
-`data/finds/`. Run `python3 tools/relic_quest_art.py` to reproduce.
-The [in-game review](screenshots/review/ines-note/README.md) shows the handoff.
+The collectible sprite shows the outside of the folded note. On the first-clear
+card the open paper reads “WALL UNSAFE” and “I. R.” before the courtyard scene.
+The card uses the exposed crop of the [original sheet](../art/quest-objects/ines-note-states.png)
+and [prompt](../art/quest-objects/ines-note-states.prompt.txt). The manifest
+registers it as `data/finds/note.png` within 228 px on a 320×320 canvas.
+
+The earlier excavation art is documented in
+[the silhouette review](screenshots/review/compact-silhouettes/README.md) and
+[the footprint review](screenshots/review/laid-finds/README.md).
 
 ## Additional board elements
 
@@ -356,8 +322,7 @@ collecting its piece. Selected/hint frames are under pieces, blockers over them.
 ### Story materials
 
 The goal signboard uses the cover when the obstacle counter combines several
-materials. Lock-only boards use their lock artwork and buried-find goals keep the find
-itself. The Explorer's Guide illustrates the two-hit salt cover. A match must include the
+materials. Lock-only boards use their lock artwork. Story collection goals show the matching piece. The Explorer's Guide illustrates the two-hit salt cover. A match must include the
 held piece to damage a lock or cover. A power-up can hit it directly. Colour accents on
 the existing transient impact particles follow the material.
 
@@ -369,8 +334,8 @@ the existing transient impact particles follow the material.
 | `creeper-vine-1`, `creeper-vine-1-mirror`, `creeper-vine-2` | Leafy strand in either diagonal, or two crossed strands. Boards 5, 12 and 13. |
 | `rope-lashing-1`, `rope-lashing-1-mirror`, `rope-lashing-2` | Braided strand in either diagonal, or two crossed strands. Boards 7, 9, 14–16 and 24–26. |
 | `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
-| `dig-sand`, `trench-earth` | Opaque sand hides a find. Dark earth beneath the uncovered part keeps its outline readable. |
-| `well-mud`, `tide-silt` | Mud on board 26 and tide-room silt on board 10. Matches clear the painted cells. The exposed find cells on board 10 show trench earth. Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
+| `dig-sand`, `trench-earth`, `tide-silt` | Excavation surfaces kept in the dressing atlas for the art review. |
+| `well-mud` | Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
 | `drift-sand`, `swept-stone` | Tan sand fills uncleared stonework, and cool slate marks cleared cells. A match touching cleared stone sweeps the rest of that match. The goal counts sandy cells. Boards 5, 8, 10, 13, 18, 22, 24 and 28. Authored together in the [sweep swatches](../art/board-dressing/sweep.png) from the [prompt](../art/board-dressing/sweep.prompt.txt), then clipped to the canonical mask. |
 
 Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the

@@ -154,39 +154,25 @@ for key in quest["slots"]:
     assert "`" + key + "`" in doc
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
-assert all((ROOT / quest["crank"][key]).is_file() for key in ("source", "prompt"))
-compact_silhouettes = quest["compact_silhouettes"]
-declaration = re.search(r"A\.compact_silhouettes = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(compact_silhouettes["items"])
-assert all((ROOT / compact_silhouettes[key]).is_file() for key in ("source", "prompt"))
-for name, item in compact_silhouettes["items"].items():
-    assert item["runtime"] == f"data/finds/{name}-silhouette.png" and item["runtime"] in actual
-    assert f"`{name}-silhouette`" in doc
-assert (ROOT / quest["laid_out"]["guide"]).is_file()
+assert all((ROOT / quest["gear_reward"][key]).is_file() for key in ("source", "prompt"))
+note = quest["note_reward"]
+assert note["runtime"] == "data/finds/note.png" and note["runtime"] in actual
+assert all((ROOT / note[key]).is_file() for key in ("source", "prompt"))
+assert f'textures["find-note"] = texture.load("{note["runtime"].removeprefix("data/")}")' in art
 campaign = (ROOT / "lua/campaign.lua").read_text()
-pieces = quest["story_pieces"]
+sheets = quest["story_pieces"]["atlases"]
 declaration = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(pieces["items"])
-assert all((ROOT / pieces[key]).is_file() for key in ("source", "prompt"))
-for name, item in pieces["items"].items():
-    board = f'levels[{item["board"]}]'
-    assert f'{board}.story_piece, {board}.goal_kind = "{name}", {item["kind"]}' in campaign
-    assert item["runtime"] == f"data/story-pieces/{name}.png" and item["runtime"] in actual
-for spec_key, runtime_field, prefix in (("laid_out", "laid_finds", "laid-"),
-                                        ("standalone_finds", "standalone_finds", "")):
-    spec = quest[spec_key]
-    assert all((ROOT / spec[key]).is_file() for key in ("source", "prompt"))
-    declaration = re.search(rf"A\.{runtime_field} = \{{([^}}]+)\}}", art).group(1)
-    assert re.findall(r'"([^"]+)"', declaration) == list(spec["items"])
-    for name, item in spec["items"].items():
-        assert set(item["states"]) == {"exposed", "covered"}
-        for state, placement in item["states"].items():
-            stem = prefix + name + ("-silhouette" if state == "covered" else "")
-            assert placement["runtime"] == f"data/finds/{stem}.png" and placement["runtime"] in actual
-            assert f"`{stem}`" in doc
-        footprint = re.search(rf'bury\({item["board"]}, \{{([^}}]+)\}}', campaign).group(1)
-        cells = [[int(q), int(r)] for q, r in re.findall(r'cell\((-?\d+),\s*(-?\d+)\)', footprint)]
-        assert cells == item["cells"], f'{name}: registered footprint differs from the campaign'
+assert re.findall(r'"([^"]+)"', declaration) == [name for sheet in sheets for name in sheet["items"]]
+board_slots = {}
+for sheet in sheets:
+    assert all((ROOT / sheet[key]).is_file() for key in ("source", "prompt"))
+    for name, item in sheet["items"].items():
+        assert item["runtime"] == f"data/story-pieces/{name}.png" and item["runtime"] in actual
+        for board in item["boards"]:
+            assert board not in board_slots, f"Multiple story pieces on board {board}"
+            board_slots[board] = name, item["kind"]
+declarations = re.findall(r'levels\[(\d+)\]\.story_piece, levels\[\1\]\.goal_kind = "([^"]+)", (\d+)', campaign)
+assert {int(board): (name, int(kind)) for board, name, kind in declarations} == board_slots
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
 
 result_icons = manifest["result_icons"]

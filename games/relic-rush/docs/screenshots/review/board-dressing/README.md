@@ -8,9 +8,9 @@ Each comparison shows the former board on the left and the current board on the 
 | Under the Pump, well mud | [480×900](pump.jpg) |
 | Quay Marker, creeper vines | [480×900](quay.jpg) |
 | Broken Cable, relay cable and salt crust | [480×900](relay.jpg) |
-| Shutter Crank, barnacles and tide-room silt | [480×900](tide-room.jpg) |
+| Archived Shutter Crank excavation with tide-room silt | [480×900](tide-room.jpg) |
 | Frost Line, wall rubble | [480×900](wall.jpg) |
-| Partial excavation, sand and trench earth | [480×900](dig-480.jpg) · [390×844](dig-390.jpg) |
+| Archived partial excavation, sand and trench earth | [480×900](dig-480.jpg) · [390×844](dig-390.jpg) |
 | Explorer's Guide | [480×900](guide-480.jpg) · [390×844](guide-390.jpg) |
 
 | Current game capture | Review |

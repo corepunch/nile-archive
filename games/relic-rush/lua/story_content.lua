@@ -71,16 +71,16 @@ return {
     }},
     {key="restore-09", phase="restore", level=9, lines={
         {"mara", "Supplies are ready. We can reach the tide room now."},
-        {"tomas", "We still need the old shutter crank. Take care on the damaged wall."},
+        {"tomas", "The shutter is missing a gear. Take care on the damaged wall."},
         {"elena", "We go together, then. Nobody steps onto that wall alone."},
     }},
     {key="before-10", phase="before", level=10, lines={
-        {"mara", "The crank should be under the silt by the door. That's a lot of barnacles."},
+        {"mara", "The gear should be by the door. That's a lot of barnacles."},
         {"tomas", "The sea has been in here. Knock it off like the salt."},
         {"elena", "Let the light tell us what it can."},
     }},
     {key="after-10", phase="after", level=10, lines={
-        {"tomas", "That crank fits the near shutter. The old warning means keep away from the quay."},
+        {"tomas", "The gear fits. Our shutter’s open. The old signal warns boats away from the quay."},
         {"mara", "I can see the shutter across the flooded gap. There’s no way to see behind it."},
         {"mara", "But the last flashes were different. Someone changed the pattern."},
         {"elena", "Someone is asking us to notice, not merely warning boats."},

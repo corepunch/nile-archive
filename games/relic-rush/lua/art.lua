@@ -28,11 +28,8 @@ A.dressing_colors = {
 }
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
-A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"}
-A.story_pieces = {"timber", "chart", "supplies"}
-A.laid_finds = {"cable"}
-A.compact_silhouettes = {"lens", "marker", "tools", "crank"}
-A.standalone_finds = {"note"}
+A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
+A.story_pieces = {"timber", "chart", "supplies", "lens", "cable", "marker", "tools", "note", "gear"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -93,25 +90,12 @@ function A.load()
     for i, key in ipairs(A.dressing_frames) do
         textures[key] = texture.region(dressing, rect((i - 1) % 5 * 132 + 2, (i - 1) // 5 * 132 + 2, 128, 128))
     end
-    local quest_atlas = texture.load("quest-objects.png")
-    for i, key in ipairs(A.quest_objects) do
-        textures[key] = texture.region(quest_atlas, rect((i - 1) % 4 * 128, (i - 1) // 4 * 128, 128, 128))
-        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")   -- compact card and board props
+    for _, key in ipairs(A.quest_objects) do
+        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
     end
+    textures["find-note"] = texture.load("finds/note.png")
     for _, key in ipairs(A.story_pieces) do
         textures["story-" .. key] = texture.load("story-pieces/" .. key .. ".png")
-    end
-    for _, key in ipairs(A.laid_finds) do
-        local stem = "laid-" .. key
-        textures["find-" .. stem] = texture.load("finds/" .. stem .. ".png")
-        textures["find-" .. stem .. "-silhouette"] = texture.load("finds/" .. stem .. "-silhouette.png")
-    end
-    for _, key in ipairs(A.compact_silhouettes) do
-        textures["find-" .. key .. "-silhouette"] = texture.load("finds/" .. key .. "-silhouette.png")
-    end
-    for _, key in ipairs(A.standalone_finds) do
-        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
-        textures["find-" .. key .. "-silhouette"] = texture.load("finds/" .. key .. "-silhouette.png")
     end
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")

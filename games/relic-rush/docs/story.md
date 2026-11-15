@@ -37,8 +37,8 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | --- | --- | --- |
 | 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 gather camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 gather the tide chart pieces; **confirm Spring well**. | A hand-changed answering flash and chart lead to the quay. |
 | 1. Find the lower quay — Elena needs to follow the chart | 5 uncover the quay marker; 6 uncover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | Tomas admits he knows the route, and agrees to guide them. |
-| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 gather supplies for the crate; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter crank. | The old warning has been deliberately changed; someone is there now. |
-| 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 uncover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
+| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 gather supplies for the crate; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter gear. | The old warning has been deliberately changed; someone is there now. |
+| 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test a route; 15 check the broken wall; 16 prepare shelter; **confirm Explorer's lodge**. | A safe shelter is ready, but the direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 recover a fragment; 18 compare measures; 19 consult records; **confirm Lost-world archive**; 20 find Ines's signed plan. | Tomas admits the broken cable and shares the key; Adrian's claim threatens the records. |
 | 3. Protect the warning — Adrian must prevent Kessler taking the relay | 21 read bearings; 22 seek an alternate landing; 23 establish lookout; **confirm Star observatory**. | The crew can guide a boat without using the damaged quay. |
@@ -69,13 +69,13 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Boards 1, 4 and 9 each use a story piece alongside their regular kinds. Matches and power-ups collect timber, map pieces or supply packs. The first clear awards the corresponding quest object. Boards 2, 3, 5–7, 10 and 13 have buried objects with a crew reaction at halfway and a clear view of the find before the item card. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Boards 1–7, 9, 10 and 13 use a story piece alongside their regular kinds. Matches and power-ups collect it. The first clear awards the corresponding quest object. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 
 **Status:** Story materials are in play across the campaign. The later chapters still use provisional dialogue.
 
-A board is not a pause between scenes. It is the crew doing the task the last line named: cutting creepers off the path, washing mud off the chart, prising barnacles from the shutter. The rules stay as they are. Each rule family can wear several looks, and a board picks the look its task calls for.
+A board is not a pause between scenes. It is the crew doing the task the last line named: cutting creepers off the path, gathering pieces of the tide chart, prising barnacles from the shutter. The rules stay as they are. Each rule family can wear several looks, and a board picks the look its task calls for.
 
 ### Rule families and the readability contract
 
@@ -83,7 +83,7 @@ A board is not a pause between scenes. It is the crew doing the task the last li
 | --- | --- | --- | --- |
 | **Lock** | Holds a piece in place; one hit per strand (`chain`, `chain-2`) | Iron chain | Creeper vine, rope lashing, cable snarl, claim seal |
 | **Cover** | Encases a piece; one hit per layer (`ice-1`, `ice-2`) | Salt crust | Barnacle crust, wall rubble, ice (frozen boards only) |
-| **Floor** | Match directly over buried objects or spreading silt. Match through cleared stone to sweep drift sand. | Dig sand or stonework | Well mud, tide-room silt, river silt, drift sand |
+| **Floor** | Match on spreading silt or mud. Match through cleared stone to sweep drift sand. | Stonework | Well mud, river silt, drift sand |
 
 Each family keeps one visual language in every look, so a player who knows the rule recognises it at once:
 
@@ -98,11 +98,9 @@ The [asset catalogue](asset-catalogue.md#story-materials) records every painted 
 
 ### Flow around a board
 
-1. **The scene line names the job.** The last line before Play names what is in the way ("The pump's choked. Get the chain off and wash the chart clean").
+1. **The scene line names the job.** The last line before Play names what is in the way ("The pump chain has rusted fast. Break it and gather the loose chart pieces.").
 2. **The board shows that job.** The board's skin and lesson text match the line.
-3. **A mid-board line marks progress.** This uses the existing half-revealed bark, or a line when the last piece of a dressed obstacle goes.
-4. **The cleared board is the next scene's picture.** The first-clear exchange plays over the emptied board, as recovered finds already do.
-5. **Optional: the backdrop changes.** For example, board 4's well water runs clear as the mud goes. This comes last and only where it is cheap.
+3. **The item card hands the clue to the story.** The first-clear exchange can refer to the recovered object once players have seen it.
 
 ### Chapter 1 boards
 
@@ -111,15 +109,15 @@ Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
 | Board | Task | Obstacles | Lock look | Cover look | Floor look | First mention |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | Gather 10 timber pieces | — | — | — | — | Elena spots the timber on the landing. |
-| 2 | Recover the lamp lens | — | — | — | Dig sand | — |
-| 3 | Find the relay cable | stone | — | — | Dig sand | — |
+| 2 | Gather 10 lenses | — | — | — | Mara needs a lens for the lookout lamp. |
+| 3 | Gather 12 cable coils | stone | — | — | Mara wonders whether the relay cable explains the flashes. |
 | 4 | Gather 15 map pieces | 4 / 0 | Iron chain (base) | — | — | Tomas names the rusted chain and loose chart pieces after board 3. |
-| 5 | Uncover the quay marker | 4 / 0 | **Creeper vine** | — | Drift sand and dig sand | Tomas points to the marker under the creepers after the well is restored. |
-| 6 | Uncover the shore marker | 0 / 5 | — | **Salt crust** (base) | Dig sand | Lesson: *Match the piece under the salt crust to break it.* |
-| 7 | Recover the tool roll | 3 / 4 (2) | **Rope lashing** | Salt crust | Dig sand | Mara remembers lashing the tools down. |
+| 5 | Gather 14 marker pieces | 4 / 0 | **Creeper vine** | — | Drift sand | Tomas points to the marker under the creepers after the well is restored. |
+| 6 | Gather 14 marker pieces | 0 / 5 | — | **Salt crust** (base) | — | The lesson teaches matching the piece within the salt crust. |
+| 7 | Gather 16 tool rolls | 3 / 4 (2) | **Rope lashing** | Salt crust | — | Mara remembers lashing the tools down. |
 | 8 | Recover the broken cable | 4 / 6 (2) | **Cable snarl** | Salt crust | Drift sand | Tomas points out the cable tangled in the old fittings. |
 | 9 | Gather 18 supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas mentions the stowed supply crate after board 8. |
-| 10 | Recover the shutter crank | 6 / 6 (2) | Iron chain | **Barnacle crust** | Tide-room silt | *Tomas: The sea has been in here. Knock it off like the salt.* |
+| 10 | Gather 20 gears | 6 / 6 (2) | Iron chain | **Barnacle crust** | Drift sand | *Tomas: The sea has been in here. Knock it off like the salt.* |
 
 ### Chapters 2–3 by quest
 
@@ -127,7 +125,7 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 | Quest (boards) | Lock look | Cover look | Floor look | Note |
 | --- | --- | --- | --- | --- |
-| Find the sender (11–13) | Creeper vine (12–13) | — | Drift sand and dig sand (13) | Clearing the dig sand recovers the note. The warning and initials are visible on the item card before the courtyard is built. |
+| Find the sender (11–13) | Creeper vine (12–13) | — | Drift sand (13) | Collecting folded notes recovers the warning. The warning and initials are visible on the item card before the courtyard is built. |
 | Make a way home (14–16) | Rope lashing | **Wall rubble** (15), salt crust (16) | — | Board 15 checks the cracked wall. Rename *The Frost Line* during the Chapter 2 rewrite. |
 | Keep the record (17–20) | Iron chain | Salt crust | Drift sand (18), spreading river silt (20) | The record boxes are chained shut. |
 | Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Drift sand (22) | Mara spots the ice before board 22. |
@@ -225,18 +223,18 @@ These chapters are provisional. Board dressing follows the existing placements a
 **After restoration 9**
 
 - **Mara:** Supplies are ready. We can reach the tide room now.
-- **Tomas:** We still need the old shutter crank. Take care on the damaged wall.
+- **Tomas:** The shutter is missing a gear. Take care on the damaged wall.
 - **Elena:** We go together, then. Nobody steps onto that wall alone.
 
 **Before level 10**
 
-- **Mara:** The crank should be under the silt by the door. That's a lot of barnacles.
+- **Mara:** The gear should be by the door. That's a lot of barnacles.
 - **Tomas:** The sea has been in here. Knock it off like the salt.
 - **Elena:** Let the light tell us what it can.
 
 **Level 10**
 
-- **Tomas:** That crank fits the near shutter. The old warning means keep away from the quay.
+- **Tomas:** The gear fits. Our shutter’s open. The old signal warns boats away from the quay.
 - **Mara:** I can see the shutter across the flooded gap. There’s no way to see behind it.
 - **Mara:** But the last flashes were different. Someone changed the pattern.
 - **Elena:** Someone is asking us to notice, not merely warning boats.
@@ -423,7 +421,7 @@ Choice prompt: Who should answer the signal?
 
 ## Small lines
 
-**The delayed reply.** On the first win of board 3, the distant light waits, then flashes three times as the buried cable comes into view. On board 30, the signal plate fits into the exit when the player completes the delivery and clears the remaining blockers. Ines waits and answers with the same three flashes from her lantern at the safe landing. The reduced motion setting uses a steady lantern and the dialogue names the pattern.
+**The delayed reply.** On the first win of board 3, the distant light waits, then flashes three times before the relay cable appears on its first-clear card. On board 30, the signal plate fits into the exit when the player completes the delivery and clears the remaining blockers. Ines waits and answers with the same three flashes from her lantern at the safe landing. The reduced motion setting uses a steady lantern and the dialogue names the pattern.
 
 The region greetings, building tap lines, recap and finale describe the relay and the quay. Mechanics lessons remain on the boards.
 
@@ -437,7 +435,14 @@ A cold reader followed the clue from the fresh supplies to the note and Tomas’
 
 A cold reader followed the camp timber, chart pieces and supply crate from their board objectives to the three restorations.
 
+A cold reader followed the relay cable, shutter gear and folded note through
+their story handoffs. Tomas names the old signal when he opens the near shutter.
+
 ## Changelog
+
+- 2026-11-15: Converted the remaining buried finds on boards 2, 3, 5–7, 10 and 13 to collection goals. The recovered note still shows I. R. before the courtyard scene.
+
+- 2026-11-15: Replaced the crank with a bronze gear. Tomas fits it to open the near shutter on board 10.
 
 - 2026-11-15: Boards 1, 4 and 9 each replace one regular colour with a collectible story piece. Their rewards are the camp timber, tide chart and supply crate.
 

@@ -1,13 +1,16 @@
 # Relic Rush board progression
 
-The expedition uses relic, blocker, sand sweeping, spreading ground and delivery goals. Boards
-2, 3, 5–7, 10 and 13 bury their quest object under sand or tide-room silt.
-The cable takes six cells in a zigzag.
-Each buried find shows a black silhouette over its covered cells until a match reveals the painted find.
-Uncovering all buried cells is a goal (shown with the object's own icon), a crew member speaks at
-the halfway point, and the first clear shows the whole object on the emptied
-board before its **Item recovered!** card. Board 8 sweeps sand from the stonework and shows the broken cable on its recovered-item card. Board 1 uses four regular kinds and one story piece. Boards 4 and 9 use five regular kinds and one story piece. Boards 18
-and 28 provide lighter intervals in the later chapters.
+The expedition uses collection, blocker, sand sweeping, spreading ground and
+delivery goals. On boards 1–7, 9, 10 and 13 the story piece occupies one colour
+slot and advances the collection counter. The first clear shows the quest
+object on the **Item recovered!** card. Board 8 sweeps sand from the stonework
+and awards the broken cable. Boards 18 and 28 provide lighter intervals in the
+later chapters.
+
+| Boards | Palette |
+| --- | --- |
+| 1, 2, 5, 10, 13 | Four regular kinds and one story piece |
+| 3, 4, 6, 7, 9 | Five regular kinds and one story piece |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
 to choose a story sprite and the colour slot it replaces. An optional
@@ -27,18 +30,18 @@ objectives move the emphasis within each family.
 | Level | Board | Family | Lesson and focus | Goals | Moves |
 | ---: | --- | --- | --- | --- | ---: |
 | 1 | First Light | Tapered bowl | Match 3 to collect timber. | 10 timber pieces | 24 |
-| 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. Uncover the lens. | find | 29 |
-| 3 | The Buried Cable | Two chambers | Break the stone. Uncover the cable. (stone) | blockers, find | 32 |
+| 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. Collect lenses. | 10 lenses | 29 |
+| 3 | The Relay Cable | Two chambers | Match beside stone to break it. Collect cable coils. | blockers, 12 cable coils | 32 |
 | 4 | Under the Pump | Twin lanes | Collect map pieces and break the chains. | blockers, 15 map pieces | 35 |
-| 5 | The Quay Marker | Tapered bowl | Match on cleared stone to sweep more sand. (sand) | sand, find | 35 |
-| 6 | The Shore Marker | Two chambers | Match the piece under the salt crust to break it. | blockers, find | 37 |
-| 7 | The Tool Roll | Two chambers | Break the carved stone. Uncover the tools. (stone) | blockers, find | 40 |
+| 5 | The Quay Marker | Tapered bowl | Match on cleared stone to sweep sand. Collect marker pieces. | sand, 14 marker pieces | 35 |
+| 6 | The Shore Marker | Two chambers | Match the piece under the salt crust. Collect marker pieces. | blockers, 14 marker pieces | 37 |
+| 7 | The Tool Roll | Two chambers | Clear the stone and salt crust. Collect tool rolls. | blockers, 16 tool rolls | 40 |
 | 8 | The Broken Cable | Compact court | Match 5 for a rainbow ball. (sand) | sand, relics | 40 |
 | 9 | The Supply Crate | Two chambers | Collect supply packs. Clear the ropes and salt crust. | blockers, 18 supply packs | 43 |
-| 10 | The Shutter Crank | Twin lanes | Sweep the sand. Uncover the crank. (sand) | sand, blockers, find | 46 |
+| 10 | The Shutter Gear | Twin lanes | Sweep the sand, clear blockers, and collect gears. | sand, blockers, 20 gears | 46 |
 | 11 | The Long Terrace | Tapered bowl | Collect the relics. | relics | 33 |
 | 12 | Twelve Crates | Twin lanes | Free relics caught in the vines. | blockers, relics | 36 |
-| 13 | Names in the Stone | Twin lanes | Match on the sand to uncover the note. | sand, blockers, buried note | 37 |
+| 13 | Names in the Stone | Twin lanes | Sweep the sand, clear vines, and collect folded notes. | sand, blockers, 14 folded notes | 37 |
 | 14 | Static | Two chambers | Work around the broken seam. | blockers, relics | 38 |
 | 15 | The Frost Line | Tapered bowl | Clear the stone to open the board. (stone) | blockers, relics | 39 |
 | 16 | Supper for Twelve | Twin lanes | Hit the salt crust with matches or power-ups. | blockers, relics | 40 |
