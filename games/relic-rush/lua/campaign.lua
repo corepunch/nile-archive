@@ -324,9 +324,11 @@ for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Bring the tablet down to its exit."
 -- Matches touching the mosaic restore more floor tiles.
+-- Lane boards with locks (10, 22) start with both lanes and the one-cell spine restored:
+-- matches on the spine are too rare to restore it within the moves.
 local carpet = {
-    [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = {cell(-2,1), cell(-2,2)},
-    [13] = {cell(-2,1), cell(-2,2)}, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0)},
+    [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = {cell(-2,1), cell(-2,2), cell(2,-2), cell(2,-1), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)},
+    [13] = {cell(-2,1), cell(-2,2)}, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0), cell(-2,0), cell(-2,1), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)},
     [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
 }
 for i, seeds in pairs(carpet) do levels[i].carpet = seeds end

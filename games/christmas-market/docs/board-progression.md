@@ -24,7 +24,7 @@ objectives move the emphasis within each family.
 | 6 | Ribbon Wishes | Compact court | Match on ice to crack it. (lanternlight) | lanternlight, blockers | 38 |
 | 7 | Candlelight Circle | Two chambers | Break the carved stone. (stone) | blockers, bows | 40 |
 | 8 | Carousel Stars | Tapered bowl | Clear the tinsel and the ice. | blockers, bows | 42 |
-| 9 | Skating Evening | Twin lanes | Rockets clear a whole line. (lanternlight) | lanternlight, blockers | 44 |
+| 9 | Skating Evening | Twin lanes | Rockets clear a whole line. (lanternlight) | lanternlight, blockers | 46 |
 | 10 | Under the Big Fir | Tapered bowl | Clear the tinsel and the ice. | blockers, bows | 46 |
 | 11 | Carols and Crumbs | Two chambers | Share the lanternlight around the square. (lanternlight) | lanternlight, bows | 32 |
 | 12 | Word from Fenwick | Tapered bowl | Match five in a line for a rainbow ball. | bows, blockers | 35 |
