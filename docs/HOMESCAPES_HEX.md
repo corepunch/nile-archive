@@ -49,7 +49,7 @@ These are explicit hex adaptation choices, not original replay results.
 | `TRASH` | Swappable/falling cookies, three original damage states; adjacent matches or direct hits |
 | `TRASH_STONE` | Swappable/falling hazelnuts; only direct hits damage; original whole/split/exposed nut states |
 | `ICE` | Holds pieces. One layer per direct hit, before chain. Both strengths use [the painted ice set](../art/match3-ice/README.md). |
-| `LOCK` | Holds pieces. One chain layer per direct hit, after ice. Includes a mirrored single-chain state. |
+| `LOCK` | Holds pieces. One chain layer per direct hit, after ice. Includes a mirrored single-chain state. The [painted chains](../art/match3-chain-paint/README.md) attach to the sloped hex edges. |
 | `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. All six original layer appearances and both visible cherry variants |
 | `OIL` | One layer under a piece (`TunerUnder`), cleared by a match on its cell or a blast; after a move that clears none it spreads to one neighbouring cell (`GrowsByInactivity`). Drawn as one SDF patch of engine-made golden liquid with two drifting bubble layers, after Homescapes' `oil.fsh`; goal `CELL_OIL` uses `goal-oil`. Levels 161 and 162 are in the reference pack |
 | `JELLY` | Carpet floor spreads through a matching group or carried power-up wave. All carpeted cells draw as one rounded patch: a signed distance field of their hexes (`texture.hex_field`) masks the tiled source swatch (`gfx.sdf_mask`). The goal uses `goal-carpet` |

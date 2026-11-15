@@ -148,13 +148,14 @@ local guide_entries = {
 }
 local function guide_icon(box, icon)
     local at=box:center()
-    local layer=rect.centered(at,size2(52,52))
+    local layer=rect.centered(at,size2(48,48))
+    if icon.front=="chain" then R.draw_ground("face",pp(at),layer.w * P.scale * .5,0,P.alpha) end
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
     if icon.front and icon.front:sub(1,4)=="ice-" then
         R.draw_ice(tonumber(icon.front:sub(5)),pp(at),P.scale,P.alpha)
-    elseif icon.front then picture(R.board_art[icon.front],layer:inflate(-2),255) end
+    elseif icon.front then picture(R.board_art[icon.front],layer,255) end
 end
 local guide_form = match3.guide_form({
     title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",

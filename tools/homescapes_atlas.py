@@ -15,12 +15,12 @@ ENGINE_MADE = {'goal-carpet': 'python3 tools/carpet_goal_icon.py', 'goal-oil': '
 def engine_made(name): return ROOT / 'engine/art/match3' / f'{name}.png'
 ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
-           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut'}
+           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'delivery': 'donut'}
 # Extracted originals no board draws: the portals (the engine has no tunnels),
 # honey (HONEY draws as jelly-N), the carpet hex (carpet draws as one patch of
-# carpet-swatch), and ice (the live atlases use our painted set).
+# carpet-swatch), ice and chains (the live atlases use painted sets).
 UNREGISTERED = {'portal-entrance-source', 'portal-output-source', 'honey-material', 'carpet',
-                'ice-1', 'ice-2'}
+                'ice-1', 'ice-2', 'chain-1', 'chain-1-mirror', 'chain-2'}
 
 
 def registered():

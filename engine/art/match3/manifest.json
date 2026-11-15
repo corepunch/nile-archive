@@ -208,18 +208,28 @@
       "mask": false
     },
     "chain": {
-      "source": "engine/art/homescapes/sprites/chain-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        89
+      "source": "art/match3-chain-paint/edge-anchors.png",
+      "prompt": "art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "art/match3-chain-paint/source.png",
+      "geometry": "engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        0,
+        0,
+        557,
+        470
       ],
-      "canvas": [
+      "crop": [
+        38,
+        -6,
+        576,
+        532
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "ice-2": {
       "source": "art/match3-ice/source.png",
@@ -1834,46 +1844,77 @@
       "mask": false
     },
     "chain-1": {
-      "source": "engine/art/homescapes/sprites/chain-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        89
+      "source": "art/match3-chain-paint/edge-anchors.png",
+      "prompt": "art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "art/match3-chain-paint/source.png",
+      "geometry": "engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        0,
+        0,
+        557,
+        470
       ],
-      "canvas": [
+      "crop": [
+        38,
+        -6,
+        576,
+        532
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
         128,
         128
       ],
-      "mask": false
+      "alias": "chain"
     },
     "chain-1-mirror": {
-      "source": "engine/art/homescapes/sprites/chain-1-mirror.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        92,
-        89
+      "source": "art/match3-chain-paint/edge-anchors.png",
+      "prompt": "art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "art/match3-chain-paint/source.png",
+      "geometry": "engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        557,
+        0,
+        1114,
+        470
       ],
-      "canvas": [
+      "crop": [
+        3,
+        -10,
+        548,
+        535
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "chain-2": {
-      "source": "engine/art/homescapes/sprites/chain-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        88
+      "source": "art/match3-chain-paint/edge-anchors.png",
+      "prompt": "art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "art/match3-chain-paint/source.png",
+      "geometry": "engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        1114,
+        0,
+        1671,
+        470
       ],
-      "canvas": [
+      "crop": [
+        -6,
+        2,
+        517,
+        525
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "cherry": {
       "source": "engine/art/homescapes/sprites/cherry.png",
@@ -3337,8 +3378,11 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "8fd4c410a98954c350a8f18553637fe32f0c979bbd7a0e8f261c0be7b1e0bbb9",
+    "recipe": "1dc83bcdefeb1d5156285451e5a595aaab11c9aeb6cb6cc4d050745f8a5aacd5",
     "inputs": {
+      "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
+      "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
+      "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
       "art/match3-ice/clear-shell.png": "1e0aab9594d7500bd72dab66a0e5f5fd052fc0d8de13a1b64bf49e16a336378b",
       "art/match3-ice/concept.png": "24ec0da136cff61ec8100b37e858878dd852948daf94aa4e512e1e55c876a507",
       "art/match3-ice/filled-pane-prompt.txt": "57c51c844e2090d813ac27d64b9f6e82ea62a34726f054dcf221b6325ffa4eb1",
@@ -3379,9 +3423,6 @@
       "engine/art/homescapes/sprites/carry-exit-arrow.png": "ab748d9b2d5d108b0fa7dddcb6ff1711640ae0afc43ebb64615d496d79b945e4",
       "engine/art/homescapes/sprites/ceramic-tile-1.png": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
       "engine/art/homescapes/sprites/ceramic-tile-2.png": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
-      "engine/art/homescapes/sprites/chain-1-mirror.png": "4a8d55a723c47232842840593784e8037be59466fe4e9595d0190030f6904b3e",
-      "engine/art/homescapes/sprites/chain-1.png": "6dd6e26a2517fecaf23426569c131de0108465e35ab13b12075471bbea30d0e4",
-      "engine/art/homescapes/sprites/chain-2.png": "b079e697e46e005d1faecd99d755293af3b0678705c105b9f2f9f05bedf1563b",
       "engine/art/homescapes/sprites/cherry.png": "26a4e2666f714bb2eee3c860338c21d80c1fef944f90364710045a06a5e6cf57",
       "engine/art/homescapes/sprites/chip-0.png": "094a4dd120f6872221659620a8173c3cd5102efa6595fb0b905427dc339f0f7d",
       "engine/art/homescapes/sprites/chip-1.png": "cb86082a22841f680c69fe75abdcc79c1c1d238e9528af4ff3253004f5835218",
@@ -3460,12 +3501,13 @@
       "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "fbeb9a10d234e5e0d34c6d0fb2485602f360ef877425fcd60dfcf873af38dd42",
+      "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
+      "tools/match3_theme_art.py": "697afae2facca38df8f6da203bdbd1940818ee2e4f69c14a96216465b32c5f6e",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
-      "engine/data/match3.png": "2d33650ea98348d0bc2c3533b663fe77a120c1abe2a2b92ebb1ccc14f4a9de5e",
+      "engine/data/match3.png": "9ebbf6cd4bbda86b401c9d8b2da0401ce23be2b3a0b8826b2776d7cc0a7e0463",
       "engine/match3_frames.lua": "82efa22d054245146d316bb38e1bb89606bd0e257d0da4eb6279c1abc62dd79d"
     }
   }

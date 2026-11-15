@@ -30,7 +30,6 @@ local rgba = color
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
-local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
 local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
@@ -157,7 +156,7 @@ local function draw_blockers(sx)
             if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
             alpha = alpha * elements.reveal_cover(R, rules)
             if visible then
-                local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
+                local dst = rect.centered(at, size2.splat(CELL_FACE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
                 if g.ice[i] > 0 then
                     R.draw_ice(g.ice[i],at,scale,alpha,true)

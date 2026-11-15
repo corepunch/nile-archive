@@ -33,7 +33,6 @@ local rgba = color
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
-local STATE_SIZE = 2 * HEX_R
 local CELL_FACE_R = HEX_R - .65
 -- Registered edge sprites have a centreline radius of 46 px on a 128px canvas.
 local FESTIVE = not app.arg("default-match3")
@@ -125,12 +124,11 @@ local function draw_blockers(sx)
             local visible, scale, alpha = true, 1, 1
             if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
             if visible then
-                local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
+                local dst = rect.centered(at, size2.splat(2 * CELL_FACE_R * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha * cover)
                 if ice then
                     local name = g.ice[i] > 1 and "ice-2" or "ice-1"
-                    local face = rect.centered(at, size2.splat(2 * CELL_FACE_R * scale))
-                    gfx.image(R.board_art[name], face, tint)
+                    gfx.image(R.board_art[name], dst, tint)
                 end
                 if tinsel then
                     gfx.image(elements.chain(R,g,i), dst, tint)

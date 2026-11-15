@@ -87,9 +87,9 @@
       ],
       "runtime": "data/match3.png",
       "atlas_frame": "chain",
-      "fit": "free-object",
+      "fit": "hex-slot",
       "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-chain-paint/source.png",
+      "source": "../../art/match3-chain-paint/edge-anchors.png",
       "atlas_section": "board_theme"
     },
     "ice-2": {
@@ -1307,9 +1307,9 @@
     },
     "chain_paint": {
       "generator": "built-in ImageGen",
-      "source": "../../art/match3-chain-paint/source.png",
-      "prompt": "../../art/match3-chain-paint/prompt.txt",
-      "edit_target": "../../art/match3-chain-paint/edit-target.png",
+      "source": "../../art/match3-chain-paint/edge-anchors.png",
+      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/source.png",
       "states": {
         "chain": "one hit remaining, silver",
         "chain-1-mirror": "one hit remaining, gold, opposite orientation",
@@ -1317,7 +1317,7 @@
       },
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/curved-chains/README.md"
+      "review": "docs/screenshots/review/chain-anchors/README.md"
     },
     "stone_paint": {
       "generator": "built-in ImageGen",

@@ -170,6 +170,9 @@ def build_default(check):
     ice, ice_records = registered_ice()
     originals.update(ice)
     registration_h.update(ice_records)
+    chains, chain_records = match3_theme_art.registered_chains('relic-rush', ROOT)
+    originals.update(chains)
+    registration_h.update(chain_records)
     start = 11 * 8
     end = start + sum(name not in frames for name in originals)
     required_height = ((end + 7) // 8) * 128
@@ -207,7 +210,8 @@ def build_default(check):
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
         [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']]
-        + element_sources + homescapes_atlas.inputs() + ICE_INPUTS + list(effect_sources.values()) + [Path(pack_particles.__file__)],
+        + element_sources + homescapes_atlas.inputs() + ICE_INPUTS + match3_theme_art.chain_inputs()
+        + list(effect_sources.values()) + [Path(pack_particles.__file__), Path(match3_theme_art.__file__)],
         [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
     return raw

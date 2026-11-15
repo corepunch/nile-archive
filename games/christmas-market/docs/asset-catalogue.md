@@ -13,7 +13,7 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | `oil-material`, `goal-oil` | Pale matte snow drifts beneath treats. Matching on it clears it. If the turn clears none, snow drifts into a neighbouring cell. A snow mound identifies the goal. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's red parcel. Source boards use the original donut. |
-| `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
+| `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
@@ -21,7 +21,7 @@ Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together f
 
 `python3 tools/match3_specials.py christmas-market` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
 
-The [curved chain sheet](../../../art/match3-chain-paint/source.png) was painted in one built-in ImageGen edit for both games. See the [prompt](../../../art/match3-chain-paint/prompt.txt), the [edit target](../../../art/match3-chain-paint/edit-target.png) and the [atlas manifest](../art/match3-atlas.json) for the crops and placements. Rebuild with `python3 tools/match3_atlas.py`. [Board review at both phone sizes](screenshots/review/curved-chains/README.md).
+One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
 
 The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one built-in ImageGen call for both games using the [approved concepts](../../../art/match3-terrain/christmas-market-concepts.png). The [prompt](../../../art/match3-terrain/prompt.txt) and [registration manifest](../art/match3-atlas.json) record the opaque swatch crops and alpha-preserving goal icon placement. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/themed-terrain/README.md).
 

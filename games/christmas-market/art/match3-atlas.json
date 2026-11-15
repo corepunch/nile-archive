@@ -1296,20 +1296,6 @@
       ],
       "mask": false
     },
-    "chain-1": {
-      "source": "engine/art/homescapes/sprites/chain-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        89
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "cherry": {
       "source": "engine/art/homescapes/sprites/cherry.png",
       "rotation": 0,
@@ -3075,6 +3061,103 @@
     }
   },
   "board_theme": {
+    "chain": {
+      "source": "../../art/match3-chain-paint/edge-anchors.png",
+      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/source.png",
+      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        0,
+        470,
+        557,
+        941
+      ],
+      "crop": [
+        38,
+        -58,
+        576,
+        480
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
+        128,
+        128
+      ]
+    },
+    "chain-1-mirror": {
+      "source": "../../art/match3-chain-paint/edge-anchors.png",
+      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/source.png",
+      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        557,
+        470,
+        1114,
+        941
+      ],
+      "crop": [
+        2,
+        -60,
+        547,
+        485
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
+        128,
+        128
+      ]
+    },
+    "chain-2": {
+      "source": "../../art/match3-chain-paint/edge-anchors.png",
+      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/source.png",
+      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        1114,
+        470,
+        1671,
+        941
+      ],
+      "crop": [
+        -6,
+        -50,
+        517,
+        473
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
+        128,
+        128
+      ]
+    },
+    "chain-1": {
+      "source": "../../art/match3-chain-paint/edge-anchors.png",
+      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
+      "edit_target": "../../art/match3-chain-paint/source.png",
+      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
+      "generator": "built-in ImageGen",
+      "bay": [
+        0,
+        470,
+        557,
+        941
+      ],
+      "crop": [
+        38,
+        -58,
+        576,
+        480
+      ],
+      "fit": "edge-mounted on the canonical hex with authored alpha",
+      "fitted_size": [
+        128,
+        128
+      ],
+      "alias": "chain"
+    },
     "festive-0": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
@@ -3456,72 +3539,6 @@
         29
       ]
     },
-    "chain": {
-      "source": "../../art/match3-chain-paint/source.png",
-      "prompt": "../../art/match3-chain-paint/prompt.txt",
-      "crop": [
-        0,
-        470,
-        557,
-        941
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        97,
-        56
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-chain-paint/edit-target.png",
-      "offset": [
-        15,
-        36
-      ]
-    },
-    "chain-1-mirror": {
-      "source": "../../art/match3-chain-paint/source.png",
-      "prompt": "../../art/match3-chain-paint/prompt.txt",
-      "crop": [
-        557,
-        470,
-        1114,
-        941
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        97,
-        56
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-chain-paint/edit-target.png",
-      "offset": [
-        15,
-        36
-      ]
-    },
-    "chain-2": {
-      "source": "../../art/match3-chain-paint/source.png",
-      "prompt": "../../art/match3-chain-paint/prompt.txt",
-      "crop": [
-        1114,
-        470,
-        1672,
-        941
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        97,
-        62
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-chain-paint/edit-target.png",
-      "offset": [
-        15,
-        33
-      ]
-    },
     "stone-1": {
       "source": "../../art/match3-blockers/source.png",
       "prompt": "../../art/match3-blockers/prompt.txt",
@@ -3600,13 +3617,13 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "8fd4c410a98954c350a8f18553637fe32f0c979bbd7a0e8f261c0be7b1e0bbb9",
+    "recipe": "1dc83bcdefeb1d5156285451e5a595aaab11c9aeb6cb6cc4d050745f8a5aacd5",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
-      "art/match3-chain-paint/edit-target.png": "7ee50689492c7eee47b14e77dde24351da75ac89c3d359993b7ab8a5bd35848a",
-      "art/match3-chain-paint/prompt.txt": "9d911d21024a3d3c12969959e60bd5c89355fc8abf8e0f97c64a766c27865998",
+      "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
+      "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
       "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
       "art/match3-ice/clear-shell.png": "1e0aab9594d7500bd72dab66a0e5f5fd052fc0d8de13a1b64bf49e16a336378b",
       "art/match3-ice/concept.png": "24ec0da136cff61ec8100b37e858878dd852948daf94aa4e512e1e55c876a507",
@@ -3658,9 +3675,6 @@
       "engine/art/homescapes/sprites/carry-exit-arrow.png": "ab748d9b2d5d108b0fa7dddcb6ff1711640ae0afc43ebb64615d496d79b945e4",
       "engine/art/homescapes/sprites/ceramic-tile-1.png": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
       "engine/art/homescapes/sprites/ceramic-tile-2.png": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
-      "engine/art/homescapes/sprites/chain-1-mirror.png": "4a8d55a723c47232842840593784e8037be59466fe4e9595d0190030f6904b3e",
-      "engine/art/homescapes/sprites/chain-1.png": "6dd6e26a2517fecaf23426569c131de0108465e35ab13b12075471bbea30d0e4",
-      "engine/art/homescapes/sprites/chain-2.png": "b079e697e46e005d1faecd99d755293af3b0678705c105b9f2f9f05bedf1563b",
       "engine/art/homescapes/sprites/cherry.png": "26a4e2666f714bb2eee3c860338c21d80c1fef944f90364710045a06a5e6cf57",
       "engine/art/homescapes/sprites/chip-0.png": "094a4dd120f6872221659620a8173c3cd5102efa6595fb0b905427dc339f0f7d",
       "engine/art/homescapes/sprites/chip-1.png": "cb86082a22841f680c69fe75abdcc79c1c1d238e9528af4ff3253004f5835218",
@@ -3777,15 +3791,15 @@
       "games/relic-rush/data/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
       "games/relic-rush/data/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "fbeb9a10d234e5e0d34c6d0fb2485602f360ef877425fcd60dfcf873af38dd42",
+      "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
-      "tools/match3_theme_art.py": "07b0d3c96c9fce9f333dd26c5d8420dcf91beddcd085e1dac46351a03673dd3a",
+      "tools/match3_theme_art.py": "697afae2facca38df8f6da203bdbd1940818ee2e4f69c14a96216465b32c5f6e",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-      "games/christmas-market/data/match3.png": "f27e634c0db94defda56ccfe8f55c51248f664ac255aabd57ac1c5931a25913d",
+      "games/christmas-market/data/match3.png": "b6fb5f27ce80f1b937747cd58d67f0b746b99827946039a7290d0d89a9ae010e",
       "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
       "games/christmas-market/lua/match3_skin.lua": "c802f38e88b4fcd89a6d9d127b90eea418a529711c7f7adb15abf8284e98f5a0"
     }
