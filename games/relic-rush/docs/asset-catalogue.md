@@ -6,7 +6,7 @@ The default chips retain the original identities (sun idol, flame, jade leaf, sc
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
-| `relics-0` through `relics-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
+| `relics-0` through `relics-5` | Round gold sun coin, red flame, jade leaf, blue scarab, violet crystal and orange amphora. The same frames appear in chip goals. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Terracotta-red collars and waist, with old-gold long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt and inset socket disc, a rope fuse and a lit tip. Parchment paper plane: Christmas Market's painted plane with its blues remapped by luminance to parchment shades. The rainbow ball has chamfered enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
 | `carpet-swatch`, `goal-carpet` | Dusty blue tesserae and a limestone chevron mark restored floor. Matching on the mosaic restores the cells it clears. The goal shows a fragment of the restored pattern. |
@@ -16,6 +16,8 @@ The default chips retain the original identities (sun idol, flame, jade leaf, sc
 | `chain`, `chain-1-mirror`, `chain-2` | A hanging silver strand marks one hit remaining. The gold strand curves in the opposite direction on mirrored source cells. Two interwoven silver strands mark two hits remaining. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
+
+The round sun coin at `relics-0` is the default Relics idol (kind 0). The board, idol objectives, Explorer's Guide and Amulet displays reuse the same frame. Selection, hints and blockers keep their separate overlays. Built-in ImageGen authored the [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
@@ -175,7 +177,7 @@ the game does not recolour one gem into other kinds.
 
 | ID / rule name | Relics (default) | Jewels | Resources | Rule meaning |
 | --- | --- | --- | --- | --- |
-| 0 / IDOL | Gold sun idol | Yellow hex gem | Coins | Idol objective and score; reused Gold purse icon |
+| 0 / IDOL | Round gold sun coin | Yellow hex gem | Coins | Idol objective and score; reused Amulet icon |
 | 1 / FLAME | Coral flame | Red heart | Terracotta amphora | Ordinary matching kind |
 | 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
@@ -591,15 +593,13 @@ See [checked in-game captures and commands](review/trickling/README.md) and the
 prompt, all supported states and crop/rotation registration are catalogued in
 `engine/art/match3/manifest.json` at repository root.
 
-### Flat-top hex pieces; original gem set retained
+### Earlier flat-top piece artwork
 
-Relic Rush retains its original flame and the other original piece identities.
-Only the sun idol and yellow hex gem contours were reauthored to match the
-board's six-sided flat-top orientation; the sun face remains upright.
-`art/tile-sets/source-flat-hex.png` and `flat-hex.prompt.txt` preserve the whole
-set edit. `piece_replacements` in the state manifest records both crops and
-their spatial fit to the renderer-authored cell aspect. The other sixteen
-pieces, including the flame, match the original runtime pixels exactly.
+The earlier flat-top sun idol and the Jewels pack's yellow hex gem come from
+`art/tile-sets/source-flat-hex.png` and `flat-hex.prompt.txt`.
+`piece_replacements` in the state manifest records both historical crops and
+their fit to the cell. The current atlas uses the round sun coin in the Relics
+pack and the six-sided yellow gem in the Jewels pack.
 
 The clay brick belongs to the independent engine default atlas and is not used
 by this game's overrides. Reproduce with `python3 tools/match3_atlas.py` and
@@ -669,7 +669,7 @@ added. Reproduce with the existing native-input hold/placement captures in the
 
 ## Settings gear and three-resource wallet
 
-The legacy `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys now draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart from the same atlas; it is a wallet readout, not an interactive control. The hex amulet uses the existing archaeological sun idol, and discovery stars retain their documented procedural glyph. Wood, stone and compasses are retired from wallet UI, costs and rewards; their old slots remain reserved for save compatibility.
+The legacy `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys now draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart from the same atlas; it is a wallet readout, not an interactive control. The default Amulet icon uses the round sun coin, and discovery stars retain their documented procedural glyph. Wood, stone and compasses are retired from wallet UI, costs and rewards; their old slots remain reserved for save compatibility.
 
 All five gear states were generated together by ImageGen; `settings-lives-prompt.txt` records the prompt and alpha cutout edit. `python3 games/relic-rush/tools/prepare_hud.py` performs only grid crops and thumbnail registration to 128px RGBA canvases, preserving authored alpha and paint. `tools/match3_atlas.py` then packs the five gear states. No tint-generated interaction state is used. Captures: `docs/screenshots/hud-states.jpg`, `hex-first.jpg`, `phone-board.jpg`, `island-village.jpg` and `phone-island.jpg`. Normal, selected, pressed, hover and disabled use the same authored outer medallion, with distinct painted state feedback.
 

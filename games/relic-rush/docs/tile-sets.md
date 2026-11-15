@@ -2,11 +2,11 @@
 
 Three original six-piece sets are available as art packs; **set 1 (Relics) is the production default**. Gameplay, rewards and construction costs are the same with every pack. The original generated source is `art/tile-sets/source.png` (a 6 × 3 sheet, one pack per row, pieces in rule order); `tools/prepare_assets.py` registers the two flat-top hex pieces from `art/tile-sets/source-flat-hex.png`, isolates the remaining original pieces, and cuts them into `data/tile-sets/<pack>/0..5.png`, removing neighbouring fragments. See the [complete artwork/state catalogue](asset-catalogue.md) for all special frames, blocker strengths and tool states.
 
-1. **Relics**: hex sun idol, flame, leaf, scarab, crystal cluster, amber amphora.
+1. **Relics**: round gold sun coin, flame, leaf, scarab, crystal cluster, amber amphora.
 2. **Jewels**: yellow hexagon, red heart, green square, blue drop, purple diamond, orange star.
 3. **Resources**: coins, terracotta, timber, water, stone, wheat. These are visual replacements only; water, terracotta and wheat are not new economy currencies.
 
-![The same board with each art pack](screenshots/tile-sets.jpg)
+[Original three-pack comparison](screenshots/tile-sets.jpg) and [current Relics board](screenshots/review/sun-coin/README.md).
 
 ## Choose a pack
 
@@ -28,13 +28,11 @@ Checked current official support documentation, rather than generalizing across 
 
 Thus, construction in these two Wooga games is not exclusively coin based. Cradle of Rome is a reference for a more direct puzzle resource-collection → city-building loop. Relic Rush spends Gold, Wood and Stone on story wonders, but now grants the full restoration cost predictably on each first clear; random tile colours do not change that payout. Gold-only replays fund optional decoration. See the [current economy study](../../../docs/ECONOMY_RESEARCH.md). The three tile packs keep the same rules and economy.
 
-## Hex orientation
+## Sun coin and yellow gem
 
-The sun idol and yellow hex gem now use six-sided flat-top contours matching
-the actual board. The sun face stays upright; the outer frame is authored in
-the correct orientation. `source-flat-hex.png` and `flat-hex.prompt.txt` preserve
-the complete-set edit. Only those two crops are registered. The original flame
-and other fifteen pieces are unchanged, as are kind IDs and behavior.
+The Relics idol uses the round coin from `art/board-theme/sun-coin/source.png`.
+Jewels keeps the yellow gem's six-sided flat-top contour from the earlier set
+edit in `art/tile-sets/source-flat-hex.png`.
 
 `python3 tools/match3_atlas.py` exports the registered pieces and rebuilds the
-one-atlas runtime skin. See [before/after captures](../../../docs/review/resource-icons/README.md).
+one-atlas runtime skin. See the [round coin in the game](screenshots/review/sun-coin/README.md).

@@ -161,11 +161,13 @@ def rendered(root):
 
 def inputs(root):
     borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
+    sun_coin = [root / 'art/board-theme/sun-coin' / name for name in (
+        'source.png', 'prompt.txt', 'concept.png')] if root.name == 'relic-rush' else []
     paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'),
             (CHAIN_PAINT, 'edit-target.png'), (BLOCKER_PAINT, 'reference.png'))
              for name in ('source.png', 'prompt.txt', target)]
     paint += [FLOOR_PAINT / name for name in ('source.png', 'prompt.txt', 'relic-rush-concepts.png', 'christmas-market-concepts.png')]
-    return painted(root) + borrowed + rendered(root) + paint + [Path(__file__).with_name('match3_specials.py')]
+    return painted(root) + borrowed + sun_coin + rendered(root) + paint + [Path(__file__).with_name('match3_specials.py')]
 
 
 def registered(root, mask):
@@ -190,7 +192,13 @@ def registered(root, mask):
             is_chain_paint = name in PAINTED_CHAINS
             is_floor_paint = name in PAINTED_FLOORS
             is_blocker_paint = name == 'stone-1'
-            if is_power_up_paint or is_chain_paint:
+            if name == 'relics-0':
+                folder = root / 'art/board-theme/sun-coin'
+                sheet = stack.enter_context(Image.open(folder / 'source.png'))
+                assert sheet.mode == 'RGBA', sheet.filename
+                sprite_prompt = folder / 'prompt.txt'
+                crop = (0, 0, *sheet.size)
+            elif is_power_up_paint or is_chain_paint:
                 sheet, slots, folder = (chains, PAINTED_CHAINS, CHAIN_PAINT) if is_chain_paint else (
                     power_ups, PAINTED_SPECIALS, POWER_UP_PAINT)
                 row = int(root.name == 'christmas-market')
@@ -260,6 +268,9 @@ def registered(root, mask):
                              'prompt': os.path.relpath(sprite_prompt, root),
                              'crop': list(crop), 'rotation': 0, 'fit': fit,
                              'fitted_size': fitted_size}
+            if name == 'relics-0':
+                records[name]['generator'] = 'built-in ImageGen'
+                records[name]['reference'] = os.path.relpath(sprite_prompt.with_name('concept.png'), root)
             if is_power_up_paint:
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['edit_target'] = os.path.relpath(POWER_UP_PAINT / 'scener-strip.png', root)
