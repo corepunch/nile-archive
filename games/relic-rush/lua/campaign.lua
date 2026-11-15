@@ -94,7 +94,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shore Marker", "Match to break ice.", 37, 3400, 14, 0, 5)
+        local l = level("The Shore Marker", "Match the piece under the salt crust to break it.", 37, 3400, 14, 0, 5)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -102,7 +102,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Tool Roll", "Hit frozen pieces with matches or power-ups.", 40, 3800, 16, 3, 4)
+        local l = level("The Tool Roll", "Hit the salt crust with matches or power-ups.", 40, 3800, 16, 3, 4)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -118,7 +118,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Supply Crate", "Clear the chains and the ice.", 43, 4600, 18, 5, 6)
+        local l = level("The Supply Crate", "Clear the ropes and salt crust.", 43, 4600, 18, 5, 6)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -142,7 +142,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Twelve Crates", "Free chained relics.", 36, 2900, 13, 5, 0)
+        local l = level("Twelve Crates", "Free relics caught in the vines.", 36, 2900, 13, 5, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 1, -1, -1, 0)
         l.ice_layers = 1
@@ -150,7 +150,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Names in the Stone", "Aim rockets along the chains.", 37, 3200, 14, 6, 0)
+        local l = level("Names in the Stone", "Aim rockets along the vines.", 37, 3200, 14, 6, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -166,7 +166,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Frost Line", "Clear chains and ice.", 39, 3700, 15, 4, 6)
+        local l = level("The Frost Line", "Clear ropes and rubble.", 39, 3700, 15, 4, 6)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -174,7 +174,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Supper for Twelve", "Hit frozen pieces with matches or power-ups.", 40, 4000, 15, 4, 7)
+        local l = level("Supper for Twelve", "Hit the salt crust with matches or power-ups.", 40, 4000, 15, 4, 7)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, -1)
         l.ice_layers = 2
@@ -182,7 +182,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Torn Log", "Some ice takes two hits.", 42, 4200, 16, 5, 7)
+        local l = level("The Torn Log", "Thick salt crust takes two hits.", 42, 4200, 16, 5, 7)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
         l.ice_layers = 2
@@ -254,7 +254,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Jade Deep", "Clear the river silt before it spreads.", 43, 4300, 17, 4, 7)
+        local l = level("The Jade Deep", "Clear the mud before it spreads.", 43, 4300, 17, 4, 7)
         l.mask = lanes_mask
         l.terrain = central_seam(-1)
         l.ice_layers = 2
@@ -301,12 +301,9 @@ levels[3].stones = {{cell=cell(2,0)}}
 levels[3].lesson = "Match beside a stone to break it."
 levels[7].stones = {{cell=cell(2,0)}}
 levels[7].lesson = "Break the carved stone."
-levels[9].lesson = "Clear the chains and the ice."
 levels[11].lesson = "Collect the relics."
 levels[15].stones = {{cell=cell(0,0)}}
 levels[15].lesson = "Clear the stone to open the board."
-levels[16].lesson = "Clear the frozen gems."
-levels[17].lesson = "Thick ice takes two hits."
 levels[21].deliveries = {tokens={cell(0,-2)},exits={cell(0,2)}}
 levels[21].lesson = "Clear below the tablet to deliver it."
 levels[22].stones = {{cell=cell(2,0)}}
@@ -321,8 +318,8 @@ local quest_objects = {
     {key="supplies", name="Supply crate"}, {key="crank", name="Shutter crank"},
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
--- A recovery board buries its quest object: still silt (oil that does not
--- spread) covers the listed cells, the object lies whole beneath them and
+-- A recovery board buries its quest object: still oil (presented as sand,
+-- mud or silt) covers the listed cells, the object lies whole beneath them and
 -- uncovering every cell is the goal. Each find names its own cells; the
 -- current paintings are compact props, so each fills a seven-cell cluster.
 -- Board 8 recovers its cable through the story mosaic below.
@@ -335,14 +332,14 @@ local function bury(board, cells, lesson, bark)
     l.oil, l.oil_still, l.lesson = cells, true, lesson
     l.reveal = {picture="find-" .. key, icon=key, floor="oil", object=true, bark=bark}
 end
-bury(1, cluster(0, 1), "Match on the silt to uncover the timber.", "Mara: That's cut timber under the silt. Keep going!")
+bury(1, cluster(0, 1), "Match on the sand to uncover the timber.", "Mara: That's cut timber under the sand. Keep going!")
 bury(2, cluster(0, -1), "Match 4 for a rocket. Uncover the lens.", "Mara: Brass! That's my lens down there.")
 bury(3, cluster(-3, 1), "Break the stone. Uncover the cable.", "Mara: I can see cable. Clear the rest of it!")
-bury(4, cluster(-3, 1), "Break the chains. Uncover the chart.", "Elena: That is paper under the silt. Gently, now.")
+bury(4, cluster(-3, 1), "Break the chains. Uncover the chart.", "Elena: That is paper under the mud. Gently, now.")
 bury(5, cluster(2, 0), "Restore the mosaic. Uncover the marker.", "Elena: A carved stone. Uncover the whole notch.")
-bury(6, cluster(-3, 2), "Break the ice. Uncover the marker.", "Mara: Another marker. Clear it off!")
+bury(6, cluster(-3, 2), levels[6].lesson, "Mara: Another marker. Clear it off!")
 bury(7, cluster(3, -2), "Break the carved stone. Uncover the tools.", "Mara: Leather and steel. That's a tool roll!")
-bury(9, cluster(3, 0), "Clear the chains and ice. Uncover the crate.", "Mara: Straps and brass corners. The crate!")
+bury(9, cluster(3, 0), "Clear the ropes and salt crust. Uncover the crate.", "Mara: Straps and brass corners. The crate!")
 bury(10, cluster(-3, 2), "Restore the mosaic. Uncover the crank.", "Tomas: That is the crank. Free it carefully.")
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
 levels[30].lesson = "Bring the tablet down to its exit."
@@ -363,10 +360,28 @@ levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), ce
 levels[20].lesson = "Clear the river silt before it spreads."
 levels[26].oil = {cell(3,-4), cell(3,-3), cell(3,-2), cell(4,-4), cell(4,-3), cell(4,-2)}
 
+-- Story materials are presentation only. The cover rules still use ice HP,
+-- and a lock/cover/stone objective still counts the same combined hits.
+local locks = {
+    [5]="creeper-vine", [7]="rope-lashing", [8]="cable-snarl", [9]="rope-lashing",
+    [12]="creeper-vine", [13]="creeper-vine", [14]="rope-lashing", [15]="rope-lashing", [16]="rope-lashing",
+    [22]="cable-snarl", [23]="cable-snarl", [24]="rope-lashing", [25]="rope-lashing", [26]="rope-lashing",
+}
+local covers = {
+    [10]="barnacle-crust", [15]="wall-rubble", [22]="ice",
+    [24]="barnacle-crust", [25]="barnacle-crust", [26]="barnacle-crust", [27]="wall-rubble",
+}
+local floors = {[4]="well-mud", [10]="tide-silt", [26]="well-mud"}
+for i, l in ipairs(levels) do
+    local floor = floors[i] or l.oil_still and "dig-sand"
+    l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
+        floor=floor and {covered=floor, excavated=l.oil_still and "trench-earth" or nil} or nil}
+end
+
 -- Goals, as in Homescapes: one to three per level, never score (points only
 -- rank a clear). The early levels ask for at most two, led by the lesson.
 -- The engine goal keys "carpet" and "oil" count unlit/unrestored and covered cells.
--- On boards 1-10 "oil" is the silt over the buried quest object.
+-- On recovery boards "oil" is the ground over the buried quest object.
 local goals = {
     {"oil"}, {"oil"}, {"locks", "oil"}, {"locks", "oil"}, {"carpet", "oil"},
     {"locks", "oil"}, {"locks", "oil"}, {"carpet", "idols"}, {"locks", "oil"}, {"carpet", "locks", "oil"},

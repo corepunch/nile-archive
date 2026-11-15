@@ -26,6 +26,7 @@ return {
         {"elena", "A reflection would not wait. I was wrong."},
         {"tomas", "Tomas Reed. I look after what’s left of this place."},
         {"tomas", "That cable led to the well. There used to be a tide chart under the pump cover."},
+        {"tomas", "The pump chain has rusted fast. Free it, then wash the mud off the chart."},
     }},
     {key="after-04", phase="after", level=4, lines={
         {"elena", "The tide chart’s free. Let’s fix the pump and use its cover to flatten it."},
@@ -34,7 +35,7 @@ return {
         {"elena", "Now I can read it. The line runs from camp to a tide room."},
         {"tomas", "The lower quay lies on that route."},
         {"mara", "Then we have a place to look. Thanks for the tip, Tomas."},
-        {"tomas", "Look for a quay marker on the path. It should point out the lower route."},
+        {"tomas", "Look for a quay marker under the creepers. It should point out the lower route."},
     }},
     {key="after-05", phase="after", level=5, lines={
         {"elena", "The quay marker is intact. Its notch points straight into the vines."},
@@ -46,6 +47,7 @@ return {
         {"mara", "There it is. The shore marker and the quay marker point to the same steps."},
         {"elena", "And a crack through this one. We need tools before we try those steps."},
         {"tomas", "I can show you the old way. It is safer than the shore."},
+        {"mara", "My tools will help. I left the roll lashed to the rail."},
     }},
     {key="after-07", phase="after", level=7, lines={
         {"mara", "A tool roll, still dry inside. Let’s get the workshop set up."},
@@ -55,6 +57,7 @@ return {
         {"elena", "You knew what the chart meant."},
         {"tomas", "Yes. I hoped the room would stay closed."},
         {"mara", "Come with us. We can follow the cable the rest of the way."},
+        {"tomas", "Watch your step. The torn cable still snakes around the old fittings."},
     }},
     {key="after-08", phase="after", level=8, lines={
         {"tomas", "That’s the broken end. A storm tore it away years ago."},
@@ -72,7 +75,8 @@ return {
         {"elena", "We go together, then. Nobody steps onto that wall alone."},
     }},
     {key="before-10", phase="before", level=10, lines={
-        {"mara", "The tide room is ahead. The crank must be in the rubble by the door."},
+        {"mara", "The crank should be under the silt by the door. That's a lot of barnacles."},
+        {"tomas", "The sea has been in here. Knock it off like the salt."},
         {"elena", "Let the light tell us what it can."},
     }},
     {key="after-10", phase="after", level=10, lines={
@@ -115,6 +119,7 @@ return {
     {key="after-14", phase="after", level=14, lines={
         {"mara", "The shore route floods. We need another way."},
         {"tomas", "I should have checked the wall sooner."},
+        {"tomas", "Let's clear those loose stones and see how far the crack goes."},
     }},
     {key="after-15", phase="after", level=15, lines={
         {"elena", "The crack runs through the quay wall."},
@@ -161,6 +166,9 @@ return {
     {key="after-21", phase="after", level=21, lines={
         {"mara", "These bearings lead around the broken wall."},
         {"elena", "We need a lookout to guide a boat through."},
+    }},
+    {key="before-22", phase="before", level=22, lines={
+        {"mara", "Ice on the steps. Mind your footing; we need this landing."},
     }},
     {key="after-22", phase="after", level=22, lines={
         {"mara", "The alternate landing is clear enough for a small boat."},

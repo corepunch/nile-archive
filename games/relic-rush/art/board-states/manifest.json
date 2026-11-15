@@ -366,6 +366,7 @@
     "disabled"
   ],
   "runtime_inventory": [
+    "data/board-dressing.png",
     "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
     "data/board-states/chain.png",
@@ -1095,9 +1096,24 @@
         "prompt": "art/story-pictures/broken-relay.prompt.txt",
         "runtime": "data/reveal-08.jpg",
         "level": 8,
-        "states": ["covered", "uncovered", "won", "replay"],
-        "size": [720, 800],
-        "mosaic": {"runtime": "data/reveal-08-mosaic.jpg", "cells_across": 11, "stones_per_cell": 7, "grout": 1.0, "joint": 2.2, "seed": 8},
+        "states": [
+          "covered",
+          "uncovered",
+          "won",
+          "replay"
+        ],
+        "size": [
+          720,
+          800
+        ],
+        "mosaic": {
+          "runtime": "data/reveal-08-mosaic.jpg",
+          "cells_across": 11,
+          "stones_per_cell": 7,
+          "grout": 1.0,
+          "joint": 2.2,
+          "seed": 8
+        },
         "transform": "Center crop to 9:10, resize with Lanczos and encode as JPEG. The play mosaic paves each board cell of that image with flat-top hexagonal single-colour stones cut to the cell, over a darkened, blurred grout bed with a darker joint between cells; no recolouring beyond a per-stone shade of 5%. cells_across is the board width in cell radii, which registers the stones to the cells. At runtime, center crop to the board bounds and mask through the restored mosaic cells; the mosaic shows in play and the painting fades in on the win."
       }
     }
@@ -1129,7 +1145,10 @@
       "story handoff"
     ],
     "board_runtime": "data/finds/<slot>.png",
-    "board_cell": [320, 320],
+    "board_cell": [
+      320,
+      320
+    ],
     "board": "Boards 1-7, 9 and 10 bury the object under still river silt (oil-material, oil_still); board 8 keeps its story mosaic. lua/campaign.lua lists each find's cells.",
     "transform": "One authored object sprite per slot. The same sprite appears in the goal, on the board and in the handoff. The board file is the same crop, uniformly resized to fit 256 px inside a 320 px transparent canvas so every covering cell samples inside it; no recolouring or masking."
   },
@@ -1381,5 +1400,300 @@
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/themed-terrain/README.md"
     }
+  },
+  "dressing": {
+    "generator": "built-in ImageGen",
+    "sources": {
+      "covers": {
+        "source": "art/board-dressing/open-covers.png",
+        "prompt": "art/board-dressing/open-covers.prompt.txt",
+        "references": ["art/board-dressing/covers.png"]
+      },
+      "cover_concept": {
+        "source": "art/board-dressing/covers.png",
+        "prompt": "art/board-dressing/covers.prompt.txt",
+        "references": ["../../engine/art/hex-tile/hex-mask-preview.png", "../../art/match3-ice/source.png"]
+      },
+      "locks": {
+        "source": "art/board-dressing/locks.png",
+        "prompt": "art/board-dressing/locks.prompt.txt",
+        "references": ["../../art/match3-chain-paint/edge-anchors.png"]
+      },
+      "floors": {
+        "source": "art/board-dressing/floors.png",
+        "prompt": "art/board-dressing/floors.prompt.txt"
+      }
+    },
+    "mask": "../../engine/art/hex-tile/hex-mask-128.png",
+    "runtime": "data/board-dressing.png",
+    "columns": 5,
+    "frames": {
+      "salt-crust-2": {
+        "source": "covers",
+        "fit": "frame",
+        "crop": [
+          0,
+          0,
+          522,
+          510
+        ],
+        "center": [
+          276,
+          258
+        ],
+        "side": 456
+      },
+      "barnacle-crust-2": {
+        "source": "covers",
+        "fit": "frame",
+        "crop": [
+          522,
+          0,
+          1013,
+          510
+        ],
+        "center": [
+          768,
+          258
+        ],
+        "side": 456
+      },
+      "wall-rubble-2": {
+        "source": "covers",
+        "fit": "frame",
+        "crop": [
+          1013,
+          0,
+          1536,
+          510
+        ],
+        "center": [
+          1259,
+          258
+        ],
+        "side": 456
+      },
+      "salt-crust-1": {
+        "source": "covers",
+        "fit": "frame",
+        "crop": [
+          0,
+          510,
+          522,
+          1024
+        ],
+        "center": [
+          276,
+          743
+        ],
+        "side": 456
+      },
+      "barnacle-crust-1": {
+        "source": "covers",
+        "fit": "frame",
+        "crop": [
+          522,
+          510,
+          1013,
+          1024
+        ],
+        "center": [
+          768,
+          743
+        ],
+        "side": 456
+      },
+      "wall-rubble-1": {
+        "source": "covers",
+        "fit": "frame",
+        "crop": [
+          1013,
+          510,
+          1536,
+          1024
+        ],
+        "center": [
+          1259,
+          743
+        ],
+        "side": 456
+      },
+      "creeper-vine-1": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          0,
+          0,
+          550,
+          310
+        ],
+        "center": [
+          291,
+          153
+        ],
+        "side": 560
+      },
+      "rope-lashing-1": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          550,
+          0,
+          1100,
+          310
+        ],
+        "center": [
+          839,
+          153
+        ],
+        "side": 560
+      },
+      "cable-snarl-1": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          1100,
+          0,
+          1670,
+          310
+        ],
+        "center": [
+          1388,
+          153
+        ],
+        "side": 560
+      },
+      "creeper-vine-1-mirror": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          0,
+          310,
+          550,
+          610
+        ],
+        "center": [
+          291,
+          458
+        ],
+        "side": 560
+      },
+      "rope-lashing-1-mirror": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          550,
+          310,
+          1100,
+          610
+        ],
+        "center": [
+          839,
+          458
+        ],
+        "side": 560
+      },
+      "cable-snarl-1-mirror": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          1100,
+          310,
+          1670,
+          610
+        ],
+        "center": [
+          1388,
+          458
+        ],
+        "side": 560
+      },
+      "creeper-vine-2": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          0,
+          610,
+          550,
+          941
+        ],
+        "center": [
+          291,
+          774
+        ],
+        "side": 560
+      },
+      "rope-lashing-2": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          550,
+          610,
+          1100,
+          941
+        ],
+        "center": [
+          839,
+          774
+        ],
+        "side": 560
+      },
+      "cable-snarl-2": {
+        "source": "locks",
+        "fit": "object",
+        "crop": [
+          1100,
+          610,
+          1670,
+          941
+        ],
+        "center": [
+          1388,
+          774
+        ],
+        "side": 560
+      },
+      "dig-sand": {
+        "source": "floors",
+        "fit": "fill",
+        "crop": [
+          0,
+          0,
+          627,
+          627
+        ]
+      },
+      "trench-earth": {
+        "source": "floors",
+        "fit": "fill",
+        "crop": [
+          627,
+          0,
+          1254,
+          627
+        ]
+      },
+      "well-mud": {
+        "source": "floors",
+        "fit": "fill",
+        "crop": [
+          0,
+          627,
+          627,
+          1254
+        ]
+      },
+      "tide-silt": {
+        "source": "floors",
+        "fit": "fill",
+        "crop": [
+          627,
+          627,
+          1254,
+          1254
+        ]
+      }
+    },
+    "registration": "tools/prepare_board_dressing.py"
   }
 }

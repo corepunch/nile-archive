@@ -52,17 +52,31 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
 end
 local draw_relic = R.draw_relic
 
--- The guide uses icon sizing. The board registers the ice to the cell face.
-function R.draw_ice(hits, at, scale, alpha, on_board)
-    local name = hits > 1 and "ice-2" or "ice-1"
+local function dressing()
+    return not R.g.hs and rules.level_of(R.g).dress or nil
+end
+
+-- Keep a stable material for the combined obstacle goal throughout the board.
+function R.board_goal_icon(l, goal)
+    local dress = l.dress
+    if not dress then return end
+    if goal == "oil" then return dress.floor and dress.floor.covered end
+    if dress.cover then return dress.cover .. (l.ice_layers == 2 and "-2" or "-1") end
+    if dress.lock then return dress.lock .. "-1" end
+end
+
+function R.blocker_color(kind)
+    local dress = dressing()
+    if dress then return art.dressing_colors[kind == 6 and dress.cover or kind == 7 and dress.lock] end
+end
+
+-- The guide uses icon sizing. The board registers every cover to the cell face.
+function R.draw_cover(material, hits, at, scale, alpha, on_board)
+    local name = material .. (hits > 1 and "-2" or "-1")
     local size = on_board and CELL_FACE_SIZE or ART_STATE_SIZE
     local dst = rect.centered(at,size2.splat(size * scale))
     gfx.image(R.board_art[name], dst, rgba(255,255,255,255 * alpha))
     if on_board then return end
-    R.draw_ice_count(hits,at,scale,alpha)
-end
-
-function R.draw_ice_count(hits,at,scale,alpha)
     local badge = at
     gfx.circle(badge,8 * scale,rgba(15,57,81,230 * alpha))
     local style = R.pal(PAL_WHITE,12 * scale)
@@ -128,7 +142,7 @@ local function draw_relics(sx)
     gfx.unclip()
 end
 
-local function draw_blockers(sx)
+local function draw_blockers(sx, dress)
     local g = R.g
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
@@ -140,9 +154,14 @@ local function draw_blockers(sx)
                 local dst = rect.centered(at, size2.splat(CELL_FACE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
                 if g.ice[i] > 0 then
-                    R.draw_ice(g.ice[i],at,scale,alpha,true)
+                    R.draw_cover(dress and dress.cover or "ice",g.ice[i],at,scale,alpha,true)
                 end
-                if g.chain[i] > 0 then gfx.image(elements.chain(R,g,i), dst, tint) end
+                if g.chain[i] > 0 then
+                    local lock = dress and dress.lock
+                    local state = g.chain[i] > 1 and "-2" or i % 2 == 0 and "-1" or "-1-mirror"
+                    local tex = lock and R.board_art[lock .. state] or elements.chain(R,g,i)
+                    gfx.image(tex, dst, tint)
+                end
             end
         end
     end
@@ -162,19 +181,21 @@ end
 function R.board_screen(inp, dt)
     draw_backdrop()
     local intro = R.intro
+    local dress = dressing()
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx, "edge")
     draw_cells(sx, "rim")
     draw_cells(sx, "face")
-    elements.ground(R, rules, sx)
+    elements.ground(R, rules, sx, dress and dress.floor)
     draw_cells(sx, "flash")
     draw_relics(sx)
-    draw_blockers(sx)
+    draw_blockers(sx, dress)
     elements.blockers(R, rules, sx)
     if intro then draw_sheen(sx) end
     R.draw_board_tools(inp)
-    if app.arg("art-states") then art.draw_catalogue(R) end
+    if app.arg("art-states") == "dressing" then art.draw_dressing_catalogue(R)
+    elseif app.arg("art-states") then art.draw_catalogue(R) end
     if app.arg("stripe-states") then art.draw_stripe_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)

@@ -133,8 +133,17 @@ else
     out.levels = {}
     for i, l in ipairs(campaign.levels) do
         local reveal = type(l.reveal) == "table" and not is_stub(l.reveal) and l.reveal or nil
+        local materials
+        if l.dress then
+            materials = {}
+            if l.chains > 0 then materials[#materials + 1] = l.dress.lock or "iron-chain" end
+            if l.dress.cover then materials[#materials + 1] = l.dress.cover end
+            if l.dress.floor then materials[#materials + 1] = l.dress.floor.covered
+            elseif l.oil then materials[#materials + 1] = "river-silt" end
+            if l.carpet then materials[#materials + 1] = "mosaic" end
+        end
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
-                         quest = l.quest_object, wonder = funds[i],
+                         quest = l.quest_object, wonder = funds[i], materials = materials,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor}}
     end
     out.beats = {}

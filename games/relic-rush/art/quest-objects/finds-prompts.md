@@ -1,8 +1,8 @@
 # Buried finds: art prompts
 
-Two ImageGen requests that close the gaps listed under "Buried on the board" in
-[the asset catalogue](../../docs/asset-catalogue.md): a dedicated dig cover, and three finds
-painted in the long shape they occupy on the board. Nothing here is generated or registered yet.
+The [board dressing atlas](../../docs/asset-catalogue.md#story-materials) now supplies the dig
+surfaces from section 1. The laid-out finds in section 2 remain tracked in
+[issue #102](https://github.com/corepunch/nile-archive/issues/102).
 
 Style reference to attach to both requests: [source.png](source.png) (the eight existing props)
 and a current board capture, [find-half.jpg](../../docs/screenshots/find-half.jpg).

@@ -26,7 +26,7 @@ for line in source.splitlines():
     spoken = re.match(r'- \*\*(Elena|Mara|Tomas|Adrian|Kessler)(?: \((thought|shout)\))?:\*\* (.+)', line)
     if spoken and beat:
         (choice['lines'] if choice else beat['lines']).append((speakers[spoken[1]], spoken[3], spoken[2]))
-expected = {f'after-{n:02}' for n in range(1, 31)} | {f'before-{n:02}' for n in (1, 10, 11, 20, 21, 30)} | {f'restore-{n:02}' for n in (1, 4, 7, 9, 13, 16, 19, 23, 26, 29)}
+expected = {f'after-{n:02}' for n in range(1, 31)} | {f'before-{n:02}' for n in (1, 10, 11, 20, 21, 22, 30)} | {f'restore-{n:02}' for n in (1, 4, 7, 9, 13, 16, 19, 23, 26, 29)}
 assert len(beats) == len(expected) and {b['key'] for b in beats} == expected
 assert all(b['lines'] and len(b['lines']) <= 48 for b in beats)
 assert all(bool(b.get('prompt')) == bool(b['choices']) for b in beats)

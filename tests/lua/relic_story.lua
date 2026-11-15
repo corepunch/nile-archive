@@ -10,7 +10,8 @@ local function owned(c) return function(kind) return island.owned(c,kind)>0 end 
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
-check(rules.LEVELS==30 and #journey.beats==46,'all chapters and their restoration scenes are playable')
+check(rules.LEVELS==30 and #journey.beats==47,'all chapters and their restoration scenes are playable')
+check(journey.find('before-22').lines[1][2]:find('Ice',1,true),'the Frozen Stair introduces ice before play')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do

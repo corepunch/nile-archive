@@ -9,6 +9,20 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- Standalone power-ups, with one authored rocket per hex axis.
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+-- Row-major; packed by tools/prepare_board_dressing.py with a 2 px gutter.
+A.dressing_frames = {
+    "salt-crust-2", "barnacle-crust-2", "wall-rubble-2",
+    "salt-crust-1", "barnacle-crust-1", "wall-rubble-1",
+    "creeper-vine-1", "rope-lashing-1", "cable-snarl-1",
+    "creeper-vine-1-mirror", "rope-lashing-1-mirror", "cable-snarl-1-mirror",
+    "creeper-vine-2", "rope-lashing-2", "cable-snarl-2",
+    "dig-sand", "trench-earth", "well-mud", "tide-silt",
+}
+A.dressing_colors = {
+    ["salt-crust"]=color(255, 235, 198), ["barnacle-crust"]=color(217, 205, 183),
+    ["wall-rubble"]=color(238, 186, 116), ["creeper-vine"]=color(157, 216, 104),
+    ["rope-lashing"]=color(242, 188, 104), ["cable-snarl"]=color(194, 177, 223),
+}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"}
@@ -68,6 +82,10 @@ function A.load()
     for i, key in ipairs(A.result_icons) do
         textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))
     end
+    local dressing = texture.load("board-dressing.png")
+    for i, key in ipairs(A.dressing_frames) do
+        textures[key] = texture.region(dressing, rect((i - 1) % 5 * 132 + 2, (i - 1) // 5 * 132 + 2, 128, 128))
+    end
     local quest_atlas = texture.load("quest-objects.png")
     for i, key in ipairs(A.quest_objects) do
         textures[key] = texture.region(quest_atlas, rect((i - 1) % 4 * 128, (i - 1) // 4 * 128, 128, 128))
@@ -113,6 +131,25 @@ function A.draw_catalogue(R)
         end
     end
     R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)
+end
+
+-- Game-rendered samples at the same size as live board cells.
+function A.draw_dressing_catalogue(R)
+    gfx.round_rect(rect(16, 145, 448, 608), 18, color(12, 47, 41, 250))
+    R.say_at("BOARD MATERIALS", vec2(240, 173), 25, R.PAL_GOLD, 420)
+    local labels = {"Salt 2", "Barnacles 2", "Rubble 2", "Salt 1", "Barnacles 1", "Rubble 1",
+        "Vine 1", "Rope 1", "Cable 1", "Vine 1 reversed", "Rope 1 reversed", "Cable 1 reversed",
+        "Vine 2", "Rope 2", "Cable 2", "Dig sand", "Trench earth", "Well mud", "Tide silt"}
+    local side = 2 * (R.HEX_R - .65)
+    for i, name in ipairs(A.dressing_frames) do
+        local at
+        if i <= 15 then at = vec2(110 + (i - 1) % 3 * 130, 230 + (i - 1) // 3 * 88)
+        else at = vec2(78 + (i - 16) * 108, 670) end
+        R.draw_ground("face", at, R.HEX_R, 0, 1)
+        if i <= 15 then R.draw_relic({kind=(i - 1) % 6,special=0}, at, 1, 255, 1, true) end
+        gfx.image(R.board_art[name], rect.centered(at, size2.splat(side)), color.WHITE)
+        R.say_at(labels[i], at + vec2(0, 37), 13, R.PAL_CREAM, 100)
+    end
 end
 
 -- Actual game rendering, all kinds and axes at board size; no replacement art.

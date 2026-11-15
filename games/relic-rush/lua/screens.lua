@@ -162,19 +162,19 @@ local guide_entries = {
      icon={tiles={{kind=0,special=rules.PLANE}}}},
     {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells. Combine power-ups for larger effects.",
      icon={tiles={{kind=0,special=rules.BOMB}}}},
-    {id="blockers", title="Chains", description="Match the chained gem to break its chain.",
+    {id="blockers", title="Chains and lashings", description="Match the held piece to break its lock.",
      icon={front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Frozen gems", description="Match the frozen piece or hit it with a power-up. Each hit removes one layer.",
-     icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
+    {id="ice", title="Salt crust and other covers", description="Match the held piece or hit it with a power-up. One layer per hit.",
+     icon={cover="salt-crust",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Carved stone", description="Match beside a stone or hit it with a power-up to break it.",
      icon={front="stone-1",tiles={}}},
     {id="deliveries", title="Tablets", description="Clear the cells below a tablet so it falls to its exit.",
      icon={front="delivery",tiles={}}},
     {id="carpet", title="Restore the mosaic", description="Match on the mosaic to restore every cell the match clears. Restore the whole floor.",
      icon={front="goal-carpet",tiles={}}},
-    {id="oil", title="River silt", description="Match on the silt to clear it. If a move clears none, silt spreads to a neighbouring cell.",
+    {id="oil", title="Spreading silt and mud", description="Match over silt or mud to clear it. If a move clears none, it spreads to a neighbouring cell.",
      icon={front="goal-oil",tiles={}}},
-    {id="finds", title="Buried finds", description="Match on the silt over a find to uncover it. This silt does not spread.",
+    {id="finds", title="Buried finds", description="Match on the sand, mud or silt over a find to uncover it. This ground does not spread.",
      icon={front="lens",tiles={}}},
 }
 local function guide_icon(box, icon)
@@ -184,8 +184,8 @@ local function guide_icon(box, icon)
     for _,tile in ipairs(icon.tiles) do
         R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
     end
-    if icon.front and icon.front:sub(1,4)=="ice-" then
-        R.draw_ice(tonumber(icon.front:sub(5)),pp(at),P.scale,P.alpha)
+    if icon.cover then
+        R.draw_cover(icon.cover,2,pp(at),P.scale,P.alpha)
     elseif icon.front then picture(R.board_art[icon.front],layer,255) end
 end
 local guide_form = match3.guide_form({

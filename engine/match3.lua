@@ -145,14 +145,16 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
         if g.initial_obstacles>0 then
             local stone_only = (l.chains or 0)==0 and (l.ice or 0)==0 and l.stones and #l.stones>0
-            local icon = stone_only and "stone-1" or "chain"
+            local icon = (R.board_goal_icon and R.board_goal_icon(l, "locks"))
+                or (stone_only and "stone-1" or "chain")
             entries[#entries+1]={id="locks",icon=icon,remaining=math.max(0,g.obstacles)}
         end
         if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
         if g.oil_left>0 or l.oil and #l.oil>0 then
             -- A buried find (reveal.object) is its own goal icon.
             local find = l.reveal and l.reveal.object and l.reveal.icon
-            entries[#entries+1]={id="oil",icon=find or "goal-oil",remaining=g.oil_left}
+            local floor = R.board_goal_icon and R.board_goal_icon(l, "oil")
+            entries[#entries+1]={id="oil",icon=find or floor or "goal-oil",remaining=g.oil_left}
         end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}

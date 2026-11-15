@@ -35,7 +35,8 @@ function V.bind(R, rules)
     local palette = {[0] = rgba(255, 201, 73), rgba(255, 107, 48), rgba(113, 232, 115), rgba(71, 222, 255),
                      rgba(196, 116, 255), rgba(255, 173, 70), rgba(188, 244, 255), rgba(249, 223, 161)}
     function R.vfx_color(kind, alpha)
-        local c = palette[num.clampi(kind, 0, 7)]
+        local c = ((kind == 6 or kind == 7) and R.blocker_color and R.blocker_color(kind))
+            or palette[num.clampi(kind, 0, 7)]
         return rgba(c.r, c.g, c.b, num.clamp(alpha, 0, 255))
     end
     local vfx_color = R.vfx_color

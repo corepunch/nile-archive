@@ -125,6 +125,15 @@ print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board 
 # Script, identities and presentation mapping must ship together.
 import subprocess
 import sys
+dressing = manifest["dressing"]
+declaration = re.search(r"A\.dressing_frames = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(dressing["frames"])
+for paths in dressing["sources"].values():
+    assert all((ROOT / paths[key]).is_file() for key in ("source", "prompt"))
+assert dressing["runtime"] in actual
+assert all(f"`{name}`" in doc for name in dressing["frames"])
+subprocess.run([sys.executable, str(ROOT / dressing["registration"]), "--check"], check=True)
+
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
 assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian'}
 assert all(path in actual for path in manifest['story']['cast'].values())

@@ -167,7 +167,7 @@ local function object_crop(R, rules, t)
         rect(0, 0, size.w, size.h)
 end
 
-local function draw_buried_picture(R, rules, story, sx, alpha, cover)
+local function draw_buried_picture(R, rules, story, sx, alpha, cover, trench)
     local g, cells = R.g, {}
     local t = R.board_art[story.picture]
     local box, src
@@ -191,7 +191,12 @@ local function draw_buried_picture(R, rules, story, sx, alpha, cover)
         if g.oil[i] == 0 then
             local p = R.cell_pos(i)
             local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
-            gfx.image_hex(t, rect.centered(uv, face), p + vec2(sx, 0), radius, 0, tint)
+            local at = p + vec2(sx, 0)
+            if trench then
+                gfx.image(trench, rect.centered(at, size2.splat(2 * (radius - .65))),
+                    color(255, 255, 255, 255 * alpha * cover))
+            end
+            gfx.image_hex(t, rect.centered(uv, face), at, radius, 0, tint)
         end
     end
 end
@@ -200,7 +205,7 @@ end
 local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
 
 -- Called after every well has been painted, before pieces.
-function E.ground(R, rules, sx)
+function E.ground(R, rules, sx, floor)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
     -- The picture shows on every play; only a first clear speaks, fades the
@@ -208,7 +213,10 @@ function E.ground(R, rules, sx)
     local story = reveal(R, rules) or rules.level_of(g).reveal
     local cover = E.reveal_cover(R, rules)
     draw_carpet(R, rules, story, sx, alpha, cover)
-    if story and story.floor == "oil" then draw_buried_picture(R, rules, story, sx, alpha, cover) end
+    if story and story.floor == "oil" then
+        draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])
+    end
+    local face_size = 2 * (R.HEX_R - .65)
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
@@ -216,8 +224,14 @@ function E.ground(R, rules, sx)
                 local scale, turn, lift = 1, 0, 0
                 if intro then scale, turn, lift = intro:cell(i) end
                 if scale > .02 then
-                    gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at + vec2(0, lift), R.HEX_R * scale, turn,
-                        color(255, 255, 255, 255 * alpha))
+                    local pos = at + vec2(0, lift)
+                    if floor then
+                        gfx.image_rot(R.board_art[floor.covered], rect.centered(pos, size2.splat(face_size * scale)), turn,
+                            color(255, 255, 255, 255 * alpha))
+                    else
+                        gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, pos, R.HEX_R * scale, turn,
+                            color(255, 255, 255, 255 * alpha))
+                    end
                 end
             end
             if g.hs then

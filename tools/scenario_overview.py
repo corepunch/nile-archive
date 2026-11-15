@@ -167,12 +167,14 @@ def match3_section(data, title):
                 reveal = f'<figure class="reveal"><img src="{src}" alt=""><figcaption>Story picture revealed on the board{floor}</figcaption></figure>'
         beats = sorted(by_level.get(n, []), key=lambda b: PHASE_ORDER.get(b['phase'], 9))
         beat_html = ''.join(page.beat(b, PHASES.get(b['phase'], b['phase'])) for b in beats)
+        materials = ', '.join(name.replace('-', ' ') for name in lv.get('materials', []))
+        materials_html = f'<p class="meta">Board materials · {esc(materials.capitalize())}</p>' if materials else ''
         cards.append(f'''<article class="step" id="{game}-{n}">
   <div class="media">{shot}</div>
   <div class="body">
     <h3><span class="num">{n}</span>{esc(lv["name"])}</h3>
     <p class="meta">{esc(lv.get("lesson"))} · {lv.get("moves")} moves · {lv.get("score")} points</p>
-    <div class="chips">{"".join(chips)}</div>{reveal}
+    {materials_html}<div class="chips">{"".join(chips)}</div>{reveal}
     {beat_html or '<p class="quiet">No story beat.</p>'}
   </div>
 </article>''')

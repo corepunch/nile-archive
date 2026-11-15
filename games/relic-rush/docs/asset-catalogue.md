@@ -66,19 +66,17 @@ Run `python3 tools/relic_quest_art.py` from the repository root to register the 
 into `data/quest-objects.png` and, at board size, into `data/finds/<slot>.png` (the same crop fitted
 to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and centers the original RGBA art.
 
-**Buried on the board.** Boards 1-7, 9 and 10 bury their object under seven cells of still river
-silt (`oil-material`, the existing silt surface; `oil_still` stops it spreading). States: covered
-(silt over every cell), partial (each uncovered cell shows its part of `data/finds/<slot>.png`
-beneath the piece), recovered (first clear: pieces fade and the whole object holds on the board),
+**Buried on the board.** Boards 1–7, 9 and 10 bury their object under seven cells of sand,
+well mud (4) or tide-room silt (10). The ground is still (`oil_still`). States: covered
+(painted ground over every cell), partial (each excavated cell shows its part of `data/finds/<slot>.png`
+on trench earth beneath the piece), recovered (first clear: pieces fade and the whole object holds on the board),
 goal (the 128 px slot beside the remaining cell count) and the **Item recovered!** card (the board
-file at 210 px). `lua/campaign.lua` (`bury`) lists each find's cells. Reviewed captures:
-[covered](review/buried-finds/board-1-covered.jpg), [partial at 480×900 and 390×844](review/buried-finds/board-3-half.jpg),
-[recovered and card](review/buried-finds/board-2-recovered.jpg); reproduce with
-`build/test/relic-rush "shot find-"`. Known limits: the eight paintings are compact props, so every
-find is the same round cluster and the cable does not run along the board; the cover reuses the river
-silt surface, not a dedicated sand or rubble painting. Prompts for both
-(a dig cover with a trench floor, and a laid-out timber, cable and crank) are drafted in
-[finds-prompts.md](../art/quest-objects/finds-prompts.md); nothing is generated yet.
+file at 210 px). `lua/campaign.lua` (`bury`) lists each find's cells. See the
+[current dig surfaces](screenshots/review/board-dressing/README.md) and the
+[recovered object and card](review/buried-finds/board-2-recovered.jpg).
+[Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks replacing the compact
+timber, cable and crank with laid-out props. Each future sprite must cross every cell in
+its authored footprint and match the existing compact goal and recovered-card art.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 
@@ -284,14 +282,41 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The board distinguishes the two ice strengths by silhouette and stronger
-highlights on the full pane. The guide shows the full pane with a **2** hit
-badge. Both states were drawn in one shared
+The Frozen Stair (22) distinguishes the ice strengths by silhouette and stronger
+highlights on the full pane. Both states were drawn in one shared
 ImageGen atlas and are packed into `data/match3.png`. The
 [ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,
 registration and [portrait captures](screenshots/review/ice/README.md).
 Ice and chain are independent layers and a blocker hit removes a layer before
 collecting its piece. Selected/hint frames are under pieces, blockers over them.
+
+### Story materials
+
+The goal signboard uses the cover when the obstacle counter combines several
+materials. Lock-only boards use their lock artwork and buried-find goals keep the find
+itself. The Explorer's Guide illustrates the two-hit salt cover. A match must include the
+held piece to damage a lock or cover. A power-up can hit it directly. Colour accents on
+the existing transient impact particles follow the material.
+
+| Frames | Meaning and use |
+| --- | --- |
+| `salt-crust-2`, `salt-crust-1` | Ivory mineral rim, intact for two hits and split open for one. Base cover from board 6. |
+| `barnacle-crust-2`, `barnacle-crust-1` | Barnacles and oyster shells, intact or one hit remaining. Tide room (10) and quay (24–26). |
+| `wall-rubble-2`, `wall-rubble-1` | Sandstone fragments, intact or one hit remaining. Cracked wall (15) and board 27. |
+| `creeper-vine-1`, `creeper-vine-1-mirror`, `creeper-vine-2` | Leafy strand in either diagonal, or two crossed strands. Boards 5, 12 and 13. |
+| `rope-lashing-1`, `rope-lashing-1-mirror`, `rope-lashing-2` | Braided strand in either diagonal, or two crossed strands. Boards 7, 9, 14–16 and 24–26. |
+| `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
+| `dig-sand`, `trench-earth` | Opaque sand hides a find. Dark earth beneath the uncovered part keeps its outline readable. |
+| `well-mud`, `tide-silt` | Mud on boards 4 and 26, and tide-room silt on board 10. Matches clear the painted cells; the exposed find cells show trench earth. Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
+
+Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the
+[open covers](../art/board-dressing/open-covers.png), [lock states](../art/board-dressing/locks.png)
+and [surfaces](../art/board-dressing/floors.png) in family atlases. The
+[manifest](../art/board-states/manifest.json) records the original prompts, source crops and
+registration. The cover sprites retain their painted openings within the canonical mask.
+The locks use uniform crop and placement, with preserved alpha. Floor paint fills the exact
+128 px flat-top mask. Run `python3 games/relic-rush/tools/prepare_board_dressing.py` to
+repack `data/board-dressing.png`. See the [board and state review](screenshots/review/board-dressing/README.md).
 
 The excavation layer (`sand`) and the sand and ice rims (`sand-edge`,
 `ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels have no
