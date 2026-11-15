@@ -157,7 +157,11 @@ function D.bind(R, W)
                 end
             end
             if share >= 1 then
-                for i = 0, rules.CELLS - 1 do g.chain[i], g.ice[i], g.stone_hp[i] = 0, 0, 0 end
+                for i = 0, rules.CELLS - 1 do
+                    g.chain[i], g.ice[i], g.stone_hp[i] = 0, 0, 0
+                    if g.tiles[i].kind == rules.DELIVERY then g.tiles[i] = rules.tile(-1) end
+                    if g.carpet_total > 0 and rules.game_cell_active(g, i) then g.carpet[i] = 1 end
+                end
                 g.obstacles = 0
                 R.prog.level, R.quiet = g.level, false
                 R.debug_skip_level()   -- first clear, with its beat

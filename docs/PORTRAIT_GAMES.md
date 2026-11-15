@@ -60,6 +60,11 @@ uses the shared form and modal stack. The selection is saved before the reply
 plays, and the scene is acknowledged after the reply finishes. Use
 `--story-choice after-10` to preview the Relic Rush prompt.
 
+A game can play a short board-specific scene before the award, dialogue and
+Results. `R.clear_scene()` returns the active scene and `R.draw_clear_scene(scene, inp)`
+draws it. The game owns first-clear eligibility, timing, and any skip input.
+Relic Rush uses this for the light on board 3 and Ines's reply on board 30.
+
 Results keep the board HUD in the blurred background so the card title and
 actions have a clear foreground.
 

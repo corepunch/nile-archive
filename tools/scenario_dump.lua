@@ -140,10 +140,11 @@ else
             if l.dress.cover then materials[#materials + 1] = l.dress.cover end
             if l.dress.floor then materials[#materials + 1] = l.dress.floor.covered
             elseif l.oil then materials[#materials + 1] = "river-silt" end
-            if l.carpet then materials[#materials + 1] = "mosaic" end
+            if l.carpet then materials[#materials + 1] = "drift-sand" end
         end
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
                          quest = l.quest_object, wonder = funds[i], materials = materials,
+                         signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor}}
     end
     out.beats = {}

@@ -2,7 +2,7 @@
 
 ## Themed board art
 
-The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. The floor objectives use a dusty blue mosaic and rose-brown river silt.
+The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. The floor objectives use drifting sand over stonework and rose-brown river silt.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -29,18 +29,18 @@ The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one b
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
-## Story pictures
+## The signal finale
 
 | Asset | Rule meaning and states | Source and runtime |
 | --- | --- | --- |
-| `reveal-08` | Board 8, The Broken Cable. Unrestored cells show the board face. Restored cells uncover a hexagonal stone-mosaic cut of a continuous storybook painting of the camp lamp, its severed relay cable, and a keeper operating the tide-room shutter; the flat stones keep the pieces readable and the joints keep the cells countable. A notice appears at half restored. On the win the pieces fade, the painting itself fades in over the mosaic and holds for 1.2 seconds before the first-clear exchange. Replays show the mosaic throughout, without the notice, the fade or the hold. | Built-in ImageGen [master](../art/story-pictures/broken-relay.png) and [prompt](../art/story-pictures/broken-relay.prompt.txt). Runtime `data/reveal-08.jpg` (painting) and `data/reveal-08-mosaic.jpg` (play), both written by `python3 games/relic-rush/tools/prepare_story_mosaics.py`; the mosaic paves every board cell of the registered painting with flat-top hexagonal single-colour stones cut to the cell, with a thin dark joint between cells (`mosaic` in the manifest: seven stones to a cell radius, 1 px grout, 2.2 px joint, seed 8). It assumes the picture is laid centred across a board 11 cell radii wide, as on board 8. |
+| `signal-plate` | Board 30’s falling token, goal icon and the plate seated at the exit during the first clear. Uses the delivery rules learned on board 21. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/signal-plate.png`. |
+| `safe-landing` | After the plate arrives and the remaining blockers are cleared, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
 
-Run `python3 games/relic-rush/tools/prepare_story_mosaics.py` to center-crop
-and scale the 1190×1322 master to 720×800 with Lanczos, then encode it as
-JPEG at quality 91 with 4:4:4 chroma. The renderer center-crops the picture
-over the full board bounds and reveals it through the restored-cell mask.
-The [in-game comparison](review/story-mosaic/README.md) shows the partial and
-complete reveals at 480×900 and 390×844.
+Run `python3 games/relic-rush/tools/prepare_finale_art.py` to register both assets.
+The amber pulses reuse the board’s additive glow, with a shared delay and rhythm.
+See the [finale and sand review](screenshots/review/signal-finale/README.md).
+The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
+[historical review](review/story-mosaic/README.md).
 
 ## Chapter 1 quest objects
 
@@ -62,6 +62,12 @@ They are independent of the selected match piece pack.
 | `supplies` | Supply crate | 9, stock the Jungle market supply point |
 | `crank` | Shutter crank | 10, test the tide-room signal |
 
+The current crank is the selected lower-right variation on the [four-option
+ImageGen sheet](../art/quest-objects/crank-choices.png). Its square socket is at the upper
+right and its wooden grip at the lower left. The [prompt](../art/quest-objects/crank-choices.prompt.txt)
+and manifest record the sheet and crop. The goal, buried find and recovered-item card
+share this crop at their respective sizes and keep its authored transparency.
+
 Run `python3 tools/relic_quest_art.py` from the repository root to register the source
 into `data/quest-objects.png` and, at board size, into `data/finds/<slot>.png` (the same crop fitted
 to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and centers the original RGBA art.
@@ -74,9 +80,8 @@ goal (the 128 px slot beside the remaining cell count) and the **Item recovered!
 file at 210 px). `lua/campaign.lua` (`bury`) lists each find's cells. See the
 [current dig surfaces](screenshots/review/board-dressing/README.md) and the
 [recovered object and card](review/buried-finds/board-2-recovered.jpg).
-[Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks replacing the compact
-timber, cable and crank with laid-out props. Each future sprite must cross every cell in
-its authored footprint and match the existing compact goal and recovered-card art.
+[Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks separate laid-out
+footprints for the long finds. The chosen crank uses the existing excavation footprint.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 
@@ -276,7 +281,7 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `chain` | A silver chain holds the chip between two bolted hex edges. One hit unlocks the piece. |
 | `ice-2` | Translucent blue pane with high-contrast facets across the entire hex face. Two hits remain. |
 | `ice-1` | Translucent blue ice with a broken upper edge. One hit remains. |
-| `carpet-swatch`, `goal-carpet` | Restored mosaic and its goal icon. Coverage extends through matches touching the restored floor. |
+| `carpet-swatch`, `goal-carpet` | Shared mosaic art for the neutral atlas and source-level reviews. The Relic Rush campaign uses drift sand and swept stone. |
 | `oil-material`, `goal-oil` | River silt fills each affected hex face. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
@@ -308,6 +313,7 @@ the existing transient impact particles follow the material.
 | `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
 | `dig-sand`, `trench-earth` | Opaque sand hides a find. Dark earth beneath the uncovered part keeps its outline readable. |
 | `well-mud`, `tide-silt` | Mud on boards 4 and 26, and tide-room silt on board 10. Matches clear the painted cells; the exposed find cells show trench earth. Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
+| `drift-sand`, `swept-stone` | Tan sand fills uncleared stonework, and cool slate marks cleared cells. A match touching cleared stone sweeps the rest of that match. The goal counts sandy cells. Boards 5, 8, 10, 13, 18, 22, 24 and 28. Authored together in the [sweep swatches](../art/board-dressing/sweep.png) from the [prompt](../art/board-dressing/sweep.prompt.txt), then clipped to the canonical mask. |
 
 Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the
 [open covers](../art/board-dressing/open-covers.png), [lock states](../art/board-dressing/locks.png)

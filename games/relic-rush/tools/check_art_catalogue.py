@@ -133,6 +133,12 @@ for paths in dressing["sources"].values():
 assert dressing["runtime"] in actual
 assert all(f"`{name}`" in doc for name in dressing["frames"])
 subprocess.run([sys.executable, str(ROOT / dressing["registration"]), "--check"], check=True)
+finale = manifest["finale"]
+for name, item in finale["assets"].items():
+    assert f'`{name}`' in doc and f'"{name}"' in art
+    assert item["runtime"] in actual
+    assert all((ROOT / item[key]).is_file() for key in ("source", "prompt"))
+subprocess.run([sys.executable, str(ROOT / finale["registration"]), "--check"], check=True)
 
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
 assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian'}
@@ -148,6 +154,7 @@ for key in quest["slots"]:
     assert "`" + key + "`" in doc
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
+assert all((ROOT / quest["crank"][key]).is_file() for key in ("source", "prompt"))
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
 
 result_icons = manifest["result_icons"]
@@ -158,16 +165,6 @@ for key in result_icons["icons"]:
     assert "`" + key + "`" in doc
 assert (ROOT / result_icons["source"]).is_file() and (ROOT / result_icons["prompt"]).is_file()
 subprocess.run([sys.executable, str(ROOT / result_icons["registration"]), "--check"], check=True)
-
-campaign = (ROOT / "lua/campaign.lua").read_text()
-mosaics = manifest["story_mosaics"]
-assert {name: str(item["level"]) for name, item in mosaics["pictures"].items()} == {
-    name: level for level, name in re.findall(r'levels\[(\d+)\]\.reveal = \{picture="([^"]+)"', campaign)
-}
-for name, item in mosaics["pictures"].items():
-    assert item["runtime"] == f"data/{name}.jpg" and item["runtime"] in actual
-    assert (ROOT / item["prompt"]).is_file() and f"`{name}`" in doc
-subprocess.run([sys.executable, str(ROOT / mosaics["registration"]), "--check"], check=True)
 
 # Kenney particle sprites: retained CC0 sources, a fresh atlas and documented frames.
 particles = manifest['particle_sprites']

@@ -15,7 +15,7 @@ check(journey.find('before-22').lines[1][2]:find('Ice',1,true),'the Frozen Stair
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
-        check(({elena=true,mara=true,tomas=true,adrian=true,kessler=true})[line[1]],'every line has a real cast member')
+        check(({elena=true,mara=true,tomas=true,adrian=true,kessler=true,ines=true})[line[1]],'every line has a real cast member')
     end
 end
 for level=1,30 do
@@ -123,3 +123,33 @@ empty_queue();R.story_tick()
 check(R.prog.story_seen['after-10'] and journey.next(R.prog,owned(c),10).key=='before-11',
     'finishing the reply unlocks chapter two')
 empty_queue()
+
+-- Land the physical token using the ordinary gravity and exit rules. A plate
+-- alone is insufficient, and the finale precedes the first-clear dialogue.
+R.g=rules.game_start(29,1)
+R.prog={level=29,story_seen={}}
+R.on_island,R.overlay=false,R.OV_RESULT
+local g=R.g
+local delivery=rules.level_of(g).deliveries
+local exit, cell=delivery.exits[1], rules.hex_neighbor(delivery.tokens[1],1)
+while cell >= 0 do
+    g.tiles[cell],g.chain[cell],g.ice[cell]=rules.tile(-1),0,0
+    rules.game_collapse(g)
+    if cell==exit then break end
+    cell=rules.hex_neighbor(cell,1)
+end
+rules.game_check_end(g)
+check(g.delivered==1 and not g.won and not R.clear_scene(),'the signal plate reaches its exit while blockers still stand')
+g.obstacles=0
+rules.game_check_end(g)
+R.story_tick()
+local scene=R.clear_scene()
+check(scene and scene.exit==exit and not story.active(),'a completed delivery and the cleared board run the landing scene before dialogue')
+R.now=R.now+5
+R.story_tick()
+check(R.story_current and R.story_current.key=='after-30','the landing scene hands off to the finale dialogue')
+empty_queue(); R.story_tick()
+R.g=rules.game_start(29,2)
+R.g.delivered,R.g.won=1,true
+R.prog.level=30
+check(not R.clear_scene(),'a replay cannot run the landing scene again')

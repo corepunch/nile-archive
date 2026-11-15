@@ -86,7 +86,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Quay Marker", "Match on the mosaic to restore more tiles.", 35, 3100, 14, 4, 0)
+        local l = level("The Quay Marker", "Match on cleared stone to sweep more sand.", 35, 3100, 14, 4, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -126,7 +126,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shutter Crank", "Restore the mosaic through the centre.", 46, 5000, 20, 6, 6)
+        local l = level("The Shutter Crank", "Sweep the sand through the centre.", 46, 5000, 20, 6, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, -1)
         l.ice_layers = 2
@@ -190,7 +190,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Lantern Steps", "Restore the mosaic across the terrace.", 40, 3000, 12, 2, 4)
+        local l = level("Lantern Steps", "Sweep the sand across the terrace.", 40, 3000, 12, 2, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -238,7 +238,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Noon Shadow", "Restore the mosaic across the shaded floor.", 41, 3900, 16, 4, 5)
+        local l = level("Noon Shadow", "Sweep the sand across the shaded floor.", 41, 3900, 16, 4, 5)
         l.mask = bowl_mask
         l.terrain = central_seam(1)
         l.ice_layers = 2
@@ -270,7 +270,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Last Terrace", "Restore the mosaic across the terrace.", 42, 3200, 13, 2, 4)
+        local l = level("The Last Terrace", "Sweep the sand across the terrace.", 42, 3200, 13, 2, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 1, 0, -1)
         l.ice_layers = 1
@@ -322,7 +322,7 @@ for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 -- mud or silt) covers the listed cells, the object lies whole beneath them and
 -- uncovering every cell is the goal. Each find names its own cells; the
 -- current paintings are compact props, so each fills a seven-cell cluster.
--- Board 8 recovers its cable through the story mosaic below.
+-- Board 8 recovers its cable on the first-clear item card.
 local function cluster(q, r)
     return {cell(q, r), cell(q + 1, r), cell(q + 1, r - 1), cell(q, r - 1), cell(q - 1, r), cell(q - 1, r + 1), cell(q, r + 1)}
 end
@@ -336,14 +336,16 @@ bury(1, cluster(0, 1), "Match on the sand to uncover the timber.", "Mara: That's
 bury(2, cluster(0, -1), "Match 4 for a rocket. Uncover the lens.", "Mara: Brass! That's my lens down there.")
 bury(3, cluster(-3, 1), "Break the stone. Uncover the cable.", "Mara: I can see cable. Clear the rest of it!")
 bury(4, cluster(-3, 1), "Break the chains. Uncover the chart.", "Elena: That is paper under the mud. Gently, now.")
-bury(5, cluster(2, 0), "Restore the mosaic. Uncover the marker.", "Elena: A carved stone. Uncover the whole notch.")
+bury(5, cluster(2, 0), levels[5].lesson, "Elena: A carved stone. Uncover the whole notch.")
 bury(6, cluster(-3, 2), levels[6].lesson, "Mara: Another marker. Clear it off!")
 bury(7, cluster(3, -2), "Break the carved stone. Uncover the tools.", "Mara: Leather and steel. That's a tool roll!")
 bury(9, cluster(3, 0), "Clear the ropes and salt crust. Uncover the crate.", "Mara: Straps and brass corners. The crate!")
-bury(10, cluster(-3, 2), "Restore the mosaic. Uncover the crank.", "Tomas: That is the crank. Free it carefully.")
-levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)}}
-levels[30].lesson = "Bring the tablet down to its exit."
--- Matches touching the mosaic restore more floor tiles.
+bury(10, cluster(-3, 2), "Sweep the sand. Uncover the crank.", "Tomas: That is the crank. Free it carefully.")
+levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)},icon="signal-plate"}
+levels[30].lesson = "Clear below the signal plate to deliver it."
+levels[3].signal = "cliff"
+levels[30].signal = "landing"
+-- A match touching cleared stone sweeps sand from the rest of that match.
 -- Lane boards with locks (10, 22) start with both lanes and the one-cell spine restored:
 -- matches on the spine are too rare to restore it within the moves.
 local carpet = {
@@ -352,9 +354,6 @@ local carpet = {
     [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
 }
 for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
--- Story mosaics: the restored floor uncovers a picture on the first clear, and
--- a crew member reacts once half of it shows (match3.elements_view reveal).
-levels[8].reveal = {picture="reveal-08", mosaic="reveal-08-mosaic", bark="Elena: This floor is a drawing of the relay. Uncover the rest!"}
 -- River silt advances after a turn that clears none of it.
 levels[20].oil = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,1), cell(-3,2), cell(-3,3)}
 levels[20].lesson = "Clear the river silt before it spreads."

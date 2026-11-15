@@ -17,6 +17,7 @@
 --   R.dialogs[R.OV_RESULT], R.dialogs[R.OV_GUIDE]   the results card and guide
 --   R.award_for(g), R.dialogs[R.OV_AWARD]   an item a first clear recovers (nil for none),
 --                           shown big on its own card before the win's story beat and results
+--   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
 --   R.wallet_icons()        three icons for lives, gold and stars capsules
 --   R.town_middle_icon(at)  the round middle button's icon in the town
 --   R.cast                  the story cast (narrative.lua)
@@ -896,6 +897,7 @@ function G.bind(R, over)
         if R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
+            if R.clear_scene and R.clear_scene() then return end
             -- A first clear's item comes first, then the talk about it, then the results.
             if R.award_for and R.award_game ~= R.g and R.g.won and R.g.level == R.prog.level then
                 R.award_game, R.award = R.g, R.award_for(R.g)
@@ -1176,8 +1178,10 @@ function G.app(R)
         ui.set_enabled(true)
         local at_result = R.overlay == R.OV_RESULT
         local revealing = at_result and require("match3.elements_view").reveal_holding(R, rules)
+        local scene = at_result and not R.quiet and R.clear_scene and R.clear_scene()
         local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
-        if not talking and not revealing and not clear_due then R.overlays(dt) end
+        if scene then R.draw_clear_scene(scene, inp) end
+        if not talking and not revealing and not scene and not clear_due then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
         -- Keep the HUD above ordinary dialogs. Results, the guide and

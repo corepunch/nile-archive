@@ -8,6 +8,7 @@
 local R = require("state")
 require("screens")
 require("board")
+require("finale")
 require("narrative")
 require("quests")
 require("smoke")

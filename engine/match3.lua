@@ -142,14 +142,20 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         end
         local entries = {{id="score",icon="score",remaining=math.max(0,l.score-g.score)},
             {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)}}
-        if g.delivery_total>0 then entries[#entries+1]={id="deliveries",icon="delivery",remaining=g.delivery_total-g.delivered} end
+        if g.delivery_total>0 then
+            local icon = l.deliveries and l.deliveries.icon or "delivery"
+            entries[#entries+1]={id="deliveries",icon=icon,remaining=g.delivery_total-g.delivered}
+        end
         if g.initial_obstacles>0 then
             local stone_only = (l.chains or 0)==0 and (l.ice or 0)==0 and l.stones and #l.stones>0
             local icon = (R.board_goal_icon and R.board_goal_icon(l, "locks"))
                 or (stone_only and "stone-1" or "chain")
             entries[#entries+1]={id="locks",icon=icon,remaining=math.max(0,g.obstacles)}
         end
-        if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
+        if (g.carpet_total or 0)>0 then
+            local icon = R.board_goal_icon and R.board_goal_icon(l, "carpet")
+            entries[#entries+1]={id="carpet",icon=icon or "goal-carpet",remaining=g.carpet_total-g.carpeted}
+        end
         if g.oil_left>0 or l.oil and #l.oil>0 then
             -- A buried find (reveal.object) is its own goal icon.
             local find = l.reveal and l.reveal.object and l.reveal.icon

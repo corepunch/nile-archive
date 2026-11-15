@@ -152,6 +152,10 @@ def match3_section(data, title):
             icon = icons.get(lv['quest']['key'])
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip award">{img}Recovers <b>{esc(lv["quest"]["name"])}</b></span>')
+        if lv.get('delivery_icon') == 'signal-plate':
+            icon = picture(page.data_dir / 'signal-plate.png', 96, 'PNG')
+            img = f'<img src="{icon}" alt="">' if icon else ''
+            chips.append(f'<span class="chip award">{img}Delivers <b>Signal plate</b></span>')
         if lv.get('wonder'):
             w = lv['wonder']
             sprite = picture(page.data_dir / w['sprite'], 120, 'PNG') if w.get('sprite') else None
@@ -165,6 +169,15 @@ def match3_section(data, title):
             if src:
                 floor = f' ({esc(lv["reveal"]["floor"])} floor)' if lv['reveal'].get('floor') else ''
                 reveal = f'<figure class="reveal"><img src="{src}" alt=""><figcaption>Story picture revealed on the board{floor}</figcaption></figure>'
+        if lv.get('signal') == 'cliff':
+            reveal += '<p class="meta">First clear: the light under the cliff waits, then flashes three times.</p>'
+        elif lv.get('signal') == 'landing':
+            scene = picture(FRAMES / 'scenario-relic-rush-landing.png', 360)
+            if not scene:
+                scene = picture(page.data_dir / 'safe-landing.jpg', 360)
+            if scene:
+                reveal += (f'<figure class="reveal"><img src="{scene}" alt="Ines lifting her lantern on the safe landing">'
+                           '<figcaption>First clear: Ines waits and answers from the landing with the same three flashes.</figcaption></figure>')
         beats = sorted(by_level.get(n, []), key=lambda b: PHASE_ORDER.get(b['phase'], 9))
         beat_html = ''.join(page.beat(b, PHASES.get(b['phase'], b['phase'])) for b in beats)
         materials = ', '.join(name.replace('-', ' ') for name in lv.get('materials', []))

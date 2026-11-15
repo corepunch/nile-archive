@@ -61,6 +61,7 @@ function R.board_goal_icon(l, goal)
     local dress = l.dress
     if not dress then return end
     if goal == "oil" then return dress.floor and dress.floor.covered end
+    if goal == "carpet" then return art.sweep.dirty end
     if dress.cover then return dress.cover .. (l.ice_layers == 2 and "-2" or "-1") end
     if dress.lock then return dress.lock .. "-1" end
 end
@@ -125,7 +126,7 @@ end
 
 local function draw_relics(sx)
     local g = R.g
-    local cover = elements.reveal_cover(R, rules)   -- a won story mosaic clears its pieces away
+    local cover = elements.reveal_cover(R, rules)   -- a recovered find clears its pieces away
     if cover <= 0 then return end
     gfx.clip(R.BOARD_CLIP)
     for i = 0, CELLS - 1 do
@@ -187,7 +188,8 @@ function R.board_screen(inp, dt)
     draw_cells(sx, "edge")
     draw_cells(sx, "rim")
     draw_cells(sx, "face")
-    elements.ground(R, rules, sx, dress and dress.floor)
+    local sweep = dress and rules.level_of(R.g).carpet and art.sweep
+    elements.ground(R, rules, sx, dress and dress.floor, sweep)
     draw_cells(sx, "flash")
     draw_relics(sx)
     draw_blockers(sx, dress)

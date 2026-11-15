@@ -7,6 +7,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1] / 'games/relic-rush'
 SOURCE = ROOT / 'art/quest-objects/source.png'
+CRANK_CHOICES = ROOT / 'art/quest-objects/crank-choices.png'
+CRANK_CROP = (768, 512, 1536, 1024)  # selected lower-right variation, without rotation
 OUTPUT = ROOT / 'data/quest-objects.png'
 # The same props at board size: one padded file each, drawn across the cells
 # that bury it and on the Item recovered card.
@@ -24,8 +26,12 @@ def sprites():
     source = Image.open(SOURCE)
     if source.mode != 'RGBA' or source.size != (1774, 887):
         raise ValueError('Expected the authored 1774×887 RGBA source')
-    for crop in CROPS:
-        sprite = source.crop(crop)
+    for key, crop in zip(KEYS, CROPS):
+        if key == 'crank':
+            with Image.open(CRANK_CHOICES) as variants:
+                sprite = variants.crop(CRANK_CROP)
+        else:
+            sprite = source.crop(crop)
         # Crop to visible paint plus an edge guard. Keep the original alpha
         # inside that crop and uniformly resize. No recolouring or masking.
         bounds = sprite.getchannel('A').point(lambda value: 255 if value >= 160 else 0).getbbox()

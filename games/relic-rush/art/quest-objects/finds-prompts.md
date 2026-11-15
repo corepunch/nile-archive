@@ -3,6 +3,8 @@
 The [board dressing atlas](../../docs/asset-catalogue.md#story-materials) now supplies the dig
 surfaces from section 1. The laid-out finds in section 2 remain tracked in
 [issue #102](https://github.com/corepunch/nile-archive/issues/102).
+The [selected crank](../../docs/asset-catalogue.md#chapter-1-quest-objects) has its
+own four-option source sheet and uses its existing excavation footprint.
 
 Style reference to attach to both requests: [source.png](source.png) (the eight existing props)
 and a current board capture, [find-half.jpg](../../docs/screenshots/find-half.jpg).

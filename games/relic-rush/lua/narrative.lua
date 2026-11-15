@@ -8,6 +8,7 @@ R.cast={
     {id='adrian',name='Adrian Vale',role='Expedition financier',portrait_path='characters/adrian.png',color=color(104,48,92),right=true,mouth=vec2(.54,.52)},
     -- Heard, never seen: the radio or a loudhailer. No bust, so the engine captions his lines.
     {id='kessler',name='Kessler',role='Meridian Society',color=color(60,62,70)},
+    {id='ines',name='Ines Reed',role='Keeper of the tide warning',color=color(51,93,84)},
 }
 
 return R

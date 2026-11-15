@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 source = (ROOT / 'docs/story.md').read_text().split('## Small lines')[0]
 beats, beat, choice = [], None, None
-speakers = {'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler'}
+speakers = {'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler', 'Ines': 'ines'}
 for line in source.splitlines():
     heading = re.match(r'\*\*(Before level|Level|After restoration) (\d+)', line)
     if heading:
@@ -23,7 +23,7 @@ for line in source.splitlines():
     if option and beat:
         choice = {'id': option[1], 'label': option[2], 'lines': []}
         beat['choices'].append(choice)
-    spoken = re.match(r'- \*\*(Elena|Mara|Tomas|Adrian|Kessler)(?: \((thought|shout)\))?:\*\* (.+)', line)
+    spoken = re.match(r'- \*\*(' + '|'.join(speakers) + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
     if spoken and beat:
         (choice['lines'] if choice else beat['lines']).append((speakers[spoken[1]], spoken[3], spoken[2]))
 expected = {f'after-{n:02}' for n in range(1, 31)} | {f'before-{n:02}' for n in (1, 10, 11, 20, 21, 22, 30)} | {f'restore-{n:02}' for n in (1, 4, 7, 9, 13, 16, 19, 23, 26, 29)}

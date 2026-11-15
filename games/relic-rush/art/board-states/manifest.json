@@ -637,11 +637,11 @@
     "data/navigation/play-selected.png",
     "data/quest-objects.png",
     "data/result-icons.png",
-    "data/reveal-08-mosaic.jpg",
-    "data/reveal-08.jpg",
     "data/roads.png",
+    "data/safe-landing.jpg",
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
+    "data/signal-plate.png",
     "data/tile-sets/jewels/0.png",
     "data/tile-sets/jewels/1.png",
     "data/tile-sets/jewels/2.png",
@@ -1087,37 +1087,6 @@
     "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states.",
     "retired": "Crate, tunnel, hidden-object and growth cells stay in the master but are not registered: the engine no longer has those mechanics (not in Homescapes story levels)."
   },
-  "story_mosaics": {
-    "generator": "built-in ImageGen",
-    "registration": "tools/prepare_story_mosaics.py",
-    "pictures": {
-      "reveal-08": {
-        "source": "art/story-pictures/broken-relay.png",
-        "prompt": "art/story-pictures/broken-relay.prompt.txt",
-        "runtime": "data/reveal-08.jpg",
-        "level": 8,
-        "states": [
-          "covered",
-          "uncovered",
-          "won",
-          "replay"
-        ],
-        "size": [
-          720,
-          800
-        ],
-        "mosaic": {
-          "runtime": "data/reveal-08-mosaic.jpg",
-          "cells_across": 11,
-          "stones_per_cell": 7,
-          "grout": 1.0,
-          "joint": 2.2,
-          "seed": 8
-        },
-        "transform": "Center crop to 9:10, resize with Lanczos and encode as JPEG. The play mosaic paves each board cell of that image with flat-top hexagonal single-colour stones cut to the cell, over a darkened, blurred grout bed with a darker joint between cells; no recolouring beyond a per-stone shade of 5%. cells_across is the board width in cell radii, which registers the stones to the cells. At runtime, center crop to the board bounds and mask through the restored mosaic cells; the mosaic shows in play and the painting fades in on the win."
-      }
-    }
-  },
   "quest_objects": {
     "source": "art/quest-objects/source.png",
     "prompt": "art/quest-objects/prompt.txt",
@@ -1149,8 +1118,19 @@
       320,
       320
     ],
-    "board": "Boards 1-7, 9 and 10 bury the object under still river silt (oil-material, oil_still); board 8 keeps its story mosaic. lua/campaign.lua lists each find's cells.",
-    "transform": "One authored object sprite per slot. The same sprite appears in the goal, on the board and in the handoff. The board file is the same crop, uniformly resized to fit 256 px inside a 320 px transparent canvas so every covering cell samples inside it; no recolouring or masking."
+    "board": "Boards 1–7, 9 and 10 bury the object under still sand, mud or silt. Board 8 presents the cable on its first-clear card.",
+    "transform": "One authored object sprite per slot. The same sprite appears in the goal, on the board and in the handoff. The board file is the same crop, uniformly resized to fit 256 px inside a 320 px transparent canvas so every covering cell samples inside it; no recolouring or masking.",
+    "crank": {
+      "source": "art/quest-objects/crank-choices.png",
+      "prompt": "art/quest-objects/crank-choices.prompt.txt",
+      "crop": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "selection": "Lower right. Upper-right socket and lower-left grip, no rotation."
+    }
   },
   "homescapes": {
     "registration": "art/match3-atlas.json",
@@ -1407,21 +1387,32 @@
       "covers": {
         "source": "art/board-dressing/open-covers.png",
         "prompt": "art/board-dressing/open-covers.prompt.txt",
-        "references": ["art/board-dressing/covers.png"]
+        "references": [
+          "art/board-dressing/covers.png"
+        ]
       },
       "cover_concept": {
         "source": "art/board-dressing/covers.png",
         "prompt": "art/board-dressing/covers.prompt.txt",
-        "references": ["../../engine/art/hex-tile/hex-mask-preview.png", "../../art/match3-ice/source.png"]
+        "references": [
+          "../../engine/art/hex-tile/hex-mask-preview.png",
+          "../../art/match3-ice/source.png"
+        ]
       },
       "locks": {
         "source": "art/board-dressing/locks.png",
         "prompt": "art/board-dressing/locks.prompt.txt",
-        "references": ["../../art/match3-chain-paint/edge-anchors.png"]
+        "references": [
+          "../../art/match3-chain-paint/edge-anchors.png"
+        ]
       },
       "floors": {
         "source": "art/board-dressing/floors.png",
         "prompt": "art/board-dressing/floors.prompt.txt"
+      },
+      "sweep": {
+        "source": "art/board-dressing/sweep.png",
+        "prompt": "art/board-dressing/sweep.prompt.txt"
       }
     },
     "mask": "../../engine/art/hex-tile/hex-mask-128.png",
@@ -1692,8 +1683,79 @@
           1254,
           1254
         ]
+      },
+      "drift-sand": {
+        "source": "sweep",
+        "fit": "fill",
+        "crop": [
+          0,
+          0,
+          887,
+          887
+        ]
+      },
+      "swept-stone": {
+        "source": "sweep",
+        "fit": "fill",
+        "crop": [
+          887,
+          0,
+          1774,
+          887
+        ]
       }
     },
     "registration": "tools/prepare_board_dressing.py"
+  },
+  "finale": {
+    "generator": "built-in ImageGen",
+    "registration": "tools/prepare_finale_art.py",
+    "assets": {
+      "signal-plate": {
+        "source": "art/finale/signal-plate.png",
+        "prompt": "art/finale/signal-plate.prompt.txt",
+        "runtime": "data/signal-plate.png",
+        "size": [
+          128,
+          128
+        ],
+        "crop": [
+          204,
+          256,
+          1028,
+          959
+        ],
+        "paint_size": [
+          94,
+          80
+        ],
+        "reference": "data/quest-objects.png"
+      },
+      "safe-landing": {
+        "source": "art/finale/safe-landing.png",
+        "prompt": "art/finale/safe-landing.prompt.txt",
+        "runtime": "data/safe-landing.jpg",
+        "size": [
+          864,
+          1152
+        ],
+        "lantern": [
+          0.459,
+          0.423
+        ],
+        "references": [
+          "art/art-direction/expedition-cast.png",
+          "data/scene-lagoon.jpg",
+          "art/story-pictures/broken-relay.png"
+        ]
+      }
+    }
+  },
+  "archived_story_art": {
+    "broken_relay": {
+      "source": "art/story-pictures/broken-relay.png",
+      "prompt": "art/story-pictures/broken-relay.prompt.txt",
+      "previous_runtime": "Board 8 picture and mosaic before the sand floor."
+    }
   }
 }
