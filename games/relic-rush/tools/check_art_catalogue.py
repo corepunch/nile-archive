@@ -141,6 +141,15 @@ for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
 
+result_icons = manifest["result_icons"]
+assert result_icons["runtime"] in actual
+declaration = re.search(r"A\.result_icons = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(result_icons["icons"])
+for key in result_icons["icons"]:
+    assert "`" + key + "`" in doc
+assert (ROOT / result_icons["source"]).is_file() and (ROOT / result_icons["prompt"]).is_file()
+subprocess.run([sys.executable, str(ROOT / result_icons["registration"]), "--check"], check=True)
+
 campaign = (ROOT / "lua/campaign.lua").read_text()
 mosaics = manifest["story_mosaics"]
 assert {name: str(item["level"]) for name, item in mosaics["pictures"].items()} == {

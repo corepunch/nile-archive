@@ -19,6 +19,7 @@ A.buildings = {catalogue="buildings", shadows="building_sprites", states={"resto
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
 A.wallet_icons={life="match3-hud.png",amulets="relics-0",stars="discovery-star"}
+A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
@@ -63,6 +64,10 @@ function A.load()
     local function load(name) textures[name] = skin[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
+    local result_atlas = texture.load("result-icons.png")
+    for i, key in ipairs(A.result_icons) do
+        textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))
+    end
     local quest_atlas = texture.load("quest-objects.png")
     for i, key in ipairs(A.quest_objects) do
         textures[key] = texture.region(quest_atlas, rect((i - 1) % 4 * 128, (i - 1) // 4 * 128, 128, 128))

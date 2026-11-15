@@ -627,6 +627,7 @@
     "data/navigation/play-pressed.png",
     "data/navigation/play-selected.png",
     "data/quest-objects.png",
+    "data/result-icons.png",
     "data/reveal-08-mosaic.jpg",
     "data/reveal-08.jpg",
     "data/roads.png",
@@ -702,10 +703,10 @@
   },
   "buildings": "art/building-catalogue/manifest.json",
   "economy_presentation": {
-    "contract": "lua/rules.lua reward_breakdown; lua/art.lua names existing normal artwork",
-    "wallet_icons": "existing Idol/Leaf/Crystal art identifies Gold/Wood/Stone; random board colour counts do not mint wallet resources",
-    "discovery": "one-time restoration grant, spare Gold, 3 Discovery Stars and scheduled Compasses",
-    "replay": "Gold only; no repeated discovery or restoration reward",
+    "contract": "lua/rules.lua reward_breakdown; lua/art.lua names the results and wallet artwork",
+    "wallet_icons": "life heart, sun coin for Amulets, gold and turquoise Discovery Star",
+    "discovery": "one-time 3 Discovery Stars and spare Amulets, plus a restoration grant at scheduled milestones",
+    "replay": "Amulets only",
     "controls": "existing shared form skin normal/hover/pressed/disabled/focus; modal opening input is consumed",
     "review": "docs/review/economy/README.md"
   },
@@ -991,6 +992,28 @@
     "review": "docs/screenshots/hud-states.jpg"
   },
   "navigation": "art/navigation/manifest.json",
+  "result_icons": {
+    "source": "art/result-icons/source.png",
+    "prompt": "art/result-icons/prompt.txt",
+    "source_size": [1774, 887],
+    "generator": "Built-in ImageGen, 2026-11-15. Both readout icons authored in one transparent atlas, using the Christmas Market result screen as a style reference.",
+    "runtime": "data/result-icons.png",
+    "registration": "tools/prepare_result_icons.py",
+    "cell_size": 128,
+    "art_size": 120,
+    "states": "Static readout art. First-clear celebration scales and fades the same star; the town wallet capsule handles its own input states.",
+    "icons": {
+      "discovery-star": {
+        "box": [46, 28, 843, 855],
+        "meaning": "First-clear celebration, discovery payout and cumulative town wallet count"
+      },
+      "next-clue": {
+        "box": [929, 76, 1736, 849],
+        "meaning": "Investigation continues after a first clear without a scheduled restoration"
+      }
+    },
+    "review": "docs/screenshots/review/discovery-stars/"
+  },
   "story": {
     "source": "art/art-direction/expedition-cast.png",
     "import": "python3 games/relic-rush/tools/prepare_assets.py --portraits-only",

@@ -14,21 +14,8 @@ local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_
 local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
 local set_paint, section = R.set_paint, R.section
 
--- Two-tone gold star on a darker rim, lit from above.
-function R.star_icon(center, radius)
-    for layer = 0, 1 do
-        local r = (radius - (layer == 1 and 2 or 0)) * P.scale
-        local c = pp(center) + vec2(0, layer == 1 and 0 or 2 * P.scale)
-        local rim = rgba(129, 78, 27)
-        local pts, cols, idx = {c}, {pc(layer == 1 and rgba(255, 224, 100) or rim)}, {}
-        for k = 0, 9 do
-            local a, rr = -math.pi / 2 + k * math.pi / 5, r * (k % 2 == 1 and .46 or 1)
-            pts[k + 2] = c + vec2.polar(a, rr)
-            cols[k + 2] = pc(layer == 1 and (k < 5 and rgba(255, 242, 163) or rgba(225, 158, 41)) or rim)
-            idx[k * 3 + 1], idx[k * 3 + 2], idx[k * 3 + 3] = 0, k + 1, (k + 1) % 10 + 1
-        end
-        app.mesh(pts, cols, idx)
-    end
+local function star_icon(center, side)
+    picture(R.board_art["discovery-star"], rect.centered(center, size2.splat(side)), 255)
 end
 
 function R.compass_icon(center, radius)
@@ -38,11 +25,10 @@ function R.compass_icon(center, radius)
     local cols = {pc(rgba(33, 114, 102)), pc(rgba(33, 114, 102)), pc(rgba(185, 92, 47)), pc(rgba(185, 92, 47))}
     app.mesh(pts, cols, {0, 1, 3, 1, 2, 3})
 end
-local star_icon = R.star_icon
 
--- One prominent medallion and matching touch area on the town and board.
+-- Art for the island wallet's three capsules.
 function R.wallet_icons()
-    return {R.life_art, R.relics[RELIC_IDOL + 1], function(box) star_icon(box:center(), box.w * .45) end}
+    return {R.life_art, R.relics[RELIC_IDOL + 1], R.board_art["discovery-star"]}
 end
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
@@ -64,8 +50,8 @@ local function result_screen()
         local part
         s, part = section(.24 + k * .13, .32, 13)
         local pop = 1 + math.sin(part.u * math.pi) * .14
-        R.vfx_halo(pp(slot:center()), 45 * P.scale, rgba(255, 201, 77, 65 * P.alpha))
-        star_icon(slot:center(), (k == 1 and 29 or 24) * pop)
+        local center = slot:center() + vec2(0, k == 1 and -4 or 2)
+        star_icon(center, (k == 1 and 68 or 54) * pop)
         set_paint(s)
     end
     if not breakdown.first then say("AMULETS FOR YOUR ISLAND",l.stars,23,PAL_GOLD) end
@@ -93,16 +79,23 @@ local function result_screen()
         rect(l.rewards.x,l.rewards.y+l.rewards.h+2,l.rewards.w,15),13,PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then
-        local r=l.progress
-        rrect(r,16,rgba(221,228,182));star_icon(vec2(r.x+24,r:center().y),14)
+        local r = l.progress
+        rrect(r, 16, rgba(221,228,182))
+        star_icon(vec2(r.x + 24, r:center().y), 30)
         say("+3 DISCOVERY STARS",rect(r.x+44,r.y,r.w-52,r.h),18,PAL_CREAM)
     end
     if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))
-    if w then picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10), 255)
-    else star_icon(vec2(l.next.x+38,l.next:center().y),24) end
+    local next_icon = rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10)
+    if breakdown.first and w then
+        picture_fit(w.sprite, next_icon, 255)
+    elseif breakdown.first then
+        picture_fit(R.board_art["next-clue"], next_icon, 255)
+    else
+        R.skin:paint_button(next_icon, nil, {role = "navigation_build"})
+    end
     say_left(breakdown.first and (w and "READY TO RESTORE" or "THE INVESTIGATION CONTINUES") or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
     say_left(breakdown.first and (w and w.name or "Return for the next clue") or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
     set_paint(s)

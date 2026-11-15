@@ -143,17 +143,26 @@ prompt and reviewed game captures are recorded in the
 
 ## Reward and replay presentation
 
-The [economy review](review/economy/README.md) records first-clear/replay rewards,
-the measured expedition list, available/locked/resume rows and the shop's spendable /
-reserved Gold. Sources are `engine/match3_game.lua` (the level list and shop) with
-`data/game.json` (their words), `lua/screens.lua` and `lua/rules.lua`. The shared form skin supplies existing
-normal/hover/pressed/disabled/focus controls. No new bitmap or icon set is added;
-the existing normal Idol/Leaf/Crystal artwork identifies Gold/Wood/Stone. Board
-matches contribute to score/objectives; wallet payouts use the separate fixed
-grant contract. Discovery Stars/Compasses are one-time progress rewards, and
-replays pay Gold only. All piece packs and authored board/tool states retain
-their existing artwork and state mapping. Reproduce with `--victory`,
-`--replay-victory`, `--expeditions --expedition-page N` and `--catalogue`.
+The [economy review](review/economy/README.md) records the first-clear and replay
+flows, expedition list and build shop. Board matches contribute to score and
+objectives. The results card and wallet use the round sun coin for Amulets.
+First clears award three Discovery Stars, and replays award Amulets.
+
+| Sprite | Presentation |
+| --- | --- |
+| `discovery-star` | Faceted gold star in a turquoise setting. The celebration scales and fades the same artwork, and the Discovery Stars reward row and island wallet use it at smaller sizes. |
+| `next-clue` | Sealed papyrus when the investigation continues after a first clear. Restoration milestones show the building sprite, and replay results show the normal Build hammer. |
+
+Both static icons were authored together with built-in ImageGen in a
+[transparent atlas](../art/result-icons/source.png), using the Christmas Market
+results stars as the visual reference. The [generation prompt](../art/result-icons/prompt.txt)
+and [crop bounds and slot order](../art/board-states/manifest.json) record the
+source. Run `python3 games/relic-rush/tools/prepare_result_icons.py` to crop
+both sprites, fit them to 120 px preserving aspect ratio and alpha, and center
+them in two 128 px cells in `data/result-icons.png`. Add `--check` to verify
+the exported pixels. The wallet capsule retains its skin-painted feedback.
+See the [results and wallet captures](screenshots/review/discovery-stars/README.md)
+for both phone sizes and reproduction commands.
 
 ## Pause menu actions
 
@@ -686,7 +695,7 @@ added. Reproduce with the existing native-input hold/placement captures in the
 
 ## Settings gear and three-resource wallet
 
-The legacy `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys now draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart from the same atlas; it is a wallet readout, not an interactive control. The default Amulet icon uses the round sun coin, and discovery stars retain their documented procedural glyph. Wood, stone and compasses are retired from wallet UI, costs and rewards; their old slots remain reserved for save compatibility.
+The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart readout from the same atlas. The wallet also shows the round sun coin for Amulets and the turquoise-backed `discovery-star`. Wood, stone and compasses are retired from wallet UI, costs and rewards. Their old slots remain reserved for save compatibility.
 
 All five gear states were generated together by ImageGen; `settings-lives-prompt.txt` records the prompt and alpha cutout edit. `python3 games/relic-rush/tools/prepare_hud.py` performs only grid crops and thumbnail registration to 128px RGBA canvases, preserving authored alpha and paint. `tools/match3_atlas.py` then packs the five gear states. No tint-generated interaction state is used. Captures: `docs/screenshots/hud-states.jpg`, `hex-first.jpg`, `phone-board.jpg`, `island-village.jpg` and `phone-island.jpg`. Normal, selected, pressed, hover and disabled use the same authored outer medallion, with distinct painted state feedback.
 

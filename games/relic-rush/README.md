@@ -95,7 +95,7 @@ The expedition and city headers share a 64-unit Settings gear with a matching to
 
 ## Result screens and typography
 
-The result screen now reveals stars, score, resources, progression and the next restoration in sequence, with a short animated return to the island. Building cards use clean sprite extraction and balanced text wrapping.
+The result screen reveals Discovery Stars, score, rewards and what's next in sequence, with a short animated return to the island. The gold and turquoise Discovery Star badge also identifies the island wallet count. The next step shows the building to restore, a sealed papyrus for the next clue, or the Build hammer after a replay. See the [results and wallet captures](docs/screenshots/review/discovery-stars/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
