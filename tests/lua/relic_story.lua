@@ -8,8 +8,8 @@ local function empty_queue() while story.active() do story.next() end end
 local function owned(c) return function(kind) return island.owned(c,kind)>0 end end
 
 -- Story pieces occupy one palette slot and advance its matching goal.
-for _, spec in ipairs{{1,5,0}, {4,0,5}, {9,3,5}} do
-    local board, target, omitted = table.unpack(spec)
+for _, spec in ipairs{{1,5,5,0}, {4,0,6}, {9,3,6}} do
+    local board, target, expected_count, omitted = table.unpack(spec)
     local g = rules.game_start(board-1,123)
     R.g = g
     local kinds, free = {}, {}
@@ -21,19 +21,22 @@ for _, spec in ipairs{{1,5,0}, {4,0,5}, {9,3,5}} do
     end
     local count = 0
     for _ in pairs(kinds) do count = count+1 end
-    check(count==5 and kinds[target] and not kinds[omitted], 'opening has five kinds including the story piece')
+    check(count==expected_count and kinds[target] and not kinds[omitted],
+        'opening uses the configured palette including the story piece')
     for _, entry in ipairs(R.goal_entries()) do
         if entry.id=='idols' then check(entry.kind==target, 'the HUD tracks the story kind') end
     end
     local a,b=free[1],free[2]
-    g.tiles[a],g.tiles[b]=rules.tile(target),rules.tile(1)
+    local regular=board==9 and rules.RELIC_IDOL or rules.RELIC_FLAME
+    g.tiles[a],g.tiles[b]=rules.tile(target),rules.tile(regular)
     local m=rules.new_match()
     m.mask[a],m.mask[b]=true,true
     rules.game_apply(g,m)
     check(g.relics==1, 'only the story piece advances collection')
     rules.game_collapse(g)
     for i=0,rules.CELLS-1 do
-        check(g.tiles[i].kind~=omitted, 'refill cannot introduce the omitted kind')
+        local kind=g.tiles[i].kind
+        check(kind==-1 or kinds[kind], 'refill stays within the configured palette')
     end
 end
 

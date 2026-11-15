@@ -6,8 +6,14 @@ The cable takes six cells in a zigzag.
 Each buried find shows a black silhouette over its covered cells until a match reveals the painted find.
 Uncovering all buried cells is a goal (shown with the object's own icon), a crew member speaks at
 the halfway point, and the first clear shows the whole object on the emptied
-board before its **Item recovered!** card. Board 8 sweeps sand from the stonework and shows the broken cable on its recovered-item card. Boards 1, 4 and 9 each have four regular kinds and one collectible story piece. Boards 18
+board before its **Item recovered!** card. Board 8 sweeps sand from the stonework and shows the broken cable on its recovered-item card. Board 1 uses four regular kinds and one story piece. Boards 4 and 9 use five regular kinds and one story piece. Boards 18
 and 28 provide lighter intervals in the later chapters.
+
+Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
+to choose a story sprite and the colour slot it replaces. An optional
+`omit_kind` removes one other colour from that board's starting pieces and
+refills. Leave it unset for five regular kinds plus the story piece. The
+existing relic target sets the collection count.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap

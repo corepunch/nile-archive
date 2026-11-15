@@ -1,8 +1,9 @@
 # Story pieces on the board
 
-Each collection board has five match kinds. The story piece replaces the
-slot closest to its colour. The goal shows the same icon and counts cleared
-pieces. The first-clear card shows the recovered object.
+Board 1 has four regular match kinds and one story piece. Boards 4 and 9 have
+five regular kinds and one story piece. The story piece replaces the slot
+closest to its colour. The goal shows the same icon and counts cleared pieces.
+The first-clear card shows the recovered object.
 
 | Board and viewport | Previous layout | Story collection |
 | --- | --- | --- |
@@ -17,7 +18,7 @@ pieces. The first-clear card shows the recovered object.
 
 The tiles fit within the canonical hex in strict object mode when registered
 at the board's draw size. The goal and refill tests verify that each level
-spawns five types and credits only the story piece.
+spawns its configured palette and credits only the story piece.
 
 ```sh
 SPRITE_SCENARIO=1 build/test/relic-rush \

@@ -149,11 +149,13 @@ def match3_section(data, title):
         board = picture(frame, 200)
         shot = f'<img class="board" src="{board}" alt="Board {n}">' if board else '<div class="board missing">run with --capture</div>'
         chips = []
+        palette = ''
         if collection := lv.get('collection'):
             key = collection['key']
             icon = picture(page.data_dir / f'story-pieces/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip">{img}Collect <b>{collection["count"]} {STORY_PIECE_NAMES[key]}</b></span>')
+            palette = f' · {collection["regular"]} regular types + 1 story type'
         if lv.get('quest'):
             key = lv['quest']['key']
             icon = icons.get(key) or picture(page.data_dir / f'finds/{key}.png', 96, 'PNG')
@@ -203,7 +205,7 @@ def match3_section(data, title):
   <div class="media">{shot}</div>
   <div class="body">
     <h3><span class="num">{n}</span>{esc(lv["name"])}</h3>
-    <p class="meta">{esc(lv.get("lesson"))} · {lv.get("moves")} moves · {lv.get("score")} points</p>
+    <p class="meta">{esc(lv.get("lesson"))} · {lv.get("moves")} moves · {lv.get("score")} points{palette}</p>
     {materials_html}<div class="chips">{"".join(chips)}</div>{reveal}
     {beat_html or '<p class="quiet">No story beat.</p>'}
   </div>

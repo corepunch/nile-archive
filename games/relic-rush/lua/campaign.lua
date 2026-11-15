@@ -319,10 +319,12 @@ local quest_objects = {
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[13].quest_object = {key="note", name="Folded note"}
--- Each story piece takes a colour slot. Omit a second slot for five kinds.
-levels[1].story_piece, levels[1].goal_kind, levels[1].omit_kind = "timber", 5, 0  -- orange replaces the amphora
-levels[4].story_piece, levels[4].goal_kind, levels[4].omit_kind = "chart", 0, 5   -- gold replaces the sun idol
-levels[9].story_piece, levels[9].goal_kind, levels[9].omit_kind = "supplies", 3, 5 -- blue replaces the scarab
+-- goal_kind is the slot the story piece replaces. Set omit_kind to leave
+-- one other slot out of a board's opening and refills.
+levels[1].story_piece, levels[1].goal_kind = "timber", 5 -- orange replaces the amphora
+levels[1].omit_kind = 0                                -- no gold sun idols in the tutorial
+levels[4].story_piece, levels[4].goal_kind = "chart", 0  -- gold replaces the sun idol
+levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
 -- A recovery board buries its quest object: still oil (presented as sand,
 -- mud or silt) covers the listed cells, the object lies whole beneath them and
 -- uncovering every cell is the goal. Compact props fill a seven-cell cluster.
@@ -412,4 +414,4 @@ end
 local shapes = {}
 for i, l in ipairs(levels) do shapes[i] = l.name end
 
-return {levels=levels, shapes=shapes, wonder_levels={1,4,7,9,13,16,19,23,26,29}}
+return {levels=levels, colors=6, shapes=shapes, wonder_levels={1,4,7,9,13,16,19,23,26,29}}

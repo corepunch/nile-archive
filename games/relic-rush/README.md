@@ -84,7 +84,8 @@ shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog
 open the dialogs.
 
 Boards 1, 4 and 9 collect 10 timber pieces, 15 map pieces and 18 supply packs
-respectively. Each board has four regular kinds and one story piece in the matching colour slot.
+respectively. Board 1 uses four regular kinds and a story piece. Boards 4 and 9
+use five regular kinds and a story piece.
 Boards 2, 3, 5 to 7, 10 and 13 bury their quest object in sand or tide-room silt.
 The relay cable winds through six cells.
 The covered cells show each object's black silhouette over the soil. Matches reveal

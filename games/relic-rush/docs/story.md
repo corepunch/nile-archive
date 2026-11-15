@@ -69,7 +69,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Boards 1, 4 and 9 each use four regular pieces and one story piece. Matches and power-ups collect timber, map pieces or supply packs. The first clear awards the corresponding quest object. Boards 2, 3, 5–7, 10 and 13 have buried objects with a crew reaction at halfway and a clear view of the find before the item card. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Boards 1, 4 and 9 each use a story piece alongside their regular kinds. Matches and power-ups collect timber, map pieces or supply packs. The first clear awards the corresponding quest object. Boards 2, 3, 5–7, 10 and 13 have buried objects with a crew reaction at halfway and a clear view of the find before the item card. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 

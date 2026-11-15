@@ -117,7 +117,7 @@ Each 128×128 slot passes the canonical hex check in strict object mode. The
 ### Collectible story pieces
 
 Boards 1, 4 and 9 replace one colour slot with timber, a tide map or a supply
-pack. They use four other kinds. The collection HUD and flying match pieces
+pack. Board 1 uses four regular kinds. Boards 4 and 9 use five. The collection HUD and flying match pieces
 use the same sprite as the board. Selection, hints and refill use the existing
 piece animation and overlays. Power-ups keep their authored sprites. The
 quest-object PNGs provide the camp timber, tide chart and supply crate on

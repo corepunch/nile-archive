@@ -1188,9 +1188,9 @@
       "paint_size": [108, 108],
       "states": ["board", "selected", "hint", "falling", "goal", "collection flight"],
       "items": {
-        "timber": {"board": 1, "kind": 5, "omitted_kind": 0, "crop": [36, 20, 673, 693], "runtime": "data/story-pieces/timber.png"},
-        "chart": {"board": 4, "kind": 0, "omitted_kind": 5, "crop": [694, 49, 1425, 680], "runtime": "data/story-pieces/chart.png"},
-        "supplies": {"board": 9, "kind": 3, "omitted_kind": 5, "crop": [1464, 29, 2135, 687], "runtime": "data/story-pieces/supplies.png"}
+        "timber": {"board": 1, "kind": 5, "crop": [36, 20, 673, 693], "runtime": "data/story-pieces/timber.png"},
+        "chart": {"board": 4, "kind": 0, "crop": [694, 49, 1425, 680], "runtime": "data/story-pieces/chart.png"},
+        "supplies": {"board": 9, "kind": 3, "crop": [1464, 29, 2135, 687], "runtime": "data/story-pieces/supplies.png"}
       }
     },
     "laid_out": {
