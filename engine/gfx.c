@@ -398,6 +398,18 @@ void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle,
     render_textured_geometry(t, mesh, n, NULL, 0);
 }
 
+void draw_image_glass(texture t, rect src, vec2 center, float radius, int mode, float strength, float light, color tint)
+{
+    if (!t.tex || radius <= 0 || t.size.w <= 0 || t.size.h <= 0) return;
+    rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
+    /* Texcoords per logical point: src spans 2r across and sqrt(3)r down. */
+    vec2 k = v2(src.size.w / t.size.w * uv.size.w / (2 * radius),
+                src.size.h / t.size.h * uv.size.h / (sqrtf(3) * radius));
+    render_lens(center, radius, clampi(mode, 0, 4), k, isfinite(strength) ? strength : 0, isfinite(light) ? light : 0);
+    draw_image_hex(t, src, center, radius, 0, tint);
+    render_lens(v2(0, 0), 0, 0, v2(0, 0), 0, 0);
+}
+
 void draw_star(vec2 center, float radius, float inner, int points, float angle, color c)
 {
     points = clampi(points, 2, 32);

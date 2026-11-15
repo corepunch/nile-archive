@@ -24,7 +24,17 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 
 -- A story mosaic's picture and its frosted copy: during play the floor shows
 -- the picture as through frosted glass; the win clears it to the sharp one.
-local FROST_BLUR = 18                       -- image pixels
+local FROST_BLUR = 9                        -- image pixels
+-- Each restored cell is its own glass tile over the picture (gfx.image_glass).
+-- --glass N previews the variants; 0 is one flat frosted pane.
+local GLASS = {
+    [0] = {mode = 0, strength = 0, light = 0},
+    {mode = 1, strength = .14, light = .55},   -- pillow: a convex lens per tile
+    {mode = 2, strength = .16, light = .65},   -- bevelled rim, flat centre
+    {mode = 3, strength = .12, light = .35},   -- reeded flutes
+    {mode = 4, strength = .10, light = .55},   -- cut facets
+}
+local GLASS_INSET = 1.2                     -- grout between tiles, logical px
 local FROST_WASH = color(236, 244, 255, 46)  -- the glass's milky sheen
 function E.load_picture(art, name, path)
     art[name] = texture.load(path)
@@ -154,7 +164,16 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
         local frost, dst = R.board_art[story.picture .. "-frost"], box:offset(vec2(sx, 0))
         local sharp = frost and frost.tex and 1 - cover or 1
         if sharp < 1 then
-            gfx.image_part(frost, src, dst, color(255, 255, 255, 255 * alpha * opacity))
+            local glass = GLASS[tonumber(app.arg("glass") or "") or 1] or GLASS[1]
+            local tint, scale = color(255, 255, 255, 255 * alpha * opacity), src.w / box.w
+            local face = size2(2 * R.HEX_R * scale, math.sqrt(3) * R.HEX_R * scale)
+            if glass.mode == 0 then gfx.image_part(frost, src, dst, tint) end
+            for _, i in ipairs(glass.mode > 0 and cells or {}) do
+                local p = R.cell_pos(i)
+                local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
+                gfx.image_glass(frost, rect.centered(uv, face), p + vec2(sx, 0), R.HEX_R - GLASS_INSET,
+                                glass.mode, glass.strength, glass.light, tint)
+            end
             gfx.rect(area, color(FROST_WASH.r, FROST_WASH.g, FROST_WASH.b, FROST_WASH.a * alpha * cover))
         end
         if sharp > 0 then gfx.image_part(t, src, dst, color(255, 255, 255, 255 * alpha * opacity * sharp)) end
@@ -392,9 +411,9 @@ end
 -- art: the piece's silhouette inked dark blue (a single full-width stripe),
 -- dropped and spread over a ring of faint taps. size is the piece's drawn
 -- width in logical pixels.
-local SHADOW_TAPS = 10
-local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .07, .07, 20
-local SHADOW_INK = color(16, 32, 84, 255)
+local SHADOW_TAPS = 8
+local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .035, .025, 11
+local SHADOW_INK = color(22, 38, 92, 255)
 function E.piece_shadow(tex, dst, alpha, size)
     local drop, spread = size * SHADOW_DROP, size * SHADOW_SPREAD
     local tint = color(255, 255, 255, SHADOW_TAP_ALPHA * alpha / 255)

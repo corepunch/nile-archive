@@ -1219,6 +1219,21 @@ Map a source rectangle in texture pixels to an anti-aliased flat-top hex. The he
 | `angle` | `number` |  |
 | `tint` | `color` |  |
 
+### `gfx.image_glass(t, src, center, radius, mode, strength, light, tint)`
+
+Like image_hex (angle 0), seen through a glass tile that bends the lookup inside the hex. mode: 0 flat, 1 pillow lens, 2 bevelled rim, 3 reeded flutes, 4 cut facets. strength is the bend in hex radii (about 0.1); light (0..1) adds a top-left rim highlight and lower-right shade.
+
+| Argument | Type | |
+|---|---|---|
+| `t` | `texture` |  |
+| `src` | `rect` |  |
+| `center` | `vec2` |  |
+| `radius` | `number` |  |
+| `mode` | `integer` |  |
+| `strength` | `number` |  |
+| `light` | `number` |  |
+| `tint` | `color` |  |
+
 ### `gfx.image_striped(t, dst, angle, repeats, width, ink, tint)`
 
 Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
