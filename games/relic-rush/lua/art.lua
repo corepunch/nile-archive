@@ -31,6 +31,7 @@ A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"}
 A.laid_finds = {"timber", "cable"}
 A.compact_silhouettes = {"lens", "chart", "marker", "tools", "supplies", "crank"}
+A.standalone_finds = {"note"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -102,6 +103,10 @@ function A.load()
         textures["find-" .. stem .. "-silhouette"] = texture.load("finds/" .. stem .. "-silhouette.png")
     end
     for _, key in ipairs(A.compact_silhouettes) do
+        textures["find-" .. key .. "-silhouette"] = texture.load("finds/" .. key .. "-silhouette.png")
+    end
+    for _, key in ipairs(A.standalone_finds) do
+        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
         textures["find-" .. key .. "-silhouette"] = texture.load("finds/" .. key .. "-silhouette.png")
     end
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")

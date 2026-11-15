@@ -54,6 +54,12 @@ shot("find-won", "480x900", "--level 2 --reveal 1 --goals-met --frames 95")
 shot("find-won-phone", "390x844", "--level 2 --reveal 1 --goals-met --frames 95 --safe-area 0,47,0,34")
 shot("find-award", "480x900", "--level 2 --reveal 1 --goals-met --frames 270")
 shot("campaign-access", "480x900", "--level 13")
+shot("note-covered-phone", "390x844", "--level 13")
+shot("note-partial", "480x900", "--level 13 --reveal .5 --frames 180")
+shot("note-award", "480x900", "--level 13 --reveal 1 --frames 270")
+shot("note-award-phone", "390x844", "--level 13 --reveal 1 --frames 270")
+shot("note-read", "480x900", "--story-beat after-13 --story-line 1 --frames 120")
+shot("note-courtyard", "480x900", "--story-beat restore-13 --story-line 1 --frames 220")
 shot("dressing-pump", "480x900", "--level 4")
 shot("dressing-quay", "480x900", "--level 5")
 shot("dressing-shore", "480x900", "--level 6")
@@ -244,7 +250,7 @@ reel("homescapes-maker-transition", 40, 3, "480x900", "--maker-reel --reel")
 if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-relic-rush-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
     frame("scenario-relic-rush-landing", "480x900", "--level 30 --reveal 1 --frames 89")
-    for _, level in ipairs{1, 2, 3, 4, 5, 6, 7, 9, 10} do
+    for _, level in ipairs{1, 2, 3, 4, 5, 6, 7, 9, 10, 13} do
         frame(("scenario-relic-rush-find-%02d"):format(level), "480x900", "--level " .. level .. " --reveal 1 --frames 95")
     end
 end

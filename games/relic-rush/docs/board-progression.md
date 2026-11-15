@@ -32,7 +32,7 @@ objectives move the emphasis within each family.
 | 10 | The Shutter Crank | Twin lanes | Sweep the sand. Uncover the crank. (sand) | sand, blockers, find | 46 |
 | 11 | The Long Terrace | Tapered bowl | Collect the relics. | relics | 33 |
 | 12 | Twelve Crates | Twin lanes | Free relics caught in the vines. | blockers, relics | 36 |
-| 13 | Names in the Stone | Twin lanes | Aim rockets along the vines. (sand) | sand, blockers | 37 |
+| 13 | Names in the Stone | Twin lanes | Match on the sand to uncover the note. | sand, blockers, buried note | 37 |
 | 14 | Static | Two chambers | Work around the broken seam. | blockers, relics | 38 |
 | 15 | The Frost Line | Tapered bowl | Clear the stone to open the board. (stone) | blockers, relics | 39 |
 | 16 | Supper for Twelve | Twin lanes | Hit the salt crust with matches or power-ups. | blockers, relics | 40 |

@@ -114,11 +114,11 @@ def place_state(sprite, size, offset):
     return canvas
 
 
-def laid_out_finds(spec, overlay_dir):
+def authored_finds(spec, overlay_dir):
     if overlay_dir:
         overlay_dir.mkdir(parents=True, exist_ok=True)
     with Image.open(ROOT / spec['source']) as source:
-        assert source.mode == 'RGBA', 'laid finds need authored alpha'
+        assert source.mode == 'RGBA', 'authored finds need alpha'
         for key, item in spec['items'].items():
             shapes = {}
             for state, placement in item['states'].items():
@@ -161,8 +161,9 @@ def main():
     manifest = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
     quest = manifest['quest_objects']
     compact = dict(finds())
-    outputs = [(OUTPUT, atlas()), *compact.items(), *laid_out_finds(quest['laid_out'], args.overlay_dir),
-               *compact_silhouettes(quest['compact_silhouettes'], compact)]
+    outputs = [(OUTPUT, atlas()), *compact.items(), *authored_finds(quest['laid_out'], args.overlay_dir),
+               *compact_silhouettes(quest['compact_silhouettes'], compact),
+               *authored_finds(quest['standalone_finds'], args.overlay_dir)]
     if args.check:
         for path, expected in outputs:
             if not same(path, expected):

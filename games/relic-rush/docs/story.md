@@ -38,7 +38,7 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 uncover camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 recover the tide chart; **confirm Spring well**. | A hand-changed answering flash and chart lead to the quay. |
 | 1. Find the lower quay — Elena needs to follow the chart | 5 uncover the quay marker; 6 uncover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | Tomas admits he knows the route, and agrees to guide them. |
 | 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 retrieve the supply crate; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter crank. | The old warning has been deliberately changed; someone is there now. |
-| 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 compare marks; **confirm Sunstone courtyard** as a working space. | Ines's initials on a fresh note identify the sender; Tomas must explain. |
+| 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 uncover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test a route; 15 check the broken wall; 16 prepare shelter; **confirm Explorer's lodge**. | A safe shelter is ready, but the direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 recover a fragment; 18 compare measures; 19 consult records; **confirm Lost-world archive**; 20 find Ines's signed plan. | Tomas admits the broken cable and shares the key; Adrian's claim threatens the records. |
 | 3. Protect the warning — Adrian must prevent Kessler taking the relay | 21 read bearings; 22 seek an alternate landing; 23 establish lookout; **confirm Star observatory**. | The crew can guide a boat without using the damaged quay. |
@@ -60,7 +60,7 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | Plant | Inference later / payoff |
 | --- | --- |
 | Empty lamp bracket (opening) | Camp lamp can answer the relay (2); warning is tested together (30). |
-| Answer repeats then changes (2–3) | A person changes the shutter (10). Ines's fresh signed note names her (13), and her delayed three flashes from the safe landing confirm it (30). |
+| Answer repeats then changes (2–3) | A person changes the shutter (10). The note reveals I. R. on board 13 and Tomas names Ines at the courtyard. Her delayed three flashes from the safe landing confirm it (30). |
 | Pump chart shows a broken route (4) | Tomas knows the tide room (7); the signed repair plan explains the damaged wall (20). |
 | Tomas says he has not seen Ines return (8) | True but incomplete: he did not know she returned elsewhere (13); he admits his broken cable (20). |
 | Adrian avoids paperwork (5) | His claim surfaces (20); he surrenders it (28). |
@@ -127,7 +127,7 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 | Quest (boards) | Lock look | Cover look | Floor look | Note |
 | --- | --- | --- | --- | --- |
-| Find the sender (11–13) | Creeper vine (12–13) | — | Drift sand (13) | Following old paths. |
+| Find the sender (11–13) | Creeper vine (12–13) | — | Drift sand and dig sand (13) | Clearing the dig sand recovers the note. The warning and initials are visible on the item card before the courtyard is built. |
 | Make a way home (14–16) | Rope lashing | **Wall rubble** (15), salt crust (16) | — | Board 15 checks the cracked wall. Rename *The Frost Line* during the Chapter 2 rewrite. |
 | Keep the record (17–20) | Iron chain | Salt crust | Drift sand (18), spreading river silt (20) | The record boxes are chained shut. |
 | Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Drift sand (22) | Mara spots the ice before board 22. |
@@ -136,7 +136,6 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 ### More story to put on the board
 
-- **Board 13, Ines's note.** Let sweeping the stonework earn a recovered letter with Ines’s initials. The courtyard conversation identifies her after the player has seen the evidence.
 - **Board 28, Adrian's claim.** Let Adrian break the last wax seal in the first-clear scene. His decision gets a visible act.
 
 ## Chapter 1: A Light Below
@@ -276,12 +275,12 @@ Choice prompt: Who should answer the signal?
 
 **Level 13**
 
-- **Elena:** A courtyard will give us room to compare these marks.
+- **Elena:** A fresh note: “Wall unsafe. I. R.”
+- **Elena:** I’ll show Tomas once the courtyard’s clear. He might recognize the writing.
 
 **After restoration 13**
 
-- **Elena:** A fresh note: “Wall unsafe. I. R.”
-- **Tomas:** Ines Reed. She is back.
+- **Tomas:** The warning about the wall is in Ines Reed’s handwriting. She’s back.
 - **Mara:** Then let us make her a way home.
 
 **Level 14**
@@ -434,7 +433,11 @@ An independent cold read identified the need to introduce Tomas, show the floode
 
 The board dressing cold read flagged the positions of the two shutters and Ines's arrival as unclear. The Chapter 3 finale shows her reply from the landing. A second reader recognized the flash and key payoffs, and caught a duplicate chart and an unclear reference to what Mara saw. Ines now brings the only chart of the other stations, and Mara names the lantern.
 
+A cold reader followed the clue from the fresh supplies to the note and Tomas’s recognition. Elena now says why she wants to show Tomas the note after the courtyard is cleared. Tomas refers to the wall warning so his recognition also makes sense in saves that had already cleared board 13.
+
 ## Changelog
+
+- 2026-11-15: Buried the warning note in board 13. The player uncovers I. R. before Tomas identifies Ines at the courtyard.
 
 - 2026-11-15: Replaced picture mosaics with drifting sand over stonework. Board 30 delivers the signal plate and replays the three flashes from board 3 with Ines at the landing.
 

@@ -117,6 +117,18 @@ tracks the broader footprint work, including a separate plan for the shutter cra
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 
+### Board 13 warning note
+
+The `note-silhouette` lies on seven cells of still dig sand and serves as the
+goal icon. Each cleared cell shows the corresponding part of `note` on trench
+earth. On first clear the whole note reads “WALL UNSAFE” and “I. R.” on the
+board and the recovered-item card, before the courtyard scene. The states
+were authored together in [one ImageGen sheet](../art/quest-objects/ines-note-states.png)
+using [this prompt](../art/quest-objects/ines-note-states.prompt.txt). Both crops
+are fitted within 228 px and centred on separate 320×320 RGBA PNGs under
+`data/finds/`. Run `python3 tools/relic_quest_art.py` to reproduce.
+The [in-game review](screenshots/review/ines-note/README.md) shows the handoff.
+
 ## Additional board elements
 
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and

@@ -109,11 +109,11 @@ return {
         {"mara", "Someone has been here recently. Let us keep looking."},
     }},
     {key="after-13", phase="after", level=13, lines={
-        {"elena", "A courtyard will give us room to compare these marks."},
+        {"elena", "A fresh note: “Wall unsafe. I. R.”"},
+        {"elena", "I’ll show Tomas once the courtyard’s clear. He might recognize the writing."},
     }},
     {key="restore-13", phase="restore", level=13, lines={
-        {"elena", "A fresh note: “Wall unsafe. I. R.”"},
-        {"tomas", "Ines Reed. She is back."},
+        {"tomas", "The warning about the wall is in Ines Reed’s handwriting. She’s back."},
         {"mara", "Then let us make her a way home."},
     }},
     {key="after-14", phase="after", level=14, lines={

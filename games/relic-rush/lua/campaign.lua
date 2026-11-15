@@ -309,7 +309,7 @@ levels[21].lesson = "Clear below the tablet to deliver it."
 levels[22].stones = {{cell=cell(2,0)}}
 levels[29].stones = {{cell=cell(2,0)}}
 
--- Quest objects belong to the story after the first clear, not to the board goals.
+-- The first clear hands recovered quest objects to the story.
 local quest_objects = {
     {key="timber", name="Camp timber"}, {key="lens", name="Lamp lens"},
     {key="cable", name="Relay cable"}, {key="chart", name="Tide chart"},
@@ -318,6 +318,7 @@ local quest_objects = {
     {key="supplies", name="Supply crate"}, {key="crank", name="Shutter crank"},
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
+levels[13].quest_object = {key="note", name="Folded note"}
 -- A recovery board buries its quest object: still oil (presented as sand,
 -- mud or silt) covers the listed cells, the object lies whole beneath them and
 -- uncovering every cell is the goal. Compact props fill a seven-cell cluster.
@@ -345,16 +346,21 @@ bury(6, cluster(-3, 2), levels[6].lesson, "Mara: Another marker. Clear it off!")
 bury(7, cluster(3, -2), "Break the carved stone. Uncover the tools.", "Mara: Leather and steel. That's a tool roll!")
 bury(9, cluster(3, 0), "Clear the ropes and salt crust. Uncover the crate.", "Mara: Straps and brass corners. The crate!")
 bury(10, cluster(-3, 2), "Sweep the sand. Uncover the crank.", "Tomas: That is the crank. Free it carefully.")
+bury(13, {cell(-3,1), cell(-2,1), cell(-2,0), cell(-3,0), cell(-4,1), cell(-4,2), cell(-3,2)},
+    "Match on the sand to uncover the note.", "Elena: There’s paper under the sand. Gently.")
+levels[13].reveal.icon = "find-note-silhouette"
 levels[30].deliveries = {tokens={cell(1,-2)},exits={cell(1,2)},icon="signal-plate"}
 levels[30].lesson = "Clear below the signal plate to deliver it."
 levels[3].signal = "cliff"
 levels[30].signal = "landing"
 -- A match touching cleared stone sweeps sand from the rest of that match.
--- Lane boards with locks (10, 22) start with both lanes and the one-cell spine restored:
+-- Lane boards with locks (10, 13, 22) start with both lanes and the one-cell spine restored:
 -- matches on the spine are too rare to restore it within the moves.
+local swept_lanes = {cell(-2,1), cell(-2,2), cell(2,-2), cell(2,-1),
+    cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)}
 local carpet = {
-    [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = {cell(-2,1), cell(-2,2), cell(2,-2), cell(2,-1), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)},
-    [13] = {cell(-2,1), cell(-2,2)}, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0), cell(-2,0), cell(-2,1), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)},
+    [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = swept_lanes,
+    [13] = swept_lanes, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0), cell(-2,0), cell(-2,1), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)},
     [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
 }
 for i, seeds in pairs(carpet) do levels[i].carpet = seeds end
@@ -388,7 +394,7 @@ end
 local goals = {
     {"oil"}, {"oil"}, {"locks", "oil"}, {"locks", "oil"}, {"carpet", "oil"},
     {"locks", "oil"}, {"locks", "oil"}, {"carpet", "idols"}, {"locks", "oil"}, {"carpet", "locks", "oil"},
-    {"idols"}, {"locks", "idols"}, {"carpet", "locks"}, {"locks", "idols"}, {"locks", "idols"},
+    {"idols"}, {"locks", "idols"}, {"carpet", "locks", "oil"}, {"locks", "idols"}, {"locks", "idols"},
     {"locks", "idols"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"oil", "locks"},
     {"deliveries"}, {"carpet", "locks"}, {"idols", "locks"}, {"carpet", "idols"}, {"locks", "idols"},
     {"oil", "locks"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"deliveries", "locks"},

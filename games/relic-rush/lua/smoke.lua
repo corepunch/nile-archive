@@ -53,7 +53,7 @@ local function campaign()
     end
     local c = R.island
     if R.overlay == R.OV_FINALE then
-        assert(awards == 10, "campaign smoke: each of the ten quest objects shows its card once, saw " .. awards)
+        assert(awards == 11, "campaign smoke: expected eleven recovered-item cards, saw " .. awards)
         local want = {}
         for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
         assert(table.concat(played, " ") == table.concat(want, " "),
@@ -69,7 +69,15 @@ local function campaign()
         local box = R.choice_form.boxes["1"]
         if box then app.inject_click(box:center()); wait = 10 end
     elseif R.overlay == R.OV_AWARD then
-        if R.modal_for == R.OV_AWARD and R.dialog_settled() then awards = awards + 1; app.inject_click(R.award_continue:center() + vec2(0, R.drop / 2)); wait = 20 end
+        if R.modal_for == R.OV_AWARD and R.dialog_settled() then
+            if R.award.level == 13 then
+                assert(R.award.name == "Folded note" and not R.prog.story_seen["after-13"],
+                    "campaign smoke: board 13 presents the note before Elena reads it")
+            end
+            awards = awards + 1
+            app.inject_click(R.award_continue:center() + vec2(0, R.drop / 2))
+            wait = 20
+        end
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_ZONE then

@@ -618,6 +618,8 @@
     "data/finds/lens.png",
     "data/finds/marker-silhouette.png",
     "data/finds/marker.png",
+    "data/finds/note-silhouette.png",
+    "data/finds/note.png",
     "data/finds/supplies-silhouette.png",
     "data/finds/supplies.png",
     "data/finds/timber.png",
@@ -1153,6 +1155,31 @@
         1024
       ],
       "selection": "Lower right. Upper-right socket and lower-left grip, no rotation."
+    },
+    "standalone_finds": {
+      "source": "art/quest-objects/ines-note-states.png",
+      "prompt": "art/quest-objects/ines-note-states.prompt.txt",
+      "generator": "Built-in ImageGen",
+      "registration": "Tight crop with edge guard, uniformly resize and center both authored states without modifying their alpha.",
+      "items": {
+        "note": {
+          "board": 13,
+          "canvas": [320, 320],
+          "cells": [[-3, 1], [-2, 1], [-2, 0], [-3, 0], [-4, 1], [-4, 2], [-3, 2]],
+          "states": {
+            "exposed": {
+              "crop": [67, 99, 788, 787],
+              "paint_size": [228, 228],
+              "runtime": "data/finds/note.png"
+            },
+            "covered": {
+              "crop": [949, 101, 1681, 789],
+              "paint_size": [228, 228],
+              "runtime": "data/finds/note-silhouette.png"
+            }
+          }
+        }
+      }
     },
     "laid_out": {
       "generator": "Built-in ImageGen, both finds and both states in a single atlas",

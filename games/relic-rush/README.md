@@ -209,7 +209,7 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | 10 | The Shutter Crank | 46 | Sand, Blockers | 6 | 6 | Sweep the sand. Uncover the crank. |
 | 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |
 | 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free relics caught in the vines. |
-| 13 | Names in the Stone | 37 | Sand, Blockers | 6 | 0 | Aim rockets along the vines. |
+| 13 | Names in the Stone | 37 | Sand, Blockers, Find | 6 | 0 | Match on the sand to uncover the note. |
 | 14 | Static | 38 | Blockers, Relics | 7 | 0 | Work around the broken seam. |
 | 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Clear the stone to open the board. |
 | 16 | Supper for Twelve | 40 | Blockers, Relics | 4 | 7 | Hit the salt crust with matches or power-ups. |

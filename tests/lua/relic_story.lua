@@ -28,20 +28,31 @@ for level=1,30 do
         p.story_seen[before.key]=true
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
-    if level<=10 then
+    if level<=10 or level==13 then
         check(rules.level_of(g).quest_object, 'first-clear story retains its quest object')
     end
     g.score,g.relics,g.obstacles=0,0,0
     rules.game_check_end(g)
     check(not g.won, 'ordinary match-3 goals must be met')
     g.score,g.relics=99999,999
+    if level==13 then
+        g.carpeted=g.carpet_total
+        rules.game_check_end(g)
+        check(not g.won and g.oil_left==7, 'board 13 still needs the buried note after its other goals are met')
+        check(R.award_for(g).name=='Folded note', 'board 13 has its own recovered-item card')
+    end
     g.delivered,g.carpeted,g.oil_left=g.delivery_total,g.carpet_total,0
     rules.game_check_end(g)
-    check(g.won, 'completing the match-3 goals wins without an object')
+    check(g.won, 'completing the match-3 goals wins')
     g.moves=0
     local reveal=journey.result_beat(p,g)
     check(level==10 and reveal==nil or reveal and reveal.level==level,
         'the first-clear exchange precedes results except the town choice')
+    if level==13 then
+        check(reveal.lines[1][2]:find('I. R.',1,true), 'Elena reads the initials before the courtyard is built')
+        check(journey.find('restore-13').lines[1][2]:find('Ines Reed',1,true),
+            'Tomas names the sender at the courtyard')
+    end
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     local after=journey.next(p,owned(c),nil)
     check(after and after.key==('after-%02d'):format(level),'every first clear has a story beat')

@@ -29,7 +29,7 @@ Q.chapters = {
     {title="The Keeper’s Return", quests={
         {title="Find the sender", points=20, tasks={
             dig(11, "Follow the changed signal"), dig(12, "Find dry supplies"),
-            dig(13, "Compare the marks"), build("gateway"),
+            dig(13, "Uncover the note"), build("gateway"),
         }},
         {title="Make a way home", points=24, tasks={
             dig(14, "Test a route"), dig(15, "Check the quay wall"),

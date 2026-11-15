@@ -162,19 +162,23 @@ assert all((ROOT / compact_silhouettes[key]).is_file() for key in ("source", "pr
 for name, item in compact_silhouettes["items"].items():
     assert item["runtime"] == f"data/finds/{name}-silhouette.png" and item["runtime"] in actual
     assert f"`{name}-silhouette`" in doc
-laid = quest["laid_out"]
-assert all((ROOT / laid[key]).is_file() for key in ("source", "prompt", "guide"))
-declaration = re.search(r"A\.laid_finds = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(laid["items"])
+assert (ROOT / quest["laid_out"]["guide"]).is_file()
 campaign = (ROOT / "lua/campaign.lua").read_text()
-for name, item in laid["items"].items():
-    for state, placement in item["states"].items():
-        stem = f'laid-{name}' + ('-silhouette' if state == 'covered' else '')
-        assert placement["runtime"] == f"data/finds/{stem}.png" and placement["runtime"] in actual
-        assert f"`{stem}`" in doc
-    footprint = re.search(rf'bury\({item["board"]}, \{{([^}}]+)\}}', campaign).group(1)
-    cells = [[int(q), int(r)] for q, r in re.findall(r'cell\((-?\d+),\s*(-?\d+)\)', footprint)]
-    assert cells == item["cells"], f'{name}: registered footprint differs from the campaign'
+for spec_key, runtime_field, prefix in (("laid_out", "laid_finds", "laid-"),
+                                        ("standalone_finds", "standalone_finds", "")):
+    spec = quest[spec_key]
+    assert all((ROOT / spec[key]).is_file() for key in ("source", "prompt"))
+    declaration = re.search(rf"A\.{runtime_field} = \{{([^}}]+)\}}", art).group(1)
+    assert re.findall(r'"([^"]+)"', declaration) == list(spec["items"])
+    for name, item in spec["items"].items():
+        assert set(item["states"]) == {"exposed", "covered"}
+        for state, placement in item["states"].items():
+            stem = prefix + name + ("-silhouette" if state == "covered" else "")
+            assert placement["runtime"] == f"data/finds/{stem}.png" and placement["runtime"] in actual
+            assert f"`{stem}`" in doc
+        footprint = re.search(rf'bury\({item["board"]}, \{{([^}}]+)\}}', campaign).group(1)
+        cells = [[int(q), int(r)] for q, r in re.findall(r'cell\((-?\d+),\s*(-?\d+)\)', footprint)]
+        assert cells == item["cells"], f'{name}: registered footprint differs from the campaign'
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
 
 result_icons = manifest["result_icons"]

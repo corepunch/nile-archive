@@ -149,7 +149,8 @@ def match3_section(data, title):
         shot = f'<img class="board" src="{board}" alt="Board {n}">' if board else '<div class="board missing">run with --capture</div>'
         chips = []
         if lv.get('quest'):
-            icon = icons.get(lv['quest']['key'])
+            key = lv['quest']['key']
+            icon = icons.get(key) or picture(page.data_dir / f'finds/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip award">{img}Recovers <b>{esc(lv["quest"]["name"])}</b></span>')
         if lv.get('delivery_icon') == 'signal-plate':
