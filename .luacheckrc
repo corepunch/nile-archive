@@ -23,10 +23,11 @@ files["engine/ui_forms.lua"] = {globals = {"ui"}}            -- defines ui.form,
 files["engine/ui_skin.lua"] = {globals = {"ui"}}             -- defines ui.skin
 files["engine/city_smoke.lua"] = {globals = {"city"}}         -- defines city.move_test
 files["tests/lua"] = {read_globals = {"check", "near", "testing"}}   -- from the test build
-files["tests/games"] = {read_globals = {"rules", "smoke", "shot", "frame", "reel", "hold", "match3_root"}, globals = {"default_frames"}}
+files["tests/games"] = {read_globals = {"rules", "smoke", "shot", "frame", "reel", "hold", "match3_root", "getenv"}, globals = {"default_frames"}}
 
 files["tests/lua/injections.lua"] = {read_globals = {"check", "near", "testing"}, globals = {"print"}}
 
 files["tests/fixtures/trickling"] = {read_globals = {"testing"}} -- test-build presentation fixture
 
 files["engine/board_intro.lua"] = {globals = {"board_intro"}}
+files["tools/scenario_dump.lua"] = {globals = {"vec2", "size2", "color", "rect", "story", "require"}}   -- host-Lua stubs for the game data

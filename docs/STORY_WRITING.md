@@ -108,3 +108,14 @@ Do these before calling a script done.
 ## What does not apply
 
 Parsers, verb coverage, mapping, mazes, inventory and unwinnable states are about a form we do not use. Our equivalents are in the checks above. Game-wide hints already exist as the idle hint on the board, so the story needs none.
+
+## Scenario overview
+
+`python3 tools/scenario_overview.py --capture` writes `build/scenarios/index.html`, one page
+for Relic Rush, Christmas Market and Nile Archive. It shows each game's cast with portraits,
+then every level or search in order, with its board capture or scene painting, the item it
+recovers, the building it funds, any story picture, and each story beat as dialogue. The data is
+read from the games' own Lua tables (`tools/scenario_dump.lua`, under the host `lua`). The
+match-3 boards come from one start of each game's test binary. Without `--capture` the page
+reuses the boards already in `build/shots/frames`. Images are embedded, so the file can be
+shared on its own.

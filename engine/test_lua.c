@@ -88,6 +88,14 @@ static const char test_spec_prelude[] =
     "    add{kind = 'hold', name = name, size = size, press = press, opts = opts}\n"
     "end\n";
 
+/* Manifests read the environment through getenv(name) to add opt-in jobs. */
+static int test_spec_getenv(lua_State *S)
+{
+    const char *value = getenv(luaL_checkstring(S, 1));
+    if (value) lua_pushstring(S, value); else lua_pushnil(S);
+    return 1;
+}
+
 static void test_copy_field(lua_State *S, const char *field, char *out, size_t size)
 {
     lua_getfield(S, -1, field);
@@ -107,6 +115,8 @@ int test_read_jobs(const char *path, test_job *jobs, int max)
     snprintf(module, sizeof module, "%s/match3.lua", root);
     if (!access(module, R_OK)) lua_pushstring(S, root); else lua_pushnil(S);
     lua_setglobal(S, "match3_root");
+    lua_pushcfunction(S, test_spec_getenv);
+    lua_setglobal(S, "getenv");
     if (luaL_dostring(S, test_spec_prelude) != LUA_OK || luaL_dofile(S, path) != LUA_OK) {
         fprintf(stderr, "tests: %s\n", lua_tostring(S, -1));
         lua_close(S);

@@ -195,3 +195,9 @@ shot("homescapes-maker-stages", "480x900", "--homescapes-art maker")
 shot("phone-homescapes-maker-stages", "390x844", "--homescapes-art maker --safe-area 0,47,0,34")
 
 reel("homescapes-maker-transition", 40, 3, "480x900", "--maker-reel --reel")
+
+-- tools/scenario_overview.py --capture: every board as it opens, for the scenario overview.
+-- Only with SPRITE_SCENARIO=1, so make test, test-full and shots never run them.
+if getenv("SPRITE_SCENARIO") == "1" then
+    for level = 1, 30 do frame(("scenario-relic-rush-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
+end

@@ -124,6 +124,10 @@ reel("fx-ray", 18, 2, "480x900", "--fx ray --reel") -- 18 pictures, 2 frames apa
 hold("long-press", "480x900", "240,440", "--city 3") -- a real pointer press and hold
 ```
 
+A manifest can add opt-in jobs with `getenv(name)`, which returns the variable or nil. The
+scenario overview's board captures run only with `SPRITE_SCENARIO=1`, so `make test`, `make shots`
+and CI never start them.
+
 Every picture is checked: not one flat colour, and the shape its size asks for. `default_frames`
 sets how many frames a picture waits for, 4 unless the file changes it.
 
