@@ -29,8 +29,9 @@ A.dressing_colors = {
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "crank"}
-A.laid_finds = {"timber", "cable"}
-A.compact_silhouettes = {"lens", "chart", "marker", "tools", "supplies", "crank"}
+A.story_pieces = {"timber", "chart", "supplies"}
+A.laid_finds = {"cable"}
+A.compact_silhouettes = {"lens", "marker", "tools", "crank"}
 A.standalone_finds = {"note"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
@@ -96,6 +97,9 @@ function A.load()
     for i, key in ipairs(A.quest_objects) do
         textures[key] = texture.region(quest_atlas, rect((i - 1) % 4 * 128, (i - 1) // 4 * 128, 128, 128))
         textures["find-" .. key] = texture.load("finds/" .. key .. ".png")   -- compact card and board props
+    end
+    for _, key in ipairs(A.story_pieces) do
+        textures["story-" .. key] = texture.load("story-pieces/" .. key .. ".png")
     end
     for _, key in ipairs(A.laid_finds) do
         local stem = "laid-" .. key

@@ -6,7 +6,7 @@
 local V = {}
 
 function V.bind(R, rules)
-    local CELLS, RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.CELLS, rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
+    local CELLS, RELIC_LEAF, RELIC_CRYSTAL = rules.CELLS, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
     local NORMAL=rules.NORMAL
     local ROW, COLUMN, DIAGONAL, BOMB, PRISM = rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM
     local hex_neighbor = rules.hex_neighbor
@@ -109,7 +109,7 @@ function V.bind(R, rules)
 
     local function land(p)
         add(FX_IMPACT, p.to, vec2(0, 0), p.kind, .25, 0, 0)
-        if p.kind == RELIC_IDOL then R.goal_pulse = .22 else R.score_pulse = .22 end
+        if rules.is_goal_kind(R.g, p.kind) then R.goal_pulse = .22 else R.score_pulse = .22 end
     end
 
     function R.vfx_particles()
@@ -124,7 +124,8 @@ function V.bind(R, rules)
                     for k = 4, 1, -1 do vfx_halo(flight(p, math.max(0, t - k * .025)), 9 - k, vfx_color(p.kind, 70 * (1 - k / 5))) end
                     vfx_halo(at, 19, vfx_color(p.kind, 125))
                     local size = 18 + 7 * math.sin(t * PI)
-                    gfx.image(R.relics[p.kind + 1], rect.centered(at, size2.splat(size)), color.WHITE)
+                    local piece = R.board_piece_texture and R.board_piece_texture(p.kind) or R.relics[p.kind + 1]
+                    gfx.image(piece, rect.centered(at, size2.splat(size)), color.WHITE)
                 else
                     local c = vfx_color(p.kind, 255 * fade)
                     vfx_halo(p.at, 8 * fade + 2, vfx_color(p.kind, 130 * fade))
@@ -190,7 +191,7 @@ function V.bind(R, rules)
                 if delay == 0 then vfx_emit(at, kind, false) end
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
                     if was.special==NORMAL and not was.element and not (R.pending.activations or {})[i]
-                        and (was.kind == RELIC_IDOL or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL) then vfx_emit(at, was.kind, true) end
+                        and (rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL) then vfx_emit(at, was.kind, true) end
                     if not R.pending.make[i] then
                         local special=(R.pending.activations or {})[i]
                         if special == ROW or special == COLUMN or special == DIAGONAL then

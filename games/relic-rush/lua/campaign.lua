@@ -54,7 +54,7 @@ local compact_mask = "1111011111011111101111111001111110001111100011110000000000
 
 local levels = {
     (function()
-        local l = level("First Light", "Match 3 in a row.", 24, 1100, 8, 0, 0)
+        local l = level("First Light", "Match 3 to collect timber.", 24, 1100, 10, 0, 0)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 0, 0, 1)
         l.ice_layers = 1
@@ -78,7 +78,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("Under the Pump", "Match to break chains.", 35, 2700, 12, 4, 0)
+        local l = level("Under the Pump", "Collect map pieces and break the chains.", 35, 2700, 15, 4, 0)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, 1)
         l.ice_layers = 1
@@ -118,7 +118,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Supply Crate", "Clear the ropes and salt crust.", 43, 4600, 18, 5, 6)
+        local l = level("The Supply Crate", "Collect supply packs. Clear the ropes and salt crust.", 43, 4600, 18, 5, 6)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -319,11 +319,14 @@ local quest_objects = {
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[13].quest_object = {key="note", name="Folded note"}
+-- Each story piece takes a colour slot. Omit a second slot for five kinds.
+levels[1].story_piece, levels[1].goal_kind, levels[1].omit_kind = "timber", 5, 0  -- orange replaces the amphora
+levels[4].story_piece, levels[4].goal_kind, levels[4].omit_kind = "chart", 0, 5   -- gold replaces the sun idol
+levels[9].story_piece, levels[9].goal_kind, levels[9].omit_kind = "supplies", 3, 5 -- blue replaces the scarab
 -- A recovery board buries its quest object: still oil (presented as sand,
 -- mud or silt) covers the listed cells, the object lies whole beneath them and
 -- uncovering every cell is the goal. Compact props fill a seven-cell cluster.
--- The timber and cable have their own paintings aligned to longer paths.
--- Board 8 recovers its cable on the first-clear item card.
+-- The relay cable has its own painting aligned to a longer path.
 local function cluster(q, r)
     return {cell(q, r), cell(q + 1, r), cell(q + 1, r - 1), cell(q, r - 1), cell(q - 1, r), cell(q - 1, r + 1), cell(q, r + 1)}
 end
@@ -335,16 +338,12 @@ local function bury(board, cells, lesson, bark, laid_out)
     l.reveal = {picture=picture, covered_picture=picture .. "-silhouette",
         icon=key, floor="oil", object=true, bark=bark}
 end
-bury(1, {cell(-2,3), cell(-1,2), cell(0,1), cell(1,0), cell(-1,3), cell(0,2), cell(1,1)},
-    "Match on the sand to uncover the timber.", "Mara: That's cut timber under the sand. Keep going!", true)
 bury(2, cluster(0, -1), "Match 4 for a rocket. Uncover the lens.", "Mara: Brass! That's my lens down there.")
 bury(3, {cell(-4,1), cell(-3,1), cell(-4,2), cell(-3,2), cell(-4,3), cell(-3,3)},
     "Break the stone. Uncover the cable.", "Mara: I can see cable. Clear the rest of it!", true)
-bury(4, cluster(-3, 1), "Break the chains. Uncover the chart.", "Elena: That is paper under the mud. Gently, now.")
 bury(5, cluster(2, 0), levels[5].lesson, "Elena: A carved stone. Uncover the whole notch.")
 bury(6, cluster(-3, 2), levels[6].lesson, "Mara: Another marker. Clear it off!")
 bury(7, cluster(3, -2), "Break the carved stone. Uncover the tools.", "Mara: Leather and steel. That's a tool roll!")
-bury(9, cluster(3, 0), "Clear the ropes and salt crust. Uncover the crate.", "Mara: Straps and brass corners. The crate!")
 bury(10, cluster(-3, 2), "Sweep the sand. Uncover the crank.", "Tomas: That is the crank. Free it carefully.")
 bury(13, {cell(-3,1), cell(-2,1), cell(-2,0), cell(-3,0), cell(-4,1), cell(-4,2), cell(-3,2)},
     "Match on the sand to uncover the note.", "Elena: There’s paper under the sand. Gently.")
@@ -380,7 +379,7 @@ local covers = {
     [10]="barnacle-crust", [15]="wall-rubble", [22]="ice",
     [24]="barnacle-crust", [25]="barnacle-crust", [26]="barnacle-crust", [27]="wall-rubble",
 }
-local floors = {[4]="well-mud", [10]="tide-silt", [26]="well-mud"}
+local floors = {[10]="tide-silt", [26]="well-mud"}
 for i, l in ipairs(levels) do
     local floor = floors[i] or l.oil_still and "dig-sand"
     l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
@@ -392,8 +391,8 @@ end
 -- The engine goal keys "carpet" and "oil" count unlit/unrestored and covered cells.
 -- On recovery boards "oil" is the ground over the buried quest object.
 local goals = {
-    {"oil"}, {"oil"}, {"locks", "oil"}, {"locks", "oil"}, {"carpet", "oil"},
-    {"locks", "oil"}, {"locks", "oil"}, {"carpet", "idols"}, {"locks", "oil"}, {"carpet", "locks", "oil"},
+    {"idols"}, {"oil"}, {"locks", "oil"}, {"locks", "idols"}, {"carpet", "oil"},
+    {"locks", "oil"}, {"locks", "oil"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks", "oil"},
     {"idols"}, {"locks", "idols"}, {"carpet", "locks", "oil"}, {"locks", "idols"}, {"locks", "idols"},
     {"locks", "idols"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"oil", "locks"},
     {"deliveries"}, {"carpet", "locks"}, {"idols", "locks"}, {"carpet", "idols"}, {"locks", "idols"},

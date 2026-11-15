@@ -2,8 +2,8 @@
 return {
     {key="before-01", phase="before", level=1, lines={
         {"mara", "There! A light under the cliff. Did you see it?"},
-        {"elena", "I saw the landing. There’s camp timber under the sand."},
-        {"mara", "Let’s dig it out. I want the Marigold landed before that light goes out."},
+        {"elena", "I saw the landing. There’s camp timber scattered along it."},
+        {"mara", "Gather what you can. I want the Marigold ashore before that light goes out."},
         {"adrian", "A mystery and a landing fee. My favourite kind of holiday."},
         {"elena", "There is an empty lamp bracket by the old camp. Keep your lamp handy."},
     }},
@@ -26,10 +26,10 @@ return {
         {"elena", "A reflection would not wait. I was wrong."},
         {"tomas", "Tomas Reed. I look after what’s left of this place."},
         {"tomas", "That cable led to the well. There used to be a tide chart under the pump cover."},
-        {"tomas", "The pump chain has rusted fast. Free it, then wash the mud off the chart."},
+        {"tomas", "The pump chain has rusted fast. Break it and gather the loose chart pieces."},
     }},
     {key="after-04", phase="after", level=4, lines={
-        {"elena", "The tide chart’s free. Let’s fix the pump and use its cover to flatten it."},
+        {"elena", "I have the chart pieces. Let’s fix the pump and lay them out on its cover."},
     }},
     {key="restore-04", phase="restore", level=4, lines={
         {"elena", "Now I can read it. The line runs from camp to a tide room."},

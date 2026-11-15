@@ -3,6 +3,8 @@
 The [opening boards](covered-boards.jpg) show every new silhouette at 480×900.
 The marker artwork appears twice because boards 5 and 6 share it. The
 [recovered boards](recovered-boards.jpg) show the matching painted props.
+The board 4 and 9 images record the original implementation. See the
+[current story collection boards](../story-collection/README.md).
 
 The before and after pairs below show the shutter crank over tide-room silt
 at both phone sizes. Already uncovered cells show the painted crank.

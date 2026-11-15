@@ -14,15 +14,15 @@ local function build(key) return {building=key} end
 Q.chapters = {
     {title="A Light Below", quests={
         {title="Get the camp talking", points=8, tasks={
-            dig(1, "Clear the landing"), build("camp"), dig(2, "Test the lamp"),
-            dig(3, "Follow the cable"), dig(4, "Inspect the pump"), build("well"),
+            dig(1, "Gather camp timber"), build("camp"), dig(2, "Test the lamp"),
+            dig(3, "Follow the cable"), dig(4, "Gather chart pieces"), build("well"),
         }},
         {title="Find the lower quay", points=12, tasks={
             dig(5, "Clear the vines"), dig(6, "Trace the shore marks"),
             dig(7, "Find tools"), build("workshop"),
         }},
         {title="Open the tide room", points=16, tasks={
-            dig(8, "Trace the broken cable"), dig(9, "Reach the old approach"),
+            dig(8, "Trace the broken cable"), dig(9, "Gather supplies"),
             build("market"), dig(10, "Inspect the relay"),
         }},
     }},

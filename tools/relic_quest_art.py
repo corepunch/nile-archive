@@ -146,6 +146,15 @@ def compact_silhouettes(spec, compact):
             yield ROOT / placement['runtime'], covered
 
 
+def story_pieces(spec):
+    with Image.open(ROOT / spec['source']) as source:
+        assert source.mode == 'RGBA', 'story pieces need authored alpha'
+        for item in spec['items'].values():
+            sprite = state_crop(source, item)
+            sprite.thumbnail(tuple(spec['paint_size']), Image.Resampling.LANCZOS)
+            yield ROOT / item['runtime'], place_state(sprite, spec['canvas'], (0, 0))
+
+
 def same(path, expected):
     if not path.exists():
         return False
@@ -163,14 +172,15 @@ def main():
     compact = dict(finds())
     outputs = [(OUTPUT, atlas()), *compact.items(), *authored_finds(quest['laid_out'], args.overlay_dir),
                *compact_silhouettes(quest['compact_silhouettes'], compact),
-               *authored_finds(quest['standalone_finds'], args.overlay_dir)]
+               *authored_finds(quest['standalone_finds'], args.overlay_dir),
+               *story_pieces(quest['story_pieces'])]
     if args.check:
         for path, expected in outputs:
             if not same(path, expected):
                 parser.error(f'{path.name} is out of date')
     else:
-        FINDS.mkdir(exist_ok=True)
         for path, expected in outputs:
+            path.parent.mkdir(parents=True, exist_ok=True)
             expected.save(path, optimize=True)
 
 

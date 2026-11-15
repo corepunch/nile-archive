@@ -3,6 +3,8 @@
 Comparisons show the original find on the left and the new art on the right.
 The sand marks cells still to clear. An authored black silhouette shows the shape
 under the pieces, and each match reveals the painted prop in the cleared cells.
+The timber screenshots record the original excavation. See the
+[current timber collection board](../story-collection/README.md).
 
 | Board and state | 480×900 | 390×844 |
 | --- | --- | --- |
@@ -17,7 +19,7 @@ The [recovered-item cards](cards.jpg) use the compact artwork.
 Reproduce the captures from the repository root.
 
 ```sh
-build/test/relic-rush "shot timber-" "shot cable-" "shot find-half"
+build/test/relic-rush "shot cable-" "shot find-half"
 python3 tools/relic_quest_art.py --check --overlay-dir /tmp/relic-finds
 ```
 

@@ -35,6 +35,14 @@ local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
 
+function R.board_piece_texture(kind)
+    local level = rules.level_of(R.g)
+    if level.story_piece and kind == level.goal_kind then
+        return R.board_art["story-" .. level.story_piece]
+    end
+    return R.relics[kind + 1]
+end
+
 function R.draw_relic(t, at, scale, alpha, aspect, board)
     if elements.delivery(R, rules, t, at, scale, alpha, aspect, ART_CELL_SIZE * .95 * (board and BOARD_SCALE or 1)) then return end
     if t.kind < 0 then return end
@@ -45,7 +53,8 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local frame = ART_STATE_SIZE * draw_scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
-    local tex, area = R.relics[t.kind+1], rect.centered(at,size2(s*aspect,s/aspect))
+    local tex, area = board and R.board_piece_texture(t.kind) or R.relics[t.kind+1],
+        rect.centered(at,size2(s*aspect,s/aspect))
     if t.special ~= NORMAL then tex, area = R.board_art[art.specials[t.special]], dst end
     if board then elements.piece_shadow(tex, area, alpha, s) end
     gfx.image(tex, area, tint)

@@ -1,12 +1,12 @@
 # Relic Rush board progression
 
 The expedition uses relic, blocker, sand sweeping, spreading ground and delivery goals. Boards
-1–7, 9 and 10 bury their quest object under sand, well mud or tide-room silt.
-Timber takes seven cells across two staggered rows and the cable takes six in a zigzag.
+2, 3, 5–7, 10 and 13 bury their quest object under sand or tide-room silt.
+The cable takes six cells in a zigzag.
 Each buried find shows a black silhouette over its covered cells until a match reveals the painted find.
 Uncovering all buried cells is a goal (shown with the object's own icon), a crew member speaks at
 the halfway point, and the first clear shows the whole object on the emptied
-board before its **Item recovered!** card. Board 8 sweeps sand from the stonework and shows the broken cable on its recovered-item card. Boards 18
+board before its **Item recovered!** card. Board 8 sweeps sand from the stonework and shows the broken cable on its recovered-item card. Boards 1, 4 and 9 each have four regular kinds and one collectible story piece. Boards 18
 and 28 provide lighter intervals in the later chapters.
 
 Four recurring silhouettes give the player readable working areas: parallel
@@ -20,15 +20,15 @@ objectives move the emphasis within each family.
 
 | Level | Board | Family | Lesson and focus | Goals | Moves |
 | ---: | --- | --- | --- | --- | ---: |
-| 1 | First Light | Tapered bowl | Match on the sand to uncover the timber. | find | 24 |
+| 1 | First Light | Tapered bowl | Match 3 to collect timber. | 10 timber pieces | 24 |
 | 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. Uncover the lens. | find | 29 |
 | 3 | The Buried Cable | Two chambers | Break the stone. Uncover the cable. (stone) | blockers, find | 32 |
-| 4 | Under the Pump | Twin lanes | Break the chains. Uncover the chart. | blockers, find | 35 |
+| 4 | Under the Pump | Twin lanes | Collect map pieces and break the chains. | blockers, 15 map pieces | 35 |
 | 5 | The Quay Marker | Tapered bowl | Match on cleared stone to sweep more sand. (sand) | sand, find | 35 |
 | 6 | The Shore Marker | Two chambers | Match the piece under the salt crust to break it. | blockers, find | 37 |
 | 7 | The Tool Roll | Two chambers | Break the carved stone. Uncover the tools. (stone) | blockers, find | 40 |
 | 8 | The Broken Cable | Compact court | Match 5 for a rainbow ball. (sand) | sand, relics | 40 |
-| 9 | The Supply Crate | Two chambers | Clear the ropes and salt crust. Uncover the crate. | blockers, find | 43 |
+| 9 | The Supply Crate | Two chambers | Collect supply packs. Clear the ropes and salt crust. | blockers, 18 supply packs | 43 |
 | 10 | The Shutter Crank | Twin lanes | Sweep the sand. Uncover the crank. (sand) | sand, blockers, find | 46 |
 | 11 | The Long Terrace | Tapered bowl | Collect the relics. | relics | 33 |
 | 12 | Twelve Crates | Twin lanes | Free relics caught in the vines. | blockers, relics | 36 |

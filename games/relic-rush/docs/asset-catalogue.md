@@ -72,9 +72,8 @@ Run `python3 tools/relic_quest_art.py` from the repository root to register the 
 into `data/quest-objects.png` and, at board size, into `data/finds/<slot>.png` (the same crop fitted
 to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and centers the original RGBA art.
 
-**Buried on the board.** Boards 1–7, 9 and 10 bury their object under still sand,
-well mud (4) or tide-room silt (10). The timber spans two staggered rows of seven cells total,
-and the cable winds through six. The compact finds occupy seven cells each. In the covered
+**Buried on the board.** Boards 2, 3, 5–7, 10 and 13 bury their object under still sand
+or tide-room silt (10). The cable winds through six cells. Compact finds occupy seven cells each. In the covered
 state the ground covers every excavation cell, with a black silhouette over the soil.
 Each excavated cell shows its part of the painted prop on trench earth
 beneath the piece. On first clear the pieces fade and the whole object holds on the board.
@@ -86,12 +85,11 @@ The [laid-out state atlas](../art/quest-objects/laid-finds-states.png) was paint
 built-in ImageGen as one sheet. See the [production prompt](../art/quest-objects/laid-finds-states.prompt.txt),
 the [footprint guide](../art/quest-objects/laid-finds-guide.png) and the
 [in-game review at both phone sizes](screenshots/review/laid-finds/README.md).
-The manifest records the crops and placement for the four separate transparent PNGs in
+The manifest records the crops and placement for the two separate cable PNGs in
 `data/finds/`. Registration checks that each sprite fits and reaches every cell.
 
 | Board sprite | Placement and use |
 | --- | --- |
-| `laid-timber`, `laid-timber-silhouette` | Board 1. A thick stack of uneven cedar planks runs upward to the right across two rows of sand. |
 | `laid-cable`, `laid-cable-silhouette` | Board 3. The cable runs through six cells in alternating columns in the left chamber. |
 
 The [compact state atlas](../art/quest-objects/compact-states.png) and
@@ -105,17 +103,33 @@ See the [in-game review](screenshots/review/compact-silhouettes/README.md).
 | Covered sprite | Boards |
 | --- | --- |
 | `lens-silhouette` | 2, The Lamp Lens |
-| `chart-silhouette` | 4, Under the Pump |
 | `marker-silhouette` | 5 and 6, the quay and shore markers |
 | `tools-silhouette` | 7, The Tool Roll |
-| `supplies-silhouette` | 9, The Supply Crate |
 | `crank-silhouette` | 10, The Shutter Crank |
 
-The goal and recovered-item cards use the compact props. Board 8 also presents
-the compact broken cable. [Issue #102](https://github.com/corepunch/nile-archive/issues/102)
+The goal and recovered-item cards use the compact props. Board 8 presents the
+compact broken cable on its first-clear card.
+[Issue #102](https://github.com/corepunch/nile-archive/issues/102)
 tracks the broader footprint work, including a separate plan for the shutter crank.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
+
+### Collectible story pieces
+
+Boards 1, 4 and 9 replace one colour slot with timber, a tide map or a supply
+pack. They use four other kinds. The collection HUD and flying match pieces
+use the same sprite as the board. Selection, hints and refill use the existing
+piece animation and overlays. Power-ups keep their authored sprites. The
+quest-object PNGs provide the camp timber, tide chart and supply crate on
+their first-clear cards.
+
+The three pieces were authored together using built-in ImageGen. The
+[transparent sheet](../art/quest-objects/story-pieces.png) and
+[prompt](../art/quest-objects/story-pieces.prompt.txt) are tracked. The manifest
+records the crops and slots. Run `python3 tools/relic_quest_art.py` to register
+individual `data/story-pieces/*.png` files. Each crop fits inside 108 px on a
+centred 128×128 canvas. See the
+[board captures](screenshots/review/story-collection/README.md).
 
 ### Board 13 warning note
 
@@ -356,7 +370,7 @@ the existing transient impact particles follow the material.
 | `rope-lashing-1`, `rope-lashing-1-mirror`, `rope-lashing-2` | Braided strand in either diagonal, or two crossed strands. Boards 7, 9, 14–16 and 24–26. |
 | `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
 | `dig-sand`, `trench-earth` | Opaque sand hides a find. Dark earth beneath the uncovered part keeps its outline readable. |
-| `well-mud`, `tide-silt` | Mud on boards 4 and 26, and tide-room silt on board 10. Matches clear the painted cells; the exposed find cells show trench earth. Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
+| `well-mud`, `tide-silt` | Mud on board 26 and tide-room silt on board 10. Matches clear the painted cells. The exposed find cells on board 10 show trench earth. Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
 | `drift-sand`, `swept-stone` | Tan sand fills uncleared stonework, and cool slate marks cleared cells. A match touching cleared stone sweeps the rest of that match. The goal counts sandy cells. Boards 5, 8, 10, 13, 18, 22, 24 and 28. Authored together in the [sweep swatches](../art/board-dressing/sweep.png) from the [prompt](../art/board-dressing/sweep.prompt.txt), then clipped to the canonical mask. |
 
 Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the

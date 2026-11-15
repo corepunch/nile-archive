@@ -179,7 +179,6 @@ function R.smoke()
             return
         end
         if R.overlay == R.OV_RESULT then
-            -- The recovered find holds on the emptied board before the card and the results.
             if R.modal_for == R.OV_RESULT and R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1 end
             return
         end

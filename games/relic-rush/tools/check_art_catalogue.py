@@ -164,6 +164,14 @@ for name, item in compact_silhouettes["items"].items():
     assert f"`{name}-silhouette`" in doc
 assert (ROOT / quest["laid_out"]["guide"]).is_file()
 campaign = (ROOT / "lua/campaign.lua").read_text()
+pieces = quest["story_pieces"]
+declaration = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(pieces["items"])
+assert all((ROOT / pieces[key]).is_file() for key in ("source", "prompt"))
+for name, item in pieces["items"].items():
+    board = f'levels[{item["board"]}]'
+    assert f'{board}.story_piece, {board}.goal_kind, {board}.omit_kind = "{name}", {item["kind"]}, {item["omitted_kind"]}' in campaign
+    assert item["runtime"] == f"data/story-pieces/{name}.png" and item["runtime"] in actual
 for spec_key, runtime_field, prefix in (("laid_out", "laid_finds", "laid-"),
                                         ("standalone_finds", "standalone_finds", "")):
     spec = quest[spec_key]

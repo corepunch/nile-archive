@@ -141,7 +141,8 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             return entries
         end
         local entries = {{id="score",icon="score",remaining=math.max(0,l.score-g.score)},
-            {id="idols",icon="idols",remaining=math.max(0,l.relics-g.relics)}}
+            {id="idols",icon=not g.goal_kind and "idols" or nil,kind=g.goal_kind,
+                remaining=math.max(0,l.relics-g.relics)}}
         if g.delivery_total>0 then
             local icon = l.deliveries and l.deliveries.icon or "delivery"
             entries[#entries+1]={id="deliveries",icon=icon,remaining=g.delivery_total-g.delivered}
@@ -180,7 +181,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if entry.kind then goal_centers["chip-" .. entry.kind] = goal_centers[entry.id] end
         local icon = entry.icon=="score" and R.hud_art.score
             or entry.icon=="idols" and R.relics[rules.RELIC_IDOL+1]
-            or entry.kind and R.relics[entry.kind+1]
+            or entry.kind and ((R.board_piece_texture and R.board_piece_texture(entry.kind)) or R.relics[entry.kind+1])
             or R.board_art[entry.icon]
         -- Collections landing on a goal make it bounce.
         local pulse = entry.id=="idols" and R.goal_pulse or entry.id=="score" and R.score_pulse or 0
@@ -229,7 +230,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
 
     function R.goal_target(kind)
         -- Collection flights land on the goal they advance.
-        return goal_centers["chip-" .. kind] or goal_centers[kind==rules.RELIC_IDOL and "idols" or "score"]
+        return goal_centers["chip-" .. kind] or goal_centers[rules.is_goal_kind(R.g, kind) and "idols" or "score"]
             or R.hud_rect:center()
     end
     function R.draw_board_hud()
@@ -513,6 +514,12 @@ function E.new(config)
     local NORMAL, ROW, COLUMN, DIAGONAL, BOMB, PRISM = 0, 1, 2, 3, 4, 5
     local shapes = require("match3.shapes")
     function M.level_of(g) return M.levels[g.level + 1] end
+    function M.is_goal_kind(g, kind)
+        if g.goal_kind ~= nil then return kind == g.goal_kind end
+        return (kind_flags[kind] or 0) & E.GOAL ~= 0
+    end
+    local default_kinds = {}
+    for kind = 0, COLORS - 1 do default_kinds[#default_kinds + 1] = kind end
     --------------------------------------------------------------------- rules
 
     -- xorshift32 on 32-bit values, the same stream as the C original
@@ -526,6 +533,10 @@ function E.new(config)
         return x
     end
     local function randn(g, n) return random_next(g) % n end
+    local function spawn_kind(g)
+        local kinds = g.spawn_kinds or default_kinds
+        return kinds[randn(g, #kinds) + 1]
+    end
     local home = require("match3.homescapes").bind(M,randn)
 
     local function tile(kind, special) return {kind = kind, special = special or NORMAL} end
@@ -636,7 +647,7 @@ function E.new(config)
         for _=1,count or 1 do
             local target,priority=-1,-1
             for i=0,CELLS-1 do if cell_active(g,i) and not m.mask[i] then
-                local score=locked(g,i) and 4 or (kind_flags[g.tiles[i].kind] or 0)&E.GOAL~=0 and 2 or 1
+                local score=locked(g,i) and 4 or M.is_goal_kind(g,g.tiles[i].kind) and 2 or 1
                 if g.hs and g.hs.cells[i] and next(g.hs.cells[i]) then score=5 end
                 if score>priority then target,priority=i,score end
             end end
@@ -832,7 +843,7 @@ function E.new(config)
                         end
                         local k = g.tiles[i].kind
                         if k >= 0 then
-                            if g.tiles[i].special == NORMAL and (kind_flags[k] or 0) & E.GOAL ~= 0 then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
+                            if g.tiles[i].special == NORMAL and M.is_goal_kind(g,k) then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
                             if g.tiles[i].special == NORMAL and (kind_flags[k] or 0) & E.WOOD ~= 0 then g.wood, g.last_wood = g.wood + 1, g.last_wood + 1 end
                             if g.tiles[i].special == NORMAL and (kind_flags[k] or 0) & E.STONE ~= 0 then g.stone, g.last_stone = g.stone + 1, g.last_stone + 1 end
                             g.score = g.score + 50 * g.combo
@@ -907,7 +918,7 @@ function E.new(config)
                         progress = true
                     elseif inlet or not movable(left) and not movable(right) and not movable(above) then
                         spawned = spawned + 1
-                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(randn(g, COLORS)), -1, -spawned
+                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(spawn_kind(g)), -1, -spawned
                         progress = true
                     end
                 end
@@ -919,7 +930,7 @@ function E.new(config)
                 for _, i in ipairs(fall_order) do
                     if movable(i) and g.tiles[i].kind == -1 then
                         spawned = spawned + 1
-                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(randn(g, COLORS)), -1, -spawned
+                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(spawn_kind(g)), -1, -spawned
                     end
                 end
             end
@@ -1026,7 +1037,7 @@ function E.new(config)
     local game_hint = M.game_hint
 
     local function fill_without_matches(g)
-        local cells = {}
+        local cells, kinds = {}, g.spawn_kinds or default_kinds
         for i = 0, CELLS - 1 do
             if not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then g.tiles[i] = tile(-1, NORMAL) end
         end
@@ -1049,9 +1060,9 @@ function E.new(config)
                         end end
                         if valid and first and equal(g,first,first) then forbidden[g.tiles[first].kind]=true end
                     end
-                    for k=0,COLORS-1 do if not forbidden[k] then n=n+1;choices[n]=k end end
+                    for _, k in ipairs(kinds) do if not forbidden[k] then n=n+1;choices[n]=k end end
                 else
-                    for k = 0, COLORS - 1 do
+                    for _, k in ipairs(kinds) do
                         g.tiles[i] = tile(k, NORMAL)
                         local valid
                         if flags & E.LINE_MATCHES ~= 0 then valid=not shape_at(g,i)
@@ -1120,6 +1131,18 @@ function E.new(config)
             tools = {2, 2, 2},   -- pickaxe, dynamite, sunburst charges
         }
         local l = M.levels[lvl + 1]
+        if l.omit_kind ~= nil then
+            -- The palette contains stable colour slots. Board copies share it read-only.
+            assert(math.type(l.omit_kind) == "integer" and l.omit_kind >= 0
+                and l.omit_kind < COLORS and COLORS > 3, "invalid omitted match3 kind")
+            g.spawn_kinds = {}
+            for _, kind in ipairs(default_kinds) do
+                if kind ~= l.omit_kind then g.spawn_kinds[#g.spawn_kinds + 1] = kind end
+            end
+        end
+        assert(l.goal_kind == nil or math.type(l.goal_kind) == "integer" and l.goal_kind >= 0
+            and l.goal_kind < COLORS and l.goal_kind ~= l.omit_kind, "collection goal kind must spawn")
+        g.goal_kind = l.goal_kind
         g.moves = l.moves
         local order, n = {}, 0
         for i = 0, CELLS - 1 do

@@ -56,7 +56,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | Hexagonal expeditions | Restored island |
 | --- | --- |
 | ![First hex match-3 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
-| ![Salt crust and rope at the supply crate](docs/screenshots/review/board-dressing/supply-crate.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
+| ![Supply packs and blockers on board 9](docs/screenshots/review/story-collection/supplies-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
@@ -83,14 +83,16 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Boards 1 to 7, 9 and 10 bury their quest object in sand, well mud or tide-room silt.
-The camp timber spans seven cells in two staggered rows and the relay cable winds through six.
+Boards 1, 4 and 9 collect 10 timber pieces, 15 map pieces and 18 supply packs
+respectively. Each board has four regular kinds and one story piece in the matching colour slot.
+Boards 2, 3, 5 to 7, 10 and 13 bury their quest object in sand or tide-room silt.
+The relay cable winds through six cells.
 The covered cells show each object's black silhouette over the soil. Matches reveal
 the painted object one cell at a time. The goal shows the object and the cells left.
 Board 8 sweeps sand off the stonework and shows the broken cable on the recovered-item card.
 Use `--level 3 --reveal .5` to preview a half-uncovered find.
 
-A first clear of boards 1 to 10 recovers a quest object. It shows big on its own **Item
+A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
 recovered!** card, styled like the results card, before the story exchange about it and the
 results (`--victory clue --dialog award` previews it).
 
@@ -197,15 +199,15 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 
 | # | Expedition | Moves | Goals | Locks | Cover cells | Focus |
 | --- | --- | ---: | --- | ---: | ---: | --- |
-| 1 | First Light | 24 | Relics | 0 | 0 | Match 3 in a row. |
+| 1 | First Light | 24 | 10 timber pieces | 0 | 0 | Match 3 to collect timber. |
 | 2 | The Lamp Lens | 29 | Relics | 0 | 0 | Match 4 for a rocket. |
 | 3 | The Buried Cable | 32 | Blockers, Relics | 0 | 0 | Match beside a stone to break it. |
-| 4 | Under the Pump | 35 | Blockers, Relics | 4 | 0 | Match to break chains. |
+| 4 | Under the Pump | 35 | Blockers, 15 map pieces | 4 | 0 | Collect map pieces and break the chains. |
 | 5 | The Quay Marker | 35 | Sand | 4 | 0 | Match on cleared stone to sweep more sand. |
 | 6 | The Shore Marker | 37 | Blockers, Find | 0 | 5 | Match the piece under the salt crust to break it. |
 | 7 | The Tool Roll | 40 | Blockers, Relics | 3 | 4 | Break the carved stone. |
 | 8 | The Broken Cable | 40 | Sand, Relics | 4 | 6 | Match 5 for a rainbow ball. |
-| 9 | The Supply Crate | 43 | Blockers, Find | 5 | 6 | Clear the ropes and salt crust. Uncover the crate. |
+| 9 | The Supply Crate | 43 | Blockers, 18 supply packs | 5 | 6 | Collect supply packs. Clear the ropes and salt crust. |
 | 10 | The Shutter Crank | 46 | Sand, Blockers | 6 | 6 | Sweep the sand. Uncover the crank. |
 | 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |
 | 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free relics caught in the vines. |

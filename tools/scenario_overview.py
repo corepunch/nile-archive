@@ -32,6 +32,7 @@ GAMES = ['relic-rush', 'christmas-market', 'nile-archive']
 MATCH3 = {'relic-rush', 'christmas-market'}
 PHASES = {'before': 'Before the level', 'after': 'After the first clear', 'restore': 'After the building is restored'}
 PHASE_ORDER = {'before': 0, 'after': 1, 'restore': 2}
+STORY_PIECE_NAMES = {'timber': 'timber pieces', 'chart': 'map pieces', 'supplies': 'supply packs'}
 
 
 def capture(game):
@@ -148,6 +149,11 @@ def match3_section(data, title):
         board = picture(frame, 200)
         shot = f'<img class="board" src="{board}" alt="Board {n}">' if board else '<div class="board missing">run with --capture</div>'
         chips = []
+        if collection := lv.get('collection'):
+            key = collection['key']
+            icon = picture(page.data_dir / f'story-pieces/{key}.png', 96, 'PNG')
+            img = f'<img src="{icon}" alt="">' if icon else ''
+            chips.append(f'<span class="chip">{img}Collect <b>{collection["count"]} {STORY_PIECE_NAMES[key]}</b></span>')
         if lv.get('quest'):
             key = lv['quest']['key']
             icon = icons.get(key) or picture(page.data_dir / f'finds/{key}.png', 96, 'PNG')

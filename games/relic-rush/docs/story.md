@@ -35,9 +35,9 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 
 | Chapter / quest and requester | Board-linked tasks and confirmed placement | Outcome / next request |
 | --- | --- | --- |
-| 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 uncover camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 recover the tide chart; **confirm Spring well**. | A hand-changed answering flash and chart lead to the quay. |
+| 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 gather camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 gather the tide chart pieces; **confirm Spring well**. | A hand-changed answering flash and chart lead to the quay. |
 | 1. Find the lower quay — Elena needs to follow the chart | 5 uncover the quay marker; 6 uncover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | Tomas admits he knows the route, and agrees to guide them. |
-| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 retrieve the supply crate; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter crank. | The old warning has been deliberately changed; someone is there now. |
+| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 gather supplies for the crate; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter crank. | The old warning has been deliberately changed; someone is there now. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 uncover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test a route; 15 check the broken wall; 16 prepare shelter; **confirm Explorer's lodge**. | A safe shelter is ready, but the direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 recover a fragment; 18 compare measures; 19 consult records; **confirm Lost-world archive**; 20 find Ines's signed plan. | Tomas admits the broken cable and shares the key; Adrian's claim threatens the records. |
@@ -69,7 +69,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-On boards 1–7, 9 and 10 the named quest object is buried on the board itself: uncovering it is a goal, one crew member reacts when half of it shows, and the first clear holds the whole object on the emptied board. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Boards 1, 4 and 9 each use four regular pieces and one story piece. Matches and power-ups collect timber, map pieces or supply packs. The first clear awards the corresponding quest object. Boards 2, 3, 5–7, 10 and 13 have buried objects with a crew reaction at halfway and a clear view of the find before the item card. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 
@@ -110,15 +110,15 @@ Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
 
 | Board | Task | Obstacles | Lock look | Cover look | Floor look | First mention |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | Uncover camp timber | — | — | — | Dig sand | — |
+| 1 | Gather 10 timber pieces | — | — | — | — | Elena spots the timber on the landing. |
 | 2 | Recover the lamp lens | — | — | — | Dig sand | — |
 | 3 | Find the relay cable | stone | — | — | Dig sand | — |
-| 4 | Recover the tide chart | 4 / 0 | Iron chain (base) | — | **Well mud** | Tomas names the rusted chain and muddy chart after board 3. |
+| 4 | Gather 15 map pieces | 4 / 0 | Iron chain (base) | — | — | Tomas names the rusted chain and loose chart pieces after board 3. |
 | 5 | Uncover the quay marker | 4 / 0 | **Creeper vine** | — | Drift sand and dig sand | Tomas points to the marker under the creepers after the well is restored. |
 | 6 | Uncover the shore marker | 0 / 5 | — | **Salt crust** (base) | Dig sand | Lesson: *Match the piece under the salt crust to break it.* |
 | 7 | Recover the tool roll | 3 / 4 (2) | **Rope lashing** | Salt crust | Dig sand | Mara remembers lashing the tools down. |
 | 8 | Recover the broken cable | 4 / 6 (2) | **Cable snarl** | Salt crust | Drift sand | Tomas points out the cable tangled in the old fittings. |
-| 9 | Retrieve the supply crate | 5 / 6 (2) | Rope lashing | Salt crust | Dig sand | — |
+| 9 | Gather 18 supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas mentions the stowed supply crate after board 8. |
 | 10 | Recover the shutter crank | 6 / 6 (2) | Iron chain | **Barnacle crust** | Tide-room silt | *Tomas: The sea has been in here. Knock it off like the salt.* |
 
 ### Chapters 2–3 by quest
@@ -143,8 +143,8 @@ These chapters are provisional. Board dressing follows the existing placements a
 **Before level 1**
 
 - **Mara:** There! A light under the cliff. Did you see it?
-- **Elena:** I saw the landing. There’s camp timber under the sand.
-- **Mara:** Let’s dig it out. I want the Marigold landed before that light goes out.
+- **Elena:** I saw the landing. There’s camp timber scattered along it.
+- **Mara:** Gather what you can. I want the Marigold ashore before that light goes out.
 - **Adrian:** A mystery and a landing fee. My favourite kind of holiday.
 - **Elena:** There is an empty lamp bracket by the old camp. Keep your lamp handy.
 
@@ -171,11 +171,11 @@ These chapters are provisional. Board dressing follows the existing placements a
 - **Elena:** A reflection would not wait. I was wrong.
 - **Tomas:** Tomas Reed. I look after what’s left of this place.
 - **Tomas:** That cable led to the well. There used to be a tide chart under the pump cover.
-- **Tomas:** The pump chain has rusted fast. Free it, then wash the mud off the chart.
+- **Tomas:** The pump chain has rusted fast. Break it and gather the loose chart pieces.
 
 **Level 4**
 
-- **Elena:** The tide chart’s free. Let’s fix the pump and use its cover to flatten it.
+- **Elena:** I have the chart pieces. Let’s fix the pump and lay them out on its cover.
 
 **After restoration 4**
 
@@ -435,7 +435,11 @@ The board dressing cold read flagged the positions of the two shutters and Ines'
 
 A cold reader followed the clue from the fresh supplies to the note and Tomas’s recognition. Elena now says why she wants to show Tomas the note after the courtyard is cleared. Tomas refers to the wall warning so his recognition also makes sense in saves that had already cleared board 13.
 
+A cold reader followed the camp timber, chart pieces and supply crate from their board objectives to the three restorations.
+
 ## Changelog
+
+- 2026-11-15: Boards 1, 4 and 9 each replace one regular colour with a collectible story piece. Their rewards are the camp timber, tide chart and supply crate.
 
 - 2026-11-15: Buried the warning note in board 13. The player uncovers I. R. before Tomas identifies Ines at the courtyard.
 

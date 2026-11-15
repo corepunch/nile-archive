@@ -7,11 +7,42 @@ require('main')
 local function empty_queue() while story.active() do story.next() end end
 local function owned(c) return function(kind) return island.owned(c,kind)>0 end end
 
+-- Story pieces occupy one palette slot and advance its matching goal.
+for _, spec in ipairs{{1,5,0}, {4,0,5}, {9,3,5}} do
+    local board, target, omitted = table.unpack(spec)
+    local g = rules.game_start(board-1,123)
+    R.g = g
+    local kinds, free = {}, {}
+    for i=0,rules.CELLS-1 do
+        if g.active[i] then
+            kinds[g.tiles[i].kind] = true
+            if g.chain[i]==0 and g.ice[i]==0 then free[#free+1] = i end
+        end
+    end
+    local count = 0
+    for _ in pairs(kinds) do count = count+1 end
+    check(count==5 and kinds[target] and not kinds[omitted], 'opening has five kinds including the story piece')
+    for _, entry in ipairs(R.goal_entries()) do
+        if entry.id=='idols' then check(entry.kind==target, 'the HUD tracks the story kind') end
+    end
+    local a,b=free[1],free[2]
+    g.tiles[a],g.tiles[b]=rules.tile(target),rules.tile(1)
+    local m=rules.new_match()
+    m.mask[a],m.mask[b]=true,true
+    rules.game_apply(g,m)
+    check(g.relics==1, 'only the story piece advances collection')
+    rules.game_collapse(g)
+    for i=0,rules.CELLS-1 do
+        check(g.tiles[i].kind~=omitted, 'refill cannot introduce the omitted kind')
+    end
+end
+
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 check(rules.LEVELS==30 and #journey.beats==47,'all chapters and their restoration scenes are playable')
 check(journey.find('before-22').lines[1][2]:find('Ice',1,true),'the Frozen Stair introduces ice before play')
+local collections = {[1]={10,'Camp timber'},[4]={15,'Tide chart'},[9]={18,'Supply crate'}}
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -34,6 +65,15 @@ for level=1,30 do
     g.score,g.relics,g.obstacles=0,0,0
     rules.game_check_end(g)
     check(not g.won, 'ordinary match-3 goals must be met')
+    if collections[level] then
+        local spec=rules.level_of(g)
+        local target, reward=table.unpack(collections[level])
+        g.relics=target-1
+        rules.game_check_end(g)
+        check(spec.relics==target and not g.won and g.oil_left==0 and not spec.reveal,
+            'the story piece collection is required after the other goals are met')
+        check(R.award_for(g).name==reward, 'the assembled object is the first-clear reward')
+    end
     g.score,g.relics=99999,999
     if level==13 then
         g.carpeted=g.carpet_total
