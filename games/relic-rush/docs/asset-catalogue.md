@@ -76,7 +76,9 @@ file at 210 px). `lua/campaign.lua` (`bury`) lists each find's cells. Reviewed c
 [recovered and card](review/buried-finds/board-2-recovered.jpg); reproduce with
 `build/test/relic-rush "shot find-"`. Known limits: the eight paintings are compact props, so every
 find is the same round cluster and the cable does not run along the board; the cover reuses the river
-silt surface, not a dedicated sand or rubble painting.
+silt surface, not a dedicated sand or rubble painting. Prompts for both
+(a dig cover with a trench floor, and a laid-out timber, cable and crank) are drafted in
+[finds-prompts.md](../art/quest-objects/finds-prompts.md); nothing is generated yet.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 
