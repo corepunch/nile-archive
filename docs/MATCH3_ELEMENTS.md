@@ -80,7 +80,9 @@ counts the active cells still uncovered (`g.carpet_total - g.carpeted`).
 A carpet level may add `reveal = {picture = "art-name", bark = "Speaker: line"}`.
 The picture (a texture the game puts in `R.board_art`) then replaces the tiled
 material: it is laid once across the whole board, cropped to cover it, and the
-carpet patch uncovers it. `bark` is shown as a notice once half the floor is
+carpet patch uncovers it. An optional `mosaic = "art-name"` is a same-sized,
+calmer cut of the picture shown during play; the picture fades in over it
+with the win. `bark` is shown as a notice once half the floor is
 restored. Only a first clear reveals; a replay restores the plain material. On
 the win the game fades pieces and blockers by `elements.reveal_cover(R, rules)`
 and the first-clear beat waits for `elements.reveal_holding(R, rules)`, so the

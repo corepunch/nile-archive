@@ -137,7 +137,14 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
         local t = R.board_art[story.picture]
         local box, src = picture_crop(R, rules, t)
         local opacity = 1 - cover * (1 - (R.reveal_play_opacity or 1))
-        gfx.image_part(t, src, box:offset(vec2(sx, 0)), color(255, 255, 255, 255 * alpha * opacity))
+        local dst = box:offset(vec2(sx, 0))
+        -- `reveal.mosaic` is the same picture cut into stones: it shows during
+        -- play and the painting fades in over it with the win.
+        local stones = story.mosaic and cover > 0 and R.board_art[story.mosaic]
+        if stones then
+            gfx.image_part(stones, src, dst, color(255, 255, 255, 255 * alpha * opacity))
+            if cover < 1 then gfx.image_part(t, src, dst, color(255, 255, 255, 255 * alpha * (1 - cover))) end
+        else gfx.image_part(t, src, dst, color(255, 255, 255, 255 * alpha * opacity)) end
     else tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha)) end
     gfx.sdf_unmask()
 end

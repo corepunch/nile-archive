@@ -70,6 +70,8 @@ function A.load()
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load(name .. ".jpg") end
+        local stones = level.reveal and level.reveal.mosaic
+        if stones then textures[stones] = texture.load(stones .. ".jpg") end
     end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
