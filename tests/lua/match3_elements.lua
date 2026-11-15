@@ -173,8 +173,8 @@ do
     check(g.won, 'clearing the oil wins an oil-only level')
 end
 
--- A story mosaic reveals its picture on a first clear only, speaks once at
--- half and holds the finished picture before the first-clear beat.
+-- A story mosaic shows its picture on every play; only a first clear speaks
+-- once at half and holds the finished picture before the first-clear beat.
 do
     local V = require('match3.elements_view')
     local C = rules{name='reveal',moves=20,score=0,relics=0,chains=0,ice=0,carpet={cell(0,0)},goals={'carpet'},

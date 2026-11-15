@@ -76,7 +76,7 @@ local function tile(t, area, side, origin, tint)
         end
     end
 end
--- A first-clear picture replaces restored carpet, or peeks through the
+-- A story picture replaces restored carpet, or peeks through the
 -- original hazard cells as they are cleared (`reveal.floor = "oil"`).
 -- On the win the pieces clear away (E.reveal_cover) and the finished picture
 -- holds for a moment before the first-clear beat (E.reveal_holding).
@@ -177,8 +177,10 @@ local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
 function E.ground(R, rules, sx)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    local story = reveal(R, rules)
-    local cover = story and E.reveal_cover(R, rules) or 1
+    -- The picture shows on every play; only a first clear speaks, fades the
+    -- pieces and holds the finished picture (reveal).
+    local story = reveal(R, rules) or rules.level_of(g).reveal
+    local cover = E.reveal_cover(R, rules)
     draw_carpet(R, rules, story, sx, alpha, cover)
     if story and story.floor == "oil" then draw_buried_picture(R, rules, story, sx, alpha, cover) end
     for i = 0, rules.CELLS - 1 do

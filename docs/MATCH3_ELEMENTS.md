@@ -108,11 +108,11 @@ Each carved stone is one face-on hex sprite. The guide and HUD use the
 same goal icons.
 
 A level can set `reveal = {picture = art_key}` to show a continuous painting
-in the restored floor on the first clear. With `floor = "oil"`, the painting
+in the restored floor on every play. With `floor = "oil"`, the painting
 peeks through cleared cells from the starting hazard patch. Returning hazard
 covers those cells again. Winning fades the pieces and shows the whole painting
-before the existing first-clear scene and reward card. Replays use the usual
-floor material. `--level N --reveal .5` previews a partial floor and
+before the existing first-clear scene and reward card; replays show the
+painting without the fade, hold or notice. `--level N --reveal .5` previews a partial floor and
 `--reveal 1` previews the first clear.
 
 ## Artwork and verification
