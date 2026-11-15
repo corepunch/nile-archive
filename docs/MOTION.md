@@ -219,11 +219,14 @@ switches at once, the screen being left is covered, then the other screen is
 uncovered while the board's entrance plays. It takes no input (`R.diving()`),
 and reduced motion skips it. The styles live in `engine/match3_dive.lua`:
 `flash` (the engine's default: the town zooms into its newest building and
-blurs into a warm flash), `hex`, `drift`, `iris` and `bands`. game.json's `dive`
+blurs into a warm flash), `hex`, `drift`, `iris`, `bands` and `wipe`. game.json's `dive`
 block picks one (`style`) and dresses it in the game's theme: a `motif` (`snow`,
-`leaves`) and its colours. Christmas Market and Relic Rush use `bands`: diagonal
-bands sweep across with the level's name on a tag, as a wrapped present or a
-treasure map. Capture with `--city 3 --dive --dive-back 120 --reel` (the
+`leaves`) and its colours. Christmas Market and Relic Rush use `wipe`, a cinematic
+cut: both screens show at once and a diagonal edge sweeps left to right over 1.4
+seconds, pushing the town off to the right on the way into the board and drawing
+it in from the left on the way back. The town is the masked screen
+(`gfx.sdf_mask` with a diagonal ramp field), because the board masks its own story
+mosaic and the renderer holds one mask at a time. Capture with `--city 3 --dive --dive-back 120 --reel` (the
 `*-town-dive` reels, there and back); `--dive-style NAME` films another style.
 The particle
 pools in `engine/match3_vfx.lua` and the continuous hint pulse are likewise not tweens.

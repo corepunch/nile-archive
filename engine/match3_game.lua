@@ -1084,6 +1084,22 @@ function G.app(R)
     end
     local function dive_screen(world, dt)
         local s = dive.style
+        if s.wipe then   -- both screens at once, the town masked to its side of the edge
+            local u = num.saturate(dive.t / s.inn)
+            R.board_screen(world, dt)
+            R.vfx_draw()
+            R.vfx_particles()
+            dive.focus = dive.town
+            s.mask(dive, u)
+            R.island_screen(world, dt)
+            gfx.sdf_unmask()
+            gfx.bleed(true)
+            s.draw(dive, false, u)
+            gfx.bleed(false)
+            dive.t = dive.t + dt
+            if dive.t >= s.inn then dive = nil end
+            return
+        end
         local leaving = dive.t < s.out
         local u = leaving and dive.t / s.out or num.saturate((dive.t - s.out) / s.inn)
         local island_view = leaving == dive.from_island

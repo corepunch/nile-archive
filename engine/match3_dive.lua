@@ -368,7 +368,62 @@ styles.bands = {
     end,
 }
 
-D.names = {"flash", "hex", "drift", "iris", "bands"}
+-- A cinematic wipe: both screens show at once, the town on one side of a
+-- diagonal edge that sweeps left to right. Into the board the town is pushed
+-- off to the right; back to town it is drawn in from the left. The town is the
+-- masked one either way, since the board masks its own story mosaic and the
+-- renderer holds one mask at a time. match3.game draws both screens for a
+-- `wipe` style and calls mask() before the town and draw() last.
+local WIPE_TILT = -.32   -- the edge's normal, radians from +x: it leans like "/"
+local WIPE_RANGE = 64    -- the field's encoded half-span; the feather must stay inside it
+local WIPE_FEATHER = 12
+local WIPE_TEXELS = 256
+local wipe_fields = {}
+-- A plane d = dot(p - centre, n) across a square, signed so the town's side is
+-- negative (inside the mask). The square is centred on the edge and moves with it.
+local function wipe_field(town_right)
+    local key = town_right and "right" or "left"
+    if wipe_fields[key] then return wipe_fields[key] end
+    local n, size, sign = vec2.polar(WIPE_TILT, 1), WIPE_TEXELS, town_right and -1 or 1
+    local px = {}
+    for y = 0, size - 1 do
+        for x = 0, size - 1 do
+            local d = sign * ((x + .5 - size / 2) * n.x + (y + .5 - size / 2) * n.y)
+            local v = math.floor(num.saturate(.5 + d / (2 * WIPE_RANGE / D.wipe_texel())) * 255 + .5)
+            px[#px + 1] = string.char(v, v, v, 255)
+        end
+    end
+    wipe_fields[key] = texture.from_pixels(table.concat(px), size, size)
+    return wipe_fields[key]
+end
+-- One texel's size in logical units: the square spans four times the display.
+local function wipe_side() local full = app.bleed(); return 4 * math.max(full.w, full.h) end
+function D.wipe_texel() return wipe_side() / WIPE_TEXELS end
+local function wipe_edge(u)   -- where the edge crosses the display's middle row
+    local full = app.bleed()
+    local lean = math.abs(math.tan(WIPE_TILT)) * full.h / 2 + WIPE_FEATHER + 8
+    return vec2(num.lerp(full.x - lean, full:max().x + lean, ease.in_out_sine(u)), full:center().y)
+end
+styles.wipe = {
+    wipe = true, out = 0, inn = 1.4,
+    look = function() return 1 end,
+    mask = function(d, u)
+        local side = wipe_side()
+        gfx.sdf_mask(wipe_field(d.from_island), rect.centered(wipe_edge(u), size2(side, side)), WIPE_RANGE, 0, 0, 0, WIPE_FEATHER)
+    end,
+    -- A soft shade on the board's side of the edge gives the cut some depth.
+    draw = function(d, _, u)
+        local full, n = app.bleed(), vec2.polar(WIPE_TILT, 1)
+        local along, o = vec2(-n.y, n.x), wipe_edge(u)
+        local toward = d.from_island and -1 or 1   -- from the edge into the board
+        local a, b = o + along:scale(full.h), o - along:scale(full.h)
+        local off = n:scale(toward * 26)
+        local shade, clear = color(0, 0, 0, 55), color(0, 0, 0, 0)
+        app.mesh({a, b, b + off, a + off}, {shade, shade, clear, clear}, {0, 1, 2, 0, 2, 3})
+    end,
+}
+
+D.names = {"flash", "hex", "drift", "iris", "bands", "wipe"}
 function D.get(name) return styles[name or "flash"] or styles.flash end
 
 return D
