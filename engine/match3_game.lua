@@ -341,7 +341,7 @@ function G.bind(R, over)
         end
     end
 
-    -- The town's wallet capsules: lives, gold, stars (engine/town.lua lays them out).
+    -- The town's wallet capsules (engine/town.lua lays them out).
     function R.header_capsules()
         local remaining = math.max(0, math.ceil((R.prog.life_at or 0) - app.clock()))
         local lives = (R.prog.lives or rules.LIVES) == rules.LIVES and W.capsules.lives_full
@@ -349,7 +349,13 @@ function G.bind(R, over)
         local values = {lives, tostring(R.prog.wallet[rules.GOLD]), tostring(R.prog.wallet[rules.STARS])}
         local icons = R.wallet_icons()
         local out = {}
-        for k = 1, 3 do out[k] = {icon = icons[k], value = values[k], note = W.capsules.notes[k]} end
+        if R.currency_capsules then
+            out[1] = {icon=icons[1], value=lives, note=W.capsules.notes[1], width=78}
+            for _, capsule in ipairs(R.currency_capsules(R.prog.wallet)) do out[#out+1] = capsule end
+            out[#out+1] = {icon=icons[3], value=values[3], note=W.capsules.notes[3], width=65}
+        else
+            for k = 1, 3 do out[k] = {icon = icons[k], value = values[k], note = W.capsules.notes[k]} end
+        end
         return out
     end
 
@@ -425,6 +431,11 @@ function G.bind(R, over)
         return old, part
     end
 
+    local function price_parts(cost)
+        if R.currency_prices then return R.currency_prices(cost) end
+        return {{id="gold", amount=cost[rules.GOLD], icon=R.wallet_icons()[2]}}
+    end
+
     -- The building card: a story building or a shop item, to build or move.
     local wonder_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,13}, children={
@@ -434,8 +445,16 @@ function G.bind(R, over)
             {kind="spacer", height=18},
             {kind="label", id="about", height=62, wrap=true, em=22, text_style=PAL_CREAM},
             {kind="spacer", height=14},
-            {kind="row", height=78, padding={16,0,16,0}, gap=10, visible_field="can_build", children={
-                {kind="column", grow=1, gap=9, children={{kind="image",id="gold_icon",height=34},{kind="label",id="gold",height=28}}},
+            {kind="row", height=78, align="center", visible_field="show_price", children={
+                {kind="spacer",grow=1},
+                {kind="list",id="price",direction="row",gap=10,item=function(entry)
+                    return {kind="column",width=90,gap=4,children={
+                        {kind="image",image=entry.icon,height=33},
+                        {kind="label",text=tostring(entry.amount),height=25,em=23},
+                        {kind="label",text=entry.name or "",height=12,em=11,text_style=PAL_CREAM},
+                    }}
+                end},
+                {kind="spacer",grow=1},
             }},
             {kind="label",id="notice",height=78,wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
             {kind="spacer",height=18},
@@ -446,7 +465,6 @@ function G.bind(R, over)
         bindings={
             {id="name",field="name",readonly=true},{id="sprite",field="sprite",type="texture",readonly=true},
             {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
-            {id="gold",field="cost.1",type="integer",readonly=true},
         },
     }
     R.wonder_form = wonder_form
@@ -456,10 +474,12 @@ function G.bind(R, over)
         local w = R.buildings[i + 1]
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=journey.building_about(i, R.prog.level, w.about),
-            cost={w.cost[1]}, action=built and W.card.move or can_build and W.card.build or W.card.back}
+            action=built and W.card.move or can_build and W.card.build or W.card.back}
         assert(ok, message)
-        wonder_form:set("gold_icon", R.wallet_icons()[2])
-        wonder_form.values.can_build, wonder_form.values.show_notice = can_build and not built, built or not can_build
+        local show_price = not built and (can_build or R.currency_prices and w.needs and
+            R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
+        wonder_form.values.show_price, wonder_form.values.show_notice = show_price, not show_price
+        assert(wonder_form:set_items("price", price_parts(w.cost)))
         wonder_form:set("notice", built and W.card.moving or W.card.locked)
         local bounds = rect.centered(vec2(240, 450), size2(math.min(420, R.SCREEN_W - 48), 592))
         R.modal_bounds = pr(bounds)
@@ -600,8 +620,14 @@ function G.bind(R, over)
         if record.state == "built" or locked then   -- icons from the game's atlas
             R.picture_fit(record.state == "built" and R.shop_built_art or R.shop_locked_art, rect.centered(line:center(), size2(30, 30)), 255)
         else
-            R.picture_fit(R.wallet_icons()[2], rect(box.x + box.w / 2 - 34, line.y + 1, 22, 22), 255)
-            R.say_left(tostring(record.cost), rect(box.x + box.w / 2 - 9, line.y, box.w / 2, 24), 19, record.state == "ready" and PAL_GOLD or PAL_CREAM)
+            local parts = record.prices
+            local width = math.min(55, line.w / #parts)
+            for k, part in ipairs(parts) do
+                local x = line:center().x + (k - 1 - #parts / 2) * width
+                R.picture_fit(part.icon, rect(x, line.y + 2, 18, 19), 255)
+                R.say_left(tostring(part.amount), rect(x+18, line.y, width-18, 24),
+                    #parts == 3 and 13 or 17, record.state == "ready" and PAL_GOLD or PAL_CREAM)
+            end
         end
     end
     local catalogue_form = match3.catalogue_form(C.title, C.hint, C.close, PAL_CREAM, paint_tile)
@@ -623,15 +649,19 @@ function G.bind(R, over)
                     local reason = owned > 0 and C.built or journey.wonder_levels[i] > R.prog.level and C.complete:format(journey.wonder_levels[i]) or
                         i - 1 ~= island.wonder_count(R.island) and C.earlier
                     if reason then action, state = reason, owned > 0 and "built" or "locked" end
+                    if not reason and not wallet:covers(def.cost) then action, state = C.poor, "poor" end
                 elseif wallet[rules.STARS] < meta.stars then action, state = C.stars:format(meta.stars), "locked"
                 elseif not wallet:covers(def.cost) then action, state = C.poor, "poor"
-                elseif wallet[rules.GOLD] - island.reserved_gold(R.island, R.prog.level) < def.cost[1] then action, state = C.reserved, "poor"
+                elseif island.can_spend and not island.can_spend(R.island, wallet, R.prog.level, def.cost)
+                    or not island.can_spend and wallet[rules.GOLD] - island.reserved_gold(R.island, R.prog.level) < def.cost[1] then
+                    action, state = C.reserved, "poor"
                 elseif R.island.count >= 160 then action, state = C.full, "poor" end
-                local price = C.price:format(def.cost[1])
+                local parts = price_parts(def.cost)
+                local price = R.currency_prices and R.cost_text(parts) or C.price:format(def.cost[1])
                 if i > island.WONDERS then price = price .. C.unlock:format(meta.stars) end
                 local details = C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  ")
                 if R.quest_build_points then details = details .. ("  /  +%d decoration points"):format(R.quest_build_points(i - 1)) end
-                local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, cost=def.cost[1], state=state,
+                local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts, state=state,
                     details=details, available=available, action=action}
                 records[#records + 1], tiles[meta.key] = record, record
             end
@@ -940,6 +970,7 @@ function G.bind(R, over)
             journey.migrate(R.prog, version)
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
+        if R.serialize_campaign then R.serialize_campaign(s) end
     end
     R.serialize = serialize
 
@@ -952,6 +983,10 @@ function G.bind(R, over)
         if not R.test_mode then save.write(progress_slot(), serialize) end
     end
 
+    function R.make_board(level, seed, preview)
+        return rules.game_start(level, seed, R.board_context and R.board_context(preview))
+    end
+
     function R.start_level(chosen)
         local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
         if lvl > R.prog.level then return false end
@@ -960,7 +995,7 @@ function G.bind(R, over)
         if lvl == R.prog.level and R.quest_allows_board and not R.quest_allows_board(lvl + 1) then return false end
         rules.refill_lives(R.prog, app.clock())
         if R.prog.lives <= 0 then R.on_island = true; R.notice(W.notices.no_lives); return false end
-        R.reset_board(rules.game_start(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
+        R.reset_board(R.make_board(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
         R.on_island = false
         R.overlay = R.OV_NONE
         R.intro = nil
@@ -968,7 +1003,7 @@ function G.bind(R, over)
         -- Mechanics stay in the board lesson, apart from the story dialogue.
         if not R.quiet then
             local l = rules.level_of(R.g)
-            R.mission(l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
+            R.mission(R.board_lesson and R.board_lesson(R.g) or l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
         end
         return true
     end
@@ -1247,7 +1282,7 @@ function G.app(R)
         if not R.start_level() then
             -- A loaded zero-life wallet still needs an inert board for shared view
             -- updates. It cannot be resumed as an unfinished level.
-            R.reset_board(rules.game_start(math.min(R.prog.level, LEVELS - 1), R.prog.seed))
+            R.reset_board(R.make_board(math.min(R.prog.level, LEVELS - 1), R.prog.seed))
             R.g.lost, R.g.life_paid = true, true
             R.on_island = true
         end
@@ -1255,6 +1290,7 @@ function G.app(R)
         if journey.earned(R.prog.level) > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
         if W.start_on_town and not app.arg("smoke") then R.on_island = true end
+        if R.resume_completed then R.resume_completed() end
         R.debug_screens()
     end
 

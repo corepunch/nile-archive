@@ -1,7 +1,12 @@
 {
   "background": "#166E77",
   "header": {
-    "role": "wallet"
+    "role": "wallet",
+    "x": 14,
+    "height": 32,
+    "gap": 7,
+    "overhang": 6,
+    "menu": {"size": 64, "inset": 7, "y": 4}
   },
   "bottom": {
     "layout": "play-primary",

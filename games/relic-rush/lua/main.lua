@@ -11,6 +11,7 @@ require("board")
 require("finale")
 require("narrative")
 require("quests")
+require("progress")
 require("smoke")
 
 return require("match3.game").app(R)

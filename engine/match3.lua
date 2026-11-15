@@ -267,6 +267,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         end
         local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
         if medallion > .05 then draw_moves(vec2(moves_x, centre.y), medallion) end
+        if R.draw_earnings then R.draw_earnings(centre) end
         local pause_art = signboard and R.hud_art["board-pause-normal"] and "board-pause-"
         if E.pause_button(R, R.board_pause:offset(offset), pause_art) then R.overlay = R.OV_PAUSE end
     end
@@ -843,9 +844,14 @@ function E.new(config)
                         end
                         local k = g.tiles[i].kind
                         if k >= 0 then
-                            if g.tiles[i].special == NORMAL and M.is_goal_kind(g,k) then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
-                            if g.tiles[i].special == NORMAL and (kind_flags[k] or 0) & E.WOOD ~= 0 then g.wood, g.last_wood = g.wood + 1, g.last_wood + 1 end
-                            if g.tiles[i].special == NORMAL and (kind_flags[k] or 0) & E.STONE ~= 0 then g.stone, g.last_stone = g.stone + 1, g.last_stone + 1 end
+                            local normal = g.tiles[i].special == NORMAL
+                            if normal and g.resource_yields then
+                                local resource = g.resource_yields[k]
+                                if resource then g.earnings[resource.slot] = g.earnings[resource.slot] + resource.amount end
+                            end
+                            if normal and M.is_goal_kind(g,k) then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
+                            if normal and (kind_flags[k] or 0) & E.WOOD ~= 0 then g.wood, g.last_wood = g.wood + 1, g.last_wood + 1 end
+                            if normal and (kind_flags[k] or 0) & E.STONE ~= 0 then g.stone, g.last_stone = g.stone + 1, g.last_stone + 1 end
                             g.score = g.score + 50 * g.combo
                             cleared = cleared + 1
                             if m.make[i] then g.tiles[i].special = m.make[i]
@@ -982,6 +988,7 @@ function E.new(config)
         c.oil = g.oil and copy_array(g.oil)
         c.stone_hp = copy_array(g.stone_hp)
         c.tools = {g.tools[1], g.tools[2], g.tools[3]}
+        if g.earnings then c.earnings = {table.unpack(g.earnings)} end
         return c
     end
     local game_copy = M.game_copy
@@ -1118,7 +1125,7 @@ function E.new(config)
     end
     local game_shuffle = M.game_shuffle
 
-    function M.game_start(lvl, seed)
+    function M.game_start(lvl, seed, resource_yields)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
             tiles = {}, active = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
@@ -1131,6 +1138,8 @@ function E.new(config)
             tools = {2, 2, 2},   -- pickaxe, dynamite, sunburst charges
         }
         local l = M.levels[lvl + 1]
+        g.resource_yields = resource_yields
+        if g.resource_yields then g.earnings = {0, 0, 0} end
         if l.omit_kind ~= nil then
             -- The palette contains stable colour slots. Board copies share it read-only.
             assert(math.type(l.omit_kind) == "integer" and l.omit_kind >= 0
@@ -1624,7 +1633,10 @@ function E.new(config)
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
             R.notice("No moves. Board reshuffled.")
         end
-        if R.g.won then R.overlay = R.OV_RESULT; R.play("win"); haptic.play(haptic.SUCCESS)
+        if R.g.won then
+            R.overlay = R.OV_RESULT
+            if R.stash_completed then R.stash_completed() end
+            R.play("win"); haptic.play(haptic.SUCCESS)
         elseif R.g.lost then R.overlay = R.OV_FAILED; R.play("lose"); haptic.play(haptic.ERROR) end
         R.idle_time = 0
     end

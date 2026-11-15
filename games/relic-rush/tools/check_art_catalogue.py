@@ -15,6 +15,13 @@ for field, key in [("tools", "tools"), ("states", "tool_states")]:
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
+resources = manifest["resource_pieces"]
+declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(resources["slots"])
+assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
+for name in resources["slots"]:
+    path = f"data/resource-pieces/{name}.png"
+    assert path in actual and f"`{name}`" in doc
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)
@@ -176,6 +183,7 @@ for sheet in sheets:
 declarations = re.findall(r'levels\[(\d+)\]\.story_piece, levels\[\1\]\.goal_kind = "([^"]+)", (\d+)', campaign)
 assert {int(board): (name, int(kind)) for board, name, kind in declarations} == board_slots
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
+subprocess.run([sys.executable, str(ROOT / "tools/prepare_resource_pieces.py"), "--check"], check=True)
 
 result_icons = manifest["result_icons"]
 assert result_icons["runtime"] in actual

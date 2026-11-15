@@ -16,13 +16,17 @@ function D.bind(R, W)
     local journey = require("journey")
     local LEVELS, WONDERS, ISLAND_ZONES = rules.LEVELS, island.WONDERS, island.ISLAND_ZONES
     local debug = W.debug
+    local function wallet(gold, stars)
+        local extras = R.currency_prices and 160 or 0
+        return purse(gold, extras, extras, stars)
+    end
 
     -- A town after n story buildings: n buildings at their suggested spots and
     -- the regions a player would have opened by then, with Stars to match.
     local function island_with(n)
         local opened_at = {0, 6, 9, 15, 21, 27}
         local cleared = n > 0 and journey.wonder_levels[n] or 0
-        R.prog.level, R.prog.wallet = cleared, purse(340, 0, 0, cleared * 3)
+        R.prog.level, R.prog.wallet = cleared, wallet(340, cleared * 3)
         R.island.count = 0
         local open = 1
         for z = 1, ISLAND_ZONES - 1 do
@@ -30,7 +34,7 @@ function D.bind(R, W)
         end
         R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
         R.island.open = R.island.open | 1
-        local spend = purse(100000)
+        local spend = purse(100000, 100000, 100000)
         for _ = 1, n do island.island_place_next(R.island, spend, cleared, 0) end
     end
     R.island_with = island_with
@@ -141,7 +145,7 @@ function D.bind(R, W)
         if app.arg("stripe-states") then R.art_review = true end
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
-        if a then R.g = rules.game_start(tonumber(a) - 1, 123478); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
+        if a then R.g = R.make_board(tonumber(a) - 1, 123478, true); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
         a = app.arg("reveal")   -- --level N --reveal F: restore/clear that share of the floor; 1 wins the board
         if a and R.g then
             local g, share = R.g, tonumber(a)
@@ -178,7 +182,7 @@ function D.bind(R, W)
         if app.arg("showcase") then
             local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),
                            vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}
-            R.prog.level, R.prog.wallet = LEVELS, purse(340, 0, 0, LEVELS * 3)
+            R.prog.level, R.prog.wallet = LEVELS, wallet(340, LEVELS * 3)
             R.island.count = 0
             R.island.open = 63
             for i = 0, WONDERS - 1 do
@@ -228,11 +232,14 @@ function D.bind(R, W)
         a = app.arg("zone")
         if a then R.zone_card = num.clampi(tonumber(a), 1, ISLAND_ZONES - 1); R.overlay = R.OV_ZONE; R.on_island = true end
         if app.arg("victory") then   -- a level that funds a building; "clue": a story-only level
-            local level = app.arg("victory") == "clue" and 1 or debug.victory
-            R.prog.level, R.prog.wallet = level, purse(142, 0, 0, level * 3)
+            local chosen = tonumber(app.arg("victory"))
+            local level = chosen and num.clampi(math.floor(chosen) - 1, 0, LEVELS - 1)
+                or app.arg("victory") == "clue" and 1 or debug.victory
+            R.prog.level, R.prog.wallet = level, wallet(142, level * 3)
             R.g = rules.game_start(level, 123478)
             R.pending = rules.new_match()
             R.g.score, R.g.relics, R.g.wood, R.g.stone, R.g.won = 5860, 13, 9, 14, true
+            if R.g.earnings then R.g.earnings = {24, 9, 14} end
             R.vfx_reset()
             R.on_island = false
             R.overlay = R.OV_RESULT
@@ -243,7 +250,7 @@ function D.bind(R, W)
             local i = num.clampi(tonumber(a), 0, WONDERS - 1)
             island_with(i)
             R.prog.level = journey.wonder_levels[i + 1]
-            R.prog.wallet = purse(142, 0, 0, R.prog.level * 3)
+            R.prog.wallet = wallet(142, R.prog.level * 3)
             R.inspect = i
             R.overlay = R.OV_WONDER
             R.on_island = true
@@ -279,6 +286,7 @@ function D.bind(R, W)
         end
         if app.arg("replay-victory") then
             island_with(4); R.g = rules.game_start(1, 123478); R.g.won = true; R.g.score = 5860; R.g.moves = 12
+            if R.g.earnings then R.g.earnings = {24, 9, 14} end
             R.on_island = false; R.overlay = R.OV_RESULT; R.toast_time = 0
         end
         if app.arg("building-review") then
@@ -453,7 +461,7 @@ function D.bind(R, W)
         if app.arg("present") then R.present_board() end
         if app.arg("mission") then   -- the level's mission banner, as a level starts
             local l = rules.level_of(R.g)
-            R.mission(l.lesson, ("%d. %s"):format(R.g.level + 1, l.name))
+            R.mission(R.board_lesson and R.board_lesson(R.g) or l.lesson, ("%d. %s"):format(R.g.level + 1, l.name))
         end
         if app.arg("goals-met") then   -- score and goal pieces met: their capsules show the tick
             local l = rules.level_of(R.g)

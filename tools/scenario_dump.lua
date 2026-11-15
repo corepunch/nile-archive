@@ -27,6 +27,7 @@ vec2 = ctor(function(x, y) return {x = x, y = y} end)
 size2 = ctor(function(w, h) return {w = w, h = h} end)
 color = ctor(function(r, g, b, a) return {r, g, b, a} end)
 rect = ctor(function(x, y, w, h) return {x = x, y = y, w = w, h = h} end)
+rawset(_G, "purse", ctor(function(...) return {...} end))
 -- Dialogue modes (story.THOUGHT, story.SHOUT) become their lowercase names.
 story = setmetatable({}, {__index = function(_, k) return type(k) == "string" and k:lower() or stub end})
 setmetatable(_G, {__index = function() return stub end})
@@ -119,13 +120,15 @@ if game == "nile-archive" then
     table.sort(out.beats, function(a, b) return a.key < b.key end)
 else
     local campaign, buildings = require("campaign"), require("buildings")
+    local economy = game == "relic-rush" and require("economy") or nil
     require("narrative")
     out.kind = "match3"
     out.cast = cast_of(loaded.state.cast)
     local wonders = {}
     for _, b in ipairs(buildings) do
         if b.category == "wonder" then
-            wonders[#wonders + 1] = {key = b.key, name = b.name, about = b.about, sprite = b.sprite_path}
+            wonders[#wonders + 1] = {key = b.key, name = b.name, about = b.about, sprite = b.sprite_path,
+                price = economy and economy.price_parts(b.cost)}
         end
     end
     local funds = {}
@@ -142,8 +145,21 @@ else
             elseif l.oil then materials[#materials + 1] = "river-silt" end
             if l.carpet then materials[#materials + 1] = "drift-sand" end
         end
+        local resources
+        if economy then
+            resources = {}
+            local yields = economy.board_yields(l, true)
+            for k = 0, campaign.colors - 1 do
+                local piece = yields[k]
+                if piece then
+                    resources[#resources + 1] = {key=piece.key, name=piece.name, yield=piece.amount,
+                        currency=economy.currencies[piece.slot].name}
+                end
+            end
+        end
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
                          quest = l.quest_object, wonder = funds[i], materials = materials,
+                         resources = resources, water_after_well = l.water_after_well or nil,
                          collection = l.story_piece and {key = l.story_piece, count = l.relics,
                              regular = campaign.colors - (l.omit_kind ~= nil and 2 or 1)} or nil,
                          plaques = l.dress and l.dress.floor and l.dress.floor.covered == "blue-plaque" and #l.oil or nil,

@@ -21,7 +21,11 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are continuous measured scrolling lists with bounded inertia; the building catalogue keeps its category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
 
-The wallet contains five lives, amulets and discovery stars. Losing an expedition spends one life; lives regenerate every 30 minutes up to five, including offline time. First clears add spare amulets and discovery stars; wonder milestones also fund their restoration. Replays earn 60–100 amulets without extra stars. Buildings cost amulets; discovery-star gates open land without requiring compasses. The old wood, stone and compass slots stay reserved for save compatibility, with no new costs, rewards or UI.
+The wallet holds Gold, Provisions, Supplies and discovery stars. Matches earn
+resources during the expedition, and a successful clear banks them once.
+Most buildings cost two resources. The market, archive and temple use all
+three. Discovery stars unlock shop stock and land. The five lives regenerate
+one at a time every 30 minutes, including offline.
 
 Tap a placed building for its name and subtitle in the existing speech bubble above it. Only one stays open; the next press dismisses it. A stationary hold still picks up a building through the shared mover, with Confirm/Cancel preserving saved state. Taps do not open building dialogs.
 
@@ -159,12 +163,12 @@ first-clear dialogue, the crew finds timber for the camp, the lamp lens, the tid
 chart and other objects that take them towards the quay.
 
 The island shows the active chapter, quest, next task and decoration progress. First clears
-award Amulets and Discovery Stars, and fund the scheduled story upgrades. Each confirmed
+award earned resources and Discovery Stars, and unlock scheduled restorations. Each confirmed
 wonder adds four decoration points. Other purchases add one. Required upgrades meet the
 thresholds for the next quests. Moving a building leaves its points intact.
 
 First-clear dialogue leads into Results. Board 30 seats the signal plate at its exit, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
-funded wonder has a separate scene after confirmed placement. Replays earn Amulets.
+wonder has a separate scene after confirmed placement. Replays bank matched resources.
 Existing saves retain clears, currency, land and buildings and receive a recap at their
 current level. Chapters 2 and 3 have provisional dialogue to carry the campaign to its finale.
 
@@ -184,12 +188,17 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Complete its goals within the move budget.
-3. Claim the first win once: 80–120 spare amulets and 3 discovery stars, plus a restoration grant at a wonder milestone.
+3. Claim the matched resources, up to 40 Gold for saved moves, and three discovery stars on a first clear.
 4. Return to the island. At a wonder milestone, choose a location and confirm construction; otherwise the next story clue plays immediately.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Amulets pay for restorations and decorations. Each scheduled first-clear grant covers its wonder; random match colours do not change it. Replays earn 60 base amulets plus two per saved move, up to 40 bonus, without new stars or story progress. Discovery stars unlock stock and adjacent land and are never spent. Failed attempts cost one of five lives; one life regenerates per 30 minutes, including offline time. There is no purchase backend.
+Sun coins pay Gold. Red berries and green plantains pay Provisions. Blue-tied
+timber and cut stone pay Supplies. Restore the Spring Well to replace timber
+with water buckets on boards 5 and 6. Buckets pay into Provisions. At a
+restoration milestone the crew supplies any exact shortfall. First clears
+advance the story and unlock discovery stars. Replays earn resources and two
+Gold per unused move, with a maximum move bonus of 40 Gold.
 
 ## Campaign: thirty hex levels
 
@@ -237,27 +246,28 @@ intact cover takes two hits. A cover with a broken upper edge takes one.
 
 Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
 
-| # | Building | Amulets | Purpose in the story |
-| --- | --- | ---: | --- |
-| 1 | Expedition camp | 60 | Every great discovery begins with a little canvas. |
-| 2 | Spring well | 80 | Fresh water brings the lost valley back to life. |
-| 3 | Artisan workshop | 100 | A home for the hands that rebuild the valley. |
-| 4 | Jungle market | 120 | Stories, spices and treasures from far away. |
-| 5 | Sunstone courtyard | 140 | A sunlit gathering place brings the valley together. |
-| 6 | Explorer's lodge | 160 | A warm light after a long day of adventure. |
-| 7 | Lost-world archive | 180 | Protect the knowledge buried beneath the vines. |
-| 8 | Star observatory | 200 | Follow the stars to the next discovery. |
-| 9 | Jade fountain | 220 | Let the ancient spring flow once more. |
-| 10 | Temple of the sun | 250 | The heart of the valley shines again. |
+| # | Building | Price | Purpose in the story |
+| --- | --- | --- | --- |
+| 1 | Expedition camp | 6 Provisions + 8 Supplies | Every great discovery begins with a little canvas. |
+| 2 | Spring well | 10 Provisions + 22 Supplies | Fresh water brings the lost valley back to life. |
+| 3 | Artisan workshop | 70 Gold + 24 Supplies | A home for the hands that rebuild the valley. |
+| 4 | Jungle market | 60 Gold + 18 Provisions + 12 Supplies | Stories, spices and treasures from far away. |
+| 5 | Sunstone courtyard | 22 Provisions + 26 Supplies | A sunlit gathering place brings the valley together. |
+| 6 | Explorer's lodge | 70 Gold + 25 Provisions | A warm light after a long day of adventure. |
+| 7 | Lost-world archive | 100 Gold + 20 Provisions + 25 Supplies | Protect the knowledge buried beneath the vines. |
+| 8 | Star observatory | 105 Gold + 30 Supplies | Follow the stars to the next discovery. |
+| 9 | Jade fountain | 110 Gold + 33 Supplies | Let the ancient spring flow once more. |
+| 10 | Temple of the sun | 120 Gold + 30 Provisions + 36 Supplies | The heart of the valley shines again. |
 
-These are restoration milestones, not autonomous resource factories: production timers, citizens and upgrade trees are future possibilities rather than current mechanics.
+Construction makes the next story beat available. The Spring Well also
+changes the blue match kind on the following two expeditions.
 
 The island's **SHOP** adds 86 repeatable buildings and decorations to these
 ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,
 furniture, supplies, wildlife and rocks. Browse categories and pages, check the
-Amulet price and cumulative Star requirement, then choose a location and confirm.
-Cancelling is free; Stars are never spent. Amulets for earned story restorations
-stays reserved so optional purchases cannot block the campaign. Purchases save
+resource price and cumulative star requirement, then choose a location and
+confirm. Cancelling is free. Stars remain in the wallet and the resources
+needed for an earned restoration are reserved until placement. Purchases save
 and move like wonders, with a 160-object island limit. See the complete
 [building catalogue](docs/building-catalogue.md) and
 [in-game review](docs/review/building-catalogue/README.md).
@@ -286,10 +296,10 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
-- First-clear grants fund the next building and leave 80–120 spare Gold. Completed expeditions can be replayed for 60–100 Gold. Each won attempt pays once; only first clears advance discoveries.
+- Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - Adjacent clouded regions require cumulative discovery stars, which stay with the expedition. Compasses are retired.
-- The island HUD has lives, amulets and stars beside the settings gear. Large Buildings and Play actions sit at the bottom corners with a smaller Expeditions compass beside Buildings. Both catalogues scroll continuously. The building shop shows three cards per row.
+- The island HUD shows lives, the three resource balances and stars beside the settings gear. Large Buildings and Play actions sit at the bottom corners with a smaller Expeditions compass beside Buildings. Both catalogues scroll continuously. The building shop shows three cards per row.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
@@ -302,7 +312,10 @@ reproduction commands. Specials, blockers and all five tool interaction states
 use one authored atlas; `--art-states` shows the complete set and `--art-board`
 freezes a board with all specials. Catalogue coverage runs in `make test`.
 
-The archaeological **Relics** set (option 1) is the default match piece art: a round gold sun coin, coral flame, jade leaf, turquoise scarab, purple crystal cluster and amber amphora. **Jewels** and **Resources** stay available as optional art packs — `--tiles jewels` natively, `?tiles=jewels` in the browser. Gameplay, rewards and costs are the same with every pack. See the [tile-set comparison and construction research](docs/tile-sets.md).
+The campaign uses the [expedition resource sprites](docs/asset-catalogue.md#resource-pieces).
+Story pieces and water take their authored slots. The **Jewels** and **Resources**
+art previews remain available through `--tiles jewels` and `--tiles resources`.
+See the [tile-set comparison and construction research](docs/tile-sets.md).
 
 ![The three packs on the same board](docs/screenshots/tile-sets.jpg)
 

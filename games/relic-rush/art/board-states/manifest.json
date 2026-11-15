@@ -638,6 +638,12 @@
     "data/navigation/play-pressed.png",
     "data/navigation/play-selected.png",
     "data/quest-objects.png",
+    "data/resource-pieces/berries.png",
+    "data/resource-pieces/coin.png",
+    "data/resource-pieces/plantains.png",
+    "data/resource-pieces/stone.png",
+    "data/resource-pieces/timber.png",
+    "data/resource-pieces/water.png",
     "data/result-icons.png",
     "data/roads.png",
     "data/safe-landing.jpg",
@@ -1150,37 +1156,19 @@
       "states": ["board", "selected", "hint", "falling", "goal", "collection flight"],
       "atlases": [
         {
-          "source": "art/quest-objects/story-pieces.png",
-          "prompt": "art/quest-objects/story-pieces.prompt.txt",
+          "source": "art/resource-pieces/scenario-atlas.png",
+          "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
           "items": {
-            "timber": {"boards": [1], "kind": 5, "crop": [36, 20, 673, 693], "runtime": "data/story-pieces/timber.png"},
-            "chart": {"boards": [4], "kind": 0, "crop": [694, 49, 1425, 680], "runtime": "data/story-pieces/chart.png"},
-            "supplies": {"boards": [9], "kind": 3, "crop": [1464, 29, 2135, 687], "runtime": "data/story-pieces/supplies.png"}
-          }
-        },
-        {
-          "source": "art/quest-objects/story-pieces-expedition.png",
-          "prompt": "art/quest-objects/story-pieces-expedition.prompt.txt",
-          "items": {
-            "lens": {"boards": [2], "kind": 3, "crop": [39, 62, 473, 449], "runtime": "data/story-pieces/lens.png"},
-            "cable": {"boards": [3], "kind": 4, "crop": [550, 87, 982, 429], "runtime": "data/story-pieces/cable.png"},
-            "marker": {"boards": [5, 6], "kind": 2, "crop": [1076, 60, 1483, 443], "runtime": "data/story-pieces/marker.png"},
-            "tools": {"boards": [7], "kind": 1, "crop": [26, 601, 483, 947], "runtime": "data/story-pieces/tools.png"},
-            "note": {"boards": [13], "kind": 0, "crop": [1081, 583, 1480, 941], "runtime": "data/story-pieces/note.png"}
-          }
-        },
-        {
-          "source": "art/quest-objects/shutter-gear-states.png",
-          "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
-          "items": {
-            "gear": {"boards": [10], "kind": 5, "crop": [79, 83, 790, 820], "runtime": "data/story-pieces/gear.png"}
-          }
-        },
-        {
-          "source": "art/quest-objects/broken-cable-states.png",
-          "prompt": "art/quest-objects/broken-cable-states.prompt.txt",
-          "items": {
-            "broken-cable": {"boards": [8], "kind": 4, "crop": [77, 117, 726, 696], "runtime": "data/story-pieces/broken-cable.png"}
+            "timber": {"boards": [1], "kind": 5, "crop": [629, 349, 932, 617], "runtime": "data/story-pieces/timber.png"},
+            "chart": {"boards": [4], "kind": 0, "crop": [320, 653, 619, 910], "runtime": "data/story-pieces/chart.png"},
+            "supplies": {"boards": [9], "kind": 3, "crop": [326, 952, 613, 1229], "runtime": "data/story-pieces/supplies.png"},
+            "lens": {"boards": [2], "kind": 3, "crop": [959, 343, 1230, 612], "runtime": "data/story-pieces/lens.png"},
+            "cable": {"boards": [3], "kind": 4, "crop": [12, 649, 300, 929], "runtime": "data/story-pieces/cable.png"},
+            "marker": {"boards": [5, 6], "kind": 2, "crop": [657, 635, 891, 930], "runtime": "data/story-pieces/marker.png"},
+            "tools": {"boards": [7], "kind": 1, "crop": [934, 671, 1245, 899], "runtime": "data/story-pieces/tools.png"},
+            "note": {"boards": [13], "kind": 0, "crop": [970, 979, 1243, 1206], "runtime": "data/story-pieces/note.png"},
+            "gear": {"boards": [10], "kind": 5, "crop": [638, 954, 924, 1236], "runtime": "data/story-pieces/gear.png"},
+            "broken-cable": {"boards": [8], "kind": 4, "crop": [8, 1034, 303, 1150], "runtime": "data/story-pieces/broken-cable.png"}
           }
         }
       ]
@@ -1824,6 +1812,26 @@
       "source": "art/story-pictures/broken-relay.png",
       "prompt": "art/story-pictures/broken-relay.prompt.txt",
       "previous_runtime": "Board 8 picture and mosaic before the sand floor."
+    }
+  },
+  "resource_pieces": {
+    "source": "art/resource-pieces/scenario-atlas.png",
+    "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
+    "grid": [
+      4,
+      4
+    ],
+    "size": 128,
+    "extent": 114,
+    "content_alpha": 128,
+    "padding": 4,
+    "slots": {
+      "coin": 1,
+      "berries": 2,
+      "plantains": 3,
+      "timber": 4,
+      "stone": 5,
+      "water": 6
     }
   }
 }

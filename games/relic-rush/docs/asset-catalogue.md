@@ -29,12 +29,39 @@ The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one b
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
+## Resource pieces
+
+The [4 × 4 expedition sheet](../art/resource-pieces/scenario-atlas.png) contains
+six resource sprites and ten story pieces. The [prompt](../art/resource-pieces/scenario-atlas.prompt.txt)
+lists the items in reading order. Each resource source cell is
+cropped around its opaque content with a four-pixel margin, scaled to fit
+114 × 114, and centred on a transparent 128-pixel square. The separate PNGs
+live in `data/resource-pieces/`. The board uses the existing selection and
+hint overlays and replaces the normal sprite with the authored special
+sprite when a power-up forms.
+
+| Runtime name | Match meaning | Wallet context |
+| --- | --- | --- |
+| `coin` | Yellow sun coin, 4 Gold | Gold |
+| `berries` | Red berries, 1 Provisions | Provisions |
+| `plantains` | Green plantains, 1 Provisions | Board only |
+| `timber` | Blue-tied timber, 1 Supplies | Supplies |
+| `stone` | Violet-grey cut stone, 1 Supplies | Board only |
+| `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board and guide |
+
+The optional sixth resource slot uses the amber amphora from the Relics pack
+for the ration jar. It earns 1 Provisions.
+
+Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
+See the [economy art review](screenshots/review/expedition-economy/README.md).
+
+
 ## The signal finale
 
 | Asset | Rule meaning and states | Source and runtime |
 | --- | --- | --- |
 | `signal-plate` | Board 30’s falling token, goal icon and the plate seated at the exit during the first clear. Uses the delivery rules learned on board 21. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/signal-plate.png`. |
-| `safe-landing` | After the plate arrives and the remaining blockers are cleared, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
+| `safe-landing` | After the plate arrives, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
 
 Run `python3 games/relic-rush/tools/prepare_finale_art.py` to register both assets.
 The amber pulses reuse the board’s additive glow, with a shared delay and rhythm.
@@ -62,9 +89,8 @@ They are independent of the selected match piece pack.
 | `supplies` | Supply crate | 9, stock the Jungle market supply point |
 | `gear` | Shutter gear | 10, operate the near shutter and read the tide-room warning |
 
-The [shutter gear sheet](../art/quest-objects/shutter-gear-states.png) pairs
-the bright orange board sprite with the weathered bronze reward. Its six
-teeth and hollow square bore identify it at both sizes. The
+The [shutter gear sheet](../art/quest-objects/shutter-gear-states.png) supplies
+the weathered bronze reward. The new board gear uses the same open square bore. The
 [prompt](../art/quest-objects/shutter-gear-states.prompt.txt) and manifest
 record the source and crops.
 
@@ -73,8 +99,9 @@ in `data/quest-objects.png` for the scenario index and in individual
 `data/finds/<slot>.png` files for the item cards. Card props fit within
 256 px on a 320×320 canvas. Board 8 uses the separately registered `broken-cable`
 card. The [broken cable sheet](../art/quest-objects/broken-cable-states.png) and
-[prompt](../art/quest-objects/broken-cable-states.prompt.txt) cover the purple
-collectible and the worn reward. Both show exposed copper at the break.
+[prompt](../art/quest-objects/broken-cable-states.prompt.txt) record that reward.
+On the new expedition sheet, the intact relay cable is coiled with two plugs.
+The snapped cable has a gap between the exposed copper ends.
 
 ### Collectible story pieces
 
@@ -91,14 +118,14 @@ piece animation and overlays. Power-ups use their authored sprites.
 | Purple | 3, 8 | Coiled relay cable, snapped cable |
 | Orange | 1, 10 | Timber bundle, bronze shutter gear |
 
-Built-in ImageGen authored each set together. See the [first sheet](../art/quest-objects/story-pieces.png),
-[its prompt](../art/quest-objects/story-pieces.prompt.txt), the
-[expedition sheet](../art/quest-objects/story-pieces-expedition.png) and
-[its prompt](../art/quest-objects/story-pieces-expedition.prompt.txt).
-The manifest records each crop, its boards and the colour it replaces.
+The ten normal story sprites share the [expedition atlas](../art/resource-pieces/scenario-atlas.png).
+The manifest records each crop, the boards it appears on and its colour slot.
 Run `python3 tools/relic_quest_art.py` to register the individual
 `data/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
-128×128 canvas. See the [in-game review](screenshots/review/story-collection/README.md).
+128 × 128 canvas. The [new board review](screenshots/review/expedition-economy/README.md)
+covers both cable silhouettes. The [earlier review](screenshots/review/story-collection/README.md)
+records the preceding sprites and the item cards.
+
 
 ### Board 13 warning note
 
@@ -190,8 +217,8 @@ prompt and reviewed game captures are recorded in the
 
 The [economy review](review/economy/README.md) records the first-clear and replay
 flows, expedition list and build shop. Board matches contribute to score and
-objectives. The results card and wallet use the round sun coin for Amulets.
-First clears award three Discovery Stars, and replays award Amulets.
+objectives. The results card and wallet use the three resource icons. First clears award
+three Discovery Stars. Replays bank matched resources and the move bonus.
 
 | Sprite | Presentation |
 | --- | --- |
@@ -774,7 +801,7 @@ added. Reproduce with the existing native-input hold/placement captures in the
 
 ## Settings gear and three-resource wallet
 
-The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart readout from the same atlas. The wallet also shows the round sun coin for Amulets and the turquoise-backed `discovery-star`. Wood, stone and compasses are retired from wallet UI, costs and rewards. Their old slots remain reserved for save compatibility.
+The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart readout from the same atlas. The wallet shows Gold, Provisions, Supplies and the turquoise-backed `discovery-star`. The compass slot remains reserved for save compatibility.
 
 All five gear states were generated together by ImageGen; `settings-lives-prompt.txt` records the prompt and alpha cutout edit. `python3 games/relic-rush/tools/prepare_hud.py` performs only grid crops and thumbnail registration to 128px RGBA canvases, preserving authored alpha and paint. `tools/match3_atlas.py` then packs the five gear states. No tint-generated interaction state is used. Captures: `docs/screenshots/hud-states.jpg`, `hex-first.jpg`, `phone-board.jpg`, `island-village.jpg` and `phone-island.jpg`. Normal, selected, pressed, hover and disabled use the same authored outer medallion, with distinct painted state feedback.
 

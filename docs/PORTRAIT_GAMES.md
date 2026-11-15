@@ -41,6 +41,13 @@ return require("match3.game").app(R)                       -- last line of main.
 
 plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
+Games with several currencies supply `R.currency_capsules(balance)` and
+`R.currency_prices(cost)`. The town and shop draw those entries in the
+order returned. Relic Rush supplies price entries with a stable ID, name,
+icon and amount. `R.board_context(preview)` selects a match palette variant
+from the game state, and the board renderer can draw attempt earnings with
+`R.draw_earnings(centre)`.
+
 `engine/match3_game.lua` selects the engine's default portrait-game dialogue
 layout, drawn by `engine/story.c`. On phones the engine puts the portraits at
 the screen edges, centers the text vertically in a full-width bar, and centers

@@ -5,9 +5,9 @@
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
+local economy = require("economy")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
-local RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL = rules.RELIC_IDOL, rules.RELIC_LEAF, rules.RELIC_CRYSTAL
 local rgba = color
 local P, pp, pc = R.P, R.pp, R.pc
 local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_fit
@@ -26,9 +26,41 @@ function R.compass_icon(center, radius)
     app.mesh(pts, cols, {0, 1, 3, 1, 2, 3})
 end
 
--- Art for the island wallet's three capsules.
+local function currency_icon(slot)
+    return R.board_art["resource-" .. economy.currencies[slot].key]
+end
+
 function R.wallet_icons()
-    return {R.life_art, R.relics[RELIC_IDOL + 1], R.board_art["discovery-star"]}
+    return {R.life_art, currency_icon(rules.GOLD), R.board_art["discovery-star"]}
+end
+
+function R.currency_capsules(balance)
+    local out = {}
+    for slot, currency in ipairs(economy.currencies) do
+        out[slot] = {icon=currency_icon(slot), value=tostring(balance[slot]), width=67,
+            note=currency.name .. " earned from matches. Spend it on the island."}
+    end
+    return out
+end
+
+function R.currency_prices(cost)
+    local parts = economy.price_parts(cost)
+    for _, part in ipairs(parts) do part.id, part.icon = part.name, currency_icon(part.slot) end
+    return parts
+end
+
+function R.cost_text(parts)
+    local amounts = {}
+    for i, part in ipairs(parts) do amounts[i] = ("%d %s"):format(part.amount, part.name) end
+    return table.concat(amounts, " + ")
+end
+
+function R.draw_earnings(centre)
+    if not R.g.earnings or R.toast_time > 0 then return end
+    for slot, capsule in ipairs(R.currency_capsules(R.g.earnings)) do
+        local box = rect.centered(centre + vec2((slot - 2) * 82, 50), size2(75, 25))
+        R.skin:draw_resource(box, capsule.icon, capsule.value, {role="expedition_wallet", interactive=false})
+    end
 end
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
@@ -54,29 +86,32 @@ local function result_screen()
         star_icon(center, (k == 1 and 68 or 54) * pop)
         set_paint(s)
     end
-    if not breakdown.first then say("AMULETS FOR YOUR ISLAND",l.stars,23,PAL_GOLD) end
+    if not breakdown.first then say("SUPPLY RUN",l.stars,23,PAL_GOLD) end
     s = section(.43, .3, 9)
     say("EXPEDITION SCORE", l.score_label, 12, PAL_CREAM)
     local count = R.dialog_part(.43, .65).f   -- the score counts up
     say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
     set_paint(s)
     s = section(.62, .25, 8)
-    say(breakdown.first and "RESTORATION GRANT + SPARE AMULETS" or "REPLAYS AWARD AMULETS ONLY", l.treasure_label, 12, PAL_CREAM)
+    say("RESOURCES TO BANK", l.treasure_label, 12, PAL_CREAM)
     set_paint(s)
-    local kinds = {RELIC_IDOL, RELIC_LEAF, RELIC_CRYSTAL}
-    local columns=1
+    local columns=#economy.currencies
     for k = 0, columns-1 do
         local r = l.rewards:col(columns, k, 10)
         s = section(.66 + k * .1, .28, 10)
         rrect(r, 12, rgba(241, 218, 157))
         rrect(r:inflate(-2), 10, rgba(255, 242, 201))
-        picture_fit(R.relics[kinds[k + 1] + 1], rect(r.x + (r.w - 40) / 2, r.y + 8, 40, 40), 255)
-        say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 56, r.w - 12, 26), 26, PAL_GOLD)
+        picture_fit(currency_icon(k+1), rect(r.x + (r.w - 36) / 2, r.y + 4, 36, 36), 255)
+        say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 40, r.w - 12, 27), 25, PAL_GOLD)
+        say(economy.currencies[k+1].name, rect(r.x + 3, r.y + 70, r.w - 6, 14), 13, PAL_CREAM)
         set_paint(s)
     end
-    say(breakdown.first and ("%d restoration Amulets + %d spendable"):format(breakdown.grant[1],breakdown.base+breakdown.bonus) or
-        ("%d base Amulets + %d move bonus"):format(breakdown.base,breakdown.bonus),
-        rect(l.rewards.x,l.rewards.y+l.rewards.h+2,l.rewards.w,15),13,PAL_CREAM)
+    local delivery = R.currency_prices(breakdown.delivery)
+    local bonus = ("Move bonus +%d Gold"):format(breakdown.bonus)
+    if #delivery > 0 then
+        bonus = "Crew delivery " .. R.cost_text(delivery) .. (breakdown.bonus > 0 and ("  ·  +%d Gold for moves"):format(breakdown.bonus) or "")
+    end
+    say(bonus, rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then
         local r = l.progress
@@ -97,7 +132,10 @@ local function result_screen()
         R.skin:paint_button(next_icon, nil, {role = "navigation_build"})
     end
     say_left(breakdown.first and (w and "READY TO RESTORE" or "THE INVESTIGATION CONTINUES") or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(breakdown.first and (w and w.name or "Return for the next clue") or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 32, l.next.w - 88, 24), 22, PAL_GOLD)
+    say_left(breakdown.first and (w and w.name or "Return for the next clue") or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 24, l.next.w - 88, 24), 22, PAL_GOLD)
+    if breakdown.first and w then
+        say_left(R.cost_text(R.currency_prices(w.cost)), rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
+    end
     set_paint(s)
     s = section(1.12, .22, 8)
     if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
@@ -153,7 +191,11 @@ R.dialogs[R.OV_AWARD] = award_screen
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
     {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of three axes.",
-     icon={tiles={{kind=0,special=rules.NORMAL}}}},
+     icon={front="resource-coin",tiles={}}},
+    {id="earnings", title="Stock the expedition", description="Coins earn Gold, fruit and water earn Provisions, and timber and stone earn Supplies. Win to bank them.",
+     icon={front="resource-timber",tiles={}}},
+    {id="water", title="Draw water from the well", description="Restore the Spring Well to find water buckets at the Quay and Shore Markers.",
+     icon={front="resource-water",tiles={}}},
     {id="lightning", title="Line of 4: rocket", description="A multicolor rocket clears its axis. Tap it or swap it to launch.",
      icon={tiles={{kind=1,special=rules.ROW}}}},
     {id="specials", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its color; combine with a power-up to multiply it.",

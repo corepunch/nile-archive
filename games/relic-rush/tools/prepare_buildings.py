@@ -28,7 +28,7 @@ def main():
         cost = story.get('cost', [gold, 0, 0])
         about = story.get('about', 'Place this treasure anywhere on open grass.')
         entries.append(dict(id=i, key=key, name=name, category=category, size=[w, h], pivot=art['pivot'],
-            base_width=art['base_width'], gold=gold, stars=stars, runtime=art['sprite'], image=art['image'],
+            base_width=art['base_width'], gold=cost[0], stars=stars, runtime=art['sprite'], image=art['image'],
             source=registry['master'], reference=reference, cost=cost, about=about, road=road,
             shadow=dict(runtime=art['shadow'], source=registry['master'], pivot=art['shadow_pivot'],
                         base_width=art['shadow_base_width'])))

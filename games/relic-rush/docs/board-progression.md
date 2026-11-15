@@ -17,6 +17,12 @@ to choose a story sprite and the colour slot it replaces. An optional
 refills. Leave it unset for five regular kinds plus the story piece. The
 existing relic target sets the collection count.
 
+Ordinary boards use five resource pieces. The six-kind story palettes also
+have room for the amber ration jar. Restoring the Spring Well changes the
+blue slot from timber (Supplies) to a water bucket (Provisions) on boards 5
+and 6. The marker stays in its green story slot. The scene overview shows the
+palettes before and after the well.
+
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap
 opens into a broad bowl; two substantial chambers sit on opposite sides of a

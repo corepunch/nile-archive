@@ -133,7 +133,8 @@ for level=1,30 do
         check(next_task and next_task.kind==kind-1,'the funded upgrade is the next quest task')
         check(not journey.next(p,owned(c),nil),'restoration story waits for confirmed construction')
         check(island.can_buy(c,p.wallet,p.level,kind-1),'earned restoration is affordable')
-        check(island.reserved_gold(c,p.level)==island.wonders[kind].cost[1],'reserve covers the earned building')
+        local reserve,cost=island.reserved_cost(c,p.level),island.wonders[kind].cost
+        check(reserve:covers(cost) and cost:covers(reserve),'reserve covers all costs of the earned building')
         for z=1,5 do c:unlock(z,p.wallet) end
         check(island.island_place_next(c,p.wallet,p.level,0),'scheduled building fits open land')
         local placed=journey.next(p,owned(c),nil)

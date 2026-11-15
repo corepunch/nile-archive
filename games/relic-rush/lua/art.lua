@@ -1,7 +1,5 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
--- The sun coin identifies the spendable Amulet balance.
--- Board clears score points; the fixed first-clear grant and Amulet-only replay
--- payout are separate from colour counts (rules.reward_breakdown).
+-- Resource pieces appear at board size and also identify wallet currencies.
 local A = {}
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
@@ -31,13 +29,14 @@ A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
 A.story_pieces = {"timber", "chart", "supplies", "lens", "cable", "marker", "tools", "note", "gear", "broken-cable"}
 A.separate_rewards = {"note", "broken-cable"}
+A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
-A.wallet_icons={life="match3-hud.png",amulets="relics-0",stars="discovery-star"}
+A.wallet_icons={life="match3-hud.png",gold="resource-coin",provisions="resource-berries",supplies="resource-timber",stars="discovery-star"}
 A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
@@ -99,6 +98,9 @@ function A.load()
     end
     for _, key in ipairs(A.story_pieces) do
         textures["story-" .. key] = texture.load("story-pieces/" .. key .. ".png")
+    end
+    for _, key in ipairs(A.resource_pieces) do
+        textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
     end
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")

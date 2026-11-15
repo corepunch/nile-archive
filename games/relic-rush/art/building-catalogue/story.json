@@ -1,82 +1,58 @@
 {
   "camp": {
     "about": "Every great discovery begins with a little canvas.",
-    "cost": [
-      60,
-      0,
-      0
-    ]
+    "cost": [0, 6, 8]
   },
   "well": {
     "about": "Fresh water brings the lost valley back to life.",
-    "cost": [
-      80,
-      0,
-      0
-    ]
+    "cost": [0, 10, 22]
   },
   "workshop": {
     "about": "A home for the hands that rebuild the valley.",
-    "cost": [
-      100,
-      0,
-      0
-    ]
+    "cost": [70, 0, 24]
   },
   "market": {
     "about": "Stories, spices and treasures from far away.",
-    "cost": [
-      120,
-      0,
-      0
-    ]
+    "cost": [60, 18, 12]
   },
   "gateway": {
     "about": "A sunlit gathering place brings the valley together.",
-    "cost": [
-      140,
-      0,
-      0
-    ]
+    "cost": [0, 22, 26]
   },
   "lodge": {
     "about": "A warm light after a long day of adventure.",
-    "cost": [
-      160,
-      0,
-      0
-    ]
+    "cost": [70, 25, 0]
   },
   "archive": {
     "about": "Protect the knowledge buried beneath the vines.",
-    "cost": [
-      180,
-      0,
-      0
-    ]
+    "cost": [100, 20, 25]
   },
   "observatory": {
     "about": "Follow the stars to the next discovery.",
-    "cost": [
-      200,
-      0,
-      0
-    ]
+    "cost": [105, 0, 30]
   },
   "fountain": {
     "about": "Let the ancient spring flow once more.",
-    "cost": [
-      220,
-      0,
-      0
-    ]
+    "cost": [110, 0, 33]
   },
   "temple": {
     "about": "The heart of the valley shines again.",
-    "cost": [
-      250,
-      0,
-      0
-    ]
-  }
+    "cost": [120, 30, 36]
+  },
+  "log_cabin": {"cost": [200, 0, 13]},
+  "apothecary": {"cost": [220, 15, 0]},
+  "mess_hall": {"cost": [240, 0, 16]},
+  "stilt_house": {"cost": [260, 0, 17]},
+  "map_room": {"cost": [280, 0, 19]},
+  "greenhouse": {"cost": [300, 20, 0]},
+  "trading_post": {"cost": [320, 21, 0]},
+  "water_mill": {"cost": [340, 0, 23]},
+  "clock_tower": {"cost": [360, 0, 24]},
+  "lighthouse": {"cost": [380, 0, 25]},
+  "treehouse": {"cost": [400, 0, 27]},
+  "aviary": {"cost": [420, 28, 0]},
+  "beached_ship": {"cost": [440, 0, 29]},
+  "amphitheater": {"cost": [460, 0, 31]},
+  "museum": {"cost": [500, 0, 33]},
+  "hanging_gardens": {"cost": [550, 37, 0]}
 }

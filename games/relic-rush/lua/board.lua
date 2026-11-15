@@ -40,6 +40,11 @@ function R.board_piece_texture(kind)
     if level.story_piece and kind == level.goal_kind then
         return R.board_art["story-" .. level.story_piece]
     end
+    local piece = R.g.resource_yields and R.g.resource_yields[kind]
+    local pack = app.arg("tiles")
+    if piece and piece.key ~= "rations" and (piece.key == "water" or not app.arg("default-match3") and (not pack or pack == "relics")) then
+        return R.board_art["resource-" .. piece.key]
+    end
     return R.relics[kind + 1]
 end
 

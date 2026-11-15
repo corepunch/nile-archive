@@ -127,7 +127,7 @@ valley and display the new piece and its yield on the restoration card.
 
 ## Restoration prices and earnings
 
-Start with two price entries for regular restoration work. Use all three for the
+Regular restorations have two price entries. All three apply for the
 market, archive and temple, where workers, materials and trade are all involved.
 The first restoration spends Provisions and Supplies gathered in the timber tutorial.
 These are initial tuning values in Relic Rush units.
@@ -156,7 +156,7 @@ the result card next to any story award and the next building's price.
 
 Record attempt earnings until a successful clear. Claim persists the first
 clear, resources, story progress and discovery stars together. A resumed result
-can be claimed once. Restart, quit and loss close the attempt without credit.
+can be claimed once. Restart and loss discard unbanked matches. Quitting to the island keeps the active board available for the current session.
 Optional replays bank the matches from each won attempt and advance no story.
 Suggested play for a missing resource can point to a prior board with two
 kinds in its family, with replay entirely optional to the story route.
@@ -168,29 +168,28 @@ ordinary play. The crew delivery eliminates progression stalls from random
 palettes, early wins or tool-heavy play. Its frequency is a balance measure.
 Reserve the price of the next unlocked wonder in all three currencies while
 any is owed. Gold-only scenery gives surplus Gold a place to go. Optional
-houses can use Gold and one practical resource when their catalogue is
-rebalanced. Confirmed placement debits the price once and Cancel returns the
+buildings use Gold and one practical resource. Confirmed placement debits the price once and Cancel returns the
 preview. Stars remain access requirements.
 
-Store Provisions and Supplies in versioned save fields. Preserve Gold, stars,
-placements, lives, unlocks, claimed levels and story checkpoints in existing
-saves. If a player had already earned a building under the old single-currency
-price, credit the missing Provisions and Supplies once during migration and leave its
-dedicated Gold available through placement. The wallet, catalogue and result
+A save version identifies the Provisions and Supplies slots. Existing Gold,
+stars, placements, lives, unlocks, claimed levels and story checkpoints are
+preserved. Legacy Wood and Stone are combined into Supplies. If the player
+already earned a building at its old single-currency price, migration funds
+any shortfall once. The wallet, catalogue and result
 screen should all use the same ordering and amount formatting. Use resource
 shapes and readable labels alongside color in the guide and price rows.
 
 ## Release status and checks
 
-The campaign now uses sandstone on all 30 boards, with blue plaque targets on
-20. Story recovery, targeted floor clearing and delivery are the live win
-conditions. Board 8's snapped cable art and collection are live. The three-bin
-economy, resource piece art and restoration prices above are specified for the
-economy pass. The current build still uses its Gold wallet and milestone
-grants.
+The campaign uses sandstone on all 30 boards, with blue plaque targets on
+20. Story recovery, targeted floor clearing and delivery are the win
+conditions. The runtime uses the five base resources, the scripted story
+pieces and well variants, three balances, and the restoration prices above.
+The [art review](screenshots/review/expedition-economy/README.md) shows the
+board, wallet, shop and results.
 
-Before shipping the economy, play the first restoration through a fresh save on
-both supported phone sizes and test a migrated save midway through chapter two.
+For release balancing, play the first restoration through a fresh save on
+both supported phone sizes and sample a migrated save midway through chapter two.
 Verify that matching every resource kind, including through a cascade or
 special, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay

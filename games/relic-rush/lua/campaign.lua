@@ -398,6 +398,8 @@ local covers = {
 }
 for i, l in ipairs(levels) do
     local cells = plaques[i]
+    if not l.story_piece then l.omit_kind = 5 end
+    l.water_after_well = i == 5 or i == 6
     l.oil, l.oil_still = cells, cells ~= nil
     l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
         floor={normal="sandstone-floor", covered=cells and "blue-plaque" or nil}}

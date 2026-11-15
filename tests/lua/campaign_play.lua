@@ -71,7 +71,7 @@ for level = 1, rules.LEVELS do
     -- Fixed independent starts permit a failed board to be retried. They are
     -- a reproducible bot sample, not a prediction of human win rates.
     for seed = 1, 4 do
-        R.g = rules.game_start(level - 1, seed)
+        R.g = R.make_board(level - 1, seed)
         attempts = attempts + 1
         play(R.g)
         if R.g.won then won = true; break end

@@ -322,8 +322,8 @@ local function test_catalogue()
     local c=city.new();island.island_setup(c);c.open=63
     local wallet=purse(1000,500,500,30,10)
     local shrub=37
-    check(not island.can_buy(c,purse(65,10,5),1,shrub),"earned wonder gold is reserved")
-    check(island.can_buy(c,purse(75,10,5),1,shrub),"only spare gold funds decorations")
+    check(not island.can_buy(c,purse(84,30,60),7,shrub),"earned workshop gold is reserved")
+    check(island.can_buy(c,purse(85,30,60),7,shrub),"only spare gold funds decorations")
     check(not island.can_buy(c,purse(1000),0,10),"stars gate advanced buildings")
     for _=1,2 do
         local ok,spot=c:find_spot(shrub,vec2(760,2030));check(ok,"decoration fits")

@@ -1,7 +1,7 @@
 -- smoke.lua — the --smoke run: opens and closes the guide, plays level one
 -- through injected clicks, claims the reward, builds the first wonder, runs
 -- the engine's pickup-and-move check, buys and cancels a decoration through
--- the catalogue, replays an expedition for Gold only, checks that an
+-- the catalogue, replays an expedition for resources, checks that an
 -- unfinished board hides the island, and enters level two.
 local R = require("state")
 local rules = require("rules")
@@ -179,7 +179,10 @@ function R.smoke()
             return
         end
         if R.overlay == R.OV_RESULT then
-            if R.modal_for == R.OV_RESULT and R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1 end
+            if R.modal_for == R.OV_RESULT and R.dialog_settled() then
+                shop.replay_reward = shop.replay and rules.level_reward(R.g,R.wonders,R.prog) or nil
+                app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1
+            end
             return
         end
         if R.phase == R.PH_IDLE and R.overlay == R.OV_NONE and R.selected < 0 then
@@ -199,9 +202,11 @@ function R.smoke()
     elseif stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
         if shop.replay then
-            local gain = R.prog.wallet[1] - shop.replay_gold
-            assert(gain >= 60 and gain <= 100 and R.prog.wallet[4] == 3 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
-                   "replay must pay only Gold without changing discoveries or restoration")
+            for slot = 1, 3 do
+                assert(R.prog.wallet[slot] == shop.replay_wallet[slot] + shop.replay_reward[slot], "replay must pay its matched resources")
+            end
+            assert(R.prog.wallet[4] == 3 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
+                   "replay cannot change discoveries or restoration")
             app.inject_click(R.town.buttons.play); stage = 5; return
         end
         app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
@@ -256,7 +261,7 @@ function R.smoke()
     elseif stage == 29 and R.island.placing < 0 then
         app.inject_click(R.town.buttons.middle); stage = 30
     elseif stage == 30 and R.overlay == R.OV_EXPEDITIONS then
-        shop.replay_gold = R.prog.wallet[1]
+        shop.replay_wallet = purse(table.unpack(R.prog.wallet))
         local node = press_row(R.expedition_form, "0", "play")
         assert(node and node.enabled, "completed expedition must be replayable")
         shop.replay = true
@@ -320,7 +325,7 @@ function R.smoke()
         stage = 0
     elseif stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> resume expedition -> Gold only -> level 2")
+        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay resources -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> resume expedition -> level 2")
         app.quit()
     end
 end

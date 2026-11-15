@@ -144,6 +144,7 @@ def match3_section(data, title):
     page = Page(data)
     game = data['game']
     icons = quest_icons(game)
+    resources = {}
     by_level = {}
     for b in data['beats']:
         by_level.setdefault(b['level'], []).append(b)
@@ -176,8 +177,32 @@ def match3_section(data, title):
             w = lv['wonder']
             sprite = picture(page.data_dir / w['sprite'], 120, 'PNG') if w.get('sprite') else None
             img = f'<img src="{sprite}" alt="">' if sprite else ''
-            chips.append(f'<span class="chip fund" title="{esc(w.get("about"))}">{img}Funds <b>{esc(w["name"])}</b></span>')
+            price = w.get('price')
+            label = 'Opens' if price else 'Funds'
+            chips.append(f'<span class="chip fund" title="{esc(w.get("about"))}">{img}{label} <b>{esc(w["name"])}</b></span>')
+            if price:
+                amounts = ' + '.join(f'{p["amount"]} {esc(p["name"])}' for p in price)
+                chips.append(f'<span class="chip">Restoration price <b>{amounts}</b></span>')
         reveal = ''
+        if lv.get('resources'):
+            palette = ' · ' + str(len(lv['resources'])) + ' resource types'
+            if lv.get('collection'):
+                palette += ' + 1 story type'
+            for item in lv['resources']:
+                key = item['key']
+                if key not in resources:
+                    resources[key] = picture(page.data_dir / f'resource-pieces/{key}.png', 44, 'PNG')
+                img = f'<img src="{resources[key]}" alt="">' if resources[key] else ''
+                chips.append(f'<span class="chip">{img}{esc(item["name"])} <b>+{item["yield"]} {esc(item["currency"])}</b></span>')
+        if lv.get('water_after_well'):
+            reveal += '<p class="meta">After the Spring Well is placed, water buckets take the blue timber slot and earn Provisions.</p>'
+            timber = picture(FRAMES / f'scenario-{game}-before-well-{n:02d}.png', 220)
+            if timber:
+                reveal += (f'<figure class="reveal"><img src="{timber}" alt="Blue timber before the well">'
+                           '<figcaption>Palette before the Spring Well is restored.</figcaption></figure>')
+        if game == 'relic-rush' and n == 9 and (result := picture(FRAMES / 'scenario-relic-rush-resources.png', 300)):
+            reveal += (f'<figure class="reveal"><img src="{result}" alt="Resources and three-currency market price">'
+                       '<figcaption>The resources banked on clear and the market restoration price.</figcaption></figure>')
         reveal_spec = lv.get('reveal') or {}
         if reveal_spec.get('covered_picture'):
             src = picture(FRAMES / f'scenario-{game}-find-{n:02d}.png', 300)

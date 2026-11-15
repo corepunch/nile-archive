@@ -139,11 +139,11 @@ return ui.skin{
                 {border = "#E9C77BAA", width = 1.4, radius_scale = 1},
             }},
             pressed = {offset = {0, 1}},
-            -- The island wallet is prominent: 60-unit icons on 36-unit panels.
             variants = {
                 goal = {icon_overhang = .24},
                 signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
-                wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
+                wallet = {em = 16, icon_ratio = 1.14, icon_overhang = .19},
+                expedition_wallet = {em = 16, icon_ratio = 1.14, icon_overhang = .08},
             },
         },
 

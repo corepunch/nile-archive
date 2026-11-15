@@ -15,15 +15,15 @@
     "build_first": "Restore your earned wonder before the next discovery.",
     "story_waiting": "A new clue awaits on your island.",
     "no_lives": "A life returns every 30 minutes. Explore your valley meanwhile.",
-    "reward_building": "Restoration funded. Spare Amulets are yours to decorate.",
+    "reward_building": "Resources banked. Your next restoration is ready.",
     "reward_story": "A new clue awaits on your island.",
-    "reward_replay": "Replay Amulets collected. Choose a treasure in the Build Shop.",
+    "reward_replay": "Resources banked. Spend them in the Build Shop.",
     "all_open": "Your whole island is open to explore.",
     "quit": "Your board is saved. Tap LEVEL %d or Expeditions to continue."
   },
   "capsules": {
     "notes": ["A life returns every 30 minutes, up to five.",
-              "Amulets buy buildings. Replay expeditions to earn more.",
+              "Gold buys buildings and decorations.",
               "Discovery Stars unlock stock and land. First clears only; never spent.",
               "Placed buildings earn decoration points for the next quest."]
   },
@@ -49,18 +49,18 @@
                    ["animal", "Wildlife"], ["rock", "Rocks & crystals"]],
     "category": "building",
     "built": "RESTORED", "complete": "COMPLETE EXPEDITION %d", "earlier": "RESTORE EARLIER WONDERS",
-    "poor": "MORE AMULETS NEEDED", "reserved": "AMULETS RESERVED FOR WONDERS", "full": "ISLAND IS FULL",
-    "price": "%d amulets"
+    "poor": "MORE RESOURCES NEEDED", "reserved": "RESOURCES RESERVED FOR RESTORATION", "full": "ISLAND IS FULL",
+    "price": "%d Gold"
   },
   "expeditions": {
     "title": "Expeditions",
-    "intro": "First clear: clues, Discovery Stars and scheduled wonder grants.\nReplay: 60 Amulets + up to 40 for moves saved.",
+    "intro": "Match pieces to bring Gold, Provisions and Supplies home. First clears also unlock clues and Discovery Stars.",
     "close": "BACK TO ISLAND",
     "resume": "RESUME", "replay": "REPLAY", "pending": "RESTORE FIRST",
     "new": "PLAY", "earlier": "DISCOVER EARLIER LEVELS",
-    "replay_note": "Amulets only. No extra Stars or story unlocks.",
-    "building_note": "First clear: wonder funded + 80–120 spare Amulets and 3 Stars.",
-    "story_note": "First clear: next story clue + 80–120 Amulets and 3 Stars."
+    "replay_note": "Bank resources from matches and Gold for unused moves.",
+    "building_note": "First clear: a new restoration, 3 Stars and resources.",
+    "story_note": "First clear: the next clue, 3 Stars and resources."
   },
   "debug": {"victory": 1, "catalogue_card": 37, "narrator": "tomas"}
 }
