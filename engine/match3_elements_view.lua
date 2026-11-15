@@ -24,7 +24,7 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 
 -- A story mosaic's picture and its frosted copy: during play the floor shows
 -- the picture as through frosted glass; the win clears it to the sharp one.
-local FROST_BLUR = 9                        -- image pixels
+local FROST_BLUR = 4.5                      -- image pixels
 -- Each restored cell is its own glass tile over the picture (gfx.image_glass):
 -- a horizontal cylinder with a thin hard bevel. --glass N previews strengths;
 -- 0 is one flat frosted pane.
