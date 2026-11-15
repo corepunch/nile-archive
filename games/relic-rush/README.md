@@ -83,10 +83,9 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Boards 1–7, 9, 10 and 13 collect story pieces that replace a matching colour.
-Boards 1, 2, 5, 10 and 13 use four regular kinds plus the story piece. Boards
-3, 4, 6, 7 and 9 use five regular kinds plus the story piece. Board 8 sweeps
-sand off the stonework and shows the broken cable on the recovered-item card.
+Boards 1–10 and 13 collect story pieces that replace a matching colour.
+Boards 1, 2, 5, 8, 10 and 13 use four regular kinds plus the story piece. Boards
+3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
 A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
@@ -203,7 +202,7 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | 5 | The Quay Marker | 35 | Sand, 14 marker pieces | 4 | 0 | Match on cleared stone to sweep sand. Collect marker pieces. |
 | 6 | The Shore Marker | 37 | Blockers, 14 marker pieces | 0 | 5 | Match the piece under the salt crust. Collect marker pieces. |
 | 7 | The Tool Roll | 40 | Blockers, 16 tool rolls | 3 | 4 | Clear the stone and salt crust. Collect tool rolls. |
-| 8 | The Broken Cable | 40 | Sand, Relics | 4 | 6 | Match 5 for a rainbow ball. |
+| 8 | The Broken Cable | 40 | 16 snapped cable pieces | 4 | 6 | Collect snapped cable. Match 5 for a rainbow ball. |
 | 9 | The Supply Crate | 43 | Blockers, 18 supply packs | 5 | 6 | Collect supply packs. Clear the ropes and salt crust. |
 | 10 | The Shutter Gear | 46 | Sand, Blockers, 20 gears | 6 | 6 | Sweep the sand, clear blockers, and collect gears. |
 | 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |

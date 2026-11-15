@@ -605,6 +605,7 @@
     "data/expedition-hud/score.png",
     "data/expedition-hud/shop-built.png",
     "data/expedition-hud/shop-locked.png",
+    "data/finds/broken-cable.png",
     "data/finds/cable.png",
     "data/finds/chart.png",
     "data/finds/gear.png",
@@ -643,6 +644,7 @@
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/signal-plate.png",
+    "data/story-pieces/broken-cable.png",
     "data/story-pieces/cable.png",
     "data/story-pieces/chart.png",
     "data/story-pieces/gear.png",
@@ -1137,13 +1139,9 @@
       "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
       "crop": [969, 83, 1680, 821]
     },
-    "note_reward": {
-      "source": "art/quest-objects/ines-note-states.png",
-      "prompt": "art/quest-objects/ines-note-states.prompt.txt",
-      "runtime": "data/finds/note.png",
-      "crop": [67, 99, 788, 787],
-      "canvas": [320, 320],
-      "paint_size": [228, 228]
+    "separate_rewards": {
+      "note": {"source": "art/quest-objects/ines-note-states.png", "prompt": "art/quest-objects/ines-note-states.prompt.txt", "runtime": "data/finds/note.png", "crop": [67, 99, 788, 787], "canvas": [320, 320], "paint_size": [228, 228]},
+      "broken-cable": {"source": "art/quest-objects/broken-cable-states.png", "prompt": "art/quest-objects/broken-cable-states.prompt.txt", "runtime": "data/finds/broken-cable.png", "crop": [1168, 116, 1823, 698], "canvas": [320, 320], "paint_size": [256, 256]}
     },
     "story_pieces": {
       "generator": "Built-in ImageGen, each matching set authored together",
@@ -1176,6 +1174,13 @@
           "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
           "items": {
             "gear": {"boards": [10], "kind": 5, "crop": [79, 83, 790, 820], "runtime": "data/story-pieces/gear.png"}
+          }
+        },
+        {
+          "source": "art/quest-objects/broken-cable-states.png",
+          "prompt": "art/quest-objects/broken-cable-states.prompt.txt",
+          "items": {
+            "broken-cable": {"boards": [8], "kind": 4, "crop": [77, 117, 726, 696], "runtime": "data/story-pieces/broken-cable.png"}
           }
         }
       ]

@@ -69,7 +69,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Boards 1–7, 9, 10 and 13 use a story piece alongside their regular kinds. Matches and power-ups collect it. The first clear awards the corresponding quest object. Board 8 sweeps sand from the stonework and shows the broken cable on its first-clear card. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Boards 1–10 and 13 use a story piece alongside their regular kinds. Matches and power-ups collect it. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 
@@ -115,7 +115,7 @@ Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
 | 5 | Gather 14 marker pieces | 4 / 0 | **Creeper vine** | — | Drift sand | Tomas points to the marker under the creepers after the well is restored. |
 | 6 | Gather 14 marker pieces | 0 / 5 | — | **Salt crust** (base) | — | The lesson teaches matching the piece within the salt crust. |
 | 7 | Gather 16 tool rolls | 3 / 4 (2) | **Rope lashing** | Salt crust | — | Mara remembers lashing the tools down. |
-| 8 | Recover the broken cable | 4 / 6 (2) | **Cable snarl** | Salt crust | Drift sand | Tomas points out the cable tangled in the old fittings. |
+| 8 | Gather 16 snapped cable pieces | 4 / 6 (2) | **Cable snarl** | Salt crust | — | Tomas points out the cable tangled in the old fittings. |
 | 9 | Gather 18 supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas mentions the stowed supply crate after board 8. |
 | 10 | Gather 20 gears | 6 / 6 (2) | Iron chain | **Barnacle crust** | Drift sand | *Tomas: The sea has been in here. Knock it off like the salt.* |
 

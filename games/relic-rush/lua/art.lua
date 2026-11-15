@@ -29,7 +29,8 @@ A.dressing_colors = {
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
-A.story_pieces = {"timber", "chart", "supplies", "lens", "cable", "marker", "tools", "note", "gear"}
+A.story_pieces = {"timber", "chart", "supplies", "lens", "cable", "marker", "tools", "note", "gear", "broken-cable"}
+A.separate_rewards = {"note", "broken-cable"}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -93,7 +94,9 @@ function A.load()
     for _, key in ipairs(A.quest_objects) do
         textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
     end
-    textures["find-note"] = texture.load("finds/note.png")
+    for _, key in ipairs(A.separate_rewards) do
+        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
+    end
     for _, key in ipairs(A.story_pieces) do
         textures["story-" .. key] = texture.load("story-pieces/" .. key .. ".png")
     end

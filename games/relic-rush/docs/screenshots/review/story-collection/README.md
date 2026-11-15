@@ -22,10 +22,12 @@ object. The [campaign data](../../../../lua/campaign.lua) sets each palette.
 | 5 · Quay Marker | 4+1 | Green | [14 marker pieces](quay-marker-480x900.jpg) |
 | 6 · Shore Marker | 5+1 | Green | [14 marker pieces](shore-marker-480x900.jpg) |
 | 7 · Tool Roll | 5+1 | Red | [16 tool rolls](tools-480x900.jpg) |
+| 8 · Broken Cable | 4+1 | Purple | [16 snapped cable pieces](broken-cable-480x900.jpg) · [390×844](broken-cable-390x844.jpg) |
 | 10 · Shutter Gear | 4+1 | Orange | [20 gears](gear-480x900.jpg) |
 | 13 · Names in the Stone | 4+1 | Gold | [14 folded notes](note-480x900.jpg) · [390×844](note-390x844.jpg) |
 
 Board 3 plays the three flashes before the [relay cable card](award-cable-480x900.jpg).
+The [board 8 item card](award-broken-cable-480x900.jpg) shows both torn ends.
 Board 10 shows the [bronze gear](award-gear-480x900.jpg), then
 [Tomas opens the near shutter](gear-story-480x900.jpg).
 The [board 13 item card](award-note-480x900.jpg) shows the warning and initials

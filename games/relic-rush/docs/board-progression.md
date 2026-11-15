@@ -1,15 +1,14 @@
 # Relic Rush board progression
 
 The expedition uses collection, blocker, sand sweeping, spreading ground and
-delivery goals. On boards 1–7, 9, 10 and 13 the story piece occupies one colour
+delivery goals. On boards 1–10 and 13 the story piece occupies one colour
 slot and advances the collection counter. The first clear shows the quest
-object on the **Item recovered!** card. Board 8 sweeps sand from the stonework
-and awards the broken cable. Boards 18 and 28 provide lighter intervals in the
+object on the **Item recovered!** card. Boards 18 and 28 provide lighter intervals in the
 later chapters.
 
 | Boards | Palette |
 | --- | --- |
-| 1, 2, 5, 10, 13 | Four regular kinds and one story piece |
+| 1, 2, 5, 8, 10, 13 | Four regular kinds and one story piece |
 | 3, 4, 6, 7, 9 | Five regular kinds and one story piece |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
@@ -36,7 +35,7 @@ objectives move the emphasis within each family.
 | 5 | The Quay Marker | Tapered bowl | Match on cleared stone to sweep sand. Collect marker pieces. | sand, 14 marker pieces | 35 |
 | 6 | The Shore Marker | Two chambers | Match the piece under the salt crust. Collect marker pieces. | blockers, 14 marker pieces | 37 |
 | 7 | The Tool Roll | Two chambers | Clear the stone and salt crust. Collect tool rolls. | blockers, 16 tool rolls | 40 |
-| 8 | The Broken Cable | Compact court | Match 5 for a rainbow ball. (sand) | sand, relics | 40 |
+| 8 | The Broken Cable | Compact court | Collect snapped cable. Match 5 for a rainbow ball. | 16 snapped cable pieces | 40 |
 | 9 | The Supply Crate | Two chambers | Collect supply packs. Clear the ropes and salt crust. | blockers, 18 supply packs | 43 |
 | 10 | The Shutter Gear | Twin lanes | Sweep the sand, clear blockers, and collect gears. | sand, blockers, 20 gears | 46 |
 | 11 | The Long Terrace | Tapered bowl | Collect the relics. | relics | 33 |

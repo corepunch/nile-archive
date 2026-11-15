@@ -81,8 +81,8 @@ def main():
     quest = manifest['quest_objects']
     gear = quest['gear_reward']
     outputs = [(OUTPUT, atlas(gear)), *finds(gear)]
-    note = quest['note_reward']
-    outputs.extend(register_sprites(note['source'], [note], note['canvas'], note['paint_size']))
+    for reward in quest['separate_rewards'].values():
+        outputs.extend(register_sprites(reward['source'], [reward], reward['canvas'], reward['paint_size']))
     pieces = quest['story_pieces']
     for sheet in pieces['atlases']:
         outputs.extend(register_sprites(sheet['source'], sheet['items'].values(),

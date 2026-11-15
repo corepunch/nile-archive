@@ -10,7 +10,7 @@ local function owned(c) return function(kind) return island.owned(c,kind)>0 end 
 local collections = {
     [1]={10,"Camp timber",5,0}, [2]={10,"Lamp lens",3,5}, [3]={12,"Relay cable",4},
     [4]={15,"Tide chart",0}, [5]={14,"Quay marker",2,5}, [6]={14,"Shore marker",2},
-    [7]={16,"Tool roll",1}, [9]={18,"Supply crate",3}, [10]={20,"Shutter gear",5,0},
+    [7]={16,"Tool roll",1}, [8]={16,"Broken cable",4,5}, [9]={18,"Supply crate",3}, [10]={20,"Shutter gear",5,0},
     [13]={14,"Folded note",0,5},
 }
 

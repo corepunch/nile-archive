@@ -55,7 +55,7 @@ They are independent of the selected match piece pack.
 | --- | --- | --- |
 | `timber` | Camp timber | 1, put up the Expedition camp |
 | `lens` | Lamp lens | 2, answer the light below the cliff |
-| `cable` | Relay cable and broken end | 3 and 8, trace the route and establish that the cable is broken |
+| `cable` | Relay cable | 3, trace the route |
 | `chart` | Tide chart | 4, read the route after restoring the Spring well |
 | `marker` | Quay and shore markers | 5 and 6, locate the steps below the quay |
 | `tools` | Tool roll | 7, equip the Artisan workshop |
@@ -71,7 +71,10 @@ record the source and crops.
 Run `python3 tools/relic_quest_art.py` to register the eight quest props
 in `data/quest-objects.png` for the scenario index and in individual
 `data/finds/<slot>.png` files for the item cards. Card props fit within
-256 px on a 320×320 canvas. Board 8 uses the broken cable card.
+256 px on a 320×320 canvas. Board 8 uses the separately registered `broken-cable`
+card. The [broken cable sheet](../art/quest-objects/broken-cable-states.png) and
+[prompt](../art/quest-objects/broken-cable-states.prompt.txt) cover the purple
+collectible and the worn reward. Both show exposed copper at the break.
 
 ### Collectible story pieces
 
@@ -85,7 +88,7 @@ piece animation and overlays. Power-ups use their authored sprites.
 | Red | 7 | Rolled leather tool wrap |
 | Green | 5, 6 | Carved marker |
 | Blue | 2, 9 | Lamp lens, supply pack |
-| Purple | 3 | Coiled relay cable |
+| Purple | 3, 8 | Coiled relay cable, snapped cable |
 | Orange | 1, 10 | Timber bundle, bronze shutter gear |
 
 Built-in ImageGen authored each set together. See the [first sheet](../art/quest-objects/story-pieces.png),
@@ -336,7 +339,7 @@ the existing transient impact particles follow the material.
 | `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
 | `dig-sand`, `trench-earth`, `tide-silt` | Excavation surfaces kept in the dressing atlas for the art review. |
 | `well-mud` | Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
-| `drift-sand`, `swept-stone` | Tan sand fills uncleared stonework, and cool slate marks cleared cells. A match touching cleared stone sweeps the rest of that match. The goal counts sandy cells. Boards 5, 8, 10, 13, 18, 22, 24 and 28. Authored together in the [sweep swatches](../art/board-dressing/sweep.png) from the [prompt](../art/board-dressing/sweep.prompt.txt), then clipped to the canonical mask. |
+| `drift-sand`, `swept-stone` | Tan sand fills uncleared stonework, and cool slate marks cleared cells. A match touching cleared stone sweeps the rest of that match. The goal counts sandy cells. Boards 5, 10, 13, 18, 22, 24 and 28. Authored together in the [sweep swatches](../art/board-dressing/sweep.png) from the [prompt](../art/board-dressing/sweep.prompt.txt), then clipped to the canonical mask. |
 
 Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the
 [open covers](../art/board-dressing/open-covers.png), [lock states](../art/board-dressing/locks.png)

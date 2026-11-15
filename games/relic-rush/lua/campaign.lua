@@ -110,7 +110,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Broken Cable", "Match 5 for a rainbow ball.", 40, 4200, 16, 4, 6)
+        local l = level("The Broken Cable", "Collect snapped cable. Match 5 for a rainbow ball.", 40, 4200, 16, 4, 6)
         l.mask = compact_mask
         l.terrain = seam(0, 1, -1, -1, 0)
         l.ice_layers = 2
@@ -314,7 +314,7 @@ local quest_objects = {
     {key="timber", name="Camp timber"}, {key="lens", name="Lamp lens"},
     {key="cable", name="Relay cable"}, {key="chart", name="Tide chart"},
     {key="marker", name="Quay marker"}, {key="marker", name="Shore marker"},
-    {key="tools", name="Tool roll"}, {key="cable", name="Broken cable"},
+    {key="tools", name="Tool roll"}, {key="broken-cable", name="Broken cable"},
     {key="supplies", name="Supply crate"}, {key="gear", name="Shutter gear"},
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
@@ -331,6 +331,8 @@ levels[5].story_piece, levels[5].goal_kind = "marker", 2 -- green replaces the l
 levels[5].omit_kind = 5
 levels[6].story_piece, levels[6].goal_kind = "marker", 2
 levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the flame
+levels[8].story_piece, levels[8].goal_kind = "broken-cable", 4 -- purple replaces the crystal
+levels[8].omit_kind = 5
 levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
 levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the amphora
 levels[10].omit_kind = 0
@@ -346,7 +348,7 @@ levels[30].signal = "landing"
 local swept_lanes = {cell(-2,1), cell(-2,2), cell(2,-2), cell(2,-1),
     cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)}
 local carpet = {
-    [5] = {cell(-1,0), cell(0,0)}, [8] = {cell(1,-1), cell(1,0)}, [10] = swept_lanes,
+    [5] = {cell(-1,0), cell(0,0)}, [10] = swept_lanes,
     [13] = swept_lanes, [18] = {cell(-1,0), cell(0,0)}, [22] = {cell(2,-1), cell(2,0), cell(-2,0), cell(-2,1), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2)},
     [24] = {cell(2,-1), cell(3,-1)}, [28] = {cell(0,-1), cell(0,0)},
 }
@@ -377,7 +379,7 @@ end
 -- The engine goal keys "carpet" and "oil" count unswept and spreading ground.
 local goals = {
     {"idols"}, {"idols"}, {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"},
-    {"locks", "idols"}, {"locks", "idols"}, {"carpet", "idols"}, {"locks", "idols"}, {"carpet", "locks", "idols"},
+    {"locks", "idols"}, {"locks", "idols"}, {"idols"}, {"locks", "idols"}, {"carpet", "locks", "idols"},
     {"idols"}, {"locks", "idols"}, {"carpet", "locks", "idols"}, {"locks", "idols"}, {"locks", "idols"},
     {"locks", "idols"}, {"locks", "idols"}, {"carpet"}, {"locks", "idols"}, {"oil", "locks"},
     {"deliveries"}, {"carpet", "locks"}, {"idols", "locks"}, {"carpet", "idols"}, {"locks", "idols"},

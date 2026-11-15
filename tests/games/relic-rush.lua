@@ -32,9 +32,7 @@ shot("goal-board", "480x900", "--level 2 --frames 180")
 shot("goal-board-phone", "390x844", "--level 2 --frames 180 --safe-area 0,47,0,34")
 shot("hex-first", "480x900")
 shot("hex-late", "480x900", "--level 8")
-shot("sand-half", "480x900", "--level 8 --reveal .5 --frames 180")
-shot("sand-half-phone", "390x844", "--level 8 --reveal .5 --frames 180 --safe-area 0,47,0,34")
-shot("sand-cable", "480x900", "--level 8 --reveal 1 --frames 95")
+shot("broken-cable-phone", "390x844", "--level 8")
 shot("timber-item-card", "480x900", "--level 1 --reveal 1 --goals-met --frames 180")
 shot("chart-item-card", "480x900", "--level 4 --reveal 1 --goals-met --frames 180")
 shot("cable-item-card", "480x900", "--level 3 --reveal 1 --goals-met --frames 270")
@@ -230,6 +228,7 @@ reel("homescapes-maker-transition", 40, 3, "480x900", "--maker-reel --reel")
 if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-relic-rush-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
     frame("scenario-relic-rush-landing", "480x900", "--level 30 --reveal 1 --frames 89")
+    frame("scenario-relic-rush-award-08", "480x900", "--level 8 --reveal 1 --goals-met --frames 180")
     frame("scenario-relic-rush-award-10", "480x900", "--level 10 --reveal 1 --goals-met --frames 180")
     frame("scenario-relic-rush-award-13", "480x900", "--level 13 --reveal 1 --goals-met --frames 180")
 end

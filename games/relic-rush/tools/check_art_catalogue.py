@@ -155,10 +155,12 @@ for key in quest["slots"]:
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 assert all((ROOT / quest["gear_reward"][key]).is_file() for key in ("source", "prompt"))
-note = quest["note_reward"]
-assert note["runtime"] == "data/finds/note.png" and note["runtime"] in actual
-assert all((ROOT / note[key]).is_file() for key in ("source", "prompt"))
-assert f'textures["find-note"] = texture.load("{note["runtime"].removeprefix("data/")}")' in art
+rewards = quest["separate_rewards"]
+declaration = re.search(r"A\.separate_rewards = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(rewards)
+for name, reward in rewards.items():
+    assert reward["runtime"] == f"data/finds/{name}.png" and reward["runtime"] in actual
+    assert all((ROOT / reward[key]).is_file() for key in ("source", "prompt"))
 campaign = (ROOT / "lua/campaign.lua").read_text()
 sheets = quest["story_pieces"]["atlases"]
 declaration = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
