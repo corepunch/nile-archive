@@ -82,8 +82,13 @@ for level = 1, rules.LEVELS do
     local first_exchange = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
     if first_exchange then
         R.overlay = R.OV_RESULT
-        R.story_tick()
-        R.now = R.now + 2   -- let a level's finished picture hold before its scene
+        -- Allow the headless clock to advance through any object reveal or
+        -- signal scene. Some boards have both before the Item recovered card.
+        for _ = 1, 8 do
+            R.story_tick()
+            if R.story_current or R.overlay == R.OV_AWARD then break end
+            R.now = R.now + 1
+        end
         scene(after, true)
     end
     local reward = rules.reward_breakdown(R.g, R.wonders, R.prog)

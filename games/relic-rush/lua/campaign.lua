@@ -320,21 +320,25 @@ local quest_objects = {
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 -- A recovery board buries its quest object: still oil (presented as sand,
 -- mud or silt) covers the listed cells, the object lies whole beneath them and
--- uncovering every cell is the goal. Each find names its own cells; the
--- current paintings are compact props, so each fills a seven-cell cluster.
+-- uncovering every cell is the goal. Compact props fill a seven-cell cluster.
+-- The timber and cable have their own paintings aligned to longer paths.
 -- Board 8 recovers its cable on the first-clear item card.
 local function cluster(q, r)
     return {cell(q, r), cell(q + 1, r), cell(q + 1, r - 1), cell(q, r - 1), cell(q - 1, r), cell(q - 1, r + 1), cell(q, r + 1)}
 end
-local function bury(board, cells, lesson, bark)
+local function bury(board, cells, lesson, bark, laid_out)
     local l = levels[board]
     local key = l.quest_object.key
     l.oil, l.oil_still, l.lesson = cells, true, lesson
-    l.reveal = {picture="find-" .. key, icon=key, floor="oil", object=true, bark=bark}
+    l.reveal = {picture=(laid_out and "find-laid-" or "find-") .. key,
+        covered_picture=laid_out and "find-laid-" .. key .. "-silhouette" or nil,
+        icon=key, floor="oil", object=true, bark=bark, laid_out=laid_out}
 end
-bury(1, cluster(0, 1), "Match on the sand to uncover the timber.", "Mara: That's cut timber under the sand. Keep going!")
+bury(1, {cell(-2,3), cell(-1,2), cell(0,1), cell(1,0), cell(-1,3), cell(0,2), cell(1,1)},
+    "Match on the sand to uncover the timber.", "Mara: That's cut timber under the sand. Keep going!", true)
 bury(2, cluster(0, -1), "Match 4 for a rocket. Uncover the lens.", "Mara: Brass! That's my lens down there.")
-bury(3, cluster(-3, 1), "Break the stone. Uncover the cable.", "Mara: I can see cable. Clear the rest of it!")
+bury(3, {cell(-4,1), cell(-3,1), cell(-4,2), cell(-3,2), cell(-4,3), cell(-3,3)},
+    "Break the stone. Uncover the cable.", "Mara: I can see cable. Clear the rest of it!", true)
 bury(4, cluster(-3, 1), "Break the chains. Uncover the chart.", "Elena: That is paper under the mud. Gently, now.")
 bury(5, cluster(2, 0), levels[5].lesson, "Elena: A carved stone. Uncover the whole notch.")
 bury(6, cluster(-3, 2), levels[6].lesson, "Mara: Another marker. Clear it off!")

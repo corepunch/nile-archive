@@ -145,7 +145,8 @@ else
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
                          quest = l.quest_object, wonder = funds[i], materials = materials,
                          signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
-                         reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor}}
+                         reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,
+                             laid_out = reveal.laid_out, cells = reveal.object and #l.oil or nil}}
     end
     out.beats = {}
     for i, b in ipairs(require("story_content")) do

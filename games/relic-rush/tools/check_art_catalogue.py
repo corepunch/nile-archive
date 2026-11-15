@@ -155,6 +155,19 @@ for key in quest["slots"]:
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 assert all((ROOT / quest["crank"][key]).is_file() for key in ("source", "prompt"))
+laid = quest["laid_out"]
+assert all((ROOT / laid[key]).is_file() for key in ("source", "prompt", "guide"))
+declaration = re.search(r"A\.laid_finds = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(laid["items"])
+campaign = (ROOT / "lua/campaign.lua").read_text()
+for name, item in laid["items"].items():
+    for state, placement in item["states"].items():
+        stem = f'laid-{name}' + ('-silhouette' if state == 'covered' else '')
+        assert placement["runtime"] == f"data/finds/{stem}.png" and placement["runtime"] in actual
+        assert f"`{stem}`" in doc
+    footprint = re.search(rf'bury\({item["board"]}, \{{([^}}]+)\}}', campaign).group(1)
+    cells = [[int(q), int(r)] for q, r in re.findall(r'cell\((-?\d+),\s*(-?\d+)\)', footprint)]
+    assert cells == item["cells"], f'{name}: registered footprint differs from the campaign'
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
 
 result_icons = manifest["result_icons"]

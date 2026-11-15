@@ -170,6 +170,7 @@ end
 local function draw_buried_picture(R, rules, story, sx, alpha, cover, trench)
     local g, cells = R.g, {}
     local t = R.board_art[story.picture]
+    local silhouette = story.covered_picture and R.board_art[story.covered_picture]
     local box, src
     if story.object then box, src = object_crop(R, rules, t) else box, src = picture_crop(R, rules, t) end
     if cover < 1 then
@@ -182,21 +183,32 @@ local function draw_buried_picture(R, rules, story, sx, alpha, cover, trench)
         gfx.sdf_unmask()
     end
     if cover == 0 then return end
-    -- Snow can spread back over these cells. Read the live mask every frame.
+    -- Select the authored state for each live excavation cell.
     local scale = src.w / box.w
     local radius = R.HEX_R
     local face = size2(2 * radius * scale, math.sqrt(3) * radius * scale)
     local tint = color(255, 255, 255, 255 * alpha * (R.reveal_play_opacity or 1) * cover)
+    local ink = silhouette and color(255, 255, 255, 255 * alpha)
     for _, i in ipairs(rules.level_of(g).oil) do
-        if g.oil[i] == 0 then
+        local uncovered = g.oil[i] == 0
+        if uncovered or silhouette then
             local p = R.cell_pos(i)
             local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
             local at = p + vec2(sx, 0)
-            if trench then
-                gfx.image(trench, rect.centered(at, size2.splat(2 * (radius - .65))),
-                    color(255, 255, 255, 255 * alpha * cover))
+            local crop = rect.centered(uv, face)
+            if uncovered then
+                if trench then
+                    gfx.image(trench, rect.centered(at, size2.splat(2 * (radius - .65))),
+                        color(255, 255, 255, 255 * alpha * cover))
+                end
+                gfx.image_hex(t, crop, at, radius, 0, tint)
+            else
+                local amount, turn, lift = 1, 0, 0
+                if R.intro then amount, turn, lift = R.intro:cell(i) end
+                if amount > .02 then
+                    gfx.image_hex(silhouette, crop, at + vec2(0, lift), radius * amount, turn, ink)
+                end
             end
-            gfx.image_hex(t, rect.centered(uv, face), at, radius, 0, tint)
         end
     end
 end
@@ -236,9 +248,6 @@ function E.ground(R, rules, sx, floor, sweep)
     else
         draw_carpet(R, rules, story, sx, alpha, cover)
     end
-    if story and story.floor == "oil" then
-        draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])
-    end
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
@@ -259,6 +268,9 @@ function E.ground(R, rules, sx, floor, sweep)
                 end
             end
         end
+    end
+    if story and story.floor == "oil" then
+        draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])
     end
 end
 

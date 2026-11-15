@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Register the eight authored Relic Rush quest objects in a 4×2 runtime atlas."""
+"""Register Relic Rush quest icons, compact props and props laid out for the board."""
 import argparse
+import json
+import math
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1] / 'games/relic-rush'
 SOURCE = ROOT / 'art/quest-objects/source.png'
 CRANK_CHOICES = ROOT / 'art/quest-objects/crank-choices.png'
 CRANK_CROP = (768, 512, 1536, 1024)  # selected lower-right variation, without rotation
 OUTPUT = ROOT / 'data/quest-objects.png'
-# The same props at board size: one padded file each, drawn across the cells
-# that bury it and on the Item recovered card.
+# The compact props used on the Item recovered card and in clustered finds.
 FINDS = ROOT / 'data/finds'
 KEYS = ['timber', 'lens', 'cable', 'chart', 'marker', 'tools', 'supplies', 'crank']
 FIND_SIZE, FIND_PAINT = 320, 256
@@ -57,6 +58,69 @@ def finds():
         yield FINDS / f'{key}.png', out
 
 
+def footprints(size, cells):
+    """The same flat-top cell positions and canvas scale as object_crop."""
+    axials = [(1.5*q, math.sqrt(3)*(r + q/2)) for q, r in cells]
+    xs, ys = zip(*axials)
+    cx, cy = (min(xs) + max(xs))/2, (min(ys) + max(ys))/2
+    radius = min(size[0]/(max(xs) - min(xs) + 2), size[1]/(max(ys) - min(ys) + math.sqrt(3)))
+    for x, y in axials:
+        x, y = size[0]/2 + (x - cx)*radius, size[1]/2 + (y - cy)*radius
+        mask = Image.new('L', size)
+        ImageDraw.Draw(mask).polygon([(x + radius*math.cos(math.pi*i/3), y + radius*math.sin(math.pi*i/3))
+                                      for i in range(6)], fill=255)
+        yield mask
+
+
+def check_fit(sprite, key, cells, overlay_dir):
+    solid = sprite.getchannel('A').point(lambda a: 255 if a >= 128 else 0)
+    union = Image.new('L', sprite.size)
+    for cell, mask in zip(cells, footprints(sprite.size, cells)):
+        coverage = ImageChops.multiply(solid, mask).histogram()[255] / mask.histogram()[255]
+        assert coverage >= .07, f'{key} barely reaches cell {cell}: {coverage:.1%} covered'
+        union = ImageChops.lighter(union, mask)
+    outside = ImageChops.subtract(solid, union)
+    spill = outside.histogram()[255] / solid.histogram()[255]
+    assert spill <= .005, f'{key} spills {spill:.1%} of its solid paint outside the cells'
+    if overlay_dir:
+        overlay = Image.new('RGBA', sprite.size, '#102027')
+        overlay.paste('#35535b', (0, 0), union)
+        overlay.alpha_composite(sprite)
+        overlay.paste('#ff4d43', (0, 0), outside)
+        overlay.save(overlay_dir / f'{key}.png')
+    return solid
+
+
+def laid_out_finds(overlay_dir):
+    manifest = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
+    spec = manifest['quest_objects']['laid_out']
+    if overlay_dir:
+        overlay_dir.mkdir(parents=True, exist_ok=True)
+    with Image.open(ROOT / spec['source']) as source:
+        assert source.mode == 'RGBA', 'laid finds need authored alpha'
+        for key, item in spec['items'].items():
+            shapes = {}
+            for state, placement in item['states'].items():
+                name = f'{key}-{state}'
+                sprite = source.crop(placement['crop'])
+                if placement.get('angle'):
+                    sprite = sprite.rotate(placement['angle'], resample=Image.Resampling.BICUBIC, expand=True)
+                    bounds = sprite.getchannel('A').point(lambda a: 255 if a >= 32 else 0).getbbox()
+                    sprite = sprite.crop(bounds)
+                sprite.thumbnail(tuple(placement['paint_size']), Image.Resampling.LANCZOS)
+                canvas = Image.new('RGBA', item['canvas'])
+                dx, dy = placement.get('offset', (0, 0))
+                pos = ((canvas.width - sprite.width)//2 + dx, (canvas.height - sprite.height)//2 + dy)
+                assert all(0 <= at <= outer - inner for at, outer, inner in zip(pos, canvas.size, sprite.size)), name
+                canvas.paste(sprite, pos)
+                shapes[state] = check_fit(canvas, name, item['cells'], overlay_dir)
+                yield ROOT / placement['runtime'], canvas
+            exposed, covered = shapes['exposed'], shapes['covered']
+            overlap = ImageChops.darker(exposed, covered).histogram()[255]
+            extent = ImageChops.lighter(exposed, covered).histogram()[255]
+            assert overlap / extent >= .90, f'{key} shifts visibly between the covered and exposed states'
+
+
 def same(path, expected):
     if not path.exists():
         return False
@@ -67,8 +131,9 @@ def same(path, expected):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--overlay-dir', type=Path, help='Write review images with the flat-top footprints')
     args = parser.parse_args()
-    outputs = [(OUTPUT, atlas()), *finds()]
+    outputs = [(OUTPUT, atlas()), *finds(), *laid_out_finds(args.overlay_dir)]
     if args.check:
         for path, expected in outputs:
             if not same(path, expected):

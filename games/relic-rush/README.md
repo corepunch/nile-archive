@@ -83,8 +83,10 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Boards 1 to 7, 9 and 10 bury their quest object under seven cells of sand, well mud or tide-room silt.
-Matching on the covered cells uncovers it. The goal shows the object and the cells left.
+Boards 1 to 7, 9 and 10 bury their quest object in sand, well mud or tide-room silt.
+The camp timber spans seven cells in two staggered rows and the relay cable winds through six.
+On those two boards the sand shows the object's dark outline. Matches replace it with
+the painted object one cell at a time. The goal shows the object and the cells left.
 Board 8 sweeps sand off the stonework and shows the broken cable on the recovered-item card.
 Use `--level 3 --reveal .5` to preview a half-uncovered find.
 

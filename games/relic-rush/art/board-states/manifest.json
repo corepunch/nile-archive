@@ -608,6 +608,10 @@
     "data/finds/cable.png",
     "data/finds/chart.png",
     "data/finds/crank.png",
+    "data/finds/laid-cable-silhouette.png",
+    "data/finds/laid-cable.png",
+    "data/finds/laid-timber-silhouette.png",
+    "data/finds/laid-timber.png",
     "data/finds/lens.png",
     "data/finds/marker.png",
     "data/finds/supplies.png",
@@ -1118,8 +1122,8 @@
       320,
       320
     ],
-    "board": "Boards 1–7, 9 and 10 bury the object under still sand, mud or silt. Board 8 presents the cable on its first-clear card.",
-    "transform": "One authored object sprite per slot. The same sprite appears in the goal, on the board and in the handoff. The board file is the same crop, uniformly resized to fit 256 px inside a 320 px transparent canvas so every covering cell samples inside it; no recolouring or masking.",
+    "board": "Boards 1–7, 9 and 10 bury the object under still sand, mud or silt. Board 1 uses seven timber cells in two staggered rows, and board 3 uses six cable cells. Other buried finds use seven. Board 8 presents the cable on its first-clear card.",
+    "transform": "Compact sprites for the goal and handoff, and for the standard seven-cell finds. The compact prop is uniformly resized to fit 256 px inside a 320 px transparent canvas.",
     "crank": {
       "source": "art/quest-objects/crank-choices.png",
       "prompt": "art/quest-objects/crank-choices.prompt.txt",
@@ -1130,6 +1134,161 @@
         1024
       ],
       "selection": "Lower right. Upper-right socket and lower-left grip, no rotation."
+    },
+    "laid_out": {
+      "generator": "Built-in ImageGen, both finds and both states in a single atlas",
+      "source": "art/quest-objects/laid-finds-states.png",
+      "prompt": "art/quest-objects/laid-finds-states.prompt.txt",
+      "guide": "art/quest-objects/laid-finds-guide.png",
+      "registration": "Crop, rotate, resize uniformly, and position each authored state on a transparent canvas registered to its hex footprint. Preserve painted alpha.",
+      "items": {
+        "timber": {
+          "board": 1,
+          "cells": [
+            [
+              -2,
+              3
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              -1,
+              3
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "canvas": [
+            650,
+            520
+          ],
+          "states": {
+            "exposed": {
+              "crop": [
+                5,
+                0,
+                830,
+                590
+              ],
+              "angle": 6,
+              "paint_size": [
+                540,
+                520
+              ],
+              "offset": [
+                21,
+                -18
+              ],
+              "runtime": "data/finds/laid-timber.png"
+            },
+            "covered": {
+              "crop": [
+                5,
+                596,
+                830,
+                1182
+              ],
+              "angle": 6,
+              "paint_size": [
+                542,
+                520
+              ],
+              "offset": [
+                21,
+                -18
+              ],
+              "runtime": "data/finds/laid-timber-silhouette.png"
+            }
+          }
+        },
+        "cable": {
+          "board": 3,
+          "cells": [
+            [
+              -4,
+              1
+            ],
+            [
+              -3,
+              1
+            ],
+            [
+              -4,
+              2
+            ],
+            [
+              -3,
+              2
+            ],
+            [
+              -4,
+              3
+            ],
+            [
+              -3,
+              3
+            ]
+          ],
+          "canvas": [
+            350,
+            606
+          ],
+          "states": {
+            "exposed": {
+              "crop": [
+                854,
+                20,
+                1295,
+                588
+              ],
+              "angle": -5,
+              "paint_size": [
+                310,
+                606
+              ],
+              "offset": [
+                -6,
+                -5
+              ],
+              "runtime": "data/finds/laid-cable.png"
+            },
+            "covered": {
+              "crop": [
+                855,
+                611,
+                1296,
+                1187
+              ],
+              "angle": -5,
+              "paint_size": [
+                312,
+                606
+              ],
+              "offset": [
+                -6,
+                -5
+              ],
+              "runtime": "data/finds/laid-cable-silhouette.png"
+            }
+          }
+        }
+      }
     }
   },
   "homescapes": {

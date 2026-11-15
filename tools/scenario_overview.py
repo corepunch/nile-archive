@@ -162,7 +162,17 @@ def match3_section(data, title):
             img = f'<img src="{sprite}" alt="">' if sprite else ''
             chips.append(f'<span class="chip fund" title="{esc(w.get("about"))}">{img}Funds <b>{esc(w["name"])}</b></span>')
         reveal = ''
-        if lv.get('reveal') and lv['reveal'].get('picture'):
+        reveal_spec = lv.get('reveal') or {}
+        if reveal_spec.get('laid_out'):
+            src = picture(FRAMES / f'scenario-{game}-find-{n:02d}.png', 300)
+            if not src:
+                name = reveal_spec['picture'].removeprefix('find-')
+                src = picture(page.data_dir / f'finds/{name}.png', 300, 'PNG')
+            if src:
+                name = esc(lv['quest']['name'])
+                reveal = (f'<figure class="reveal"><img src="{src}" alt="{name} uncovered">'
+                          f'<figcaption>{name} uncovered across {reveal_spec["cells"]} cells.</figcaption></figure>')
+        elif reveal_spec.get('picture'):
             # Each game keeps its story pictures in its own folder under data/.
             found = sorted(page.data_dir.rglob(f'{lv["reveal"]["picture"]}.jpg'))
             src = picture(found[0], 360) if found else None

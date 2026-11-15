@@ -1,12 +1,12 @@
 # Buried finds: art prompts
 
 The [board dressing atlas](../../docs/asset-catalogue.md#story-materials) now supplies the dig
-surfaces from section 1. The laid-out finds in section 2 remain tracked in
-[issue #102](https://github.com/corepunch/nile-archive/issues/102).
+surfaces from section 1. The laid-out timber and cable use their own footprints in section 2.
+[Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks the broader long-find work.
 The [selected crank](../../docs/asset-catalogue.md#chapter-1-quest-objects) has its
 own four-option source sheet and uses its existing excavation footprint.
 
-Style reference to attach to both requests: [source.png](source.png) (the eight existing props)
+Style references for the original production requests: [source.png](source.png) (the eight existing props)
 and a current board capture, [find-half.jpg](../../docs/screenshots/find-half.jpg).
 
 ## 1. Dig-site surfaces
@@ -35,44 +35,15 @@ Acceptance:
 
 ## 2. Finds laid out along the board
 
-Three objects whose story shape is long. Each is painted in the pose and direction it will lie in,
-because the board does not rotate art. Proportions are of the prop's own bounding box; R is one
-cell's radius on the flat-top hex board.
+| Find | Board | Cells | Footprint |
+| --- | ---: | ---: | --- |
+| Camp timber | 1 | 7 | Thick stack of irregular boards across two staggered rows, rising to the right |
+| Relay cable | 3 | 6 | Zigzag down two neighbouring columns, alternating left and right |
 
-| Find | Board | Cells | Footprint | Prop bounding box |
-| --- | ---: | ---: | --- | --- |
-| Camp timber | 1 | 4 | Straight diagonal run rising to the right, 30° above horizontal | 3:2 landscape (6.5R × 4.3R) |
-| Relay cable | 3 | 6 | Zigzag down two neighbouring columns, alternating left and right | 4:7 portrait (3.5R × 6.1R) |
-| Shutter crank | 10 | 4 | Three cells straight down, plus one cell lower-right of the bottom cell | 4:7 portrait (3.5R × 6.1R) |
+See the [footprint guide](laid-finds-guide.png) and [exact production prompt](laid-finds-states.prompt.txt).
+One master sheet contains the painted and charcoal states for both finds. Registration places
+each state on a separate transparent board canvas. Run `python3 tools/relic_quest_art.py --overlay-dir /tmp/relic-finds`
+from the repository root and compare the overlays with the game. The goal and recovered-item
+cards keep the compact original props.
 
-```text
-Use case: stylized-concept. One transparent PNG sprite sheet for the painted mobile archaeology match-3 game Relic Rush. Exactly 3 isolated props seen from DIRECTLY ABOVE, lying flat on the ground, top-down orthographic view with no perspective. Landscape 16:9 sheet. Generous empty transparent margin around every prop; the props must not touch or overlap. Match the attached reference props exactly in materials, palette and paint finish: these are the same three objects, laid out flat.
-
-Prop 1, left third of the sheet, "camp timber": the same bundle of three cut cedar construction beams bound with rope, now as three LONG straight beams lying side by side. The bundle runs in a straight line from lower-left to upper-right at 30 degrees above horizontal. Its bounding box is 3:2 landscape and the beams span almost the full diagonal of that box. Two rope lashings, one near each end. Beam bundle is thick: its width is about one quarter of its length.
-
-Prop 2, middle third, "relay cable": the same worn copper relay cable with dark cloth insulation, now UNCOILED and laid out as one continuous loose S-curve running from top to bottom. Its bounding box is 4:7 portrait. The cable swings left, right, left, right, left, right in six shallow evenly spaced bends, each bend reaching the side of the box, with one brass collar near the top and a frayed bare-copper end at the bottom. The cable is fat and bold: its thickness is about one quarter of the box width. No coils, no knots, no crossing over itself.
-
-Prop 3, right third, "shutter crank": the same antique brass L-shaped shutter crank with a wooden grip, laid flat. Its bounding box is 4:7 portrait. A long straight brass shaft runs vertically down the LEFT side of the box for the full height, with the obvious square fitting at the top. At the bottom the arm turns and extends down and to the right at 30 degrees below horizontal, ending in the wooden grip at the lower-right corner of the box. Shaft thickness about one quarter of the box width.
-
-All three: crisp bold silhouettes that stay recognisable when two thirds of the object is hidden, hand-painted dimensional adventure-game props, warm light from upper left, comparable paint weight. Real transparency around each prop. No ground, sand, dirt patch, cell plates, hex shapes, frames, borders, scene, figures, UI, letters, digits, labels, glow, watermark, or shadows outside the prop.
-```
-
-Acceptance:
-
-- Laid over its footprint, each object's centre line passes through every listed cell and no cell
-  is empty of paint.
-- With every cell but one still covered, the visible slice already suggests the object.
-- The goal icon and the **Item recovered!** card keep the existing compact props, so check that
-  the laid-out and compact versions read as the same object side by side.
-
-## Using them
-
-- Surfaces: register both swatches beside `oil-material`, then draw the cover for levels with
-  `oil_still` and the trench floor under uncovered find cells (`engine/match3_elements_view.lua`).
-- Long finds: extend `tools/relic_quest_art.py` to write `data/finds/timber.png`, `cable.png` and
-  `crank.png` from the new sheet at each footprint's proportions, and replace `cluster(...)` with
-  the listed cells for boards 1, 3 and 10 in `lua/campaign.lua`. Board 8 also uses the `cable`
-  slot, but only for its goal and card, so it is unaffected.
-- Re-run the bot sample after changing footprints: a four-cell find is easier than a seven-cell
-  one, and the six-cell cable spans most of a chamber.
-- Record sources, prompts, transforms and reviewed captures in the manifest and the catalogue.
+The selected shutter crank remains on its compact excavation footprint.

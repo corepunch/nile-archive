@@ -72,16 +72,31 @@ Run `python3 tools/relic_quest_art.py` from the repository root to register the 
 into `data/quest-objects.png` and, at board size, into `data/finds/<slot>.png` (the same crop fitted
 to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and centers the original RGBA art.
 
-**Buried on the board.** Boards 1–7, 9 and 10 bury their object under seven cells of sand,
-well mud (4) or tide-room silt (10). The ground is still (`oil_still`). States: covered
-(painted ground over every cell), partial (each excavated cell shows its part of `data/finds/<slot>.png`
-on trench earth beneath the piece), recovered (first clear: pieces fade and the whole object holds on the board),
-goal (the 128 px slot beside the remaining cell count) and the **Item recovered!** card (the board
-file at 210 px). `lua/campaign.lua` (`bury`) lists each find's cells. See the
+**Buried on the board.** Boards 1–7, 9 and 10 bury their object under still sand,
+well mud (4) or tide-room silt (10). The timber spans two staggered rows of seven cells total,
+and the cable winds through six. The compact finds occupy seven cells each. In the covered
+state the ground covers every excavation cell, with a charcoal silhouette over the sand for
+timber and cable. Each excavated cell shows its part of the painted prop on trench earth
+beneath the piece. On first clear the pieces fade and the whole object holds on the board.
+The goal uses the 128 px slot beside the remaining cell count, and the **Item recovered!**
+card shows the compact file at 210 px. `lua/campaign.lua` (`bury`) lists each find's cells. See the
 [current dig surfaces](screenshots/review/board-dressing/README.md) and the
 [recovered object and card](review/buried-finds/board-2-recovered.jpg).
-[Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks separate laid-out
-footprints for the long finds. The chosen crank uses the existing excavation footprint.
+The [laid-out state atlas](../art/quest-objects/laid-finds-states.png) was painted in
+built-in ImageGen as one sheet. See the [production prompt](../art/quest-objects/laid-finds-states.prompt.txt),
+the [footprint guide](../art/quest-objects/laid-finds-guide.png) and the
+[in-game review at both phone sizes](screenshots/review/laid-finds/README.md).
+The manifest records the crops and placement for the four separate transparent PNGs in
+`data/finds/`. Registration checks that each sprite fits and reaches every cell.
+
+| Board sprite | Placement and use |
+| --- | --- |
+| `laid-timber`, `laid-timber-silhouette` | Board 1. A thick stack of uneven cedar planks runs upward to the right across two rows of sand. |
+| `laid-cable`, `laid-cable-silhouette` | Board 3. The cable runs through six cells in alternating columns in the left chamber. |
+
+The goal and recovered-item cards use the compact props. Board 8 also presents
+the compact broken cable. [Issue #102](https://github.com/corepunch/nile-archive/issues/102)
+tracks the broader footprint work, including a separate plan for the shutter crank.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 
