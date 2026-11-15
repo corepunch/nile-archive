@@ -25,16 +25,15 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 -- A story mosaic's picture and its frosted copy: during play the floor shows
 -- the picture as through frosted glass; the win clears it to the sharp one.
 local FROST_BLUR = 4.5                      -- image pixels
--- Each restored cell is its own glass tile over the picture (gfx.image_glass):
--- a horizontal cylinder with a thin hard bevel. --glass N previews strengths;
--- 0 is one flat frosted pane.
+-- Each restored cell bends the picture behind it like a horizontal glass
+-- cylinder (gfx.image_glass), with no outline, bevel or shading. --glass N
+-- previews strengths; 0 is one flat frosted pane.
 local GLASS = {
     [0] = false,
-    {bend = .07, bevel = 1.5, light = .7},    -- subtle (default)
-    {bend = .12, bevel = 2.0, light = 1},     -- medium
-    {bend = .20, bevel = 2.5, light = 1},     -- strong
+    {bend = .07},    -- subtle (default)
+    {bend = .12},    -- medium
+    {bend = .20},    -- strong
 }
-local GLASS_INSET = 1.2                     -- grout between tiles, logical px
 local FROST_WASH = color(236, 244, 255, 46)  -- the glass's milky sheen
 function E.load_picture(art, name, path)
     art[name] = texture.load(path)
@@ -173,8 +172,7 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
             for _, i in ipairs(glass and cells or {}) do
                 local p = R.cell_pos(i)
                 local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
-                gfx.image_glass(frost, rect.centered(uv, face), p + vec2(sx, 0), R.HEX_R - GLASS_INSET,
-                                glass.bend, glass.bevel, glass.light, tint)
+                gfx.image_glass(frost, rect.centered(uv, face), p + vec2(sx, 0), R.HEX_R, glass.bend, 0, 0, tint)
             end
             gfx.rect(area, color(FROST_WASH.r, FROST_WASH.g, FROST_WASH.b, FROST_WASH.a * alpha * cover))
         end
