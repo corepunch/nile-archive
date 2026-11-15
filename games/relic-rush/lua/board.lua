@@ -18,6 +18,7 @@ end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
+R.reveal_play_opacity = .72   -- sink the story mosaic towards the board so pieces stay readable over it
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
@@ -128,6 +129,25 @@ local function draw_cells(sx, layer)
     end
 end
 
+-- The restored mosaic hides the wells, so faint seams keep the cells countable
+-- during play. They leave with the pieces when the finished picture shows.
+local SEAM = {}
+for k = 0, 6 do SEAM[k + 1] = vec2(math.cos(k * math.pi / 3) * (HEX_R - .5), math.sin(k * math.pi / 3) * (HEX_R - .5)) end
+local function draw_mosaic_seams(sx)
+    local g = R.g
+    if not g.carpet or not rules.level_of(g).reveal then return end
+    local alpha = (R.intro and R.intro:fade() or 1) * elements.reveal_cover(R, rules)
+    if alpha <= 0 then return end
+    local pts = {}
+    for i = 0, CELLS - 1 do
+        if cell_active(g, i) and (g.carpet[i] or 0) > 0 then
+            local at = cell_pos(i) + vec2(sx, 0)
+            for k = 1, 7 do pts[k] = at + SEAM[k] end
+            gfx.polyline(pts, 1.5, rgba(16, 52, 60, 110 * alpha))
+        end
+    end
+end
+
 local function draw_relics(sx)
     local g = R.g
     local cover = elements.reveal_cover(R, rules)   -- a won story mosaic clears its pieces away
@@ -187,6 +207,7 @@ function R.board_screen(inp, dt)
     draw_cells(sx, "rim")
     draw_cells(sx, "face")
     elements.ground(R, rules, sx)
+    draw_mosaic_seams(sx)
     draw_cells(sx, "flash")
     draw_relics(sx)
     draw_blockers(sx)
