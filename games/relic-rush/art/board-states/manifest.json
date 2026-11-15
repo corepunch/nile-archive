@@ -641,6 +641,7 @@
     "data/resource-pieces/berries.png",
     "data/resource-pieces/coin.png",
     "data/resource-pieces/plantains.png",
+    "data/resource-pieces/rations.png",
     "data/resource-pieces/stone.png",
     "data/resource-pieces/timber.png",
     "data/resource-pieces/water.png",
@@ -658,7 +659,6 @@
     "data/story-pieces/marker.png",
     "data/story-pieces/note.png",
     "data/story-pieces/supplies.png",
-    "data/story-pieces/timber.png",
     "data/story-pieces/tools.png",
     "data/tile-sets/jewels/0.png",
     "data/tile-sets/jewels/1.png",
@@ -1145,6 +1145,10 @@
       "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
       "crop": [969, 83, 1680, 821]
     },
+    "reward_sources": {
+      "timber": {"source": "art/resource-pieces/outlined-atlas.png", "prompt": "art/resource-pieces/outlined-atlas.prompt.txt", "crop": [1330, 0, 1774, 443]},
+      "marker": {"source": "art/resource-pieces/outlined-atlas.png", "prompt": "art/resource-pieces/outlined-atlas.prompt.txt", "crop": [1330, 443, 1774, 887]}
+    },
     "separate_rewards": {
       "note": {"source": "art/quest-objects/ines-note-states.png", "prompt": "art/quest-objects/ines-note-states.prompt.txt", "runtime": "data/finds/note.png", "crop": [67, 99, 788, 787], "canvas": [320, 320], "paint_size": [228, 228]},
       "broken-cable": {"source": "art/quest-objects/broken-cable-states.png", "prompt": "art/quest-objects/broken-cable-states.prompt.txt", "runtime": "data/finds/broken-cable.png", "crop": [1168, 116, 1823, 698], "canvas": [320, 320], "paint_size": [256, 256]}
@@ -1159,16 +1163,21 @@
           "source": "art/resource-pieces/scenario-atlas.png",
           "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
           "items": {
-            "timber": {"boards": [1], "kind": 5, "crop": [629, 349, 932, 617], "runtime": "data/story-pieces/timber.png"},
             "chart": {"boards": [4], "kind": 0, "crop": [320, 653, 619, 910], "runtime": "data/story-pieces/chart.png"},
             "supplies": {"boards": [9], "kind": 3, "crop": [326, 952, 613, 1229], "runtime": "data/story-pieces/supplies.png"},
             "lens": {"boards": [2], "kind": 3, "crop": [959, 343, 1230, 612], "runtime": "data/story-pieces/lens.png"},
             "cable": {"boards": [3], "kind": 4, "crop": [12, 649, 300, 929], "runtime": "data/story-pieces/cable.png"},
-            "marker": {"boards": [5, 6], "kind": 2, "crop": [657, 635, 891, 930], "runtime": "data/story-pieces/marker.png"},
             "tools": {"boards": [7], "kind": 1, "crop": [934, 671, 1245, 899], "runtime": "data/story-pieces/tools.png"},
             "note": {"boards": [13], "kind": 0, "crop": [970, 979, 1243, 1206], "runtime": "data/story-pieces/note.png"},
             "gear": {"boards": [10], "kind": 5, "crop": [638, 954, 924, 1236], "runtime": "data/story-pieces/gear.png"},
             "broken-cable": {"boards": [8], "kind": 4, "crop": [8, 1034, 303, 1150], "runtime": "data/story-pieces/broken-cable.png"}
+          }
+        },
+        {
+          "source": "art/resource-pieces/outlined-atlas.png",
+          "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
+          "items": {
+            "marker": {"boards": [5, 6], "kind": 2, "crop": [1376, 517, 1739, 795], "runtime": "data/story-pieces/marker.png"}
           }
         }
       ]
@@ -1834,11 +1843,12 @@
     }
   },
   "resource_pieces": {
-    "source": "art/resource-pieces/scenario-atlas.png",
-    "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
+    "source": "art/resource-pieces/outlined-atlas.png",
+    "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
+    "outline_reference": "data/tile-sets/resources/4.png",
     "grid": [
       4,
-      4
+      2
     ],
     "size": 128,
     "extent": 114,
@@ -1850,7 +1860,8 @@
       "plantains": 3,
       "timber": 4,
       "stone": 5,
-      "water": 6
+      "water": 6,
+      "rations": 7
     }
   }
 }

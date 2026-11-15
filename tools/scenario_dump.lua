@@ -131,8 +131,11 @@ else
                 price = economy and economy.price_parts(b.cost)}
         end
     end
-    local funds = {}
+    local funds, restored = {}, {}
     for i, level in ipairs(campaign.wonder_levels or {}) do funds[level] = wonders[i] end
+    if economy then
+        for _, piece in pairs(economy.unlocks) do restored[piece.building] = true end
+    end
     out.levels = {}
     for i, l in ipairs(campaign.levels) do
         local reveal = type(l.reveal) == "table" and not is_stub(l.reveal) and l.reveal or nil
@@ -145,10 +148,11 @@ else
             elseif l.oil then materials[#materials + 1] = "river-silt" end
             if l.carpet then materials[#materials + 1] = "drift-sand" end
         end
-        local resources
+        local resources, goal_resource
         if economy then
             resources = {}
-            local yields = economy.board_yields(l, true)
+            local yields = economy.board_yields(l, restored)
+            goal_resource = l.goal_kind ~= nil and yields[l.goal_kind] or nil
             for k = 0, campaign.colors - 1 do
                 local piece = yields[k]
                 if piece then
@@ -159,9 +163,10 @@ else
         end
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
                          quest = l.quest_object, wonder = funds[i], materials = materials,
-                         resources = resources, water_after_well = l.water_after_well or nil,
-                         collection = l.story_piece and {key = l.story_piece, count = l.relics,
-                             regular = campaign.colors - (l.omit_kind ~= nil and 2 or 1)} or nil,
+                         resources = resources, resource_unlock = l.resource_unlock,
+                         collection = (l.story_piece or goal_resource) and {
+                             key = l.story_piece or goal_resource.key, count = l.relics, resource = goal_resource ~= nil,
+                             regular = campaign.colors - (l.omit_kind ~= nil and 1 or 0) - (l.story_piece and 1 or 0)} or nil,
                          plaques = l.dress and l.dress.floor and l.dress.floor.covered == "blue-plaque" and #l.oil or nil,
                          signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,

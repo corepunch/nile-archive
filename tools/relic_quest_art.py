@@ -20,14 +20,15 @@ CROPS = [
 ]
 
 
-def sprites(gear):
+def sprites(rewards):
     source = Image.open(SOURCE)
     if source.mode != 'RGBA' or source.size != (1774, 887):
         raise ValueError('Expected the authored 1774×887 RGBA source')
     for key, crop in zip(KEYS, CROPS):
-        if key == 'gear':
-            with Image.open(ROOT / gear['source']) as source_atlas:
-                sprite = source_atlas.crop(gear['crop'])
+        if key in rewards:
+            reward = rewards[key]
+            with Image.open(ROOT / reward['source']) as source_atlas:
+                sprite = source_atlas.crop(reward['crop'])
         else:
             sprite = source.crop(crop)
         # Crop to visible paint plus an edge guard. Keep the original alpha
@@ -38,17 +39,17 @@ def sprites(gear):
                            min(sprite.width, right + 4), min(sprite.height, bottom + 4)))
 
 
-def atlas(gear):
+def atlas(rewards):
     out = Image.new('RGBA', (512, 256))
-    for index, sprite in enumerate(sprites(gear)):
+    for index, sprite in enumerate(sprites(rewards)):
         sprite.thumbnail((100, 87), Image.Resampling.LANCZOS)
         out.paste(sprite, (index % 4 * 128 + (128 - sprite.width) // 2,
                            index // 4 * 128 + (128 - sprite.height) // 2))
     return out
 
 
-def finds(gear):
-    for key, sprite in zip(KEYS, sprites(gear)):
+def finds(rewards):
+    for key, sprite in zip(KEYS, sprites(rewards)):
         sprite.thumbnail((FIND_PAINT, FIND_PAINT), Image.Resampling.LANCZOS)
         out = Image.new('RGBA', (FIND_SIZE, FIND_SIZE))
         out.paste(sprite, ((FIND_SIZE - sprite.width) // 2, (FIND_SIZE - sprite.height) // 2))
@@ -79,8 +80,8 @@ def main():
     args = parser.parse_args()
     manifest = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
     quest = manifest['quest_objects']
-    gear = quest['gear_reward']
-    outputs = [(OUTPUT, atlas(gear)), *finds(gear)]
+    rewards = {'gear': quest['gear_reward'], **quest['reward_sources']}
+    outputs = [(OUTPUT, atlas(rewards)), *finds(rewards)]
     for reward in quest['separate_rewards'].values():
         outputs.extend(register_sprites(reward['source'], [reward], reward['canvas'], reward['paint_size']))
     pieces = quest['story_pieces']

@@ -43,6 +43,7 @@ shot("note-read", "480x900", "--story-beat after-13 --story-line 1 --frames 120"
 shot("note-courtyard", "480x900", "--story-beat restore-13 --story-line 1 --frames 220")
 shot("dressing-pump", "480x900", "--level 4")
 shot("dressing-quay", "480x900", "--level 5")
+shot("marker-item-card", "480x900", "--level 5 --reveal 1 --goals-met --frames 180")
 shot("dressing-shore", "480x900", "--level 6")
 shot("dressing-shore-phone", "390x844", "--level 6 --safe-area 0,47,0,34")
 shot("dressing-tools", "480x900", "--level 7")

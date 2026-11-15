@@ -38,7 +38,7 @@ return {
         {"tomas", "Look for a quay marker under the creepers. It should point out the lower route."},
     }},
     {key="after-05", phase="after", level=5, lines={
-        {"elena", "The quay marker is intact. Its notch points down the shore."},
+        {"elena", "The quay marker is intact. The arrow points down the shore."},
         {"adrian", "A route, at last. I shall put it in the expedition papers."},
         {"mara", "You keep those papers very close."},
         {"adrian", "They are the only dry thing I own. Is there a second marker?"},

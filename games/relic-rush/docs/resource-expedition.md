@@ -109,8 +109,9 @@ the player can see immediately where the pieces went.
 
 Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
-earn that complexity through layout and enough legal opening swaps. Keep board
-1 4+1 and boards 4 and 9 5+1. Board 8 uses a purple snapped cable in 4+1. The
+earn that complexity through layout and enough legal opening swaps. Board 1
+collects regular timber from a five-kind palette. Boards 4 and 9 use 5+1.
+Board 8 uses a purple snapped cable in 4+1. The
 orange slot can hold an authored recovery item or a rarer orange food jar on a
 six-kind board. Gold story chapters can temporarily suspend coin income.
 Board 4's next restoration uses Provisions and Supplies, and boards 11 and 12 earn
@@ -156,7 +157,8 @@ A piece earns its base amount each time it actually leaves its cell, including
 during cascades and when collected by a special. A hit that removes a lock or
 cover with the piece intact pays on the later removal. Specials earn from the
 pieces they clear. A piece converted into a special can earn once at
-conversion. Story pieces count toward their recovery. Their assembled item has
+conversion. Regular timber on board 1 earns Supplies and advances the
+camp's goal. Dedicated story pieces count toward their recovery. Each find has
 a separate card. Keep the existing move bonus as a capped Gold reward and use
 the existing discovery-star gates for land. Show the three resource totals on
 the result card next to any story award and the next building's price.

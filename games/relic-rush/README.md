@@ -89,10 +89,11 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Boards 1–10 and 13 collect story pieces that replace a matching colour.
-Boards 1, 2, 5, 8, 10 and 13 use four regular kinds plus the story piece. Boards
-3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
-[Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
+Board 1 collects ordinary blue-tied timber, which also earns Supplies.
+Boards 2–10 and 13 collect story pieces that replace a matching colour.
+Boards 2, 5, 8, 10 and 13 use four regular kinds plus the story piece.
+Boards 3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
+[Outlined resources and new trail markers](docs/screenshots/review/resource-outlines/README.md)
 
 A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
 recovered!** card, styled like the results card, before the story exchange about it and the

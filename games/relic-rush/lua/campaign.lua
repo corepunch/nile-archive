@@ -316,10 +316,9 @@ local quest_objects = {
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[13].quest_object = {key="note", name="Folded note"}
--- goal_kind is the slot the story piece replaces. Set omit_kind to leave
--- one other slot out of a board's opening and refills.
-levels[1].story_piece, levels[1].goal_kind = "timber", 5 -- orange replaces the amphora
-levels[1].omit_kind = 0                                -- no gold sun idols in the tutorial
+-- Collect ordinary timber on the first board. Later collections use a
+-- dedicated story piece in the goal slot.
+levels[1].goal_kind, levels[1].omit_kind = 3, 0         -- blue timber, no gold in the tutorial
 levels[2].story_piece, levels[2].goal_kind = "lens", 3   -- blue replaces the scarab
 levels[2].omit_kind = 5
 levels[3].story_piece, levels[3].goal_kind = "cable", 4  -- purple replaces the crystal
@@ -400,13 +399,13 @@ local covers = {
 }
 for i, l in ipairs(levels) do
     local cells = plaques[i]
-    if not l.story_piece then l.omit_kind = 5 end
+    if l.goal_kind == nil then l.omit_kind = 5 end
     l.oil, l.oil_still = cells, cells ~= nil
     l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
         floor={normal="sandstone-floor", covered=cells and "blue-plaque" or nil}}
     l.goals = {}
     if cells then l.goals[#l.goals+1] = "oil" end
-    if l.story_piece then l.goals[#l.goals+1] = "idols" end
+    if l.goal_kind ~= nil then l.goals[#l.goals+1] = "idols" end
     if l.deliveries then l.goals[#l.goals+1] = "deliveries" end
     assert(#l.goals > 0, "each board needs a plaque, story or delivery goal")
 end

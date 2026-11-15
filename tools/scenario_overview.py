@@ -160,10 +160,13 @@ def match3_section(data, title):
             chips.append(f'<span class="chip">Clear <b>{lv["plaques"]} blue plaques</b></span>')
         if collection := lv.get('collection'):
             key = collection['key']
-            icon = picture(page.data_dir / f'story-pieces/{key}.png', 96, 'PNG')
+            folder = 'resource-pieces' if collection['resource'] else 'story-pieces'
+            icon = picture(page.data_dir / f'{folder}/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip">{img}Collect <b>{collection["count"]} {STORY_PIECE_NAMES[key]}</b></span>')
-            palette = f' · {collection["regular"]} regular types + 1 story type'
+            palette = f' · {collection["regular"]} regular types'
+            if not collection['resource']:
+                palette += ' + 1 story type'
         if lv.get('quest'):
             key = lv['quest']['key']
             icon = icons.get(key) or picture(page.data_dir / f'finds/{key}.png', 96, 'PNG')
@@ -186,20 +189,23 @@ def match3_section(data, title):
         reveal = ''
         if lv.get('resources'):
             palette = ' · ' + str(len(lv['resources'])) + ' resource types'
-            if lv.get('collection'):
+            if lv.get('collection') and not lv['collection']['resource']:
                 palette += ' + 1 story type'
             for item in lv['resources']:
                 key = item['key']
                 if key not in resources:
-                    resources[key] = picture(page.data_dir / f'resource-pieces/{key}.png', 44, 'PNG')
+                    path = 'tile-sets/resources/4.png' if key == 'cut-blocks' else f'resource-pieces/{key}.png'
+                    resources[key] = picture(page.data_dir / path, 44, 'PNG')
                 img = f'<img src="{resources[key]}" alt="">' if resources[key] else ''
                 chips.append(f'<span class="chip">{img}{esc(item["name"])} <b>+{item["yield"]} {esc(item["currency"])}</b></span>')
-        if lv.get('water_after_well'):
+        if lv.get('resource_unlock') == 'water':
             reveal += '<p class="meta">After the Spring Well is placed, water buckets take the blue timber slot and earn Provisions.</p>'
             timber = picture(FRAMES / f'scenario-{game}-before-well-{n:02d}.png', 220)
             if timber:
                 reveal += (f'<figure class="reveal"><img src="{timber}" alt="Blue timber before the well">'
                            '<figcaption>Palette before the Spring Well is restored.</figcaption></figure>')
+        if lv.get('resource_unlock') == 'cut-blocks':
+            reveal += '<p class="meta">After the Artisan Workshop is placed, cut blocks take the purple stone slot and earn Supplies.</p>'
         if game == 'relic-rush' and n == 9 and (result := picture(FRAMES / 'scenario-relic-rush-resources.png', 300)):
             reveal += (f'<figure class="reveal"><img src="{result}" alt="Resources and three-currency market price">'
                        '<figcaption>The resources banked on clear and the market restoration price.</figcaption></figure>')

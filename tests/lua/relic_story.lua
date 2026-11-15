@@ -25,13 +25,13 @@ do
 end
 
 local collections = {
-    [1]={10,"Camp timber",5,0}, [2]={10,"Lamp lens",3,5}, [3]={12,"Relay cable",4},
+    [1]={10,"Camp timber",3,0}, [2]={10,"Lamp lens",3,5}, [3]={12,"Relay cable",4},
     [4]={15,"Tide chart",0}, [5]={14,"Quay marker",2,5}, [6]={14,"Shore marker",2},
     [7]={16,"Tool roll",1}, [8]={16,"Broken cable",4,5}, [9]={18,"Supply crate",3}, [10]={20,"Shutter gear",5,0},
     [13]={14,"Folded note",0,5},
 }
 
--- Story pieces occupy one palette slot and advance its matching goal.
+-- Each collection advances only for matches in its goal slot.
 for board, spec in pairs(collections) do
     local _, _, target, omitted = table.unpack(spec)
     local expected_count = omitted~=nil and 5 or 6
@@ -57,7 +57,8 @@ for board, spec in pairs(collections) do
     local m=rules.new_match()
     m.mask[a],m.mask[b]=true,true
     rules.game_apply(g,m)
-    check(g.relics==1, 'only the story piece advances collection')
+    check(g.relics==1, 'only the goal piece advances collection')
+    if board==1 then check(g.earnings[3]==1,'the ordinary timber also earns Supplies') end
     rules.game_collapse(g)
     for i=0,rules.CELLS-1 do
         local kind=g.tiles[i].kind

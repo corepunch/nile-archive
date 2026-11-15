@@ -27,9 +27,9 @@ A.dressing_colors = {
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
-A.story_pieces = {"timber", "chart", "supplies", "lens", "cable", "marker", "tools", "note", "gear", "broken-cable"}
+A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "broken-cable", "marker"}
 A.separate_rewards = {"note", "broken-cable"}
-A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water"}
+A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water", "rations"}
 A.cut_blocks = "tile-sets/resources/4.png"
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.

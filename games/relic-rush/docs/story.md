@@ -71,7 +71,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Boards 1–10 and 13 use a story piece alongside their regular kinds. Matches and power-ups collect it. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Plaque boards open a place the crew can examine in dialogue. Delivery boards move the tablet or signal plate to an exit. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Board 1 collects the regular blue-tied timber the crew uses throughout the campaign. Each bundle also earns Supplies. Boards 2–10 and 13 collect a dedicated story piece through matches and power-ups. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Plaque boards open a place the crew can examine in dialogue. Delivery boards move the tablet or signal plate to an exit. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 
@@ -186,7 +186,7 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 **Level 5**
 
-- **Elena:** The quay marker is intact. Its notch points down the shore.
+- **Elena:** The quay marker is intact. The arrow points down the shore.
 - **Adrian:** A route, at last. I shall put it in the expedition papers.
 - **Mara:** You keep those papers very close.
 - **Adrian:** They are the only dry thing I own. Is there a second marker?
@@ -446,6 +446,8 @@ as the slipped steps and distinguishes the near viewing shutter from the
 hand-operated warning across the flooded gap.
 
 ## Changelog
+
+- 2026-11-15: Camp timber comes from the same blue-tied logs used for Supplies. Painted trail arrows at the quay and shore point toward the old steps.
 
 - 2026-11-15: The restored well supplies the marker search. The recovered tools and completed workshop let the crew cut blocks for the slipped steps. The supply run recovers the crate and earns Supplies to support the crew before they reach the tide-room door.
 

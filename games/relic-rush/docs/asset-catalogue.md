@@ -31,9 +31,11 @@ The [front-facing carved hex stones](../../../art/match3-blockers/source.png) us
 
 ## Resource pieces
 
-The [4 × 4 expedition sheet](../art/resource-pieces/scenario-atlas.png) contains
-six resource sprites and ten story pieces. The [prompt](../art/resource-pieces/scenario-atlas.prompt.txt)
-lists the items in reading order. Each resource source cell is
+The [4 × 2 outlined atlas](../art/resource-pieces/outlined-atlas.png) contains
+seven regular resource sprites and the trail arrow. The
+[ImageGen prompts](../art/resource-pieces/outlined-atlas.prompt.txt) record
+the original Resources-pack cut blocks as the painted outline reference.
+Each resource source cell is
 cropped around its opaque content with a four-pixel margin, scaled to fit
 114 × 114, and centred on a transparent 128-pixel square. The separate PNGs
 live in `data/resource-pieces/`. The board uses the existing selection and
@@ -45,20 +47,19 @@ sprite when a power-up forms.
 | `coin` | Yellow sun coin, 4 Gold | Gold |
 | `berries` | Red berries, 1 Provisions | Provisions |
 | `plantains` | Green plantains, 1 Provisions | Board only |
-| `timber` | Blue-tied timber, 1 Supplies | Supplies |
+| `timber` | Blue-tied timber, 1 Supplies. Also fills the camp timber goal on board 1. | Supplies, board and goal |
 | `stone` | Pale violet dressed stone, 1 Supplies | Board only |
 | `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board, guide and expedition briefing |
+| `rations` | Outlined orange ration jar, 1 Provisions | Board only |
 | `cut-blocks` | Dark outlined masonry stack, 1 Supplies. Replaces dressed stone in the purple slot on board 9 after the workshop is restored. | Board, guide and expedition briefing |
 
-The optional sixth resource slot uses the amber amphora from the Relics pack
-for the ration jar. It earns 1 Provisions.
-
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
-See the [economy art review](screenshots/review/expedition-economy/README.md).
+See the [outlined resource review](screenshots/review/resource-outlines/README.md).
 
 The cut blocks reuse the original painted Resources sheet's third row,
 fifth column. The approved darker stack keeps the artist's outline and
-alpha, and the lighter dressed stone keeps the existing expedition sprite.
+alpha. The lighter dressed stone keeps its irregular chipped faces and
+uses the newly painted outline.
 The existing crop and registration in `python3 games/relic-rush/tools/prepare_assets.py`
 produces `data/tile-sets/resources/4.png`. Both unlocks use their campaign
 artwork across the art previews and keep the existing board overlays for
@@ -81,8 +82,11 @@ The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived w
 
 ## Chapter 1 quest objects
 
-The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
-contain eight recognizable objects. A first clear shows its object (the board-size file) at 210 px, centred on an
+The [original quest prop atlas](../art/quest-objects/source.png) and its
+[prompt](../art/quest-objects/prompt.txt) contain eight objects. The current
+camp timber and trail arrow cards use the same paintings as their board
+pieces, cropped from the [outlined atlas](../art/resource-pieces/outlined-atlas.png).
+A first clear shows its object at 210 px, centred on an
 **Item recovered!** card (the results card's panel, jade header and glow; the name and a
 CONTINUE button below), before the story exchange in which the characters find it and before
 the results. Reviewed capture: `build/relic-rush --victory clue --dialog award`.
@@ -94,7 +98,7 @@ They are independent of the selected match piece pack.
 | `lens` | Lamp lens | 2, answer the light below the cliff |
 | `cable` | Relay cable | 3, trace the route |
 | `chart` | Tide chart | 4, read the route after restoring the Spring well |
-| `marker` | Quay and shore markers | 5 and 6, locate the steps below the quay |
+| `marker` | Green painted brass trail arrow | 5 and 6, locate the steps below the quay |
 | `tools` | Tool roll | 7, equip the Artisan workshop |
 | `supplies` | Supply crate | 9, stock the Jungle market supply point |
 | `gear` | Shutter gear | 10, operate the near shutter and read the tide-room warning |
@@ -115,20 +119,24 @@ The snapped cable has a gap between the exposed copper ends.
 
 ### Collectible story pieces
 
-The board, collection HUD, and flying match pieces all use the story sprite
-for the replaced colour slot. Selection, hints and refill use the existing
-piece animation and overlays. Power-ups use their authored sprites.
+The board, collection HUD, and flying match pieces all use the goal
+sprite. Board 1 shares the blue resource timber. Other collection
+boards use the story sprite in the goal slot. Selection, hints and
+refill use the existing piece animation and overlays. Power-ups use
+their authored sprites.
 
 | Slot | Boards | Collectible sprite |
 | --- | --- | --- |
 | Gold | 4, 13 | Tide map, folded note |
 | Red | 7 | Rolled leather tool wrap |
-| Green | 5, 6 | Carved marker |
-| Blue | 2, 9 | Lamp lens, supply pack |
+| Green | 5, 6 | Painted trail arrow |
+| Blue | 1, 2, 9 | Ordinary timber, lamp lens, supply pack |
 | Purple | 3, 8 | Coiled relay cable, snapped cable |
-| Orange | 1, 10 | Timber bundle, bronze shutter gear |
+| Orange | 10 | Bronze shutter gear |
 
-The ten normal story sprites share the [expedition atlas](../art/resource-pieces/scenario-atlas.png).
+Eight story sprites still use the [expedition atlas](../art/resource-pieces/scenario-atlas.png).
+The trail arrow uses the outlined atlas. The fanned planks and mossy marker
+remain in the old source for reference.
 The manifest records each crop, the boards it appears on and its colour slot.
 Run `python3 tools/relic_quest_art.py` to register the individual
 `data/story-pieces/*.png` files. Each crop fits inside 108 px on a centred

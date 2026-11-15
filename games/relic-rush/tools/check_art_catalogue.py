@@ -18,7 +18,7 @@ assert actual == manifest["runtime_inventory"], "Runtime inventory changed: upda
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(resources["slots"])
-assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
+assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt", "outline_reference"))
 for name in resources["slots"]:
     path = f"data/resource-pieces/{name}.png"
     assert path in actual and f"`{name}`" in doc
@@ -166,6 +166,8 @@ for key in quest["slots"]:
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 assert all((ROOT / quest["gear_reward"][key]).is_file() for key in ("source", "prompt"))
+for name, reward in quest["reward_sources"].items():
+    assert name in quest["slots"] and all((ROOT / reward[key]).is_file() for key in ("source", "prompt"))
 rewards = quest["separate_rewards"]
 declaration = re.search(r"A\.separate_rewards = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(rewards)

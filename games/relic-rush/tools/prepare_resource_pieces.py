@@ -1,4 +1,4 @@
-"""Register the selected ImageGen sprites from the sixteen-cell source sheet."""
+"""Register the selected resource sprites from their authored atlas."""
 import argparse
 import json
 from pathlib import Path
@@ -21,7 +21,8 @@ def main():
     for name, slot in SPEC['slots'].items():
         row, col = divmod(slot - 1, cols)
         tile = atlas.crop((col*width//cols, row*height//rows, (col+1)*width//cols, (row+1)*height//rows))
-        assert tile.getchannel('A').getextrema() == (0, 255), name
+        transparent, opaque = tile.getchannel('A').getextrema()
+        assert transparent == 0 and opaque >= 250, name
         alpha = tile.getchannel('A').point(lambda value: 255 if value > SPEC['content_alpha'] else 0)
         x0, y0, x1, y1 = alpha.getbbox()
         sprite = tile.crop((max(0, x0-pad), max(0, y0-pad), min(tile.width, x1+pad), min(tile.height, y1+pad)))

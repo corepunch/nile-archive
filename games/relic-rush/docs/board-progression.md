@@ -1,14 +1,17 @@
 # Relic Rush board progression
 
 Expeditions ask players to clear blue plaques, recover a story object or
-deliver it. Locks, covers and stone control access to the marked cells. On boards 1–10 and 13 the story piece occupies one colour
-slot and advances the collection counter. The first clear shows the quest
+deliver it. Locks, covers and stone control access to the marked cells.
+Board 1 counts ordinary blue-tied timber toward the goal and pays Supplies.
+On boards 2–10 and 13 a story piece occupies one colour slot and advances
+the collection counter. The first clear shows the quest
 object on the **Item recovered!** card. Boards 18 and 28 provide lighter intervals in the
 later chapters.
 
 | Boards | Palette |
 | --- | --- |
-| 1, 2, 5, 8, 10, 13 | Four regular kinds and one story piece |
+| 1 | Five regular kinds, including blue timber as the goal |
+| 2, 5, 8, 10, 13 | Four regular kinds and one story piece |
 | 3, 4, 6, 7, 9 | Five regular kinds and one story piece |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
@@ -18,7 +21,7 @@ refills. Leave it unset for five regular kinds plus the story piece. The
 existing relic target sets the collection count.
 
 Ordinary boards use five resource pieces. The six-kind story palettes also
-have room for the amber ration jar. Restoring the Spring Well changes the
+have room for the amber ration jar, which also appears on board 1. Restoring the Spring Well changes the
 blue slot from timber (Supplies) to water buckets (1 Provisions each) on
 boards 5 and 6. The marker stays in its green story slot. Restoring the Artisan
 Workshop puts cut blocks in the purple slot on board 9 at the usual
