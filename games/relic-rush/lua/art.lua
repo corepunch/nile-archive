@@ -8,22 +8,8 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Row-major; packed by tools/prepare_board_dressing.py with a 2 px gutter.
-A.dressing_frames = {
-    "salt-crust-2", "barnacle-crust-2", "wall-rubble-2",
-    "salt-crust-1", "barnacle-crust-1", "wall-rubble-1",
-    "creeper-vine-1", "rope-lashing-1", "cable-snarl-1",
-    "creeper-vine-1-mirror", "rope-lashing-1-mirror", "cable-snarl-1-mirror",
-    "creeper-vine-2", "rope-lashing-2", "cable-snarl-2",
-    "dig-sand", "trench-earth", "well-mud", "tide-silt",
-    "drift-sand", "swept-stone",
-    "sandstone-floor", "blue-plaque",
-}
+A.dressing_frames = {"sandstone-floor", "blue-plaque"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
-A.dressing_colors = {
-    ["salt-crust"]=color(255, 235, 198), ["barnacle-crust"]=color(217, 205, 183),
-    ["wall-rubble"]=color(238, 186, 116), ["creeper-vine"]=color(157, 216, 104),
-    ["rope-lashing"]=color(242, 188, 104), ["cable-snarl"]=color(194, 177, 223),
-}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
@@ -89,7 +75,7 @@ function A.load()
     end
     local dressing = texture.load("board-dressing.png")
     for i, key in ipairs(A.dressing_frames) do
-        textures[key] = texture.region(dressing, rect((i - 1) % 5 * 132 + 2, (i - 1) // 5 * 132 + 2, 128, 128))
+        textures[key] = texture.region(dressing, rect((i - 1) * 132 + 2, 2, 128, 128))
     end
     for _, key in ipairs(A.quest_objects) do
         textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
@@ -127,7 +113,7 @@ function A.draw_catalogue(R)
         gfx.image(R.board_art["resource-" .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
-                   "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+                   "chain", "sandstone-floor", "blue-plaque", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 414 + math.floor((i - 1) / 6) * 75
         if i <= 6 then
@@ -148,21 +134,18 @@ end
 
 -- Game-rendered samples at the same size as live board cells.
 function A.draw_dressing_catalogue(R)
-    gfx.round_rect(rect(16, 145, 448, 675), 18, color(12, 47, 41, 250))
-    R.say_at("BOARD MATERIALS", vec2(240, 173), 25, R.PAL_GOLD, 420)
-    local labels = {"Salt 2", "Barnacles 2", "Rubble 2", "Salt 1", "Barnacles 1", "Rubble 1",
-        "Vine 1", "Rope 1", "Cable 1", "Vine 1 reversed", "Rope 1 reversed", "Cable 1 reversed",
-        "Vine 2", "Rope 2", "Cable 2", "Dig sand", "Trench earth", "Well mud", "Tide silt",
-        "Drift sand", "Swept stone", "Sandstone", "Blue plaque"}
+    gfx.round_rect(rect(28, 315, 424, 180), 18, color(12, 47, 41, 250))
+    R.say_at("BOARD MATERIALS", vec2(240, 345), 25, R.PAL_GOLD, 420)
     local side = 2 * (R.HEX_R - .65)
-    for i, name in ipairs(A.dressing_frames) do
-        local at
-        if i <= 15 then at = vec2(110 + (i - 1) % 3 * 130, 230 + (i - 1) // 3 * 88)
-        else at = vec2(80 + (i - 16) % 4 * 106, 660 + (i - 16) // 4 * 84) end
-        R.draw_ground("face", at, R.HEX_R, 0, 1)
-        if i <= 15 then R.draw_relic({kind=(i - 1) % 6,special=0}, at, 1, 255, 1, true) end
-        gfx.image(R.board_art[name], rect.centered(at, size2.splat(side)), color.WHITE)
-        R.say_at(labels[i], at + vec2(0, 37), 13, R.PAL_CREAM, 100)
+    for i, name in ipairs{"sandstone-floor", "blue-plaque", "chain"} do
+        local at = vec2(105 + (i - 1) * 135, 413)
+        local area = rect.centered(at, size2.splat(side))
+        gfx.image(R.board_art[i == 3 and "blue-plaque" or name], area, color.WHITE)
+        if i == 3 then
+            gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
+            gfx.image(R.board_art.chain, area, color.WHITE)
+        end
+        R.say_at(({"Pale stone", "Blue plaque", "Chained plaque"})[i], at + vec2(0, 44), 13, R.PAL_CREAM, 120)
     end
 end
 

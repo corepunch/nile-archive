@@ -1,7 +1,7 @@
 -- Homescapes shapes adapted to axial hexes: straight runs on three axes and
 -- four-cell rhombi on every pair of adjacent axes. Power-ups are not colors.
 local S={}
-function S.matches(M,g,m,preferred,alternate,minimum,no_specials,eligible,equal)
+function S.matches(M,g,m,preferred,alternate,minimum,no_specials,rhombus_matches,eligible,equal)
     local groups={}
     local function add(cells,length,axis,rhombus)
         local group={cells={},length=length,axis=axis,rhombus=rhombus,cross=false}
@@ -34,7 +34,7 @@ function S.matches(M,g,m,preferred,alternate,minimum,no_specials,eligible,equal)
                     if #cells>=minimum then add(cells,#cells,axis,false) end
                 end
             end
-            if minimum==3 then
+            if rhombus_matches and minimum==3 then
                 for d=0,2 do
                     local a,b=M.hex_neighbor(i,d),M.hex_neighbor(i,d+1)
                     local c=a>=0 and M.hex_neighbor(a,d+1) or -1

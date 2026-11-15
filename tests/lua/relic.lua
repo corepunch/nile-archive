@@ -95,17 +95,16 @@ local function test_matching()
         g = blank()
         line(g, start, axis, 4, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 4 and m.make[c] == axis + 1, "four make an axis ray")
-        rules.game_apply(g, m)
-        check(g.tiles[c].special == axis + 1, "earned ray survives its birth wave")
+        check(m.hits == 4 and next(m.make) == nil, "four in a line clear as ordinary pieces")
+        check(rules.game_apply(g, m) == 4 and g.tiles[c].kind < 0, "a line of four leaves no special behind")
         g = blank()
         line(g, start, axis, 5, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 5 and m.make[c] == PRISM, "five in a line make a prism")
+        check(m.hits == 5 and next(m.make) == nil, "five in a line clear as ordinary pieces")
         g = blank()
         line(g, hex_neighbor(start, axis + 3), axis, 6, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 6 and m.make[c] == PRISM, "longer lines retain prism reward")
+        check(m.hits == 6 and next(m.make) == nil, "longer lines clear as ordinary pieces")
         g = pattern()   -- a ray clears exactly its axis
         g.tiles[c] = tile(3, axis == 0 and ROW or axis == 1 and COLUMN or DIAGONAL)
         m = rules.new_match()
@@ -121,7 +120,7 @@ local function test_matching()
     line(g, hex_neighbor(c, 3), 0, 3, 0)
     line(g, hex_neighbor(c, 4), 1, 3, 0)
     rules.game_matches(g, m, c)
-    check(m.hits == 5 and m.make[c] == rules.BOMB, "crossing triples make a bomb")
+    check(m.hits == 5 and next(m.make) == nil, "crossing lines clear every member once")
     for d = 0, 5 do
         g = blank()
         local a, b = hex_neighbor(c, d), hex_neighbor(c, (d + 1) % 6)
@@ -136,7 +135,7 @@ local function test_matching()
     g = blank()
     for _, at in ipairs({c, hex_index(1,0), hex_index(0,1), hex_index(1,1)}) do g.tiles[at].kind = 2 end
     rules.game_matches(g, m, c)
-    check(m.hits == 4 and m.make[c] == rules.PLANE, "four-cell diamond creates a plane")
+    check(m.hits == 0 and not rules.game_hint(g), "a four-cell diamond is not a match")
     g = blank()
     for d = 0, 5 do g.tiles[hex_neighbor(c,d)].kind = 2 end
     rules.game_matches(g, m, c)
@@ -146,6 +145,7 @@ local function test_matching()
     local a, b = hex_index(1,0), hex_index(1,1)
     g.tiles[c], g.tiles[hex_index(0,1)], g.tiles[b], g.tiles[a] = tile(2), tile(2), tile(2), tile(1)
     local moves = g.moves
+    check(not rules.game_hint(g), "a swap that only completes a rhombus is not hinted")
     check(not rules.game_swap(g,a,b,m) and g.moves == moves
         and g.tiles[a].kind == 1 and g.tiles[b].kind == 2, "nonlinear swap rejected without spending a move")
 
@@ -245,7 +245,11 @@ local function test_moves_and_blockers()
     check(rules.game_tool(g, 1, c, m) and m.hits == 7, "dynamite hits seven")
     g = pattern()
     g.tools[3] = 1
-    check(rules.game_tool(g, 2, c, m) and m.hits == 25, "sunburst hits three axes")
+    local target_kind = g.tiles[c].kind
+    g.chain[c], g.obstacles = 1, 1
+    check(rules.game_tool(g, 2, c, m), "sunburst can target a chained piece")
+    rules.game_apply(g, m)
+    check(g.chain[c] == 0 and g.tiles[c].kind == target_kind, "sunburst breaks a matching chain first")
 
     g = pattern()   -- prism + relic clears that colour
     g.tiles[c].special = PRISM

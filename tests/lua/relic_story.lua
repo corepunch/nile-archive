@@ -67,7 +67,6 @@ end
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 check(rules.LEVELS==30 and #journey.beats==47,'all chapters and their restoration scenes are playable')
-check(journey.find('before-22').lines[1][2]:find('Ice',1,true),'the Frozen Stair introduces ice before play')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -85,7 +84,8 @@ for level=1,30 do
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
     local specs=rules.level_of(g)
-    check(g.carpet_total==0, 'Relic Rush boards do not use spreading carpet goals')
+    check(g.carpet_total==0 and g.initial_obstacles==specs.chains,
+        'Relic Rush expeditions use chains and fixed blue plaques')
     check(#specs.goals==1 and specs.goals[1]=='oil' and specs.oil_still and g.delivery_total==0,
         'fixed blue plaques are the only win condition')
     check(g.oil_left>0 and g.oil_left==#specs.oil, 'each authored plaque is present on an active cell')
@@ -210,7 +210,7 @@ end
 g.oil_left=1
 local m=rules.new_match()
 m.mask[signal]=true
-for _=1,1+g.chain[signal]+g.ice[signal] do rules.game_apply(g,m) end
+for _=1,1+g.chain[signal] do rules.game_apply(g,m) end
 rules.game_check_end(g)
 check(g.won and g.oil[signal]==0 and g.obstacles>0,'the final plaque wins even while ordinary blockers remain')
 R.story_tick()

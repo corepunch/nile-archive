@@ -49,7 +49,6 @@ if not neutral then
 end
 
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local PAL_WHITE = R.PAL_WHITE
 local NORMAL = rules.NORMAL
 local cell_active = rules.game_cell_active
 local rgba = color
@@ -94,38 +93,8 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
 end
 local draw_relic = R.draw_relic
 
-local function dressing()
-    return not R.g.hs and rules.level_of(R.g).dress or nil
-end
-
--- Keep a stable material for the combined obstacle goal throughout the board.
 function R.board_goal_icon(l, goal)
-    local dress = l.dress
-    if not dress then return end
-    if goal == "oil" then return dress.floor and dress.floor.covered end
-    if dress.cover then return dress.cover .. (l.ice_layers == 2 and "-2" or "-1") end
-    if dress.lock then return dress.lock .. "-1" end
-end
-
-function R.blocker_color(kind)
-    local dress = dressing()
-    if dress then return art.dressing_colors[kind == 6 and dress.cover or kind == 7 and dress.lock] end
-end
-
--- The guide uses icon sizing. The board registers every cover to the cell face.
-function R.draw_cover(material, hits, at, scale, alpha, on_board)
-    local name = material .. (hits > 1 and "-2" or "-1")
-    local size = on_board and CELL_FACE_SIZE or ART_STATE_SIZE
-    local dst = rect.centered(at,size2.splat(size * scale))
-    gfx.image(R.board_art[name], dst, rgba(255,255,255,255 * alpha))
-    if on_board then return end
-    local badge = at
-    gfx.circle(badge,8 * scale,rgba(15,57,81,230 * alpha))
-    local style = R.pal(PAL_WHITE,12 * scale)
-    for _, key in ipairs{"fill","fill2","outline","shadow"} do
-        if style[key] then style[key] = color.alpha(style[key],alpha) end
-    end
-    text.inside(style,rect.centered(badge,size2.splat(20 * scale)),vec2(.5,.5),tostring(hits))
+    if goal == "oil" and l.dress then return l.dress.floor.covered end
 end
 
 local function wrapf(v, m) return v - m * math.floor(v / m) end
@@ -184,26 +153,20 @@ local function draw_relics(sx)
     gfx.unclip()
 end
 
-local function draw_blockers(sx, dress)
+local function draw_blockers(sx)
     local g = R.g
+    local cover = elements.reveal_cover(R, rules)
     for i = 0, CELLS - 1 do
-        if cell_active(g, i) then
+        if cell_active(g, i) and (g.ice[i] > 0 or g.chain[i] > 0) then
             local at = cell_pos(i) + vec2(sx, 0)
             local visible, scale, alpha = true, 1, 1
             if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
-            alpha = alpha * elements.reveal_cover(R, rules)
             if visible then
                 local dst = rect.centered(at, size2.splat(CELL_FACE_SIZE * scale))
-                local tint = rgba(255, 255, 255, 255 * alpha)
-                if g.ice[i] > 0 then
-                    R.draw_cover(dress and dress.cover or "ice",g.ice[i],at,scale,alpha,true)
-                end
-                if g.chain[i] > 0 then
-                    local lock = dress and dress.lock
-                    local state = g.chain[i] > 1 and "-2" or i % 2 == 0 and "-1" or "-1-mirror"
-                    local tex = lock and R.board_art[lock .. state] or elements.chain(R,g,i)
-                    gfx.image(tex, dst, tint)
-                end
+                local tint = rgba(255, 255, 255, 255 * alpha * cover)
+                -- Generic ice is available to the engine's reference boards.
+                if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, tint) end
+                if g.chain[i] > 0 then gfx.image(elements.chain(R,g,i), dst, tint) end
             end
         end
     end
@@ -223,7 +186,7 @@ end
 function R.board_screen(inp, dt)
     draw_backdrop()
     local intro = R.intro
-    local dress = dressing()
+    local dress = not R.g.hs and rules.level_of(R.g).dress
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     draw_cells(sx, "edge")
@@ -232,7 +195,7 @@ function R.board_screen(inp, dt)
     elements.ground(R, rules, sx, dress and dress.floor)
     draw_cells(sx, "flash")
     draw_relics(sx)
-    draw_blockers(sx, dress)
+    draw_blockers(sx)
     elements.blockers(R, rules, sx)
     if intro then draw_sheen(sx) end
     R.draw_board_tools(inp)

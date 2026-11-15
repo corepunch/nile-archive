@@ -6,13 +6,13 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Complete the level's goals within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
+Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear all blue plaques within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
 [popup and refill comparisons](docs/review/popup-refill/README.md).
 
-Haptics accompany matches, special activations, cascades, trickling landings,
+Haptics accompany matches, cascades, trickling landings,
 results, income collection, building pickup and release/drop. Moving a preview
 requires dragging the building; tapping land does not move it. Confirm and Cancel
 add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
@@ -34,12 +34,12 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 ## Shared match engine and atlas
 
 Every expedition ends when all of its blue plaques are clear. Match on a blue
-cell to reveal the pale stone below; locks and covers absorb the hit first. The
-[board progression](docs/board-progression.md) lists where each mechanic appears.
+cell to reveal the pale stone below. A chain absorbs the first hit on its piece.
+See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition.
 The [resource expedition design](docs/resource-expedition.md) covers how
 resource matches and restoration costs fit into the campaign.
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
-and [in-game art review](docs/screenshots/review/board-theme/README.md).
+and [current board review](docs/review/chains-only/README.md).
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
@@ -53,7 +53,7 @@ locked or missing. Locks still route gems around their sides.
 and effects. The HUD and tool controls use `data/match3-hud.png`.
 `python3 tools/match3_atlas.py` rebuilds both atlases from their source art.
 `--default-match3` previews the engine's neutral skin.
-[Power-up paint-over and board captures](docs/screenshots/review/power-up-paint/README.md).
+
 
 ## Screenshots
 
@@ -62,7 +62,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | Hexagonal expeditions | Restored island |
 | --- | --- |
 | ![First hex match-3 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
-| ![Supply packs and blockers on board 9](docs/screenshots/review/story-collection/supplies-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
+| ![Chains and blue plaques on board 22](docs/review/chains-only/board-after-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
@@ -125,7 +125,7 @@ See [UI architecture, Playrix/Candy Crush references and regression checks](docs
 
 ## Effects and motion
 
-Travelling sun rays, expanding bomb shockwaves, prism target links, special-piece birth glows, colored fragments, resource trails, HUD landing pulses, smooth score count-up, landing squash/stretch and escalating cascade chimes use the shared triangle renderer. After any dialogue the board presents itself: the HUD lands, the cells ripple out from the centre, relics rain down their columns with squash and bounce, blockers slam on and a sheen runs across as the board goes live. A tap skips it; reduced motion makes it a short fade. See [the board entrance](../../docs/ENGINE.md#board-entrance). Reduced-motion mode is supported.
+Coloured match fragments, resource trails, landing squash and cascade chimes follow each clear. The result screen counts the score up. After any dialogue the board presents itself: the HUD lands, the cells ripple out from the centre, relics rain down their columns with squash and bounce, blockers slam on and a sheen runs across as the board goes live. A tap skips it; reduced motion makes it a short fade. See [the board entrance](../../docs/ENGINE.md#board-entrance). Reduced-motion mode is supported.
 
 ![Actual SDL effects demonstration](docs/screenshots/effects-reel.gif)
 
@@ -140,7 +140,7 @@ teal rim frames the hex board.
 
 The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are thirty different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
-After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the same gems are rearranged with all earned special powers intact; moves, tools, objectives, terrain and locked relics are preserved. See the [dead-board regression and captures](docs/review/dead-board/README.md).
+After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue plaques in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
 The three power-up buttons use square artwork and 76×76 touch targets, with all five interaction states redrawn together. See the [square-button review](docs/review/square-tools/README.md).
 
@@ -210,45 +210,40 @@ Gold per unused move, with a maximum move bonus of 40 Gold.
 
 ## Campaign: thirty hex levels
 
-Every stage uses its own connected active-cell mask within a radius-four hex grid. Their lock placements make seams and interrupted approaches; [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Each row gives the starting number of blue plaques, including any under a lock or cover.
+Every stage uses its own connected active-cell mask within a radius-four hex grid. Chain placements shape seams and approaches, and [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Each row gives the starting number of blue plaques, including plaques under chains.
 
-| # | Expedition | Moves | Blue plaques | Locks | Cover cells |
-| --- | --- | ---: | ---: | ---: | ---: |
-| 1 | First Light | 24 | 7 | 0 | 0 |
-| 2 | The Lamp Lens | 29 | 9 | 0 | 0 |
-| 3 | The Relay Cable | 32 | 10 | 0 | 0 |
-| 4 | Under the Pump | 35 | 11 | 4 | 0 |
-| 5 | The Quay Marker | 35 | 10 | 4 | 0 |
-| 6 | The Shore Marker | 37 | 11 | 0 | 5 |
-| 7 | The Tool Roll | 40 | 12 | 3 | 4 |
-| 8 | The Broken Cable | 40 | 12 | 4 | 6 |
-| 9 | The Supply Crate | 43 | 12 | 5 | 6 |
-| 10 | The Shutter Gear | 46 | 12 | 6 | 6 |
-| 11 | The Long Terrace | 33 | 12 | 0 | 0 |
-| 12 | Twelve Crates | 36 | 12 | 5 | 0 |
-| 13 | Names in the Stone | 37 | 10 | 6 | 0 |
-| 14 | Static | 38 | 13 | 7 | 0 |
-| 15 | The Frost Line | 39 | 12 | 4 | 6 |
-| 16 | Supper for Twelve | 40 | 13 | 4 | 7 |
-| 17 | The Torn Log | 42 | 13 | 5 | 7 |
-| 18 | Lantern Steps | 40 | 14 | 2 | 4 |
-| 19 | Under the Vines | 45 | 12 | 4 | 6 |
-| 20 | The Archivist's Key | 46 | 9 | 5 | 7 |
-| 21 | Tomas's Trail | 35 | 12 | 0 | 0 |
-| 22 | The Frozen Stair | 40 | 13 | 2 | 8 |
-| 23 | The Star Road | 40 | 12 | 3 | 4 |
-| 24 | Noon Shadow | 41 | 12 | 4 | 5 |
-| 25 | Smoke on the Water | 38 | 14 | 6 | 6 |
-| 26 | The Jade Deep | 43 | 10 | 4 | 7 |
-| 27 | Six Sun Gates | 45 | 12 | 7 | 8 |
-| 28 | The Last Terrace | 42 | 13 | 2 | 4 |
-| 29 | The Silent Temple | 47 | 16 | 8 | 10 |
-| 30 | The Warning Returns | 49 | 16 | 8 | 10 |
-
-The [board materials](docs/asset-catalogue.md#story-materials) come from the
-crew's tasks. Salt crust is the usual cover, barnacles mark the tide room and
-quay, rubble marks the cracked wall, and only The Frozen Stair uses ice. An
-intact cover takes two hits. A cover with a broken upper edge takes one.
+| # | Expedition | Moves | Blue plaques | Chains |
+| --- | --- | ---: | ---: | ---: |
+| 1 | First Light | 24 | 7 | 0 |
+| 2 | The Lamp Lens | 29 | 9 | 0 |
+| 3 | The Relay Cable | 32 | 10 | 0 |
+| 4 | Under the Pump | 35 | 11 | 4 |
+| 5 | The Quay Marker | 35 | 10 | 4 |
+| 6 | The Shore Marker | 37 | 11 | 0 |
+| 7 | The Tool Roll | 40 | 12 | 3 |
+| 8 | The Broken Cable | 40 | 12 | 4 |
+| 9 | The Supply Crate | 43 | 12 | 5 |
+| 10 | The Shutter Gear | 46 | 12 | 6 |
+| 11 | The Long Terrace | 33 | 12 | 0 |
+| 12 | Twelve Crates | 36 | 12 | 5 |
+| 13 | Names in the Stone | 37 | 10 | 6 |
+| 14 | Static | 38 | 13 | 7 |
+| 15 | The Cracked Wall | 39 | 12 | 4 |
+| 16 | Supper for Twelve | 40 | 13 | 4 |
+| 17 | The Torn Log | 42 | 13 | 5 |
+| 18 | Lantern Steps | 40 | 14 | 2 |
+| 19 | Under the Vines | 45 | 12 | 4 |
+| 20 | The Archivist's Key | 46 | 9 | 5 |
+| 21 | Tomas's Trail | 35 | 12 | 0 |
+| 22 | The Alternate Landing | 40 | 13 | 2 |
+| 23 | The Star Road | 40 | 12 | 3 |
+| 24 | Noon Shadow | 41 | 12 | 4 |
+| 25 | Smoke on the Water | 38 | 14 | 6 |
+| 26 | The Jade Deep | 43 | 10 | 4 |
+| 27 | Six Sun Gates | 45 | 12 | 7 |
+| 28 | The Last Terrace | 42 | 13 | 2 |
+| 29 | The Silent Temple | 47 | 16 | 8 |
+| 30 | The Warning Returns | 49 | 16 | 8 |
 
 ## Buildings
 
@@ -298,11 +293,10 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 ## Play
 
-- Thirty distinct hex board masks with 48–58 active cells. Match straight lines of three or more identical relics along any hex axis. Four makes a directional rocket, five or more makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a paper plane.
-- Swap two specials for a combination attack. A rainbow ball combined with another power-up converts matching chips into that power-up before firing them.
-- An adjacent match or a direct power-up hit breaks a carved hex stone. Match or land a power-up hit directly on a blue plaque to expose the sandstone. A cover or lock on the same cell takes the hit first. Locked and covered relics stay in place until matched or hit. Intact covers need two hits.
+- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. All pieces in a long line clear together.
+- Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots; the result screen separately explains the guaranteed grant and spare Gold.
-- Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
+- Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each tool has two charges per level and costs zero moves. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
@@ -315,10 +309,9 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 ## Selected tile art
 
 The [artwork and state catalogue](docs/asset-catalogue.md) inventories every gem
-pack, special, blocker, tool and animation state, with source/runtime paths and
-reproduction commands. Specials, blockers and all five tool interaction states
-use one authored atlas; `--art-states` shows the complete set and `--art-board`
-freezes a board with all specials. Catalogue coverage runs in `make test`.
+pack, chain, tool and animation state, with source and runtime paths.
+`--art-states` shows the collection and `--art-board` previews the shared
+engine’s special pieces for development. Catalogue coverage runs in `make test`.
 
 The campaign uses the [expedition resource sprites](docs/asset-catalogue.md#resource-pieces).
 Story pieces and water take their authored slots. The **Jewels** and **Resources**
@@ -350,7 +343,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Verification
 
-- `make test` runs the original rule regressions, ported: grid invariants, straight triples, rejection of bent/diamond/ring groups, four/five special creation, holes and diagonal trickling, chain and ice locks, tools, prism colour clears, connected board masks and seeded opening boards without ready matches and with a legal move, exactly-once rewards and construction, shoreline/collision/zone rules on the engine city, and 120 greedy campaign trials (extended: `make test-extended`). The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
+- `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
 - `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. Every one of the 46 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
@@ -384,7 +377,7 @@ effects and the debug entry points are the engine's (`engine/match3_game.lua`,
 - `lua/journey.lua`: the restoration schedule, recap and changing tap lines.
 - `lua/narrative.lua`: the cast.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
-- `lua/board.lua`: how cells, relics, ice and blockers are painted.
+- `lua/board.lua`: how cells, resource pieces and chains are painted.
 - `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet, star and compass icons.
 - `lua/skin.lua`: the look as data (`ui.skin`).
 - `lua/main.lua`: loads the modules and returns the engine's app descriptor.
@@ -394,7 +387,7 @@ effects and the debug entry points are the engine's (`engine/match3_game.lua`,
 ## Design references and original assets
 
 - **Cradle of Rome:** excavating puzzle terrain and spending collected resources on visible restoration.
-- **Candy Crush:** understandable special-piece creation, combination attacks, boosters and animated reward feedback.
+- **Candy Crush:** an earlier reference for animated reward feedback.
 - **June's Journey / Pearl's Peril (Wooga):** a large island, player-selected building locations and land expansion, replacing a linear friend-road progression map.
 - **Supercell games:** readable building silhouettes, polished resource feedback and a cheerful settlement presentation.
 - **Settlers II / Return to the Roots:** a reference for territory represented by small connected land cells. No road-management system or GPL implementation was copied into the game.

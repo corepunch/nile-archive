@@ -73,66 +73,17 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 Board 1 uses regular blue-tied timber, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
-## Board dressing: obstacles as the scene
+## Chains and blue plaques
 
-**Status:** Story materials are in play across the campaign. The later chapters still use provisional dialogue.
+The blue plaques mark the crew’s work site. A chain holds a piece in place
+until a match or tool breaks it. Blue plaques beneath chains take a separate
+hit after the piece is free. Each first-clear item or scene pays off the work
+at that site. See [board progression](board-progression.md) for the starting
+counts and the [asset catalogue](asset-catalogue.md#story-materials) for the art.
 
-A board is not a pause between scenes. It is the crew doing the task the last line named: cutting creepers off the path, gathering pieces of the tide chart, prising barnacles from the shutter. The rules stay as they are. Each rule family can wear several looks, and a board picks the look its task calls for.
-
-### Rule families and the readability contract
-
-| Family | Rule (unchanged) | Base look, taught first | Story looks |
-| --- | --- | --- | --- |
-| **Lock** | Holds a piece in place; one hit per strand (`chain`, `chain-2`) | Iron chain | Creeper vine, rope lashing, cable snarl, claim seal |
-| **Cover** | Encases a piece; one hit per layer (`ice-1`, `ice-2`) | Salt crust | Barnacle crust, wall rubble, ice (frozen boards only) |
-| **Floor** | Match or hit directly on a blue plaque to uncover the sandstone. | Sandstone | Blue plaques |
-
-Each family keeps one visual language in every look, so a player who knows the rule recognises it at once:
-
-- **Lock** looks span the hex between two bolted edges like the chain does, and the two-hit state crosses two strands.
-- **Cover** looks trace the whole face in the intact state and lose the upper edge after a hit. Tropical covers have an opening so the piece inside stays readable.
-- **Floor** looks sit flat under the pieces with countable cell joints.
-- **Blue plaques.** The floor marks the site of the find. All blue cells must clear before the first-clear card or scene.
-
-The [asset catalogue](asset-catalogue.md#story-materials) records every painted state and its runtime mapping.
-
-**Teach on the base look, then dress it.** A rule first appears in its base look. The board that brings in a new look has one crew line tying it to the rule the player already knows ("same as the pump chains"). After that the look needs no explanation.
-
-### Flow around a board
-
-1. **The scene line names the job.** The last line before Play names what is in the way ("The pump chain has rusted fast. Break it and gather the loose chart pieces.").
-2. **The board shows that job.** The board's skin and lesson text match the line.
-3. **The item card hands the clue to the story.** The first-clear exchange can refer to the recovered object once players have seen it.
-
-### Chapter 1 boards
-
-Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
-
-| Board | Task | Obstacles | Lock look | Cover look | Floor look | First mention |
-| ---: | --- | --- | --- | --- | --- | --- |
-| 1 | Gather 10 timber pieces | — | — | — | — | Elena spots the timber on the landing. |
-| 2 | Gather 10 lenses | — | — | — | Mara needs a lens for the lookout lamp. |
-| 3 | Gather 12 cable coils | stone | — | — | Mara wonders whether the relay cable explains the flashes. |
-| 4 | Gather 15 map pieces | 4 / 0 | Iron chain (base) | — | — | Tomas names the rusted chain and loose chart pieces after board 3. |
-| 5 | Gather 14 marker pieces | 4 / 0 | **Creeper vine** | — | Blue plaques | Tomas points to the marker under the creepers after the well is restored. |
-| 6 | Gather 14 marker pieces | 0 / 5 | — | **Salt crust** (base) | — | The lesson teaches matching the piece within the salt crust. |
-| 7 | Gather 16 tool rolls | 3 / 4 (2) | **Rope lashing** | Salt crust | — | Mara remembers lashing the tools down. |
-| 8 | Gather 16 snapped cable pieces | 4 / 6 (2) | **Cable snarl** | Salt crust | — | Tomas points out the cable tangled in the old fittings. |
-| 9 | Gather 18 blue supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas names the crate and asks the crew to bring the workshop blocks. The purple blocks pay Supplies as a regular match. |
-| 10 | Gather 20 gears | 6 / 6 (2) | Iron chain | **Barnacle crust** | Blue plaques | *Tomas: The sea has been in here. Knock it off like the salt.* |
-
-### Chapters 2–3 by quest
-
-These chapters are provisional. Board dressing follows the existing placements and goals.
-
-| Quest (boards) | Lock look | Cover look | Floor look | Note |
-| --- | --- | --- | --- | --- |
-| Find the sender (11–13) | Creeper vine (12–13) | — | Blue plaques (11–13) | The first clear of board 13 recovers the warning. The warning and initials are visible on the item card before the courtyard is built. |
-| Make a way home (14–16) | Rope lashing | **Wall rubble** (15), salt crust (16) | Blue plaques (14–16) | Board 15 checks the cracked wall. Rename *The Frost Line* during the Chapter 2 rewrite. |
-| Keep the record (17–20) | Iron chain | Salt crust | Blue plaques (17–20) | The record boxes are chained shut. |
-| Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Blue plaques (21–23) | Mara spots the ice before board 22. |
-| Repair the quay (24–26) | Rope lashing | Barnacle crust | Blue plaques (24–26) | The quay and the water. |
-| Let the light speak (27–30) | Iron chain | Wall rubble (27), salt crust (28–30) | Blue plaques (27–30) | The signal plate arrives on board 30. |
+The chain on the old pump is the first obstacle. Mooring chains mark the
+approach to the quay, and the cracked wall sends the crew to a landing
+where a boat can reach them.
 
 ### More story to put on the board
 
@@ -182,7 +133,7 @@ These chapters are provisional. Board dressing follows the existing placements a
 - **Elena:** Now I can read it. The line runs from camp to a tide room.
 - **Tomas:** The lower quay lies on that route.
 - **Mara:** The pump’s running clear. Fill the buckets before we go.
-- **Tomas:** Look for a quay marker under the creepers. It should point out the lower route.
+- **Tomas:** Look for a quay marker by the old mooring chains. It should point out the lower route.
 
 **Level 5**
 
@@ -196,7 +147,7 @@ These chapters are provisional. Board dressing follows the existing placements a
 - **Mara:** There it is. The shore marker and the quay marker point to the same steps.
 - **Elena:** The bottom tread has slipped. We’ll need stone blocks to shore it up.
 - **Tomas:** These are the old steps. Once they’re firm, I’ll show you where they lead.
-- **Mara:** We can cut blocks with my tools. I left the roll lashed to the rail.
+- **Mara:** We can cut blocks with my tools. I left the roll by the rail.
 
 **Level 7**
 
@@ -208,7 +159,7 @@ These chapters are provisional. Board dressing follows the existing placements a
 - **Elena:** You knew what the chart meant.
 - **Tomas:** Yes. I hoped the room would stay closed.
 - **Mara:** Help me cut those blocks. Then we’ll follow the cable together.
-- **Tomas:** Watch your step. The torn cable still snakes around the old fittings.
+- **Tomas:** The cable broke where it bends around the old fittings.
 
 **Level 8**
 
@@ -230,8 +181,8 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 **Before level 10**
 
-- **Mara:** The gear should be by the door. That's a lot of barnacles.
-- **Tomas:** The sea has been in here. Knock it off like the salt.
+- **Mara:** The gear should be by the door.
+- **Tomas:** Reach it from this side. That wall won’t bear our weight.
 - **Elena:** Let the light tell us what it can.
 
 **Level 10**
@@ -287,7 +238,7 @@ Choice prompt: Who should answer the signal?
 
 - **Mara:** The shore route floods. We need another way.
 - **Tomas:** I should have checked the wall sooner.
-- **Tomas:** Let's clear those loose stones and see how far the crack goes.
+- **Tomas:** Let’s see how far the crack runs before we risk another crossing.
 
 **Level 15**
 
@@ -351,7 +302,7 @@ Choice prompt: Who should answer the signal?
 
 **Before level 22**
 
-- **Mara:** Ice on the steps. Mind your footing; we need this landing.
+- **Mara:** These steps lead to the other landing. Let’s see if a boat can reach it.
 
 **Level 22**
 
@@ -470,3 +421,4 @@ hand-operated warning across the flooded gap.
 - 2026-11-12: Replaced the prior campaign plan with A Light Below; mapped all 30 existing boards and ten milestones, wrote Chapter 1 and provisional continuity bridges. Added the playable quest tracker, confirmed upgrade points and a choice at the tide-room reveal.
 
 - 2026-11-15: Every expedition uses blue plaques. The previously collected objects and the signal plate now appear on first clear. Story dialogue is unchanged.
+- 2026-11-15: Simplified the expedition boards to chains and blue plaques. Updated the route and recovery dialogue to match.

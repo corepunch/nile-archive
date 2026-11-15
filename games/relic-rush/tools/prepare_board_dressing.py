@@ -1,4 +1,4 @@
-"""Register the painted cover, lock and excavation atlases for Relic Rush."""
+"""Register the painted limestone and blue plaque faces for Relic Rush."""
 import argparse
 import json
 from pathlib import Path
@@ -11,22 +11,12 @@ SIZE, STRIDE = 128, 132
 
 
 def register(source, item, mask):
-    tile = source.crop(item["crop"])
-    if "side" in item:
-        x, y = item["center"]
-        left, top = item["crop"][:2]
-        side = item["side"]
-        square = Image.new("RGBA", (side, side))
-        square.paste(tile, (left - x + side // 2, top - y + side // 2))
-        tile = square
-    tile = tile.resize((SIZE, SIZE), Image.Resampling.LANCZOS)
-    if item["fit"] == "fill":
-        # Full-bleed paint must reach the registered face before we cut it.
-        unpainted = tile.getchannel("A").point(lambda a: 255 if a < 230 else 0)
-        assert not ImageChops.multiply(unpainted, mask).getbbox(), item
-        tile.putalpha(mask)
-    elif item["fit"] == "frame":
-        tile.putalpha(ImageChops.multiply(tile.getchannel("A"), mask))
+    assert item["fit"] == "fill", item
+    tile = source.crop(item["crop"]).resize((SIZE, SIZE), Image.Resampling.LANCZOS)
+    # Full-bleed paint must reach the registered face before we cut it.
+    unpainted = tile.getchannel("A").point(lambda a: 255 if a < 230 else 0)
+    assert not ImageChops.multiply(unpainted, mask).getbbox(), item
+    tile.putalpha(mask)
     return tile
 
 

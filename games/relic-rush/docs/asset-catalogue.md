@@ -147,6 +147,9 @@ The earlier excavation art is documented in
 
 ## Additional board elements
 
+These sprites support the reference-board previews. The campaign uses chains
+and blue plaques.
+
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
 [exact prompt](../../../engine/art/match3-elements/prompt.txt) contain both games'
 24-state families in one ImageGen call. The full-bleed tile faces are cropped,
@@ -291,7 +294,10 @@ Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:
 Largest-component isolation removes neighbouring sprite fragments before centring
 and resizing; it does not create new colours or states.
 
-## Specials and powerups
+## Diagnostic special pieces
+
+The shared engine’s special pieces appear on reference boards and in art
+previews. Live expeditions use straight matches and the three tool buttons.
 
 Source for every new sprite below: `art/board-states/source.png`, generated together
 in one built-in ImageGen call. The exact prompt is
@@ -339,62 +345,35 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | Authored name | State and meaning |
 | --- | --- |
 | `chain` | A silver chain holds the chip between two bolted hex edges. One hit unlocks the piece. |
-| `ice-2` | Translucent blue pane with high-contrast facets across the entire hex face. Two hits remain. |
-| `ice-1` | Translucent blue ice with a broken upper edge. One hit remains. |
+| `ice-2` | Diagnostic ice pane with two hits remaining. |
+| `ice-1` | Diagnostic ice pane with one hit remaining. |
 | `carpet-swatch`, `goal-carpet` | Shared mosaic art for the neutral atlas and source-level reviews. |
 | `oil-material`, `goal-oil` | Shared spreading-silt art for the neutral atlas and source-level reviews. The campaign overrides this slot with blue plaques and sets the fixed-cell rule. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The Frozen Stair (22) distinguishes the ice strengths by silhouette and stronger
-highlights on the full pane. Both states were drawn in one shared
-ImageGen atlas and are packed into `data/match3.png`. The
-[ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,
-registration and [portrait captures](screenshots/review/ice/README.md).
-Ice and chain are independent layers and a blocker hit removes a layer before
-collecting its piece. Selected/hint frames are under pieces, blockers over them.
+The campaign uses the same silver chain art on each board. One hit breaks
+the chain and keeps the piece in place. A later hit clears the piece and its
+blue plaque. Ice and carpet textures are recorded here for shared engine
+and source-board diagnostics.
 
 ### Story materials
 
-A blue plaque under a lock or cover shows that the piece guarding it must be cleared. The Explorer's Guide illustrates the two-hit salt cover. A match must include the
-held piece to damage a lock or cover. A power-up can hit it directly. Colour accents on
-the existing transient impact particles follow the material.
-
-| Frames | Meaning and use |
+| Frame | Meaning and use |
 | --- | --- |
-| `salt-crust-2`, `salt-crust-1` | Ivory mineral rim, intact for two hits and split open for one. Base cover from board 6. |
-| `barnacle-crust-2`, `barnacle-crust-1` | Barnacles and oyster shells, intact or one hit remaining. Tide room (10) and quay (24–26). |
-| `wall-rubble-2`, `wall-rubble-1` | Sandstone fragments, intact or one hit remaining. Cracked wall (15) and board 27. |
-| `creeper-vine-1`, `creeper-vine-1-mirror`, `creeper-vine-2` | Leafy strand in either diagonal, or two crossed strands. Boards 5, 12 and 13. |
-| `rope-lashing-1`, `rope-lashing-1-mirror`, `rope-lashing-2` | Braided strand in either diagonal, or two crossed strands. Boards 7, 9, 14–16 and 24–26. |
-| `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
-| `dig-sand`, `trench-earth`, `tide-silt` | Excavation surfaces kept in the dressing atlas for the art review. |
-| `well-mud` | Archived spreading-mud material from board 26, visible in the dressing art review. |
-| `drift-sand`, `swept-stone` | Archived sand objective surfaces, shown in the dressing art review. |
-| `sandstone-floor`, `blue-plaque` | Pale limestone for an ordinary or cleared cell; deep blue glazed ceramic for a remaining target. The Explorer’s Guide uses the same blue hex. |
+| `sandstone-floor` | Pale limestone for ordinary and cleared cells. |
+| `blue-plaque` | Deep blue glazed ceramic on cells required for a win. The Explorer’s Guide uses the same face. |
 
-Both current faces share the [resource atlas](../art/board-refresh/source.png).
-The manifest records their two 360 px square crops. The packer resizes them to
-128 px and applies the exact canonical flat-top alpha, keeping the painted bevel
-inside the face at the live board radius. Match on a blue cell to expose the
-pale face. The two [original swatches](../art/board-dressing/plaques.png) are
-retained for the [historical review](screenshots/review/blue-plaques/README.md).
+Both faces share the [resource atlas](../art/board-refresh/source.png).
+The [manifest](../art/board-states/manifest.json) records their two 360 px square
+crops. The packer resizes to 128 px and applies the exact canonical flat-top
+alpha. Run `python3 games/relic-rush/tools/prepare_board_dressing.py` to repack
+`data/board-dressing.png`. See the [campaign review](review/chains-only/README.md).
 
-Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the
-[open covers](../art/board-dressing/open-covers.png), [lock states](../art/board-dressing/locks.png)
-and [surfaces](../art/board-dressing/floors.png) in family atlases. The
-[manifest](../art/board-states/manifest.json) records the original prompts, source crops and
-registration. The cover sprites retain their painted openings within the canonical mask.
-The locks use uniform crop and placement, with preserved alpha. Floor paint fills the exact
-128 px flat-top mask. Run `python3 games/relic-rush/tools/prepare_board_dressing.py` to
-repack `data/board-dressing.png`. See the [board and state review](screenshots/review/board-dressing/README.md).
-
-The excavation layer (`sand`) and the sand and ice rims (`sand-edge`,
-`ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels have no
-excavation, and no screen drew the rims. Their runtime files and frames left
-the atlas; the earlier [frost-edge review](screenshots/review/frost-edges/after-480x900.jpg)
-shows them.
+The earlier [cover and terrain sources](../art/board-dressing/) and
+[historical review](screenshots/review/board-dressing/README.md) document the
+archived salt, rubble, vine, rope, cable and excavation artwork.
 
 Hint opacity pulses; reduced motion uses a steady frame. There are no hover/pressed
 states for individual pieces: a touch selects a piece or initiates a swap.
@@ -408,7 +387,7 @@ cover a zero-charge ring at both phone sizes.
 
 Each tool starts with two charges per level, costs no move, and is used by selecting
 it then tapping an active cell. Pickaxe hits one cell; dynamite hits its cell and
-six neighbours; sunburst attacks all three axes through its target.
+six neighbours. Sunburst hits every piece of the tapped kind.
 
 All fifteen buttons are separately painted in the same atlas, including their
 backgrounds. The renderer never desaturates, tints or synthesizes a disabled state.

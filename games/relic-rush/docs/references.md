@@ -26,10 +26,12 @@ Pearl's Peril and June's Journey are the primary references for the island and b
 Paths on our island are painted scenery. There is no road-connectivity requirement or traffic simulation. Buildings use player-selected world positions. Placement previews can be dragged, confirmed or cancelled; existing buildings can be moved. Panning is independent of placement. Region state and building positions are saved, with migration of previous saves.
 
 ## Match-3 mechanics
-King's official special-piece guide: https://candycrush.zendesk.com/hc/en-us/articles/211939685-Creating-and-combining-Special-Candies
-King's booster guide: https://candycrush.zendesk.com/hc/en-us/articles/211320729-What-types-of-Boosters-are-available
 
-Implemented interpretations: four in a line → line clear; five in a line → color clear; intersecting T/L → seven-cell hex bomb; special-special combos; chains; excavated sand; ice (including double layers); adjacent fire melting ice. Limited tools give targeted hit, 3×3 blast and cross clear. No lives, purchases, timers or social backend.
+Relic Rush uses Cradle of Rome’s straight matches, fixed target cells, chains
+and three tool effects. Pickaxe is the Hammer, Dynamite is the Bomb over
+neighboring hexes, and Sunburst is the Star that hits one kind across the
+board. See the [original game page](https://store.steampowered.com/app/38170/)
+and the [published walkthrough of the original game](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/).
 
 ## Free asset shortlist
 - Kenney Puzzle Pack 2: CC0, useful coins, particles and generic UI tiles: https://kenney.nl/assets/puzzle-pack-2

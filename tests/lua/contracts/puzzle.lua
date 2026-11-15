@@ -1,6 +1,7 @@
 -- Shared engine puzzle contract. Accept a rules instance configured by the caller.
 return function(R, options)
     local H=require('support')
+    local engine=require('match3')
     local t=H.suite(options.name..' board matrix')
     local goal_kind=options.goal_kind or R.RELIC_IDOL
     local wood_kind=options.wood_kind or R.RELIC_LEAF
@@ -31,6 +32,7 @@ return function(R, options)
                         R.game_matches(g,m,pick)
                         t:check(m.hits==(length>=R.MATCH_MIN and length or 0),'exact match threshold')
                         local special=length>=R.MATCH_MIN+2 and R.PRISM or length==R.MATCH_MIN+1 and dir%3+1 or nil
+                        if R.flags & engine.NO_SPECIALS ~= 0 then special=nil end
                         t:check(m.make[pick]==special,'correct special and preferred cell')
                         for i=0,N-1 do
                             local expected=false
@@ -58,7 +60,7 @@ return function(R, options)
                 if rand(6)==0 then g.tiles[i].kind=-1 end
             end
             local seen,expected={},{}
-            if R.flags & require('match3').LINE_MATCHES ~= 0 then
+            if R.flags & engine.LINE_MATCHES ~= 0 then
                 -- Independent oracle: sort same-axis cells by coordinates,
                 -- then find consecutive equal-colour spans, stopping at holes.
                 for axis=0,2 do
@@ -105,7 +107,7 @@ return function(R, options)
                 end
             end
             end
-            if R.flags & require('match3').LINE_MATCHES~=0 and R.MATCH_MIN==3 then
+            if R.flags & engine.LINE_MATCHES~=0 and R.flags & engine.NO_RHOMBI==0 and R.MATCH_MIN==3 then
                 -- Independent coordinate oracle for the three axial rhombi.
                 for q=-R.HEX_RADIUS,R.HEX_RADIUS do for r=-R.HEX_RADIUS,R.HEX_RADIUS do
                     for _,d in ipairs{{1,0,0,1},{0,1,-1,1},{-1,1,-1,0}} do
@@ -132,18 +134,27 @@ return function(R, options)
         end)
     end
 
-    -- Tools have exact spatial masks at corners, edges and the centre, including holes.
+    -- Check each tool's targets at corners, edges and the centre, including holes.
     for cell=0,N-1 do
         for tool=0,2 do
             for _,holes in ipairs({false,true}) do
                 t:case(('tool=%d cell=%d holes=%s'):format(tool,cell,tostring(holes)),function()
                     local g,m=blank(),R.new_match()
+                    local color_tool=tool==2 and R.flags & engine.COLOR_TOOL~=0
+                    if color_tool then
+                        t:check(not R.game_tool(g,tool,cell,m) and g.tools[3]==2,'empty cell does not spend a charge')
+                        for i=0,N-1 do g.tiles[i]=R.tile(i%R.COLORS) end
+                    end
                     if holes then for i=0,N-1 do if i~=cell and i%4==0 then g.active[i]=false end end end
                     t:check(R.game_tool(g,tool,cell,m),'charged tool accepted')
                     local count=0
                     for i=0,N-1 do
-                        local hit=g.active[i] and (tool==0 and i==cell or tool==1 and distance(i,cell)<=1
-                            or tool==2 and (same_axis(i,cell,0) or same_axis(i,cell,1) or same_axis(i,cell,2)))
+                        local target
+                        if tool==0 then target=i==cell
+                        elseif tool==1 then target=distance(i,cell)<=1
+                        elseif color_tool then target=i%R.COLORS==cell%R.COLORS
+                        else target=same_axis(i,cell,0) or same_axis(i,cell,1) or same_axis(i,cell,2) end
+                        local hit=g.active[i] and target
                         t:check((not not m.mask[i])==(not not hit),'tool exact cell mask '..i)
                         if hit then count=count+1 end
                     end

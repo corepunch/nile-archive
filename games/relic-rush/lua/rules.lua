@@ -3,7 +3,9 @@ local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
 local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
-local M = match3.new{flags=match3.LINE_MATCHES, radius=reference and reference.radius or 4, colors=campaign.colors, match_min=3,
+local flags = match3.LINE_MATCHES
+if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI | match3.COLOR_TOOL end
+local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=campaign.colors, match_min=3,
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 local start = M.game_start

@@ -1,6 +1,6 @@
 -- Campaign content only; all match mechanics live in engine/match3.lua.
-local function level(name, moves, chains, ice)
-    return {name=name, lesson="Clear every blue plaque.", moves=moves, score=0, relics=0, chains=chains, ice=ice}
+local function level(name, moves, chains)
+    return {name=name, lesson="Clear every blue plaque.", moves=moves, score=0, relics=0, chains=chains, ice=0}
 end
 
 -- Masks are ordered by axial q, then r, exactly as the engine enumerates cells.
@@ -54,254 +54,217 @@ local compact_mask = "1111011111011111101111111001111110001111100011110000000000
 
 local levels = {
     (function()
-        local l = level("First Light", 24, 0, 0)
+        local l = level("First Light", 24, 0)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 0, 0, 1)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Lamp Lens", 29, 0, 0)
+        local l = level("The Lamp Lens", 29, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Relay Cable", 32, 0, 0)
+        local l = level("The Relay Cable", 32, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Under the Pump", 35, 4, 0)
+        local l = level("Under the Pump", 35, 4)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, 1)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Quay Marker", 35, 4, 0)
+        local l = level("The Quay Marker", 35, 4)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Shore Marker", 37, 0, 5)
+        local l = level("The Shore Marker", 37, 0)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 1, -1, 0)
-        l.ice_layers = 1
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Tool Roll", 40, 3, 4)
+        local l = level("The Tool Roll", 40, 3)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 0, 1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Broken Cable", 40, 4, 6)
+        local l = level("The Broken Cable", 40, 4)
         l.mask = compact_mask
         l.terrain = seam(0, 1, -1, -1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Supply Crate", 43, 5, 6)
+        local l = level("The Supply Crate", 43, 5)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Shutter Gear", 46, 6, 6)
+        local l = level("The Shutter Gear", 46, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, -1)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Long Terrace", 33, 0, 0)
+        local l = level("The Long Terrace", 33, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 1, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Twelve Crates", 36, 5, 0)
+        local l = level("Twelve Crates", 36, 5)
         l.mask = lanes_mask
         l.terrain = seam(1, 1, -1, -1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Names in the Stone", 37, 6, 0)
+        local l = level("Names in the Stone", 37, 6)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 0, 0, 1)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Static", 38, 7, 0)
+        local l = level("Static", 38, 7)
         l.mask = chambers_mask
         l.terrain = seam(0, 1, 1, -1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Frost Line", 39, 4, 6)
+        local l = level("The Cracked Wall", 39, 4)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 0, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Supper for Twelve", 40, 4, 7)
+        local l = level("Supper for Twelve", 40, 4)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, -1)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Torn Log", 42, 5, 7)
+        local l = level("The Torn Log", 42, 5)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, -1, 1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("Lantern Steps", 40, 2, 4)
+        local l = level("Lantern Steps", 40, 2)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 1, -1, 0)
-        l.ice_layers = 1
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("Under the Vines", 45, 4, 6)
+        local l = level("Under the Vines", 45, 4)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, 1, 0, 1)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Archivist's Key", 46, 5, 7)
+        local l = level("The Archivist's Key", 46, 5)
         l.mask = lanes_mask
         l.terrain = central_seam(0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("Tomas's Trail", 35, 0, 0)
+        local l = level("Tomas's Trail", 35, 0)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, -1, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Frozen Stair", 40, 2, 8)
+        local l = level("The Alternate Landing", 40, 2)
         l.mask = lanes_mask
         l.terrain = seam(1, 0, -1, 0, 1)
-        l.ice_layers = 2
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Star Road", 40, 3, 4)
+        local l = level("The Star Road", 40, 3)
         l.mask = lanes_mask
         l.terrain = seam(0, 1, 1, 1, 0)
-        l.ice_layers = 1
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Noon Shadow", 41, 4, 5)
+        local l = level("Noon Shadow", 41, 4)
         l.mask = bowl_mask
         l.terrain = central_seam(1)
-        l.ice_layers = 2
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("Smoke on the Water", 38, 6, 6)
+        local l = level("Smoke on the Water", 38, 6)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 0, 0, -1)
-        l.ice_layers = 2
         l.background = 1
         return l
     end)(),
     (function()
-        local l = level("The Jade Deep", 43, 4, 7)
+        local l = level("The Jade Deep", 43, 4)
         l.mask = lanes_mask
         l.terrain = central_seam(-1)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("Six Sun Gates", 45, 7, 8)
+        local l = level("Six Sun Gates", 45, 7)
         l.mask = lanes_mask
         l.terrain = seam(1, 1, 0, 1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Last Terrace", 42, 2, 4)
+        local l = level("The Last Terrace", 42, 2)
         l.mask = bowl_mask
         l.terrain = seam(1, 0, 1, 0, -1)
-        l.ice_layers = 1
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Silent Temple", 47, 8, 10)
+        local l = level("The Silent Temple", 47, 8)
         l.mask = lanes_mask
         l.terrain = seam(0, 1, 0, 1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
     (function()
-        local l = level("The Warning Returns", 49, 8, 10)
+        local l = level("The Warning Returns", 49, 8)
         l.mask = bowl_mask
         l.terrain = seam(1, 1, 0, -1, 0)
-        l.ice_layers = 2
         l.background = 2
         return l
     end)(),
 }
 
-
--- Teach each new problem alone, then combine it with a familiar one.
-levels[3].stones = {{cell=cell(2,0)}}
-levels[7].stones = {{cell=cell(2,0)}}
-levels[15].stones = {{cell=cell(0,0)}}
-levels[22].stones = {{cell=cell(2,0)}}
-levels[29].stones = {{cell=cell(2,0)}}
 
 -- The first clear hands recovered quest objects to the story.
 local quest_objects = {
@@ -336,7 +299,7 @@ levels[13].omit_kind = 5
 levels[3].signal = "cliff"
 levels[30].signal = "landing"
 levels[30].signal_cell = cell(1,2)
--- Clear the marked cells directly. A lock or cover on a plaque protects it.
+-- Clear the marked cells directly. A chain on a plaque protects it.
 -- Each patch names the part of the site the crew needs to uncover.
 local plaques = {
     [1] = {cell(-1,0), cell(-1,1), cell(0,-1), cell(0,0), cell(0,1), cell(1,-1), cell(1,0)},
@@ -402,24 +365,13 @@ local plaques = {
         cell(2,-1), cell(2,0), cell(2,1), cell(2,2)},
 }
 
--- Story materials are presentation only. The cover rules still use ice HP,
--- and locks, covers and stones still obstruct the cells behind them.
-local locks = {
-    [5]="creeper-vine", [7]="rope-lashing", [8]="cable-snarl", [9]="rope-lashing",
-    [12]="creeper-vine", [13]="creeper-vine", [14]="rope-lashing", [15]="rope-lashing", [16]="rope-lashing",
-    [22]="cable-snarl", [23]="cable-snarl", [24]="rope-lashing", [25]="rope-lashing", [26]="rope-lashing",
-}
-local covers = {
-    [10]="barnacle-crust", [15]="wall-rubble", [22]="ice",
-    [24]="barnacle-crust", [25]="barnacle-crust", [26]="barnacle-crust", [27]="wall-rubble",
-}
+local dress = {floor={normal="sandstone-floor", covered="blue-plaque"}}
 for i, l in ipairs(levels) do
     local cells = plaques[i]
     assert(cells and #cells > 0, "expedition " .. i .. " needs an authored plaque patch")
     if not l.story_piece then l.omit_kind = 5 end
     l.oil, l.oil_still = cells, true
-    l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
-        floor={normal="sandstone-floor", covered="blue-plaque"}}
+    l.dress = dress
     l.goals = {"oil"}
 end
 

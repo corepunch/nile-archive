@@ -186,41 +186,31 @@ R.dialogs[R.OV_AWARD] = award_screen
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of three axes.",
-     icon={front="resource-coin",tiles={}}},
-    {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match on the plaque or hit it with a tool. Locks and covers absorb hits first.",
-     icon={front="blue-plaque",tiles={}}},
+    {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of the three axes.",
+     icon={front="resource-coin"}},
+    {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match pieces on a plaque or hit it with a tool.",
+     icon={front="blue-plaque"}},
+    {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is blue, clear it with another hit.",
+     icon={floor="blue-plaque", piece="resource-coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Coins earn Gold, fruit and water earn Provisions, and timber and stone earn Supplies. Win to bank them.",
-     icon={front="resource-timber",tiles={}}},
+     icon={front="resource-timber"}},
     {id="water", title="Spring Well", description=economy.unlock_text(economy.unlocks.water) .. " Find them on the marker expeditions.",
-     icon={front="resource-water",tiles={}}},
+     icon={front="resource-water"}},
     {id="cut-blocks", title="Artisan Workshop", description=economy.unlock_text(economy.unlocks["cut-blocks"]) .. " Find them on the supply run.",
-     icon={front="resource-cut-blocks",tiles={}}},
-    {id="lightning", title="Line of 4: rocket", description="A multicolor rocket clears its axis. Tap it or swap it to launch.",
-     icon={tiles={{kind=1,special=rules.ROW}}}},
-    {id="specials", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its color; combine with a power-up to multiply it.",
-     icon={tiles={{kind=2,special=rules.PRISM}}}},
-    {id="plane", title="Four-cell rhombus: plane", description="Clears neighboring cells, then flies to a target. Two planes launch three flights.",
-     icon={tiles={{kind=0,special=rules.PLANE}}}},
-    {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells. Combine power-ups for larger effects.",
-     icon={tiles={{kind=0,special=rules.BOMB}}}},
-    {id="blockers", title="Chains and lashings", description="Match the held piece to break its lock.",
-     icon={front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Salt crust and other covers", description="Match the held piece or hit it with a power-up. One layer per hit.",
-     icon={cover="salt-crust",tiles={{kind=4,special=rules.NORMAL}}}},
-    {id="stones", title="Carved stone", description="Match beside a stone or hit it with a power-up to break it.",
-     icon={front="stone-1",tiles={}}},
+     icon={front="resource-cut-blocks"}},
+    {id="pickaxe", title="Pickaxe", description="Hits one cell.",
+     icon={tool="pickaxe"}},
+    {id="dynamite", title="Dynamite", description="Hits a cell and its neighbors.",
+     icon={tool="dynamite"}},
+    {id="sunburst", title="Sunburst", description="Hits every piece that matches the one you tap.",
+     icon={tool="sunburst"}},
 }
 local function guide_icon(box, icon)
-    local at=box:center()
-    local layer=rect.centered(at,size2(48,48))
-    if icon.front=="chain" then R.draw_ground("face",pp(at),layer.w * P.scale * .5,0,P.alpha) end
-    for _,tile in ipairs(icon.tiles) do
-        R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
-    end
-    if icon.cover then
-        R.draw_cover(icon.cover,2,pp(at),P.scale,P.alpha)
-    elseif icon.front then picture(R.board_art[icon.front],layer,255) end
+    local layer = rect.centered(box:center(), size2.splat(48))
+    if icon.floor then picture(R.board_art[icon.floor], layer, 255) end
+    if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
+    if icon.front then picture(R.board_art[icon.front], layer, 255) end
+    if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end
 end
 local guide_form = match3.guide_form({
     title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",

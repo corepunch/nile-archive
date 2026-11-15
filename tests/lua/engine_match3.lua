@@ -7,7 +7,7 @@ local function config(flags)
         levels={{name='Test',moves=20,score=1000,relics=3,chains=0,ice=0}},
         kind_flags={[0]=E.GOAL,[2]=E.WOOD,[4]=E.STONE}}
 end
-for _,bad in ipairs({-1,128,1.5,'1'}) do
+for _,bad in ipairs({-1,512,1.5,'1'}) do
     t:case('invalid flags '..tostring(bad),function()
         t:check(not pcall(E.new,config(bad)),'invalid flag mask rejected')
     end)

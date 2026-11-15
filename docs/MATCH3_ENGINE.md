@@ -54,6 +54,8 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
 | `LINE_MATCHES` | Default: straight runs along three hex axes, plus four-cell rhombi at minimum three |
+| `NO_RHOMBI` | With `LINE_MATCHES`, accept only straight runs. Hints and refill use the same shape rule. |
+| `COLOR_TOOL` | Sunburst hits all pieces of the tapped kind. A chain absorbs a hit on its piece. |
 
 | Kind flag | Meaning |
 | --- | --- |

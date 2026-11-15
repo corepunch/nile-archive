@@ -2,6 +2,7 @@
 -- integer behavior flags; graphics never implement matching, gravity or input.
 local E = {
     NO_TRICKLE=1, NO_SPECIALS=2, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64,
+    NO_RHOMBI=128, COLOR_TOOL=256,
     GOAL=1, WOOD=4, STONE=8, -- per-kind behavior bits
 }
 
@@ -452,9 +453,10 @@ end
 function E.new(config)
     config = config or {}
     local flags, kind_flags = config.flags or E.LINE_MATCHES, config.kind_flags or {}
-    assert(math.type(flags) == "integer" and flags >= 0 and flags < 128, "invalid match3 flags")
+    assert(math.type(flags) == "integer" and flags >= 0 and flags < 512, "invalid match3 flags")
     assert(not config.radius or math.type(config.radius) == "integer" and config.radius >= 1 and config.radius <= 16, "invalid hex radius")
     local M = {flags=flags}
+    local rhombus_matches = flags & E.NO_RHOMBI == 0
     -- Axial hex grid; neighbours are
     -- numbered 0..5 and opposite directions differ by 3.
     M.HEX_RADIUS = config.radius or 4
@@ -676,7 +678,7 @@ function E.new(config)
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
         if flags & E.LINE_MATCHES ~= 0 then
-            shapes.matches(M,g,m,preferred,alternate,MATCH_MIN,flags & E.NO_SPECIALS ~= 0,
+            shapes.matches(M,g,m,preferred,alternate,MATCH_MIN,flags & E.NO_SPECIALS ~= 0,rhombus_matches,
                 function(board,i) return not locked(board,i) end,equal)
             return
         end
@@ -1011,7 +1013,7 @@ function E.new(config)
     local function shape_at(g,i)
         if not equal(g,i,i) then return false end
         for axis=0,2 do if run_length(g,i,axis)>=MATCH_MIN then return true end end
-        if MATCH_MIN==3 then for _,cells in ipairs(rhombi[i]) do
+        if rhombus_matches and MATCH_MIN==3 then for _,cells in ipairs(rhombi[i]) do
             if equal(g,i,cells[1]) and equal(g,i,cells[2]) and equal(g,i,cells[3]) and equal(g,i,cells[4]) then return true end
         end end
         return false
@@ -1060,13 +1062,13 @@ function E.new(config)
                         local a,b=hex_neighbor(i,axis),hex_neighbor(i,axis+3)
                         forbid(a,b);forbid(a,hex_neighbor(a,axis));forbid(b,hex_neighbor(b,axis+3))
                     end
-                    for _,shape in ipairs(rhombi[i]) do
+                    if rhombus_matches then for _,shape in ipairs(rhombi[i]) do
                         local first,valid=nil,true
                         for _,cell in ipairs(shape) do if cell~=i then
                             if not first then first=cell elseif not equal(g,first,cell) then valid=false;break end
                         end end
                         if valid and first and equal(g,first,first) then forbidden[g.tiles[first].kind]=true end
-                    end
+                    end end
                     for _, k in ipairs(kinds) do if not forbidden[k] then n=n+1;choices[n]=k end end
                 else
                     for _, k in ipairs(kinds) do
@@ -1292,15 +1294,18 @@ function E.new(config)
         return false
     end
 
-    -- Tools: 0 pickaxe (one cell), 1 dynamite (radius 1), 2 sunburst (three axes).
+    -- Tools: 0 pickaxe (one cell), 1 dynamite (radius 1), 2 sunburst (axes or matching kind).
     function M.game_tool(g, tool, cell, m)
         if flags & E.NO_TOOLS ~= 0 or tool < 0 or tool > 2 or g.tools[tool + 1] <= 0 or g.won or g.lost or not cell_active(g, cell) then return false end
+        local color_tool = tool == 2 and flags & E.COLOR_TOOL ~= 0
+        if color_tool and not equal(g, cell, cell) then return false end
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
         g.tools[tool + 1] = g.tools[tool + 1] - 1
         g.combo = 0
         if tool == 0 then m.mask[cell], m.direct[cell] = true, true
         elseif tool == 1 then mark_area(g, m, cell, 1)
+        elseif color_tool then mark_color(g, m, g.tiles[cell].kind)
         else for z = 0, 2 do mark_line(g, m, cell, z) end end
         count_hits(m)
         return true

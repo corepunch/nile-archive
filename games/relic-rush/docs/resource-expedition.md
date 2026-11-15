@@ -80,9 +80,8 @@ extracted files.
 ## Board rules and palette
 
 A beige cell is open ground. Clear the piece on a blue cell once to expose
-the sandstone. A lock or cover takes the hit while it protects a piece on
-that cell. Locks, salt, rubble and ice are routes through the board. Their
-counts stay off the goal bar. A cell changes only when the move reaches it.
+the pale stone. A chained piece takes one hit to free and a later hit to clear
+the plaque beneath it. Each blue cell marks a target on the board.
 
 Every expedition marks the work site with blue plaques. Clearing all of
 them wins. The first clear can recover a story item shown in an ordinary
@@ -144,14 +143,10 @@ These are initial tuning values in Relic Rush units.
 | 26 | Jade fountain | 110 | — | 33 |
 | 29 | Temple of the sun | 120 | 30 | 36 |
 
-A piece earns its base amount each time it actually leaves its cell, including
-during cascades and when collected by a special. A hit that removes a lock or
-cover with the piece intact pays on the later removal. Specials earn from the
-pieces they clear. A piece converted into a special can earn once at
-conversion. Story pieces count toward their recovery. Their assembled item has
-a separate card. Keep the existing move bonus as a capped Gold reward and use
-the existing discovery-star gates for land. Show the three resource totals on
-the result card next to any story award and the next building's price.
+A piece earns its base amount when a match, cascade or tool clears it.
+Breaking a chain leaves its piece in place. A later hit clears the piece and
+earns its resources. The first clear awards the story item and Discovery Stars.
+The result card shows the three resource totals and the next building’s price.
 
 Record attempt earnings until a successful clear. Claim persists the first
 clear, resources, story progress and discovery stars together. A resumed result

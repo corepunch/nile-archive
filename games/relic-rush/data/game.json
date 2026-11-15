@@ -9,7 +9,7 @@
   "board": {
     "kudos": ["Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"],
     "tool_notes": ["Pickaxe: tap a relic to break it.", "Dynamite: tap a relic to blast around it.",
-                   "Sunburst: tap a relic to clear its three lines."]
+                   "Sunburst: tap a piece to hit all pieces of that kind."]
   },
   "notices": {
     "build_first": "Restore your earned wonder before the next discovery.",
