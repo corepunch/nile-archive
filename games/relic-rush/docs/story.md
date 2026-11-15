@@ -6,7 +6,7 @@
 
 ## What is broken
 
-The camp is abandoned, the well is fouled, old paths are overgrown, and an unattended tide relay sends a false all-clear. Its lamp is useful to boats but can draw them towards a damaged quay. The existing sand, vines, chains and ice are obstacles, not evidence by themselves. Restorations give the team places to work and meet.
+The camp is abandoned, the well is fouled, old paths are overgrown, and an unattended tide relay sends a false all-clear. Its lamp is useful to boats but can draw them towards a damaged quay. Each board's obstacles are dressed as the problem the crew is solving there (see [Board dressing](#board-dressing-obstacles-as-the-scene)). Restorations give the team places to work and meet.
 
 ## Truth timeline
 
@@ -70,6 +70,76 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 ## Delivery and choices
 
 On boards 1–7, 9 and 10 the named quest object is buried on the board itself: uncovering it is a goal, one crew member reacts when half of it shows, and the first clear holds the whole object on the emptied board. Board 8 uncovers its story picture instead. The characters then talk about the find in the first-clear exchange. Each first clear plays a short exchange before the reward card. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+
+## Board dressing: obstacles as the scene
+
+**Status:** plan only. No skin art, data or lines are implemented; the lines below are provisional and have not had a cold read.
+
+A board is not a pause between scenes. It is the crew doing the task the last line named: cutting creepers off the path, washing mud off the chart, prising barnacles from the shutter. The rules stay as they are. Each rule family can wear several looks, and a board picks the look its task calls for.
+
+### Rule families and the readability contract
+
+| Family | Rule (unchanged) | Base look, taught first | Story looks |
+| --- | --- | --- | --- |
+| **Lock** | Holds a piece in place; one hit per strand (`chain`, `chain-2`) | Iron chain | Creeper vine, rope lashing, cable snarl, claim seal |
+| **Cover** | Encases a piece; one hit per layer (`ice-1`, `ice-2`) | Ice | Barnacle crust, wall rubble |
+| **Floor** | Lies under the pieces; a match on it clears the cell (find cover, mosaic) | Silt | Dig sand, well mud, tide-room silt, mosaic |
+
+Each family keeps one visual language in every look, so a player who knows the rule recognises it at once:
+
+- **Lock** looks span the hex between two bolted edges like the chain does, and the two-hit state crosses two strands.
+- **Cover** looks fill the whole face, and the one-hit state shows the same broken upper edge as `ice-1`.
+- **Floor** looks sit flat under the pieces with countable cell joints.
+- **HUD and lessons.** The goal icon and counters use the board's look, and the lesson text names it.
+
+Each look is one authored atlas with every state (per the repository rules), catalogued in `docs/asset-catalogue.md` before it ships.
+
+**Teach on the base look, then dress it.** A rule first appears in its base look, with the lesson text. The board that brings in a new look has one crew line tying it to the rule the player already knows ("same as the pump chains"). After that the look needs no explanation.
+
+### Flow around a board
+
+1. **The scene line names the job.** The last line before Play names what is in the way ("The pump's choked. Get the chain off and wash the chart clean").
+2. **The board shows that job.** The board's skin and lesson text match the line.
+3. **A mid-board line marks progress.** This uses the existing half-revealed bark, or a line when the last piece of a dressed obstacle goes.
+4. **The cleared board is the next scene's picture.** The first-clear exchange plays over the emptied board, as recovered finds already do.
+5. **Optional: the backdrop changes.** For example, board 4's well water runs clear as the mud goes. This comes last and only where it is cheap.
+
+### Chapter 1 boards
+
+Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
+
+| Board | Task | Obstacles | Lock look | Cover look | Floor look | New-look line (provisional) |
+| ---: | --- | --- | --- | --- | --- | --- |
+| 1 | Uncover camp timber | — | — | — | Dig sand | — |
+| 2 | Recover the lamp lens | — | — | — | Dig sand | — |
+| 3 | Find the relay cable | stone | — | — | Dig sand | — |
+| 4 | Recover the tide chart | 4 / 0 | Iron chain (base) | — | **Well mud** | *Tomas: The pump chain has rusted fast. Break it, then wash the mud off that chart.* |
+| 5 | Uncover the quay marker | 4 / 0 | **Creeper vine** | — | Mosaic | *Mara: Creepers over the old path. Same as the pump chain: one match each.* |
+| 6 | Uncover the shore marker | 0 / 5 | — | Ice (base) | Dig sand | — |
+| 7 | Recover the tool roll | 3 / 4 (2) | **Rope lashing** | Ice | Dig sand | *Mara: Someone strapped this down tight. Cut the ropes.* |
+| 8 | Recover the broken cable | 4 / 6 (2) | **Cable snarl** | Ice | Mosaic (story picture) | *Elena: The cable is wound round everything. Free each loop.* |
+| 9 | Retrieve the supply crate | 5 / 6 (2) | Rope lashing | Ice | Dig sand | — |
+| 10 | Recover the shutter crank | 6 / 6 (2) | Iron chain | **Barnacle crust** | Tide-room silt | *Tomas: The sea has been in here. Knock the crust off like ice.* |
+
+### Chapters 2–3 by quest
+
+These chapters are provisional, so their dressing is set per quest and fixed when their dialogue is written.
+
+| Quest (boards) | Lock look | Cover look | Floor look | Note |
+| --- | --- | --- | --- | --- |
+| Find the sender (11–13) | Creeper vine | — | Dig sand | Following old paths. |
+| Make a way home (14–16) | Rope lashing | **Wall rubble** (15) | — | Board 15 checks the cracked wall; rubble is its new look. |
+| Keep the record (17–20) | Iron chain | Ice | Silt; spreading river silt on 20 | The record boxes are chained shut. |
+| Protect the warning (21–23) | Cable snarl | Ice (22, *The Frozen Stair*) | — | Relay work again. |
+| Repair the quay (24–26) | Rope lashing | Barnacle crust | Well mud (26, *restore water access*) | The quay and the water. |
+| Let the light speak (27–30) | **Claim seal** (28) | Wall rubble (27) | Mosaic | On 28 Kessler's wax seals lock the records, and breaking them is confronting the claim. Board 30 mixes every look the crew has cleared: the whole campaign on one board. |
+
+### Art order and open questions
+
+- **First batch** (covers Chapter 1): well mud (floor), creeper vine (lock), rope lashing (lock), cable snarl (lock) and barnacle crust (cover). Dig sand is already requested in `art/quest-objects/finds-prompts.md`.
+- **Later:** wall rubble, tide-room silt, claim seal.
+- **Data:** a per-board `dress = {lock=…, cover=…, floor=…}` in `lua/campaign.lua`, which the layer drawing in `lua/art.lua` resolves to the look's atlas. Missing looks fall back to the base look and are listed as gaps in the catalogue.
+- **Open question:** ice on a tropical shore (board 6) is the one look that fights the setting. Either teach covers as *salt crust* and keep ice for the frozen boards (15, 22), or accept ice as the cold-spring look throughout. The recommendation is salt crust. That moves one cover look into the first batch.
 
 ## Chapter 1: A Light Below
 
@@ -356,6 +426,8 @@ The region greetings, building tap lines, recap and finale describe the relay an
 An independent cold read identified the need to introduce Tomas, show the flooded gap, and give the player a choice with a concrete consequence. Both replies now send the same signal through a different character. Chapter 2 begins with the reply from across the water. Ines appears through her actions and records in the provisional later chapters.
 
 ## Changelog
+
+- 2026-11-15: Planned board dressing: each obstacle rule wears story looks (vines, rope, cable, mud, barnacles, rubble, claim seals) chosen per board, taught on the base look first and tied in by one crew line. Plan only; lines are provisional and have not had a cold read.
 
 - 2026-11-15: Quest objects are buried on boards 1–7, 9 and 10 and recovered by play. Added one provisional mid-board line per board (Mara 1, 2, 3, 6, 7, 9; Elena 4, 5; Tomas 10); each only names what is coming into view and adds no plot. They have not had a cold read.
 - 2026-11-14: Prototype story mosaic on board 8: the restored floor uncovers a picture of the relay, with one mid-board line from Elena. Placeholder art; the line is provisional.
