@@ -83,6 +83,10 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
+Boards 1 to 7, 9 and 10 bury their quest object under seven cells of still silt. Matching on
+the silt uncovers it; the goal shows the object and the cells left, and board 8 uncovers its
+story mosaic instead (`--level 3 --reveal .5` previews a half-uncovered find).
+
 A first clear of boards 1 to 10 recovers a quest object. It shows big on its own **Item
 recovered!** card, styled like the results card, before the story exchange about it and the
 results (`--victory clue --dialog award` previews it).

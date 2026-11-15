@@ -150,7 +150,9 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         end
         if (g.carpet_total or 0)>0 then entries[#entries+1]={id="carpet",icon="goal-carpet",remaining=g.carpet_total-g.carpeted} end
         if g.oil_left>0 or l.oil and #l.oil>0 then
-            entries[#entries+1]={id="oil",icon="goal-oil",remaining=g.oil_left}
+            -- A buried find (reveal.object) is its own goal icon.
+            local find = l.reveal and l.reveal.object and l.reveal.icon
+            entries[#entries+1]={id="oil",icon=find or "goal-oil",remaining=g.oil_left}
         end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}
@@ -1191,7 +1193,8 @@ function E.new(config)
             end
             for i = 0, CELLS - 1 do if cell_active(g, i) then g.carpet_total = g.carpet_total + 1 end end
         end
-        -- Oil (Homescapes' CELL_OIL): one layer under a piece.
+        -- Oil (Homescapes' CELL_OIL): one layer under a piece. `oil_still`
+        -- keeps it from spreading: the cover over a buried find.
         for _, cell in ipairs(l.oil or {}) do
             valid_cell(cell)
             assert(cell_active(g, cell), "oil outside the board")
@@ -1208,6 +1211,7 @@ function E.new(config)
     -- GrowsByInactivity): one random neighbouring cell, under its piece.
     local function grow_oil(g)
         if not g.oil or (g.oil_left or 0) == 0 or g.oil_cleared then return false end
+        if M.levels[g.level + 1].oil_still then return false end   -- the cover over a buried find stays put
         local seen, options = {}, {}
         for i = 0, CELLS - 1 do
             if g.oil[i] > 0 then

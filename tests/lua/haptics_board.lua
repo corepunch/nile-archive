@@ -4,6 +4,7 @@ local H = require('support')
 local function setup()
     testing.reset()
     local g = H.board(rules)
+    g.level = H.plain_level(rules)
     for i=0,rules.CELLS-1 do g.tiles[i] = rules.tile(i % rules.COLORS) end
     R.reset_board(g)
     R.overlay, R.on_island, R.art_review = R.OV_NONE, false, false

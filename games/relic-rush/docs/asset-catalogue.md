@@ -45,7 +45,7 @@ complete reveals at 480×900 and 390×844.
 ## Chapter 1 quest objects
 
 The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
-contain eight recognizable objects. A first clear shows its object at 210 px, centred on an
+contain eight recognizable objects. A first clear shows its object (the board-size file) at 210 px, centred on an
 **Item recovered!** card (the results card's panel, jade header and glow; the name and a
 CONTINUE button below), before the story exchange in which the characters find it and before
 the results. Reviewed capture: `build/relic-rush --victory clue --dialog award`.
@@ -63,7 +63,20 @@ They are independent of the selected match piece pack.
 | `crank` | Shutter crank | 10, test the tide-room signal |
 
 Run `python3 tools/relic_quest_art.py` from the repository root to register the source
-into `data/quest-objects.png`. The tool only crops, resizes and centers the original RGBA art.
+into `data/quest-objects.png` and, at board size, into `data/finds/<slot>.png` (the same crop fitted
+to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and centers the original RGBA art.
+
+**Buried on the board.** Boards 1-7, 9 and 10 bury their object under seven cells of still river
+silt (`oil-material`, the existing silt surface; `oil_still` stops it spreading). States: covered
+(silt over every cell), partial (each uncovered cell shows its part of `data/finds/<slot>.png`
+beneath the piece), recovered (first clear: pieces fade and the whole object holds on the board),
+goal (the 128 px slot beside the remaining cell count) and the **Item recovered!** card (the board
+file at 210 px). `lua/campaign.lua` (`bury`) lists each find's cells. Reviewed captures:
+[covered](review/buried-finds/board-1-covered.jpg), [partial at 480×900 and 390×844](review/buried-finds/board-3-half.jpg),
+[recovered and card](review/buried-finds/board-2-recovered.jpg); reproduce with
+`build/test/relic-rush "shot find-"`. Known limits: the eight paintings are compact props, so every
+find is the same round cluster and the cable does not run along the board; the cover reuses the river
+silt surface, not a dedicated sand or rubble painting.
 Each 128×128 slot passes the canonical hex check in strict object mode. The
 [historical review captures](review/quest-campaign/README.md) show the retired board presentation and its story handoff.
 

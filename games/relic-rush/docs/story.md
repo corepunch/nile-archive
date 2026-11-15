@@ -69,7 +69,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-On boards 1–10 the characters find the named quest object in the first-clear exchange after the match-3 goals are met. Each first clear plays a short exchange before the reward card. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+On boards 1–7, 9 and 10 the named quest object is buried on the board itself: uncovering it is a goal, one crew member reacts when half of it shows, and the first clear holds the whole object on the emptied board. Board 8 uncovers its story picture instead. The characters then talk about the find in the first-clear exchange. Each first clear plays a short exchange before the reward card. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Chapter 1: A Light Below
 
@@ -357,6 +357,7 @@ An independent cold read identified the need to introduce Tomas, show the floode
 
 ## Changelog
 
+- 2026-11-15: Quest objects are buried on boards 1–7, 9 and 10 and recovered by play. Added one provisional mid-board line per board (Mara 1, 2, 3, 6, 7, 9; Elena 4, 5; Tomas 10); each only names what is coming into view and adds no plot. They have not had a cold read.
 - 2026-11-14: Prototype story mosaic on board 8: the restored floor uncovers a picture of the relay, with one mid-board line from Elena. Placeholder art; the line is provisional.
 - 2026-11-14: Replaced the procedural picture with a continuous storybook painting. The existing scene explains the clues in the painting.
 - 2026-11-12: Replaced the prior campaign plan with A Light Below; mapped all 30 existing boards and ten milestones, wrote Chapter 1 and provisional continuity bridges. Added the playable quest tracker, confirmed upgrade points and a choice at the tide-room reveal.

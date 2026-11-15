@@ -168,6 +168,14 @@ do
     local grown = g.oil_grew
     check(grown and g.oil[grown]==1 and grown~=cell(0,1), 'it spreads into a new cell')
     check(C.game_copy(g).oil ~= g.oil, 'copy owns the oil layer')
+    -- The cover over a buried find is oil that stays put.
+    local S = rules{name='find',moves=20,score=0,relics=0,chains=0,ice=0,oil={cell(0,0),cell(0,1)},oil_still=true,goals={'oil'}}
+    local s = S.game_start(0, 7)
+    s.turn_pending,s.oil_cleared = true,false
+    check(not S.game_end_turn(s) and s.oil_left==2, 'a still cover never spreads')
+    s.oil_left = 0
+    S.game_check_end(s)
+    check(s.won, 'uncovering every cell of a find wins its board')
     g.oil_left = 0; g.turn_pending = false
     C.game_check_end(g)
     check(g.won, 'clearing the oil wins an oil-only level')

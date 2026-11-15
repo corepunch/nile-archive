@@ -112,7 +112,8 @@ R.dialogs[R.OV_RESULT] = result_screen
 -- story beat that talks about it (engine: R.award_for, R.OV_AWARD).
 function R.award_for(g)
     local object = rules.levels[g.level + 1].quest_object
-    return object and {image = R.board_art[object.key], name = object.name, level = g.level + 1}
+    local art = R.board_art or {}   -- window-free tests play the campaign without art
+    return object and {image = art["find-" .. object.key], name = object.name, level = g.level + 1}
 end
 
 local function award_screen()
@@ -173,6 +174,8 @@ local guide_entries = {
      icon={front="goal-carpet",tiles={}}},
     {id="oil", title="River silt", description="Match on the silt to clear it. If a move clears none, silt spreads to a neighbouring cell.",
      icon={front="goal-oil",tiles={}}},
+    {id="finds", title="Buried finds", description="Match on the silt over a find to uncover it. This silt does not spread.",
+     icon={front="lens",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

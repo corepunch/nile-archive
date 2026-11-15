@@ -604,6 +604,14 @@
     "data/expedition-hud/score.png",
     "data/expedition-hud/shop-built.png",
     "data/expedition-hud/shop-locked.png",
+    "data/finds/cable.png",
+    "data/finds/chart.png",
+    "data/finds/crank.png",
+    "data/finds/lens.png",
+    "data/finds/marker.png",
+    "data/finds/supplies.png",
+    "data/finds/timber.png",
+    "data/finds/tools.png",
     "data/fonts/LilitaOne-Regular.ttf",
     "data/fonts/lilitaone-OFL.txt",
     "data/game.json",
@@ -1120,7 +1128,10 @@
       "goal",
       "story handoff"
     ],
-    "transform": "One authored object sprite per slot. The same sprite appears in the goal and handoff."
+    "board_runtime": "data/finds/<slot>.png",
+    "board_cell": [320, 320],
+    "board": "Boards 1-7, 9 and 10 bury the object under still river silt (oil-material, oil_still); board 8 keeps its story mosaic. lua/campaign.lua lists each find's cells.",
+    "transform": "One authored object sprite per slot. The same sprite appears in the goal, on the board and in the handoff. The board file is the same crop, uniformly resized to fit 256 px inside a 320 px transparent canvas so every covering cell samples inside it; no recolouring or masking."
   },
   "homescapes": {
     "registration": "art/match3-atlas.json",

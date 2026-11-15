@@ -46,6 +46,14 @@ function M.board(rules)
     return g
 end
 
+-- The first campaign level with no story reveal or buried find: synthetic
+-- boards on it carry no floor goal that an empty floor would already meet.
+function M.plain_level(rules)
+    local level = 0
+    while rules.levels[level + 1].reveal do level = level + 1 end
+    return level
+end
+
 function M.wallet(def)
     local w = purse()
     for i=1,purse.MAX do w[i] = math.max(def.cost[i], def.needs[i]) + 10 end

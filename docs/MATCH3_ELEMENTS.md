@@ -29,6 +29,14 @@ carpet and oil have independent goal counters. A level's `goals` list names
 the goals it shows and needs; without one, victory requires every positive
 goal. A board with more than four goals uses two HUD rows.
 
+**Buried finds.** A level with `oil_still = true` keeps its oil from spreading: it is the cover over
+one buried object. `reveal = {picture=<art>, icon=<goal art>, floor="oil", object=true, bark=<line>}`
+draws that one image across the level's `oil` cells (each uncovered cell shows its part beneath the
+piece), uses `icon` for the `oil` goal, speaks `bark` once half the cells are clear, and on a first
+clear fades the pieces and holds the whole object before the result. The picture carries its own
+transparent margin so every covering cell samples inside it. Relic Rush boards 1-7, 9 and 10 use it
+for their quest objects.
+
 Earlier versions also had colour crates, hidden-object footprints under snow,
 spreading ribbon/vines, tunnels, oil cans and a thaw rule. None of them is in
 Homescapes' story levels, so they were removed from the engine.

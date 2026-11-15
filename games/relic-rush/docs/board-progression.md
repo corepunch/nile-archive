@@ -1,7 +1,11 @@
 # Relic Rush board progression
 
-The expedition uses relic, blocker, mosaic, river silt and delivery goals. After
-each first clear, the characters find the quest object in the story. Boards 18
+The expedition uses relic, blocker, mosaic, river silt and delivery goals. Boards
+1-7, 9 and 10 bury their quest object under still silt: uncovering all seven of
+its cells is a goal (shown with the object's own icon), a crew member speaks at
+the halfway point, and the first clear shows the whole object on the emptied
+board before its **Item recovered!** card. Board 8 recovers the broken cable
+through its story mosaic. Boards 18
 and 28 provide lighter intervals in the later chapters.
 
 Four recurring silhouettes give the player readable working areas: parallel
@@ -15,16 +19,16 @@ objectives move the emphasis within each family.
 
 | Level | Board | Family | Lesson and focus | Goals | Moves |
 | ---: | --- | --- | --- | --- | ---: |
-| 1 | First Light | Tapered bowl | Match 3 in a row. | relics | 24 |
-| 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. | relics | 29 |
-| 3 | The Buried Cable | Two chambers | Match beside a stone to break it. (stone) | blockers, relics | 32 |
-| 4 | Under the Pump | Twin lanes | Match to break chains. | blockers, relics | 35 |
-| 5 | The Quay Marker | Tapered bowl | Match on the mosaic to restore more tiles. (mosaic) | mosaic | 35 |
-| 6 | The Shore Marker | Two chambers | Match to break ice. | blockers, relics | 37 |
-| 7 | The Tool Roll | Two chambers | Break the carved stone. (stone) | blockers, relics | 40 |
+| 1 | First Light | Tapered bowl | Match on the silt to uncover the timber. | find | 24 |
+| 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. Uncover the lens. | find | 29 |
+| 3 | The Buried Cable | Two chambers | Break the stone. Uncover the cable. (stone) | blockers, find | 32 |
+| 4 | Under the Pump | Twin lanes | Break the chains. Uncover the chart. | blockers, find | 35 |
+| 5 | The Quay Marker | Tapered bowl | Restore the mosaic. Uncover the marker. (mosaic) | mosaic, find | 35 |
+| 6 | The Shore Marker | Two chambers | Break the ice. Uncover the marker. | blockers, find | 37 |
+| 7 | The Tool Roll | Two chambers | Break the carved stone. Uncover the tools. (stone) | blockers, find | 40 |
 | 8 | The Broken Cable | Compact court | Match 5 for a rainbow ball. (mosaic) | mosaic, relics | 40 |
-| 9 | The Supply Crate | Two chambers | Clear the chains and the ice. | blockers, relics | 43 |
-| 10 | The Shutter Crank | Twin lanes | Restore the mosaic through the centre. (mosaic) | mosaic, blockers | 46 |
+| 9 | The Supply Crate | Two chambers | Clear the chains and ice. Uncover the crate. | blockers, find | 43 |
+| 10 | The Shutter Crank | Twin lanes | Restore the mosaic. Uncover the crank. (mosaic) | mosaic, blockers, find | 46 |
 | 11 | The Long Terrace | Tapered bowl | Collect the relics. | relics | 33 |
 | 12 | Twelve Crates | Twin lanes | Free chained relics. | blockers, relics | 36 |
 | 13 | Names in the Stone | Twin lanes | Aim rockets along the chains. (mosaic) | mosaic, blockers | 37 |

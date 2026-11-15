@@ -1000,6 +1000,10 @@ function G.bind(R, over)
         local g = R.g
         g.score = math.max(g.score, rules.level_of(g).score)
         g.delivered, g.carpeted = g.delivery_total, g.carpet_total
+        if rules.level_of(g).oil_still then
+            for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
+            g.oil_left = 0
+        end
         g.won = true
         R.overlay = R.OV_RESULT
         return true

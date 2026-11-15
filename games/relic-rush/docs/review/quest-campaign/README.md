@@ -1,7 +1,7 @@
 # A Light Below — historical review
 
-These captures document the retired hidden-object board mechanic. Current boards use
-normal match-3 goals; the quest objects appear in the first-clear story.
+These captures document the retired one-to-two-cell hidden-object mechanic. Current boards bury
+the quest object across seven cells of still silt: see [buried finds](../buried-finds/).
 
 Chapter 1 boards win when the quest object is fully recovered. The goal and
 first-clear dialogue use the same object art. The island tracks confirmed

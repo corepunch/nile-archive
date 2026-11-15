@@ -92,7 +92,9 @@ local function reveal(R, rules)
     local spec = R.reveal_spec
     if not spec then return end
     if g.won and not R.reveal_won then R.reveal_won = R.now end
-    if spec.bark and spec.floor ~= "oil" and not R.reveal_barked and not g.won and g.carpeted * 2 >= g.carpet_total then
+    local half = spec.floor ~= "oil" and g.carpeted * 2 >= g.carpet_total
+        or spec.object and g.oil_left * 2 <= #rules.level_of(g).oil   -- a still cover; snow can drift back
+    if spec.bark and not R.reveal_barked and not g.won and half then
         R.reveal_barked = true
         R.notice(spec.bark)
     end
@@ -149,10 +151,27 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
     gfx.sdf_unmask()
 end
 
+-- A buried find is one object, not a floor-wide painting: the whole image
+-- covers the cells that hide it (`reveal.object`, the level's `oil`). The
+-- art carries its own transparent margin, so every cell samples inside it.
+local function object_crop(R, rules, t)
+    local minx, miny, maxx, maxy = math.huge, math.huge, -math.huge, -math.huge
+    for _, i in ipairs(rules.level_of(R.g).oil) do
+        local p = R.cell_pos(i)
+        minx, miny, maxx, maxy = math.min(minx, p.x), math.min(miny, p.y), math.max(maxx, p.x), math.max(maxy, p.y)
+    end
+    local w, h = maxx - minx + 2 * R.HEX_R, maxy - miny + math.sqrt(3) * R.HEX_R
+    local size = texture.size(t)
+    local s = math.max(w / size.w, h / size.h)
+    return rect.centered(vec2((minx + maxx) / 2, (miny + maxy) / 2), size2(size.w * s, size.h * s)),
+        rect(0, 0, size.w, size.h)
+end
+
 local function draw_buried_picture(R, rules, story, sx, alpha, cover)
     local g, cells = R.g, {}
     local t = R.board_art[story.picture]
-    local box, src = picture_crop(R, rules, t)
+    local box, src
+    if story.object then box, src = object_crop(R, rules, t) else box, src = picture_crop(R, rules, t) end
     if cover < 1 then
         for i = 0, rules.CELLS - 1 do
             if rules.game_cell_active(g, i) then cells[#cells + 1] = i end

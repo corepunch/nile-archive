@@ -442,7 +442,7 @@ end
 do
     local elements=require("match3.elements_view")
     local saved_game,saved_art,saved_intro,saved_image=R.g,R.board_art,R.intro,gfx.image
-    local g=rules.game_start(0,123478)
+    local g=rules.game_start(require("support").plain_level(rules),123478)
     g.hs={cells={},groups={},queues={}}
     g.delivery_exits={}
     for i=0,rules.CELLS-1 do g.active[i]=true;g.hs.cells[i]={};g.stone_hp[i]=0 end

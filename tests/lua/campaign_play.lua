@@ -21,6 +21,7 @@ local played = {}
 
 local function scene(expected, before_reward)
     R.story_tick()
+    if R.overlay == R.OV_AWARD then R.overlay = R.OV_RESULT; R.story_tick() end   -- CONTINUE on the Item recovered card
     check(R.story_current and R.story_current.key == expected, 'expected story scene ' .. expected)
     if not R.story_current then error('missing story scene ' .. expected) end
     played[#played + 1] = R.story_current.key
