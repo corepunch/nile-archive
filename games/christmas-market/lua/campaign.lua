@@ -68,7 +68,7 @@ local levels = {
     level("Carousel Stars", "Match five to make a rainbow ball.", 42, 4200, 16, 4, 6, 2,
         bowl_mask, terrain(0, -1, 0, 1, 0)),
     -- 09: Skating Evening
-    level("Skating Evening", "Rockets clear a whole line.", 44, 4600, 18, 5, 6, 2,
+    level("Skating Evening", "Rockets clear a whole line.", 46, 4600, 18, 5, 6, 2,
         lanes_mask, terrain(-2, 1, 2, -2, 1)),
     -- 10: Under the Big Fir
     level("Under the Big Fir", "Clear the tinsel and the ice.", 46, 5000, 20, 6, 6, 2,
@@ -156,7 +156,8 @@ levels[30].lesson = "Bring the parcel down to the tree."
 -- Matches touching lanternlight extend it across the court.
 local carpet = {
     [3] = {cell(0,-1), cell(0,0)}, [6] = {cell(1,-1), cell(1,0)},
-    [9] = {cell(-3,-1), cell(3,0)},   -- one in each lane, not on the narrow spine
+    -- 9: one in each lane and the whole narrow spine, where matches are too rare to light it in time
+    [9] = {cell(-3,-1), cell(3,0), cell(0,-4), cell(0,-3), cell(0,-2), cell(0,-1), cell(0,0), cell(0,1), cell(0,2), cell(0,3), cell(0,4)},
     [11] = {cell(2,-1), cell(2,0)}, [15] = {cell(1,0), cell(1,1)}, [18] = {cell(-1,1), cell(-1,2)},
     [21] = {cell(-2,1), cell(-2,2)}, [24] = {cell(-1,-1), cell(0,-1)}, [28] = {cell(-1,-1), cell(0,-2)},
 }
