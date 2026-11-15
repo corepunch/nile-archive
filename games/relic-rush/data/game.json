@@ -28,8 +28,7 @@
               "Placed buildings earn decoration points for the next quest."]
   },
   "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley", "leaderboard": "LEADERBOARD"},
-  "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d",
-                  "level_button": "LEADERBOARD"},
+  "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d"},
   "confirm": {"title": "Restart this expedition?"},
   "failed": {"title": "One more adventure?", "subtitle": "THE RUINS WILL WAIT FOR YOU.", "town": "VISIT ISLAND"},
   "zone": {"subtitle": "A NEW PLACE TO DISCOVER", "earn": "EARN STARS IN NEW EXPEDITIONS",

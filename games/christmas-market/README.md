@@ -137,14 +137,14 @@ Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market -
 Game Center comes from the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)) and is switched on by the
 `leaderboard` block of `data/game.json`: a **stars** board for the lifetime Christmas Stars (never spent)
 and one board per winter wish (`level_01` to `level_30`) for its best score. Scores are reported when a
-reward is claimed. Settings has a LEADERBOARD link for the stars board and the results card a LEADERBOARD
-button for that wish; both open the shared dialog in this game's red and green skin. Create 31
+reward is claimed. Settings has a LEADERBOARD link for the stars board (the results card has no leaderboard
+button); it opens the shared dialog in this game's red and green skin. Create 31
 leaderboards in App Store Connect (high to low) as `com.corepunch.christmasmarket.stars` and
 `com.corepunch.christmasmarket.level_01` ... `level_30`. Try it with `--gamecenter-demo --dialog leaderboard`.
 
 | Settings | Merriest markets | Results card | Winter wish board |
 | --- | --- | --- | --- |
-| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The stars board](docs/screenshots/leaderboard.jpg) | ![Results with a Leaderboard button](docs/screenshots/reward.jpg) | ![One wish's board](docs/screenshots/level-leaderboard.jpg) |
+| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The stars board](docs/screenshots/leaderboard.jpg) | ![Results card](docs/screenshots/reward.jpg) | ![One wish's board](docs/screenshots/level-leaderboard.jpg) |
 
 ![The stars board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
 

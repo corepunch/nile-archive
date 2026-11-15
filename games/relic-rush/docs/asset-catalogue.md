@@ -45,8 +45,10 @@ complete reveals at 480×900 and 390×844.
 ## Chapter 1 quest objects
 
 The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
-contain eight recognizable objects. Their icons appear alongside the first-clear
-story exchanges; the objects are found by the characters after the match-3 level.
+contain eight recognizable objects. A first clear shows its object at 210 px, centred on an
+**Item recovered!** card (the results card's panel, jade header and glow; the name and a
+CONTINUE button below), before the story exchange in which the characters find it and before
+the results. Reviewed capture: `build/relic-rush --victory clue --dialog award`.
 They are independent of the selected match piece pack.
 
 | Atlas slot | Quest object | Board and use |
@@ -166,9 +168,8 @@ safe-area phone layout. States are listed below with the checkbox and button
 variants; no artwork, source prompt, runtime file or sprite transform is added.
 The menu contract is recorded in `art/board-states/manifest.json` under `pause_menu`.
 
-Pause also carries a LEADERBOARD link above the guide link, and the results card a
-LEADERBOARD button under the card, both drawn by the game skin (the jade button and the link
-role). They open the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)):
+Pause also carries a LEADERBOARD link above the guide link, drawn by the game skin (the link
+role); the results card has no leaderboard button. They open the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)):
 a panel with Everyone / Friends tabs (the chosen one a jade button, the other a flat caption), a
 scrolling list of rank, portrait, name and score rows (a round placeholder bust with the initial
 while a portrait loads, "(you)" on the player's row), loading / empty / signed-out notes, and

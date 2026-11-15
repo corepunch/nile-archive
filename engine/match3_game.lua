@@ -15,6 +15,8 @@
 --
 -- Game hooks the shared code calls (set on R by the game's modules):
 --   R.dialogs[R.OV_RESULT], R.dialogs[R.OV_GUIDE]   the results card and guide
+--   R.award_for(g), R.dialogs[R.OV_AWARD]   an item a first clear recovers (nil for none),
+--                           shown big on its own card before the win's story beat and results
 --   R.wallet_icons()        three icons for lives, gold and stars capsules
 --   R.town_middle_icon(at)  the round middle button's icon in the town
 --   R.cast                  the story cast (narrative.lua)
@@ -115,7 +117,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_AWARD = 12,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -133,6 +135,7 @@ function G.state()
         toast = nil,
         toast_time = 0, now = 0,
         quiet = false,       -- no story (stills for the docs)
+        award = nil, award_game = nil,   -- the recovered item's card, and the game it was shown for
 
         -- animated readouts
         score_display = 0, score_pulse = 0, goal_display = 0, goal_pulse = 0,
@@ -893,6 +896,11 @@ function G.bind(R, over)
         if R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
+            -- A first clear's item comes first, then the talk about it, then the results.
+            if R.award_for and R.award_game ~= R.g and R.g.won and R.g.level == R.prog.level then
+                R.award_game, R.award = R.g, R.award_for(R.g)
+                if R.award then R.overlay = R.OV_AWARD; return end
+            end
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
             if b then R.queue_story(b, false, true) end
             return
@@ -1152,10 +1160,9 @@ function G.app(R)
         if not talking and not revealing and not clear_due then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
-        if story.active() and R.draw_story_item then R.draw_story_item() end
         -- Keep the HUD above ordinary dialogs. Results, the guide and
         -- leaderboard own the whole foreground.
-        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_GUIDE and not board
+        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_AWARD and R.overlay ~= R.OV_GUIDE and not board
         if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end

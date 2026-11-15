@@ -33,25 +33,6 @@ local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
-local object_form = ui.form{root={kind="row", panel=true, role="quest", padding={6,2,10,2}, gap=5, align="center", children={
-    {kind="image", id="icon", width=37, height=34},
-    {kind="label", id="label", grow=1, em=19, text_style="cream", text_align="start"},
-}}}
-
-local function show_object(object, found)
-    object_form:set("icon", R.board_art[object.key])
-    object_form:set("label", (found and "Recovered · " or "Recover · ") .. object.name)
-    object_form:draw(rect(10, R.hud_rect.y - 50, 298, 40), R.skin, {interactive=false})
-end
-
-function R.draw_story_item()
-    local beat = R.story_current
-    if beat and beat.key:match("^after%-") then
-        local object = rules.levels[tonumber(beat.key:sub(-2))].quest_object
-        if object then show_object(object, true) end
-    end
-end
-
 -------------------------------------------------------------------- drawing
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)

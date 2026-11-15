@@ -32,6 +32,7 @@ end
 -- before one real swap, so this checks the flow; the extended greedy-bot
 -- rules test checks that the boards themselves can be won.
 local played = {}
+local awards = 0   -- recovered-item cards stepped through
 local function campaign()
     local journey = require("journey")
     if frames > 16000 then
@@ -52,6 +53,7 @@ local function campaign()
     end
     local c = R.island
     if R.overlay == R.OV_FINALE then
+        assert(awards == 10, "campaign smoke: each of the ten quest objects shows its card once, saw " .. awards)
         local want = {}
         for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
         assert(table.concat(played, " ") == table.concat(want, " "),
@@ -66,6 +68,8 @@ local function campaign()
     elseif R.overlay == R.OV_STORY_CHOICE then
         local box = R.choice_form.boxes["1"]
         if box then app.inject_click(box:center()); wait = 10 end
+    elseif R.overlay == R.OV_AWARD then
+        if R.modal_for == R.OV_AWARD and R.dialog_settled() then awards = awards + 1; app.inject_click(R.award_continue:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_ZONE then
@@ -162,6 +166,10 @@ function R.smoke()
         assert(done and guide_laid_out(), "smoke: guide data source was not laid out")
         app.inject_click(done:center() + vec2(0, R.drop / 2)); stage = 0
     elseif stage == 0 then
+        if R.overlay == R.OV_AWARD then   -- level one recovers the camp timber before its talk
+            if R.modal_for == R.OV_AWARD and R.dialog_settled() then app.inject_click(R.award_continue:center() + vec2(0, R.drop / 2)) end
+            return
+        end
         if R.overlay == R.OV_RESULT then
             if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1 end
             return
