@@ -22,6 +22,13 @@ The build shop scrolls through the selected category. Its rows show each object'
 sprite, footprint, ownership and price, with a disabled action for unavailable
 stock. The category arrows stay above the list.
 
+Story construction ranges from 40 Gold for the Welcome arch to 500 for the
+Christmas tree. The scheduled first clear funds each build in full. Optional
+decorations use spare Gold, with a 20-Gold lamp post available early and the
+largest cottages priced at 420–500 Gold. Existing saves receive the increase
+for any already earned and unbuilt story stall when first loaded with the new
+prices. The credit is stored with the wallet on the next save.
+
 ## Source and pipeline
 
 | Step | File |
@@ -98,43 +105,43 @@ A full render of all 37 objects takes about two minutes on four CPU cores.
 
 | ID / key | Name | Category | Tiles | Cost (Gold) | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
-| 0 / `arch` | Welcome arch | wonder | 3 x 3 | 60 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 80 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 100 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 120 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 140 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 160 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 180 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 7 / `carousel` | Reindeer carousel | wonder | 3 x 3 | 200 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 8 / `rink` | Winter skating rink | wonder | 3 x 3 | 220 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 9 / `tree` | Christmas tree | wonder | 3 x 3 | 250 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 10 / `firs` | Lantern firs | building | 2 x 2 | 45 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 11 / `bench` | Snowman bench | building | 2 x 2 | 60 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 12 / `snowman` | Snowman | building | 1 x 1 | 35 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 13 / `presents` | Pile of presents | building | 1 x 1 | 40 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 14 / `candy_canes` | Candy canes | building | 1 x 1 | 30 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 15 / `lamp_post` | Lamp post | building | 1 x 1 | 35 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 16 / `snowy_bench` | Snowy bench | building | 1 x 1 | 30 | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 17 / `mailbox` | Letters to Santa | building | 1 x 1 | 40 | 3 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 18 / `snow_rocks` | Snowy rocks | building | 1 x 1 | 20 | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 19 / `giant_ornament` | Giant bauble | building | 1 x 1 | 60 | 3 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 20 / `ice_star` | Ice star sculpture | building | 1 x 1 | 70 | 6 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 21 / `nutcracker` | Nutcracker guard | building | 1 x 1 | 80 | 6 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 22 / `reindeer` | Reindeer | building | 1 x 1 | 90 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 23 / `penguins` | Penguin pair | building | 1 x 1 | 80 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 24 / `wreath_arch` | Wreath arch | building | 2 x 1 | 90 | 6 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 25 / `sleigh` | Santa's sleigh | building | 2 x 1 | 150 | 12 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 26 / `igloo` | Igloo | building | 2 x 2 | 120 | 9 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 27 / `fir_snowy` | Snowy fir | tree | 1 x 1 | 25 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 28 / `birch` | Frosted birch | tree | 1 x 1 | 30 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 29 / `fir_decorated` | Decorated fir | tree | 1 x 1 | 50 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 30 / `pine_grove` | Pine grove | tree | 2 x 2 | 80 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 31 / `log_cabin` | Log cabin | cottage | 2 x 2 | 180 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 32 / `gingerbread_house` | Gingerbread house | cottage | 2 x 2 | 200 | 9 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 33 / `post_office` | North Pole post office | cottage | 2 x 2 | 220 | 12 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 34 / `chapel` | Snowy chapel | cottage | 2 x 2 | 260 | 15 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 35 / `reindeer_stable` | Reindeer stable | cottage | 3 x 2 | 280 | 18 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 36 / `santa_workshop` | Santa's workshop | cottage | 3 x 3 | 320 | 21 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 0 / `arch` | Welcome arch | wonder | 3 x 3 | 40 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 135 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 185 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 105 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 230 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 155 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 210 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 7 / `carousel` | Reindeer carousel | wonder | 3 x 3 | 380 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 8 / `rink` | Winter skating rink | wonder | 3 x 3 | 440 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 9 / `tree` | Christmas tree | wonder | 3 x 3 | 500 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 10 / `firs` | Lantern firs | building | 2 x 2 | 55 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 11 / `bench` | Snowman bench | building | 2 x 2 | 65 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 12 / `snowman` | Snowman | building | 1 x 1 | 30 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 13 / `presents` | Pile of presents | building | 1 x 1 | 45 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 14 / `candy_canes` | Candy canes | building | 1 x 1 | 25 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 15 / `lamp_post` | Lamp post | building | 1 x 1 | 20 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 16 / `snowy_bench` | Snowy bench | building | 1 x 1 | 25 | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 17 / `mailbox` | Letters to Santa | building | 1 x 1 | 55 | 3 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 18 / `snow_rocks` | Snowy rocks | building | 1 x 1 | 15 | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 19 / `giant_ornament` | Giant bauble | building | 1 x 1 | 65 | 3 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 20 / `ice_star` | Ice star sculpture | building | 1 x 1 | 85 | 6 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 21 / `nutcracker` | Nutcracker guard | building | 1 x 1 | 95 | 6 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 22 / `reindeer` | Reindeer | building | 1 x 1 | 110 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 23 / `penguins` | Penguin pair | building | 1 x 1 | 100 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 24 / `wreath_arch` | Wreath arch | building | 2 x 1 | 125 | 6 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 25 / `sleigh` | Santa's sleigh | building | 2 x 1 | 190 | 12 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 26 / `igloo` | Igloo | building | 2 x 2 | 140 | 9 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 27 / `fir_snowy` | Snowy fir | tree | 1 x 1 | 20 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 28 / `birch` | Frosted birch | tree | 1 x 1 | 25 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 29 / `fir_decorated` | Decorated fir | tree | 1 x 1 | 70 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 30 / `pine_grove` | Pine grove | tree | 2 x 2 | 105 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 31 / `log_cabin` | Log cabin | cottage | 2 x 2 | 205 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 32 / `gingerbread_house` | Gingerbread house | cottage | 2 x 2 | 260 | 9 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 33 / `post_office` | North Pole post office | cottage | 2 x 2 | 310 | 12 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 34 / `chapel` | Snowy chapel | cottage | 2 x 2 | 360 | 15 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 35 / `reindeer_stable` | Reindeer stable | cottage | 3 x 2 | 420 | 18 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 36 / `santa_workshop` | Santa's workshop | cottage | 3 x 3 | 500 | 21 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
 
 ## Style and prompt provenance
 

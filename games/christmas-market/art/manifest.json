@@ -16,7 +16,8 @@
     "art/story-floors/wish-ribbon.prompt.txt",
     "art/story-floors/telegram.prompt.txt",
     "art/story-floors/last-train.prompt.txt",
-    "art/lantern-panes/prompt.txt"
+    "art/lantern-panes/prompt.txt",
+    "art/festive-pieces/prompt.txt"
   ],
   "states": [
     "normal",
@@ -150,13 +151,13 @@
     "data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
     "data/fonts/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
-    "data/game.json": "38960bd3e475c3a9a406b900a5ac8371b5bffd76197a9cb73be364ee2c305f7e",
+    "data/game.json": "f057c2e37762147945115d1f546289e50e4fd5b1c34c78341ad03937e1334cc5",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/lantern-panes/blue.png": "cdfe5c943c65b73cc0b879b1abc60c3762db49d9d64c731e283dc2ba9e84107b",
     "data/lantern-panes/lit.png": "dcd26a17bbc66081c138e90c06c7b234ceb91d2c294c5226f3ef314c10889449",
     "data/lantern-panes/plain.png": "09dc889f86355001d339d99ce8a3dc09e93b69829556fc1ed5f67126518db02e",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-    "data/match3.png": "9dc2e106bc0aa857e8150089f5d4e25d71a6830c0093a8ca1bfd695ca806c33a",
+    "data/match3.png": "a137fa323952ef2428fa72fe6cd12211aafc8949d4074d0d08b5d6d88a63ee66",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -542,6 +543,21 @@
         ],
         "runtime": "data/lantern-panes/blue.png"
       }
+    }
+  },
+  "festive_pieces": {
+    "source": "art/festive-pieces/source.png",
+    "prompt": "art/festive-pieces/prompt.txt",
+    "layout": "art/festive-pieces/layout.png",
+    "runtime": "data/match3.png",
+    "registration": "art/match3-atlas.json",
+    "frames": {
+      "festive-0": "bell",
+      "festive-1": "candy cane",
+      "festive-2": "holly",
+      "festive-3": "knitted mitten",
+      "festive-4": "plum bauble",
+      "festive-5": "gingerbread person"
     }
   }
 }

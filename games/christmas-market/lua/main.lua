@@ -6,10 +6,17 @@
 -- the debug entry points are the engine's (engine/match3_game.lua); board.lua
 -- and screens.lua paint the game's own art. See docs/PORTRAIT_GAMES.md.
 local R = require("state")
+local island = require("island")
 require("screens")
 require("board")
 require("narrative")
 require("smoke")
 require("campaign_smoke")
+
+function R.serialize_campaign(s)
+    local reading = save.is_reading(s)
+    local version = s:int("market_prices", reading and 0 or 1)
+    if reading and version == 0 then island.top_up_legacy_grants(R.island, R.prog) end
+end
 
 return require("match3.game").app(R)

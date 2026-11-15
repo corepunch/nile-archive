@@ -3503,7 +3503,7 @@
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
       "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_theme_art.py": "697afae2facca38df8f6da203bdbd1940818ee2e4f69c14a96216465b32c5f6e",
+      "tools/match3_theme_art.py": "c4aed4c24d6ad5222e715526e2f694c0af813aed53d4a17e9a326413379734f2",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {

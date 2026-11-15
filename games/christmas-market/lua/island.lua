@@ -57,6 +57,18 @@ function M.reserved_gold(c, level)
     return gold
 end
 
+-- Saves made before the price change may hold funding for unbuilt stalls.
+local legacy_prices = {60, 80, 100, 120, 140, 160, 180, 200, 220, 250}
+function M.top_up_legacy_grants(c, progress)
+    local gold = 0
+    for kind = 1, journey.earned(progress.level) do
+        if M.owned(c, kind - 1) == 0 then
+            gold = gold + math.max(0, M.wonders[kind].cost[1] - legacy_prices[kind])
+        end
+    end
+    if gold > 0 then progress.wallet = progress.wallet + purse(gold) end
+end
+
 function M.restore_saved(c,level)
     -- Purchased decorations do not count toward campaign restoration progress.
     -- Rehome saved buildings whose footprints no longer fit without charging again.

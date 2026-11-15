@@ -30,6 +30,11 @@ to the goal only when they cover a blue pane. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
 [board progression](docs/board-progression.md) and [story](docs/story.md).
 
+Mrs Alder sets aside a cup of cocoa for the next person who comes in cold.
+The guests who share it return with lamps when the wind takes the lights out.
+The same market goods appear on the board, from gingerbread at the bakery to
+a bright blue mitten that recalls Pip's knitting.
+
 On the first clears of A Ribbon for Home, Word from the Station and The Last Train,
 the lit board gives way to a full-board painting and the next scene.
 [Story paintings and board captures](docs/asset-catalogue.md#story-floors).
@@ -67,6 +72,11 @@ them. Debug `--footprints` shows the full outline over
 each sprite. See the [placement captures](docs/review/placement-guides/README.md).
 
 ## Draft implementation
+
+Story builds cost 40–500 Gold. The scheduled first clear funds the full
+price, and the shop reserves it until construction. Spare Gold buys extras
+such as a 20-Gold lamp post or a 500-Gold workshop.
+[Full price list](docs/building-catalogue.md).
 
 The market header shows Lives, Gold and Christmas Stars in one row. A failed
 wish uses a life, and one returns every 30 minutes up to five. Gold funds
@@ -108,7 +118,7 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 
 | Snowy market | Festive puzzle | Noelle |
 | --- | --- | --- |
-| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/lantern-panes/board-480x900.jpg) | ![Dialogue](docs/screenshots/main-character-dialogue.jpg) |
+| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/market-wishes/board-480.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
 
 Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 

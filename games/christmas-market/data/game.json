@@ -11,7 +11,7 @@
     "kudos": ["Jolly!", "Merry!", "Magical!", "Christmas Magic!"],
     "tool_notes": ["Hammer: tap a treat to break it.", "Firecracker: tap a treat to blast around it.",
                    "Star wand: tap a treat to clear all treats of that kind."],
-    "locked": "Ice and tinsel must be cleared first."
+    "locked": "Match the tied piece to untangle the tinsel."
   },
   "notices": {
     "build_first": "Build your earned stall before the next winter wish.",
@@ -36,9 +36,9 @@
            "keep": "CHRISTMAS STARS STAY WITH YOU."},
   "finale": {
     "title": "To be continued",
-    "lines": [["Who was Mr Wren? And who's going to tell", 380, 16],
-              ["Fernhollow about the goat?", 404, 16],
-              ["NEXT: EPISODE 4, THE ROAD TO FERNHOLLOW", 446, 13, "cream"]],
+    "lines": [["There's a light in Noelle's window.", 380, 16],
+              ["Fernhollow has asked for a few lights of its own.", 404, 16],
+              ["THE ROAD TO FERNHOLLOW", 446, 13, "cream"]],
     "button": "BACK TO MY MARKET"
   },
   "card": {"back": "BACK TO MARKET", "moving": "HOLD AND DRAG IN THE MARKET TO MOVE",

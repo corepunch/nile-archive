@@ -32,6 +32,14 @@ def main():
     registration = json.loads((ROOT/'art/registration.json').read_text())
     assert 'buildings' not in registration and len(registration['icons']) == 39
     atlas = json.loads((ROOT/'art/match3-atlas.json').read_text())
+    pieces = manifest['festive_pieces']
+    assert png(ROOT/pieces['source']) == ((1536,1024),6)
+    assert png(ROOT/pieces['layout']) == ((1536,1024),6)
+    assert set(pieces['frames']) == {f'festive-{i}' for i in range(6)}
+    for name in pieces['frames']:
+        sprite = atlas['board_theme'][name]
+        assert sprite['source'] == pieces['source'] and sprite['prompt'] == pieces['prompt'], name
+        assert sprite['reference'] == pieces['layout'] and atlas['frames'][name][2:] == [128,128], name
     for entry in registration['icons']:
         assert png(ROOT/'data'/entry['path']) == ((128,128),6), entry['path']
     for tool, folder in [('pickaxe','board-states'),('dynamite','board-states'),('sunburst','board-states'),('pause','expedition-hud')]:

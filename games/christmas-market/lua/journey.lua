@@ -18,15 +18,16 @@ return require("match3.game").journey{
         "Lantern Lane's clear! There's a lamp post that still works if you kick it.",
         "Gingerbread Green's open! It doesn't smell of gingerbread yet. Give it a week.",
         "Carolers Court's open! Mrs Alder's already in it, singing flat.",
-        "Starlight Terrace is open! You can see all the way to Fenwick. We're winning.",
+        "Starlight Terrace is open! You can hear the Fenwick choir from up here. Nearly in tune.",
         "Evergreen Hill's open! You can see the whole line from up here!",
     },
     -- {kind, from level, line}: the latest reached replaces the catalogue line.
     about = {
         {0, 22, "Theo's trees go round it now. He says it was his idea."},
         {2, 20, "Two cups on the windowsill."},
+        {3, 12, "A cup waiting on the counter. Mrs Alder made sure of it."},
         {4, 20, "The window's been cleaned. On both sides of the square."},
         {7, 23, "Twelve horses, twelve families. The third one's a touch to the left."},
-        {9, 30, "There's a broom against the arch. Nobody's moved it."},
+        {9, 30, "A lamp for the last walker home. There's one left by the fir."},
     },
 }

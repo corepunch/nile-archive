@@ -2,11 +2,14 @@
 
 ## Themed board art
 
-The default chips retain the original identities (bell, candy cane, holly, ornament, bauble and gingerbread). Each has one dominant hue and at most one accent hue. The active boards pair the six festive treats with a walnut surface, blue panes and one-hit chains. Older special and terrain frames remain available to the diagnostic and reference boards below.
+The six live chips are market goods. Their silhouettes and dominant colours
+make the gold bell, red candy cane, green holly, sky-blue knitted mitten, plum
+bauble and toasted gingerbread readable over both walnut and cobalt.
+The bell also identifies Gold in the wallet and shop.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
-| `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The gold bell also represents Gold in the wallet. |
+| `festive-0` through `festive-5` | Bell, candy cane, holly, knitted mitten, bauble and gingerbread, in atlas order. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
 | `carpet-swatch`, `goal-carpet` | Warm apricot light spreads across the paving when a match touches a lit cell. A bronze lantern identifies the goal. |
@@ -15,7 +18,21 @@ The default chips retain the original identities (bell, candy cane, holly, ornam
 | `delivery` | The campaign's red parcel. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
-Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
+ImageGen painted all six market goods in one [transparent atlas](../art/festive-pieces/source.png)
+using the [prompt](../art/festive-pieces/prompt.txt) and
+[3×2 layout guide](../art/festive-pieces/layout.png). The atlas packer crops
+the six 512 px bays and fits the artwork to the canonical 128 px canvas with
+its authored alpha. Each chip uses the same artwork when moved, selected or
+hinted. The board animates the pose and uses its existing authored selection,
+hint and chain overlays. The [registration manifest](../art/match3-atlas.json)
+records the crop and fitted size per chip. Rebuild `data/match3.png` with
+`python3 tools/match3_atlas.py`.
+[Live board and state captures](screenshots/review/market-wishes/README.md).
+
+The [earlier base sheet](../art/board-theme/source.png) and
+[accent revision](../art/board-theme/accent-revision.png) document the first
+festive palette. The base sheet remains the source for certain reference elements.
+[Earlier in-game art review](screenshots/review/board-palette/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
@@ -69,7 +86,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | 37 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/buildings/<key>.png` | Ten sequential construction milestones, 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
-| Six festive puzzle kinds | `art/icons.png`, cells 0–5 | `data/tile-sets/festive/` | Bell, candy cane, holly, blue ornament, purple bauble, gingerbread; the bell also represents Gold. On the board the bell (12/128), holly (7/128) and both ornaments (11/128) are drawn higher (`art.piece_lift`) so the main shape, not its bow, leaves or hanging cap, is centred in the hex |
+| Six festive puzzle kinds | `art/festive-pieces/source.png` | `data/match3.png` | Gold bell, candy cane, holly, blue mitten, plum bauble and gingerbread. The original `art/icons.png` crops under `data/tile-sets/festive/` are legacy exports. |
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |

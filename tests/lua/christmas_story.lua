@@ -55,6 +55,22 @@ for level=1,30 do
     for z=1,5 do c:unlock(z,p.wallet) end
     local kind=journey.wonder_at(level)
     if kind then
+        if level == 7 then
+            -- An older market has the first two stalls and the old bakery grant.
+            R.island, R.prog = c, {level=7, wallet=purse()}
+            local function wallet(s)
+                R.prog.wallet = s:ints("wallet", R.prog.wallet)
+                R.serialize_campaign(s)
+            end
+            save.write("old-market-prices", function(s) s:ints("wallet", purse(100)) end)
+            save.read("old-market-prices", wallet)
+            check(R.prog.wallet[1] == island.wonders[3].cost[1], "the revised bakery is funded on a legacy save")
+            check(island.can_buy(c, R.prog.wallet, 7, 2), "the bakery can be built before continuing")
+            check(not island.can_buy(c, R.prog.wallet, 7, 15), "the reserved grant cannot buy a lamp post")
+            save.write("new-market-prices", wallet)
+            save.read("new-market-prices", wallet)
+            check(R.prog.wallet[1] == island.wonders[3].cost[1], "saving the migrated wallet prevents a second top-up")
+        end
         check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
         check(island.can_buy(c,p.wallet,p.level,kind-1),'earned stall is affordable')
         check(island.island_place_next(c,p.wallet,p.level,0),'scheduled stall fits open land')

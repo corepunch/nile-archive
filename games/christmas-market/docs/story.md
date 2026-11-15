@@ -2,7 +2,7 @@
 
 **Status: implemented in the thirty-level campaign.** All 198 lines play. All six speakers have painted busts. The structure matches [Relic Rush](../../relic-rush/docs/story.md): 30 levels, wonders split 4+3+3, one beat per level, a happy turn at each episode's end. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
 
-**Fantasy of play:** I came to help at a Christmas market for three weeks, and I am building the place where a whole town finds its way back to each other.
+**Fantasy of play:** I came to help for three weeks. Each light I put up and each stall I build gives somebody a place to come in from the cold.
 
 **Feeling:** a Christmas film on a snowy evening. Small human stories, people who should talk finally talking, somebody coming home just in time, and a season in which slightly impossible things seem to happen. There is no villain, and the sadness never goes deeper than missing someone. Every thread ends happily.
 
@@ -34,27 +34,27 @@ Over all of them hovers **Mr Wren**, who turned up asking for a broom, and who k
 
 | Wonder | Level | What it does for people |
 | --- | ---: | --- |
-| Welcome arch | 1 | Noelle lights the arch where Theo wanted his trees. They meet |
+| Welcome arch | 1 | Agnes asks for a light by dusk. Noelle gets the lamp up and meets Theo |
 | Lumber workshop | 4 | She has to buy timber from him. They haggle, badly |
 | Gingerbread bakery | 7 | Agnes's oven is back. Henrik sends Pip for a bun, "not that I want one" |
-| Hot cocoa kiosk | 9 | Somewhere to stand and talk. Mrs Alder, 91, holds court |
+| Hot cocoa kiosk | 9 | Mrs Alder pays for an extra cup. There’s always one waiting for the next person |
 | Toymaker's workshop | 13 | Henrik's window on the square, looking straight at the bakery |
 | Gift wrapping pavilion | 16 | Pip wraps a present for his mum and won't say why |
 | Candlelight shop | 19 | By a borrowed lantern, Noelle finds a forty-year-old letter behind the postbox lining |
 | Reindeer carousel | 23 | Every family paints one horse |
 | Winter skating rink | 26 | Agnes and Henrik, after forty years, on the ice |
-| Christmas tree | 29 | Where everyone was always going to meet |
+| Christmas tree | 29 | Henrik repairs the wiring while the stalls each bring a lamp for the watch by the fir |
 
 **What gets in the way.** Bramble, Mr Finch's goat, gets into the market's tinsel and runs through the lanes with it. On the board a tinsel tie protects the treat underneath for one hit.
 
 ## The question
 
-**Will everyone get where they need to be by Christmas Eve?** And for Noelle: will she be on that train? Smaller curiosities keep the player going: who is Someone, why did Agnes and Henrik stop speaking, who is Mr Wren, and who is the parcel for?
+**Will there be a light to come home to on Christmas Eve?** Agnes asks Noelle for one by dusk. By Christmas Eve the market has a whole lane to light and a late passenger to welcome. Noelle has to decide which end of her own train ride feels like home.
 
 ## What is going on
 
 1. **Forty years ago,** Agnes posted a note to Henrik through the market's old post box: meet me by the big fir on Christmas Eve. It slipped behind the lining and never arrived. She waited, and he never came. Too proud to ask, she stopped speaking to him. He never knew why, and got too proud to ask as well.
-2. **Noelle's gran, Rosa,** ran the market's last small stall until her knees gave out and she retired to the coast. This winter she sends Noelle to help get it going again. She gives her a red parcel tagged "For whoever needs it most." It holds the key to Rosa's house on the square, and a note.
+2. **Noelle's gran, Rosa,** ran the market's last small stall until her knees gave out and she retired to the coast. This winter she sends Noelle to help get it going again. She gives her a red parcel tagged "For whoever needs it most." It holds the key to Rosa's house on the square and a note. Noelle decides to stay before she opens it.
 3. **Theo Marsh** runs the family tree lot, and his hands are always sticky with resin. He started the Kind Word box's new season himself, because the town seemed lonely.
 4. **Mr Wren** appears on the first day and leaves on the last. Nobody hired him. Things tend to go well near his broom. The script never explains him. He may simply be a kind old man. Writers should keep both readings possible, up to his last note.
 
@@ -78,7 +78,7 @@ Noelle and the five supporting speakers have painted busts. Bramble the goat doe
 | Planted | Paid off |
 | --- | --- |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (9), Pip (16), Mr Wren (29), who sends her to read it again. It's hers: the key (29) |
-| The ticket for the 26th (opening) | Noelle decides to stay and gives it up gladly (30) |
+| The ticket for the 26th (opening) | Noelle gives up the ticket when she decides to stay (29), then invites Theo round (30) |
 | The rule of the Kind Word box: never ask who (5) | Theo and Noelle break it together (30) |
 | Resin on a note (11), sticky gloves (2) | How Noelle finally knows (30) |
 | "Your arch is in my way" (1) | Theo's first words under the fir (30) |
@@ -87,10 +87,11 @@ Noelle and the five supporting speakers have painted busts. Bramble the goat doe
 | Pip "doesn't mind" (10) | He minds (16). She comes (28) |
 | Wrapped present for his mum (16) | He gives it to her on the platform (28) |
 | Everyone Noelle helped (1–26) | They all turn up with their lamps (27) |
-| Bramble eats things (8 onward) | Noelle offers her the ticket (30) |
+| The penny for the next cup (9) | The Fenwick choir finds a place to practice (12), brings paint (22) and turns up in the dark (27) |
+| Noelle imagines January in Bellmere (23) | She tells Wren she is staying before she opens the parcel (29) and invites Theo round (30) |
 | Rosa leaves a light for one more (opening) | The arch (1), both doors (20), the station walk (27–28) and Noelle’s own window (30) |
 
-**Who knows what.** Pip delivers the notes, works out who Someone is by level 14 and nearly bursts. Mr Wren knows everything or seems to. Noelle and Theo learn at level 30. The player should guess by level 11, and enjoy it. Only Agnes and Henrik know what the quarrel looked like from their own side, and only level 20 joins the two.
+**Who knows what.** Pip delivers the notes, works out who Someone is by level 14 and nearly bursts. Mr Wren knows everything or seems to. Theo learns from Noelle's signature at level 18. Noelle makes the connection at level 30. The player can guess by level 11. Only Agnes and Henrik know what the quarrel looked like from their own side, and only level 20 joins the two.
 
 **Knock-on check.** Days count in events, down to Christmas Eve, so lives and replays do not contradict them. Beats never say where a building stands, because the player chooses. Theo's lines are never at a level where he has another story beat to be in.
 
@@ -98,13 +99,13 @@ Noelle and the five supporting speakers have painted busts. Bramble the goat doe
 
 Order: result → market → place the wonder → beat → next goal. Most levels without a wonder play their beat on returning to the market. On first clears of 24, 25 and 28, the painting and scene play before Collect. Beats play once per save, on the first clear. Lines are speech unless marked *(thought)* or *(shout)*. Mechanic lessons stay separate.
 
-## Episode 1: Three Weeks in Bellmere
+## Episode 1: A Place by the Fire
 
 **Before level 1 · opening** · *Panel: Noelle stepping off a little train into falling snow, with her suitcase under one arm and the red parcel in her mittens. A dark, pretty square. One old man, sweeping.*
 
 - **Noelle (thought):** Gran always left a light in the window. 'So they know there's room for one more,' she said.
-- **Agnes:** You're Rosa's girl. You've still got her chin. One stall, no stock, twenty days till Christmas Eve. Well done.
-- **Noelle:** I'm only here for three weeks. I've a train on the twenty-sixth, and a job in the city.
+- **Agnes:** Rosa's girl. You've got her chin. Twenty days till Christmas Eve. Can you light the path from the station?
+- **Noelle:** I can help till Christmas. I'm due back at work in the city. My train's on the twenty-sixth.
 - **Agnes:** Course you have. Come in when you can't feel your nose. There's buns.
 - **Noelle:** Gran gave me this for someone here, too. "For whoever needs it most." Very helpful, Gran.
 - **Mr Wren:** Good morning, Noelle. Mind the third step. It's a sly one.
@@ -115,14 +116,14 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Theo:** Excuse me. Your arch is in my way.
 - **Noelle:** I lit the arch so anyone coming up from the station would know they could come in.
 - **Theo:** It's the first thing my trees will hit. I've sold trees from this corner for eleven years.
-- **Noelle:** Then you'll know how to get round it. Merry Christmas!
+- **Noelle:** Help me move the little trees when you're ready. I think there's room for both of us.
 
 **Level 2 · Lumber Lane**
 
 - **Noelle:** I need timber. A lot of it. I'm told you're the man. Please don't enjoy this.
 - **Theo:** Oh, I'm going to enjoy this. Is that arch made of my offcuts?
-- **Noelle:** Nothing! It's scrap! Don't touch that, your gloves are sticky!
-- **Theo:** It's resin. It's a tree thing. You wouldn't understand. You've got one arch.
+- **Noelle:** Pip chose the crooked ones. They made the best arch. Oh! Your gloves are sticky.
+- **Theo:** Resin. It gets on the receipts, the wrapping paper. Even my letters, some days.
 
 **Level 3 · Gingerbread Swirl**
 
@@ -133,24 +134,24 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 4 · Cocoa Corner · builds Lumber workshop**
 
-- **Theo:** There's your timber. I knocked a bit off. Don't tell anyone.
-- **Noelle:** That's almost kind.
-- **Theo:** It's almost dry, too. Who's that old man sweeping my lot?
+- **Theo:** Timber's stacked and dry. There's a short bit on top. Save that for somebody who needs a seat.
+- **Noelle:** A seat by the cocoa, then. For the people who come without anyone.
+- **Theo:** Ask your friend with the broom if he wants a seat. He's been there since dawn.
 - **Noelle:** I thought he was yours.
 - **Mr Wren:** Lovely morning, Theo. That one's the good saw, by the way. Behind the stack.
 
 **Level 5 · Toymaker Lane**
 
-- **Pip:** Look what I found behind the old post box! The Kind Word box! You write something nice, no name.
-- **Pip:** Then I carry it to anyone at all. It's the only rule. You never, ever ask who.
+- **Pip:** I found the Kind Word box in the old post box. Leave a note in here and I'll carry it. No names.
+- **Pip:** For anyone. You can write back, too. The only rule is you never ask who.
 - **Noelle:** Well. I've had a long day, Pip. Give me that pencil. "Dear anyone."
-- **Noelle:** "Is everyone here this stubborn, or is it just the man who sells the trees?"
+- **Noelle:** "I came to help with the market. Is there a trick to getting people to let you help?"
 
 **Level 6 · Ribbon Wishes**
 
 - **Noelle:** Oh, look. Under the lanterns. This whole rail is tied with ribbons.
 - **Agnes:** Wish ribbons. We tie them to the fountain rail in December and leave them till spring.
-- **Noelle:** An answer already! "It's everyone. Him especially. Are you eating enough? Someone."
+- **Noelle:** An answer already! "Start by sitting down with someone. Have you stopped for lunch yet? Someone."
 - **Pip:** I'm not allowed to say who. I don't know who! I do know. I don't!
 - **Mr Wren:** I remember a little girl who needed a lift to tie hers.
 
@@ -161,7 +162,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Agnes:** Tell him nobody offered.
 - **Pip:** He gave me a penny for one anyway. He says it's for me. He says to leave it on his step, for me.
 - **Noelle:** Agnes, what happened with you two?
-- **Agnes:** Eat your gingerbread. It's better hot.
+- **Agnes:** Eat while it's hot. And leave one on the back of the tray, just in case.
 
 **Level 8 · Carousel Stars** *(easier level)*
 
@@ -172,10 +173,10 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 9 · Skating Evening · builds Hot cocoa kiosk**
 
-- **Noelle:** Mrs Alder, first cocoa's on me. In fact, I've got something for you. You're on your own, aren't you?
-- **Pip:** Mrs Alder's got nineteen grandchildren! She says keep your parcel, and bring her a stool.
-- **Noelle:** Oh. Right. Then who does need it?
-- **Mr Wren:** Good cocoa. You'll know when you know. You've a little on your nose.
+- **Noelle:** First cocoa's on me, Mrs Alder. Gran left me a parcel for somebody here. Would you like it?
+- **Pip:** Mrs Alder says she only needs a stool. She's left a penny for the next person who comes in cold.
+- **Noelle:** All right. I'll put a cup out on the counter so we remember whose turn it is.
+- **Mr Wren:** Put a second cup by yours, too. You've a bit of cocoa on your nose, by the way.
 - **Pip:** Another one came for you! "Dear anyone. You sound like you could use a day off. So could I. Someone."
 
 **Before level 10**
@@ -190,20 +191,20 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Theo:** I was going to say it's upside down.
 - **Pip (shout):** IT'S ON! Everyone's coming out! Look! All of them!
 - **Agnes:** Well. Would you look at that. I'd forgotten it could look like this.
-- **Noelle:** It's one string of lights.
-- **Mr Wren:** It usually is.
+- **Noelle:** We could leave them on till the last train. Someone might still be coming.
+- **Mr Wren:** There's always someone on the last train.
 - **Pip:** Noelle! Mr Strand's come down to his door. He's looking this way. He hasn't been out after dark in years.
 - **Agnes:** Hmph. He's got his good scarf on.
 - **Pip:** And there's a note for you. It's only short.
 - **Noelle:** "I heard you're leaving on the twenty-sixth. That's a pity. Stay for the cocoa, at least. Someone."
 - **Noelle (thought):** Three weeks. It's only three weeks. So why did I just smile at a piece of paper?
 
-## Episode 2: The Kind Word Box
+## Episode 2: A Cup for Someone
 
 **Before level 11 · opening** · *Panel: the same square, later that night. Noelle under the first lights, writing on her knee. Behind her, Pip holding out his satchel to half the town.*
 
 - **Pip:** Everyone wants a go! Mrs Alder's sent nine! Mr Finch has written one to his goat!
-- **Noelle:** What have I started?
+- **Noelle:** Set your bag down and have a sip, Pip. Then we'll take the next ones round together.
 - **Mr Wren:** Oh, you'd be surprised how far one goes. Is that a pencil you're not using?
 - **Noelle:** "Dear Someone. I'm not staying. But tell me something good about this place."
 - **Theo:** You're out late. Writing home?
@@ -212,17 +213,17 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 11 · Carols and Crumbs**
 
-- **Noelle:** "The carolers are terrible, and nobody's ever told them. That's the good thing. Someone."
+- **Noelle:** "The carolers never agree on a key. They wait for the slowest singer, though. That's the good thing. Someone."
 - **Noelle:** Pip, this note's all sticky at the corner. What is that, cough sweet?
 - **Pip:** I can't hear you! I'm very busy! Bye!
-- **Agnes:** They are dreadful. Fifty years. Give them some cocoa.
+- **Agnes:** Well, yes. I'm the slowest singer. Bring a pot, would you?
 
 **Level 12 · Word from Fenwick**
 
-- **Pip:** Upper Fenwick says THEY'RE the best market in the north! Eleven thousand bulbs!
-- **Agnes:** Raisins in their gingerbread, that's what they've got. It's a scandal.
-- **Theo:** They buy their trees from me, you know. They always pick the crooked ones.
-- **Noelle:** You've got a tree for every occasion. Stop staring at my parcel.
+- **Pip:** A note from the Fenwick choir! Their hall's got a leaking roof. They haven't anywhere to sing.
+- **Agnes:** Tell them they can practice here. I'll make biscuits. No raisins. They can get used to it.
+- **Theo:** I'll bring them round. I take them a tree every year. They always pick the crooked one.
+- **Noelle:** And I'll put the kettle on. We can make room. What are you staring at?
 - **Theo:** What's in it? You never put it down.
 - **Noelle:** No idea. It's for whoever needs it most.
 
@@ -233,7 +234,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Noelle:** You can see the whole square from there. And right into the bakery.
 - **Henrik:** Can you? Hadn't noticed. Tell that woman her window wants cleaning.
 - **Noelle:** Tell her yourself. It's thirty feet.
-- **Henrik:** It's further than it looks.
+- **Henrik:** I know exactly how far it is.
 
 **Level 14 · The Bench by the Fir**
 
@@ -252,17 +253,17 @@ Order: result → market → place the wonder → beat → next goal. Most level
 **Level 16 · Paper and String · builds Gift wrapping pavilion**
 
 - **Noelle:** That's a good bow, Pip! Who's the present for?
-- **Pip:** Nobody. It's a scarf. I knitted it. It's just practice. For nobody.
+- **Pip:** It's a scarf. I tried a mitten first. Didn't leave room for the thumb.
 - **Noelle:** Pip. Do you want this parcel of mine? I think it might be for you.
-- **Pip:** Nah. It's for whoever needs it most. I'm fine. If she doesn't come, I'll post the scarf.
-- **Noelle:** Oh, Pip. Come here.
+- **Pip:** Keep it. The tag says it's for whoever needs it most. If Mum can't come, I'll post the scarf.
+- **Noelle:** I hope you get to put it round her yourself. I've got a spare tag for it here.
 
 **Level 17 · Twelve Horses**
 
 - **Henrik:** Old carousel's been in my shed for years. Twelve horses, no paint. Thought someone might want it.
-- **Noelle:** It'd be the heart of the whole market! But we'll never paint twelve in time.
-- **Mr Wren:** You'd be surprised how many people own a paintbrush.
-- **Pip:** I told Mrs Alder. She's told everyone. It's already a whole thing.
+- **Noelle:** I could paint one. Could we ask everyone who comes through the arch to try one, too?
+- **Mr Wren:** Ask for a brush over a cup of cocoa, and see what turns up.
+- **Pip:** Mrs Alder's first! She's brought every paintbrush in her house. Even the one for the skirting.
 
 **Level 18 · Fairy Lights** *(easier level)*
 
@@ -272,12 +273,12 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 19 · A Hundred Flames · builds Candlelight shop**
 
-- **Noelle:** Hold your lantern up a bit, Pip. There's a gap behind the lining of this old post box.
-- **Pip:** There's something behind it! An old envelope. It's gone all brown. It's never been delivered!
-- **Noelle:** "H. Strand." In very firm handwriting. There's flour in the fold. Pip, that's forty years old.
+- **Noelle:** Try that new lamp, Pip. There's something wedged behind the lining of this old post box.
+- **Pip:** I'll lift the lining. Oh! An envelope. Look, it's stuck fast at one corner.
+- **Noelle:** "H. Strand." There's flour in the fold. I think I know who wrote this.
 - **Pip:** I can take it! I can take it right now! A penny a message!
 - **Noelle:** No. This one I'll carry myself.
-- **Mr Wren:** Ah. There it is. I did wonder.
+- **Mr Wren:** Sometimes it takes a little more light to see what's been there all along.
 
 **Before level 20**
 
@@ -299,7 +300,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Agnes:** Course there's a bun. Get in here, you'll catch your death.
 - **Noelle (thought):** Eleven days till I leave. And Pip's just handed me a note I'm scared to open.
 
-## Episode 3: Christmas Eve
+## Episode 3: The Walk Home
 
 **Before level 21 · opening** · *Panel: the same square at first light. Two sets of footprints going into the bakery. Noelle on the step with a note; snow clouds over the sea.*
 
@@ -307,7 +308,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Noelle:** Pip, this came. I signed mine, and now look. "Dear Noelle. Meet me by the big fir on Christmas Eve."
 - **Noelle:** "I promise I'll be there. Someone."
 - **Pip:** So you'll go! Will you go? You have to go! I don't know why! I don't know anything!
-- **Noelle:** My train's the twenty-sixth, Pip. It wouldn't be fair on anyone.
+- **Noelle:** I'll see them. I don't know what I'll do after Christmas, and I'll tell them that much.
 - **Mr Wren:** It's a good fir, that. Very reliable.
 - **Agnes:** Eight days, and that carousel's got no paint. Move, the lot of you. I've got a man to feed.
 
@@ -319,8 +320,8 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 22 · Many Hands**
 
-- **Theo:** Half of Fenwick's here, holding your ladders. Someone told them about the cocoa.
-- **Noelle:** Why are you being nice?
+- **Theo:** The Fenwick choir brought paint and ladders. They said there was always a cup waiting for them here.
+- **Noelle:** They remembered the cups. Shall we make another pot?
 - **Theo:** I've moved my trees. Round your arch. It looks better there. Don't tell anyone.
 
 **Level 23 · Painted Horses · builds Reindeer carousel**
@@ -328,23 +329,23 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Noelle:** It's turning! Look, it's really turning! I'm not crying, it's the cold.
 - **Henrik:** The third horse is a touch to the left. I'll fix that.
 - **Agnes:** You'll leave it alone and have a ride, you old fusspot.
-- **Theo:** Twelve families, twelve horses. You did that, you know. In three weeks. With one arch.
-- **Noelle:** I'm leaving on the twenty-sixth, Theo.
-- **Theo:** I know. Somebody told me.
+- **Theo:** Twelve families, twelve horses. This time last year Henrik couldn't get anyone to take that thing.
+- **Noelle:** I'd like to see what Bellmere's like in January. When everyone's gone back to work.
+- **Theo:** The lights come down. The baker still opens at six.
 
 **Level 24 · A Ribbon for Home** · *First-clear painting: the lanterns light Noelle's old red wish ribbon at the snowy fountain.*
 
 - **Noelle:** That red ribbon by the lamp. Someone's written on it.
-- **Mr Wren:** I think you'll want to read that one, Noelle.
+- **Mr Wren:** Lift it out of the snow. The writing will smudge.
 - **Noelle:** I never tied one. It's got my name on, in a child's writing.
-- **Agnes:** You were six. You wished to live in the bakery. Rosa kept that ribbon in her biscuit tin for years.
+- **Agnes:** Rosa kept it in her biscuit tin. I brought it out. You were six and wished everyone could stay.
 
 **Level 25 · Word from the Station** · *First-clear painting: Pip reads the railway telegram by a lamp, with the scarf and stamp beside it.*
 
 - **Pip:** The steamer's in! Mum's telegram says she's on the last train, Christmas Eve!
-- **Theo:** There's a big one coming in off the sea. They might stop the line at Fenwick.
-- **Pip:** They won't. They can't. I don't mind. I've got a stamp for the scarf, anyway.
-- **Noelle:** Come on, love. Help me leave a light on the station path. She'll see it when she gets off.
+- **Theo:** The wind's picked up. I'll ask the stationmaster what he's heard.
+- **Pip:** The station will be dark by then. She hasn't been here since the old market closed.
+- **Noelle:** Come on, love. We'll leave a lamp at the station and another at the arch. She'll know the way.
 
 **Level 26 · First Skate · builds Winter skating rink**
 
@@ -353,37 +354,37 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Theo:** Is that Agnes Holt? In skates?
 - **Agnes:** Eyes front, you lot. I'm seventy next year. Mind your own business. Henrik, you're on my foot.
 - **Henrik:** I'm forty years late. I'm allowed one foot.
-- **Noelle:** Here it comes. Can you feel that wind?
+- **Noelle:** Pip, put a scarf on. Smaller than the one you're saving.
 
 **Level 27 · Every Light in Bellmere** · *Panel: the storm-dark square, one lantern at the far end of the lane, and then, in every doorway, another.*
 
-- **Noelle:** It's Christmas Eve, and the wind's had all our lights down. The fuses have gone. The whole market's dark.
+- **Noelle:** Stay by me, Pip. The wind's taken the lights out. Can you see the lamp we left at the station?
 - **Pip:** They've stopped the train at Fenwick. The stationmaster says they have to clear the line first.
-- **Noelle:** Oh, Pip. I promised her a light, and the one at the station's gone out too.
+- **Noelle:** I can't see either lamp. I'd better fetch the oil can. Will you hold my sleeve?
 - **Mr Wren:** Is that so? Look behind you.
 - **Agnes:** I've got every lamp from the bakery, and I want them back.
 - **Henrik:** Twenty toy lanterns. They do work. I made them. Straight.
-- **Theo:** The road's full of people with lamps. Mrs Alder sent me ahead to ask where you want us.
+- **Theo:** The Fenwick choir's behind me with lamps from their hall. Mrs Alder's got people at the arch.
 - **Noelle:** All of you came?
-- **Agnes:** You daft girl. Whose market do you think it is? Now, where do we put the lamps?
-- **Noelle:** From the station to the arch. Leave a light at the gate, so she knows where to find us.
+- **Agnes:** You put a cup out for them. They put a lamp out for you. Where do you want them, love?
+- **Noelle:** Down both sides of the lane. One at the turn by the station. Come on, Pip. We'll light that one.
 
 **Level 28 · The Last Train** *(easier level)* · *Board painting: a small train approaching the station, with lamps glowing beside the snowy track.*
 
 - **Pip (shout):** They've cleared the line! I can see her coat! Mum! MUM!
 - **Noelle:** She's getting off now, Pip. Go on. I'll mind your hat.
 - **Pip (shout):** MUM! MUM! I KNITTED YOU A SCARF! IT'S TERRIBLE! I DIDN'T MIND! I MINDED A LOT!
-- **Noelle:** Oh, look at him go.
-- **Theo:** You've got something in your eye, too.
-- **Noelle:** It's the cold.
+- **Noelle:** She's put half the scarf round him. Look, she's still got her work shoes on.
+- **Theo:** I've got the kettle on back at the stall. Bring them when they're ready.
+- **Noelle:** Put two more cups out. I think there'll be a few of us.
 
 **Level 29 · The Big Fir · builds Christmas tree**
 
-- **Mr Wren:** Nearly midnight. It's a fine tree. You've still got your parcel, I see.
-- **Noelle:** I've tried Mrs Alder. I've tried Pip. Here, you have it. Nobody's paid you for all that sweeping.
-- **Mr Wren:** That's kind. Read the tag again, though. Slowly.
+- **Mr Wren:** Every shop brought a lamp for round the fir. When do you catch the train back?
+- **Noelle:** I'm staying. I'll write to my boss in the morning. Here. I never thanked you for all that sweeping.
+- **Mr Wren:** That's kind. You can give me a cup of cocoa. Read the tag again first.
 - **Noelle:** "For whoever needs it most." ...Oh. Oh, Gran. It's a key. And a note.
-- **Noelle:** "It's the house on the square. Stay or don't, my darling. But you'll want a door."
+- **Noelle:** "It's the key to my old front door. Stay as long as you like. The kettle's under the stairs."
 - **Mr Wren:** Mind the third step. It's a sly one.
 
 **Before level 30**
@@ -397,55 +398,50 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Noelle:** You. Of course it's you. You've got resin on your note. You've had resin on every note!
 - **Theo:** Your arch is in my way.
 - **Noelle:** You never asked who. That's the rule.
-- **Theo:** I knew by the second one. Nobody else is that rude about trees. I'm here anyway.
+- **Theo:** I saw your name on the last one. I thought I'd come and answer this one in person.
 - **Pip (shout):** I KNEW THE WHOLE TIME! I KNEW FOR WEEKS! IT WAS AWFUL!
-- **Agnes:** Then light the thing, somebody! Henrik, your ladder's on the wrong side!
+- **Agnes:** Henrik's got the tree wired again. Go on, Noelle. We'll keep the lamps along the path till morning.
 - **Noelle:** Here goes. Everyone, all together!
 - **Pip (shout):** IT'S ON! LOOK AT IT! LOOK AT THE WHOLE TOWN!
-- **Noelle:** Gran would've loved this. We might have to carry another bench out.
+- **Noelle:** Set the spare cup down here with us. There might still be someone on the way up.
 - **Theo:** And the twenty-sixth?
-- **Noelle:** I'm staying. I'll put a light in my window. Bramble can have my ticket.
+- **Noelle:** I'm staying. Look for the light in my window tomorrow. I'll have the kettle on.
 - **Pip:** Hey, where's Mr Wren? His broom's here. There's a note on it.
-- **Noelle:** "Well swept, all of you. Fernhollow, up the line, has never had a market. They've heard about the cocoa."
-- **Agnes:** I am not leaving my oven.
-- **Henrik:** It's coming with us. Get your good hat.
+- **Noelle:** "Well swept, all of you. Fernhollow asked if we might help put up a few lights. I'll get the kettle on."
+- **Agnes:** Pack a tin of buns when we go. It doesn't do to turn up empty-handed.
+- **Henrik:** I'll carry it. You put your good hat on.
 
 ## The end screen
 
-Shown once after the level 30 turn, replacing today's "ALL TEN MARKET WISHES CAME TRUE" panel. The market stays open and lit behind it, with snow falling.
+Shown after the level 30 turn. The market stays open and lit behind it, with snow falling.
 
 > **TO BE CONTINUED**
-> Who was Mr Wren? And who's going to tell Fernhollow about the goat?
-> *Next: Episode 4, The Road to Fernhollow*
-> Episodes 3 · Wonders 10 · Rank N
+> There's a light in Noelle's window. Fernhollow has asked for a few lights of its own.
+> *The Road to Fernhollow*
 > **[ BACK TO MY MARKET ]**
 
 **Walking into the sequel.** Episode 4 opens in the same square at dawn on Christmas morning: Noelle at her new front door, a key that sticks, the broom still leaning on the arch, and everybody's suitcases on Theo's tree cart.
 
 ## Small lines
 
-**Pip, when a region opens** (replacing today's one repeated line). Levels assume the proposed tripled star gates.
+**Pip, when a region opens** (replacing today's one repeated line). Each region opens at its scheduled Christmas Star threshold.
 
 - **Lantern Lane, level 6. Pip:** Lantern Lane's clear! There's a lamp post that still works if you kick it.
 - **Gingerbread Green, level 9. Pip:** Gingerbread Green's open! It doesn't smell of gingerbread yet. Give it a week.
 - **Carolers Court, level 15. Pip:** Carolers Court's open! Mrs Alder's already in it, singing flat.
-- **Starlight Terrace, level 21. Pip:** Starlight Terrace is open! You can see all the way to Fenwick. We're winning.
+- **Starlight Terrace, level 21. Pip:** Starlight Terrace is open! You can hear the Fenwick choir from up here. I think they're nearly in tune.
 - **Evergreen Hill, level 27. Pip:** Evergreen Hill's open! You can see the whole line from up here!
-
-**Episode gates, only if a Rank gate is approved for this game.** They make decorating part of the fun.
-
-- **Rank goal before episode 2. Agnes:** A market wants more than sheds, love. Hang something pretty, then we'll talk.
-- **Rank goal before episode 3. Pip:** Fenwick's still got more bulbs! Trees, lamps, snowmen, anything! Make it glow!
 
 **Tap bubbles that change as the threads move.** The world answers back, at a cost of a few strings:
 
 | Building | After | Bubble |
 | --- | --- | --- |
 | Welcome arch | Level 22 | Theo's trees go round it now. He says it was his idea. |
+| Hot cocoa kiosk | Level 12 | A cup waiting on the counter. Mrs Alder made sure of it. |
 | Gingerbread bakery | Level 20 | Two cups on the windowsill. |
 | Toymaker's workshop | Level 20 | The window's been cleaned. On both sides of the square. |
 | Reindeer carousel | Level 23 | Twelve horses, twelve families. The third one's a touch to the left. |
-| Christmas tree | Level 30 | There's a broom against the arch. Nobody's moved it. |
+| Christmas tree | Level 30 | A lamp for the last walker home. There’s one left by the fir. |
 
 ## Levels
 
@@ -459,7 +455,7 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 | 19–20 · A Hundred Flames and A Letter Forty Years Late | Noelle borrows a lantern to see behind the postbox lining. Two separate banks of light mark the doors that Henrik finally crosses between. |
 | 24–25 · A Ribbon for Home and Word from the Station | The last pane gives way to the first-clear paintings of the ribbon and telegram. Pip and Noelle leave a light at the station lane for his mum. |
 | 27–28 · Every Light in Bellmere and The Last Train | Neighbors bring enough lamps to light both ends of the walk. A gentler winding board gives Pip a moment to wait, then the first-clear painting shows the train arriving. |
-| 29–30 · The Big Fir and Light the Christmas Tree | The last two pockets of tinsel give way to a fir-shaped patch, finishing the tree lights before Noelle decides to stay. |
+| 29–30 · The Big Fir and Light the Christmas Tree | The last two pockets of tinsel give way to a fir-shaped patch, finishing the tree lights before Noelle invites Theo to her window. |
 
 ## Implementation
 
@@ -484,3 +480,5 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 - 2026-11-14: Put the wish ribbon, telegram and last train on their boards and moved their existing first-clear scenes to the board. The spoken script is unchanged.
 
 - 2026-11-15: Made lantern light the link between the boards and the story. Rosa's open-window line returns through Agnes's bakery, Henrik's walk across the square, Pip's welcome at the station and Noelle's decision to leave a lamp in her own window. The railway crew clears the line while the market lights the walk home. The ribbon, telegram and train paintings hold on their first clears. A separate cold read clarified the ribbon’s return and the train’s arrival.
+
+- 2026-11-15: Gave all three episodes a shared act of hospitality. Agnes asks for the first light, the spare cup brings Fenwick into the story, and both towns leave light for the last train. Noelle chooses Bellmere before opening Rosa's parcel. An independent cold read clarified the ribbon's return and moved the decision to stay into the scene with Wren.

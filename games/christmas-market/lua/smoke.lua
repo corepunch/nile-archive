@@ -145,7 +145,7 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.confirm:center());smoke_stage=26
     elseif smoke_stage==26 and R.island.placing<0 then
         assert(R.island.count==2 and island.wonder_count(R.island)==1,"decoration changed campaign restoration count")
-        assert(R.prog.wallet[1]==smoke_move.shop_gold-45,"purchase must charge once")
+        assert(R.prog.wallet[1]==smoke_move.shop_gold-R.buildings[11].cost[1],"purchase must charge the catalogue price once")
         local c=R.island
         R.island_focus(c.items[2].pos-vec2(0,80),.8)
         local bounds=c.cam:rect_to_screen(c:sprite_rect(c.items[2]))

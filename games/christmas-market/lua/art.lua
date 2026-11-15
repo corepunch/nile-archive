@@ -1,4 +1,4 @@
--- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
+-- Named presentation contract; tools/check_assets.py checks its coverage.
 -- The gold bell artwork also identifies spendable Gold in the island purse.
 -- Board clears score points; the fixed first-clear grant and Gold-only replay
 -- payout are separate from colour counts (rules.reward_breakdown).
@@ -11,13 +11,7 @@ A.elements = require("match3.elements_view").assets
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="art/navigation/controls.png", roles={"navigation_build", "navigation_play", "navigation_levels"}, states=A.states}
--- Board-only lift per kind, as a fraction of the piece canvas. Pieces are
--- cropped around everything visible, so a cap, bow or leaf crown on top pushes
--- the main shape low in the hex. Lifting re-centres that shape; the top detail
--- may overlap the cell's top edge. Measured on data/tile-sets/festive/<kind>.png:
--- bell 0 (gold body ~84/128 under its bow), holly 2 (alpha centroid ~71/128),
--- ornaments 3 and 4 (ball centre ~75/128 under the cap).
-A.piece_lift = {[0] = 12 / 128, [2] = 7 / 128, [3] = 11 / 128, [4] = 11 / 128}
+A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
 
@@ -94,7 +88,9 @@ function A.draw_catalogue(R)
     for row, pack in ipairs(packs) do
         R.say_at(pack:upper(), vec2(240, 175 + (row - 1) * 60), 13, R.PAL_CREAM, 0)
         for k = 0, 5 do
-            gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
+            local x = 39 + k * 68
+            gfx.image(R.art_packs[pack][k + 1], rect(x, 190 + (row - 1) * 60, 46, 46), color.WHITE)
+            R.say_at(A.festive[k + 1], vec2(x + 23, 245), 10, R.PAL_CREAM, 66)
         end
     end
     for i, name in ipairs{"plain", "blue", "lit"} do

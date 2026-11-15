@@ -26,6 +26,7 @@ FLOOR_COLUMNS = (0, 444, 887, 1331, 1774)
 FLOOR_ROWS = (0, 485, 887)  # Transparent gap between the swatches and goal icons.
 BLOCKER_PAINT = ART / 'match3-blockers'
 MATERIALS = {'carpet-swatch', 'oil-material'}
+FESTIVE_ATLAS = 'art/festive-pieces'
 
 SLOTS = (
     'chip-0', 'chip-1', 'chip-2', 'chip-3', 'chip-4',
@@ -197,27 +198,31 @@ def inputs(root):
     borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
     sun_coin = [root / 'art/board-theme/sun-coin' / name for name in (
         'source.png', 'prompt.txt', 'concept.png')] if root.name == 'relic-rush' else []
+    festive = [root / FESTIVE_ATLAS / name for name in (
+        'source.png', 'prompt.txt', 'layout.png')] if root.name == 'christmas-market' else []
     paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'),
             (BLOCKER_PAINT, 'reference.png'))
              for name in ('source.png', 'prompt.txt', target)]
     paint += [FLOOR_PAINT / name for name in ('source.png', 'prompt.txt', 'relic-rush-concepts.png', 'christmas-market-concepts.png')]
-    return painted(root) + borrowed + sun_coin + rendered(root) + paint + chain_inputs() + [Path(__file__).with_name('match3_specials.py')]
+    return painted(root) + borrowed + sun_coin + festive + rendered(root) + paint + chain_inputs() + [Path(__file__).with_name('match3_specials.py')]
 
 
 def registered(root, mask):
-    path, prompt, accent_path, accent_prompt = painted(root)
+    path, prompt, *_ = painted(root)
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
     areas = reference_areas()
     hex_silhouette = mask.point(lambda alpha: 255 if alpha >= 128 else 0)
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
-        source, accent = [stack.enter_context(Image.open(p)) for p in (path, accent_path)]
+        source = stack.enter_context(Image.open(path))
+        festive = stack.enter_context(Image.open(root / FESTIVE_ATLAS / 'source.png')) if pack == 'festive' else None
+        if festive:
+            assert festive.mode == 'RGBA' and festive.size == (1536, 1024), festive.filename
         power_ups, floors, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
                  for folder in (POWER_UP_PAINT, FLOOR_PAINT, BLOCKER_PAINT)]
         for sheet in (power_ups, floors, blockers):
             assert sheet.mode == 'RGBA', sheet.filename
-        for sheet in (source, accent):
-            assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254), sheet.filename
+        assert source.mode == 'RGBA' and source.size == (1254, 1254), source.filename
         frames, records = registered_chains(root.name, root)
         for i, slot in enumerate(SLOTS):
             name = f'{pack}-{i}' if i < 6 else slot
@@ -225,7 +230,12 @@ def registered(root, mask):
             is_power_up_paint = name in PAINTED_SPECIALS
             is_floor_paint = name in PAINTED_FLOORS
             is_blocker_paint = name == 'stone-1'
-            if name == 'relics-0':
+            is_festive_piece = festive is not None and i < 6
+            if is_festive_piece:
+                sheet, sprite_prompt = festive, root / FESTIVE_ATLAS / 'prompt.txt'
+                row, col = divmod(i, 3)
+                crop = (col * 512, row * 512, (col + 1) * 512, (row + 1) * 512)
+            elif name == 'relics-0':
                 folder = root / 'art/board-theme/sun-coin'
                 sheet = stack.enter_context(Image.open(folder / 'source.png'))
                 assert sheet.mode == 'RGBA', sheet.filename
@@ -264,7 +274,7 @@ def registered(root, mask):
                     round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
                     round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
                 )
-                sheet, sprite_prompt = (accent, accent_prompt) if pack == 'festive' and i == 1 else (source, prompt)
+                sheet, sprite_prompt = source, prompt
                 if name == 'plane' and root.name != PLANE_FROM:
                     plane_path, sprite_prompt = borrowed_plane(root)
                     sheet = stack.enter_context(Image.open(plane_path))
@@ -302,6 +312,9 @@ def registered(root, mask):
             if name == 'relics-0':
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['reference'] = os.path.relpath(sprite_prompt.with_name('concept.png'), root)
+            if is_festive_piece:
+                records[name]['generator'] = 'built-in ImageGen'
+                records[name]['reference'] = os.path.relpath(sprite_prompt.with_name('layout.png'), root)
             if is_power_up_paint:
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['edit_target'] = os.path.relpath(POWER_UP_PAINT / 'scener-strip.png', root)
