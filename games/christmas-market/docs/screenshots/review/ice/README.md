@@ -1,8 +1,9 @@
 # Christmas Market ice review
 
-A Hundred Flames (level 19) shows both hit strengths. The Market Keeper's
-Guide shows the full pane. Each pair shows uniform opacity on the left
-and brighter, more opaque facets on the right.
+A Hundred Flames (level 19) shows both hit strengths. The board comparisons
+show the shared opacity curve on the left and brighter full-pane highlights
+on the right. The Market Keeper's Guide comparisons are from the earlier
+update that introduced the shared curve.
 
 | Screen | 480×900 | 390×844 |
 | --- | --- | --- |

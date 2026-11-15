@@ -7,7 +7,7 @@ one layer. Both ice overlays tint the piece underneath through their baked alpha
 | Atlas frame | Appearance | Runtime use |
 | --- | --- | --- |
 | `ice-1` | Translucent cyan ice with a broken upper edge | One hit remaining. Also used for the imported ice goal. |
-| `ice-2` | Translucent cyan pane with continuous faceted glass across the entire hex face | Two hits remaining. Also used in both guides. |
+| `ice-2` | Translucent cyan pane with high-contrast facets across the entire hex face | Two hits remaining. Also used in both guides. |
 
 Built-in ImageGen painted both strengths together on one transparent sheet.
 The [first pass](concept.png) used the archived Homescapes
@@ -23,16 +23,22 @@ and [the filled pane](filled-pane-prompt.txt).
 
 Run `python3 tools/match3_atlas.py` to pack the runtime textures at
 `engine/data/match3.png` and `games/<game>/data/match3.png`. The recipe crops
-matching 690×690 source squares and resizes them to 128×128. Both states use
-the same luma-to-opacity ramp. Dark blue at luma 140 and below is 24% opaque.
-Bright facets at luma 230 and above are 88% opaque, with a linear transition
-between the two. The full pane uses the canonical hex as coverage. The
-fractured state also retains its painted fracture alpha. The recipe multiplies
-the opacity ramp by that coverage and preserves the painted RGB. The atlas
-manifests record the crops, ramp, mask path and source fingerprints.
+matching 690×690 source squares and resizes them to 128×128. Each state uses
+a linear luma-to-opacity ramp clamped at its endpoints. The full pane reaches
+nearly opaque at a lower luma to make its painted highlights stand out.
 
-The in-game before and after captures cover both supported portrait sizes
-and the guide illustrations.
+| Atlas frame | Shadow luma and alpha | Highlight luma and alpha |
+| --- | --- | --- |
+| `ice-1` | 140 → 62 (24%) | 230 → 224 (88%) |
+| `ice-2` | 155 → 78 (31%) | 199 → 250 (98%) |
+
+The full pane uses the canonical hex as coverage. The fractured state also
+retains its painted fracture alpha. The recipe multiplies the opacity ramp
+by that coverage and preserves the painted RGB. The atlas manifests record
+the crops, ramps, mask path and source fingerprints.
+
+The in-game board comparisons cover both supported portrait sizes. The
+guide illustrations document the earlier shared opacity curve.
 
 - [Relic Rush](../../games/relic-rush/docs/screenshots/review/ice/README.md)
 - [Christmas Market](../../games/christmas-market/docs/screenshots/review/ice/README.md)

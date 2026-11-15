@@ -21,7 +21,11 @@ import pack_particles
 ROOT = Path(__file__).resolve().parents[1]
 ICE_DIR = ROOT / 'art/match3-ice'
 ICE_CROPS = {'ice-1': (129, 66, 819, 756), 'ice-2': (1060, 66, 1750, 756)}
-ICE_OPACITY_RAMP = {'luma': [140, 230], 'alpha': [62, 224]}
+ICE_OPACITY_RAMPS = {
+    'ice-1': {'luma': [140, 230], 'alpha': [62, 224]},
+    # The two-hit pane's painted highlights are dimmer than the broken rim.
+    'ice-2': {'luma': [155, 199], 'alpha': [78, 250]},
+}
 HEX_MASK = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
 ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept.png', 'clear-shell.png',
                                          'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt',
@@ -96,15 +100,16 @@ def verify_provenance(manifest_path):
 
 def registered_ice():
     sprites, records = {}, {}
-    dark, light = ICE_OPACITY_RAMP['luma']
-    transparent, opaque = ICE_OPACITY_RAMP['alpha']
-    opacity_curve = [round(transparent + (opaque - transparent) * min(1, max(0, (value - dark) / (light - dark))))
-                     for value in range(256)]
     with Image.open(HEX_MASK) as reference:
         mask = reference.getchannel('A')
     with Image.open(ICE_DIR / 'source.png') as sheet:
         assert sheet.mode == 'RGBA' and sheet.size == (1886, 834)
         for name, box in ICE_CROPS.items():
+            ramp = ICE_OPACITY_RAMPS[name]
+            dark, light = ramp['luma']
+            transparent, opaque = ramp['alpha']
+            opacity_curve = [round(transparent + (opaque - transparent) * min(1, max(0, (value - dark) / (light - dark))))
+                             for value in range(256)]
             sprite = sheet.crop(box).resize(mask.size, Image.Resampling.LANCZOS)
             paint = sprite.getchannel('A')
             if name == 'ice-2':
@@ -119,7 +124,7 @@ def registered_ice():
             sprite.putalpha(ImageChops.multiply(alpha, opacity))
             sprites[name] = sprite
             records[name] = {'source': 'art/match3-ice/source.png', 'prompt': 'art/match3-ice/filled-pane-prompt.txt',
-                             'crop': list(box), 'canvas': list(mask.size), 'opacity_ramp': ICE_OPACITY_RAMP,
+                             'crop': list(box), 'canvas': list(mask.size), 'opacity_ramp': ramp,
                              'mask': str(HEX_MASK.relative_to(ROOT))}
     return sprites, records
 

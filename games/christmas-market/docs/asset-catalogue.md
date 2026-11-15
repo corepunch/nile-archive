@@ -327,9 +327,9 @@ Market Keeper’s Guide.
 
 ## Ice
 
-`ice-2` is a continuous translucent cyan pane across the hex face and takes
-two hits. `ice-1` is translucent ice with a broken upper edge and takes one
-hit. Both states follow the canonical hex mask.
+`ice-2` is a continuous translucent cyan pane with high-contrast facets across
+the hex face and takes two hits. `ice-1` is translucent ice with a broken
+upper edge and takes one hit. Both states follow the canonical hex mask.
 Both states were drawn together in the shared ImageGen atlas and are packed
 into `data/match3.png`. The guide uses the full shell. The
 [ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,

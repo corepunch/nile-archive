@@ -251,7 +251,7 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | Authored name | State and meaning |
 | --- | --- |
 | `chain` | A silver chain holds the chip between two bolted hex edges. One hit unlocks the piece. |
-| `ice-2` | Translucent blue pane across the entire hex face. Two hits remain. |
+| `ice-2` | Translucent blue pane with high-contrast facets across the entire hex face. Two hits remain. |
 | `ice-1` | Translucent blue ice with a broken upper edge. One hit remains. |
 | `carpet-swatch`, `goal-carpet` | Restored mosaic and its goal icon. Coverage extends through matches touching the restored floor. |
 | `oil-material`, `goal-oil` | River silt fills each affected hex face. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
@@ -259,8 +259,9 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The board distinguishes the two ice strengths by silhouette. The guide shows
-the full shell with a **2** hit badge. Both states were drawn in one shared
+The board distinguishes the two ice strengths by silhouette and stronger
+highlights on the full pane. The guide shows the full pane with a **2** hit
+badge. Both states were drawn in one shared
 ImageGen atlas and are packed into `data/match3.png`. The
 [ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,
 registration and [portrait captures](screenshots/review/ice/README.md).

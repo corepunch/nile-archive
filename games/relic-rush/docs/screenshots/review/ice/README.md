@@ -1,8 +1,9 @@
 # Relic Rush ice review
 
-The Frozen Stair (level 22) shows both hit strengths. The Explorer's Guide
-shows the full pane with its hit count. Each pair shows uniform opacity on the left
-and brighter, more opaque facets on the right.
+The Frozen Stair (level 22) shows both hit strengths. The board comparisons
+show the shared opacity curve on the left and brighter full-pane highlights
+on the right. The Explorer's Guide comparisons are from the earlier update
+that introduced the shared curve.
 
 | Screen | 480×900 | 390×844 |
 | --- | --- | --- |
