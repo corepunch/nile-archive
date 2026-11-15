@@ -1333,6 +1333,7 @@ function E.new(config)
     end
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
     local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
+    local centred_game, centre_q = nil, 0
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
         local h = math.max(design_h, app.screen().h)
@@ -1341,8 +1342,22 @@ function E.new(config)
         R.board_pause = rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
         R.board_toast = rect(38, R.hud_rect.y + 68, w - 76, 28)
         R.tools_y = h - TOOLS_FROM_BOTTOM
-        R.board_origin = vec2(w / 2, h - BOARD_FROM_BOTTOM)
-        R.BOARD_CLIP = rect.centered(R.board_origin, board_size)
+        -- Centre the level's own cells: a small court laid off-centre in the grid
+        -- (the compact mask) would otherwise sit to one side of the screen.
+        local g = R.g
+        if g ~= centred_game then
+            centred_game, centre_q = g, 0
+            if g and not fitted then
+                local minq, maxq = math.huge, -math.huge
+                for i = 0, CELLS - 1 do
+                    if cell_active(g, i) then minq, maxq = math.min(minq, hex_q(i)), math.max(maxq, hex_q(i)) end
+                end
+                if minq <= maxq then centre_q = (minq + maxq) / 2 end
+            end
+        end
+        local shift = centre_q * 1.5 * HEX_R
+        R.board_origin = vec2(w / 2 - shift, h - BOARD_FROM_BOTTOM)
+        R.BOARD_CLIP = rect.centered(R.board_origin + vec2(shift, 0), board_size)
         if fitted then
             local top,bottom=R.hud_rect.y+HUD_H+16,R.tools_y-18
             local center=vec2(w/2,(top+bottom)/2)
