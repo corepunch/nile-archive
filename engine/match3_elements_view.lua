@@ -30,7 +30,7 @@ local FROST_BLUR = 9                        -- image pixels
 -- 0 is one flat frosted pane.
 local GLASS = {
     [0] = false,
-    {bend = .07, bevel = 1.5, light = .7},    -- subtle
+    {bend = .07, bevel = 1.5, light = .7},    -- subtle (default)
     {bend = .12, bevel = 2.0, light = 1},     -- medium
     {bend = .20, bevel = 2.5, light = 1},     -- strong
 }
@@ -164,9 +164,9 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
         local frost, dst = R.board_art[story.picture .. "-frost"], box:offset(vec2(sx, 0))
         local sharp = frost and frost.tex and 1 - cover or 1
         if sharp < 1 then
-            local pick = tonumber(app.arg("glass") or "") or 2
+            local pick = tonumber(app.arg("glass") or "") or 1
             local glass = GLASS[pick]
-            if glass == nil then glass = GLASS[2] end
+            if glass == nil then glass = GLASS[1] end
             local tint, scale = color(255, 255, 255, 255 * alpha * opacity), src.w / box.w
             local face = size2(2 * R.HEX_R * scale, math.sqrt(3) * R.HEX_R * scale)
             if not glass then gfx.image_part(frost, src, dst, tint) end
