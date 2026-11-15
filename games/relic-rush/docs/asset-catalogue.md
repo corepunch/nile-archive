@@ -75,8 +75,8 @@ to 256 px inside a 320 px transparent canvas). The tool only crops, resizes and 
 **Buried on the board.** Boards 1–7, 9 and 10 bury their object under still sand,
 well mud (4) or tide-room silt (10). The timber spans two staggered rows of seven cells total,
 and the cable winds through six. The compact finds occupy seven cells each. In the covered
-state the ground covers every excavation cell, with a charcoal silhouette over the sand for
-timber and cable. Each excavated cell shows its part of the painted prop on trench earth
+state the ground covers every excavation cell, with a black silhouette over the soil.
+Each excavated cell shows its part of the painted prop on trench earth
 beneath the piece. On first clear the pieces fade and the whole object holds on the board.
 The goal uses the 128 px slot beside the remaining cell count, and the **Item recovered!**
 card shows the compact file at 210 px. `lua/campaign.lua` (`bury`) lists each find's cells. See the
@@ -93,6 +93,23 @@ The manifest records the crops and placement for the four separate transparent P
 | --- | --- |
 | `laid-timber`, `laid-timber-silhouette` | Board 1. A thick stack of uneven cedar planks runs upward to the right across two rows of sand. |
 | `laid-cable`, `laid-cable-silhouette` | Board 3. The cable runs through six cells in alternating columns in the left chamber. |
+
+The [compact state atlas](../art/quest-objects/compact-states.png) and
+[ImageGen prompt](../art/quest-objects/compact-states.prompt.txt) contain the six
+compact finds and their covered states together. The reference sheet lays out
+the existing 320 px compact PNGs in atlas order, including the selected crank.
+Registration crops the authored black shapes, aligns them with the original
+painted PNGs and saves each as a separate 320 px RGBA file in `data/finds/`.
+See the [in-game review](screenshots/review/compact-silhouettes/README.md).
+
+| Covered sprite | Boards |
+| --- | --- |
+| `lens-silhouette` | 2, The Lamp Lens |
+| `chart-silhouette` | 4, Under the Pump |
+| `marker-silhouette` | 5 and 6, the quay and shore markers |
+| `tools-silhouette` | 7, The Tool Roll |
+| `supplies-silhouette` | 9, The Supply Crate |
+| `crank-silhouette` | 10, The Shutter Crank |
 
 The goal and recovered-item cards use the compact props. Board 8 also presents
 the compact broken cable. [Issue #102](https://github.com/corepunch/nile-archive/issues/102)

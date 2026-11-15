@@ -146,7 +146,7 @@ else
                          quest = l.quest_object, wonder = funds[i], materials = materials,
                          signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,
-                             laid_out = reveal.laid_out, cells = reveal.object and #l.oil or nil}}
+                             covered_picture = reveal.covered_picture, cells = reveal.object and #l.oil or nil}}
     end
     out.beats = {}
     for i, b in ipairs(require("story_content")) do

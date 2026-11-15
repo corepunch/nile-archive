@@ -155,6 +155,13 @@ for key in quest["slots"]:
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 assert all((ROOT / quest["crank"][key]).is_file() for key in ("source", "prompt"))
+compact_silhouettes = quest["compact_silhouettes"]
+declaration = re.search(r"A\.compact_silhouettes = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(compact_silhouettes["items"])
+assert all((ROOT / compact_silhouettes[key]).is_file() for key in ("source", "prompt"))
+for name, item in compact_silhouettes["items"].items():
+    assert item["runtime"] == f"data/finds/{name}-silhouette.png" and item["runtime"] in actual
+    assert f"`{name}-silhouette`" in doc
 laid = quest["laid_out"]
 assert all((ROOT / laid[key]).is_file() for key in ("source", "prompt", "guide"))
 declaration = re.search(r"A\.laid_finds = \{([^}]+)\}", art).group(1)

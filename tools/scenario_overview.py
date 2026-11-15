@@ -163,7 +163,7 @@ def match3_section(data, title):
             chips.append(f'<span class="chip fund" title="{esc(w.get("about"))}">{img}Funds <b>{esc(w["name"])}</b></span>')
         reveal = ''
         reveal_spec = lv.get('reveal') or {}
-        if reveal_spec.get('laid_out'):
+        if reveal_spec.get('covered_picture'):
             src = picture(FRAMES / f'scenario-{game}-find-{n:02d}.png', 300)
             if not src:
                 name = reveal_spec['picture'].removeprefix('find-')

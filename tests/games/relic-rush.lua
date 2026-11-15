@@ -75,6 +75,8 @@ shot("designed-chambers", "390x844", "--level 3 --safe-area 0,47,0,34")
 shot("delivery-finale", "480x900", "--level 30")
 shot("crank-half", "480x900", "--level 10 --reveal .5 --frames 180")
 shot("crank-half-phone", "390x844", "--level 10 --reveal .5 --frames 180 --safe-area 0,47,0,34")
+shot("crank-covered", "480x900", "--level 10")
+shot("crank-covered-phone", "390x844", "--level 10 --safe-area 0,47,0,34")
 shot("crank-found", "480x900", "--level 10 --reveal 1 --frames 95")
 shot("crank-found-phone", "390x844", "--level 10 --reveal 1 --frames 95 --safe-area 0,47,0,34")
 shot("crank-award", "480x900", "--level 10 --reveal 1 --frames 240")
@@ -242,6 +244,7 @@ reel("homescapes-maker-transition", 40, 3, "480x900", "--maker-reel --reel")
 if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-relic-rush-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
     frame("scenario-relic-rush-landing", "480x900", "--level 30 --reveal 1 --frames 89")
-    frame("scenario-relic-rush-find-01", "480x900", "--level 1 --reveal 1 --frames 95")
-    frame("scenario-relic-rush-find-03", "480x900", "--level 3 --reveal 1 --frames 95")
+    for _, level in ipairs{1, 2, 3, 4, 5, 6, 7, 9, 10} do
+        frame(("scenario-relic-rush-find-%02d"):format(level), "480x900", "--level " .. level .. " --reveal 1 --frames 95")
+    end
 end

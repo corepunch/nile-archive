@@ -606,16 +606,22 @@
     "data/expedition-hud/shop-built.png",
     "data/expedition-hud/shop-locked.png",
     "data/finds/cable.png",
+    "data/finds/chart-silhouette.png",
     "data/finds/chart.png",
+    "data/finds/crank-silhouette.png",
     "data/finds/crank.png",
     "data/finds/laid-cable-silhouette.png",
     "data/finds/laid-cable.png",
     "data/finds/laid-timber-silhouette.png",
     "data/finds/laid-timber.png",
+    "data/finds/lens-silhouette.png",
     "data/finds/lens.png",
+    "data/finds/marker-silhouette.png",
     "data/finds/marker.png",
+    "data/finds/supplies-silhouette.png",
     "data/finds/supplies.png",
     "data/finds/timber.png",
+    "data/finds/tools-silhouette.png",
     "data/finds/tools.png",
     "data/fonts/LilitaOne-Regular.ttf",
     "data/fonts/lilitaone-OFL.txt",
@@ -1008,7 +1014,10 @@
   "result_icons": {
     "source": "art/result-icons/source.png",
     "prompt": "art/result-icons/prompt.txt",
-    "source_size": [1774, 887],
+    "source_size": [
+      1774,
+      887
+    ],
     "generator": "Built-in ImageGen, 2026-11-15. Both readout icons authored in one transparent atlas, using the Christmas Market result screen as a style reference.",
     "runtime": "data/result-icons.png",
     "registration": "tools/prepare_result_icons.py",
@@ -1017,11 +1026,21 @@
     "states": "Static readout art. First-clear celebration scales and fades the same star; the town wallet capsule handles its own input states.",
     "icons": {
       "discovery-star": {
-        "box": [46, 28, 843, 855],
+        "box": [
+          46,
+          28,
+          843,
+          855
+        ],
         "meaning": "First-clear celebration, discovery payout and cumulative town wallet count"
       },
       "next-clue": {
-        "box": [929, 76, 1736, 849],
+        "box": [
+          929,
+          76,
+          1736,
+          849
+        ],
         "meaning": "Investigation continues after a first clear without a scheduled restoration"
       }
     },
@@ -1287,6 +1306,105 @@
               "runtime": "data/finds/laid-cable-silhouette.png"
             }
           }
+        }
+      }
+    },
+    "compact_silhouettes": {
+      "generator": "Built-in ImageGen",
+      "source": "art/quest-objects/compact-states.png",
+      "prompt": "art/quest-objects/compact-states.prompt.txt",
+      "reference": "3 × 2 grid of the corresponding 320 px compact runtime PNGs. The reference has a 30 px gutter on each side of every asset.",
+      "registration": "Crop the authored black state, optionally rotate, resize uniformly and offset on the same 320 px canvas as the existing painted prop. Preserve alpha.",
+      "items": {
+        "lens": {
+          "crop": [
+            199,
+            523,
+            423,
+            754
+          ],
+          "angle": 0,
+          "side": 268,
+          "offset": [
+            0,
+            0
+          ],
+          "runtime": "data/finds/lens-silhouette.png"
+        },
+        "chart": {
+          "crop": [
+            626,
+            542,
+            907,
+            740
+          ],
+          "angle": 2.5,
+          "side": 259,
+          "offset": [
+            0,
+            5
+          ],
+          "runtime": "data/finds/chart-silhouette.png"
+        },
+        "marker": {
+          "crop": [
+            1096,
+            528,
+            1330,
+            744
+          ],
+          "angle": 0,
+          "side": 260,
+          "offset": [
+            0,
+            -3
+          ],
+          "runtime": "data/finds/marker-silhouette.png"
+        },
+        "tools": {
+          "crop": [
+            189,
+            777,
+            425,
+            997
+          ],
+          "angle": 0,
+          "side": 260,
+          "offset": [
+            0,
+            0
+          ],
+          "runtime": "data/finds/tools-silhouette.png"
+        },
+        "supplies": {
+          "crop": [
+            648,
+            773,
+            889,
+            999
+          ],
+          "angle": 0,
+          "side": 260,
+          "offset": [
+            0,
+            0
+          ],
+          "runtime": "data/finds/supplies-silhouette.png"
+        },
+        "crank": {
+          "crop": [
+            1085,
+            791,
+            1329,
+            986
+          ],
+          "angle": 0,
+          "side": 260,
+          "offset": [
+            0,
+            0
+          ],
+          "runtime": "data/finds/crank-silhouette.png"
         }
       }
     }

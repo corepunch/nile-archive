@@ -3,7 +3,7 @@
 The expedition uses relic, blocker, sand sweeping, spreading ground and delivery goals. Boards
 1–7, 9 and 10 bury their quest object under sand, well mud or tide-room silt.
 Timber takes seven cells across two staggered rows and the cable takes six in a zigzag.
-Sand cells on those two boards show a dark silhouette until a match reveals the painted find.
+Each buried find shows a black silhouette over its covered cells until a match reveals the painted find.
 Uncovering all buried cells is a goal (shown with the object's own icon), a crew member speaks at
 the halfway point, and the first clear shows the whole object on the emptied
 board before its **Item recovered!** card. Board 8 sweeps sand from the stonework and shows the broken cable on its recovered-item card. Boards 18

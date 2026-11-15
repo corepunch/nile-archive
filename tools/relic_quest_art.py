@@ -91,9 +91,30 @@ def check_fit(sprite, key, cells, overlay_dir):
     return solid
 
 
-def laid_out_finds(overlay_dir):
-    manifest = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
-    spec = manifest['quest_objects']['laid_out']
+def silhouette_overlap(exposed, covered):
+    overlap = ImageChops.darker(exposed, covered).histogram()[255]
+    extent = ImageChops.lighter(exposed, covered).histogram()[255]
+    return overlap / extent
+
+
+def state_crop(source, placement):
+    sprite = source.crop(placement['crop'])
+    if placement.get('angle'):
+        sprite = sprite.rotate(placement['angle'], resample=Image.Resampling.BICUBIC, expand=True)
+        bounds = sprite.getchannel('A').point(lambda a: 255 if a >= 32 else 0).getbbox()
+        sprite = sprite.crop(bounds)
+    return sprite
+
+
+def place_state(sprite, size, offset):
+    canvas = Image.new('RGBA', size)
+    x, y = ((outer - inner)//2 + shift for outer, inner, shift in zip(size, sprite.size, offset))
+    assert 0 <= x <= canvas.width - sprite.width and 0 <= y <= canvas.height - sprite.height
+    canvas.paste(sprite, (x, y))
+    return canvas
+
+
+def laid_out_finds(spec, overlay_dir):
     if overlay_dir:
         overlay_dir.mkdir(parents=True, exist_ok=True)
     with Image.open(ROOT / spec['source']) as source:
@@ -102,23 +123,27 @@ def laid_out_finds(overlay_dir):
             shapes = {}
             for state, placement in item['states'].items():
                 name = f'{key}-{state}'
-                sprite = source.crop(placement['crop'])
-                if placement.get('angle'):
-                    sprite = sprite.rotate(placement['angle'], resample=Image.Resampling.BICUBIC, expand=True)
-                    bounds = sprite.getchannel('A').point(lambda a: 255 if a >= 32 else 0).getbbox()
-                    sprite = sprite.crop(bounds)
+                sprite = state_crop(source, placement)
                 sprite.thumbnail(tuple(placement['paint_size']), Image.Resampling.LANCZOS)
-                canvas = Image.new('RGBA', item['canvas'])
-                dx, dy = placement.get('offset', (0, 0))
-                pos = ((canvas.width - sprite.width)//2 + dx, (canvas.height - sprite.height)//2 + dy)
-                assert all(0 <= at <= outer - inner for at, outer, inner in zip(pos, canvas.size, sprite.size)), name
-                canvas.paste(sprite, pos)
+                canvas = place_state(sprite, item['canvas'], placement.get('offset', (0, 0)))
                 shapes[state] = check_fit(canvas, name, item['cells'], overlay_dir)
                 yield ROOT / placement['runtime'], canvas
-            exposed, covered = shapes['exposed'], shapes['covered']
-            overlap = ImageChops.darker(exposed, covered).histogram()[255]
-            extent = ImageChops.lighter(exposed, covered).histogram()[255]
-            assert overlap / extent >= .90, f'{key} shifts visibly between the covered and exposed states'
+            assert silhouette_overlap(shapes['exposed'], shapes['covered']) >= .90, (
+                f'{key} shifts visibly between the covered and exposed states')
+
+
+def compact_silhouettes(spec, compact):
+    with Image.open(ROOT / spec['source']) as source:
+        assert source.mode == 'RGBA', 'compact silhouettes need authored alpha'
+        for key, placement in spec['items'].items():
+            sprite = state_crop(source, placement)
+            scale = placement['side'] / max(sprite.size)
+            sprite = sprite.resize(tuple(round(d * scale) for d in sprite.size), Image.Resampling.LANCZOS)
+            exposed = compact[FINDS / f'{key}.png']
+            covered = place_state(sprite, exposed.size, placement.get('offset', (0, 0)))
+            shapes = [im.getchannel('A').point(lambda a: 255 if a >= 128 else 0) for im in (exposed, covered)]
+            assert silhouette_overlap(*shapes) >= .90, f'{key} silhouette does not align with the original'
+            yield ROOT / placement['runtime'], covered
 
 
 def same(path, expected):
@@ -133,7 +158,11 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--overlay-dir', type=Path, help='Write review images with the flat-top footprints')
     args = parser.parse_args()
-    outputs = [(OUTPUT, atlas()), *finds(), *laid_out_finds(args.overlay_dir)]
+    manifest = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
+    quest = manifest['quest_objects']
+    compact = dict(finds())
+    outputs = [(OUTPUT, atlas()), *compact.items(), *laid_out_finds(quest['laid_out'], args.overlay_dir),
+               *compact_silhouettes(quest['compact_silhouettes'], compact)]
     if args.check:
         for path, expected in outputs:
             if not same(path, expected):

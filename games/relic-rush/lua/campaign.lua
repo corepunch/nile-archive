@@ -329,10 +329,10 @@ end
 local function bury(board, cells, lesson, bark, laid_out)
     local l = levels[board]
     local key = l.quest_object.key
+    local picture = (laid_out and "find-laid-" or "find-") .. key
     l.oil, l.oil_still, l.lesson = cells, true, lesson
-    l.reveal = {picture=(laid_out and "find-laid-" or "find-") .. key,
-        covered_picture=laid_out and "find-laid-" .. key .. "-silhouette" or nil,
-        icon=key, floor="oil", object=true, bark=bark, laid_out=laid_out}
+    l.reveal = {picture=picture, covered_picture=picture .. "-silhouette",
+        icon=key, floor="oil", object=true, bark=bark}
 end
 bury(1, {cell(-2,3), cell(-1,2), cell(0,1), cell(1,0), cell(-1,3), cell(0,2), cell(1,1)},
     "Match on the sand to uncover the timber.", "Mara: That's cut timber under the sand. Keep going!", true)

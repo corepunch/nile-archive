@@ -85,7 +85,7 @@ open the dialogs.
 
 Boards 1 to 7, 9 and 10 bury their quest object in sand, well mud or tide-room silt.
 The camp timber spans seven cells in two staggered rows and the relay cable winds through six.
-On those two boards the sand shows the object's dark outline. Matches replace it with
+The covered cells show each object's black silhouette over the soil. Matches reveal
 the painted object one cell at a time. The goal shows the object and the cells left.
 Board 8 sweeps sand off the stonework and shows the broken cable on the recovered-item card.
 Use `--level 3 --reveal .5` to preview a half-uncovered find.
