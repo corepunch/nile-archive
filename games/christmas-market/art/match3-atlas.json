@@ -3752,7 +3752,7 @@
       "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
-      "tools/match3_theme_art.py": "1f6b2964f4c0e25e0b9889935e8e12b874a2c9353829679ec08c9fb6007e0e46",
+      "tools/match3_theme_art.py": "07b0d3c96c9fce9f333dd26c5d8420dcf91beddcd085e1dac46351a03673dd3a",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {

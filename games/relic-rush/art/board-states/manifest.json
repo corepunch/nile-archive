@@ -973,7 +973,7 @@
       "pause-disabled",
       "life"
     ],
-    "meaning": "Settings gear; life heart, archaeological hex amulets and discovery stars. Wood, stone and compasses are retired wallet resources.",
+    "meaning": "Settings gear; life heart, Amulets shown with the sun coin, and discovery stars. Wood, stone and compasses are retired wallet resources.",
     "runtime": [
       "data/expedition-hud/pause-normal.png",
       "data/expedition-hud/pause-hover.png",
@@ -1252,6 +1252,23 @@
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
+    "sun_coin": {
+      "generator": "built-in ImageGen",
+      "source": "art/board-theme/sun-coin/source.png",
+      "prompt": "art/board-theme/sun-coin/prompt.txt",
+      "reference": "art/board-theme/sun-coin/concept.png",
+      "frame": "relics-0",
+      "rule": "Default Relics IDOL (kind 0), used for matching, idol goals and the Amulet icon.",
+      "states": {
+        "normal": "Centered round gold coin with an embossed sun face",
+        "selected": "Same coin with the existing selected cell frame",
+        "hint": "Same coin with the existing hint cell frame",
+        "blocked": "Same coin under the existing blocker overlays"
+      },
+      "registration": "art/match3-atlas.json",
+      "reproduction": "python3 tools/match3_atlas.py",
+      "review": "docs/screenshots/review/sun-coin/README.md"
+    },
     "power_up_review": "docs/screenshots/review/power-up-paint/README.md",
     "power_up_models": {
       "generator": "tools/match3_specials.py",

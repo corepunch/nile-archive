@@ -20,7 +20,7 @@ R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or 
 R.locked_notice = words.locked
 -- Lanternlight fades at the patch boundary, so neighbouring unlit cells stay gray.
 R.carpet_patch = {corner = .25, fillet = .8,
-    range = .6, texel = 1.5, tile = 1.5, inset = 3.4, rim = 0, shade = 0, bevel = 0, feather = 3}
+    range = .6, texel = 1.5, tile = 1.5, inset = 3.4, feather = 3}
 R.reveal_play_opacity = .62   -- keep the treats readable over the paintings
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools, {["goal-carpet"] = {x = -2}})
@@ -51,11 +51,10 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local frame = (board and BOARD_FRAME_SIZE or ART_STATE_SIZE) * scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
-    if t.special ~= NORMAL then
-        gfx.image(R.board_art[art.specials[t.special]],dst,tint)
-    else
-        gfx.image(R.relics[t.kind+1],rect.centered(at,size2(s*aspect,s/aspect)),tint)
-    end
+    local tex, area = R.relics[t.kind+1], rect.centered(at,size2(s*aspect,s/aspect))
+    if t.special ~= NORMAL then tex, area = R.board_art[art.specials[t.special]], dst end
+    if board then elements.piece_shadow(tex, area, alpha, s) end
+    gfx.image(tex, area, tint)
 end
 local draw_relic = R.draw_relic
 

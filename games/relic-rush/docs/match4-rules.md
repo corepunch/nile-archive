@@ -39,7 +39,7 @@ The three-episode campaign adds twenty connected, rotated lane variants with tri
 
 ## Idol
 
-The gold idol is six-sided, like the board. Since the tile-set update the match pieces come from `art/tile-sets/source.png` (see [tile-sets.md](tile-sets.md)); the selected Relics pack keeps the hexagonal sun idol.
+The default Relics pack shows a round gold sun coin for idol matches and goals. See the [tile art comparison](tile-sets.md) for the optional packs.
 
 See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [before/after trickling captures](review/trickling/README.md).
 

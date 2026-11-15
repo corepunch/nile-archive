@@ -32,12 +32,12 @@ end
 
 -- The spreading coverage objective forms a continuous patch: a signed
 -- distance field of their cells (texture.hex_field, rounded outside corners,
--- filleted inside ones) masks a tiled material, and the rim is shaded. A field
+-- filleted inside ones) masks a tiled material or picture, unshaded. A field
 -- is rebuilt only when its cells or layout change.
 -- Polynomial smooth-min rounds an inside corner by about a quarter of its fillet.
 local CARPET_PATCH = {
     corner = .25, fillet = .8, range = .6, texel = 1.5, tile = 1.15,
-    inset = 1.4, rim = 2.3, shade = .26, bevel = .15, shadow_y = 1.4, softness = 2.4, opacity = 76,
+    inset = 1.4,
 }
 local function patch_field(R, cells, spec)
     local origin = R.board_origin
@@ -76,7 +76,7 @@ local function tile(t, area, side, origin, tint)
         end
     end
 end
--- A first-clear picture replaces restored carpet, or peeks through the
+-- A story picture replaces restored carpet, or peeks through the
 -- original hazard cells as they are cleared (`reveal.floor = "oil"`).
 -- On the win the pieces clear away (E.reveal_cover) and the finished picture
 -- holds for a moment before the first-clear beat (E.reveal_holding).
@@ -132,12 +132,7 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
     local area = field.area:offset(vec2(sx, 0))
     local side = 2 * R.HEX_R * spec.tile
     local origin = R.board_origin + vec2(sx, 0)
-    if spec.shadow_y then
-        local shadow = area:offset(vec2(1, spec.shadow_y))
-        gfx.sdf_mask(field.texture, shadow, field.range, 0, 0, 0, spec.softness)
-        gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
-    end
-    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0)
+    gfx.sdf_mask(field.texture, area, field.range, 0, 0, 0, spec.feather or 0)
     if story and story.floor ~= "oil" then
         local t = R.board_art[story.picture]
         local box, src = picture_crop(R, rules, t)
@@ -182,8 +177,10 @@ local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
 function E.ground(R, rules, sx)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    local story = reveal(R, rules)
-    local cover = story and E.reveal_cover(R, rules) or 1
+    -- The picture shows on every play; only a first clear speaks, fades the
+    -- pieces and holds the finished picture (reveal).
+    local story = reveal(R, rules) or rules.level_of(g).reveal
+    local cover = E.reveal_cover(R, rules)
     draw_carpet(R, rules, story, sx, alpha, cover)
     if story and story.floor == "oil" then draw_buried_picture(R, rules, story, sx, alpha, cover) end
     for i = 0, rules.CELLS - 1 do
@@ -369,6 +366,24 @@ function E.selection_scale(R,i)
         return R.reduced_motion and 1.06 or 1+.06*math.sin(R.now*5)^2
     end
     return 1
+end
+
+-- A soft drop shadow under a board piece, so it stays legible on bright floor
+-- art: the piece's silhouette inked dark blue (a single full-width stripe),
+-- dropped and spread over a ring of faint taps. size is the piece's drawn
+-- width in logical pixels.
+local SHADOW_TAPS = 8
+local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .035, .025, 11
+local SHADOW_INK = color(22, 38, 92, 255)
+function E.piece_shadow(tex, dst, alpha, size)
+    local drop, spread = size * SHADOW_DROP, size * SHADOW_SPREAD
+    local tint = color(255, 255, 255, SHADOW_TAP_ALPHA * alpha / 255)
+    local base = dst:offset(vec2(0, drop))
+    gfx.image_striped(tex, base, 0, 1, 1, SHADOW_INK, tint)
+    for k = 1, SHADOW_TAPS do
+        local a = k / SHADOW_TAPS * 2 * math.pi
+        gfx.image_striped(tex, base:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), 0, 1, 1, SHADOW_INK, tint)
+    end
 end
 
 -- Leave room to see artwork underneath pieces on special floor cells.

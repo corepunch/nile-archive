@@ -1,5 +1,5 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
--- The hex amulet identifies the spendable wallet; Leaf/Crystal remain board pieces.
+-- The sun coin identifies the spendable Amulet balance.
 -- Board clears score points; the fixed first-clear grant and Amulet-only replay
 -- payout are separate from colour counts (rules.reward_breakdown).
 local A = {}

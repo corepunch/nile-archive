@@ -131,7 +131,7 @@ The three static paintings lead into existing first-clear scenes. The
 landmarks stay fixed as the floor changes. During a match the painting is
 muted beneath the pieces. On a win, pieces and any remaining cover fade out
 over 0.6 seconds and the completed picture holds for 1.2 seconds before
-dialogue. Replays use the usual material. Reduce Motion shows the full reveal
+dialogue. Replays show the painting too, without the fade or the hold. Reduce Motion shows the full reveal
 without the fade.
 
 | Level | Rule and story | Built-in ImageGen master and prompt | Runtime |
