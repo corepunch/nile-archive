@@ -125,9 +125,12 @@ It pays into **Provisions**, the same family as the fruit. Those boards already
 use their green slot for the quay marker, and purple stone still supplies
 construction. Clearing the blue plaques and finding the marker are the win
 conditions. The bucket remains available on designated water boards and adds
-no fourth currency. Later, a restored workshop can introduce cut blocks in
-place of rough purple stone. Keep each intro tied to an actual change in the
-valley and display the new piece and its yield on the restoration card.
+no fourth currency. Confirming the Artisan Workshop unlocks cut blocks in
+the purple slot on board 9, where they also earn 1 Supplies each. The blue
+supply packs still assemble the crate. The cut blocks give the crew material
+to shore up the slipped steps to the tide room. The building card, board
+briefing and illustrated guide explain the payout, while the dialogue
+explains why the crew needs the water and stone.
 
 ## Restoration prices and earnings
 

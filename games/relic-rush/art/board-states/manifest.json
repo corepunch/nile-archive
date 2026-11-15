@@ -1814,6 +1814,25 @@
       "previous_runtime": "Board 8 picture and mosaic before the sand floor."
     }
   },
+  "resource_unlocks": {
+    "water": {
+      "building": "well",
+      "levels": [5, 6],
+      "kind": 3,
+      "yield": {"provisions": 1},
+      "runtime": "data/resource-pieces/water.png"
+    },
+    "cut-blocks": {
+      "building": "workshop",
+      "levels": [9],
+      "kind": 4,
+      "yield": {"supplies": 1},
+      "runtime": "data/tile-sets/resources/4.png",
+      "source": "art/tile-sets/source.png",
+      "source_cell": {"row": 3, "column": 5},
+      "registration": "tools/prepare_assets.py"
+    }
+  },
   "resource_pieces": {
     "source": "art/resource-pieces/scenario-atlas.png",
     "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",

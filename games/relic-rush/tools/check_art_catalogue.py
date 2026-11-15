@@ -22,6 +22,10 @@ assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
 for name in resources["slots"]:
     path = f"data/resource-pieces/{name}.png"
     assert path in actual and f"`{name}`" in doc
+for name, unlock in manifest["resource_unlocks"].items():
+    assert unlock["runtime"] in actual and f"`{name}`" in doc
+    assert all((ROOT / unlock[key]).is_file() for key in ("source", "registration") if key in unlock)
+assert re.search(r'A\.cut_blocks = "([^"]+)"', art).group(1) == manifest["resource_unlocks"]["cut-blocks"]["runtime"].removeprefix("data/")
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)

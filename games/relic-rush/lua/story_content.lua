@@ -13,8 +13,8 @@ return {
         {"mara", "Let’s get the camp ready before dark."},
     }},
     {key="restore-01", phase="restore", level=1, lines={
-        {"mara", "The timber held. My lamp fits the bracket, but the lens is missing."},
-        {"mara", "It must have fallen when the roof came down. Help me find it."},
+        {"mara", "The timber held. My lamp fits the bracket, but the lookout’s lens is missing."},
+        {"mara", "The lens must have fallen when the roof came down. Help me find it."},
     }},
     {key="after-02", phase="after", level=2, lines={
         {"mara", "The lens fits. One flash from our lamp. One back from below the cliff."},
@@ -34,29 +34,29 @@ return {
     {key="restore-04", phase="restore", level=4, lines={
         {"elena", "Now I can read it. The line runs from camp to a tide room."},
         {"tomas", "The lower quay lies on that route."},
-        {"mara", "Then we have a place to look. Thanks for the tip, Tomas."},
+        {"mara", "The pump’s running clear. Fill the buckets before we go."},
         {"tomas", "Look for a quay marker under the creepers. It should point out the lower route."},
     }},
     {key="after-05", phase="after", level=5, lines={
-        {"elena", "The quay marker is intact. Its notch points straight into the vines."},
+        {"elena", "The quay marker is intact. Its notch points down the shore."},
         {"adrian", "A route, at last. I shall put it in the expedition papers."},
         {"mara", "You keep those papers very close."},
         {"adrian", "They are the only dry thing I own. Is there a second marker?"},
     }},
     {key="after-06", phase="after", level=6, lines={
         {"mara", "There it is. The shore marker and the quay marker point to the same steps."},
-        {"elena", "And a crack through this one. We need tools before we try those steps."},
-        {"tomas", "I can show you the old way. It is safer than the shore."},
-        {"mara", "My tools will help. I left the roll lashed to the rail."},
+        {"elena", "The bottom tread has slipped. We’ll need stone blocks to shore it up."},
+        {"tomas", "These are the old steps. Once they’re firm, I’ll show you where they lead."},
+        {"mara", "We can cut blocks with my tools. I left the roll lashed to the rail."},
     }},
     {key="after-07", phase="after", level=7, lines={
         {"mara", "A tool roll, still dry inside. Let’s get the workshop set up."},
     }},
     {key="restore-07", phase="restore", level=7, lines={
-        {"tomas", "These tools will do. I used to maintain the tide room."},
+        {"tomas", "A good stone chisel. I used one like this to maintain the tide room."},
         {"elena", "You knew what the chart meant."},
         {"tomas", "Yes. I hoped the room would stay closed."},
-        {"mara", "Come with us. We can follow the cable the rest of the way."},
+        {"mara", "Help me cut those blocks. Then we’ll follow the cable together."},
         {"tomas", "Watch your step. The torn cable still snakes around the old fittings."},
     }},
     {key="after-08", phase="after", level=8, lines={
@@ -64,14 +64,14 @@ return {
         {"elena", "Then how is the lamp answering?"},
         {"tomas", "The room has a hand shutter. Ines knew how to work it."},
         {"mara", "Where is Ines?"},
-        {"tomas", "I have not seen her return. We stowed a supply crate on the approach."},
+        {"tomas", "I haven’t seen her since she left. Bring our blocks. There’s a crate by the steps."},
     }},
     {key="after-09", phase="after", level=9, lines={
-        {"mara", "The supply crate is intact. We can stock a dry place for the crew."},
+        {"mara", "The crate’s dry inside. Let’s set up a supply point while the crew shores up the steps."},
     }},
     {key="restore-09", phase="restore", level=9, lines={
-        {"mara", "Supplies are ready. We can reach the tide room now."},
-        {"tomas", "The shutter is missing a gear. Take care on the damaged wall."},
+        {"mara", "The steps are firm now. We can reach the tide-room door."},
+        {"tomas", "The viewing shutter by this door has lost a gear. Mind the cracked wall."},
         {"elena", "We go together, then. Nobody steps onto that wall alone."},
     }},
     {key="before-10", phase="before", level=10, lines={
@@ -80,8 +80,8 @@ return {
         {"elena", "Let the light tell us what it can."},
     }},
     {key="after-10", phase="after", level=10, lines={
-        {"tomas", "The gear fits. Our shutter’s open. The old signal warns boats away from the quay."},
-        {"mara", "I can see the shutter across the flooded gap. There’s no way to see behind it."},
+        {"tomas", "The gear fits. Through our shutter you can see the far one warning boats off the quay."},
+        {"mara", "It’s across a flooded gap. Whoever’s working it is out of sight."},
         {"mara", "But the last flashes were different. Someone changed the pattern."},
         {"elena", "Someone is asking us to notice, not merely warning boats."},
         {"tomas", "Ines used to send that warning. She left for repair plans years ago."},

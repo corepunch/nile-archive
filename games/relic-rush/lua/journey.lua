@@ -3,6 +3,8 @@
 -- for older saves, Mara's region lines and the wonders' changing tap lines.
 -- The bookkeeping (checkpoints, scheduling, migration) is the engine's
 -- (match3.game journey).
+local economy = require("economy")
+
 return require("match3.game").journey{
     beats = require("story_content"),
     wonder_levels = require("campaign").wonder_levels,
@@ -27,8 +29,10 @@ return require("match3.game").journey{
     -- {kind, from level, line}: the latest reached replaces the catalogue line.
     about = {
         {0, 1, "Mara's lamp fits the bracket. The light under the cliff can see it."},
-        {1, 4, "A chart in the pump cover traces the old cable to the tide room."},
-        {2, 7, "The tools Tomas used to maintain the tide room are ready again."},
+        {economy.WELL_KIND, 4, economy.unlock_text(economy.unlocks.water)},
+        {economy.WELL_KIND, 6, "The chart from the pump traces the old cable to the tide room."},
+        {economy.WORKSHOP_KIND, 7, economy.unlock_text(economy.unlocks["cut-blocks"])},
+        {economy.WORKSHOP_KIND, 9, "We cut the blocks for the tide-room approach here."},
         {3, 9, "The crew stocks up here before taking the old path to the tide room."},
         {4, 13, "A dry place to lay out the note that led the crew to Ines."},
         {5, 16, "There is a dry bunk here for the keeper when she can get ashore."},

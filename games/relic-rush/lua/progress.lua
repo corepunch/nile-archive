@@ -4,15 +4,25 @@ local island = require("island")
 local economy = require("economy")
 
 function R.board_context(preview)
-    if preview then return not app.arg("before-well") end
-    return island.owned(R.island, economy.WELL_KIND) > 0
+    if preview then
+        return {
+            [economy.WELL_KIND]=not app.arg("before-well"),
+            [economy.WORKSHOP_KIND]=not app.arg("before-workshop"),
+        }
+    end
+    return {
+        [economy.WELL_KIND]=island.owned(R.island, economy.WELL_KIND) > 0,
+        [economy.WORKSHOP_KIND]=island.owned(R.island, economy.WORKSHOP_KIND) > 0,
+    }
 end
 
 function R.board_lesson(g)
-    if g.level == 4 and g.resource_yields[3] == economy.water then
-        return "Water stocks your camp. Clear plaques and collect markers."
+    local level = rules.level_of(g)
+    local piece = economy.unlocks[level.resource_unlock]
+    if piece and g.resource_yields and g.resource_yields[piece.kind] == piece then
+        return level.lesson .. "\n" .. economy.unlock_text(piece)
     end
-    return rules.level_of(g).lesson
+    return level.lesson
 end
 
 function R.stash_completed()

@@ -194,8 +194,10 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
 Sun coins pay Gold. Red berries and green plantains pay Provisions. Blue-tied
-timber and cut stone pay Supplies. Restore the Spring Well to replace timber
-with water buckets on boards 5 and 6. Buckets pay into Provisions. At a
+timber and dressed stone pay Supplies. Restore the Spring Well to replace timber
+with water buckets on boards 5 and 6. Each cleared bucket earns 1 Provisions.
+Restore the Artisan Workshop to get purple cut blocks on board 9. Each cleared
+block earns 1 Supplies alongside the blue supply pack objective. At a
 restoration milestone the crew supplies any exact shortfall. First clears
 advance the story and unlock discovery stars. Replays earn resources and two
 Gold per unused move, with a maximum move bonus of 40 Gold.
@@ -259,8 +261,8 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 | 9 | Jade fountain | 110 Gold + 33 Supplies | Let the ancient spring flow once more. |
 | 10 | Temple of the sun | 120 Gold + 30 Provisions + 36 Supplies | The heart of the valley shines again. |
 
-Construction makes the next story beat available. The Spring Well also
-changes the blue match kind on the following two expeditions.
+Construction makes the next story beat available. The Spring Well and
+Artisan Workshop also change the pieces on expeditions 5–6 and 9 respectively.
 
 The island's **SHOP** adds 86 repeatable buildings and decorations to these
 ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,

@@ -46,14 +46,24 @@ sprite when a power-up forms.
 | `berries` | Red berries, 1 Provisions | Provisions |
 | `plantains` | Green plantains, 1 Provisions | Board only |
 | `timber` | Blue-tied timber, 1 Supplies | Supplies |
-| `stone` | Violet-grey cut stone, 1 Supplies | Board only |
-| `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board and guide |
+| `stone` | Pale violet dressed stone, 1 Supplies | Board only |
+| `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board, guide and expedition briefing |
+| `cut-blocks` | Dark outlined masonry stack, 1 Supplies. Replaces dressed stone in the purple slot on board 9 after the workshop is restored. | Board, guide and expedition briefing |
 
 The optional sixth resource slot uses the amber amphora from the Relics pack
 for the ration jar. It earns 1 Provisions.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 See the [economy art review](screenshots/review/expedition-economy/README.md).
+
+The cut blocks reuse the original painted Resources sheet's third row,
+fifth column. The approved darker stack keeps the artist's outline and
+alpha, and the lighter dressed stone keeps the existing expedition sprite.
+The existing crop and registration in `python3 games/relic-rush/tools/prepare_assets.py`
+produces `data/tile-sets/resources/4.png`. Both unlocks use their campaign
+artwork across the art previews and keep the existing board overlays for
+selection, hint, lock and cover. Forming a special uses the shared authored
+special sprite. [Restoration resource review](screenshots/review/restoration-resources/README.md)
 
 
 ## The signal finale

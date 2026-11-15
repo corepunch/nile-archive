@@ -1,5 +1,11 @@
 # Applying Cradle of Rome to Relic Rush
 
+The Spring Well and Artisan Workshop resource handoffs are now playable.
+The [restoration resource review](../../games/relic-rush/docs/screenshots/review/restoration-resources/README.md)
+shows the implemented briefings, the cut blocks on board 9 and the story
+payoff at the steps. The tuning and optional skill challenge below are
+design proposals.
+
 Cradle of Rome is the economy reference. Tropicats is the companion reference
 for quest structure, story pacing and the way multiple board systems combine.
 Both point to making the next action legible, first on the board and then on

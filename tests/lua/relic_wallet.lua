@@ -16,8 +16,7 @@ do
     check(not rules.lose_life(p,{lost=false},10000),'winning boards cost no life')
 end
 
--- The palette keeps its matching slots. Only the built well changes the
--- sprite and proceeds of slot 3, and only on the two marker boards.
+-- Confirmed restorations affect only the authored slots and expeditions.
 do
     R.island=city.new();island.island_setup(R.island)
     local bank=purse(700,90,90,12)
@@ -30,11 +29,20 @@ do
     c:cancel()
     check(R.make_board(5,19).resource_yields[3].key=='timber','cancel still leaves the timber palette')
     check(island.island_place_next(c,bank,4,0),'confirm the earned well')
+    local workshop=economy.WORKSHOP_KIND
+    fits,spot=c:find_spot(workshop,island.island_suggestion(workshop))
+    check(fits,'workshop has a placement spot')
+    c:begin_place(workshop,spot)
+    check(R.make_board(8,19).resource_yields[4].key=='stone','workshop preview does not unlock cut blocks')
+    c:cancel()
+    check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
+    check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
         local spec=rules.level_of(g)
-        local water=g.resource_yields[3]==economy.water
-        check(water==(level==4 or level==5),'water only replaces the blue slot on boards 5 and 6')
+        local water=g.resource_yields[3]==economy.unlocks.water
+        local blocks=g.resource_yields[4]==economy.unlocks['cut-blocks']
+        check(water==(level==4 or level==5) and blocks==(level==8),'only the intended boards receive restoration pieces')
         if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
     end
@@ -57,6 +65,20 @@ do
     check(copy.earnings[2]==1 and g.earnings[2]==0,'water credits provisions and a board copy has an independent ledger')
     rules.game_apply(g,m)
     check(g.earnings[2]==1,'credit the water once when actually removed')
+
+    local supply_run=R.make_board(8,19)
+    local free={}
+    for i=0,rules.CELLS-1 do
+        if rules.game_cell_active(supply_run,i) and supply_run.chain[i]==0 and supply_run.ice[i]==0 then
+            free[#free+1]=i
+        end
+    end
+    local block,pack=free[1],free[2]
+    supply_run.tiles[block],supply_run.tiles[pack]=rules.tile(4),rules.tile(3)
+    m=rules.new_match();m.mask[block],m.mask[pack]=true,true
+    rules.game_apply(supply_run,m)
+    check(supply_run.relics==1 and supply_run.earnings[economy.SUPPLIES]==1,
+        'one cut block pays one Supplies and only the blue pack advances the crate goal')
 end
 
 -- Even a tool-only clear funds the next restoration. Optional spending
@@ -111,7 +133,7 @@ do
     R.prog.completed=nil
     check(save.read('relic-resource-complete',R.serialize),'load completed award')
     R.resume_completed()
-    check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.water,
+    check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.unlocks.water,
         'completed award restores its counts on the correct palette')
     check(rules.progress_reward(R.prog,R.g,R.wonders) and not R.prog.completed,'claim consumes the pending award')
     check(not rules.progress_reward(R.prog,R.g,R.wonders),'loaded award cannot bank twice')

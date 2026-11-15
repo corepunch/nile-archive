@@ -30,6 +30,7 @@ A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "suppl
 A.story_pieces = {"timber", "chart", "supplies", "lens", "cable", "marker", "tools", "note", "gear", "broken-cable"}
 A.separate_rewards = {"note", "broken-cable"}
 A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water"}
+A.cut_blocks = "tile-sets/resources/4.png"
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -102,6 +103,7 @@ function A.load()
     for _, key in ipairs(A.resource_pieces) do
         textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
     end
+    textures["resource-cut-blocks"] = texture.load(A.cut_blocks)
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
     for _, name in pairs(A.specials) do load(name) end

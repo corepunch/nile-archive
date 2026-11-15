@@ -36,13 +36,13 @@ Q.chapters = {
             dig(16, "Prepare shelter"), build("lodge"),
         }},
         {title="Keep the record", points=28, tasks={
-            dig(17, "Recover the fragment"), dig(18, "Compare the measurements"),
+            dig(17, "Clear a way to the fragment"), dig(18, "Compare the measurements"),
             dig(19, "Consult the records"), build("archive"), dig(20, "Find the signed plan"),
         }},
     }},
     {title="Keep the Light", quests={
         {title="Protect the warning", points=32, tasks={
-            dig(21, "Read the bearings"), dig(22, "Find another landing"),
+            dig(21, "Deliver the bearings tablet"), dig(22, "Find another landing"),
             dig(23, "Establish a lookout"), build("observatory"),
         }},
         {title="Repair the quay", points=36, tasks={
@@ -51,7 +51,7 @@ Q.chapters = {
         }},
         {title="Let the light speak", points=40, tasks={
             dig(27, "Prepare the wall"), dig(28, "Confront the claim"),
-            dig(29, "Restore the station"), build("temple"), dig(30, "Test the signal"),
+            dig(29, "Restore the station"), build("temple"), dig(30, "Deliver the signal plate"),
         }},
     }},
 }

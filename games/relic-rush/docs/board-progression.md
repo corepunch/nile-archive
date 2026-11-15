@@ -19,9 +19,10 @@ existing relic target sets the collection count.
 
 Ordinary boards use five resource pieces. The six-kind story palettes also
 have room for the amber ration jar. Restoring the Spring Well changes the
-blue slot from timber (Supplies) to a water bucket (Provisions) on boards 5
-and 6. The marker stays in its green story slot. The scene overview shows the
-palettes before and after the well.
+blue slot from timber (Supplies) to water buckets (1 Provisions each) on
+boards 5 and 6. The marker stays in its green story slot. Restoring the Artisan
+Workshop puts cut blocks in the purple slot on board 9 at the usual
+1 Supplies per piece. The blue supply packs remain the story objective.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap
@@ -38,11 +39,11 @@ objectives move the emphasis within each family.
 | 2 | The Lamp Lens | Tapered bowl | Match 4 for a rocket. Collect lenses. | 10 lenses | 29 |
 | 3 | The Relay Cable | Two chambers | Match beside a stone to break it. | 12 cable coils | 32 |
 | 4 | Under the Pump | Twin lanes | Collect map pieces. Match a chained piece to free it. | 15 map pieces | 35 |
-| 5 | The Quay Marker | Tapered bowl | Clear the blue plaques. Collect marker pieces. | 10 blue plaques, 14 marker pieces | 35 |
-| 6 | The Shore Marker | Two chambers | Match the piece under the salt crust. Collect marker pieces. | 14 marker pieces | 37 |
+| 5 | The Quay Marker | Tapered bowl | Clear plaques and collect markers. Water buckets earn Provisions. | 10 blue plaques, 14 marker pieces | 35 |
+| 6 | The Shore Marker | Two chambers | Match under salt crust to find markers. Water buckets earn Provisions. | 14 marker pieces | 37 |
 | 7 | The Tool Roll | Two chambers | Collect tool rolls. Break stone to open more space. | 16 tool rolls | 40 |
 | 8 | The Broken Cable | Compact court | Collect snapped cable. Match 5 for a rainbow ball. | 16 snapped cable pieces | 40 |
-| 9 | The Supply Crate | Two chambers | Collect supply packs. | 18 supply packs | 43 |
+| 9 | The Supply Crate | Two chambers | Collect blue supply packs. Cut blocks earn Supplies. | 18 supply packs | 43 |
 | 10 | The Shutter Gear | Twin lanes | Clear blue plaques and collect gears. | 12 blue plaques, 20 gears | 46 |
 | 11 | The Long Terrace | Tapered bowl | Clear the blue plaques along the terrace. | 12 blue plaques | 33 |
 | 12 | Twelve Crates | Twin lanes | Match through the vines to reach the blue plaques. | 12 blue plaques | 36 |

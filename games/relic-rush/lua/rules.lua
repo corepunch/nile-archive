@@ -7,9 +7,9 @@ local M = match3.new{flags=match3.LINE_MATCHES, radius=reference and reference.r
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 local start = M.game_start
-function M.game_start(level, seed, well_restored)
+function M.game_start(level, seed, restored)
     local spec = M.levels[math.max(0, math.min(level, M.LEVELS-1)) + 1]
-    return start(level, seed, not reference and economy.board_yields(spec, well_restored))
+    return start(level, seed, not reference and economy.board_yields(spec, restored))
 end
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS

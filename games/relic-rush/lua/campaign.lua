@@ -86,7 +86,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Quay Marker", "Clear the blue plaques. Collect marker pieces.", 35, 3100, 14, 4, 0)
+        local l = level("The Quay Marker", "Clear plaques and collect markers.", 35, 3100, 14, 4, 0)
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.ice_layers = 1
@@ -94,7 +94,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Shore Marker", "Match the piece under the salt crust. Collect marker pieces.", 37, 3400, 14, 0, 5)
+        local l = level("The Shore Marker", "Match under salt crust to find markers.", 37, 3400, 14, 0, 5)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 1, -1, 0)
         l.ice_layers = 1
@@ -118,7 +118,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Supply Crate", "Collect supply packs.", 43, 4600, 18, 5, 6)
+        local l = level("The Supply Crate", "Collect the blue supply packs.", 43, 4600, 18, 5, 6)
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.ice_layers = 2
@@ -331,6 +331,8 @@ levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the fla
 levels[8].story_piece, levels[8].goal_kind = "broken-cable", 4 -- purple replaces the crystal
 levels[8].omit_kind = 5
 levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
+levels[5].resource_unlock, levels[6].resource_unlock = "water", "water"
+levels[9].resource_unlock = "cut-blocks"
 levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the amphora
 levels[10].omit_kind = 0
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
@@ -399,7 +401,6 @@ local covers = {
 for i, l in ipairs(levels) do
     local cells = plaques[i]
     if not l.story_piece then l.omit_kind = 5 end
-    l.water_after_well = i == 5 or i == 6
     l.oil, l.oil_still = cells, cells ~= nil
     l.dress = {lock=locks[i], cover=l.ice > 0 and (covers[i] or "salt-crust") or nil,
         floor={normal="sandstone-floor", covered=cells and "blue-plaque" or nil}}

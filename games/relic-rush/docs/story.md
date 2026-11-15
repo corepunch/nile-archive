@@ -35,13 +35,13 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 
 | Chapter / quest and requester | Board-linked tasks and confirmed placement | Outcome / next request |
 | --- | --- | --- |
-| 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 gather camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 gather the tide chart pieces; **confirm Spring well**. | A hand-changed answering flash and chart lead to the quay. |
-| 1. Find the lower quay — Elena needs to follow the chart | 5 uncover the quay marker; 6 uncover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | Tomas admits he knows the route, and agrees to guide them. |
-| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 gather supplies for the crate; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter gear. | The old warning has been deliberately changed; someone is there now. |
+| 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 gather camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 gather the tide chart pieces; **confirm Spring well**. | A changed flash and the chart lead to the quay. The working well provides water for the search. |
+| 1. Find the lower quay — Elena needs to follow the chart | 5 recover the quay marker; 6 recover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | The markers lead to slipped steps. Tomas agrees to guide the crew and uses the tools to cut blocks for the approach. |
+| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 recover the supply crate and earn Supplies from cut blocks along the way; **confirm Jungle market** as the crew’s supply point; 10 recover the shutter gear. | The crew shores up the steps and reaches the tide room. Someone has changed the old warning. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test a route; 15 check the broken wall; 16 prepare shelter; **confirm Explorer's lodge**. | A safe shelter is ready, but the direct quay is unsafe. |
-| 2. Keep the record — Elena needs the repair plans | 17 recover a fragment; 18 compare measures; 19 consult records; **confirm Lost-world archive**; 20 find Ines's signed plan. | Tomas admits the broken cable and shares the key; Adrian's claim threatens the records. |
-| 3. Protect the warning — Adrian must prevent Kessler taking the relay | 21 read bearings; 22 seek an alternate landing; 23 establish lookout; **confirm Star observatory**. | The crew can guide a boat without using the damaged quay. |
+| 2. Keep the record — Elena needs the repair plans | 17 clear a way to the fragment; 18 compare measures; 19 consult records; **confirm Lost-world archive**; 20 open the area with Ines's signed plan. | Tomas admits the broken cable and shares the key; Adrian's claim threatens the records. |
+| 3. Protect the warning — Adrian must prevent Kessler taking the relay | 21 deliver the bearings tablet; 22 seek an alternate landing; 23 establish lookout; **confirm Star observatory**. | The crew can guide a boat without using the damaged quay. |
 | 3. Repair the quay — Mara needs a reliable landing | 24 measure tide; 25 secure materials; 26 restore water access; **confirm Jade fountain**. | Ines's plan shows how to divert water while the wall is repaired. |
 | 3. Let the light speak — Elena asks everyone to finish the warning | 27 prepare the wall; 28 confront the claim; 29 restore the station; **confirm Temple of the sun**; 30 deliver the signal plate and test the warning. | Adrian gives up the claim. Ines answers from the safe landing and brings a chart of other stations. |
 
@@ -62,6 +62,8 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | Empty lamp bracket (opening) | Camp lamp can answer the relay (2); warning is tested together (30). |
 | Answer repeats then changes (2–3) | A person changes the shutter (10). The note reveals I. R. on board 13 and Tomas names Ines at the courtyard. Her delayed three flashes from the safe landing confirm it (30). |
 | Pump chart shows a broken route (4) | Tomas knows the tide room (7); the signed repair plan explains the damaged wall (20). |
+| The well runs again (restoration 4) | The crew can carry water on both marker expeditions (5–6). Matching a bucket stocks Provisions. |
+| A tread has slipped at the quay (6) | The workshop cuts blocks (restoration 7), the crew brings them on the supply run (9), and the shored steps give access to the tide-room door (restoration 9). |
 | Tomas says he has not seen Ines return (8) | True but incomplete: he did not know she returned elsewhere (13); he admits his broken cable (20). |
 | Adrian avoids paperwork (5) | His claim surfaces (20); he surrenders it (28). |
 
@@ -69,7 +71,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Boards 1–10 and 13 use a story piece alongside their regular kinds. Matches and power-ups collect it. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays earn Amulets. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Boards 1–10 and 13 use a story piece alongside their regular kinds. Matches and power-ups collect it. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Plaque boards open a place the crew can examine in dialogue. Delivery boards move the tablet or signal plate to an exit. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 
@@ -116,7 +118,7 @@ Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
 | 6 | Gather 14 marker pieces | 0 / 5 | — | **Salt crust** (base) | — | The lesson teaches matching the piece within the salt crust. |
 | 7 | Gather 16 tool rolls | 3 / 4 (2) | **Rope lashing** | Salt crust | — | Mara remembers lashing the tools down. |
 | 8 | Gather 16 snapped cable pieces | 4 / 6 (2) | **Cable snarl** | Salt crust | — | Tomas points out the cable tangled in the old fittings. |
-| 9 | Gather 18 supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas mentions the stowed supply crate after board 8. |
+| 9 | Gather 18 blue supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas names the crate and asks the crew to bring the workshop blocks. The purple blocks pay Supplies as a regular match. |
 | 10 | Gather 20 gears | 6 / 6 (2) | Iron chain | **Barnacle crust** | Blue plaques | *Tomas: The sea has been in here. Knock it off like the salt.* |
 
 ### Chapters 2–3 by quest
@@ -154,8 +156,8 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 **After restoration 1**
 
-- **Mara:** The timber held. My lamp fits the bracket, but the lens is missing.
-- **Mara:** It must have fallen when the roof came down. Help me find it.
+- **Mara:** The timber held. My lamp fits the bracket, but the lookout’s lens is missing.
+- **Mara:** The lens must have fallen when the roof came down. Help me find it.
 
 **Level 2**
 
@@ -179,12 +181,12 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 - **Elena:** Now I can read it. The line runs from camp to a tide room.
 - **Tomas:** The lower quay lies on that route.
-- **Mara:** Then we have a place to look. Thanks for the tip, Tomas.
+- **Mara:** The pump’s running clear. Fill the buckets before we go.
 - **Tomas:** Look for a quay marker under the creepers. It should point out the lower route.
 
 **Level 5**
 
-- **Elena:** The quay marker is intact. Its notch points straight into the vines.
+- **Elena:** The quay marker is intact. Its notch points down the shore.
 - **Adrian:** A route, at last. I shall put it in the expedition papers.
 - **Mara:** You keep those papers very close.
 - **Adrian:** They are the only dry thing I own. Is there a second marker?
@@ -192,9 +194,9 @@ These chapters are provisional. Board dressing follows the existing placements a
 **Level 6**
 
 - **Mara:** There it is. The shore marker and the quay marker point to the same steps.
-- **Elena:** And a crack through this one. We need tools before we try those steps.
-- **Tomas:** I can show you the old way. It is safer than the shore.
-- **Mara:** My tools will help. I left the roll lashed to the rail.
+- **Elena:** The bottom tread has slipped. We’ll need stone blocks to shore it up.
+- **Tomas:** These are the old steps. Once they’re firm, I’ll show you where they lead.
+- **Mara:** We can cut blocks with my tools. I left the roll lashed to the rail.
 
 **Level 7**
 
@@ -202,10 +204,10 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 **After restoration 7**
 
-- **Tomas:** These tools will do. I used to maintain the tide room.
+- **Tomas:** A good stone chisel. I used one like this to maintain the tide room.
 - **Elena:** You knew what the chart meant.
 - **Tomas:** Yes. I hoped the room would stay closed.
-- **Mara:** Come with us. We can follow the cable the rest of the way.
+- **Mara:** Help me cut those blocks. Then we’ll follow the cable together.
 - **Tomas:** Watch your step. The torn cable still snakes around the old fittings.
 
 **Level 8**
@@ -214,16 +216,16 @@ These chapters are provisional. Board dressing follows the existing placements a
 - **Elena:** Then how is the lamp answering?
 - **Tomas:** The room has a hand shutter. Ines knew how to work it.
 - **Mara:** Where is Ines?
-- **Tomas:** I have not seen her return. We stowed a supply crate on the approach.
+- **Tomas:** I haven’t seen her since she left. Bring our blocks. There’s a crate by the steps.
 
 **Level 9**
 
-- **Mara:** The supply crate is intact. We can stock a dry place for the crew.
+- **Mara:** The crate’s dry inside. Let’s set up a supply point while the crew shores up the steps.
 
 **After restoration 9**
 
-- **Mara:** Supplies are ready. We can reach the tide room now.
-- **Tomas:** The shutter is missing a gear. Take care on the damaged wall.
+- **Mara:** The steps are firm now. We can reach the tide-room door.
+- **Tomas:** The viewing shutter by this door has lost a gear. Mind the cracked wall.
 - **Elena:** We go together, then. Nobody steps onto that wall alone.
 
 **Before level 10**
@@ -234,8 +236,8 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 **Level 10**
 
-- **Tomas:** The gear fits. Our shutter’s open. The old signal warns boats away from the quay.
-- **Mara:** I can see the shutter across the flooded gap. There’s no way to see behind it.
+- **Tomas:** The gear fits. Through our shutter you can see the far one warning boats off the quay.
+- **Mara:** It’s across a flooded gap. Whoever’s working it is out of sight.
 - **Mara:** But the last flashes were different. Someone changed the pattern.
 - **Elena:** Someone is asking us to notice, not merely warning boats.
 - **Tomas:** Ines used to send that warning. She left for repair plans years ago.
@@ -438,7 +440,14 @@ A cold reader followed the camp timber, chart pieces and supply crate from their
 A cold reader followed the relay cable, shutter gear and folded note through
 their story handoffs. Tomas names the old signal when he opens the near shutter.
 
+A cold reader traced the crew’s route from the restored pump through the
+marker search, workshop and steps. The chapter now identifies the old route
+as the slipped steps and distinguishes the near viewing shutter from the
+hand-operated warning across the flooded gap.
+
 ## Changelog
+
+- 2026-11-15: The restored well supplies the marker search. The recovered tools and completed workshop let the crew cut blocks for the slipped steps. The supply run recovers the crate and earns Supplies to support the crew before they reach the tide-room door.
 
 - 2026-11-15: Converted the remaining buried finds on boards 2, 3, 5–7, 10 and 13 to collection goals. The recovered note still shows I. R. before the courtyard scene.
 
