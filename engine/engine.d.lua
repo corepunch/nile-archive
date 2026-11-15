@@ -801,6 +801,12 @@ function texture.match3_default() end
 ---@return texture
 function texture.load(path) end
 
+---Like load, blurred once at load time (Gaussian, sigma about radius image pixels); for frosted-glass backgrounds. Colour and alpha blur together, so use it for opaque images.
+---@param path string
+---@param radius number
+---@return texture
+function texture.load_blurred(path, radius) end
+
 ---From raw RGBA bytes, w * h * 4 of them.
 ---@param rgba string
 ---@param w integer

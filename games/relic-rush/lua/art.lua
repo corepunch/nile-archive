@@ -68,9 +68,10 @@ function A.load()
     for i, key in ipairs(A.quest_objects) do
         textures[key] = texture.region(quest_atlas, rect((i - 1) % 4 * 128, (i - 1) // 4 * 128, 128, 128))
     end
+    local elements = require("match3.elements_view")
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
-        if name then textures[name] = texture.load(name .. ".jpg") end
+        if name then elements.load_picture(textures, name, name .. ".jpg") end
     end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end

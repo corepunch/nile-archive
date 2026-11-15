@@ -285,6 +285,7 @@ typedef struct { struct render_texture *tex; size2 size; rect uv; bool borrowed,
 texture tex_region(texture atlas, rect source); /* borrowed view; no extra GPU texture */
 texture tex_match3_default(void);           /* built-in resource atlas */
 texture tex_load(const char *path);         /* PNG/JPG/BMP via stb_image */
+texture tex_load_blurred(const char *path, float radius); /* tex_load, Gaussian-blurred by radius image pixels */
 texture tex_from_pixels(const void *rgba, int w, int h);
 void tex_free(texture t);
 rect tex_rect(texture t);                   /* (0,0,w,h) */

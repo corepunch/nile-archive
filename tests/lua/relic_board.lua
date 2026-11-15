@@ -342,12 +342,13 @@ do
             R.board_art = R.board_art or {}
             -- Temporarily record draw calls instead of requiring a renderer.
             -- The piece is each call's last image; earlier ones are its shadow.
-            local last
+            local last, striped = nil, gfx.image_striped
             gfx.image = function(_, box) last = box end -- luacheck: ignore 122
+            gfx.image_striped = function() end -- luacheck: ignore 122
             local function draw(t, board) R.draw_relic(t, pos, scale, 255, aspect, board); boxes[#boxes + 1] = last end
             for kind = 0, 5 do draw(rules.tile(kind), true) end
             draw(rules.tile(0, rules.PRISM), false)
-            gfx.image, R.hex_piece_kind = image, hex_kind -- luacheck: ignore 122
+            gfx.image, gfx.image_striped, R.hex_piece_kind = image, striped, hex_kind -- luacheck: ignore 122
             R.board_art = board_art
             check(#boxes == 7, "all six resting pieces and a state panel are drawn")
             local pitch = math.sqrt(3) * R.HEX_R

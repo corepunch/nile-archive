@@ -75,7 +75,7 @@ function A.load()
     require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
-        if name then textures[name] = texture.load("story-floors/" .. name .. ".jpg") end
+        if name then require("match3.elements_view").load_picture(textures, name, "story-floors/" .. name .. ".jpg") end
     end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end

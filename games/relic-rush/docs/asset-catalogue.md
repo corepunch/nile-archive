@@ -33,7 +33,7 @@ The [front-facing carved hex stones](../../../art/match3-blockers/source.png) us
 
 | Asset | Rule meaning and states | Source and runtime |
 | --- | --- | --- |
-| `reveal-08` | Board 8, The Broken Cable. Unrestored cells show the board face. Restored cells uncover a continuous storybook painting of the camp lamp, its severed relay cable, and a keeper operating the tide-room shutter. A notice appears at half restored. On the win the pieces fade and the painting holds for 1.2 seconds before the first-clear exchange. Replays use the plain mosaic floor. | Built-in ImageGen [master](../art/story-pictures/broken-relay.png) and [prompt](../art/story-pictures/broken-relay.prompt.txt). Runtime `data/reveal-08.jpg`. |
+| `reveal-08` | Board 8, The Broken Cable. Unrestored cells show the board face. Restored cells uncover a continuous storybook painting of the camp lamp, its severed relay cable, and a keeper operating the tide-room shutter. During play the painting shows as through frosted glass, a blurred copy loaded at start (`texture.load_blurred`) under a pale wash. A notice appears at half restored. On the win the pieces fade, the painting clears to sharp and holds for 1.2 seconds before the first-clear exchange. Replays use the plain mosaic floor. | Built-in ImageGen [master](../art/story-pictures/broken-relay.png) and [prompt](../art/story-pictures/broken-relay.prompt.txt). Runtime `data/reveal-08.jpg`. |
 
 Run `python3 games/relic-rush/tools/prepare_story_mosaics.py` to center-crop
 and scale the 1190×1322 master to 720×800 with Lanczos, then encode it as

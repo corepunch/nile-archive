@@ -2681,6 +2681,16 @@ static int l_texture_load(lua_State *L)
     return 1;
 }
 
+/* texture.load_blurred(path, radius) */
+static int l_texture_load_blurred(lua_State *L)
+{
+    const char * a_path = luaL_checkstring(L, 1);
+    float a_radius = (float)luaL_checknumber(L, 2);
+    texture r = tex_load_blurred(a_path, a_radius);
+    api_push_texture(L, r);
+    return 1;
+}
+
 /* texture.from_pixels(rgba, w, h) */
 static int l_texture_from_pixels(lua_State *L)
 {
@@ -4351,6 +4361,7 @@ static void open_texture(lua_State *L)
         {"hex_field", l_texture_hex_field},
         {"match3_default", l_texture_match3_default},
         {"load", l_texture_load},
+        {"load_blurred", l_texture_load_blurred},
         {"from_pixels", l_texture_from_pixels},
         {"free", l_texture_free},
         {"rect", l_texture_rect},

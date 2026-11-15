@@ -22,6 +22,15 @@ for n=1,9 do E.assets[#E.assets+1]="apple-platter-"..n end
 for n=0,5 do E.assets[#E.assets+1]="donut-maker-"..n end
 for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.assets+1]=name end
 
+-- A story mosaic's picture and its frosted copy: during play the floor shows
+-- the picture as through frosted glass; the win clears it to the sharp one.
+local FROST_BLUR = 18                       -- image pixels
+local FROST_WASH = color(236, 244, 255, 46)  -- the glass's milky sheen
+function E.load_picture(art, name, path)
+    art[name] = texture.load(path)
+    art[name .. "-frost"] = texture.load_blurred(path, FROST_BLUR)
+end
+
 function E.load(art, skin)
     for _, name in ipairs(E.assets) do art[name] = assert(skin[name], "missing element art: " .. name) end
 end
@@ -142,7 +151,13 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
         local t = R.board_art[story.picture]
         local box, src = picture_crop(R, rules, t)
         local opacity = 1 - cover * (1 - (R.reveal_play_opacity or 1))
-        gfx.image_part(t, src, box:offset(vec2(sx, 0)), color(255, 255, 255, 255 * alpha * opacity))
+        local frost, dst = R.board_art[story.picture .. "-frost"], box:offset(vec2(sx, 0))
+        local sharp = frost and frost.tex and 1 - cover or 1
+        if sharp < 1 then
+            gfx.image_part(frost, src, dst, color(255, 255, 255, 255 * alpha * opacity))
+            gfx.rect(area, color(FROST_WASH.r, FROST_WASH.g, FROST_WASH.b, FROST_WASH.a * alpha * cover))
+        end
+        if sharp > 0 then gfx.image_part(t, src, dst, color(255, 255, 255, 255 * alpha * opacity * sharp)) end
     else tile(R.board_art["carpet-swatch"], area, side, origin, color(255, 255, 255, 255 * alpha)) end
     gfx.sdf_unmask()
 end
@@ -166,11 +181,13 @@ local function draw_buried_picture(R, rules, story, sx, alpha, cover)
     local radius = R.HEX_R
     local face = size2(2 * radius * scale, math.sqrt(3) * radius * scale)
     local tint = color(255, 255, 255, 255 * alpha * (R.reveal_play_opacity or 1) * cover)
+    local frost = R.board_art[story.picture .. "-frost"]
+    if not (frost and frost.tex) then frost = t end
     for _, i in ipairs(rules.level_of(g).oil) do
         if g.oil[i] == 0 then
             local p = R.cell_pos(i)
             local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
-            gfx.image_hex(t, rect.centered(uv, face), p + vec2(sx, 0), radius, 0, tint)
+            gfx.image_hex(frost, rect.centered(uv, face), p + vec2(sx, 0), radius, 0, tint)
         end
     end
 end
@@ -372,18 +389,20 @@ function E.selection_scale(R,i)
 end
 
 -- A soft drop shadow under a board piece, so it stays legible on bright floor
--- art: the piece's own silhouette, dropped and spread over a ring of faint
--- taps. size is the piece's drawn width in logical pixels.
+-- art: the piece's silhouette inked dark blue (a single full-width stripe),
+-- dropped and spread over a ring of faint taps. size is the piece's drawn
+-- width in logical pixels.
 local SHADOW_TAPS = 10
 local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .07, .07, 20
+local SHADOW_INK = color(16, 32, 84, 255)
 function E.piece_shadow(tex, dst, alpha, size)
     local drop, spread = size * SHADOW_DROP, size * SHADOW_SPREAD
-    local tint = color(0, 0, 0, SHADOW_TAP_ALPHA * alpha / 255)
+    local tint = color(255, 255, 255, SHADOW_TAP_ALPHA * alpha / 255)
     local base = dst:offset(vec2(0, drop))
-    gfx.image(tex, base, tint)
+    gfx.image_striped(tex, base, 0, 1, 1, SHADOW_INK, tint)
     for k = 1, SHADOW_TAPS do
         local a = k / SHADOW_TAPS * 2 * math.pi
-        gfx.image(tex, base:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), tint)
+        gfx.image_striped(tex, base:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), 0, 1, 1, SHADOW_INK, tint)
     end
 end
 

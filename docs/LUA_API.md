@@ -1105,6 +1105,17 @@ PNG, JPG or BMP relative to the data root. A missing file gives a texture with t
 
 **Returns:** `texture`
 
+### `texture.load_blurred(path, radius)`
+
+Like load, blurred once at load time (Gaussian, sigma about radius image pixels); for frosted-glass backgrounds. Colour and alpha blur together, so use it for opaque images.
+
+| Argument | Type | |
+|---|---|---|
+| `path` | `string` |  |
+| `radius` | `number` |  |
+
+**Returns:** `texture`
+
 ### `texture.from_pixels(rgba, w, h)`
 
 From raw RGBA bytes, w * h * 4 of them.
