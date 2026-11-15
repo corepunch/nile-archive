@@ -129,7 +129,8 @@ local function draw_blockers(sx)
                 local tint = rgba(255, 255, 255, 255 * alpha * cover)
                 if ice then
                     local name = g.ice[i] > 1 and "ice-2" or "ice-1"
-                    gfx.image(R.board_art[name], dst, tint)
+                    local face = rect.centered(at, size2.splat(2 * CELL_FACE_R * scale))
+                    gfx.image(R.board_art[name], face, tint)
                 end
                 if tinsel then
                     gfx.image(elements.chain(R,g,i), dst, tint)

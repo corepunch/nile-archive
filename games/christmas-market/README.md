@@ -63,7 +63,7 @@ paper plane. An adjacent match or a direct power-up hit breaks a carved hex ston
 The puzzle backdrop shows a lantern-lit Christmas market above the spruce
 signboard. Moves, objective counts and Settings share the signboard.
 Slate-blue hex wells shade from light at the top to dark at the bottom.
-Both ice strengths use [painted ice shells shaped for the hex tiles](docs/asset-catalogue.md#ice).
+Both ice strengths use [translucent ice fitted to the hex tiles](docs/asset-catalogue.md#ice).
 See the [signboard and board review](../../docs/review/match3-signboards/README.md).
 The original festive chips and the themed power-ups are shown in the
 [asset catalogue](docs/asset-catalogue.md#themed-board-art).

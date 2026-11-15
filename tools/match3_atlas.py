@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Build/check the engine skin and single-texture game overrides, preserving alpha.
+"""Build and check the engine skin and single-texture game overrides.
 
-Default source: one authored ImageGen atlas. Only crop/rotate/resize registration
-is used. Game overrides copy their existing RGBA canvases byte-for-byte; no
-control states are recolored or derived. --check never writes runtime assets.
+Match-3 ice uses a canonical mask and baked opacity. Control sprites are packed
+with their authored colors and alpha. --check never writes runtime assets.
 """
 import argparse
 import importlib.util
@@ -13,7 +12,7 @@ import json
 import math
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageChops
 from match3_elements_art import NAMES as ELEMENT_NAMES
 import homescapes_atlas
 import match3_theme_art
@@ -21,10 +20,13 @@ import pack_particles
 
 ROOT = Path(__file__).resolve().parents[1]
 ICE_DIR = ROOT / 'art/match3-ice'
-ICE_CROPS = {'ice-1': (77, 310, 868, 727), 'ice-2': (1000, 94, 1810, 729)}
-ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'concept.png', 'clear-shell.png',
-                                         'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt')]
-ICE_INPUTS.append(ROOT / 'engine/art/hex-tile/hex-mask-preview.png')
+ICE_CROPS = {'ice-1': (129, 66, 819, 756), 'ice-2': (1060, 66, 1750, 756)}
+ICE_ALPHA = {'ice-1': 150, 'ice-2': 128}
+HEX_MASK = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
+ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept.png', 'clear-shell.png',
+                                         'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt',
+                                         'filled-pane-prompt.txt')]
+ICE_INPUTS += [HEX_MASK, ROOT / 'engine/art/hex-tile/hex-mask-preview.png']
 SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
 SIGNBOARD_CROPS = {
     # Centre each crop on the painted face so live counters share its axis.
@@ -94,20 +96,27 @@ def verify_provenance(manifest_path):
 
 def registered_ice():
     sprites, records = {}, {}
+    with Image.open(HEX_MASK) as reference:
+        mask = reference.getchannel('A')
     with Image.open(ICE_DIR / 'source.png') as sheet:
         assert sheet.mode == 'RGBA' and sheet.size == (1886, 834)
         for name, box in ICE_CROPS.items():
-            sprite = sheet.crop(box)
-            # Both silhouettes fit the same hex slot and rest on the same baseline.
-            width = 120
-            sprite = sprite.resize((width, round(sprite.height * width / sprite.width)), Image.Resampling.LANCZOS)
-            offset = ((128 - width) // 2, 112 - sprite.height)
-            canvas = Image.new('RGBA', (128, 128))
-            canvas.paste(sprite, offset)
-            sprites[name] = canvas
-            records[name] = {'source': 'art/match3-ice/source.png', 'prompt': 'art/match3-ice/hexagon-prompt.txt',
-                             'crop': list(box),
-                             'registered_size': list(sprite.size), 'offset': list(offset), 'canvas': [128, 128]}
+            sprite = sheet.crop(box).resize(mask.size, Image.Resampling.LANCZOS)
+            paint = sprite.getchannel('A')
+            if name == 'ice-2':
+                # The painted pane must have material under the entire mask.
+                coverage = paint.point(lambda alpha: 255 if alpha >= 240 else 0)
+                assert ImageChops.subtract(mask, coverage).getbbox() is None, 'Incomplete full ice painting'
+                alpha = mask
+            else:
+                # Keep the painted fracture while fitting the lower three sides.
+                alpha = ImageChops.multiply(paint, mask)
+            opacity = ICE_ALPHA[name]
+            sprite.putalpha(alpha.point(lambda value: round(value * opacity / 255)))
+            sprites[name] = sprite
+            records[name] = {'source': 'art/match3-ice/source.png', 'prompt': 'art/match3-ice/filled-pane-prompt.txt',
+                             'crop': list(box), 'canvas': list(mask.size), 'max_alpha': opacity,
+                             'mask': str(HEX_MASK.relative_to(ROOT))}
     return sprites, records
 
 
@@ -270,8 +279,7 @@ def build_game(game, check):
     originals, original_registration = homescapes_atlas.registered()
     loaded.update(originals)
     for name in originals: sources.pop(name, None)
-    mask_path = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
-    with Image.open(mask_path) as mask:
+    with Image.open(HEX_MASK) as mask:
         theme, theme_registration = match3_theme_art.registered(root, mask.getchannel('A'))
     ice, ice_records = registered_ice()
     theme.update(ice)

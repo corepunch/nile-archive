@@ -3546,47 +3546,35 @@
     },
     "ice-1": {
       "source": "art/match3-ice/source.png",
-      "prompt": "art/match3-ice/hexagon-prompt.txt",
+      "prompt": "art/match3-ice/filled-pane-prompt.txt",
       "crop": [
-        77,
-        310,
-        868,
-        727
-      ],
-      "registered_size": [
-        120,
-        63
-      ],
-      "offset": [
-        4,
-        49
+        129,
+        66,
+        819,
+        756
       ],
       "canvas": [
         128,
         128
-      ]
+      ],
+      "max_alpha": 150,
+      "mask": "engine/art/hex-tile/hex-mask-128.png"
     },
     "ice-2": {
       "source": "art/match3-ice/source.png",
-      "prompt": "art/match3-ice/hexagon-prompt.txt",
+      "prompt": "art/match3-ice/filled-pane-prompt.txt",
       "crop": [
-        1000,
-        94,
-        1810,
-        729
-      ],
-      "registered_size": [
-        120,
-        94
-      ],
-      "offset": [
-        4,
-        18
+        1060,
+        66,
+        1750,
+        756
       ],
       "canvas": [
         128,
         128
-      ]
+      ],
+      "max_alpha": 128,
+      "mask": "engine/art/hex-tile/hex-mask-128.png"
     }
   },
   "procedural_glow": "Original 64px white cubic radial alpha; transient light, packed alongside sprites",
@@ -3594,7 +3582,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "088e625ab85f9c50250555e8db3c0de78613ce3cc23a5e216e3e2d1fc8f0c588",
+    "recipe": "4d1cf909a90e5088626dd09e1eb75f09ad25f50f8bffbbe2331ed72d09b25105",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -3604,9 +3592,11 @@
       "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
       "art/match3-ice/clear-shell.png": "1e0aab9594d7500bd72dab66a0e5f5fd052fc0d8de13a1b64bf49e16a336378b",
       "art/match3-ice/concept.png": "24ec0da136cff61ec8100b37e858878dd852948daf94aa4e512e1e55c876a507",
+      "art/match3-ice/filled-pane-prompt.txt": "57c51c844e2090d813ac27d64b9f6e82ea62a34726f054dcf221b6325ffa4eb1",
       "art/match3-ice/hexagon-prompt.txt": "49cff139174b7e6fe18f2a064d416b8d33f121da113c7ce6eee6bdef9f127d62",
+      "art/match3-ice/open-hex.png": "9618e3334f95ae15329b2d15c9032e2e37b0aefff92635cea09626337666c074",
       "art/match3-ice/prompt.txt": "5133c913a4d875466c64cd36bb93b344198f5cdbe92ec15d3bd85f51ebe1baae",
-      "art/match3-ice/source.png": "9618e3334f95ae15329b2d15c9032e2e37b0aefff92635cea09626337666c074",
+      "art/match3-ice/source.png": "9440301138701ab44f3bcc011b0a7d0b81c7e3a14ce3babda205686edb25396f",
       "art/match3-ice/transparency-prompt.txt": "4b7b548389430d6dd6b99806911a53ab5413d5073c41eacefcd8e39f99a75d0f",
       "art/match3-power-up-paint/prompt.txt": "8207562c2d6f8a2e3ea66e51476875394072d09f8645aeb8bc725f1b4daa5d7e",
       "art/match3-power-up-paint/scener-strip.png": "e087fe56642192a2e42885300c04da8fbc8c18433736ac9c46ad1e0340c421c0",
@@ -3777,7 +3767,7 @@
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-      "games/christmas-market/data/match3.png": "dc526cebeb3f993c6f7109435f9380b9a10bbc5c550dc01ae8948ab89175d4c3",
+      "games/christmas-market/data/match3.png": "608cad89cfa53744b7793a577de998026208870e04cb85dcf5ddcb6d7cbc9248",
       "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
       "games/christmas-market/lua/match3_skin.lua": "c802f38e88b4fcd89a6d9d127b90eea418a529711c7f7adb15abf8284e98f5a0"
     }

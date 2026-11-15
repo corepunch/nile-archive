@@ -31,6 +31,7 @@ local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local STATE_SIZE = ART_STATE_SIZE * BOARD_SCALE
+local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
 local object_form = ui.form{root={kind="row", panel=true, role="quest", padding={6,2,10,2}, gap=5, align="center", children={
@@ -71,13 +72,13 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
 end
 local draw_relic = R.draw_relic
 
--- The guide and board share the ice rim and its remaining-hit indicator.
-function R.draw_ice(hits, at, scale, alpha, material_only)
+-- The guide uses icon sizing. The board registers the ice to the cell face.
+function R.draw_ice(hits, at, scale, alpha, on_board)
     local name = hits > 1 and "ice-2" or "ice-1"
-    local size = ART_STATE_SIZE
+    local size = on_board and CELL_FACE_SIZE or ART_STATE_SIZE
     local dst = rect.centered(at,size2.splat(size * scale))
     gfx.image(R.board_art[name], dst, rgba(255,255,255,255 * alpha))
-    if material_only then return end
+    if on_board then return end
     R.draw_ice_count(hits,at,scale,alpha)
 end
 
@@ -159,7 +160,7 @@ local function draw_blockers(sx)
                 local dst = rect.centered(at, size2.splat(STATE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha)
                 if g.ice[i] > 0 then
-                    R.draw_ice(g.ice[i],at,BOARD_SCALE * scale,alpha,true)
+                    R.draw_ice(g.ice[i],at,scale,alpha,true)
                 end
                 if g.chain[i] > 0 then gfx.image(elements.chain(R,g,i), dst, tint) end
             end

@@ -212,8 +212,8 @@ actual generated dimensions and explicit crop boxes; the importer does not assum
 the generator produced a mathematically uniform grid.
 
 Runtime pattern: `data/board-states/<name>.png`, RGBA 128 × 128.
-Terrain fills the slot's **flat-top** silhouette. Special gems and live ice
-overlays are free-standing artwork.
+Terrain and ice use the slot's **flat-top** mask. Special gems are
+free-standing artwork.
 The replacement set is authored together in
 `art/board-states/clear-indicators.png` (ImageGen, 2026-11-01), with its prompt
 in `clear-indicators-prompt.txt`. The manifest records measured crop boxes,
@@ -251,8 +251,8 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | Authored name | State and meaning |
 | --- | --- |
 | `chain` | One silver chain curves around the chip; one hit unlocks the piece |
-| `ice-2` | Blue flat-top hex shell with rounded corners and an open center. Two hits remain. |
-| `ice-1` | Broken blue ice lip along the lower three sides of the hex. One hit remains. |
+| `ice-2` | Translucent blue pane across the entire hex face. Two hits remain. |
+| `ice-1` | Translucent blue ice with a broken upper edge. One hit remains. |
 | `carpet-swatch`, `goal-carpet` | Restored mosaic and its goal icon. Coverage extends through matches touching the restored floor. |
 | `oil-material`, `goal-oil` | River silt fills each affected hex face. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
