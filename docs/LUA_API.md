@@ -1219,9 +1219,9 @@ Map a source rectangle in texture pixels to an anti-aliased flat-top hex. The he
 | `angle` | `number` |  |
 | `tint` | `color` |  |
 
-### `gfx.image_glass(t, src, center, radius, mode, strength, light, tint)`
+### `gfx.image_glass(t, src, center, radius, bend, bevel, light, tint)`
 
-Like image_hex (angle 0), seen through a glass tile that bends the lookup inside the hex. mode: 0 flat, 1 pillow lens, 2 bevelled rim, 3 reeded flutes, 4 cut facets. strength is the bend in hex radii (about 0.1); light (0..1) adds a top-left rim highlight and lower-right shade.
+Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and the bevel's top-left highlight.
 
 | Argument | Type | |
 |---|---|---|
@@ -1229,8 +1229,8 @@ Like image_hex (angle 0), seen through a glass tile that bends the lookup inside
 | `src` | `rect` |  |
 | `center` | `vec2` |  |
 | `radius` | `number` |  |
-| `mode` | `integer` |  |
-| `strength` | `number` |  |
+| `bend` | `number` |  |
+| `bevel` | `number` |  |
 | `light` | `number` |  |
 | `tint` | `color` |  |
 

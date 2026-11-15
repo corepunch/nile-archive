@@ -2793,18 +2793,18 @@ static int l_gfx_image_hex(lua_State *L)
     return 0;
 }
 
-/* gfx.image_glass(t, src, center, radius, mode, strength, light, tint) */
+/* gfx.image_glass(t, src, center, radius, bend, bevel, light, tint) */
 static int l_gfx_image_glass(lua_State *L)
 {
     texture a_t = api_check_texture(L, 1);
     rect a_src = api_check_rect(L, 2);
     vec2 a_center = api_check_vec2(L, 3);
     float a_radius = (float)luaL_checknumber(L, 4);
-    int a_mode = (int)luaL_checkinteger(L, 5);
-    float a_strength = (float)luaL_checknumber(L, 6);
+    float a_bend = (float)luaL_checknumber(L, 5);
+    float a_bevel = (float)luaL_checknumber(L, 6);
     float a_light = (float)luaL_checknumber(L, 7);
     color a_tint = api_check_color(L, 8);
-    draw_image_glass(a_t, a_src, a_center, a_radius, a_mode, a_strength, a_light, a_tint);
+    draw_image_glass(a_t, a_src, a_center, a_radius, a_bend, a_bevel, a_light, a_tint);
     return 0;
 }
 
