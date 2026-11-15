@@ -217,7 +217,9 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | 29 | The Silent Temple | 47 | Blockers, Relics | 8 | 10 | Break through the temple floor. |
 | 30 | The Warning Returns | 49 | Delivery, Blockers | 8 | 10 | Bring the tablet down to its exit. |
 
-Ice can require more than one hit. Board patterns progress from the introductory field to crescents, spirals, branching lines, rings and the final central seal.
+The [painted hex ice shell](docs/asset-catalogue.md#terrain-blockers-and-board-interaction)
+takes two hits. Its broken lower lip takes one. Board patterns progress from the
+introductory field to crescents, spirals, branching lines, rings and the final central seal.
 
 ## Buildings
 

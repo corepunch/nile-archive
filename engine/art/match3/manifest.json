@@ -222,33 +222,48 @@
       "mask": false
     },
     "ice-2": {
-      "source": "engine/art/homescapes/sprites/ice-2.png",
-      "rotation": 0,
-      "crop": null,
+      "source": "art/match3-ice/source.png",
+      "prompt": "art/match3-ice/hexagon-prompt.txt",
+      "crop": [
+        1000,
+        94,
+        1810,
+        729
+      ],
       "registered_size": [
-        112,
-        106
+        120,
+        94
+      ],
+      "offset": [
+        4,
+        18
       ],
       "canvas": [
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "ice-1": {
-      "source": "engine/art/homescapes/sprites/ice-1.png",
-      "rotation": 0,
-      "crop": null,
+      "source": "art/match3-ice/source.png",
+      "prompt": "art/match3-ice/hexagon-prompt.txt",
+      "crop": [
+        77,
+        310,
+        868,
+        727
+      ],
       "registered_size": [
-        112,
-        74
+        120,
+        63
+      ],
+      "offset": [
+        4,
+        49
       ],
       "canvas": [
         128,
         128
-      ],
-      "mask": false,
-      "placement": "bottom-aligned to ice-2"
+      ]
     },
     "selected": {
       "crop": [
@@ -3316,9 +3331,16 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "b22c8b4429587663c7868469390b30a0c887e8defe9b886a09acab4ba3fd8d46",
+    "recipe": "088e625ab85f9c50250555e8db3c0de78613ce3cc23a5e216e3e2d1fc8f0c588",
     "inputs": {
+      "art/match3-ice/clear-shell.png": "1e0aab9594d7500bd72dab66a0e5f5fd052fc0d8de13a1b64bf49e16a336378b",
+      "art/match3-ice/concept.png": "24ec0da136cff61ec8100b37e858878dd852948daf94aa4e512e1e55c876a507",
+      "art/match3-ice/hexagon-prompt.txt": "49cff139174b7e6fe18f2a064d416b8d33f121da113c7ce6eee6bdef9f127d62",
+      "art/match3-ice/prompt.txt": "5133c913a4d875466c64cd36bb93b344198f5cdbe92ec15d3bd85f51ebe1baae",
+      "art/match3-ice/source.png": "9618e3334f95ae15329b2d15c9032e2e37b0aefff92635cea09626337666c074",
+      "art/match3-ice/transparency-prompt.txt": "4b7b548389430d6dd6b99806911a53ab5413d5073c41eacefcd8e39f99a75d0f",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
+      "engine/art/hex-tile/hex-mask-preview.png": "43b59e7300f7f4377f03d65db8f33f0e6920ee94694e14e7c401af93fcdd344f",
       "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
       "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassback.png": "1985e7a943b1a5ac423bf2841e6f382a4862d520efe1daac2958b7c946b53a8f",
@@ -3391,8 +3413,6 @@
       "engine/art/homescapes/sprites/hazelnut-2.png": "0656948a81190c39e141b7a95bdb34dd69f0b7310d11a7eaa75df8e1cde54fa0",
       "engine/art/homescapes/sprites/hazelnut-3.png": "fcdc99550be5fd2bc6e9243d9fc0864ef6c71d2e477f432ec26fd5b202efd062",
       "engine/art/homescapes/sprites/honey-swatch.png": "66d65742cec7372ed3333265e2138931e5d02f5fa5a0212ad661f0c3aa95f4a5",
-      "engine/art/homescapes/sprites/ice-1.png": "aa335d52106e6e41e63a8cfd20f3d0337be0105714f5c54ba4dd7dc44a79e389",
-      "engine/art/homescapes/sprites/ice-2.png": "971b2c451a4d04df9a62075cd7c6896bb741bfdeb51a0e688698aba5976e5d1f",
       "engine/art/homescapes/sprites/jelly-cherry-clear-source.png": "cccef2c0d24ad54d04eadeb29694489e977e787617e055ebfe550df662f64f18",
       "engine/art/homescapes/sprites/jelly-cherry-soft-source.png": "47e66cc9955aa41fb9d43743bef73d7b3707bbb14e8dd79440d542264b078f7f",
       "engine/art/homescapes/sprites/jelly-flower-dark-source.png": "637cf95b8754e6ec4c4670dc557484268c91ae28eb6ea38414a31781b075c896",
@@ -3432,12 +3452,12 @@
       "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "87e054d3ce9e37e06307a5c745660a874fc0d2424a07411b70275bde8b8669b4",
+      "tools/homescapes_atlas.py": "fbeb9a10d234e5e0d34c6d0fb2485602f360ef877425fcd60dfcf873af38dd42",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
-      "engine/data/match3.png": "aa6881c8e8a6125589b04815a53c6b1630447e3b20bc79cf10673d12da98f7b1",
+      "engine/data/match3.png": "6beac943f9a97faed8d9601799be5197923e4a29ed606d23475e3462c569a4ee",
       "engine/match3_frames.lua": "82efa22d054245146d316bb38e1bb89606bd0e257d0da4eb6279c1abc62dd79d"
     }
   }

@@ -26,7 +26,8 @@ shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
 shot("main-character-board", "480x900", "--level 4")
 shot("campaign-access", "480x900", "--level 13")
-shot("campaign-thaw", "480x900", "--level 22")
+shot("campaign-thaw", "480x900", "--level 19")
+shot("phone-campaign-thaw", "390x844", "--level 19 --safe-area 0,47,0,34")
 for _, size in ipairs{"480x900", "390x844"} do
     local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
     for _, level in ipairs{24, 25, 28} do

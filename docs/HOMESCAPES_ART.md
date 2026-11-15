@@ -62,6 +62,7 @@ buttons remain centred independently of asymmetric source masks.
 
 | Model | Rendering now | Evidence / remaining limitation |
 | --- | --- | --- |
+| `ICE` | `ice-1`, `ice-2` | Both strengths use [the painted ice set](../art/match3-ice/README.md). The extracted Homescapes ice sprites are archived references. |
 | `TRASH_STONE` | `hazelnut-1..3` | Original exposed/split/whole states; strength order inferred from damage appearance. |
 | `STATUE` | `statue-1..3` | Original carved/cut/raw stone states; strength order inferred from appearance. |
 | `COOKIE_BOX` | `cookie-stack-1..3` | Original plain/strap/bow states; order and rotation checked against [Playrix's illustration](https://playrix.helpshift.com/hc/en/14-homescapes/faq/2383-cookie-stack/). |

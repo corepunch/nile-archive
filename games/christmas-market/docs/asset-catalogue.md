@@ -327,11 +327,13 @@ Market Keeper’s Guide.
 
 ## Ice
 
-The live board's one-layer ice is the original Homescapes shell fragment. It is
-the lower part of the full shell, so `tools/homescapes_atlas.py` rests it on
-the full shell's bottom edge (`ice-2`) instead of centring it. The piece shows
-above the cracked cup, as in Homescapes. Regenerate with
-`python3 tools/match3_atlas.py`.
+`ice-2` is a cyan hex shell with rounded corners and a clear opening. It takes
+two hits. `ice-1` is the broken lip along the lower three sides of the hex and
+takes one hit.
+Both states were drawn together in the shared ImageGen atlas and are packed
+into `data/match3.png`. The guide uses the full shell. The
+[ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,
+registration and [portrait captures](screenshots/review/ice/README.md).
 
 The snow floor (the engine's former `soil` layer) and the snow and ice rims
 (`sand-edge`, `ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels

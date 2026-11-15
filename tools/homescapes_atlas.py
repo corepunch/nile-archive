@@ -17,9 +17,10 @@ ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
            'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
            'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'chain': 'chain-1', 'delivery': 'donut'}
 # Extracted originals no board draws: the portals (the engine has no tunnels),
-# honey (HONEY draws as jelly-N) and the carpet hex (carpet draws as one patch
-# of carpet-swatch). The source PNGs stay; they are not registered.
-UNREGISTERED = {'portal-entrance-source', 'portal-output-source', 'honey-material', 'carpet'}
+# honey (HONEY draws as jelly-N), the carpet hex (carpet draws as one patch of
+# carpet-swatch), and ice (the live atlases use our painted set).
+UNREGISTERED = {'portal-entrance-source', 'portal-output-source', 'honey-material', 'carpet',
+                'ice-1', 'ice-2'}
 
 
 def registered():
@@ -54,13 +55,6 @@ def registered():
             registrations[name] = {'source': str(path.relative_to(ROOT)), 'rotation': angle,
                                    'crop': crop, 'registered_size': [128,128] if name in ('carpet-swatch','membrane-fill-1','membrane-fill-2','blind-body') else list(candidate.size), 'canvas': [128,128],
                                    'mask': name in ('membrane-fill-1','membrane-fill-2', 'blind-body')}
-            if name == 'ice-1': fragment = candidate
-    # One-layer ice is the bottom of the cracked shell, not a centred band: rest
-    # it on the full shell's bottom edge, as Homescapes does.
-    shell_bottom = images['ice-2'].getchannel('A').getbbox()[3]
-    images['ice-1'] = Image.new('RGBA', (128,128))
-    images['ice-1'].paste(fragment, ((128-fragment.width)//2, shell_bottom-fragment.height))
-    registrations['ice-1']['placement'] = 'bottom-aligned to ice-2'
     for name, generator in ENGINE_MADE.items():   # 128px canvases, copied unchanged
         images[name] = Image.open(engine_made(name)).convert('RGBA')
         registrations[name] = {'source': str(engine_made(name).relative_to(ROOT)), 'canvas': [128,128], 'generator': generator}

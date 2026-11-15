@@ -7,8 +7,7 @@ A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedi
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
 -- Standalone power-ups, with one authored rocket per hex axis.
--- The neutral skin's filled ice uses 0.52 opacity. Live rim art has open centres.
-A.indicators = {source="art/board-states/clear-indicators.png", ice_opacity=133}
+-- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets

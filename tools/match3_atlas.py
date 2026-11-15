@@ -20,6 +20,11 @@ import match3_theme_art
 import pack_particles
 
 ROOT = Path(__file__).resolve().parents[1]
+ICE_DIR = ROOT / 'art/match3-ice'
+ICE_CROPS = {'ice-1': (77, 310, 868, 727), 'ice-2': (1000, 94, 1810, 729)}
+ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'concept.png', 'clear-shell.png',
+                                         'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt')]
+ICE_INPUTS.append(ROOT / 'engine/art/hex-tile/hex-mask-preview.png')
 SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
 SIGNBOARD_CROPS = {
     # Centre each crop on the painted face so live counters share its axis.
@@ -87,6 +92,25 @@ def verify_provenance(manifest_path):
     return manifest
 
 
+def registered_ice():
+    sprites, records = {}, {}
+    with Image.open(ICE_DIR / 'source.png') as sheet:
+        assert sheet.mode == 'RGBA' and sheet.size == (1886, 834)
+        for name, box in ICE_CROPS.items():
+            sprite = sheet.crop(box)
+            # Both silhouettes fit the same hex slot and rest on the same baseline.
+            width = 120
+            sprite = sprite.resize((width, round(sprite.height * width / sprite.width)), Image.Resampling.LANCZOS)
+            offset = ((128 - width) // 2, 112 - sprite.height)
+            canvas = Image.new('RGBA', (128, 128))
+            canvas.paste(sprite, offset)
+            sprites[name] = canvas
+            records[name] = {'source': 'art/match3-ice/source.png', 'prompt': 'art/match3-ice/hexagon-prompt.txt',
+                             'crop': list(box),
+                             'registered_size': list(sprite.size), 'offset': list(offset), 'canvas': [128, 128]}
+    return sprites, records
+
+
 def build_default(check):
     manifest_path = ROOT / 'engine/art/match3/manifest.json'
     if check:
@@ -130,6 +154,9 @@ def build_default(check):
         registration[name] = {'source': str(path.relative_to(ROOT)), 'runtime': frames[name],
                               'transform': 'RGBA canvas copied without change'}
     originals, registration_h = homescapes_atlas.registered()
+    ice, ice_records = registered_ice()
+    originals.update(ice)
+    registration_h.update(ice_records)
     start = 11 * 8
     end = start + sum(name not in frames for name in originals)
     required_height = ((end + 7) // 8) * 128
@@ -167,7 +194,7 @@ def build_default(check):
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
         [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']]
-        + element_sources + homescapes_atlas.inputs() + list(effect_sources.values()) + [Path(pack_particles.__file__)],
+        + element_sources + homescapes_atlas.inputs() + ICE_INPUTS + list(effect_sources.values()) + [Path(pack_particles.__file__)],
         [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
     return raw
@@ -246,6 +273,9 @@ def build_game(game, check):
     mask_path = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
     with Image.open(mask_path) as mask:
         theme, theme_registration = match3_theme_art.registered(root, mask.getchannel('A'))
+    ice, ice_records = registered_ice()
+    theme.update(ice)
+    theme_registration.update(ice_records)
     loaded.update(theme)
     for name in theme:
         sources.pop(name, None)
@@ -304,7 +334,7 @@ def build_game(game, check):
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
     inputs = list(sources.values()) + list(hud_sources.values()) + list(effect_sources.values())
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
-    inputs += homescapes_atlas.inputs() + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
+    inputs += homescapes_atlas.inputs() + ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
     outputs = [root / name for name in ('data/match3.png', 'lua/match3_skin.lua', 'data/match3-hud.png', 'lua/match3_hud.lua')]
     if game == 'relic-rush':
         inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]

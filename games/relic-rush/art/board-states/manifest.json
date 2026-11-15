@@ -102,7 +102,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "ice-2",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "../../art/match3-ice/source.png",
+      "atlas_section": "board_theme"
     },
     "ice-1": {
       "box": [
@@ -114,7 +116,9 @@
       "runtime": "data/match3.png",
       "atlas_frame": "ice-1",
       "fit": "free-object",
-      "registration": "art/match3-atlas.json"
+      "registration": "art/match3-atlas.json",
+      "source": "../../art/match3-ice/source.png",
+      "atlas_section": "board_theme"
     },
     "selected": {
       "box": [
@@ -947,7 +951,7 @@
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
     "review": "docs/review/striped-specials/README.md",
     "specials": "Standalone original Homescapes power-ups from data/match3.png. Legacy stripe rendering retired.",
-    "ice": "filled face with branching cracks and frosted material; authored layers share 0.52 material opacity; centred 1/2 hit counter above every board layer",
+    "ice": "archived filled frost sheets; live ice uses the rounded overlays in ../../art/match3-ice/source.png",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },
   "building_paintover": {

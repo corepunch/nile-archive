@@ -39,6 +39,7 @@ shot("reveal-won-phone", "390x844", "--level 8 --reveal 1 --goals-met --frames 9
 shot("reveal-beat", "480x900", "--level 8 --reveal 1 --goals-met --frames 270")
 shot("campaign-access", "480x900", "--level 13")
 shot("campaign-thaw", "480x900", "--level 22")
+shot("phone-campaign-thaw", "390x844", "--level 22 --safe-area 0,47,0,34")
 shot("designed-lanes", "480x900", "--level 4")
 shot("designed-chambers", "390x844", "--level 3 --safe-area 0,47,0,34")
 shot("delivery-finale", "480x900", "--level 30")

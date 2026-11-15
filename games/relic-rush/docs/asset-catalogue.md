@@ -212,8 +212,8 @@ actual generated dimensions and explicit crop boxes; the importer does not assum
 the generator produced a mathematically uniform grid.
 
 Runtime pattern: `data/board-states/<name>.png`, RGBA 128 × 128.
-Terrain and ice rims use the slot's **flat-top** silhouette. Special gems use
-no hexagonal outline frames.
+Terrain fills the slot's **flat-top** silhouette. Special gems and live ice
+overlays are free-standing artwork.
 The replacement set is authored together in
 `art/board-states/clear-indicators.png` (ImageGen, 2026-11-01), with its prompt
 in `clear-indicators-prompt.txt`. The manifest records measured crop boxes,
@@ -251,19 +251,21 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | Authored name | State and meaning |
 | --- | --- |
 | `chain` | One silver chain curves around the chip; one hit unlocks the piece |
-| `ice-2` | Filled faceted frost sheet across the whole gem; counter **2** means two hits remain |
-| `ice-1` | Filled cracked frost sheet across the whole gem; counter **1** means one hit remains |
+| `ice-2` | Blue flat-top hex shell with rounded corners and an open center. Two hits remain. |
+| `ice-1` | Broken blue ice lip along the lower three sides of the hex. One hit remains. |
 | `carpet-swatch`, `goal-carpet` | Restored mosaic and its goal icon. Coverage extends through matches touching the restored floor. |
 | `oil-material`, `goal-oil` | River silt fills each affected hex face. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The two ice states keep the dynamic 1/2 remaining-hit count. Ice and chain are
-independent layers and a blocker hit removes a layer before collecting its
-piece. Selected/hint frames are under pieces, blockers over them. Board cells
-and outer edge lines remain simple intentional layout geometry. Empty/inactive
-cells have no piece artwork.
+The board distinguishes the two ice strengths by silhouette. The guide shows
+the full shell with a **2** hit badge. Both states were drawn in one shared
+ImageGen atlas and are packed into `data/match3.png`. The
+[ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,
+registration and [portrait captures](screenshots/review/ice/README.md).
+Ice and chain are independent layers and a blocker hit removes a layer before
+collecting its piece. Selected/hint frames are under pieces, blockers over them.
 
 The excavation layer (`sand`) and the sand and ice rims (`sand-edge`,
 `ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels have no
