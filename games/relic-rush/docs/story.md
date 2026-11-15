@@ -41,9 +41,9 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | 2. Find the sender — Mara wants to answer safely | 11 follow the changed signal; 12 find dry supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test a route; 15 check the broken wall; 16 prepare shelter; **confirm Explorer's lodge**. | A safe shelter is ready, but the direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 clear a way to the fragment; 18 compare measures; 19 consult records; **confirm Lost-world archive**; 20 open the area with Ines's signed plan. | Tomas admits the broken cable and shares the key; Adrian's claim threatens the records. |
-| 3. Protect the warning — Adrian must prevent Kessler taking the relay | 21 deliver the bearings tablet; 22 seek an alternate landing; 23 establish lookout; **confirm Star observatory**. | The crew can guide a boat without using the damaged quay. |
+| 3. Protect the warning — Adrian must prevent Kessler taking the relay | 21 uncover the bearings; 22 seek an alternate landing; 23 establish lookout; **confirm Star observatory**. | The crew can guide a boat without using the damaged quay. |
 | 3. Repair the quay — Mara needs a reliable landing | 24 measure tide; 25 secure materials; 26 restore water access; **confirm Jade fountain**. | Ines's plan shows how to divert water while the wall is repaired. |
-| 3. Let the light speak — Elena asks everyone to finish the warning | 27 prepare the wall; 28 confront the claim; 29 restore the station; **confirm Temple of the sun**; 30 deliver the signal plate and test the warning. | Adrian gives up the claim. Ines answers from the safe landing and brings a chart of other stations. |
+| 3. Let the light speak — Elena asks everyone to finish the warning | 27 prepare the wall; 28 confront the claim; 29 restore the station; **confirm Temple of the sun**; 30 uncover the signal plate and test the warning. | Adrian gives up the claim. Ines answers from the safe landing and brings a chart of other stations. |
 
 ## Knowledge ledger
 
@@ -71,7 +71,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Board 1 collects the regular blue-tied timber the crew uses throughout the campaign. Each bundle also earns Supplies. Boards 2–10 and 13 collect a dedicated story piece through matches and power-ups. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Plaque boards open a place the crew can examine in dialogue. Delivery boards move the tablet or signal plate to an exit. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Board 1 uses regular blue-tied timber, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Board dressing: obstacles as the scene
 
@@ -92,11 +92,11 @@ Each family keeps one visual language in every look, so a player who knows the r
 - **Lock** looks span the hex between two bolted edges like the chain does, and the two-hit state crosses two strands.
 - **Cover** looks trace the whole face in the intact state and lose the upper edge after a hit. Tropical covers have an opening so the piece inside stays readable.
 - **Floor** looks sit flat under the pieces with countable cell joints.
-- **HUD and lessons.** The goal icon and counters use the board's look, and the lesson text names it.
+- **Blue plaques.** The floor marks the site of the find. All blue cells must clear before the first-clear card or scene.
 
 The [asset catalogue](asset-catalogue.md#story-materials) records every painted state and its runtime mapping.
 
-**Teach on the base look, then dress it.** A rule first appears in its base look, with the lesson text. The board that brings in a new look has one crew line tying it to the rule the player already knows ("same as the pump chains"). After that the look needs no explanation.
+**Teach on the base look, then dress it.** A rule first appears in its base look. The board that brings in a new look has one crew line tying it to the rule the player already knows ("same as the pump chains"). After that the look needs no explanation.
 
 ### Flow around a board
 
@@ -127,12 +127,12 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 | Quest (boards) | Lock look | Cover look | Floor look | Note |
 | --- | --- | --- | --- | --- |
-| Find the sender (11–13) | Creeper vine (12–13) | — | Blue plaques (11–13) | Collecting folded notes recovers the warning. The warning and initials are visible on the item card before the courtyard is built. |
-| Make a way home (14–16) | Rope lashing | **Wall rubble** (15), salt crust (16) | — | Board 15 checks the cracked wall. Rename *The Frost Line* during the Chapter 2 rewrite. |
+| Find the sender (11–13) | Creeper vine (12–13) | — | Blue plaques (11–13) | The first clear of board 13 recovers the warning. The warning and initials are visible on the item card before the courtyard is built. |
+| Make a way home (14–16) | Rope lashing | **Wall rubble** (15), salt crust (16) | Blue plaques (14–16) | Board 15 checks the cracked wall. Rename *The Frost Line* during the Chapter 2 rewrite. |
 | Keep the record (17–20) | Iron chain | Salt crust | Blue plaques (17–20) | The record boxes are chained shut. |
-| Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Blue plaques (22–23) | Mara spots the ice before board 22. |
+| Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Blue plaques (21–23) | Mara spots the ice before board 22. |
 | Repair the quay (24–26) | Rope lashing | Barnacle crust | Blue plaques (24–26) | The quay and the water. |
-| Let the light speak (27–30) | Iron chain | Wall rubble (27), salt crust (28–30) | Blue plaques (27–29) | The signal plate arrives on board 30. |
+| Let the light speak (27–30) | Iron chain | Wall rubble (27), salt crust (28–30) | Blue plaques (27–30) | The signal plate arrives on board 30. |
 
 ### More story to put on the board
 
@@ -423,7 +423,7 @@ Choice prompt: Who should answer the signal?
 
 ## Small lines
 
-**The delayed reply.** On the first win of board 3, the distant light waits, then flashes three times before the relay cable appears on its first-clear card. On board 30, the signal plate fits into the exit when the player completes the delivery and clears the remaining blockers. Ines waits and answers with the same three flashes from her lantern at the safe landing. The reduced motion setting uses a steady lantern and the dialogue names the pattern.
+**The delayed reply.** On the first win of board 3, the distant light waits, then flashes three times before the relay cable appears on its first-clear card. On board 30, the signal plate appears on the cleared site after the last blue plaque is removed. Ines waits and answers with the same three flashes from her lantern at the safe landing. The reduced motion setting uses a steady lantern and the dialogue names the pattern.
 
 The region greetings, building tap lines, recap and finale describe the relay and the quay. Mechanics lessons remain on the boards.
 
@@ -468,3 +468,5 @@ hand-operated warning across the flooded gap.
 - 2026-11-14: Prototype story mosaic on board 8: the restored floor uncovers a picture of the relay, with one mid-board line from Elena. Placeholder art; the line is provisional.
 - 2026-11-14: Replaced the procedural picture with a continuous storybook painting. The existing scene explains the clues in the painting.
 - 2026-11-12: Replaced the prior campaign plan with A Light Below; mapped all 30 existing boards and ten milestones, wrote Chapter 1 and provisional continuity bridges. Added the playable quest tracker, confirmed upgrade points and a choice at the tide-room reveal.
+
+- 2026-11-15: Every expedition uses blue plaques. The previously collected objects and the signal plate now appear on first clear. Story dialogue is unchanged.

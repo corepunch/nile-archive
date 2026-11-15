@@ -25,15 +25,15 @@ do
 end
 
 local collections = {
-    [1]={10,"Camp timber",3,0}, [2]={10,"Lamp lens",3,5}, [3]={12,"Relay cable",4},
-    [4]={15,"Tide chart",0}, [5]={14,"Quay marker",2,5}, [6]={14,"Shore marker",2},
-    [7]={16,"Tool roll",1}, [8]={16,"Broken cable",4,5}, [9]={18,"Supply crate",3}, [10]={20,"Shutter gear",5,0},
-    [13]={14,"Folded note",0,5},
+    [1]={"Camp timber",3,5}, [2]={"Lamp lens",3,5}, [3]={"Relay cable",4},
+    [4]={"Tide chart",0}, [5]={"Quay marker",2,5}, [6]={"Shore marker",2},
+    [7]={"Tool roll",1}, [8]={"Broken cable",4,5}, [9]={"Supply crate",3}, [10]={"Shutter gear",5,0},
+    [13]={"Folded note",0,5},
 }
 
--- Each collection advances only for matches in its goal slot.
+-- Story pieces occupy one palette slot and remain distinct through refills.
 for board, spec in pairs(collections) do
-    local _, _, target, omitted = table.unpack(spec)
+    local _, target, omitted = table.unpack(spec)
     local expected_count = omitted~=nil and 5 or 6
     local g = rules.game_start(board-1,123)
     R.g = g
@@ -48,17 +48,14 @@ for board, spec in pairs(collections) do
     for _ in pairs(kinds) do count = count+1 end
     check(count==expected_count and kinds[target] and not kinds[omitted],
         'opening uses the configured palette including the story piece')
-    for _, entry in ipairs(R.goal_entries()) do
-        if entry.id=='idols' then check(entry.kind==target, 'the HUD tracks the story kind') end
-    end
     local a,b=free[1],free[2]
     local regular=target~=rules.RELIC_IDOL and omitted~=rules.RELIC_IDOL and rules.RELIC_IDOL or rules.RELIC_FLAME
     g.tiles[a],g.tiles[b]=rules.tile(target),rules.tile(regular)
     local m=rules.new_match()
     m.mask[a],m.mask[b]=true,true
     rules.game_apply(g,m)
-    check(g.relics==1, 'only the goal piece advances collection')
-    if board==1 then check(g.earnings[3]==1,'the ordinary timber also earns Supplies') end
+    check(g.relics==1 and g.tiles[a].kind<0, 'the quest piece matches like an ordinary piece')
+    if board==1 then check(g.earnings[3]==1,'ordinary camp timber earns Supplies') end
     rules.game_collapse(g)
     for i=0,rules.CELLS-1 do
         local kind=g.tiles[i].kind
@@ -89,31 +86,24 @@ for level=1,30 do
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
     local specs=rules.level_of(g)
     check(g.carpet_total==0, 'Relic Rush boards do not use spreading carpet goals')
-    if specs.oil then
-        check(g.oil_left==#specs.oil and specs.oil_still, 'each authored plaque is present on an active cell')
+    check(#specs.goals==1 and specs.goals[1]=='oil' and specs.oil_still and g.delivery_total==0,
+        'fixed blue plaques are the only win condition')
+    check(g.oil_left>0 and g.oil_left==#specs.oil, 'each authored plaque is present on an active cell')
+    for _, i in ipairs(specs.oil) do
+        check(g.active[i] and g.stone_hp[i]==0, 'plaque is visible on a playable cell')
     end
-    for _, goal in ipairs(specs.goals) do
-        check(goal=='oil' or goal=='deliveries' or goal=='idols' and collections[level],
-            'the board asks for a plaque, delivery or story find')
+    if specs.signal_cell then
+        check(g.oil[specs.signal_cell]==1, 'the signal plate appears on the cleared final site')
     end
-    if collections[level] then
-        check(specs.quest_object, 'first-clear story retains its quest object')
-    end
-    g.score,g.relics,g.obstacles=0,0,0
     rules.game_check_end(g)
-    check(not g.won, 'ordinary match-3 goals must be met')
+    check(not g.won, 'a board cannot win before its plaques are cleared')
     if collections[level] then
-        local target, reward=table.unpack(collections[level])
-        g.relics,g.oil_left=target-1,0
-        rules.game_check_end(g)
-        check(specs.relics==target and not g.won and g.oil_left==0 and not specs.reveal,
-            'the story piece collection is required after the other goals are met')
-        check(R.award_for(g).name==reward, 'the assembled object is the first-clear reward')
+        check(R.award_for(g).name==collections[level][1], 'the story object remains the first-clear reward')
     end
-    g.score,g.relics=99999,999
-    g.delivered,g.carpeted,g.oil_left=g.delivery_total,g.carpet_total,0
+    for _, i in ipairs(specs.oil) do g.oil[i]=0 end
+    g.oil_left=0
     rules.game_check_end(g)
-    check(g.won, 'completing the match-3 goals wins')
+    check(g.won and g.score==0 and g.relics==0, 'clearing all plaques wins without a score or item quota')
     g.moves=0
     local reveal=journey.result_beat(p,g)
     check(level==10 and reveal==nil or reveal and reveal.level==level,
@@ -206,30 +196,31 @@ check(R.prog.story_seen['after-10'] and journey.next(R.prog,owned(c),10).key=='b
     'finishing the reply unlocks chapter two')
 empty_queue()
 
--- Land the physical token using the ordinary gravity and exit rules. The
--- delivery wins and the finale precedes the first-clear dialogue.
+-- The final plaque reveals the signal plate and plays the landing scene
+-- before the first-clear dialogue.
 R.g=rules.game_start(29,1)
 R.prog={level=29,story_seen={}}
 R.on_island,R.overlay=false,R.OV_RESULT
 local g=R.g
-local delivery=rules.level_of(g).deliveries
-local exit, cell=delivery.exits[1], rules.hex_neighbor(delivery.tokens[1],1)
-while cell >= 0 do
-    g.tiles[cell],g.chain[cell],g.ice[cell]=rules.tile(-1),0,0
-    rules.game_collapse(g)
-    if cell==exit then break end
-    cell=rules.hex_neighbor(cell,1)
+local level=rules.level_of(g)
+local signal=level.signal_cell
+for _, i in ipairs(level.oil) do
+    if i~=signal then g.oil[i]=0 end
 end
+g.oil_left=1
+local m=rules.new_match()
+m.mask[signal]=true
+for _=1,1+g.chain[signal]+g.ice[signal] do rules.game_apply(g,m) end
 rules.game_check_end(g)
-check(g.delivered==1 and g.won and g.obstacles>0,'delivering the signal plate wins while off-route blockers remain')
+check(g.won and g.oil[signal]==0 and g.obstacles>0,'the final plaque wins even while ordinary blockers remain')
 R.story_tick()
 local scene=R.clear_scene()
-check(scene and scene.exit==exit and not story.active(),'a completed delivery and the cleared board run the landing scene before dialogue')
+check(scene and scene.cell==signal and not story.active(),'the recovered plate runs the landing scene before dialogue')
 R.now=R.now+5
 R.story_tick()
 check(R.story_current and R.story_current.key=='after-30','the landing scene hands off to the finale dialogue')
 empty_queue(); R.story_tick()
 R.g=rules.game_start(29,2)
-R.g.delivered,R.g.won=1,true
+R.g.won=true
 R.prog.level=30
 check(not R.clear_scene(),'a replay cannot run the landing scene again')

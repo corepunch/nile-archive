@@ -18,7 +18,7 @@ assert actual == manifest["runtime_inventory"], "Runtime inventory changed: upda
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(resources["slots"])
-assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt", "outline_reference"))
+assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
 for name in resources["slots"]:
     path = f"data/resource-pieces/{name}.png"
     assert path in actual and f"`{name}`" in doc

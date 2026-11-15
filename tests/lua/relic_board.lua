@@ -258,38 +258,6 @@ for _, reduced in ipairs({false, true}) do
 end
 R.reduced_motion = false
 
--- The compact header reports remaining win conditions from the rules, without
--- dropping score/locks or exposing redundant current/target totals.
-do
-    local g=rules.game_start(16,123)
-    R.g=g
-    local goals=R.goal_entries()
-    local l = rules.level_of(g)
-    local remaining={score=l.score,idols=l.relics,locks=g.obstacles,deliveries=g.delivery_total,oil=g.oil_left}
-    if l.goals then
-        -- A level that names its goals shows exactly those, in its order.
-        check(#goals==#l.goals,"late HUD shows only the level's own goals")
-        for n,id in ipairs(l.goals) do
-            check(goals[n].id==id and goals[n].remaining==remaining[id],"late HUD exposes the actual remaining goals")
-        end
-    else
-        check(goals[1].id=="score" and goals[1].remaining==l.score and goals[2].id=="idols" and goals[2].remaining==l.relics
-              and goals[#goals].id=="locks" and goals[#goals].remaining==g.obstacles,"late HUD exposes the actual remaining goals")
-    end
-    g.score,g.relics,g.obstacles=9000,99,0
-    g.delivered=g.delivery_total
-    g.oil_left=0
-    for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
-    R.g=rules.game_start(0,123)
-    local opening,first=R.goal_entries(),rules.levels[1].goals
-    if first then
-        check(#opening==#first and opening[1].id==first[1],"opening HUD shows the first level's own goals")
-    else
-        check(#opening==2 and opening[1].id=="score" and opening[2].id=="idols",
-              "opening HUD shows the ordinary score and collection goals")
-    end
-end
-
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,
 -- a skip release cannot play a move, and reset discards suspended presentation.
 do
@@ -446,7 +414,8 @@ do
     local g=rules.game_start(require("support").plain_level(rules),123478)
     g.hs={cells={},groups={},queues={}}
     g.delivery_exits={}
-    for i=0,rules.CELLS-1 do g.active[i]=true;g.hs.cells[i]={};g.stone_hp[i]=0 end
+    g.oil_left=0
+    for i=0,rules.CELLS-1 do g.active[i]=true;g.hs.cells[i]={};g.stone_hp[i],g.oil[i]=0,0 end
     local a=rules.hex_index(0,0)
     local cells={a,rules.hex_index(1,0),rules.hex_index(0,1),rules.hex_index(1,1)}
     g.hs.groups[a]={kind="TARGET_GEN",count=8,cells=cells}

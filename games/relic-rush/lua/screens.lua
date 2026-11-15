@@ -36,9 +36,12 @@ end
 
 function R.currency_capsules(balance)
     local out = {}
+    local earned = not R.on_island and R.g and not R.g.lost and not R.g.reward_claimed and R.g.earnings
     for slot, currency in ipairs(economy.currencies) do
-        out[slot] = {icon=currency_icon(slot), value=tostring(balance[slot]), width=67,
-            note=currency.name .. " earned from matches. Spend it on the island."}
+        local pending = earned and earned[slot] or 0
+        out[slot] = {icon=currency_icon(slot), value=tostring(balance[slot] + pending), width=67,
+            note=earned and (currency.name .. " from matches is banked on a win.")
+                or (currency.name .. " earned from matches. Spend it on the island.")}
     end
     return out
 end
@@ -55,13 +58,6 @@ function R.cost_text(parts)
     return table.concat(amounts, " + ")
 end
 
-function R.draw_earnings(centre)
-    if not R.g.earnings or R.toast_time > 0 then return end
-    for slot, capsule in ipairs(R.currency_capsules(R.g.earnings)) do
-        local box = rect.centered(centre + vec2((slot - 2) * 82, 50), size2(75, 25))
-        R.skin:draw_resource(box, capsule.icon, capsule.value, {role="expedition_wallet", interactive=false})
-    end
-end
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 local function result_screen()
@@ -192,6 +188,8 @@ R.dialogs[R.OV_AWARD] = award_screen
 local guide_entries = {
     {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of three axes.",
      icon={front="resource-coin",tiles={}}},
+    {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match on the plaque or hit it with a tool. Locks and covers absorb hits first.",
+     icon={front="blue-plaque",tiles={}}},
     {id="earnings", title="Stock the expedition", description="Coins earn Gold, fruit and water earn Provisions, and timber and stone earn Supplies. Win to bank them.",
      icon={front="resource-timber",tiles={}}},
     {id="water", title="Spring Well", description=economy.unlock_text(economy.unlocks.water) .. " Find them on the marker expeditions.",
@@ -212,12 +210,6 @@ local guide_entries = {
      icon={cover="salt-crust",tiles={{kind=4,special=rules.NORMAL}}}},
     {id="stones", title="Carved stone", description="Match beside a stone or hit it with a power-up to break it.",
      icon={front="stone-1",tiles={}}},
-    {id="deliveries", title="Tablets and plates", description="Clear the cells below a tablet or plate so it falls to its exit.",
-     icon={front="delivery",tiles={}}},
-    {id="plaques", title="Blue plaques", description="Match on a blue plaque to clear it. Clear any lock or cover on it first.",
-     icon={front="blue-plaque",tiles={}}},
-    {id="finds", title="Story pieces", description="Match the piece shown in the goal to recover the item.",
-     icon={front="story-lens",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

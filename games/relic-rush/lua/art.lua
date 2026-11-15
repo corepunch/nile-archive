@@ -119,13 +119,17 @@ function A.draw_catalogue(R)
     for row, pack in ipairs(packs) do
         R.say_at(pack:upper(), vec2(240, 175 + (row - 1) * 60), 13, R.PAL_CREAM, 0)
         for k = 0, 5 do
-            gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
+            gfx.image(R.art_packs[pack][k + 1], rect(43 + k * 68, 190 + (row - 1) * 60, 38, 38), color.WHITE)
         end
+    end
+    R.say_at("EXPEDITION RESOURCES", vec2(240, 355), 13, R.PAL_CREAM, 0)
+    for i, key in ipairs(A.resource_pieces) do
+        gfx.image(R.board_art["resource-" .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
-        local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85
+        local x, y = 39 + (i - 1) % 6 * 68, 414 + math.floor((i - 1) / 6) * 75
         if i <= 6 then
             R.draw_relic({kind=i-1,special=i},vec2(x+24,y+24),1,255,1)
         else gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE) end

@@ -15,10 +15,10 @@ function R.clear_scene()
     local g = R.g
     if not g or not g.won or g.level ~= R.prog.level or g.story_clear then return end
     local level = rules.level_of(g)
-    if not level.signal or (level.signal == "landing" and g.delivered < g.delivery_total) then return end
+    if not level.signal then return end
     if not R.signal_scene or R.signal_scene.game ~= g then
         R.signal_scene = {game=g, key=level.signal, time=R.now,
-            exit=level.deliveries and level.deliveries.exits[1]}
+            cell=level.signal_cell}
     end
     local scene = R.signal_scene
     scene.elapsed = R.now - scene.time
@@ -40,11 +40,11 @@ function R.draw_clear_scene(scene, inp)
         return
     end
 
-    -- The delivered plate is visible in the exit before we cut across the bay.
+    -- The recovered plate appears at the signal site before we cut across the bay.
     local join = still and 0 or .68
     local incoming = still and 1 or num.saturate((t - join) / .25)
     if incoming < 1 then
-        local at = R.cell_pos(scene.exit)
+        local at = R.cell_pos(scene.cell)
         local side = 2 * R.HEX_R
         lamp(at, 37, 1 - incoming)
         gfx.image(R.board_art[art.plate], rect.centered(at, size2.splat(side)), color.WHITE)

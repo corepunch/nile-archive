@@ -205,7 +205,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
 
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
-    local function draw_moves(c, arrive)
+    function R.draw_moves(c, arrive)
         local r, a = 40 * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
         local moves = R.g.moves
         local urgent = moves <= 5 and not R.g.won
@@ -266,7 +266,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             end
         end
         local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
-        if medallion > .05 then draw_moves(vec2(moves_x, centre.y), medallion) end
+        if medallion > .05 then R.draw_moves(vec2(moves_x, centre.y), medallion) end
         if R.draw_earnings then R.draw_earnings(centre) end
         local pause_art = signboard and R.hud_art["board-pause-normal"] and "board-pause-"
         if E.pause_button(R, R.board_pause:offset(offset), pause_art) then R.overlay = R.OV_PAUSE end

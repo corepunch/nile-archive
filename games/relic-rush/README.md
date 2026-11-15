@@ -33,8 +33,8 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-The campaign uses carved stone, locks, covers, tablet deliveries and blue
-plaques. Match on a plaque to reveal the sandstone underneath. The
+Every expedition ends when all of its blue plaques are clear. Match on a blue
+cell to reveal the pale stone below; locks and covers absorb the hit first. The
 [board progression](docs/board-progression.md) lists where each mechanic appears.
 The [resource expedition design](docs/resource-expedition.md) covers how
 resource matches and restoration costs fit into the campaign.
@@ -89,11 +89,11 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Board 1 collects ordinary blue-tied timber, which also earns Supplies.
-Boards 2–10 and 13 collect story pieces that replace a matching colour.
-Boards 2, 5, 8, 10 and 13 use four regular kinds plus the story piece.
-Boards 3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
-[Outlined resources and new trail markers](docs/screenshots/review/resource-outlines/README.md)
+Board 1 uses five regular kinds, including blue-tied timber that earns Supplies.
+Boards 2–10 and 13 show a story piece in place of one matching colour.
+Boards 2, 5, 8, 10 and 13 use four regular kinds plus the story piece. Boards
+3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
+[Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
 A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
 recovered!** card, styled like the results card, before the story exchange about it and the
@@ -101,9 +101,15 @@ results (`--victory clue --dialog award` previews it).
 
 ## Shared UI and dialog layers
 
-Pause, building and guide dialogs use engine-owned form resources and one game skin. The look is defined in [`lua/skin.lua`](lua/skin.lua) and compiled by the engine's `ui.skin`. The jade expedition signboard holds the hexagonal Moves medallion, objective counts and Settings. Moves turns red for the last five moves, and a check replaces each completed count. The three tools sit along the bottom edge. Settings contains level details and the Explorer's Guide, and Results contains score and rewards. The measured goal list keeps every win condition visible. Menus and other closable popups dismiss on background taps through the shared engine. Results retain explicit actions. Modal screens and dialogue use the engine's cached GPU Gaussian blur. See the [signboard and board review](../../docs/review/match3-signboards/README.md) and [shared UI API](../../docs/UI_ENGINE.md).
+The island and the board share one wallet and Settings bar. The board shows
+resources earned so far in the same three slots; winning banks them. The
+separate Moves medallion turns red at five moves. Blue cells show the goal
+directly on the board, so there is no objective row or entrance banner.
+The three tools sit along the bottom edge. Settings opens the Explorer's Guide,
+and Results shows the score and rewards. Dialogs reuse the engine's forms and
+cached blur. See the [board and wallet review](docs/review/blue-plaque-campaign/README.md)
+and [shared UI API](../../docs/UI_ENGINE.md).
 
-The expedition and city headers share a 64-unit Settings gear with a matching touch area. Goal rows and city currency pills leave room beside it on both phone sizes.
 
 ## Result screens and typography
 
@@ -168,7 +174,7 @@ award earned resources and Discovery Stars, and unlock scheduled restorations. E
 wonder adds four decoration points. Other purchases add one. Required upgrades meet the
 thresholds for the next quests. Moving a building leaves its points intact.
 
-First-clear dialogue leads into Results. Board 30 seats the signal plate at its exit, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
+First-clear dialogue leads into Results. Board 30 reveals the signal plate at the cleared site, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
 wonder has a separate scene after confirmed placement. Replays bank matched resources.
 Existing saves retain clears, currency, land and buildings and receive a recap at their
 current level. Chapters 2 and 3 have provisional dialogue to carry the campaign to its finale.
@@ -188,57 +194,56 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 ## Expedition and restoration loop
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
-2. Complete its goals within the move budget.
+2. Clear all blue plaques within the move budget.
 3. Claim the matched resources, up to 40 Gold for saved moves, and three discovery stars on a first clear.
 4. Return to the island. At a wonder milestone, choose a location and confirm construction; otherwise the next story clue plays immediately.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Sun coins pay Gold. Red berries and green plantains pay Provisions. Blue-tied
-timber and dressed stone pay Supplies. Restore the Spring Well to replace timber
-with water buckets on boards 5 and 6. Each cleared bucket earns 1 Provisions.
-Restore the Artisan Workshop to get purple cut blocks on board 9. Each cleared
-block earns 1 Supplies alongside the blue supply pack objective. At a
+Coins engraved with the sun pay Gold. Red berries and green plantains pay Provisions. Blue-tied
+timber and cut stone pay Supplies. Restore the Spring Well to replace timber
+with water buckets on boards 5 and 6. Each bucket earns 1 Provisions. The Artisan
+Workshop unlocks cut blocks on board 9, worth 1 Supplies each. At a
 restoration milestone the crew supplies any exact shortfall. First clears
 advance the story and unlock discovery stars. Replays earn resources and two
 Gold per unused move, with a maximum move bonus of 40 Gold.
 
 ## Campaign: thirty hex levels
 
-Every stage uses its own connected active-cell mask within a radius-four hex grid. Their lock placements make seams and interrupted approaches; [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Goals below are taken from the current level configuration; a level is won by its own goals.
+Every stage uses its own connected active-cell mask within a radius-four hex grid. Their lock placements make seams and interrupted approaches; [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Each row gives the starting number of blue plaques, including any under a lock or cover.
 
-| # | Expedition | Moves | Goals | Locks | Cover cells | Focus |
-| --- | --- | ---: | --- | ---: | ---: | --- |
-| 1 | First Light | 24 | 10 timber pieces | 0 | 0 | Match 3 to collect timber. |
-| 2 | The Lamp Lens | 29 | 10 lenses | 0 | 0 | Match 4 for a rocket. Collect lenses. |
-| 3 | The Relay Cable | 32 | 12 cable coils | 0 | 0 | Match beside a stone to break it. |
-| 4 | Under the Pump | 35 | 15 map pieces | 4 | 0 | Collect map pieces. Match a chained piece to free it. |
-| 5 | The Quay Marker | 35 | 10 blue plaques, 14 marker pieces | 4 | 0 | Clear the blue plaques. Collect marker pieces. |
-| 6 | The Shore Marker | 37 | 14 marker pieces | 0 | 5 | Match the piece under the salt crust. Collect marker pieces. |
-| 7 | The Tool Roll | 40 | 16 tool rolls | 3 | 4 | Collect tool rolls. Break stone to open more space. |
-| 8 | The Broken Cable | 40 | 16 snapped cable pieces | 4 | 6 | Collect snapped cable. Match 5 for a rainbow ball. |
-| 9 | The Supply Crate | 43 | 18 supply packs | 5 | 6 | Collect supply packs. |
-| 10 | The Shutter Gear | 46 | 12 blue plaques, 20 gears | 6 | 6 | Clear blue plaques and collect gears. |
-| 11 | The Long Terrace | 33 | 12 blue plaques | 0 | 0 | Clear the blue plaques along the terrace. |
-| 12 | Twelve Crates | 36 | 12 blue plaques | 5 | 0 | Match through the vines to reach the blue plaques. |
-| 13 | Names in the Stone | 37 | 10 blue plaques, 14 folded notes | 6 | 0 | Clear blue plaques and collect folded notes. |
-| 14 | Static | 38 | 13 blue plaques | 7 | 0 | Clear blue plaques on both sides of the seam. |
-| 15 | The Frost Line | 39 | 12 blue plaques | 4 | 6 | Clear the blue plaques around the fallen wall. |
-| 16 | Supper for Twelve | 40 | 13 blue plaques | 4 | 7 | Hit the salt crust with matches or power-ups. |
-| 17 | The Torn Log | 42 | 13 blue plaques | 5 | 7 | Thick salt crust takes two hits. |
-| 18 | Lantern Steps | 40 | 14 blue plaques | 2 | 4 | Clear the blue plaques on the terrace. |
-| 19 | Under the Vines | 45 | 12 blue plaques | 4 | 6 | Clear the blue plaques under the locks. |
-| 20 | The Archivist's Key | 46 | 9 blue plaques | 5 | 7 | Clear the blue plaques beside the records. |
-| 21 | Tomas's Trail | 35 | deliver tablet | 0 | 0 | Clear below the tablet to deliver it. |
-| 22 | The Frozen Stair | 40 | 13 blue plaques | 2 | 8 | Break the ice to reach the blue plaques. |
-| 23 | The Star Road | 40 | 12 blue plaques | 3 | 4 | Choose a colour for the rainbow ball. |
-| 24 | Noon Shadow | 41 | 12 blue plaques | 4 | 5 | Clear the blue plaques in the shade. |
-| 25 | Smoke on the Water | 38 | 14 blue plaques | 6 | 6 | Clear the blue plaques along the quay. |
-| 26 | The Jade Deep | 43 | 10 blue plaques | 4 | 7 | Clear the blue plaques to open the water channel. |
-| 27 | Six Sun Gates | 45 | 12 blue plaques | 7 | 8 | Clear the six pairs of blue plaques. |
-| 28 | The Last Terrace | 42 | 13 blue plaques | 2 | 4 | Clear the blue plaques on the terrace. |
-| 29 | The Silent Temple | 47 | 16 blue plaques | 8 | 10 | Clear the blue plaques at the temple entrance. |
-| 30 | The Warning Returns | 49 | deliver signal plate | 8 | 10 | Clear below the signal plate to deliver it. |
+| # | Expedition | Moves | Blue plaques | Locks | Cover cells |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1 | First Light | 24 | 7 | 0 | 0 |
+| 2 | The Lamp Lens | 29 | 9 | 0 | 0 |
+| 3 | The Relay Cable | 32 | 10 | 0 | 0 |
+| 4 | Under the Pump | 35 | 11 | 4 | 0 |
+| 5 | The Quay Marker | 35 | 10 | 4 | 0 |
+| 6 | The Shore Marker | 37 | 11 | 0 | 5 |
+| 7 | The Tool Roll | 40 | 12 | 3 | 4 |
+| 8 | The Broken Cable | 40 | 12 | 4 | 6 |
+| 9 | The Supply Crate | 43 | 12 | 5 | 6 |
+| 10 | The Shutter Gear | 46 | 12 | 6 | 6 |
+| 11 | The Long Terrace | 33 | 12 | 0 | 0 |
+| 12 | Twelve Crates | 36 | 12 | 5 | 0 |
+| 13 | Names in the Stone | 37 | 10 | 6 | 0 |
+| 14 | Static | 38 | 13 | 7 | 0 |
+| 15 | The Frost Line | 39 | 12 | 4 | 6 |
+| 16 | Supper for Twelve | 40 | 13 | 4 | 7 |
+| 17 | The Torn Log | 42 | 13 | 5 | 7 |
+| 18 | Lantern Steps | 40 | 14 | 2 | 4 |
+| 19 | Under the Vines | 45 | 12 | 4 | 6 |
+| 20 | The Archivist's Key | 46 | 9 | 5 | 7 |
+| 21 | Tomas's Trail | 35 | 12 | 0 | 0 |
+| 22 | The Frozen Stair | 40 | 13 | 2 | 8 |
+| 23 | The Star Road | 40 | 12 | 3 | 4 |
+| 24 | Noon Shadow | 41 | 12 | 4 | 5 |
+| 25 | Smoke on the Water | 38 | 14 | 6 | 6 |
+| 26 | The Jade Deep | 43 | 10 | 4 | 7 |
+| 27 | Six Sun Gates | 45 | 12 | 7 | 8 |
+| 28 | The Last Terrace | 42 | 13 | 2 | 4 |
+| 29 | The Silent Temple | 47 | 16 | 8 | 10 |
+| 30 | The Warning Returns | 49 | 16 | 8 | 10 |
 
 The [board materials](docs/asset-catalogue.md#story-materials) come from the
 crew's tasks. Salt crust is the usual cover, barnacles mark the tide room and
@@ -263,7 +268,7 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 | 10 | Temple of the sun | 120 Gold + 30 Provisions + 36 Supplies | The heart of the valley shines again. |
 
 Construction makes the next story beat available. The Spring Well and
-Artisan Workshop also change the pieces on expeditions 5–6 and 9 respectively.
+Artisan Workshop change the pieces on expeditions 5–6 and 9 respectively.
 
 The island's **SHOP** adds 86 repeatable buildings and decorations to these
 ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,
@@ -295,14 +300,14 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 - Thirty distinct hex board masks with 48–58 active cells. Match straight lines of three or more identical relics along any hex axis. Four makes a directional rocket, five or more makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a paper plane.
 - Swap two specials for a combination attack. A rainbow ball combined with another power-up converts matching chips into that power-up before firing them.
-- An adjacent match or a direct power-up hit breaks a carved hex stone. Match or land a power-up hit directly on a blue plaque to expose the sandstone. A cover or lock on the same cell takes the hit first. Tablets and the signal plate fall to their exits. Locked and covered relics stay in place until matched or hit. Intact covers need two hits.
-- Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
+- An adjacent match or a direct power-up hit breaks a carved hex stone. Match or land a power-up hit directly on a blue plaque to expose the sandstone. A cover or lock on the same cell takes the hit first. Locked and covered relics stay in place until matched or hit. Intact covers need two hits.
+- Cascades increase score multipliers. Gathered resources animate toward their wallet slots; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - Adjacent clouded regions require cumulative discovery stars, which stay with the expedition. Compasses are retired.
-- The island HUD shows lives, the three resource balances and stars beside the settings gear. Large Buildings and Play actions sit at the bottom corners with a smaller Expeditions compass beside Buildings. Both catalogues scroll continuously. The building shop shows three cards per row.
+- Both screens show lives, the three resource balances and stars beside the settings gear. Large Buildings and Play actions sit at the bottom corners with a smaller Expeditions compass beside Buildings. Both catalogues scroll continuously. The building shop shows three cards per row.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.

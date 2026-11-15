@@ -20,6 +20,34 @@ R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or 
 R.locked_notice = words.locked
 board_intro.bind(R, rules)
 require("match3").bind_board_ui(R, rules, art.tools)
+local goal_hud, mission = R.draw_board_hud, R.mission
+local neutral = app.arg("default-match3")
+
+function R.draw_board_hud()
+    if neutral or R.g.hs then return goal_hud() end
+    R.town:header()
+    R.board_pause = R.town.menu_bounds
+    local arrive = R.intro and R.intro:arrive(.16, 3, .42) or 1
+    if arrive > .05 then R.draw_moves(R.hud_rect:center() - vec2(0, 37), arrive) end
+end
+
+-- The campaign board teaches its objective with the blue faces. Keep the
+-- explicit lesson preview and the original imported-board presentation.
+function R.mission(...)
+    if app.arg("mission") or R.g.hs then mission(...) end
+end
+
+if not neutral then
+    function R.resource_target(kind)
+        local piece = R.g.resource_yields[kind]
+        local box = piece and R.town.header_form and R.town.header_form.boxes["cap" .. (piece.slot + 1)]
+        if not box then return end
+        local header = R.town.cfg.header
+        local capsule = rect(box.x + header.overhang, box.y, box.w - header.overhang, box.h)
+        return R.skin:resource_icon_box(capsule, header.role):center()
+    end
+end
+
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local PAL_WHITE = R.PAL_WHITE
 local NORMAL = rules.NORMAL
@@ -42,7 +70,7 @@ function R.board_piece_texture(kind)
     end
     local piece = R.g.resource_yields and R.g.resource_yields[kind]
     local pack = app.arg("tiles")
-    if piece and (kind == level.goal_kind or piece.building or not app.arg("default-match3") and (not pack or pack == "relics")) then
+    if piece and (kind == level.goal_kind or piece.building or not neutral and (not pack or pack == "relics")) then
         return R.board_art["resource-" .. piece.key]
     end
     return R.relics[kind + 1]

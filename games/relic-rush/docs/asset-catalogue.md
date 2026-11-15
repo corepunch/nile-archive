@@ -2,22 +2,22 @@
 
 ## Themed board art
 
-The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. Blue plaques mark fixed cells to clear on a pale sandstone floor.
+The live expedition uses [painted resources](#resource-pieces) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets remain in the atlas for previews and imported-board diagnostics.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
-| `relics-0` through `relics-5` | Round gold sun coin, red flame, jade leaf, blue scarab, violet crystal and orange amphora. The same frames appear in chip goals. |
+| `relics-0` through `relics-5` | Round gold sun coin, red flame, jade leaf, blue scarab, violet crystal and orange amphora. Source and preview boards use these older frames. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Terracotta-red collars and waist, with old-gold long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt and inset socket disc, a rope fuse and a lit tip. Parchment paper plane: Christmas Market's painted plane with its blues remapped by luminance to parchment shades. The rainbow ball has chamfered enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
 | `carpet-swatch`, `goal-carpet` | Dusty blue tesserae and a limestone chevron mark restored floor. Matching on the mosaic restores the cells it clears. The goal shows a fragment of the restored pattern. |
 | `oil-material`, `goal-oil` | Matte rose-brown sediment gathers in shallow banks. Matching on it clears it. If the turn clears none, silt spreads to a neighbouring cell. A silt bank icon identifies the goal. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
-| `delivery` | The campaign's carved tablet. Source boards use the original donut. |
+| `delivery` | Carved tablet from the earlier delivery boards. Imported boards use their own tokens. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
-The round sun coin at `relics-0` is the default Relics idol (kind 0). The board, idol objectives, Explorer's Guide and Amulet displays reuse the same frame. Selection, hints and blockers keep their separate overlays. Built-in ImageGen authored the [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
+The earlier round sun coin at `relics-0` remains the Relics preview idol (kind 0). The campaign and its wallet use the newer `resource-coin` sprite. Selection, hints and blockers keep their separate overlays. Built-in ImageGen authored the [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
@@ -31,47 +31,39 @@ The [front-facing carved hex stones](../../../art/match3-blockers/source.png) us
 
 ## Resource pieces
 
-The [4 × 2 outlined atlas](../art/resource-pieces/outlined-atlas.png) contains
-seven regular resource sprites and the trail arrow. The
-[ImageGen prompts](../art/resource-pieces/outlined-atlas.prompt.txt) record
-the original Resources-pack cut blocks as the painted outline reference.
-Each resource source cell is
-cropped around its opaque content with a four-pixel margin, scaled to fit
-114 × 114, and centred on a transparent 128-pixel square. The separate PNGs
-live in `data/resource-pieces/`. The board uses the existing selection and
-hint overlays and replaces the normal sprite with the authored special
-sprite when a power-up forms.
+Built-in ImageGen painted the [3 × 3 source atlas](../art/board-refresh/source.png)
+with seven expedition pieces and both cell faces. The [prompt](../art/board-refresh/prompt.txt)
+and [hex layout](../art/board-refresh/hex-template.png) record the generation inputs.
+The [manifest](../art/board-states/manifest.json) records the slot order, crop and
+registration. Each resource is trimmed with a four-pixel margin, fit inside 114 px
+and centred on a transparent 128 px square. Runtime sprites live in
+`data/resource-pieces/`. Selected, hinted and falling pieces reuse the same
+authored sprite with existing motion and separate indicators. Specials use
+their own authored art. The original scenario sheet is still the source of
+the other story pieces below, alongside the trail arrow from the outlined atlas.
 
 | Runtime name | Match meaning | Wallet context |
 | --- | --- | --- |
-| `coin` | Yellow sun coin, 4 Gold | Gold |
+| `coin` | Round gold coin engraved with an eight-ray sun, 4 Gold | Gold |
 | `berries` | Red berries, 1 Provisions | Provisions |
 | `plantains` | Green plantains, 1 Provisions | Board only |
-| `timber` | Blue-tied timber, 1 Supplies. Also fills the camp timber goal on board 1. | Supplies, board and goal |
-| `stone` | Pale violet dressed stone, 1 Supplies | Board only |
-| `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board, guide and expedition briefing |
-| `rations` | Outlined orange ration jar, 1 Provisions | Board only |
-| `cut-blocks` | Dark outlined masonry stack, 1 Supplies. Replaces dressed stone in the purple slot on board 9 after the workshop is restored. | Board, guide and expedition briefing |
+| `timber` | Blue-tied timber, 1 Supplies | Supplies |
+| `stone` | Pale violet-grey quarry stone, 1 Supplies | Board only |
+| `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board and guide |
+| `rations` | Orange ration jar in six-kind palettes, 1 Provisions | Board only |
+| `cut-blocks` | Workshop unlock on board 9, 1 Supplies | Board and guide |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
-See the [outlined resource review](screenshots/review/resource-outlines/README.md).
-
-The cut blocks reuse the original painted Resources sheet's third row,
-fifth column. The approved darker stack keeps the artist's outline and
-alpha. The lighter dressed stone keeps its irregular chipped faces and
-uses the newly painted outline.
-The existing crop and registration in `python3 games/relic-rush/tools/prepare_assets.py`
-produces `data/tile-sets/resources/4.png`. Both unlocks use their campaign
-artwork across the art previews and keep the existing board overlays for
-selection, hint, lock and cover. Forming a special uses the shared authored
-special sprite. [Restoration resource review](screenshots/review/restoration-resources/README.md)
+Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
+column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
+See the [current board and wallet review](review/blue-plaque-campaign/README.md).
 
 
 ## The signal finale
 
 | Asset | Rule meaning and states | Source and runtime |
 | --- | --- | --- |
-| `signal-plate` | Board 30’s falling token, goal icon and the plate seated at the exit during the first clear. Uses the delivery rules learned on board 21. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/signal-plate.png`. |
+| `signal-plate` | On board 30’s first clear, the recovered signal plate appears at the cleared site before the scene cuts to the landing. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/signal-plate.png`. |
 | `safe-landing` | After the plate arrives, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
 
 Run `python3 games/relic-rush/tools/prepare_finale_art.py` to register both assets.
@@ -82,11 +74,8 @@ The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived w
 
 ## Chapter 1 quest objects
 
-The [original quest prop atlas](../art/quest-objects/source.png) and its
-[prompt](../art/quest-objects/prompt.txt) contain eight objects. The current
-camp timber and trail arrow cards use the same paintings as their board
-pieces, cropped from the [outlined atlas](../art/resource-pieces/outlined-atlas.png).
-A first clear shows its object at 210 px, centred on an
+The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
+contain eight recognizable objects. A first clear shows its object (the board-size file) at 210 px, centred on an
 **Item recovered!** card (the results card's panel, jade header and glow; the name and a
 CONTINUE button below), before the story exchange in which the characters find it and before
 the results. Reviewed capture: `build/relic-rush --victory clue --dialog award`.
@@ -119,24 +108,23 @@ The snapped cable has a gap between the exposed copper ends.
 
 ### Collectible story pieces
 
-The board, collection HUD, and flying match pieces all use the goal
-sprite. Board 1 shares the blue resource timber. Other collection
-boards use the story sprite in the goal slot. Selection, hints and
-refill use the existing piece animation and overlays. Power-ups use
-their authored sprites.
+The board uses the story sprite for the replaced colour slot. Selection, hints
+and refill use the existing animation and overlays. Power-ups use their own
+sprites. The first clear recovers the story item.
 
 | Slot | Boards | Collectible sprite |
 | --- | --- | --- |
 | Gold | 4, 13 | Tide map, folded note |
 | Red | 7 | Rolled leather tool wrap |
-| Green | 5, 6 | Painted trail arrow |
-| Blue | 1, 2, 9 | Ordinary timber, lamp lens, supply pack |
+| Green | 5, 6 | Painted brass trail arrow |
+| Blue | 2, 9 | Lamp lens, supply pack |
 | Purple | 3, 8 | Coiled relay cable, snapped cable |
 | Orange | 10 | Bronze shutter gear |
 
-Eight story sprites still use the [expedition atlas](../art/resource-pieces/scenario-atlas.png).
-The trail arrow uses the outlined atlas. The fanned planks and mossy marker
-remain in the old source for reference.
+Board 1 uses the ordinary blue-tied timber chip. Most story sprites come
+from the [expedition atlas](../art/resource-pieces/scenario-atlas.png). The
+trail arrow chip plus the marker and timber recovery cards use the
+[outlined source sheet](../art/resource-pieces/outlined-atlas.png).
 The manifest records each crop, the boards it appears on and its colour slot.
 Run `python3 tools/relic_quest_art.py` to register the individual
 `data/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
@@ -199,7 +187,7 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 ![All packs and authored states rendered by the game](screenshots/art-catalogue.jpg)
 
-## Cell and goal alignment
+## Earlier cell and goal alignment
 
 The teal wells use the engine's flat-top hex geometry and a light-to-dark
 vertical gradient. The atlas cell mask remains the registration reference for
@@ -369,8 +357,7 @@ collecting its piece. Selected/hint frames are under pieces, blockers over them.
 
 ### Story materials
 
-The goal signboard uses the cover when the obstacle counter combines several
-materials. Lock-only boards use their lock artwork. Story collection goals show the matching piece. The Explorer's Guide illustrates the two-hit salt cover. A match must include the
+A blue plaque under a lock or cover shows that the piece guarding it must be cleared. The Explorer's Guide illustrates the two-hit salt cover. A match must include the
 held piece to damage a lock or cover. A power-up can hit it directly. Colour accents on
 the existing transient impact particles follow the material.
 
@@ -385,13 +372,14 @@ the existing transient impact particles follow the material.
 | `dig-sand`, `trench-earth`, `tide-silt` | Excavation surfaces kept in the dressing atlas for the art review. |
 | `well-mud` | Archived spreading-mud material from board 26, visible in the dressing art review. |
 | `drift-sand`, `swept-stone` | Archived sand objective surfaces, shown in the dressing art review. |
-| `sandstone-floor`, `blue-plaque` | Plain sandstone and blue stone that must be cleared. Match on a plaque to expose the ordinary floor. The HUD shows the same blue hex. |
+| `sandstone-floor`, `blue-plaque` | Pale limestone for an ordinary or cleared cell; deep blue glazed ceramic for a remaining target. The Explorer’s Guide uses the same blue hex. |
 
-The two [plaque swatches](../art/board-dressing/plaques.png) were authored
-together with built-in ImageGen using [this prompt](../art/board-dressing/plaques.prompt.txt).
-The manifest crops the two squares in row order, resizes them to 128 px and
-applies the canonical flat-top mask. Run `python3 games/relic-rush/tools/prepare_board_dressing.py`.
-See the [plaque review](screenshots/review/blue-plaques/README.md).
+Both current faces share the [resource atlas](../art/board-refresh/source.png).
+The manifest records their two 360 px square crops. The packer resizes them to
+128 px and applies the exact canonical flat-top alpha, keeping the painted bevel
+inside the face at the live board radius. Match on a blue cell to expose the
+pale face. The two [original swatches](../art/board-dressing/plaques.png) are
+retained for the [historical review](screenshots/review/blue-plaques/README.md).
 
 Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the
 [open covers](../art/board-dressing/open-covers.png), [lock states](../art/board-dressing/locks.png)
@@ -454,7 +442,12 @@ buttons without captions; choosing one names it and its effect in the toast.
 
 ## Expedition header
 
-The jade `signboard` is a static backplate packed in `data/match3-hud.png`.
+The campaign draws the same town wallet, lives, stars and Settings in both
+views. The board adds a separate Moves medallion, with its existing low-move
+state. The three resource icons show pending earnings in that same layout;
+flights land on the matching wallet icon. See the [current review](review/blue-plaque-campaign/README.md).
+
+The earlier jade `signboard` is a static backplate packed in `data/match3-hud.png`.
 Moves, goal counts and Settings share its face. A green check replaces a
 completed count. Collected idol icons bounce on landing, and the Moves
 medallion turns red over the last five moves. Settings retains the existing
@@ -493,8 +486,7 @@ Measured crops, source dimensions, prompts and runtime paths are recorded in
 by the primary runtime manifest. Import is aspect-preserving spatial registration
 with authored alpha retained, never derived state artwork:
 `python3 games/relic-rush/tools/prepare_hud.py` (`--check` verifies exact exports).
-`lua/art.lua` loads the contract; the measured horizontal engine list in
-`lua/board.lua` owns the goal cells. Collection flights land on the new goal positions.
+`lua/art.lua` loads the contract; the measured engine list remains available for diagnostic boards.
 [Reviewed game captures and native input checks](review/expedition-header/README.md)
 cover both backgrounds, both phone sizes, completed goals, every pause state,
 and dismissible/required popup behavior.
@@ -518,7 +510,7 @@ pause, guide and the island.
 | FALL | Engine one-edge gravity steps prefer straight down; diagonals require a blocked or missing cell below the donor, then land with a short squash; all exposed column tops spawn vertically; interior cells spawn only with blocked donors |
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
-| Collection | Existing base-kind image flies to resource HUD with a trail |
+| Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |
 | Reduced motion | Suppresses trails, shake, squash and effect spawns; the board's entrance becomes a short fade; rule resolution stays active |
 
 Transient light, beams, rings, particles, score text and sunlight motes

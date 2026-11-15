@@ -1462,8 +1462,11 @@
         "prompt": "art/board-dressing/floors.prompt.txt"
       },
       "plaques": {
-        "source": "art/board-dressing/plaques.png",
-        "prompt": "art/board-dressing/plaques.prompt.txt"
+        "source": "art/board-refresh/source.png",
+        "prompt": "art/board-refresh/prompt.txt",
+        "references": [
+          "art/board-refresh/hex-template.png"
+        ]
       },
       "sweep": {
         "source": "art/board-dressing/sweep.png",
@@ -1762,12 +1765,12 @@
       "sandstone-floor": {
         "source": "plaques",
         "fit": "fill",
-        "crop": [0, 0, 887, 887]
+        "crop": [31, 864, 391, 1224]
       },
       "blue-plaque": {
         "source": "plaques",
         "fit": "fill",
-        "crop": [887, 0, 1774, 887]
+        "crop": [448, 864, 808, 1224]
       }
     },
     "registration": "tools/prepare_board_dressing.py"
@@ -1843,12 +1846,11 @@
     }
   },
   "resource_pieces": {
-    "source": "art/resource-pieces/outlined-atlas.png",
-    "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
-    "outline_reference": "data/tile-sets/resources/4.png",
+    "source": "art/board-refresh/source.png",
+    "prompt": "art/board-refresh/prompt.txt",
     "grid": [
-      4,
-      2
+      3,
+      3
     ],
     "size": 128,
     "extent": 114,
@@ -1861,7 +1863,8 @@
       "timber": 4,
       "stone": 5,
       "water": 6,
-      "rations": 7
-    }
+      "rations": 9
+    },
+    "generator": "built-in ImageGen, full-atlas revision with a sun engraving"
   }
 }

@@ -9,8 +9,7 @@ just brought home.
 ## What the reference games do
 
 The [extracted Cradle of Rome reference](../../../docs/cradle-of-rome-reference/README.md)
-covers the original game's Android beta, with board counts, city prices and
-[proposals for this campaign](../../../docs/cradle-of-rome-reference/ADAPTATION.md).
+covers the Android beta’s boards and city prices.
 
 | Question | Cradle of Rome | Cradle of Egypt, GameTop Windows edition |
 | --- | --- | --- |
@@ -21,9 +20,9 @@ covers the original game's Android beta, with board counts, city prices and
 
 Rome's blue plaques and income are an especially good fit. A player can
 decide whether to take the match that clears a remote plaque, take a colour
-needed at home, or satisfy both with one move. The extracted Android beta
-and the Egypt desktop edition both make that loop inspectable. The exact
-ratios belong to each build. For example, the official Egypt tile guide gives
+needed at home, or satisfy both with one move. Egypt is an adequate reference
+for that loop and gives us inspectable data. The exact ratios belong to the
+specific reference build. For example, the official Egypt tile guide gives
 silver/gold coins yields of 3/5, while the Windows files set them to 2/4.
 [GameHouse's Rome walkthrough](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/),
 [Awem's Egypt tile guide](https://support.awem.com/hc/en-gb/articles/201076871-Tiles),
@@ -85,13 +84,11 @@ the sandstone. A lock or cover takes the hit while it protects a piece on
 that cell. Locks, salt, rubble and ice are routes through the board. Their
 counts stay off the goal bar. A cell changes only when the move reaches it.
 
-A regular expedition marks the work site with blue plaques. Recovery
-expeditions match the item in an ordinary colour slot, with a plaque patch
-only when the location adds to the task. Delivery boards guide the tablet
-or signal plate to its marked exit. Board 30 keeps the three flashes and
-Ines's reply. Move limits fit short portrait play and give deliberate resource
-matches a visible cost. The soundtrack and effects can show time pressure
-without imposing a real-time deadline.
+Every expedition marks the work site with blue plaques. Clearing all of
+them wins. The first clear can recover a story item shown in an ordinary
+colour slot, and board 30 reveals the signal plate and Ines’s reply.
+Move limits fit short portrait play and give deliberate resource matches a
+visible cost.
 
 | Regular piece | Family | Yield per removed piece |
 | --- | --- | ---: |
@@ -104,14 +101,13 @@ without imposing a real-time deadline.
 Buy or restore a building using the family totals. Timber and stone are
 separate match kinds within Supplies, just as berries and plantains are
 separate kinds within Provisions. Each piece needs a recognizable shape at phone
-size. Resource counters use the coin, a food basket and a supply crate, so
-the player can see immediately where the pieces went.
+size. The shared town and board wallet uses the sun coin, berries and blue-tied
+timber. Pending earnings are visible on the board and are banked on a win.
 
 Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
 earn that complexity through layout and enough legal opening swaps. Board 1
-collects regular timber from a five-kind palette. Boards 4 and 9 use 5+1.
-Board 8 uses a purple snapped cable in 4+1. The
+uses five regular resources. Boards 4 and 9 use 5+1. Board 8 uses a purple snapped cable in 4+1. The
 orange slot can hold an authored recovery item or a rarer orange food jar on a
 six-kind board. Gold story chapters can temporarily suspend coin income.
 Board 4's next restoration uses Provisions and Supplies, and boards 11 and 12 earn
@@ -124,14 +120,9 @@ is the first such opportunity. After placement, show a turquoise water bucket
 in place of the blue timber on the next two water-site boards, 5 and 6.
 It pays into **Provisions**, the same family as the fruit. Those boards already
 use their green slot for the quay marker, and purple stone still supplies
-construction. Clearing the blue plaques and finding the marker are the win
-conditions. The bucket remains available on designated water boards and adds
-no fourth currency. Confirming the Artisan Workshop unlocks cut blocks in
-the purple slot on board 9, where they also earn 1 Supplies each. The blue
-supply packs still assemble the crate. The cut blocks give the crew material
-to shore up the slipped steps to the tide room. The building card, board
-briefing and illustrated guide explain the payout, while the dialogue
-explains why the crew needs the water and stone.
+construction. Clearing the blue plaques recovers the marker. The bucket remains available on designated water boards and adds
+no fourth currency. The Artisan Workshop unlocks cut blocks on board 9 at
+1 Supplies each. The crew uses the blocks to shore up the old steps.
 
 ## Restoration prices and earnings
 
@@ -157,8 +148,7 @@ A piece earns its base amount each time it actually leaves its cell, including
 during cascades and when collected by a special. A hit that removes a lock or
 cover with the piece intact pays on the later removal. Specials earn from the
 pieces they clear. A piece converted into a special can earn once at
-conversion. Regular timber on board 1 earns Supplies and advances the
-camp's goal. Dedicated story pieces count toward their recovery. Each find has
+conversion. Story pieces count toward their recovery. Their assembled item has
 a separate card. Keep the existing move bonus as a capped Gold reward and use
 the existing discovery-star gates for land. Show the three resource totals on
 the result card next to any story award and the next building's price.
@@ -190,12 +180,9 @@ shapes and readable labels alongside color in the guide and price rows.
 
 ## Release status and checks
 
-The campaign uses sandstone on all 30 boards, with blue plaque targets on
-20. Story recovery, targeted floor clearing and delivery are the win
-conditions. The runtime uses the five base resources, the scripted story
-pieces and well variants, three balances, and the restoration prices above.
-The [art review](screenshots/review/expedition-economy/README.md) shows the
-board, wallet, shop and results.
+All 30 boards use pale stone with fixed blue targets. They share the
+same clear condition. The [current review](review/blue-plaque-campaign/README.md)
+shows the board, new resource artwork and common wallet at both phone sizes.
 
 For release balancing, play the first restoration through a fresh save on
 both supported phone sizes and sample a migrated save midway through chapter two.

@@ -2,6 +2,15 @@
 
 Research date: 29 October 2026. Original sprites and environment paintings were generated for this prototype; no King, Supercell or Wooga game art is redistributed.
 
+## Cradle of Rome board reference
+
+For the November 15 board refresh, we downloaded and reviewed gameplay from
+the original Awem game: [level 2](https://www.doublegames.com/images/screenshots/cradle-of-rome_1_big.jpg)
+and [level 13](https://www.old-games.com/screenshot/10934-12-cradle-of-rome.jpg).
+The contrast between bright resource shapes, cream stone and blue target cells
+informed the palette. Relic Rush ships its own artwork, sun engraving, shapes
+and hex layout. See the [sprite and cell catalogue](asset-catalogue.md#resource-pieces).
+
 ## Island and building art direction
 
 Pearl's Peril and June's Journey are the primary references for the island and buildings, as requested. Favor a landscaped island with organic shoreline, gardens, trees, scenic paths and coherent building scale. Let individual buildings sit in their own surroundings with breathing room. Keep a calm, detailed painted environment; retain archaeological expedition architecture for our original setting. Candy Crush informs the puzzle board and feedback, not the island composition. Automatic roads between buildings are disabled; landscape detail comes from the painted terrain. The prototype now uses a large scrolling world, explicit neighboring-region unlocks, and freely placed movable buildings with green/red footprint validation.

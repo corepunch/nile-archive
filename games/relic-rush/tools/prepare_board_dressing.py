@@ -20,7 +20,12 @@ def register(source, item, mask):
         square.paste(tile, (left - x + side // 2, top - y + side // 2))
         tile = square
     tile = tile.resize((SIZE, SIZE), Image.Resampling.LANCZOS)
-    if item["fit"] in {"frame", "fill"}:
+    if item["fit"] == "fill":
+        # Full-bleed paint must reach the registered face before we cut it.
+        unpainted = tile.getchannel("A").point(lambda a: 255 if a < 230 else 0)
+        assert not ImageChops.multiply(unpainted, mask).getbbox(), item
+        tile.putalpha(mask)
+    elif item["fit"] == "frame":
         tile.putalpha(ImageChops.multiply(tile.getchannel("A"), mask))
     return tile
 

@@ -92,23 +92,11 @@ local function campaign()
             app.inject_click(R.town.buttons.play); wait = 10
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
-        local g, l = R.g, rules.level_of(R.g)
+        local g = R.g
         for i = 0, rules.CELLS - 1 do
-            g.ice[i], g.chain[i], g.stone_hp[i] = 0, 0, 0
-            if g.tiles[i].kind == rules.DELIVERY then
-                -- The smoke tests progression, so complete delivery while preserving
-                -- a stable match-free starting board for the next real swap.
-                local match = rules.new_match()
-                for kind = 0, rules.COLORS - 1 do
-                    g.tiles[i] = rules.tile(kind)
-                    rules.game_matches(g, match, -1)
-                    if match.hits == 0 then break end
-                end
-                assert(match.hits == 0, "campaign smoke cannot replace delivered token")
-            end
+            g.ice[i], g.chain[i], g.stone_hp[i], g.oil[i] = 0, 0, 0, 0
         end
-        g.delivered = g.delivery_total
-        g.score, g.relics, g.obstacles, g.carpeted, g.oil_left = l.score, l.relics, 0, g.carpet_total, 0
+        g.obstacles, g.oil_left = 0, 0
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b
@@ -159,7 +147,8 @@ function R.smoke()
     end
     if stage == -2 and R.overlay == R.OV_NONE then
         assert(R.selected < 0 and R.g.moves == rules.level_of(R.g).moves, "smoke: the tap that skips the entrance must not play")
-        app.inject_click(R.board_pause:point(vec2(.1, .5))); stage = -3   -- enlarged Pause's left edge, outside its old touch area
+        assert(not R.mission_banner, "smoke: the blue plaques replace the mission banner")
+        app.inject_click(R.town.menu_bounds:point(vec2(.1, .5))); stage = -3
     elseif stage == -3 and R.overlay == R.OV_PAUSE and R.dialog_settled() then   -- Sound off, then on again
         smoke_sound = R.sound
         app.inject_click(R.pause_form.boxes.sound:center() + vec2(0, R.drop / 2)); stage = -4
@@ -271,7 +260,7 @@ function R.smoke()
         app.inject_click(vec2(40, 38)); stage = 32
     elseif stage == 32 then
         assert(not R.on_island and R.overlay == R.OV_NONE, "old header corner must not return to the island")
-        app.inject_click(R.board_pause:center()); stage = 33
+        app.inject_click(R.town.menu_bounds:center()); stage = 33
     elseif stage == 33 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(vec2(12, 220 + R.drop / 2)); stage = 34
     elseif stage == 34 and R.overlay == R.OV_NONE then
@@ -285,7 +274,13 @@ function R.smoke()
         app.inject_click(R.cell_pos(partner)); partner = -1; stage = 51
     elseif stage == 51 and R.phase == R.PH_IDLE and R.g.moves < shop.resume_moves then
         assert(R.g.score > 0, "restart smoke must exercise a partly played board")
-        app.inject_click(R.board_pause:center()); stage = 35
+        local capsules = R.header_capsules()
+        for slot = 1, 3 do
+            assert(R.prog.wallet[slot] == shop.replay_wallet[slot]
+                and tonumber(capsules[slot+1].value) == R.prog.wallet[slot] + R.g.earnings[slot],
+                "smoke: the shared header previews live match earnings without banking them")
+        end
+        app.inject_click(R.town.menu_bounds:center()); stage = 35
     -- Pause > Restart asks first: Keep playing returns to Pause, Restart starts over.
     elseif stage == 35 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(R.pause_form.nodes.sound and R.pause_form.nodes.motion, "pause groups the Sound and Reduce motion checkboxes")
@@ -303,7 +298,7 @@ function R.smoke()
                and R.phase == R.PH_IDLE and R.shake == 0,
                "restart must create a fresh attempt of the same expedition")
         shop.resume_game, shop.resume_moves = R.g, R.g.moves
-        app.inject_click(R.board_pause:center()); stage = 40
+        app.inject_click(R.town.menu_bounds:center()); stage = 40
     -- Pause > Quit to island keeps the board and pays nothing; the browser resumes it.
     elseif stage == 40 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(R.pause_form.boxes.quit:center() + vec2(0, R.drop / 2)); stage = 41

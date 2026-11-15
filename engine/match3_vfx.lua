@@ -86,13 +86,13 @@ function V.bind(R, rules)
     ------------------------------------------------------------------ particles
 
 
-    function R.vfx_emit(at, kind, flying, count)
+    function R.vfx_emit(at, kind, flying, count, target)
         if R.reduced_motion then return end
         for _ = 1, flying and 1 or count or 7 do
             local p = parts[part_next % PARTICLES + 1]
             part_next = part_next + 1
             local a, speed = rng_float() * 2 * PI, 55 + rng_float() * 125
-            local to = R.goal_target(kind)
+            local to = target or at
             p.at, p.vel, p.to = at, vec2.polar(a, speed) + vec2(0, -35), to
             p.age = flying and -rng_float() * .14 or 0
             p.life = flying and .75 + rng_float() * .2 or .35 + rng_float() * .32
@@ -190,8 +190,15 @@ function V.bind(R, rules)
                 add(FX_IMPACT, at, vec2(0, 0), kind, .3, delay, 0)
                 if delay == 0 then vfx_emit(at, kind, false) end
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
-                    if was.special==NORMAL and not was.element and not (R.pending.activations or {})[i]
-                        and (rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL) then vfx_emit(at, was.kind, true) end
+                    if was.special==NORMAL and not was.element and not (R.pending.activations or {})[i] then
+                        local to
+                        if R.resource_target and R.g.earnings and not R.g.hs then
+                            to = R.resource_target(was.kind)
+                        elseif rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL then
+                            to = R.goal_target(was.kind)
+                        end
+                        if to then vfx_emit(at, was.kind, true, nil, to) end
+                    end
                     if not R.pending.make[i] then
                         local special=(R.pending.activations or {})[i]
                         if special == ROW or special == COLUMN or special == DIAGONAL then
