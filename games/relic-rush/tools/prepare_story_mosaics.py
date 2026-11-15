@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Register paintings for mosaic reveals and verify the decoded runtime images.
 
-A picture with a "mosaic" entry also gets a tesserae version for play: the
-painting is cut into small, slightly irregular stone tiles, each a single
-colour, set in dark grout. The finished painting replaces it on the win.
+A picture with a "mosaic" entry also gets a stone version for play: every
+board cell is paved with small flat-top hexagonal stones, each a single
+colour, cut to fit the cell, with a thin dark joint between cells. The
+finished painting replaces it on the win.
 """
 import argparse
 from io import BytesIO
 import json
+import math
 from pathlib import Path
 import random
 
@@ -15,40 +17,67 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageOp
 
 ROOT = Path(__file__).resolve().parents[1]
 SUPERSAMPLE = 3
+ROOT3 = math.sqrt(3)
 
 
-def tesserae(image, tile, grout, jitter, seed):
-    """Cut `image` into jittered quads of about `tile` pixels with `grout` pixels between them."""
+def hexagon(cx, cy, radius):
+    return [(cx + radius * math.cos(k * math.pi / 3), cy + radius * math.sin(k * math.pi / 3)) for k in range(6)]
+
+
+def in_hexagon(dx, dy, radius):
+    dx, dy = abs(dx), abs(dy)
+    return dy <= ROOT3 / 2 * radius and ROOT3 * dx + dy <= ROOT3 * radius
+
+
+def hex_stones(image, cells_across, per_cell, grout, joint, seed):
+    """Pave each board cell of `image` with hexagonal stones.
+
+    The runtime lays the picture centred across a board `cells_across` cell
+    radii wide, so a cell's radius here is the width over that. Stones are
+    `per_cell` to a cell radius, which puts a stone on every cell centre and,
+    when per_cell % 3 == 1, a stone corner on every cell corner.
+    """
     rng = random.Random(seed)
     w, h = image.size
-    cols, rows = round(w / tile), round(h / tile)
-    tw, th = w / cols, h / rows
-    stones = image.resize((cols, rows), Image.Resampling.BOX).load()   # each stone's average colour
-    # Grout follows the painting's local tone, so seams never read as a black net.
-    bed = ImageEnhance.Brightness(image.filter(ImageFilter.GaussianBlur(tile))).enhance(.5)
-    canvas = bed.resize((w * SUPERSAMPLE, h * SUPERSAMPLE), Image.Resampling.BILINEAR)
-    draw = ImageDraw.Draw(canvas)
-    corner = [[(c * tw + (rng.uniform(-jitter, jitter) * tw if 0 < c < cols else 0),
-                r * th + (rng.uniform(-jitter, jitter) * th if 0 < r < rows else 0))
-               for c in range(cols + 1)] for r in range(rows + 1)]
+    big = w / cells_across
+    small = big / per_cell
+    soft = image.filter(ImageFilter.GaussianBlur(small * .55)).load()   # a stone's average colour
+    bed = image.filter(ImageFilter.GaussianBlur(small * 2))
+    canvas = ImageEnhance.Brightness(bed).enhance(.3).resize((w * SUPERSAMPLE, h * SUPERSAMPLE))   # joints
+    grouted = ImageEnhance.Brightness(bed).enhance(.55)
+    reach = math.ceil(max(w, h) / big)
+    tile_w, tile_h = math.ceil(2 * big) + 4, math.ceil(ROOT3 * big) + 4
+    for q in range(-reach, reach + 1):
+        for r in range(-reach, reach + 1):
+            cx, cy = w / 2 + 1.5 * big * q, h / 2 + ROOT3 * big * (r + q / 2)
+            if not (-big < cx < w + big and -big < cy < h + big):
+                continue
+            left, top = math.floor(cx - big) - 2, math.floor(cy - ROOT3 / 2 * big) - 2
+            box = (left, top, left + tile_w, top + tile_h)
+            tile = grouted.crop(box).resize((tile_w * SUPERSAMPLE, tile_h * SUPERSAMPLE))
+            draw = ImageDraw.Draw(tile)
 
-    def quad(points, inset, shift=0):
-        cx, cy = sum(p[0] for p in points) / 4, sum(p[1] for p in points) / 4
-        out = []
-        for x, y in points:
-            dx, dy = x - cx, y - cy
-            k = max(0, 1 - inset / max(1e-6, (dx * dx + dy * dy) ** .5))
-            out.append(((cx + dx * k + shift) * SUPERSAMPLE, (cy + dy * k + shift) * SUPERSAMPLE))
-        return out
+            def local(points, shift=0):
+                return [((x - left + shift) * SUPERSAMPLE, (y - top + shift) * SUPERSAMPLE) for x, y in points]
 
-    for r in range(rows):
-        for c in range(cols):
-            points = [corner[r][c], corner[r][c + 1], corner[r + 1][c + 1], corner[r + 1][c]]
-            shade = rng.uniform(.95, 1.05)   # hand-cut stones never match exactly
-            base = tuple(min(255, round(v * shade)) for v in stones[c, r])
-            lit = tuple(min(255, round(v * 1.14 + 8)) for v in base)
-            draw.polygon(quad(points, grout * .7), fill=lit)              # a lit upper-left edge
-            draw.polygon(quad(points, grout * .7 + .8, .45), fill=base)   # the stone's face
+            for a in range(-per_cell - 1, per_cell + 2):
+                for b in range(-per_cell - 1, per_cell + 2):
+                    dx, dy = 1.5 * small * a, ROOT3 * small * (b + a / 2)
+                    if not in_hexagon(dx, dy, big + small):
+                        continue
+                    # A stone cut by the cell's edge takes its colour from the part inside.
+                    pull = 0 if in_hexagon(dx, dy, big - small) else .5 * small / max(1e-6, math.hypot(dx, dy))
+                    sx = min(w - 1, max(0, round(cx + dx * (1 - pull))))
+                    sy = min(h - 1, max(0, round(cy + dy * (1 - pull))))
+                    shade = rng.uniform(.95, 1.05)   # hand-cut stones never match exactly
+                    base = tuple(min(255, round(v * shade)) for v in soft[sx, sy])
+                    lit = tuple(min(255, round(v * 1.12 + 8)) for v in base)
+                    face = small - grout / ROOT3
+                    draw.polygon(local(hexagon(cx + dx, cy + dy, face)), fill=lit)              # a lit upper-left edge
+                    draw.polygon(local(hexagon(cx + dx, cy + dy, face - .8), .4), fill=base)   # the stone's face
+            mask = Image.new("L", tile.size, 0)
+            ImageDraw.Draw(mask).polygon(local(hexagon(cx, cy, big - joint / ROOT3)), fill=255)
+            canvas.paste(tile, (left * SUPERSAMPLE, top * SUPERSAMPLE), mask)
     return canvas.resize((w, h), Image.Resampling.LANCZOS)
 
 
@@ -84,7 +113,8 @@ def main():
         settle(path, encode(image), args.check, name)
         cut = mosaic.get("mosaic")
         if cut:
-            stones = tesserae(image, cut["tile"], cut["grout"], cut["jitter"], cut["seed"])
+            stones = hex_stones(image, cut["cells_across"], cut["stones_per_cell"], cut["grout"], cut["joint"],
+                                cut["seed"])
             settle(ROOT / cut["runtime"], encode(stones), args.check, name + " mosaic")
         print(f"{name}: {image.width}×{image.height} authored painting")
 

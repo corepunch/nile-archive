@@ -1066,8 +1066,8 @@
         "level": 8,
         "states": ["covered", "uncovered", "won", "replay"],
         "size": [720, 800],
-        "mosaic": {"runtime": "data/reveal-08-mosaic.jpg", "tile": 10, "grout": 1.1, "jitter": 0.24, "seed": 8},
-        "transform": "Center crop to 9:10, resize with Lanczos and encode as JPEG. The play mosaic cuts that image into jittered single-colour stones over a darkened, blurred grout bed; no recolouring beyond a per-stone shade of 5%. At runtime, center crop to the board bounds and mask through the restored mosaic cells; the mosaic shows in play and the painting fades in on the win."
+        "mosaic": {"runtime": "data/reveal-08-mosaic.jpg", "cells_across": 11, "stones_per_cell": 7, "grout": 1.0, "joint": 2.2, "seed": 8},
+        "transform": "Center crop to 9:10, resize with Lanczos and encode as JPEG. The play mosaic paves each board cell of that image with flat-top hexagonal single-colour stones cut to the cell, over a darkened, blurred grout bed with a darker joint between cells; no recolouring beyond a per-stone shade of 5%. cells_across is the board width in cell radii, which registers the stones to the cells. At runtime, center crop to the board bounds and mask through the restored mosaic cells; the mosaic shows in play and the painting fades in on the win."
       }
     }
   },
