@@ -371,6 +371,22 @@ function E.selection_scale(R,i)
     return 1
 end
 
+-- A soft drop shadow under a board piece, so it stays legible on bright floor
+-- art: the piece's own silhouette, dropped and spread over a ring of faint
+-- taps. size is the piece's drawn width in logical pixels.
+local SHADOW_TAPS = 10
+local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .07, .07, 20
+function E.piece_shadow(tex, dst, alpha, size)
+    local drop, spread = size * SHADOW_DROP, size * SHADOW_SPREAD
+    local tint = color(0, 0, 0, SHADOW_TAP_ALPHA * alpha / 255)
+    local base = dst:offset(vec2(0, drop))
+    gfx.image(tex, base, tint)
+    for k = 1, SHADOW_TAPS do
+        local a = k / SHADOW_TAPS * 2 * math.pi
+        gfx.image(tex, base:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), tint)
+    end
+end
+
 -- Leave room to see artwork underneath pieces on special floor cells.
 function E.piece_scale(g, cell)
     return g.delivery_exits and g.delivery_exits[cell] and .58 or 1

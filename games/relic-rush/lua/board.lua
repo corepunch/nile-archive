@@ -64,11 +64,10 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     local frame = ART_STATE_SIZE * draw_scale
     local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
-    if t.special ~= NORMAL then
-        gfx.image(R.board_art[art.specials[t.special]],dst,tint)
-    else
-        gfx.image(R.relics[t.kind+1],rect.centered(at,size2(s*aspect,s/aspect)),tint)
-    end
+    local tex, area = R.relics[t.kind+1], rect.centered(at,size2(s*aspect,s/aspect))
+    if t.special ~= NORMAL then tex, area = R.board_art[art.specials[t.special]], dst end
+    if board then elements.piece_shadow(tex, area, alpha, s) end
+    gfx.image(tex, area, tint)
 end
 local draw_relic = R.draw_relic
 

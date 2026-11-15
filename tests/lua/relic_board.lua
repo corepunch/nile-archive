@@ -341,9 +341,12 @@ do
             R.hex_piece_kind = rules.RELIC_IDOL
             R.board_art = R.board_art or {}
             -- Temporarily record draw calls instead of requiring a renderer.
-            gfx.image = function(_, box) boxes[#boxes + 1] = box end -- luacheck: ignore 122
-            for kind = 0, 5 do R.draw_relic(rules.tile(kind), pos, scale, 255, aspect, true) end
-            R.draw_relic(rules.tile(0, rules.PRISM), pos, scale, 255, aspect, false)
+            -- The piece is each call's last image; earlier ones are its shadow.
+            local last
+            gfx.image = function(_, box) last = box end -- luacheck: ignore 122
+            local function draw(t, board) R.draw_relic(t, pos, scale, 255, aspect, board); boxes[#boxes + 1] = last end
+            for kind = 0, 5 do draw(rules.tile(kind), true) end
+            draw(rules.tile(0, rules.PRISM), false)
             gfx.image, R.hex_piece_kind = image, hex_kind -- luacheck: ignore 122
             R.board_art = board_art
             check(#boxes == 7, "all six resting pieces and a state panel are drawn")
