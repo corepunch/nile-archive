@@ -82,7 +82,7 @@ A board is not a pause between scenes. It is the crew doing the task the last li
 | Family | Rule (unchanged) | Base look, taught first | Story looks |
 | --- | --- | --- | --- |
 | **Lock** | Holds a piece in place; one hit per strand (`chain`, `chain-2`) | Iron chain | Creeper vine, rope lashing, cable snarl, claim seal |
-| **Cover** | Encases a piece; one hit per layer (`ice-1`, `ice-2`) | Ice | Barnacle crust, wall rubble |
+| **Cover** | Encases a piece; one hit per layer (`ice-1`, `ice-2`) | Salt crust | Barnacle crust, wall rubble, ice (frozen boards only) |
 | **Floor** | Lies under the pieces; a match on it clears the cell (find cover, mosaic) | Silt | Dig sand, well mud, tide-room silt, mosaic |
 
 Each family keeps one visual language in every look, so a player who knows the rule recognises it at once:
@@ -115,11 +115,11 @@ Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
 | 3 | Find the relay cable | stone | — | — | Dig sand | — |
 | 4 | Recover the tide chart | 4 / 0 | Iron chain (base) | — | **Well mud** | *Tomas: The pump chain has rusted fast. Break it, then wash the mud off that chart.* |
 | 5 | Uncover the quay marker | 4 / 0 | **Creeper vine** | — | Mosaic | *Mara: Creepers over the old path. Same as the pump chain: one match each.* |
-| 6 | Uncover the shore marker | 0 / 5 | — | Ice (base) | Dig sand | — |
-| 7 | Recover the tool roll | 3 / 4 (2) | **Rope lashing** | Ice | Dig sand | *Mara: Someone strapped this down tight. Cut the ropes.* |
-| 8 | Recover the broken cable | 4 / 6 (2) | **Cable snarl** | Ice | Mosaic (story picture) | *Elena: The cable is wound round everything. Free each loop.* |
-| 9 | Retrieve the supply crate | 5 / 6 (2) | Rope lashing | Ice | Dig sand | — |
-| 10 | Recover the shutter crank | 6 / 6 (2) | Iron chain | **Barnacle crust** | Tide-room silt | *Tomas: The sea has been in here. Knock the crust off like ice.* |
+| 6 | Uncover the shore marker | 0 / 5 | — | **Salt crust** (base) | Dig sand | — (the lesson text teaches it: *Match beside the salt crust to break it.*) |
+| 7 | Recover the tool roll | 3 / 4 (2) | **Rope lashing** | Salt crust | Dig sand | *Mara: Someone strapped this down tight. Cut the ropes.* |
+| 8 | Recover the broken cable | 4 / 6 (2) | **Cable snarl** | Salt crust | Mosaic (story picture) | *Elena: The cable is wound round everything. Free each loop.* |
+| 9 | Retrieve the supply crate | 5 / 6 (2) | Rope lashing | Salt crust | Dig sand | — |
+| 10 | Recover the shutter crank | 6 / 6 (2) | Iron chain | **Barnacle crust** | Tide-room silt | *Tomas: The sea has been in here. Knock it off like the salt.* |
 
 ### Chapters 2–3 by quest
 
@@ -128,18 +128,18 @@ These chapters are provisional, so their dressing is set per quest and fixed whe
 | Quest (boards) | Lock look | Cover look | Floor look | Note |
 | --- | --- | --- | --- | --- |
 | Find the sender (11–13) | Creeper vine | — | Dig sand | Following old paths. |
-| Make a way home (14–16) | Rope lashing | **Wall rubble** (15) | — | Board 15 checks the cracked wall; rubble is its new look. |
-| Keep the record (17–20) | Iron chain | Ice | Silt; spreading river silt on 20 | The record boxes are chained shut. |
-| Protect the warning (21–23) | Cable snarl | Ice (22, *The Frozen Stair*) | — | Relay work again. |
+| Make a way home (14–16) | Rope lashing | **Wall rubble** (15) | — | Board 15 checks the cracked wall; rubble is its new look, and its name *The Frost Line* changes when Chapter 2 is written. |
+| Keep the record (17–20) | Iron chain | Salt crust | Silt; spreading river silt on 20 | The record boxes are chained shut. |
+| Protect the warning (21–23) | Cable snarl | **Ice** (22, *The Frozen Stair*) | — | Relay work again. Ice appears only where the board is cold; it needs one line when it first shows. |
 | Repair the quay (24–26) | Rope lashing | Barnacle crust | Well mud (26, *restore water access*) | The quay and the water. |
 | Let the light speak (27–30) | **Claim seal** (28) | Wall rubble (27) | Mosaic | On 28 Kessler's wax seals lock the records, and breaking them is confronting the claim. Board 30 mixes every look the crew has cleared: the whole campaign on one board. |
 
 ### Art order and open questions
 
-- **First batch** (covers Chapter 1): well mud (floor), creeper vine (lock), rope lashing (lock), cable snarl (lock) and barnacle crust (cover). Dig sand is already requested in `art/quest-objects/finds-prompts.md`.
+- **First batch** (covers Chapter 1): well mud (floor), creeper vine (lock), rope lashing (lock), cable snarl (lock), salt crust (cover, the new base look) and barnacle crust (cover). Dig sand is already requested in `art/quest-objects/finds-prompts.md`.
 - **Later:** wall rubble, tide-room silt, claim seal.
 - **Data:** a per-board `dress = {lock=…, cover=…, floor=…}` in `lua/campaign.lua`, which the layer drawing in `lua/art.lua` resolves to the look's atlas. Missing looks fall back to the base look and are listed as gaps in the catalogue.
-- **Open question:** ice on a tropical shore (board 6) is the one look that fights the setting. Either teach covers as *salt crust* and keep ice for the frozen boards (15, 22), or accept ice as the cold-spring look throughout. The recommendation is salt crust. That moves one cover look into the first batch.
+- **Decided 2026-11-15:** ice fights the tropical setting, so covers are taught as *salt crust* on board 6 and ice is kept for the frozen board 22. Until the salt-crust atlas exists, covers fall back to the current ice art; board 6's lesson text changes with the art.
 
 ## Chapter 1: A Light Below
 
@@ -427,7 +427,7 @@ An independent cold read identified the need to introduce Tomas, show the floode
 
 ## Changelog
 
-- 2026-11-15: Planned board dressing: each obstacle rule wears story looks (vines, rope, cable, mud, barnacles, rubble, claim seals) chosen per board, taught on the base look first and tied in by one crew line. Plan only; lines are provisional and have not had a cold read.
+- 2026-11-15: Planned board dressing: each obstacle rule wears story looks (vines, rope, cable, mud, barnacles, rubble, claim seals) chosen per board, taught on the base look first and tied in by one crew line. Plan only; lines are provisional and have not had a cold read. Covers are taught as salt crust; ice stays only on the frozen board 22.
 
 - 2026-11-15: Quest objects are buried on boards 1–7, 9 and 10 and recovered by play. Added one provisional mid-board line per board (Mara 1, 2, 3, 6, 7, 9; Elena 4, 5; Tomas 10); each only names what is coming into view and adds no plot. They have not had a cold read.
 - 2026-11-14: Prototype story mosaic on board 8: the restored floor uncovers a picture of the relay, with one mid-board line from Elena. Placeholder art; the line is provisional.
