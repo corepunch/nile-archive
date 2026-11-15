@@ -63,8 +63,8 @@ function M.step()
     if frames % 6 ~= 0 then return end
     if story.active() then story.next() return end
     if step == 0 then
-        assert(G.island.clearance.w == 0 and G.island.clearance.h == 0,
-            "Nile island must not add placement clearance")
+        assert(G.island.clearance.w == 1 and G.island.clearance.h == 1,
+            "Nile island must keep its street spacing: one tile of clearance around every base")
         local c = city.new()
         c:init(nil)
         c.defs, c.tile, c.clearance = content.buildings, G.island.tile, G.island.clearance
@@ -79,8 +79,9 @@ function M.step()
         c:add(at, tree, 0)
         assert(not c:can_place(at, tree), "overlapping trees must be blocked")
         local ok, neighbour = c:find_spot(tree, at)
-        assert(ok and (neighbour - at):len() < c.tile,
-            "one-tile decorations must fit in adjacent cells")
+        -- An adjacent cell is under one tile away; with the clearance the nearest spot is two.
+        assert(ok and (neighbour - at):len() >= c.tile,
+            "a street must stay between neighbouring one-tile decorations")
         app.inject_click(G.spots.chapters); step = 1
     elseif step == 1 then
         assert(G.modal == MODAL_CHAPTERS, "chapters button failed")
