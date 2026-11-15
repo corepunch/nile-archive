@@ -62,7 +62,8 @@ function D.bind(R, W)
                             rules.game_end_turn(copy)
                             local delta = copy.carpeted - g.carpeted
                             if floor_reel == "oil" then
-                                delta = floor_turn == 0 and copy.oil_left - g.oil_left or g.oil_left - copy.oil_left
+                                local growing = floor_turn == 0 and not rules.level_of(g).oil_still
+                                delta = growing and copy.oil_left - g.oil_left or g.oil_left - copy.oil_left
                             end
                             local score = delta * 10 - duration
                             if score > best then

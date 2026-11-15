@@ -2,7 +2,7 @@
 
 ## Themed board art
 
-The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. The floor objectives use drifting sand over stonework and rose-brown river silt.
+The default chips retain the original identities (sun idol, flame, jade leaf, scarab, crystal and amphora). Each has one dominant hue and at most one accent hue. The optional Relic Rush packs keep their existing chip art. Blue plaques mark fixed cells to clear on a pale sandstone floor.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -308,8 +308,8 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `chain` | A silver chain holds the chip between two bolted hex edges. One hit unlocks the piece. |
 | `ice-2` | Translucent blue pane with high-contrast facets across the entire hex face. Two hits remain. |
 | `ice-1` | Translucent blue ice with a broken upper edge. One hit remains. |
-| `carpet-swatch`, `goal-carpet` | Shared mosaic art for the neutral atlas and source-level reviews. The Relic Rush campaign uses drift sand and swept stone. |
-| `oil-material`, `goal-oil` | River silt fills each affected hex face. Clear it under a match or it advances after a turn that clears none. The HUD and guide share its goal icon. |
+| `carpet-swatch`, `goal-carpet` | Shared mosaic art for the neutral atlas and source-level reviews. |
+| `oil-material`, `goal-oil` | Shared spreading-silt art for the neutral atlas and source-level reviews. The campaign overrides this slot with blue plaques and sets the fixed-cell rule. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
@@ -338,8 +338,15 @@ the existing transient impact particles follow the material.
 | `rope-lashing-1`, `rope-lashing-1-mirror`, `rope-lashing-2` | Braided strand in either diagonal, or two crossed strands. Boards 7, 9, 14–16 and 24–26. |
 | `cable-snarl-1`, `cable-snarl-1-mirror`, `cable-snarl-2` | Cloth-wrapped cable in either diagonal, or two crossed strands. Boards 8, 22 and 23. |
 | `dig-sand`, `trench-earth`, `tide-silt` | Excavation surfaces kept in the dressing atlas for the art review. |
-| `well-mud` | Board 26's mud spreads by the river-silt rules and uses the mud goal icon. |
-| `drift-sand`, `swept-stone` | Tan sand fills uncleared stonework, and cool slate marks cleared cells. A match touching cleared stone sweeps the rest of that match. The goal counts sandy cells. Boards 5, 10, 13, 18, 22, 24 and 28. Authored together in the [sweep swatches](../art/board-dressing/sweep.png) from the [prompt](../art/board-dressing/sweep.prompt.txt), then clipped to the canonical mask. |
+| `well-mud` | Archived spreading-mud material from board 26, visible in the dressing art review. |
+| `drift-sand`, `swept-stone` | Archived sand objective surfaces, shown in the dressing art review. |
+| `sandstone-floor`, `blue-plaque` | Plain sandstone and blue stone that must be cleared. Match on a plaque to expose the ordinary floor. The HUD shows the same blue hex. |
+
+The two [plaque swatches](../art/board-dressing/plaques.png) were authored
+together with built-in ImageGen using [this prompt](../art/board-dressing/plaques.prompt.txt).
+The manifest crops the two squares in row order, resizes them to 128 px and
+applies the canonical flat-top mask. Run `python3 games/relic-rush/tools/prepare_board_dressing.py`.
+See the [plaque review](screenshots/review/blue-plaques/README.md).
 
 Built-in ImageGen painted the [cover concept](../art/board-dressing/covers.png) and the
 [open covers](../art/board-dressing/open-covers.png), [lock states](../art/board-dressing/locks.png)

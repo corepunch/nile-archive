@@ -7,6 +7,23 @@ require('main')
 local function empty_queue() while story.active() do story.next() end end
 local function owned(c) return function(kind) return island.owned(c,kind)>0 end end
 
+-- A plaque is fixed to a cell. Nearby clears and blocker damage leave it in place.
+do
+    local g=rules.game_start(4,123)
+    local a,b=rules.hex_index(-1,0),rules.hex_index(-1,1)
+    local initial=g.oil_left
+    check(initial==10 and g.oil[a]==1 and g.chain[a]>0 and g.oil[b]==1, 'blue plaques are authored under both locked and ordinary pieces')
+    g.turn_pending=true
+    rules.game_end_turn(g)
+    check(g.oil_left==initial, 'blue plaques do not spread on a turn that clears none')
+    local m=rules.new_match()
+    m.mask[a]=true
+    rules.game_apply(g,m)
+    check(g.oil_left==initial and g.chain[a]==0, 'the first hit removes the lock')
+    rules.game_apply(g,m)
+    check(g.oil[a]==0 and g.oil[b]==1 and g.oil_left==initial-1, 'a direct clear removes only the plaque it reaches')
+end
+
 local collections = {
     [1]={10,"Camp timber",5,0}, [2]={10,"Lamp lens",3,5}, [3]={12,"Relay cable",4},
     [4]={15,"Tide chart",0}, [5]={14,"Quay marker",2,5}, [6]={14,"Shore marker",2},
@@ -69,18 +86,26 @@ for level=1,30 do
         p.story_seen[before.key]=true
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
-    if level<=10 or level==13 then
-        check(rules.level_of(g).quest_object, 'first-clear story retains its quest object')
+    local specs=rules.level_of(g)
+    check(g.carpet_total==0, 'Relic Rush boards do not use spreading carpet goals')
+    if specs.oil then
+        check(g.oil_left==#specs.oil and specs.oil_still, 'each authored plaque is present on an active cell')
+    end
+    for _, goal in ipairs(specs.goals) do
+        check(goal=='oil' or goal=='deliveries' or goal=='idols' and collections[level],
+            'the board asks for a plaque, delivery or story find')
+    end
+    if collections[level] then
+        check(specs.quest_object, 'first-clear story retains its quest object')
     end
     g.score,g.relics,g.obstacles=0,0,0
     rules.game_check_end(g)
     check(not g.won, 'ordinary match-3 goals must be met')
     if collections[level] then
-        local spec=rules.level_of(g)
         local target, reward=table.unpack(collections[level])
-        g.relics,g.carpeted=target-1,g.carpet_total
+        g.relics,g.oil_left=target-1,0
         rules.game_check_end(g)
-        check(spec.relics==target and not g.won and g.oil_left==0 and not spec.reveal,
+        check(specs.relics==target and not g.won and g.oil_left==0 and not specs.reveal,
             'the story piece collection is required after the other goals are met')
         check(R.award_for(g).name==reward, 'the assembled object is the first-clear reward')
     end
@@ -179,8 +204,8 @@ check(R.prog.story_seen['after-10'] and journey.next(R.prog,owned(c),10).key=='b
     'finishing the reply unlocks chapter two')
 empty_queue()
 
--- Land the physical token using the ordinary gravity and exit rules. A plate
--- alone is insufficient, and the finale precedes the first-clear dialogue.
+-- Land the physical token using the ordinary gravity and exit rules. The
+-- delivery wins and the finale precedes the first-clear dialogue.
 R.g=rules.game_start(29,1)
 R.prog={level=29,story_seen={}}
 R.on_island,R.overlay=false,R.OV_RESULT
@@ -194,9 +219,7 @@ while cell >= 0 do
     cell=rules.hex_neighbor(cell,1)
 end
 rules.game_check_end(g)
-check(g.delivered==1 and not g.won and not R.clear_scene(),'the signal plate reaches its exit while blockers still stand')
-g.obstacles=0
-rules.game_check_end(g)
+check(g.delivered==1 and g.won and g.obstacles>0,'delivering the signal plate wins while off-route blockers remain')
 R.story_tick()
 local scene=R.clear_scene()
 check(scene and scene.exit==exit and not story.active(),'a completed delivery and the cleared board run the landing scene before dialogue')

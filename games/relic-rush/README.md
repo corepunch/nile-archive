@@ -29,9 +29,11 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-The campaign uses only elements found in Homescapes' story levels: carved
-stone, locks, covers, tablet deliveries and floor objectives such as sweeping sand and clearing spreading silt. Each has an
-introduction in the [board progression](docs/board-progression.md).
+The campaign uses carved stone, locks, covers, tablet deliveries and blue
+plaques. Match on a plaque to reveal the sandstone underneath. The
+[board progression](docs/board-progression.md) lists where each mechanic appears.
+The [resource expedition design](docs/resource-expedition.md) covers how
+resource matches and restoration costs fit into the campaign.
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
 and [in-game art review](docs/screenshots/review/board-theme/README.md).
 
@@ -197,34 +199,34 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | --- | --- | ---: | --- | ---: | ---: | --- |
 | 1 | First Light | 24 | 10 timber pieces | 0 | 0 | Match 3 to collect timber. |
 | 2 | The Lamp Lens | 29 | 10 lenses | 0 | 0 | Match 4 for a rocket. Collect lenses. |
-| 3 | The Relay Cable | 32 | Blockers, 12 cable coils | 0 | 0 | Match beside stone to break it. Collect cable coils. |
-| 4 | Under the Pump | 35 | Blockers, 15 map pieces | 4 | 0 | Collect map pieces and break the chains. |
-| 5 | The Quay Marker | 35 | Sand, 14 marker pieces | 4 | 0 | Match on cleared stone to sweep sand. Collect marker pieces. |
-| 6 | The Shore Marker | 37 | Blockers, 14 marker pieces | 0 | 5 | Match the piece under the salt crust. Collect marker pieces. |
-| 7 | The Tool Roll | 40 | Blockers, 16 tool rolls | 3 | 4 | Clear the stone and salt crust. Collect tool rolls. |
+| 3 | The Relay Cable | 32 | 12 cable coils | 0 | 0 | Match beside a stone to break it. |
+| 4 | Under the Pump | 35 | 15 map pieces | 4 | 0 | Collect map pieces. Match a chained piece to free it. |
+| 5 | The Quay Marker | 35 | 10 blue plaques, 14 marker pieces | 4 | 0 | Clear the blue plaques. Collect marker pieces. |
+| 6 | The Shore Marker | 37 | 14 marker pieces | 0 | 5 | Match the piece under the salt crust. Collect marker pieces. |
+| 7 | The Tool Roll | 40 | 16 tool rolls | 3 | 4 | Collect tool rolls. Break stone to open more space. |
 | 8 | The Broken Cable | 40 | 16 snapped cable pieces | 4 | 6 | Collect snapped cable. Match 5 for a rainbow ball. |
-| 9 | The Supply Crate | 43 | Blockers, 18 supply packs | 5 | 6 | Collect supply packs. Clear the ropes and salt crust. |
-| 10 | The Shutter Gear | 46 | Sand, Blockers, 20 gears | 6 | 6 | Sweep the sand, clear blockers, and collect gears. |
-| 11 | The Long Terrace | 33 | Relics | 0 | 0 | Collect the relics. |
-| 12 | Twelve Crates | 36 | Blockers, Relics | 5 | 0 | Free relics caught in the vines. |
-| 13 | Names in the Stone | 37 | Sand, Blockers, 14 folded notes | 6 | 0 | Sweep the sand, clear vines, and collect folded notes. |
-| 14 | Static | 38 | Blockers, Relics | 7 | 0 | Work around the broken seam. |
-| 15 | The Frost Line | 39 | Blockers, Relics | 4 | 6 | Clear the stone to open the board. |
-| 16 | Supper for Twelve | 40 | Blockers, Relics | 4 | 7 | Hit the salt crust with matches or power-ups. |
-| 17 | The Torn Log | 42 | Blockers, Relics | 5 | 7 | Thick salt crust takes two hits. |
-| 18 | Lantern Steps | 40 | Sand | 2 | 4 | Sweep the sand across the terrace. |
-| 19 | Under the Vines | 45 | Blockers, Relics | 4 | 6 | Work beneath the locks. |
-| 20 | The Archivist's Key | 46 | River silt, Blockers | 5 | 7 | Clear the river silt before it spreads. |
-| 21 | Tomas's Trail | 35 | Delivery | 0 | 0 | Clear below the tablet to deliver it. |
-| 22 | The Frozen Stair | 40 | Sand, Blockers | 2 | 8 | Thaw the frozen approach. |
-| 23 | The Star Road | 40 | Relics, Blockers | 3 | 4 | Choose a colour for the rainbow ball. |
-| 24 | Noon Shadow | 41 | Sand, Relics | 4 | 5 | Sweep the sand across the shaded floor. |
-| 25 | Smoke on the Water | 38 | Blockers, Relics | 6 | 6 | Work through the locks. |
-| 26 | The Jade Deep | 43 | Well mud, Blockers | 4 | 7 | Clear the mud before it spreads. |
-| 27 | Six Sun Gates | 45 | Blockers, Relics | 7 | 8 | Clear the scattered locks. |
-| 28 | The Last Terrace | 42 | Sand | 2 | 4 | Sweep the sand across the terrace. |
-| 29 | The Silent Temple | 47 | Blockers, Relics | 8 | 10 | Break through the temple floor. |
-| 30 | The Warning Returns | 49 | Delivery, Blockers | 8 | 10 | Clear below the signal plate to deliver it. |
+| 9 | The Supply Crate | 43 | 18 supply packs | 5 | 6 | Collect supply packs. |
+| 10 | The Shutter Gear | 46 | 12 blue plaques, 20 gears | 6 | 6 | Clear blue plaques and collect gears. |
+| 11 | The Long Terrace | 33 | 12 blue plaques | 0 | 0 | Clear the blue plaques along the terrace. |
+| 12 | Twelve Crates | 36 | 12 blue plaques | 5 | 0 | Match through the vines to reach the blue plaques. |
+| 13 | Names in the Stone | 37 | 10 blue plaques, 14 folded notes | 6 | 0 | Clear blue plaques and collect folded notes. |
+| 14 | Static | 38 | 13 blue plaques | 7 | 0 | Clear blue plaques on both sides of the seam. |
+| 15 | The Frost Line | 39 | 12 blue plaques | 4 | 6 | Clear the blue plaques around the fallen wall. |
+| 16 | Supper for Twelve | 40 | 13 blue plaques | 4 | 7 | Hit the salt crust with matches or power-ups. |
+| 17 | The Torn Log | 42 | 13 blue plaques | 5 | 7 | Thick salt crust takes two hits. |
+| 18 | Lantern Steps | 40 | 14 blue plaques | 2 | 4 | Clear the blue plaques on the terrace. |
+| 19 | Under the Vines | 45 | 12 blue plaques | 4 | 6 | Clear the blue plaques under the locks. |
+| 20 | The Archivist's Key | 46 | 9 blue plaques | 5 | 7 | Clear the blue plaques beside the records. |
+| 21 | Tomas's Trail | 35 | deliver tablet | 0 | 0 | Clear below the tablet to deliver it. |
+| 22 | The Frozen Stair | 40 | 13 blue plaques | 2 | 8 | Break the ice to reach the blue plaques. |
+| 23 | The Star Road | 40 | 12 blue plaques | 3 | 4 | Choose a colour for the rainbow ball. |
+| 24 | Noon Shadow | 41 | 12 blue plaques | 4 | 5 | Clear the blue plaques in the shade. |
+| 25 | Smoke on the Water | 38 | 14 blue plaques | 6 | 6 | Clear the blue plaques along the quay. |
+| 26 | The Jade Deep | 43 | 10 blue plaques | 4 | 7 | Clear the blue plaques to open the water channel. |
+| 27 | Six Sun Gates | 45 | 12 blue plaques | 7 | 8 | Clear the six pairs of blue plaques. |
+| 28 | The Last Terrace | 42 | 13 blue plaques | 2 | 4 | Clear the blue plaques on the terrace. |
+| 29 | The Silent Temple | 47 | 16 blue plaques | 8 | 10 | Clear the blue plaques at the temple entrance. |
+| 30 | The Warning Returns | 49 | deliver signal plate | 8 | 10 | Clear below the signal plate to deliver it. |
 
 The [board materials](docs/asset-catalogue.md#story-materials) come from the
 crew's tasks. Salt crust is the usual cover, barnacles mark the tide room and
@@ -280,7 +282,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 - Thirty distinct hex board masks with 48–58 active cells. Match straight lines of three or more identical relics along any hex axis. Four makes a directional rocket, five or more makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a paper plane.
 - Swap two specials for a combination attack. A rainbow ball combined with another power-up converts matching chips into that power-up before firing them.
-- An adjacent match or a direct power-up hit breaks a carved hex stone. A match that touches cleared stone sweeps sand from the other matched cells. River silt advances after a turn that clears none. Tablets and the signal plate fall to their exits. Locked and covered relics stay in place until matched or hit. Intact covers need two hits.
+- An adjacent match or a direct power-up hit breaks a carved hex stone. Match or land a power-up hit directly on a blue plaque to expose the sandstone. A cover or lock on the same cell takes the hit first. Tablets and the signal plate fall to their exits. Locked and covered relics stay in place until matched or hit. Intact covers need two hits.
 - Cascades increase score multipliers. Matched pieces animate toward score/objective readouts; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe, dynamite and sunburst tools: select a tool, then a board cell. Two charges per tool per level; no move cost. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.

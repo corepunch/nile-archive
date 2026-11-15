@@ -83,7 +83,7 @@ A board is not a pause between scenes. It is the crew doing the task the last li
 | --- | --- | --- | --- |
 | **Lock** | Holds a piece in place; one hit per strand (`chain`, `chain-2`) | Iron chain | Creeper vine, rope lashing, cable snarl, claim seal |
 | **Cover** | Encases a piece; one hit per layer (`ice-1`, `ice-2`) | Salt crust | Barnacle crust, wall rubble, ice (frozen boards only) |
-| **Floor** | Match on spreading silt or mud. Match through cleared stone to sweep drift sand. | Stonework | Well mud, river silt, drift sand |
+| **Floor** | Match or hit directly on a blue plaque to uncover the sandstone. | Sandstone | Blue plaques |
 
 Each family keeps one visual language in every look, so a player who knows the rule recognises it at once:
 
@@ -112,12 +112,12 @@ Counts are the current `lua/campaign.lua` setup: locks / covers (layers).
 | 2 | Gather 10 lenses | — | — | — | Mara needs a lens for the lookout lamp. |
 | 3 | Gather 12 cable coils | stone | — | — | Mara wonders whether the relay cable explains the flashes. |
 | 4 | Gather 15 map pieces | 4 / 0 | Iron chain (base) | — | — | Tomas names the rusted chain and loose chart pieces after board 3. |
-| 5 | Gather 14 marker pieces | 4 / 0 | **Creeper vine** | — | Drift sand | Tomas points to the marker under the creepers after the well is restored. |
+| 5 | Gather 14 marker pieces | 4 / 0 | **Creeper vine** | — | Blue plaques | Tomas points to the marker under the creepers after the well is restored. |
 | 6 | Gather 14 marker pieces | 0 / 5 | — | **Salt crust** (base) | — | The lesson teaches matching the piece within the salt crust. |
 | 7 | Gather 16 tool rolls | 3 / 4 (2) | **Rope lashing** | Salt crust | — | Mara remembers lashing the tools down. |
 | 8 | Gather 16 snapped cable pieces | 4 / 6 (2) | **Cable snarl** | Salt crust | — | Tomas points out the cable tangled in the old fittings. |
 | 9 | Gather 18 supply packs | 5 / 6 (2) | Rope lashing | Salt crust | — | Tomas mentions the stowed supply crate after board 8. |
-| 10 | Gather 20 gears | 6 / 6 (2) | Iron chain | **Barnacle crust** | Drift sand | *Tomas: The sea has been in here. Knock it off like the salt.* |
+| 10 | Gather 20 gears | 6 / 6 (2) | Iron chain | **Barnacle crust** | Blue plaques | *Tomas: The sea has been in here. Knock it off like the salt.* |
 
 ### Chapters 2–3 by quest
 
@@ -125,12 +125,12 @@ These chapters are provisional. Board dressing follows the existing placements a
 
 | Quest (boards) | Lock look | Cover look | Floor look | Note |
 | --- | --- | --- | --- | --- |
-| Find the sender (11–13) | Creeper vine (12–13) | — | Drift sand (13) | Collecting folded notes recovers the warning. The warning and initials are visible on the item card before the courtyard is built. |
+| Find the sender (11–13) | Creeper vine (12–13) | — | Blue plaques (11–13) | Collecting folded notes recovers the warning. The warning and initials are visible on the item card before the courtyard is built. |
 | Make a way home (14–16) | Rope lashing | **Wall rubble** (15), salt crust (16) | — | Board 15 checks the cracked wall. Rename *The Frost Line* during the Chapter 2 rewrite. |
-| Keep the record (17–20) | Iron chain | Salt crust | Drift sand (18), spreading river silt (20) | The record boxes are chained shut. |
-| Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Drift sand (22) | Mara spots the ice before board 22. |
-| Repair the quay (24–26) | Rope lashing | Barnacle crust | Well mud (26, *restore water access*) | The quay and the water. |
-| Let the light speak (27–30) | Iron chain | Wall rubble (27), salt crust (28–30) | Drift sand (28) | The signal plate arrives on board 30. |
+| Keep the record (17–20) | Iron chain | Salt crust | Blue plaques (17–20) | The record boxes are chained shut. |
+| Protect the warning (21–23) | Cable snarl (22–23) | **Ice** (22, *The Frozen Stair*), salt crust (23) | Blue plaques (22–23) | Mara spots the ice before board 22. |
+| Repair the quay (24–26) | Rope lashing | Barnacle crust | Blue plaques (24–26) | The quay and the water. |
+| Let the light speak (27–30) | Iron chain | Wall rubble (27), salt crust (28–30) | Blue plaques (27–29) | The signal plate arrives on board 30. |
 
 ### More story to put on the board
 
@@ -448,6 +448,7 @@ their story handoffs. Tomas names the old signal when he opens the near shutter.
 
 - 2026-11-15: Buried the warning note in board 13. The player uncovers I. R. before Tomas identifies Ines at the courtyard.
 
+- 2026-11-15: Replaced sand, river silt, well mud and standalone blocker and relic quotas with fixed blue plaques over sandstone. The plaques mark the approach or work area the crew is opening.
 - 2026-11-15: Replaced picture mosaics with drifting sand over stonework. Board 30 delivers the signal plate and replays the three flashes from board 3 with Ines at the landing.
 
 - 2026-11-15: Implemented soil, vine, rope, cable, salt, barnacle and rubble artwork, and updated lessons and crew lines. Salt crust is taught on board 6. Campaign ice appears only on board 22.

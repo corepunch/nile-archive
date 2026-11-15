@@ -1,11 +1,11 @@
 # Relic Rush board materials
 
-Each comparison shows the former board on the left and the current board on the right.
+These comparisons record the introduction of the story materials. The current sandstone and blue targets are in the [blue plaque review](../blue-plaques/README.md).
 
 | Board or screen | Comparison |
 | --- | --- |
 | Shore Marker, 480×900 and 390×844 | [480×900](shore-480.jpg) · [390×844](shore-390.jpg) |
-| Under the Pump, well mud | [480×900](pump.jpg) |
+| Archived well mud | [480×900](pump.jpg) |
 | Quay Marker, creeper vines | [480×900](quay.jpg) |
 | Broken Cable, relay cable and salt crust | [480×900](relay.jpg) |
 | Archived Shutter Crank excavation with tide-room silt | [480×900](tide-room.jpg) |

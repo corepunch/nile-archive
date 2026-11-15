@@ -155,6 +155,8 @@ def match3_section(data, title):
         shot = f'<img class="board" src="{board}" alt="Board {n}">' if board else '<div class="board missing">run with --capture</div>'
         chips = []
         palette = ''
+        if lv.get('plaques'):
+            chips.append(f'<span class="chip">Clear <b>{lv["plaques"]} blue plaques</b></span>')
         if collection := lv.get('collection'):
             key = collection['key']
             icon = picture(page.data_dir / f'story-pieces/{key}.png', 96, 'PNG')

@@ -265,7 +265,7 @@ do
     R.g=g
     local goals=R.goal_entries()
     local l = rules.level_of(g)
-    local remaining={score=l.score,idols=l.relics,locks=g.obstacles,deliveries=g.delivery_total}
+    local remaining={score=l.score,idols=l.relics,locks=g.obstacles,deliveries=g.delivery_total,oil=g.oil_left}
     if l.goals then
         -- A level that names its goals shows exactly those, in its order.
         check(#goals==#l.goals,"late HUD shows only the level's own goals")
@@ -278,6 +278,7 @@ do
     end
     g.score,g.relics,g.obstacles=9000,99,0
     g.delivered=g.delivery_total
+    g.oil_left=0
     for _,entry in ipairs(R.goal_entries()) do check(entry.remaining==0,"completed goal clamps at zero") end
     R.g=rules.game_start(0,123)
     local opening,first=R.goal_entries(),rules.levels[1].goals

@@ -170,12 +170,10 @@ local guide_entries = {
      icon={front="stone-1",tiles={}}},
     {id="deliveries", title="Tablets and plates", description="Clear the cells below a tablet or plate so it falls to its exit.",
      icon={front="delivery",tiles={}}},
-    {id="carpet", title="Sweep sand", description="Include cleared stone in a match to sweep sand from the other cells it hits.",
-     icon={front="drift-sand",tiles={}}},
-    {id="oil", title="Spreading silt and mud", description="Match over silt or mud to clear it. If a move clears none, it spreads to a neighbouring cell.",
-     icon={front="goal-oil",tiles={}}},
-    {id="finds", title="Buried finds", description="Match on the sand, mud or silt over a find to uncover it. This ground does not spread.",
-     icon={front="lens",tiles={}}},
+    {id="plaques", title="Blue plaques", description="Match on a blue plaque to clear it. Clear any lock or cover on it first.",
+     icon={front="blue-plaque",tiles={}}},
+    {id="finds", title="Story pieces", description="Match the piece shown in the goal to recover the item.",
+     icon={front="story-lens",tiles={}}},
 }
 local function guide_icon(box, icon)
     local at=box:center()

@@ -18,8 +18,8 @@ A.dressing_frames = {
     "creeper-vine-2", "rope-lashing-2", "cable-snarl-2",
     "dig-sand", "trench-earth", "well-mud", "tide-silt",
     "drift-sand", "swept-stone",
+    "sandstone-floor", "blue-plaque",
 }
-A.sweep = {dirty="drift-sand", clean="swept-stone"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
 A.dressing_colors = {
     ["salt-crust"]=color(255, 235, 198), ["barnacle-crust"]=color(217, 205, 183),
@@ -140,17 +140,17 @@ end
 
 -- Game-rendered samples at the same size as live board cells.
 function A.draw_dressing_catalogue(R)
-    gfx.round_rect(rect(16, 145, 448, 608), 18, color(12, 47, 41, 250))
+    gfx.round_rect(rect(16, 145, 448, 675), 18, color(12, 47, 41, 250))
     R.say_at("BOARD MATERIALS", vec2(240, 173), 25, R.PAL_GOLD, 420)
     local labels = {"Salt 2", "Barnacles 2", "Rubble 2", "Salt 1", "Barnacles 1", "Rubble 1",
         "Vine 1", "Rope 1", "Cable 1", "Vine 1 reversed", "Rope 1 reversed", "Cable 1 reversed",
         "Vine 2", "Rope 2", "Cable 2", "Dig sand", "Trench earth", "Well mud", "Tide silt",
-        "Drift sand", "Swept stone"}
+        "Drift sand", "Swept stone", "Sandstone", "Blue plaque"}
     local side = 2 * (R.HEX_R - .65)
     for i, name in ipairs(A.dressing_frames) do
         local at
         if i <= 15 then at = vec2(110 + (i - 1) % 3 * 130, 230 + (i - 1) // 3 * 88)
-        else at = vec2(56 + (i - 16) * 74, 670) end
+        else at = vec2(80 + (i - 16) % 4 * 106, 660 + (i - 16) // 4 * 84) end
         R.draw_ground("face", at, R.HEX_R, 0, 1)
         if i <= 15 then R.draw_relic({kind=(i - 1) % 6,special=0}, at, 1, 255, 1, true) end
         gfx.image(R.board_art[name], rect.centered(at, size2.splat(side)), color.WHITE)

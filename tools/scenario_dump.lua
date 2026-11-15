@@ -146,6 +146,7 @@ else
                          quest = l.quest_object, wonder = funds[i], materials = materials,
                          collection = l.story_piece and {key = l.story_piece, count = l.relics,
                              regular = campaign.colors - (l.omit_kind ~= nil and 2 or 1)} or nil,
+                         plaques = l.dress and l.dress.floor and l.dress.floor.covered == "blue-plaque" and #l.oil or nil,
                          signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,
                              covered_picture = reveal.covered_picture, cells = reveal.object and #l.oil or nil}}

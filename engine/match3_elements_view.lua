@@ -253,6 +253,8 @@ function E.ground(R, rules, sx, floor, sweep)
             local at = R.cell_pos(i) + vec2(sx, 0)
             if g.oil and (g.oil[i] or 0) > 0 then
                 draw_floor_cell(R, i, at, floor and floor.covered, alpha)
+            elseif floor and floor.normal and g.stone_hp[i] == 0 then
+                draw_floor_cell(R, i, at, floor.normal, alpha)
             end
             if g.hs then
                 local c=g.hs.cells[i]
