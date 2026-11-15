@@ -20,60 +20,40 @@ The supplied portrait is now the identity reference for Noelle, the main charact
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin.
 
-Haptics accompany matches, special activations, cascades, trickling landings,
+Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-The thirty winter wishes each use an authored court contour and terrain focus,
-with tinsel, ice, carved stones, lanternlight and powder snow introduced and revisited across the three episodes.
-See the [board progression](docs/board-progression.md) for each wish and the
-limits of the current difficulty tuning.
+Each of Bellmere's thirty winter wishes asks you to light every blue pane.
+Cleared panes glow amber. Tinsel ties protect treats for one hit and contribute
+to the goal only when they cover a blue pane. The lamps lead from the market
+arch to Agnes's bakery and along the station walk for Pip's mum. See the
+[board progression](docs/board-progression.md) and [story](docs/story.md).
 
-On the first clears of Frozen Fountain, Snow on the Line and The Last Train,
-the floor reveals a painting that leads into the next scene. Lanternlight
-brings the fountain and railway into view, while clearing powder snow uncovers
-Pip's telegram. See the [story paintings and board captures](docs/asset-catalogue.md#story-floors).
+On the first clears of A Ribbon for Home, Word from the Station and The Last Train,
+the lit board gives way to a full-board painting and the next scene.
+[Story paintings and board captures](docs/asset-catalogue.md#story-floors).
 
 ## Shared match engine and atlas
 
-The campaign uses only elements found in Homescapes' story levels: stone,
-tinsel (chains), ice, present deliveries, and two floor objectives themed as lanternlight and powder snow. Each has a different introduction order from Relic Rush.
-See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)
-and [in-game art review](docs/screenshots/review/board-theme/README.md).
+Swap adjacent treats or tap two neighbors to match three or more along a hex
+axis. Hammer hits one cell, Firecracker hits a cell and its six neighbors, and
+Star Wand hits all treats of the chosen kind. The [engine match-3 module](../../docs/MATCH3_ENGINE.md)
+owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
+The game supplies the boards, artwork and straight-match rules.
 
-The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
-swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
-input/timing. This game provides campaign data, graphics and integer behavior
-flags. Every exposed column top (no active cell directly above) spawns gems
-vertically. Interior gems fall straight down whenever their cell below is
-empty and movable, and slide diagonally only when that cell is occupied,
-locked or missing. Locks still route gems around their sides.
+The puzzle and town use the same wallet and Pause button. The remaining moves
+are shown below the wallet on the puzzle. The cobalt panes are the objective
+display. The board's warm base has fine seams at cell boundaries. Pause opens
+the Market Keeper's Guide alongside Sound and Reduce Motion.
+[Board and guide screenshots](docs/screenshots/review/lantern-panes/README.md).
 
-`data/match3.png` holds the board's backgrounds, pieces, blockers, materials,
-and effects. The HUD and tool controls use `data/match3-hud.png`.
-`python3 tools/match3_atlas.py` rebuilds both atlases from their source art.
-`--default-match3` previews the engine's neutral skin.
-[Power-up paint-over and board captures](docs/screenshots/review/power-up-paint/README.md).
-
-Swap adjacent treats, or tap two neighbours, to match three or more along a
-hex axis. Four in a line makes a rocket along that axis. Five or more makes a
-rainbow ball. Crossing lines make a bomb, and a four-cell rhombus makes a
-paper plane. An adjacent match or a direct power-up hit breaks a carved hex stone.
-
-The puzzle backdrop shows a lantern-lit Christmas market above the spruce
-signboard. Moves, objective counts and Settings share the signboard.
-Slate-blue hex wells shade from light at the top to dark at the bottom.
-Both ice strengths use [translucent ice fitted to the hex tiles](docs/asset-catalogue.md#ice).
-See the [signboard and board review](../../docs/review/match3-signboards/README.md).
-The original festive chips and the themed power-ups are shown in the
-[asset catalogue](docs/asset-catalogue.md#themed-board-art).
-Open Pause to reach Sound, Reduce Motion, Resume and the Market Guide.
-
-Each wish opens with its mission on a banner that slides across the middle of
-the screen and away (a tap sends it on). Long cascades and special combos earn
-praise (Jolly!, Merry!, Magical!, Christmas Magic!) with a rising chime. Swaps,
-matches, specials, tools, wins and losses each have their own synthesised
-sound. The win card shows stars, score, one chip per reward and the next step.
+`data/match3.png` holds the puzzle backdrop, pieces, blockers and effects.
+The HUD and tool controls use `data/match3-hud.png`. Run
+`python3 tools/match3_atlas.py` to rebuild the two atlases. The three lantern
+pane faces are exported separately with
+`python3 games/christmas-market/tools/prepare_lantern_panes.py`.
+[Asset catalogue](docs/asset-catalogue.md#lantern-panes).
 
 The market keeps Relic Rush's bottom controls in its own skin: Build (the
 shop) in the left corner, Play in the right and the winter wishes medallion
@@ -120,7 +100,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Story
 
-The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. A level without a stall plays its scene when you return to the market. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
+The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Most levels without a stall play their scene when you return to the market. Levels 24, 25 and 28 play theirs after the board painting and before Collect. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/match3_game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
@@ -128,7 +108,7 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 
 | Snowy market | Festive puzzle | Noelle |
 | --- | --- | --- |
-| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/winter-market/after-480x900.jpg) | ![Dialogue](docs/screenshots/main-character-dialogue.jpg) |
+| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/lantern-panes/board-480x900.jpg) | ![Dialogue](docs/screenshots/main-character-dialogue.jpg) |
 
 Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 

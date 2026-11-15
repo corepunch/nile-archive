@@ -368,6 +368,28 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     end
 end
 
+-- Campaigns with a single board-visible objective can use their town wallet.
+function E.bind_town_board_hud(R)
+    local goal_hud, goal_target, mission = R.draw_board_hud, R.goal_target, R.mission
+    local neutral = app.arg("default-match3")
+
+    function R.draw_board_hud()
+        if neutral or R.g.hs then return goal_hud() end
+        R.town:header()
+        R.board_pause = R.town.menu_bounds
+        local arrive = R.intro and R.intro:arrive(.16, 3, .42) or 1
+        if arrive > .05 then R.draw_moves(R.hud_rect:center() - vec2(0, 37), arrive) end
+    end
+
+    function R.goal_target(kind)
+        if neutral or R.g.hs then return goal_target(kind) end
+    end
+
+    function R.mission(...)
+        if app.arg("mission") or R.g.hs then mission(...) end
+    end
+end
+
 function E.result_rects(screen_w, screen_h)
     local w, s = math.min(408, screen_w - 48), math.min(1, (screen_h - 100) / 556)
     local x, y = (screen_w - w) / 2, (screen_h - 556 * s) / 2 + 8

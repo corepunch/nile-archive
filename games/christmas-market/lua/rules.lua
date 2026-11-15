@@ -2,7 +2,9 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
-local M = match3.new{flags=match3.LINE_MATCHES, radius=reference and reference.radius or 4, colors=6, match_min=3,
+local flags = match3.LINE_MATCHES
+if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI | match3.COLOR_TOOL end
+local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=6, match_min=3,
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5

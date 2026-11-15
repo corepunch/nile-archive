@@ -6,11 +6,15 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
+local match3 = require("match3")
 local elements = require("match3.elements_view")
+local skin = require("skin")
+local neutral = app.arg("default-match3")
+local lantern_floor = {plain="lantern-plain", normal="lantern-lit", covered="lantern-blue", inset=.18}
+local seam = skin:color("board_seam")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
-if not app.arg("default-match3") then
-    local skin = require("skin")
+if not neutral then
     for _, name in ipairs{"edge", "rim", "top", "bottom"} do
         R.GROUND[name] = skin:color("board_" .. name)
     end
@@ -18,12 +22,13 @@ end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
--- Lanternlight fades at the patch boundary, so neighbouring unlit cells stay gray.
-R.carpet_patch = {corner = .25, fillet = .8,
-    range = .6, texel = 1.5, tile = 1.5, inset = 3.4, feather = 3}
-R.reveal_play_opacity = .62   -- keep the treats readable over the paintings
 board_intro.bind(R, rules)
-require("match3").bind_board_ui(R, rules, art.tools, {["goal-carpet"] = {x = -2}})
+match3.bind_board_ui(R, rules, art.tools)
+match3.bind_town_board_hud(R)
+
+function R.board_goal_icon(level, goal)
+    if goal == "oil" and level.floor_marks then return lantern_floor.covered end
+end
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local NORMAL = rules.NORMAL
 local cell_active = rules.game_cell_active
@@ -35,7 +40,7 @@ local BOARD_SCALE = HEX_R / ART_HEX_R
 local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local CELL_FACE_R = HEX_R - .65
 -- Registered edge sprites have a centreline radius of 46 px on a 128px canvas.
-local FESTIVE = not app.arg("default-match3")
+local FESTIVE = not neutral
 local BOARD_FRAME_SIZE = FESTIVE and 2 * CELL_FACE_R / BOARD_SCALE or 2 * ART_HEX_R
 local cell_pos = R.cell_pos
 
@@ -74,7 +79,7 @@ local function draw_backdrop()
     end
 end
 
--- layer: "edge" and "rim" (the board's two outlines, under every face), "face" (the cells) or "flash" (the intro's halo).
+-- Fill the hairline seams with the board's base colour before painting the glass.
 local function draw_cells(sx, layer)
     local g,intro=R.g,R.intro
     local fade=intro and intro:fade() or 1
@@ -84,7 +89,9 @@ local function draw_cells(sx, layer)
             if intro then scale,turn,lift,flash=intro:cell(i) end
             if scale>.02 then
                 local at=cell_pos(i)+vec2(sx,lift)
-                if layer~="flash" then
+                if layer=="seam" then
+                    gfx.ngon(at,HEX_R*scale,6,turn,color.alpha(seam,fade))
+                elseif layer~="flash" then
                     R.draw_ground(layer,at,HEX_R*scale,turn,fade)
                 elseif flash>0 then
                     R.vfx_halo(at,HEX_R*1.6*scale,rgba(255,226,150,120*flash))
@@ -154,10 +161,14 @@ function R.board_screen(inp, dt)
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    draw_cells(sx, "edge")
-    draw_cells(sx, "rim")
-    draw_cells(sx, "face")
-    elements.ground(R, rules, sx)
+    if neutral or R.g.hs then
+        draw_cells(sx, "edge")
+        draw_cells(sx, "rim")
+        draw_cells(sx, "face")
+    else
+        draw_cells(sx, "seam")
+    end
+    elements.ground(R, rules, sx, not R.g.hs and lantern_floor or nil)
     draw_cells(sx, "flash")
     -- Overhanging blockers sit below treats, including those in adjacent cells.
     draw_relics(sx)

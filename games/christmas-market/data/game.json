@@ -10,7 +10,7 @@
   "board": {
     "kudos": ["Jolly!", "Merry!", "Magical!", "Christmas Magic!"],
     "tool_notes": ["Hammer: tap a treat to break it.", "Firecracker: tap a treat to blast around it.",
-                   "Star wand: tap a treat to clear its three lines."],
+                   "Star wand: tap a treat to clear all treats of that kind."],
     "locked": "Ice and tinsel must be cleared first."
   },
   "notices": {

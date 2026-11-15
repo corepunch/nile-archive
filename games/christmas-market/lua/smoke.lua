@@ -50,7 +50,7 @@ function R.smoke()
         return
     end
     if smoke_stage == -2 and R.overlay==R.OV_NONE then
-        app.inject_click(R.board_pause:center());smoke_stage=-3   -- Pause, in the HUD band
+        app.inject_click(R.town.menu_bounds:center());smoke_stage=-3   -- Pause, in the HUD band
     elseif smoke_stage == -3 and R.overlay==R.OV_PAUSE and R.dialog_settled() then
         smoke_move.sound = R.sound
         assert(R.pause_form.boxes.restart and R.pause_form.boxes.quit, "Pause on a board offers Restart and Quit")
@@ -179,7 +179,7 @@ function R.smoke()
         app.inject_click(vec2(40,38));smoke_stage=32
     elseif smoke_stage==32 then
         assert(not R.on_island and R.overlay==R.OV_NONE,'unfinished expedition must not expose island access')
-        app.inject_click(R.board_pause:center());smoke_stage=33
+        app.inject_click(R.town.menu_bounds:center());smoke_stage=33
     elseif smoke_stage==33 and R.overlay==R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(vec2(12,220+R.drop/2));smoke_stage=34
     elseif smoke_stage==34 and R.overlay==R.OV_NONE then

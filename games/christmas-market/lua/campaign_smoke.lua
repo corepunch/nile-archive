@@ -59,25 +59,9 @@ function R.campaign_smoke()
             app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
-        local g, l = R.g, rules.level_of(R.g)
-        for i = 0, rules.CELLS - 1 do
-            g.ice[i], g.chain[i], g.stone_hp[i] = 0, 0, 0
-            g.oil[i] = 0
-            if l.carpet and rules.game_cell_active(g, i) then g.carpet[i] = 1 end
-            if g.tiles[i].kind == rules.DELIVERY then
-                -- The smoke tests progression, so complete delivery while preserving
-                -- a stable match-free starting board for the next real swap.
-                local match = rules.new_match()
-                for kind = 0, rules.COLORS - 1 do
-                    g.tiles[i] = rules.tile(kind)
-                    rules.game_matches(g, match, -1)
-                    if match.hits == 0 then break end
-                end
-                assert(match.hits == 0, "campaign smoke cannot replace delivered token")
-            end
-        end
-        g.delivered = g.delivery_total
-        g.score, g.relics, g.obstacles, g.carpeted, g.oil_left = l.score, l.relics, 0, g.carpet_total, 0
+        local g = R.g
+        for i = 0, rules.CELLS - 1 do g.chain[i], g.oil[i] = 0, 0 end
+        g.obstacles, g.oil_left = 0, 0
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b

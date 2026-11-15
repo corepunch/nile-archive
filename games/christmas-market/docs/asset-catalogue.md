@@ -2,11 +2,11 @@
 
 ## Themed board art
 
-The default chips retain the original identities (bell, candy cane, holly, ornament, bauble and gingerbread). Each has one dominant hue and at most one accent hue. The floor objectives use warm lanternlight and soft powder snow.
+The default chips retain the original identities (bell, candy cane, holly, ornament, bauble and gingerbread). Each has one dominant hue and at most one accent hue. The active boards pair the six festive treats with a walnut surface, blue panes and one-hit chains. Older special and terrain frames remain available to the diagnostic and reference boards below.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
-| `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The same frames appear in chip goals. |
+| `festive-0` through `festive-5` | Six default chips in yellow, red, green, cyan-blue, violet and orange. The gold bell also represents Gold in the wallet. |
 | `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
 | `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
 | `carpet-swatch`, `goal-carpet` | Warm apricot light spreads across the paving when a match touches a lit cell. A bronze lantern identifies the goal. |
@@ -69,11 +69,11 @@ Status: the buildings are Blender renders with projected registration (see the [
 | 37 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/buildings/<key>.png` | Ten sequential construction milestones, 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
-| Six festive puzzle kinds | `art/icons.png`, cells 0–5 | `data/tile-sets/festive/` | Bell, candy cane, holly, blue ornament, purple bauble, gingerbread; bell objective. On the board the bell (12/128), holly (7/128) and both ornaments (11/128) are drawn higher (`art.piece_lift`) so the main shape, not its bow, leaves or hanging cap, is centred in the hex |
+| Six festive puzzle kinds | `art/icons.png`, cells 0–5 | `data/tile-sets/festive/` | Bell, candy cane, holly, blue ornament, purple bauble, gingerbread; the bell also represents Gold. On the board the bell (12/128), holly (7/128) and both ornaments (11/128) are drawn higher (`art.piece_lift`) so the main shape, not its bow, leaves or hanging cap, is centred in the hex |
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
-| Goal met | Engine skin (`ui_skin.lua`, `done`) | Procedural | A green tick replaces the completed count on the signboard. Capture: `--level 5 --goals-met` |
+| Lantern panes | One ImageGen atlas at `art/lantern-panes/source.png` | `data/lantern-panes/{plain,blue,lit}.png` | Walnut unmarked surface, cobalt objective and amber cleared pane. See [Lantern panes](#lantern-panes) |
 | Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
 | Market streets | `tools/roads.py christmas-market` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): grey-brown setts, stone kerbs and a snow shoulder. The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); no interaction states. Captures: `screenshots/market.jpg`, `screenshots/phone-market.jpg` |
@@ -127,18 +127,16 @@ for the level 4 captures.
 
 ## Story floors
 
-The three static paintings lead into existing first-clear scenes. The
-landmarks stay fixed as the floor changes. During a match the painting is
-muted beneath the pieces. On a win, pieces and any remaining cover fade out
-over 0.6 seconds and the completed picture holds for 1.2 seconds before
-dialogue. Replays show the painting too, without the fade or the hold. Reduce Motion shows the full reveal
-without the fade.
+The paintings appear on first clears as the pieces fade away over 0.6 seconds.
+The image holds for 1.2 seconds before the scene. Reduce Motion shows the
+image without the fade. During play and on replays the board shows its regular
+blue and amber pane states.
 
 | Level | Rule and story | Built-in ImageGen master and prompt | Runtime |
 | --- | --- | --- | --- |
-| 24, Frozen Fountain | Lanternlight brings Noelle’s childhood wish ribbon into view. Agnes remembers who brought her to Bellmere. | [Painting](../art/story-floors/wish-ribbon.png), [prompt](../art/story-floors/wish-ribbon.prompt.txt) | `data/story-floors/wish-ribbon.jpg` |
-| 25, Snow on the Line | Clearing the original snow patch uncovers parts of the telegram. Spreading snow can cover those parts again. On the win, the whole telegram shows Pip’s mother is on the last train. | [Painting](../art/story-floors/telegram.png), [prompt](../art/story-floors/telegram.prompt.txt) | `data/story-floors/telegram.jpg` |
-| 28, The Last Train | Lanternlight picks out the track and lamps guiding the train home. The completed picture leads into Pip’s reunion. | [Painting](../art/story-floors/last-train.png), [prompt](../art/story-floors/last-train.prompt.txt) | `data/story-floors/last-train.jpg` |
+| 24, A Ribbon for Home | The last pane gives way to a lantern-lit view of Noelle's childhood wish ribbon. | [Painting](../art/story-floors/wish-ribbon.png), [prompt](../art/story-floors/wish-ribbon.prompt.txt) | `data/story-floors/wish-ribbon.jpg` |
+| 25, Word from the Station | The board gives way to Pip's telegram, with his scarf and a stamp beside it. | [Painting](../art/story-floors/telegram.png), [prompt](../art/story-floors/telegram.prompt.txt) | `data/story-floors/telegram.jpg` |
+| 28, The Last Train | A slowly arriving train and lamps in the snow lead into Pip's reunion. | [Painting](../art/story-floors/last-train.png), [prompt](../art/story-floors/last-train.prompt.txt) | `data/story-floors/last-train.jpg` |
 
 The three 1190×1322 RGB masters are downsampled without cropping to fit 720×800
 with Lanczos, then encoded as JPEG (quality 91, 4:4:4, optimized). Reproduce
@@ -159,18 +157,10 @@ for master in (game / "art/story-floors").glob("*.png"):
 PY
 ```
 
-The renderer center-crops each painting to the active board bounds and masks
-it against the connected flat-top cells. The individual snow openings sample
-the same crop through the engine’s hex face before the full board appears.
-[In-game before, partial and win captures](screenshots/review/story-floors/README.md)
-cover both supported phone sizes.
+The renderer center-crops each painting to the active board bounds and uses
+the connected board mask. [First-clear review](screenshots/review/lantern-panes/README.md).
 
-## Board trim and village snow
-
-The live board paints flat spruce-green hex wells with a fine champagne edge
-on exposed sides. The original painted cell mask remains in the atlas. The
-authored snow, tinsel, ice, special, selection and hint sprites retain their
-registration over the wells.
+## Village snow
 
 Snowfall uses two layers over the village (84 small and 44 large flakes).
 Their pattern is anchored to the world origin, so panning carries the flakes
@@ -311,19 +301,25 @@ and `python3 tools/match3_atlas.py`. Review with
 
 [Fitted art in the Market Keeper’s Guide](screenshots/review/fitted-gold/guide.jpg)
 
-## Lanternlight and powder snow
+## Lantern panes
 
-Lanternlight starts in levels 3, 6, 9, 11, 15, 18, 21, 24 and 28. A match touching
-the light extends it to the active cells the match clears. The goal counts
-unlit cells. Powder snow starts in levels 13 and 25. A match or blast on a
-snowy cell clears the snow. After any turn that clears none, it advances to
-one neighbouring cell, increasing the goal count.
+| Runtime art key | State | Use |
+| --- | --- | --- |
+| `lantern-plain` | Walnut | The unmarked part of the contiguous board |
+| `lantern-blue` | Cobalt | A pane that still needs a match or tool hit |
+| `lantern-lit` | Amber | A pane whose treat has been cleared |
 
-The renderer tiles lanternlight inside a connected-cell mask with a feathered
-edge. Powder snow fills each affected hex face. Both
-objectives have one board state and a separate icon shared by the HUD and the
-Market Keeper’s Guide.
-[In-game review](screenshots/review/themed-terrain/README.md).
+All three were painted together in the [source atlas](../art/lantern-panes/source.png)
+using the [prompt](../art/lantern-panes/prompt.txt) and [flat-top template](../art/lantern-panes/hex-template.png).
+The [manifest](../art/manifest.json) records each square crop, the canonical
+mask and runtime path. Export with
+`python3 games/christmas-market/tools/prepare_lantern_panes.py`.
+Each cropped 584×584 square is downsampled to 128×128 and masked to the exact
+hex. The live artwork draws almost edge-to-edge at a 0.18-unit inset, over a
+dark walnut backing that supplies the hairline seam. The guide reuses the
+blue pane and the one-hit chain art. The board uses existing authored
+selection and hint layers and the three tools retain their five authored
+interaction states. [Reviewed board, guide and story captures](screenshots/review/lantern-panes/README.md).
 
 ## Ice
 
@@ -331,7 +327,7 @@ Market Keeper’s Guide.
 the hex face and takes two hits. `ice-1` is translucent ice with a broken
 upper edge and takes one hit. Both states follow the canonical hex mask.
 Both states were drawn together in the shared ImageGen atlas and are packed
-into `data/match3.png`. The guide uses the full shell. The
+into `data/match3.png`. The legacy board art review shows the full shell. The
 [ice catalogue](../../../art/match3-ice/README.md) records the source, prompts,
 registration and [portrait captures](screenshots/review/ice/README.md).
 

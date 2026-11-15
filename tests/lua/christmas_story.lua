@@ -12,6 +12,23 @@ for _,who in ipairs(R.cast) do cast[who.id]=true end
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 check(rules.LEVELS==30 and #journey.beats==36,'all three episodes are playable')
+local intro = rules.game_start(3, 1)
+local tied
+for _, i in ipairs(rules.level_of(intro).oil) do
+    if intro.chain[i] > 0 then tied = i; break end
+end
+check(tied ~= nil, "the first tinsel board has a chain over a blue pane")
+if tied then
+    local wave = rules.new_match()
+    check(rules.game_tool(intro, 0, tied, wave), "hammer can hit tinsel")
+    rules.game_apply(intro, wave)
+    check(intro.chain[tied] == 0 and intro.oil[tied] == 1, "untangling tinsel leaves the pane blue")
+    intro.tools[1] = 1
+    check(rules.game_tool(intro, 0, tied, wave), "hammer can hit the freed treat")
+    rules.game_apply(intro, wave)
+    check(intro.oil[tied] == 0, "clearing the freed treat lights the pane")
+end
+
 local lines=0
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
@@ -27,7 +44,13 @@ for level=1,30 do
         check(before.phase=='before' and before.level==level,'opening comes before its winter wish')
         p.story_seen[before.key]=true
     end
-    local g=rules.game_start(level-1,level);g.won=true;g.moves=0
+    local g=rules.game_start(level-1,level)
+    local spec = rules.level_of(g)
+    check(spec.oil_still and g.oil_left == #spec.oil and g.oil_left > 0, "every wish opens with fixed blue panes")
+    check(#spec.goals == 1 and spec.goals[1] == "oil", "only the blue panes count toward the win")
+    check(g.initial_obstacles == spec.chains and g.carpet_total == 0 and g.delivery_total == 0,
+          "tinsel is the only campaign blocker")
+    g.won=true;g.moves=0
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     for z=1,5 do c:unlock(z,p.wallet) end
     local kind=journey.wonder_at(level)

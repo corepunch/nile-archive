@@ -77,6 +77,9 @@ function A.load()
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load("story-floors/" .. name .. ".jpg") end
     end
+    for _, state in ipairs{"plain", "lit", "blue"} do
+        textures["lantern-" .. state] = texture.load("lantern-panes/" .. state .. ".png")
+    end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
@@ -93,6 +96,11 @@ function A.draw_catalogue(R)
         for k = 0, 5 do
             gfx.image(R.art_packs[pack][k + 1], rect(39 + k * 68, 190 + (row - 1) * 60, 46, 46), color.WHITE)
         end
+    end
+    for i, name in ipairs{"plain", "blue", "lit"} do
+        local x = 104 + (i - 1) * 112
+        gfx.image(R.board_art["lantern-" .. name], rect(x, 272, 48, 48), color.WHITE)
+        R.say_at(name, vec2(x + 24, 330), 11, R.PAL_CREAM, 88)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}

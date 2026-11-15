@@ -34,6 +34,7 @@ return ui.skin{
         board_rim = "#7898BF",
         board_top = "#48668F",
         board_bottom = "#293C5C",
+        board_seam = "#462B26",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.

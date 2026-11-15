@@ -41,6 +41,7 @@ def main():
             name = f'{tool}-{state}'
             assert name in atlas['hud']['frames'] and name not in atlas['frames']
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
+    subprocess.run([sys.executable, str(ROOT/'tools/prepare_lantern_panes.py'), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}
     for kind in ('build', 'play', 'levels'):

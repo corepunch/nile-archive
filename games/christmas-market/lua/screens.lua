@@ -94,37 +94,23 @@ R.dialogs[R.OV_RESULT] = result_screen
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of three axes.",
-     icon={tiles={{kind=0,special=rules.NORMAL}}}},
-    {id="lightning", title="Line of 4: rocket", description="A multicolor rocket clears its axis. Tap it or swap it to launch.",
-     icon={tiles={{kind=1,special=rules.ROW}}}},
-    {id="specials", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its color; combine with a power-up to multiply it.",
-     icon={tiles={{kind=2,special=rules.PRISM}}}},
-    {id="plane", title="Four-cell rhombus: plane", description="Clears neighboring cells, then flies to a target. Two planes launch three flights.",
-     icon={tiles={{kind=0,special=rules.PLANE}}}},
-    {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells. Combine power-ups for larger effects.",
-     icon={tiles={{kind=0,special=rules.BOMB}}}},
-    {id="blockers", title="Tinsel", description="Match the treat inside to untangle the tinsel.",
-     icon={front="chain",tiles={{kind=3,special=rules.NORMAL}}}},
-    {id="ice", title="Frozen pieces", description="Match the frozen piece or hit it with a power-up. Each hit removes one layer.",
-     icon={front="ice-2",tiles={{kind=4,special=rules.NORMAL}}}},
-    {id="stones", title="Carved stone", description="Match beside a stone or hit it with a power-up to break it.",
-     icon={front="stone-1",tiles={}}},
-    {id="deliveries", title="Parcels", description="Clear the cells below a parcel so it falls to its exit.",
-     icon={front="delivery",tiles={}}},
-    {id="carpet", title="Lanternlight", description="Match in the lanternlight to light every cell the match clears. Light the whole court.",
-     icon={front="goal-carpet",tiles={}}},
-    {id="oil", title="Powder snow", description="Match on the snow to clear it. If a move clears none, snow drifts into a neighbouring cell.",
-     icon={front="goal-oil",tiles={}}},
+    {id="neighbors", title="Line up three or more", description="Match treats in a straight line along any of the three axes.",
+     icon={kind=0}},
+    {id="panes", title="Light the blue panes", description="Match on a blue pane or hit it with a tool to light it. Light them all to finish.",
+     icon={back="lantern-blue"}},
+    {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
+     icon={back="lantern-blue", kind=3, front="chain"}},
+    {id="hammer", title="Hammer", description="Hit one treat or its tinsel.", icon={tool="pickaxe"}},
+    {id="firecracker", title="Firecracker", description="Hit a treat and all its neighbors.", icon={tool="dynamite"}},
+    {id="wand", title="Star wand", description="Pick a treat and hit every treat of that kind.", icon={tool="sunburst"}},
 }
 local function guide_icon(box, icon)
-    local at=box:center()
-    local layer=rect.centered(at,size2(48,48))
-    if icon.front=="chain" then R.draw_ground("face",pp(at),layer.w * P.scale * .5,0,P.alpha) end
-    for _,tile in ipairs(icon.tiles) do
-        R.draw_relic(rules.tile(tile.kind,tile.special),pp(at+vec2(tile.x or 0,0)),P.scale*(tile.scale or 1),255*P.alpha,1)
-    end
-    if icon.front then picture(R.board_art[icon.front],layer,255) end
+    local at = box:center()
+    local layer = rect.centered(at, size2(48, 48))
+    if icon.back then picture(R.board_art[icon.back], layer, 255) end
+    if icon.kind then R.draw_relic(rules.tile(icon.kind), pp(at), P.scale, 255 * P.alpha, 1) end
+    if icon.front then picture(R.board_art[icon.front], layer, 255) end
+    if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end
 end
 local guide_form = match3.guide_form({
     title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING TREATS",

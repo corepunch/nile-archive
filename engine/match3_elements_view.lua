@@ -168,6 +168,7 @@ local function object_crop(R, rules, t)
 end
 
 local function draw_buried_picture(R, rules, story, sx, alpha, cover, trench)
+    if story.on_clear and cover == 1 then return end
     local g, cells = R.g, {}
     local t = R.board_art[story.picture]
     local silhouette = story.covered_picture and R.board_art[story.covered_picture]
@@ -182,7 +183,7 @@ local function draw_buried_picture(R, rules, story, sx, alpha, cover, trench)
         gfx.image_part(t, src, box:offset(vec2(sx, 0)), color(255, 255, 255, 255 * alpha * (1 - cover)))
         gfx.sdf_unmask()
     end
-    if cover == 0 then return end
+    if cover == 0 or story.on_clear then return end
     -- Select the authored state for each live excavation cell.
     local scale = src.w / box.w
     local radius = R.HEX_R
@@ -216,14 +217,14 @@ end
 -- Sample the material at its painted proportions inside the flat-top face.
 local OIL_SAMPLE = rect.centered(vec2(64, 64), size2(82, 82 * math.sqrt(3) / 2))
 
-local function draw_floor_cell(R, i, at, material, alpha)
+local function draw_floor_cell(R, i, at, material, alpha, inset)
     local scale, turn, lift = 1, 0, 0
     if R.intro then scale, turn, lift = R.intro:cell(i) end
     if scale <= .02 then return end
     at = at + vec2(0, lift)
     local tint = color(255, 255, 255, 255 * alpha)
     if material then
-        local side = 2 * (R.HEX_R - .65) * scale
+        local side = 2 * (R.HEX_R - (inset or .65)) * scale
         gfx.image_rot(R.board_art[material], rect.centered(at, size2.splat(side)), turn, tint)
     else
         gfx.image_hex(R.board_art["oil-material"], OIL_SAMPLE, at, R.HEX_R * scale, turn, tint)
@@ -234,9 +235,9 @@ end
 function E.ground(R, rules, sx, floor, sweep)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    -- The picture shows on every play; only a first clear speaks, fades the
-    -- pieces and holds the finished picture (reveal).
-    local story = reveal(R, rules) or rules.level_of(g).reveal
+    -- A reveal can show during play or wait for the first clear.
+    local level = rules.level_of(g)
+    local story = reveal(R, rules) or level.reveal
     local cover = E.reveal_cover(R, rules)
     if sweep then
         for i = 0, rules.CELLS - 1 do
@@ -252,9 +253,10 @@ function E.ground(R, rules, sx, floor, sweep)
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
             if g.oil and (g.oil[i] or 0) > 0 then
-                draw_floor_cell(R, i, at, floor and floor.covered, alpha)
+                draw_floor_cell(R, i, at, floor and floor.covered, alpha, floor and floor.inset)
             elseif floor and floor.normal and g.stone_hp[i] == 0 then
-                draw_floor_cell(R, i, at, floor.normal, alpha)
+                local material = level.floor_marks and not level.floor_marks[i] and floor.plain or floor.normal
+                draw_floor_cell(R, i, at, material, alpha, floor.inset)
             end
             if g.hs then
                 local c=g.hs.cells[i]
