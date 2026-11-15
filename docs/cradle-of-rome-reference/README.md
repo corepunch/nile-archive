@@ -1,0 +1,67 @@
+# Cradle of Rome reference for Relic Rush
+
+Cradle of Rome gives every board two jobs. Clearing the plaques wins the level.
+Matching resource pieces pays for the city, and some purchases change the
+pieces or tools on later boards. Relic Rush already has both jobs and one
+city-to-board example in the Spring Well. The strongest next use of this
+reference is to make that connection more legible and repeat it at another
+restoration, with a board that gives the changed piece a reason to matter.
+
+| Start here | What it covers |
+| --- | --- |
+| [Board design](BOARD_DESIGN.md) | All 115 numbered layouts, feature counts and worked examples of plaque placement, locks and supply. |
+| [Resources and city](ECONOMY_AND_CITY.md) | Piece yields, the finish bonus, all 20 purchases across five epochs, and examples of citizen rewards. |
+| [Applying it to Relic Rush](ADAPTATION.md) | What the game already does, which changes to prototype first, and how to check them. |
+| [Tropicats reference](../tropicats-reference/README.md) | Companion research for quests, story pacing and board objectives. |
+
+## Build and scope
+
+The source is Awem's Android **Cradle of Rome Beta 0.9.0** (`com.awem.cor.beta`).
+Its main `game_cfg.xml` enables soft release and sets `soft_release_levels="40"`.
+The shared `game_settings.xml` specifies Adventure 1–100, Extras 101–115,
+Tourney 1–115 and Blitz 1–100. The archive ships all 115 numbered files and
+`level_empty.xml`. Treat 1–40 as the beta's configured range, 1–100 as the wider
+Adventure data, and 101–115 as separate Extras data. A file's presence does
+not establish that it was accessible in this APK. The full desktop release
+is a cross-check for the player-facing loop. [GameHouse walkthrough](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/)
+
+This is a static audit. XML establishes authored layout, thresholds and
+prices. English strings explain the intended player-facing rules. Where the
+desktop guide, event predicates or internal artwork names differ, the notes
+identify the source explicitly. The APK was not run. Runtime spawn weights,
+fill routes, shop state transitions, precise payout and measured difficulty
+remain unverified.
+
+## Source inventory
+
+Paths are relative to the local, ignored
+`reference/cradle-of-rome/resources/` directory. The original APK, its
+hashes and download URL are recorded in
+[SOURCE.txt](../../reference/cradle-of-rome/SOURCE.txt).
+
+| What to inspect | File and lookup |
+| --- | --- |
+| Beta cap and mode ranges | `settings/game_cfg.xml` and `settings/scenes/game/game_settings.xml` → `Common`. |
+| Layout and initial layers | `settings/scenes/game/levels/level_N.xml` → `Settings`, `Field/Cell`. Join `Tile` and `Ball` at each `x,y`. |
+| Player-facing rules and names | `settings/locale.xml` → `Puzzle_cell`, `Double_puzzle_cell`, `Lock`, `Timer`, `Pieces_*`, `People_bonus_*`, `Episode_title_*`. |
+| Per-piece yield and tool charge | `settings/scenes/game/game_balls.xml` → `Ball` / `BonusBall`, joined by numeric `type` to `field_balls.xml` in the same folder. |
+| Time, scoring and bonuses | `settings/scenes/game/game_settings.xml` → `Adventure`; `game.xml` builds the results view and `bonuses.xml` configures tool effects. |
+| Prices, plan access and building payoff | `settings/scenes/shop/epochs.xml` → `Epoch/Construction`. Read `Price`, `PlanAccess` and `Ball type` separately. `shop.xml` describes shop, plan and epoch-completion UI. |
+| Location, name and citizen | Join construction `id` to `settings/scenes/city/city_view.xml` for position and `enable_user_events`, to `city_info_dialog.xml` page `<id>_0` for the localized title, and to `settings/user_events.xml` for predicates and effects. |
+
+## Reproduce the counts
+
+Run these commands from the repository root with the downloaded APK and fresh output paths.
+
+```sh
+unzip -q reference/cradle-of-rome/cradle-of-rome-beta-0.9.0.apk -d reference/cradle-of-rome/apk
+python3 tools/cradle-of-rome-reference/extract_pak.py reference/cradle-of-rome/apk/assets/resources.pak reference/cradle-of-rome/resources
+python3 tools/cradle-of-rome-reference/analyze.py > /tmp/cradle-of-rome.json
+python3 tools/cradle-of-rome-reference/analyze.py --level 35
+```
+
+The [analyzer](../../tools/cradle-of-rome-reference/analyze.py) emits per-level
+metrics, feature lists by mode, piece credits and joined city tables as JSON.
+The level option prints terrain and piece layers side by side. It runs with
+Python's standard library. The notes and analyzer work from the repository,
+with the decoded assets kept as local research inputs.

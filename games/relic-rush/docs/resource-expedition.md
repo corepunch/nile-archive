@@ -8,6 +8,10 @@ just brought home.
 
 ## What the reference games do
 
+The [extracted Cradle of Rome reference](../../../docs/cradle-of-rome-reference/README.md)
+covers the original game's Android beta, with board counts, city prices and
+[proposals for this campaign](../../../docs/cradle-of-rome-reference/ADAPTATION.md).
+
 | Question | Cradle of Rome | Cradle of Egypt, GameTop Windows edition |
 | --- | --- | --- |
 | What clears a board? | Match on every blue plaque before time runs out. Chains limit access to the pieces above the plaques. | The atlas has beige ordinary, blue single-hit and orange two-hit cells. All 115 numbered board files use marked cells. 102 only use single-hit targets, and 13 also have two-hit targets. |
@@ -17,9 +21,9 @@ just brought home.
 
 Rome's blue plaques and income are an especially good fit. A player can
 decide whether to take the match that clears a remote plaque, take a colour
-needed at home, or satisfy both with one move. Egypt is an adequate reference
-for that loop and gives us inspectable data. The exact ratios belong to the
-specific reference build. For example, the official Egypt tile guide gives
+needed at home, or satisfy both with one move. The extracted Android beta
+and the Egypt desktop edition both make that loop inspectable. The exact
+ratios belong to each build. For example, the official Egypt tile guide gives
 silver/gold coins yields of 3/5, while the Windows files set them to 2/4.
 [GameHouse's Rome walkthrough](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/),
 [Awem's Egypt tile guide](https://support.awem.com/hc/en-gb/articles/201076871-Tiles),
