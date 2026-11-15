@@ -1,8 +1,8 @@
 # Relic Rush ice review
 
 The Frozen Stair (level 22) shows both hit strengths. The Explorer's Guide
-shows the full pane with its hit count. Each pair shows the earlier open-shell
-artwork on the left and the translucent, mask-fitted ice on the right.
+shows the full pane with its hit count. Each pair shows uniform opacity on the left
+and brighter, more opaque facets on the right.
 
 | Screen | 480×900 | 390×844 |
 | --- | --- | --- |

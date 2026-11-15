@@ -3557,7 +3557,16 @@
         128,
         128
       ],
-      "max_alpha": 150,
+      "opacity_ramp": {
+        "luma": [
+          140,
+          230
+        ],
+        "alpha": [
+          62,
+          224
+        ]
+      },
       "mask": "engine/art/hex-tile/hex-mask-128.png"
     },
     "ice-2": {
@@ -3573,7 +3582,16 @@
         128,
         128
       ],
-      "max_alpha": 128,
+      "opacity_ramp": {
+        "luma": [
+          140,
+          230
+        ],
+        "alpha": [
+          62,
+          224
+        ]
+      },
       "mask": "engine/art/hex-tile/hex-mask-128.png"
     }
   },
@@ -3582,7 +3600,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "4d1cf909a90e5088626dd09e1eb75f09ad25f50f8bffbbe2331ed72d09b25105",
+    "recipe": "8fd4c410a98954c350a8f18553637fe32f0c979bbd7a0e8f261c0be7b1e0bbb9",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -3767,7 +3785,7 @@
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-      "games/christmas-market/data/match3.png": "608cad89cfa53744b7793a577de998026208870e04cb85dcf5ddcb6d7cbc9248",
+      "games/christmas-market/data/match3.png": "f27e634c0db94defda56ccfe8f55c51248f664ac255aabd57ac1c5931a25913d",
       "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
       "games/christmas-market/lua/match3_skin.lua": "c802f38e88b4fcd89a6d9d127b90eea418a529711c7f7adb15abf8284e98f5a0"
     }

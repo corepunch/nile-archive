@@ -234,7 +234,16 @@
         128,
         128
       ],
-      "max_alpha": 128,
+      "opacity_ramp": {
+        "luma": [
+          140,
+          230
+        ],
+        "alpha": [
+          62,
+          224
+        ]
+      },
       "mask": "engine/art/hex-tile/hex-mask-128.png"
     },
     "ice-1": {
@@ -250,7 +259,16 @@
         128,
         128
       ],
-      "max_alpha": 150,
+      "opacity_ramp": {
+        "luma": [
+          140,
+          230
+        ],
+        "alpha": [
+          62,
+          224
+        ]
+      },
       "mask": "engine/art/hex-tile/hex-mask-128.png"
     },
     "selected": {
@@ -3319,7 +3337,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "4d1cf909a90e5088626dd09e1eb75f09ad25f50f8bffbbe2331ed72d09b25105",
+    "recipe": "8fd4c410a98954c350a8f18553637fe32f0c979bbd7a0e8f261c0be7b1e0bbb9",
     "inputs": {
       "art/match3-ice/clear-shell.png": "1e0aab9594d7500bd72dab66a0e5f5fd052fc0d8de13a1b64bf49e16a336378b",
       "art/match3-ice/concept.png": "24ec0da136cff61ec8100b37e858878dd852948daf94aa4e512e1e55c876a507",
@@ -3447,7 +3465,7 @@
       "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
     },
     "outputs": {
-      "engine/data/match3.png": "907e18186b056912551570cd9d3f881662f622a87bc27ed39c45825251424e6a",
+      "engine/data/match3.png": "2d33650ea98348d0bc2c3533b663fe77a120c1abe2a2b92ebb1ccc14f4a9de5e",
       "engine/match3_frames.lua": "82efa22d054245146d316bb38e1bb89606bd0e257d0da4eb6279c1abc62dd79d"
     }
   }

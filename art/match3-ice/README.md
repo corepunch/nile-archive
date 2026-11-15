@@ -23,13 +23,13 @@ and [the filled pane](filled-pane-prompt.txt).
 
 Run `python3 tools/match3_atlas.py` to pack the runtime textures at
 `engine/data/match3.png` and `games/<game>/data/match3.png`. The recipe crops
-matching 690×690 source squares and resizes them to 128×128. The full pane's
-alpha is exactly the canonical mask scaled to 128/255. The fractured state
-multiplies its painted alpha by the same mask and scales the result to 150/255.
-The crop preserves the painted color and the mask aligns the outer sides to
-both games' well-face radius. The atlas manifests record the crops, opacity,
-mask path and source fingerprints. Both states pass the strict hex check
-with opacity normalized for measurement.
+matching 690×690 source squares and resizes them to 128×128. Both states use
+the same luma-to-opacity ramp. Dark blue at luma 140 and below is 24% opaque.
+Bright facets at luma 230 and above are 88% opaque, with a linear transition
+between the two. The full pane uses the canonical hex as coverage. The
+fractured state also retains its painted fracture alpha. The recipe multiplies
+the opacity ramp by that coverage and preserves the painted RGB. The atlas
+manifests record the crops, ramp, mask path and source fingerprints.
 
 The in-game before and after captures cover both supported portrait sizes
 and the guide illustrations.

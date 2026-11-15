@@ -1,8 +1,8 @@
 # Christmas Market ice review
 
 A Hundred Flames (level 19) shows both hit strengths. The Market Keeper's
-Guide shows the full pane. Each pair shows the earlier open-shell artwork on
-the left and the translucent, mask-fitted ice on the right.
+Guide shows the full pane. Each pair shows uniform opacity on the left
+and brighter, more opaque facets on the right.
 
 | Screen | 480×900 | 390×844 |
 | --- | --- | --- |

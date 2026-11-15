@@ -21,7 +21,7 @@ import pack_particles
 ROOT = Path(__file__).resolve().parents[1]
 ICE_DIR = ROOT / 'art/match3-ice'
 ICE_CROPS = {'ice-1': (129, 66, 819, 756), 'ice-2': (1060, 66, 1750, 756)}
-ICE_ALPHA = {'ice-1': 150, 'ice-2': 128}
+ICE_OPACITY_RAMP = {'luma': [140, 230], 'alpha': [62, 224]}
 HEX_MASK = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
 ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept.png', 'clear-shell.png',
                                          'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt',
@@ -96,6 +96,10 @@ def verify_provenance(manifest_path):
 
 def registered_ice():
     sprites, records = {}, {}
+    dark, light = ICE_OPACITY_RAMP['luma']
+    transparent, opaque = ICE_OPACITY_RAMP['alpha']
+    opacity_curve = [round(transparent + (opaque - transparent) * min(1, max(0, (value - dark) / (light - dark))))
+                     for value in range(256)]
     with Image.open(HEX_MASK) as reference:
         mask = reference.getchannel('A')
     with Image.open(ICE_DIR / 'source.png') as sheet:
@@ -111,11 +115,11 @@ def registered_ice():
             else:
                 # Keep the painted fracture while fitting the lower three sides.
                 alpha = ImageChops.multiply(paint, mask)
-            opacity = ICE_ALPHA[name]
-            sprite.putalpha(alpha.point(lambda value: round(value * opacity / 255)))
+            opacity = sprite.convert('L').point(opacity_curve)
+            sprite.putalpha(ImageChops.multiply(alpha, opacity))
             sprites[name] = sprite
             records[name] = {'source': 'art/match3-ice/source.png', 'prompt': 'art/match3-ice/filled-pane-prompt.txt',
-                             'crop': list(box), 'canvas': list(mask.size), 'max_alpha': opacity,
+                             'crop': list(box), 'canvas': list(mask.size), 'opacity_ramp': ICE_OPACITY_RAMP,
                              'mask': str(HEX_MASK.relative_to(ROOT))}
     return sprites, records
 
