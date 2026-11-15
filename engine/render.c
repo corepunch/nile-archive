@@ -96,7 +96,7 @@ bool render_init(void)
          * horizontal cylinder: its normal tilts with y only, compressing the
          * lookup towards the top and bottom and shading top-light to bottom-dark.
          * A thin, hard bevel along the edge bends further and catches the
-         * top-left light. */
+         * top-left light; without a bevel there is no highlight streak either. */
         "void main(){vec2 tc=texcoord;float ny=0.,band=0.,lit=0.;"
         "if(lens.z>0.){vec2 q=(point-lens.xy)/lens.z,a=abs(q);"
         "float fs=(a.x*.8660254+a.y*.5)/.8660254,ft=a.y/.8660254,f=max(fs,ft);"
@@ -106,7 +106,7 @@ bool render_init(void)
         "ny=clamp(q.y/.8660254,-1.,1.);lit=dot(n,vec2(-.55,-.835));"
         "tc+=(vec2(0.,ny)+n*band*1.5)*lens_k.z*lens.z*lens_k.xy;}"
 "vec4 base=texture(image,tc);"
-        "if(lens.z>0.){float spec=exp(-pow((ny+.55)/.2,2.))*.3*(1.-band);"
+        "if(lens.z>0.){float spec=lens.w>0.?exp(-pow((ny+.55)/.2,2.))*.3*(1.-band):0.;"
         "base.rgb*=1.-ny*.18*lens_k.w;"
         "base.rgb=mix(base.rgb,vec3(1.),(spec+band*max(lit,0.)*.85)*lens_k.w);"
         "base.rgb*=1.-band*max(-lit,0.)*.55*lens_k.w;}"

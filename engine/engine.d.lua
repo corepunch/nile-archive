@@ -868,7 +868,7 @@ function gfx.image_rot(t, dst, angle, tint) end
 ---@param tint color
 function gfx.image_hex(t, src, center, radius, angle, tint) end
 
----Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and the bevel's top-left highlight.
+---Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and, with a bevel, its top-left highlight and a soft streak.
 ---@param t texture
 ---@param src rect
 ---@param center vec2

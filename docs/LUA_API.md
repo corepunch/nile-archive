@@ -1221,7 +1221,7 @@ Map a source rectangle in texture pixels to an anti-aliased flat-top hex. The he
 
 ### `gfx.image_glass(t, src, center, radius, bend, bevel, light, tint)`
 
-Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and the bevel's top-left highlight.
+Like image_hex (angle 0), seen through a glass tile: a horizontal cylinder that bends the lookup towards its top and bottom by bend (hex radii, about 0.1) and shades top-light to bottom-dark, with a thin hard bevel of bevel points along the edge. light (0..1) scales the shading and, with a bevel, its top-left highlight and a soft streak.
 
 | Argument | Type | |
 |---|---|---|

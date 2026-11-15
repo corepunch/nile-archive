@@ -26,13 +26,14 @@ for _,name in ipairs{"blind-top","blind-body","generator-shell"} do E.assets[#E.
 -- the picture as through frosted glass; the win clears it to the sharp one.
 local FROST_BLUR = 4.5                      -- image pixels
 -- Each restored cell bends the picture behind it like a horizontal glass
--- cylinder (gfx.image_glass), with no outline, bevel or shading. --glass N
--- previews strengths; 0 is one flat frosted pane.
+-- cylinder (gfx.image_glass), shaded top-light to bottom-dark like the board
+-- cells but far softer, with no outline or bevel. --glass N previews
+-- strengths; 0 is one flat frosted pane.
 local GLASS = {
     [0] = false,
-    {bend = .07},    -- subtle (default)
-    {bend = .12},    -- medium
-    {bend = .20},    -- strong
+    {bend = .14, light = .7},    -- subtle (default)
+    {bend = .22, light = .7},    -- medium
+    {bend = .32, light = .7},    -- strong
 }
 local FROST_WASH = color(236, 244, 255, 46)  -- the glass's milky sheen
 function E.load_picture(art, name, path)
@@ -150,13 +151,15 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
     local area = field.area:offset(vec2(sx, 0))
     local side = 2 * R.HEX_R * spec.tile
     local origin = R.board_origin + vec2(sx, 0)
-    if spec.shadow_y then
+    local picture = story and story.floor ~= "oil"   -- glass tiles shade themselves
+    if spec.shadow_y and not picture then
         local shadow = area:offset(vec2(1, spec.shadow_y))
         gfx.sdf_mask(field.texture, shadow, field.range, 0, 0, 0, spec.softness)
         gfx.rect(shadow, color(12, 10, 8, spec.opacity * alpha))
     end
-    gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0)
-    if story and story.floor ~= "oil" then
+    if picture then gfx.sdf_mask(field.texture, area, field.range, 0, 0, 0, spec.feather or 0)
+    else gfx.sdf_mask(field.texture, area, field.range, spec.rim, spec.shade, spec.bevel, spec.feather or 0) end
+    if picture then
         local t = R.board_art[story.picture]
         local box, src = picture_crop(R, rules, t)
         local opacity = 1 - cover * (1 - (R.reveal_play_opacity or 1))
@@ -172,7 +175,7 @@ local function draw_carpet(R, rules, story, sx, alpha, cover)
             for _, i in ipairs(glass and cells or {}) do
                 local p = R.cell_pos(i)
                 local uv = vec2(src.x + (p.x - box.x) * scale, src.y + (p.y - box.y) * scale)
-                gfx.image_glass(frost, rect.centered(uv, face), p + vec2(sx, 0), R.HEX_R, glass.bend, 0, 0, tint)
+                gfx.image_glass(frost, rect.centered(uv, face), p + vec2(sx, 0), R.HEX_R, glass.bend, 0, glass.light, tint)
             end
             gfx.rect(area, color(FROST_WASH.r, FROST_WASH.g, FROST_WASH.b, FROST_WASH.a * alpha * cover))
         end
