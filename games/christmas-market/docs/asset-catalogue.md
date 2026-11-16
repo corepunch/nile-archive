@@ -482,9 +482,9 @@ rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced
 motion omits the bounce. Capture with
 `build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
-At one to three remaining panes, `engine/match3_vfx.lua` traces their bevels
-with the atlas's Kenney `fx-glint` and `fx-twinkle` sprites after the move
-suggestion's idle delay. A board tap resets the reminder. The blue and green
+At one to three remaining panes, `engine/match3_vfx.lua` traces the full bevel
+with a fading ribbon of the atlas's `glow`, `fx-glint` and `fx-twinkle`
+sprites after the move suggestion's idle delay. A board tap resets the reminder. The blue and green
 trails follow the [Cradle of Rome perimeter emitters](../../../docs/cradle-of-rome-reference/README.md#source-inventory).
 Green uses the same motion until its first hit turns the pane blue. Reduce
 Motion hides the effect. Reproduce the mixed-pane capture with

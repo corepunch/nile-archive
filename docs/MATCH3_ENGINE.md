@@ -207,8 +207,8 @@ in its entrance, in place of the halo). A level's `oil_double` lists `oil`
 cells that take two hits; each still counts once toward the goal.
 Floors can set `tablet_hint=true` to help players spot the last one to three
 tablets. The reminder shares the move suggestion's five-second idle delay
-and resets with it on board interaction. A star and fading sparks follow
-each bevel edge. A double tablet has a green trail. Reduce Motion
+and resets with it on board interaction. A star leaves a fading ribbon of
+overlapping sparks around all six bevel edges. A double tablet has a green trail. Reduce Motion
 suppresses the moving sparks. See the
 [Cradle of Rome emitter reference](cradle-of-rome-reference/README.md#source-inventory).
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.

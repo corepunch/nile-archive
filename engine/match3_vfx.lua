@@ -84,20 +84,26 @@ function V.bind(R, rules)
     local function spark(at, radius, angle, c) sprite("glint", at, radius * 2.6, angle, c) end
 
     local blue_hint, green_hint = rgba(103, 213, 255), rgba(141, 255, 153)
+    local TABLET_TRAIL_PARTICLES = 60
     function R.vfx_tablet_hint(center, radius, vertices, phase, double)
         local ink = double and green_hint or blue_hint
-        for n = 10, 0, -1 do
-            local distance = phase - n * .105
+        -- Overlapping glow particles keep the full perimeter legible between sparkles.
+        for n = TABLET_TRAIL_PARTICLES, 0, -1 do
+            local age = n / TABLET_TRAIL_PARTICLES
+            local distance = phase - 6 * age
             local edge = math.floor(distance)
             local at = center + vertices[edge % 6]:lerp(vertices[(edge + 1) % 6], distance - edge):scale(radius)
-            local fade = (1 - n / 11)^1.5
             if n == 0 then
                 vfx_halo(at, radius * .31, color.alpha(ink, .7))
                 sprite("glint", at, radius * .57, PI / 4, rgba(246, 255, 255, 245))
             else
-                local flicker = .8 + .2 * math.sin(phase * 7 + n * 2.3)
-                sprite("twinkle", at, radius * (.12 + .25 * fade) * flicker, n,
-                    color.alpha(ink, fade * flicker))
+                local fade = .38 + .42 * (1 - age)^1.5
+                vfx_halo(at, radius * .15, color.alpha(ink, fade))
+                if n % 4 == 0 then
+                    local flicker = .75 + .25 * math.sin(phase * 7 + n * 2.3)
+                    sprite("twinkle", at, radius * (.13 + .26 * fade) * flicker, n,
+                        color.alpha(ink, fade * flicker))
+                end
             end
         end
     end
