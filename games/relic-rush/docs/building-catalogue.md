@@ -112,7 +112,7 @@ sprite file is always `data/buildings/<key>.png`.
 
 | ID / key | Name | Category | Tiles | Price | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
-| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 6 Provisions + 8 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 3 Provisions + 8 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 1 / `well` | Spring well | wonder | 2 x 2 | 100 Gold | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 70 Gold + 20 Provisions + 24 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 3 / `market` | Jungle market | wonder | 3 x 2 | 85 Gold + 24 Provisions + 30 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |

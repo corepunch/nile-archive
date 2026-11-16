@@ -20,13 +20,19 @@ refills. Leave it unset for five regular kinds plus the story piece.
 Ordinary boards use five resource pieces. The amber amphora on early six-kind
 boards earns score. Confirming the Spring Well replaces blue timber with a water
 bucket worth 3 Provisions from board 5. The Artisan Workshop replaces dressed
-stone with cut blocks worth 5 Supplies from board 9. The Jungle Market
+stone with cut blocks worth 5 Supplies from board 8. The broken cable occupies
+the orange slot on that board, and berries are omitted to keep five kinds. The Jungle Market
 replaces red berries with ration jars worth 4 Provisions from board 10.
 From board 14 the Courtyard improves Gold, from board 17 the Lodge replaces
 ration jars with grain, and from board 20 the Archive improves Supplies.
 The Fountain upgrades the blue water slot from board 27 and the Temple
 upgrades the Gold slot on board 30. The Camp and Observatory add tools on
 boards 2 and 24. These rewards persist wherever the slot is available.
+
+Boards 5 and 9 use authored openings with seeded refills. The first idle hint
+matches three buckets on the quay approach or three cut blocks by the market
+steps. Each match clears three plaques and earns 9 Provisions or 15 Supplies
+after the relevant restoration.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap

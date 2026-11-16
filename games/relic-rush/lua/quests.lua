@@ -32,12 +32,12 @@ Q.chapters = {
             dig(13, "Recover the note"), build("gateway"),
         }},
         {title="Make a way home", points=24, tasks={
-            dig(14, "Test a route"), dig(15, "Check the quay wall"),
-            dig(16, "Prepare shelter"), build("lodge"),
+            dig(14, "Test the terrace route"), dig(15, "Trace the crack in the quay wall"),
+            dig(16, "Survey the lodge"), build("lodge"),
         }},
         {title="Keep the record", points=28, tasks={
-            dig(17, "Clear a way to the fragment"), dig(18, "Compare the measurements"),
-            dig(19, "Consult the records"), build("archive"), dig(20, "Find the signed plan"),
+            dig(17, "Read the harbor log"), dig(18, "Check the stone gauge"),
+            dig(19, "Reach the chart cabinet"), build("archive"), dig(20, "Find Ines's signed plan"),
         }},
     }},
     {title="Keep the Light", quests={

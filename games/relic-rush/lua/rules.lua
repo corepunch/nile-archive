@@ -13,8 +13,16 @@ local start = M.game_start
 function M.game_start(level, seed, restored)
     if reference then return start(level, seed) end
     local number = math.max(0, math.min(level, M.LEVELS-1)) + 1
-    local yields, tools = economy.board_loadout(M.levels[number], number, restored)
+    local spec = M.levels[number]
+    local yields, tools = economy.board_loadout(spec, number, restored)
     local g = start(level, seed, yields)
+    if spec.opening then
+        -- Authored kind slots use the current restoration art and yields.
+        -- The engine's seeded RNG still drives cascades and refills.
+        for i = 0, M.CELLS - 1 do
+            if g.active[i] then g.tiles[i] = M.tile(tonumber(spec.opening:sub(i + 1, i + 1))) end
+        end
+    end
     g.tools, g.starting_tools = {table.unpack(tools)}, tools
     return g
 end

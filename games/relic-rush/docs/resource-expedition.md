@@ -80,8 +80,9 @@ Pending earnings are visible on the board and are banked on a win.
 Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
 earn that complexity through layout and enough legal opening swaps. Board 1
-uses five regular resources. Boards 4 and 9 use 5+1. Board 8 uses a purple snapped cable in 4+1. The
-orange slot can hold a story item or an amphora that pays score. Board 4 takes
+uses five regular resources. Boards 4 and 9 use 5+1. Board 8 puts the snapped
+cable in the orange slot and omits red berries, leaving room for cut blocks in
+a 4+1 palette. The orange slot can also hold an amphora that pays score. Board 4 takes
 the Gold slot for the tide chart. The Well purchase that follows uses Gold
 banked on earlier boards or earned from unused moves and replays.
 
@@ -93,7 +94,7 @@ Dynamite and Sunburst replenish at the start of each eligible attempt.
 | --- | ---: | --- | --- |
 | Expedition Camp | 2 | Dynamite, two uses | Blast coin clusters or save moves for Well Gold. |
 | Spring Well | 5 | Water buckets replace timber, 3 Provisions each | Pay the Workshop's Provisions. |
-| Artisan Workshop | 9 | Cut blocks replace dressed stone, 5 Supplies each | Pay the Market's Supplies. |
+| Artisan Workshop | 8 | Cut blocks replace dressed stone, 5 Supplies each | Pay the Market's Supplies. |
 | Jungle Market | 10 | Ration jars replace red berries, 4 Provisions each | Pay the Courtyard's Provisions. |
 | Sunstone Courtyard | 14 | Trade coin stacks replace sun coins, 6 Gold each | Pay the Lodge's Gold. |
 | Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Provisions each | Pay the Archive's Provisions. |
@@ -101,6 +102,12 @@ Dynamite and Sunburst replenish at the start of each eligible attempt.
 | Star Observatory | 24 | Sunburst, two uses | Clear coin or quartz across the board for the Fountain. |
 | Jade Fountain | 27 | Springwater drops replace water buckets, 6 Provisions each | Pay the Temple's Provisions. |
 | Temple of the Sun | 30 | Sun gems replace trade coin stacks, 9 Gold each | The finale and its replays earn Gold for island purchases. |
+
+An arrival message credits the restored building and names the new piece's
+yield. The authored hint on board 5 trades one swap for three cleared plaques
+and 9 Provisions. Board 9 pairs three plaques with 15 Supplies while leaving
+the supply crate as the first-clear find. Gold is the crew's purchasing
+budget, Provisions keep the workers supplied, and Supplies go into repairs.
 
 ## Restoration prices and earnings
 
@@ -110,7 +117,7 @@ three currencies. Prices are in Relic Rush units for the shorter portrait boards
 
 | Clear | Restore | Gold | Provisions | Supplies |
 | ---: | --- | ---: | ---: | ---: |
-| 1 | Expedition camp | — | 6 | 8 |
+| 1 | Expedition camp | — | 3 | 8 |
 | 4 | Spring well | 100 | — | — |
 | 7 | Artisan workshop | 70 | 20 | 24 |
 | 9 | Jungle market | 85 | 24 | 30 |
@@ -147,6 +154,10 @@ screen should all use the same ordering and amount formatting. Use resource
 shapes and readable labels alongside color in the guide and price rows.
 
 ## Release status and checks
+
+Eight seeded runs through level 20 funded all 56 restoration purchases from
+first clears after the Camp price was lowered to 3 Provisions. The sample used
+greedy matches and allowed expedition tools when four moves remained.
 
 All 30 boards use pale stone with fixed blue targets. They share the
 same clear condition. The [current review](review/blue-plaque-campaign/README.md)

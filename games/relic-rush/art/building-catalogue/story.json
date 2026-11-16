@@ -1,14 +1,14 @@
 {
   "camp": {
     "about": "Unlocks two sticks of Dynamite per expedition.",
-    "cost": [0, 6, 8]
+    "cost": [0, 3, 8]
   },
   "well": {
-    "about": "Adds water buckets to later expeditions.",
+    "about": "Water buckets earn 3 Provisions each from expedition 5.",
     "cost": [100, 0, 0]
   },
   "workshop": {
-    "about": "Adds cut blocks to later expeditions.",
+    "about": "Cut blocks earn 5 Supplies each from expedition 8.",
     "cost": [70, 20, 24]
   },
   "market": {

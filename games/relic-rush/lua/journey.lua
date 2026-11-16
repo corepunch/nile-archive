@@ -11,7 +11,7 @@ return require("match3.game").journey{
     version = 5,
     clear_before_result = true,
     recap = {
-        {"elena", "Back in the Lost Valley. It began with a light under the cliff."},
+        {"elena", "Back at the old harbor. It began with a light under the cliff."},
         {30, {"mara", "The quay is safe and the warning works. Ines left a chart of the other stations."}},
         {20, {"tomas", "Ines came back to warn boats away. Her repair plan can make the quay safe."},
              {"adrian", "My agreement gave Kessler a claim on the discoveries. We need those plans here."}},

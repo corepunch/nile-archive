@@ -16,16 +16,30 @@ function R.board_context(preview)
     return restored
 end
 
-function R.board_lesson(g)
+local function opening_unlock(g)
     local level = rules.level_of(g)
-    for _, unlock in ipairs(economy.unlocks) do
-        if g.level + 1 == unlock.first_level then
+    for i, unlock in ipairs(economy.unlocks) do
+        if g.level + 1 == unlock.first_level or level.featured_resource == unlock.key then
             local active = unlock.tool and g.starting_tools and g.starting_tools[unlock.tool] > 0
                 or g.resource_yields and g.resource_yields[unlock.kind] == unlock
-            if active then return level.lesson .. "\n" .. economy.unlock_text(unlock) end
+            if active then return unlock, island.wonders[i].name end
         end
     end
-    return level.lesson
+end
+
+function R.board_lesson(g)
+    local lesson, unlock = rules.level_of(g).lesson, opening_unlock(g)
+    return unlock and lesson .. "\n" .. economy.unlock_text(unlock) or lesson
+end
+
+local present_board = R.present_board
+function R.present_board()
+    present_board()
+    local g = R.g
+    if g.level < 20 and g.moves == rules.level_of(g).moves and not app.arg("mission") then
+        local unlock, building = opening_unlock(g)
+        if unlock then R.notice(building .. " · " .. economy.unlock_text(unlock)) end
+    end
 end
 
 local serialize_completed = require("match3.game").bind_completed_rewards(R, rules)

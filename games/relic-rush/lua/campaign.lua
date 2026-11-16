@@ -86,6 +86,9 @@ local levels = {
         l.mask = bowl_mask
         l.terrain = seam(0, 1, 0, 1, 0)
         l.background = 1
+        -- The first idle hint makes a water match across three plaques.
+        l.opening = ".1302" .. "..3413" .. "..24042" .. "00423323" .. "232033032"
+            .. "24304010" .. "..42230" .. "..3113" .. ".2343"
         return l
     end)(),
     (function()
@@ -114,6 +117,10 @@ local levels = {
         l.mask = chambers_mask
         l.terrain = seam(1, 1, 0, 1, 0)
         l.background = 2
+        -- Put a cut-block match in the first hint while leaving the crate to find.
+        l.opening = "31355" .. "440543" .. "5424340" .. "32......" .. "55......."
+            .. "15......" .. "0014105" .. "454204" .. "05142"
+        l.featured_resource = "cut-blocks"
         return l
     end)(),
     (function()
@@ -287,8 +294,9 @@ levels[5].story_piece, levels[5].goal_kind = "marker", 2 -- green replaces the l
 levels[5].omit_kind = 5
 levels[6].story_piece, levels[6].goal_kind = "marker", 2
 levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the flame
-levels[8].story_piece, levels[8].goal_kind = "broken-cable", 4 -- purple replaces the crystal
-levels[8].omit_kind = 5
+-- Keep the workshop's purple slot available on the expedition right after the build.
+levels[8].story_piece, levels[8].goal_kind = "broken-cable", 5
+levels[8].omit_kind = 1
 levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
 levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the amphora
 levels[10].omit_kind = 0

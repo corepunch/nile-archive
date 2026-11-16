@@ -55,7 +55,7 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
 | `water` | Teal water bucket, 3 Provisions. Replaces timber from board 5 after the Well is restored. | Board and guide |
 | `rations` | Orange ration jar, 4 Provisions in the Market slot from board 10 | Board and guide |
-| `cut-blocks` | Workshop unlock from board 9, 5 Supplies | Board and guide |
+| `cut-blocks` | Workshop unlock from board 8, 5 Supplies | Board and guide |
 | `trade-coins` | Existing Resources stack (`data/tile-sets/resources/0.png`), 6 Gold | Board and guide from 14 |
 | `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Provisions | Board and guide from 17 |
 | `quartz` | Existing Relics purple crystal (`data/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
@@ -75,6 +75,8 @@ hover and disabled artwork. The locked and depleted tools share the disabled
 art and show different tap notices. Review `shot hex-first`, `shot hex-late`,
 `shot landing-briefing`, and `shot phone-story-level-30` in the Relic Rush suite.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
+The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
+shows the new openings and the cut blocks sharing level 8 with the snapped cable.
 
 `--rome-reference-art` uses the eight aliases in the manifest to load local
 Cradle of Rome 2 crops for resource pieces and matching wallet and guide icons.
@@ -144,8 +146,8 @@ sprites. The first clear recovers the story item.
 | Red | 7 | Rolled leather tool wrap |
 | Green | 5, 6 | Painted brass trail arrow |
 | Blue | 2, 9 | Lamp lens, supply pack |
-| Purple | 3, 8 | Coiled relay cable, snapped cable |
-| Orange | 10 | Bronze shutter gear |
+| Purple | 3 | Coiled relay cable |
+| Orange | 8, 10 | Snapped cable, bronze shutter gear |
 
 Board 1 uses the ordinary timber chip. Most story sprites come
 from the [expedition atlas](../art/resource-pieces/scenario-atlas.png). The

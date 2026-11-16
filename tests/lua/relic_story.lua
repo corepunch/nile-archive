@@ -61,7 +61,7 @@ end
 local collections = {
     [1]={"Camp timber",3,5}, [2]={"Lamp lens",3,5}, [3]={"Relay cable",4},
     [4]={"Tide chart",0}, [5]={"Quay marker",2,5}, [6]={"Shore marker",2},
-    [7]={"Tool roll",1}, [8]={"Broken cable",4,5}, [9]={"Supply crate",3}, [10]={"Shutter gear",5,0},
+    [7]={"Tool roll",1}, [8]={"Broken cable",5,1}, [9]={"Supply crate",3}, [10]={"Shutter gear",5,0},
     [13]={"Folded note",0,5},
 }
 

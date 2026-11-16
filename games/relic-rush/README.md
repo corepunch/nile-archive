@@ -156,18 +156,19 @@ See the [reference study, original cast and asset gallery](docs/art-direction-v2
 
 ![Original expedition cast: Elena, Mara, Tomas and Adrian](art/art-direction/expedition-cast.png)
 
-Elena Voss leads the archaeological expedition; Mara Bell is its pilot, Tomas Reed its archivist, and Adrian Vale its ambiguous financier. These are original character concepts. Their busts (cut by `tools/prepare_assets.py` from that lineup) appear in the game's dialogue; the garden-island painting is a design asset without a playable version.
+Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, Tomas Reed keeps the harbor, and Adrian Vale finances the trip. Their busts (cut by `tools/prepare_assets.py` from that lineup) appear in the game's dialogue.
 
 ## Story and world
 
-Mara spots a light under the cliff before the expedition can land. The crew rebuilds its
-camp and follows the signal through the Lost Valley. The opening chapter, **A Light Below**,
+Mara radios from the Marigold when she spots a light under the cliff. The
+present-day crew is restoring an ancient harbor whose keepers ran an electric
+relay along the original stone channel. The opening chapter, **A Light Below**,
 uses boards 1–10 and four island upgrades to lead to the tide room. The player chooses
 whether Mara or Tomas answers the signal. Their replies differ, and both advance the expedition.
 
-In Chapter 1, complete each board’s match-3 goals to advance the quest. In the
-first-clear dialogue, the crew finds timber for the camp, the lamp lens, the tide
-chart and other objects that take them towards the quay.
+In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard,
+Lodge and Archive to use. Ines’s note identifies the signaler, and her signed
+plan gives the crew a way to repair the quay wall.
 
 The island shows the active chapter, quest, next task and Happiness. Each confirmed
 wonder adds four Happiness and each optional building or decoration adds one.
@@ -178,7 +179,7 @@ Required restorations cover quest thresholds. Moving a building preserves its Ha
 First-clear dialogue leads into Results. Board 30 reveals the signal plate at the cleared site, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
 wonder has a separate scene after confirmed placement. Replays bank matched resources.
 Existing saves retain clears, currency, land and buildings and receive a recap at their
-current level. Chapters 2 and 3 have provisional dialogue to carry the campaign to its finale.
+current level. Chapter 3 carries the quay repair and ownership dispute to the finale.
 
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/match3_game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
@@ -207,6 +208,11 @@ restoration unlocks a higher-yield chip or a tool on eligible expeditions.
 Authored story pieces keep their slots. The result shows what the next
 restoration unlocks or what is still needed to afford it. Replays earn
 matched resources and up to 40 Gold for unused moves.
+
+The Well adds water buckets on level 5. The Workshop adds cut blocks on level 8,
+alongside the broken cable. An arrival message names the building and the piece's
+value. The first hint on level 5 earns 9 Provisions while clearing plaques. Level 9
+offers a similar cut-block match for 15 Supplies toward the Market.
 
 ## Campaign: thirty hex levels
 
@@ -251,7 +257,7 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 
 | # | Building | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | Expedition camp | 6 Provisions + 8 Supplies | Two sticks of Dynamite per expedition from board 2. |
+| 1 | Expedition camp | 3 Provisions + 8 Supplies | Two sticks of Dynamite per expedition from board 2. |
 | 2 | Spring well | 100 Gold | Unlocks water buckets worth 3 Provisions each. |
 | 3 | Artisan workshop | 70 Gold + 20 Provisions + 24 Supplies | Unlocks cut blocks worth 5 Supplies each. |
 | 4 | Jungle market | 85 Gold + 24 Provisions + 30 Supplies | Unlocks ration jars worth 4 Provisions each. |
@@ -349,7 +355,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 - `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. Every one of the 46 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. All 47 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
 

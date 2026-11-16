@@ -18,11 +18,10 @@ local E = {
 }
 
 -- Same order as the story catalogue and its stable city type IDs (zero-based).
--- The workshop's first purple slot is on board 9 because board 8 needs it for the cable.
 E.unlocks = {
     {key="dynamite", name="Dynamite", tool=2, amount=2, first_level=2, effect="Hits one cell and its neighbors."},
     {key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
-    {key="cut-blocks", name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=9},
+    {key="cut-blocks", name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
     {key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
     {key="trade-coins", name="Trade coin stacks", kind=0, slot=E.GOLD, amount=6, first_level=14},
     {key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},

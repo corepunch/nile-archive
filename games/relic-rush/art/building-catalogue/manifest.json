@@ -37,7 +37,7 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         0,
-        6,
+        3,
         8
       ],
       "about": "Unlocks two sticks of Dynamite per expedition.",
@@ -80,7 +80,7 @@
         0,
         0
       ],
-      "about": "Adds water buckets to later expeditions.",
+      "about": "Water buckets earn 3 Provisions each from expedition 5.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/well.png",
@@ -120,7 +120,7 @@
         20,
         24
       ],
-      "about": "Adds cut blocks to later expeditions.",
+      "about": "Cut blocks earn 5 Supplies each from expedition 8.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/workshop.png",

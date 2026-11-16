@@ -53,7 +53,7 @@ do
     fits,spot=c:find_spot(workshop,island.island_suggestion(workshop))
     check(fits,'workshop has a placement spot')
     c:begin_place(workshop,spot)
-    check(R.make_board(8,19).resource_yields[4].key=='stone','workshop preview does not unlock cut blocks')
+    check(R.make_board(7,19).resource_yields[4].key=='stone','workshop preview does not unlock cut blocks')
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
@@ -67,9 +67,22 @@ do
         local blocks=g.resource_yields[4]==economy.unlocks[3]
         local rations=g.resource_yields[1]==economy.unlocks[4]
         check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
-        check(blocks==(level>=8) and rations==(level>=9), 'workshop and market pieces stay unlocked')
+        check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
+    end
+
+    -- Act on the same first hint a player sees. The match must stock the town
+    -- at its new rate while clearing the work site in the same move.
+    for _, opening in ipairs{{4, economy.PROVISIONS, 9}, {8, economy.SUPPLIES, 15}} do
+        local level, currency, expected = table.unpack(opening)
+        local g = R.make_board(level, 73)
+        local ok, a, b = rules.game_hint(g)
+        check(ok and rules.game_swap(g, a, b, match), 'the resource opening offers a legal swap')
+        local plaques = g.oil_left
+        rules.game_apply(g, match)
+        check(g.earnings[currency] == expected and g.oil_left < plaques,
+            'the opening earns the upgraded resource and clears a plaque')
     end
 end
 
