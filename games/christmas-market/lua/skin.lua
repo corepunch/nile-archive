@@ -30,9 +30,6 @@ return ui.skin{
         moves_glow = "#2C7850",
         moves_low = "#80181E",
         moves_low_glow = "#C43434",
-        board_edge = "#120D08",
-        board_rim = "#D2A85C",
-        board_seam = "#0E1B15",
         board_face = "#294737",
     },
 

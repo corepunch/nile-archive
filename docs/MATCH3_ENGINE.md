@@ -153,13 +153,15 @@ can reuse the board's chip and objective frames. The generated
 The shared floor renderer in `match3.elements_view` draws an edge-to-edge
 backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
 default) at its radius. The seam shows the backing colour through that inset.
-When `R.GROUND` sets `edge`/`edge_width` and `rim`/`rim_width`, the board's
-silhouette gets a Cradle of Rome style frame: a dark edge outside a light rim,
-drawn for every cell under the faces so only the outline remains. Campaign
-textures use the canonical flat-top mask and carry their paint to the edge.
-Games supply the frame, seam and fallback face colours through their skins
-(`board_edge`, `board_rim`, `board_seam`, `board_face`). Imported and neutral
-boards use the same geometry without a frame.
+`R.GROUND.frame` lists the board's outline bands from the cells outwards, each
+`{width, top, bottom}`. Every band is drawn for every cell under the faces, so
+only the silhouette's outline remains, and as a vertical gradient, so the
+board's top edges catch the light and its bottom edges fall into shade.
+`elements.cradle_ground(R)` applies the shared Cradle of Rome preset
+(`E.CRADLE_GROUND`): a dark line, a brown band, a cream highlight, a dark line
+and a tan-gold ledge, dark brown grout (`seam`, `seam_width`) and the cell-state
+tiles. Games supply the fallback face colour as the skin's `board_face`.
+Imported and neutral boards use the same geometry without a frame.
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each
 listed game's `data/board-tiles/`: a bevel lit from above, a top-to-bottom face

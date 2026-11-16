@@ -224,11 +224,11 @@ local function floor_pose(R, i)
     return scale, turn, lift
 end
 
--- The board stands in a frame like a Cradle of Rome plaque board: each layer is
+-- The board stands in a frame like a Cradle of Rome plaque board: each band is
 -- drawn for every cell before the next, so only what sticks out past the
--- silhouette survives as an outline: a dark edge, then a light rim. The
--- full-radius backing joins edge to edge, and the face leaves a seam of backing
--- between neighbours, with the same gap for painted and flat colours.
+-- silhouette survives as an outline. The full-radius backing joins edge to
+-- edge, and the face leaves a seam of backing between neighbours, with the
+-- same gap for painted and flat colours.
 local GROW = 2 / math.sqrt(3)   -- a hex grown by w along its edges has a corner radius this much larger
 
 local function each_ground_cell(R, rules, sx, fn)
@@ -242,16 +242,19 @@ end
 
 local function draw_ground_backing(R, rules, sx, alpha, textured)
     local look = R.GROUND
-    local rim_w, edge_w = look.rim_width or 0, look.edge_width or 0
-    if look.edge and edge_w > 0 then
+    -- The frame: bands listed from the cells outwards, drawn outermost first.
+    -- Each band is a vertical gradient per cell, so the board's top edges
+    -- catch the light (`top`) and its bottom edges fall into shade (`bottom`).
+    local frame, reach = look.frame or {}, 0
+    for _, band in ipairs(frame) do reach = reach + band.width end
+    for k = #frame, 1, -1 do
+        local band = frame[k]
+        local top, bottom = color.alpha(band.top, alpha), color.alpha(band.bottom or band.top, alpha)
+        local grow = reach * GROW
         each_ground_cell(R, rules, sx, function(_, at, scale, turn)
-            gfx.ngon(at, (R.HEX_R + (rim_w + edge_w) * GROW) * scale, 6, turn, color.alpha(look.edge, alpha))
+            gfx.ngon_grad(at, (R.HEX_R + grow) * scale, 6, turn, top, bottom)
         end)
-    end
-    if look.rim and rim_w > 0 then
-        each_ground_cell(R, rules, sx, function(_, at, scale, turn)
-            gfx.ngon(at, (R.HEX_R + rim_w * GROW) * scale, 6, turn, color.alpha(look.rim, alpha))
-        end)
+        reach = reach - band.width
     end
     local seam = color.alpha(look.seam, alpha)
     local face = color.alpha(look.face, alpha)
@@ -262,6 +265,28 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
             gfx.ngon(at, (R.HEX_R - inset) * scale, 6, turn, face)
         end
     end)
+end
+
+-- Cradle of Rome's board, shared by the match-3 games: a carved frame (from the
+-- cells out: a dark line, a brown band, a cream highlight, a dark line and a
+-- wooden ledge), dark brown grout between cells, and the cell-state tiles
+-- baked by tools/board_tiles.py.
+E.CRADLE_GROUND = {
+    seam = color.hex(0x6A4214), seam_width = 1.4,
+    frame = {
+        {width = 1.4, top = color.hex(0x2E1206), bottom = color.hex(0x1E0802)},
+        {width = 2.4, top = color.hex(0x84542A), bottom = color.hex(0x4A2408)},
+        {width = 1.4, top = color.hex(0xF6DCA8), bottom = color.hex(0xA07848)},
+        {width = 1.2, top = color.hex(0x2A1004), bottom = color.hex(0x160600)},
+        {width = 4.6, top = color.hex(0xDCB67C), bottom = color.hex(0x765628)},
+        {width = 1, top = color.hex(0x2A1606), bottom = color.hex(0x120600)},
+    },
+    tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
+             wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
+}
+
+function E.cradle_ground(R)
+    for key, value in pairs(E.CRADLE_GROUND) do R.GROUND[key] = value end
 end
 
 local function draw_floor_cell(R, i, at, material, alpha)
