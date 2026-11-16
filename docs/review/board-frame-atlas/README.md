@@ -35,8 +35,8 @@ matching paint across the join lines. The engine overlaps those joins by a
 small amount to keep the stone continuous at both phone sizes. The 168×168 px
 rim in the bottom left follows each cell's scale and rotation as it flies in.
 The winter atlas adds a snowy north edge at `(240, 240)` in an 80×80 px slot.
-Christmas Market uses it on the highest horizontal north edge in each hex
-column, which keeps the snow above the playing field and away from openings.
+Christmas Market uses it on the highest horizontal north rim edges with open
+space above them. Stone inside an opening uses the bare slot.
 
 The frame generator writes the stone atlas and guide. The
 [decoration source and review](../board-frame-decorations/README.md) show

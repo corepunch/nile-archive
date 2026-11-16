@@ -3,12 +3,21 @@
 -- The same painted pieces identify wallet resources and story finds.
 local elements_view = require("match3.elements_view")
 local A = {}
+local ribbon, pinecone = "board-frame/fir-ribbon.png", "board-frame/fir-pinecone.png"
 A.board_frame = {
     stone = "board-frame/stone.png",
     north_edge = true,
     corners = {
-        {path = "board-frame/fir-ribbon.png", width = 1.65},
-        {path = "board-frame/fir-pinecone.png", width = 1.65},
+        {path = ribbon, width = 1.05},
+        {path = pinecone, width = 1.05},
+    },
+    hanging = {
+        {path = "board-frame/hanging-bell.png", width = 2.15},
+        {path = "board-frame/hanging-pinecone.png", width = 2.25},
+    },
+    walls = {
+        {path = pinecone, width = 1.85},
+        {path = ribbon, width = 1.85},
     },
 }
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}

@@ -421,9 +421,12 @@ previous frame's bands, seeded grain and cracks with
 `data/board-frame/leaves.png` is a hand-painted-style three-leaf jungle sprig
 from the shared [ImageGen source](../../../engine/art/board-frame/decorations-source.png).
 Its centred stem anchors to three outward tips on the settled board. The
-renderer turns it towards the outside and varies its size by corner. Rebuild
-its separate sprite with `python3 tools/board_frame_decor.py --game relic-rush`.
-[Paint guide, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/README.md).
+renderer turns it towards the outside and varies its size by corner.
+`data/board-frame/hanging-vine.png` is the larger interior variant, painted
+on the [hanging source atlas](../../../engine/art/board-frame/hanging-source.png)
+with its stem at the top to drape from the upper edge of a cutout. Rebuild both
+separate sprites with `python3 tools/board_frame_decor.py --game relic-rush`.
+[Paint guide, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/interior.md).
 
 The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
 these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).

@@ -360,16 +360,18 @@ and the two openings in the level 4 board. Its six straight runs, six outward
 joins, six inward joins and `frame-entrance` rim use the previous bands,
 seeded grain and cracks. The alternate north edge incorporates painted snow
 from the [registered source atlas](../../../engine/art/board-frame/decorations.json).
-It replaces the highest horizontal north edge in each hex column. Generate
+It replaces the exposed horizontal north edge in each hex column. Generate
 this atlas with `python3 tools/board_frame.py --winter --output build/winter-frame`.
 
-The settled board has two separate paintable sprites under `data/board-frame/`.
-`fir-ribbon` ties the left shoulder with
-snowy needles, a ribbon and a bell. `fir-pinecone` puts a frosted cone and
-berries on the right shoulder. Rebuild the separate sprites from the shared
-[ImageGen source](../../../engine/art/board-frame/decorations-source.png) with
+The settled board has four separate paintable sprites under `data/board-frame/`.
+`fir-ribbon` and `fir-pinecone` sit at the outer shoulders at small scale.
+They also decorate the walls of the open-top chamber at larger scale.
+`hanging-bell` and `hanging-pinecone` hang from the upper edge of enclosed
+cutouts, with the stem at the top and greater size than the outer trim.
+Rebuild them from the [outer source](../../../engine/art/board-frame/decorations-source.png)
+and [hanging source](../../../engine/art/board-frame/hanging-source.png) with
 `python3 tools/board_frame_decor.py --game christmas-market`.
-[Paint guide, prompt and level 4 at both phone sizes](../../../docs/review/board-frame-decorations/README.md).
+[Paint guide, prompt and phone captures](../../../docs/review/board-frame-decorations/interior.md).
 
 The shared renderer gives each face a 0.18-unit inset over a dark spruce
 backing that supplies the hairline seams. The guide reuses the tablet

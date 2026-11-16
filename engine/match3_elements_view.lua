@@ -237,7 +237,7 @@ end
 -- perimeter slots and 168 px entrance slot are painted at a 64 px hex radius.
 local FRAME_RADIUS, FRAME_SLOT = 64, 80
 local ENTRY_RIM = rect(0, 3 * FRAME_SLOT, 168, 168)
-local NORTH_EDGE = 4
+local SOUTH_EDGE, NORTH_EDGE = 1, 4
 local NORTH_RIM = rect(3 * FRAME_SLOT, 3 * FRAME_SLOT, FRAME_SLOT, FRAME_SLOT)
 local frame_vertices, frame_sources = {}, {}
 for k = 0, 5 do
@@ -255,13 +255,81 @@ function E.load_frame(art, paths)
     local sheet = texture.load(paths.stone)
     art["frame-stone"] = sheet
     art["frame-entrance"] = texture.region(sheet, ENTRY_RIM)
-    art["frame-north"] = paths.north_edge and NORTH_RIM
-    local corners, images = {}, {}
-    for i, spec in ipairs(paths.corners or {}) do
-        images[spec.path] = images[spec.path] or texture.load(spec.path)
-        corners[i] = {art = images[spec.path], width = spec.width, outward = spec.outward}
+    art["frame-north"] = paths.north_edge
+    local images = {}
+    local function load(specs)
+        local sprites = {}
+        for i, spec in ipairs(specs or {}) do
+            images[spec.path] = images[spec.path] or texture.load(spec.path)
+            sprites[i] = {art = images[spec.path], width = spec.width, outward = spec.outward}
+        end
+        return sprites
     end
-    art["frame-decorations"] = corners
+    art["frame-decorations"] = {corners = load(paths.corners), hanging = load(paths.hanging), walls = load(paths.walls)}
+end
+
+-- Intersect the outline at y. Wings of an arch and walls of an enclosed
+-- hole both bound empty space on the left and right.
+local function opening_sides(edges, at)
+    local left, right, crossings = -math.huge, math.huge, 0
+    for _, edge in ipairs(edges) do
+        local a, b = edge.a, edge.b
+        if (a.y > at.y) ~= (b.y > at.y) then
+            local x = a.x + (b.x - a.x) * (at.y - a.y) / (b.y - a.y)
+            if x < at.x then
+                left = math.max(left, x)
+            else
+                right, crossings = math.min(right, x), crossings + 1
+            end
+        end
+    end
+    if left > -math.huge and right < math.huge and crossings % 2 == 0 then return left, right end
+end
+
+local function hanging_points(edges, radius)
+    local candidates = {}
+    for _, edge in ipairs(edges) do
+        if edge.direction == SOUTH_EDGE then
+            local at = edge.at
+            local left, right = opening_sides(edges, at + vec2(0, radius * .65))
+            if left and math.min(at.x - left, right - at.x) >= radius * .72
+                and opening_sides(edges, at + vec2(0, radius * 1.25)) then
+                candidates[#candidates + 1] = at
+            end
+        end
+    end
+    table.sort(candidates, function(a, b)
+        if math.abs(a.y - b.y) < .01 then return a.x < b.x end
+        return a.y < b.y
+    end)
+    local points = {}
+    for _, at in ipairs(candidates) do
+        local separate = true
+        for _, point in ipairs(points) do
+            if math.abs(point.x - at.x) < radius * 1.75 then
+                separate = false
+                break
+            end
+        end
+        if separate then points[#points + 1] = at + vec2(0, radius * .16) end
+    end
+    return points
+end
+
+local function wall_points(edges, convex, radius)
+    local points = {}
+    for _, corner in ipairs(convex) do
+        if corner.direction == 0 or corner.direction == 3 then
+            local side = corner.direction == 0 and 1 or 2
+            local sign = side == 1 and 1 or -1
+            local p = corner.p
+            local left, right = opening_sides(edges, p + vec2(sign * radius * .85, 0))
+            if left and right - left >= radius * 2.25 and (not points[side] or p.y < points[side].y) then
+                points[side] = p + vec2(sign * radius * .16, 0)
+            end
+        end
+    end
+    return points
 end
 
 local function frame_layout(R, rules)
@@ -286,7 +354,7 @@ local function frame_layout(R, rules)
                 if open[k] then
                     local a = centre + frame_vertices[k]:scale(r)
                     local b = centre + frame_vertices[(k + 1) % 6]:scale(r)
-                    local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k]}
+                    local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k], direction = k}
                     edges[#edges + 1] = edge
                     if k == NORTH_EDGE then
                         -- The highest north-facing edge in each column is on
@@ -296,7 +364,7 @@ local function frame_layout(R, rules)
                     end
                     if open[(k + 5) % 6] then
                         joins[#joins + 1] = {at = a, source = frame_sources[1][k]}
-                        convex[#convex + 1] = {p = a, angle = math.rad(60 * k)}
+                        convex[#convex + 1] = {p = a, angle = math.rad(60 * k), direction = k}
                     else
                         -- Two cells touch this vertex. The exposed edge that
                         -- starts here owns the join. Index it by the empty
@@ -307,8 +375,18 @@ local function frame_layout(R, rules)
             end
         end
     end
-    for _, edge in pairs(north) do edge.north = true end
-    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex}
+    local snow = R.board_art["frame-north"]
+    if snow then
+        for _, edge in pairs(north) do
+            edge.north = not opening_sides(edges, edge.at - vec2(0, r * .65))
+        end
+    end
+    local hanging = hanging_points(edges, r)
+    local decor = R.board_art["frame-decorations"]
+    -- A channel open at the top takes side sprigs instead of a hanging swag.
+    local walls = #hanging == 0 and decor and #decor.walls > 0 and wall_points(edges, convex, r) or {}
+    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex,
+                    hanging = hanging, walls = walls}
     R.frame_layout = layout
     return layout
 end
@@ -343,10 +421,9 @@ local function draw_stone(R, rules, sx, alpha)
     local layout = frame_layout(R, rules)
     local origin = R.board_origin + vec2(sx, 0)
     local size = size2.splat(FRAME_SLOT * scale)
-    local north = R.board_art["frame-north"]
     if R.GROUND.drop_shadow then draw_drop_shadow(R, layout.edges, origin, alpha) end
     for _, e in ipairs(layout.edges) do
-        gfx.image_part(art, e.north and north or e.source, rect.centered(e.at + origin, size), tint)
+        gfx.image_part(art, e.north and NORTH_RIM or e.source, rect.centered(e.at + origin, size), tint)
     end
     for _, j in ipairs(layout.joins) do gfx.image_part(art, j.source, rect.centered(j.at + origin, size), tint) end
     return layout
@@ -354,13 +431,20 @@ end
 
 -- Corners are selected clockwise from north-west.
 local corner_directions = {{-1, -1}, {1, -1}, {1, 1}}
+local function draw_inner_sprites(sprites, points, origin, radius, tint)
+    for i, spec in ipairs(sprites) do
+        local at = points[i]
+        if at then gfx.image(spec.art, rect.centered(origin + at, size2.splat(radius * spec.width)), tint) end
+    end
+end
+
 local function draw_frame_decorations(R, frame, sx, alpha)
-    local corners = R.board_art["frame-decorations"]
-    if not corners then return end
+    local decor = R.board_art["frame-decorations"]
+    if not decor then return end
     local origin = R.board_origin + vec2(sx, 0)
     local tint = color(255, 255, 255, 255 * alpha)
     local r = R.HEX_R
-    for k, spec in ipairs(corners) do
+    for k, spec in ipairs(decor.corners) do
         local d = corner_directions[k]
         local best, score
         for _, c in ipairs(frame.convex) do
@@ -373,6 +457,8 @@ local function draw_frame_decorations(R, frame, sx, alpha)
             gfx.image_rot(spec.art, dst, turn, tint)
         end
     end
+    draw_inner_sprites(decor.hanging, frame.hanging, origin, r, tint)
+    draw_inner_sprites(decor.walls, frame.walls, origin, r, tint)
 end
 
 local function draw_ground_backing(R, rules, sx, alpha, textured)

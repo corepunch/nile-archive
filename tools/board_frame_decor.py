@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Register separately paintable board decorations from the source atlas."""
 import argparse
+from contextlib import ExitStack
 import json
 import math
 from pathlib import Path
@@ -40,12 +41,16 @@ def main():
     parser.add_argument("--game", choices=tuple(spec["games"]))
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    assert (ROOT / spec["prompt"]).is_file()
     games = (args.game,) if args.game else spec["games"]
-    with Image.open(ROOT / spec["source"]) as source:
-        assert source.mode == "RGBA"
+    with ExitStack() as files:
+        atlases = {}
+        for key, entry in {"outer": spec, **spec["atlases"]}.items():
+            assert (ROOT / entry["prompt"]).is_file()
+            atlases[key] = files.enter_context(Image.open(ROOT / entry["source"]))
+            assert atlases[key].mode == "RGBA"
         for game in games:
             for key, sprite in spec["games"][game].items():
+                source = atlases[sprite.get("atlas", "outer")]
                 registered = register(source, sprite, spec["size"])
                 alpha = registered.getchannel("A")
                 bounds = alpha.point(lambda a: 255 if a >= 64 else 0).getbbox()

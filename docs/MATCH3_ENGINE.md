@@ -163,14 +163,15 @@ regions along the exposed edges, inward corners and outward corners,
 including the edges of holes. It keeps those placements relative to the board
 origin for shake and resize, and rebuilds them when the active mask changes.
 The atlas also provides the rim under each cell during the entrance.
-The soft shadow follows the settled outline. The skin can place separate sprites
-on the north-west, north-east and south-east outward tips. An optional atlas
-slot replaces the highest horizontal north edge in each hex column.
-Relic Rush uses the corner placements for leaves. Christmas Market uses the
-two upper corners for festive trim and the alternate rim slot for snow.
+The soft shadow follows the settled outline. The skin can place small sprites
+on outward tips and larger ones under the upper rim of an opening. The renderer
+uses the outline to check for room on each side of a hanging sprite. A board
+whose channel opens at the top can use larger side sprigs.
+An optional atlas slot adds snow to the highest horizontal north edges of the
+outer rim. Inner channel edges use bare stone.
 Imported and neutral boards use the default ground geometry.
 [Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
-[Decoration source and in-game review](review/board-frame-decorations/README.md).
+[Decoration sources and in-game review](review/board-frame-decorations/interior.md).
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each
 listed game's `data/board-tiles/`: a bevel lit from above, a top-to-bottom face

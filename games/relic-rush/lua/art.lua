@@ -6,9 +6,12 @@ local leaves = "board-frame/leaves.png"
 A.board_frame = {
     stone = "board-frame/stone.png",
     corners = {
-        {path = leaves, width = 1.5, outward = true},
-        {path = leaves, width = 1.1, outward = true},
-        {path = leaves, width = 1.25, outward = true},
+        {path = leaves, width = 1.0, outward = true},
+        {path = leaves, width = .8, outward = true},
+        {path = leaves, width = .88, outward = true},
+    },
+    hanging = {
+        {path = "board-frame/hanging-vine.png", width = 2.48},
     },
 }
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",

@@ -1,5 +1,7 @@
 # Painted board decorations
 
+[Current captures and hanging source art for the inner rim](interior.md).
+
 Relic Rush level 6 has the repainted three-leaf sprig. Christmas Market
 level 4 uses the winter stone atlas on the horizontal north-facing rim,
 with a fir sprig tied with a red ribbon and bell at the left shoulder and

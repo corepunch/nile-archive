@@ -388,6 +388,7 @@
     "disabled"
   ],
   "runtime_inventory": [
+    "data/board-frame/hanging-vine.png",
     "data/board-frame/leaves.png",
     "data/board-frame/stone.png",
     "data/board-states/bomb.png",
@@ -1889,6 +1890,6 @@
     "review": "docs/review/board-frame-atlas/README.md",
     "decorations": "engine/art/board-frame/decorations.json",
     "registration": "tools/board_frame_decor.py",
-    "decoration_review": "docs/review/board-frame-decorations/README.md"
+    "decoration_review": "docs/review/board-frame-decorations/interior.md"
   }
 }
