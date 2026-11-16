@@ -1,4 +1,4 @@
-"""Register the bonus atlas and cut the disabled sockets' recessed motifs."""
+"""Place the bonus icons on painted faces and engrave the disabled state."""
 import argparse
 import io
 import json
@@ -8,6 +8,9 @@ from PIL import Image, ImageChops, ImageEnhance, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "art/board-states/manifest.json"
+BOARD_ICON_SIZE = 112
+BUTTON_FACE_SIZE = 116
+BUTTON_ICON_SIZE = 84
 
 
 def center(image):
@@ -16,36 +19,47 @@ def center(image):
     return frame
 
 
-def engrave(plate, chip):
-    """Cut a shallow recess with a shadowed top wall and a lit lower edge."""
-    chip = chip.copy()
-    chip.thumbnail((84, 84), Image.Resampling.LANCZOS)
-    mask = center(chip).getchannel("A").point(lambda a: max(0, min(255, (a - 32) * 255 // 200)))
+def engrave(plate, icon):
+    """Shade the cavity and give the edge a warm reflected glow."""
+    mask = icon.getchannel("A").point(lambda a: max(0, min(255, (a - 24) * 255 // 208)))
     mask = mask.filter(ImageFilter.GaussianBlur(0.5))
-    top = ImageChops.subtract(mask, ImageChops.offset(mask, 2, 2))
-    bottom = ImageChops.subtract(mask, ImageChops.offset(mask, -2, -2))
     face = plate.convert("RGB")
     shade = ImageEnhance.Brightness(face)
-    recess = Image.composite(shade.enhance(0.34), shade.enhance(0.56), top)
-    recess = Image.composite(shade.enhance(1.18), recess, bottom)
-    result = Image.composite(recess, face, mask)
+    amber = Image.new("RGB", face.size, (255, 198, 108))
+
+    # Reflected light falls off outside the cut and catches the lower wall.
+    rim = ImageChops.subtract(mask.filter(ImageFilter.MaxFilter(5)), mask)
+    halo = ImageChops.subtract(mask.filter(ImageFilter.GaussianBlur(3)), mask)
+    glow = ImageChops.add(rim, halo, scale=2).filter(ImageFilter.GaussianBlur(0.7))
+    stone = Image.composite(amber, face, glow)
+    upper_wall = ImageChops.subtract(mask, ImageChops.offset(mask, 4, 3))
+    lower_wall = ImageChops.subtract(mask, ImageChops.offset(mask, -3, -3))
+    rim_light = ImageChops.subtract(mask, ImageChops.offset(mask, -1, -1))
+    recess = Image.composite(shade.enhance(0.16), shade.enhance(0.32), upper_wall)
+    recess = Image.composite(shade.enhance(0.72), recess, lower_wall)
+    recess = Image.composite(Image.blend(face, amber, 0.48), recess, rim_light)
+    result = Image.composite(recess, stone, mask)
     result.putalpha(plate.getchannel("A"))
     return result
 
 
 def pack(spec):
-    source = Image.open(ROOT / spec["source"])
-    assert source.mode == "RGBA"
+    chips = Image.open(ROOT / spec["source"])
+    faces = Image.open(ROOT / spec["button_source"])
+    assert chips.mode == faces.mode == "RGBA"
+    plates = [center(faces.crop(box).resize((BUTTON_FACE_SIZE, BUTTON_FACE_SIZE), Image.Resampling.LANCZOS))
+              for box in spec["button_boxes"]]
+    states = spec["rows"][1:]
+    assert len(plates) == len(states)
     atlas = Image.new("RGBA", (128 * len(spec["columns"]), 128 * len(spec["rows"])))
-    for x, bounds in enumerate(spec["boxes"][0]):
-        chip = source.crop(tuple(bounds))
-        chip.thumbnail((112, 112), Image.Resampling.LANCZOS)
+    for x, bounds in enumerate(spec["chip_boxes"]):
+        chip = chips.crop(bounds)
+        chip.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
         atlas.paste(center(chip), (x * 128, 0))
-        for y, (state, boxes) in enumerate(zip(spec["rows"][1:], spec["boxes"][1:]), 1):
-            # Every face occupies the same square so the charge layers align.
-            face = center(source.crop(tuple(boxes[x])).resize((116, 116), Image.Resampling.LANCZOS))
-            if state == "disabled":
-                face = engrave(face, chip)
+        chip.thumbnail((BUTTON_ICON_SIZE, BUTTON_ICON_SIZE), Image.Resampling.LANCZOS)
+        icon = center(chip)
+        for y, (state, plate) in enumerate(zip(states, plates), 1):
+            face = engrave(plate, icon) if state == "disabled" else Image.alpha_composite(plate, icon)
             atlas.paste(face, (x * 128, y * 128))
     output = io.BytesIO()
     atlas.save(output, format="PNG", optimize=True)

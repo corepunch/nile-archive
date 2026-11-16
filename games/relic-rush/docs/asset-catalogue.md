@@ -505,22 +505,23 @@ Lightning and Star. The board shows one unlocked family per expedition. Their
 rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
 The bonus buttons use Relic Rush's square bevels, warm gold ready and hover
 faces, jade selected faces, and dark amber pressed faces. Empty buttons show a
-recess carved into sandstone. For partial charge, the renderer reveals the
-painted gold face from the bottom. The rounded, wide Lightning profile carries
-through the field chip and all five button states.
+deep sandstone recess with shadowed inner walls and a soft amber rim. The
+lighting follows the disabled hammer and lightning sockets in Cradle of Rome 2.
+For partial charge, the renderer reveals the painted gold face from the bottom.
+The rounded, wide Lightning profile carries through the field chip and all five
+button states.
 
-The [ImageGen source](../art/bonus-gems/source.png) contains all six standalone
-pieces, 24 painted button states, and six blank sandstone faces in one atlas.
-The [prompt](../art/bonus-gems/prompt.txt) references Relic Rush's earlier
-toolbar screenshot and [painted square buttons](../art/tool-buttons/source.png). The
-[manifest](../art/board-states/manifest.json) records the crop rectangles and
-state order. `python3 games/relic-rush/tools/prepare_bonus_gems.py` registers the
-crops in 128 × 128 RGBA slots in `data/bonus-gems.png`. Standalone pieces
-preserve their proportions in a 112 × 112 area. The packer aligns button faces
-to a 116 × 116 area and cuts the disabled recesses from the standalone
-pieces' alpha. It shades the opposing walls of each cut and preserves the plate
-alpha and openings such as the gear's center hole. Every board pack uses the
-same six pieces.
+The first row of the [original ImageGen atlas](../art/bonus-gems/source.png)
+supplies the six pieces. The [button face strip](../art/bonus-gems/button-faces.png)
+and its [prompt](../art/bonus-gems/button-faces.prompt.txt) provide one painted
+blank face for each state. The [manifest](../art/board-states/manifest.json)
+records both sources' crop rectangles and state order.
+`python3 games/relic-rush/tools/prepare_bonus_gems.py` packs 128 × 128 RGBA slots
+into `data/bonus-gems.png`. It centers each board piece in a 112 × 112 area,
+aligns each face to 116 × 116, and places the same centered 84 px icon on every
+active face. The disabled recess uses that icon's alpha at those same bounds.
+The script preserves the plate alpha and openings such as the gear's center
+hole. Every board pack uses the same six pieces.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·

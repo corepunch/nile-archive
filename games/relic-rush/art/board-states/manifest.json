@@ -2097,7 +2097,7 @@
       "hover",
       "disabled"
     ],
-    "registration": "Crop boxes are in source pixels, ordered by runtime row and column. Center standalone chip crops at at most 112 × 112 and register all square faces to 116 × 116 in transparent 128 × 128 atlas slots.",
+    "registration": "Source pixel boxes list six standalone chip crops in column order and five blank plate crops in button state order. Preserve chip proportions in 112 px board art and use the same centered 84 px icon on every 116 px button face. Runtime atlas slots are 128 × 128.",
     "bonuses": {
       "hammer": {
         "building": "workshop",
@@ -2130,235 +2130,77 @@
         "effect": "Hit every piece of the chosen kind"
       }
     },
-    "disabled": "The last source row supplies six blank sandstone plates. prepare_bonus_gems.py cuts each relief from the corresponding standalone chip alpha, shading the upper and lower edges while preserving the frame and gear hole.",
-    "boxes": [
+    "disabled": "The sandstone plate uses the registered 84 px icon alpha for a deep cut with upper wall shadow, a warm lower rim, and a feathered amber glow. Lighting reference is the disabled sockets in Cradle of Rome 2 bns_hammer_full.png and bns_lightning_full.png.",
+    "chip_boxes": [
       [
-        [
-          52,
-          25,
-          223,
-          204
-        ],
-        [
-          244,
-          26,
-          414,
-          199
-        ],
-        [
-          445,
-          30,
-          617,
-          198
-        ],
-        [
-          647,
-          22,
-          812,
-          207
-        ],
-        [
-          853,
-          31,
-          1002,
-          203
-        ],
-        [
-          1039,
-          19,
-          1227,
-          208
-        ]
+        52,
+        25,
+        223,
+        204
       ],
       [
-        [
-          26,
-          221,
-          221,
-          416
-        ],
-        [
-          228,
-          221,
-          423,
-          416
-        ],
-        [
-          428,
-          221,
-          625,
-          416
-        ],
-        [
-          630,
-          221,
-          826,
-          416
-        ],
-        [
-          831,
-          221,
-          1027,
-          416
-        ],
-        [
-          1032,
-          221,
-          1228,
-          416
-        ]
+        244,
+        26,
+        414,
+        199
       ],
       [
-        [
-          24,
-          423,
-          223,
-          620
-        ],
-        [
-          227,
-          423,
-          423,
-          620
-        ],
-        [
-          427,
-          423,
-          625,
-          620
-        ],
-        [
-          628,
-          423,
-          826,
-          620
-        ],
-        [
-          831,
-          423,
-          1028,
-          620
-        ],
-        [
-          1031,
-          423,
-          1230,
-          620
-        ]
+        445,
+        30,
+        617,
+        198
       ],
       [
-        [
-          25,
-          625,
-          222,
-          822
-        ],
-        [
-          227,
-          625,
-          423,
-          822
-        ],
-        [
-          428,
-          625,
-          625,
-          822
-        ],
-        [
-          629,
-          625,
-          825,
-          822
-        ],
-        [
-          831,
-          625,
-          1027,
-          822
-        ],
-        [
-          1033,
-          625,
-          1229,
-          822
-        ]
+        647,
+        22,
+        812,
+        207
       ],
       [
-        [
-          25,
-          829,
-          222,
-          1024
-        ],
-        [
-          227,
-          829,
-          423,
-          1025
-        ],
-        [
-          428,
-          829,
-          625,
-          1025
-        ],
-        [
-          629,
-          829,
-          826,
-          1025
-        ],
-        [
-          832,
-          829,
-          1028,
-          1025
-        ],
-        [
-          1033,
-          829,
-          1229,
-          1025
-        ]
+        853,
+        31,
+        1002,
+        203
       ],
       [
-        [
-          25,
-          1032,
-          222,
-          1229
-        ],
-        [
-          228,
-          1032,
-          423,
-          1229
-        ],
-        [
-          428,
-          1032,
-          625,
-          1229
-        ],
-        [
-          630,
-          1032,
-          826,
-          1229
-        ],
-        [
-          831,
-          1032,
-          1028,
-          1229
-        ],
-        [
-          1033,
-          1032,
-          1229,
-          1229
-        ]
+        1039,
+        19,
+        1227,
+        208
+      ]
+    ],
+    "button_source": "art/bonus-gems/button-faces.png",
+    "button_prompt": "art/bonus-gems/button-faces.prompt.txt",
+    "button_boxes": [
+      [
+        66,
+        167,
+        456,
+        556
+      ],
+      [
+        475,
+        165,
+        871,
+        556
+      ],
+      [
+        888,
+        167,
+        1284,
+        556
+      ],
+      [
+        1301,
+        166,
+        1698,
+        556
+      ],
+      [
+        1717,
+        167,
+        2106,
+        556
       ]
     ]
   }
