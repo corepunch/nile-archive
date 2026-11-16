@@ -201,7 +201,7 @@
     "data/tile-sets/festive/3.png": "47771b09452c047dce4ccb7ab7efe0bf5af92560a74923ae407d61e7d008888e",
     "data/tile-sets/festive/4.png": "c14aeb68832b8fbce56b9d2c55539c2c6824e821088a67a5913c37078d684166",
     "data/tile-sets/festive/5.png": "88b1d3cbe317a6afe2137298558fe92c9f30b06b72ea1b6d97b855ecff5ad671",
-    "data/town.json": "ff623560531886072607abe448a465d17460cd96f023e569d8443737fcb1cfc9",
+    "data/town.json": "7b861632271642cef56ecdc48ef661427fd1a67e0db2cb94ee145de1d584f9d6",
     "data/winter.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7"
   },
   "matching_rules": "Three hex axes: straight 3 clears, 4 makes an axis rocket, 5+ makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a plane.",
