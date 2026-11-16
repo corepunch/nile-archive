@@ -506,24 +506,25 @@ Plus. Their effects and restoration unlocks are documented in
 [board progression](board-progression.md#bonus-pieces). One compact row
 shows every socket in restoration order from the first expedition.
 
-The five authored button faces are gold normal, jade selected, dark amber
-pressed, bright gold hover, and a carved sandstone recess for locked and empty
-sockets. The recess has about half the original shadow depth. Partial charge reveals the gold normal face from the bottom. A matched
-gem flies from the board to the center of its own socket using the standalone
-sprite, collection trail and landing ring. Reduce Motion fills the meter
-immediately.
+The generator uses one [painted button base](../art/bonus-gems/button-base.png)
+and a [strip of six standalone gems](../art/bonus-gems/six-bonuses.png).
+The strip comes from the first row of the previous atlas at commit
+`20ad450b`. Its [original prompt](../art/bonus-gems/six-bonuses.prompt.txt)
+records where the gem paintings came from.
 
-Built-in ImageGen painted both the standalone gems and all five button rows
-in one [six-column atlas](../art/bonus-gems/six-bonuses.png). The
-[prompt](../art/bonus-gems/six-bonuses.prompt.txt) records the reference and the
-new silver hammer and teal enamel cross. The Shutter Gear and Tide Chart use
-their existing quest artwork on the board and the recovered-item cards.
+The five generated faces are normal gold, selected jade, pressed amber,
+brighter gold on hover, and carved sandstone for locked and empty sockets.
+The engraver casts the inner shadow from each gem's own silhouette. The
+shadow offset is 3.5 × 4.5 px, half the original 7 × 9 px. All five states
+share the base's alpha. Partial charge reveals the normal face from the
+bottom. Matched gems fly to their sockets using the same standalone board
+sprite. Reduce Motion fills the meter immediately.
 
-Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to pack
+Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to generate
 `data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
-records the inputs and registration. The packer crops and downsamples the
-painted button rows to 128 px, preserving their alpha. The board sprites fit
-in 112 × 112 px and are centered in their atlas cells.
+records the base crop, registration and state recipes. The gems fit in
+112 × 112 px on the board and 84 × 84 px on buttons. Both use 128 px
+atlas cells.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·

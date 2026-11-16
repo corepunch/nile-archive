@@ -2096,7 +2096,7 @@
   "bonus_gems": {
     "source": "art/bonus-gems/six-bonuses.png",
     "prompt": "art/bonus-gems/six-bonuses.prompt.txt",
-    "generator": "Built-in ImageGen, with a six-column registration reference and a full-atlas pass for the sandstone relief",
+    "generator": "prepare_bonus_gems.py generates all five button states from one painted base and the existing standalone gems",
     "runtime": "data/bonus-gems.png",
     "review": "docs/screenshots/bonus-states.jpg",
     "columns": [
@@ -2115,7 +2115,7 @@
       "hover",
       "disabled"
     ],
-    "registration": "Fit the standalone gems in 112 px board slots. Crop the five painted button rows directly from the source grid, downsample to 128 px and preserve their authored alpha.",
+    "registration": "Crop each standalone gem from the strip, fit to 112 px for the board and 84 px for the buttons, then center on a 128 px cell. Derive all button faces from the painted base and use the gem silhouette for disabled recesses.",
     "bonuses": {
       "hammer": {
         "building": "log_cabin",
@@ -2148,6 +2148,133 @@
         "effect": "Add half a use to every other unlocked bonus"
       }
     },
-    "cell_size": 209
+    "cell_size": 209,
+    "button_base": "art/bonus-gems/button-base.png",
+    "button_base_origin": {
+      "commit": "6d05253e",
+      "source": "art/bonus-gems/button-faces.png",
+      "crop": [
+        66,
+        167,
+        456,
+        556
+      ],
+      "resize": [
+        116,
+        116
+      ],
+      "center": [
+        64,
+        64
+      ]
+    },
+    "button_inset": {
+      "bounds": [
+        18,
+        18,
+        110,
+        110
+      ],
+      "radius": 18
+    },
+    "button_states": {
+      "normal": {},
+      "selected": {
+        "inset_palette": [
+          [
+            2,
+            32,
+            19
+          ],
+          [
+            9,
+            119,
+            72
+          ],
+          [
+            104,
+            198,
+            131
+          ]
+        ],
+        "bevel": 2,
+        "glow": [
+          255,
+          236,
+          140
+        ],
+        "glow_strength": 1.65
+      },
+      "pressed": {
+        "inset_palette": [
+          [
+            42,
+            15,
+            2
+          ],
+          [
+            150,
+            62,
+            9
+          ],
+          [
+            232,
+            150,
+            57
+          ]
+        ],
+        "bevel": 4
+      },
+      "hover": {
+        "brightness": 1.14
+      },
+      "disabled": {
+        "palette": [
+          [
+            43,
+            31,
+            25
+          ],
+          [
+            184,
+            164,
+            144
+          ],
+          [
+            255,
+            244,
+            225
+          ]
+        ],
+        "cutout": {
+          "floor_palette": [
+            [
+              65,
+              49,
+              38
+            ],
+            [
+              168,
+              145,
+              119
+            ],
+            [
+              201,
+              180,
+              151
+            ]
+          ],
+          "shadow_offset": [
+            3.5,
+            4.5
+          ],
+          "shadow_softness": 1.65,
+          "shadow_brightness": 0.59,
+          "glow_radius": 3.8,
+          "glow_strength": 1.05,
+          "floor_grain": 11
+        }
+      }
+    }
   }
 }
