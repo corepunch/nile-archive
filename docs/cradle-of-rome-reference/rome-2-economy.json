@@ -1,0 +1,605 @@
+{
+  "build": "GameTop Windows",
+  "price_order": [
+    "gold",
+    "supplies",
+    "food"
+  ],
+  "resource_ids": {
+    "1": "gold",
+    "2": "supplies",
+    "3": "food"
+  },
+  "tiles": {
+    "1": {
+      "kind": "Ball",
+      "initially_available": true,
+      "base_score": 5,
+      "credit": null,
+      "sprite": "gmbn_1"
+    },
+    "2": {
+      "kind": "Ball",
+      "initially_available": true,
+      "base_score": 5,
+      "credit": null,
+      "sprite": "gmbn_2"
+    },
+    "3": {
+      "kind": "Ball",
+      "initially_available": true,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 3
+      },
+      "sprite": "gmbn_3"
+    },
+    "4": {
+      "kind": "Ball",
+      "initially_available": true,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 5
+      },
+      "sprite": "gmbn_4"
+    },
+    "5": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 3,
+        "amount": 3
+      },
+      "sprite": "gmbn_5"
+    },
+    "6": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 2,
+        "amount": 5
+      },
+      "sprite": "gmbn_6"
+    },
+    "7": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 3,
+        "amount": 4
+      },
+      "sprite": "gmbn_7"
+    },
+    "8": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 2,
+        "amount": 7
+      },
+      "sprite": "gmbn_8"
+    },
+    "9": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 3,
+        "amount": 5
+      },
+      "sprite": "gmbn_9"
+    },
+    "10": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 3,
+        "amount": 6
+      },
+      "sprite": "gmbn_10"
+    },
+    "11": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 6
+      },
+      "sprite": "gmbn_11"
+    },
+    "12": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 7
+      },
+      "sprite": "gmbn_12"
+    },
+    "13": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 8
+      },
+      "sprite": "gmbn_13"
+    },
+    "14": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 9
+      },
+      "sprite": "gmbn_14"
+    },
+    "15": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 10
+      },
+      "sprite": "gmbn_15"
+    },
+    "16": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 1,
+        "amount": 11
+      },
+      "sprite": "gmbn_16"
+    },
+    "17": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": null
+    },
+    "600": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 10,
+        "amount": 3
+      },
+      "sprite": "bns_hammer_fld"
+    },
+    "601": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 11,
+        "amount": 3
+      },
+      "sprite": "bns_bomb_fld"
+    },
+    "602": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 12,
+        "amount": 3
+      },
+      "sprite": "bns_fireball_fld"
+    },
+    "603": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 13,
+        "amount": 3
+      },
+      "sprite": "bns_time_fld"
+    },
+    "604": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 14,
+        "amount": 3
+      },
+      "sprite": "bns_lightning_fld"
+    },
+    "605": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 15,
+        "amount": 3
+      },
+      "sprite": "bns_multi_fld"
+    },
+    "606": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 16,
+        "amount": 3
+      },
+      "sprite": "bns_mixer_fld"
+    },
+    "607": {
+      "kind": "BonusBall",
+      "initially_available": false,
+      "base_score": 5,
+      "credit": {
+        "type": 17,
+        "amount": 3
+      },
+      "sprite": "bns_star_fld"
+    },
+    "613": {
+      "kind": "MultiBall",
+      "initially_available": true,
+      "base_score": 0,
+      "credit": null
+    },
+    "614": {
+      "kind": "BombBall",
+      "initially_available": true,
+      "base_score": 0,
+      "credit": null,
+      "sprite": "gmbn_17"
+    },
+    "615": {
+      "kind": "Ball",
+      "initially_available": false,
+      "base_score": 0,
+      "credit": null,
+      "sprite": "bns_multi_fld"
+    },
+    "999": {
+      "kind": "PuzzleBall",
+      "initially_available": true,
+      "base_score": 0,
+      "credit": null,
+      "sprite": "gmbn_skull"
+    }
+  },
+  "epochs": [
+    {
+      "id": "epoch_title01",
+      "buildings": [
+        {
+          "id": "city_well",
+          "price": [
+            500,
+            0,
+            0
+          ],
+          "plan_access": [
+            500,
+            0,
+            0
+          ],
+          "unlocks_tile": 5
+        },
+        {
+          "id": "city_hunter",
+          "price": [
+            1000,
+            0,
+            1500
+          ],
+          "plan_access": [
+            1000,
+            0,
+            1500
+          ],
+          "unlocks_tile": 600
+        },
+        {
+          "id": "city_sawmill",
+          "price": [
+            3000,
+            0,
+            2500
+          ],
+          "plan_access": [
+            3000,
+            0,
+            2500
+          ],
+          "unlocks_tile": 6
+        },
+        {
+          "id": "city_village",
+          "price": [
+            2000,
+            3000,
+            2000
+          ],
+          "plan_access": [
+            2000,
+            3000,
+            2000
+          ],
+          "unlocks_tile": 601
+        }
+      ]
+    },
+    {
+      "id": "epoch_title02",
+      "buildings": [
+        {
+          "id": "city_farm",
+          "price": [
+            3000,
+            2000,
+            3000
+          ],
+          "plan_access": [
+            3000,
+            2000,
+            3000
+          ],
+          "unlocks_tile": 7
+        },
+        {
+          "id": "city_mine",
+          "price": [
+            5000,
+            4000,
+            4000
+          ],
+          "plan_access": [
+            5000,
+            4000,
+            4000
+          ],
+          "unlocks_tile": 8
+        },
+        {
+          "id": "city_mill",
+          "price": [
+            6000,
+            7000,
+            8000
+          ],
+          "plan_access": [
+            6000,
+            7000,
+            8000
+          ],
+          "unlocks_tile": 9
+        },
+        {
+          "id": "city_thermae",
+          "price": [
+            10000,
+            12000,
+            11000
+          ],
+          "plan_access": [
+            10000,
+            12000,
+            11000
+          ],
+          "unlocks_tile": 602
+        }
+      ]
+    },
+    {
+      "id": "epoch_title03",
+      "buildings": [
+        {
+          "id": "city_port",
+          "price": [
+            12000,
+            14000,
+            13000
+          ],
+          "plan_access": [
+            12000,
+            14000,
+            13000
+          ],
+          "unlocks_tile": 10
+        },
+        {
+          "id": "city_oktavia",
+          "price": [
+            15000,
+            17000,
+            15000
+          ],
+          "plan_access": [
+            15000,
+            17000,
+            15000
+          ],
+          "unlocks_tile": 603
+        },
+        {
+          "id": "city_coliseum",
+          "price": [
+            17000,
+            19000,
+            18000
+          ],
+          "plan_access": [
+            17000,
+            19000,
+            18000
+          ],
+          "unlocks_tile": 11
+        },
+        {
+          "id": "city_vestalki",
+          "price": [
+            20000,
+            22000,
+            22000
+          ],
+          "plan_access": [
+            20000,
+            22000,
+            22000
+          ],
+          "unlocks_tile": 604
+        }
+      ]
+    },
+    {
+      "id": "epoch_title04",
+      "buildings": [
+        {
+          "id": "city_aqueduct",
+          "price": [
+            20000,
+            23000,
+            22000
+          ],
+          "plan_access": [
+            20000,
+            23000,
+            22000
+          ],
+          "unlocks_tile": 12
+        },
+        {
+          "id": "city_lighthouse",
+          "price": [
+            25000,
+            26000,
+            24000
+          ],
+          "plan_access": [
+            25000,
+            26000,
+            24000
+          ],
+          "unlocks_tile": 605
+        },
+        {
+          "id": "city_neron",
+          "price": [
+            28000,
+            29000,
+            30000
+          ],
+          "plan_access": [
+            28000,
+            29000,
+            30000
+          ],
+          "unlocks_tile": 13
+        },
+        {
+          "id": "city_mausoleum",
+          "price": [
+            34000,
+            32000,
+            35000
+          ],
+          "plan_access": [
+            34000,
+            32000,
+            35000
+          ],
+          "unlocks_tile": 606
+        }
+      ]
+    },
+    {
+      "id": "epoch_title05",
+      "buildings": [
+        {
+          "id": "city_pantheon",
+          "price": [
+            36000,
+            37000,
+            37000
+          ],
+          "plan_access": [
+            36000,
+            37000,
+            37000
+          ],
+          "unlocks_tile": 14
+        },
+        {
+          "id": "city_theatre",
+          "price": [
+            40000,
+            42000,
+            41000
+          ],
+          "plan_access": [
+            40000,
+            42000,
+            41000
+          ],
+          "unlocks_tile": 15
+        },
+        {
+          "id": "city_forum",
+          "price": [
+            47000,
+            45000,
+            45000
+          ],
+          "plan_access": [
+            47000,
+            45000,
+            45000
+          ],
+          "unlocks_tile": 607
+        },
+        {
+          "id": "city_center",
+          "price": [
+            50000,
+            50000,
+            50000
+          ],
+          "plan_access": [
+            50000,
+            50000,
+            50000
+          ],
+          "unlocks_tile": 16
+        }
+      ]
+    }
+  ],
+  "adventure": {
+    "match_multipliers": {
+      "3": 1,
+      "4": 2,
+      "5": 4,
+      "6": 6,
+      "7": 6
+    },
+    "combo_multipliers": {
+      "2": 2,
+      "3": 4,
+      "4": 6
+    },
+    "finish_time_multiplier": 7,
+    "finish_level_multiplier": 2
+  }
+}

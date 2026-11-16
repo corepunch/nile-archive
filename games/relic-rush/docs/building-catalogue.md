@@ -113,9 +113,9 @@ sprite file is always `data/buildings/<key>.png`.
 | ID / key | Name | Category | Tiles | Price | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
 | 0 / `camp` | Expedition camp | wonder | 2 x 2 | 6 Provisions + 8 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `well` | Spring well | wonder | 2 x 2 | 10 Provisions + 22 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 70 Gold + 24 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `market` | Jungle market | wonder | 3 x 2 | 60 Gold + 18 Provisions + 12 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `well` | Spring well | wonder | 2 x 2 | 100 Gold | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 70 Gold + 20 Provisions + 24 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `market` | Jungle market | wonder | 3 x 2 | 85 Gold + 24 Provisions + 30 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 22 Provisions + 26 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 70 Gold + 25 Provisions | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 100 Gold + 20 Provisions + 25 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |

@@ -16,10 +16,10 @@ do
     check(not rules.lose_life(p,{lost=false},10000),'winning boards cost no life')
 end
 
--- Confirmed restorations affect only the authored slots and expeditions.
+-- Confirmed restorations persist across eligible boards without taking story slots.
 do
     R.island=city.new();island.island_setup(R.island)
-    local bank=purse(700,90,90,12)
+    local bank=purse(700,90,90,27)
     check(island.island_place_next(R.island,bank,4,0),'place the camp before the well')
     local c=R.island
     local fits,spot=c:find_spot(economy.WELL_KIND,island.island_suggestion(economy.WELL_KIND))
@@ -37,12 +37,17 @@ do
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
+    check(not R.make_board(8,19).resource_yields[5],'the early amphora has no wallet yield')
+    check(R.make_board(9,19).resource_yields[1].key=='berries','rations are locked before the market')
+    check(island.island_place_next(c,bank,9,0),'confirm the earned market')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
         local spec=rules.level_of(g)
         local water=g.resource_yields[3]==economy.unlocks.water
         local blocks=g.resource_yields[4]==economy.unlocks['cut-blocks']
-        check(water==(level==4 or level==5) and blocks==(level==8),'only the intended boards receive restoration pieces')
+        local rations=g.resource_yields[1]==economy.unlocks.rations
+        check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
+        check(blocks==(level>=8) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
     end
@@ -58,13 +63,13 @@ do
     local m=rules.new_match()
     m.mask[a],m.mask[b],m.mask[c],m.make[b]=true,true,true,rules.ROW
     rules.game_apply(g,m)
-    check(g.earnings[1]==4 and g.earnings[2]==0 and g.earnings[3]==1,'credit paid-once gold and stone, protected water waits')
+    check(g.earnings[1]==4 and g.earnings[2]==0 and g.earnings[3]==3,'credit paid-once gold and stone, protected water waits')
     local copy=rules.game_copy(g)
     m=rules.new_match();m.mask[a]=true
     rules.game_apply(copy,m)
-    check(copy.earnings[2]==1 and g.earnings[2]==0,'water credits provisions and a board copy has an independent ledger')
+    check(copy.earnings[2]==3 and g.earnings[2]==0,'water credits provisions and a board copy has an independent ledger')
     rules.game_apply(g,m)
-    check(g.earnings[2]==1,'credit the water once when actually removed')
+    check(g.earnings[2]==3,'credit the water once when actually removed')
 
     local supply_run=R.make_board(8,19)
     local free={}
@@ -77,31 +82,24 @@ do
     supply_run.tiles[block],supply_run.tiles[pack]=rules.tile(4),rules.tile(3)
     m=rules.new_match();m.mask[block],m.mask[pack]=true,true
     rules.game_apply(supply_run,m)
-    check(supply_run.relics==1 and supply_run.earnings[economy.SUPPLIES]==1,
-        'one cut block pays one Supplies and only the blue pack advances the crate goal')
+    check(supply_run.relics==1 and supply_run.earnings[economy.SUPPLIES]==5,
+        'one cut block pays five Supplies and only the blue pack advances the crate goal')
 end
 
--- Even a tool-only clear funds the next restoration. Optional spending
--- cannot take away its price. Replays bank all three resources once.
+-- Story progress earns building access. Players can replay to pay the price.
 do
     local p={level=0,seed=1,wallet=purse()}
     local c=city.new();island.island_setup(c)
-    for level=0,rules.LEVELS-1 do
-        local g=rules.game_start(level,level+1);g.won=true;g.moves=0
-        check(rules.progress_reward(p,g,island.wonders),'first clear pays')
-        local reserved=island.reserved_cost(c,p.level)
-        check(p.wallet:covers(reserved),'exact shortfall keeps every mandatory purchase affordable')
-        check(not rules.progress_reward(p,g,island.wonders),'the same win cannot pay twice')
-        for z=1,5 do c:unlock(z,p.wallet) end
-        local scheduled=rules.wonder_at(level+1)~=nil
-        check(island.island_place_next(c,p.wallet,p.level,0)==scheduled,'only the scheduled clear earns a restoration')
-    end
-    check(c.count==10 and c.open==63 and p.wallet[4]==90,'full campaign remains affordable with zero matches')
-    local g=rules.game_start(5,999);g.won=true;g.moves=999;g.earnings={8,12,14}
-    local before=purse(table.unpack(p.wallet))
+    local g=rules.game_start(0,1);g.won=true;g.moves=0
+    check(rules.progress_reward(p,g,island.wonders) and p.level==1,'first clear unlocks the camp')
+    check(not p.wallet:covers(island.reserved_cost(c,p.level)) and not island.island_place_next(c,p.wallet,p.level,0),
+        'a clear without income cannot buy the camp')
+    check(not rules.progress_reward(p,g,island.wonders),'the same win cannot pay twice')
+    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={8,12,14}
     check(rules.progress_reward(p,g,island.wonders),'replay resources bank')
-    check(p.wallet[1]-before[1]==48 and p.wallet[2]-before[2]==12 and p.wallet[3]-before[3]==14
-        and p.wallet[4]==before[4] and p.level==30,'replay pays all matches and capped move bonus without discoveries')
+    check(p.wallet[1]==48 and p.wallet[2]==12 and p.wallet[3]==14 and p.wallet[4]==3 and p.level==1,
+        'replay pays matched resources and capped move bonus without discoveries')
+    check(island.island_place_next(c,p.wallet,p.level,0) and island.wonder_count(c)==1,'replay can fund the camp')
     check(not rules.progress_reward(p,{won=false},island.wonders),'failed attempt pays nothing')
     local future=rules.game_start(4,887);future.won=true
     check(not rules.progress_reward({level=0},future,island.wonders),'future expedition pays nothing')
@@ -122,10 +120,21 @@ do
     end),'write legacy fixture')
     check(save.read('relic-resource-legacy',R.serialize),'load legacy fixture')
     local w=R.prog.wallet
-    check(w[1]==155 and w[2]==10 and w[3]==22 and w[4]==12 and island.wonder_count(R.island)==1,
-        'legacy saves retain Gold, Stars, placements and funding for the earned well')
-    check(not island.can_spend(R.island,w,4,purse(1,0,1)) and island.can_spend(R.island,w,4,purse(1)),
-        'optional building cannot spend the reserved supplies')
+    check(w[1]==155 and w[2]==0 and w[3]==9 and w[4]==12 and island.wonder_count(R.island)==1,
+        'legacy saves preserve Gold, Stars, placements and combined Supplies')
+    check(not island.can_spend(R.island,w,4,purse(56)) and island.can_spend(R.island,w,4,purse(55)),
+        'optional building cannot spend the Gold reserved for the well')
+    check(save.write('relic-resource-v1',function(s)
+        s:int('version',require('journey').version)
+        s:int('resource_version',1)
+        s:int('level',4)
+        s:ints('wallet',purse(20,10,22,12))
+        R.island:serialize(s)
+    end),'write an old wallet with the previous well price')
+    check(save.read('relic-resource-v1',R.serialize),'load the old price')
+    w=R.prog.wallet
+    check(w[1]==100 and w[2]==10 and w[3]==22 and w[4]==12,
+        'migration covers an earned restoration at the new price and preserves other balances')
     check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
     R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
     R.stash_completed()

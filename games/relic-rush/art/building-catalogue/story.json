@@ -4,16 +4,16 @@
     "cost": [0, 6, 8]
   },
   "well": {
-    "about": "Fresh water brings the lost valley back to life.",
-    "cost": [0, 10, 22]
+    "about": "Adds water buckets to later expeditions.",
+    "cost": [100, 0, 0]
   },
   "workshop": {
-    "about": "A home for the hands that rebuild the valley.",
-    "cost": [70, 0, 24]
+    "about": "Adds cut blocks to later expeditions.",
+    "cost": [70, 20, 24]
   },
   "market": {
-    "about": "Stories, spices and treasures from far away.",
-    "cost": [60, 18, 12]
+    "about": "Adds ration jars to later expeditions.",
+    "cost": [85, 24, 30]
   },
   "gateway": {
     "about": "A sunlit gathering place brings the valley together.",

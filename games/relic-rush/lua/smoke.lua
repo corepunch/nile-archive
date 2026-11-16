@@ -93,6 +93,9 @@ local function campaign()
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
         local g = R.g
+        -- This scripted path skips most matches and exercises the real purchase UI.
+        local wonder = journey.wonder_at(g.level + 1)
+        if wonder then g.earnings = {table.unpack(R.wonders[wonder].cost)} end
         for i = 0, rules.CELLS - 1 do
             g.ice[i], g.chain[i], g.stone_hp[i], g.oil[i] = 0, 0, 0, 0
         end

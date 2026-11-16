@@ -66,7 +66,7 @@
         191.175
       ],
       "base_width": 273.205,
-      "gold": 0,
+      "gold": 100,
       "stars": 0,
       "runtime": "data/buildings/well.png",
       "image": [
@@ -76,11 +76,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
+        100,
         0,
-        10,
-        22
+        0
       ],
-      "about": "Fresh water brings the lost valley back to life.",
+      "about": "Adds water buckets to later expeditions.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/well.png",
@@ -117,10 +117,10 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         70,
-        0,
+        20,
         24
       ],
-      "about": "A home for the hands that rebuild the valley.",
+      "about": "Adds cut blocks to later expeditions.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/workshop.png",
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 60,
+      "gold": 85,
       "stars": 0,
       "runtime": "data/buildings/market.png",
       "image": [
@@ -156,11 +156,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        60,
-        18,
-        12
+        85,
+        24,
+        30
       ],
-      "about": "Stories, spices and treasures from far away.",
+      "about": "Adds ration jars to later expeditions.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/market.png",

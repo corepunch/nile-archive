@@ -47,16 +47,26 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `coin` | Round gold coin engraved with an eight-ray sun, 4 Gold | Gold |
 | `berries` | Red berries, 1 Provisions | Provisions |
 | `plantains` | Green plantains, 1 Provisions | Board only |
-| `timber` | Blue-tied timber, 1 Supplies | Supplies |
-| `stone` | Pale violet-grey quarry stone, 1 Supplies | Board only |
-| `water` | Teal water bucket, 1 Provisions. Replaces timber on boards 5 and 6 after the well is restored. | Board and guide |
-| `rations` | Orange ration jar in six-kind palettes, 1 Provisions | Board only |
-| `cut-blocks` | Workshop unlock on board 9, 1 Supplies | Board and guide |
+| `timber` | Blue-tied timber, 2 Supplies | Supplies |
+| `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
+| `water` | Teal water bucket, 3 Provisions. Replaces timber from board 5 after the Well is restored. | Board and guide |
+| `rations` | Orange ration jar, 4 Provisions in the Market slot from board 10 | Board and guide |
+| `cut-blocks` | Workshop unlock from board 9, 5 Supplies | Board and guide |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
+The score-only amphora on early six-kind boards uses kind 5 of the selected
+pack. The default is `data/tile-sets/relics/5.png`.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
+
+`--rome-reference-art` uses the eight aliases in the manifest to load local
+Cradle of Rome 2 crops for resource pieces and matching wallet and guide icons.
+Selected, hinted and falling pieces use the same authored crop with the existing
+Relic Rush overlays and motion. The source is the Windows atlas `gmf_balls_2.png`.
+The [Cradle of Rome 2 extraction](../../../docs/cradle-of-rome-reference/README.md#cradle-of-rome-2-artwork)
+reproduces the transparent crops. `--level 5 --size 390x844` shows the water
+bucket in its live slot alongside the original story marker.
 
 
 ## The signal finale

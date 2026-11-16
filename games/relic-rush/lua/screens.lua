@@ -7,6 +7,8 @@ local match3 = require("match3")
 local elements = require("match3.elements_view")
 local rules = require("rules")
 local economy = require("economy")
+local island = require("island")
+local journey = require("journey")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local rgba = color
@@ -63,10 +65,12 @@ function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 local function result_screen()
     local l = match3.result_rects(SCREEN_W, SCREEN_H)
-    local kind=rules.wonder_at(R.g.level+1)
-    local w=kind and R.wonders[kind]
     local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
     local reward = breakdown.total
+    local pending = island.wonder_count(R.island) + 1
+    local next_kind = breakdown.first and journey.wonder_at(R.g.level + 1)
+        or not breakdown.first and pending <= journey.earned(R.prog.level) and pending
+    local w = next_kind and R.wonders[next_kind]
     local s
     panel(l.card)
     rrect(l.header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
@@ -103,12 +107,8 @@ local function result_screen()
         say(economy.currencies[k+1].name, rect(r.x + 3, r.y + 70, r.w - 6, 14), 13, PAL_CREAM)
         set_paint(s)
     end
-    local delivery = R.currency_prices(breakdown.delivery)
-    local bonus = ("Move bonus +%d Gold"):format(breakdown.bonus)
-    if #delivery > 0 then
-        bonus = "Crew delivery " .. R.cost_text(delivery) .. (breakdown.bonus > 0 and ("  ·  +%d Gold for moves"):format(breakdown.bonus) or "")
-    end
-    say(bonus, rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
+    say(("Move bonus +%d Gold"):format(breakdown.bonus),
+        rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then
         local r = l.progress
@@ -121,18 +121,21 @@ local function result_screen()
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))
     local next_icon = rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10)
-    if breakdown.first and w then
+    local heading, next_step = "BUILD SHOP", "Choose your next treasure"
+    if w then
         picture_fit(w.sprite, next_icon, 255)
+        local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
+        heading, next_step = #missing == 0 and "READY TO RESTORE" or "REPLAY TO EARN THE REST", w.name
+        local price = #missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)
+        say_left(price, rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
     elseif breakdown.first then
         picture_fit(R.board_art["next-clue"], next_icon, 255)
+        heading, next_step = "THE INVESTIGATION CONTINUES", "Return for the next clue"
     else
         R.skin:paint_button(next_icon, nil, {role = "navigation_build"})
     end
-    say_left(breakdown.first and (w and "READY TO RESTORE" or "THE INVESTIGATION CONTINUES") or "BUILD SHOP", rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(breakdown.first and (w and w.name or "Return for the next clue") or "Choose your next treasure", rect(l.next.x + 78, l.next.y + 24, l.next.w - 88, 24), 22, PAL_GOLD)
-    if breakdown.first and w then
-        say_left(R.cost_text(R.currency_prices(w.cost)), rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
-    end
+    say_left(heading, rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
+    say_left(next_step, rect(l.next.x + 78, l.next.y + 24, l.next.w - 88, 24), 22, PAL_GOLD)
     set_paint(s)
     s = section(1.12, .22, 8)
     if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
@@ -195,10 +198,12 @@ local guide_entries = {
      icon={floor="target-plaque", piece="resource-coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Coins earn Gold, fruit and water earn Provisions, and timber and stone earn Supplies. Win to bank them.",
      icon={front="resource-timber"}},
-    {id="water", title="Spring Well", description=economy.unlock_text(economy.unlocks.water) .. " Find them on the marker expeditions.",
+    {id="water", title="Spring Well", description=economy.unlock_text(economy.unlocks.water) .. " Restoring the well adds them to later boards.",
      icon={front="resource-water"}},
-    {id="cut-blocks", title="Artisan Workshop", description=economy.unlock_text(economy.unlocks["cut-blocks"]) .. " Find them on the supply run.",
+    {id="cut-blocks", title="Artisan Workshop", description=economy.unlock_text(economy.unlocks["cut-blocks"]) .. " Restoring the workshop adds them to later boards.",
      icon={front="resource-cut-blocks"}},
+    {id="rations", title="Jungle Market", description=economy.unlock_text(economy.unlocks.rations) .. " Restoring the market adds them to later boards.",
+     icon={front="resource-rations"}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
      icon={tool="pickaxe"}},
     {id="dynamite", title="Dynamite", description="Hits a cell and its neighbors.",

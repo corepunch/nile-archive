@@ -17,12 +17,12 @@ to choose a story sprite and the colour slot it replaces. An optional
 `omit_kind` removes one other colour from that board's starting pieces and
 refills. Leave it unset for five regular kinds plus the story piece.
 
-Ordinary boards use five resource pieces. The six-kind story palettes also
-have room for the amber ration jar. Restoring the Spring Well changes the
-blue slot from timber (Supplies) to a water bucket (Provisions) on boards 5
-and 6. The marker stays in its green story slot. The scene overview shows the
-palettes before and after the well. The Artisan Workshop brings purple cut blocks
-to board 9. Each block earns 1 Supplies.
+Ordinary boards use five resource pieces. The amber amphora on early six-kind
+boards earns score. Confirming the Spring Well replaces blue timber with a water
+bucket worth 3 Provisions from board 5. The Artisan Workshop replaces dressed
+stone with cut blocks worth 5 Supplies from board 9. The Jungle Market
+replaces red berries with ration jars worth 4 Provisions from board 10.
+Each change persists wherever the board has that ordinary slot available.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap

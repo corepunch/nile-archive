@@ -1,54 +1,34 @@
 # Applying Cradle of Rome to Relic Rush
 
-The Spring Well and Artisan Workshop resource handoffs are now playable.
-The [restoration resource review](../../games/relic-rush/docs/screenshots/review/restoration-resources/README.md)
-shows the implemented briefings, the cut blocks on board 9 and the story
-payoff at the steps. The tuning and optional skill challenge below are
-design proposals.
-
-Cradle of Rome is the economy reference. Tropicats is the companion reference
-for quest structure, story pacing and the way multiple board systems combine.
-Both point to making the next action legible, first on the board and then on
-the island. The proposals below use Relic Rush's existing campaign and
-original assets as their starting point.
+Relic Rush uses the purchase-to-tile loop from the [Cradle of Rome 2 Windows economy](rome-2-economy.json).
+Matches finance restorations, and three confirmed placements introduce
+higher-yield pieces on subsequent expeditions. Tropicats remains the
+companion reference for quest structure and story pacing.
 [Tropicats adaptation](../tropicats-reference/ADAPTATION.md)
 
 ## What Relic Rush already does
 
 | Rome pattern | Relic Rush implementation | Design consequence |
 | --- | --- | --- |
-| Progress on the board and gather city currency at the same time | Plaques, story-piece recovery and deliveries determine victory. Ordinary coin clears earn 4 Gold, fruit earns 1 Provisions, timber or stone earns 1 Supplies. Story pieces earn recovery credit. On a winning claim, cascades and clears from specials can contribute resources. A hit absorbed by a cover or chain does not pay for the protected piece. | Give the player a choice of earning matches while the win condition is still open. |
+| Progress on the board and gather city currency at the same time | Plaques, story-piece recovery and deliveries determine victory. Ordinary coin clears earn 4 Gold, fruit earns 1 Provisions, timber earns 2 Supplies and dressed stone earns 3. Story pieces earn recovery credit. On a winning claim, cascades and clears from specials can contribute resources. A hit absorbed by a cover or chain does not pay for the protected piece. | Give the player a choice of earning matches while the win condition is still open. |
 | Quick finish pays | Each remaining move is worth 2 Gold, capped at 40. A first clear also awards 3 discovery stars. A replay can bank earnings and the move bonus without advancing the campaign or granting more stars. | With 1–20 moves left, one extra ordinary Supplies triple can trade 2 Gold for 3 Supplies before cascades. With more than 20 left, the next move costs no bonus Gold. Check which purse is scarce before changing the bonus. |
-| Spend several resources to build visibly | Ten required restorations unlock at clears 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. The next new expedition waits for earned construction. First-clear crew deliveries cover an earned wonder's exact shortfall. Optional purchases respect those reserves. Discovery stars separately open land and shop stock. Placement is player-chosen. | Let good play leave more resources for optional spending. Keep the authored campaign progress independent of exceptional boards or discretionary purchases. |
-| A construction changes what spawns | Restoring the Spring Well after 4 replaces blue timber with the water bucket on 5 and 6. The same blue match slot now credits Provisions instead of Supplies. Purple stone still provides Supplies, and the green quay marker occupies a separate story slot. | This is the closest implemented counterpart to the Sawmill. Treat the before/after board and its payout as one feature. |
+| Spend several resources to build visibly | Ten required restorations unlock at clears 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. The next new expedition waits for earned construction. Players pay with banked earnings. Replays can cover a shortfall, and optional purchases respect the reserve. Discovery stars separately open land and shop stock. Placement is player-chosen. | Let good play leave more resources for optional spending. Keep the authored campaign progress independent of exceptional boards or discretionary purchases. |
+| A construction changes what spawns | The Spring Well unlocks 3-Provisions buckets from board 5. The Artisan Workshop unlocks 5-Supplies blocks from board 9. The Jungle Market unlocks 4-Provisions ration jars from board 10. Story pieces take priority in their authored slots. | This is the closest implemented counterpart to the Sawmill. Treat the before/after board and its payout as one feature. |
 
 [Relic Rush economy design](../../games/relic-rush/docs/resource-expedition.md) · [Piece yields](../../games/relic-rush/lua/economy.lua) · [Claims and move bonus](../../games/relic-rush/lua/rules.lua) · [Construction reserve](../../games/relic-rush/lua/island.lua) · [Campaign palettes and milestones](../../games/relic-rush/lua/campaign.lua)
 
 ## Priorities
 
-1. **Make the Spring Well's payoff visible from construction through claim.**
-   Keep the existing swap of timber for water. In the placement payoff or next
-   briefing, pair the bucket with the Provisions icon and its +1 yield. On the
-   board, make a practical use for this match type visible alongside the quay
-   marker. Keep the existing results breakdown so a player can see the payout.
-   Check before placement, after cancel, after confirmed placement, and on
-   both 5 and 6. Verify that the change ends when the authored stretch ends.
-2. **Use the Artisan Workshop for the next city-to-board link.** The existing
-   design calls for cut blocks in the purple stone slot. The workshop follows
-   clear 7, but board 8 uses purple for the snapped cable. Preview the benefit
-   at the workshop and try the swap on 9, where blue is the story item and
-   purple is available. Keep the number of match kinds fixed and start at
-   the same Supplies yield. Only test a higher yield if the price and income
-   data expose a need. Rome's Sawmill and Quarry demonstrate two
-   pieces for the same purse, making a higher yield an independent tuning
-   choice. [Relic Rush resource plan](../../games/relic-rush/docs/resource-expedition.md#board-rules-and-palette)
-3. **Tune the approach to a building against ordinary earnings.** At each
-   unlock, compare the pre-claim wallet plus matched income and move Gold
-   with each part of the price. Track how often a crew delivery fills a gap
-   and the amounts by currency. Start with the camp, well and workshop
-   sequence. A frequent Supplies shortfall after the water stretch is a reason
-   to check the palette and placement of attainable matches before raising
-   yields. Keep a reserve and the exact shortfall delivery on the story path.
+1. **Check that players recognize the payoff.** Watch for the first water,
+   block and ration matches. Ask what each pays and whether the player
+   can see how that helps with the next construction.
+2. **Measure the cost of a shortfall.** At each unlock, compare the
+   wallet before claim, matched income and move Gold with the price.
+   Record which resource players need to replay for and how many wins
+   it takes to continue.
+3. **Compare the balance after the Workshop and Market.** Check whether
+   higher Provisions and Supplies yields create useful surplus for
+   optional buildings while Gold still rewards efficient play.
 4. **Try a building-linked skill challenge only after that link reads.**
    Rome's Sawmill asks for a five-piece match and gives the building a visible
    upgrade. An optional workshop challenge could ask for a line of four on
@@ -86,7 +66,7 @@ together before picking a specific campaign edit.
 Use the existing well captures and wallet tests as baselines. When tuning
 prices, follow the existing economy plan for at least 30 seeded campaign runs.
 At the restoration milestones, record wallet before claim, earning clears
-by family, unused moves, crew delivery, and price due. Compare full runs
+by family, unused moves and outstanding cost. Compare full runs
 including players who finish quickly, make an optional purchase, or replay for
 resources. The measure is the frequency and size of each shortfall and
 whether the featured match is worth taking during normal objective play.

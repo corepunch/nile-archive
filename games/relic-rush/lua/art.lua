@@ -16,6 +16,8 @@ A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear",
 A.separate_rewards = {"note", "broken-cable"}
 A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water", "rations"}
 A.cut_blocks = "tile-sets/resources/4.png"
+-- Local comparison art uses the exact source crops and the same board states.
+A.rome_reference = {coin=4, berries=2, plantains=1, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -85,6 +87,15 @@ function A.load()
         textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
     end
     textures["resource-cut-blocks"] = texture.load(A.cut_blocks)
+    local rome_reference = app.arg("rome-reference-art")
+    if rome_reference then
+        for key, id in pairs(A.rome_reference) do
+            local source = ("%s/gmbn_%d.png"):format(rome_reference, id)
+            local image = texture.load(source)
+            assert(texture.size(image).w > 0, "Missing Rome reference sprite: " .. source)
+            textures["resource-" .. key] = image
+        end
+    end
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
     for _, name in pairs(A.specials) do load(name) end

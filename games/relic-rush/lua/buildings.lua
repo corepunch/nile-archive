@@ -2,9 +2,9 @@
 local sprites = require("building_sprites")
 local items = {
     {key="camp", name="Expedition camp", category="wonder", stars=0, about="Every great discovery begins with a little canvas.", cost=purse(0,6,8), needs=purse(0,0,0,0)},
-    {key="well", name="Spring well", category="wonder", stars=0, about="Fresh water brings the lost valley back to life.", cost=purse(0,10,22), needs=purse(0,0,0,0)},
-    {key="workshop", name="Artisan workshop", category="wonder", stars=0, about="A home for the hands that rebuild the valley.", cost=purse(70,0,24), needs=purse(0,0,0,0)},
-    {key="market", name="Jungle market", category="wonder", stars=0, about="Stories, spices and treasures from far away.", cost=purse(60,18,12), needs=purse(0,0,0,0)},
+    {key="well", name="Spring well", category="wonder", stars=0, about="Adds water buckets to later expeditions.", cost=purse(100,0,0), needs=purse(0,0,0,0)},
+    {key="workshop", name="Artisan workshop", category="wonder", stars=0, about="Adds cut blocks to later expeditions.", cost=purse(70,20,24), needs=purse(0,0,0,0)},
+    {key="market", name="Jungle market", category="wonder", stars=0, about="Adds ration jars to later expeditions.", cost=purse(85,24,30), needs=purse(0,0,0,0)},
     {key="gateway", name="Sunstone courtyard", category="wonder", stars=0, about="A sunlit gathering place brings the valley together.", cost=purse(0,22,26), needs=purse(0,0,0,0)},
     {key="lodge", name="Explorer's lodge", category="wonder", stars=0, about="A warm light after a long day of adventure.", cost=purse(70,25,0), needs=purse(0,0,0,0)},
     {key="archive", name="Lost-world archive", category="wonder", stars=0, about="Protect the knowledge buried beneath the vines.", cost=purse(100,20,25), needs=purse(0,0,0,0)},

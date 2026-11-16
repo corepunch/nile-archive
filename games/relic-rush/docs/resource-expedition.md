@@ -36,10 +36,9 @@ of water. The bucket produces **3 Food per piece**, so a match of three
 produces 9 Food at base value. The blue marble is the level objective and the
 large water vessel on the right is the timer. Awem credits later Food pieces
 such as meat, bread and shrimp at 4, 5 and 6 per piece. Buying buildings adds
-more valuable pieces and bonuses to the pool. In the recorded opening, the
-player builds the well after the first board and reaches the bucket board
-after that. The level 4 screenshot establishes the five active pieces at that
-moment. The previous slot is unverified.
+more valuable pieces and bonuses to the pool. The Windows Well costs 500 Gold
+and unlocks tile 5, the water bucket. The Sawmill subsequently requires Food and unlocks lumber.
+See the [full Windows economy export](../../../docs/cradle-of-rome-reference/rome-2-economy.json).
 [Big Fish level 4 screenshot](https://cdn-content.bigfishgames.com/prodstatic/games/es_cradle-of-rome-2/screen1.jpg),
 [Well construction in the recorded run](https://www.youtube.com/watch?v=AOBES8G3LGU&t=150s),
 [Awem on resources and construction](https://support.awem.com/hc/en-gb/articles/200686242-Building-the-City),
@@ -47,35 +46,10 @@ moment. The previous slot is unverified.
 
 ### Extracted evidence
 
-The GameTop Windows installer was unpacked with innoextract. Its installer
-manifest lists two PAKs and separate Theora tutorials for matching, puzzle cells,
-collecting resources, and rope. The `AWEM` archive contains 826 indexed entries.
-These files were extracted and read for the comparison above.
-
-| Archive entry | What it establishes |
-| --- | --- |
-| `settings/scenes/game/levels/level_*.xml` | Per-board palette cap, cell targets, target hit count and preplaced pieces. Sample boards 1, 5 and 20 have 12, 64 and 143 target cells. |
-| `settings/scenes/game/game_balls.xml` | Piece availability, resource mapping and per-piece payout. |
-| `settings/scenes/shop/epochs.xml` | Five epochs with four constructions each, three price fields, and tile or bonus unlocks. |
-| `settings/scenes/game/field_tiles.xml` and `textures/scenes/game/game_field_atlas_01.png` | Distinct ordinary, one-hit and two-hit floor art. |
-| `app/Video/2_puzzle_cell.ogg` and `app/Video/3_recieve_resources.ogg` | Separate tutorials shipped with the installer. |
-
-The installer and selected files are in the local temporary reference folder
-`/tmp/rr-cradle-reference`. The installer SHA-256 is
-`6e2cc4353f3d0a118503f0a338ea646140b842d91ef076fb9e63d64dcf23d086`.
-The archived Awem trials for Rome and Rome 2 use Gentee installers. The
-Shockwave Rome 2 trial has a readable 1,136-entry AWEM directory inside its
-wrapper. The referenced level and price files remained packed in both
-installers. The screenshot, playthrough and Awem's guide supply the Rome 2
-observations above. Apktool expects an Android APK. The paired iPhone can
-serve as a visual reference, and the Egypt desktop edition supplied the
-extracted files.
-[Awem trial archive](https://web.archive.org/web/20070222161945/http://www.awem.com:80/download/CradleOfRomeSetup.exe),
-[Awem Rome 2 trial archive](https://web.archive.org/web/20110329182607/http://www.awem.com/download/CradleOfRome2Setup.exe),
-[Shockwave Rome 2 trial](https://www.shockwave.com/gamelanding/cradle-of-rome-2),
-[innoextract](https://constexpr.org/innoextract/),
-[QuickBMS AWEM format](https://mirror.aluigi.org/bms/awem.bms),
-[Apktool CLI](https://apktool.org/docs/cli-parameters/).
+The [Cradle of Rome 2 Windows extraction](../../../docs/cradle-of-rome-reference/README.md#cradle-of-rome-2-economy-data)
+has all 1,426 resource entries. `game_balls.xml` supplies the tile yields.
+`epochs.xml` supplies the prices, blueprint requirements and tile unlocks.
+The original chips are available locally for comparison with `--rome-reference-art`.
 
 ## Board rules and palette
 
@@ -94,8 +68,8 @@ visible cost.
 | Gold sun coin | Gold | 4 |
 | Red berries | Provisions | 1 |
 | Green plantains | Provisions | 1 |
-| Blue-wrapped timber | Supplies | 1 |
-| Purple dressed stone | Supplies | 1 |
+| Blue-wrapped timber | Supplies | 2 |
+| Purple dressed stone | Supplies | 3 |
 
 Buy or restore a building using the family totals. Timber and stone are
 separate match kinds within Supplies, just as berries and plantains are
@@ -107,35 +81,31 @@ Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
 earn that complexity through layout and enough legal opening swaps. Board 1
 uses five regular resources. Boards 4 and 9 use 5+1. Board 8 uses a purple snapped cable in 4+1. The
-orange slot can hold an authored recovery item or a rarer orange food jar on a
-six-kind board. Gold story chapters can temporarily suspend coin income.
-Board 4's next restoration uses Provisions and Supplies, and boards 11 and 12 earn
-Gold before the note on board 13 takes the yellow slot again. Keep the palette
-explicit for each board. A missing family is allowed only when the next story
-gate can be funded without that board earning it.
+orange slot can hold a story item or an amphora that pays score. Board 4 takes
+the Gold slot for the tide chart. The Well purchase that follows uses Gold
+banked on earlier boards or earned from unused moves and replays.
 
-A restoration can also introduce a recurring resource sprite. The Spring Well
-is the first such opportunity. After placement, show a turquoise water bucket
-in place of the blue timber on the next two water-site boards, 5 and 6.
-It pays into **Provisions**, the same family as the fruit. Those boards already
-use their green slot for the quay marker, and purple stone still supplies
-construction. Clearing the blue plaques recovers the marker. The bucket remains available on designated water boards and adds
-no fourth currency. The Artisan Workshop unlocks cut blocks on board 9 at
-1 Supplies each. The crew uses the blocks to shore up the old steps.
+Confirmed placements change ordinary slots in openings and refills from the
+listed expedition onward. Authored story pieces keep their slots.
+
+| Restoration | First board | Replaces | New piece | Yield per piece |
+| --- | ---: | --- | --- | --- |
+| Spring Well | 5 | Timber | Water bucket | 3 Provisions |
+| Artisan Workshop | 9 | Dressed stone | Cut blocks | 5 Supplies |
+| Jungle Market | 10 | Red berries | Ration jar | 4 Provisions |
 
 ## Restoration prices and earnings
 
-Regular restorations have two price entries. All three apply for the
-market, archive and temple, where workers, materials and trade are all involved.
-The first restoration spends Provisions and Supplies gathered in the timber tutorial.
-These are initial tuning values in Relic Rush units.
+The Camp uses Provisions and Supplies. The Well follows the Rome pattern of a
+Gold purchase that unlocks a Provisions source. The Workshop and Market use all
+three currencies. Prices are in Relic Rush units for the shorter portrait boards.
 
 | Clear | Restore | Gold | Provisions | Supplies |
 | ---: | --- | ---: | ---: | ---: |
 | 1 | Expedition camp | — | 6 | 8 |
-| 4 | Spring well | — | 10 | 22 |
-| 7 | Artisan workshop | 70 | — | 24 |
-| 9 | Jungle market | 60 | 18 | 12 |
+| 4 | Spring well | 100 | — | — |
+| 7 | Artisan workshop | 70 | 20 | 24 |
+| 9 | Jungle market | 85 | 24 | 30 |
 | 13 | Sunstone courtyard | — | 22 | 26 |
 | 16 | Explorer's lodge | 70 | 25 | — |
 | 19 | Lost-world archive | 100 | 20 | 25 |
@@ -146,30 +116,21 @@ These are initial tuning values in Relic Rush units.
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and
 earns its resources. The first clear awards the story item and Discovery Stars.
-The result card shows the three resource totals and the next building’s price.
+The result card shows the three resource totals and what is still due for the next restoration.
 
 Record attempt earnings until a successful clear. Claim persists the first
 clear, resources, story progress and discovery stars together. A resumed result
 can be claimed once. Restart and loss discard unbanked matches. Quitting to the island keeps the active board available for the current session.
 Optional replays bank the matches from each won attempt and advance no story.
-Suggested play for a missing resource can point to a prior board with two
-kinds in its family, with replay entirely optional to the story route.
-
-On first clears that unlock a mandatory restoration, provide a crew delivery
-for the exact unreserved shortfall. The results itemizes this delivery apart
-from matches. The first board's opening should make this unnecessary in
-ordinary play. The crew delivery eliminates progression stalls from random
-palettes, early wins or tool-heavy play. Its frequency is a balance measure.
-Reserve the price of the next unlocked wonder in all three currencies while
-any is owed. Gold-only scenery gives surplus Gold a place to go. Optional
-buildings use Gold and one practical resource. Confirmed placement debits the price once and Cancel returns the
-preview. Stars remain access requirements.
+When a restoration costs more than is in the wallet, replay a cleared board
+with the missing resource and bank the earnings. Optional purchases reserve
+the price of any earned restoration. Confirmed placement debits the price
+once and Cancel returns the preview. Stars remain access requirements.
 
 A save version identifies the Provisions and Supplies slots. Existing Gold,
 stars, placements, lives, unlocks, claimed levels and story checkpoints are
-preserved. Legacy Wood and Stone are combined into Supplies. If the player
-already earned a building at its old single-currency price, migration funds
-any shortfall once. The wallet, catalogue and result
+preserved. Legacy Wood and Stone are combined into Supplies. Migration covers
+any gap on a restoration already earned before the price changes. The wallet, catalogue and result
 screen should all use the same ordering and amount formatting. Use resource
 shapes and readable labels alongside color in the guide and price rows.
 
@@ -184,9 +145,8 @@ both supported phone sizes and sample a migrated save midway through chapter two
 Verify that matching every resource kind, including through a cascade or
 special, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay
-and claim interruption. Record resource yields at all ten restoration gates for
-at least 30 deterministic campaign runs, then play through all 30 boards on a
-phone with human players. Tune prices so most ordinary clears fund the current
-restoration with what the crew matched and keep every story gate available
-without mandatory replay. Review plaque recognition and story piece
-recognition with Reduce Motion enabled at 390 × 844 and 480 × 900.
+and claim interruption. The seeded campaign test plays all 30 boards with
+the live wallet and confirms all ten purchases. For release tuning, record
+wallet shortfalls across more seeds and watch people play on both phone sizes.
+Review plaque and story piece recognition with Reduce Motion enabled at
+390×844 and 480×900.

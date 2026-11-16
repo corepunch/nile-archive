@@ -1,5 +1,13 @@
 {
   "matching_rules": "Campaign matches clear straight lines of three or more. Chains take a hit before a plaque can clear. The three tools hit one cell, its neighborhood, or every piece of the selected kind. Specials are kept for reference boards.",
+  "rome_reference_art": {
+    "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
+    "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
+    "option": "--rome-reference-art",
+    "pieces": {"coin": 4, "berries": 2, "plantains": 1, "timber": 6, "stone": 8, "water": 5, "rations": 9, "cut-blocks": 8},
+    "states": ["normal", "selected", "hinted", "falling"],
+    "transform": "Unmodified XML-defined source crops. Board selection, motion and hints use existing Relic Rush overlays."
+  },
   "source": "art/board-states/source.png",
   "prompt": "art/board-states.prompt.txt",
   "generator": "built-in image_gen, 2026-10-30; first full-atlas geometry edit selected; user requested 30-degree tool rotation of original ornate selected/hint frames",
@@ -732,7 +740,7 @@
   "economy_presentation": {
     "contract": "lua/rules.lua reward_breakdown; lua/art.lua names the results and wallet artwork",
     "wallet_icons": "life heart, sun coin for Amulets, gold and turquoise Discovery Star",
-    "discovery": "one-time 3 Discovery Stars and spare Amulets, plus a restoration grant at scheduled milestones",
+    "discovery": "Three Discovery Stars on the first clear. Scheduled milestones open a restoration purchase.",
     "replay": "Amulets only",
     "controls": "existing shared form skin normal/hover/pressed/disabled/focus; modal opening input is consumed",
     "review": "docs/review/economy/README.md"

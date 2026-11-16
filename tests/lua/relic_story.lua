@@ -55,7 +55,7 @@ for board, spec in pairs(collections) do
     m.mask[a],m.mask[b]=true,true
     rules.game_apply(g,m)
     check(g.relics==1 and g.tiles[a].kind<0, 'the quest piece matches like an ordinary piece')
-    if board==1 then check(g.earnings[3]==1,'ordinary camp timber earns Supplies') end
+    if board==1 then check(g.earnings[3]==2,'ordinary camp timber earns two Supplies') end
     rules.game_collapse(g)
     for i=0,rules.CELLS-1 do
         local kind=g.tiles[i].kind
@@ -113,12 +113,14 @@ for level=1,30 do
         check(journey.find('restore-13').lines[1][2]:find('Ines Reed',1,true),
             'Tomas names the sender at the courtyard')
     end
+    local kind=journey.wonder_at(level)
+    -- This test skips matches to isolate the story, so supply the board income.
+    if kind then g.earnings={table.unpack(island.wonders[kind].cost)} end
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     local after=journey.next(p,owned(c),nil)
     check(after and after.key==('after-%02d'):format(level),'every first clear has a story beat')
     check(journey.awaiting_return(p),'unread result blocks the next new expedition')
     p.story_seen[after.key]=true
-    local kind=journey.wonder_at(level)
     if kind then
         local _, next_task=quests.current(p,c)
         check(next_task and next_task.kind==kind-1,'the funded upgrade is the next quest task')

@@ -33,7 +33,7 @@ return require("match3.game").journey{
         {economy.WELL_KIND, 6, "The chart from the pump traces the old cable to the tide room."},
         {economy.WORKSHOP_KIND, 7, economy.unlock_text(economy.unlocks["cut-blocks"])},
         {economy.WORKSHOP_KIND, 9, "We cut the blocks for the tide-room approach here."},
-        {3, 9, "The crew stocks up here before taking the old path to the tide room."},
+        {economy.MARKET_KIND, 9, economy.unlock_text(economy.unlocks.rations)},
         {4, 13, "A dry place to lay out the note that led the crew to Ines."},
         {5, 16, "There is a dry bunk here for the keeper when she can get ashore."},
         {6, 19, "Tomas keeps the old records here. Elena is looking for the signed plan."},

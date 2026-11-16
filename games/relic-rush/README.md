@@ -23,8 +23,8 @@ Buildings is the large workshop/hammer image at bottom left, Play the large righ
 
 The wallet holds Gold, Provisions, Supplies and discovery stars. Matches earn
 resources during the expedition, and a successful clear banks them once.
-Most buildings cost two resources. The market, archive and temple use all
-three. Discovery stars unlock shop stock and land. The five lives regenerate
+The Well costs Gold. The Workshop, Market, Archive and Temple use all three
+resources. Discovery stars unlock shop stock and land. The five lives regenerate
 one at a time every 30 minutes, including offline.
 
 Tap a placed building for its name and subtitle in the existing speech bubble above it. Only one stays open; the next press dismisses it. A stationary hold still picks up a building through the shared mover, with Confirm/Cancel preserving saved state. Taps do not open building dialogs.
@@ -196,17 +196,17 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all blue plaques within the move budget.
 3. Claim the matched resources, up to 40 Gold for saved moves, and three discovery stars on a first clear.
-4. Return to the island. At a wonder milestone, choose a location and confirm construction; otherwise the next story clue plays immediately.
+4. Return to the island. At a wonder milestone, check the price and replay an expedition if you need more resources.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Coins engraved with the sun pay Gold. Red berries and green plantains pay Provisions. Blue-tied
-timber and cut stone pay Supplies. Restore the Spring Well to replace timber
-with water buckets on boards 5 and 6. Each bucket earns 1 Provisions. The Artisan
-Workshop unlocks cut blocks on board 9, worth 1 Supplies each. At a
-restoration milestone the crew supplies any exact shortfall. First clears
-advance the story and unlock discovery stars. Replays earn resources and two
-Gold per unused move, with a maximum move bonus of 40 Gold.
+Coins pay 4 Gold each. Red berries and green plantains pay 1 Provisions.
+Blue-tied timber and dressed stone pay 2 and 3 Supplies. Confirming the Spring
+Well unlocks water buckets from board 5 at 3 Provisions each. The Workshop
+unlocks cut blocks from board 9 at 5 Supplies each. The Market unlocks ration
+jars from board 10 at 4 Provisions each. An authored story piece keeps its normal
+slot. The result shows any resources still needed for the next restoration.
+Replays earn matched resources and up to 40 Gold for unused moves.
 
 ## Campaign: thirty hex levels
 
@@ -252,9 +252,9 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 | # | Building | Price | Purpose in the story |
 | --- | --- | --- | --- |
 | 1 | Expedition camp | 6 Provisions + 8 Supplies | Every great discovery begins with a little canvas. |
-| 2 | Spring well | 10 Provisions + 22 Supplies | Fresh water brings the lost valley back to life. |
-| 3 | Artisan workshop | 70 Gold + 24 Supplies | A home for the hands that rebuild the valley. |
-| 4 | Jungle market | 60 Gold + 18 Provisions + 12 Supplies | Stories, spices and treasures from far away. |
+| 2 | Spring well | 100 Gold | Unlocks water buckets worth 3 Provisions each. |
+| 3 | Artisan workshop | 70 Gold + 20 Provisions + 24 Supplies | Unlocks cut blocks worth 5 Supplies each. |
+| 4 | Jungle market | 85 Gold + 24 Provisions + 30 Supplies | Unlocks ration jars worth 4 Provisions each. |
 | 5 | Sunstone courtyard | 22 Provisions + 26 Supplies | A sunlit gathering place brings the valley together. |
 | 6 | Explorer's lodge | 70 Gold + 25 Provisions | A warm light after a long day of adventure. |
 | 7 | Lost-world archive | 100 Gold + 20 Provisions + 25 Supplies | Protect the knowledge buried beneath the vines. |
@@ -295,7 +295,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. All pieces in a long line clear together.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
-- Cascades increase score multipliers. Gathered resources animate toward their wallet slots; the result screen separately explains the guaranteed grant and spare Gold.
+- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Gold bonus and any remaining cost of the next restoration.
 - Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each tool has two charges per level and costs zero moves. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
@@ -317,6 +317,10 @@ The campaign uses the [expedition resource sprites](docs/asset-catalogue.md#reso
 Story pieces and water take their authored slots. The **Jewels** and **Resources**
 art previews remain available through `--tiles jewels` and `--tiles resources`.
 See the [tile-set comparison and construction research](docs/tile-sets.md).
+
+Use `--rome-reference-art /absolute/path/to/game_graphics` to compare the
+extracted Cradle of Rome 2 chips in a local run. Point it at the directory with
+`gmbn_5.png`. The shipped resource art remains in the game data.
 
 ![The three packs on the same board](docs/screenshots/tile-sets.jpg)
 

@@ -92,6 +92,30 @@ python3 tools/cradle-of-rome-reference/export_art.py --root reference/cradle-of-
 The extracted pack's SHA-256 is
 `9ec46272ab4d9b4a2f40cd09781f7910775dbda72f9fa6830cdff81d8809f9d5`.
 
+## Cradle of Rome 2 economy data
+
+The [Windows economy export](rome-2-economy.json) records the 20 priced
+constructions in order, their blueprint requirements, the tile or tool each
+construction unlocks, the exact credits by tile, and Adventure multipliers.
+The source files are `settings/scenes/shop/epochs.xml` and
+`settings/scenes/game/{game_balls,field_balls,game_settings}.xml`.
+
+| First epoch | Gold | Supplies | Food | Unlock |
+| --- | ---: | ---: | ---: | --- |
+| Well | 500 | 0 | 0 | Water bucket, 3 Food |
+| Hunter's Hut | 1,000 | 0 | 1,500 | Hammer tile, 3 Hammer charge |
+| Sawmill | 3,000 | 0 | 2,500 | Lumber, 5 Supplies |
+| Village | 2,000 | 3,000 | 2,000 | Bomb tile, 3 Bomb charge |
+
+The opening pool has leaves and flowers for score, and coins worth 3 or 5 Gold.
+The Well is the first Food source. Food pays for the Hunter's Hut and Sawmill,
+then lumber supplies the Village. Relic Rush uses this purchase-to-tile loop
+with its own three wallets, expedition lengths and story milestones.
+
+```sh
+python3 tools/cradle-of-rome-reference/export_economy.py reference/cradle-of-rome-2/resources > docs/cradle-of-rome-reference/rome-2-economy.json
+```
+
 ## Reproduce the counts
 
 Run these commands from the repository root with the downloaded APK and fresh output paths.
