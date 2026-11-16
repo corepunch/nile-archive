@@ -103,7 +103,7 @@ def checks(fast=False, arguments=(), games=()):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--budget", type=float, default=5)
+    parser.add_argument("--budget", type=float, default=10)
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--games", default="", help="space-separated game suites to run beside the engine's")

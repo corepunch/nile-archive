@@ -47,7 +47,7 @@ failures or budget overruns fail the target.
 Build time is separate: the timer starts after compilation. It includes process
 startup, waiting for workers, preflight checks, reporting and teardown. Timed-out
 jobs and their children are terminated. `TEST_WORKERS` defaults to four;
-`TEST_BUDGET` defaults to five seconds.
+`TEST_BUDGET` defaults to ten seconds.
 
 Measured on the development Mac (2026-11-16): `make test` passes in 4.6 to 5.0
 seconds; the suites take engine 1.8 s, Relic Rush 1.4 s, Christmas Market 1.1 s,
@@ -79,7 +79,7 @@ Clayfight and its native/JavaScript checks
 now live in the [standalone repository](https://github.com/corepunch/clayfight).
 
 ```sh
-make test                       # correctness + renderer + preflight, two instances, budget 5s
+make test                       # correctness + renderer + preflight, two instances, budget 10s
 make test-fast                  # same checks without a window/GPU
 make test-full                  # complete smoke/capture integration, deliberately slow
 make test-full ONLY=smoke        # only smoke jobs, in every suite

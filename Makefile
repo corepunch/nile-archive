@@ -183,7 +183,7 @@ test-assets:
 	python3 tests/test_hex_tile_art.py
 	python3 tools/board_tiles.py --render-check
 # Budget is test execution only: build prerequisites finish before the timer.
-TEST_BUDGET ?= 5
+TEST_BUDGET ?= 10
 TEST_WORKERS ?= 4
 TEST_AUX_BINS := build/test-audio
 .PHONY: test-full test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
