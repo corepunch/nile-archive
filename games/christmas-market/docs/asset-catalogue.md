@@ -349,6 +349,9 @@ for all eight). Both games ship identical copies, loaded as `tile-<name>`:
 | `tile-light-wave` | The light that sweeps across the board as it arrives |
 | `tile-ice`, `tile-tablet-double` | Under an iced treat; a two-hit pane from a level's `oil_double` (none yet) |
 
+`frame-leaves` is a generated sprig of leaves the game draws on three corners
+of the board frame.
+
 Regenerate all of them for both games with `python3 tools/board_tiles.py`;
 `tools/check_assets.py` fails if a tile is stale. The painted
 [spruce atlas](../art/lantern-panes/spruce-atlas.png) and

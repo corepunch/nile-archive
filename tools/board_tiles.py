@@ -220,13 +220,47 @@ def bake(spec, tile, grains, index):
     return out
 
 
+def leaves(spec):
+    """A sprig of leaves fanning up from the sprite's centre, to sit on a frame corner."""
+    px = spec["size"] * SS
+    out = Image.new("RGBA", (px, px))
+    c = px / 2
+    for turn, length, width in spec["fan"]:
+        leaf = Image.new("RGBA", (px, px))
+        draw = ImageDraw.Draw(leaf)
+        tip, half, n = length * px, width * px / 2, 24
+        # A pointed oval from the centre to the tip, widest a little below the middle.
+        def edge(side):
+            return [(c + side * half * math.sin(math.pi * (k / n) ** .8), c - tip * k / n) for k in range(n + 1)]
+        shape = edge(-1) + edge(1)[::-1]
+        draw.polygon(shape, fill=rgb(spec["outline"]) + (255,))
+        inner = [(c + (x - c) * .82, c + (y - c) * .97 - tip * .015) for x, y in shape]
+        fill = Image.new("RGBA", (px, px))
+        column = Image.new("RGB", (1, px))
+        for y in range(px):
+            t = min(1, max(0, (c - y) / tip))
+            column.putpixel((0, y), tuple(round(a + (b - a) * t) for a, b in zip(rgb(spec["base"]), rgb(spec["tip"]))))
+        mask = Image.new("L", (px, px)); ImageDraw.Draw(mask).polygon(inner, fill=255)
+        fill.paste(column.resize((px, px)), (0, 0), mask)
+        # The right half sits in shade.
+        shade = Image.new("L", (px, px)); ImageDraw.Draw(shade).polygon([(c, c), (c, c - tip)] + edge(1)[::-1], fill=70)
+        fill.paste(Image.new("RGBA", (px, px), (0, 40, 0, 255)), (0, 0), Image.composite(shade, Image.new("L", (px, px)), mask))
+        leaf.alpha_composite(fill)
+        ImageDraw.Draw(leaf).line((c, c - tip * .08, c, c - tip * .9), fill=rgb(spec["vein"]) + (255,), width=max(1, round(.012 * px)))
+        out.alpha_composite(leaf.rotate(-turn, resample=Image.Resampling.BICUBIC, center=(c, c)))
+    return out.resize((spec["size"], spec["size"]), Image.Resampling.LANCZOS)
+
+
 def render_all(spec):
     grains = {}
     for tile in spec["tiles"].values():
         key = json.dumps(tile.get("grain_params", {}), sort_keys=True)
         if tile.get("grain", 0) > 0 and key not in grains:
             grains[key] = board_grain.render(**{**spec["grain"], **tile.get("grain_params", {})})
-    return {name: bake(spec, tile, grains, i) for i, (name, tile) in enumerate(spec["tiles"].items())}
+    out = {name: bake(spec, tile, grains, i) for i, (name, tile) in enumerate(spec["tiles"].items())}
+    for name, decor in spec.get("decor", {}).items():
+        out[name] = leaves(decor)
+    return out
 
 
 def main():

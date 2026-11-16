@@ -77,6 +77,7 @@ function A.load()
     for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
         textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
     end
+    textures["frame-leaves"] = texture.load("board-tiles/frame-leaves.png")
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end

@@ -422,6 +422,7 @@
     "data/board-states/sunburst-selected.png",
     "data/board-tiles/bonus-area.png",
     "data/board-tiles/cell-normal.png",
+    "data/board-tiles/frame-leaves.png",
     "data/board-tiles/hover.png",
     "data/board-tiles/ice.png",
     "data/board-tiles/light-wave.png",
@@ -1650,7 +1651,10 @@
       "ice",
       "bonus-area"
     ],
-    "previous_source": "art/board-refresh/flat-ground.png"
+    "previous_source": "art/board-refresh/flat-ground.png",
+    "decor": [
+      "frame-leaves"
+    ]
   },
   "finale": {
     "generator": "built-in ImageGen",

@@ -243,24 +243,72 @@ end
 -- The cell edges that face off the board: {a, b} are the edge's corners and
 -- t, ta, tb say how low its middle and corners sit on their cell (0 top, 1 bottom).
 function E.silhouette_edges(R, rules)
-    local edges, r = {}, R.HEX_R
+    local edges, corners, r = {}, {}, R.HEX_R
     local apothem = r * math.sqrt(3) / 2
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(R.g, i) then
-            local at = R.cell_pos(i)
+            local at, open = R.cell_pos(i), {}
             for k = 0, 5 do
                 local mid = math.rad(k * 60 + 30)
-                if R.cell_at(at + vec2(math.cos(mid) * 2 * apothem, math.sin(mid) * 2 * apothem)) < 0 then
+                local n = vec2(math.cos(mid), math.sin(mid))
+                open[k] = R.cell_at(at + vec2(n.x * 2 * apothem, n.y * 2 * apothem)) < 0
+                if open[k] then
                     local a0, a1 = math.rad(k * 60), math.rad(k * 60 + 60)
                     edges[#edges + 1] = {
                         a = at + vec2(math.cos(a0) * r, math.sin(a0) * r), b = at + vec2(math.cos(a1) * r, math.sin(a1) * r),
+                        n = n,   -- pointing off the board
                         t = (math.sin(mid) * apothem / r + 1) / 2, ta = (math.sin(a0) + 1) / 2, tb = (math.sin(a1) + 1) / 2,
                     }
                 end
             end
+            -- A corner where two of a cell's open edges meet sticks out of the board.
+            for k = 0, 5 do
+                if open[k] and open[(k + 1) % 6] then
+                    local angle = math.rad(k * 60 + 60)
+                    corners[#corners + 1] = {p = at + vec2(math.cos(angle) * r, math.sin(angle) * r), angle = angle}
+                end
+            end
         end
     end
-    return edges
+    return edges, corners
+end
+
+-- The frame's shadow on the cells along the board's edge, as in Cradle of
+-- Rome's frame pieces: `shadow` = {width, alpha, steps}. Each step darkens a
+-- narrower strip, so the shade is deepest right under the frame.
+local function draw_inner_shadow(R, edges, sx, alpha)
+    local spec = R.GROUND.inner_shadow
+    if not spec then return end
+    local ink = color(0, 0, 0, 255 * alpha * spec.alpha / spec.steps)
+    for step = 1, spec.steps do
+        local depth = spec.width * step / spec.steps
+        for _, e in ipairs(edges) do
+            local inward = vec2(sx - e.n.x * depth / 2, -e.n.y * depth / 2)
+            gfx.line(e.a + inward, e.b + inward, depth, ink)
+        end
+    end
+end
+
+-- Leaves on the frame, in the sprite R.GROUND.leaves (drawn pointing up): on
+-- the board's north-west, north-east and south-east outer corners.
+local function draw_leaves(R, corners, sx, alpha)
+    local art = R.GROUND.leaves and R.board_art[R.GROUND.leaves]
+    if not art or art.w == 0 or #corners == 0 then return end
+    local picks = {}
+    for k, score in ipairs{function(c) return -c.p.x - c.p.y end, function(c) return c.p.x - c.p.y end,
+                           function(c) return c.p.x + c.p.y end} do
+        local best
+        for _, c in ipairs(corners) do
+            if not best or score(c) > score(best) then best = c end
+        end
+        picks[k] = best
+    end
+    local sizes = {1.5, 1.1, 1.25}
+    for k, c in ipairs(picks) do
+        local size = R.HEX_R * sizes[k]
+        gfx.image_rot(art, rect.centered(c.p + vec2(sx, 0), size2.splat(size)), c.angle + math.pi / 2,
+            color(255, 255, 255, 255 * alpha))
+    end
 end
 
 local function draw_ground_backing(R, rules, sx, alpha, textured)
@@ -273,7 +321,9 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
     -- Once the board has settled, only the silhouette's own edges are drawn:
     -- a thick line along each with a disc at each corner, which rounds the
     -- outline's corners. While cells fly in, each cell grows its own hexes.
-    local outline = not R.intro and E.silhouette_edges(R, rules)
+    local outline, corners
+    if not R.intro then outline, corners = E.silhouette_edges(R, rules) end
+    R.GROUND.outline, R.GROUND.corners = outline, corners
     for k = #frame, 1, -1 do
         local band = frame[k]
         local top, bottom = color.alpha(band.top, alpha), color.alpha(band.bottom or band.top, alpha)
@@ -327,17 +377,24 @@ function E.frame_ramp(width, stops, steps, shade)
     return bands
 end
 
--- Cradle of Rome's board, shared by the match-3 games. One frame band runs from
--- near-black under the board's edge, like wear and shadow where the cells sit
--- in it, through brown to a bright peach-tan lip, closed by a thin dark line.
--- Dark brown grout separates the cells, and the cell-state tiles are baked by
--- tools/board_tiles.py.
-local cradle_frame = E.frame_ramp(7, {{0, 0x240802}, {.25, 0x4A200A}, {.45, 0x6E3C18}, {.62, 0xB07444},
-                                        {.78, 0xE8BC8C}, {1, 0xF2D2A0}}, 10, .78)
-cradle_frame[#cradle_frame + 1] = {width = 1, top = color.hex(0x1C0A02), bottom = color.hex(0x0C0400)}
+-- Cradle of Rome's board, shared by the match-3 games, after the first game's
+-- frame pieces. From the cells out: a thin dark edge, a tan inner lip, a rusty
+-- line and dark brown wood. The frame shades the cells along the board's edge
+-- and carries leaves on three corners. Dark brown grout separates the cells,
+-- and the cell-state tiles are baked by tools/board_tiles.py.
+local function band(width, top, bottom) return {width = width, top = color.hex(top), bottom = color.hex(bottom)} end
+local cradle_frame = {
+    band(.7, 0x5E4428, 0x4A3018),
+    band(3, 0xB28C5A, 0x9A7446),
+    band(.8, 0x733A12, 0x5A2A0C),
+    band(1.6, 0x664626, 0x56361A),
+    band(2.4, 0x58300F, 0x47240C),
+}
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
     frame = cradle_frame,
+    inner_shadow = {width = 5, alpha = .55, steps = 5},
+    leaves = "frame-leaves",
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
              wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
 }
@@ -428,6 +485,10 @@ function E.ground(R, rules, sx, floor, sweep)
                 end
             end
         end
+    end
+    if R.GROUND.outline then
+        draw_inner_shadow(R, R.GROUND.outline, sx, alpha)
+        draw_leaves(R, R.GROUND.corners, sx, alpha)
     end
     E.cell_highlights(R, rules, sx, alpha)
     if story and story.floor == "oil" then

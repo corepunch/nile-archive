@@ -161,8 +161,10 @@ Once the board has settled, the frame is drawn along the silhouette's own
 edges (`E.silhouette_edges`) as thick lines with a disc at each corner, which
 rounds the outline's corners; while cells fly in, each cell grows its own hexes.
 `elements.cradle_ground(R)` applies the shared Cradle of Rome preset
-(`E.CRADLE_GROUND`): one band built by `E.frame_ramp`, from near-black under
-the board's edge through brown to a bright peach-tan lip and a thin dark line,
+(`E.CRADLE_GROUND`), after the first game's frame pieces: a tan inner lip, a
+rusty line and dark brown wood; `inner_shadow` (`{width, alpha, steps}`), the
+frame's shade on the cells along the board's edge; `leaves`, a sprite drawn on
+the board's north-west, north-east and south-east outer corners;
 dark brown grout (`seam`, `seam_width`) and the cell-state
 tiles. Games supply the fallback face colour as the skin's `board_face`.
 Imported and neutral boards use the same geometry without a frame.
