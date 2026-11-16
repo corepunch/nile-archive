@@ -82,6 +82,9 @@ reel("signal-cliff", 22, 7, "480x900", "--level 3 --reveal 1 --goals-met --reel"
 shot("element-states", "480x900", "--element-states")
 shot("specials-and-stone", "480x900", "--element-states specials")
 shot("plaques-phone", "390x844", "--level 5 --safe-area 0,47,0,34")
+local tablet_review = "--lua tests/fixtures/tablet-hints;games/relic-rush/lua;. --level 5 --reel"
+reel("relic-rush-tablet-hints", 12, 6, "480x900", tablet_review)
+reel("relic-rush-tablet-hints-phone", 12, 6, "390x844", tablet_review .. " --safe-area 0,47,0,34")
 shot("water-after", "480x900", "--level 5")
 shot("water-before", "480x900", "--level 5 --before-well")
 shot("harbor-well", "480x900", "--level 5 --present --frames 115")

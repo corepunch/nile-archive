@@ -44,6 +44,8 @@ reel("story-floor-train-win", 12, 12, "480x900", "--level 28 --reveal 1 --reel")
 shot("element-states", "480x900", "--element-states")
 shot("specials-and-stone", "480x900", "--element-states specials")
 reel("christmas-market-welcome-panes", 25, 15, "480x900", "--level 3 --floor-reel oil --reel")
+frame("christmas-market-tablet-hints", "480x900",
+    "--lua tests/fixtures/tablet-hints;games/christmas-market/lua;. --level 10 --frames 20")
 reel("christmas-market-sawdust-panes", 25, 15, "480x900", "--level 13 --floor-reel oil --reel")
 shot("designed-lanes", "480x900", "--level 4")
 shot("find-letter-480", "480x900", "--level 19")

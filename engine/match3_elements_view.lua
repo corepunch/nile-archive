@@ -530,6 +530,19 @@ local function draw_floor_cell(R, i, at, material, alpha)
     end
 end
 
+local function draw_tablet_hints(R, rules, sx, floor)
+    local g = R.g
+    if not (floor and floor.tablet_hint and g.oil_left > 0 and g.oil_left <= 3)
+        or R.intro or R.reduced_motion or R.overlay ~= R.OV_NONE or g.won or g.lost then return end
+    local radius = R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET) - 1
+    for i = 0, rules.CELLS - 1 do
+        local layers = g.oil[i] or 0
+        if layers > 0 and rules.game_cell_active(g, i) then
+            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, R.now * 4.8 + i * 1.37, layers > 1)
+        end
+    end
+end
+
 -- Cell states drawn as whole tiles over the floor and under the pieces, from
 -- the art keys in R.GROUND.tiles: the cells an armed tool would hit
 -- (`bonus`), the mouse-hovered cell (`hover`) and the selected cell
@@ -612,6 +625,7 @@ function E.ground(R, rules, sx, floor, sweep)
         local art = R.board_art[R.GROUND.frame]
         for _, p in ipairs(frame.painted) do gfx.image_part(art, p.source, p.area:offset(origin), tint) end
     end
+    draw_tablet_hints(R, rules, sx, floor)
     if intro then
         for i = 0, rules.CELLS - 1 do
             if rules.game_cell_active(g, i) then

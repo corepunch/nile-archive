@@ -10,7 +10,7 @@ local match3 = require("match3")
 local elements = require("match3.elements_view")
 local skin = require("skin")
 local neutral = app.arg("default-match3")
-local lantern_floor = {plain="tile-cell-normal", normal="tile-cell-normal", covered="tile-tablet-single"}
+local lantern_floor = {plain="tile-cell-normal", normal="tile-cell-normal", covered="tile-tablet-single", tablet_hint=true}
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 if not neutral then

@@ -45,6 +45,7 @@ hashes and download URL are recorded in
 | Layout and initial layers | `settings/scenes/game/levels/level_N.xml` → `Settings`, `Field/Cell`. Join `Tile` and `Ball` at each `x,y`. |
 | Player-facing rules and names | `settings/locale.xml` → `Puzzle_cell`, `Double_puzzle_cell`, `Lock`, `Timer`, `Pieces_*`, `People_bonus_*`, `Episode_title_*`. |
 | Per-piece yield and tool charge | `settings/scenes/game/game_balls.xml` → `Ball` / `BonusBall`, joined by numeric `type` to `field_balls.xml` in the same folder. |
+| Hint for the last puzzle tiles | `settings/scenes/game/game_settings.xml` → `PuzzleLeftGlow` sets a three-tile threshold, a four-second start delay and a nine-second period. `particles/cell_hint_blue.ptc` and `particles/cell_hint_green.ptc` name a `perimeter` emitter and use `Star_16.png` and `Star_02_16.png`. |
 | Time, scoring and bonuses | `settings/scenes/game/game_settings.xml` → `Adventure`; `game.xml` builds the results view and `bonuses.xml` configures tool effects. |
 | Prices, plan access and building payoff | `settings/scenes/shop/epochs.xml` → `Epoch/Construction`. Read `Price`, `PlanAccess` and `Ball type` separately. `shop.xml` describes shop, plan and epoch-completion UI. |
 | Location, name and citizen | Join construction `id` to `settings/scenes/city/city_view.xml` for position and `enable_user_events`, to `city_info_dialog.xml` page `<id>_0` for the localized title, and to `settings/user_events.xml` for predicates and effects. |

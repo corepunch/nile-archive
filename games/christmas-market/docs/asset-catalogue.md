@@ -482,6 +482,13 @@ rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced
 motion omits the bounce. Capture with
 `build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
+At one to three remaining panes, `engine/match3_vfx.lua` traces their bevels
+with the atlas's Kenney `fx-glint` and `fx-twinkle` sprites. The blue and green
+trails follow the [Cradle of Rome perimeter emitters](../../../docs/cradle-of-rome-reference/README.md#source-inventory).
+Green uses the same motion until its first hit turns the pane blue. Reduce
+Motion hides the effect. Reproduce the mixed-pane capture with
+`build/test/all --suite=christmas-market 'frame christmas-market-tablet-hints'`.
+
 When a swap is rejected by a tinsel tie, only the incoming treat slides toward
 the tie and back. The shared `engine/match3.lua` animation moves the existing
 artwork and plays the normal reject haptic. Review the same motion with

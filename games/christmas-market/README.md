@@ -29,6 +29,7 @@ Blue panes clear in one hit. Green panes first turn blue. A tinsel tie
 absorbs a hit before the piece and its pane can clear. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
 [board progression](docs/board-progression.md) and [story](docs/story.md).
+When three or fewer panes remain, sparks follow their edges in blue or green.
 A treat moved toward a tinsel tie slides toward it and back, with the same
 haptic as a rejected swap and zero moves spent.
 

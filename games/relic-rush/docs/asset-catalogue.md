@@ -589,6 +589,7 @@ pause, guide and the island.
 | REJECT | Existing artwork moves and returns with zero moves spent. Against a chain only the incoming gem moves (`engine/match3.lua`). Capture with `build/test/all --suite=relic-rush 'reel chain-reject'`. |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
 | FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
+| Last tablets | `PuzzleLeftGlow` and the `cell_hint_blue` perimeter emitter in the [Cradle of Rome reference](../../../docs/cradle-of-rome-reference/README.md#source-inventory) inform the threshold and motion. `engine/match3_vfx.lua` traces the existing floor bevel with the atlas's Kenney `fx-glint` and `fx-twinkle` sprites. Visible at one to three tablets during play and hidden under Reduce Motion. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. |
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
 | Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |

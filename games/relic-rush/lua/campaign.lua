@@ -380,7 +380,7 @@ local plaques = {
         cell(2,-1), cell(2,0), cell(2,1), cell(2,2)},
 }
 
-local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single"}}
+local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single", tablet_hint=true}}
 for i, l in ipairs(levels) do
     local cells = plaques[i]
     assert(cells and #cells > 0, "expedition " .. i .. " needs an authored plaque patch")

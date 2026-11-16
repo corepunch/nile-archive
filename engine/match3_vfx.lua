@@ -83,6 +83,25 @@ function V.bind(R, rules)
     local function ring_sprite(name, at, radius, c) sprite(name, at, radius * (name == "ring" and 3.5 or 2.86), 0, c) end
     local function spark(at, radius, angle, c) sprite("glint", at, radius * 2.6, angle, c) end
 
+    local blue_hint, green_hint = rgba(103, 213, 255), rgba(141, 255, 153)
+    function R.vfx_tablet_hint(center, radius, vertices, phase, double)
+        local ink = double and green_hint or blue_hint
+        for n = 10, 0, -1 do
+            local distance = phase - n * .105
+            local edge = math.floor(distance)
+            local at = center + vertices[edge % 6]:lerp(vertices[(edge + 1) % 6], distance - edge):scale(radius)
+            local fade = (1 - n / 11)^1.5
+            if n == 0 then
+                vfx_halo(at, radius * .31, color.alpha(ink, .7))
+                sprite("glint", at, radius * .57, PI / 4, rgba(246, 255, 255, 245))
+            else
+                local flicker = .8 + .2 * math.sin(phase * 7 + n * 2.3)
+                sprite("twinkle", at, radius * (.12 + .25 * fade) * flicker, n,
+                    color.alpha(ink, fade * flicker))
+            end
+        end
+    end
+
     ------------------------------------------------------------------ particles
 
 
