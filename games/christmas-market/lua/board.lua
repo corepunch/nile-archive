@@ -25,7 +25,7 @@ if not neutral then
                 bevel = 1.6, grain = grain}
     end
     R.GROUND.grain = "board-grain.png"
-    R.GROUND.materials = {["lantern-plain"] = material("plain", .45), ["lantern-red"] = material("red", .5),
+    R.GROUND.materials = {["lantern-plain"] = material("plain", .45), ["lantern-red"] = material("red", .3),
                           ["lantern-lit"] = material("lit", .5)}
 end
 local words = require("match3.game").config().board   -- data/game.json

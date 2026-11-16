@@ -4,7 +4,7 @@
 
 The six live chips are market goods. Their silhouettes and dominant colours
 make the gold bell, red candy cane, green holly, sky-blue knitted mitten, plum
-bauble and toasted gingerbread readable over both spruce and muted red.
+bauble and toasted gingerbread readable over both spruce and cranberry red.
 The bell also identifies Gold in the wallet and shop.
 
 | Runtime frames | Rule and artwork |
@@ -90,7 +90,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
-| Lantern panes | Drawn by the game from skin colours; grain from `tools/board_grain.py --seed 11` | `data/board-grain.png` | Spruce unmarked surface, muted red objective and honey-amber cleared pane. See [Lantern panes](#lantern-panes) |
+| Lantern panes | Drawn by the game from skin colours; grain from `tools/board_grain.py --seed 11` | `data/board-grain.png` | Spruce unmarked surface, cranberry red objective and honey-amber cleared pane. See [Lantern panes](#lantern-panes) |
 | Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
 | Market streets | `tools/roads.py christmas-market` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): grey-brown setts, stone kerbs and a snow shoulder. The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); no interaction states. Captures: `screenshots/market.jpg`, `screenshots/phone-market.jpg` |
@@ -340,7 +340,7 @@ and `python3 tools/match3_atlas.py`. Review with
 | Runtime art key | State | Use |
 | --- | --- | --- |
 | `lantern-plain` | Spruce | The unmarked part of the continuous board |
-| `lantern-red` | Muted cranberry red | A pane that still needs a match or tool hit |
+| `lantern-red` | Cranberry red | A pane that still needs a match or tool hit |
 | `lantern-lit` | Honey amber | A pane whose treat has been cleared |
 
 The game draws all three, the way Relic Rush draws its plaques after Cradle of

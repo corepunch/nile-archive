@@ -503,4 +503,4 @@ neighbor's delivery makes up any shortfall for the next earned stall.
 - 2026-11-15: Gave all three episodes a shared act of hospitality. Agnes asks for the first light, the spare cup brings Fenwick into the story, and both towns leave light for the last train. Noelle chooses Bellmere before opening Rosa's parcel. An independent cold read clarified the ribbon's return and moved the decision to stay into the scene with Wren.
 
 - 2026-11-16: Connected six first-clear story objects to the live pieces. The extra mug, a practice scarf and a borrowed lantern carry the same act of hospitality through the market, and matched goods pay for its stalls.
-- 2026-11-16: The lantern panes to light are muted red instead of slate blue, beside spruce green; the lesson and guide say “red panes”. Dialogue is unchanged.
+- 2026-11-16: The lantern panes to light are cranberry red instead of slate blue, beside spruce green; the lesson and guide say “red panes”. Dialogue is unchanged.
