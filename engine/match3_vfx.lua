@@ -52,6 +52,9 @@ function V.bind(R, rules)
             image.additive = true
             fx_art[name] = image
         end
+        -- Smoke puffs keep alpha blending: their grey fringe is the billow's shading.
+        R.vfx_smoke = {}
+        for k = 0, 3 do R.vfx_smoke[k + 1] = assert(board_skin["fx-smoke-" .. k], "missing match3 effect: smoke") end
     end
 
     function R.vfx_reset()

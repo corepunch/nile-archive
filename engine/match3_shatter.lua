@@ -1,6 +1,6 @@
 -- match3_shatter.lua — a floor layer (tablet, ice) breaking apart: the cell's
 -- own artwork is cut into Voronoi shards that crack, burst outwards, tumble and
--- fall under gravity, over a puff of dust. Presentation only, with its
+-- fall under gravity, over billowing smoke (Kenney puff sprites). Presentation only, with its
 -- own random stream and fixed pools (`require("match3.shatter").bind(R, rules)`,
 -- called by match3.game after match3.vfx).
 --
@@ -17,9 +17,11 @@ S.PATTERNS, S.SITES, S.SITE_GAP = 8, 8, .44   -- fracture variety and shard coun
 S.CRACK = .07                                  -- shards hold, cracks glow, then burst
 S.SPEED, S.LIFT, S.GRAVITY = {3.4, 8.5}, {1.6, 4.2}, 46   -- r/s, r/s up, r/s²
 S.LIFE = {.43, .67}                            -- gone before they drop far below the cell
-S.PUFFS, S.PUFF_LIFE = 6, {.8, 1.15}
+S.PUFFS, S.PUFF_LIFE = 4, {1.05, 1.45}
 S.DUST = color(146, 118, 84)                   -- earthy smoke for every layer
-S.SHARD_CAP, S.PUFF_CAP = 220, 72
+S.SMOKE_LIGHT = .7                             -- puffs lean this far from the dust towards white
+S.SMOKE_ALPHA = .85                            -- peak opacity, just after the burst
+S.SHARD_CAP, S.PUFF_CAP = 220, 96
 
 -- The unit hex: vertices at +-x like the board's cells, clockwise on screen.
 local HEX = {}
@@ -170,9 +172,10 @@ function S.bind(R, rules)
             puff_next = puff_next + 1
             local a, d = (k + rand()) * TAU / S.PUFFS, (.15 + .45 * rand()) * radius
             p.x, p.y = at.x + math.cos(a) * d, at.y + math.sin(a) * d * .85
-            local speed = (.8 + 1.4 * rand()) * radius
+            local speed = (1.6 + 1.6 * rand()) * radius
             p.vx, p.vy = math.cos(a) * speed, math.sin(a) * speed * .7 - (.6 + .8 * rand()) * radius
-            p.r0, p.r1 = (.45 + .2 * rand()) * radius, (1.35 + .5 * rand()) * radius
+            p.r0, p.r1 = (.35 + .15 * rand()) * radius, (.85 + .3 * rand()) * radius
+            p.frame, p.angle, p.spin = 1 + math.floor(rand() * 4), rand() * TAU, (rand() - .5) * 1.6
             p.tint, p.age, p.delay, p.life = tint, 0, S.CRACK * .6 + .05 * rand(), range(S.PUFF_LIFE)
         end
     end
@@ -204,6 +207,7 @@ function S.bind(R, rules)
                     local drag = 1 - 2.6 * dt
                     p.vx, p.vy = p.vx * drag, p.vy * drag
                     p.x, p.y = p.x + p.vx * dt, p.y + p.vy * dt
+                    p.angle = p.angle + p.spin * dt
                 end
             end
         end
@@ -259,16 +263,19 @@ function S.bind(R, rules)
 
     local function draw()
         if R.reduced_motion then return end
+        local smoke, light = R.vfx_smoke, S.SMOKE_LIGHT
         for i = 1, S.PUFF_CAP do
             local p = puffs[i]
             local t = p.age - (p.delay or 0)
             if p.life > 0 and t > 0 then
                 local u = t / p.life
                 local grow = 1 - (1 - u) ^ 3
-                local alpha = .34 * math.min(1, u / .14) * (1 - u) ^ 1.4
+                local alpha = S.SMOKE_ALPHA * math.min(1, u / .07) * (1 - u) ^ 1.3
                 local c = p.tint
-                gfx.glow(vec2(p.x, p.y), p.r0 + (p.r1 - p.r0) * grow,
-                    rgba(c.r, c.g, c.b, math.floor(255 * alpha)), rgba(c.r, c.g, c.b, 0))
+                local r, g, b = c.r + (255 - c.r) * light, c.g + (255 - c.g) * light, c.b + (255 - c.b) * light
+                local size = 2 * (p.r0 + (p.r1 - p.r0) * grow)
+                gfx.image_rot(smoke[p.frame], rect.centered(vec2(p.x, p.y), size2.splat(size)), p.angle,
+                    rgba(math.floor(r), math.floor(g), math.floor(b), math.floor(255 * alpha)))
             end
         end
         for i = 1, S.SHARD_CAP do

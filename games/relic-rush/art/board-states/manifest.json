@@ -1134,6 +1134,24 @@
     "review": "docs/review/kenney-particles/README.md",
     "frame_prefix": "fx-"
   },
+  "smoke_sprites": {
+    "source": "../../engine/art/match3/kenney-smoke/",
+    "license": "../../engine/art/match3/kenney-smoke/License.txt",
+    "origin": "Smoke particle assets by Kenney Vleugels, CC0, https://opengameart.org/content/smoke-particle-assets",
+    "runtime": "data/match3.png",
+    "contract": "lua/match3_skin.lua",
+    "renderer": "../../engine/match3_shatter.lua",
+    "frames": {
+      "smoke-0": "whitePuff00",
+      "smoke-1": "whitePuff04",
+      "smoke-2": "whitePuff08",
+      "smoke-3": "whitePuff12"
+    },
+    "states": "transient alpha-blended smoke under breaking floor layers; dust tint at draw time; no interaction states",
+    "reproduction": "python3 tools/match3_atlas.py",
+    "review": "docs/screenshots/review/shatter/smoke-after.jpg",
+    "frame_prefix": "fx-"
+  },
   "additional_board_elements": {
     "source": "../../engine/art/match3-elements/source.png",
     "prompt": "../../engine/art/match3-elements/prompt.txt",

@@ -647,7 +647,7 @@ pause, guide and the island.
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
 | FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
 | Last tablets | Cradle of Rome 2's original `Star_02_16.png` and `Star_16.png` are packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in `data/match3.png`. `engine/match3_vfx.lua` sweeps them clockwise along the bevel over a soft blue wash. One to three tablets receive the first pulse with the move suggestion. The cue repeats every nine seconds until board input. Reduce Motion hides it. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow). |
-| Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single`, or the `oil-material` hex sample on undressed levels) into about eight Voronoi shards (`engine/match3_shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above a puff of earth-coloured dust. Procedural cut-outs of existing art, no new bitmaps or states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg). |
+| Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single`, or the `oil-material` hex sample on undressed levels) into about eight Voronoi shards (`engine/match3_shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above billowing smoke: four Kenney puff sprites per cell (`fx-smoke-0..3`, below), turning slowly, tinted pale earth and fading over about 1.25 s, after the shards. The shards are procedural cut-outs of existing art with no new states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg); smoke [before](screenshots/review/shatter/smoke-before.jpg) and [after](screenshots/review/shatter/smoke-after.jpg) (24 reel frames, 2 apart). |
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
 | Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |
@@ -680,6 +680,12 @@ prism links, special births and the bomb's leading ring stay procedural.
 | `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, ray tips and births |
 | `twinkle` | `star_06` | Spark particles and shard heads |
 | `streak` | `trace_06` | Shard particles, aligned to their velocity |
+| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer (`engine/match3_shatter.lua`), alpha-blended |
+
+The smoke puffs come from Kenney's CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets)
+(`engine/art/match3/kenney-smoke/`, with its license). Unlike the sprites above they keep
+their own colour and alpha, since the grey fringe is the billow's shading, are centred on a
+square and reduced to 128 px.
 
 Review: [kenney-particles](review/kenney-particles/README.md) (bomb and ray frames before and after,
 `--fx bomb|ray --frames N`).

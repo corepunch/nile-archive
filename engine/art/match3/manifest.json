@@ -3356,10 +3356,46 @@
         128
       ]
     },
+    "fx-smoke-0": {
+      "source": "engine/art/match3/kenney-smoke/whitePuff00.png",
+      "runtime": [
+        134,
+        3334,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-1": {
+      "source": "engine/art/match3/kenney-smoke/whitePuff04.png",
+      "runtime": [
+        266,
+        3334,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-2": {
+      "source": "engine/art/match3/kenney-smoke/whitePuff08.png",
+      "runtime": [
+        398,
+        3334,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-3": {
+      "source": "engine/art/match3/kenney-smoke/whitePuff12.png",
+      "runtime": [
+        530,
+        3334,
+        128,
+        128
+      ]
+    },
     "fx-streak": {
       "source": "games/relic-rush/art/particles/kenney/trace_06.png",
       "runtime": [
-        134,
+        662,
         3334,
         128,
         128
@@ -3368,7 +3404,7 @@
     "fx-twinkle": {
       "source": "games/relic-rush/art/particles/kenney/star_06.png",
       "runtime": [
-        266,
+        794,
         3334,
         128,
         128
@@ -3377,7 +3413,7 @@
     "fx-tablet-glow": {
       "source": "engine/art/match3/rome-2-cell-hint/Star_02_16.png",
       "runtime": [
-        398,
+        926,
         3334,
         16,
         16
@@ -3386,7 +3422,7 @@
     "fx-tablet-spark": {
       "source": "engine/art/match3/rome-2-cell-hint/Star_16.png",
       "runtime": [
-        418,
+        946,
         3334,
         16,
         16
@@ -3501,6 +3537,10 @@
       "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",
       "engine/art/match3/goal-carpet.png": "513b2a02163ce5f2c04dddff35e1ed6707a37f1baac71292671d6d38408d9358",
       "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
+      "engine/art/match3/kenney-smoke/whitePuff00.png": "6a94cdfef4752465348840e1c127493ce9cafbe65093541d348c64d3985d7b9b",
+      "engine/art/match3/kenney-smoke/whitePuff04.png": "38a902c019ab4eccff027aab227bc41c522774df707a59d31709fb1de2ab368c",
+      "engine/art/match3/kenney-smoke/whitePuff08.png": "dc234acc53f3f64a235603c910e54005eb34392024ff2439077afd620dd3cf65",
+      "engine/art/match3/kenney-smoke/whitePuff12.png": "f87ace669d6aff1060e2ca52e53b2c8d2a6655cd9525c4bd6caf338f4aa8350c",
       "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
@@ -3524,11 +3564,11 @@
       "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_theme_art.py": "c4aed4c24d6ad5222e715526e2f694c0af813aed53d4a17e9a326413379734f2",
-      "tools/pack_particles.py": "7dd23246a40a4a3a5f64cdc2d50d9f053d79b6b4ffcd45e9aa1e325fbbe58231"
+      "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "engine/data/match3.png": "0d7c6e067b4125ca0f49283b3804f06f1b376343b135e0763737a2b9f4ecc4a3",
-      "engine/match3_frames.lua": "bcf1fbe5a3f0e28debf9c722fdee3ebc00df991ea87caa4886711a106ef720e6"
+      "engine/data/match3.png": "2e202e95f8fcc86a8110e7d765f8de4a24e76293f5aade9796aeb3fa2c8ac97a",
+      "engine/match3_frames.lua": "d1c0cd21237d07c47a82b57a6647824ffe794a17926af5fc26dda3c66968a297"
     }
   }
 }

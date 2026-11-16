@@ -267,13 +267,13 @@ assert (ROOT / result_icons["source"]).is_file() and (ROOT / result_icons["promp
 subprocess.run([sys.executable, str(ROOT / result_icons["registration"]), "--check"], check=True)
 
 # Kenney particle sprites: retained CC0 sources, a fresh atlas and documented frames.
-particles = manifest['particle_sprites']
-assert (ROOT / particles['license']).is_file(), 'Particle sprites need their licence'
-for name, source in particles['frames'].items():
-    path = (Path(particles['source']) / f'{source}.png').as_posix()
-    assert (ROOT / path).is_file(), f'Missing particle source: {source}'
-    assert atlas['effects'][f'fx-{name}'] == path
-    assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
+for particles in (manifest['particle_sprites'], manifest['smoke_sprites']):
+    assert (ROOT / particles['license']).is_file(), 'Particle sprites need their licence'
+    for name, source in particles['frames'].items():
+        path = (Path(particles['source']) / f'{source}.png').as_posix()
+        assert (ROOT / path).is_file(), f'Missing particle source: {source}'
+        assert atlas['effects'][f'fx-{name}'] == path
+        assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
 
 # Exact crop freshness for the changed town controls, without re-exporting the board HUD.
 subprocess.run([sys.executable, str(ROOT/"tools/prepare_hud.py"), "--navigation-only", "--check"], check=True)

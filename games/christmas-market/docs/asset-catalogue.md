@@ -392,9 +392,9 @@ layers, and the three tools use their five authored interaction states.
 [Regular, chained and partly lit boards](screenshots/review/spruce-palette/README.md).
 
 A pane, a double pane's green face or ice shatters when a hit removes it.
-The engine cuts that layer's existing tile into shards over a puff of
-earth-coloured dust (`engine/match3_shatter.lua`). This is a procedural cut-out,
-with no new bitmaps or states, and Reduce Motion hides it. Capture with
+The engine cuts that layer's existing tile into shards over billowing smoke
+(`engine/match3_shatter.lua`), drawn with the Kenney puff sprites `fx-smoke-0..3`
+listed below. The shards are a procedural cut-out with no new states, and Reduce Motion hides it. Capture with
 `build/test/all --suite=christmas-market 'reel fx-shatter'`.
 [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg).
 
@@ -542,6 +542,7 @@ bomb's leading ring stay procedural.
 | `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, beam tips and births |
 | `twinkle` | `star_06` | Spark particles and shard heads |
 | `streak` | `trace_06` | Shard particles, aligned to their velocity |
+| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer, alpha-blended; Kenney CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets) in `engine/art/match3/kenney-smoke/` |
 
 Review: [kenney-particles](review/kenney-particles/README.md) (bomb and shooting-star frames
 before and after, `--fx bomb|ray --frames N`).

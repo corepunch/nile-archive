@@ -15,6 +15,10 @@ SPRITES = {
     'streak': ('trace_06', 128),    # shard particles, long axis vertical
 }
 ROME_HINT = Path(__file__).resolve().parents[1] / 'engine/art/match3/rome-2-cell-hint'
+# Kenney smoke puffs (CC0) for the dust of breaking floor layers. Their grey
+# fringe is the billow shading, so colour and alpha are kept, alpha-blended.
+SMOKE = Path(__file__).resolve().parents[1] / 'engine/art/match3/kenney-smoke'
+SMOKE_PUFFS, SMOKE_SIZE = ['whitePuff00', 'whitePuff04', 'whitePuff08', 'whitePuff12'], 128
 
 
 def registered(root):
@@ -32,5 +36,14 @@ def registered(root):
         path = ROME_HINT / name
         with Image.open(path) as source:
             frames[key] = source.convert('RGBA')
+        sources[key] = path
+    for k, name in enumerate(SMOKE_PUFFS):
+        key, path = f'fx-smoke-{k}', SMOKE / f'{name}.png'
+        with Image.open(path) as source:
+            puff = source.convert('RGBA')
+        side = max(puff.size)   # centred on a square so every puff turns about its middle
+        square = Image.new('RGBA', (side, side), (255, 255, 255, 0))
+        square.paste(puff, ((side - puff.width) // 2, (side - puff.height) // 2))
+        frames[key] = square.resize((SMOKE_SIZE, SMOKE_SIZE), Image.Resampling.LANCZOS)
         sources[key] = path
     return frames, sources
