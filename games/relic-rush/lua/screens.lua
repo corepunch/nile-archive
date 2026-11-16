@@ -204,6 +204,12 @@ local guide_entries = {
      icon={front="resource-wallet-supplies"}},
     {id="score", title="Leaves and flowers", description="These pieces earn score only. See your score at the end of the expedition.",
      icon={front="campaign-leaf"}},
+    {id="rocket", title="Line of 4: rocket", description="Clears its whole axis. Tap it or swap it to launch.",
+     icon={special=rules.ROW}},
+    {id="bomb", title="Crossing lines: bomb", description="Blasts the surrounding cells.",
+     icon={special=rules.BOMB}},
+    {id="rainbow", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its kind; swap with a power-up to multiply it.",
+     icon={special=rules.PRISM}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
      icon={tool="pickaxe"}},
 }
@@ -226,6 +232,7 @@ local function guide_icon(box, icon)
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end
+    if icon.special then R.draw_relic(rules.tile(0, icon.special), pp(box:center()), P.scale, 255 * P.alpha, 1) end
 end
 local guide_form = match3.guide_form({
     title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",

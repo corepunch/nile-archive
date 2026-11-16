@@ -306,7 +306,8 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 ## Play
 
-- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. All pieces in a long line clear together.
+- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. Four in a line makes a rocket that clears its axis, crossing lines make a bomb, and five or more make a rainbow ball that clears every piece of the kind it is swapped with.
+- Swap two specials for a combination attack. A rainbow ball swapped with another power-up turns pieces of the commonest kind into that power-up before firing them.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
 - Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each available tool starts with two charges and costs zero moves. Restore the Camp for Dynamite and the Observatory for Sunburst.

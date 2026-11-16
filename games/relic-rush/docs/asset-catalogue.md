@@ -374,10 +374,12 @@ Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:
 Largest-component isolation removes neighbouring sprite fragments before centring
 and resizing; it does not create new colours or states.
 
-## Diagnostic special pieces
+## Special pieces
 
-The shared engine’s special pieces appear on reference boards and in art
-previews. Live expeditions use straight matches and the three tool buttons.
+Live expeditions make rockets (four in a line), bombs (crossing lines) and
+rainbow balls (five or more in a line). Expeditions accept straight lines only,
+so the plane, made from a four-cell rhombus, appears only on reference boards
+and in art previews.
 
 Source for every new sprite below: `art/board-states/source.png`, generated together
 in one built-in ImageGen call. The exact prompt is
