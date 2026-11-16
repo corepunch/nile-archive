@@ -1,4 +1,4 @@
--- Three wallet slots. The optional amphora scores points without paying resources.
+-- Three wallet slots. Score-only pieces have no wallet yield.
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3, STARS=4,
     currencies={
@@ -9,7 +9,7 @@ local E = {
     pieces={
         [0]={key="coin", name="Sun coin", slot=1, amount=4},
         {key="berries", name="Red berries", slot=2, amount=1},
-        {key="emerald", name="Emerald", slot=2, amount=1},
+        {key="apple", name="Green apple", slot=2, amount=1},
         {key="timber", name="Timber", slot=3, amount=2},
         {key="stone", name="Dressed stone", slot=3, amount=3},
     },
@@ -41,8 +41,11 @@ end
 function E.board_loadout(level, number, restored)
     local yields = {}
     local tools = {2, 0, 0}
+    local score_pieces = level.score_pieces or {}
     for kind, piece in pairs(E.pieces) do
-        if kind ~= level.omit_kind and not (level.story_piece and level.goal_kind == kind) then yields[kind] = piece end
+        if kind ~= level.omit_kind and not score_pieces[kind] and not (level.story_piece and level.goal_kind == kind) then
+            yields[kind] = piece
+        end
     end
     for i, unlock in ipairs(E.unlocks) do
         if number >= unlock.first_level and restored and restored[i - 1] then

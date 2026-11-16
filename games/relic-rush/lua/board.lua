@@ -69,6 +69,8 @@ function R.board_piece_texture(kind)
     end
     local piece = g.resource_yields and g.resource_yields[kind]
     if campaign then
+        local score_piece = level.score_pieces and level.score_pieces[kind]
+        if score_piece then return R.board_art["campaign-" .. score_piece] end
         if piece then return R.board_art["campaign-" .. piece.key] end
         if kind == 5 then return R.board_art["campaign-amphora"] end
     end

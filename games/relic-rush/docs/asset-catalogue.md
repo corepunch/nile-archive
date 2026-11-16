@@ -31,32 +31,36 @@ The [front-facing carved hex stones](../../../art/match3-blockers/source.png) us
 
 ## Campaign piece atlas
 
-One built-in ImageGen edit painted all 23 campaign objects together. It used the
+One built-in ImageGen edit painted the original 23 campaign objects together. It used the
 [previous pieces assembled in slot order](../art/campaign-pieces/edit-target.png)
 as the edit target and the original Cradle of Rome's
 `reference/cradle-of-rome/visuals/board-pieces.png` as the style reference.
 The objects share an upper-left light, dark contours and compact silhouettes.
 The [transparent source](../art/campaign-pieces/source.png), [exact prompt](../art/campaign-pieces/prompt.txt)
 and [manifest](../art/board-states/manifest.json) record the inputs and registration.
+A [single revision](../art/campaign-pieces/fruit-and-score.png) redraws the
+emerald as a green apple and adds a leaf and flower. The
+[revision prompt](../art/campaign-pieces/fruit-and-score.prompt.txt) and named
+crop boxes in the manifest register all three into the same runtime atlas.
 
 | Atlas row | Left to right |
 | --- | --- |
-| 1 | Sun coin, berries, emerald, timber, quarry stones |
+| 1 | Sun coin, berries, green apple, timber, quarry stones |
 | 2 | Amphora, water bucket, cut blocks, ration jar, trade coins |
 | 3 | Grain, quartz, springwater, sun gem, lamp lens |
 | 4 | Relay cable, tide chart, trail arrow, tool roll, snapped cable |
-| 5 | Supply satchel, shutter gear, folded note |
+| 5 | Supply satchel, shutter gear, folded note, leaf, flower |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
-measured row bands and five columns, trim the transparent exterior and
+measured row bands, columns and revision boxes, trim the transparent exterior and
 uniformly fit each object into a centered 128 px cell with a 112 px maximum
 extent. The runtime atlas is `data/campaign-pieces.png`. The same sprite appears
 in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
 wallet use their own currency artwork, and first-clear cards use their prop art.
 The sprites are free-standing objects. At the board's actual draw size the
-23 pieces fit the canonical face in strict object mode.
-[In-game review](screenshots/review/campaign-pieces/README.md).
+25 pieces fit the canonical face in strict object mode.
+[In-game review](screenshots/review/fruit-and-score/README.md).
 
 ## Resource pieces
 
@@ -80,7 +84,7 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | --- | --- | --- |
 | `coin` | Round gold coin engraved with an eight-ray sun, 4 Coins | Coins icon |
 | `berries` | Red berries, 1 Food | Board only |
-| `emerald` | Square-cut green gem, 1 Food | Board only |
+| `emerald` | Square-cut green gem from the earlier palette | Alternate art previews |
 | `timber` | One unwrapped log, 2 Supplies | Camp Timber award |
 | `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
 | `water` | Teal water bucket, 3 Food. Replaces timber from board 5 after the Well is restored. | Board and guide |
@@ -93,8 +97,9 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `sun-gem` | Existing Jewels gold gem (`data/tile-sets/jewels/0.png`), 9 Coins | Board and guide from 30 |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
-The score-only amphora in the live campaign comes from the campaign atlas.
-Alternate previews draw kind 5 from the selected match-piece pack.
+Leaves and flowers use the same board match and scoring behavior as other
+pieces. Their authored slots carry no wallet yield. The amphora asset serves
+legacy art previews.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The five later chips use their existing pack art at its authored orientation

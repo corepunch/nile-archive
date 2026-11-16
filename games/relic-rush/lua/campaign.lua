@@ -302,6 +302,15 @@ levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the 
 levels[10].omit_kind = 0
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
 levels[13].omit_kind = 5
+-- Score pieces occupy existing palette slots. Level 6 has both kinds,
+-- with the restored Well supplying Food on that expedition.
+levels[3].score_pieces = {[5]="leaf"}
+levels[4].score_pieces = {[5]="flower"}
+levels[6].score_pieces = {[1]="flower", [5]="leaf"}
+levels[7].score_pieces = {[5]="flower"}
+levels[9].score_pieces = {[5]="leaf"}
+for _, i in ipairs{12,18,24} do levels[i].score_pieces = {[2]="leaf"} end
+for _, i in ipairs{15,21,27} do levels[i].score_pieces = {[2]="flower"} end
 levels[3].signal = "cliff"
 levels[30].signal = "landing"
 levels[30].signal_cell = cell(1,2)

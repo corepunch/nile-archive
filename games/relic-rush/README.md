@@ -205,7 +205,8 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-A matched sun coin earns 4 Coins. Red berries and emeralds pay 1 Food.
+A matched sun coin earns 4 Coins. Red berries and green apples pay 1 Food.
+Leaves and flowers add score only.
 Timber and dressed stone pay 2 and 3 Supplies. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
 Authored story pieces keep their slots. The result shows what the next

@@ -67,12 +67,12 @@ visible cost.
 | --- | --- | ---: |
 | Gold sun coin | Coins | 4 |
 | Red berries | Food | 1 |
-| Emerald | Food | 1 |
+| Green apple | Food | 1 |
 | Timber log | Supplies | 2 |
 | Purple dressed stone | Supplies | 3 |
 
 Buy or restore a building using the family totals. Timber and stone are
-separate match kinds within Supplies, just as berries and emeralds are
+separate match kinds within Supplies, just as berries and green apples are
 separate kinds within Food. The town and board show Coins, Supplies and Food
 with a sun coin, a timber-and-stone bundle and a food basket. Pending earnings
 are visible on the board and bank on a win. The completion dialog shows score.
@@ -82,7 +82,8 @@ story kind in the fifth slot. A 5+1 recovery has six total kinds and should
 earn that complexity through layout and enough legal opening swaps. Board 1
 uses five regular resources. Boards 4 and 9 use 5+1. Board 8 puts the snapped
 cable in the orange slot and omits red berries, leaving room for cut blocks in
-a 4+1 palette. The orange slot can also hold an amphora that pays score. Board 4 takes
+a 4+1 palette. Leaves and flowers add score in their authored slots and clear
+plaques just like other matches. Board 4 takes
 the Coins slot for the tide chart. The Well purchase that follows uses Coins
 banked on earlier boards or earned from unused moves and replays.
 

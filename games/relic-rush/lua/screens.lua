@@ -204,6 +204,8 @@ local guide_entries = {
      icon={floor="tile-tablet-single", piece=chip_prefix .. "coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Coins, Supplies and Food.",
      icon={front="resource-wallet-supplies"}},
+    {id="score", title="Leaves and flowers", description="These pieces earn score only. See your score at the end of the expedition.",
+     icon={front="campaign-leaf"}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
      icon={tool="pickaxe"}},
 }

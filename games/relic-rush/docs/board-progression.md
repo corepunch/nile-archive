@@ -8,9 +8,10 @@ it is out of the way. Boards 2–10 and 13 show a story piece in one colour slot
 
 | Boards | Palette |
 | --- | --- |
-| 1 | Five regular kinds, including emerald and the timber log |
-| 2, 5, 8, 10, 13 | Four regular kinds and one story piece |
-| 3, 4, 6, 7, 9 | Five regular kinds and one story piece |
+| 1 | Five resource kinds, including the green apple and timber log |
+| 2, 5, 8, 10, 13 | Four resource kinds and one story piece |
+| 3, 4, 7, 9 | Four resource kinds, one score piece and one story piece |
+| 6 | Three resource kinds, two score pieces and one story piece |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
 to choose a story sprite and the colour slot it replaces. An optional
@@ -19,8 +20,8 @@ refills. Leave it unset for five regular kinds plus the story piece.
 The [campaign atlas](asset-catalogue.md#campaign-piece-atlas) supplies the art
 for these slots and for the pieces introduced by restorations.
 
-Ordinary boards use five resource pieces. The amber amphora on early six-kind
-boards earns score. Confirming the Spring Well replaces blue timber with a water
+Ordinary boards use five match kinds. Green apples earn 1 Food each.
+Confirming the Spring Well replaces blue timber with a water
 bucket worth 3 Food from board 5. The Artisan Workshop replaces dressed
 stone with cut blocks worth 5 Supplies from board 8. The broken cable occupies
 the orange slot on that board, and berries are omitted to keep five kinds. The Jungle Market
@@ -30,6 +31,12 @@ ration jars with grain, and from board 20 the Archive improves Supplies.
 The Fountain upgrades the blue water slot from board 27 and the Temple
 upgrades the Coins slot on board 30. The Camp and Observatory add tools on
 boards 2 and 24. These rewards persist wherever the slot is available.
+
+Leaves appear on boards 3, 6, 9, 12, 18 and 24. Flowers appear on boards 4, 6,
+7, 15, 21 and 27. They award score only. Earlier introductions use the score
+slot. Board 6 also uses the berries' slot for the flower and gets Food from
+the Well. Later appearances use the apple slot while rations or grain and
+water still pay Food.
 
 Boards 5 and 9 use authored openings with seeded refills. The first idle hint
 matches three buckets on the quay approach or three cut blocks by the market

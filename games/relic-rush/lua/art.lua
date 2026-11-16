@@ -20,11 +20,11 @@ A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear",
 A.separate_rewards = {"note", "broken-cable"}
 A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
 A.campaign_pieces = {
-    "coin", "berries", "emerald", "timber", "stone",
+    "coin", "berries", "apple", "timber", "stone",
     "amphora", "water", "cut-blocks", "rations", "trade-coins",
     "grain", "quartz", "springwater", "sun-gem", "lens",
     "cable", "chart", "marker", "tools", "broken-cable",
-    "supplies", "gear", "note",
+    "supplies", "gear", "note", "leaf", "flower",
 }
 A.resource_upgrades = {
     ["cut-blocks"]="tile-sets/resources/4.png", ["trade-coins"]="tile-sets/resources/0.png",
@@ -131,6 +131,8 @@ function A.load()
             textures["resource-" .. key] = image
         end
     end
+    -- Explicit art comparisons retain the earlier green piece for this slot.
+    textures["resource-apple"] = textures["resource-emerald"]
     textures["find-timber"] = textures["resource-timber"]
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
@@ -151,9 +153,11 @@ function A.draw_catalogue(R)
         end
     end
     R.say_at("EXPEDITION RESOURCES", vec2(240, 355), 13, R.PAL_CREAM, 0)
-    local prefix = A.use_campaign_pieces() and "campaign-" or "resource-"
+    local campaign = A.use_campaign_pieces()
+    local prefix = campaign and "campaign-" or "resource-"
     for i, key in ipairs(A.resource_pieces) do
-        gfx.image(R.board_art[prefix .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
+        local name = campaign and key == "emerald" and "apple" or key
+        gfx.image(R.board_art[prefix .. name], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "tile-cell-normal", "tile-tablet-single", "selected", "hint", "guide"}

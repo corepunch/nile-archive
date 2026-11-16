@@ -57,7 +57,6 @@ do
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
-    check(not R.make_board(8,19).resource_yields[5],'the early amphora has no wallet yield')
     check(R.make_board(9,19).resource_yields[1].key=='berries','rations are locked before the market')
     check(island.island_place_next(c,bank,9,0),'confirm the earned market')
     for level=0,rules.LEVELS-1 do
@@ -70,6 +69,10 @@ do
         check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
+        for kind in pairs(spec.score_pieces or {}) do
+            check(kind ~= spec.goal_kind and kind ~= spec.omit_kind and not g.resource_yields[kind],
+                'score pieces use their own active slot and never pay the wallet')
+        end
     end
 
     -- Act on the same first hint a player sees. The match must stock the town
@@ -84,6 +87,28 @@ do
         check(g.earnings[currency] == expected and g.oil_left < plaques,
             'the opening earns the upgraded resource and clears a plaque')
     end
+end
+
+-- The Shore Marker board has two different score pieces. A matching line of
+-- either uses the normal scoring path, while a green apple still earns Food.
+for _, entry in ipairs{{6, 1, 'flower'}, {6, 5, 'leaf'}, {1, 2, 'apple'}} do
+    local level, kind, name = table.unpack(entry)
+    local g = rules.game_start(level-1,123)
+    local spec = rules.level_of(g)
+    local yield = g.resource_yields[kind]
+    local key = yield and yield.key or spec.score_pieces and spec.score_pieces[kind]
+    check(key==name,'the selected expedition spawns ' .. name)
+    local present = false
+    for i=0,rules.CELLS-1 do present = present or g.tiles[i].kind == kind end
+    check(present,'the opening contains ' .. name)
+    for r=0,2 do g.tiles[rules.hex_index(-2,r)] = rules.tile(kind) end
+    local m = rules.new_match()
+    rules.game_matches(g,m,-1)
+    check(m.hits >= 3,'a line of ' .. name .. ' matches')
+    rules.game_apply(g,m)
+    check(g.score > 0 and g.earnings[economy.GOLD] == 0 and g.earnings[economy.SUPPLIES] == 0
+        and g.earnings[economy.PROVISIONS] == (yield and m.hits or 0),
+        'apple matches pay Food and leaf or flower matches pay score only')
 end
 
 for i, unlock in ipairs(economy.unlocks) do

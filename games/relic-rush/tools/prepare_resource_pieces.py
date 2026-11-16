@@ -43,6 +43,9 @@ def register(spec, check):
 
 def register_campaign(spec, check):
     atlas = Image.open(ROOT / spec['source'])
+    revision = spec['revision']
+    revised = Image.open(ROOT / revision['source'])
+    assert revised.mode == 'RGBA'
     edges = spec['row_edges']
     assert atlas.mode == 'RGBA' and edges[0] == 0 and edges[-1] == atlas.height
     rows, size = spec['rows'], spec['cell_size']
@@ -50,8 +53,9 @@ def register_campaign(spec, check):
     packed = Image.new('RGBA', (columns * size, len(rows) * size))
     for row, keys in enumerate(rows):
         for col, key in enumerate(keys):
-            tile = atlas.crop((col*atlas.width//columns, edges[row],
-                               (col+1)*atlas.width//columns, edges[row+1]))
+            box = revision['boxes'].get(key)
+            tile = revised.crop(box) if box else atlas.crop((col*atlas.width//columns, edges[row],
+                                                             (col+1)*atlas.width//columns, edges[row+1]))
             packed.paste(fit_sprite(tile, key, size, spec['extent']), (col*size, row*size))
     target = ROOT / spec['runtime']
     if check:
