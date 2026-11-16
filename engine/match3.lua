@@ -351,7 +351,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if R.intro and R.intro:arrive(.05, 2.8, .58) <= 0 then return end
         for k = 0, 2 do
             local meter = R.g.tool_meter and R.g.tool_meter[k + 1]
-            if R.g.tool_meter and not meter then goto next_tool end
+            if R.g.tool_meter and not meter and not (R.g.fixed_tools and R.g.fixed_tools[k + 1]) then goto next_tool end
             local r = R.board_tool_bounds(k)
             local x, y = r:center().x, r.y
             local charges = R.g.tools[k + 1]
@@ -1283,6 +1283,7 @@ function E.new(config)
             g.spawn_kinds = loadout.kinds
             g.resource_multipliers = loadout.multipliers
             g.tool_threshold, g.tool_meter = loadout.tool_threshold, loadout.tool_meter
+            g.charge_tool = loadout.charge_tool
             g.tools = {0, 0, 0}
         elseif l.omit_kind ~= nil then
             -- The palette contains stable colour slots. Board copies share it read-only.
@@ -1629,8 +1630,8 @@ function E.new(config)
             R.tool = R.tool == k and -1 or k
             R.selected = -1
             R.notice(R.tool < 0 and "Tool put away." or R.tool_notes[k + 1])
-        elseif R.g.tool_meter then
-            R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Build its stall to unlock this tool.")
+        elseif R.g.tool_meter and not (R.g.fixed_tools and R.g.fixed_tools[k + 1]) then
+            R.notice(R.g.charge_tool == k + 1 and "Match its pieces to charge this tool." or "This tool charges on other boards.")
         else R.notice("No charges left. More tools next expedition.") end
     end
     local function tap_cell(at)
@@ -1744,6 +1745,7 @@ function E.new(config)
         local old_score = R.g.score
         elements.maker_observe(R)
         rules.game_apply(R.g, R.pending)
+        if R.bank_tool_stock then R.bank_tool_stock() end
         elements.maker_observe(R)
         R.phase = PH_CLEAR
         R.phase_time = 0

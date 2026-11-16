@@ -390,10 +390,14 @@ end
 local function test_campaign()
     local m = rules.new_match()
     local total, runs = 0, 0
+    local restored, wonder = {}, 1
     for lvl = 0, LEVELS - 1 do
+        if rules.wonder_levels[wonder] == lvl then
+            restored[wonder - 1], wonder = true, wonder + 1
+        end
         local wins = 0
         for seed = 1, 4 do
-            local g = rules.game_start(lvl, seed)
+            local g = rules.game_start(lvl, seed, restored)
             runs = runs + 1
             for _ = 1, 100 do
                 if g.won or g.lost then break end

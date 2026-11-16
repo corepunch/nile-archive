@@ -24,7 +24,7 @@ E.silver_coin = {key="silver-coin", name="Silver coins", kind=0, slot=E.GOLD, am
 -- Same order as the story catalogue and its stable city type IDs (zero-based).
 -- backdrop is the board painting the restored building brings: 1 lagoon, 2 temple.
 E.unlocks = {
-    {key="dynamite", backdrop=1, name="Dynamite", tool=2, amount=2, first_level=2, effect="Hits one cell and its neighbors."},
+    {key="dynamite", backdrop=1, name="Dynamite", tool=2, amount=3, first_level=2, effect="Hits one cell and its neighbors."},
     {key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
     {key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
     {key="rations", backdrop=1, name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
@@ -36,19 +36,20 @@ E.unlocks = {
     }},
     {key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
     {key="quartz", backdrop=2, name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
-    {key="sunburst", backdrop=2, name="Sunburst", tool=3, amount=2, first_level=24, effect="Hits every piece of the color you tap."},
+    {key="sunburst", backdrop=2, name="Sunburst", tool=3, amount=3, first_level=24, effect="Hits every piece of the color you tap."},
     {key="shrimp", backdrop=1, name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
     {key="emerald", backdrop=2, name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
 }
 
+E.EXTRA_BONUS_KIND, E.TOOL_THRESHOLD = 6, 27
+
 function E.unlock_text(unlock)
-    if unlock.tool then return ("%d %s charges per expedition."):format(unlock.amount, unlock.name) end
+    if unlock.tool then return ("Match %s pieces to charge the tool."):format(unlock.name) end
     return ("%s earn +%d %s each."):format(unlock.name, unlock.amount, E.currencies[unlock.slot].name)
 end
 
-function E.board_loadout(level, number, restored)
-    local yields = {}
-    local tools = {2, 0, 0}
+function E.board_loadout(level, number, restored, seed)
+    local yields, kinds, meter, bonuses = {}, {}, {}, {}
     local score_pieces = level.score_pieces or {}
     for kind, piece in pairs(E.pieces) do
         if kind ~= level.omit_kind and not score_pieces[kind] and not (level.story_piece and level.goal_kind == kind) then
@@ -59,7 +60,9 @@ function E.board_loadout(level, number, restored)
     if number == silver.first_level and yields[silver.kind] then yields[silver.kind] = silver end
     for i, unlock in ipairs(E.unlocks) do
         if number >= unlock.first_level and restored and restored[i - 1] then
-            if unlock.tool then tools[unlock.tool] = unlock.amount
+            if unlock.tool then
+                meter[unlock.tool] = 0
+                bonuses[#bonuses + 1] = unlock
             elseif yields[unlock.kind] then
                 yields[unlock.kind] = unlock
                 for _, variant in ipairs(unlock.variants or {}) do
@@ -68,7 +71,20 @@ function E.board_loadout(level, number, restored)
             end
         end
     end
-    return yields, tools
+    for kind = 0, E.EXTRA_BONUS_KIND - 1 do
+        if kind ~= level.omit_kind then kinds[#kinds + 1] = kind end
+    end
+    if #bonuses == 0 then return yields, {kinds=kinds, tool_meter=meter, tool_threshold=E.TOOL_THRESHOLD} end
+    local newest = bonuses[#bonuses]
+    local bonus = number == newest.first_level and newest or bonuses[(seed or 1) % #bonuses + 1]
+    -- Use the spare amphora slot unless the authored board reserves it.
+    local kind = 5
+    if level.goal_kind == kind or score_pieces[kind] or level.omit_kind == kind then
+        kind = E.EXTRA_BONUS_KIND
+        kinds[#kinds + 1] = kind
+    end
+    yields[kind] = bonus
+    return yields, {kinds=kinds, tool_meter=meter, charge_tool=bonus.tool, tool_threshold=E.TOOL_THRESHOLD}
 end
 
 -- Like Cradle of Rome, the board shows the latest restoration in force on this

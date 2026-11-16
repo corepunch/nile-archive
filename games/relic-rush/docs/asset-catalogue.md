@@ -114,16 +114,16 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves and flowers use the same board match and scoring behavior as other
-pieces. Their authored slots carry no wallet yield. The amphora asset serves
-legacy art previews.
+pieces. Their authored slots carry no wallet yield. The amphora is available
+when its slot has no bonus or story piece.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The alternate packs still supply separate grain and quartz sprites at their
 authored orientation and alpha. Selected, hinted and falling pieces use the normal chip
 with the existing board feedback. The Camp and Observatory enable existing
 Dynamite and Sunburst controls with their authored normal, selected, pressed,
-hover and disabled artwork. The locked and depleted tools share the disabled
-art and show different tap notices. Review `shot hex-first`, `shot hex-late`,
+hover and disabled artwork. The toolbar shows each unlocked tool and uses the
+disabled artwork when it has no stored uses. Review `shot hex-first`, `shot hex-late`,
 `shot landing-briefing`, and `shot phone-story-level-30` in the Relic Rush suite.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
 The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
@@ -500,9 +500,23 @@ cover a zero-charge ring at both phone sizes.
 
 ## Tools: complete interaction matrix
 
-Each tool starts with two charges per level, costs no move, and is used by selecting
-it then tapping an active cell. Pickaxe hits one cell; dynamite hits its cell and
-six neighbours. Sunburst hits every piece of the tapped kind.
+Tools cost no move. Select a tool and tap an active cell. Pickaxe starts with
+two uses and hits one cell. Dynamite hits its cell and six neighbours.
+Sunburst hits every piece of the tapped kind.
+
+The Camp introduces `dynamite` pieces on expedition 2 and the Observatory
+introduces `sunburst` pieces on expedition 24. Matching them earns three points
+per cleared piece. A tool use costs 27 points. Later boards spawn one family,
+and the toolbar keeps uses and partial charge for both unlocked tools.
+
+Built-in ImageGen authored both free-standing pieces together in one strip.
+[Source strip](../art/bonus-pieces/source.png) · [Prompt](../art/bonus-pieces/prompt.txt).
+Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop each half
+by its alpha bounds and fit it to 114 px on a 128 px transparent canvas. The
+runtime atlas is `data/bonus-pieces.png`. The board and guide use these same
+textures across tile packs. The HUD uses the existing five authored button states.
+Reproduce the board captures with `build/test/all --suite=relic-rush "shot goal-board" "shot sunburst-board" "shot phone-sunburst-board" "shot bonus-"`.
+[Camp before and after](review/bonus-unlocks/camp.jpg) · [Sunburst and alternate packs](review/bonus-unlocks/bonus-pieces.jpg)
 
 All fifteen buttons are separately painted in the same atlas, including their
 backgrounds. The renderer never desaturates, tints or synthesizes a disabled state.

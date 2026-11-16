@@ -37,6 +37,7 @@ A.resource_upgrades = {
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
     ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
+A.bonus_pieces = {"dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
@@ -117,6 +118,10 @@ function A.load()
     for i, key in ipairs(A.campaign_pieces) do
         local col, row = (i - 1) % 5, (i - 1) // 5
         textures["campaign-" .. key] = texture.region(campaign, rect(col * 128, row * 128, 128, 128))
+    end
+    local bonuses = texture.load("bonus-pieces.png")
+    for i, key in ipairs(A.bonus_pieces) do
+        textures["bonus-" .. key] = texture.region(bonuses, rect((i - 1) * 128, 0, 128, 128))
     end
     for _, key in ipairs(A.campaign_resources) do
         textures["resource-" .. key] = textures["campaign-" .. key]

@@ -20,7 +20,7 @@ local function opening_unlock(g)
     local level = rules.level_of(g)
     for i, unlock in ipairs(economy.unlocks) do
         if g.level + 1 == unlock.first_level or level.featured_resource == unlock.key then
-            local active = unlock.tool and g.starting_tools and g.starting_tools[unlock.tool] > 0
+            local active = unlock.tool and g.charge_tool == unlock.tool
                 or g.resource_yields and g.resource_yields[unlock.kind] == unlock
             if active then return unlock, island.wonders[i].name end
         end
@@ -39,7 +39,7 @@ local present_board = R.present_board
 function R.present_board()
     present_board()
     local g = R.g
-    if g.level < 20 and g.moves == rules.level_of(g).moves and not app.arg("mission") then
+    if g.moves == rules.level_of(g).moves and not app.arg("mission") then
         local unlock, building = opening_unlock(g)
         if unlock then
             local text = economy.unlock_text(unlock)

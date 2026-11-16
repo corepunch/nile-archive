@@ -42,7 +42,8 @@ do
     check(locked.backdrop==rules.level_of(locked).background,'with nothing restored the board keeps its own scene')
     check(island.island_place_next(R.island,bank,4,0),'place the camp before the well')
     local c=R.island
-    check(R.make_board(1,19).tools[2]==2,'the camp stocks dynamite starting with expedition 2')
+    local camp=R.make_board(1,19)
+    check(camp.charge_tool==2 and camp.tools[2]==0,'the camp adds dynamite pieces starting with expedition 2')
     local fits,spot=c:find_spot(economy.WELL_KIND,island.island_suggestion(economy.WELL_KIND))
     check(fits,'well fits first region')
     c:begin_place(economy.WELL_KIND,spot)
@@ -69,7 +70,8 @@ do
         check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
         check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
-        check(g.spawn_kinds==nil and rules.COLORS==6,'every expedition spawns all six kinds')
+        check(#g.spawn_kinds==(g.resource_yields[economy.EXTRA_BONUS_KIND] and 7 or 6),
+            'bonus pieces use the spare slot or join the authored palette')
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
         for kind in pairs(spec.score_pieces or {}) do
             check(kind ~= spec.goal_kind and kind ~= spec.omit_kind and not g.resource_yields[kind],
@@ -162,7 +164,7 @@ do
     for i=5,#economy.unlocks do
         local unlock=economy.unlocks[i]
         local before=R.make_board(unlock.first_level-1,41)
-        local was_locked=unlock.tool and before.tools[unlock.tool]==0
+        local was_locked=unlock.tool and before.tool_meter[unlock.tool]==nil
             or not unlock.tool and before.resource_yields[unlock.kind]~=unlock
         check(was_locked, unlock.name .. ' is locked until construction')
         local cost=island.wonders[i].cost
@@ -181,9 +183,11 @@ do
         if unlock.tool then
             local moves=g.moves
             g.tiles[cell]=rules.tile(0)
-            check(g.tools[unlock.tool]==2 and rules.game_tool(g,unlock.tool-1,cell,m),'the observatory unlocks a usable Sunburst')
+            check(g.charge_tool==unlock.tool and g.tools[unlock.tool]==0,'the observatory introduces Sunburst pieces with an empty meter')
+            g.tools[unlock.tool]=1
+            check(rules.game_tool(g,unlock.tool-1,cell,m),'a charged Sunburst can be used')
             rules.game_apply(g,m)
-            check(g.earnings[economy.GOLD]>=6 and g.tools[unlock.tool]==1 and g.moves==moves,'Sunburst earns resources without spending a move')
+            check(g.earnings[economy.GOLD]>=6 and g.tools[unlock.tool]==0 and g.moves==moves,'Sunburst earns resources without spending a move')
         else
             check(g.resource_yields[unlock.kind]==unlock,'opening uses ' .. unlock.name)
             g.tiles[cell]=rules.tile(unlock.kind)
@@ -196,7 +200,7 @@ do
     check(final.resource_yields[0]==economy.unlocks[10] and final.resource_yields[1]==economy.unlocks[6] and
           final.resource_yields[3]==economy.unlocks[9] and final.resource_yields[4]==economy.unlocks[7],
           'the last board combines all current chip upgrades')
-    check(final.tools[2]==2 and final.tools[3]==2,'both restored tools replenish on a fresh run')
+    check(final.tool_meter[2]==0 and final.tool_meter[3]==0,'both restored tools are in the inventory')
 end
 
 -- Clear regular pieces through the real match resolver. A blocker absorbs

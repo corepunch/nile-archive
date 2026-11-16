@@ -967,6 +967,7 @@ function G.bind(R, over)
         R.prog.wallet = s:ints("wallet", R.prog.wallet)
         R.prog.lives = s:int("lives", R.prog.lives or rules.LIVES)
         R.prog.life_at = s:int("life_at", R.prog.life_at or 0)
+        R.prog.tool_stock = s:ints("tool_stock", R.prog.tool_stock or purse())
         R.island:serialize(s)
         story.serialize(s)
         journey.serialize(s, R.prog)
@@ -989,7 +990,33 @@ function G.bind(R, over)
     end
 
     function R.make_board(level, seed, preview)
-        return rules.game_start(level, seed, R.board_context and R.board_context(preview))
+        local g = rules.game_start(level, seed, R.board_context and R.board_context(preview))
+        if not preview and g.tool_meter and R.prog then
+            g.bank_tools = true
+            local stock = R.prog.tool_stock
+            for tool in pairs(g.tool_meter) do
+                local points = stock and math.max(0, stock[tool]) or 0
+                g.tools[tool] = points // g.tool_threshold
+                g.tool_meter[tool] = points % g.tool_threshold
+            end
+        end
+        return g
+    end
+
+    -- Tools earned and spent in a resolved wave carry into retries and other boards.
+    function R.bank_tool_stock()
+        local g = R.g
+        if not g.bank_tools then return end
+        local stock = R.prog.tool_stock or purse()
+        local changed = false
+        for tool, meter in pairs(g.tool_meter) do
+            local points = g.tools[tool] * g.tool_threshold + meter
+            if stock[tool] ~= points then stock[tool], changed = points, true end
+        end
+        if changed then
+            R.prog.tool_stock = stock
+            R.save_progress()
+        end
     end
 
     function R.start_level(chosen)

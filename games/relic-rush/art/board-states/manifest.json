@@ -436,6 +436,7 @@
     "data/board-tiles/selected.png",
     "data/board-tiles/tablet-double.png",
     "data/board-tiles/tablet-single.png",
+    "data/bonus-pieces.png",
     "data/building-shadows/amphitheater.png",
     "data/building-shadows/apothecary.png",
     "data/building-shadows/archive.png",
@@ -1784,14 +1785,16 @@
     "dynamite": {
       "building": "camp",
       "first_level": 2,
-      "charges": 2,
-      "review": "hex-late"
+      "review": "goal-board",
+      "charge_per_piece": 3,
+      "charge_threshold": 27
     },
     "sunburst": {
       "building": "observatory",
       "first_level": 24,
-      "charges": 2,
-      "review": "phone-story-level-30"
+      "review": "sunburst-board",
+      "charge_per_piece": 3,
+      "charge_threshold": 27
     }
   },
   "resource_pieces": {
@@ -2087,5 +2090,23 @@
       "runtime": "data/campaign-pieces.png",
       "building": "gateway"
     }
+  },
+  "bonus_pieces": {
+    "source": "art/bonus-pieces/source.png",
+    "prompt": "art/bonus-pieces/prompt.txt",
+    "runtime": "data/bonus-pieces.png",
+    "rows": [
+      [
+        "dynamite",
+        "sunburst"
+      ]
+    ],
+    "row_edges": [
+      0,
+      887
+    ],
+    "cell_size": 128,
+    "extent": 114,
+    "registration": "tools/prepare_resource_pieces.py"
   }
 }

@@ -86,8 +86,9 @@ Market mirrors that rhythm. [Board progression](board-progression.md)
   a power-up. Hammer and Lightning charge from their own matched pieces
   at 3 base charge per piece, with 200 charge per use. Hammer hits one
   cell and Lightning hits 15, prioritizing a blue pane as in the Android
-  data. The tools start uncharged on each board. The debut boards are
-  5 and 20. After both tools unlock, a seed selects one on other wishes.
+  data. The debut boards are 5 and 20. After both tools unlock, a seed
+  selects one piece family on other wishes. Uses and partial charge carry
+  between wishes, and both unlocked tools remain available in the toolbar.
 - The Roman price ratios through the tavern are preserved at one tenth
   of the source prices. The prototype keeps Bellmere’s story checkpoints,
   free placement and move limits. Purchases spend the actual wallet.

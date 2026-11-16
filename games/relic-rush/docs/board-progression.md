@@ -14,14 +14,15 @@ by `python3 games/relic-rush/tools/tune_levels.py`, which writes
 To change difficulty, edit the curve's tiers or rhythm and rerun the tuner;
 the layout, plaques and story slots stay authored here.
 
-Every board spawns all six kinds. With five on a hex board, where each cell
+Every board starts from a six-kind palette. A bonus can add a seventh kind
+when a board needs all six authored slots. With five on a hex board, where each cell
 sits on three lines, refills chained so often that one move could clear a board.
 Refills are also damped from the second cascade wave (`refill_damping=2`).
 
 | Boards | Palette |
 | --- | --- |
-| 1, 11, 12, 14–30 | Six resource kinds, some of them score pieces |
-| 2–10, 13 | Five resource or score kinds and one story piece |
+| 1, 11, 12, 14–30 | Six slots for resources, score pieces and an eligible bonus |
+| 2–10, 13 | One story slot alongside the resource, score and bonus pieces |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
 to choose a story sprite and the colour slot it replaces. `omit_kind` is
@@ -39,7 +40,10 @@ From board 14 the Courtyard improves Coins, from board 17 the Lodge replaces
 ration jars with grain, and from board 20 the Archive improves Supplies.
 The Fountain upgrades the blue water slot from board 27 and the Temple
 upgrades the Coins slot on board 30. The Camp and Observatory add tools on
-boards 2 and 24. These rewards persist wherever the slot is available.
+boards 2 and 24. Each debut board features its new bonus piece. Later boards
+select one built bonus family by seed. It uses the orange amphora slot when
+free or adds a seventh kind when a story or score piece needs that slot.
+Both unlocked tools remain available to spend wherever they are in force.
 
 Leaves appear on boards 3, 6, 9, 12, 18 and 24. Flowers appear on boards 4, 6,
 7, 15, 21 and 27. They award score only. Earlier introductions use the score

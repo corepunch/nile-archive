@@ -1,6 +1,6 @@
 {
   "camp": {
-    "about": "Unlocks two sticks of Dynamite per expedition.",
+    "about": "Adds Dynamite pieces to expeditions. Match them to charge the tool.",
     "cost": [0, 3, 8]
   },
   "well": {
@@ -28,7 +28,7 @@
     "cost": [145, 85, 40]
   },
   "observatory": {
-    "about": "Unlocks two Sunbursts per expedition.",
+    "about": "Adds Sunburst pieces to expeditions. Match them to charge the tool.",
     "cost": [155, 0, 70]
   },
   "fountain": {

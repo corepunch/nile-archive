@@ -38,19 +38,24 @@ local ordinary = {
 }
 
 function E.loadout(built, number, seed)
+    built = math.min(built, require("journey").earned(number - 1))
     local kinds = {table.unpack(ordinary[math.min(built, #ordinary)])}
     local meter = {}
-    if built >= 7 and (number == 20 or (number ~= 5 and seed % 2 == 0)) then
-        kinds[#kinds + 1], meter[3] = 10, 0
-    elseif built >= 2 then
-        kinds[#kinds + 1], meter[1] = 5, 0
+    local charge_tool
+    if built >= 2 then
+        meter[1], charge_tool = 0, 1
+        if built >= 7 then
+            meter[3] = 0
+            if number == 20 or seed % 2 == 0 then charge_tool = 3 end
+        end
+        kinds[#kinds + 1] = charge_tool == 1 and 5 or 10
     end
     local yields = {}
     for _, kind in ipairs(kinds) do
         local piece = E.pieces[kind]
         if piece.amount then yields[kind] = piece end
     end
-    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=200, tool_meter=meter}
+    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=200, tool_meter=meter, charge_tool=charge_tool}
 end
 
 -- Rome I Beta lightning hits 15 cells and reserves one hit for a plaque.

@@ -3,7 +3,7 @@
 -- Exercise the visible walkthrough buttons with real injected pointer events.
 local game = testing.game
 local desc = require('games/' .. game .. '/lua/main')
-local R, island = require('state'), require('island')
+local R, island, economy = require('state'), require('island'), require('economy')
 local init = desc.init
 local stage, wait, frames = 0, 0, 0
 function desc.init()
@@ -27,7 +27,16 @@ function R.smoke()
         app.inject_click(vec2(394, 136)); stage = 3
     elseif stage == 3 and island.wonder_count(R.island) == 1 then
         assert(R.island.placing < 0, 'town action must confirm placement')
-        print('walkthrough pointer smoke passed: skip, reward and confirmed building')
+        app.inject_click(vec2(394, 136)); stage = 4
+    elseif stage == 4 and not R.on_island then
+        assert(R.g.level == 1, 'town action must start the next board')
+        if game == 'relic-rush' then
+            assert(R.g.charge_tool == economy.unlocks[1].tool and R.g.tools[R.g.charge_tool] == 0,
+                'the camp opens an uncharged bonus on the second board')
+        else
+            assert(R.g.resource_yields[4] == economy.pieces[4], 'the arch adds firewood to the second board')
+        end
+        print('walkthrough pointer smoke passed: skip, reward, confirmed building and next board reward')
         app.quit()
     end
 end

@@ -40,7 +40,7 @@
         3,
         8
       ],
-      "about": "Unlocks two sticks of Dynamite per expedition.",
+      "about": "Adds Dynamite pieces to expeditions. Match them to charge the tool.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/camp.png",
@@ -320,7 +320,7 @@
         0,
         70
       ],
-      "about": "Unlocks two Sunbursts per expedition.",
+      "about": "Adds Sunburst pieces to expeditions. Match them to charge the tool.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/observatory.png",

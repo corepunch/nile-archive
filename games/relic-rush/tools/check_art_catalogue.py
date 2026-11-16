@@ -60,6 +60,11 @@ expected_pieces = set(pieces) | set(upgrades) | campaign_resources | set(re.find
 expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 assert set(manifest["tool_unlocks"]) <= set(manifest["tools"])
+bonus = manifest["bonus_pieces"]
+declaration = re.search(r"A\.bonus_pieces = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == bonus["rows"][0] == list(manifest["tool_unlocks"])
+assert bonus["runtime"] in actual
+assert all((ROOT / bonus[key]).is_file() for key in ("source", "prompt", "registration"))
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)

@@ -264,14 +264,14 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 
 | # | Building | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | Expedition camp | 8 Supplies + 3 Food | Two sticks of Dynamite per expedition from board 2. |
+| 1 | Expedition camp | 8 Supplies + 3 Food | Dynamite pieces charge the tool from board 2. |
 | 2 | Spring well | 100 Coins | Unlocks water buckets worth 3 Food each. |
 | 3 | Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Unlocks cut blocks worth 5 Supplies each. |
 | 4 | Jungle market | 85 Coins + 30 Supplies + 24 Food | Unlocks ration jars worth 4 Food each. |
 | 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Helmets worth 6 Coins, followed by rings, scarabs, sandals and harps. |
 | 6 | Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
 | 7 | Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Carved quartz worth 7 Supplies each. |
-| 8 | Star observatory | 155 Coins + 70 Supplies | Two Sunbursts per expedition from board 24. |
+| 8 | Star observatory | 155 Coins + 70 Supplies | Sunburst pieces charge the tool from board 24. |
 | 9 | Jade fountain | 160 Coins + 65 Supplies | Shrimp worth 6 Food each. |
 | 10 | Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Emeralds worth 11 Coins each. |
 
@@ -310,7 +310,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 - Swap two specials for a combination attack. A rainbow ball swapped with another power-up turns pieces of the commonest kind into that power-up before firing them.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
-- Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each available tool starts with two charges and costs zero moves. Restore the Camp for Dynamite and the Observatory for Sunburst.
+- Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Tools cost zero moves. Pickaxe starts each attempt with two uses. Restore the Camp for Dynamite and the Observatory for Sunburst, then match their pieces to charge them. Each matched bonus piece adds three points and 27 points grant one use. Stored uses and partial charge carry between expeditions.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).

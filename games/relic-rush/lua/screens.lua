@@ -217,7 +217,7 @@ local function guide_piece(unlock, title, availability)
     local description = economy.unlock_text(unlock) .. " " .. availability
     guide_entries[#guide_entries+1] = {id=unlock.key, title=title,
         description=description .. (unlock.effect and " " .. unlock.effect or ""),
-        icon=unlock.tool and {tool=unlock.key} or {front=chip_prefix .. unlock.key}}
+        icon={front=(unlock.tool and "bonus-" or chip_prefix) .. unlock.key}}
 end
 guide_piece(economy.silver_coin, "Silver coins", ("On expedition %d."):format(economy.silver_coin.first_level))
 for i, unlock in ipairs(economy.unlocks) do
