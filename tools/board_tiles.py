@@ -144,7 +144,45 @@ def lit_face(size, radius, bevel, tile, shading):
     return face
 
 
+def streak(size, spec):
+    """A soft band of light across the tile, along the anti-diagonal by default."""
+    nx, ny = spec.get("normal", [1, 1])
+    n = math.hypot(nx, ny)
+    small, width = 64, spec.get("width", .28)
+    c = (small - 1) / 2
+    alpha = Image.new("L", (small, small))
+    alpha.putdata([round(255 * spec["opacity"] * math.exp(-(((x - c) * nx + (y - c) * ny) / n / (small / 2) / width) ** 2))
+                   for y in range(small) for x in range(small)])
+    out = Image.new("RGBA", (size, size), rgb(spec["colour"]) + (0,))
+    out.putalpha(alpha.resize((size, size), Image.Resampling.BICUBIC))
+    return out
+
+
+def brackets(size, spec):
+    """Corner marks around the hex: a stroke along the outline near each vertex,
+    with a brighter core. Returns the RGBA marks; the rest of the tile is clear."""
+    layer = Image.new("RGBA", (size, size))
+    draw = ImageDraw.Draw(layer)
+    c, radius = size / 2, size / 2 - spec.get("inset", 5) * SS
+    points = [(c + radius * math.cos(k * math.pi / 3), c + radius * math.sin(k * math.pi / 3)) for k in range(6)]
+    reach = spec.get("length", .3)
+    for colour, width in ((spec["colour"], spec["width"]), (spec["core"], spec["width"] * .4)):
+        w = max(1, round(width * SS))
+        for k, (x, y) in enumerate(points):
+            for other in (points[k - 1], points[(k + 1) % 6]):
+                end = (x + (other[0] - x) * reach, y + (other[1] - y) * reach)
+                draw.line((x, y, *end), fill=rgb(colour) + (255,), width=w)
+            draw.ellipse((x - w / 2, y - w / 2, x + w / 2, y + w / 2), fill=rgb(colour) + (255,))
+    return layer
+
+
 def bake(spec, tile, grains, index):
+    if "brackets" in tile:   # an open frame: nothing but the corner marks
+        size = spec["size"] * SS
+        out = brackets(size, tile["brackets"]).resize((spec["size"], spec["size"]), Image.Resampling.LANCZOS)
+        mask = Image.open(REPO / spec["mask"]).getchannel("A")
+        out.putalpha(Image.composite(out.getchannel("A"), Image.new("L", out.size), mask))
+        return out
     size = spec["size"] * SS
     radius = size / 2
     shading = {**spec.get("shading", {}), **tile.get("shading", {})}
@@ -170,6 +208,8 @@ def bake(spec, tile, grains, index):
                                          for a, b in zip(dark, light)] + [patch.getchannel("A")])
         patch.putalpha(patch.getchannel("A").point(lambda a: round(a * tile["grain"])))
         face.alpha_composite(patch)
+    if "streak" in tile:
+        face.alpha_composite(streak(size, tile["streak"]))
     if "cracks" in tile:
         face.alpha_composite(cracks(size, tile["cracks"]))
     if "glow" in tile:

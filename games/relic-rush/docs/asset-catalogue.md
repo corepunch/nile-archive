@@ -388,27 +388,25 @@ and source-board diagnostics.
 
 | Frame | Meaning and use |
 | --- | --- |
-| `tile-cell-normal` | Slot 1, parchment: ordinary and cleared cells. |
-| `tile-tablet-single` | Slot 2, teal blue: plaques required for a win. The Explorer’s Guide uses the same face. |
+| `tile-cell-normal` | Slot 1, parchment lit from the upper left: ordinary and cleared cells. |
+| `tile-tablet-single` | Slot 2, deep blue: plaques required for a win. The Explorer’s Guide uses the same face. |
 | `tile-tablet-double` | Slot 3, green: a plaque listed in a level's `oil_double`, before its first hit. No campaign level uses one yet. |
-| `tile-light-wave` | Slot 4, pale yellow glow: the light that sweeps across the board as it arrives. |
+| `tile-light-wave` | Slot 4, a diagonal streak of pale gold: the light that sweeps across the board as it arrives. |
 | `tile-hover` | Slot 5, white: the cell under a mouse pointer (not on touch). |
-| `tile-selected` | Slot 6, cream with a warm yellow border: the selected cell. |
-| `tile-ice` | Slot 7, frosted gray-blue with hairline cracks: the floor under an iced piece, which keeps its `ice-1`/`ice-2` overlay. |
-| `tile-bonus-area` | Slot 8, glowing light blue: every cell an armed tool will hit, at the hovered or pressed cell. |
+| `tile-selected` | Slot 6, orange corner brackets on a clear tile: the selected cell. |
+| `tile-ice` | Slot 7, frosted teal with a white burst and hairline cracks: the floor under an iced piece, which keeps its `ice-1`/`ice-2` overlay. |
+| `tile-bonus-area` | Slot 8, blue-gray with a soft glow: every cell an armed tool will hit, at the hovered or pressed cell. |
 
 The eight tiles follow the slots of Cradle of Rome's board sheet and are
 shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
 from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
-into each game's `data/board-tiles/`. Colours are sampled from Cradle of
-Rome's tile sheet. Each face is lit from above, from a lighter top to a darker
-bottom (`shading` sets the light, contrast, bevel and highlights). Parchment
-follows the lighting measured on a Cradle of Rome board's empty cells: cream at
-the upper left to deep gold at the lower right, a thin edge light, and a fine
-warm-tinted mottle (`grain_tint` keeps its stains brown and flecks cream); the tablets are thick, with a bevel from a light upper edge to a shaded
-lower one. A neutral stained-paper grain (`tools/board_grain.py`) and, where
-set, a radial glow or hairline cracks finish them. The canonical 128 px flat-top mask
-cuts the alpha, and every tile passes `tools/hex_tile_art.py --mode fill --strict`.
+into each game's `data/board-tiles/`. Colours and lighting are sampled from the
+first Cradle of Rome's tile sheet: faces lit from the upper left, a thin edge
+light on the parchment, thick bevels on the tablets and ice. The spec's options
+add a warm mottle (`grain`, `grain_tint`), a glow, hairline cracks, a diagonal
+light `streak`, and `brackets` for the open selected frame. The canonical
+128 px flat-top mask cuts the alpha, and every filled tile passes
+`tools/hex_tile_art.py --mode fill --strict`.
 Regenerate with `python3 tools/board_tiles.py`; `tools/check_art_catalogue.py`
 fails if a tile is stale. The `--art-states dressing` screen shows all eight, and
 `--level 6 --cell-states` shows them in use on a board.

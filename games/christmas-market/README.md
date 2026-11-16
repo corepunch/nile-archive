@@ -48,7 +48,7 @@ owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
 The game supplies the boards, artwork and straight-match rules.
 
 The puzzle and town use the same wallet and Pause button. The remaining moves
-are shown below the wallet on the puzzle. The teal-blue tablets mark the objectives on parchment cells, which meet at
+are shown below the wallet on the puzzle. The deep blue tablets mark the objectives on parchment cells, which meet at
 hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).

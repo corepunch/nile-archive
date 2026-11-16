@@ -6,11 +6,13 @@ are the floor in both games; the other six show cell states.
 
 ![The eight tiles](tiles.png)
 
-Colours are matched to Cradle of Rome's tile sheet. Parchment is flat and lit
-from above with a soft south-east glow; the single and double tablets are thick,
-bevelled stones.
+The tiles follow the originals from the first Cradle of Rome: parchment lit
+from the upper left, a deep blue tablet, teal ice with a white burst, a diagonal
+streak for the light wave, orange corner brackets for the selected cell and a
+blue-gray glow for a bonus's area. The green double tablet and white hover tile
+have no original and keep their earlier look.
 
-![Cradle of Rome's sheet above ours](strip-vs-reference.png)
+![Cradle of Rome 1's tiles beside ours](strip-vs-reference.png)
 
 The board frame is one band that runs from near-black under the board's edge,
 like wear and shadow, through brown to a bright peach-tan lip, as in Cradle of
@@ -30,7 +32,7 @@ The outline's corners are rounded and the frame is 1.5 units slimmer:
 | 3 | `tablet-double` | Two-hit tablet from a level's `oil_double` (no campaign level yet) |
 | 4 | `light-wave` | Light sweeping across the board as it arrives |
 | 5 | `hover` | Mouse hover |
-| 6 | `selected` | Selected cell |
+| 6 | `selected` | Selected cell: orange corner brackets on a clear tile |
 | 7 | `ice` | Floor under an iced piece |
 | 8 | `bonus-area` | Cells an armed tool will hit |
 
@@ -58,7 +60,7 @@ The light wave during the board's entrance, frames 30, 45 and 60:
 
 ![Light wave](relic-wave.jpg)
 
-Every tile passes `tools/hex_tile_art.py --mode fill --strict` (coverage 1.0, no spill).
+Every filled tile passes `tools/hex_tile_art.py --mode fill --strict` (coverage 1.0, no spill); `selected` is an open frame.
 
 ```sh
 python3 tools/board_tiles.py            # writes both games' data/board-tiles/
