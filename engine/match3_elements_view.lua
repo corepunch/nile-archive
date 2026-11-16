@@ -261,7 +261,7 @@ function E.load_frame(art, paths)
         local sprites = {}
         for i, spec in ipairs(specs or {}) do
             images[spec.path] = images[spec.path] or texture.load(spec.path)
-            sprites[i] = {art = images[spec.path], width = spec.width, outward = spec.outward, side = spec.side}
+            sprites[i] = {art = images[spec.path], width = spec.width, outward = spec.outward}
         end
         return sprites
     end
@@ -286,36 +286,30 @@ local function opening_sides(edges, at)
     if left > -math.huge and right < math.huge and crossings % 2 == 0 then return left, right end
 end
 
-local function opening_mounts(edges, radius)
+local function opening_cells(edges, radius)
     local candidates = {}
+    local to_centre = vec2(0, radius * math.sqrt(3) / 2)
     for _, edge in ipairs(edges) do
         if edge.direction == SOUTH_EDGE then
             local at = edge.at
             local left, right = opening_sides(edges, at + vec2(0, radius * .65))
             if left and math.min(at.x - left, right - at.x) >= radius * .72
                 and opening_sides(edges, at + vec2(0, radius * 1.25)) then
-                local shoulder = at + vec2(0, radius * .50)
-                local west, east = opening_sides(edges, shoulder)
-                if west then
-                    local inset = radius * .15
-                    candidates[#candidates + 1] = {
-                        centre = at,
-                        left = vec2(west + inset, shoulder.y),
-                        right = vec2(east - inset, shoulder.y),
-                    }
-                end
+                -- The side-mounted art is registered to the empty hex below
+                -- this edge, with the stem already painted on the shoulder.
+                candidates[#candidates + 1] = at + to_centre
             end
         end
     end
     table.sort(candidates, function(a, b)
-        if math.abs(a.centre.y - b.centre.y) < .01 then return a.centre.x < b.centre.x end
-        return a.centre.y < b.centre.y
+        if math.abs(a.y - b.y) < .01 then return a.x < b.x end
+        return a.y < b.y
     end)
     local points = {}
     for _, candidate in ipairs(candidates) do
         local separate = true
         for _, point in ipairs(points) do
-            if math.abs(point.centre.x - candidate.centre.x) < radius * 1.75 then
+            if math.abs(point.x - candidate.x) < radius * 1.75 then
                 separate = false
                 break
             end
@@ -415,7 +409,7 @@ local function frame_layout(R, rules)
             edge.north = not opening_sides(edges, edge.at - vec2(0, r * .65))
         end
     end
-    local openings = opening_mounts(edges, r)
+    local openings = opening_cells(edges, r)
     local decor = R.board_art["frame-decorations"]
     -- An open-top channel has no upper shoulders. Its inward tips can
     -- support sprigs on the sides.
@@ -486,15 +480,7 @@ local function draw_frame_decorations(R, frame, sx, alpha)
             gfx.image_rot(spec.art, dst, turn, tint)
         end
     end
-    for i, spec in ipairs(decor.inner) do
-        local mounts = frame.openings[i]
-        if mounts then
-            local at = mounts[spec.side]
-            -- The source points down from its stem. Turn it into the gap.
-            local turn = math.rad(spec.side == "left" and -48 or 48)
-            gfx.image_rot(spec.art, rect.centered(origin + at, size2.splat(r * spec.width)), turn, tint)
-        end
-    end
+    draw_inner_sprites(decor.inner, frame.openings, origin, r, tint)
     draw_inner_sprites(decor.walls, frame.walls, origin, r, tint)
 end
 

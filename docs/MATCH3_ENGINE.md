@@ -167,10 +167,10 @@ The soft shadow follows the settled outline. The renderer grows the union
 of the active hexes to the rim, shifts it down and draws one signed-distance
 mask. Equal distances from that shifted outline get the same opacity. The
 mask is cached with the frame layout and follows board shake and resize.
-The skin can place small sprites
-on outward tips and larger ones on the inner side of an opening. The renderer
-uses the outline to find the side mounts and turns the sprites diagonally into
-the opening. An open-top channel can use larger sprigs on its inward tips.
+The skin can place small sprites on outward tips and larger ones in the first
+empty hex below the rim of an opening. These sprites are registered to that
+hex with the diagonal side mount painted into the artwork. An open-top channel
+can use larger sprigs on its inward tips.
 An optional atlas slot adds snow to the highest horizontal north edges of the
 outer rim. Inner channel edges use bare stone.
 Imported and neutral boards use the default ground geometry.

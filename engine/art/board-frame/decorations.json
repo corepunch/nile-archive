@@ -4,21 +4,21 @@
   "size": 96,
   "north_snow": {"crop": [549, 220, 970, 311], "anchor": [758, 296], "scale": 0.182, "turn": 0},
   "atlases": {
-    "hanging": {
-      "source": "engine/art/board-frame/hanging-source.png",
-      "prompt": "engine/art/board-frame/hanging.prompt.txt"
+    "cutout": {
+      "source": "engine/art/board-frame/cutout-source.png",
+      "prompt": "engine/art/board-frame/cutout.prompt.txt"
     }
   },
   "games": {
     "relic-rush": {
       "leaves": {"crop": [80, 588, 464, 921], "anchor": [280, 898], "scale": 0.147, "turn": 0},
-      "hanging-vine": {"atlas": "hanging", "crop": [55, 43, 674, 683], "anchor": [358, 73], "scale": 0.073, "turn": 0}
+      "hanging-vine": {"atlas": "cutout", "crop": [34, 69, 686, 613], "anchor": [354, 328], "scale": 0.116, "turn": 0}
     },
     "christmas-market": {
       "fir-ribbon": {"crop": [591, 594, 946, 920], "anchor": [842, 825], "scale": 0.170, "turn": 0},
       "fir-pinecone": {"crop": [1121, 601, 1467, 922], "anchor": [1175, 878], "scale": 0.155, "turn": 0},
-      "hanging-bell": {"atlas": "hanging", "crop": [760, 43, 1404, 589], "anchor": [1088, 70], "scale": 0.086, "turn": 0},
-      "hanging-pinecone": {"atlas": "hanging", "crop": [1484, 42, 2123, 674], "anchor": [1800, 70], "scale": 0.074, "turn": 0}
+      "hanging-bell": {"atlas": "cutout", "crop": [729, 69, 1379, 609], "anchor": [1043, 331], "scale": 0.116, "turn": 0},
+      "hanging-pinecone": {"atlas": "cutout", "crop": [1457, 68, 2145, 607], "anchor": [1807, 324], "scale": 0.118, "turn": 0}
     }
   }
 }

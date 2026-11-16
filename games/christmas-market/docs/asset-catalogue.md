@@ -367,9 +367,10 @@ The settled board has four separate paintable sprites under `data/board-frame/`.
 `fir-ribbon` and `fir-pinecone` sit at the outer shoulders at small scale.
 They also decorate the walls of the open-top chamber at larger scale.
 `hanging-bell` and `hanging-pinecone` project diagonally from the inner
-sides of enclosed cutouts at a larger size than the outer trim.
+sides of enclosed cutouts and fill most of the visible empty hex with matte
+fir, muted berries and a bronze bell.
 Rebuild them from the [outer source](../../../engine/art/board-frame/decorations-source.png)
-and [hanging source](../../../engine/art/board-frame/hanging-source.png) with
+and [cutout source](../../../engine/art/board-frame/cutout-source.png) with
 `python3 tools/board_frame_decor.py --game christmas-market`.
 [Paint guide, prompt and phone captures](../../../docs/review/board-frame-decorations/interior.md).
 

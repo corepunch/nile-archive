@@ -11,7 +11,7 @@ A.board_frame = {
         {path = leaves, width = .88, outward = true},
     },
     inner = {
-        {path = "board-frame/hanging-vine.png", width = 2.48, side = "left"},
+        {path = "board-frame/hanging-vine.png", width = 2},
     },
 }
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
