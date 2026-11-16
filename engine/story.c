@@ -368,7 +368,12 @@ static void type_text(const char *text, int length, float dt)
     int before = (int)S.shown;
     S.shown = minf(S.shown + dt * TYPE_SPEED, (float)length);
     for (int i = before; i < (int)S.shown; i++) {
-        float p = pause_after(codepoint_at(text, i), codepoint_at(text, i + 1));
+        uint32_t c = codepoint_at(text, i);
+        /* A soft tap as each word lands, like a key under the pen; per-letter
+         * would blur into a buzz at typing speed. */
+        if (c != ' ' && c != '\n' && (i == 0 || codepoint_at(text, i - 1) == ' ' || codepoint_at(text, i - 1) == '\n'))
+            haptic_play(HAPTIC_TICK, .25f);
+        float p = pause_after(c, codepoint_at(text, i + 1));
         if (p > 0) {
             S.shown = (float)(i + 1);
             S.hold = p;

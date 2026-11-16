@@ -1,6 +1,7 @@
 /* Real rendered pixels: a cloud/burst must not engulf the speaker's badge or
  * introduce a large blank band above the words. Also exercise resize/letterbox, centred framed groups and Skip input. */
 #include "render.h"
+#include "haptic.h"
 #include "test.h"
 #include <stdio.h>
 #include <string.h>
@@ -308,5 +309,31 @@ TEST(story_portrait_motion)
     char *args[]={"test-story","--headless","--mute","--size","480x900"};
     app_desc desc={.design={480,900},.fixed=true,.data_dir="games/relic-rush/data",
         .init=init,.frame=motion_frame,.quit=quit};
+    CHECK(app_run(desc,5,args)==0);
+}
+
+/* Typing taps once as each word lands, never once per letter. */
+static void typing_frame(float dt)
+{
+    (void)dt;
+    story_setup(cast,2,&test_style);
+    haptic_flush();
+    int before=haptic_test_count();
+    story_say("ann","Tap each word.");
+    for (int i=0;i<200;i++) {
+        story_frame(.03f);
+        haptic_flush();
+        app_test_advance(.1);
+    }
+    CHECK(haptic_test_count()-before==3);
+    story_next();
+    app_quit();
+}
+
+TEST(story_typing_haptics)
+{
+    char *args[]={"test-story","--headless","--mute","--size","480x900"};
+    app_desc desc={.design={480,900},.fixed=true,.data_dir="games/relic-rush/data",
+        .init=init,.frame=typing_frame,.quit=quit};
     CHECK(app_run(desc,5,args)==0);
 }
