@@ -267,16 +267,39 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
     end)
 end
 
--- Cradle of Rome's board, shared by the match-3 games: one tan-gold frame band
--- lit from above between thin dark lines, dark brown grout between cells, and
--- the cell-state tiles baked by tools/board_tiles.py.
+-- Frame bands that blend across the frame's width: `stops` are {position,
+-- 0xRRGGBB} from the cells (0) to the outer edge (1). Each of the `steps`
+-- bands takes the colour at its middle; `shade` darkens its lower edges.
+function E.frame_ramp(width, stops, steps, shade)
+    local function at(t)
+        for k = 2, #stops do
+            local a, b = stops[k - 1], stops[k]
+            if t <= b[1] then
+                local f = (t - a[1]) / (b[1] - a[1])
+                local function mix(shift) return ((a[2] >> shift) & 255) * (1 - f) + ((b[2] >> shift) & 255) * f end
+                return mix(16), mix(8), mix(0)
+            end
+        end
+    end
+    local bands = {}
+    for k = 1, steps do
+        local r, g, b = at((k - .5) / steps)
+        bands[k] = {width = width / steps, top = color(r, g, b), bottom = color(r * shade, g * shade, b * shade)}
+    end
+    return bands
+end
+
+-- Cradle of Rome's board, shared by the match-3 games. One frame band runs from
+-- near-black under the board's edge, like wear and shadow where the cells sit
+-- in it, through brown to a bright peach-tan lip, closed by a thin dark line.
+-- Dark brown grout separates the cells, and the cell-state tiles are baked by
+-- tools/board_tiles.py.
+local cradle_frame = E.frame_ramp(8.5, {{0, 0x240802}, {.3, 0x4A200A}, {.55, 0x6E3C18}, {.74, 0xB07444},
+                                        {.88, 0xE8BC8C}, {1, 0xF2D2A0}}, 10, .78)
+cradle_frame[#cradle_frame + 1] = {width = 1, top = color.hex(0x1C0A02), bottom = color.hex(0x0C0400)}
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
-    frame = {
-        {width = 1.2, top = color.hex(0x2E1206), bottom = color.hex(0x1E0802)},
-        {width = 5, top = color.hex(0xDCB67C), bottom = color.hex(0x765628)},
-        {width = 1, top = color.hex(0x2A1606), bottom = color.hex(0x120600)},
-    },
+    frame = cradle_frame,
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
              wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
 }

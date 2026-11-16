@@ -402,11 +402,10 @@ shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
 from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
 into each game's `data/board-tiles/`. Colours are sampled from Cradle of
 Rome's tile sheet. Each face is lit from above, from a lighter top to a darker
-bottom (`shading` sets the light, contrast, bevel and highlights). Parchment is
-flat: a north-west to south-east gradient between the average colours of the
-reference tile's two corners (`#C2A167` to `#D6B774`, met exactly after the
-texture), under a fine warm-tinted mottle (`grain_tint` keeps its stains brown
-and flecks cream, so the gold does not go gray); the tablets are thick, with a bevel from a light upper edge to a shaded
+bottom (`shading` sets the light, contrast, bevel and highlights). Parchment
+follows the lighting measured on a Cradle of Rome board's empty cells: cream at
+the upper left to deep gold at the lower right, a thin edge light, and a fine
+warm-tinted mottle (`grain_tint` keeps its stains brown and flecks cream); the tablets are thick, with a bevel from a light upper edge to a shaded
 lower one. A neutral stained-paper grain (`tools/board_grain.py`) and, where
 set, a radial glow or hairline cracks finish them. The canonical 128 px flat-top mask
 cuts the alpha, and every tile passes `tools/hex_tile_art.py --mode fill --strict`.

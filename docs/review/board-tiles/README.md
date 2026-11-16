@@ -12,15 +12,12 @@ bevelled stones.
 
 ![Cradle of Rome's sheet above ours](strip-vs-reference.png)
 
-The board frame is one outline, as in Cradle of Rome: a tan-gold band lit from
-above between thin dark lines, with dark brown grout between cells:
+The board frame is one band that runs from near-black under the board's edge,
+like wear and shadow, through brown to a bright peach-tan lip, as in Cradle of
+Rome. The parchment follows the lighting measured on that board's empty cells:
+cream at the upper left to deep gold at the lower right, with a thin edge light:
 
-![Frame against Cradle of Rome](frame-vs-reference.jpg)
-
-The parchment is a north-west to south-east gradient between the average
-colours of the reference tile's two corners, under a fine warm mottle:
-
-![Parchment against Cradle of Rome](parchment-vs-reference.jpg)
+![Frame and parchment against Cradle of Rome](frame-vs-reference.jpg)
 
 | Slot | Tile | Use |
 | --- | --- | --- |
