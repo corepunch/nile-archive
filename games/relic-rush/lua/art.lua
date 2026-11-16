@@ -37,10 +37,8 @@ A.resource_upgrades = {
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
     ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
-A.bonus_tools = {"bonus-hammer", "bonus-dynamite", "bonus-star", "bonus-mixer", "bonus-shield", "bonus-lightning",
-    "bonus-hourglass", "bonus-plus"}
-A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-mixer", "bonus-shield", "bonus-lightning", "bonus-star",
-    "bonus-hourglass", "bonus-plus"}
+A.bonus_tools = {"bonus-hammer", "bonus-dynamite", "bonus-star", "bonus-shield", "bonus-lightning", "bonus-plus"}
+A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-shield", "bonus-lightning", "bonus-star", "bonus-plus"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}

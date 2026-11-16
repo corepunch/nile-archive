@@ -1647,10 +1647,10 @@ function E.new(config)
     local rules = M
     -- The engine owns the HUD, field and tool bands. The scenery is painted
     -- from the bottom at its original scale. Single-charge bonuses have a
-    -- two-row tray at the bottom, below the centred playable field.
+    -- compact tray at the bottom, below the centred playable field.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
-    local BONUS_COLS, BONUS_GAP, BONUS_ROW_GAP = 4, 10, 8
+    local BONUS_GAP, BONUS_MARGIN = 4, 8
     local neutral_hud = app.arg("default-match3")
     -- Imported boards can occupy only part of their enclosing hex grid. Fit
     -- their actual cells, including the hex faces, into the space between HUD
@@ -1727,20 +1727,17 @@ function E.new(config)
     end
     function R.board_tool_bounds(k)
         local w, side = R.SCREEN_W or 480, E.TOOL_SIZE
+        local offset_x = (k - 1) * 120
         if R.g and R.g.single_charge_tools then
             local order, position = R.g.tool_order, 0
             for i, tool in ipairs(order) do
                 if tool == k + 1 then position = i - 1; break end
             end
-            local row, col = position // BONUS_COLS, position % BONUS_COLS
-            local count = math.min(BONUS_COLS, #order - row * BONUS_COLS)
-            local rows = (#order + BONUS_COLS - 1) // BONUS_COLS
-            side = math.min(side, (w - 32 - (count - 1) * BONUS_GAP) / count)
-            local x = w / 2 + (col - (count - 1) / 2) * (side + BONUS_GAP)
-            local y = R.tools_y + E.TOOL_SIZE - side - (rows - row - 1) * (side + BONUS_ROW_GAP)
-            return rect(x - side / 2, y, side, side)
+            local count = math.max(1, #order)
+            side = math.min(side, (w - 2 * BONUS_MARGIN - (count - 1) * BONUS_GAP) / count)
+            offset_x = (position - (count - 1) / 2) * (side + BONUS_GAP)
         end
-        return rect(w / 2 + (k - 1) * 120 - side / 2, R.tools_y, side, side)
+        return rect(w / 2 + offset_x - side / 2, R.tools_y + (E.TOOL_SIZE - side) / 2, side, side)
     end
     R.layout = layout
     layout()

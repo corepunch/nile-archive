@@ -1,11 +1,8 @@
 # Twenty campaign buildings for Relic Rush and Christmas Market
 
-> **Status:** 16 November 2026. Both ladders are implemented as revised below.
-> Relic Rush's prices are fitted to a measured run; it has two borrowed gem chips
-> ([#103](https://github.com/corepunch/nile-archive/issues/103)). Christmas
-> Market reuses existing art throughout and is priced from a measured run.
-> Prices are starting points for the campaign bot and `tools/tune_levels.py`,
-> not tuned values.
+> Both twenty-step ladders are implemented and priced from measured campaign
+> runs. Relic Rush uses [six matchable bonus gems](../../games/relic-rush/docs/board-progression.md#bonus-pieces)
+> with dedicated artwork.
 
 Both games have 30 boards and 10 story buildings today. Cradle of Rome has
 20 purchases in five epochs of four, and every purchase adds exactly one
@@ -66,25 +63,11 @@ left, so a shuffle tool would rarely matter. The paper plane takes its slot.
 
 ## Relic Rush: the 20 restorations
 
-> **Revised 16 November 2026.** Since this proposal was first written, Relic
-> Rush has gained six of Rome's eight tools as matchable bonus gems with a
-> scaling toolbar (Dynamite, Hammer, Shutter Gear, Shield, Lightning, Star).
-> [Bonus pieces](../../games/relic-rush/docs/board-progression.md#bonus-pieces)
-> The opening specials and perks described above do not apply to Relic Rush.
-> Its ladder builds on those bonus gems instead. They remain the plan for
-> Christmas Market.
+Relic Rush has twelve resource upgrades and six matchable bonus gems.
+Restoring the Water mill and Clock tower advances the building ladder.
 
-Today four story restorations give two things each: the Workshop, Market,
-Courtyard and Archive add a resource piece *and* a bonus gem. The Courtyard
-also brings rings, scarabs, sandals and harps on a timer. Rome gives each
-building one thing. So the ten new buildings take over those four bonuses and
-four treasures, and add Rome's two missing tools, the Hourglass and the Plus.
-That is exactly Rome I's set: twelve pieces and all eight tools.
-
-★ marks a story restoration. Its price and story beat are unchanged; it keeps
-its piece and gives up its second unlock. Every debut board stays where it is
-today, so the fitted budgets still hold. All ten new buildings are shop
-buildings with Blender renders today and move into the campaign.
+★ marks the ten story restorations. The other buildings open after their
+listed clear and come before the next story restoration.
 
 | # | Build after | Building | From board | Adds | Price C / F / S |
 | ---: | ---: | --- | ---: | --- | ---: |
@@ -94,9 +77,9 @@ buildings with Blender renders today and move into the campaign.
 | 3 | 7 | Trapper's cabin | 8 | Hammer gems *(from the Workshop)* | 80 / 55 / 75 |
 | 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 145 / 105 / 150 |
 | **II. The quay** |
-| 5 | 9 | Water mill | 10 | Shutter Gear gems *(from the Market)* | 75 / 50 / 75 |
+| 5 | 9 | Water mill | — | Opens the Jungle market restoration | 75 / 50 / 75 |
 | 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 145 / 95 / 150 |
-| 7 | 11 | Clock tower | 12 | **Hourglass gems, new:** +5 moves | 180 / 140 / 200 |
+| 7 | 11 | Clock tower | — | Opens the Sunstone courtyard restoration | 180 / 140 / 200 |
 | 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 60 / 80 / 80 |
 | **III. The terraces** |
 | 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 90 / 150 / 160 |
@@ -106,7 +89,7 @@ buildings with Blender renders today and move into the campaign.
 | **IV. The wreck** |
 | 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 195 / 230 / 240 |
 | 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 190 / 190 / 190 |
-| 15 | 22 | Cartographer's house | 23 | **Plus gems, new:** charge the other sockets | 285 / 250 / 270 |
+| 15 | 22 | Cartographer's house | 23 | Plus gems charge the other sockets | 285 / 250 / 270 |
 | 16 | 23 | ★ Star observatory | 24 | Star gems | 205 / 0 / 200 |
 | **V. The temple** |
 | 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 200 / 240 / 180 |
@@ -114,17 +97,13 @@ buildings with Blender renders today and move into the campaign.
 | 19 | 27 | Relic museum | 28 | Harp, 10 Coins *(from the Courtyard)* | 220 / 420 / 220 |
 | 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 330 / 430 / 330 |
 
-Where a story restoration and the new building that took its bonus share a
-clear (7, 9, 13 and 19), the new one comes first on the ladder. The story
-building then requires it, so the bonus still debuts on the same board.
-Board 10 needs this most: its story gear is also the Shutter Gear piece.
+When two restorations unlock on the same clear (7, 9, 13 and 19), the
+story restoration comes second. Expedition 10 introduces ration jars
+alongside the Shutter Gear quest piece.
 
 **Why each building gives what it does.**
 
 - **Trapper's cabin, Hammer.** The trapper's tools. Rome's Forge.
-- **Water mill, Shutter Gear.** A turning wheel and gears, which shuffle.
-- **Clock tower, Hourglass.** Rome's Pantheon adds time to the amphora. Here a
-  charged Hourglass adds 5 moves, which saves a nearly finished board.
 - **Stone amphitheatre, Shield.** Rome's Colosseum.
 - **Valley lighthouse, Lightning.** A beam striking the board.
 - **Cartographer's house, Plus.** Rome's Tabularium, a record office. A charged
@@ -133,15 +112,9 @@ Board 10 needs this most: its story gear is also the Shutter Gear piece.
   slot's climb: trade goods, a wreck's cargo, winged sandals, a museum's harp.
   Rome's Arch, Ship, Statue and Temple of Saturn do the same.
 
-**What new art this needs.** Two bonus gems, the Hourglass and the Plus, each
-with its toolbar button states, made through the existing bonus-piece pipeline
-(`art/bonus-pieces/`). Every building and every other piece exists.
-
-**Eight buttons on a phone.** The bonus toolbar shrinks its buttons to fit the
-unlocked sockets. With all eight at 390 points wide, each is about 40 points,
-under the usual 44-point touch target. Check this at 390×844 before
-committing to eight. If it is too small, the fallback is to show only charged
-sockets and the one this board charges.
+The [bonus atlas](../../games/relic-rush/art/bonus-gems/six-bonuses.png)
+contains the gems and the five states of each button. All six sockets stay
+visible in one row.
 
 ## Christmas Market: the 20 stalls
 

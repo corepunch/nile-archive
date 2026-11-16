@@ -127,7 +127,9 @@ local function result_screen()
     if w then
         picture_fit(w.sprite, next_icon, 255)
         local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
-        heading, next_step = #missing == 0 and island.buildings[next_kind + 1].unlock_text or "REPLAY TO EARN THE REST", w.name
+        local unlock = island.buildings[next_kind + 1].unlock_text
+        heading = #missing == 0 and (unlock or "NEXT RESTORATION") or "REPLAY TO EARN THE REST"
+        next_step = w.name
         local price = #missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)
         say_left(price, rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
     elseif breakdown.first then
@@ -154,8 +156,7 @@ function R.award_for(g)
     local object = rules.levels[g.level + 1].quest_object
     local textures = R.board_art or {}   -- window-free tests play the campaign without art
     if not object then return end
-    local image = object.key == "gear" and g.bonus_debut and textures["bonus-mixer"] or textures["find-" .. object.key]
-    return {image = image, name = object.name, level = g.level + 1}
+    return {image = textures["find-" .. object.key], name = object.name, level = g.level + 1}
 end
 
 local function award_screen()

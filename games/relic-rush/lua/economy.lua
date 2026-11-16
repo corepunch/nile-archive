@@ -26,17 +26,14 @@ E.bonuses = {
     {key="hammer", name="Hammer", tool=1, effect="Tap a cell to hit it once."},
     {key="dynamite", name="Dynamite", tool=2, effect="Tap a cell to hit it and its neighbors."},
     {key="star", name="Star", tool=3, effect="Tap a piece to hit every piece of that kind."},
-    {key="mixer", name="Shutter Gear", tool=4, effect="Tap the charged gear to shuffle loose pieces."},
-    {key="shield", name="Shield", tool=5, effect="Tap a cell to hit the row through it."},
-    {key="lightning", name="Lightning", tool=6, effect="Tap the charged bolt to strike up to 20 cells."},
-    {key="hourglass", name="Amphora", tool=7, effect="Tap the charged amphora for 5 more moves."},
-    {key="plus", name="Tide Chart", tool=8, effect="Tap the charged chart to half-charge your other bonuses."},
+    {key="shield", name="Shield", tool=4, effect="Tap a cell to hit the row through it."},
+    {key="lightning", name="Lightning", tool=5, effect="Tap the charged bolt to strike up to 20 cells."},
+    {key="plus", name="Plus", tool=6, effect="Tap the charged Plus to half-charge your other bonuses."},
 }
-E.AMPHORA_MOVES = 5
 for _, bonus in ipairs(E.bonuses) do bonus.amount = 3 end
 
 -- The campaign ladder, in purchase order, after Cradle of Rome's 20
--- constructions: each building adds exactly one piece or one bonus. `building`
+-- constructions. Most buildings add a resource or bonus piece. `building`
 -- is the catalogue key. The ten story restorations hold the next new
 -- expedition; the other ten must be placed before the next story restoration.
 -- backdrop is the board painting the restored building brings: 1 lagoon, 2 temple.
@@ -46,17 +43,17 @@ E.unlocks = {
     {building="well", key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
     {building="log_cabin", first_level=8, bonus=B[1]},
     {building="workshop", key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
-    {building="water_mill", first_level=10, bonus=B[4]},
+    {building="water_mill", first_level=10},
     {building="market", key="rations", backdrop=1, name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
-    {building="clock_tower", first_level=12, bonus=B[7]},
-    {building="amphitheater", first_level=14, bonus=B[5]},
+    {building="clock_tower", first_level=12},
+    {building="amphitheater", first_level=14, bonus=B[4]},
     {building="gateway", key="helmet", backdrop=2, name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14},
     {building="lodge", key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
     {building="trading_post", key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
-    {building="lighthouse", first_level=20, bonus=B[6]},
+    {building="lighthouse", first_level=20, bonus=B[5]},
     {building="archive", key="quartz", backdrop=2, name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
     {building="beached_ship", key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
-    {building="map_room", first_level=23, bonus=B[8]},
+    {building="map_room", first_level=23, bonus=B[6]},
     {building="observatory", backdrop=2, first_level=24, bonus=B[3]},
     {building="aviary", key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9, first_level=25},
     {building="fountain", key="shrimp", backdrop=1, name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
@@ -113,13 +110,11 @@ function E.board_loadout(level, number, restored, seed)
         end
     end
     local bonus = debut or (#available > 0 and available[(seed or 1) % #available + 1])
-    if bonus then
-        -- Reuse the score slot to keep the tuned six-kind board. The Mixer
-        -- doubles as the story gear. Other finds in that slot take priority.
-        local story_gear = level.story_piece == "gear" and bonus.key == "mixer"
-        local kind = level.goal_kind == 5 and not story_gear and 1 or 5
-        yields[kind] = bonus
-    end
+    -- Use the score slot or the red slot when a story item uses orange.
+    -- Give a newly unlocked resource (such as board 10's rations) its debut.
+    local kind = level.goal_kind == 5 and 1 or 5
+    if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
+    if bonus then yields[kind] = bonus end
     return yields, {tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
         tool_order=order, single_charge_tools=true}, bonus, debut
 end

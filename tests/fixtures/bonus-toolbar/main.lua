@@ -5,20 +5,25 @@ local init, frame = game.init, game.frame
 local ticks, tool, swap_a, swap_b, took_charge = 0
 
 local function check_layout(g)
-    assert(#g.tool_order == 8, "all bonuses keep their toolbar slots")
+    assert(#g.tool_order == 6, "all bonuses keep their toolbar slots")
     local first = R.board_tool_bounds(g.tool_order[1] - 1)
-    local second = R.board_tool_bounds(g.tool_order[5] - 1)
-    assert(second.x == first.x and second.y > first:max().y and first.w >= 64,
-        "two aligned rows keep the bonus buttons large")
-    for row = 0, 1 do
-        local previous = 0
-        for col = 1, 4 do
-            local box = R.board_tool_bounds(g.tool_order[row * 4 + col] - 1)
-            assert(box.x > previous and box:max().x <= R.SCREEN_W and box:max().y <= app.screen().h,
-                "the eight buttons have separate on-screen hit areas")
-            previous = box:max().x
+    local last = first
+    for i, index in ipairs(g.tool_order) do
+        local box = R.board_tool_bounds(index - 1)
+        assert(box.y == first.y and box.w >= 72 and app.screen():contains(box:center()),
+            "the six full-size buttons stay on one on-screen line")
+        if i > 1 then
+            assert(box.x >= last:max().x and box.x - last:max().x <= 6,
+                "adjacent buttons stay tightly spaced")
         end
+        last = box
     end
+    assert(first.x >= 0 and last:max().x <= app.screen().w, "the full row fits in the safe area")
+    local header = R.town.header_form.boxes
+    assert(math.abs(header.menu.w - header.menu.h) < .01 and header.menu.h == R.town.cfg.header.menu.size,
+        "the pause button retains its square slot beside the wallet")
+    assert(math.abs(header.cap1.w - header.cap3.w) < .01 and header.cap3:max().x < header.menu.x,
+        "the wallet shares the available space without overlapping pause")
     local min_x, max_x, min_y, max_y = math.huge, -math.huge, math.huge, -math.huge
     for cell = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, cell) then
@@ -61,7 +66,7 @@ function game.init()
         return prepare_flight(g)
     end
     tool = nil
-    assert(#g.tool_order == 8)
+    assert(#g.tool_order == 6)
     g.tools[1], g.tool_meter[1] = 1, g.tool_threshold
     g.tools[4], g.tool_meter[4] = 1, g.tool_threshold
     g.tool_meter[2], g.tool_meter[6] = 6, 12

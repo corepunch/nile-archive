@@ -88,14 +88,12 @@ the Coins slot for the tide chart. The Well purchase that follows uses Coins
 banked on earlier boards or earned from unused moves and replays.
 
 Confirmed placements change openings and refills from the listed expedition
-onward. Authored story pieces keep their slots. The eight bonus families debut
+onward. Authored story pieces keep their slots. The six bonus families debut
 as matchable pieces and fill their own saved sockets. [Bonus rules and effects](board-progression.md#bonus-pieces)
 
-Like Cradle of Rome's twenty constructions, each restoration adds exactly one
-piece or one bonus. The ten story restorations (★) hold the next new
-expedition until they are placed. The other ten sit between them on the same
-ladder: each opens after its clear, and must be placed before the next story
-restoration can be. A player can play on past an open one until the story
+The ten story restorations (★) hold the next new expedition until they are
+placed. The other ten sit between them on the same ladder. Each opens after
+its clear and must be placed before the next story restoration. A player can play on past an open one until the story
 needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDINGS.md#relic-rush-the-20-restorations)
 
 | # | Restoration | Placed after | First board | Board payoff | Price C / F / S |
@@ -104,9 +102,9 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 | 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 130 / 0 / 0 |
 | 3 | Trapper's cabin | 7 | 8 | Hammer gems | 80 / 55 / 75 |
 | 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 145 / 105 / 150 |
-| 5 | Water mill | 9 | 10 | Shutter Gear gems | 75 / 50 / 75 |
+| 5 | Water mill | 9 | — | Opens the Jungle Market restoration | 75 / 50 / 75 |
 | 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 145 / 95 / 150 |
-| 7 | Clock tower | 11 | 12 | Amphora gems: a use adds 5 moves | 180 / 140 / 200 |
+| 7 | Clock tower | 11 | — | Opens the Sunstone Courtyard restoration | 180 / 140 / 200 |
 | 8 | Stone amphitheatre | 13 | 14 | Shield gems | 60 / 80 / 80 |
 | 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 90 / 150 / 160 |
 | 10 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 300 / 340 / 0 |
@@ -114,7 +112,7 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 | 12 | Valley lighthouse | 19 | 20 | Lightning gems | 100 / 110 / 120 |
 | 13 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 195 / 230 / 240 |
 | 14 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 190 / 190 / 190 |
-| 15 | Cartographer's house | 22 | 23 | Tide Chart gems: a use half-charges every other bonus | 285 / 250 / 270 |
+| 15 | Cartographer's house | 22 | 23 | Plus gems: a use half-charges every other unlocked bonus | 285 / 250 / 270 |
 | 16 | ★ Star Observatory | 23 | 24 | Star gems | 205 / 0 / 200 |
 | 17 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 200 / 240 / 180 |
 | 18 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 280 / 0 / 300 |
@@ -122,9 +120,9 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 | 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 330 / 430 / 330 |
 
 Each new piece pays a currency the next restoration on the ladder needs.
-Where a story restoration and a new one share a clear (7, 9, 13 and 19), the
-new one comes first, so every bonus debuts on the same board as before the
-ladder. Board 10's story gear is also the Shutter Gear piece.
+Where two restorations share a clear (7, 9, 13 and 19), the story restoration
+comes second. Board 10 features the Shutter Gear quest piece alongside the
+market's new ration jars.
 
 One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. From there
 the slot climbs one treasure per restoration: helmet (6), ring (7), scarab (8),

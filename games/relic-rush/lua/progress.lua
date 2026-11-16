@@ -83,8 +83,9 @@ function R.serialize_campaign(s)
         R.prog.wallet = wallet + economy.shortfall(island.reserved_cost(R.island, R.prog.level), wallet)
     end
     local charges = R.prog.bonus_charge or {}
-    for i, bonus in ipairs(economy.bonuses) do
-        charges[i] = num.clampi(s:int("bonus_" .. bonus.key, reading and 0 or charges[i] or 0), 0, economy.BONUS_THRESHOLD)
+    for _, bonus in ipairs(economy.bonuses) do
+        local tool = bonus.tool
+        charges[tool] = num.clampi(s:int("bonus_" .. bonus.key, reading and 0 or charges[tool] or 0), 0, economy.BONUS_THRESHOLD)
     end
     R.prog.bonus_charge = charges
     serialize_completed(s)

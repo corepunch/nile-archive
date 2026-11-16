@@ -19,33 +19,24 @@ def center(image):
 
 
 def pack(spec):
-    chips = Image.open(ROOT / spec["source"])
-    buttons = Image.open(ROOT / spec["button_art"]["source"])
+    source = Image.open(ROOT / spec["source"])
     cols, rows = len(spec["columns"]), len(spec["rows"])
-    side = spec["button_art"]["cell_size"]
-    assert chips.mode == buttons.mode == "RGBA" and buttons.size == (cols * side, rows * side)
+    side = spec["cell_size"]
+    assert source.mode == "RGBA" and source.size == (cols * side, rows * side)
     atlas = Image.new("RGBA", (SLOT_SIZE * cols, SLOT_SIZE * rows))
 
-    def painted_cell(x, y):
-        return buttons.crop((x * side, y * side, (x + 1) * side, (y + 1) * side))
-
-    for x, column in enumerate(spec["columns"]):
-        if column in spec["button_art"]["board_chips"]:
-            chip = painted_cell(x, 0)
-            # Register the standalone piece by its silhouette, leaving two
-            # source pixels beyond the visible edge to preserve its soft alpha.
-            l, t, r, b = chip.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox()
-            chip = chip.crop((l - 2, t - 2, r + 2, b + 2))
-        elif column in spec["borrowed_chips"]:
-            borrowed = spec["borrowed_chips"][column]
-            chip = Image.open(ROOT / borrowed["source"]).convert("RGBA").crop(borrowed["box"])
-        else:
-            chip = chips.crop(spec["chip_boxes"][x])
-        chip.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
-        atlas.paste(center(chip), (x * SLOT_SIZE, 0))
-        for y in range(1, rows):
-            state = painted_cell(x, y).resize((SLOT_SIZE, SLOT_SIZE), Image.Resampling.LANCZOS)
-            atlas.paste(state, (x * SLOT_SIZE, y * SLOT_SIZE))
+    for x in range(cols):
+        for y in range(rows):
+            frame = source.crop((x * side, y * side, (x + 1) * side, (y + 1) * side))
+            if y == 0:
+                # Leave two source pixels beyond the silhouette for soft alpha.
+                l, t, r, b = frame.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox()
+                frame = frame.crop((l - 2, t - 2, r + 2, b + 2))
+                frame.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
+                frame = center(frame)
+            else:
+                frame = frame.resize((SLOT_SIZE, SLOT_SIZE), Image.Resampling.LANCZOS)
+            atlas.paste(frame, (x * SLOT_SIZE, y * SLOT_SIZE))
     output = io.BytesIO()
     atlas.save(output, format="PNG", optimize=True)
     return output.getvalue()

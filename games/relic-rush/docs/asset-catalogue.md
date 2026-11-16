@@ -501,30 +501,29 @@ cover a zero-charge ring at both phone sizes.
 
 ## Campaign bonus pieces and sockets
 
-The eight standalone pieces are the Hammer, Dynamite, Shutter Gear, Shield,
-Lightning, Star, Amphora and Tide Chart. The board shows one unlocked family per expedition. Their
-rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
-The toolbar shows all eight sockets in two rows of four, in restoration order,
-below the centred board. The five authored faces are gold normal, jade selected, dark amber
-pressed, bright gold hover, and shallow sandstone engraving for locked and empty
-sockets. Partial charge reveals the gold normal face from the bottom. Gems fly
-from ordinary matches to the center of their own socket. The animated gem is
-the existing board sprite, with the engine's collection trail and landing ring.
-Reduce Motion fills the meter immediately.
+The six standalone pieces are Hammer, Dynamite, Shield, Lightning, Star and
+Plus. Their effects and restoration unlocks are documented in
+[board progression](board-progression.md#bonus-pieces). One compact row
+shows every socket in restoration order from the first expedition.
 
-The [ImageGen source atlas](../art/bonus-gems/shallow-sockets.png) and
-[edit prompts](../art/bonus-gems/shallow-sockets.prompt.txt) record the new
-faces and the larger Amphora drawn to match the visual weight of the other
-icons. The Amphora also uses its new standalone painting on the board. The
-first six board pieces come from the [original atlas](../art/bonus-gems/source.png).
-The Tide Chart still borrows the campaign atlas chip for the board
-([#103](https://github.com/corepunch/nile-archive/issues/103)).
+The five authored button faces are gold normal, jade selected, dark amber
+pressed, bright gold hover, and a carved sandstone recess for locked and empty
+sockets. The recess has about half the original shadow depth. Partial charge reveals the gold normal face from the bottom. A matched
+gem flies from the board to the center of its own socket using the standalone
+sprite, collection trail and landing ring. Reduce Motion fills the meter
+immediately.
+
+Built-in ImageGen painted both the standalone gems and all five button rows
+in one [six-column atlas](../art/bonus-gems/six-bonuses.png). The
+[prompt](../art/bonus-gems/six-bonuses.prompt.txt) records the reference and the
+new silver hammer and teal enamel cross. The Shutter Gear and Tide Chart use
+their existing quest artwork on the board and the recovered-item cards.
 
 Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to pack
 `data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
-records the inputs and registration. The packer crops and scales the five
-painted state rows, preserving their alpha, and fits board pieces in 112 × 112
-px. Every board pack uses the same eight pieces.
+records the inputs and registration. The packer crops and downsamples the
+painted button rows to 128 px, preserving their alpha. The board sprites fit
+in 112 × 112 px and are centered in their atlas cells.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
@@ -532,7 +531,8 @@ px. Every board pack uses the same eight pieces.
 [Locked sockets on expedition 1](screenshots/bonus-locked-phone.jpg) ·
 [Spent Hammer](screenshots/bonus-spent.jpg) ·
 [Workshop card](screenshots/bonus-workshop-card.jpg) ·
-[Market unlock on the results screen](screenshots/bonus-building-result.jpg) ·
+[Water mill on the results screen](screenshots/bonus-building-result.jpg) ·
+[Plus debut](screenshots/bonus-plus-debut.jpg) ·
 [Shutter Gear board](screenshots/bonus-gear.jpg) ·
 [Recovered gear](screenshots/bonus-gear-award.jpg).
 Reproduce the views and the real tap-to-spend check with
@@ -953,7 +953,7 @@ added. Reproduce with the existing native-input hold/placement captures in the
 
 ## Settings gear and three-resource wallet
 
-The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. The same atlas includes the archived `life` heart. The top wallet shows the sun coin, `wallet-supplies` and `wallet-food` in that order.
+The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. The same atlas includes the archived `life` heart. The top wallet shows the sun coin, `wallet-supplies` and `wallet-food` in that order. The shared header keeps the gear slot square and scales the wallet capsule widths to fit beside it.
 
 Built-in ImageGen painted the timber-and-stone bundle and bread-and-fruit
 basket in one [transparent atlas](../art/resource-pieces/wallet-supplies-food.png).

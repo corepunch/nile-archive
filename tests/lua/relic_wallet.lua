@@ -63,8 +63,8 @@ do
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
     local before_market = R.make_board(9,19)
-    check(before_market.resource_yields[1] ~= economy.unlock_of("market") and before_market.tool_meter[4] == nil,
-        'both rations and Mixer are locked before the mill and market')
+    check(before_market.resource_yields[1] ~= economy.unlock_of("market"),
+        'rations are locked before restoring the market')
     check(not island.can_buy(c,bank,9,island.ladder[6].kind),'the market waits for the water mill')
     check(island.island_place_next(c,bank,9,0) and island.island_place_next(c,bank,9,0),
         'confirm the water mill and then the earned market')
@@ -85,8 +85,7 @@ do
         check(charge_kinds == (g.bonus and 1 or 0), 'at most one kind charges a bonus')
         if spec.story_piece then
             local piece = g.resource_yields[spec.goal_kind]
-            check(not piece or spec.story_piece == "gear" and piece == economy.bonuses[4],
-                'the shutter gear charges its own meter while story pieces never pay into the wallet')
+            check(not piece, 'story items neither pay into the wallet nor charge a bonus')
         end
         for kind in pairs(spec.score_pieces or {}) do
             local piece = g.resource_yields[kind]
@@ -220,20 +219,37 @@ do
         local g = R.make_board(29, seed)
         seen[g.bonus] = true
         for _, bonus in ipairs(economy.bonuses) do
-            check(g.tool_meter[bonus.tool] == 0, 'all eight empty sockets remain available across boards')
+            check(g.tool_meter[bonus.tool] == 0, 'all six empty sockets remain available across boards')
         end
     end
     for _, bonus in ipairs(economy.bonuses) do check(seen[bonus], 'seeded rotation includes ' .. bonus.name) end
 end
 
--- Story matches charge one stored use. Applying a tool alone cannot replenish it.
+-- The Shutter Gear advances the story while the market's rations make their debut.
 do
-    local gear = economy.bonuses[4]
+    local g, m = R.make_board(9, 73), rules.new_match()
+    check(g.bonus == nil and g.resource_yields[1] == economy.unlock_of("market") and not g.resource_yields[g.goal_kind],
+        'expedition 10 keeps both the story gear slot and newly unlocked ration jars')
+    for _, cell in ipairs{rules.hex_index(0, -1), rules.hex_index(0, 0), rules.hex_index(0, 1)} do
+        g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
+        g.tiles[cell] = rules.tile(g.goal_kind)
+    end
+    rules.game_matches(g, m, -1)
+    rules.game_apply(g, m)
+    check(g.relics >= 3 and not m.bonus_charge_by_cell, 'a shutter gear match counts only toward the quest')
+end
+
+-- Bonus matches bank one use across expeditions. The other tools keep their effects.
+do
+    local dynamite = economy.unlock_of("camp").bonus
     R.prog, R.test_mode = {bonus_charge={}}, true
-    local g = R.make_board(9, 73)
-    local kind, m = g.goal_kind, rules.new_match()
+    local g, m = R.make_board(1, 73), rules.new_match()
+    local kind
+    for i, piece in pairs(g.resource_yields) do
+        if piece == dynamite then kind = i; break end
+    end
+    check(g.bonus_debut == dynamite and kind ~= nil, 'the Camp debuts Dynamite')
     local line = {rules.hex_index(0, -1), rules.hex_index(0, 0), rules.hex_index(0, 1)}
-    check(g.bonus_debut == gear and g.resource_yields[kind] == gear, 'the story gear itself charges Mixer')
     for _ = 1, 3 do
         for _, cell in ipairs(line) do
             g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
@@ -242,53 +258,50 @@ do
         rules.game_matches(g, m, -1)
         rules.game_apply(g, m)
     end
-    check(g.relics >= 6 and g.tools[gear.tool] == 1 and g.tool_meter[gear.tool] == g.tool_threshold,
-        'story progress still counts and extra matches cannot bank a second use')
+    check(g.tools[dynamite.tool] == 1 and g.tool_meter[dynamite.tool] == g.tool_threshold,
+        'extra bonus matches cannot bank a second use')
     local copy = rules.game_copy(g)
-    copy.tools[gear.tool], copy.tool_meter[gear.tool] = 0, 0
-    check(g.tools[gear.tool] == 1 and g.tool_meter[gear.tool] == g.tool_threshold, 'preview copies preserve the live meters')
+    copy.tools[dynamite.tool], copy.tool_meter[dynamite.tool] = 0, 0
+    check(g.tools[dynamite.tool] == 1 and g.tool_meter[dynamite.tool] == g.tool_threshold,
+        'preview copies preserve the live meters')
     R.g = g
     R.update_bonus_charges()
     local later = R.make_board(29, 1)
-    check(later.bonus ~= gear and later.tools[gear.tool] == 1, 'stored use survives on a board featuring another bonus')
-    local used, shuffled = rules.game_tool(later, gear.tool - 1, nil, m)
-    check(used and shuffled and later.moves == rules.level_of(later).moves and rules.game_hint(later),
-        'Mixer reshuffles loose pieces without spending a move or leaving a dead board')
+    check(later.bonus ~= dynamite and later.tools[dynamite.tool] == 1,
+        'a stored use survives on a board featuring another bonus')
+    local center = rules.hex_center()
+    check(rules.game_tool(later, dynamite.tool - 1, center, m) and m.hits == 7
+        and later.moves == rules.level_of(later).moves, 'Dynamite blasts seven cells without spending a move')
     R.g = later
     R.update_bonus_charges()
-    check(R.make_board(29, 1).tool_meter[gear.tool] == 0, 'spending a charge clears it across boards')
+    check(R.make_board(29, 1).tool_meter[dynamite.tool] == 0, 'spending a charge clears it across boards')
 
-    local shield, lightning = economy.bonuses[5], economy.bonuses[6]
+    local shield, lightning = economy.unlock_of("amphitheater").bonus, economy.unlock_of("lighthouse").bonus
     later.tools[shield.tool], later.tools[lightning.tool] = 1, 1
-    local center = rules.hex_center()
     local row = rules.game_tool_area(later, shield.tool - 1, center)
     check(row[center] and row[rules.hex_neighbor(center, 0)], 'Shield targets the selected row')
     for cell in pairs(row) do check(rules.hex_r(cell) == rules.hex_r(center), 'Shield stays on its axis') end
-    check(rules.game_tool(later, lightning.tool - 1, nil, m) and m.hits == 20, 'Lightning spends a use on twenty distinct cells')
+    check(rules.game_tool(later, lightning.tool - 1, nil, m) and m.hits == 20,
+        'Lightning spends a use on twenty distinct cells')
 end
 
--- The Amphora adds moves. The Tide Chart half-charges every other socket and
--- keeps its use when there is nothing left to charge.
+-- Plus half-charges every other unlocked socket and keeps its use if they are full.
 do
-    local amphora, chart = economy.bonuses[7], economy.bonuses[8]
+    local plus, shield = economy.unlock_of("map_room").bonus, economy.unlock_of("amphitheater").bonus
     local hammer, dynamite = economy.bonuses[1], economy.bonuses[2]
     local g, m = R.make_board(29, 3), rules.new_match()
-    for _, bonus in ipairs(economy.bonuses) do g.tools[bonus.tool], g.tool_meter[bonus.tool] = 0, 0 end
-    g.tools[amphora.tool], g.tool_meter[amphora.tool] = 1, g.tool_threshold
-    local moves = g.moves
-    local used, still = rules.game_tool(g, amphora.tool - 1, nil, m)
-    check(used and still == "moves" and g.moves == moves + economy.AMPHORA_MOVES and g.tool_meter[amphora.tool] == 0,
-        'the Amphora spends its use on five more moves')
+    g.tool_meter[shield.tool] = nil
     g.tool_meter[dynamite.tool] = 12
-    g.tools[chart.tool], g.tool_meter[chart.tool] = 1, g.tool_threshold
-    used, still = rules.game_tool(g, chart.tool - 1, nil, m)
+    g.tools[plus.tool], g.tool_meter[plus.tool] = 1, g.tool_threshold
+    local moves = g.moves
+    local used, still = rules.game_tool(g, plus.tool - 1, nil, m)
     check(used and still == "charge" and g.tool_meter[dynamite.tool] == g.tool_threshold and g.tools[dynamite.tool] == 1
         and g.tool_meter[hammer.tool] == g.tool_threshold // 2 and g.tools[hammer.tool] == 0
-        and g.tool_meter[chart.tool] == 0 and g.moves == moves + economy.AMPHORA_MOVES,
-        'the Tide Chart adds half a use to every other socket without a move')
-    for _, bonus in ipairs(economy.bonuses) do g.tools[bonus.tool], g.tool_meter[bonus.tool] = 1, g.tool_threshold end
-    check(not rules.game_tool(g, chart.tool - 1, nil, m) and g.tools[chart.tool] == 1,
-        'a Tide Chart with nothing to charge keeps its use')
+        and g.tool_meter[plus.tool] == 0 and g.tool_meter[shield.tool] == nil and g.moves == moves,
+        'Plus adds half a use to the other unlocked sockets without a move')
+    for tool in pairs(g.tool_meter) do g.tools[tool], g.tool_meter[tool] = 1, g.tool_threshold end
+    check(not rules.game_tool(g, plus.tool - 1, nil, m) and g.tools[plus.tool] == 1,
+        'Plus keeps its use when there is nothing to charge')
 end
 
 -- A save from before the ladder keeps playing: the new restorations it had
@@ -422,6 +435,25 @@ do
     check(w[1]==well and w[2]==10 and w[3]==22 and w[4]==12,
         'migration covers an earned restoration at the new price and preserves other balances')
     check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
+    -- Relic Rush serializes each meter by name. Reordered tools retain their
+    -- own charges, and neither retired bonus can be selected or inherited.
+    check(save.write('relic-eight-bonuses', function(s)
+        s:int('version', require('journey').version)
+        s:int('resource_version', economy.CAMPAIGN_VERSION)
+        s:int('level', 4)
+        s:int('bonus_shield', 6)
+        s:int('bonus_lightning', 12)
+        s:int('bonus_plus', 18)
+        s:int('bonus_mixer', 18)
+        s:int('bonus_hourglass', 18)
+        R.island:serialize(s)
+    end), 'write the named meters from the eight-bonus version')
+    check(save.read('relic-eight-bonuses', R.serialize), 'load a save from the eight-bonus version')
+    local charges = R.prog.bonus_charge
+    check(charges[economy.unlock_of("amphitheater").bonus.tool] == 6
+        and charges[economy.unlock_of("lighthouse").bonus.tool] == 12
+        and charges[economy.unlock_of("map_room").bonus.tool] == 18 and charges[7] == nil,
+        'the remaining tools preserve charges by name')
     R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
     R.g.tool_meter[2] = 9
     R.update_bonus_charges()

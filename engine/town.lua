@@ -302,8 +302,25 @@ function View:header_layout(caps, leading_width)
     local cfg, s = self.cfg.header, app.screen()
     local menu, oh = self.hooks.menu and cfg.menu, cfg.overhang
     local right = cfg.align == "right"
+    local h = menu and menu.size or cfg.height
+    local top = s.y + (menu and menu.y or cfg.y)
+    local left = s.x + cfg.x - (right and 0 or oh)
+    local band = rect(left, top, s:max().x - (menu and menu.inset or cfg.x) - left, h)
+    local gap = right and cfg.gap or cfg.gap - oh
+    local spacer = right or menu
+    local count = #caps + (leading_width and 1 or 0) + (menu and 1 or 0) + (spacer and 1 or 0)
+    local reserved = (leading_width or 0) + (menu and menu.size or 0) + #caps * oh
+        + math.max(0, count - 1) * gap
+    local wanted = 0
     local key = {cfg.align, leading_width or 0}
-    for _, cap in ipairs(caps) do key[#key + 1] = cap.width or cfg.width end
+    for _, cap in ipairs(caps) do
+        local width = cap.width or cfg.width
+        wanted = wanted + width
+        key[#key + 1] = width
+    end
+    -- Preserve the moves and square menu slots when the row runs out of room.
+    local scale = wanted > 0 and num.clamp((band.w - reserved) / wanted, 0, 1) or 1
+    key[#key + 1] = scale
     key = table.concat(key, ",")
     if self.header_key ~= key then
         local children = {}
@@ -312,20 +329,17 @@ function View:header_layout(caps, leading_width)
             children[#children + 1] = {kind = "custom", id = "leading", width = leading_width, height = cfg.height}
         end
         for k, cap in ipairs(caps) do
-            children[#children + 1] = {kind = "custom", id = "cap" .. k, width = oh + (cap.width or cfg.width), height = cfg.height}
+            children[#children + 1] = {kind = "custom", id = "cap" .. k,
+                width = oh + (cap.width or cfg.width) * scale, height = cfg.height}
         end
         if menu then
             if not right then children[#children + 1] = {kind = "spacer", grow = 1} end
             children[#children + 1] = {kind = "custom", id = "menu", width = menu.size, height = menu.size}
         end
         -- Left-aligned pills let the next icon overhang into the gap.
-        self.header_form = ui.form{kind = "row", align = "center", gap = right and cfg.gap or cfg.gap - oh, children = children}
+        self.header_form = ui.form{kind = "row", align = "center", gap = gap, children = children}
         self.header_key = key
     end
-    local h = menu and menu.size or cfg.height
-    local top = menu and s.y + menu.y or s.y + cfg.y
-    local left = s.x + cfg.x - (right and 0 or oh)
-    local band = rect(left, top, s:max().x - (menu and menu.inset or cfg.x) - left, h)
     local boxes = self.header_form:layout(band, self.hooks.skin)
     if menu then
         self.menu_bounds = boxes.menu

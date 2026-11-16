@@ -2094,19 +2094,17 @@
     }
   },
   "bonus_gems": {
-    "source": "art/bonus-gems/source.png",
-    "prompt": "art/bonus-gems/prompt.txt",
-    "generator": "Built-in ImageGen from the Relic Rush toolbar screenshot and the existing art/tool-buttons/source.png atlas",
+    "source": "art/bonus-gems/six-bonuses.png",
+    "prompt": "art/bonus-gems/six-bonuses.prompt.txt",
+    "generator": "Built-in ImageGen, with a six-column registration reference and a full-atlas pass for the sandstone relief",
     "runtime": "data/bonus-gems.png",
     "review": "docs/screenshots/bonus-states.jpg",
     "columns": [
       "hammer",
       "dynamite",
-      "mixer",
       "shield",
       "lightning",
       "star",
-      "hourglass",
       "plus"
     ],
     "rows": [
@@ -2117,7 +2115,7 @@
       "hover",
       "disabled"
     ],
-    "registration": "Center the standalone pieces in 112 px board slots. Crop the five button states directly from the 181 px painted grid, downsample to 128 px and preserve their authored alpha.",
+    "registration": "Fit the standalone gems in 112 px board slots. Crop the five painted button rows directly from the source grid, downsample to 128 px and preserve their authored alpha.",
     "bonuses": {
       "hammer": {
         "building": "log_cabin",
@@ -2128,11 +2126,6 @@
         "building": "camp",
         "first_level": 2,
         "effect": "Hit the selected cell and its six neighbors"
-      },
-      "mixer": {
-        "building": "water_mill",
-        "first_level": 10,
-        "effect": "Shuffle loose pieces; also the Shutter Gear story objective on expedition 10"
       },
       "shield": {
         "building": "amphitheater",
@@ -2149,76 +2142,12 @@
         "first_level": 24,
         "effect": "Hit every piece of the chosen kind"
       },
-      "hourglass": {
-        "building": "clock_tower",
-        "first_level": 12,
-        "effect": "Add 5 moves"
-      },
       "plus": {
         "building": "map_room",
         "first_level": 23,
         "effect": "Add half a use to every other unlocked bonus"
       }
     },
-    "chip_boxes": [
-      [
-        52,
-        25,
-        223,
-        204
-      ],
-      [
-        244,
-        26,
-        414,
-        199
-      ],
-      [
-        445,
-        30,
-        617,
-        198
-      ],
-      [
-        647,
-        22,
-        812,
-        207
-      ],
-      [
-        853,
-        31,
-        1002,
-        203
-      ],
-      [
-        1039,
-        19,
-        1227,
-        208
-      ]
-    ],
-    "borrowed_chips": {
-      "plus": {
-        "source": "art/campaign-pieces/source.png",
-        "box": [
-          251,
-          741,
-          502,
-          978
-        ],
-        "note": "Temporary: the tide chart quest piece, until a dedicated Tide Chart gem is painted"
-      }
-    },
-    "button_art": {
-      "source": "art/bonus-gems/shallow-sockets.png",
-      "prompt": "art/bonus-gems/shallow-sockets.prompt.txt",
-      "generator": "Built-in ImageGen edit of the previous runtime atlas and follow-up amphora enlargement",
-      "cell_size": 181,
-      "board_chips": [
-        "hourglass"
-      ],
-      "disabled": "Shallow sandstone engravings with soft close shadows around the large icon outlines."
-    }
+    "cell_size": 209
   }
 }

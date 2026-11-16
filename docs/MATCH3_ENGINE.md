@@ -97,8 +97,9 @@ both the seeded opening and refills. Its `multipliers` apply to the longest
 straight match through each clearing piece. Resource entries credit a
 wallet `slot` or a `tool` meter. An ordinary match can fill a tool meter
 and turn each full meter into one charge. The `tool_meter` keys identify
-the tools shown in the toolbar. Relic Rush uses `single_charge_tools` to cap
-each tool at one use. Christmas Market keeps a count and a remainder.
+the unlocked tools. Single-charge campaigns supply `tool_order` for all visible
+slots, including locked ones. Relic Rush shows them in one compact row and
+caps each tool at one use. Christmas Market keeps a count and a remainder.
 Both games persist the inventory through `update_bonus_charges` as waves
 resolve. Tool hits still earn the base wallet yield. A game can supply `sunburst_targets` for the earned tool
 so the preview and the hit share the same cell mask.
@@ -117,8 +118,8 @@ without drawing on it, avoid goals and blockers where possible, and always
 leave a legal swap.
 
 `match3.game.campaign_ladder(island, unlocks, journey, slots)` gives a game a
-Cradle of Rome ladder: catalogue buildings bought in order, each adding one
-piece or bonus. Story buildings keep the journey's schedule and hold the next
+Cradle of Rome ladder: catalogue buildings bought in order, with optional
+piece and bonus unlocks. Story buildings keep the journey's schedule and hold the next
 new level; the others open after their clear and must be placed before the
 next story building. It installs the gate, reserve, shop order and waivers
 for older saves on the island module. Both portrait games use it. A game whose

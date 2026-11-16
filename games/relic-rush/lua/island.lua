@@ -43,7 +43,8 @@ end
 -- order, gate, reserve, shop order and older saves are the engine's.
 require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
 for _, step in ipairs(M.ladder) do
-    M.buildings[step.kind + 1].unlock_text = "Unlocks " .. economy.building_unlock_text(step.unlock)
+    local unlock = economy.building_unlock_text(step.unlock)
+    if unlock then M.buildings[step.kind + 1].unlock_text = "Unlocks " .. unlock end
 end
 
 function M.happiness_points(kind) return M.ladder_position[kind] and 4 or 1 end

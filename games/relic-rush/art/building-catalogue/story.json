@@ -47,7 +47,7 @@
   "mess_hall": {"cost": [240, 0, 16]},
   "stilt_house": {"cost": [260, 0, 17]},
   "map_room": {
-    "about": "Tide Chart gems join later expeditions. Match them to half-charge your other bonuses.",
+    "about": "Plus gems join later expeditions. Match them to half-charge your other bonuses.",
     "cost": [285, 250, 270]
   },
   "greenhouse": {"cost": [300, 20, 0]},
@@ -56,11 +56,11 @@
     "cost": [250, 290, 360]
   },
   "water_mill": {
-    "about": "Shutter Gear gems join later expeditions. Match them to charge a shuffle.",
+    "about": "Restore the Water mill before rebuilding the Jungle market.",
     "cost": [75, 50, 75]
   },
   "clock_tower": {
-    "about": "Amphora gems join later expeditions. Match them to charge 5 more moves.",
+    "about": "Restore the Clock tower before rebuilding the Sunstone courtyard.",
     "cost": [180, 140, 200]
   },
   "lighthouse": {

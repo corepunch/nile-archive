@@ -600,7 +600,7 @@
         250,
         270
       ],
-      "about": "Tide Chart gems join later expeditions. Match them to half-charge your other bonuses.",
+      "about": "Plus gems join later expeditions. Match them to half-charge your other bonuses.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/map_room.png",
@@ -720,7 +720,7 @@
         50,
         75
       ],
-      "about": "Shutter Gear gems join later expeditions. Match them to charge a shuffle.",
+      "about": "Restore the Water mill before rebuilding the Jungle market.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/water_mill.png",
@@ -760,7 +760,7 @@
         140,
         200
       ],
-      "about": "Amphora gems join later expeditions. Match them to charge 5 more moves.",
+      "about": "Restore the Clock tower before rebuilding the Sunstone courtyard.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/clock_tower.png",

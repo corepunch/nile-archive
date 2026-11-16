@@ -69,23 +69,22 @@ featured resource matches.
 | --- | ---: | --- |
 | Expedition Camp | 2 | Dynamite hits the chosen cell and its six neighbors. |
 | Trapper's cabin | 8 | Hammer hits one chosen cell. |
-| Water mill | 10 | Shutter Gear reshuffles loose pieces. |
-| Clock tower | 12 | Amphora adds 5 moves. |
 | Stone amphitheatre | 14 | Shield hits the row through the chosen cell, along the hex board's row axis. |
 | Valley lighthouse | 20 | Lightning immediately strikes up to 20 distinct random cells. |
-| Cartographer's house | 23 | Tide Chart adds half a use to every other unlocked bonus. It keeps its use when they are all full. |
+| Cartographer's house | 23 | Plus adds half a use to every other unlocked bonus. It keeps its use when they are all full. |
 | Star Observatory | 24 | Star hits every piece of the chosen kind. |
 
-These are Cradle of Rome's eight tools. Relic Rush's Amphora adds moves in
-place of the Hourglass's time. The Tide Chart is its Plus and borrows an
-existing painted board chip ([#103](https://github.com/corepunch/nile-archive/issues/103)). All eight bonus
-sockets keep the same positions in restoration order from the first expedition.
-Two rows of four sit below the centred board.
+These six tools cover a precision hit, a local blast, a row clear, a random
+strike, a piece-type clear, and a charge refill. The sockets keep their
+positions in restoration order from the first expedition, in one compact
+row below the centered board.
 
-The first expedition after each of these restorations features its new piece.
-Later boards draw one family from the eligible restorations using the board seed.
-It takes an existing slot so the expedition keeps six kinds. The cabin's
-Hammer uses the red slot on board 8, where the relay pliers occupy the score slot.
+The first expedition after a bonus restoration features its new piece.
+Later boards draw a family from the eligible restorations using the board
+seed. The bonus takes an existing slot so the expedition keeps six kinds.
+The cabin's Hammer uses the red slot on board 8, where the relay pliers
+occupy the orange slot. Expedition 10 introduces the market's ration jars
+and gives the orange slot to the Shutter Gear quest piece.
 Each matched bonus piece flies to its own socket and contributes three points.
 The gold fill rises as the gems land, or immediately with Reduce Motion on.
 The socket holds 18 points and one use. Matches beyond that cap cannot bank a
@@ -93,10 +92,9 @@ second use. Both partial and full meters are saved across expeditions, and using
 a bonus empties its socket without spending a move. Confirming a restoration
 unlocks its visible socket for charging.
 
-The market hoist makes the tide-room approach possible. Expedition 10 uses the
-Shutter Gear as both Tomas's recovery objective and the new Mixer piece.
-Matching it advances the story objective and fills the socket. The recovered
-item card shows the same gear the player matched.
+The market hoist makes the tide-room approach possible. The Shutter Gear
+counts toward the expedition 10 recovery objective, and the first clear
+still awards the gear. The Tide Chart is recovered on expedition 4.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap
