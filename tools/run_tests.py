@@ -97,7 +97,7 @@ def checks(fast=False, arguments=()):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--budget", type=float, default=15)
+    parser.add_argument("--budget", type=float, default=5)
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
