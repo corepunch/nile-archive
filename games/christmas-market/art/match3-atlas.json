@@ -3799,7 +3799,7 @@
       "games/christmas-market/data/expedition-hud/pause-selected.png": "56287787c7e68549b0b72af866a02712681902578264a795fe4323a17c649d9f",
       "games/christmas-market/data/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
       "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
-      "games/christmas-market/data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5",
+      "games/christmas-market/data/winter.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
       "games/relic-rush/data/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
       "games/relic-rush/data/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
       "games/relic-rush/data/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
@@ -3814,7 +3814,7 @@
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-      "games/christmas-market/data/match3.png": "a137fa323952ef2428fa72fe6cd12211aafc8949d4074d0d08b5d6d88a63ee66",
+      "games/christmas-market/data/match3.png": "67e46a38deb46b59513f41a539019d4b525cadf5c0fd73e443be5d630de88a5b",
       "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
       "games/christmas-market/lua/match3_skin.lua": "c802f38e88b4fcd89a6d9d127b90eea418a529711c7f7adb15abf8284e98f5a0"
     }

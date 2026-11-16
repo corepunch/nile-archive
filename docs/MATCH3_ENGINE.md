@@ -172,7 +172,7 @@ Call `state.layout()` once per frame. It is measured up from the bottom edge, at
 - **`tools_y`:** the top of the tool row, 100 units above the bottom edge.
 - **`board_origin` and `BOARD_CLIP`:** the board, centred 409 units above the bottom edge.
 - **`hud_rect`:** a 64-unit band 772 units above the bottom edge. The themed signboard joins the Moves medallion, goals and Settings on its midline. Toasts sit just below it (`board_toast`).
-- **`backdrop_rect(size, full)`:** where to draw the backdrop painting. It keeps at least its 1040-tall scale, covers the screen and stands on the bottom edge, so the painting's scenery always ends just above the HUD. Paint a backdrop's scenery in the top 22% of its height.
+- **`backdrop_rect(size, full, min_height)`:** where to draw the backdrop painting. It covers the screen and stands on the bottom edge. The default minimum is 1040 units tall. Christmas Market uses 960 units to keep its stall windows visible on shorter phones. Paint a backdrop's scenery in the top 22% of its height.
 
 `match3.bind_board_ui` measures the goal rows between Moves and Settings.
 Goals wrap to a second row when they exceed the available width. The

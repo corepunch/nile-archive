@@ -4,7 +4,7 @@
 
 The six live chips are market goods. Their silhouettes and dominant colours
 make the gold bell, red candy cane, green holly, sky-blue knitted mitten, plum
-bauble and toasted gingerbread readable over both walnut and cobalt.
+bauble and toasted gingerbread readable over both spruce and slate blue.
 The bell also identifies Gold in the wallet and shop.
 
 | Runtime frames | Rule and artwork |
@@ -90,12 +90,12 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
-| Lantern panes | One ImageGen atlas at `art/lantern-panes/source.png` | `data/lantern-panes/{plain,blue,lit}.png` | Walnut unmarked surface, cobalt objective and amber cleared pane. See [Lantern panes](#lantern-panes) |
+| Lantern panes | One ImageGen atlas at `art/lantern-panes/spruce-atlas.png` | `data/lantern-panes/{plain,blue,lit}.png` | Spruce unmarked surface, slate-blue objective and honey-amber cleared pane. See [Lantern panes](#lantern-panes) |
 | Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
 | Market streets | `tools/roads.py christmas-market` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): grey-brown setts, stone kerbs and a snow shoulder. The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); no interaction states. Captures: `screenshots/market.jpg`, `screenshots/phone-market.jpg` |
 | Market streets, second look | `tools/roads.py christmas-market --style sandstone` (palette in `art/roads-sandstone.json`, copied from Relic Rush's first sandstone streets) | `data/roads-sandstone.png` | The same pieces as warm sandstone setts with pale kerbs and no snow shoulder. An option under review, not the default: start the game with `--roads sandstone` to see it. Capture: `screenshots/market-sandstone.jpg` |
-| Puzzle backdrop | Built-in ImageGen, `art/winter-market.png` | `data/winter.jpg` → `data/match3.png` | One static night market painting for all puzzles |
+| Puzzle backdrop | Built-in ImageGen, `art/lantern-panes/spruce-backdrop.png` | `data/winter.jpg` → `data/match3.png` | One static dusk market painting for all puzzles |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
 | Story cast | Built-in ImageGen, `art/story-cast.png` | `data/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
@@ -146,23 +146,18 @@ its authored alpha. [Board and first-clear capture review](screenshots/review/re
 
 ## Puzzle backdrop
 
-Lantern-lit stalls and a decorated tree fill the strip above the goals. The
-center stays open snow for the hex grid, and fir boughs frame the bottom
-corners. The engine anchors the painting to the bottom and crops its upper
-edge on shorter phones. The stalls and tree sit low enough to read at both
-reviewed sizes.
+The [game-screen concept](../art/lantern-panes/concept.png) was generated from
+the real festive chips, story pieces and a rendered story board. Its palette
+guides the [master dusk painting](../art/lantern-panes/spruce-backdrop.png)
+and the three playing surfaces. Snow, fir boughs and amber stall lights frame
+a quiet green playing area. The game anchors the scene at the bottom and
+crops from the top according to the phone's proportions.
 
-The [ImageGen prompt](../art/winter-market.prompt.txt) and [master painting](../art/winter-market.png)
-are retained. From the repository root, run
-`python3 games/christmas-market/tools/prepare_assets.py` to resize the opaque
-2:3 master to 600×900, then `python3 tools/match3_atlas.py` to pack it. Run
-`build/test/christmas-market "shot main-character-board" "shot phone-board"`
-for the level 4 captures.
-
-| Size | Before | After |
-| --- | --- | --- |
-| 480×900 | ![Snow clearing](screenshots/review/winter-market/before-480x900.jpg) | ![Lantern-lit market](screenshots/review/winter-market/after-480x900.jpg) |
-| 390×844 with safe areas | ![Snow clearing on a narrower phone](screenshots/review/winter-market/before-390x844.jpg) | ![Lantern-lit market on a narrower phone](screenshots/review/winter-market/after-390x844.jpg) |
+The [background prompt](../art/lantern-panes/spruce-backdrop-prompt.txt) and
+output recipe are in the [manifest](../art/manifest.json). From the repository
+root, run `python3 games/christmas-market/tools/prepare_assets.py --backdrop`
+to fit the painting to a 600×900 JPEG, then `python3 tools/match3_atlas.py`
+to pack it. [Before and after on both phone sizes](screenshots/review/spruce-palette/README.md).
 
 ## Story floors
 
@@ -344,21 +339,23 @@ and `python3 tools/match3_atlas.py`. Review with
 
 | Runtime art key | State | Use |
 | --- | --- | --- |
-| `lantern-plain` | Walnut | The unmarked part of the contiguous board |
-| `lantern-blue` | Cobalt | A pane that still needs a match or tool hit |
-| `lantern-lit` | Amber | A pane whose treat has been cleared |
+| `lantern-plain` | Spruce | The unmarked part of the continuous board |
+| `lantern-blue` | Slate blue | A pane that still needs a match or tool hit |
+| `lantern-lit` | Honey amber | A pane whose treat has been cleared |
 
-All three were painted together in the [source atlas](../art/lantern-panes/source.png)
-using the [prompt](../art/lantern-panes/prompt.txt) and [flat-top template](../art/lantern-panes/hex-template.png).
+All three were painted together in the [source atlas](../art/lantern-panes/spruce-atlas.png).
+The [prompt](../art/lantern-panes/spruce-atlas-prompt.txt) uses the
+[flat-top template](../art/lantern-panes/hex-template.png) and the
+[game-screen concept](../art/lantern-panes/concept.png).
 The [manifest](../art/manifest.json) records each square crop, the canonical
 mask and runtime path. Export with
 `python3 games/christmas-market/tools/prepare_lantern_panes.py`.
-Each cropped 584×584 square is downsampled to 128×128 and masked to the exact
-hex. The shared match-3 renderer draws it almost edge-to-edge at a 0.18-unit
-inset, over a dark walnut backing that supplies the hairline seam. The guide reuses the
-blue pane and the one-hit chain art. The board uses existing authored
-selection and hint layers and the three tools retain their five authored
-interaction states. [Reviewed board, guide and story captures](screenshots/review/lantern-panes/README.md).
+Each cropped 586×586 square is downsampled to 128×128 and masked to the exact
+hex. The shared renderer gives each face a 0.18-unit inset over a dark spruce
+backing that supplies the hairline seams. The guide reuses the blue pane
+and one-hit chain art. The board uses existing authored selection and hint
+layers, and the three tools use their five authored interaction states.
+[Regular, chained and partly lit boards](screenshots/review/spruce-palette/README.md).
 
 ## Ice
 

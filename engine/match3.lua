@@ -1448,9 +1448,9 @@ function E.new(config)
         end
     end
     -- Where a backdrop of this pixel size goes in the bleed rect `full`:
-    -- at least its 1040-tall scale, covering the screen, on the bottom edge.
-    function R.backdrop_rect(size, full)
-        local s = math.max(math.max(REF_H, full.h) / size.h, full.w / size.w)
+    -- Covering the screen on the bottom edge, normally at least 1040 tall.
+    function R.backdrop_rect(size, full, min_height)
+        local s = math.max(math.max(min_height or REF_H, full.h) / size.h, full.w / size.w)
         local sw, sh = size.w * s, size.h * s
         return rect(full.x + (full.w - sw) / 2, full.y + full.h - sh, sw, sh)
     end

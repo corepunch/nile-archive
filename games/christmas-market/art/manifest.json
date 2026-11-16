@@ -18,7 +18,10 @@
     "art/story-floors/last-train.prompt.txt",
     "art/lantern-panes/prompt.txt",
     "art/festive-pieces/prompt.txt",
-    "art/story-pieces/prompt.txt"
+    "art/story-pieces/prompt.txt",
+    "art/lantern-panes/spruce-atlas-prompt.txt",
+    "art/lantern-panes/concept-prompt.txt",
+    "art/lantern-panes/spruce-backdrop-prompt.txt"
   ],
   "states": [
     "normal",
@@ -154,11 +157,11 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/game.json": "afb02ae0cacaf89d5335d087c656b05900376be485476c0e10197139287d5231",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
-    "data/lantern-panes/blue.png": "cdfe5c943c65b73cc0b879b1abc60c3762db49d9d64c731e283dc2ba9e84107b",
-    "data/lantern-panes/lit.png": "dcd26a17bbc66081c138e90c06c7b234ceb91d2c294c5226f3ef314c10889449",
-    "data/lantern-panes/plain.png": "09dc889f86355001d339d99ce8a3dc09e93b69829556fc1ed5f67126518db02e",
+    "data/lantern-panes/blue.png": "f674758dd3bc0015a2a0e1402de2aea338736b68a3ef10085d8dd7d15f6b0493",
+    "data/lantern-panes/lit.png": "25bca3915fce1479f8aead06e008fae016711a0c68e4e3f055cf4b18c9c7a11e",
+    "data/lantern-panes/plain.png": "c1d8bd509f6b1c77939ab3f27e343c2a618bdc1d781ae0eaf1030f5cd451c42b",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-    "data/match3.png": "a137fa323952ef2428fa72fe6cd12211aafc8949d4074d0d08b5d6d88a63ee66",
+    "data/match3.png": "67e46a38deb46b59513f41a539019d4b525cadf5c0fd73e443be5d630de88a5b",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -192,7 +195,7 @@
     "data/tile-sets/festive/4.png": "c14aeb68832b8fbce56b9d2c55539c2c6824e821088a67a5913c37078d684166",
     "data/tile-sets/festive/5.png": "88b1d3cbe317a6afe2137298558fe92c9f30b06b72ea1b6d97b855ecff5ad671",
     "data/town.json": "ff623560531886072607abe448a465d17460cd96f023e569d8443737fcb1cfc9",
-    "data/winter.jpg": "288ce490e463d484340a3ce33b0a1d7dcc4625dc8f87ed012e2e78a4058095d5"
+    "data/winter.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7"
   },
   "matching_rules": "Three hex axes: straight 3 clears, 4 makes an axis rocket, 5+ makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a plane.",
   "particle_sprites": {
@@ -515,42 +518,43 @@
     }
   },
   "lantern_panes": {
-    "source": "art/lantern-panes/source.png",
-    "prompt": "art/lantern-panes/prompt.txt",
+    "source": "art/lantern-panes/spruce-atlas.png",
+    "prompt": "art/lantern-panes/spruce-atlas-prompt.txt",
     "template": "art/lantern-panes/hex-template.png",
     "mask": "../../engine/art/hex-tile/hex-mask-128.png",
     "states": {
       "plain": {
         "meaning": "Unmarked board",
         "crop": [
-          70,
-          69,
-          654,
-          653
+          71,
+          68,
+          657,
+          654
         ],
         "runtime": "data/lantern-panes/plain.png"
       },
       "lit": {
         "meaning": "Cleared pane",
         "crop": [
-          794,
-          69,
-          1378,
-          653
+          793,
+          68,
+          1379,
+          654
         ],
         "runtime": "data/lantern-panes/lit.png"
       },
       "blue": {
         "meaning": "Pane to clear",
         "crop": [
-          1518,
-          69,
-          2102,
-          653
+          1513,
+          68,
+          2099,
+          654
         ],
         "runtime": "data/lantern-panes/blue.png"
       }
-    }
+    },
+    "reference": "art/lantern-panes/concept.png"
   },
   "festive_pieces": {
     "source": "art/festive-pieces/source.png",
@@ -642,5 +646,26 @@
         "runtime": "data/story-pieces/lantern.png"
       }
     }
+  },
+  "lantern_concept": {
+    "source": "art/lantern-panes/concept.png",
+    "prompt": "art/lantern-panes/concept-prompt.txt",
+    "references": [
+      "art/festive-pieces/source.png",
+      "art/story-pieces/source.png",
+      "docs/screenshots/review/resources-and-finds/letter-480.jpg"
+    ]
+  },
+  "puzzle_backdrop": {
+    "source": "art/lantern-panes/spruce-backdrop.png",
+    "prompt": "art/lantern-panes/spruce-backdrop-prompt.txt",
+    "reference": "art/lantern-panes/concept.png",
+    "runtime": "data/winter.jpg",
+    "atlas_frame": "background",
+    "output": [
+      600,
+      900
+    ],
+    "reproduction": "python3 games/christmas-market/tools/prepare_assets.py --backdrop"
   }
 }

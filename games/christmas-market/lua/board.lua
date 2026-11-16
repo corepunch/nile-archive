@@ -77,8 +77,8 @@ local function draw_backdrop()
     local full = app.bleed()
     local size = texture.size(tex)
     gfx.bleed(true)
-    gfx.image(tex, R.backdrop_rect(size, full), color.WHITE)   -- engine layout: bottom-anchored
-    gfx.rect(full, rgba(5, 30, 29, 35))
+    -- Keep the stalls' lit windows visible on the shorter phone.
+    gfx.image(tex, R.backdrop_rect(size, full, 960), color.WHITE)
     gfx.bleed(false)
     for i = 0, 11 do   -- drifting motes of sunlight
         local p = vec2(20 + wrapf(i * 93 + R.now * (i % 2 == 1 and 3 or -4) + 480, 440), 170 + wrapf(i * 139 + R.now * 5, 620))

@@ -5,7 +5,7 @@ import json
 import sys
 from math import sqrt
 from pathlib import Path
-from PIL import Image, ImageChops, ImageDraw
+from PIL import Image, ImageChops, ImageDraw, ImageOps
 from prepare_character import main as prepare_character
 from prepare_story_cast import prepare as prepare_story_cast
 
@@ -20,6 +20,11 @@ def save(im, path):
     path = DATA / path
     path.parent.mkdir(parents=True, exist_ok=True)
     im.save(path)
+
+def prepare_backdrop():
+    with Image.open(ROOT / 'art/lantern-panes/spruce-backdrop.png') as source:
+        backdrop = ImageOps.fit(source.convert('RGB'), (600, 900), Image.Resampling.LANCZOS, centering=(.5, 0))
+    save(backdrop, 'winter.jpg')
 
 ALPHA = 40   # the sheet's 40 icons are separate regions above this alpha; fainter glow joins its nearest icon
 
@@ -115,8 +120,13 @@ UNREGISTERED = {'board-states/sand'}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--board-fit', action='store_true', help='only register the gold frames and board tinsel')
+    parts = parser.add_mutually_exclusive_group()
+    parts.add_argument('--board-fit', action='store_true', help='only register the gold frames and board tinsel')
+    parts.add_argument('--backdrop', action='store_true', help='only prepare the current puzzle backdrop')
     args = parser.parse_args()
+    if args.backdrop:
+        prepare_backdrop()
+        return
     sheet = Image.open(ROOT / 'art/icons.png').convert('RGBA')
     if args.board_fit:
         registration = json.loads(REGISTRATION.read_text())
@@ -176,8 +186,7 @@ def main():
     fit_board_art(sheet, registration)
     terrain = Image.open(ROOT / 'art/terrain.png').convert('RGB')
     save(terrain.resize((1920,2880),Image.Resampling.LANCZOS),'island.jpg')
-    backdrop = Image.open(ROOT / 'art/winter-market.png').convert('RGB')
-    save(backdrop.resize((600,900),Image.Resampling.LANCZOS),'winter.jpg')
+    prepare_backdrop()
     prepare_character()
     prepare_story_cast()
     REGISTRATION.write_text(json.dumps(registration,indent=2)+'\n')
