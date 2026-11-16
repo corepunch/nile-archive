@@ -122,9 +122,8 @@ local function draw_blockers(sx)
             if visible then
                 local dst = rect.centered(at, size2.splat(2 * CELL_FACE_R * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha * cover)
-                if ice then
-                    local name = g.ice[i] > 1 and "ice-2" or "ice-1"
-                    gfx.image(R.board_art[name], dst, tint)
+                if ice then   -- an ice field: the ice floor tile below, full ice over the treat
+                    gfx.image(R.board_art["ice-2"], dst, tint)
                 end
                 if tinsel then
                     gfx.image(elements.chain(R,g,i), dst, tint)

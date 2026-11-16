@@ -144,8 +144,8 @@ local function draw_blockers(sx)
             if visible then
                 local dst = rect.centered(at, size2.splat(CELL_FACE_SIZE * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha * cover)
-                -- Generic ice is available to the engine's reference boards.
-                if g.ice[i] > 0 then gfx.image(R.board_art[g.ice[i] > 1 and "ice-2" or "ice-1"], dst, tint) end
+                -- An ice field: the ice floor tile below, full ice over the piece at any strength.
+                if g.ice[i] > 0 then gfx.image(R.board_art["ice-2"], dst, tint) end
                 if g.chain[i] > 0 then gfx.image(elements.chain(R,g,i), dst, tint) end
             end
         end
