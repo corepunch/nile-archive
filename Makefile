@@ -181,6 +181,7 @@ test-assets:
 	python3 tools/oil_art.py --check
 	python3 tools/match3_elements_art.py --check
 	python3 tests/test_hex_tile_art.py
+	python3 tools/board_tiles.py --render-check
 # Budget is test execution only: build prerequisites finish before the timer.
 TEST_BUDGET ?= 15
 TEST_WORKERS ?= 4

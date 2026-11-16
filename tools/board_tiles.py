@@ -14,9 +14,11 @@ The spec (engine/art/board-tiles/tiles.json) holds every colour and setting
 and lists the game data folders that receive identical copies:
 
     python3 tools/board_tiles.py
-    python3 tools/board_tiles.py --check
+    python3 tools/board_tiles.py --check          # hashes in provenance.json, instant
+    python3 tools/board_tiles.py --render-check   # a fresh render, pixel for pixel (CI)
 """
 import argparse
+import hashlib
 import json
 import math
 import random
@@ -28,6 +30,8 @@ import board_grain
 
 REPO = Path(__file__).resolve().parents[1]
 SPEC = REPO / "engine/art/board-tiles/tiles.json"
+PROVENANCE = REPO / "engine/art/board-tiles/provenance.json"
+RECIPE = [Path(__file__).resolve(), REPO / "tools/board_grain.py"]
 SS = 4   # supersampling for the bevel, gradient and glow edges
 
 
@@ -229,22 +233,42 @@ def render_all(spec):
     return {name: bake(spec, tile, grains, i) for i, (name, tile) in enumerate(spec["tiles"].items())}
 
 
+def fingerprint(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def provenance(spec_path, spec):
+    """What a bake read and wrote: recipe code, spec and mask, every copied tile."""
+    def record(paths):
+        return {str(p.relative_to(REPO)): fingerprint(p) for p in paths}
+    outputs = [REPO / folder / f"{name}.png" for folder in spec["outputs"] for name in spec["tiles"]]
+    return {"recipe": record(RECIPE), "inputs": record([spec_path.resolve(), REPO / spec["mask"]]),
+            "outputs": record(outputs)}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--spec", type=Path, default=SPEC)
-    parser.add_argument("--check", action="store_true", help="fail if any tile differs from a fresh render")
+    parser.add_argument("--check", action="store_true", help="fail if the recipe, spec, mask or a tile changed since the bake")
+    parser.add_argument("--render-check", action="store_true", help="fail if any tile differs from a fresh render")
     args = parser.parse_args()
     spec = json.loads(args.spec.read_text())
+    if args.check:
+        recorded = json.loads(PROVENANCE.read_text())
+        assert recorded == provenance(args.spec, spec), "Board tiles are stale: run python3 tools/board_tiles.py"
+        return
     tiles = render_all(spec)
     for folder in spec["outputs"]:
         for name, out in tiles.items():
             path = REPO / folder / f"{name}.png"
-            if args.check:
+            if args.render_check:
                 current = Image.open(path).convert("RGBA")
                 assert current.size == out.size and current.tobytes() == out.tobytes(), f"Stale tile: {path}"
             else:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 out.save(path, optimize=True)
+    if not args.render_check:
+        PROVENANCE.write_text(json.dumps(provenance(args.spec, spec), indent=2) + "\n")
 
 
 if __name__ == "__main__":
