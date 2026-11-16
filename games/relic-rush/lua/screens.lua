@@ -6,6 +6,7 @@ local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
 local economy = require("economy")
+local wallet_art = require("art").wallet_icons
 local island = require("island")
 local journey = require("journey")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
@@ -29,7 +30,7 @@ function R.compass_icon(center, radius)
 end
 
 local function currency_icon(slot)
-    return R.board_art["resource-" .. economy.currencies[slot].key]
+    return R.board_art["resource-" .. wallet_art[economy.currencies[slot].key]]
 end
 
 function R.wallet_icons()
@@ -39,9 +40,10 @@ end
 function R.currency_capsules(balance)
     local out = {}
     local earned = not R.on_island and R.g and not R.g.lost and not R.g.reward_claimed and R.g.earnings
-    for slot, currency in ipairs(economy.currencies) do
+    for i, slot in ipairs(economy.currency_order) do
+        local currency = economy.currencies[slot]
         local pending = earned and earned[slot] or 0
-        out[slot] = {icon=currency_icon(slot), value=tostring(balance[slot] + pending), width=67,
+        out[i] = {slot=slot, icon=currency_icon(slot), value=tostring(balance[slot] + pending), width=100,
             note=earned and (currency.name .. " from matches is banked on a win.")
                 or (currency.name .. " earned from matches. Spend it on the island.")}
     end
@@ -95,19 +97,20 @@ local function result_screen()
     s = section(.62, .25, 8)
     say("RESOURCES TO BANK", l.treasure_label, 12, PAL_CREAM)
     set_paint(s)
-    local columns=#economy.currencies
-    for k = 0, columns-1 do
+    local columns = #economy.currency_order
+    for i, slot in ipairs(economy.currency_order) do
+        local k = i - 1
         local r = l.rewards:col(columns, k, 10)
         s = section(.66 + k * .1, .28, 10)
         rrect(r, 12, rgba(241, 218, 157))
         rrect(r:inflate(-2), 10, rgba(255, 242, 201))
-        picture_fit(currency_icon(k+1), rect(r.x + (r.w - 36) / 2, r.y + 4, 36, 36), 255)
-        say(("+%d"):format(reward[k + 1]), rect(r.x + 6, r.y + 40, r.w - 12, 27), 25, PAL_GOLD)
-        say(economy.currencies[k+1].name, rect(r.x + 3, r.y + 70, r.w - 6, 14), 13, PAL_CREAM)
+        picture_fit(currency_icon(slot), rect(r.x + (r.w - 36) / 2, r.y + 4, 36, 36), 255)
+        say(("+%d"):format(reward[slot]), rect(r.x + 6, r.y + 40, r.w - 12, 27), 25, PAL_GOLD)
+        say(economy.currencies[slot].name, rect(r.x + 3, r.y + 70, r.w - 6, 14), 13, PAL_CREAM)
         set_paint(s)
     end
-    local bonuses = ("Move bonus +%d Gold"):format(breakdown.bonus)
-    if breakdown.happiness > 0 then bonuses = bonuses .. ("  ·  Happiness +%d Gold"):format(breakdown.happiness) end
+    local bonuses = ("Move bonus +%d Coins"):format(breakdown.bonus)
+    if breakdown.happiness > 0 then bonuses = bonuses .. ("  ·  Happiness +%d Coins"):format(breakdown.happiness) end
     say(bonuses, rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then
@@ -197,8 +200,8 @@ local guide_entries = {
      icon={floor="tile-tablet-single"}},
     {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is blue, clear it with another hit.",
      icon={floor="tile-tablet-single", piece="resource-coin", front="chain"}},
-    {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Gold, Provisions and Supplies.",
-     icon={front="resource-timber"}},
+    {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Coins, Supplies and Food.",
+     icon={front="resource-wallet-supplies"}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
      icon={tool="pickaxe"}},
 }

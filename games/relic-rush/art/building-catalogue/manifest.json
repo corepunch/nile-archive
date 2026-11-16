@@ -80,7 +80,7 @@
         0,
         0
       ],
-      "about": "Water buckets earn 3 Provisions each from expedition 5.",
+      "about": "Water buckets earn 3 Food each from expedition 5.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/well.png",
@@ -200,7 +200,7 @@
         34,
         36
       ],
-      "about": "Adds trade coin stacks worth 6 Gold each.",
+      "about": "Adds trade coin stacks worth 6 Coins each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/gateway.png",
@@ -240,7 +240,7 @@
         35,
         0
       ],
-      "about": "Adds grain bundles worth 5 Provisions each.",
+      "about": "Adds grain bundles worth 5 Food each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lodge.png",
@@ -360,7 +360,7 @@
         0,
         65
       ],
-      "about": "Adds springwater drops worth 6 Provisions each.",
+      "about": "Adds springwater drops worth 6 Food each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/fountain.png",

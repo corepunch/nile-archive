@@ -286,10 +286,19 @@ function R.smoke()
     elseif stage == 51 and R.phase == R.PH_IDLE and R.g.moves < shop.resume_moves then
         assert(R.g.score > 0, "restart smoke must exercise a partly played board")
         local capsules = R.header_capsules()
-        for slot = 1, 3 do
-            assert(R.prog.wallet[slot] == shop.replay_wallet[slot]
-                and tonumber(capsules[slot+1].value) == R.prog.wallet[slot] + R.g.earnings[slot],
+        assert(#capsules == 3, "the shared header shows only coins, supplies and food")
+        for i, slot in ipairs{rules.GOLD, rules.SUPPLIES, rules.PROVISIONS} do
+            assert(capsules[i].slot == slot and R.prog.wallet[slot] == shop.replay_wallet[slot]
+                and tonumber(capsules[i].value) == R.prog.wallet[slot] + R.g.earnings[slot],
                 "smoke: the shared header previews live match earnings without banking them")
+            local box = R.town.header_form.boxes["cap" .. i]
+            for kind, piece in pairs(R.g.resource_yields) do
+                if piece.slot == slot then
+                    local target = R.resource_target(kind)
+                    assert(target and target.x >= box.x and target.x < box.x + box.w,
+                        "match particles fly to the displayed currency")
+                end
+            end
         end
         app.inject_click(R.town.menu_bounds:center()); stage = 35
     -- Pause > Restart asks first: Keep playing returns to Pause, Restart starts over.

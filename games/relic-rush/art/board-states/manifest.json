@@ -673,6 +673,8 @@
     "data/resource-pieces/rations.png",
     "data/resource-pieces/stone.png",
     "data/resource-pieces/timber.png",
+    "data/resource-pieces/wallet-food.png",
+    "data/resource-pieces/wallet-supplies.png",
     "data/resource-pieces/water.png",
     "data/result-icons.png",
     "data/roads.png",
@@ -760,7 +762,7 @@
   "buildings": "art/building-catalogue/manifest.json",
   "economy_presentation": {
     "contract": "lua/rules.lua reward_breakdown; lua/art.lua names the results and wallet artwork",
-    "wallet_icons": "life heart, sun coin for Amulets, gold and turquoise Discovery Star",
+    "wallet_icons": "sun coin, timber-and-stone bundle, and bread-and-fruit basket",
     "discovery": "Three Discovery Stars on the first clear. Scheduled milestones open a restoration purchase.",
     "replay": "Amulets only",
     "controls": "existing shared form skin normal/hover/pressed/disabled/focus; modal opening input is consumed",
@@ -1035,7 +1037,7 @@
       "pause-disabled",
       "life"
     ],
-    "meaning": "Settings gear; life heart, Amulets shown with the sun coin, and discovery stars. Wood, stone and compasses are retired wallet resources.",
+    "meaning": "Settings gear states and archived life readout art. The active wallet uses the three currency icons.",
     "runtime": [
       "data/expedition-hud/pause-normal.png",
       "data/expedition-hud/pause-hover.png",
@@ -1871,7 +1873,6 @@
         "selected",
         "hinted",
         "falling",
-        "wallet",
         "first-clear award"
       ],
       "review": [
@@ -1881,6 +1882,37 @@
         "economy-wallet"
       ]
     }
+  },
+  "wallet_icons": {
+    "source": "art/resource-pieces/wallet-supplies-food.png",
+    "prompt": "art/resource-pieces/wallet-supplies-food.prompt.txt",
+    "generator": "built-in ImageGen, one transparent atlas",
+    "grid": [
+      2,
+      1
+    ],
+    "slots": {
+      "wallet-supplies": 1,
+      "wallet-food": 2
+    },
+    "resize": {
+      "wallet-supplies": [
+        128,
+        120
+      ],
+      "wallet-food": [
+        128,
+        120
+      ]
+    },
+    "runtime": {
+      "coins": "data/resource-pieces/coin.png",
+      "supplies": "data/resource-pieces/wallet-supplies.png",
+      "food": "data/resource-pieces/wallet-food.png"
+    },
+    "states": "Static currency readouts. The shared capsule handles pressed feedback.",
+    "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
+    "review": "docs/screenshots/review/three-resource-wallet/README.md"
   },
   "board_frame": {
     "generator": "tools/board_frame.py",

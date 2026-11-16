@@ -18,7 +18,7 @@
 --   skin                    the game's ui.skin (required)
 --   wallet()                the purse the city charges (required)
 --   notice(text)            show a short message
---   capsules()              {{icon=texture|fn(box), value=string, note=string, width=n,
+--   capsules()              {{icon=texture|fn(box), value=string, note=string, width=n, slot=wallet slot,
 --                             reserve=n, decorate=fn(box)}, ...}
 --   menu(bounds)            draw the top-right menu button; handle its tap
 --   build(), play(), middle()   bottom actions
@@ -335,9 +335,11 @@ function View:header()
     local h, cfg, skin = self.hooks, self.cfg.header, self.hooks.skin
     local caps = h.capsules and h.capsules() or {}
     local boxes = self:header_layout(caps)
+    self.resource_targets = {}
     for k, cap in ipairs(caps) do
         local node = boxes["cap" .. k]
         local r = rect(node.x + cfg.overhang, node.y, node.w - cfg.overhang, node.h)
+        if cap.slot then self.resource_targets[cap.slot] = skin:resource_icon_box(r, cfg.role):center() end
         local hit = rect(r.x - cfg.overhang, r.y - 12, r.w + cfg.overhang, r.h + 24)
         local tapped = skin:draw_resource(r, cap.icon, cap.value, {role = cfg.role, hit = hit, reserve = cap.reserve})
         if cap.decorate then cap.decorate(r) end

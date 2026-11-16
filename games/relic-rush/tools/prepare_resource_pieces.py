@@ -1,4 +1,4 @@
-"""Register the selected resource sprites from their authored atlas."""
+"""Register match pieces and wallet icons from their authored atlases."""
 import argparse
 import json
 from pathlib import Path
@@ -6,7 +6,8 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = json.loads((ROOT / 'art/board-states/manifest.json').read_text())['resource_pieces']
+MANIFEST = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
+SPEC = MANIFEST['resource_pieces']
 
 
 def register(spec, check):
@@ -39,7 +40,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    for spec in (SPEC, SPEC['timber_emerald']):
+    for spec in (SPEC, SPEC['timber_emerald'], MANIFEST['wallet_icons']):
         register(spec, args.check)
 
 

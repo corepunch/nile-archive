@@ -63,7 +63,7 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | Electric cable clipped over an older stone channel (3) | The severed cable leaves the crew looking for a manual signal (8). The working hand shutter gives them their answer (10). |
 | Answer repeats then changes (2–3) | A person changes the shutter (10). The note reveals I. R. on board 13 and Tomas names Ines at the courtyard. Her delayed three flashes from the safe landing confirm it (30). |
 | Pump chart shows a broken route (4) | Tomas knows the tide room (7); the signed repair plan explains the damaged wall (20). |
-| The well runs again (restoration 4) | The crew can carry water on both marker expeditions (5–6). Matching a bucket stocks Provisions. |
+| The well runs again (restoration 4) | The crew can carry water on both marker expeditions (5–6). Matching a bucket stocks Food. |
 | A tread has slipped at the quay (6) | The workshop cuts blocks (restoration 7), the crew brings them on the supply run (9), and the shored steps give access to the tide-room door (restoration 9). |
 | Tomas says he has not seen Ines return (8) | He recognizes her handwriting at the courtyard (13), then hands over her cabinet key (20). |
 | Adrian asks for a survey pin for his sponsor's paperwork (5) | His claim surfaces (20), and he surrenders it (28). |

@@ -21,9 +21,10 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are continuous measured scrolling lists with bounded inertia; the building catalogue keeps its category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
 
-The wallet holds Gold, Provisions, Supplies and discovery stars. Matches earn
-resources during the expedition, and a successful clear banks them once.
-The Well costs Gold. The Workshop, Market, Archive and Temple use all three
+The top wallet shows Coins, Supplies and Food on both screens. Matches
+preview in the wallet during an expedition and bank after a successful clear.
+The completion dialog shows the expedition score.
+The Well costs Coins. The Workshop, Market, Archive and Temple use all three
 resources. Discovery stars unlock shop stock and land. The five lives regenerate
 one at a time every 30 minutes, including offline.
 
@@ -174,8 +175,8 @@ plan gives the crew a way to repair the quay wall.
 
 The island shows the active chapter, quest, next task and Happiness. Each confirmed
 wonder adds four Happiness and each optional building or decoration adds one.
-Optional placements also add one Gold to every won expedition, up to ten Gold.
-The shop previews the Happiness gain and the results show the Gold bonus.
+Optional placements also add one Coins to every won expedition, up to ten Coins.
+The shop previews the Happiness gain and the results show the Coins bonus.
 Required restorations cover quest thresholds. Moving a building preserves its Happiness.
 
 First-clear dialogue leads into Results. Board 30 reveals the signal plate at the cleared site, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
@@ -199,21 +200,21 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all blue plaques within the move budget.
-3. Claim the matched resources, up to 40 Gold for saved moves, and three discovery stars on a first clear.
+3. Claim the matched resources, up to 40 Coins for saved moves, and three discovery stars on a first clear.
 4. Return to the island. At a wonder milestone, check the price and replay an expedition if you need more resources.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Coins start at 4 Gold each. Red berries and emeralds pay 1 Provisions.
+A matched sun coin earns 4 Coins. Red berries and emeralds pay 1 Food.
 Timber and dressed stone pay 2 and 3 Supplies. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
 Authored story pieces keep their slots. The result shows what the next
 restoration unlocks or what is still needed to afford it. Replays earn
-matched resources and up to 40 Gold for unused moves.
+matched resources and up to 40 Coins for unused moves.
 
 The Well adds water buckets on level 5. The Workshop adds cut blocks on level 8,
 alongside the broken cable. An arrival message names the building and the piece's
-value. The first hint on level 5 earns 9 Provisions while clearing plaques. Level 9
+value. The first hint on level 5 earns 9 Food while clearing plaques. Level 9
 offers a similar cut-block match for 15 Supplies toward the Market.
 
 ## Campaign: thirty hex levels
@@ -259,16 +260,16 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 
 | # | Building | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | Expedition camp | 3 Provisions + 8 Supplies | Two sticks of Dynamite per expedition from board 2. |
-| 2 | Spring well | 100 Gold | Unlocks water buckets worth 3 Provisions each. |
-| 3 | Artisan workshop | 70 Gold + 20 Provisions + 24 Supplies | Unlocks cut blocks worth 5 Supplies each. |
-| 4 | Jungle market | 85 Gold + 24 Provisions + 30 Supplies | Unlocks ration jars worth 4 Provisions each. |
-| 5 | Sunstone courtyard | 85 Gold + 34 Provisions + 36 Supplies | Trade coin stacks worth 6 Gold each. |
-| 6 | Explorer's lodge | 130 Gold + 35 Provisions | Grain bundles worth 5 Provisions each. |
-| 7 | Lost-world archive | 145 Gold + 85 Provisions + 40 Supplies | Carved quartz worth 7 Supplies each. |
-| 8 | Star observatory | 155 Gold + 70 Supplies | Two Sunbursts per expedition from board 24. |
-| 9 | Jade fountain | 160 Gold + 65 Supplies | Springwater drops worth 6 Provisions each. |
-| 10 | Temple of the sun | 185 Gold + 110 Provisions + 75 Supplies | Sun gems worth 9 Gold each. |
+| 1 | Expedition camp | 8 Supplies + 3 Food | Two sticks of Dynamite per expedition from board 2. |
+| 2 | Spring well | 100 Coins | Unlocks water buckets worth 3 Food each. |
+| 3 | Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Unlocks cut blocks worth 5 Supplies each. |
+| 4 | Jungle market | 85 Coins + 30 Supplies + 24 Food | Unlocks ration jars worth 4 Food each. |
+| 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Trade coin stacks worth 6 Coins each. |
+| 6 | Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
+| 7 | Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Carved quartz worth 7 Supplies each. |
+| 8 | Star observatory | 155 Coins + 70 Supplies | Two Sunbursts per expedition from board 24. |
+| 9 | Jade fountain | 160 Coins + 65 Supplies | Springwater drops worth 6 Food each. |
+| 10 | Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Sun gems worth 9 Coins each. |
 
 Construction makes the next story beat available. The [economy table](docs/resource-expedition.md#board-rules-and-palette)
 lists the first expedition and currency for each payoff.
@@ -303,13 +304,13 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. All pieces in a long line clear together.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
-- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Gold bonus and any remaining cost of the next restoration.
+- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
 - Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each available tool starts with two charges and costs zero moves. Restore the Camp for Dynamite and the Observatory for Sunburst.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - Adjacent clouded regions require cumulative discovery stars, which stay with the expedition. Compasses are retired.
-- Both screens show lives, the three resource balances and stars beside the settings gear. Large Buildings and Play actions sit at the bottom corners with a smaller Expeditions compass beside Buildings. Both catalogues scroll continuously. The building shop shows three cards per row.
+- The settings gear sits beside the three resource balances. Buildings, Play and Expeditions occupy the town's bottom row. Both catalogues scroll continuously. The building shop shows three cards per row.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.

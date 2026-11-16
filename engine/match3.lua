@@ -395,11 +395,8 @@ function E.bind_town_board_hud(R)
     if not neutral and R.currency_capsules then
         function R.resource_target(kind)
             local piece = R.g.resource_yields and R.g.resource_yields[kind]
-            local box = piece and piece.slot and R.town.header_form and R.town.header_form.boxes["cap" .. (piece.slot + 1)]
-            if not box then return end
-            local header = R.town.cfg.header
-            local capsule = rect(box.x + header.overhang, box.y, box.w - header.overhang, box.h)
-            return R.skin:resource_icon_box(capsule, header.role):center()
+            local targets = R.town.resource_targets
+            return piece and targets and targets[piece.slot]
         end
     end
 

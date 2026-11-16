@@ -1,7 +1,7 @@
 # Relic Rush resource expedition
 
 Clear the marked ground or complete the crew's task. The matches made along the
-way bring back Gold, Provisions and Supplies to restore the valley. The launch
+way bring back Coins, Supplies and Food to restore the valley. The launch
 campaign uses the existing 30 expeditions, ten restorations, nine quests and
 the signal finale. Each restoration should feel like spending what the crew
 just brought home.
@@ -65,17 +65,17 @@ visible cost.
 
 | Regular piece | Family | Yield per removed piece |
 | --- | --- | ---: |
-| Gold sun coin | Gold | 4 |
-| Red berries | Provisions | 1 |
-| Emerald | Provisions | 1 |
+| Gold sun coin | Coins | 4 |
+| Red berries | Food | 1 |
+| Emerald | Food | 1 |
 | Timber log | Supplies | 2 |
 | Purple dressed stone | Supplies | 3 |
 
 Buy or restore a building using the family totals. Timber and stone are
 separate match kinds within Supplies, just as berries and emeralds are
-separate kinds within Provisions. Each piece needs a recognizable shape at phone
-size. The shared town and board wallet uses the sun coin, berries and timber.
-Pending earnings are visible on the board and are banked on a win.
+separate kinds within Food. The town and board show Coins, Supplies and Food
+with a sun coin, a timber-and-stone bundle and a food basket. Pending earnings
+are visible on the board and bank on a win. The completion dialog shows score.
 
 Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
@@ -83,7 +83,7 @@ earn that complexity through layout and enough legal opening swaps. Board 1
 uses five regular resources. Boards 4 and 9 use 5+1. Board 8 puts the snapped
 cable in the orange slot and omits red berries, leaving room for cut blocks in
 a 4+1 palette. The orange slot can also hold an amphora that pays score. Board 4 takes
-the Gold slot for the tide chart. The Well purchase that follows uses Gold
+the Coins slot for the tide chart. The Well purchase that follows uses Coins
 banked on earlier boards or earned from unused moves and replays.
 
 Confirmed placements change openings and refills from the listed expedition
@@ -92,41 +92,40 @@ Dynamite and Sunburst replenish at the start of each eligible attempt.
 
 | Restoration | First board | Board payoff | How it funds the next restoration |
 | --- | ---: | --- | --- |
-| Expedition Camp | 2 | Dynamite, two uses | Blast coin clusters or save moves for Well Gold. |
-| Spring Well | 5 | Water buckets replace timber, 3 Provisions each | Pay the Workshop's Provisions. |
+| Expedition Camp | 2 | Dynamite, two uses | Blast coin clusters or save moves for the Well. |
+| Spring Well | 5 | Water buckets replace timber, 3 Food each | Feed the Workshop crew. |
 | Artisan Workshop | 8 | Cut blocks replace dressed stone, 5 Supplies each | Pay the Market's Supplies. |
-| Jungle Market | 10 | Ration jars replace red berries, 4 Provisions each | Pay the Courtyard's Provisions. |
-| Sunstone Courtyard | 14 | Trade coin stacks replace sun coins, 6 Gold each | Pay the Lodge's Gold. |
-| Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Provisions each | Pay the Archive's Provisions. |
+| Jungle Market | 10 | Ration jars replace red berries, 4 Food each | Feed the crew working on the Courtyard. |
+| Sunstone Courtyard | 14 | Trade coin stacks replace sun coins, 6 Coins each | Pay the Lodge's Coin cost. |
+| Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Food each | Pay the Archive's Food cost. |
 | Lost-world Archive | 20 | Carved quartz replaces cut blocks, 7 Supplies each | Pay the Observatory's Supplies. |
 | Star Observatory | 24 | Sunburst, two uses | Clear coin or quartz across the board for the Fountain. |
-| Jade Fountain | 27 | Springwater drops replace water buckets, 6 Provisions each | Pay the Temple's Provisions. |
-| Temple of the Sun | 30 | Sun gems replace trade coin stacks, 9 Gold each | The finale and its replays earn Gold for island purchases. |
+| Jade Fountain | 27 | Springwater drops replace water buckets, 6 Food each | Pay the Temple's Food cost. |
+| Temple of the Sun | 30 | Sun gems replace trade coin stacks, 9 Coins each | The finale and its replays earn Coins for island purchases. |
 
 An arrival message credits the restored building and names the new piece's
 yield. The authored hint on board 5 trades one swap for three cleared plaques
-and 9 Provisions. Board 9 pairs three plaques with 15 Supplies while leaving
-the supply crate as the first-clear find. Gold is the crew's purchasing
-budget, Provisions keep the workers supplied, and Supplies go into repairs.
+and 9 Food. Board 9 pairs three plaques with 15 Supplies while leaving
+the supply crate as the first-clear find. Coins pay for labor and materials,
+Food keeps the workers supplied, and Supplies go into repairs.
 
 ## Restoration prices and earnings
 
-The Camp uses Provisions and Supplies. The Well follows the Rome pattern of a
-Gold purchase that unlocks a Provisions source. The Workshop and Market use all
-three currencies. Prices are in Relic Rush units for the shorter portrait boards.
+The Camp uses Supplies and Food. Buying the Well with Coins unlocks a Food
+source. The Workshop and Market use all three currencies.
 
-| Clear | Restore | Gold | Provisions | Supplies |
+| Clear | Restore | Coins | Supplies | Food |
 | ---: | --- | ---: | ---: | ---: |
-| 1 | Expedition camp | — | 3 | 8 |
+| 1 | Expedition camp | — | 8 | 3 |
 | 4 | Spring well | 100 | — | — |
-| 7 | Artisan workshop | 70 | 20 | 24 |
-| 9 | Jungle market | 85 | 24 | 30 |
-| 13 | Sunstone courtyard | 85 | 34 | 36 |
-| 16 | Explorer's lodge | 130 | 35 | — |
-| 19 | Lost-world archive | 145 | 85 | 40 |
-| 23 | Star observatory | 155 | — | 70 |
-| 26 | Jade fountain | 160 | — | 65 |
-| 29 | Temple of the sun | 185 | 110 | 75 |
+| 7 | Artisan workshop | 70 | 24 | 20 |
+| 9 | Jungle market | 85 | 30 | 24 |
+| 13 | Sunstone courtyard | 85 | 36 | 34 |
+| 16 | Explorer's lodge | 130 | — | 35 |
+| 19 | Lost-world archive | 145 | 40 | 85 |
+| 23 | Star observatory | 155 | 70 | — |
+| 26 | Jade fountain | 160 | 65 | — |
+| 29 | Temple of the sun | 185 | 75 | 110 |
 
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and
@@ -142,11 +141,11 @@ with the missing resource and bank the earnings. Optional purchases reserve
 the price of any earned restoration. Confirmed placement debits the price
 once and Cancel returns the preview. Stars remain access requirements.
 Confirmed restorations add four Happiness. Each confirmed optional building
-or decoration adds one Happiness and earns one bonus Gold per win, capped at
-ten Gold. Moving items preserves the score and bonus. Both derive from saved
+or decoration adds one Happiness and earns one bonus Coins per win, capped at
+ten Coins. Moving items preserves the score and bonus. Both derive from saved
 placements.
 
-A save version identifies the Provisions and Supplies slots. Existing Gold,
+A save version identifies the Food and Supplies slots. Existing Coins,
 stars, placements, lives, unlocks, claimed levels and story checkpoints are
 preserved. Legacy Wood and Stone are combined into Supplies. Migration covers
 any gap on a restoration already earned before the price changes. The wallet, catalogue and result
@@ -156,7 +155,7 @@ shapes and readable labels alongside color in the guide and price rows.
 ## Release status and checks
 
 Eight seeded runs through level 20 funded all 56 restoration purchases from
-first clears after the Camp price was lowered to 3 Provisions. The sample used
+first clears after the Camp price was lowered to 3 Food. The sample used
 greedy matches and allowed expedition tools when four moves remained.
 
 All 30 boards use pale stone with fixed blue targets. They share the

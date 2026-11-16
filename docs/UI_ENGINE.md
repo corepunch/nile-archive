@@ -501,6 +501,11 @@ capsule and the menu button are `custom` nodes, so the pills and the taller
 menu share one centre line. `buttons.menu` and the bottom row's tap points
 come from the forms' layout boxes, not separate arithmetic.
 
+Match-3 games can set `capsules.currencies_only` in `game.json` to show
+only their wallet balances in the town and expedition headers. Each currency
+capsule can identify its `slot` in the saved purse. Match particles use the
+icon center for that slot, so a game's presentation can choose a display order.
+
 ## Town building popups
 
 `engine/town.lua` draws the label above a tapped building. The game's

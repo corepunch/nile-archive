@@ -22,10 +22,7 @@
     "quit": "Your board is saved. Tap LEVEL %d or Expeditions to continue."
   },
   "capsules": {
-    "notes": ["A life returns every 30 minutes, up to five.",
-              "Gold buys buildings and decorations.",
-              "Discovery Stars unlock stock and land. First clears only; never spent.",
-              "Place buildings and decorations to raise Happiness."]
+    "currencies_only": true
   },
   "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley", "leaderboard": "LEADERBOARD"},
   "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d"},
@@ -50,15 +47,15 @@
     "category": "building",
     "built": "RESTORED", "complete": "COMPLETE EXPEDITION %d", "earlier": "RESTORE EARLIER WONDERS",
     "poor": "MORE RESOURCES NEEDED", "reserved": "RESOURCES RESERVED FOR RESTORATION", "full": "ISLAND IS FULL",
-    "price": "%d Gold", "build_points": "  /  +%d Happiness"
+    "price": "%d Coins", "build_points": "  /  +%d Happiness"
   },
   "expeditions": {
     "title": "Expeditions",
-    "intro": "Match pieces to bring Gold, Provisions and Supplies home. First clears also unlock clues and Discovery Stars.",
+    "intro": "Match pieces to bring Coins, Supplies and Food home. First clears also unlock clues and Discovery Stars.",
     "close": "BACK TO ISLAND",
     "resume": "RESUME", "replay": "REPLAY", "pending": "RESTORE FIRST",
     "new": "PLAY", "earlier": "DISCOVER EARLIER LEVELS",
-    "replay_note": "Bank resources from matches and Gold for unused moves.",
+    "replay_note": "Bank resources from matches and Coins for unused moves.",
     "building_note": "First clear: a new restoration, 3 Stars and resources.",
     "story_note": "First clear: the next clue, 3 Stars and resources."
   },

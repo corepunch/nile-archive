@@ -39,7 +39,7 @@ registration. Resources are trimmed with a four-pixel margin and centred on a
 transparent square. The [timber and emerald atlas](../art/resource-pieces/timber-emerald.png)
 was edited together in built-in ImageGen. The [edit prompt](../art/resource-pieces/timber-emerald.prompt.txt)
 records both slots. The emerald fits inside 114 px on a 128 px canvas. Timber
-fits inside 285 px on a 320 px canvas so the board, wallet and reward can use
+fits inside 285 px on a 320 px canvas so the board and reward can use
 the same texture. Runtime sprites live in
 `data/resource-pieces/`. Selected, hinted and falling pieces reuse the same
 authored sprite with existing motion and separate indicators. Specials use
@@ -48,19 +48,19 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 
 | Runtime name | Match meaning | Wallet context |
 | --- | --- | --- |
-| `coin` | Round gold coin engraved with an eight-ray sun, 4 Gold | Gold |
-| `berries` | Red berries, 1 Provisions | Provisions |
-| `emerald` | Square-cut green gem, 1 Provisions | Board only |
-| `timber` | One unwrapped log, 2 Supplies | Supplies and the Camp Timber award |
+| `coin` | Round gold coin engraved with an eight-ray sun, 4 Coins | Coins icon |
+| `berries` | Red berries, 1 Food | Board only |
+| `emerald` | Square-cut green gem, 1 Food | Board only |
+| `timber` | One unwrapped log, 2 Supplies | Camp Timber award |
 | `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
-| `water` | Teal water bucket, 3 Provisions. Replaces timber from board 5 after the Well is restored. | Board and guide |
-| `rations` | Orange ration jar, 4 Provisions in the Market slot from board 10 | Board and guide |
+| `water` | Teal water bucket, 3 Food. Replaces timber from board 5 after the Well is restored. | Board and guide |
+| `rations` | Orange ration jar, 4 Food in the Market slot from board 10 | Board and guide |
 | `cut-blocks` | Workshop unlock from board 8, 5 Supplies | Board and guide |
-| `trade-coins` | Existing Resources stack (`data/tile-sets/resources/0.png`), 6 Gold | Board and guide from 14 |
-| `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Provisions | Board and guide from 17 |
+| `trade-coins` | Existing Resources stack (`data/tile-sets/resources/0.png`), 6 Coins | Board and guide from 14 |
+| `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Food | Board and guide from 17 |
 | `quartz` | Existing Relics purple crystal (`data/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
-| `springwater` | Existing Resources blue droplet (`data/tile-sets/resources/3.png`), 6 Provisions | Board and guide from 27 |
-| `sun-gem` | Existing Jewels gold gem (`data/tile-sets/jewels/0.png`), 9 Gold | Board and guide from 30 |
+| `springwater` | Existing Resources blue droplet (`data/tile-sets/resources/3.png`), 6 Food | Board and guide from 27 |
+| `sun-gem` | Existing Jewels gold gem (`data/tile-sets/jewels/0.png`), 9 Coins | Board and guide from 30 |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 The score-only amphora on early six-kind boards uses kind 5 of the selected
@@ -79,7 +79,7 @@ The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
 shows the new openings and the cut blocks sharing level 8 with the snapped cable.
 
 `--rome-reference-art` uses the eight aliases in the manifest to load local
-Cradle of Rome 2 crops for resource pieces and matching wallet and guide icons.
+Cradle of Rome 2 crops for resource pieces and the matching coin and guide icons.
 Selected, hinted and falling pieces use the same authored crop with the existing
 Relic Rush overlays and motion. The source is the Windows atlas `gmf_balls_2.png`.
 The [Cradle of Rome 2 extraction](../../../docs/cradle-of-rome-reference/README.md#cradle-of-rome-2-artwork)
@@ -851,7 +851,16 @@ added. Reproduce with the existing native-input hold/placement captures in the
 
 ## Settings gear and three-resource wallet
 
-The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. `life` is the red heart readout from the same atlas. The wallet shows Gold, Provisions, Supplies and the turquoise-backed `discovery-star`. The compass slot remains reserved for save compatibility.
+The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. The same atlas includes the archived `life` heart. The top wallet shows the sun coin, `wallet-supplies` and `wallet-food` in that order.
+
+Built-in ImageGen painted the timber-and-stone bundle and bread-and-fruit
+basket in one [transparent atlas](../art/resource-pieces/wallet-supplies-food.png).
+The [prompt](../art/resource-pieces/wallet-supplies-food.prompt.txt) and [asset manifest](../art/board-states/manifest.json)
+record the source and registration. Run `python3 games/relic-rush/tools/prepare_resource_pieces.py`
+to crop the left and right cells, fit each to 120 px and center it on a 128 px
+canvas with the authored alpha. The static icons appear in the top wallet,
+shop prices and expedition rewards. The shared capsule handles press feedback.
+[In-game comparison](screenshots/review/three-resource-wallet/README.md).
 
 All five gear states were generated together by ImageGen; `settings-lives-prompt.txt` records the prompt and alpha cutout edit. `python3 games/relic-rush/tools/prepare_hud.py` performs only grid crops and thumbnail registration to 128px RGBA canvases, preserving authored alpha and paint. `tools/match3_atlas.py` then packs the five gear states. No tint-generated interaction state is used. Captures: `docs/screenshots/hud-states.jpg`, `hex-first.jpg`, `phone-board.jpg`, `island-village.jpg` and `phone-island.jpg`. Normal, selected, pressed, hover and disabled use the same authored outer medallion, with distinct painted state feedback.
 

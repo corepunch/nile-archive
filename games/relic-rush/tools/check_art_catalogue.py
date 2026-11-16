@@ -25,6 +25,12 @@ for atlas in (resources, new_pieces):
 for name in pieces:
     path = f"data/resource-pieces/{name}.png"
     assert path in actual and f"`{name}`" in doc
+wallet = manifest["wallet_icons"]
+assert all((ROOT / wallet[key]).is_file() for key in ("source", "prompt", "review"))
+declaration = re.search(r"A\.wallet_icons\s*=\s*\{([^}]+)\}", art).group(1)
+assert {name: f"data/resource-pieces/{key}.png" for name, key in re.findall(r'(\w+)="([^"]+)"', declaration)} == wallet["runtime"]
+for path in wallet["runtime"].values():
+    assert path in actual and f"`{Path(path).stem}`" in doc
 for name, unlock in manifest["resource_unlocks"].items():
     assert unlock["runtime"] in actual and f"`{name}`" in doc
     assert all((ROOT / unlock[key]).is_file() for key in ("source", "registration") if key in unlock)

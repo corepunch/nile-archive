@@ -1,5 +1,5 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
--- Resource pieces appear at board size and also identify wallet currencies.
+-- Board pieces and wallet icons have separate presentation keys.
 local elements_view = require("match3.elements_view")
 local A = {}
 A.board_frame = require("board_frame_atlas")
@@ -32,7 +32,7 @@ A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
-A.wallet_icons={life="match3-hud.png",gold="resource-coin",provisions="resource-berries",supplies="resource-timber",stars="discovery-star"}
+A.wallet_icons={coins="coin", supplies="wallet-supplies", food="wallet-food"}
 A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
@@ -97,6 +97,10 @@ function A.load()
     end
     for _, key in ipairs(A.resource_pieces) do
         textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
+    end
+    for _, key in pairs(A.wallet_icons) do
+        local name = "resource-" .. key
+        textures[name] = textures[name] or texture.load("resource-pieces/" .. key .. ".png")
     end
     for key, path in pairs(A.resource_upgrades) do
         textures["resource-" .. key] = texture.load(path)

@@ -4,7 +4,7 @@
     "cost": [0, 3, 8]
   },
   "well": {
-    "about": "Water buckets earn 3 Provisions each from expedition 5.",
+    "about": "Water buckets earn 3 Food each from expedition 5.",
     "cost": [100, 0, 0]
   },
   "workshop": {
@@ -16,11 +16,11 @@
     "cost": [85, 24, 30]
   },
   "gateway": {
-    "about": "Adds trade coin stacks worth 6 Gold each.",
+    "about": "Adds trade coin stacks worth 6 Coins each.",
     "cost": [85, 34, 36]
   },
   "lodge": {
-    "about": "Adds grain bundles worth 5 Provisions each.",
+    "about": "Adds grain bundles worth 5 Food each.",
     "cost": [130, 35, 0]
   },
   "archive": {
@@ -32,7 +32,7 @@
     "cost": [155, 0, 70]
   },
   "fountain": {
-    "about": "Adds springwater drops worth 6 Provisions each.",
+    "about": "Adds springwater drops worth 6 Food each.",
     "cost": [160, 0, 65]
   },
   "temple": {

@@ -2,9 +2,9 @@
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3, STARS=4,
     currencies={
-        {key="coin", name="Gold"},
-        {key="berries", name="Provisions"},
-        {key="timber", name="Supplies"},
+        {key="coins", name="Coins"},
+        {key="food", name="Food"},
+        {key="supplies", name="Supplies"},
     },
     pieces={
         [0]={key="coin", name="Sun coin", slot=1, amount=4},
@@ -16,6 +16,8 @@ local E = {
     WELL_KIND=1, WORKSHOP_KIND=2,
     CAMPAIGN_VERSION=3,
 }
+-- Presentation order is independent of the persisted purse slots.
+E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 
 -- Same order as the story catalogue and its stable city type IDs (zero-based).
 E.unlocks = {
@@ -59,9 +61,9 @@ end
 
 function E.price_parts(cost)
     local parts = {}
-    for slot, currency in ipairs(E.currencies) do
+    for _, slot in ipairs(E.currency_order) do
         if cost[slot] > 0 then
-            parts[#parts+1] = {slot=slot, name=currency.name, amount=cost[slot]}
+            parts[#parts+1] = {slot=slot, name=E.currencies[slot].name, amount=cost[slot]}
         end
     end
     return parts

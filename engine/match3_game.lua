@@ -343,15 +343,20 @@ function G.bind(R, over)
 
     -- The town's wallet capsules (engine/town.lua lays them out).
     function R.header_capsules()
+        local currencies = R.currency_capsules and R.currency_capsules(R.prog.wallet)
+        if currencies then
+            for i, cap in ipairs(currencies) do cap.slot = cap.slot or i end
+            if W.capsules.currencies_only then return currencies end
+        end
         local remaining = math.max(0, math.ceil((R.prog.life_at or 0) - app.clock()))
         local lives = (R.prog.lives or rules.LIVES) == rules.LIVES and W.capsules.lives_full
             or ("%d %d:%02d"):format(R.prog.lives, remaining // 60, remaining % 60)
         local values = {lives, tostring(R.prog.wallet[rules.GOLD]), tostring(R.prog.wallet[rules.STARS])}
         local icons = R.wallet_icons()
         local out = {}
-        if R.currency_capsules then
+        if currencies then
             out[1] = {icon=icons[1], value=lives, note=W.capsules.notes[1], width=78}
-            for _, capsule in ipairs(R.currency_capsules(R.prog.wallet)) do out[#out+1] = capsule end
+            for _, capsule in ipairs(currencies) do out[#out+1] = capsule end
             out[#out+1] = {icon=icons[3], value=values[3], note=W.capsules.notes[3], width=65}
         else
             for k = 1, 3 do out[k] = {icon = icons[k], value = values[k], note = W.capsules.notes[k]} end
