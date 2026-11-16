@@ -18,10 +18,10 @@ with dark brown grout between cells:
 
 ![Frame against Cradle of Rome](frame-vs-reference.jpg)
 
-Parchment options against a Cradle of Rome board; K, the yellower gold with a
-smooth warm mottle, is in use:
+The parchment is a north-west to south-east gradient between the average
+colours of the reference tile's two corners, under a fine warm mottle:
 
-![Parchment options](parchment-options.jpg)
+![Parchment against Cradle of Rome](parchment-vs-reference.jpg)
 
 | Slot | Tile | Use |
 | --- | --- | --- |
