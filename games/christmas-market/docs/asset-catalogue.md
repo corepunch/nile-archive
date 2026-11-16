@@ -366,8 +366,8 @@ this atlas with `python3 tools/board_frame.py --winter --output build/winter-fra
 The settled board has four separate paintable sprites under `data/board-frame/`.
 `fir-ribbon` and `fir-pinecone` sit at the outer shoulders at small scale.
 They also decorate the walls of the open-top chamber at larger scale.
-`hanging-bell` and `hanging-pinecone` hang from the upper edge of enclosed
-cutouts, with the stem at the top and greater size than the outer trim.
+`hanging-bell` and `hanging-pinecone` project diagonally from the inner
+sides of enclosed cutouts at a larger size than the outer trim.
 Rebuild them from the [outer source](../../../engine/art/board-frame/decorations-source.png)
 and [hanging source](../../../engine/art/board-frame/hanging-source.png) with
 `python3 tools/board_frame_decor.py --game christmas-market`.

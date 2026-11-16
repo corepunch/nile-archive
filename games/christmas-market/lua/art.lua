@@ -11,9 +11,9 @@ A.board_frame = {
         {path = ribbon, width = 1.05},
         {path = pinecone, width = 1.05},
     },
-    hanging = {
-        {path = "board-frame/hanging-bell.png", width = 2.15},
-        {path = "board-frame/hanging-pinecone.png", width = 2.25},
+    inner = {
+        {path = "board-frame/hanging-bell.png", width = 2.15, side = "left"},
+        {path = "board-frame/hanging-pinecone.png", width = 2.25, side = "right"},
     },
     walls = {
         {path = pinecone, width = 1.85},

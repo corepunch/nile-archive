@@ -164,9 +164,9 @@ including the edges of holes. It keeps those placements relative to the board
 origin for shake and resize, and rebuilds them when the active mask changes.
 The atlas also provides the rim under each cell during the entrance.
 The soft shadow follows the settled outline. The skin can place small sprites
-on outward tips and larger ones under the upper rim of an opening. The renderer
-uses the outline to check for room on each side of a hanging sprite. A board
-whose channel opens at the top can use larger side sprigs.
+on outward tips and larger ones on the inner side of an opening. The renderer
+uses the outline to find the side mounts and turns the sprites diagonally into
+the opening. An open-top channel can use larger sprigs on its inward tips.
 An optional atlas slot adds snow to the highest horizontal north edges of the
 outer rim. Inner channel edges use bare stone.
 Imported and neutral boards use the default ground geometry.

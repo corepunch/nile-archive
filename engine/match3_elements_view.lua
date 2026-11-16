@@ -261,11 +261,11 @@ function E.load_frame(art, paths)
         local sprites = {}
         for i, spec in ipairs(specs or {}) do
             images[spec.path] = images[spec.path] or texture.load(spec.path)
-            sprites[i] = {art = images[spec.path], width = spec.width, outward = spec.outward}
+            sprites[i] = {art = images[spec.path], width = spec.width, outward = spec.outward, side = spec.side}
         end
         return sprites
     end
-    art["frame-decorations"] = {corners = load(paths.corners), hanging = load(paths.hanging), walls = load(paths.walls)}
+    art["frame-decorations"] = {corners = load(paths.corners), inner = load(paths.inner), walls = load(paths.walls)}
 end
 
 -- Intersect the outline at y. Wings of an arch and walls of an enclosed
@@ -286,7 +286,7 @@ local function opening_sides(edges, at)
     if left > -math.huge and right < math.huge and crossings % 2 == 0 then return left, right end
 end
 
-local function hanging_points(edges, radius)
+local function opening_mounts(edges, radius)
     local candidates = {}
     for _, edge in ipairs(edges) do
         if edge.direction == SOUTH_EDGE then
@@ -294,24 +294,33 @@ local function hanging_points(edges, radius)
             local left, right = opening_sides(edges, at + vec2(0, radius * .65))
             if left and math.min(at.x - left, right - at.x) >= radius * .72
                 and opening_sides(edges, at + vec2(0, radius * 1.25)) then
-                candidates[#candidates + 1] = at
+                local shoulder = at + vec2(0, radius * .50)
+                local west, east = opening_sides(edges, shoulder)
+                if west then
+                    local inset = radius * .15
+                    candidates[#candidates + 1] = {
+                        centre = at,
+                        left = vec2(west + inset, shoulder.y),
+                        right = vec2(east - inset, shoulder.y),
+                    }
+                end
             end
         end
     end
     table.sort(candidates, function(a, b)
-        if math.abs(a.y - b.y) < .01 then return a.x < b.x end
-        return a.y < b.y
+        if math.abs(a.centre.y - b.centre.y) < .01 then return a.centre.x < b.centre.x end
+        return a.centre.y < b.centre.y
     end)
     local points = {}
-    for _, at in ipairs(candidates) do
+    for _, candidate in ipairs(candidates) do
         local separate = true
         for _, point in ipairs(points) do
-            if math.abs(point.x - at.x) < radius * 1.75 then
+            if math.abs(point.centre.x - candidate.centre.x) < radius * 1.75 then
                 separate = false
                 break
             end
         end
-        if separate then points[#points + 1] = at + vec2(0, radius * .16) end
+        if separate then points[#points + 1] = candidate end
     end
     return points
 end
@@ -381,12 +390,13 @@ local function frame_layout(R, rules)
             edge.north = not opening_sides(edges, edge.at - vec2(0, r * .65))
         end
     end
-    local hanging = hanging_points(edges, r)
+    local openings = opening_mounts(edges, r)
     local decor = R.board_art["frame-decorations"]
-    -- A channel open at the top takes side sprigs instead of a hanging swag.
-    local walls = #hanging == 0 and decor and #decor.walls > 0 and wall_points(edges, convex, r) or {}
+    -- An open-top channel has no upper shoulders. Its inward tips can
+    -- support sprigs on the sides.
+    local walls = #openings == 0 and decor and #decor.walls > 0 and wall_points(edges, convex, r) or {}
     local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex,
-                    hanging = hanging, walls = walls}
+                    openings = openings, walls = walls}
     R.frame_layout = layout
     return layout
 end
@@ -457,7 +467,15 @@ local function draw_frame_decorations(R, frame, sx, alpha)
             gfx.image_rot(spec.art, dst, turn, tint)
         end
     end
-    draw_inner_sprites(decor.hanging, frame.hanging, origin, r, tint)
+    for i, spec in ipairs(decor.inner) do
+        local mounts = frame.openings[i]
+        if mounts then
+            local at = mounts[spec.side]
+            -- The source points down from its stem. Turn it into the gap.
+            local turn = math.rad(spec.side == "left" and -48 or 48)
+            gfx.image_rot(spec.art, rect.centered(origin + at, size2.splat(r * spec.width)), turn, tint)
+        end
+    end
     draw_inner_sprites(decor.walls, frame.walls, origin, r, tint)
 end
 

@@ -422,9 +422,10 @@ previous frame's bands, seeded grain and cracks with
 from the shared [ImageGen source](../../../engine/art/board-frame/decorations-source.png).
 Its centred stem anchors to three outward tips on the settled board. The
 renderer turns it towards the outside and varies its size by corner.
-`data/board-frame/hanging-vine.png` is the larger interior variant, painted
-on the [hanging source atlas](../../../engine/art/board-frame/hanging-source.png)
-with its stem at the top to drape from the upper edge of a cutout. Rebuild both
+`data/board-frame/hanging-vine.png` is the larger interior variant. Its stem
+attaches to the left wall of a cutout and the leaves extend diagonally inward.
+The painting is in the [hanging source atlas](../../../engine/art/board-frame/hanging-source.png).
+Rebuild both
 separate sprites with `python3 tools/board_frame_decor.py --game relic-rush`.
 [Paint guide, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/interior.md).
 

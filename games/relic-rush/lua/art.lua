@@ -10,8 +10,8 @@ A.board_frame = {
         {path = leaves, width = .8, outward = true},
         {path = leaves, width = .88, outward = true},
     },
-    hanging = {
-        {path = "board-frame/hanging-vine.png", width = 2.48},
+    inner = {
+        {path = "board-frame/hanging-vine.png", width = 2.48, side = "left"},
     },
 }
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
