@@ -6,6 +6,12 @@ are the floor in both games; the other six show cell states.
 
 ![The eight tiles](tiles.png)
 
+Colours are matched to Cradle of Rome's tile sheet. Parchment is flat and lit
+from above with a soft south-east glow; the single and double tablets are thick,
+bevelled stones.
+
+![Cradle of Rome's sheet above ours](strip-vs-reference.png)
+
 | Slot | Tile | Use |
 | --- | --- | --- |
 | 1 | `cell-normal` | Normal and cleared cells |

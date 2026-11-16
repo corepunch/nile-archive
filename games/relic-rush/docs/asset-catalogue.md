@@ -400,10 +400,13 @@ and source-board diagnostics.
 The eight tiles follow the slots of Cradle of Rome's board sheet and are
 shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
 from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
-into each game's `data/board-tiles/`. Each tile is lit from above: a bevel ring
-from a light upper edge to a shaded lower one, a face from a lighter top colour
-to a darker bottom, a neutral stained-paper grain (`tools/board_grain.py`), and
-where set a radial glow or hairline cracks. The canonical 128 px flat-top mask
+into each game's `data/board-tiles/`. Colours are sampled from Cradle of
+Rome's tile sheet. Each face is lit from above, from a lighter top to a darker
+bottom (`shading` sets the light, contrast, bevel and highlights). Parchment is
+flat with a soft south-east glow; the tablets are thick, with a bevel from a
+light upper edge to a shaded lower one. A neutral stained-paper grain
+(`tools/board_grain.py`) and, where set, a radial glow or hairline cracks
+finish them. The canonical 128 px flat-top mask
 cuts the alpha, and every tile passes `tools/hex_tile_art.py --mode fill --strict`.
 Regenerate with `python3 tools/board_tiles.py`; `tools/check_art_catalogue.py`
 fails if a tile is stale. The `--art-states dressing` screen shows all eight, and
