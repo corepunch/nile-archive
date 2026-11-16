@@ -268,26 +268,26 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 
 | # | Restoration | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | ★ Expedition camp | 8 Supplies + 3 Food | Dynamite gems from board 2. |
-| 2 | ★ Spring well | 100 Coins | Water buckets worth 3 Food each. |
-| 3 | Trapper's cabin | 40 Coins + 12 Supplies + 10 Food | Hammer gems. |
-| 4 | ★ Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Cut blocks worth 5 Supplies each. |
-| 5 | Water mill | 45 Coins + 15 Supplies + 12 Food | Shutter Gear gems. |
-| 6 | ★ Jungle market | 85 Coins + 30 Supplies + 24 Food | Ration jars worth 4 Food each. |
-| 7 | Clock tower | 80 Coins + 25 Supplies + 30 Food | Amphora gems: 5 more moves. |
-| 8 | Stone amphitheatre | 50 Coins + 18 Supplies + 18 Food | Shield gems. |
-| 9 | ★ Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Helmets worth 6 Coins. |
-| 10 | ★ Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
-| 11 | Trading post | 90 Coins + 20 Supplies + 45 Food | Rings worth 7 Coins. |
-| 12 | Valley lighthouse | 75 Coins + 20 Supplies + 40 Food | Lightning gems. |
-| 13 | ★ Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Carved quartz worth 7 Supplies each. |
-| 14 | Beached schooner | 120 Coins + 70 Supplies + 30 Food | Scarabs worth 8 Coins. |
-| 15 | Cartographer's house | 140 Coins + 40 Supplies + 50 Food | Tide Chart gems: half-charge the other bonuses. |
-| 16 | ★ Star observatory | 155 Coins + 70 Supplies | Star gems from board 24. |
-| 17 | Great aviary | 160 Coins + 60 Supplies + 40 Food | Sandals worth 9 Coins. |
-| 18 | ★ Jade fountain | 160 Coins + 65 Supplies | Shrimp worth 6 Food each. |
-| 19 | Relic museum | 170 Coins + 50 Supplies + 90 Food | Harps worth 10 Coins. |
-| 20 | ★ Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Emeralds worth 11 Coins each. |
+| 1 | ★ Expedition camp | 20 Supplies + 10 Food | Dynamite gems from board 2. |
+| 2 | ★ Spring well | 130 Coins | Water buckets worth 3 Food each. |
+| 3 | Trapper's cabin | 80 Coins + 75 Supplies + 55 Food | Hammer gems. |
+| 4 | ★ Artisan workshop | 145 Coins + 150 Supplies + 105 Food | Cut blocks worth 5 Supplies each. |
+| 5 | Water mill | 75 Coins + 75 Supplies + 50 Food | Shutter Gear gems. |
+| 6 | ★ Jungle market | 145 Coins + 150 Supplies + 95 Food | Ration jars worth 4 Food each. |
+| 7 | Clock tower | 180 Coins + 200 Supplies + 140 Food | Amphora gems: 5 more moves. |
+| 8 | Stone amphitheatre | 60 Coins + 80 Supplies + 80 Food | Shield gems. |
+| 9 | ★ Sunstone courtyard | 90 Coins + 160 Supplies + 150 Food | Helmets worth 6 Coins. |
+| 10 | ★ Explorer's lodge | 300 Coins + 340 Food | Grain bundles worth 5 Food each. |
+| 11 | Trading post | 250 Coins + 360 Supplies + 290 Food | Rings worth 7 Coins. |
+| 12 | Valley lighthouse | 100 Coins + 120 Supplies + 110 Food | Lightning gems. |
+| 13 | ★ Lost-world archive | 195 Coins + 240 Supplies + 230 Food | Carved quartz worth 7 Supplies each. |
+| 14 | Beached schooner | 190 Coins + 190 Supplies + 190 Food | Scarabs worth 8 Coins. |
+| 15 | Cartographer's house | 285 Coins + 270 Supplies + 250 Food | Tide Chart gems: half-charge the other bonuses. |
+| 16 | ★ Star observatory | 205 Coins + 200 Supplies | Star gems from board 24. |
+| 17 | Great aviary | 200 Coins + 180 Supplies + 240 Food | Sandals worth 9 Coins. |
+| 18 | ★ Jade fountain | 280 Coins + 300 Supplies | Shrimp worth 6 Food each. |
+| 19 | Relic museum | 220 Coins + 220 Supplies + 420 Food | Harps worth 10 Coins. |
+| 20 | ★ Temple of the sun | 330 Coins + 330 Supplies + 430 Food | Emeralds worth 11 Coins each. |
 
 As in Cradle of Rome, each of the twenty restorations adds one piece or one
 bonus, in this order. ★ marks the ten story restorations, which hold the next

@@ -100,26 +100,26 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 
 | # | Restoration | Placed after | First board | Board payoff | Price C / F / S |
 | ---: | --- | ---: | ---: | --- | ---: |
-| 1 | ★ Expedition Camp | 1 | 2 | Dynamite gems | 0 / 3 / 8 |
-| 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 100 / 0 / 0 |
-| 3 | Trapper's cabin | 7 | 8 | Hammer gems | 40 / 10 / 12 |
-| 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 70 / 20 / 24 |
-| 5 | Water mill | 9 | 10 | Shutter Gear gems | 45 / 12 / 15 |
-| 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 85 / 24 / 30 |
-| 7 | Clock tower | 11 | 12 | Amphora gems: a use adds 5 moves | 80 / 30 / 25 |
-| 8 | Stone amphitheatre | 13 | 14 | Shield gems | 50 / 18 / 18 |
-| 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 85 / 34 / 36 |
-| 10 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 130 / 35 / 0 |
-| 11 | Trading post | 17 | 18 | Rings replace helmets, 7 Coins each | 90 / 45 / 20 |
-| 12 | Valley lighthouse | 19 | 20 | Lightning gems | 75 / 40 / 20 |
-| 13 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 145 / 85 / 40 |
-| 14 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 120 / 30 / 70 |
-| 15 | Cartographer's house | 22 | 23 | Tide Chart gems: a use half-charges every other bonus | 140 / 50 / 40 |
-| 16 | ★ Star Observatory | 23 | 24 | Star gems | 155 / 0 / 70 |
-| 17 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 160 / 40 / 60 |
-| 18 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 160 / 0 / 65 |
-| 19 | Relic museum | 27 | 28 | Harps replace sandals, 10 Coins each | 170 / 90 / 50 |
-| 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 185 / 110 / 75 |
+| 1 | ★ Expedition Camp | 1 | 2 | Dynamite gems | 0 / 10 / 20 |
+| 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 130 / 0 / 0 |
+| 3 | Trapper's cabin | 7 | 8 | Hammer gems | 80 / 55 / 75 |
+| 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 145 / 105 / 150 |
+| 5 | Water mill | 9 | 10 | Shutter Gear gems | 75 / 50 / 75 |
+| 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 145 / 95 / 150 |
+| 7 | Clock tower | 11 | 12 | Amphora gems: a use adds 5 moves | 180 / 140 / 200 |
+| 8 | Stone amphitheatre | 13 | 14 | Shield gems | 60 / 80 / 80 |
+| 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 90 / 150 / 160 |
+| 10 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 300 / 340 / 0 |
+| 11 | Trading post | 17 | 18 | Rings replace helmets, 7 Coins each | 250 / 290 / 360 |
+| 12 | Valley lighthouse | 19 | 20 | Lightning gems | 100 / 110 / 120 |
+| 13 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 195 / 230 / 240 |
+| 14 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 190 / 190 / 190 |
+| 15 | Cartographer's house | 22 | 23 | Tide Chart gems: a use half-charges every other bonus | 285 / 250 / 270 |
+| 16 | ★ Star Observatory | 23 | 24 | Star gems | 205 / 0 / 200 |
+| 17 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 200 / 240 / 180 |
+| 18 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 280 / 0 / 300 |
+| 19 | Relic museum | 27 | 28 | Harps replace sandals, 10 Coins each | 220 / 420 / 220 |
+| 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 330 / 430 / 330 |
 
 Each new piece pays a currency the next restoration on the ladder needs.
 Where a story restoration and a new one share a clear (7, 9, 13 and 19), the
@@ -148,14 +148,16 @@ The Camp uses Supplies and Food. Buying the Well with Coins unlocks a Food
 source. Every restoration after it uses at least two currencies. The prices
 are in the ladder table above.
 
-**The ten new restorations are priced provisionally.** The extended campaign
-run plays every board with a greedy bot, places each restoration when it can
-afford it, and replays the latest board when the story needs one it cannot.
-With the current prices it places all twenty in thirty clears with no replays.
-The wallet runs far ahead of prices: after board 14 it holds 556 Coins,
-902 Supplies and 679 Food, and it ends with 1,651 / 2,583 / 2,562. The story
-prices were already at this scale, so the next step is a price pass across the
-whole ladder rather than the new rows alone. The bot is not a human player.
+**Prices come from a measured run.** The extended campaign run plays every
+board with a greedy bot, places each restoration when it can afford it, and
+replays the latest board when the story needs one it cannot. Each stop's price
+is about 80% of what the boards since the previous stop pay (smoothed over five
+boards), in the building's own mix of currencies, then rounded. With these
+prices the bot places all twenty in thirty clears with three replays: two at
+clear 13, whose board pays almost no Coins, and one at clear 23. Every currency
+runs low at some stop, and it ends with 334 Coins, 229 Supplies and 299 Food.
+It also builds the Beached schooner a clear late, after saving for it. The bot
+is not a human player; human sessions should confirm the shortfalls.
 
 ```sh
 make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush

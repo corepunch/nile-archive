@@ -37,8 +37,8 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         0,
-        3,
-        8
+        10,
+        20
       ],
       "about": "The crew stocks its first expedition supplies here.",
       "road": false,
@@ -66,7 +66,7 @@
         191.175
       ],
       "base_width": 273.205,
-      "gold": 100,
+      "gold": 130,
       "stars": 0,
       "runtime": "data/buildings/well.png",
       "image": [
@@ -76,7 +76,7 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        100,
+        130,
         0,
         0
       ],
@@ -106,7 +106,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 70,
+      "gold": 145,
       "stars": 0,
       "runtime": "data/buildings/workshop.png",
       "image": [
@@ -116,9 +116,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        70,
-        20,
-        24
+        145,
+        105,
+        150
       ],
       "about": "Cut blocks earn 5 Supplies each from expedition 8.",
       "road": false,
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 85,
+      "gold": 145,
       "stars": 0,
       "runtime": "data/buildings/market.png",
       "image": [
@@ -156,9 +156,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        85,
-        24,
-        30
+        145,
+        95,
+        150
       ],
       "about": "Adds ration jars to later expeditions.",
       "road": false,
@@ -186,7 +186,7 @@
         202.13
       ],
       "base_width": 359.808,
-      "gold": 85,
+      "gold": 90,
       "stars": 0,
       "runtime": "data/buildings/gateway.png",
       "image": [
@@ -196,9 +196,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Original dry gathering plaza",
       "cost": [
-        85,
-        34,
-        36
+        90,
+        150,
+        160
       ],
       "about": "Helmets replace sun coins, 6 Coins each.",
       "road": false,
@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 130,
+      "gold": 300,
       "stars": 0,
       "runtime": "data/buildings/lodge.png",
       "image": [
@@ -236,8 +236,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        130,
-        35,
+        300,
+        340,
         0
       ],
       "about": "Adds grain bundles worth 5 Food each.",
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 145,
+      "gold": 195,
       "stars": 0,
       "runtime": "data/buildings/archive.png",
       "image": [
@@ -276,9 +276,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        145,
-        85,
-        40
+        195,
+        230,
+        240
       ],
       "about": "Adds carved quartz worth 7 Supplies each.",
       "road": false,
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 155,
+      "gold": 205,
       "stars": 0,
       "runtime": "data/buildings/observatory.png",
       "image": [
@@ -316,9 +316,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        155,
+        205,
         0,
-        70
+        200
       ],
       "about": "From the lookout, a lamp can guide boats away from the damaged quay.",
       "road": false,
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 160,
+      "gold": 280,
       "stars": 0,
       "runtime": "data/buildings/fountain.png",
       "image": [
@@ -356,9 +356,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        160,
+        280,
         0,
-        65
+        300
       ],
       "about": "Adds shrimp worth 6 Food each.",
       "road": false,
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 185,
+      "gold": 330,
       "stars": 0,
       "runtime": "data/buildings/temple.png",
       "image": [
@@ -396,9 +396,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        185,
-        110,
-        75
+        330,
+        430,
+        330
       ],
       "about": "Adds emeralds worth 11 Coins each.",
       "road": false,
@@ -426,7 +426,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 40,
+      "gold": 80,
       "stars": 0,
       "runtime": "data/buildings/log_cabin.png",
       "image": [
@@ -436,9 +436,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        40,
-        10,
-        12
+        80,
+        55,
+        75
       ],
       "about": "Hammer gems join later expeditions. Match them to charge a hit on one cell.",
       "road": false,
@@ -586,7 +586,7 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 140,
+      "gold": 285,
       "stars": 0,
       "runtime": "data/buildings/map_room.png",
       "image": [
@@ -596,9 +596,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        140,
-        50,
-        40
+        285,
+        250,
+        270
       ],
       "about": "Tide Chart gems join later expeditions. Match them to half-charge your other bonuses.",
       "road": false,
@@ -666,7 +666,7 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 90,
+      "gold": 250,
       "stars": 0,
       "runtime": "data/buildings/trading_post.png",
       "image": [
@@ -676,9 +676,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        90,
-        45,
-        20
+        250,
+        290,
+        360
       ],
       "about": "Rings replace helmets, 7 Coins each.",
       "road": false,
@@ -706,7 +706,7 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 45,
+      "gold": 75,
       "stars": 0,
       "runtime": "data/buildings/water_mill.png",
       "image": [
@@ -716,9 +716,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        45,
-        12,
-        15
+        75,
+        50,
+        75
       ],
       "about": "Shutter Gear gems join later expeditions. Match them to charge a shuffle.",
       "road": false,
@@ -746,7 +746,7 @@
         306.519
       ],
       "base_width": 273.205,
-      "gold": 80,
+      "gold": 180,
       "stars": 0,
       "runtime": "data/buildings/clock_tower.png",
       "image": [
@@ -756,9 +756,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Clock Tower",
       "cost": [
-        80,
-        30,
-        25
+        180,
+        140,
+        200
       ],
       "about": "Amphora gems join later expeditions. Match them to charge 5 more moves.",
       "road": false,
@@ -786,7 +786,7 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 75,
+      "gold": 100,
       "stars": 0,
       "runtime": "data/buildings/lighthouse.png",
       "image": [
@@ -796,9 +796,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        75,
-        40,
-        20
+        100,
+        110,
+        120
       ],
       "about": "Lightning gems join later expeditions. Match them to charge a strike on 20 cells.",
       "road": false,
@@ -866,7 +866,7 @@
         224.8
       ],
       "base_width": 409.808,
-      "gold": 160,
+      "gold": 200,
       "stars": 0,
       "runtime": "data/buildings/aviary.png",
       "image": [
@@ -876,9 +876,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Aviary",
       "cost": [
-        160,
-        40,
-        60
+        200,
+        240,
+        180
       ],
       "about": "Sandals replace scarabs, 9 Coins each.",
       "road": false,
@@ -906,7 +906,7 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 120,
+      "gold": 190,
       "stars": 0,
       "runtime": "data/buildings/beached_ship.png",
       "image": [
@@ -916,9 +916,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        120,
-        30,
-        70
+        190,
+        190,
+        190
       ],
       "about": "Scarabs replace rings, 8 Coins each.",
       "road": false,
@@ -946,7 +946,7 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 50,
+      "gold": 60,
       "stars": 0,
       "runtime": "data/buildings/amphitheater.png",
       "image": [
@@ -956,9 +956,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        50,
-        18,
-        18
+        60,
+        80,
+        80
       ],
       "about": "Shield gems join later expeditions. Match them to charge a row strike.",
       "road": false,
@@ -986,7 +986,7 @@
         304.224
       ],
       "base_width": 496.41,
-      "gold": 170,
+      "gold": 220,
       "stars": 0,
       "runtime": "data/buildings/museum.png",
       "image": [
@@ -996,9 +996,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Museum",
       "cost": [
-        170,
-        90,
-        50
+        220,
+        420,
+        220
       ],
       "about": "Harps replace sandals, 10 Coins each.",
       "road": false,

@@ -118,31 +118,31 @@ sprite file is always `data/buildings/<key>.png`.
 
 | ID / key | Name | Category | Tiles | Price | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
-| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 3 Food + 8 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `well` | Spring well | wonder | 2 x 2 | 100 Coins | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 70 Coins + 20 Food + 24 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `market` | Jungle market | wonder | 3 x 2 | 85 Coins + 24 Food + 30 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 85 Coins + 34 Food + 36 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 130 Coins + 35 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 145 Coins + 85 Food + 40 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 7 / `observatory` | Star observatory | wonder | 2 x 2 | 155 Coins + 70 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 160 Coins + 65 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 185 Coins + 110 Food + 75 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 10 / `log_cabin` | Trapper's cabin | wonder | 2 x 2 | 40 Coins + 12 Supplies + 10 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 20 Supplies + 10 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `well` | Spring well | wonder | 2 x 2 | 130 Coins | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 145 Coins + 150 Supplies + 105 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `market` | Jungle market | wonder | 3 x 2 | 145 Coins + 150 Supplies + 95 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 90 Coins + 160 Supplies + 150 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 300 Coins + 340 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 195 Coins + 240 Supplies + 230 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 7 / `observatory` | Star observatory | wonder | 2 x 2 | 205 Coins + 200 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 280 Coins + 300 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 330 Coins + 330 Supplies + 430 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 10 / `log_cabin` | Trapper's cabin | wonder | 2 x 2 | 80 Coins + 75 Supplies + 55 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 11 / `apothecary` | Herbalist's hut | building | 2 x 2 | 220 Coins + 15 Food | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 12 / `mess_hall` | Mess hall | building | 3 x 2 | 240 Coins + 16 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
 | 13 / `stilt_house` | Stilt house | building | 3 x 2 | 260 Coins + 17 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 14 / `map_room` | Cartographer's house | wonder | 3 x 2 | 140 Coins + 40 Supplies + 50 Food | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
+| 14 / `map_room` | Cartographer's house | wonder | 3 x 2 | 285 Coins + 270 Supplies + 250 Food | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
 | 15 / `greenhouse` | Glass greenhouse | building | 3 x 2 | 300 Coins + 20 Food | 12 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 16 / `trading_post` | Trading post | wonder | 3 x 3 | 90 Coins + 20 Supplies + 45 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 17 / `water_mill` | Water mill | wonder | 3 x 3 | 45 Coins + 15 Supplies + 12 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 18 / `clock_tower` | Clock tower | wonder | 2 x 2 | 80 Coins + 25 Supplies + 30 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 19 / `lighthouse` | Valley lighthouse | wonder | 2 x 2 | 75 Coins + 20 Supplies + 40 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 16 / `trading_post` | Trading post | wonder | 3 x 3 | 250 Coins + 360 Supplies + 290 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 17 / `water_mill` | Water mill | wonder | 3 x 3 | 75 Coins + 75 Supplies + 50 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 18 / `clock_tower` | Clock tower | wonder | 2 x 2 | 180 Coins + 200 Supplies + 140 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 19 / `lighthouse` | Valley lighthouse | wonder | 2 x 2 | 100 Coins + 120 Supplies + 110 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
 | 20 / `treehouse` | Canopy treehouse | building | 3 x 3 | 400 Coins + 27 Supplies | 21 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 21 / `aviary` | Great aviary | wonder | 3 x 3 | 160 Coins + 60 Supplies + 40 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 22 / `beached_ship` | Beached schooner | wonder | 4 x 2 | 120 Coins + 70 Supplies + 30 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 23 / `amphitheater` | Stone amphitheatre | wonder | 4 x 3 | 50 Coins + 18 Supplies + 18 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 24 / `museum` | Relic museum | wonder | 4 x 3 | 170 Coins + 50 Supplies + 90 Food | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 21 / `aviary` | Great aviary | wonder | 3 x 3 | 200 Coins + 180 Supplies + 240 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 22 / `beached_ship` | Beached schooner | wonder | 4 x 2 | 190 Coins + 190 Supplies + 190 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 23 / `amphitheater` | Stone amphitheatre | wonder | 4 x 3 | 60 Coins + 80 Supplies + 80 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 24 / `museum` | Relic museum | wonder | 4 x 3 | 220 Coins + 220 Supplies + 420 Food | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 25 / `hanging_gardens` | Hanging gardens | building | 4 x 4 | 550 Coins + 37 Food | 30 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 26 / `palm_young` | Young palm | tree | 1 x 1 | 30 Coins | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 27 / `jungle_tree` | Round jungle tree | tree | 1 x 1 | 30 Coins | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |

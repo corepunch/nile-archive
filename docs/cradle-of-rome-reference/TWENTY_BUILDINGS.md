@@ -1,7 +1,7 @@
 # Twenty campaign buildings for Relic Rush and Christmas Market
 
 > **Status:** 16 November 2026. Both ladders are implemented as revised below.
-> Relic Rush has provisional prices and two borrowed gem chips
+> Relic Rush's prices are fitted to a measured run; it has two borrowed gem chips
 > ([#103](https://github.com/corepunch/nile-archive/issues/103)). Christmas
 > Market reuses existing art throughout and is priced from a measured run.
 > Prices are starting points for the campaign bot and `tools/tune_levels.py`,
@@ -89,30 +89,30 @@ buildings with Blender renders today and move into the campaign.
 | # | Build after | Building | From board | Adds | Price C / F / S |
 | ---: | ---: | --- | ---: | --- | ---: |
 | **I. The landing** |
-| 1 | 1 | ★ Expedition camp | 2 | Dynamite gems | 0 / 3 / 8 |
-| 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 100 / 0 / 0 |
-| 3 | 7 | Trapper's cabin | 8 | Hammer gems *(from the Workshop)* | 40 / 10 / 12 |
-| 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 70 / 20 / 24 |
+| 1 | 1 | ★ Expedition camp | 2 | Dynamite gems | 0 / 10 / 20 |
+| 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 130 / 0 / 0 |
+| 3 | 7 | Trapper's cabin | 8 | Hammer gems *(from the Workshop)* | 80 / 55 / 75 |
+| 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 145 / 105 / 150 |
 | **II. The quay** |
-| 5 | 9 | Water mill | 10 | Shutter Gear gems *(from the Market)* | 45 / 12 / 15 |
-| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 85 / 24 / 30 |
-| 7 | 11 | Clock tower | 12 | **Hourglass gems, new:** +5 moves | 80 / 30 / 25 |
-| 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 50 / 18 / 18 |
+| 5 | 9 | Water mill | 10 | Shutter Gear gems *(from the Market)* | 75 / 50 / 75 |
+| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 145 / 95 / 150 |
+| 7 | 11 | Clock tower | 12 | **Hourglass gems, new:** +5 moves | 180 / 140 / 200 |
+| 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 60 / 80 / 80 |
 | **III. The terraces** |
-| 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 85 / 34 / 36 |
-| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | 130 / 35 / 0 |
-| 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 90 / 45 / 20 |
-| 12 | 19 | Valley lighthouse | 20 | Lightning gems *(from the Archive)* | 75 / 40 / 20 |
+| 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 90 / 150 / 160 |
+| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | 300 / 340 / 0 |
+| 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 250 / 290 / 360 |
+| 12 | 19 | Valley lighthouse | 20 | Lightning gems *(from the Archive)* | 100 / 110 / 120 |
 | **IV. The wreck** |
-| 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 145 / 85 / 40 |
-| 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 120 / 30 / 70 |
-| 15 | 22 | Cartographer's house | 23 | **Plus gems, new:** charge the other sockets | 140 / 50 / 40 |
-| 16 | 23 | ★ Star observatory | 24 | Star gems | 155 / 0 / 70 |
+| 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 195 / 230 / 240 |
+| 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 190 / 190 / 190 |
+| 15 | 22 | Cartographer's house | 23 | **Plus gems, new:** charge the other sockets | 285 / 250 / 270 |
+| 16 | 23 | ★ Star observatory | 24 | Star gems | 205 / 0 / 200 |
 | **V. The temple** |
-| 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 160 / 40 / 60 |
-| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | 160 / 0 / 65 |
-| 19 | 27 | Relic museum | 28 | Harp, 10 Coins *(from the Courtyard)* | 170 / 90 / 50 |
-| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 185 / 110 / 75 |
+| 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 200 / 240 / 180 |
+| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | 280 / 0 / 300 |
+| 19 | 27 | Relic museum | 28 | Harp, 10 Coins *(from the Courtyard)* | 220 / 420 / 220 |
+| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 330 / 430 / 330 |
 
 Where a story restoration and the new building that took its bonus share a
 clear (7, 9, 13 and 19), the new one comes first on the ladder. The story

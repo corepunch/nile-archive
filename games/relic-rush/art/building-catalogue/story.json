@@ -1,88 +1,88 @@
 {
   "camp": {
     "about": "The crew stocks its first expedition supplies here.",
-    "cost": [0, 3, 8]
+    "cost": [0, 10, 20]
   },
   "well": {
     "about": "Water buckets earn 3 Food each from expedition 5.",
-    "cost": [100, 0, 0]
+    "cost": [130, 0, 0]
   },
   "workshop": {
     "about": "Cut blocks earn 5 Supplies each from expedition 8.",
-    "cost": [70, 20, 24]
+    "cost": [145, 105, 150]
   },
   "market": {
     "about": "Adds ration jars to later expeditions.",
-    "cost": [85, 24, 30]
+    "cost": [145, 95, 150]
   },
   "gateway": {
     "about": "Helmets replace sun coins, 6 Coins each.",
-    "cost": [85, 34, 36]
+    "cost": [90, 150, 160]
   },
   "lodge": {
     "about": "Adds grain bundles worth 5 Food each.",
-    "cost": [130, 35, 0]
+    "cost": [300, 340, 0]
   },
   "archive": {
     "about": "Adds carved quartz worth 7 Supplies each.",
-    "cost": [145, 85, 40]
+    "cost": [195, 230, 240]
   },
   "observatory": {
     "about": "From the lookout, a lamp can guide boats away from the damaged quay.",
-    "cost": [155, 0, 70]
+    "cost": [205, 0, 200]
   },
   "fountain": {
     "about": "Adds shrimp worth 6 Food each.",
-    "cost": [160, 0, 65]
+    "cost": [280, 0, 300]
   },
   "temple": {
     "about": "Adds emeralds worth 11 Coins each.",
-    "cost": [185, 110, 75]
+    "cost": [330, 430, 330]
   },
   "log_cabin": {
     "about": "Hammer gems join later expeditions. Match them to charge a hit on one cell.",
-    "cost": [40, 10, 12]
+    "cost": [80, 55, 75]
   },
   "apothecary": {"cost": [220, 15, 0]},
   "mess_hall": {"cost": [240, 0, 16]},
   "stilt_house": {"cost": [260, 0, 17]},
   "map_room": {
     "about": "Tide Chart gems join later expeditions. Match them to half-charge your other bonuses.",
-    "cost": [140, 50, 40]
+    "cost": [285, 250, 270]
   },
   "greenhouse": {"cost": [300, 20, 0]},
   "trading_post": {
     "about": "Rings replace helmets, 7 Coins each.",
-    "cost": [90, 45, 20]
+    "cost": [250, 290, 360]
   },
   "water_mill": {
     "about": "Shutter Gear gems join later expeditions. Match them to charge a shuffle.",
-    "cost": [45, 12, 15]
+    "cost": [75, 50, 75]
   },
   "clock_tower": {
     "about": "Amphora gems join later expeditions. Match them to charge 5 more moves.",
-    "cost": [80, 30, 25]
+    "cost": [180, 140, 200]
   },
   "lighthouse": {
     "about": "Lightning gems join later expeditions. Match them to charge a strike on 20 cells.",
-    "cost": [75, 40, 20]
+    "cost": [100, 110, 120]
   },
   "treehouse": {"cost": [400, 0, 27]},
   "aviary": {
     "about": "Sandals replace scarabs, 9 Coins each.",
-    "cost": [160, 40, 60]
+    "cost": [200, 240, 180]
   },
   "beached_ship": {
     "about": "Scarabs replace rings, 8 Coins each.",
-    "cost": [120, 30, 70]
+    "cost": [190, 190, 190]
   },
   "amphitheater": {
     "about": "Shield gems join later expeditions. Match them to charge a row strike.",
-    "cost": [50, 18, 18]
+    "cost": [60, 80, 80]
   },
   "museum": {
     "about": "Harps replace sandals, 10 Coins each.",
-    "cost": [170, 90, 50]
+    "cost": [220, 420, 220]
   },
   "hanging_gardens": {"cost": [550, 37, 0]}
 }

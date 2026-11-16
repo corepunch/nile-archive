@@ -377,9 +377,10 @@ do
     check(not p.wallet:covers(island.reserved_cost(c,p.level)) and not island.island_place_next(c,p.wallet,p.level,0),
         'a clear without income cannot buy the camp')
     check(not rules.progress_reward(p,g,island.wonders),'the same win cannot pay twice')
-    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={8,12,14}
+    local camp=island.wonders[1].cost
+    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={8,camp[2]+2,camp[3]+4}
     check(rules.progress_reward(p,g,island.wonders),'replay resources bank')
-    check(p.wallet[1]==48 and p.wallet[2]==12 and p.wallet[3]==14 and p.wallet[4]==3 and p.level==1,
+    check(p.wallet[1]==48 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==3 and p.level==1,
         'replay pays matched resources and capped move bonus without discoveries')
     check(island.island_place_next(c,p.wallet,p.level,0) and island.wonder_count(c)==1,'replay can fund the camp')
     check(not rules.progress_reward(p,{won=false},island.wonders),'failed attempt pays nothing')
@@ -403,9 +404,11 @@ do
     check(save.read('relic-resource-legacy',R.serialize),'load legacy fixture')
     check(R.make_board(4, 93).tool_meter[2] == 0, 'older saves start their unlocked bonus meters empty')
     local w=R.prog.wallet
-    check(w[1]==155 and w[2]==0 and w[3]==9 and w[4]==12 and island.wonder_count(R.island)==1,
+    local well=island.wonders[2].cost[1]
+    check(w[1]==math.max(155,well) and w[2]==0 and w[3]==9 and w[4]==12 and island.wonder_count(R.island)==1,
         'legacy saves preserve Gold, Stars, placements and combined Supplies')
-    check(not island.can_spend(R.island,w,4,purse(56)) and island.can_spend(R.island,w,4,purse(55)),
+    local spare=w[1]-well
+    check(not island.can_spend(R.island,w,4,purse(spare+1)) and (spare==0 or island.can_spend(R.island,w,4,purse(spare))),
         'optional building cannot spend the Gold reserved for the well')
     check(save.write('relic-resource-v1',function(s)
         s:int('version',require('journey').version)
@@ -416,7 +419,7 @@ do
     end),'write an old wallet with the previous well price')
     check(save.read('relic-resource-v1',R.serialize),'load the old price')
     w=R.prog.wallet
-    check(w[1]==100 and w[2]==10 and w[3]==22 and w[4]==12,
+    check(w[1]==well and w[2]==10 and w[3]==22 and w[4]==12,
         'migration covers an earned restoration at the new price and preserves other balances')
     check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
     R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
