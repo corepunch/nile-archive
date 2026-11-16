@@ -48,11 +48,11 @@ startup, waiting for workers, preflight checks, reporting and teardown. Timed-ou
 jobs and their children are terminated. `TEST_WORKERS` defaults to four;
 `TEST_BUDGET` defaults to fifteen seconds.
 
-Measured on the development Mac: `make test` passed in 9.3 to 9.8 seconds. The
-suites take the same time as before (engine 3.4 to 3.8 s, Relic Rush 2.5 s,
-Christmas Market 2.4 s, Emergency 0.5 s, Nile Archive 0.1 s); running them in one
-instance means one after another, where five separate apps used to overlap and
-finish in about 3 seconds.
+Measured on the development Mac (2026-11-16): `make test` passes in 4.6 to 5.0
+seconds; the suites take engine 1.8 s, Relic Rush 1.4 s, Christmas Market 1.1 s,
+Emergency 0.2 s and Nile Archive 0.1 s, one after another in one instance. The
+board tile check reads recorded hashes instead of re-rendering (`--render-check`
+in `make test-assets` re-renders).
 
 Bulk screenshot/reel exports and long game smoke scenarios are explicit
 integration checks. `make test-full` retains them all and is used by cloud CI;
@@ -200,7 +200,11 @@ neither test alone is a complete human playthrough. On macOS a hidden OpenGL
 window still needs access to the logged-in graphical session; a restricted
 process may fail with `CGSNewWindow failed` before game code runs.
 
-The budgeted path does not reduce puzzle seeds or remove rule assertions.
+The budgeted path keeps every rule assertion but samples the exhaustive sweeps:
+the puzzle matrix tests every straight run with one colour in rotation, trickling
+audits three emptying patterns per level, and Emergency plays each map with one
+click order in rotation. `--extended` (CI) restores every colour, twelve seeds
+and all three orders on every map.
 The city renderer compares identical-time pixels, advances the existing test
 clock by four seconds, then checks changed fog pixels; it no longer waits four
 real seconds. Test builds present with vsync disabled. These changes leave

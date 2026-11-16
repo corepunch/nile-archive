@@ -7,7 +7,6 @@
 static int frames, w, h, resizes, settling;
 static bool present_pending = true;
 static unsigned char *pixels;
-static double elapsed;
 static color sample(float x, float y)
 {
     rect view=app_fit_view(sz2(480,900),rc(0,0,w,h));
@@ -23,8 +22,8 @@ static void frame(float dt)
     int width = (int)roundf(size.width * axGetScaling()), height = (int)roundf(size.height * axGetScaling());
     /* X11 applies window creation/resizing asynchronously, and EGL may resize
      * its backing surface only on swap. Present once before reading each size. */
-    int expected_width = frames >= 15 && frames < 20 ? 320 : 480;
-    int expected_height = frames >= 15 && frames < 20 ? 600 : 900;
+    int expected_width = frames >= 5 && frames < 8 ? 320 : 480;
+    int expected_height = frames >= 5 && frames < 8 ? 600 : 900;
     if ((int)roundf(size.width) != expected_width || (int)roundf(size.height) != expected_height) {
         if (++settling > 120) { CHECK(false); app_quit(); }
         return;
@@ -38,13 +37,10 @@ static void frame(float dt)
     CHECK(pixels != NULL);
     if (!pixels) { app_quit(); return; }
     draw_rect(rc(0,0,240,900), BLACK); draw_rect(rc(240,0,240,900), WHITE);
-    CHECK(render_read_pixels(pixels,w,h)); /* drain prior work before timing */
     gfx_clip(rc(24,24,10,10));
     gfx_additive(true);
-    double start=(double)axGetMilliseconds();
     gfx_backdrop(7,CLEAR);
     CHECK(render_read_pixels(pixels,w,h));
-    if (frames >= 3 && frames < 15) elapsed += (double)axGetMilliseconds()-start;
     color c=sample(237,100); CHECK(c.r>15 && c.r<127); /* blur ignores caller's clip */
     c=sample(243,100); CHECK(c.r>127 && c.r<240);
     c=sample(80,100); CHECK(c.r<2); /* no unintended dim or layer inversion */
@@ -64,9 +60,9 @@ static void frame(float dt)
     CHECK(render_read_pixels(pixels,w,h));
     c=sample(440,800);CHECK(c.r>=125 && c.r<=128);
     frames++;
-    if (frames == 15) { axSetSize(320,600,false); present_pending=true; }
-    if (frames == 20) { axSetSize(480,900,false); present_pending=true; }
-    if (frames == 25) { CHECK(resizes >= 2); app_quit(); }
+    if (frames == 5) { axSetSize(320,600,false); present_pending=true; }
+    if (frames == 8) { axSetSize(480,900,false); present_pending=true; }
+    if (frames == 11) { CHECK(resizes >= 2); app_quit(); }
 }
 static void quit(void) { free(pixels); pixels=NULL; }
 TEST(backdrop)

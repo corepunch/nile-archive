@@ -24,8 +24,11 @@ for _,a in pairs(art) do
         check(frame.source.w>0 and frame.source.h>0,'nonempty authored frame')
     end
 end
+-- Every map is played to the end. Locally each map takes one click order in
+-- rotation (all three still run); --extended plays every order on every map.
+local orders={'normal','reverse','yard'}
 for i,level in ipairs(levels) do
-    for _,order in ipairs({'normal','reverse','yard'}) do
+    for _,order in ipairs(testing.extended and orders or {orders[(i-1)%#orders+1]}) do
         local g=sim.new(level)
         check(#g.workers== (i==1 and 2 or 3),'worker count map '..i)
         sim.update(g,.1)

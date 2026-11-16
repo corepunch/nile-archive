@@ -127,9 +127,10 @@ do
     near(aspect, 1, "reduced motion skips the landing squash")
 end
 -- Audit each simultaneous step, including competing destinations and deep gaps,
--- on every campaign silhouette, and repeat to check determinism.
+-- on every campaign silhouette, and repeat to check determinism. Seeds 1-3
+-- cover each emptying pattern; --extended adds more deals of the same shapes.
 for level = 0, rules.LEVELS - 1 do
-    for seed = 1, 12 do
+    for seed = 1, testing.extended and 12 or 3 do
         local g = ordinary_gravity(rules.game_start(level, seed))
         for i = 0, rules.CELLS - 1 do
             if g.active[i] and g.chain[i] == 0 and g.ice[i] == 0 and (i + seed) % 3 ~= 0 then g.tiles[i] = tile(-1) end

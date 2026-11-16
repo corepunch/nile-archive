@@ -18,13 +18,16 @@ return function(R, options)
         return axis==0 and ar==br or axis==1 and aq==bq or axis==2 and aq+ar==bq+br
     end
 
-    -- All legal straight runs, both directions, all six colours, every length.
+    -- All legal straight runs, both directions, every length. Matching is
+    -- colour-blind, so locally each run takes one colour in rotation (every
+    -- colour still appears); --extended tries all colours on every run.
     for start=0,N-1 do
         for dir=0,5 do
             local cells,at={},start
             while at>=0 do cells[#cells+1]=at;at=R.hex_neighbor(at,dir) end
             for length=1,#cells do
-                for kind=0,R.COLORS-1 do
+                local first=options.extended and 0 or (start+dir+length)%R.COLORS
+                for kind=first,options.extended and R.COLORS-1 or first do
                     t:case(('line start=%d dir=%d n=%d colour=%d'):format(start,dir,length,kind),function()
                         local g,m=blank(),R.new_match()
                         for k=1,length do g.tiles[cells[k]]=R.tile(kind) end
@@ -34,13 +37,12 @@ return function(R, options)
                         local special=length>=R.MATCH_MIN+2 and R.PRISM or length==R.MATCH_MIN+1 and dir%3+1 or nil
                         if R.flags & engine.NO_SPECIALS ~= 0 then special=nil end
                         t:check(m.make[pick]==special,'correct special and preferred cell')
+                        local group,wrong={},nil
+                        if length>=R.MATCH_MIN then for k=1,length do group[cells[k]]=true end end
                         for i=0,N-1 do
-                            local expected=false
-                            if length>=R.MATCH_MIN then
-                                for k=1,length do if i==cells[k] then expected=true end end
-                            end
-                            t:check((not not m.mask[i])==expected,'only group cells marked: '..i)
+                            if (not not m.mask[i])~=(group[i]==true) then wrong=i;break end
                         end
+                        t:check(wrong==nil,'only group cells marked: '..tostring(wrong))
                     end)
                 end
             end
