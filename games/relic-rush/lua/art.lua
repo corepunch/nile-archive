@@ -173,8 +173,9 @@ function A.load()
 end
 
 function A.draw_bonus_catalogue(R)
-    gfx.round_rect(rect(13, 235, 454, 496), 18, color(12, 47, 41, 250))
-    R.say_at("BONUS ARTWORK", vec2(240, 260), 24, R.PAL_GOLD, 440)
+    local top = 204
+    gfx.round_rect(rect(13, top, 454, 496), 18, color(12, 47, 41, 250))
+    R.say_at("BONUS ARTWORK", vec2(240, top + 25), 24, R.PAL_GOLD, 440)
     -- Every bonus column, centred in the panel at a size that fits all of them.
     local count = #A.bonus_atlas_order
     local side = math.min(56, 400 / count)
@@ -182,9 +183,9 @@ function A.draw_bonus_catalogue(R)
     local left = 240 - (step * (count - 1) + side) / 2
     for col, key in ipairs(A.bonus_atlas_order) do
         local x = left + (col - 1) * step
-        gfx.image(R.board_art[key], rect(x, 290, side, side), color.WHITE)
+        gfx.image(R.board_art[key], rect(x, top + 55, side, side), color.WHITE)
         for row, state in ipairs(A.states) do
-            gfx.image(R.hud_art[key .. "-" .. state], rect(x, 353 + (row - 1) * 69, side, side), color.WHITE)
+            gfx.image(R.hud_art[key .. "-" .. state], rect(x, top + 118 + (row - 1) * 69, side, side), color.WHITE)
         end
     end
 end
