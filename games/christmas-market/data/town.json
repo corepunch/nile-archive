@@ -6,7 +6,7 @@
     "height": 32,
     "gap": 7,
     "overhang": 6,
-    "menu": {"size": 64, "inset": 7, "y": 4}
+    "menu": {"size": 76, "inset": 7, "y": -2}
   },
   "bottom": {
     "layout": "play-primary",

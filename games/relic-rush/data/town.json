@@ -7,7 +7,7 @@
     "gap": 18,
     "overhang": 12,
     "moves_width": 66,
-    "menu": {"size": 64, "inset": 7, "y": 4}
+    "menu": {"size": 76, "inset": 7, "y": -2}
   },
   "bottom": {
     "layout": "play-primary",
