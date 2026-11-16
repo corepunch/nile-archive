@@ -4,6 +4,7 @@ import re
 import struct
 from PIL import Image
 from pathlib import Path
+from prepare_bonus_gems import pack
 
 ROOT = Path(__file__).resolve().parents[1]
 manifest = json.loads((ROOT / "art/board-states/manifest.json").read_text())
@@ -59,12 +60,21 @@ story_pieces = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
 expected_pieces = set(pieces) | set(upgrades) | campaign_resources | set(re.findall(r'"([^"]+)"', story_pieces))
 expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
-assert set(manifest["tool_unlocks"]) <= set(manifest["tools"])
-bonus = manifest["bonus_pieces"]
-declaration = re.search(r"A\.bonus_pieces = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == bonus["rows"][0] == list(manifest["tool_unlocks"])
-assert bonus["runtime"] in actual
-assert all((ROOT / bonus[key]).is_file() for key in ("source", "prompt", "registration"))
+gems = manifest["bonus_gems"]
+assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "button_base", "review"))
+assert all((ROOT / gems["disabled_concept"][key]).is_file() for key in ("image", "prompt"))
+assert len(gems["chip_boxes"]) == len(gems["columns"])
+assert set(gems["button_states"]) == set(manifest["tool_states"])
+assert (ROOT / gems["runtime"]).read_bytes() == pack(gems), "Bonus gem atlas registration is stale"
+assert gems["rows"] == ["board", *manifest["tool_states"]]
+declaration = re.search(r"A\.bonus_atlas_order = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"bonus-([^"]+)"', declaration) == gems["columns"]
+declaration = re.search(r"A\.bonus_tools = \{([^}]+)\}", art).group(1)
+economy = (ROOT / "lua/economy.lua").read_text()
+bonus_keys = re.findall(r'\{key="([^"]+)",[^\n]* tool=(\d+),', economy)
+assert [name for name, _ in bonus_keys] == re.findall(r'"bonus-([^"]+)"', declaration)
+assert [int(tool) for _, tool in bonus_keys] == list(range(1, len(gems["columns"]) + 1))
+assert set(gems["columns"]) == set(gems["bonuses"])
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)

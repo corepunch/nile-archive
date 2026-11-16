@@ -114,16 +114,16 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves and flowers use the same board match and scoring behavior as other
-pieces. Their authored slots carry no wallet yield. The amphora is available
-when its slot has no bonus or story piece.
+pieces. Their authored slots carry no wallet yield. The amphora asset serves
+legacy art previews.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The alternate packs still supply separate grain and quartz sprites at their
 authored orientation and alpha. Selected, hinted and falling pieces use the normal chip
 with the existing board feedback. The Camp and Observatory enable existing
 Dynamite and Sunburst controls with their authored normal, selected, pressed,
-hover and disabled artwork. The toolbar shows each unlocked tool and uses the
-disabled artwork when it has no stored uses. Review `shot hex-first`, `shot hex-late`,
+hover and disabled artwork. The locked and depleted tools share the disabled
+art and show different tap notices. Review `shot hex-first`, `shot hex-late`,
 `shot landing-briefing`, and `shot phone-story-level-30` in the Relic Rush suite.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
 The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
@@ -498,25 +498,55 @@ sprites or derived artwork are used. The existing hint artwork still marks only
 legal swaps; [review captures and reproduction](review/dead-board/README.md)
 cover a zero-charge ring at both phone sizes.
 
-## Tools: complete interaction matrix
+## Campaign bonus pieces and sockets
 
-Tools cost no move. Select a tool and tap an active cell. Pickaxe starts with
-two uses and hits one cell. Dynamite hits its cell and six neighbours.
-Sunburst hits every piece of the tapped kind.
+The six standalone pieces are the Hammer, Dynamite, Shutter Gear, Shield,
+Lightning and Star. The board shows one unlocked family per expedition. Their
+rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
+The bonus buttons use Relic Rush's square bevels, warm gold ready and hover
+faces, jade selected faces, and dark amber pressed faces. Empty buttons show a
+sharp sandstone cutout with a longer, feathered cast shadow across its warm,
+fine-grained floor. A broad reflection fades into the sandstone around the
+cutout. The [ImageGen paint-over](../art/bonus-gems/disabled-concept.png) and its
+[prompt](../art/bonus-gems/disabled-concept.prompt.txt) record the lighting
+study for the procedural state.
+For partial charge, the renderer reveals the painted gold face from the bottom.
+The rounded, wide Lightning profile carries through the field chip and all five
+button states.
 
-The Camp introduces `dynamite` pieces on expedition 2 and the Observatory
-introduces `sunburst` pieces on expedition 24. Matching them earns three points
-per cleared piece. A tool use costs 27 points. Later boards spawn one family,
-and the toolbar keeps uses and partial charge for both unlocked tools.
+The first row of the [original ImageGen atlas](../art/bonus-gems/source.png)
+supplies the six pieces. A [single painted button](../art/bonus-gems/button-base.png)
+supplies the material, rim, and silhouette for every state. The
+[manifest](../art/board-states/manifest.json) records its crop provenance,
+the generated inset's bounds and corner radius, and the state recipes.
 
-Built-in ImageGen authored both free-standing pieces together in one strip.
-[Source strip](../art/bonus-pieces/source.png) · [Prompt](../art/bonus-pieces/prompt.txt).
-Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop each half
-by its alpha bounds and fit it to 114 px on a 128 px transparent canvas. The
-runtime atlas is `data/bonus-pieces.png`. The board and guide use these same
-textures across tile packs. The HUD uses the existing five authored button states.
-Reproduce the board captures with `build/test/all --suite=relic-rush "shot goal-board" "shot sunburst-board" "shot phone-sunburst-board" "shot bonus-"`.
-[Camp before and after](review/bonus-unlocks/camp.jpg) · [Sunburst and alternate packs](review/bonus-unlocks/bonus-pieces.jpg)
+`python3 games/relic-rush/tools/prepare_bonus_gems.py` builds the rounded-square
+inset mask and packs all 30 combinations in `data/bonus-gems.png`. Each recipe
+can recolor the plate or inset with a three-tone palette, adjust brightness, and
+add rim glow. Positive bevel widths recess the inset and negative widths raise
+it. The button's rounded-square inset bevel shades the upper-left wall and
+lights the lower-right edge. The same centered icon fits in 84 × 84 px for every state.
+The packer samples the disabled cut directly from the source icon's alpha
+at that placement, preserving edges and openings such as the gear's center
+hole. Every board pack uses the same six pieces. The packer checks that every
+button keeps the same outer alpha.
+
+[Rendered states](screenshots/bonus-states.jpg) ·
+[480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
+[390 × 844 toolbar](screenshots/bonus-toolbar-phone.jpg) ·
+[Spent Hammer](screenshots/bonus-spent.jpg) ·
+[Workshop card](screenshots/bonus-workshop-card.jpg) ·
+[Market unlock on the results screen](screenshots/bonus-building-result.jpg) ·
+[Shutter Gear board](screenshots/bonus-gear.jpg) ·
+[Recovered gear](screenshots/bonus-gear-award.jpg).
+Reproduce the views and the real tap-to-spend check with
+`build/test/relic-rush 'shot bonus-' 'shot workshop-card-phone'`.
+
+## Earlier tool art and reference boards
+
+Reference boards use the Pickaxe, Dynamite and Sunburst controls.
+Pickaxe hits one cell, Dynamite hits its cell and six neighbours, and Sunburst
+hits every piece of the tapped kind.
 
 All fifteen buttons are separately painted in the same atlas, including their
 backgrounds. The renderer never desaturates, tints or synthesizes a disabled state.

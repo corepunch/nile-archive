@@ -1,6 +1,6 @@
 {
   "camp": {
-    "about": "Adds Dynamite pieces to expeditions. Match them to charge the tool.",
+    "about": "The crew stocks its first expedition supplies here.",
     "cost": [0, 3, 8]
   },
   "well": {
@@ -28,7 +28,7 @@
     "cost": [145, 85, 40]
   },
   "observatory": {
-    "about": "Adds Sunburst pieces to expeditions. Match them to charge the tool.",
+    "about": "From the lookout, a lamp can guide boats away from the damaged quay.",
     "cost": [155, 0, 70]
   },
   "fountain": {

@@ -97,10 +97,10 @@ both the seeded opening and refills. Its `multipliers` apply to the longest
 straight match through each clearing piece. Resource entries credit a
 wallet `slot` or a `tool` meter. An ordinary match can fill a tool meter
 and turn each full meter into one charge. The `tool_meter` keys identify
-unlocked tools shown in the toolbar, and `charge_tool` identifies which
-family can charge on the current board. Portrait campaigns bank earned and spent
-charges and partial progress when a wave resolves. Tool hits still earn
-the base wallet yield. A game can supply `sunburst_targets` for the earned tool
+the tools shown in the toolbar. Relic Rush uses `single_charge_tools` to cap
+each tool at one use. Christmas Market keeps a count and a remainder.
+Both games persist the inventory through `update_bonus_charges` as waves
+resolve. Tool hits still earn the base wallet yield. A game can supply `sunburst_targets` for the earned tool
 so the preview and the hit share the same cell mask.
 
 A swap into a chain sends the movable gem halfway toward the blocked cell

@@ -4,7 +4,7 @@ local island = require("island")
 local economy = require("economy")
 
 function R.board_context(preview)
-    local restored = {}
+    local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
     for i, wonder in ipairs(island.wonders) do
         local building = i - 1
         if preview then
@@ -16,33 +16,51 @@ function R.board_context(preview)
     return restored
 end
 
+function R.update_bonus_charges()
+    local g = R.g
+    if g.bonus_preview or not g.single_charge_tools then return end
+    local saved = R.prog.bonus_charge or {}
+    local changed = false
+    for tool, charge in pairs(g.tool_meter) do
+        if (saved[tool] or 0) ~= charge then
+            saved[tool], changed = charge, true
+        end
+    end
+    if changed then
+        R.prog.bonus_charge = saved
+        R.save_progress()
+    end
+end
+
 local function opening_unlock(g)
     local level = rules.level_of(g)
     for i, unlock in ipairs(economy.unlocks) do
-        if g.level + 1 == unlock.first_level or level.featured_resource == unlock.key then
-            local active = unlock.tool and g.charge_tool == unlock.tool
-                or g.resource_yields and g.resource_yields[unlock.kind] == unlock
-            if active then return unlock, island.wonders[i].name end
+        local building = island.wonders[i].name
+        if g.bonus_debut and unlock.bonus == g.bonus_debut then
+            return economy.bonus_lesson(g.bonus_debut), building
+        elseif unlock.kind and (g.level + 1 == unlock.first_level or level.featured_resource == unlock.key) then
+            if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
+                return economy.unlock_text(unlock), building
+            end
         end
     end
     for _, piece in pairs(g.resource_yields or {}) do
-        if g.level + 1 == piece.first_level then return piece end
+        if g.level + 1 == piece.first_level then return economy.unlock_text(piece) end
     end
 end
 
 function R.board_lesson(g)
     local lesson, unlock = rules.level_of(g).lesson, opening_unlock(g)
-    return unlock and lesson .. "\n" .. economy.unlock_text(unlock) or lesson
+    return unlock and lesson .. "\n" .. unlock or lesson
 end
 
 local present_board = R.present_board
 function R.present_board()
     present_board()
     local g = R.g
-    if g.moves == rules.level_of(g).moves and not app.arg("mission") then
-        local unlock, building = opening_unlock(g)
-        if unlock then
-            local text = economy.unlock_text(unlock)
+    if (g.level < 20 or g.bonus_debut) and g.moves == rules.level_of(g).moves and not app.arg("mission") then
+        local text, building = opening_unlock(g)
+        if text then
             R.notice(building and building .. " · " .. text or text)
         end
     end
@@ -58,5 +76,10 @@ function R.serialize_campaign(s)
         local wallet = R.prog.wallet
         R.prog.wallet = wallet + economy.shortfall(island.reserved_cost(R.island, R.prog.level), wallet)
     end
+    local charges = R.prog.bonus_charge or {}
+    for i, bonus in ipairs(economy.bonuses) do
+        charges[i] = num.clampi(s:int("bonus_" .. bonus.key, reading and 0 or charges[i] or 0), 0, economy.BONUS_THRESHOLD)
+    end
+    R.prog.bonus_charge = charges
     serialize_completed(s)
 end

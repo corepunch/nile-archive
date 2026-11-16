@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Campaign matches clear straight lines of three or more. Chains take a hit before a plaque can clear. The three tools hit one cell, its neighborhood, or every piece of the selected kind. Specials are kept for reference boards.",
+  "matching_rules": "Campaign matches clear straight lines of three or more. Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
@@ -436,7 +436,7 @@
     "data/board-tiles/selected.png",
     "data/board-tiles/tablet-double.png",
     "data/board-tiles/tablet-single.png",
-    "data/bonus-pieces.png",
+    "data/bonus-gems.png",
     "data/building-shadows/amphitheater.png",
     "data/building-shadows/apothecary.png",
     "data/building-shadows/archive.png",
@@ -1781,22 +1781,6 @@
       "runtime": "data/resource-pieces/emerald.png"
     }
   },
-  "tool_unlocks": {
-    "dynamite": {
-      "building": "camp",
-      "first_level": 2,
-      "review": "goal-board",
-      "charge_per_piece": 3,
-      "charge_threshold": 27
-    },
-    "sunburst": {
-      "building": "observatory",
-      "first_level": 24,
-      "review": "sunburst-board",
-      "charge_per_piece": 3,
-      "charge_threshold": 27
-    }
-  },
   "resource_pieces": {
     "source": "art/board-refresh/source.png",
     "prompt": "art/board-refresh/prompt.txt",
@@ -2091,22 +2075,231 @@
       "building": "gateway"
     }
   },
-  "bonus_pieces": {
-    "source": "art/bonus-pieces/source.png",
-    "prompt": "art/bonus-pieces/prompt.txt",
-    "runtime": "data/bonus-pieces.png",
+  "bonus_gems": {
+    "source": "art/bonus-gems/source.png",
+    "prompt": "art/bonus-gems/prompt.txt",
+    "generator": "Built-in ImageGen from the Relic Rush toolbar screenshot and the existing art/tool-buttons/source.png atlas",
+    "runtime": "data/bonus-gems.png",
+    "review": "docs/screenshots/bonus-states.jpg",
+    "columns": [
+      "hammer",
+      "dynamite",
+      "mixer",
+      "shield",
+      "lightning",
+      "star"
+    ],
     "rows": [
+      "board",
+      "normal",
+      "selected",
+      "pressed",
+      "hover",
+      "disabled"
+    ],
+    "registration": "Center each standalone chip in a 112 px board slot and reuse its 84 px button icon across the same centered base. Generate the inner mask from the rounded rectangle and apply the state recipe at 128 × 128 without shifting the base alpha or icon.",
+    "bonuses": {
+      "hammer": {
+        "building": "workshop",
+        "first_level": 8,
+        "effect": "Hit one cell"
+      },
+      "dynamite": {
+        "building": "camp",
+        "first_level": 2,
+        "effect": "Hit the selected cell and its six neighbors"
+      },
+      "mixer": {
+        "building": "market",
+        "first_level": 10,
+        "effect": "Shuffle loose pieces; also the Shutter Gear story objective on expedition 10"
+      },
+      "shield": {
+        "building": "gateway",
+        "first_level": 14,
+        "effect": "Hit the selected hex row"
+      },
+      "lightning": {
+        "building": "archive",
+        "first_level": 20,
+        "effect": "Hit up to twenty different cells"
+      },
+      "star": {
+        "building": "observatory",
+        "first_level": 24,
+        "effect": "Hit every piece of the chosen kind"
+      }
+    },
+    "disabled": "Cast a directional shadow onto the sandstone cutout floor. The source icon outline supplies the exact silhouette, the disabled palette supplies the surrounding highlight color, and a fixed seed supplies the fine floor grain.",
+    "chip_boxes": [
       [
-        "dynamite",
-        "sunburst"
+        52,
+        25,
+        223,
+        204
+      ],
+      [
+        244,
+        26,
+        414,
+        199
+      ],
+      [
+        445,
+        30,
+        617,
+        198
+      ],
+      [
+        647,
+        22,
+        812,
+        207
+      ],
+      [
+        853,
+        31,
+        1002,
+        203
+      ],
+      [
+        1039,
+        19,
+        1227,
+        208
       ]
     ],
-    "row_edges": [
-      0,
-      887
-    ],
-    "cell_size": 128,
-    "extent": 114,
-    "registration": "tools/prepare_resource_pieces.py"
+    "button_base": "art/bonus-gems/button-base.png",
+    "button_base_origin": {
+      "commit": "6d05253e",
+      "source": "art/bonus-gems/button-faces.png",
+      "crop": [
+        66,
+        167,
+        456,
+        556
+      ],
+      "resize": [
+        116,
+        116
+      ],
+      "center": [
+        64,
+        64
+      ]
+    },
+    "button_inset": {
+      "bounds": [
+        18,
+        18,
+        110,
+        110
+      ],
+      "radius": 18
+    },
+    "button_states": {
+      "normal": {},
+      "selected": {
+        "inset_palette": [
+          [
+            2,
+            32,
+            19
+          ],
+          [
+            9,
+            119,
+            72
+          ],
+          [
+            104,
+            198,
+            131
+          ]
+        ],
+        "bevel": 2,
+        "glow": [
+          255,
+          236,
+          140
+        ],
+        "glow_strength": 1.65
+      },
+      "pressed": {
+        "inset_palette": [
+          [
+            42,
+            15,
+            2
+          ],
+          [
+            150,
+            62,
+            9
+          ],
+          [
+            232,
+            150,
+            57
+          ]
+        ],
+        "bevel": 4
+      },
+      "hover": {
+        "brightness": 1.14
+      },
+      "disabled": {
+        "palette": [
+          [
+            43,
+            31,
+            25
+          ],
+          [
+            184,
+            164,
+            144
+          ],
+          [
+            255,
+            244,
+            225
+          ]
+        ],
+        "cutout": {
+          "floor_palette": [
+            [
+              24,
+              17,
+              12
+            ],
+            [
+              96,
+              73,
+              50
+            ],
+            [
+              130,
+              106,
+              80
+            ]
+          ],
+          "shadow_offset": [
+            7,
+            9
+          ],
+          "shadow_softness": 1.65,
+          "shadow_brightness": 0.43,
+          "glow_radius": 3.8,
+          "glow_strength": 1.65,
+          "floor_grain": 11
+        }
+      }
+    },
+    "disabled_concept": {
+      "image": "art/bonus-gems/disabled-concept.png",
+      "prompt": "art/bonus-gems/disabled-concept.prompt.txt",
+      "generator": "Built-in ImageGen paint-over of the previously rendered disabled toolbar"
+    }
   }
 }

@@ -55,7 +55,7 @@ function E.loadout(built, number, seed)
         local piece = E.pieces[kind]
         if piece.amount then yields[kind] = piece end
     end
-    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=200, tool_meter=meter, charge_tool=charge_tool}
+    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=200, tool_meter=meter}
 end
 
 -- Rome I Beta lightning hits 15 cells and reserves one hit for a plaque.

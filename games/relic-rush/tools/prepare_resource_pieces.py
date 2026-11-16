@@ -46,6 +46,7 @@ def register(spec, check):
 
 
 def register_campaign(spec, check):
+    atlas = Image.open(ROOT / spec['source'])
     replacements = {}
     for revision in spec['revisions']:
         with Image.open(ROOT / revision['source']) as revised:
@@ -53,11 +54,6 @@ def register_campaign(spec, check):
             replacements.update({key: revised.crop(box) for key, box in revision['boxes'].items()})
     for key, (size, extent) in SPEC['from_campaign'].items():
         register_piece(replacements[key], key, size, extent, check)
-    register_atlas(spec, check, replacements)
-
-
-def register_atlas(spec, check, replacements):
-    atlas = Image.open(ROOT / spec['source'])
     edges = spec['row_edges']
     assert atlas.mode == 'RGBA' and edges[0] == 0 and edges[-1] == atlas.height
     rows, size = spec['rows'], spec['cell_size']
@@ -86,7 +82,6 @@ def main():
     for spec in (SPEC, MANIFEST['wallet_icons']):
         register(spec, args.check)
     register_campaign(MANIFEST['campaign_pieces'], args.check)
-    register_atlas(MANIFEST['bonus_pieces'], args.check, {})
 
 
 if __name__ == '__main__':

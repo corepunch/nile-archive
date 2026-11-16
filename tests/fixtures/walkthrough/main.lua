@@ -31,7 +31,8 @@ function R.smoke()
     elseif stage == 4 and not R.on_island then
         assert(R.g.level == 1, 'town action must start the next board')
         if game == 'relic-rush' then
-            assert(R.g.charge_tool == economy.unlocks[1].tool and R.g.tools[R.g.charge_tool] == 0,
+            local bonus = economy.unlocks[1].bonus
+            assert(R.g.bonus_debut == bonus and R.g.tools[bonus.tool] == 0,
                 'the camp opens an uncharged bonus on the second board')
         else
             assert(R.g.resource_yields[4] == economy.pieces[4], 'the arch adds firewood to the second board')
