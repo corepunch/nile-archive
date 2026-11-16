@@ -49,6 +49,21 @@ hashes and download URL are recorded in
 | Prices, plan access and building payoff | `settings/scenes/shop/epochs.xml` → `Epoch/Construction`. Read `Price`, `PlanAccess` and `Ball type` separately. `shop.xml` describes shop, plan and epoch-completion UI. |
 | Location, name and citizen | Join construction `id` to `settings/scenes/city/city_view.xml` for position and `enable_user_events`, to `city_info_dialog.xml` page `<id>_0` for the localized title, and to `settings/user_events.xml` for predicates and effects. |
 
+## Browse the artwork
+
+With Pillow available, run `python3 tools/cradle-of-rome-reference/export_art.py`
+after unpacking the APK and resource pack. Open `board-pieces.png` and
+`board-backgrounds.png` in the resulting `reference/cradle-of-rome/visuals/`
+directory for an overview.
+
+| Local path under `visuals/` | Contents |
+| --- | --- |
+| `sprites/settings/scenes/game/game_graphics/` | Individual chips (`gmbn_*`), bonus pieces (`bns_*_fld`), locks, plaques, effects and all 21 board backdrops (`gm_back_*`, cropped to 1024×768 as specified by the game). |
+| `sprites/` | Crops from all graphics XML tables, including the city, shop, menus and Japanese overrides. Animations have numbered frame PNGs. The crops retain source alpha and atlas orientation. |
+| `textures/` | Full-size PNG decodes of all 24 ETC1 textures, including the padding present in the source textures. Original PNG and JPEG atlases are in `resources/textures/`. |
+
+The APK's separate audio and splash files are under `reference/cradle-of-rome/apk/assets/`.
+
 ## Reproduce the counts
 
 Run these commands from the repository root with the downloaded APK and fresh output paths.
