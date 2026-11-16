@@ -88,14 +88,74 @@ def cracks(size, spec):
     return layer
 
 
+def spread(a, b, contrast):
+    """Push two colours apart (contrast > 1) or together around their midpoint."""
+    mid = [(x + y) / 2 for x, y in zip(a, b)]
+    return ([m + (x - m) * contrast for m, x in zip(mid, a)], [m + (y - m) * contrast for m, y in zip(mid, b)])
+
+
+def lerp(a, b, t):
+    return tuple(min(255, max(0, round(x + (y - x) * t))) for x, y in zip(a, b))
+
+
+def lit_face(size, radius, bevel, tile, shading):
+    """A face lit from `light` (a vector towards the light, e.g. [-1, -1] for the
+    north-west): the face runs from `top` on the lit side to `bottom` on the far
+    side, scaled by `contrast`. A "facets" bevel shades each of the six edges by
+    how squarely it faces the light, like a cut stone; "ring" keeps one gradient.
+    """
+    lx, ly = shading.get("light", [0, -1])
+    n = math.hypot(lx, ly)
+    lx, ly = lx / n, ly / n
+    top, bottom = spread(rgb(tile["top"]), rgb(tile["bottom"]), shading.get("contrast", 1))
+    light, shade = spread(rgb(tile["light"]), rgb(tile["shade"]), shading.get("bevel_contrast", 1))
+    edge_mid = lerp(light, shade, .5)
+    facets = shading.get("bevel_style", "ring") == "facets"
+    inner = radius - bevel
+    apothem_inner = inner * math.sqrt(3) / 2
+    c = (size - 1) / 2
+    pixels = []
+    for y in range(size):
+        for x in range(size):
+            dx, dy = (x - c) / radius, (y - c) / radius
+            # Distance to the hex edge along the nearest edge normal (angles 30° + 60°k).
+            k = round((math.degrees(math.atan2(dy, dx)) - 30) / 60) % 6
+            nx, ny = math.cos(math.radians(30 + 60 * k)), math.sin(math.radians(30 + 60 * k))
+            along = (dx * nx + dy * ny) * radius
+            t = (1 - (dx * lx + dy * ly) / 1.0) / 2   # 0 on the lit side, 1 opposite
+            if along > apothem_inner:   # in the bevel
+                if facets:
+                    b = nx * lx + ny * ly
+                    pixels.append(lerp(edge_mid, light, b) if b > 0 else lerp(edge_mid, shade, -b))
+                else:
+                    pixels.append(lerp(light, shade, t))
+            else:
+                pixels.append(lerp(top, bottom, t))
+    face = Image.new("RGB", (size, size))
+    face.putdata(pixels)
+    face = face.convert("RGBA")
+    blob = shading.get("blob")
+    if blob:   # a soft highlight, by default in the north-west
+        layer = glow(size, blob.get("colour", "#FFFFFF"), blob["opacity"], blob.get("reach", .6))
+        offset = (round(blob.get("x", -.35) * radius), round(blob.get("y", -.35) * radius))
+        moved = Image.new("RGBA", (size, size))
+        moved.paste(layer, offset, layer)
+        face.alpha_composite(moved)
+    return face
+
+
 def bake(spec, tile, grains, index):
     size = spec["size"] * SS
     radius = size / 2
-    bevel = tile.get("bevel", spec["bevel"]) * SS
-    face = gradient(size, radius, rgb(tile["light"]), rgb(tile["shade"]))
-    inner = gradient(size, radius - bevel, rgb(tile["top"]), rgb(tile["bottom"]))
-    face.paste(inner, (0, 0), hexagon(size, radius - bevel))
-    face = face.convert("RGBA")
+    shading = {**spec.get("shading", {}), **tile.get("shading", {})}
+    bevel = shading.get("bevel", tile.get("bevel", spec["bevel"])) * SS
+    if shading:
+        face = lit_face(size, radius, bevel, tile, shading)
+    else:
+        face = gradient(size, radius, rgb(tile["light"]), rgb(tile["shade"]))
+        inner = gradient(size, radius - bevel, rgb(tile["top"]), rgb(tile["bottom"]))
+        face.paste(inner, (0, 0), hexagon(size, radius - bevel))
+        face = face.convert("RGBA")
     if tile.get("grain", 0) > 0:
         # Each tile samples its own patch of its grain.
         grain = grains[json.dumps(tile.get("grain_params", {}), sort_keys=True)]
