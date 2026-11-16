@@ -109,9 +109,9 @@ The font and its license are inherited unmodified from Relic Rush in `data/fonts
 
 ## Market goods and tools
 
-All twelve pieces were authored together in one transparent ImageGen
+The first twelve pieces were authored together in one transparent ImageGen
 [master](../art/market-goods/source.png) from the [recorded prompt](../art/market-goods/prompt.txt).
-The registrar crops the 4×3 bays, trims transparent borders, fits each
+The registrar crops the 4×3 bays (and the reused fourth row below), trims transparent borders, fits each
 object to the inner flat-top mask at up to 112 px, centers the result in
 a 128 px slot and preserves authored alpha. On the board all pieces share
 the idle sprite, selection and hint overlays, and the standard swap and
@@ -132,6 +132,18 @@ normal, selected, pressed, hover and disabled art.
 | 9 | Winter apple | 6 Food |
 | 10 | Lantern star | 3 Lightning charge |
 | 11 | Cocoa | 4 Food |
+| 12 | Golden bell | 6 Gold, from the snowy chapel |
+| 13 | Snowflake bauble | 7 Gold, from the igloo |
+| 14 | Plum bauble | 8 Gold, from the giant bauble |
+| 15 | Candy cane | 7 Food, from the log cabin |
+
+Slots 12–15 form the atlas's fourth row. They reuse earlier painted festive
+pieces rather than new paintings: the golden handbell, candy cane and plum
+bauble from [the festive pieces](../art/festive-pieces/source.png) and the
+snowflake bauble from cell 3 of [the icon sheet](../art/icons.png).
+`tools/prepare_market_goods.py` registers them with the same mask and fit.
+The shooting star, firework bomb, paper plane and rainbow ball that later
+stalls place on every opening board are the existing special frames.
 
 The runtime atlas is `data/market-goods.png`. The Gold coin, firewood and
 cocoa sprites identify their wallets and appear on prices and result

@@ -35,10 +35,10 @@ function R.campaign_smoke()
         assert(table.concat(played, " ") == table.concat(want, " "),
                "campaign smoke: beats played out of order: " .. table.concat(played, " "))
         for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
-        assert(R.prog.level == rules.LEVELS and island.wonder_count(c) == island.WONDERS and c.open == 63,
-               "campaign smoke: thirty wishes build every stall and open every region")
+        assert(R.prog.level == rules.LEVELS and island.campaign_count(c) == #island.ladder and c.open == 63,
+               "campaign smoke: thirty wishes build all twenty stalls and open every region")
         print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls, every region in %d frames"):format(
-            R.prog.level, #played, island.wonder_count(c), frames))
+            R.prog.level, #played, island.campaign_count(c), frames))
         app.quit()
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
@@ -53,8 +53,8 @@ function R.campaign_smoke()
             R.island_focus(marker, c.cam.zoom)
             app.inject_click(R.island.cam:to_screen(marker))
             wait = 10
-        elseif island.wonder_count(c) < journey.earned(R.prog.level) then
-            R.island_begin(island.wonder_count(c), true); wait = 10   -- the earned stall, as the shop's row starts it
+        elseif island.next_step(c, R.prog.level) then
+            R.island_begin(island.next_step(c, R.prog.level), true); wait = 10   -- the next stall, as the shop's row starts it
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish
         end
@@ -62,11 +62,11 @@ function R.campaign_smoke()
         local g = R.g
         for i = 0, rules.CELLS - 1 do g.chain[i], g.oil[i] = 0, 0 end
         g.obstacles, g.oil_left = 0, 0
-        local kind = journey.wonder_at(g.level + 1)
-        if kind then
-            local cost = island.wonders[kind].cost
-            g.earnings = {cost[1], cost[2], cost[3]}
+        local cost = purse()
+        for _, step in ipairs(island.ladder) do
+            if step.after == g.level + 1 then cost = cost + R.buildings[step.kind + 1].cost end
         end
+        g.earnings = {cost[1], cost[2], cost[3]}
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b

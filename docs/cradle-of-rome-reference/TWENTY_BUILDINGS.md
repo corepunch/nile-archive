@@ -1,9 +1,9 @@
 # Twenty campaign buildings for Relic Rush and Christmas Market
 
-> **Status:** 16 November 2026. The Relic Rush ladder is implemented as revised
-> below, with provisional prices and two borrowed gem chips
+> **Status:** 16 November 2026. Both ladders are implemented as revised below.
+> Relic Rush has provisional prices and two borrowed gem chips
 > ([#103](https://github.com/corepunch/nile-archive/issues/103)). Christmas
-> Market's section is still a proposal.
+> Market reuses existing art throughout and is priced from a measured run.
 > Prices are starting points for the campaign bot and `tools/tune_levels.py`,
 > not tuned values.
 
@@ -145,74 +145,40 @@ sockets and the one this board charges.
 
 ## Christmas Market: the 20 stalls
 
-Christmas Market's first eight stalls already follow Rome I's first eight
-purchases. The rink and the tree add nothing today. This gives them bonuses
-and adds ten stalls. The stalls fill Rome I's remaining twelve roles: the
-Rostra's bomb, the Pantheon's hourglass, the Tabularium's plus, three Shield,
-Star and Mixer bonuses, and the five Gold treasures and one Food piece of
-epochs III–V.
+> **Revised 16 November 2026** so that no new art is needed: the first draft
+> asked for six new pieces, a cracker charge piece and two new buildings.
+> As built, the ten new stalls are existing Blender renders and the four new
+> pieces reuse the game's earlier painted festive pieces. The Firecracker
+> tool, which had no charge piece, became an opening firework bomb. Two of
+> Rome's Gold treasures became citizen-style income, which Rome pays per level.
 
-Eight of the ten new stalls are existing cottages and decorations with
-Blender renders. Two need new models.
+Christmas Market's first eight stalls already followed Rome I's first eight
+purchases; the rink and tree added nothing. Now every stall adds one thing.
+Prices are Gold / Food / Supplies and were set from the extended campaign run,
+which places all twenty with one replay for income.
 
-| # | Build after | Stall | From wish | Adds | Kind | Price G / S / F |
-| ---: | ---: | --- | ---: | --- | --- | ---: |
-| **I. First lights** |
-| 1 | 1 | ★ Welcome arch | 2 | Firewood, 5 Supplies | Piece | 50 / 0 / 0 |
-| 2 | 2 | Reindeer stable | 3 | One shooting star on every opening board | Special | 60 / 20 / 0 |
-| 3 | 4 | ★ Lumber workshop | 5 | Toy hammer · Hammer | Tool | 100 / 100 / 0 |
-| 4 | 5 | Gingerbread house | 6 | +3 moves on every wish | Perk | 150 / 120 / 0 |
-| **II. The bakery lane** |
-| 5 | 7 | ★ Gingerbread bakery | 8 | Packing blocks, 7 Supplies | Piece | 300 / 200 / 0 |
-| 6 | 9 | ★ Hot cocoa kiosk | 10 | Cocoa, 4 Food | Piece | 400 / 500 / 0 |
-| 7 | 11 | Santa's workshop | 12 | Christmas cracker · Firecracker | Tool | 250 / 250 / 150 |
-| 8 | 13 | ★ Toymaker's workshop | 14 | Milk, 3 Food | Piece | 300 / 300 / 200 |
-| **III. Gifts and letters** |
-| 9 | 14 | North Pole post office | 15 | Every tool starts each wish half charged | Perk | 350 / 300 / 300 |
-| 10 | 16 | ★ Gift wrapping pavilion | 17 | Winter apple, 6 Food | Piece | 500 / 400 / 400 |
-| 11 | 17 | Log cabin | 18 | Roast chestnuts, 7 Food | Piece | 450 / 400 / 450 |
-| 12 | 19 | ★ Candlelight shop | 20 | Lantern star · Lightning | Tool | 500 / 600 / 500 |
-| **IV. Bells and clocks** |
-| 13 | 20 | Snowy chapel | 21 | Silver bell, 6 Gold (replaces the silver coin) | Piece | 550 / 550 / 600 |
-| 14 | 21 | Clockmaker's shop *(new model)* | 22 | Pocket watch, 7 Gold (replaces the gold coin) | Piece | 600 / 600 / 600 |
-| 15 | 23 | ★ Reindeer carousel | 24 | Gingerbread, 5 Food | Piece | 700 / 700 / 600 |
-| 16 | 24 | Santa's sleigh | 25 | One paper plane on every opening board | Special | 650 / 650 / 650 |
-| **V. Christmas Eve** |
-| 17 | 25 | Igloo | 26 | Snow globe, 8 Gold (replaces the bell) | Piece | 700 / 700 / 750 |
-| 18 | 26 | ★ Winter skating rink | 27 | One rainbow ball on every opening board | Special | 750 / 700 / 700 |
-| 19 | 27 | Carol bandstand *(new model)* | 28 | Music box, 9 Gold (replaces the watch) | Piece | 800 / 750 / 800 |
-| 20 | 29 | ★ Christmas tree | 30 | Star topper, 10 Gold (replaces the globe) | Piece | 900 / 850 / 900 |
-
-Twelve pieces, eight bonuses: three tools, three opening specials and two
-perks, Rome I's exact split. Christmas prices are Gold / Supplies / Food,
-the order the resource prototype uses. The rink and tree prices above are
-new: their current prices (160 / 42 / 20 and 175 / 50 / 25) sit far below
-their neighbours and would make them free in a 20-stall economy.
-
-**Why each stall gives what it does.**
-
-- **Reindeer stable, shooting star.** A reindeer's streak across the sky; it
-  is the hex rocket and teaches specials on wish 3.
-- **Gingerbread house, +3 moves.** A snack that keeps everyone going. It
-  arrives as the first prices with Supplies make players earn deliberately.
-- **Santa's workshop, Firecracker.** Christmas crackers. The Firecracker icon
-  and all five button states are already in the tool atlas and unused. It
-  charges from its own matched cracker pieces like the Hammer.
-- **North Pole post office, half-charged tools.** This is the Plus: parcels of
-  tools arrive before the wish starts. A meter starts at 100 of 200.
-- **Log cabin, roast chestnuts.** By the fire. At 7 Food it tops the Food
-  ladder, as Rome's Port fish does.
-- **Chapel, clockmaker, igloo, bandstand, tree.** The five Gold treasures:
-  bells, watches, snow globes, music boxes and the tree's star topper, each
-  replacing the Gold piece below it, as Rome's ring through brooch do.
-- **Santa's sleigh, paper plane.** The sleigh flies to the pane it needs.
-- **Skating rink, rainbow ball.** Skaters swirl the colours. This is the Mixer
-  slot.
-
-**The Gold ladder needs two slots.** Christmas Market pays Gold from both
-silver (3) and gold (5) coins. The bell and globe climb the silver slot. The
-watch and music box climb the gold slot. The star topper replaces whichever
-of those is lower.
+| # | Build after | Stall | From wish | Adds | Price G / F / S |
+| ---: | ---: | --- | ---: | --- | ---: |
+| 1 | 1 | ★ Welcome arch | 2 | Firewood, 5 Supplies | 50 / 0 / 0 |
+| 2 | 2 | Reindeer stable | 3 | Opening shooting star (Rome's Shield) | 60 / 0 / 20 |
+| 3 | 4 | ★ Lumber workshop | 5 | Hammer | 100 / 0 / 100 |
+| 4 | 5 | Gingerbread house | 6 | +3 moves (Rome's Hourglass) | 150 / 0 / 80 |
+| 5 | 7 | ★ Gingerbread bakery | 8 | Packing blocks, 7 Supplies | 300 / 0 / 200 |
+| 6 | 9 | ★ Hot cocoa kiosk | 10 | Cocoa, 4 Food | 400 / 0 / 500 |
+| 7 | 11 | Santa's workshop | 12 | Opening firework bomb (Rome's Bomb) | 200 / 150 / 100 |
+| 8 | 13 | ★ Toymaker's workshop | 14 | Milk, 3 Food | 300 / 200 / 300 |
+| 9 | 14 | North Pole post office | 15 | Tools charge twice as fast (Rome's Plus) | 250 / 250 / 100 |
+| 10 | 16 | ★ Gift wrapping pavilion | 17 | Winter apple, 6 Food | 500 / 400 / 400 |
+| 11 | 17 | Log cabin | 18 | Candy cane, 7 Food (Rome's fish) | 250 / 350 / 100 |
+| 12 | 19 | ★ Candlelight shop | 20 | Lightning | 500 / 500 / 600 |
+| 13 | 20 | Snowy chapel | 21 | Golden bell, 6 Gold (Rome's ring) | 120 / 250 / 40 |
+| 14 | 21 | Igloo | 22 | Snowflake bauble, 7 Gold (Rome's pearl) | 130 / 300 / 40 |
+| 15 | 23 | ★ Reindeer carousel | 24 | Gingerbread, 5 Food | 700 / 600 / 700 |
+| 16 | 24 | Santa's sleigh | 25 | Opening paper plane (Rome's Mixer slot) | 150 / 350 / 50 |
+| 17 | 25 | Giant bauble | 26 | Plum bauble, 8 Gold (Rome's diamond) | 160 / 400 / 50 |
+| 18 | 26 | ★ Winter skating rink | 27 | +25 Gold every win (Rome's citizens) | 180 / 450 / 60 |
+| 19 | 27 | Pile of presents | 28 | +20 Supplies every win (Rome's citizens) | 200 / 500 / 60 |
+| 20 | 29 | ★ Christmas tree | 30 | Opening rainbow ball (Rome's Star) | 250 / 600 / 80 |
 
 ## When a building blocks the next board
 

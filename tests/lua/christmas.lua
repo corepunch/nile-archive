@@ -11,8 +11,11 @@ local opens = {[6]=1, [9]=2, [15]=3, [21]=4, [27]=5}
 for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')
-    local building = journey.wonder_at(level + 1)
-    local cost = building and island.wonders[building].cost or purse()
+    -- The clear pays for every ladder stall it opens.
+    local cost = purse()
+    for _, step in ipairs(island.ladder) do
+        if step.after == level + 1 then cost = cost + island.buildings[step.kind + 1].cost end
+    end
     g.won, g.moves, g.earnings = true, 0, {cost[1] + 50, cost[2] + 12, cost[3] + 18}
     assert(rules.progress_reward(p,g,island.wonders), 'First clear must pay')
     local before = p.wallet[1]
@@ -25,13 +28,12 @@ for level=0,rules.LEVELS-1 do
         assert(z < 0 or not c:zone_available(z,p.wallet), ('No region opens early at level %d'):format(p.level))
     end
     local kind = journey.wonder_at(p.level)
-    if kind then
-        assert(island.reserved_cost(c,p.level):covers(island.wonders[kind].cost))
-        assert(island.island_place_next(c,p.wallet,p.level,0), 'Every funded building must fit the land open by then')
-        assert(island.wonder_count(c)==kind)
-    else
-        assert(not island.island_place_next(c,p.wallet,p.level,0), 'A story-only wish funds no stall')
-    end
+    if kind then assert(island.reserved_cost(c,p.level):covers(island.wonders[kind].cost)) end
+    local due = 0
+    for _, step in ipairs(island.ladder) do if step.after <= p.level then due = due + 1 end end
+    while island.island_place_next(c,p.wallet,p.level,0) do end
+    assert(island.campaign_count(c)==due, 'Every funded stall must fit the land open by then, in ladder order')
+    assert(island.wonder_count(c)==journey.earned(p.level), 'Story stalls keep their schedule')
 end
 assert(c.open==63 and p.wallet[4]==90 and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
        'Stars open every region and spare matched goods are banked')
@@ -47,12 +49,12 @@ for kind=10,11 do
     before = p.wallet[1]
     c:begin_place(kind,spot)
     c:cancel()
-    assert(p.wallet[1]==before and c.count==kind, 'Cancelled purchase must be free')
+    assert(p.wallet[1]==before and c.count==#island.ladder+kind-10, 'Cancelled purchase must be free')
     c:begin_place(kind,spot)
     assert(c:confirm(p.wallet,0).result==city.BUILT)
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
-assert(c.count==12 and island.wonder_count(c)==10, 'Decorations cannot advance the campaign')
+assert(c.count==22 and island.wonder_count(c)==10 and island.campaign_count(c)==20, 'Decorations cannot advance the campaign')
 
 local old_save = {}
 rules.refill_lives(old_save, 100)

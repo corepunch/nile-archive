@@ -35,10 +35,28 @@ local function reward_piece(g, reward)
     end
 end
 
+-- Place what each intervening clear opens: one story building, or in Relic
+-- Rush every ladder restoration due by then.
+local function place_due(level)
+    R.prog.level = level
+    if not island.next_step then
+        check(R.debug_complete_task(), 'place the intervening restoration')
+        return
+    end
+    while island.next_step(R.island, level) do
+        local count = R.island.count
+        local placed = R.debug_complete_task() and R.island.count == count + 1
+        check(placed, 'place the intervening restoration')
+        if not placed then break end
+    end
+end
 local function check_unlock(index, reward, already_placed)
     local level = journey.wonder_levels[index]
     R.prog.level = level
     if not already_placed then
+        -- A ladder places the stalls between story buildings first.
+        if island.next_step then place_due(level - 1) end
+        R.prog.level = level
         local before = R.make_board(level, 2)
         check(reward_piece(before, reward) == nil, 'the reward waits for confirmed construction')
         check(R.debug_complete_task(), 'the walkthrough confirms the earned building')
@@ -104,37 +122,32 @@ check(save.read('walkthrough-tool-stock', R.serialize), 'read stock from the wal
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 for zone = 1, 5 do R.island:unlock(zone, R.prog.wallet) end
 local later = relic and 8 or 7
--- Place what each intervening clear opens: one story building, or in Relic
--- Rush every ladder restoration due by then.
-local function place_due(level)
-    R.prog.level = level
-    if not island.next_step then
-        check(R.debug_complete_task(), 'place the intervening restoration')
-        return
-    end
-    while island.next_step(R.island, level) do
-        local count = R.island.count
-        local placed = R.debug_complete_task() and R.island.count == count + 1
-        check(placed, 'place the intervening restoration')
-        if not placed then break end
-    end
-end
 for i = 3, later - 1 do place_due(journey.wonder_levels[i]) end
 if island.next_step then place_due(journey.wonder_levels[later] - 1) end
 local newest = check_unlock(later, second_tool)
 check(reward_piece(newest, second_tool) and not reward_piece(newest, first_tool),
     'the first eligible board features only the newly unlocked bonus pieces')
-check(newest.tools[tool] == 1 and newest.tool_meter[tool] == ready_meter, 'a saved tool is available on the other family’s board')
+-- Christmas Market banks points, so a lower threshold (its post office)
+-- turns the same points into more uses.
+local banked = R.prog[stock_key][tool]
+local function stored(g)
+    if relic then return 1, ready_meter end
+    return banked // g.tool_threshold, banked % g.tool_threshold
+end
+local uses, meter = stored(newest)
+check(uses >= 1 and newest.tools[tool] == uses and newest.tool_meter[tool] == meter,
+    'a saved tool is available on the other family’s board')
 local next_level = newest.level + 1
 local even, odd = R.make_board(next_level, 2), R.make_board(next_level, 3)
 check(even.bonus ~= odd.bonus or reward_piece(even, first_tool) ~= reward_piece(odd, first_tool),
     'later boards select a bonus family by seed')
-check(even.tool_meter[tool] == ready_meter and odd.tool_meter[tool] == ready_meter,
+check(even.tool_meter[tool] == select(2, stored(even)) and odd.tool_meter[tool] == select(2, stored(odd)),
     'each family keeps its inventory on later boards')
 R.reset_board(newest)
 local target = 0
 while not newest.active[target] do target = target + 1 end
 check(rules.game_tool(newest, tool - 1, target, R.pending), 'spend the previously banked use')
 R.finish_wave()
-check(R.make_board(next_level, 2).tools[tool] == 0 and R.prog[stock_key][tool] == (relic and 0 or 1),
+local left = relic and 0 or (uses - 1) * newest.tool_threshold + meter
+check(R.make_board(next_level, 2).tools[tool] == (relic and 0 or uses - 1) and R.prog[stock_key][tool] == left,
     'changing boards cannot recover a spent tool')

@@ -26,11 +26,7 @@ M.buildings, M.wonders = M.catalogue, {}
 -- (benches, lamps, snowmen, presents), so it is decoration unless marked.
 local HOUSES = {wonder = true, cottage = true}
 for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
-for i=1,WONDERS do
-    local building, unlock = M.buildings[i], economy.unlock_text(i)
-    if unlock then building.about = building.about .. "\n" .. unlock end
-    M.wonders[i] = building
-end
+for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
 
 function M.wonder_count(c)
     local n=0
@@ -44,30 +40,13 @@ function M.owned(c, kind)
     return n
 end
 
-function M.can_buy(c, wallet, level, kind)
-    if kind<0 or kind>=#M.buildings or c.count>=160 then return false end
-    local d=M.buildings[kind+1]
-    if kind<WONDERS and (kind~=M.wonder_count(c) or kind>=journey.earned(level)) then return false end
-    if kind>=WONDERS and not M.can_spend(c,wallet,level,d.cost) then return false end
-    if not wallet:covers(d.needs) or not wallet:covers(d.cost) then return false end
-    return true
-end
-
--- Keep the earned story restorations affordable in the finite campaign economy.
-function M.reserved_cost(c, level)
-    local cost=purse()
-    for kind=0,journey.earned(level)-1 do
-        if M.owned(c,kind)==0 then cost=cost+M.wonders[kind+1].cost end
-    end
-    return cost
-end
-
-function M.can_spend(c, wallet, level, cost)
-    local reserved = M.reserved_cost(c, level)
-    for slot in ipairs(economy.currencies) do
-        if cost[slot] > 0 and wallet[slot] - reserved[slot] < cost[slot] then return false end
-    end
-    return true
+-- The twenty-stall ladder (economy.unlocks), after Cradle of Rome: order,
+-- gate, reserve, shop order and older saves are the engine's. Each stall's
+-- card says what it adds.
+require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
+for _, step in ipairs(M.ladder) do
+    local building = M.buildings[step.kind + 1]
+    building.about = building.about .. "\n" .. economy.unlock_text(step.unlock)
 end
 
 function M.migrate_wallet(progress, c)
@@ -187,7 +166,16 @@ function M.island_zone_touches(z, open)
     return false
 end
 
-function M.island_suggestion(i) return suggestions[num.clampi(i, 0, WONDERS - 1) + 1] end
+-- A ladder stall is suggested beside the story stall after it.
+function M.island_suggestion(kind)
+    local n = M.ladder_position[kind]
+    if n and kind >= WONDERS then
+        for k = n, #M.ladder do
+            if M.ladder[k].story then kind = M.ladder[k].kind; break end
+        end
+    end
+    return suggestions[num.clampi(kind, 0, WONDERS - 1) + 1]
+end
 
 -- Map, zones, wonders and rules for an engine city.
 function M.island_setup(c)
@@ -213,10 +201,10 @@ function M.island_setup(c)
     c.road = texture.load(look and look ~= "" and "roads-" .. look .. ".png" or "roads.png")
 end
 
--- Build the next wonder at a free spot.
+-- Build the next ladder stall at a free spot.
 function M.island_place_next(c, wallet, built_limit, now)
-    local nxt = M.wonder_count(c)
-    if nxt >= WONDERS or nxt >= journey.earned(built_limit) then return false end
+    local nxt = M.next_step(c, built_limit)
+    if not nxt then return false end
     local ok, spot = c:find_spot(nxt, M.island_suggestion(nxt))
     if not ok then return false end
     c:begin_place(nxt, spot)

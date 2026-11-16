@@ -51,6 +51,31 @@ end
 for _, config in ipairs({{flags=1.5},{flags=512},{radius=0},{colors=1},{match_min=2}}) do
     check(not pcall(match3.new,config), "invalid descriptor is rejected")
 end
+-- A loadout adds moves and opens with specials on seeded cells, leaving a legal swap.
+do
+    local r = match3.new{radius=4, flags=match3.NO_SPECIALS}
+    local function loadout(extra)
+        local l = {kinds={0, 1, 2, 3, 4}, multipliers={}, tool_threshold=200, tool_meter={}}
+        for k, v in pairs(extra or {}) do l[k] = v end
+        return l
+    end
+    local specials = {"rocket", "bomb", "prism", "plane"}
+    local plain = r.game_start(0, 77, {}, loadout())
+    local g = r.game_start(0, 77, {}, loadout{extra_moves=3, opening_specials=specials})
+    local again = r.game_start(0, 77, {}, loadout{extra_moves=3, opening_specials=specials})
+    check(g.moves == plain.moves + 3, "extra_moves adds to the level's budget")
+    local seen, changed, same = {}, 0, true
+    for i = 0, r.CELLS - 1 do
+        local t = g.tiles[i]
+        if t.special ~= r.NORMAL then seen[t.special], changed = true, changed + 1 end
+        same = same and t.special == again.tiles[i].special and t.kind == plain.tiles[i].kind
+    end
+    local ray = seen[r.ROW] or seen[r.COLUMN] or seen[r.DIAGONAL]
+    check(changed == 4 and ray and seen[r.BOMB] and seen[r.PRISM] and seen[r.PLANE], "each opening special is placed once")
+    check(same, "opening specials replace only the special, the same seed gives the same cells")
+    check(r.game_hint(g), "the opening keeps a legal swap")
+end
+
 -- A fracture must tile the cell exactly, or a hole shows as the layer cracks.
 do
     local shatter = require("match3.shatter")

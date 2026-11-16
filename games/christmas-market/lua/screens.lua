@@ -144,6 +144,12 @@ local guide_entries = {
     {id="double-panes", title="Green double panes", description="A green pane turns blue after the first hit. Match again to light it.", icon={back="tile-tablet-double"}},
     {id="hammer", title="Hammer", description="Build Theo's workshop and match toy hammers to charge a hit on one cell.", icon={tool="pickaxe"}},
     {id="wand", title="Lantern lightning", description="Build the candle shop and match lantern stars to charge a strike across 15 cells.", icon={tool="sunburst"}},
+    {id="openers", title="A special to start", description="The reindeer stable, Santa's workshop, the sleigh and the Christmas tree each start every wish with a special. Tap it or swap it to set it off.",
+     icon={front="ray-row"}},
+    {id="treasures", title="Bells and baubles", description="The chapel, the igloo and the giant bauble change gold coins into golden bells, snowflake baubles and plum baubles: 6, 7 and 8 Gold each.",
+     icon={front="market-12"}},
+    {id="helpers", title="Market helpers", description="The gingerbread house adds 3 moves to every wish and the post office charges tools twice as fast. The skating rink and the presents pay on every win.",
+     icon={front="market-7"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()

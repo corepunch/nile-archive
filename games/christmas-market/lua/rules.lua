@@ -11,11 +11,29 @@ local M = match3.new{flags=flags, radius=reference and reference.radius or 4, co
     kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS
+-- The stalls in force, by building key. `built` is the game's own map, a
+-- count of story stalls (every ladder stall up to that one), or nil for
+-- every stall due by this wish.
+local function restored_from(built, level)
+    if type(built) == "table" then return built end
+    local restored, stories = {}, 0
+    for _, step in ipairs(require("island").ladder) do
+        if built then
+            if stories >= built then break end
+            if step.story then stories = stories + 1 end
+        elseif step.after > level then break end
+        restored[step.unlock.building] = true
+    end
+    return restored
+end
+
 local start = M.game_start
 function M.game_start(level, seed, built)
     if reference then return start(level, seed) end
-    local yields, loadout = economy.loadout(built or require("journey").earned(level), level + 1, seed or 1)
-    return start(level, seed, yields, loadout)
+    local yields, loadout = economy.loadout(restored_from(built, level), level + 1, seed or 1)
+    local g = start(level, seed, yields, loadout)
+    g.win_income = loadout.win_income
+    return g
 end
 M.wonder_levels=campaign.wonder_levels
 M.wonder_at=require("journey").wonder_at
@@ -46,12 +64,14 @@ function M.reward_breakdown(g, wonders, progress)
     local kind = M.wonder_at(g.level + 1)
     local w = kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    local reward = matched + purse(0, 0, 0, first and 3 or 0)
+    -- The rink's and presents' takings pay on every win, as Rome's citizens do.
+    local income = g.win_income or purse()
+    local reward = matched + income + purse(0, 0, 0, first and 3 or 0)
     if first and w and app.arg("debug-walkthrough") then
         local available = (progress and progress.wallet or purse()) + reward
         for slot in ipairs(economy.currencies) do reward[slot] = reward[slot] + math.max(0, w.cost[slot] - available[slot]) end
     end
-    return {first=first, wonder=w, total=reward}
+    return {first=first, wonder=w, income=income, total=reward}
 end
 
 function M.level_reward(g, wonders, progress)

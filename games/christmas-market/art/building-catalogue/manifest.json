@@ -266,9 +266,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    160,
-    20,
-    42
+    180,
+    450,
+    60
    ],
    "stars": 0,
    "about": "A place to skate, laugh and make winter memories.",
@@ -296,9 +296,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    175,
-    25,
-    50
+    250,
+    600,
+    80
    ],
    "stars": 0,
    "about": "Meet at the fir on Christmas Eve. Bring a lantern.",
@@ -405,7 +405,7 @@
    "id": 13,
    "key": "presents",
    "name": "Pile of presents",
-   "category": "building",
+   "category": "wonder",
    "size": [
     1,
     1
@@ -416,9 +416,9 @@
    ],
    "base_width": 136.603,
    "cost": [
-    45,
-    3,
-    8
+    200,
+    500,
+    60
    ],
    "stars": 0,
    "about": "No peeking before Christmas morning.",
@@ -582,7 +582,7 @@
    "id": 19,
    "key": "giant_ornament",
    "name": "Giant bauble",
-   "category": "building",
+   "category": "wonder",
    "size": [
     1,
     1
@@ -593,11 +593,11 @@
    ],
    "base_width": 136.603,
    "cost": [
-    65,
-    0,
-    12
+    160,
+    400,
+    50
    ],
-   "stars": 3,
+   "stars": 0,
    "about": "One bauble too big for any tree.",
    "road": false,
    "image": [
@@ -760,7 +760,7 @@
    "id": 25,
    "key": "sleigh",
    "name": "Santa's sleigh",
-   "category": "building",
+   "category": "wonder",
    "size": [
     2,
     1
@@ -771,11 +771,11 @@
    ],
    "base_width": 223.205,
    "cost": [
-    190,
-    0,
-    28
+    150,
+    350,
+    50
    ],
-   "stars": 12,
+   "stars": 0,
    "about": "Polished runners, a sack of toys and room for one more.",
    "road": false,
    "image": [
@@ -790,7 +790,7 @@
    "id": 26,
    "key": "igloo",
    "name": "Igloo",
-   "category": "building",
+   "category": "wonder",
    "size": [
     2,
     2
@@ -801,11 +801,11 @@
    ],
    "base_width": 273.205,
    "cost": [
-    140,
-    0,
-    20
+    130,
+    300,
+    40
    ],
-   "stars": 9,
+   "stars": 0,
    "about": "Snow blocks outside, a warm glow within.",
    "road": false,
    "image": [
@@ -936,7 +936,7 @@
    "id": 31,
    "key": "log_cabin",
    "name": "Log cabin",
-   "category": "cottage",
+   "category": "wonder",
    "size": [
     2,
     2
@@ -947,11 +947,11 @@
    ],
    "base_width": 273.205,
    "cost": [
-    205,
-    0,
-    34
+    250,
+    350,
+    100
    ],
-   "stars": 6,
+   "stars": 0,
    "about": "A crackling fire and boots drying by the door.",
    "road": false,
    "image": [
@@ -966,7 +966,7 @@
    "id": 32,
    "key": "gingerbread_house",
    "name": "Gingerbread house",
-   "category": "cottage",
+   "category": "wonder",
    "size": [
     2,
     2
@@ -977,11 +977,11 @@
    ],
    "base_width": 273.205,
    "cost": [
-    260,
-    28,
-    12
+    150,
+    0,
+    80
    ],
-   "stars": 9,
+   "stars": 0,
    "about": "Sweet enough to eat, if the icing holds.",
    "road": false,
    "image": [
@@ -996,7 +996,7 @@
    "id": 33,
    "key": "post_office",
    "name": "North Pole post office",
-   "category": "cottage",
+   "category": "wonder",
    "size": [
     2,
     2
@@ -1007,11 +1007,11 @@
    ],
    "base_width": 273.205,
    "cost": [
-    310,
-    0,
-    40
+    250,
+    250,
+    100
    ],
-   "stars": 12,
+   "stars": 0,
    "about": "Every letter finds its way north.",
    "road": false,
    "image": [
@@ -1026,7 +1026,7 @@
    "id": 34,
    "key": "chapel",
    "name": "Snowy chapel",
-   "category": "cottage",
+   "category": "wonder",
    "size": [
     2,
     2
@@ -1037,11 +1037,11 @@
    ],
    "base_width": 273.205,
    "cost": [
-    360,
-    0,
-    44
+    120,
+    250,
+    40
    ],
-   "stars": 15,
+   "stars": 0,
    "about": "Its bell rings the carols in.",
    "road": false,
    "image": [
@@ -1056,7 +1056,7 @@
    "id": 35,
    "key": "reindeer_stable",
    "name": "Reindeer stable",
-   "category": "cottage",
+   "category": "wonder",
    "size": [
     3,
     2
@@ -1067,11 +1067,11 @@
    ],
    "base_width": 359.808,
    "cost": [
-    420,
-    22,
-    38
+    60,
+    0,
+    20
    ],
-   "stars": 18,
+   "stars": 0,
    "about": "Hay, harness bells and nine sleepy reindeer.",
    "road": false,
    "image": [
@@ -1086,7 +1086,7 @@
    "id": 36,
    "key": "santa_workshop",
    "name": "Santa's workshop",
-   "category": "cottage",
+   "category": "wonder",
    "size": [
     3,
     3
@@ -1097,11 +1097,11 @@
    ],
    "base_width": 409.808,
    "cost": [
-    500,
-    30,
-    65
+    200,
+    150,
+    100
    ],
-   "stars": 21,
+   "stars": 0,
    "about": "Hammers, ribbons and cocoa until the last toy is wrapped.",
    "road": false,
    "image": [

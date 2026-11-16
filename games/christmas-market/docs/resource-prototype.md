@@ -111,6 +111,55 @@ Market mirrors that rhythm. [Board progression](board-progression.md)
 | 19 | Candlelight shop | 500 / 600 / 500 | Lantern star · 3 Lightning charge | A light reveals Henrik’s undelivered letter. Agnes and Henrik can finally talk after wish 20. |
 | 23 | Reindeer carousel | 700 / 700 / 600 | Gingerbread · 5 Food | Neighbors paint the carousel horses. |
 
+## The twenty-stall ladder
+
+Bellmere now has twenty stalls, after Cradle of Rome's twenty constructions:
+each adds one piece or one bonus from the wish after it is placed. The ten
+market wishes (★) keep their story beats and hold the next new wish. The ten
+stalls between them open after their clear and must be placed before the next
+★ stall. A save from before the ladder keeps playing: stalls it had already
+passed stay optional. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDINGS.md#christmas-market-the-20-stalls)
+
+| # | Stall | Placed after | Adds | Price G / F / S |
+| ---: | --- | ---: | --- | ---: |
+| 1 | ★ Welcome arch | 1 | Firewood, 5 Supplies | 50 / 0 / 0 |
+| 2 | Reindeer stable | 2 | Every wish opens with a shooting star | 60 / 0 / 20 |
+| 3 | ★ Lumber workshop | 4 | Toy hammers charge the Hammer | 100 / 0 / 100 |
+| 4 | Gingerbread house | 5 | 3 more moves on every wish | 150 / 0 / 80 |
+| 5 | ★ Gingerbread bakery | 7 | Packing blocks replace silver coins, 7 Supplies | 300 / 0 / 200 |
+| 6 | ★ Hot cocoa kiosk | 9 | Cocoa replaces firewood, 4 Food | 400 / 0 / 500 |
+| 7 | Santa's workshop | 11 | Every wish opens with a firework bomb | 200 / 150 / 100 |
+| 8 | ★ Toymaker's workshop | 13 | Milk replaces mittens, 3 Food | 300 / 200 / 300 |
+| 9 | North Pole post office | 14 | Tools charge twice as fast (a use needs 100) | 250 / 250 / 100 |
+| 10 | ★ Gift wrapping pavilion | 16 | Winter apples replace milk, 6 Food | 500 / 400 / 400 |
+| 11 | Log cabin | 17 | Candy canes replace winter apples, 7 Food | 250 / 350 / 100 |
+| 12 | ★ Candlelight shop | 19 | Lantern stars charge Lightning | 500 / 500 / 600 |
+| 13 | Snowy chapel | 20 | Golden bells replace gold coins, 6 Gold | 120 / 250 / 40 |
+| 14 | Igloo | 21 | Snowflake baubles replace golden bells, 7 Gold | 130 / 300 / 40 |
+| 15 | ★ Reindeer carousel | 23 | Gingerbread replaces cocoa, 5 Food | 700 / 600 / 700 |
+| 16 | Santa's sleigh | 24 | Every wish opens with a paper plane | 150 / 350 / 50 |
+| 17 | Giant bauble | 25 | Plum baubles replace snowflake baubles, 8 Gold | 160 / 400 / 50 |
+| 18 | ★ Winter skating rink | 26 | +25 Gold on every win | 180 / 450 / 60 |
+| 19 | Pile of presents | 27 | +20 Supplies on every win | 200 / 500 / 60 |
+| 20 | ★ Christmas tree | 29 | Every wish opens with a rainbow ball | 250 / 600 / 80 |
+
+The bonuses follow Rome's tools on a move-limited board. The shooting star,
+firework bomb, paper plane and rainbow ball are the board's existing
+specials, placed on seeded ordinary cells when a wish opens; Christmas
+Market still makes no specials from matches. The gingerbread house is Rome's
+Hourglass and the post office its Plus. The rink and presents pay like
+Rome's citizens, on every win including replays.
+
+The new pieces reuse the game's earlier painted festive pieces: the golden
+handbell, candy cane and plum bauble from `art/festive-pieces/source.png`
+and the snowflake bauble from `art/icons.png`. Firewood leaves the board when
+cocoa arrives, so after wish 10 Supplies come only from packing blocks; the
+new stalls' prices lean on Food, which the later goods make plentiful.
+
+The extended campaign run (below) places all twenty stalls in thirty wishes
+with one replay for income. The wallet runs low around wishes 24–26 (86 Gold
+after the giant bauble) and recovers by the finale.
+
 ## A measured run
 
 The existing campaign bot used the same swaps, refills, payouts and
@@ -150,8 +199,8 @@ Supplies short after wish 3. Wish 4 adds 275 Supplies, the workshop is
 built, and wish 5 introduces the hammer. No extra currency is awarded
 to make that purchase possible.
 
-The full compatibility run finished 30 wishes in 33 attempts, built
-all ten story stalls and played all 36 scenes. Reproduce it from the
+The full compatibility run finished 30 wishes in 34 attempts and one
+replay for income, built all twenty stalls and played all 36 scenes. Reproduce it from the
 repository root.
 
 ```sh

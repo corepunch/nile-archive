@@ -110,8 +110,20 @@ adds half a use to every other unlocked socket and keeps its own use when
 they are all full. `game_tool` returns the name of an effect that clears
 nothing, and the board shows `R.tool_done_notes[name]`.
 
-A game whose campaign buildings are more than story types `0..WONDERS-1` in
-order supplies three island hooks. `next_build(city, level)` names the
+A loadout's `extra_moves` adds moves to the level's budget, and its
+`opening_specials` (`"rocket"`, `"bomb"`, `"prism"`, `"plane"`) turn ordinary
+pieces into those specials when the board opens. The cells come from the seed
+without drawing on it, avoid goals and blockers where possible, and always
+leave a legal swap.
+
+`match3.game.campaign_ladder(island, unlocks, journey, slots)` gives a game a
+Cradle of Rome ladder: catalogue buildings bought in order, each adding one
+piece or bonus. Story buildings keep the journey's schedule and hold the next
+new level; the others open after their clear and must be placed before the
+next story building. It installs the gate, reserve, shop order and waivers
+for older saves on the island module. Both portrait games use it. A game whose
+campaign buildings are more than story types `0..WONDERS-1` in
+order supplies three island hooks, which the ladder installs. `next_build(city, level)` names the
 building to place next. `ladder_blocked(city, level, kind)` returns
 `"built"`, `"later"` with the clear it waits for, `"earlier"`, false when the
 building can be placed, or nil for shop items. `catalogue_order` lists catalogue

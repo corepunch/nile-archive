@@ -1287,6 +1287,39 @@ function E.new(config)
     end
     local game_shuffle = M.game_shuffle
 
+    -- A loadout's opening_specials ("rocket", "bomb", "prism" or "plane") turn
+    -- ordinary pieces into those specials when the board opens. The cells come
+    -- from the seed without drawing on it, avoid goals and blockers where
+    -- possible, and always leave a legal swap.
+    local OPENING = {bomb=BOMB, prism=PRISM, plane=M.PLANE}
+    local function place_opening_specials(g, specials)
+        if #specials == 0 then return end
+        local open, any = {}, {}
+        for i = 0, CELLS - 1 do
+            local t = g.tiles[i]
+            if cell_active(g, i) and not solid(g, i) and g.chain[i] == 0 and g.ice[i] == 0 and t.special == NORMAL
+                and t.kind >= 0 and not t.element and t.kind ~= g.goal_kind then
+                any[#any + 1] = i
+                if g.oil[i] == 0 and g.carpet[i] == 0 then open[#open + 1] = i end
+            end
+        end
+        local cells = #open >= #specials and open or any
+        local start = (g.rng * 2654435761) % math.max(1, #cells)
+        local used = 0
+        for n, name in ipairs(specials) do
+            local special = OPENING[name] or ray_for_axis((g.rng + n) % 3)
+            for step = 0, #cells - 1 do
+                local cell = cells[(start + used + step * 7) % #cells + 1]
+                local t = g.tiles[cell]
+                if t.special == NORMAL then
+                    t.special = special
+                    if game_hint(g) then used = used + step + 1; break end
+                    t.special = NORMAL
+                end
+            end
+        end
+    end
+
     function M.game_start(lvl, seed, resource_yields, loadout)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
@@ -1426,6 +1459,10 @@ function E.new(config)
         local m = new_match()
         game_matches(g, m, -1)
         if m.hits > 0 or not game_hint(g) then generate_board(g) end
+        if loadout then
+            g.moves = g.moves + (loadout.extra_moves or 0)
+            place_opening_specials(g, loadout.opening_specials or {})
+        end
         return g
     end
 

@@ -8,6 +8,7 @@
 local R = require("state")
 local island = require("island")
 local rules = require("rules")
+local economy = require("economy")
 local match3_game = require("match3.game")
 require("screens")
 require("board")
@@ -15,8 +16,14 @@ require("narrative")
 require("smoke")
 require("campaign_smoke")
 
+-- The stalls in force, by building key; a preview counts every stall due.
 function R.board_context(preview)
-    if not preview then return island.wonder_count(R.island) end
+    if preview then return end
+    local restored = {}
+    for _, step in ipairs(island.ladder) do
+        restored[step.unlock.building] = island.owned(R.island, step.kind) > 0
+    end
+    return restored
 end
 
 local make_board = R.make_board
@@ -53,7 +60,11 @@ end
 local serialize_completed = match3_game.bind_completed_rewards(R, rules)
 function R.serialize_campaign(s)
     local reading = save.is_reading(s)
-    local version = s:int("market_resources", reading and 0 or 2)
+    local version = s:int("market_resources", reading and 0 or economy.CAMPAIGN_VERSION)
+    -- Version 3 added the twenty-stall ladder. Stalls an older save had
+    -- already passed stay optional rather than holding its next wish. Waive
+    -- them before any wallet top-up, which reserves only what is still owed.
+    island.serialize_waivers(s, R.island, R.prog.level, reading and version < 3)
     if reading and version < 2 then island.migrate_wallet(R.prog, R.island) end
     R.prog.tool_stock = s:ints("tool_stock", not reading and R.prog.tool_stock or purse())
     serialize_completed(s)

@@ -68,11 +68,12 @@ for level=1,30 do
         check(not spec.story_piece.kind and not g.goal_kind, "story finds leave all the board's goods in play")
     end
     g.won=true;g.moves=0
-    local building = journey.wonder_at(level)
-    if building then
-        local price = island.wonders[building].cost
-        g.earnings = {price[1], price[2], price[3]}
+    -- Supply the income for every ladder stall this clear opens.
+    local opened, price = {}, purse()
+    for _, step in ipairs(island.ladder) do
+        if step.after == level then opened[#opened + 1], price = step, price + island.buildings[step.kind + 1].cost end
     end
+    g.earnings = {price[1], price[2], price[3]}
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     for z=1,5 do c:unlock(z,p.wallet) end
     local kind=journey.wonder_at(level)
@@ -94,11 +95,13 @@ for level=1,30 do
             check(R.prog.wallet[1] == 300 and R.prog.wallet[2] == 0 and R.prog.wallet[3] == 200, "saving the migrated wallet prevents a second top-up")
         end
         check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
-        check(island.can_buy(c,p.wallet,p.level,kind-1),'earned stall is affordable')
-        check(island.island_place_next(c,p.wallet,p.level,0),'scheduled stall fits open land')
-    else
-        check(not island.island_place_next(c,p.wallet,p.level,0),'a story-only wish creates no extra stall')
     end
+    for _, step in ipairs(opened) do
+        check(island.next_step(c,p.level)==step.kind and island.can_buy(c,p.wallet,p.level,step.kind),
+            'earned stall is next on the ladder and affordable')
+        check(island.island_place_next(c,p.wallet,p.level,0),'scheduled stall fits open land')
+    end
+    check(not island.island_place_next(c,p.wallet,p.level,0),'a wish opens only its own stalls')
     local after=journey.next(p,owned(c),nil)
     check(after and after.key==('after-%02d'):format(level),'the right post-clear beat follows every result')
     check(journey.awaiting_return(p),'unread result blocks the next new wish')
@@ -109,7 +112,7 @@ for level=1,30 do
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
 check(finds == 6, "six story wishes have authored finds")
-check(c.count==10 and c.open==63 and p.wallet[4]==90,'thirty clears build ten stalls and open every region')
+check(c.count==20 and c.open==63 and p.wallet[4]==90,'thirty clears build twenty stalls and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
 
 R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}
