@@ -39,6 +39,7 @@ do
     local match=rules.new_match()
     check(locked.tools[1]==2 and locked.tools[2]==0 and locked.tools[3]==0,'the pickaxe is the only starting tool')
     check(not rules.game_tool(locked,1,rules.hex_center(),match),'locked dynamite cannot be used')
+    check(locked.backdrop==rules.level_of(locked).background,'with nothing restored the board keeps its own scene')
     check(island.island_place_next(R.island,bank,4,0),'place the camp before the well')
     local c=R.island
     check(R.make_board(1,19).tools[2]==2,'the camp stocks dynamite starting with expedition 2')
@@ -67,6 +68,7 @@ do
         local rations=g.resource_yields[1]==economy.unlocks[4]
         check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
         check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
+        check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
         if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
         for kind in pairs(spec.score_pieces or {}) do
@@ -74,6 +76,11 @@ do
                 'score pieces use their own active slot and never pay the wallet')
         end
     end
+
+    check(R.make_board(13,19).backdrop==1,'the courtyard scene waits for the courtyard')
+    local courtyard={[0]=true,true,true,true,true}
+    check(economy.board_backdrop(rules.levels[14],14,courtyard)==2 and economy.board_backdrop(rules.levels[13],13,courtyard)==1,
+        'the courtyard brings the temple to boards from its first expedition')
 
     -- Act on the same first hint a player sees. The match must stock the town
     -- at its new rate while clearing the work site in the same move.

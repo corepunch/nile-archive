@@ -17,8 +17,8 @@ The visual observations above are our art-direction interpretation of the refere
 
 | Asset | File | Status |
 | --- | --- | --- |
-| Sunlit Lagoon | `assets/scene-lagoon.png` | Runtime background for levels 1–5; quiet center for the dynamic hex board |
-| Moonlit Sun Temple | `assets/scene-temple.png` | Runtime background for levels 6–10; indigo/teal field with amber lights at the edges |
+| Sunlit Lagoon | `assets/scene-lagoon.png` | Board background after the camp, well, workshop, market, lodge or fountain; quiet center for the dynamic hex board |
+| Moonlit Sun Temple | `assets/scene-temple.png` | Board background after the courtyard, archive, observatory or temple; indigo/teal field with amber lights at the edges |
 | Garden island | `assets/art-direction/island-gardens-concept.jpg` | Environment concept only; not a replacement terrain or placement map |
 | Expedition cast | `assets/art-direction/expedition-cast.png` | Transparent character concept lineup; busts cut from it are the dialogue portraits |
 

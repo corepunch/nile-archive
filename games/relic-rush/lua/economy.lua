@@ -22,22 +22,23 @@ E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 E.silver_coin = {key="silver-coin", name="Silver coins", kind=0, slot=E.GOLD, amount=3, first_level=3}
 
 -- Same order as the story catalogue and its stable city type IDs (zero-based).
+-- backdrop is the board painting the restored building brings: 1 lagoon, 2 temple.
 E.unlocks = {
-    {key="dynamite", name="Dynamite", tool=2, amount=2, first_level=2, effect="Hits one cell and its neighbors."},
-    {key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
-    {key="cut-blocks", name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
-    {key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
-    {key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14, variants={
+    {key="dynamite", backdrop=1, name="Dynamite", tool=2, amount=2, first_level=2, effect="Hits one cell and its neighbors."},
+    {key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
+    {key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
+    {key="rations", backdrop=1, name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
+    {key="helmet", backdrop=2, name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14, variants={
         {key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
         {key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
         {key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9, first_level=25},
         {key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10, first_level=28},
     }},
-    {key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
-    {key="quartz", name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
-    {key="sunburst", name="Sunburst", tool=3, amount=2, first_level=24, effect="Hits every piece of the color you tap."},
-    {key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
-    {key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
+    {key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
+    {key="quartz", backdrop=2, name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
+    {key="sunburst", backdrop=2, name="Sunburst", tool=3, amount=2, first_level=24, effect="Hits every piece of the color you tap."},
+    {key="shrimp", backdrop=1, name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
+    {key="emerald", backdrop=2, name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
 }
 
 function E.unlock_text(unlock)
@@ -68,6 +69,16 @@ function E.board_loadout(level, number, restored)
         end
     end
     return yields, tools
+end
+
+-- Like Cradle of Rome, the board shows the latest restoration in force on this
+-- expedition (the same gate as its pieces); before any, the level's own scene.
+function E.board_backdrop(level, number, restored)
+    local backdrop = level.background
+    for i, unlock in ipairs(E.unlocks) do
+        if number >= unlock.first_level and restored and restored[i - 1] then backdrop = unlock.backdrop end
+    end
+    return backdrop
 end
 
 function E.shortfall(cost, available)

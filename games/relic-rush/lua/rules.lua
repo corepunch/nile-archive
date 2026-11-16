@@ -24,6 +24,7 @@ function M.game_start(level, seed, restored)
         end
     end
     g.tools, g.starting_tools = {table.unpack(tools)}, tools
+    g.backdrop = economy.board_backdrop(spec, number, restored)
     return g
 end
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
