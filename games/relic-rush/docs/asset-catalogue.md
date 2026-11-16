@@ -418,15 +418,14 @@ with six straight runs, six outward joins and six inward joins. Its
 `frame-entrance` region follows the incoming cells. The starter bakes the
 previous frame's bands, seeded grain and cracks with
 `python3 tools/board_frame.py --output build/board-frame`.
-`data/board-frame/leaves.png` is a hand-painted-style three-leaf jungle sprig
-from the shared [ImageGen source](../../../engine/art/board-frame/decorations-source.png).
-Its centred stem anchors to three outward tips on the settled board. The
-renderer turns it towards the outside and varies its size by corner.
-`data/board-frame/hanging-vine.png` is the matte interior vine. Its stem
-attaches to the left wall and the foliage spans most of the visible empty hex.
-The diagonal pose is painted in the [cutout source atlas](../../../engine/art/board-frame/cutout-source.png).
-Rebuild both separate sprites with `python3 tools/board_frame_decor.py --game relic-rush`.
-[Paint guide, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/interior.md).
+The stone atlas also contains outer joins with three-leaf jungle sprigs and
+an inner join with a matte vine. The vine's diagonal pose comes from the
+[cutout source atlas](../../../engine/art/board-frame/cutout-source.png).
+Its stem crosses the stone and its foliage spans most of the visible empty hex.
+The generator bakes the sprigs and contact shadows into their joins and
+exports `lua/board_frame_atlas.lua` with the registration.
+Run `python3 tools/board_frame.py --game relic-rush --output build/board-frame/relic-rush`.
+[Board paint-over, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/baked.md).
 
 The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
 these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).

@@ -3,23 +3,7 @@
 -- The same painted pieces identify wallet resources and story finds.
 local elements_view = require("match3.elements_view")
 local A = {}
-local ribbon, pinecone = "board-frame/fir-ribbon.png", "board-frame/fir-pinecone.png"
-A.board_frame = {
-    stone = "board-frame/stone.png",
-    north_edge = true,
-    corners = {
-        {path = ribbon, width = 1.05},
-        {path = pinecone, width = 1.05},
-    },
-    inner = {
-        {path = "board-frame/hanging-bell.png", width = 2},
-        {path = "board-frame/hanging-pinecone.png", width = 2},
-    },
-    walls = {
-        {path = pinecone, width = 1.85},
-        {path = ribbon, width = 1.85},
-    },
-}
+A.board_frame = require("board_frame_atlas")
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
 -- Standalone power-ups, with one authored rocket per hex axis.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}

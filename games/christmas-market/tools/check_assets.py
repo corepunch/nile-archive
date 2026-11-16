@@ -57,18 +57,12 @@ def main():
     subprocess.run([sys.executable, str(ROOT.parents[1]/tiles['generator']), '--check'], check=True)
     frame = manifest['board_frame']
     art = (ROOT/'lua/art.lua').read_text()
-    for review in ('review', 'decoration_review'):
+    for review in ('review', 'decoration_review', 'reference', 'decorations'):
         assert (ROOT.parents[1]/frame[review]).is_file()
-    decor = json.loads((ROOT.parents[1]/frame['decorations']).read_text())
-    for path in [frame['stone'], *(f'data/board-frame/{name}.png' for name in decor['games'][ROOT.name])]:
-        assert path in inventory and '"' + path.removeprefix('data/') + '"' in art
-    frame_args = ['--winter'] if frame['winter'] else []
-    if frame['winter']:
-        assert 'north_edge = true' in art
+    assert frame['stone'] in inventory and (ROOT/frame['layout']).is_file()
+    assert 'require("board_frame_atlas")' in art
     subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
-                    '--check', str(ROOT/frame['stone']), *frame_args], check=True)
-    subprocess.run([sys.executable, str(ROOT.parents[1]/frame['registration']),
-                    '--check', '--game', ROOT.name], check=True)
+                    '--game', ROOT.name, '--check', str(ROOT/frame['stone'])], check=True)
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}

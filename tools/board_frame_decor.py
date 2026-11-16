@@ -39,30 +39,38 @@ def main():
     spec = json.loads(SPEC.read_text())
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--game", choices=tuple(spec["games"]))
+    parser.add_argument("--output", type=Path, default=Path("build/board-frame-decor"))
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     games = (args.game,) if args.game else spec["games"]
+    for game in games:
+        for key, registered in ornaments(game, spec).items():
+            path = args.output / game / f"{key}.png"
+            if args.check:
+                with Image.open(path) as current:
+                    assert current.mode == "RGBA" and current.size == registered.size, path
+                    assert current.tobytes() == registered.tobytes(), f"Stale decoration: {path}"
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                registered.save(path, optimize=True)
+
+
+def ornaments(game, spec):
+    images = {}
     with ExitStack() as files:
         atlases = {}
         for key, entry in {"outer": spec, **spec["atlases"]}.items():
             assert (ROOT / entry["prompt"]).is_file()
             atlases[key] = files.enter_context(Image.open(ROOT / entry["source"]))
             assert atlases[key].mode == "RGBA"
-        for game in games:
-            for key, sprite in spec["games"][game].items():
-                source = atlases[sprite.get("atlas", "outer")]
-                registered = register(source, sprite, spec["size"])
-                alpha = registered.getchannel("A")
-                bounds = alpha.point(lambda a: 255 if a >= 64 else 0).getbbox()
-                size = spec["size"]
-                assert bounds and min(*bounds[:2], size - bounds[2], size - bounds[3]) >= 2, key
-                path = ROOT / "games" / game / "data/board-frame" / f"{key}.png"
-                if args.check:
-                    with Image.open(path) as current:
-                        assert current.mode == "RGBA" and current.size == registered.size, path
-                        assert current.tobytes() == registered.tobytes(), f"Stale decoration: {path}"
-                else:
-                    registered.save(path, optimize=True)
+        for key, sprite in spec["games"][game].items():
+            source = atlases[sprite.get("atlas", "outer")]
+            size = spec["size"]
+            image = register(source, sprite, size)
+            bounds = image.getchannel("A").point(lambda a: 255 if a >= 64 else 0).getbbox()
+            assert bounds and min(*bounds[:2], size - bounds[2], size - bounds[3]) >= 2, key
+            images[key] = image
+    return images
 
 
 if __name__ == "__main__":

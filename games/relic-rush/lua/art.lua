@@ -2,18 +2,7 @@
 -- Resource pieces appear at board size and also identify wallet currencies.
 local elements_view = require("match3.elements_view")
 local A = {}
-local leaves = "board-frame/leaves.png"
-A.board_frame = {
-    stone = "board-frame/stone.png",
-    corners = {
-        {path = leaves, width = 1.0, outward = true},
-        {path = leaves, width = .8, outward = true},
-        {path = leaves, width = .88, outward = true},
-    },
-    inner = {
-        {path = "board-frame/hanging-vine.png", width = 2},
-    },
-}
+A.board_frame = require("board_frame_atlas")
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}

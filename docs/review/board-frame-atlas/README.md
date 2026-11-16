@@ -38,9 +38,10 @@ The winter atlas adds a snowy north edge at `(240, 240)` in an 80×80 px slot.
 Christmas Market uses it on the highest horizontal north rim edges with open
 space above them. Stone inside an opening uses the bare slot.
 
-The frame generator writes the stone atlas and guide. The
-[decoration source and review](../board-frame-decorations/README.md) show
-the painted snow on the north rim and the separate leaves and festive trim.
+The frame generator writes the stone atlas and guide. Pass `--game` to add
+that game's ornament variants and export their Lua coordinates. The
+[painted join review](../board-frame-decorations/baked.md) shows leaf and
+festive artwork baked into the corner pieces.
 
 ## Reproduce the captures
 

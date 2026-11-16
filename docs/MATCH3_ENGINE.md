@@ -157,7 +157,7 @@ default) at its radius. The seam shows the backing colour through that inset.
 (`E.CRADLE_GROUND`) for the frame, soft drop shadow, dark brown grout
 (`seam`, `seam_width`) and cell-state tiles. Games supply the fallback face
 colour as the skin's `board_face`.
-`elements.load_frame` loads each game's stone atlas and separate decorations.
+`elements.load_frame` loads each game's stone atlas and generated join coordinates.
 The renderer checks each active cell's six neighbours and places atlas
 regions along the exposed edges, inward corners and outward corners,
 including the edges of holes. It keeps those placements relative to the board
@@ -167,15 +167,15 @@ The soft shadow follows the settled outline. The renderer grows the union
 of the active hexes to the rim, shifts it down and draws one signed-distance
 mask. Equal distances from that shifted outline get the same opacity. The
 mask is cached with the frame layout and follows board shake and resize.
-The skin can place small sprites on outward tips and larger ones in the first
-empty hex below the rim of an opening. These sprites are registered to that
-hex with the diagonal side mount painted into the artwork. An open-top channel
-can use larger sprigs on its inward tips.
+The renderer can substitute decorated atlas regions at outward tips and
+the inner shoulders above an opening. The source join contains the stone,
+diagonal ornament and contact shadow. An open-top channel can use larger
+sprigs baked into its inward tips.
 An optional atlas slot adds snow to the highest horizontal north edges of the
 outer rim. Inner channel edges use bare stone.
 Imported and neutral boards use the default ground geometry.
 [Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
-[Decoration sources and in-game review](review/board-frame-decorations/interior.md).
+[Painted join atlas and in-game review](review/board-frame-decorations/baked.md).
 [Board shadow before and after](review/board-frame-decorations/shadow.md).
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each

@@ -1,6 +1,6 @@
 # Painted board decorations
 
-[Current captures and hanging source art for the inner rim](interior.md).
+[Current painted frame pieces and board captures](baked.md).
 
 Relic Rush level 6 has the repainted three-leaf sprig. Christmas Market
 level 4 uses the winter stone atlas on the horizontal north-facing rim,
@@ -24,9 +24,9 @@ and the [Christmas Market board](../board-frame-atlas/christmas-480-after.jpg).
 [Prompt](../../../engine/art/board-frame/decorations.prompt.txt) ·
 [Crop and anchor settings](../../../engine/art/board-frame/decorations.json)
 
-Each game loads separate 96×96 RGBA PNGs for its corner sprigs from
-`data/board-frame/`. The centre of each sprite is its contact point at the
-stone. Registration crops and uniformly scales each painting. It clears faint
+The earlier frame loaded separate 96×96 RGBA PNGs for its corner sprigs.
+The centre of each sprite is its contact point at the stone. Registration
+crops and uniformly scales each painting and clears faint
 background alpha more than six source pixels from the painted shape and
 carries the painted edge alpha into the result.
 

@@ -9,6 +9,31 @@
       "prompt": "engine/art/board-frame/cutout.prompt.txt"
     }
   },
+  "frames": {
+    "relic-rush": {
+      "corners": [
+        {"art": "leaves", "width": 1.0, "outward": true},
+        {"art": "leaves", "width": 0.8, "outward": true},
+        {"art": "leaves", "width": 0.88, "outward": true}
+      ],
+      "inner": [{"art": "hanging-vine", "direction": 4}]
+    },
+    "christmas-market": {
+      "winter": true,
+      "corners": [
+        {"art": "fir-ribbon", "width": 1.05},
+        {"art": "fir-pinecone", "width": 1.05}
+      ],
+      "inner": [
+        {"art": "hanging-bell", "direction": 4},
+        {"art": "hanging-pinecone", "direction": 5}
+      ],
+      "walls": [
+        {"art": "fir-pinecone", "direction": 0, "width": 1.85},
+        {"art": "fir-ribbon", "direction": 3, "width": 1.85}
+      ]
+    }
+  },
   "games": {
     "relic-rush": {
       "leaves": {"crop": [80, 588, 464, 921], "anchor": [280, 898], "scale": 0.147, "turn": 0},

@@ -363,16 +363,15 @@ from the [registered source atlas](../../../engine/art/board-frame/decorations.j
 It replaces the exposed horizontal north edge in each hex column. Generate
 this atlas with `python3 tools/board_frame.py --winter --output build/winter-frame`.
 
-The settled board has four separate paintable sprites under `data/board-frame/`.
-`fir-ribbon` and `fir-pinecone` sit at the outer shoulders at small scale.
-They also decorate the walls of the open-top chamber at larger scale.
-`hanging-bell` and `hanging-pinecone` project diagonally from the inner
-sides of enclosed cutouts and fill most of the visible empty hex with matte
-fir, muted berries and a bronze bell.
-Rebuild them from the [outer source](../../../engine/art/board-frame/decorations-source.png)
-and [cutout source](../../../engine/art/board-frame/cutout-source.png) with
-`python3 tools/board_frame_decor.py --game christmas-market`.
-[Paint guide, prompt and phone captures](../../../docs/review/board-frame-decorations/interior.md).
+Decorated joins in `data/board-frame/stone.png` combine the stone with painted
+corner trim and contact shadows. Small fir sprigs sit on the outer shoulders,
+with larger variants on the walls of the open-top chamber. The matte bell and
+pinecone project diagonally into the enclosed cutouts.
+The generator uses the [outer source](../../../engine/art/board-frame/decorations-source.png)
+and [cutout source](../../../engine/art/board-frame/cutout-source.png) and
+writes the coordinates to `lua/board_frame_atlas.lua`.
+Run `python3 tools/board_frame.py --game christmas-market --output build/board-frame/christmas-market`.
+[Board paint-over, prompt and phone captures](../../../docs/review/board-frame-decorations/baked.md).
 
 The shared renderer gives each face a 0.18-unit inset over a dark spruce
 backing that supplies the hairline seams. The guide reuses the tablet

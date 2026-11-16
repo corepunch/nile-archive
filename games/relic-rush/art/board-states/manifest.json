@@ -388,8 +388,6 @@
     "disabled"
   ],
   "runtime_inventory": [
-    "data/board-frame/hanging-vine.png",
-    "data/board-frame/leaves.png",
     "data/board-frame/stone.png",
     "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
@@ -1889,7 +1887,8 @@
     "stone": "data/board-frame/stone.png",
     "review": "docs/review/board-frame-atlas/README.md",
     "decorations": "engine/art/board-frame/decorations.json",
-    "registration": "tools/board_frame_decor.py",
-    "decoration_review": "docs/review/board-frame-decorations/interior.md"
+    "decoration_review": "docs/review/board-frame-decorations/baked.md",
+    "layout": "lua/board_frame_atlas.lua",
+    "reference": "docs/review/board-frame-decorations/baked-reference.png"
   }
 }

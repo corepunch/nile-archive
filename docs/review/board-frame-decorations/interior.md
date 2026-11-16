@@ -1,5 +1,7 @@
 # Inner board decorations
 
+[Current painted frame pieces and board captures](baked.md).
+
 Relic Rush's jungle vine projects down and right from the inner side of its
 arch. Christmas Market's bell projects into the left opening from its left
 wall, and the frosted pinecone enters the right opening from its right wall.
@@ -30,15 +32,15 @@ trims stray matte alpha around the silhouette.
 [Prompt](../../../engine/art/board-frame/cutout.prompt.txt) ·
 [Crop and anchor settings](../../../engine/art/board-frame/decorations.json)
 
-The atlas exports stay separate from the stone. Christmas Market's snow uses
+These captures show the earlier separate sprite exports. Christmas Market's snow uses
 the snowy stone slot on the exposed north rim, including on boards with open
 channels. The inner channel floor uses the bare stone slot.
 
 ```sh
 python3 tools/board_frame_decor.py
 python3 tools/board_frame_decor.py --check
-python3 tools/hex_tile_art.py games/relic-rush/data/board-frame/hanging-vine.png \
-  games/christmas-market/data/board-frame/hanging-{bell,pinecone}.png --mode object --strict
+python3 tools/hex_tile_art.py build/board-frame-decor/relic-rush/hanging-vine.png \
+  build/board-frame-decor/christmas-market/hanging-{bell,pinecone}.png --mode object --strict
 build/test/all --suite=relic-rush --suite=christmas-market \
   "shot dressing-shore" "shot main-character-board" "shot phone-board" "shot designed-chambers"
 ```

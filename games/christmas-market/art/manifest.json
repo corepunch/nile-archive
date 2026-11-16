@@ -31,11 +31,7 @@
     "disabled"
   ],
   "runtime": {
-    "data/board-frame/fir-pinecone.png": "46fbeab35d27c15580910d35cc5f55f9f0b28031cf297b2322ed8bd6076b82fc",
-    "data/board-frame/fir-ribbon.png": "70f83dbebe7830eb49b7fd8d145a214f651b6f1f58f7cead240abcc10534d85c",
-    "data/board-frame/hanging-bell.png": "5e4617f6e8330dddc0f9646dbc2b4158e58231b25e1687d5b46fc6261b85ce96",
-    "data/board-frame/hanging-pinecone.png": "7d4631869819c1cc80df6b8d5111e197df74c738a51b59b7ec715f5f49176959",
-    "data/board-frame/stone.png": "bcdf108748543b42a8c8e226d73084a68546e45243e84584d23c312e0c2ba1b9",
+    "data/board-frame/stone.png": "42d6ae5be2a2db0f6ed779fe368c38347c7d23fac05b1ba7a7086908bc5d7b73",
     "data/board-states/bomb.png": "ed81b5bdc22716892ea1510be38c268e2580908002ff35a0be630f9868907d6e",
     "data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
     "data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
@@ -660,8 +656,8 @@
     "stone": "data/board-frame/stone.png",
     "review": "docs/review/board-frame-atlas/README.md",
     "decorations": "engine/art/board-frame/decorations.json",
-    "registration": "tools/board_frame_decor.py",
-    "decoration_review": "docs/review/board-frame-decorations/interior.md",
-    "winter": true
+    "decoration_review": "docs/review/board-frame-decorations/baked.md",
+    "layout": "lua/board_frame_atlas.lua",
+    "reference": "docs/review/board-frame-decorations/baked-reference.png"
   }
 }
