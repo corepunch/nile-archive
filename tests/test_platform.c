@@ -149,6 +149,23 @@ static void draw_and_check(void)
     CHECK(pixel(83, 20).r == 255); /* no leaked mask state */
     tex_free(patch);
 
+    /* A rounded shadow grows the same distance from a vertex as from a
+     * straight edge. Equally distant samples should receive equal ink. */
+    const float centre[2] = {50, 50};
+    rect rim_field = rc(15, 15, 70, 70), rim_shadow = rect_offset(rim_field, v2(0, 3));
+    texture rim = tex_hex_field((const char *)centre, 1, 18 + 10 / sqrtf(3), 5, 0, rim_field, 70, 70, 7, 0);
+    CHECK(rim.tex);
+    draw_rect(rc(0, 0, 100, 100), hex(0x969696));
+    gfx_sdf_mask(rim, rim_shadow, 7, 0, 0, 0, 5);
+    draw_rect(rim_shadow, rgba(0, 0, 0, 140));
+    gfx_sdf_unmask();
+    CHECK(render_read_pixels(pixels, width, height));
+    int vertex_ink = pixel(76, 53).r, edge_ink = pixel(50, 61 + 9 * sqrtf(3)).r;
+    CHECKF(abs(vertex_ink - edge_ink) <= 10 && edge_ink > 85 && edge_ink < 140,
+           "equal-distance shadow samples are %d at the tip and %d at the edge", vertex_ink, edge_ink);
+    CHECK(pixel(83, 53).r == 150);
+    tex_free(rim);
+
     /* Off the logical screen, drawing is clipped until bleed lets it reach the display. */
     rect bleed = app_bleed(), screen = app_screen();
     CHECK(bleed.pos.x < 0 && bleed.pos.y <= 0 && rect_max(bleed).x > rect_max(screen).x && rect_max(bleed).y >= rect_max(screen).y);

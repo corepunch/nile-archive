@@ -341,6 +341,29 @@ local function wall_points(edges, convex, radius)
     return points
 end
 
+local function shadow_field(centres, radius, spec)
+    local xy = {}
+    local minx, miny, maxx, maxy = math.huge, math.huge, -math.huge, -math.huge
+    for _, p in ipairs(centres) do
+        xy[#xy + 1], xy[#xy + 2] = p.x, p.y
+        minx, miny, maxx, maxy = math.min(minx, p.x), math.min(miny, p.y), math.max(maxx, p.x), math.max(maxy, p.y)
+    end
+
+    local scale = radius / (FRAME_RADIUS / 2)
+    local reach, spread = spec.reach * scale, spec.spread * scale
+    -- Rounded growth increases the apothem by reach, then uses the same
+    -- rounding radius. Outside the board this is distance to the original
+    -- silhouette minus reach, including along the walls of holes.
+    local grown = radius + 2 * reach / math.sqrt(3)
+    local range = spread + 2
+    local pad = grown + range
+    local area = rect(minx - pad, miny - pad, maxx - minx + 2 * pad, maxy - miny + 2 * pad)
+    local mask = texture.hex_field(string.pack(("ff"):rep(#centres), table.unpack(xy)), #centres, grown, reach, 0,
+        area, math.ceil(area.w), math.ceil(area.h), range)
+    return {mask = mask, area = area:offset(vec2(0, spec.drop * scale)), range = range,
+            spread = spread, ink = color(0, 0, 0, spec.alpha * 255)}
+end
+
 local function frame_layout(R, rules)
     local g, r = R.g, R.HEX_R
     local old, active = R.frame_layout, {}
@@ -350,13 +373,15 @@ local function frame_layout(R, rules)
         same = same and active[i] == old.active[i]
     end
     if same then return old end
+    if old and old.shadow then texture.free(old.shadow.mask) end
 
     -- Store positions relative to the board so a resize or shake moves the
     -- whole frame and its shadow without rebuilding the list of sprites.
-    local edges, joins, convex, north = {}, {}, {}, {}
+    local edges, joins, convex, north, centres = {}, {}, {}, {}, {}
     for i = 0, rules.CELLS - 1 do
         if active[i] then
             local centre = R.cell_pos(i) - R.board_origin
+            centres[#centres + 1] = centre
             local open = {}
             for k = 0, 5 do open[k] = not active[rules.hex_neighbor(i, k)] end
             for k = 0, 5 do
@@ -395,25 +420,19 @@ local function frame_layout(R, rules)
     -- An open-top channel has no upper shoulders. Its inward tips can
     -- support sprigs on the sides.
     local walls = #openings == 0 and decor and #decor.walls > 0 and wall_points(edges, convex, r) or {}
+    local shadow = R.GROUND.drop_shadow and #centres > 0 and shadow_field(centres, r, R.GROUND.drop_shadow)
     local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex,
-                    openings = openings, walls = walls}
+                    openings = openings, walls = walls, shadow = shadow}
     R.frame_layout = layout
     return layout
 end
 
--- The board's drop shadow, outside the frame: `drop_shadow` = {spread, drop,
--- alpha, steps}. Each step is a wider, fainter copy of the frame's outline
--- moved down by `drop`, so the shadow is soft at its edge.
-local function draw_drop_shadow(R, edges, origin, alpha)
-    local spec = R.GROUND.drop_shadow
-    local scale = R.HEX_R / (FRAME_RADIUS / 2)
-    local ink = color(0, 0, 0, 255 * alpha * spec.alpha / spec.steps)
-    local shift = origin + vec2(0, spec.drop * scale)
-    for step = 1, spec.steps do
-        local w = (spec.reach + spec.spread * step / spec.steps) * scale
-        for _, e in ipairs(edges) do gfx.line(e.a + shift, e.b + shift, 2 * w, ink) end
-        for _, e in ipairs(edges) do gfx.circle(e.a + shift, w, ink); gfx.circle(e.b + shift, w, ink) end
-    end
+local function draw_drop_shadow(shadow, origin, alpha)
+    if not shadow or shadow.mask.w == 0 then return end
+    local area = shadow.area:offset(origin)
+    gfx.sdf_mask(shadow.mask, area, shadow.range, 0, 0, 0, shadow.spread)
+    gfx.rect(area, color.alpha(shadow.ink, alpha))
+    gfx.sdf_unmask()
 end
 
 local function draw_stone(R, rules, sx, alpha)
@@ -431,7 +450,7 @@ local function draw_stone(R, rules, sx, alpha)
     local layout = frame_layout(R, rules)
     local origin = R.board_origin + vec2(sx, 0)
     local size = size2.splat(FRAME_SLOT * scale)
-    if R.GROUND.drop_shadow then draw_drop_shadow(R, layout.edges, origin, alpha) end
+    draw_drop_shadow(layout.shadow, origin, alpha)
     for _, e in ipairs(layout.edges) do
         gfx.image_part(art, e.north and NORTH_RIM or e.source, rect.centered(e.at + origin, size), tint)
     end
@@ -499,7 +518,7 @@ end
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
     frame = "frame-stone",
-    drop_shadow = {reach = 5.95, spread = 5, drop = 3, alpha = .55, steps = 6},
+    drop_shadow = {reach = 5.95, spread = 5, drop = 3, alpha = .55},
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
              wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
 }
