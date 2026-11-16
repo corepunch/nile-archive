@@ -16,6 +16,14 @@ if not neutral then
         R.GROUND[name] = skin:color("board_" .. name)
     end
     R.GROUND.edge_width, R.GROUND.rim_width, R.GROUND.seam_width = 2.5, 3, .9
+    -- Cradle of Rome style faces: lit from above, bevelled, stained by one grain.
+    local function material(key, grain)
+        return {top = skin:color("board_" .. key .. "_top"), bottom = skin:color("board_" .. key .. "_bottom"),
+                light = skin:color("board_" .. key .. "_light"), shade = skin:color("board_" .. key .. "_shade"),
+                bevel = 1.6, grain = grain}
+    end
+    R.GROUND.grain = "board-grain.png"
+    R.GROUND.materials = {["sandstone-floor"] = material("plain", .4), ["target-plaque"] = material("target", .5)}
 end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes

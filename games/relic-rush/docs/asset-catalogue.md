@@ -2,7 +2,7 @@
 
 ## Themed board art
 
-The live expedition uses [painted resources](#resource-pieces) on pale limestone. Dark red plaques mark the cells required to win. The older Relics, Jewels and Resources sheets remain in the atlas for previews and imported-board diagnostics.
+The live expedition uses [painted resources](#resource-pieces) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets remain in the atlas for previews and imported-board diagnostics.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -148,7 +148,7 @@ The earlier excavation art is documented in
 ## Additional board elements
 
 These sprites support the reference-board previews. The campaign uses chains
-and red plaques.
+and blue plaques.
 
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
 [exact prompt](../../../engine/art/match3-elements/prompt.txt) contain both games'
@@ -355,30 +355,35 @@ See [match rules](match4-rules.md) for special-combination resolution.
 
 The campaign uses the same silver chain art on each board. One hit breaks
 the chain and keeps the piece in place. A later hit clears the piece and its
-red plaque. Ice and carpet textures are recorded here for shared engine
+blue plaque. Ice and carpet textures are recorded here for shared engine
 and source-board diagnostics.
 
 ### Story materials
 
 | Frame | Meaning and use |
 | --- | --- |
-| `sandstone-floor` | Pale limestone for ordinary and cleared cells. |
-| `target-plaque` | Red umber stone on cells required for a win. The Explorer’s Guide uses the same face. |
+| `sandstone-floor` | Cream limestone for ordinary and cleared cells. |
+| `target-plaque` | Cobalt stone on cells required for a win. The Explorer’s Guide and art catalogue draw the same face. |
 
-ImageGen painted the two flat faces together in one [atlas](../art/board-refresh/flat-ground.png),
-using the [prompt](../art/board-refresh/flat-ground-prompt.txt) and
-[two-slot template](../art/board-refresh/flat-ground-template.png). The
-[manifest](../art/board-states/manifest.json) records the two 712 px square
-crops. The packer resizes each to 128 px and applies the exact canonical
-flat-top alpha. Run `python3 games/relic-rush/tools/prepare_board_dressing.py`
-to repack `data/board-dressing.png`. The game draws the faces over a shared
-backing with a hairline seam between them. [In-game before and after](../../../docs/review/match3-board-seams/README.md).
+Both faces are drawn by the game, after Cradle of Rome's plaque boards. Each
+cell is lit from above: a bevel ring runs from a light upper edge to a shaded
+lower one, and inside it the face runs from a lighter top colour to a darker
+bottom. A neutral stained-paper grain (`data/board-grain.png`) then darkens and
+lightens it. The grain holds only black stains and white flecks with alpha, so
+it fits any colour, and each cell samples a different part of it. The game cuts
+the flat-top hex at draw time, so there is no mask file.
 
-`target-plaque` began as the cobalt face of that atlas. Blue cells merged into
-the blue jungle mist behind the board, so the packer colour-grades this one
-crop (manifest `grade`): each pixel keeps its painted brightness relative to
-the face's mean, applied to the tone `#74402E`. The source atlas is unchanged.
-[Before and after](review/target-plaque-grade/README.md).
+- Colours: `board_plain_*` and `board_target_*` (`top`, `bottom`, `light`,
+  `shade`) in [`lua/skin.lua`](../lua/skin.lua).
+- Bevel width and grain opacity per face: `R.GROUND.materials` in
+  [`lua/board.lua`](../lua/board.lua).
+- Grain: `python3 tools/board_grain.py games/relic-rush/data/board-grain.png`
+  regenerates it; its options set stain, tide-mark, mottle, fibre and speck
+  amounts. `tools/check_art_catalogue.py` fails if the file is stale.
+- Renderer: `draw_material` in `engine/match3_elements_view.lua`.
+
+The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
+these replaced remains as a style reference. [In-game review](review/procedural-plaques/README.md).
 
 The earlier [cover and terrain sources](../art/board-dressing/) and
 [historical review](screenshots/review/board-dressing/README.md) document the

@@ -147,7 +147,7 @@ function R.smoke()
     end
     if stage == -2 and R.overlay == R.OV_NONE then
         assert(R.selected < 0 and R.g.moves == rules.level_of(R.g).moves, "smoke: the tap that skips the entrance must not play")
-        assert(not R.mission_banner, "smoke: the red plaques replace the mission banner")
+        assert(not R.mission_banner, "smoke: the blue plaques replace the mission banner")
         app.inject_click(R.town.menu_bounds:point(vec2(.1, .5))); stage = -3
     elseif stage == -3 and R.overlay == R.OV_PAUSE and R.dialog_settled() then   -- Sound off, then on again
         smoke_sound = R.sound

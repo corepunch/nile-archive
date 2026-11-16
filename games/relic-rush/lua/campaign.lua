@@ -1,6 +1,6 @@
 -- Campaign content only; all match mechanics live in engine/match3.lua.
 local function level(name, moves, chains)
-    return {name=name, lesson="Clear every red plaque.", moves=moves, score=0, relics=0, chains=chains, ice=0}
+    return {name=name, lesson="Clear every blue plaque.", moves=moves, score=0, relics=0, chains=chains, ice=0}
 end
 
 -- Masks are ordered by axial q, then r, exactly as the engine enumerates cells.

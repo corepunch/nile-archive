@@ -264,12 +264,43 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
     end)
 end
 
+-- A material is a cell face drawn from skin colours instead of a bitmap:
+-- {top, bottom} light the face from above, {light, shade, bevel} add a lit
+-- upper and shaded lower edge, and the game's neutral grain texture
+-- (R.GROUND.grain, a texture or data path made by tools/board_grain.py) stains it at `grain` opacity.
+-- `seed` picks where the hex samples the grain, so neighbours differ.
+local GRAIN_SAMPLE = 150   -- grain pixels across one face
+
+function E.draw_material(R, name, at, radius, turn, alpha, seed)
+    local m = R.GROUND.materials and R.GROUND.materials[name]
+    if not m then return false end
+    local inner = radius
+    if m.bevel and m.bevel > 0 then
+        gfx.ngon_grad(at, radius, 6, turn, color.alpha(m.light, alpha), color.alpha(m.shade, alpha))
+        inner = radius - m.bevel * radius / R.HEX_R
+    end
+    gfx.ngon_grad(at, inner, 6, turn, color.alpha(m.top, alpha), color.alpha(m.bottom, alpha))
+    local grain = R.GROUND.grain
+    if type(grain) == "string" then   -- a data path, loaded once the renderer is up
+        grain = texture.load(grain)
+        R.GROUND.grain = grain
+    end
+    if grain and grain.w > 0 and (m.grain or 0) > 0 then
+        local w, h = GRAIN_SAMPLE, GRAIN_SAMPLE * math.sqrt(3) / 2
+        local n = (seed or 0) * 2654435761
+        local x, y = n % (grain.w - w), (n // 7919) % (grain.h - h)
+        gfx.image_hex(grain, rect(x, y, w, h), at, radius, turn, color(255, 255, 255, 255 * alpha * m.grain))
+    end
+    return true
+end
+
 local function draw_floor_cell(R, i, at, material, alpha)
     local scale, turn, lift = floor_pose(R, i)
     if scale <= .02 then return end
     at = at + vec2(0, lift)
     local tint = color(255, 255, 255, 255 * alpha)
     local radius = (R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET)) * scale
+    if material and E.draw_material(R, material, at, radius, turn, alpha, i + 1) then return end
     if material then
         gfx.image_rot(R.board_art[material], rect.centered(at, size2.splat(2 * radius)), turn, tint)
     else

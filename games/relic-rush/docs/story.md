@@ -73,10 +73,10 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 Board 1 uses regular blue-tied timber, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
-## Chains and red plaques
+## Chains and blue plaques
 
-The red plaques mark the crew’s work site. A chain holds a piece in place
-until a match or tool breaks it. Red plaques beneath chains take a separate
+The blue plaques mark the crew’s work site. A chain holds a piece in place
+until a match or tool breaks it. Blue plaques beneath chains take a separate
 hit after the piece is free. Each first-clear item or scene pays off the work
 at that site. See [board progression](board-progression.md) for the starting
 counts and the [asset catalogue](asset-catalogue.md#story-materials) for the art.
@@ -397,8 +397,6 @@ as the slipped steps and distinguishes the near viewing shutter from the
 hand-operated warning across the flooded gap.
 
 ## Changelog
-
-- 2026-11-16: The work-site plaques are red stone instead of blue, so they stand apart from the blue mist; the lesson and Explorer’s Guide say “red plaque”. Dialogue is unchanged.
 
 - 2026-11-15: Camp timber comes from the same blue-tied logs used for Supplies. Painted trail arrows at the quay and shore point toward the old steps.
 

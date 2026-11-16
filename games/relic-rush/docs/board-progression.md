@@ -1,6 +1,6 @@
 # Relic Rush board progression
 
-Every expedition asks the player to clear its red plaques. Chains hold
+Every expedition asks the player to clear its blue plaques. Chains hold
 pieces in place. A match or tool hit removes the chain, and a later hit
 clears the plaque beneath it. A chain on plain stone can be left in place if
 it is out of the way. Boards 2–10 and 13 show a story piece in one colour slot.
@@ -33,7 +33,7 @@ the parallel-channel boards, mandatory terrain avoids the isolated central
 spine so its narrowness does not create inaccessible cleanup. Blockers and
 objectives move the emphasis within each family.
 
-| Level | Board | Family | Red plaques | Moves |
+| Level | Board | Family | Blue plaques | Moves |
 | ---: | --- | --- | ---: | ---: |
 | 1 | First Light | Tapered bowl | 7 | 24 |
 | 2 | The Lamp Lens | Tapered bowl | 9 | 29 |
@@ -70,7 +70,7 @@ Straight matches of three or more clear all pieces in the run. Board holes
 interrupt a match. Pickaxe hits a single cell, Dynamite hits a cell and its
 immediate hex neighbors, and Sunburst hits all pieces of the chosen kind.
 These are the campaign’s adaptations of Cradle of Rome’s Hammer, Bomb and
-Star. Red plaques stay in their authored positions until cleared.
+Star. Blue plaques stay in their authored positions until cleared.
 
 Starting positions and targets are authored in `lua/campaign.lua`. Locks are
 ranked by the terrain priorities; the ranks favor seams and bridge approaches. The board shows its targets in blue. Points

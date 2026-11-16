@@ -366,7 +366,7 @@
     "disabled"
   ],
   "runtime_inventory": [
-    "data/board-dressing.png",
+    "data/board-grain.png",
     "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
     "data/board-states/chain.png",
@@ -1432,35 +1432,16 @@
       "review": "docs/screenshots/review/themed-terrain/README.md"
     }
   },
-  "dressing": {
-    "generator": "built-in ImageGen",
-    "sources": {
-      "plaques": {
-        "source": "art/board-refresh/flat-ground.png",
-        "prompt": "art/board-refresh/flat-ground-prompt.txt",
-        "references": [
-          "art/board-refresh/flat-ground-template.png"
-        ],
-        "finish_reference": {"revision": "f577af56", "path": "data/board-dressing.png"}
-      }
-    },
-    "mask": "../../engine/art/hex-tile/hex-mask-128.png",
-    "runtime": "data/board-dressing.png",
-    "columns": 2,
+  "materials": {
+    "generator": "tools/board_grain.py",
+    "runtime": "data/board-grain.png",
+    "args": [],
+    "colours": "lua/skin.lua",
     "frames": {
-      "sandstone-floor": {
-        "source": "plaques",
-        "fit": "fill",
-        "crop": [87, 86, 799, 798]
-      },
-      "target-plaque": {
-        "source": "plaques",
-        "fit": "fill",
-        "crop": [974, 86, 1686, 798],
-        "grade": {"tone": [116, 64, 46], "grain": 1.0}
-      }
+      "sandstone-floor": "board_plain_*",
+      "target-plaque": "board_target_*"
     },
-    "registration": "tools/prepare_board_dressing.py"
+    "previous_source": "art/board-refresh/flat-ground.png"
   },
   "finale": {
     "generator": "built-in ImageGen",

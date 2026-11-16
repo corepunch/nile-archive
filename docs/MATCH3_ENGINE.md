@@ -159,7 +159,12 @@ drawn for every cell under the faces so only the outline remains. Campaign
 textures use the canonical flat-top mask and carry their paint to the edge.
 Games supply the frame, seam and fallback face colours through their skins
 (`board_edge`, `board_rim`, `board_seam`, `board_face`). Imported and neutral
-boards use the same geometry without a frame. Selection and hints animate piece scale.
+boards use the same geometry without a frame.
+A floor name listed in `R.GROUND.materials` is drawn instead of a bitmap by
+`elements.draw_material`: a bevel ring from `light` to `shade`, a face lit from
+`top` to `bottom`, and the game's neutral grain texture (`R.GROUND.grain`, made
+by `tools/board_grain.py`) at the material's `grain` opacity, sampled at a
+different spot for every cell. Guides and catalogues call the same function. Selection and hints animate piece scale.
 [In-game board review](review/match3-board-seams/README.md), [frame](review/match3-board-frame/README.md).
 
 For a game view, initialize presentation data with `match3.view{...}`, then

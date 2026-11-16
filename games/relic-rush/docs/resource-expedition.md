@@ -83,7 +83,7 @@ A beige cell is open ground. Clear the piece on a blue cell once to expose
 the pale stone. A chained piece takes one hit to free and a later hit to clear
 the plaque beneath it. Each blue cell marks a target on the board.
 
-Every expedition marks the work site with red plaques. Clearing all of
+Every expedition marks the work site with blue plaques. Clearing all of
 them wins. The first clear can recover a story item shown in an ordinary
 colour slot, and board 30 reveals the signal plate and Ines’s reply.
 Move limits fit short portrait play and give deliberate resource matches a
@@ -119,7 +119,7 @@ is the first such opportunity. After placement, show a turquoise water bucket
 in place of the blue timber on the next two water-site boards, 5 and 6.
 It pays into **Provisions**, the same family as the fruit. Those boards already
 use their green slot for the quay marker, and purple stone still supplies
-construction. Clearing the red plaques recovers the marker. The bucket remains available on designated water boards and adds
+construction. Clearing the blue plaques recovers the marker. The bucket remains available on designated water boards and adds
 no fourth currency. The Artisan Workshop unlocks cut blocks on board 9 at
 1 Supplies each. The crew uses the blocks to shore up the old steps.
 

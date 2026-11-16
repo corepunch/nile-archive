@@ -1,5 +1,6 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
 -- Resource pieces appear at board size and also identify wallet currencies.
+local elements_view = require("match3.elements_view")
 local A = {}
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
@@ -7,11 +8,9 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- Standalone power-ups, with one authored rocket per hex axis.
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
--- Row-major; packed by tools/prepare_board_dressing.py with a 2 px gutter.
-A.dressing_frames = {"sandstone-floor", "target-plaque"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
 -- Authored element states shared by live boards, goals and the guide.
-A.elements = require("match3.elements_view").assets
+A.elements = elements_view.assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "broken-cable", "marker"}
 A.separate_rewards = {"note", "broken-cable"}
@@ -68,14 +67,10 @@ function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
+    elements_view.load(textures, require("match3").skin(require("match3_skin")))
     local result_atlas = texture.load("result-icons.png")
     for i, key in ipairs(A.result_icons) do
         textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))
-    end
-    local dressing = texture.load("board-dressing.png")
-    for i, key in ipairs(A.dressing_frames) do
-        textures[key] = texture.region(dressing, rect((i - 1) * 132 + 2, 2, 128, 128))
     end
     for _, key in ipairs(A.quest_objects) do
         textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
@@ -118,7 +113,9 @@ function A.draw_catalogue(R)
         local x, y = 39 + (i - 1) % 6 * 68, 414 + math.floor((i - 1) / 6) * 75
         if i <= 6 then
             R.draw_relic({kind=i-1,special=i},vec2(x+24,y+24),1,255,1)
-        else gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE) end
+        elseif not elements_view.draw_material(R, name, vec2(x + 24, y + 24), 24, 0, 1, i) then
+            gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
+        end
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end
     for col, state in ipairs(A.states) do
@@ -140,12 +137,12 @@ function A.draw_dressing_catalogue(R)
     for i, name in ipairs{"sandstone-floor", "target-plaque", "chain"} do
         local at = vec2(105 + (i - 1) * 135, 413)
         local area = rect.centered(at, size2.splat(side))
-        gfx.image(R.board_art[i == 3 and "target-plaque" or name], area, color.WHITE)
+        elements_view.draw_material(R, i == 3 and "target-plaque" or name, at, side / 2, 0, 1, i)
         if i == 3 then
             gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
             gfx.image(R.board_art.chain, area, color.WHITE)
         end
-        R.say_at(({"Pale stone", "Red plaque", "Chained plaque"})[i], at + vec2(0, 44), 13, R.PAL_CREAM, 120)
+        R.say_at(({"Pale stone", "Blue plaque", "Chained plaque"})[i], at + vec2(0, 44), 13, R.PAL_CREAM, 120)
     end
 end
 

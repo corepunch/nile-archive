@@ -4,6 +4,7 @@
 -- (engine/match3_game.lua); words are data/game.json.
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
+local elements = require("match3.elements_view")
 local rules = require("rules")
 local economy = require("economy")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
@@ -188,9 +189,9 @@ R.dialogs[R.OV_AWARD] = award_screen
 local guide_entries = {
     {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of the three axes.",
      icon={front="resource-coin"}},
-    {id="plaques", title="Red plaques", description="Clear every red plaque to win. Match pieces on a plaque or hit it with a tool.",
-     icon={front="target-plaque"}},
-    {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is red, clear it with another hit.",
+    {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match pieces on a plaque or hit it with a tool.",
+     icon={floor="target-plaque"}},
+    {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is blue, clear it with another hit.",
      icon={floor="target-plaque", piece="resource-coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Coins earn Gold, fruit and water earn Provisions, and timber and stone earn Supplies. Win to bank them.",
      icon={front="resource-timber"}},
@@ -207,7 +208,7 @@ local guide_entries = {
 }
 local function guide_icon(box, icon)
     local layer = rect.centered(box:center(), size2.splat(48))
-    if icon.floor then picture(R.board_art[icon.floor], layer, 255) end
+    if icon.floor then elements.draw_material(R, icon.floor, layer:center(), layer.w / 2, 0, 1, 1) end
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end

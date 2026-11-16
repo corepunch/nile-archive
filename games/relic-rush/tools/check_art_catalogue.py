@@ -136,14 +136,16 @@ print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board 
 # Script, identities and presentation mapping must ship together.
 import subprocess
 import sys
-dressing = manifest["dressing"]
-declaration = re.search(r"A\.dressing_frames = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(dressing["frames"])
-for paths in dressing["sources"].values():
-    assert all((ROOT / paths[key]).is_file() for key in ("source", "prompt"))
-assert dressing["runtime"] in actual
-assert all(f"`{name}`" in doc for name in dressing["frames"])
-subprocess.run([sys.executable, str(ROOT / dressing["registration"]), "--check"], check=True)
+materials = manifest["materials"]
+board = (ROOT / "lua/board.lua").read_text()
+skin = (ROOT / materials["colours"]).read_text()
+assert materials["runtime"] in actual
+for name, prefix in materials["frames"].items():
+    assert f'["{name}"]' in board and f"`{name}`" in doc, name
+    for part in ("top", "bottom", "light", "shade"):
+        assert prefix.replace("*", part) + " = " in skin, (name, part)
+subprocess.run([sys.executable, str(ROOT.parents[1] / materials["generator"]), str(ROOT / materials["runtime"]),
+                *materials["args"], "--check"], check=True)
 finale = manifest["finale"]
 for name, item in finale["assets"].items():
     assert f'`{name}`' in doc and f'"{name}"' in art
