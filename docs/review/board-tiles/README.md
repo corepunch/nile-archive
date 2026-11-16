@@ -14,6 +14,11 @@ have no original and keep their earlier look.
 
 ![Cradle of Rome 1's tiles beside ours](strip-vs-reference.png)
 
+The blue and green tablets carry a wide bevel, lit on the upper-left edges and
+dark on the lower-right, so they read as thick stones beside the flat parchment:
+
+![Bevelled tablets](tablet-bevel.jpg)
+
 The board frame follows the first Cradle of Rome and is drawn by the game:
 dark stone next to the cells, a rusty line and a tan outer lip with rounded
 corners, all under a cracked stone texture, with a soft drop shadow outside

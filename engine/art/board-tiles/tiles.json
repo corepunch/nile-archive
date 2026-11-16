@@ -5,15 +5,10 @@
   "grain_sample": 150,
   "grain": {"seed": 7},
   "outputs": ["games/relic-rush/data/board-tiles", "games/christmas-market/data/board-tiles"],
-  "decor": {
-    "frame-stone": {"kind": "stone", "width": 512, "height": 24, "opacity": 0.7, "crack_gap": 44, "seed": 3,
-                    "grain": {"size": 512, "seed": 19, "stain": 0.35, "rings": 0.25, "mottle": 0.5, "fibre": 0.05, "speck": 0.4, "strength": 0.8}},
-    "frame-leaves": {"size": 96, "fan": [[-58, 0.4, 0.2], [52, 0.36, 0.19], [-8, 0.47, 0.24]], "outline": "#1E4A12", "base": "#2F8A22", "tip": "#9BD83E", "vein": "#C9EE7A"}
-  },
   "tiles": {
     "cell-normal": {"slot": 1, "meaning": "Normal cell (parchment), after Cradle of Rome 1: cream at the upper left to gold at the lower right, a thin edge light, a warm mottle", "top": "#F2E09A", "bottom": "#A8884C", "light": "#FFFBE6", "shade": "#C29A62", "grain": 0.5, "shading": {"light": [-1, -1], "contrast": 1, "bevel": 2.2, "bevel_style": "facets"}, "grain_params": {"seed": 41, "stain": 0.25, "rings": 0.0, "mottle": 0.5, "fibre": 0.08, "speck": 0.05, "strength": 0.6}, "grain_tint": {"dark": "#9A6E28", "light": "#FFE8A6"}},
-    "tablet-single": {"slot": 2, "meaning": "Single tablet (deep blue), after Cradle of Rome 1", "top": "#4A859E", "bottom": "#15365C", "light": "#74B6D4", "shade": "#102C3C", "grain": 0.35, "shading": {"light": [-1, -1], "contrast": 1, "bevel_contrast": 1}},
-    "tablet-double": {"slot": 3, "meaning": "Double marble tablet (green)", "top": "#8EB743", "bottom": "#7EA937", "light": "#85A258", "shade": "#355618", "grain": 0.85, "grain_params": {"seed": 23, "mottle": 0.7, "fibre": 0.1, "speck": 0.35}, "shading": {"light": [0, -1], "contrast": 1.8, "bevel_contrast": 1.3}},
+    "tablet-single": {"slot": 2, "meaning": "Single tablet (deep blue), after Cradle of Rome 1", "top": "#4A859E", "bottom": "#15365C", "light": "#9AD4EC", "shade": "#071A26", "grain": 0.35, "shading": {"light": [-1, -1], "contrast": 1, "bevel": 7, "bevel_style": "facets", "bevel_contrast": 1}},
+    "tablet-double": {"slot": 3, "meaning": "Double marble tablet (green)", "top": "#9CC44E", "bottom": "#6E9A2C", "light": "#D4F0A0", "shade": "#24420E", "grain": 0.85, "grain_params": {"seed": 23, "mottle": 0.7, "fibre": 0.1, "speck": 0.35}, "shading": {"light": [-1, -1], "contrast": 1, "bevel": 7, "bevel_style": "facets", "bevel_contrast": 1}},
     "light-wave": {"slot": 4, "meaning": "Light wave (a diagonal streak of pale gold), after Cradle of Rome 1", "top": "#86877A", "bottom": "#5F6155", "light": "#86877A", "shade": "#5F6155", "bevel": 0, "shading": {"light": [-1, -1], "contrast": 1, "bevel": 0}, "streak": {"colour": "#E4E4A8", "opacity": 0.95, "width": 0.42}},
     "hover": {"slot": 5, "meaning": "Mouse hover highlight (white)", "top": "#FFFFFF", "bottom": "#F0F0EC", "light": "#FFFFFF", "shade": "#D6D6CF", "bevel": 2, "grain": 0.04},
     "selected": {"slot": 6, "meaning": "Selected cell (orange corner brackets), after Cradle of Rome 1", "brackets": {"colour": "#DF6B32", "core": "#FECC49", "width": 10, "length": 0.34, "inset": 7}},

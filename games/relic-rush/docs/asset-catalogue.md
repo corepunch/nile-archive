@@ -402,7 +402,9 @@ shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
 from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
 into each game's `data/board-tiles/`. Colours and lighting are sampled from the
 first Cradle of Rome's tile sheet: faces lit from the upper left, a thin edge
-light on the parchment, thick bevels on the tablets and ice. The spec's options
+light on the parchment, wide cut bevels on the blue and green tablets (lit on
+the upper-left edges, dark on the lower-right) so they read as thick stones,
+and a bevel on the ice. The spec's options
 add a warm mottle (`grain`, `grain_tint`), a glow, hairline cracks, a diagonal
 light `streak`, and `brackets` for the open selected frame. The canonical
 128 px flat-top mask cuts the alpha, and every filled tile passes
