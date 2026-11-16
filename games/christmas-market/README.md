@@ -24,9 +24,9 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-Each of Bellmere's thirty winter wishes asks you to light every blue pane.
+Each of Bellmere's thirty winter wishes asks you to light every red pane.
 Cleared panes glow amber. Tinsel ties protect treats for one hit and contribute
-to the goal only when they cover a blue pane. The lamps lead from the market
+to the goal only when they cover a red pane. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
 [board progression](docs/board-progression.md) and [story](docs/story.md).
 
@@ -48,7 +48,7 @@ owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
 The game supplies the boards, artwork and straight-match rules.
 
 The puzzle and town use the same wallet and Pause button. The remaining moves
-are shown below the wallet on the puzzle. The slate-blue panes mark the objectives. Spruce faces meet at
+are shown below the wallet on the puzzle. The muted red panes mark the objectives. Spruce faces meet at
 hairline seams, and cleared panes turn honey amber. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).

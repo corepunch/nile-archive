@@ -1,9 +1,9 @@
 # Winter wish board progression
 
-Clear every blue pane on every board. A match or tool lights the pane when
+Clear every red pane on every board. A match or tool lights the pane when
 it clears the treat above it. One hit untangles tinsel. A later hit clears
 the freed treat and lights the pane underneath. A tinsel tie on a brown
-cell may stay when the board is won. Blue panes never spread.
+cell may stay when the board is won. Red panes never spread.
 
 The authored coordinates in `lua/campaign.lua` shape the lights into windows,
 paired doorways, lanes and finally the Christmas tree. The same four court
@@ -11,7 +11,7 @@ silhouettes offer different ways to reach the panes. The narrow spine on twin
 lanes stays clear of mandatory panes so a player can focus on either side.
 Fairy Lights and The Last Train give the story room to breathe.
 
-| Level | Board | Family | Blue panes | Tinsel ties | Moves |
+| Level | Board | Family | Red panes | Tinsel ties | Moves |
 | ---: | --- | --- | ---: | ---: | ---: |
 | 1 | Welcome Lights | Tapered bowl | 7 | 0 | 20 |
 | 2 | Lumber Lane | Tapered bowl | 8 | 0 | 24 |

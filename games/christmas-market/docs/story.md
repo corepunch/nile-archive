@@ -445,7 +445,7 @@ Shown after the level 30 turn. The market stays open and lit behind it, with sno
 
 ## Levels
 
-Every wish has a fixed set of blue lantern panes. A match or tool lights a pane after any tinsel on it has been untangled. Cleared panes glow amber. Compact windows, pairs of doorways, and longer lanes grow out of what the neighbors are doing that evening. Story and funding advance on the first clear.
+Every wish has a fixed set of red lantern panes. A match or tool lights a pane after any tinsel on it has been untangled. Cleared panes glow amber. Compact windows, pairs of doorways, and longer lanes grow out of what the neighbors are doing that evening. Story and funding advance on the first clear.
 
 | Wish | What lighting the board does for Bellmere |
 | --- | --- |
@@ -468,7 +468,7 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 | 25 | Blue telegram in place of mitten | The message gives Pip a time to wait for and prompts the promise to light the path. |
 | 27 | Golden lantern in place of bell | Fenwick lends a lamp that goes at the bend in the station path. |
 
-Blue panes decide when the wish is complete. On these boards one kind is a
+Red panes decide when the wish is complete. On these boards one kind is a
 story object and its match does not pay the regular kind's resources. The
 first clear brings the item home and advances the scene through its usual
 checkpoint. Replays bank the ordinary resources matched on the board.
@@ -503,3 +503,4 @@ neighbor's delivery makes up any shortfall for the next earned stall.
 - 2026-11-15: Gave all three episodes a shared act of hospitality. Agnes asks for the first light, the spare cup brings Fenwick into the story, and both towns leave light for the last train. Noelle chooses Bellmere before opening Rosa's parcel. An independent cold read clarified the ribbon's return and moved the decision to stay into the scene with Wren.
 
 - 2026-11-16: Connected six first-clear story objects to the live pieces. The extra mug, a practice scarf and a borrowed lantern carry the same act of hospitality through the market, and matched goods pay for its stalls.
+- 2026-11-16: The lantern panes to light are muted red instead of slate blue, beside spruce green; the lesson and guide say “red panes”. Dialogue is unchanged.

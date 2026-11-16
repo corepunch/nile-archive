@@ -2,8 +2,9 @@
 
 The three lantern panes are drawn by the game instead of painted bitmaps, the
 same way as Relic Rush's plaques: lit from above with a bevelled edge and
-frosted by a neutral grain. Colours stay spruce, slate blue and honey amber,
-set in the skin.
+frosted by a neutral grain. Panes to light are muted cranberry red beside
+muted spruce green, and cleared panes glow honey amber; all three are skin
+colours. "Before" is the painted spruce and slate-blue panes.
 
 | Screen | Before | After |
 | --- | --- | --- |

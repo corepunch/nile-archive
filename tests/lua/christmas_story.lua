@@ -27,12 +27,12 @@ local tied
 for _, i in ipairs(rules.level_of(intro).oil) do
     if intro.chain[i] > 0 then tied = i; break end
 end
-check(tied ~= nil, "the first tinsel board has a chain over a blue pane")
+check(tied ~= nil, "the first tinsel board has a chain over a red pane")
 if tied then
     local wave = rules.new_match()
     check(rules.game_tool(intro, 0, tied, wave), "hammer can hit tinsel")
     rules.game_apply(intro, wave)
-    check(intro.chain[tied] == 0 and intro.oil[tied] == 1, "untangling tinsel leaves the pane blue")
+    check(intro.chain[tied] == 0 and intro.oil[tied] == 1, "untangling tinsel leaves the pane red")
     intro.tools[1] = 1
     check(rules.game_tool(intro, 0, tied, wave), "hammer can hit the freed treat")
     rules.game_apply(intro, wave)
@@ -57,8 +57,8 @@ for level=1,30 do
     end
     local g=rules.game_start(level-1,level)
     local spec = rules.level_of(g)
-    check(spec.oil_still and g.oil_left == #spec.oil and g.oil_left > 0, "every wish opens with fixed blue panes")
-    check(#spec.goals == 1 and spec.goals[1] == "oil", "only the blue panes count toward the win")
+    check(spec.oil_still and g.oil_left == #spec.oil and g.oil_left > 0, "every wish opens with fixed red panes")
+    check(#spec.goals == 1 and spec.goals[1] == "oil", "only the red panes count toward the win")
     check(g.initial_obstacles == spec.chains and g.carpet_total == 0 and g.delivery_total == 0,
           "tinsel is the only campaign blocker")
     if spec.story_piece then
@@ -71,7 +71,7 @@ for level=1,30 do
         check(rules.game_tool(g, 0, i, wave), "the story piece uses ordinary tool matches")
         rules.game_apply(g, wave)
         check(g.relics == 1 and g.oil[i] == 0 and g.earnings[1] + g.earnings[2] + g.earnings[3] == 0,
-              "the story piece clears its blue pane and does not pay the replaced resource")
+              "the story piece clears its red pane and does not pay the replaced resource")
     end
     g.won=true;g.moves=0
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')

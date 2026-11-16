@@ -134,10 +134,10 @@ R.dialogs[R.OV_RESULT] = result_screen
 local guide_entries = {
     {id="neighbors", title="Line up three or more", description="Match treats in a straight line along any of the three axes.",
      icon={kind=0}},
-    {id="panes", title="Light the blue panes", description="Match on a blue pane or hit it with a tool to light it. Light them all to finish.",
-     icon={back="lantern-blue"}},
+    {id="panes", title="Light the red panes", description="Match on a red pane or hit it with a tool to light it. Light them all to finish.",
+     icon={back="lantern-red"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
-     icon={back="lantern-blue", kind=3, front="chain"}},
+     icon={back="lantern-red", kind=3, front="chain"}},
     {id="supplies", title="Stock the market", description="Bells earn Gold, candy and gingerbread earn Treats, and holly, mittens and baubles earn Supplies.",
      icon={kind=2}},
     {id="finds", title="Story finds", description="A story object sometimes takes a regular piece's place. Light the panes to bring it back to Bellmere.",

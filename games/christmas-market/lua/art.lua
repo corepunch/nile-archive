@@ -91,7 +91,7 @@ function A.draw_catalogue(R)
             R.say_at(A.festive[k + 1], vec2(x + 23, 245), 10, R.PAL_CREAM, 66)
         end
     end
-    for i, name in ipairs{"plain", "blue", "lit"} do
+    for i, name in ipairs{"plain", "red", "lit"} do
         local x = 104 + (i - 1) * 112
         require("match3.elements_view").draw_material(R, "lantern-" .. name, vec2(x + 24, 296), 24, 0, 1, i)
         R.say_at(name, vec2(x + 24, 330), 11, R.PAL_CREAM, 88)

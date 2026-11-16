@@ -525,12 +525,12 @@
     "colours": "lua/skin.lua",
     "frames": {
       "lantern-plain": "board_plain_*",
-      "lantern-blue": "board_blue_*",
+      "lantern-red": "board_red_*",
       "lantern-lit": "board_lit_*"
     },
     "meaning": {
       "lantern-plain": "Unmarked board",
-      "lantern-blue": "Pane to clear",
+      "lantern-red": "Pane to clear",
       "lantern-lit": "Cleared pane"
     },
     "previous_source": "art/lantern-panes/spruce-atlas.png",
