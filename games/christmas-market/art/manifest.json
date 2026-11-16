@@ -31,6 +31,7 @@
     "disabled"
   ],
   "runtime": {
+    "data/board-grain.png": "1a0066184a83d251ddbc872d39e068d682c7f717abec42b08800c4449fce76e5",
     "data/board-states/bomb.png": "ed81b5bdc22716892ea1510be38c268e2580908002ff35a0be630f9868907d6e",
     "data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
     "data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
@@ -157,9 +158,6 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/game.json": "afb02ae0cacaf89d5335d087c656b05900376be485476c0e10197139287d5231",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
-    "data/lantern-panes/blue.png": "f674758dd3bc0015a2a0e1402de2aea338736b68a3ef10085d8dd7d15f6b0493",
-    "data/lantern-panes/lit.png": "25bca3915fce1479f8aead06e008fae016711a0c68e4e3f055cf4b18c9c7a11e",
-    "data/lantern-panes/plain.png": "c1d8bd509f6b1c77939ab3f27e343c2a618bdc1d781ae0eaf1030f5cd451c42b",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
     "data/match3.png": "67e46a38deb46b59513f41a539019d4b525cadf5c0fd73e443be5d630de88a5b",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
@@ -517,43 +515,25 @@
       "review": "docs/screenshots/review/themed-terrain/README.md"
     }
   },
-  "lantern_panes": {
-    "source": "art/lantern-panes/spruce-atlas.png",
-    "prompt": "art/lantern-panes/spruce-atlas-prompt.txt",
-    "template": "art/lantern-panes/hex-template.png",
-    "mask": "../../engine/art/hex-tile/hex-mask-128.png",
-    "states": {
-      "plain": {
-        "meaning": "Unmarked board",
-        "crop": [
-          71,
-          68,
-          657,
-          654
-        ],
-        "runtime": "data/lantern-panes/plain.png"
-      },
-      "lit": {
-        "meaning": "Cleared pane",
-        "crop": [
-          793,
-          68,
-          1379,
-          654
-        ],
-        "runtime": "data/lantern-panes/lit.png"
-      },
-      "blue": {
-        "meaning": "Pane to clear",
-        "crop": [
-          1513,
-          68,
-          2099,
-          654
-        ],
-        "runtime": "data/lantern-panes/blue.png"
-      }
+  "materials": {
+    "generator": "tools/board_grain.py",
+    "runtime": "data/board-grain.png",
+    "args": [
+      "--seed",
+      "11"
+    ],
+    "colours": "lua/skin.lua",
+    "frames": {
+      "lantern-plain": "board_plain_*",
+      "lantern-blue": "board_blue_*",
+      "lantern-lit": "board_lit_*"
     },
+    "meaning": {
+      "lantern-plain": "Unmarked board",
+      "lantern-blue": "Pane to clear",
+      "lantern-lit": "Cleared pane"
+    },
+    "previous_source": "art/lantern-panes/spruce-atlas.png",
     "reference": "art/lantern-panes/concept.png"
   },
   "festive_pieces": {

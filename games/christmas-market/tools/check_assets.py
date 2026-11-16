@@ -49,7 +49,14 @@ def main():
             name = f'{tool}-{state}'
             assert name in atlas['hud']['frames'] and name not in atlas['frames']
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
-    subprocess.run([sys.executable, str(ROOT/'tools/prepare_lantern_panes.py'), '--check'], check=True)
+    materials = manifest['materials']
+    board, skin = (ROOT/'lua/board.lua').read_text(), (ROOT/materials['colours']).read_text()
+    for name, prefix in materials['frames'].items():
+        assert f'["{name}"]' in board, name
+        for part in ('top', 'bottom', 'light', 'shade'):
+            assert prefix.replace('*', part) + ' = ' in skin, (name, part)
+    subprocess.run([sys.executable, str(ROOT.parents[1]/materials['generator']), str(ROOT/materials['runtime']),
+                    *materials['args'], '--check'], check=True)
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}

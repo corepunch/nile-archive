@@ -210,7 +210,7 @@ for i, unlock in ipairs(economy.unlocks) do
 end
 local function guide_icon(box, icon)
     local layer = rect.centered(box:center(), size2.splat(48))
-    if icon.floor then elements.draw_material(R, icon.floor, layer:center(), layer.w / 2, 0, 1, 1) end
+    if icon.floor then elements.draw_material(R, icon.floor, pp(layer:center()), layer.w / 2 * P.scale, 0, P.alpha, 1) end
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end

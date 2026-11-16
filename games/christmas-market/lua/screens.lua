@@ -4,6 +4,7 @@
 -- (engine/match3_game.lua); words are data/game.json.
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
+local elements = require("match3.elements_view")
 local rules = require("rules")
 local economy = require("economy")
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
@@ -148,7 +149,7 @@ local guide_entries = {
 local function guide_icon(box, icon)
     local at = box:center()
     local layer = rect.centered(at, size2(48, 48))
-    if icon.back then picture(R.board_art[icon.back], layer, 255) end
+    if icon.back then elements.draw_material(R, icon.back, pp(at), layer.w / 2 * P.scale, 0, P.alpha, 1) end
     if icon.kind then R.draw_relic(rules.tile(icon.kind), pp(at), P.scale, 255 * P.alpha, 1) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end

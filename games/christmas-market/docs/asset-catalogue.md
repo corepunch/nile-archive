@@ -90,7 +90,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Specials and board layers | `art/icons.png`, cells 6–18 | `data/board-states/` | Three shooting-star axes, firework bomb, rainbow prism, snow, tinsel, two ice strengths, selection, hint, guide and the original atlas cell mask |
 | Tools | `art/icons.png`, cells 19–33 | `data/board-states/` | Hammer, firecracker and star wand: normal, selected, pressed, hover and disabled, authored together in one atlas |
 | Pause and completion | `art/icons.png`, cells 34–39 | `data/expedition-hud/` | Five authored pause states and a completion medal; medal also represents cumulative Christmas Stars |
-| Lantern panes | One ImageGen atlas at `art/lantern-panes/spruce-atlas.png` | `data/lantern-panes/{plain,blue,lit}.png` | Spruce unmarked surface, slate-blue objective and honey-amber cleared pane. See [Lantern panes](#lantern-panes) |
+| Lantern panes | Drawn by the game from skin colours; grain from `tools/board_grain.py --seed 11` | `data/board-grain.png` | Spruce unmarked surface, slate-blue objective and honey-amber cleared pane. See [Lantern panes](#lantern-panes) |
 | Lives | Relic Rush's [authored heart](../../relic-rush/art/expedition-hud/manifest.json), copied unchanged | `data/expedition-hud/life.png` | One static life counter icon. The capsule uses the existing skin press state |
 | Buildable market terrain | `art/terrain.png` | `data/island.jpg` | Empty snowy market ground used for building placement |
 | Market streets | `tools/roads.py christmas-market` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): grey-brown setts, stone kerbs and a snow shoulder. The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); no interaction states. Captures: `screenshots/market.jpg`, `screenshots/phone-market.jpg` |
@@ -343,13 +343,21 @@ and `python3 tools/match3_atlas.py`. Review with
 | `lantern-blue` | Slate blue | A pane that still needs a match or tool hit |
 | `lantern-lit` | Honey amber | A pane whose treat has been cleared |
 
-All three were painted together in the [source atlas](../art/lantern-panes/spruce-atlas.png).
-The [prompt](../art/lantern-panes/spruce-atlas-prompt.txt) uses the
-[flat-top template](../art/lantern-panes/hex-template.png) and the
-[game-screen concept](../art/lantern-panes/concept.png).
-The [manifest](../art/manifest.json) records each square crop, the canonical
-mask and runtime path. Export with
-`python3 games/christmas-market/tools/prepare_lantern_panes.py`.
+The game draws all three, the way Relic Rush draws its plaques after Cradle of
+Rome's boards. Each pane is lit from above: a bevel ring from a light upper edge
+to a shaded lower one, and a face from a lighter top colour to a darker bottom.
+A neutral stained-paper grain (`data/board-grain.png`) then frosts it, sampled
+at a different spot for every cell. The flat-top hex is cut at draw time.
+
+- Colours: `board_plain_*`, `board_blue_*` and `board_lit_*` (`top`, `bottom`,
+  `light`, `shade`) in [`lua/skin.lua`](../lua/skin.lua).
+- Bevel width and grain opacity: `R.GROUND.materials` in [`lua/board.lua`](../lua/board.lua).
+- Grain: `python3 tools/board_grain.py games/christmas-market/data/board-grain.png --seed 11`.
+  `tools/check_assets.py` fails if it is stale.
+
+The painted [source atlas](../art/lantern-panes/spruce-atlas.png) and
+[game-screen concept](../art/lantern-panes/concept.png) these replaced remain
+as colour references. [In-game review](screenshots/review/drawn-panes/README.md).
 Each cropped 586×586 square is downsampled to 128×128 and masked to the exact
 hex. The shared renderer gives each face a 0.18-unit inset over a dark spruce
 backing that supplies the hairline seams. The guide reuses the blue pane

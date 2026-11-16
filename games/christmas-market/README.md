@@ -56,8 +56,8 @@ the Market Keeper's Guide alongside Sound and Reduce Motion.
 `data/match3.png` holds the puzzle backdrop, pieces, blockers and effects.
 The HUD and tool controls use `data/match3-hud.png`. Run
 `python3 tools/match3_atlas.py` to rebuild the two atlases. The three lantern
-pane faces are exported separately with
-`python3 games/christmas-market/tools/prepare_lantern_panes.py`.
+panes are drawn by the game from skin colours over a generated grain
+(`data/board-grain.png`, made by `tools/board_grain.py`).
 [Asset catalogue](docs/asset-catalogue.md#lantern-panes).
 
 The market keeps Relic Rush's bottom controls in its own skin: Build (the

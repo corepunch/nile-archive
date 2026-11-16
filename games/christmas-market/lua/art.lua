@@ -72,9 +72,6 @@ function A.load()
         local find = level.story_piece
         if find then textures["story-" .. find.key] = texture.load("story-pieces/" .. find.key .. ".png") end
     end
-    for _, state in ipairs{"plain", "lit", "blue"} do
-        textures["lantern-" .. state] = texture.load("lantern-panes/" .. state .. ".png")
-    end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
@@ -96,7 +93,7 @@ function A.draw_catalogue(R)
     end
     for i, name in ipairs{"plain", "blue", "lit"} do
         local x = 104 + (i - 1) * 112
-        gfx.image(R.board_art["lantern-" .. name], rect(x, 272, 48, 48), color.WHITE)
+        require("match3.elements_view").draw_material(R, "lantern-" .. name, vec2(x + 24, 296), 24, 0, 1, i)
         R.say_at(name, vec2(x + 24, 330), 11, R.PAL_CREAM, 88)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
