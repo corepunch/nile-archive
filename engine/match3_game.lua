@@ -144,6 +144,140 @@ function G.state()
     }
 end
 
+----------------------------------------------------------------- ladder
+
+-- A Cradle of Rome campaign ladder: catalogue buildings bought in order, each
+-- adding one piece or bonus. `island` is the game's map module with
+-- `buildings`, `WONDERS`, `owned` and `wonder_count`. `unlocks` lists the
+-- steps in purchase order: {building=key, after=clear, ...}. Story buildings
+-- are types 0..WONDERS-1 and keep the journey's schedule; they hold the next
+-- new level. The others open after their clear and must be placed before the
+-- next story building. A save from before the ladder waives the ones it had
+-- passed: those stay on sale and never block. Installs on `island`: ladder,
+-- ladder_position, catalogue_order, next_step, next_build, ladder_blocked,
+-- campaign_count, reserved_cost, can_spend, can_buy, waived, set_waived and
+-- waive_passed. `slots` is the number of spendable wallet slots.
+function G.campaign_ladder(island, unlocks, journey, slots)
+    local M, WONDERS = island, island.WONDERS
+    M.ladder, M.ladder_position = {}, {}
+    local type_of = {}
+    for i, d in ipairs(M.buildings) do type_of[d.key] = i - 1 end
+    for n, unlock in ipairs(unlocks) do
+        local kind = assert(type_of[unlock.building], unlock.building)
+        local story = kind < WONDERS
+        assert(not story or unlock.after == journey.wonder_levels[kind + 1], unlock.building .. " follows the story schedule")
+        M.ladder[n] = {kind=kind, unlock=unlock, after=unlock.after, story=story}
+        M.ladder_position[kind] = n
+    end
+    -- The shop lists the ladder in purchase order, then everything else.
+    M.catalogue_order = {}
+    for _, step in ipairs(M.ladder) do M.catalogue_order[#M.catalogue_order + 1] = step.kind + 1 end
+    for i in ipairs(M.buildings) do
+        if not M.ladder_position[i - 1] then M.catalogue_order[#M.catalogue_order + 1] = i end
+    end
+
+    -- Waived positions, {[position]=true}, per city (a city takes no new fields).
+    local waivers = setmetatable({}, {__mode = "k"})
+    local function waived(c, n) return waivers[c] and waivers[c][n] end
+    function M.waived(c) return waivers[c] or {} end
+    function M.set_waived(c, positions) waivers[c] = positions end
+
+    -- The next building to place and its position. The type is nil while that
+    -- one waits for a later clear.
+    function M.next_step(c, level)
+        for n, step in ipairs(M.ladder) do
+            if not waived(c, n) and M.owned(c, step.kind) == 0 then
+                if step.after <= level then return step.kind, n end
+                return nil, n
+            end
+        end
+    end
+
+    function M.next_build(c, level) return M.next_step(c, level) or M.wonder_count(c) end
+
+    -- Why a ladder building cannot be placed now: "built", "later" (with the
+    -- clear it waits for) or "earlier" (another comes first). False when it
+    -- can, nil for shop items.
+    function M.ladder_blocked(c, level, kind)
+        local n = M.ladder_position[kind]
+        if not n then return nil end
+        local step = M.ladder[n]
+        if M.owned(c, kind) > 0 then return "built" end
+        if step.after > level then return "later", step.after end
+        if not waived(c, n) and M.next_step(c, level) ~= kind then return "earlier" end
+        return false
+    end
+
+    -- Ladder positions the story requires by `level`: everything up to the
+    -- latest story building it has earned.
+    local function required_through(level)
+        local earned, last = journey.earned(level), 0
+        for n, step in ipairs(M.ladder) do
+            if step.story and step.kind < earned then last = n end
+        end
+        return last
+    end
+
+    function M.campaign_count(c)
+        local n = 0
+        for _, b in ipairs(c.items) do if M.ladder_position[b.type] then n = n + 1 end end
+        return n
+    end
+
+    -- Keep the buildings the story requires affordable in the finite economy.
+    function M.reserved_cost(c, level)
+        local cost = purse()
+        for n = 1, required_through(level) do
+            local step = M.ladder[n]
+            if not waived(c, n) and M.owned(c, step.kind) == 0 then cost = cost + M.buildings[step.kind + 1].cost end
+        end
+        return cost
+    end
+
+    function M.can_spend(c, wallet, level, cost)
+        local reserved = M.reserved_cost(c, level)
+        for slot = 1, slots do
+            if cost[slot] > 0 and wallet[slot] - reserved[slot] < cost[slot] then return false end
+        end
+        return true
+    end
+
+    function M.can_buy(c, wallet, level, kind)
+        if kind < 0 or kind >= #M.buildings or c.count >= 160 then return false end
+        local d = M.buildings[kind + 1]
+        local blocked = M.ladder_blocked(c, level, kind)
+        if blocked then return false end
+        if blocked == nil and not M.can_spend(c, wallet, level, d.cost) then return false end
+        return wallet:covers(d.needs) and wallet:covers(d.cost)
+    end
+
+    -- Waive the non-story steps before the latest earned story building.
+    function M.waive_passed(c, level)
+        local positions = waivers[c] or {}
+        for n = 1, required_through(level) do
+            local step = M.ladder[n]
+            if not step.story and M.owned(c, step.kind) == 0 then positions[n] = true end
+        end
+        waivers[c] = positions
+    end
+
+    -- Save the waivers as a bit mask beside the game's campaign data. A read
+    -- from a save older than the ladder (`predates`) waives what it passed.
+    function M.serialize_waivers(s, c, level, predates)
+        local mask = 0
+        for n in pairs(M.waived(c)) do mask = mask | (1 << (n - 1)) end
+        mask = s:int("ladder_waived", mask)
+        if not save.is_reading(s) then return end
+        local positions = {}
+        for n in ipairs(M.ladder) do
+            if mask & (1 << (n - 1)) ~= 0 then positions[n] = true end
+        end
+        M.set_waived(c, positions)
+        if predates then M.waive_passed(c, level) end
+    end
+    return M
+end
+
 ----------------------------------------------------------------- journey
 
 -- The story's bookkeeping. `content` is the game's: beats (story_content),

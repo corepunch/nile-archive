@@ -75,17 +75,7 @@ function R.serialize_campaign(s)
     local version = s:int("resource_version", reading and 0 or economy.CAMPAIGN_VERSION)
     -- Version 4 added the twenty-step ladder. Restorations an older save had
     -- already passed stay optional rather than holding its next expedition.
-    local waived = 0
-    for n in pairs(island.waived(R.island)) do waived = waived | (1 << (n - 1)) end
-    waived = s:int("ladder_waived", waived)
-    if reading then
-        local positions = {}
-        for n in ipairs(island.ladder) do
-            if waived & (1 << (n - 1)) ~= 0 then positions[n] = true end
-        end
-        island.set_waived(R.island, positions)
-        if version < 4 then island.waive_passed(R.island, R.prog.level) end
-    end
+    island.serialize_waivers(s, R.island, R.prog.level, reading and version < 4)
     if reading and version < 1 then
         island.migrate_wallet(R.prog, R.island)
     elseif reading and version < 3 then
