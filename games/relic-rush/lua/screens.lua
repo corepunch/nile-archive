@@ -112,7 +112,7 @@ local function result_screen()
     end
     local bonuses = ("Move bonus +%d Coins"):format(breakdown.bonus)
     if breakdown.happiness > 0 then bonuses = bonuses .. ("  ·  Happiness +%d Coins"):format(breakdown.happiness) end
-    say(bonuses, rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
+    say(bonuses, l.bonus, 11, PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then
         local r = l.progress
@@ -161,29 +161,27 @@ end
 
 local function award_screen()
     local a = R.award
-    local w, h = 408, 452
-    local x, y = (SCREEN_W - w) / 2, (SCREEN_H - h) / 2 + 8
-    local card = rect(x, y, w, h)
-    panel(card)
-    local header = rect(x + 22, y - 26, w - 44, 74)
+    local l = match3.award_rects(SCREEN_W, SCREEN_H)
+    local header = l.header
+    panel(l.card)
     rrect(header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
     rrect(header, 18, rgba(31, 83, 69))
     rrect(header:inflate(-3), 15, rgba(44, 108, 84))
     say("Item recovered!", rect(header.x + 14, header.y + 9, header.w - 28, 34), 31, PAL_GOLD)
     say(("EXPEDITION %d"):format(a.level), rect(header.x + 12, header.y + 48, header.w - 24, 15), 14, PAL_GOLD)
-    local at = vec2(SCREEN_W / 2, y + 196)
+    local at = l.image:center()
     local s, part = section(.1, .45, 0)
     local pop = 1 + math.sin(part.u * math.pi) * .12
     R.vfx_halo(pp(at), 150 * P.scale, rgba(255, 201, 77, 110 * P.alpha))
     R.vfx_halo(pp(at), 95 * P.scale, rgba(255, 236, 170, 90 * P.alpha))
-    picture_fit(a.image, rect.centered(at, size2.splat(210 * pop * part.f)), 255)
+    picture_fit(a.image, rect.centered(at, size2.splat(l.image.h * pop * part.f)), 255)
     set_paint(s)
     s = section(.4, .3, 10)
-    say(a.name, rect(x + 20, y + 312, w - 40, 42), 36, PAL_GOLD)
-    say("FOR YOUR QUEST", rect(x + 20, y + 354, w - 40, 18), 13, PAL_CREAM)
+    say(a.name, l.name, 36, PAL_GOLD)
+    say("FOR YOUR QUEST", l.subtitle, 13, PAL_CREAM)
     set_paint(s)
     s = section(.55, .25, 8)
-    R.award_continue = rect(x + 40, y + 380, w - 80, 56)   -- the smoke taps it
+    R.award_continue = l.claim   -- the smoke taps it
     if button(R.award_continue, "CONTINUE", true) then
         if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
         else R.overlay = R.OV_RESULT end

@@ -410,14 +410,56 @@ function E.bind_town_board_hud(R)
     end
 end
 
+-- The results and Item recovered cards are vertical stacks: groups sit one
+-- equal gap apart, so no part can crowd the next. The game paints into the
+-- boxes; the header tab rides 26 above the card's top edge.
+local function slot(id, height, side)
+    return {kind="column", padding={side, 0, side, 0}, children={{kind="custom", id=id, height=height}}}
+end
+local function group(gap, children) return {kind="column", gap=gap, children=children} end
+local card_layouts = {}
+local function card_layout(name, screen_w, screen_h, gap, children)
+    local w = math.min(408, screen_w - 48)
+    local key = ("%s:%g:%g"):format(name, w, screen_h)
+    local cached = card_layouts[key]
+    if cached then return cached end
+    local function build(g) return ui.form{kind="column", padding={0, 0, 0, 24}, gap=g, children=children} end
+    local form = build(gap)
+    local _, h = form:measure(w)
+    local spare = screen_h - 80 - h   -- short screens close the gaps up, never the parts
+    if spare < 0 then
+        local count = #children - 1
+        gap = math.max(6, gap + spare / count)
+        form = build(gap)
+        _, h = form:measure(w)
+    end
+    local x, y = (screen_w - w) / 2, (screen_h - h) / 2 + 8
+    local boxes = form:layout(rect(x, y, w, h))
+    local out = {card = rect(x, y + 26, w, h - 26)}
+    for id, box in pairs(boxes) do out[id] = box end
+    card_layouts[key] = out
+    return out
+end
+
 function E.result_rects(screen_w, screen_h)
-    local w, s = math.min(408, screen_w - 48), math.min(1, (screen_h - 100) / 556)
-    local x, y = (screen_w - w) / 2, (screen_h - 556 * s) / 2 + 8
-    return {card = rect(x, y, w, 556 * s), header = rect(x + 22, y - 26 * s, w - 44, 74 * s), stars = rect(x + 70, y + 70 * s, w - 140, 64 * s),
-            score_label = rect(x + 66, y + 140 * s, w - 132, 20 * s), score = rect(x + 60, y + 163 * s, w - 120, 53 * s),
-            treasure_label = rect(x + 30, y + 217 * s, w - 60, 20 * s), rewards = rect(x + 22, y + 243 * s, w - 44, 91 * s),
-            progress = rect(x + 44, y + 349 * s, w - 88, 36 * s), next = rect(x + 28, y + 397 * s, w - 56, 65 * s),
-            claim = rect(x + 40, y + 480 * s, w - 80, 56 * s)}
+    return card_layout("result", screen_w, screen_h, 16, {
+        slot("header", 74, 22),
+        slot("stars", 64, 70),
+        group(0, {slot("score_label", 18, 66), slot("score", 53, 60)}),
+        group(4, {slot("treasure_label", 18, 30), slot("rewards", 91, 22), slot("bonus", 16, 22)}),
+        slot("progress", 36, 44),
+        slot("next", 65, 28),
+        slot("claim", 56, 40),
+    })
+end
+
+function E.award_rects(screen_w, screen_h)
+    return card_layout("award", screen_w, screen_h, 20, {
+        slot("header", 74, 22),
+        slot("image", 210, 20),
+        group(2, {slot("name", 42, 20), slot("subtitle", 18, 20)}),
+        slot("claim", 56, 40),
+    })
 end
 
 function E.guide_form(copy, guide_icon)
