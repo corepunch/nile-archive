@@ -27,7 +27,9 @@ The Well costs Gold. The Workshop, Market, Archive and Temple use all three
 resources. Discovery stars unlock shop stock and land. The five lives regenerate
 one at a time every 30 minutes, including offline.
 
-Tap a placed building for its name and subtitle in the existing speech bubble above it. Only one stays open; the next press dismisses it. A stationary hold still picks up a building through the shared mover, with Confirm/Cancel preserving saved state. Taps do not open building dialogs.
+Tap a placed building for its name and subtitle above it. The label uses the quest panel's dark green and gold palette. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
+
+See the [building label comparisons at both phone sizes](docs/screenshots/review/town-labels/README.md).
 
 Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS timeline, as in CorePunch/orca, while other platforms use the platform monotonic clock.
 

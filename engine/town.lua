@@ -85,7 +85,7 @@ T.color = rgba
 -- The game's town config: its JSON over the engine defaults.
 -- A speech bubble whose first line is a title: larger and bold (the same fill
 -- as an outline, since the skins carry one weight per font), then the subtitle.
--- `bubble.title` names a skin text palette (e.g. "cream", as the resource bar) for the title instead.
+-- The town config can choose the skin's text and color palettes.
 local TITLE_SCALE = 1.3
 local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style)
     local title, rest = utf8:match("^([^\n]*)\n(.*)$")
@@ -440,10 +440,14 @@ function View:frame(inp, dt, active)
     end
     if b and b.item >= 0 and b.item < c.count and c.placing < 0 then
         local sprite = c.cam:rect_to_screen(c:sprite_rect(c.items[b.item + 1]))
-        local style = h.bubble_text and h.bubble_text() or h.skin:text(self.cfg.markers.text, 15)
+        local bubble, skin = self.cfg.bubble, h.skin
+        local em = bubble.em or 15
+        local style = bubble.text and skin:text(bubble.text, em)
+            or h.bubble_text and h.bubble_text() or skin:text(self.cfg.markers.text, 15)
+        local title = bubble.title and skin:text(bubble.title, (bubble.text and em or style.size) * TITLE_SCALE)
         gfx.clip(view)
-        bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, rgba(self.cfg.bubble.fill), rgba(self.cfg.bubble.edge),
-                    self.cfg.bubble.width, self.cfg.bubble.title and h.skin:text(self.cfg.bubble.title, style.size * TITLE_SCALE))
+        bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, skin:color(bubble.fill), skin:color(bubble.edge),
+                    bubble.width, title)
         gfx.unclip()
     end
 

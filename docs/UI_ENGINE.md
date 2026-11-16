@@ -500,3 +500,11 @@ The town header is one `ui.form` row with `align = "center"`: every wallet
 capsule and the menu button are `custom` nodes, so the pills and the taller
 menu share one centre line. `buttons.menu` and the bottom row's tap points
 come from the forms' layout boxes, not separate arithmetic.
+
+## Town building popups
+
+`engine/town.lua` draws the label above a tapped building. The game's
+`town.json` can select skin text palettes with `bubble.title` and
+`bubble.text`. Set `bubble.em` to size the configured subtitle. The title
+scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex
+values. Relic Rush shares those colors with its quest panel.
