@@ -149,7 +149,8 @@ The minimum match is **three identical relics in a straight line** along any of 
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue plaques in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
-The round bonus sockets fill from bronze to blue as their pieces are matched.
+The gold bonus buttons fill from the bottom as their pieces are matched.
+Empty buttons show their tool carved into sandstone.
 See the [bonus artwork and state review](docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets).
 
 ![All ten playable level shapes, actual SDL captures](docs/screenshots/level-shapes-overview.jpg)
