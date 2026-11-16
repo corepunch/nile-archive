@@ -8,7 +8,8 @@ local flags = match3.LINE_MATCHES
 if not reference then flags = flags | match3.NO_RHOMBI | match3.COLOR_TOOL end
 local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=campaign.colors, match_min=3,
     refill_damping=not reference and 2 or nil,
-    extra_tools=not reference and {"shuffle", "row", "lightning"},
+    extra_tools=not reference and {"shuffle", "row", "lightning", "moves", "charge"},
+    extra_moves=economy.AMPHORA_MOVES,
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 local start = M.game_start

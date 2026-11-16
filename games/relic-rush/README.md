@@ -265,24 +265,39 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 
 Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
 
-| # | Building | Price | Board payoff |
+| # | Restoration | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | Expedition camp | 8 Supplies + 3 Food | Dynamite pieces from board 2. |
-| 2 | Spring well | 100 Coins | Unlocks water buckets worth 3 Food each. |
-| 3 | Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Hammer pieces and cut blocks worth 5 Supplies each. |
-| 4 | Jungle market | 85 Coins + 30 Supplies + 24 Food | Shutter Gear pieces and ration jars worth 4 Food each. |
-| 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Shield pieces and helmets worth 6 Coins, followed by rings, scarabs, sandals and harps. |
-| 6 | Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
-| 7 | Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Lightning pieces and carved quartz worth 7 Supplies each. |
-| 8 | Star observatory | 155 Coins + 70 Supplies | Star pieces from board 24. |
-| 9 | Jade fountain | 160 Coins + 65 Supplies | Shrimp worth 6 Food each. |
-| 10 | Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Emeralds worth 11 Coins each. |
+| 1 | ★ Expedition camp | 8 Supplies + 3 Food | Dynamite gems from board 2. |
+| 2 | ★ Spring well | 100 Coins | Water buckets worth 3 Food each. |
+| 3 | Trapper's cabin | 40 Coins + 12 Supplies + 10 Food | Hammer gems. |
+| 4 | ★ Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Cut blocks worth 5 Supplies each. |
+| 5 | Water mill | 45 Coins + 15 Supplies + 12 Food | Shutter Gear gems. |
+| 6 | ★ Jungle market | 85 Coins + 30 Supplies + 24 Food | Ration jars worth 4 Food each. |
+| 7 | Clock tower | 80 Coins + 25 Supplies + 30 Food | Amphora gems: 5 more moves. |
+| 8 | Stone amphitheatre | 50 Coins + 18 Supplies + 18 Food | Shield gems. |
+| 9 | ★ Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Helmets worth 6 Coins. |
+| 10 | ★ Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
+| 11 | Trading post | 90 Coins + 20 Supplies + 45 Food | Rings worth 7 Coins. |
+| 12 | Valley lighthouse | 75 Coins + 20 Supplies + 40 Food | Lightning gems. |
+| 13 | ★ Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Carved quartz worth 7 Supplies each. |
+| 14 | Beached schooner | 120 Coins + 70 Supplies + 30 Food | Scarabs worth 8 Coins. |
+| 15 | Cartographer's house | 140 Coins + 40 Supplies + 50 Food | Tide Chart gems: half-charge the other bonuses. |
+| 16 | ★ Star observatory | 155 Coins + 70 Supplies | Star gems from board 24. |
+| 17 | Great aviary | 160 Coins + 60 Supplies + 40 Food | Sandals worth 9 Coins. |
+| 18 | ★ Jade fountain | 160 Coins + 65 Supplies | Shrimp worth 6 Food each. |
+| 19 | Relic museum | 170 Coins + 50 Supplies + 90 Food | Harps worth 10 Coins. |
+| 20 | ★ Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Emeralds worth 11 Coins each. |
+
+As in Cradle of Rome, each of the twenty restorations adds one piece or one
+bonus, in this order. ★ marks the ten story restorations, which hold the next
+new expedition. The others open after their clear and must be placed before
+the next ★ one.
 
 Construction makes the next story beat available. The [economy table](docs/resource-expedition.md#board-rules-and-palette)
 lists the first expedition and currency for each payoff.
 
-The island's **SHOP** adds 86 repeatable buildings and decorations to these
-ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,
+The island's **SHOP** adds 76 repeatable buildings and decorations to these
+twenty restorations: buildings, trees, shrubs, flowers, monuments, water gardens,
 furniture, supplies, wildlife and rocks. Browse categories and pages, check the
 resource price and cumulative star requirement, then choose a location and
 confirm. Cancelling is free. Stars remain in the wallet and the resources
@@ -433,7 +448,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-Current scope is an offline prototype: thirty hex levels, ten story wonders plus 86 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
+Current scope is an offline prototype: thirty hex levels, twenty campaign restorations plus 76 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
 
 ## Fast rule tests
 

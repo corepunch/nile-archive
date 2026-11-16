@@ -60,10 +60,10 @@ local function campaign()
                "campaign smoke: beats played out of order: " .. table.concat(played, " "))
         for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
         assert(R.prog.story_choices["after-10"] == 1, "campaign smoke: Mara answered the signal")
-        assert(R.prog.level == rules.LEVELS and island.wonder_count(c) == island.WONDERS and c.open == 63,
-               "campaign smoke: thirty clears restore every wonder and open every region")
-        print(("campaign smoke passed: %d expeditions, %d story beats, %d wonders, every region in %d frames"):format(
-            R.prog.level, #played, island.wonder_count(c), frames))
+        assert(R.prog.level == rules.LEVELS and island.campaign_count(c) == #island.ladder and c.open == 63,
+               "campaign smoke: thirty clears restore all twenty buildings and open every region")
+        print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations, every region in %d frames"):format(
+            R.prog.level, #played, island.campaign_count(c), frames))
         app.quit()
     elseif R.overlay == R.OV_STORY_CHOICE then
         local box = R.choice_form.boxes["1"]
@@ -87,15 +87,18 @@ local function campaign()
     elseif R.on_island and R.overlay == R.OV_NONE then
         local z = c:next_zone(R.prog.wallet)
         if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
-        elseif island.wonder_count(c) < journey.earned(R.prog.level) then R.island_begin(island.wonder_count(c), true)
+        elseif island.next_step(c, R.prog.level) then R.island_begin(island.next_step(c, R.prog.level), true)
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10
         end
     elseif not R.on_island and R.overlay == R.OV_NONE and R.phase == R.PH_IDLE and R.selected < 0 then
         local g = R.g
         -- This scripted path skips most matches and exercises the real purchase UI.
-        local wonder = journey.wonder_at(g.level + 1)
-        if wonder then g.earnings = {table.unpack(R.wonders[wonder].cost)} end
+        local income = purse()
+        for _, step in ipairs(island.ladder) do
+            if step.after == g.level + 1 then income = income + R.buildings[step.kind + 1].cost end
+        end
+        g.earnings = {income[1], income[2], income[3]}
         for i = 0, rules.CELLS - 1 do
             g.ice[i], g.chain[i], g.stone_hp[i], g.oil[i] = 0, 0, 0, 0
         end

@@ -2,7 +2,7 @@
 
 Clear the marked ground or complete the crew's task. The matches made along the
 way bring back Coins, Supplies and Food to restore the valley. The launch
-campaign uses the existing 30 expeditions, ten restorations, nine quests and
+campaign uses the existing 30 expeditions, twenty restorations, nine quests and
 the signal finale. Each restoration should feel like spending what the crew
 just brought home.
 
@@ -88,27 +88,53 @@ the Coins slot for the tide chart. The Well purchase that follows uses Coins
 banked on earlier boards or earned from unused moves and replays.
 
 Confirmed placements change openings and refills from the listed expedition
-onward. Authored story pieces keep their slots. The six bonus families debut
+onward. Authored story pieces keep their slots. The eight bonus families debut
 as matchable pieces and fill their own saved sockets. [Bonus rules and effects](board-progression.md#bonus-pieces)
 
-| Restoration | First board | Board payoff | How it funds the next restoration |
-| --- | ---: | --- | --- |
-| Expedition Camp | 2 | Dynamite pieces | Charge a blast to clear clusters and save moves for the Well. |
-| Spring Well | 5 | Water buckets replace timber, 3 Food each | Feed the Workshop crew. |
-| Artisan Workshop | 8 | Cut blocks replace dressed stone, 5 Supplies each. Hammer pieces debut. | Pay the Market's Supplies. |
-| Jungle Market | 10 | Ration jars replace red berries, 4 Food each. Shutter Gear pieces debut. | Feed the crew working on the Courtyard. |
-| Sunstone Courtyard | 14 | Helmets replace sun coins, 6 Coins each. Shield pieces debut. | Pay the Lodge's Coin cost. |
-| Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Food each | Pay the Archive's Food cost. |
-| Lost-world Archive | 20 | Carved quartz replaces cut blocks, 7 Supplies each. Lightning pieces debut. | Pay the Observatory's Supplies. |
-| Star Observatory | 24 | Star pieces | Charge a Star to clear coin or quartz across the board for the Fountain. |
-| Jade Fountain | 27 | Shrimp replace water buckets, 6 Food each | Pay the Temple's Food cost. |
-| Temple of the Sun | 30 | Emeralds earn 11 Coins each | The finale and its replays earn Coins for island purchases. |
+Like Cradle of Rome's twenty constructions, each restoration adds exactly one
+piece or one bonus. The ten story restorations (★) hold the next new
+expedition until they are placed. The other ten sit between them on the same
+ladder: each opens after its clear, and must be placed before the next story
+restoration can be. A player can play on past an open one until the story
+needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDINGS.md#relic-rush-the-20-restorations)
 
-One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. The
-Courtyard unlocks helmets on expeditions 14–17, then the same slot pays 7 with
-rings on 18–20, 8 with scarabs on 21–24, 9 with sandals on 25–27 and 10 with
-harps from 28. The Temple promotes it to Emerald on expedition 30.
+| # | Restoration | Placed after | First board | Board payoff | Price C / F / S |
+| ---: | --- | ---: | ---: | --- | ---: |
+| 1 | ★ Expedition Camp | 1 | 2 | Dynamite gems | 0 / 3 / 8 |
+| 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 100 / 0 / 0 |
+| 3 | Trapper's cabin | 7 | 8 | Hammer gems | 40 / 10 / 12 |
+| 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 70 / 20 / 24 |
+| 5 | Water mill | 9 | 10 | Shutter Gear gems | 45 / 12 / 15 |
+| 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 85 / 24 / 30 |
+| 7 | Clock tower | 11 | 12 | Amphora gems: a use adds 5 moves | 80 / 30 / 25 |
+| 8 | Stone amphitheatre | 13 | 14 | Shield gems | 50 / 18 / 18 |
+| 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 85 / 34 / 36 |
+| 10 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 130 / 35 / 0 |
+| 11 | Trading post | 17 | 18 | Rings replace helmets, 7 Coins each | 90 / 45 / 20 |
+| 12 | Valley lighthouse | 19 | 20 | Lightning gems | 75 / 40 / 20 |
+| 13 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 145 / 85 / 40 |
+| 14 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 120 / 30 / 70 |
+| 15 | Cartographer's house | 22 | 23 | Tide Chart gems: a use half-charges every other bonus | 140 / 50 / 40 |
+| 16 | ★ Star Observatory | 23 | 24 | Star gems | 155 / 0 / 70 |
+| 17 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 160 / 40 / 60 |
+| 18 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 160 / 0 / 65 |
+| 19 | Relic museum | 27 | 28 | Harps replace sandals, 10 Coins each | 170 / 90 / 50 |
+| 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 185 / 110 / 75 |
+
+Each new piece pays a currency the next restoration on the ladder needs.
+Where a story restoration and a new one share a clear (7, 9, 13 and 19), the
+new one comes first, so every bonus debuts on the same board as before the
+ladder. Board 10's story gear is also the Shutter Gear piece.
+
+One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. From there
+the slot climbs one treasure per restoration: helmet (6), ring (7), scarab (8),
+sandal (9), harp (10) and emerald (11). A board shows the best treasure placed
+by its expedition.
 [Side-by-side Rome comparison](../../../docs/cradle-of-rome-reference/gem-correspondence.html)
+
+A save from before the ladder keeps playing. When it loads, the new
+restorations before its latest earned story restoration become optional:
+they stay on sale and never hold an expedition.
 
 An arrival message credits the restored building and names the new piece's
 yield. The authored hint on board 5 trades one swap for three cleared plaques
@@ -119,20 +145,22 @@ Food keeps the workers supplied, and Supplies go into repairs.
 ## Restoration prices and earnings
 
 The Camp uses Supplies and Food. Buying the Well with Coins unlocks a Food
-source. The Workshop and Market use all three currencies.
+source. Every restoration after it uses at least two currencies. The prices
+are in the ladder table above.
 
-| Clear | Restore | Coins | Supplies | Food |
-| ---: | --- | ---: | ---: | ---: |
-| 1 | Expedition camp | — | 8 | 3 |
-| 4 | Spring well | 100 | — | — |
-| 7 | Artisan workshop | 70 | 24 | 20 |
-| 9 | Jungle market | 85 | 30 | 24 |
-| 13 | Sunstone courtyard | 85 | 36 | 34 |
-| 16 | Explorer's lodge | 130 | — | 35 |
-| 19 | Lost-world archive | 145 | 40 | 85 |
-| 23 | Star observatory | 155 | 70 | — |
-| 26 | Jade fountain | 160 | 65 | — |
-| 29 | Temple of the sun | 185 | 75 | 110 |
+**The ten new restorations are priced provisionally.** The extended campaign
+run plays every board with a greedy bot, places each restoration when it can
+afford it, and replays the latest board when the story needs one it cannot.
+With the current prices it places all twenty in thirty clears with no replays.
+The wallet runs far ahead of prices: after board 14 it holds 556 Coins,
+902 Supplies and 679 Food, and it ends with 1,651 / 2,583 / 2,562. The story
+prices were already at this scale, so the next step is a price pass across the
+whole ladder rather than the new rows alone. The bot is not a human player.
+
+```sh
+make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
+build/test/relic-rush --extended "rules campaign_play"   # per-board wallet in build/test/relic-rush.log
+```
 
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and

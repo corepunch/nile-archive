@@ -1479,9 +1479,25 @@ function E.new(config)
         return flags & E.NO_TOOLS == 0 and tool >= 0 and tool < 3 + #extra_tools
             and (g.tools[tool + 1] or 0) > 0 and not g.won and not g.lost
     end
+    -- Extra tools that act on the whole board when tapped. "moves" adds
+    -- config.extra_moves moves; "charge" adds half a use to every other
+    -- unlocked bonus socket.
+    local INSTANT = {shuffle=true, lightning=true, moves=true, charge=true}
+    function M.game_tool_effect(tool) return extra_tools[tool - 2] end
     function M.game_tool_untargeted(tool)
-        local effect = extra_tools[tool - 2]
-        return effect == "shuffle" or effect == "lightning"
+        return INSTANT[extra_tools[tool - 2]] == true
+    end
+    local function charge_others(g, tool)
+        if not g.tool_meter or not g.single_charge_tools then return false end
+        local charged = false
+        for i, meter in pairs(g.tool_meter) do
+            if i ~= tool + 1 and meter < g.tool_threshold then
+                g.tool_meter[i] = math.min(g.tool_threshold, meter + g.tool_threshold // 2)
+                g.tools[i] = g.tool_meter[i] // g.tool_threshold
+                charged = true
+            end
+        end
+        return charged
     end
     local function target_tool(g, tool, cell, m)
         if not cell or not cell_active(g, cell) then return false end
@@ -1519,13 +1535,18 @@ function E.new(config)
         m.match_lengths = nil
         if effect == "shuffle" then
             if not game_shuffle(g) then return false end
+        elseif effect == "moves" then g.moves = g.moves + (config.extra_moves or 5)
+        elseif effect == "charge" then
+            if not charge_others(g, tool) then return false end
         elseif effect == "lightning" then lightning(g, m)
         elseif not target_tool(g, tool, cell, m) then return false end
         g.tools[tool + 1] = g.tools[tool + 1] - 1
         if g.single_charge_tools and g.tool_meter[tool + 1] then g.tool_meter[tool + 1] = 0 end
         g.combo = 0
         count_hits(m)
-        return true, effect == "shuffle"
+        -- The effects that clear nothing, by name, so the caller skips the clear.
+        local still = (effect == "shuffle" or effect == "moves" or effect == "charge") and effect or nil
+        return true, still
     end
 
     -- The cells a tool would hit at `cell`, as {[cell]=true}, without using it.
@@ -1567,6 +1588,11 @@ function E.new(config)
     R.tone, R.vfx_wave = R.tone or noop, R.vfx_wave or noop
     R.notice = R.notice or function(message) R.toast, R.toast_time = message, 3.6 end
     R.tool_notes = R.tool_notes or {"Choose a piece to remove.", "Choose the centre of a blast.", "Choose a piece to clear its axes."}
+    -- What an untargeted bonus did, and why it could not act, by effect name.
+    R.tool_done_notes = R.tool_done_notes or {shuffle="Pieces reshuffled.", moves="More moves added.",
+        charge="Your other bonuses are charged."}
+    R.tool_refused_notes = R.tool_refused_notes or {shuffle="No shuffle available.",
+        charge="Your other bonuses are already charged."}
     function R.reset_board(g)
         R.g, R.pending = g, M.new_match()
         R.phase, R.phase_time, R.idle_time, R.shake = 0, 0, 0, 0
@@ -1687,17 +1713,17 @@ function E.new(config)
     end
 
     local function use_tool(k, cell)
-        local used, shuffled = rules.game_tool(R.g, k, cell, R.pending)
+        local used, still = rules.game_tool(R.g, k, cell, R.pending)
         if used then
             R.tool = -1
             R.play("tool")
             if R.g.single_charge_tools then R.toast_time = 0 end
-            if shuffled then
+            if still then
                 R.hint_a, R.hint_b, R.idle_time = -1, -1, 0
-                R.notice("Pieces reshuffled.")
+                R.notice(R.tool_done_notes[still])
                 if R.update_bonus_charges then R.update_bonus_charges() end
             else R.finish_wave() end
-        elseif rules.game_tool_untargeted(k) then R.notice("No shuffle available.") end
+        elseif rules.game_tool_untargeted(k) then R.notice(R.tool_refused_notes[rules.game_tool_effect(k)] or "Nothing to do.") end
     end
 
     function R.select_tool(k)

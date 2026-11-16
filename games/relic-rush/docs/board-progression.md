@@ -68,15 +68,23 @@ featured resource matches.
 | Confirmed restoration | Debut | Bonus and effect |
 | --- | ---: | --- |
 | Expedition Camp | 2 | Dynamite hits the chosen cell and its six neighbors. |
-| Artisan Workshop | 8 | Hammer hits one chosen cell. |
-| Jungle Market | 10 | Shutter Gear reshuffles loose pieces. |
-| Sunstone Courtyard | 14 | Shield hits the row through the chosen cell, along the hex board's row axis. |
-| Lost-world Archive | 20 | Lightning immediately strikes up to 20 distinct random cells. |
+| Trapper's cabin | 8 | Hammer hits one chosen cell. |
+| Water mill | 10 | Shutter Gear reshuffles loose pieces. |
+| Clock tower | 12 | Amphora adds 5 moves. |
+| Stone amphitheatre | 14 | Shield hits the row through the chosen cell, along the hex board's row axis. |
+| Valley lighthouse | 20 | Lightning immediately strikes up to 20 distinct random cells. |
+| Cartographer's house | 23 | Tide Chart adds half a use to every other unlocked bonus. It keeps its use when they are all full. |
 | Star Observatory | 24 | Star hits every piece of the chosen kind. |
+
+These are Cradle of Rome's eight tools. The Amphora is its Hourglass, which
+adds time; these boards count moves. The Tide Chart is its Plus. Both
+currently borrow existing painted chips ([#103](https://github.com/corepunch/nile-archive/issues/103)).
+With all eight unlocked, the toolbar's buttons are about 39 points wide at
+390×844.
 
 The first expedition after each of these restorations features its new piece.
 Later boards draw one family from the eligible restorations using the board seed.
-It takes an existing slot so the expedition keeps six kinds. The Workshop's
+It takes an existing slot so the expedition keeps six kinds. The cabin's
 Hammer uses the red slot on board 8, where the relay pliers occupy the score slot.
 Each matched bonus piece contributes three points to its own socket. The
 socket holds 18 points and one use. Matches beyond that cap cannot bank a

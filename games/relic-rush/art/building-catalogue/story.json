@@ -16,7 +16,7 @@
     "cost": [85, 24, 30]
   },
   "gateway": {
-    "about": "Adds helmets worth 6 Coins, followed by more valuable treasures.",
+    "about": "Helmets replace sun coins, 6 Coins each.",
     "cost": [85, 34, 36]
   },
   "lodge": {
@@ -39,20 +39,50 @@
     "about": "Adds emeralds worth 11 Coins each.",
     "cost": [185, 110, 75]
   },
-  "log_cabin": {"cost": [200, 0, 13]},
+  "log_cabin": {
+    "about": "Hammer gems join later expeditions. Match them to charge a hit on one cell.",
+    "cost": [40, 10, 12]
+  },
   "apothecary": {"cost": [220, 15, 0]},
   "mess_hall": {"cost": [240, 0, 16]},
   "stilt_house": {"cost": [260, 0, 17]},
-  "map_room": {"cost": [280, 0, 19]},
+  "map_room": {
+    "about": "Tide Chart gems join later expeditions. Match them to half-charge your other bonuses.",
+    "cost": [140, 50, 40]
+  },
   "greenhouse": {"cost": [300, 20, 0]},
-  "trading_post": {"cost": [320, 21, 0]},
-  "water_mill": {"cost": [340, 0, 23]},
-  "clock_tower": {"cost": [360, 0, 24]},
-  "lighthouse": {"cost": [380, 0, 25]},
+  "trading_post": {
+    "about": "Rings replace helmets, 7 Coins each.",
+    "cost": [90, 45, 20]
+  },
+  "water_mill": {
+    "about": "Shutter Gear gems join later expeditions. Match them to charge a shuffle.",
+    "cost": [45, 12, 15]
+  },
+  "clock_tower": {
+    "about": "Amphora gems join later expeditions. Match them to charge 5 more moves.",
+    "cost": [80, 30, 25]
+  },
+  "lighthouse": {
+    "about": "Lightning gems join later expeditions. Match them to charge a strike on 20 cells.",
+    "cost": [75, 40, 20]
+  },
   "treehouse": {"cost": [400, 0, 27]},
-  "aviary": {"cost": [420, 28, 0]},
-  "beached_ship": {"cost": [440, 0, 29]},
-  "amphitheater": {"cost": [460, 0, 31]},
-  "museum": {"cost": [500, 0, 33]},
+  "aviary": {
+    "about": "Sandals replace scarabs, 9 Coins each.",
+    "cost": [160, 40, 60]
+  },
+  "beached_ship": {
+    "about": "Scarabs replace rings, 8 Coins each.",
+    "cost": [120, 30, 70]
+  },
+  "amphitheater": {
+    "about": "Shield gems join later expeditions. Match them to charge a row strike.",
+    "cost": [50, 18, 18]
+  },
+  "museum": {
+    "about": "Harps replace sandals, 10 Coins each.",
+    "cost": [170, 90, 50]
+  },
   "hanging_gardens": {"cost": [550, 37, 0]}
 }

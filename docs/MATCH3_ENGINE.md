@@ -103,6 +103,21 @@ Both games persist the inventory through `update_bonus_charges` as waves
 resolve. Tool hits still earn the base wallet yield. A game can supply `sunburst_targets` for the earned tool
 so the preview and the hit share the same cell mask.
 
+`extra_tools` names the tools after the first three, in order. `"row"` is
+targeted. `"shuffle"`, `"lightning"`, `"moves"` and `"charge"` act as soon as
+they are tapped. `"moves"` adds `extra_moves` moves (default 5). `"charge"`
+adds half a use to every other unlocked socket and keeps its own use when
+they are all full. `game_tool` returns the name of an effect that clears
+nothing, and the board shows `R.tool_done_notes[name]`.
+
+A game whose campaign buildings are more than story types `0..WONDERS-1` in
+order supplies three island hooks. `next_build(city, level)` names the
+building to place next. `ladder_blocked(city, level, kind)` returns
+`"built"`, `"later"` with the clear it waits for, `"earlier"`, false when the
+building can be placed, or nil for shop items. `catalogue_order` lists catalogue
+rows in shop order. Relic Rush's twenty-step ladder uses all three; without
+them the engine keeps the story-only rules.
+
 A swap into a chain sends the movable gem halfway toward the blocked cell
 and back. The chained gem stays in place. This plays the ordinary rejected
 swap's sound and haptic and spends zero moves. Reduced motion shortens the

@@ -154,35 +154,47 @@ for level=1,30 do
             'Tomas names the sender at the courtyard')
     end
     local kind=journey.wonder_at(level)
-    -- This test skips matches to isolate the story, so supply the board income.
-    if kind then g.earnings={table.unpack(island.wonders[kind].cost)} end
+    -- This test skips matches to isolate the story, so supply the board income
+    -- for every ladder restoration this clear opens.
+    local opened, income = {}, purse()
+    for _, step in ipairs(island.ladder) do
+        if step.after==level then
+            opened[#opened+1]=step
+            income=income+island.buildings[step.kind+1].cost
+        end
+    end
+    g.earnings={income[1],income[2],income[3]}
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     local after=journey.next(p,owned(c),nil)
     check(after and after.key==('after-%02d'):format(level),'every first clear has a story beat')
     check(journey.awaiting_return(p),'unread result blocks the next new expedition')
     p.story_seen[after.key]=true
-    if kind then
+    for z=1,5 do c:unlock(z,p.wallet) end
+    for _, step in ipairs(opened) do
         local _, next_task=quests.current(p,c)
-        check(next_task and next_task.kind==kind-1,'the funded upgrade is the next quest task')
-        check(not journey.next(p,owned(c),nil),'restoration story waits for confirmed construction')
-        check(island.can_buy(c,p.wallet,p.level,kind-1),'earned restoration is affordable')
-        local reserve,cost=island.reserved_cost(c,p.level),island.wonders[kind].cost
-        check(reserve:covers(cost) and cost:covers(reserve),'reserve covers all costs of the earned building')
-        for z=1,5 do c:unlock(z,p.wallet) end
+        check(next_task and next_task.kind==step.kind,'the funded restoration is the next quest task')
+        check(island.next_step(c,p.level)==step.kind,'restorations open in ladder order')
+        if step.story then
+            check(not journey.next(p,owned(c),nil),'restoration story waits for confirmed construction')
+            local reserve,cost=island.reserved_cost(c,p.level),island.buildings[step.kind+1].cost
+            check(reserve:covers(cost) and cost:covers(reserve),'reserve covers all costs of the earned building')
+        end
+        check(island.can_buy(c,p.wallet,p.level,step.kind),'earned restoration is affordable')
         check(island.island_place_next(c,p.wallet,p.level,0),'scheduled building fits open land')
+    end
+    check(not island.island_place_next(c,p.wallet,p.level,0),'a clear opens only its own restorations')
+    if kind then
         local placed=journey.next(p,owned(c),nil)
         check(placed and placed.key==('restore-%02d'):format(level),'confirmed placement releases its scene')
         p.story_seen[placed.key]=true
-    else
-        check(not island.island_place_next(c,p.wallet,p.level,0),'ordinary clue creates no extra building')
     end
     local replay=rules.game_start(level-1,100+level);replay.won=true;replay.moves=0
     local stars=p.wallet[4]
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(c.count==10 and c.open==63 and p.wallet[4]==90 and quests.points(c)==40,
-    'thirty clears restore ten wonders, fund every region and award 40 points')
+check(c.count==20 and c.open==63 and p.wallet[4]==90 and quests.points(c)==80,
+    'thirty clears restore twenty buildings, fund every region and award 80 points')
 check(not quests.current(p,c),'all nine quests finish')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')
 

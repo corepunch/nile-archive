@@ -278,17 +278,23 @@ local function test_island()
     for i = 0, LEVELS - 1 do
         local g = rules.game_start(i, i + 1)
         g.won = true
-        local kind=rules.wonder_at(i+1)
-        if kind then g.earnings={table.unpack(island.wonders[kind].cost)} end
+        -- The clear pays for every ladder restoration it opens.
+        local due, earnings = 0, purse()
+        for _, step in ipairs(island.ladder) do
+            if step.after == i + 1 then earnings = earnings + island.buildings[step.kind + 1].cost end
+            if step.after <= i + 1 then due = due + 1 end
+        end
+        g.earnings = {earnings[1], earnings[2], earnings[3]}
         rules.progress_reward(p, g, island.wonders)
         local gold = p.wallet[rules.GOLD]
         rules.progress_reward(p, g, island.wonders)
         check(p.wallet[rules.GOLD] == gold and p.level == i + 1, "reward once")
         for z = 1, island.ISLAND_ZONES - 1 do c:unlock(z, p.wallet) end
-        if kind then check(island.island_place_next(c,p.wallet,p.level,0) and c.count==kind,"scheduled wonder fits")
-        else check(not island.island_place_next(c,p.wallet,p.level,0),"clue-only clear grants no wonder") end
-        check(not island.island_place_next(c, p.wallet, p.level, 0), "only one wonder per win")
+        while island.island_place_next(c, p.wallet, p.level, 0) do end
+        check(c.count == due and island.campaign_count(c) == due, "every opened ladder restoration fits, in order")
+        check(island.wonder_count(c) == require("journey").earned(p.level), "story restorations keep their schedule")
     end
+    check(c.count == #island.ladder, "the ladder has twenty restorations")
     check(p.wallet[rules.STARS] == LEVELS*3, "stars accumulate")
 
     -- shoreline, collisions, failed builds change nothing, moving is free
@@ -390,10 +396,10 @@ end
 local function test_campaign()
     local m = rules.new_match()
     local total, runs = 0, 0
-    local restored, wonder = {}, 1
+    local restored = {}
     for lvl = 0, LEVELS - 1 do
-        if rules.wonder_levels[wonder] == lvl then
-            restored[wonder - 1], wonder = true, wonder + 1
+        for _, step in ipairs(island.ladder) do
+            if step.after == lvl then restored[step.unlock.building] = true end
         end
         local wins = 0
         for seed = 1, 4 do

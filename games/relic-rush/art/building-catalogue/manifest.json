@@ -200,7 +200,7 @@
         34,
         36
       ],
-      "about": "Adds helmets worth 6 Coins, followed by more valuable treasures.",
+      "about": "Helmets replace sun coins, 6 Coins each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/gateway.png",
@@ -416,7 +416,7 @@
       "id": 10,
       "key": "log_cabin",
       "name": "Trapper's cabin",
-      "category": "building",
+      "category": "wonder",
       "size": [
         2,
         2
@@ -426,8 +426,8 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 200,
-      "stars": 6,
+      "gold": 40,
+      "stars": 0,
       "runtime": "data/buildings/log_cabin.png",
       "image": [
         279,
@@ -436,11 +436,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        200,
-        0,
-        13
+        40,
+        10,
+        12
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Hammer gems join later expeditions. Match them to charge a hit on one cell.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/log_cabin.png",
@@ -576,7 +576,7 @@
       "id": 14,
       "key": "map_room",
       "name": "Cartographer's house",
-      "category": "building",
+      "category": "wonder",
       "size": [
         3,
         2
@@ -586,8 +586,8 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 280,
-      "stars": 12,
+      "gold": 140,
+      "stars": 0,
       "runtime": "data/buildings/map_room.png",
       "image": [
         369,
@@ -596,11 +596,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        280,
-        0,
-        19
+        140,
+        50,
+        40
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Tide Chart gems join later expeditions. Match them to half-charge your other bonuses.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/map_room.png",
@@ -656,7 +656,7 @@
       "id": 16,
       "key": "trading_post",
       "name": "Trading post",
-      "category": "building",
+      "category": "wonder",
       "size": [
         3,
         3
@@ -666,8 +666,8 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 320,
-      "stars": 15,
+      "gold": 90,
+      "stars": 0,
       "runtime": "data/buildings/trading_post.png",
       "image": [
         419,
@@ -676,11 +676,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        320,
-        21,
-        0
+        90,
+        45,
+        20
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Rings replace helmets, 7 Coins each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/trading_post.png",
@@ -696,7 +696,7 @@
       "id": 17,
       "key": "water_mill",
       "name": "Water mill",
-      "category": "building",
+      "category": "wonder",
       "size": [
         3,
         3
@@ -706,8 +706,8 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 340,
-      "stars": 15,
+      "gold": 45,
+      "stars": 0,
       "runtime": "data/buildings/water_mill.png",
       "image": [
         419,
@@ -716,11 +716,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        340,
-        0,
-        23
+        45,
+        12,
+        15
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Shutter Gear gems join later expeditions. Match them to charge a shuffle.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/water_mill.png",
@@ -736,7 +736,7 @@
       "id": 18,
       "key": "clock_tower",
       "name": "Clock tower",
-      "category": "building",
+      "category": "wonder",
       "size": [
         2,
         2
@@ -746,8 +746,8 @@
         306.519
       ],
       "base_width": 273.205,
-      "gold": 360,
-      "stars": 18,
+      "gold": 80,
+      "stars": 0,
       "runtime": "data/buildings/clock_tower.png",
       "image": [
         278,
@@ -756,11 +756,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Clock Tower",
       "cost": [
-        360,
-        0,
-        24
+        80,
+        30,
+        25
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Amphora gems join later expeditions. Match them to charge 5 more moves.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/clock_tower.png",
@@ -776,7 +776,7 @@
       "id": 19,
       "key": "lighthouse",
       "name": "Valley lighthouse",
-      "category": "building",
+      "category": "wonder",
       "size": [
         2,
         2
@@ -786,8 +786,8 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 380,
-      "stars": 18,
+      "gold": 75,
+      "stars": 0,
       "runtime": "data/buildings/lighthouse.png",
       "image": [
         278,
@@ -796,11 +796,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        380,
-        0,
-        25
+        75,
+        40,
+        20
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Lightning gems join later expeditions. Match them to charge a strike on 20 cells.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lighthouse.png",
@@ -856,7 +856,7 @@
       "id": 21,
       "key": "aviary",
       "name": "Great aviary",
-      "category": "building",
+      "category": "wonder",
       "size": [
         3,
         3
@@ -866,8 +866,8 @@
         224.8
       ],
       "base_width": 409.808,
-      "gold": 420,
-      "stars": 21,
+      "gold": 160,
+      "stars": 0,
       "runtime": "data/buildings/aviary.png",
       "image": [
         416,
@@ -876,11 +876,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Aviary",
       "cost": [
-        420,
-        28,
-        0
+        160,
+        40,
+        60
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Sandals replace scarabs, 9 Coins each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/aviary.png",
@@ -896,7 +896,7 @@
       "id": 22,
       "key": "beached_ship",
       "name": "Beached schooner",
-      "category": "building",
+      "category": "wonder",
       "size": [
         4,
         2
@@ -906,8 +906,8 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 440,
-      "stars": 24,
+      "gold": 120,
+      "stars": 0,
       "runtime": "data/buildings/beached_ship.png",
       "image": [
         475,
@@ -916,11 +916,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        440,
-        0,
-        29
+        120,
+        30,
+        70
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Scarabs replace rings, 8 Coins each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/beached_ship.png",
@@ -936,7 +936,7 @@
       "id": 23,
       "key": "amphitheater",
       "name": "Stone amphitheatre",
-      "category": "building",
+      "category": "wonder",
       "size": [
         4,
         3
@@ -946,8 +946,8 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 460,
-      "stars": 24,
+      "gold": 50,
+      "stars": 0,
       "runtime": "data/buildings/amphitheater.png",
       "image": [
         494,
@@ -956,11 +956,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        460,
-        0,
-        31
+        50,
+        18,
+        18
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Shield gems join later expeditions. Match them to charge a row strike.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/amphitheater.png",
@@ -976,7 +976,7 @@
       "id": 24,
       "key": "museum",
       "name": "Relic museum",
-      "category": "building",
+      "category": "wonder",
       "size": [
         4,
         3
@@ -986,8 +986,8 @@
         304.224
       ],
       "base_width": 496.41,
-      "gold": 500,
-      "stars": 27,
+      "gold": 170,
+      "stars": 0,
       "runtime": "data/buildings/museum.png",
       "image": [
         515,
@@ -996,11 +996,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Museum",
       "cost": [
-        500,
-        0,
-        33
+        170,
+        90,
+        50
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Harps replace sandals, 10 Coins each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/museum.png",

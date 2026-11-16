@@ -14,7 +14,7 @@ local E = {
         {key="stone", name="Dressed stone", slot=3, amount=3},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,
-    CAMPAIGN_VERSION=3,
+    CAMPAIGN_VERSION=4,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
@@ -29,39 +29,55 @@ E.bonuses = {
     {key="mixer", name="Shutter Gear", tool=4, effect="Tap the charged gear to shuffle loose pieces."},
     {key="shield", name="Shield", tool=5, effect="Tap a cell to hit the row through it."},
     {key="lightning", name="Lightning", tool=6, effect="Tap the charged bolt to strike up to 20 cells."},
+    {key="hourglass", name="Amphora", tool=7, effect="Tap the charged amphora for 5 more moves."},
+    {key="plus", name="Tide Chart", tool=8, effect="Tap the charged chart to half-charge your other bonuses."},
 }
+E.AMPHORA_MOVES = 5
 for _, bonus in ipairs(E.bonuses) do bonus.amount = 3 end
 
--- Same order as the story catalogue and its stable city type IDs (zero-based).
+-- The campaign ladder, in purchase order, after Cradle of Rome's 20
+-- constructions: each building adds exactly one piece or one bonus. `building`
+-- is the catalogue key. The ten story restorations hold the next new
+-- expedition; the other ten must be placed before the next story restoration.
 -- backdrop is the board painting the restored building brings: 1 lagoon, 2 temple.
+local B = E.bonuses
 E.unlocks = {
-    {backdrop=1, first_level=2, bonus=E.bonuses[2]},
-    {key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
-    {key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8, bonus=E.bonuses[1]},
-    {key="rations", backdrop=1, name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10, bonus=E.bonuses[4]},
-    {key="helmet", backdrop=2, name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14, bonus=E.bonuses[5], variants={
-        {key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
-        {key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
-        {key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9, first_level=25},
-        {key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10, first_level=28},
-    }},
-    {key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
-    {key="quartz", backdrop=2, name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20, bonus=E.bonuses[6]},
-    {backdrop=2, first_level=24, bonus=E.bonuses[3]},
-    {key="shrimp", backdrop=1, name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
-    {key="emerald", backdrop=2, name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
+    {building="camp", backdrop=1, first_level=2, bonus=B[2]},
+    {building="well", key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
+    {building="log_cabin", first_level=8, bonus=B[1]},
+    {building="workshop", key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
+    {building="water_mill", first_level=10, bonus=B[4]},
+    {building="market", key="rations", backdrop=1, name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
+    {building="clock_tower", first_level=12, bonus=B[7]},
+    {building="amphitheater", first_level=14, bonus=B[5]},
+    {building="gateway", key="helmet", backdrop=2, name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14},
+    {building="lodge", key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
+    {building="trading_post", key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
+    {building="lighthouse", first_level=20, bonus=B[6]},
+    {building="archive", key="quartz", backdrop=2, name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
+    {building="beached_ship", key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
+    {building="map_room", first_level=23, bonus=B[8]},
+    {building="observatory", backdrop=2, first_level=24, bonus=B[3]},
+    {building="aviary", key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9, first_level=25},
+    {building="fountain", key="shrimp", backdrop=1, name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
+    {building="museum", key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10, first_level=28},
+    {building="temple", key="emerald", backdrop=2, name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
 }
+-- A restoration is placed after the clear before its first board.
+for _, unlock in ipairs(E.unlocks) do unlock.after = unlock.first_level - 1 end
+
+function E.unlock_of(building)
+    for _, unlock in ipairs(E.unlocks) do
+        if unlock.building == building then return unlock end
+    end
+end
 
 function E.unlock_text(unlock)
     return ("%s earn +%d %s each."):format(unlock.name, unlock.amount, E.currencies[unlock.slot].name)
 end
 
 function E.building_unlock_text(unlock)
-    if unlock.bonus then
-        local name = unlock.bonus.name .. " gems"
-        return unlock.kind and (unlock.name .. " and " .. name) or name
-    end
-    return unlock.name
+    return unlock.bonus and unlock.bonus.name .. " gems" or unlock.name
 end
 
 function E.bonus_lesson(bonus)
@@ -79,23 +95,19 @@ function E.board_loadout(level, number, restored, seed)
     end
     local silver = E.silver_coin
     if number == silver.first_level and yields[silver.kind] then yields[silver.kind] = silver end
-    for i, unlock in ipairs(E.unlocks) do
+    for _, unlock in ipairs(E.unlocks) do
         local bonus = unlock.bonus
-        if bonus and restored and restored[i - 1] and (not restored.preview or number >= unlock.first_level) then
+        local placed = restored and restored[unlock.building]
+        if bonus and placed and (not restored.preview or number >= unlock.first_level) then
             meter[bonus.tool] = restored.bonus_charge and restored.bonus_charge[bonus.tool] or 0
             order[#order + 1] = bonus.tool
         end
-        if number >= unlock.first_level and restored and restored[i - 1] then
+        if number >= unlock.first_level and placed then
             if bonus then
                 available[#available + 1] = bonus
                 if number == unlock.first_level then debut = bonus end
             end
-            if unlock.kind and yields[unlock.kind] then
-                yields[unlock.kind] = unlock
-                for _, variant in ipairs(unlock.variants or {}) do
-                    if number >= variant.first_level then yields[variant.kind] = variant end
-                end
-            end
+            if unlock.kind and yields[unlock.kind] then yields[unlock.kind] = unlock end
         end
     end
     local bonus = debut or (#available > 0 and available[(seed or 1) % #available + 1])
@@ -114,8 +126,10 @@ end
 -- expedition (the same gate as its pieces); before any, the level's own scene.
 function E.board_backdrop(level, number, restored)
     local backdrop = level.background
-    for i, unlock in ipairs(E.unlocks) do
-        if number >= unlock.first_level and restored and restored[i - 1] then backdrop = unlock.backdrop end
+    for _, unlock in ipairs(E.unlocks) do
+        if unlock.backdrop and number >= unlock.first_level and restored and restored[unlock.building] then
+            backdrop = unlock.backdrop
+        end
     end
     return backdrop
 end

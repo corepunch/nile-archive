@@ -29,11 +29,11 @@ return require("match3.game").journey{
     -- {kind, from level, line}: the latest reached replaces the catalogue line.
     about = {
         {0, 1, "Mara's lamp fits the bracket. The light under the cliff can see it."},
-        {economy.WELL_KIND, 4, economy.unlock_text(economy.unlocks[2])},
+        {economy.WELL_KIND, 4, economy.unlock_text(economy.unlock_of("well"))},
         {economy.WELL_KIND, 6, "The chart from the pump traces the old cable to the tide room."},
-        {economy.WORKSHOP_KIND, 7, economy.unlock_text(economy.unlocks[3])},
+        {economy.WORKSHOP_KIND, 7, economy.unlock_text(economy.unlock_of("workshop"))},
         {economy.WORKSHOP_KIND, 9, "We cut the blocks for the tide-room approach here."},
-        {3, 9, economy.unlock_text(economy.unlocks[4])},
+        {3, 9, economy.unlock_text(economy.unlock_of("market"))},
         {4, 13, "A dry place to lay out the note that led the crew to Ines."},
         {5, 16, "There is a dry bunk here for the keeper when she can get ashore."},
         {6, 19, "Tomas keeps the old records here. Elena is looking for the signed plan."},

@@ -103,11 +103,11 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `rations` | Orange ration jar, 4 Food in the Market slot from board 10 | Board and guide |
 | `cut-blocks` | Workshop unlock from board 8, 5 Supplies | Board and guide |
 | `silver-coin` | Silver profile coin with a laurel border, 3 Coins | Board on 3 and guide |
-| `helmet` | Gold helmet with red crest, 6 Coins | Board on 14–17 after the Courtyard, and guide |
-| `ring` | Gold ring with a dark green inset, 7 Coins | Board on 18–20 after the Courtyard, and guide |
-| `scarab` | Bronze beetle with a jade inset, 8 Coins | Board on 21–24 after the Courtyard, and guide |
-| `sandal` | Roman leather sandal with a silver wing, 9 Coins | Board on 25–27 after the Courtyard, and guide |
-| `harp` | Gold lyre with a turquoise inset, 10 Coins | Board from 28 after the Courtyard, and guide |
+| `helmet` | Gold helmet with red crest, 6 Coins | Board from 14 after the Courtyard, and guide |
+| `ring` | Gold ring with a dark green inset, 7 Coins | Board from 18 after the Trading post, and guide |
+| `scarab` | Bronze beetle with a jade inset, 8 Coins | Board from 21 after the Beached schooner, and guide |
+| `sandal` | Roman leather sandal with a silver wing, 9 Coins | Board from 25 after the Great aviary, and guide |
+| `harp` | Gold lyre with a turquoise inset, 10 Coins | Board from 28 after the Relic museum, and guide |
 | `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Food | Board and guide from 17 |
 | `quartz` | Existing Relics purple crystal (`data/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
 | `shrimp` | Curled red-orange shrimp, 6 Food | Replaces the water bucket from 27 after the Fountain |
@@ -291,7 +291,8 @@ Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot 
 ## Buildings and decorations
 
 The [building catalogue](building-catalogue.md) covers **96** registered sprites,
-including ten story wonders and 86 repeatable shop items. It records the full
+including twenty campaign restorations (ten story wonders and ten ladder
+buildings, all placed once) and 76 repeatable shop items. It records the full
 source/prompt history, runtime paths, whole-tile measurements, supported states,
 import commands and reviewed in-game captures. The board manifest links the
 building manifest and inventories every new runtime file.
@@ -500,8 +501,8 @@ cover a zero-charge ring at both phone sizes.
 
 ## Campaign bonus pieces and sockets
 
-The six standalone pieces are the Hammer, Dynamite, Shutter Gear, Shield,
-Lightning and Star. The board shows one unlocked family per expedition. Their
+The eight standalone pieces are the Hammer, Dynamite, Shutter Gear, Shield,
+Lightning, Star, Amphora and Tide Chart. The board shows one unlocked family per expedition. Their
 rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
 The bonus buttons use Relic Rush's square bevels, warm gold ready and hover
 faces, jade selected faces, and dark amber pressed faces. Empty buttons show a
@@ -515,20 +516,24 @@ The rounded, wide Lightning profile carries through the field chip and all five
 button states.
 
 The first row of the [original ImageGen atlas](../art/bonus-gems/source.png)
-supplies the six pieces. A [single painted button](../art/bonus-gems/button-base.png)
+supplies the first six pieces. **Temporary:** the Amphora and Tide Chart borrow
+the campaign atlas's amphora and tide chart chips (`borrowed_chips` in the
+manifest). Their five button states are generated from them like the others,
+but each looks like a regular piece. Dedicated gems are tracked in
+[#103](https://github.com/corepunch/nile-archive/issues/103). A [single painted button](../art/bonus-gems/button-base.png)
 supplies the material, rim, and silhouette for every state. The
 [manifest](../art/board-states/manifest.json) records its crop provenance,
 the generated inset's bounds and corner radius, and the state recipes.
 
 `python3 games/relic-rush/tools/prepare_bonus_gems.py` builds the rounded-square
-inset mask and packs all 30 combinations in `data/bonus-gems.png`. Each recipe
+inset mask and packs all 40 combinations in `data/bonus-gems.png`. Each recipe
 can recolor the plate or inset with a three-tone palette, adjust brightness, and
 add rim glow. Positive bevel widths recess the inset and negative widths raise
 it. The button's rounded-square inset bevel shades the upper-left wall and
 lights the lower-right edge. The same centered icon fits in 84 × 84 px for every state.
 The packer samples the disabled cut directly from the source icon's alpha
 at that placement, preserving edges and openings such as the gear's center
-hole. Every board pack uses the same six pieces. The packer checks that every
+hole. Every board pack uses the same eight pieces. The packer checks that every
 button keeps the same outer alpha.
 
 [Rendered states](screenshots/bonus-states.jpg) ·

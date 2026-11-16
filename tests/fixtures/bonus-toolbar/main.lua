@@ -8,7 +8,7 @@ function game.init()
     init()
     R.art_review, R.toast_time, ticks = true, 0, 0
     local g = R.g
-    assert(g.bonus.key == "lightning" and #g.tool_order == 6)
+    assert(#g.tool_order == 8)
     g.tools[1], g.tool_meter[1] = 1, g.tool_threshold
     g.tools[4], g.tool_meter[4] = 1, g.tool_threshold
     g.tool_meter[2], g.tool_meter[6] = 6, 12

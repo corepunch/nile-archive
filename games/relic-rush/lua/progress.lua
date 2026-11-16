@@ -3,14 +3,16 @@ local rules = require("rules")
 local island = require("island")
 local economy = require("economy")
 
+-- Which ladder restorations are in force, by building key. A preview counts
+-- every one unless --before-<key> names it.
 function R.board_context(preview)
     local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
-    for i, wonder in ipairs(island.wonders) do
-        local building = i - 1
+    for _, step in ipairs(island.ladder) do
+        local key = island.buildings[step.kind + 1].key
         if preview then
-            restored[building] = not app.arg("before-" .. wonder.key)
+            restored[key] = not app.arg("before-" .. key)
         else
-            restored[building] = island.owned(R.island, building) > 0
+            restored[key] = island.owned(R.island, step.kind) > 0
         end
     end
     return restored
@@ -34,8 +36,8 @@ end
 
 local function opening_unlock(g)
     local level = rules.level_of(g)
-    for i, unlock in ipairs(economy.unlocks) do
-        local building = island.wonders[i].name
+    for n, unlock in ipairs(economy.unlocks) do
+        local building = island.buildings[island.ladder[n].kind + 1].name
         if g.bonus_debut and unlock.bonus == g.bonus_debut then
             return economy.bonus_lesson(g.bonus_debut), building
         elseif unlock.kind and (g.level + 1 == unlock.first_level or level.featured_resource == unlock.key) then
@@ -58,7 +60,8 @@ local present_board = R.present_board
 function R.present_board()
     present_board()
     local g = R.g
-    if (g.level < 20 or g.bonus_debut) and g.moves == rules.level_of(g).moves and not app.arg("mission") then
+    -- Arrivals through the museum's harps on board 28; the finale keeps its own opening.
+    if (g.level < 28 or g.bonus_debut) and g.moves == rules.level_of(g).moves and not app.arg("mission") then
         local text, building = opening_unlock(g)
         if text then
             R.notice(building and building .. " · " .. text or text)
@@ -70,9 +73,22 @@ local serialize_completed = require("match3.game").bind_completed_rewards(R, rul
 function R.serialize_campaign(s)
     local reading = save.is_reading(s)
     local version = s:int("resource_version", reading and 0 or economy.CAMPAIGN_VERSION)
+    -- Version 4 added the twenty-step ladder. Restorations an older save had
+    -- already passed stay optional rather than holding its next expedition.
+    local waived = 0
+    for n in pairs(island.waived(R.island)) do waived = waived | (1 << (n - 1)) end
+    waived = s:int("ladder_waived", waived)
+    if reading then
+        local positions = {}
+        for n in ipairs(island.ladder) do
+            if waived & (1 << (n - 1)) ~= 0 then positions[n] = true end
+        end
+        island.set_waived(R.island, positions)
+        if version < 4 then island.waive_passed(R.island, R.prog.level) end
+    end
     if reading and version < 1 then
         island.migrate_wallet(R.prog, R.island)
-    elseif reading and version < economy.CAMPAIGN_VERSION then
+    elseif reading and version < 3 then
         local wallet = R.prog.wallet
         R.prog.wallet = wallet + economy.shortfall(island.reserved_cost(R.island, R.prog.level), wallet)
     end

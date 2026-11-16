@@ -1,4 +1,4 @@
-"""Generate the bonus button states from a painted base and six icons."""
+"""Generate the bonus button states from a painted base and the bonus icons."""
 import argparse
 import io
 import json
@@ -109,8 +109,13 @@ def pack(spec):
     disabled_style = spec["button_states"]["disabled"]
     floor = cutout_floor(plates["disabled"], disabled_style["cutout"])
     atlas = Image.new("RGBA", (SLOT_SIZE * len(spec["columns"]), SLOT_SIZE * len(spec["rows"])))
-    for x, bounds in enumerate(spec["chip_boxes"]):
-        source = chips.crop(bounds)
+    for x, column in enumerate(spec["columns"]):
+        # A column may borrow an existing painted chip from another atlas.
+        borrowed = spec.get("borrowed_chips", {}).get(column)
+        if borrowed:
+            source = Image.open(ROOT / borrowed["source"]).convert("RGBA").crop(borrowed["box"])
+        else:
+            source = chips.crop(spec["chip_boxes"][x])
         chip = source.copy()
         chip.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))

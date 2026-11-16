@@ -16,7 +16,7 @@ R.wonders = island.wonders
 R.prog = {level=0, seed=1, wallet=purse(), lives=rules.LIVES, life_at=0, story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
-local attempts, wins, earned, bonus = 0, 0, 0, 0
+local attempts, wins, earned, bonus, replays = 0, 0, 0, 0, 0
 local played = {}
 
 local function scene(expected, before_reward)
@@ -105,14 +105,48 @@ for level = 1, rules.LEVELS do
     local kind = journey.wonder_at(level)
     if kind then
         check(not journey.next(R.prog, function(k) return island.owned(R.island, k) > 0 end, nil), 'story waits for construction')
-        for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
-        assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
-        if journey.clear_before_result then scene(('restore-%02d'):format(level)) end
     end
+    for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
+    if island.next_step then
+        -- A ladder: place each open restoration when affordable. When the story
+        -- needs one the wallet cannot cover, replay this board for income.
+        local placed, short = {}, 0
+        while true do
+            local next_kind = island.next_step(R.island, R.prog.level)
+            if not next_kind then break end
+            local owed = island.wonder_count(R.island) < journey.earned(R.prog.level)
+            if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
+                placed[#placed + 1] = island.buildings[next_kind + 1].key
+            elseif not owed then break
+            else
+                short = short + 1
+                assert(short <= 20, 'twenty replays could not fund ' .. island.buildings[next_kind + 1].key)
+                local replay
+                for seed = 1, 4 do
+                    replay = R.make_board(level - 1, 100 * short + seed)
+                    play(replay)
+                    if replay.won then break end
+                end
+                if replay.won then
+                    R.g = replay
+                    R.claim_reward()
+                end
+            end
+        end
+        replays = replays + short
+        local wallet = R.prog.wallet
+        print(("expedition %02d · earned %d/%d/%d · stock %d/%d/%d · replays %d · placed %s"):format(
+            level, reward.total[1], reward.total[3], reward.total[2], wallet[1], wallet[3], wallet[2], short,
+            #placed > 0 and table.concat(placed, ", ") or "-"))
+    elseif kind then
+        assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
+    end
+    if kind and journey.clear_before_result then scene(('restore-%02d'):format(level)) end
     if not journey.clear_before_result and not first_exchange then scene(after) end
 end
 check(#played == #journey.beats, 'every story beat played')
 for i, beat in ipairs(journey.beats) do check(played[i] == beat.key, 'story order: ' .. beat.key) end
 check(island.wonder_count(R.island) == island.WONDERS, 'all story buildings placed')
-print(('campaign play: %d wins, %d failed attempts, %d total earned, %d move bonus, %d remaining, %d stars, %d scenes'):format(
-    wins, attempts-wins, earned, bonus, R.prog.wallet[1], R.prog.wallet[4], #played))
+if island.ladder then check(island.campaign_count(R.island) == #island.ladder, 'every ladder restoration placed') end
+print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d move bonus, %d remaining, %d stars, %d scenes'):format(
+    wins, attempts-wins, replays, earned, bonus, R.prog.wallet[1], R.prog.wallet[4], #played))

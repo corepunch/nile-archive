@@ -2105,7 +2105,9 @@
       "mixer",
       "shield",
       "lightning",
-      "star"
+      "star",
+      "hourglass",
+      "plus"
     ],
     "rows": [
       "board",
@@ -2118,7 +2120,7 @@
     "registration": "Center each standalone chip in a 112 px board slot and reuse its 84 px button icon across the same centered base. Generate the inner mask from the rounded rectangle and apply the state recipe at 128 × 128 without shifting the base alpha or icon.",
     "bonuses": {
       "hammer": {
-        "building": "workshop",
+        "building": "log_cabin",
         "first_level": 8,
         "effect": "Hit one cell"
       },
@@ -2128,17 +2130,17 @@
         "effect": "Hit the selected cell and its six neighbors"
       },
       "mixer": {
-        "building": "market",
+        "building": "water_mill",
         "first_level": 10,
         "effect": "Shuffle loose pieces; also the Shutter Gear story objective on expedition 10"
       },
       "shield": {
-        "building": "gateway",
+        "building": "amphitheater",
         "first_level": 14,
         "effect": "Hit the selected hex row"
       },
       "lightning": {
-        "building": "archive",
+        "building": "lighthouse",
         "first_level": 20,
         "effect": "Hit up to twenty different cells"
       },
@@ -2146,6 +2148,16 @@
         "building": "observatory",
         "first_level": 24,
         "effect": "Hit every piece of the chosen kind"
+      },
+      "hourglass": {
+        "building": "clock_tower",
+        "first_level": 12,
+        "effect": "Add 5 moves"
+      },
+      "plus": {
+        "building": "map_room",
+        "first_level": 23,
+        "effect": "Add half a use to every other unlocked bonus"
       }
     },
     "disabled": "Cast a directional shadow onto the sandstone cutout floor. The source icon outline supplies the exact silhouette, the disabled palette supplies the surrounding highlight color, and a fixed seed supplies the fine floor grain.",
@@ -2318,6 +2330,28 @@
       "image": "art/bonus-gems/disabled-concept.png",
       "prompt": "art/bonus-gems/disabled-concept.prompt.txt",
       "generator": "Built-in ImageGen paint-over of the previously rendered disabled toolbar"
+    },
+    "borrowed_chips": {
+      "hourglass": {
+        "source": "art/campaign-pieces/source.png",
+        "box": [
+          0,
+          268,
+          251,
+          510
+        ],
+        "note": "Temporary: the campaign atlas's orange amphora, Rome's move-timer motif, until a dedicated Amphora gem is painted"
+      },
+      "plus": {
+        "source": "art/campaign-pieces/source.png",
+        "box": [
+          251,
+          741,
+          502,
+          978
+        ],
+        "note": "Temporary: the tide chart quest piece, until a dedicated Tide Chart gem is painted"
+      }
     }
   }
 }

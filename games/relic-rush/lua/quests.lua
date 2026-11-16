@@ -19,38 +19,38 @@ Q.chapters = {
         }},
         {title="Find the lower quay", points=12, tasks={
             dig(5, "Recover the quay marker"), dig(6, "Recover the shore marker"),
-            dig(7, "Recover the tool roll"), build("workshop"),
+            dig(7, "Recover the tool roll"), build("log_cabin"), build("workshop"),
         }},
         {title="Open the tide room", points=16, tasks={
             dig(8, "Recover relay pliers"), dig(9, "Gather supplies"),
-            build("market"), dig(10, "Recover the shutter gear"),
+            build("water_mill"), build("market"), dig(10, "Recover the shutter gear"),
         }},
     }},
     {title="The Keeper’s Return", quests={
         {title="Find the sender", points=20, tasks={
-            dig(11, "Follow the changed signal"), dig(12, "Find dry supplies"),
-            dig(13, "Recover the note"), build("gateway"),
+            dig(11, "Follow the changed signal"), build("clock_tower"), dig(12, "Find dry supplies"),
+            dig(13, "Recover the note"), build("amphitheater"), build("gateway"),
         }},
         {title="Make a way home", points=24, tasks={
             dig(14, "Test the terrace route"), dig(15, "Trace the crack in the quay wall"),
             dig(16, "Survey the lodge"), build("lodge"),
         }},
         {title="Keep the record", points=28, tasks={
-            dig(17, "Read the harbor log"), dig(18, "Check the stone gauge"),
-            dig(19, "Reach the chart cabinet"), build("archive"), dig(20, "Find Ines's signed plan"),
+            dig(17, "Read the harbor log"), build("trading_post"), dig(18, "Check the stone gauge"),
+            dig(19, "Reach the chart cabinet"), build("lighthouse"), build("archive"), dig(20, "Find Ines's signed plan"),
         }},
     }},
     {title="Keep the Light", quests={
         {title="Protect the warning", points=32, tasks={
-            dig(21, "Deliver the bearings tablet"), dig(22, "Find another landing"),
-            dig(23, "Establish a lookout"), build("observatory"),
+            build("beached_ship"), dig(21, "Deliver the bearings tablet"), dig(22, "Find another landing"),
+            build("map_room"), dig(23, "Establish a lookout"), build("observatory"),
         }},
         {title="Repair the quay", points=36, tasks={
-            dig(24, "Measure the tide"), dig(25, "Secure the materials"),
+            dig(24, "Measure the tide"), build("aviary"), dig(25, "Secure the materials"),
             dig(26, "Restore water access"), build("fountain"),
         }},
         {title="Let the light speak", points=40, tasks={
-            dig(27, "Prepare the wall"), dig(28, "Confront the claim"),
+            dig(27, "Prepare the wall"), build("museum"), dig(28, "Confront the claim"),
             dig(29, "Restore the station"), build("temple"), dig(30, "Deliver the signal plate"),
         }},
     }},

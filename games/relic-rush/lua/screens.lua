@@ -9,7 +9,6 @@ local economy = require("economy")
 local art = require("art")
 local wallet_art = art.wallet_icons
 local island = require("island")
-local journey = require("journey")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local rgba = color
@@ -69,10 +68,9 @@ local function result_screen()
     local l = match3.result_rects(SCREEN_W, SCREEN_H)
     local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog,R.island)
     local reward = breakdown.total
-    local pending = island.wonder_count(R.island) + 1
-    local next_kind = breakdown.first and journey.wonder_at(R.g.level + 1)
-        or not breakdown.first and pending <= journey.earned(R.prog.level) and pending
-    local w = next_kind and R.wonders[next_kind]
+    -- The next ladder restoration this result opens, or one still waiting.
+    local next_kind = island.next_step(R.island, breakdown.first and R.g.level + 1 or R.prog.level)
+    local w = next_kind and R.buildings[next_kind + 1]
     local s
     panel(l.card)
     rrect(l.header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
@@ -129,7 +127,7 @@ local function result_screen()
     if w then
         picture_fit(w.sprite, next_icon, 255)
         local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
-        heading, next_step = #missing == 0 and island.wonders[next_kind].unlock_text or "REPLAY TO EARN THE REST", w.name
+        heading, next_step = #missing == 0 and island.buildings[next_kind + 1].unlock_text or "REPLAY TO EARN THE REST", w.name
         local price = #missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)
         say_left(price, rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
     elseif breakdown.first then
@@ -218,17 +216,14 @@ local function guide_piece(unlock, title, availability)
         description=description, icon={front=chip_prefix .. unlock.key}}
 end
 guide_piece(economy.silver_coin, "Silver coins", ("On expedition %d."):format(economy.silver_coin.first_level))
-for i, unlock in ipairs(economy.unlocks) do
-    local building = island.wonders[i].name
+for n, unlock in ipairs(economy.unlocks) do
+    local building = island.buildings[island.ladder[n].kind + 1].name
     if unlock.kind then guide_piece(unlock, building, ("From expedition %d."):format(unlock.first_level)) end
     local bonus = unlock.bonus
     if bonus then
         guide_entries[#guide_entries + 1] = {id=bonus.key, title=bonus.name,
             description=("Restore %s. %s %s"):format(building, economy.bonus_lesson(bonus), bonus.effect),
             icon={front="bonus-" .. bonus.key}}
-    end
-    for _, variant in ipairs(unlock.variants or {}) do
-        guide_piece(variant, variant.name, ("After the %s, from expedition %d."):format(island.wonders[i].name, variant.first_level))
     end
 end
 local function guide_icon(box, icon)

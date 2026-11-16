@@ -441,6 +441,24 @@ function G.bind(R, over)
         return {{id="gold", amount=cost[rules.GOLD], icon=R.wallet_icons()[2]}}
     end
 
+    -- The campaign building to place next. A game whose campaign is more than
+    -- types 0..WONDERS-1 in order supplies island.next_build.
+    local function next_build()
+        if island.next_build then return island.next_build(R.island, R.prog.level) end
+        return island.wonder_count(R.island)
+    end
+    -- Why a campaign building cannot be placed now ("built", "later" with the
+    -- clear it waits for, "earlier"), false when it can, nil for shop items.
+    local function ladder_blocked(kind, owned)
+        if island.ladder_blocked then return island.ladder_blocked(R.island, R.prog.level, kind) end
+        if kind >= island.WONDERS then return nil end
+        if owned > 0 then return "built" end
+        local at = journey.wonder_levels[kind + 1]
+        if at > R.prog.level then return "later", at end
+        if kind ~= island.wonder_count(R.island) then return "earlier" end
+        return false
+    end
+
     -- The building card: a story building or a shop item, to build or move.
     local wonder_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,13}, children={
@@ -475,7 +493,7 @@ function G.bind(R, over)
     }
     R.wonder_form = wonder_form
     R.dialogs[R.OV_WONDER] = function()
-        local i = R.inspect >= 0 and R.inspect or island.wonder_count(R.island)
+        local i = R.inspect >= 0 and R.inspect or next_build()
         if i < 0 or i >= #R.buildings then return end
         local w = R.buildings[i + 1]
         local unlock_text = island.buildings[i + 1].unlock_text
@@ -643,20 +661,25 @@ function G.bind(R, over)
     R.catalogue_form = catalogue_form
 
     local tiles = {}   -- building key -> its tile record
+    local catalogue_rows = {}
+    for i in ipairs(island.catalogue) do catalogue_rows[i] = i end
     local selected   -- the tile the footer explains
     local function refresh_catalogue()
         local records, rows = {}, {}
         local cat = categories[category][1]
         local wallet = R.prog.wallet
-        for i, meta in ipairs(island.catalogue) do
+        -- A game may list its catalogue in another order (rows stay save data).
+        for _, i in ipairs(island.catalogue_order or catalogue_rows) do
+            local meta = island.catalogue[i]
             if cat == "all" or meta.category == cat then
                 local def = R.buildings[i]
                 local owned = island.owned(R.island, i - 1)
                 local available = island.can_buy(R.island, wallet, R.prog.level, i - 1)
                 local action, state = C.choose, "ready"
-                if i <= island.WONDERS then
-                    local reason = owned > 0 and C.built or journey.wonder_levels[i] > R.prog.level and C.complete:format(journey.wonder_levels[i]) or
-                        i - 1 ~= island.wonder_count(R.island) and C.earlier
+                local blocked, at = ladder_blocked(i - 1, owned)
+                if blocked ~= nil then
+                    local reason = blocked == "built" and C.built or blocked == "later" and C.complete:format(at) or
+                        blocked == "earlier" and C.earlier
                     if reason then action, state = reason, owned > 0 and "built" or "locked" end
                     if not reason and not wallet:covers(def.cost) then action, state = C.poor, "poor" end
                 elseif wallet[rules.STARS] < meta.stars then action, state = C.stars:format(meta.stars), "locked"
@@ -667,7 +690,7 @@ function G.bind(R, over)
                 elseif R.island.count >= 160 then action, state = C.full, "poor" end
                 local parts = price_parts(def.cost)
                 local price = R.currency_prices and R.cost_text(parts) or C.price:format(def.cost[1])
-                if i > island.WONDERS then price = price .. C.unlock:format(meta.stars) end
+                if blocked == nil then price = price .. C.unlock:format(meta.stars) end
                 local details = C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  ")
                 if R.quest_build_points then details = details .. C.build_points:format(R.quest_build_points(i - 1)) end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts, state=state,
@@ -846,7 +869,7 @@ function G.bind(R, over)
             about = R.building_words,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
-            suggest = function(kind) return island.island_suggestion(math.min(kind, island.WONDERS - 1)) end,
+            suggest = function(kind) return island.island_suggestion(kind) end,
             placed = function(ev)
                 for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
                 R.tone(740)
@@ -1058,8 +1081,10 @@ function G.bind(R, over)
     function R.debug_complete_task()
         if not R.on_island or R.overlay ~= R.OV_NONE then return false end
         if R.island.placing >= 0 then return R.town:confirm() ~= nil end
-        if owes_building() then
-            local kind = island.wonder_count(R.island)
+        -- A game with an ordered ladder may also have an optional building open.
+        local open_step = island.next_step and island.next_step(R.island, R.prog.level)
+        if owes_building() or open_step then
+            local kind = next_build()
             if not R.town:begin(kind, false) then
                 local zone = R.island:next_zone(R.prog.wallet)
                 if zone >= 0 and R.island:zone_available(zone, R.prog.wallet) then R.expand() end

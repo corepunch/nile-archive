@@ -1,4 +1,4 @@
--- island.lua — the Lost Valley map: shoreline, six regions and ten wonders.
+-- island.lua — the Lost Valley map: shoreline, six regions and the campaign ladder.
 --
 -- The island is an engine city. This file only knows the map: which world
 -- points are lawn (an authored contour), which region owns them (a hidden
@@ -25,11 +25,39 @@ M.buildings, M.wonders = M.catalogue, {}
 -- on a foundation); trees, statues, camp props and the rest are decorations.
 local HOUSES = {wonder = true, building = true}
 for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
-for i = 1, WONDERS do
-    local building = M.buildings[i]
-    building.unlock_text = "Unlocks " .. economy.building_unlock_text(economy.unlocks[i])
-    M.wonders[i] = building
+for i = 1, WONDERS do M.wonders[i] = M.buildings[i] end
+
+-- The campaign ladder (economy.unlocks): twenty catalogue types in purchase
+-- order. The ten story restorations are types 0-9 and keep the journey's
+-- schedule; the other ten are placed in order between them. A save that
+-- predates the ladder waives the ones it had already passed: those stay
+-- optional and never block.
+M.ladder, M.ladder_position = {}, {}
+do
+    local type_of = {}
+    for i, d in ipairs(M.buildings) do type_of[d.key] = i - 1 end
+    for n, unlock in ipairs(economy.unlocks) do
+        local kind = assert(type_of[unlock.building], unlock.building)
+        local story = kind < WONDERS
+        assert(not story or unlock.after == journey.wonder_levels[kind + 1], unlock.building .. " follows the story schedule")
+        M.ladder[n] = {kind=kind, unlock=unlock, after=unlock.after, story=story}
+        M.ladder_position[kind] = n
+        M.buildings[kind + 1].unlock_text = "Unlocks " .. economy.building_unlock_text(unlock)
+    end
 end
+
+-- The shop lists the ladder in purchase order, then everything else.
+M.catalogue_order = {}
+for _, step in ipairs(M.ladder) do M.catalogue_order[#M.catalogue_order + 1] = step.kind + 1 end
+for i in ipairs(M.buildings) do
+    if not M.ladder_position[i - 1] then M.catalogue_order[#M.catalogue_order + 1] = i end
+end
+
+-- Waived ladder positions, {[position]=true}, per city (a city takes no new fields).
+local waivers = setmetatable({}, {__mode = "k"})
+local function waived(c, n) return waivers[c] and waivers[c][n] end
+function M.waived(c) return waivers[c] or {} end
+function M.set_waived(c, positions) waivers[c] = positions end
 
 function M.wonder_count(c)
     local n=0
@@ -43,7 +71,49 @@ function M.owned(c, kind)
     return n
 end
 
-function M.happiness_points(kind) return kind < WONDERS and 4 or 1 end
+-- The next ladder restoration to place and its position. The type is nil
+-- while that one waits for a later clear.
+function M.next_step(c, level)
+    for n, step in ipairs(M.ladder) do
+        if not waived(c, n) and M.owned(c, step.kind) == 0 then
+            if step.after <= level then return step.kind, n end
+            return nil, n
+        end
+    end
+end
+
+function M.next_build(c, level) return M.next_step(c, level) or M.wonder_count(c) end
+
+-- Why a ladder restoration cannot be placed now: "built", "later" (with the
+-- clear it waits for) or "earlier" (another comes first). False when it can,
+-- nil for shop items.
+function M.ladder_blocked(c, level, kind)
+    local n = M.ladder_position[kind]
+    if not n then return nil end
+    local step = M.ladder[n]
+    if M.owned(c, kind) > 0 then return "built" end
+    if step.after > level then return "later", step.after end
+    if not waived(c, n) and M.next_step(c, level) ~= kind then return "earlier" end
+    return false
+end
+
+-- Ladder positions the story requires by `level`: everything up to the
+-- latest restoration it has earned.
+local function required_through(level)
+    local earned, last = journey.earned(level), 0
+    for n, step in ipairs(M.ladder) do
+        if step.story and step.kind < earned then last = n end
+    end
+    return last
+end
+
+function M.campaign_count(c)
+    local n=0
+    for _,b in ipairs(c.items) do if M.ladder_position[b.type] then n=n+1 end end
+    return n
+end
+
+function M.happiness_points(kind) return M.ladder_position[kind] and 4 or 1 end
 
 function M.happiness(c)
     local points = 0
@@ -52,23 +122,25 @@ function M.happiness(c)
 end
 
 function M.happiness_gold(c)
-    return c and math.min(10, #c.items - M.wonder_count(c)) or 0
+    return c and math.min(10, #c.items - M.campaign_count(c)) or 0
 end
 
 function M.can_buy(c, wallet, level, kind)
     if kind<0 or kind>=#M.buildings or c.count>=160 then return false end
     local d=M.buildings[kind+1]
-    if kind<WONDERS and (kind~=M.wonder_count(c) or kind>=journey.earned(level)) then return false end
-    if kind>=WONDERS and not M.can_spend(c,wallet,level,d.cost) then return false end
+    local blocked = M.ladder_blocked(c, level, kind)
+    if blocked then return false end
+    if blocked == nil and not M.can_spend(c,wallet,level,d.cost) then return false end
     if not wallet:covers(d.needs) or not wallet:covers(d.cost) then return false end
     return true
 end
 
--- Keep the earned story restorations affordable in the finite campaign economy.
+-- Keep the restorations the story requires affordable in the finite campaign economy.
 function M.reserved_cost(c, level)
     local cost=purse()
-    for kind=0,journey.earned(level)-1 do
-        if M.owned(c,kind)==0 then cost=cost+M.wonders[kind+1].cost end
+    for n=1,required_through(level) do
+        local step = M.ladder[n]
+        if not waived(c, n) and M.owned(c,step.kind)==0 then cost=cost+M.buildings[step.kind+1].cost end
     end
     return cost
 end
@@ -79,6 +151,17 @@ function M.can_spend(c, wallet, level, cost)
         if cost[slot] > 0 and wallet[slot] - reserved[slot] < cost[slot] then return false end
     end
     return true
+end
+
+-- A save from before the ladder waives the new restorations it had passed:
+-- those before the latest story restoration it has earned.
+function M.waive_passed(c, level)
+    local positions = waivers[c] or {}
+    for n = 1, required_through(level) do
+        local step = M.ladder[n]
+        if not step.story and M.owned(c, step.kind) == 0 then positions[n] = true end
+    end
+    waivers[c] = positions
 end
 
 function M.migrate_wallet(progress, c)
@@ -213,7 +296,16 @@ function M.island_zone_touches(z, open)
     return false
 end
 
-function M.island_suggestion(i) return suggestions[num.clampi(i, 0, WONDERS - 1) + 1] end
+-- A ladder restoration is suggested beside the story restoration after it.
+function M.island_suggestion(kind)
+    local n = M.ladder_position[kind]
+    if n and kind >= WONDERS then
+        for k = n, #M.ladder do
+            if M.ladder[k].story then kind = M.ladder[k].kind; break end
+        end
+    end
+    return suggestions[num.clampi(kind, 0, WONDERS - 1) + 1]
+end
 
 -- Map, zones, wonders and rules for an engine city.
 function M.island_setup(c)
@@ -237,10 +329,10 @@ function M.island_setup(c)
     c.road = texture.load("roads.png")   -- tools/roads.py relic-rush
 end
 
--- Build the next wonder at a free spot.
+-- Build the next ladder restoration at a free spot.
 function M.island_place_next(c, wallet, built_limit, now)
-    local nxt = M.wonder_count(c)
-    if nxt >= WONDERS or nxt >= journey.earned(built_limit) then return false end
+    local nxt = M.next_step(c, built_limit)
+    if not nxt then return false end
     local ok, spot = c:find_spot(nxt, M.island_suggestion(nxt))
     if not ok then return false end
     c:begin_place(nxt, spot)

@@ -57,7 +57,7 @@ local function check_unlock(index, reward, already_placed)
 end
 
 local first_tool = relic and economy.unlocks[1].bonus or economy.pieces[5]
-local second_tool = relic and economy.unlocks[8].bonus or economy.pieces[10]
+local second_tool = relic and economy.unlock_of("observatory").bonus or economy.pieces[10]
 local resource = relic and economy.unlocks[2] or economy.pieces[4]
 local board
 if relic then board = check_unlock(1, first_tool, true)
@@ -104,10 +104,23 @@ check(save.read('walkthrough-tool-stock', R.serialize), 'read stock from the wal
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 for zone = 1, 5 do R.island:unlock(zone, R.prog.wallet) end
 local later = relic and 8 or 7
-for i = 3, later - 1 do
-    R.prog.level = journey.wonder_levels[i]
-    check(R.debug_complete_task(), 'place the intervening restoration')
+-- Place what each intervening clear opens: one story building, or in Relic
+-- Rush every ladder restoration due by then.
+local function place_due(level)
+    R.prog.level = level
+    if not island.next_step then
+        check(R.debug_complete_task(), 'place the intervening restoration')
+        return
+    end
+    while island.next_step(R.island, level) do
+        local count = R.island.count
+        local placed = R.debug_complete_task() and R.island.count == count + 1
+        check(placed, 'place the intervening restoration')
+        if not placed then break end
+    end
 end
+for i = 3, later - 1 do place_due(journey.wonder_levels[i]) end
+if island.next_step then place_due(journey.wonder_levels[later] - 1) end
 local newest = check_unlock(later, second_tool)
 check(reward_piece(newest, second_tool) and not reward_piece(newest, first_tool),
     'the first eligible board features only the newly unlocked bonus pieces')

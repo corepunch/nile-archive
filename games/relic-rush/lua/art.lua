@@ -37,8 +37,10 @@ A.resource_upgrades = {
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
     ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
-A.bonus_tools = {"bonus-hammer", "bonus-dynamite", "bonus-star", "bonus-mixer", "bonus-shield", "bonus-lightning"}
-A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-mixer", "bonus-shield", "bonus-lightning", "bonus-star"}
+A.bonus_tools = {"bonus-hammer", "bonus-dynamite", "bonus-star", "bonus-mixer", "bonus-shield", "bonus-lightning",
+    "bonus-hourglass", "bonus-plus"}
+A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-mixer", "bonus-shield", "bonus-lightning", "bonus-star",
+    "bonus-hourglass", "bonus-plus"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
@@ -172,11 +174,16 @@ end
 function A.draw_bonus_catalogue(R)
     gfx.round_rect(rect(13, 235, 454, 496), 18, color(12, 47, 41, 250))
     R.say_at("BONUS ARTWORK", vec2(240, 260), 24, R.PAL_GOLD, 440)
+    -- Every bonus column, centred in the panel at a size that fits all of them.
+    local count = #A.bonus_atlas_order
+    local side = math.min(56, 400 / count)
+    local step = side + math.min(14, (430 - side * count) / math.max(1, count - 1))
+    local left = 240 - (step * (count - 1) + side) / 2
     for col, key in ipairs(A.bonus_atlas_order) do
-        local x = 37 + (col - 1) * 70
-        gfx.image(R.board_art[key], rect(x, 290, 56, 56), color.WHITE)
+        local x = left + (col - 1) * step
+        gfx.image(R.board_art[key], rect(x, 290, side, side), color.WHITE)
         for row, state in ipairs(A.states) do
-            gfx.image(R.hud_art[key .. "-" .. state], rect(x, 353 + (row - 1) * 69, 56, 56), color.WHITE)
+            gfx.image(R.hud_art[key .. "-" .. state], rect(x, 353 + (row - 1) * 69, side, side), color.WHITE)
         end
     end
 end

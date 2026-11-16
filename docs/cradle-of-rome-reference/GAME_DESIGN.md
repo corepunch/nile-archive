@@ -348,7 +348,7 @@ These are **repo documentation snapshots**, not a claim that the latest running 
 [Existing adaptation](ADAPTATION.md) and [resource-expedition.md](../../games/relic-rush/docs/resource-expedition.md) already describe a strong Rome-like structure:
 
 - Puzzle wins and repeated clears earn **Coins, Supplies and Food**.
-- Ten required restorations are purchased with actual balances, and they unlock board changes.
+- Twenty restorations (ten story, ten between them) are purchased with actual balances, and each unlocks one board change, as in Rome's ladder.
 - Higher-yield pieces are introduced after restorations.
 - Expedition Camp and Star Observatory introduce tool effects.
 - A replay can recover a resource shortfall.

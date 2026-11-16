@@ -1,7 +1,9 @@
 # Twenty campaign buildings for Relic Rush and Christmas Market
 
-> **Status:** proposal, 16 November 2026. Nothing here is implemented yet.
-> The Relic Rush section was revised the same day to build on its new bonus gems.
+> **Status:** 16 November 2026. The Relic Rush ladder is implemented as revised
+> below, with provisional prices and two borrowed gem chips
+> ([#103](https://github.com/corepunch/nile-archive/issues/103)). Christmas
+> Market's section is still a proposal.
 > Prices are starting points for the campaign bot and `tools/tune_levels.py`,
 > not tuned values.
 
