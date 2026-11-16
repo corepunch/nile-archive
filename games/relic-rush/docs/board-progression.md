@@ -76,21 +76,22 @@ featured resource matches.
 | Cartographer's house | 23 | Tide Chart adds half a use to every other unlocked bonus. It keeps its use when they are all full. |
 | Star Observatory | 24 | Star hits every piece of the chosen kind. |
 
-These are Cradle of Rome's eight tools. The Amphora is its Hourglass, which
-adds time; these boards count moves. The Tide Chart is its Plus. Both
-currently borrow existing painted chips ([#103](https://github.com/corepunch/nile-archive/issues/103)).
-With all eight unlocked, the toolbar's buttons are about 39 points wide at
-390×844.
+These are Cradle of Rome's eight tools. Relic Rush's Amphora adds moves in
+place of the Hourglass's time. The Tide Chart is its Plus and borrows an
+existing painted board chip ([#103](https://github.com/corepunch/nile-archive/issues/103)). All eight bonus
+sockets keep the same positions in restoration order from the first expedition.
+Two rows of four sit below the centred board.
 
 The first expedition after each of these restorations features its new piece.
 Later boards draw one family from the eligible restorations using the board seed.
 It takes an existing slot so the expedition keeps six kinds. The cabin's
 Hammer uses the red slot on board 8, where the relay pliers occupy the score slot.
-Each matched bonus piece contributes three points to its own socket. The
-socket holds 18 points and one use. Matches beyond that cap cannot bank a
-second use. Both partial and full meters are saved across expeditions, and
-using a bonus empties its socket without spending a move. Only confirmed
-restorations add sockets to the panel.
+Each matched bonus piece flies to its own socket and contributes three points.
+The gold fill rises as the gems land, or immediately with Reduce Motion on.
+The socket holds 18 points and one use. Matches beyond that cap cannot bank a
+second use. Both partial and full meters are saved across expeditions, and using
+a bonus empties its socket without spending a move. Confirming a restoration
+unlocks its visible socket for charging.
 
 The market hoist makes the tide-room approach possible. Expedition 10 uses the
 Shutter Gear as both Tomas's recovery objective and the new Mixer piece.

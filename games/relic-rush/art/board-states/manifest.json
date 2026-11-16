@@ -2117,7 +2117,7 @@
       "hover",
       "disabled"
     ],
-    "registration": "Center each standalone chip in a 112 px board slot and reuse its 84 px button icon across the same centered base. Generate the inner mask from the rounded rectangle and apply the state recipe at 128 × 128 without shifting the base alpha or icon.",
+    "registration": "Center the standalone pieces in 112 px board slots. Crop the five button states directly from the 181 px painted grid, downsample to 128 px and preserve their authored alpha.",
     "bonuses": {
       "hammer": {
         "building": "log_cabin",
@@ -2160,7 +2160,6 @@
         "effect": "Add half a use to every other unlocked bonus"
       }
     },
-    "disabled": "Cast a directional shadow onto the sandstone cutout floor. The source icon outline supplies the exact silhouette, the disabled palette supplies the surrounding highlight color, and a fixed seed supplies the fine floor grain.",
     "chip_boxes": [
       [
         52,
@@ -2199,149 +2198,7 @@
         208
       ]
     ],
-    "button_base": "art/bonus-gems/button-base.png",
-    "button_base_origin": {
-      "commit": "6d05253e",
-      "source": "art/bonus-gems/button-faces.png",
-      "crop": [
-        66,
-        167,
-        456,
-        556
-      ],
-      "resize": [
-        116,
-        116
-      ],
-      "center": [
-        64,
-        64
-      ]
-    },
-    "button_inset": {
-      "bounds": [
-        18,
-        18,
-        110,
-        110
-      ],
-      "radius": 18
-    },
-    "button_states": {
-      "normal": {},
-      "selected": {
-        "inset_palette": [
-          [
-            2,
-            32,
-            19
-          ],
-          [
-            9,
-            119,
-            72
-          ],
-          [
-            104,
-            198,
-            131
-          ]
-        ],
-        "bevel": 2,
-        "glow": [
-          255,
-          236,
-          140
-        ],
-        "glow_strength": 1.65
-      },
-      "pressed": {
-        "inset_palette": [
-          [
-            42,
-            15,
-            2
-          ],
-          [
-            150,
-            62,
-            9
-          ],
-          [
-            232,
-            150,
-            57
-          ]
-        ],
-        "bevel": 4
-      },
-      "hover": {
-        "brightness": 1.14
-      },
-      "disabled": {
-        "palette": [
-          [
-            43,
-            31,
-            25
-          ],
-          [
-            184,
-            164,
-            144
-          ],
-          [
-            255,
-            244,
-            225
-          ]
-        ],
-        "cutout": {
-          "floor_palette": [
-            [
-              24,
-              17,
-              12
-            ],
-            [
-              96,
-              73,
-              50
-            ],
-            [
-              130,
-              106,
-              80
-            ]
-          ],
-          "shadow_offset": [
-            7,
-            9
-          ],
-          "shadow_softness": 1.65,
-          "shadow_brightness": 0.43,
-          "glow_radius": 3.8,
-          "glow_strength": 1.65,
-          "floor_grain": 11
-        }
-      }
-    },
-    "disabled_concept": {
-      "image": "art/bonus-gems/disabled-concept.png",
-      "prompt": "art/bonus-gems/disabled-concept.prompt.txt",
-      "generator": "Built-in ImageGen paint-over of the previously rendered disabled toolbar"
-    },
     "borrowed_chips": {
-      "hourglass": {
-        "source": "art/campaign-pieces/source.png",
-        "box": [
-          0,
-          268,
-          251,
-          510
-        ],
-        "note": "Temporary: the campaign atlas's orange amphora, Rome's move-timer motif, until a dedicated Amphora gem is painted"
-      },
       "plus": {
         "source": "art/campaign-pieces/source.png",
         "box": [
@@ -2352,6 +2209,16 @@
         ],
         "note": "Temporary: the tide chart quest piece, until a dedicated Tide Chart gem is painted"
       }
+    },
+    "button_art": {
+      "source": "art/bonus-gems/shallow-sockets.png",
+      "prompt": "art/bonus-gems/shallow-sockets.prompt.txt",
+      "generator": "Built-in ImageGen edit of the previous runtime atlas and follow-up amphora enlargement",
+      "cell_size": 181,
+      "board_chips": [
+        "hourglass"
+      ],
+      "disabled": "Shallow sandstone engravings with soft close shadows around the large icon outlines."
     }
   }
 }

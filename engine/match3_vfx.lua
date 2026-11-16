@@ -16,7 +16,7 @@ function V.bind(R, rules)
     local FX_CAP, PARTICLES = 256, 650
     local FX_NONE, FX_IMPACT, FX_RAY, FX_BLAST, FX_LINK, FX_BIRTH, FX_SCORE, FX_PLANE = 0, 1, 2, 3, 4, 5, 6, 7
 
-    local pool, parts = {}, {}
+    local pool, parts, bonus_in_flight = {}, {}, {}
     for i = 1, FX_CAP do pool[i] = {type = FX_NONE, kind = 0, value = 0, at = vec2(), to = vec2(), age = 0, life = 0, delay = 0} end
     for i = 1, PARTICLES do parts[i] = {at = vec2(), vel = vec2(), to = vec2(), age = 0, life = 0, kind = 0, flying = false} end
     local pool_next, part_next = 0, 0
@@ -61,6 +61,7 @@ function V.bind(R, rules)
         for i = 1, FX_CAP do pool[i].type, pool[i].life = FX_NONE, 0 end
         for i = 1, PARTICLES do parts[i].life = 0 end
         pool_next, part_next = 0, 0
+        bonus_in_flight = {}
         R.fx_combo = 0
         R.fx_origin = -1
         R.score_display = R.g.score
@@ -126,7 +127,13 @@ function V.bind(R, rules)
     ------------------------------------------------------------------ particles
 
 
-    function R.vfx_emit(at, kind, flying, count, target)
+    -- Rules bank charge immediately. Only the gold fill waits for the gems.
+    function R.bonus_display_charge(tool)
+        local meter = R.g.tool_meter[tool]
+        return meter - (not R.reduced_motion and bonus_in_flight[tool] or 0)
+    end
+
+    function R.vfx_emit(at, kind, flying, count, target, tool, charge)
         if R.reduced_motion then return end
         for _ = 1, flying and 1 or count or 7 do
             local p = parts[part_next % PARTICLES + 1]
@@ -136,7 +143,8 @@ function V.bind(R, rules)
             p.at, p.vel, p.to = at, vec2.polar(a, speed) + vec2(0, -35), to
             p.age = flying and -rng_float() * .14 or 0
             p.life = flying and .75 + rng_float() * .2 or .35 + rng_float() * .32
-            p.kind, p.flying = kind, flying
+            if tool then p.life, p.age = .43, p.age / 2 end
+            p.kind, p.flying, p.tool, p.charge = kind, flying, tool, charge
         end
     end
     local vfx_emit = R.vfx_emit
@@ -149,6 +157,7 @@ function V.bind(R, rules)
 
     local function land(p)
         add(FX_IMPACT, p.to, vec2(0, 0), p.kind, .25, 0, 0)
+        if p.tool then return end
         if rules.is_goal_kind(R.g, p.kind) then R.goal_pulse = .22 else R.score_pulse = .22 end
     end
 
@@ -163,7 +172,7 @@ function V.bind(R, rules)
                     local at = flight(p, t)
                     for k = 4, 1, -1 do vfx_halo(flight(p, math.max(0, t - k * .025)), 9 - k, vfx_color(p.kind, 70 * (1 - k / 5))) end
                     vfx_halo(at, 19, vfx_color(p.kind, 125))
-                    local size = 18 + 7 * math.sin(t * PI)
+                    local size = p.tool and 36 - 17 * t or 18 + 7 * math.sin(t * PI)
                     local piece = R.board_piece_texture and R.board_piece_texture(p.kind) or R.relics[p.kind + 1]
                     gfx.image(piece, rect.centered(at, size2.splat(size)), color.WHITE)
                 else
@@ -232,12 +241,17 @@ function V.bind(R, rules)
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
                     if was.special==NORMAL and not was.element and not (R.pending.activations or {})[i] then
                         local to
-                        if R.resource_target and R.g.earnings and not R.g.hs then
+                        local bonus_hits = R.pending.bonus_charge_by_cell
+                        local charge = bonus_hits and bonus_hits[i]
+                        local tool = charge and R.g.resource_yields[was.kind].tool
+                        if tool then
+                            to = R.board_tool_bounds(tool - 1):center()
+                        elseif R.resource_target and R.g.earnings and not R.g.hs then
                             to = R.resource_target(was.kind)
                         elseif rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL then
                             to = R.goal_target(was.kind)
                         end
-                        if to then vfx_emit(at, was.kind, true, nil, to) end
+                        if to then vfx_emit(at, was.kind, true, nil, to, tool, charge) end
                     end
                     if not R.pending.make[i] then
                         local special=(R.pending.activations or {})[i]
@@ -276,13 +290,17 @@ function V.bind(R, rules)
                 if e.age >= e.life + e.delay then e.life = 0 end
             end
         end
+        for tool in pairs(bonus_in_flight) do bonus_in_flight[tool] = nil end
         for i = 1, PARTICLES do
             local p = parts[i]
             if p.life > 0 then
+                if p.tool then p.to = R.board_tool_bounds(p.tool - 1):center() end
                 p.age = p.age + dt
                 if p.age >= p.life then
                     if p.flying then land(p) end
                     p.life = 0
+                elseif p.tool then
+                    bonus_in_flight[p.tool] = (bonus_in_flight[p.tool] or 0) + p.charge
                 elseif p.age >= 0 and not p.flying then
                     p.at = p.at + p.vel:scale(dt)
                     p.vel.y = p.vel.y + 210 * dt

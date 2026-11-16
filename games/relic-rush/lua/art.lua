@@ -64,6 +64,7 @@ function A.skin()
     return match3.skin(require("match3_skin"))
 end
 
+-- Row 1 is the board artwork. The next five are the authored toolbar state rows.
 local function bonus_frames()
     local frames = {}
     for col, key in ipairs(A.bonus_atlas_order) do

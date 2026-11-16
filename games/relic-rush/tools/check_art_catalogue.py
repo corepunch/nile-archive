@@ -61,13 +61,14 @@ expected_pieces = set(pieces) | set(upgrades) | campaign_resources | set(re.find
 expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 gems = manifest["bonus_gems"]
-assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "button_base", "review"))
-assert all((ROOT / gems["disabled_concept"][key]).is_file() for key in ("image", "prompt"))
+assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "review"))
+assert all((ROOT / gems["button_art"][key]).is_file() for key in ("source", "prompt"))
 borrowed = gems.get("borrowed_chips", {})
-assert len(gems["chip_boxes"]) + len(borrowed) == len(gems["columns"])
+painted_board = gems["button_art"]["board_chips"]
+assert len(gems["chip_boxes"]) + len(borrowed) + len(painted_board) == len(gems["columns"])
 assert all((ROOT / chip["source"]).is_file() and chip["note"] for chip in borrowed.values())
-assert set(borrowed) == set(gems["columns"][len(gems["chip_boxes"]):]), "Borrowed chips follow the painted columns"
-assert set(gems["button_states"]) == set(manifest["tool_states"])
+assert set(borrowed).isdisjoint(painted_board)
+assert set(borrowed) | set(painted_board) == set(gems["columns"][len(gems["chip_boxes"]):])
 assert (ROOT / gems["runtime"]).read_bytes() == pack(gems), "Bonus gem atlas registration is stale"
 assert gems["rows"] == ["board", *manifest["tool_states"]]
 declaration = re.search(r"A\.bonus_atlas_order = \{([^}]+)\}", art).group(1)

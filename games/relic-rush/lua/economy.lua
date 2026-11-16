@@ -98,9 +98,11 @@ function E.board_loadout(level, number, restored, seed)
     for _, unlock in ipairs(E.unlocks) do
         local bonus = unlock.bonus
         local placed = restored and restored[unlock.building]
-        if bonus and placed and (not restored.preview or number >= unlock.first_level) then
-            meter[bonus.tool] = restored.bonus_charge and restored.bonus_charge[bonus.tool] or 0
+        if bonus then
             order[#order + 1] = bonus.tool
+            if placed and (not restored.preview or number >= unlock.first_level) then
+                meter[bonus.tool] = restored.bonus_charge and restored.bonus_charge[bonus.tool] or 0
+            end
         end
         if number >= unlock.first_level and placed then
             if bonus then

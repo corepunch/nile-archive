@@ -352,11 +352,15 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
         local gems = R.g.single_charge_tools
         for i, icon in ipairs(gems and bonus_art or tool_art) do
             local k = i - 1
-            local meter = R.g.tool_meter and R.g.tool_meter[k + 1]
-            if R.g.tool_meter and not meter then goto next_tool end
+            local meter = R.g.tool_meter and R.g.tool_meter[i]
+            if not gems and R.g.tool_meter and not meter then goto next_tool end
             local r = R.board_tool_bounds(k)
             local x, y = r:center().x, r.y
-            local charges = R.g.tools[k + 1]
+            local charges = R.g.tools[i]
+            if gems and meter then
+                meter = R.bonus_display_charge(i)
+                charges = meter // R.g.tool_threshold
+            end
             local state = E.tool_state(charges, R.tool == k, r:contains(inp.pos), inp.down,
                                        inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover,
                                        R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT)
@@ -369,7 +373,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
                     gfx.image(R.hud_art[icon .. "-" .. (state == "disabled" and "normal" or state)], drawn, color.WHITE)
                 else
                     gfx.image(R.hud_art[icon .. "-disabled"], drawn, color.WHITE)
-                    if meter > 0 then
+                    if meter and meter > 0 then
                         -- The charged painting rises inside the empty socket.
                         local fill = drawn.h * meter / R.g.tool_threshold
                         gfx.clip(rect(drawn.x, drawn.y + drawn.h - fill, drawn.w, fill))
@@ -388,7 +392,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
                         rect(x - 37, drawn.y + drawn.h + 2, 74, 16), 12, PAL_CREAM)
                 end
             end
-            if ui.hit(r, 0).clicked and R.phase == R.PH_IDLE then R.select_tool(k) end
+            if ui.hit(r, 0).clicked and R.phase == R.PH_IDLE and charges == R.g.tools[i] then R.select_tool(k) end
             ::next_tool::
         end
     end
@@ -894,7 +898,7 @@ function E.new(config)
     -- Clear one wave, fire specials; returns the relics cleared.
     function M.game_apply(g, m)
         local fired = {}
-        m.activations={}
+        m.activations, m.bonus_charge_by_cell = {}, nil
         m.direct, m.ordinary = m.direct or {}, m.ordinary or {}
         local more = true
         while more do   -- specials hit by the wave fire, possibly hitting more specials
@@ -965,8 +969,10 @@ function E.new(config)
                                         local tool = resource.tool
                                         local charge = g.tool_meter[tool] + amount
                                         if g.single_charge_tools then
-                                            g.tool_meter[tool] = math.min(charge, g.tool_threshold)
-                                            g.tools[tool] = g.tool_meter[tool] // g.tool_threshold
+                                            local capped = math.min(charge, g.tool_threshold)
+                                            m.bonus_charge_by_cell = m.bonus_charge_by_cell or {}
+                                            m.bonus_charge_by_cell[i] = capped - g.tool_meter[tool]
+                                            g.tool_meter[tool], g.tools[tool] = capped, capped // g.tool_threshold
                                         else
                                             g.tools[tool] = g.tools[tool] + charge // g.tool_threshold
                                             g.tool_meter[tool] = charge % g.tool_threshold
@@ -1639,15 +1645,13 @@ function E.new(config)
         R.kudos, R.kudos_level, R.mission_banner = nil, 0, nil
     end
     local rules = M
-    -- One board-screen layout for every match-3 game. Games paint into its
-    -- bands but cannot move them. It is measured up from the bottom edge, at
-    -- the size it has on a 480x1040 phone: the tool row, the board above it,
-    -- then the HUD band (goals, moves and Pause). The backdrop painting keeps
-    -- its 1040-tall scale and stands on the bottom edge too, so its scenery
-    -- always ends just above the HUD. A shorter screen only crops the top of
-    -- the painting; the board is never squeezed.
+    -- The engine owns the HUD, field and tool bands. The scenery is painted
+    -- from the bottom at its original scale. Single-charge bonuses have a
+    -- two-row tray at the bottom, below the centred playable field.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
+    local BONUS_COLS, BONUS_GAP, BONUS_ROW_GAP = 4, 10, 8
+    local neutral_hud = app.arg("default-match3")
     -- Imported boards can occupy only part of their enclosing hex grid. Fit
     -- their actual cells, including the hex faces, into the space between HUD
     -- and tools; empty grid padding must not shrink or displace the field.
@@ -1671,31 +1675,42 @@ function E.new(config)
     end
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
     local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
-    local centred_game, centre_q = nil, 0
+    local centred_game, centre_q, centre_row = nil, 0, 0
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
         local h = math.max(design_h, app.screen().h)
-        R.drop = h - design_h
-        R.hud_rect = rect(0, h - HUD_FROM_BOTTOM, w, HUD_H)
-        R.board_pause = rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
-        R.board_toast = rect(38, R.hud_rect.y + 68, w - 76, 28)
-        R.tools_y = h - TOOLS_FROM_BOTTOM
-        -- Centre the level's own cells: a small court laid off-centre in the grid
-        -- (the compact mask) would otherwise sit to one side of the screen.
         local g = R.g
+        local bonuses = g and g.single_charge_tools
+        R.drop = h - design_h
+        R.tools_y = h - TOOLS_FROM_BOTTOM
         if g ~= centred_game then
-            centred_game, centre_q = g, 0
+            centred_game, centre_q, centre_row = g, 0, 0
             if g and not fitted then
-                local minq, maxq = math.huge, -math.huge
+                local min_q, max_q, min_row, max_row = math.huge, -math.huge, math.huge, -math.huge
                 for i = 0, CELLS - 1 do
-                    if cell_active(g, i) then minq, maxq = math.min(minq, hex_q(i)), math.max(maxq, hex_q(i)) end
+                    if cell_active(g, i) then
+                        local q = hex_q(i)
+                        local row = hex_r(i) + q * .5
+                        min_q, max_q = math.min(min_q, q), math.max(max_q, q)
+                        min_row, max_row = math.min(min_row, row), math.max(max_row, row)
+                    end
                 end
-                if minq <= maxq then centre_q = (minq + maxq) / 2 end
+                if min_q <= max_q then centre_q, centre_row = (min_q + max_q) / 2, (min_row + max_row) / 2 end
             end
         end
-        local shift = centre_q * 1.5 * HEX_R
-        R.board_origin = vec2(w / 2 - shift, h - BOARD_FROM_BOTTOM)
-        R.BOARD_CLIP = rect.centered(R.board_origin + vec2(shift, 0), board_size)
+        local board_center = vec2(w / 2, bonuses and h / 2 or h - BOARD_FROM_BOTTOM)
+        local shift = vec2(centre_q * 1.5 * HEX_R, bonuses and centre_row * HEX_DY or 0)
+        R.board_origin = board_center - shift
+        R.BOARD_CLIP = rect.centered(board_center, board_size)
+        local hud_y = h - HUD_FROM_BOTTOM
+        local toast_y = hud_y + HUD_H + 4
+        if bonuses then
+            toast_y = math.min(toast_y, R.BOARD_CLIP.y - 36)
+            if neutral_hud then hud_y = toast_y - HUD_H - 4 end
+        end
+        R.hud_rect = rect(0, hud_y, w, HUD_H)
+        R.board_pause = rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
+        R.board_toast = rect(38, toast_y, w - 76, 28)
         if fitted then
             local top,bottom=R.hud_rect.y+HUD_H+16,R.tools_y-18
             local center=vec2(w/2,(top+bottom)/2)
@@ -1711,17 +1726,21 @@ function E.new(config)
         return rect(full.x + (full.w - sw) / 2, full.y + full.h - sh, sw, sh)
     end
     function R.board_tool_bounds(k)
-        local tool_offset, side = (k - 1) * 120, E.TOOL_SIZE
+        local w, side = R.SCREEN_W or 480, E.TOOL_SIZE
         if R.g and R.g.single_charge_tools then
-            local count, preceding = #R.g.tool_order, 0
-            for position, i in ipairs(R.g.tool_order) do
-                if i == k + 1 then preceding = position - 1; break end
+            local order, position = R.g.tool_order, 0
+            for i, tool in ipairs(order) do
+                if tool == k + 1 then position = i - 1; break end
             end
-            side = math.min(side, ((R.SCREEN_W or 480) - 32) / math.max(1, count) - 6)
-            tool_offset = (preceding - (count - 1) / 2) * (side + 6)
+            local row, col = position // BONUS_COLS, position % BONUS_COLS
+            local count = math.min(BONUS_COLS, #order - row * BONUS_COLS)
+            local rows = (#order + BONUS_COLS - 1) // BONUS_COLS
+            side = math.min(side, (w - 32 - (count - 1) * BONUS_GAP) / count)
+            local x = w / 2 + (col - (count - 1) / 2) * (side + BONUS_GAP)
+            local y = R.tools_y + E.TOOL_SIZE - side - (rows - row - 1) * (side + BONUS_ROW_GAP)
+            return rect(x - side / 2, y, side, side)
         end
-        local x = (R.SCREEN_W or 480) / 2 + tool_offset
-        return rect(x - side / 2, R.tools_y + (E.TOOL_SIZE - side) / 2, side, side)
+        return rect(w / 2 + (k - 1) * 120 - side / 2, R.tools_y, side, side)
     end
     R.layout = layout
     layout()
@@ -1772,7 +1791,7 @@ function E.new(config)
             local notes = R.g.single_charge_tools and R.bonus_tool_notes or R.tool_notes
             R.notice(R.tool < 0 and "Tool put away." or notes[k + 1])
         elseif R.g.tool_meter then
-            R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Build its stall to unlock this tool.")
+            R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Restore its building to unlock this tool.")
         else R.notice("No charges left. More tools next expedition.") end
     end
     local function tap_cell(at)

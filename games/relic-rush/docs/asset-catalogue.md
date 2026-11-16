@@ -504,48 +504,39 @@ cover a zero-charge ring at both phone sizes.
 The eight standalone pieces are the Hammer, Dynamite, Shutter Gear, Shield,
 Lightning, Star, Amphora and Tide Chart. The board shows one unlocked family per expedition. Their
 rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
-The bonus buttons use Relic Rush's square bevels, warm gold ready and hover
-faces, jade selected faces, and dark amber pressed faces. Empty buttons show a
-sharp sandstone cutout with a longer, feathered cast shadow across its warm,
-fine-grained floor. A broad reflection fades into the sandstone around the
-cutout. The [ImageGen paint-over](../art/bonus-gems/disabled-concept.png) and its
-[prompt](../art/bonus-gems/disabled-concept.prompt.txt) record the lighting
-study for the procedural state.
-For partial charge, the renderer reveals the painted gold face from the bottom.
-The rounded, wide Lightning profile carries through the field chip and all five
-button states.
+The toolbar shows all eight sockets in two rows of four, in restoration order,
+below the centred board. The five authored faces are gold normal, jade selected, dark amber
+pressed, bright gold hover, and shallow sandstone engraving for locked and empty
+sockets. Partial charge reveals the gold normal face from the bottom. Gems fly
+from ordinary matches to the center of their own socket. The animated gem is
+the existing board sprite, with the engine's collection trail and landing ring.
+Reduce Motion fills the meter immediately.
 
-The first row of the [original ImageGen atlas](../art/bonus-gems/source.png)
-supplies the first six pieces. **Temporary:** the Amphora and Tide Chart borrow
-the campaign atlas's amphora and tide chart chips (`borrowed_chips` in the
-manifest). Their five button states are generated from them like the others,
-but each looks like a regular piece. Dedicated gems are tracked in
-[#103](https://github.com/corepunch/nile-archive/issues/103). A [single painted button](../art/bonus-gems/button-base.png)
-supplies the material, rim, and silhouette for every state. The
-[manifest](../art/board-states/manifest.json) records its crop provenance,
-the generated inset's bounds and corner radius, and the state recipes.
+The [ImageGen source atlas](../art/bonus-gems/shallow-sockets.png) and
+[edit prompts](../art/bonus-gems/shallow-sockets.prompt.txt) record the new
+faces and the larger Amphora drawn to match the visual weight of the other
+icons. The Amphora also uses its new standalone painting on the board. The
+first six board pieces come from the [original atlas](../art/bonus-gems/source.png).
+The Tide Chart still borrows the campaign atlas chip for the board
+([#103](https://github.com/corepunch/nile-archive/issues/103)).
 
-`python3 games/relic-rush/tools/prepare_bonus_gems.py` builds the rounded-square
-inset mask and packs all 40 combinations in `data/bonus-gems.png`. Each recipe
-can recolor the plate or inset with a three-tone palette, adjust brightness, and
-add rim glow. Positive bevel widths recess the inset and negative widths raise
-it. The button's rounded-square inset bevel shades the upper-left wall and
-lights the lower-right edge. The same centered icon fits in 84 × 84 px for every state.
-The packer samples the disabled cut directly from the source icon's alpha
-at that placement, preserving edges and openings such as the gear's center
-hole. Every board pack uses the same eight pieces. The packer checks that every
-button keeps the same outer alpha.
+Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to pack
+`data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
+records the inputs and registration. The packer crops and scales the five
+painted state rows, preserving their alpha, and fits board pieces in 112 × 112
+px. Every board pack uses the same eight pieces.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
 [390 × 844 toolbar](screenshots/bonus-toolbar-phone.jpg) ·
+[Locked sockets on expedition 1](screenshots/bonus-locked-phone.jpg) ·
 [Spent Hammer](screenshots/bonus-spent.jpg) ·
 [Workshop card](screenshots/bonus-workshop-card.jpg) ·
 [Market unlock on the results screen](screenshots/bonus-building-result.jpg) ·
 [Shutter Gear board](screenshots/bonus-gear.jpg) ·
 [Recovered gear](screenshots/bonus-gear-award.jpg).
 Reproduce the views and the real tap-to-spend check with
-`build/test/relic-rush 'shot bonus-' 'shot workshop-card-phone'`.
+`build/test/relic-rush 'shot bonus-' 'reel bonus-gem-flight' 'shot workshop-card-phone'`.
 
 ## Earlier tool art and reference boards
 

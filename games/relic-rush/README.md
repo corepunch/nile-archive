@@ -112,7 +112,7 @@ The island and the board share one wallet and Settings bar. The board shows
 Moves at the left of the resource balances. The medallion turns red at five
 moves. Blue plaques mark the board objective. Winning banks the resources
 earned in the three slots.
-Unlocked bonus sockets sit along the bottom edge. Settings opens the Explorer's Guide,
+Two rows of four bonus sockets sit below the centered board from the first expedition. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Dialogs reuse the engine's forms and
 cached blur. See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
 and [shared UI API](../../docs/UI_ENGINE.md).
@@ -149,7 +149,8 @@ The minimum match is **three identical relics in a straight line** along any of 
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue plaques in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
-The gold bonus buttons fill from the bottom as their pieces are matched.
+Matched bonus gems fly into their sockets and fill them with gold from the bottom.
+With Reduce Motion on, the gold fills immediately.
 Empty buttons show their tool carved into sandstone.
 See the [bonus artwork and state review](docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets).
 
