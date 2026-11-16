@@ -12,6 +12,11 @@ bevelled stones.
 
 ![Cradle of Rome's sheet above ours](strip-vs-reference.png)
 
+Parchment options against a Cradle of Rome board; K, the yellower gold with a
+smooth warm mottle, is in use:
+
+![Parchment options](parchment-options.jpg)
+
 | Slot | Tile | Use |
 | --- | --- | --- |
 | 1 | `cell-normal` | Normal and cleared cells |

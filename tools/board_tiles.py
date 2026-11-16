@@ -163,6 +163,11 @@ def bake(spec, tile, grains, index):
         span = grain.width - sample
         x, y = (index * 197 + 41) % span, (index * 331 + 113) % span
         patch = grain.crop((x, y, x + sample, y + sample)).resize((size, size), Image.Resampling.BICUBIC)
+        if "grain_tint" in tile:   # warm stains and flecks keep a colour from going gray
+            dark, light = rgb(tile["grain_tint"]["dark"]), rgb(tile["grain_tint"]["light"])
+            tone = patch.getchannel("R")
+            patch = Image.merge("RGBA", [tone.point(lambda v, a=a, b=b: round(a + (b - a) * v / 255))
+                                         for a, b in zip(dark, light)] + [patch.getchannel("A")])
         patch.putalpha(patch.getchannel("A").point(lambda a: round(a * tile["grain"])))
         face.alpha_composite(patch)
     if "cracks" in tile:
