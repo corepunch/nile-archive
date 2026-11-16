@@ -217,7 +217,9 @@ function board_intro.bind(R, rules)
     end
     function R.board_update(dt)
         if R.phase ~= R.PH_PRESENT then return update(dt) end
-        if R.art_review or R.overlay ~= R.OV_NONE or R.on_island or story.active() then return end
+        -- Hold the entrance until the town-to-board transition has uncovered the board.
+        if R.art_review or R.overlay ~= R.OV_NONE or R.on_island or story.active()
+           or (R.diving and R.diving()) then return end
         R.shake = math.max(0,R.shake-dt)
         local landed, slammed = 0, 0
         for _, c in ipairs(R.intro.list) do

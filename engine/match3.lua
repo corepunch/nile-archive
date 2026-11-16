@@ -283,7 +283,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     local MISSION_IN, MISSION_HOLD, MISSION_OUT = .3, 1.4, .3   -- two seconds, then it goes on its own
     local function draw_mission(dt)
         local m = R.mission_banner
-        if not m or R.overlay ~= R.OV_NONE or story.active() then return end
+        if not m or R.overlay ~= R.OV_NONE or story.active() or (R.diving and R.diving()) then return end
         if m.t == 0 then R.play("mission") end
         m.t = m.t + dt
         local w, h = R.SCREEN_W, 150
@@ -1727,8 +1727,16 @@ function E.new(config)
         local praise = R.g.combo >= 3 and R.g.combo - 2 or 0
         if fx_combo > 0 and R.g.combo == 1 then praise = math.max(praise, fx_combo == 3 and 3 or 2) end
         R.kudos_level = math.max(R.kudos_level or 0, praise)
-        haptic.play((R.g.combo > 1 or special) and haptic.COMBO or haptic.MATCH,
-            math.min(1, .6 + .1 * R.g.combo))
+        -- Breaking ice or a blue/green tablet layer lands harder than a plain match.
+        local broke = false
+        for i = 0, CELLS - 1 do
+            if R.wave_ice[i] > R.g.ice[i] or (R.g.oil and R.wave_oil[i] > R.g.oil[i]) then broke = true; break end
+        end
+        if broke then haptic.play(haptic.COMBO, 1)
+        else
+            haptic.play((R.g.combo > 1 or special) and haptic.COMBO or haptic.MATCH,
+                math.min(1, .6 + .1 * R.g.combo))
+        end
     end
 
     local function reject_swap(chain)

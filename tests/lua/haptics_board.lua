@@ -6,7 +6,7 @@ local function setup()
     local g = H.board(rules)
     g.level = H.plain_level(rules)
     if rules.level_of(g).oil_still then
-        g.oil[rules.hex_center()], g.oil_left = 1, 1   -- the synthetic board starts unfinished
+        g.oil[rules.hex_index(0, -2)], g.oil_left = 1, 1   -- the synthetic board starts unfinished, clear of the test rows
     end
     for i=0,rules.CELLS-1 do g.tiles[i] = rules.tile(i % rules.COLORS) end
     R.reset_board(g)
@@ -83,6 +83,15 @@ R.pending.mask[center], R.pending.hits = true, 1
 R.finish_wave()
 pulse(haptic.COMBO, 'special activation escalates the first wave')
 
+g = setup()
+for q=-2,1 do g.tiles[rules.hex_index(q,0)] = rules.tile(0) end
+g.ice[rules.hex_index(0,0)] = 1
+rules.game_matches(g,R.pending,-1)
+R.finish_wave()
+check(g.ice[rules.hex_index(0,0)] == 0, 'the match breaks the ice')
+local _, broke_effect, broke_strength = testing.haptics()
+check(broke_effect == haptic.COMBO and broke_strength == 1, 'breaking a layer lands harder than a plain match')
+
 setup()
 R.phase, R.phase_time, R.fall_steps, R.fall_landed = R.PH_FALL, 0, {{}, {}, {}}, 0
 R.board_update(rules.FALL_STEP + .001)
@@ -130,6 +139,13 @@ R.g.ice[rules.hex_center()] = 1
 R.present_board()
 R.board_update(3)
 pulse(haptic.MATCH, 'blocker landing takes precedence over gem ticks')
+setup()
+local diving = R.diving
+R.diving = function() return true end
+R.present_board()
+R.board_update(3)
+check(R.intro.t == 0 and testing.haptics() == 0, 'the entrance waits for the town transition')
+R.diving = diving
 setup()
 R.reduced_motion = true
 R.present_board()
