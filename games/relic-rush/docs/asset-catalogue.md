@@ -505,8 +505,11 @@ Lightning and Star. The board shows one unlocked family per expedition. Their
 rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
 The bonus buttons use Relic Rush's square bevels, warm gold ready and hover
 faces, jade selected faces, and dark amber pressed faces. Empty buttons show a
-sharp sandstone cutout with a cast shadow inside its upper-left edge and a
-broad glow around it in the sandstone highlight color.
+sharp sandstone cutout with a longer, feathered cast shadow across its warm,
+fine-grained floor. A broad reflection fades into the sandstone around the
+cutout. The [ImageGen paint-over](../art/bonus-gems/disabled-concept.png) and its
+[prompt](../art/bonus-gems/disabled-concept.prompt.txt) record the lighting
+study for the procedural state.
 For partial charge, the renderer reveals the painted gold face from the bottom.
 The rounded, wide Lightning profile carries through the field chip and all five
 button states.

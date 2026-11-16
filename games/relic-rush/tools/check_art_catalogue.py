@@ -62,6 +62,7 @@ expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 gems = manifest["bonus_gems"]
 assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "button_base", "review"))
+assert all((ROOT / gems["disabled_concept"][key]).is_file() for key in ("image", "prompt"))
 assert len(gems["chip_boxes"]) == len(gems["columns"])
 assert set(gems["button_states"]) == set(manifest["tool_states"])
 assert (ROOT / gems["runtime"]).read_bytes() == pack(gems), "Bonus gem atlas registration is stale"

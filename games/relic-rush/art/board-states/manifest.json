@@ -2130,7 +2130,7 @@
         "effect": "Hit every piece of the chosen kind"
       }
     },
-    "disabled": "Recolor the shared base to sandstone. Sample a sharp cut directly from the source icon outline at the registered size. Cast a shadow from the upper-left edge onto the dark floor and spread the sandstone palette highlight around the outline for contrast.",
+    "disabled": "Cast a directional shadow onto the sandstone cutout floor. The source icon outline supplies the exact silhouette, the disabled palette supplies the surrounding highlight color, and a fixed seed supplies the fine floor grain.",
     "chip_boxes": [
       [
         52,
@@ -2265,8 +2265,41 @@
             244,
             225
           ]
-        ]
+        ],
+        "cutout": {
+          "floor_palette": [
+            [
+              24,
+              17,
+              12
+            ],
+            [
+              96,
+              73,
+              50
+            ],
+            [
+              130,
+              106,
+              80
+            ]
+          ],
+          "shadow_offset": [
+            7,
+            9
+          ],
+          "shadow_softness": 1.65,
+          "shadow_brightness": 0.43,
+          "glow_radius": 3.8,
+          "glow_strength": 1.65,
+          "floor_grain": 11
+        }
       }
+    },
+    "disabled_concept": {
+      "image": "art/bonus-gems/disabled-concept.png",
+      "prompt": "art/bonus-gems/disabled-concept.prompt.txt",
+      "generator": "Built-in ImageGen paint-over of the previously rendered disabled toolbar"
     }
   }
 }

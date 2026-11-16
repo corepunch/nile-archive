@@ -2,6 +2,7 @@
 import argparse
 import io
 import json
+import random
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageOps
@@ -41,10 +42,10 @@ def bevel(face, mask, width, shadow=0.56, highlight=1.28):
     return Image.composite(shade.enhance(highlight), face, lower)
 
 
-def rim_glow(face, mask, color, strength=1, spread=2):
-    rim = ImageChops.subtract(mask.filter(ImageFilter.MaxFilter(2 * spread + 1)), mask)
-    halo = ImageChops.subtract(mask.filter(ImageFilter.GaussianBlur(1.5 * spread)), mask)
-    glow = ImageChops.add(rim, halo, scale=2).filter(ImageFilter.GaussianBlur(0.35 * spread))
+def rim_glow(face, mask, color, strength=1):
+    rim = ImageChops.subtract(mask.filter(ImageFilter.MaxFilter(5)), mask)
+    halo = ImageChops.subtract(mask.filter(ImageFilter.GaussianBlur(3)), mask)
+    glow = ImageChops.add(rim, halo, scale=2).filter(ImageFilter.GaussianBlur(0.7))
     glow = glow.point(lambda a: min(255, round(a * strength)))
     return Image.composite(Image.new("RGB", face.size, tuple(color)), face, glow)
 
@@ -70,13 +71,30 @@ def button_face(base, mask, style):
     return face
 
 
-def engrave(plate, mask, highlight):
-    """Cast the upper-left edge's shadow onto the cutout floor."""
+def cutout_floor(plate, cut):
+    floor = recolor(plate, cut["floor_palette"])
+    rng = random.Random(0)
+    grain = Image.new("L", floor.size)
+    strength = cut["floor_grain"]
+    grain.putdata([128 + rng.randint(-strength, strength) for _ in range(floor.width * floor.height)])
+    grain = grain.filter(ImageFilter.GaussianBlur(0.55)).convert("RGB")
+    return ImageChops.add(floor, grain, offset=-128)
+
+
+def engrave(plate, mask, floor, style):
+    """Light a dark floor through the cutout and reflect light around its edge."""
     face = plate.convert("RGB")
-    stone = rim_glow(face, mask, highlight, spread=3)
-    floor = ImageEnhance.Brightness(face).enhance(0.32)
-    shadow = ImageChops.subtract(mask, ImageChops.offset(mask, 3, 3))
-    recess = Image.composite(ImageEnhance.Brightness(floor).enhance(0.5), floor, shadow)
+    cut = style["cutout"]
+    halo = mask.filter(ImageFilter.GaussianBlur(cut["glow_radius"]))
+    glow = ImageChops.multiply(halo, ImageChops.invert(mask))
+    glow = glow.point(lambda a: min(255, round(a * cut["glow_strength"])))
+    highlight = Image.new("RGB", face.size, tuple(style["palette"][-1]))
+    stone = Image.composite(highlight, face, glow)
+
+    shadow = ImageEnhance.Brightness(floor).enhance(cut["shadow_brightness"])
+    light = ImageChops.offset(mask.filter(ImageFilter.GaussianBlur(cut["shadow_softness"])),
+                              *cut["shadow_offset"])
+    recess = Image.composite(floor, shadow, light)
     return Image.composite(recess, stone, mask)
 
 
@@ -87,8 +105,9 @@ def pack(spec):
     base_alpha = base.getchannel("A")
     outside_button = base_alpha.point(lambda a: 255 if a < 128 else 0)
     mask = rounded_mask(base.size, **spec["button_inset"])
-    states = [(state, button_face(base, mask, spec["button_states"][state])) for state in spec["rows"][1:]]
-    disabled_highlight = spec["button_states"]["disabled"]["palette"][-1]
+    plates = {state: button_face(base, mask, spec["button_states"][state]) for state in spec["rows"][1:]}
+    disabled_style = spec["button_states"]["disabled"]
+    floor = cutout_floor(plates["disabled"], disabled_style["cutout"])
     atlas = Image.new("RGBA", (SLOT_SIZE * len(spec["columns"]), SLOT_SIZE * len(spec["rows"])))
     for x, bounds in enumerate(spec["chip_boxes"]):
         source = chips.crop(bounds)
@@ -101,8 +120,8 @@ def pack(spec):
         outline = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
         cut = center(outline.resize(chip.size, Image.Resampling.BICUBIC))
         assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), "Icon extends beyond the button"
-        for y, (state, plate) in enumerate(states, 1):
-            face = engrave(plate, cut, disabled_highlight) if state == "disabled" else Image.alpha_composite(plate, icon)
+        for y, (state, plate) in enumerate(plates.items(), 1):
+            face = engrave(plate, cut, floor, disabled_style) if state == "disabled" else Image.alpha_composite(plate, icon)
             face.putalpha(base_alpha)
             atlas.paste(face, (x * SLOT_SIZE, y * SLOT_SIZE))
     output = io.BytesIO()
