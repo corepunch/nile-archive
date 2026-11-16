@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unpack the AWEM v1 resources.pak from Cradle of Rome Beta 0.9.0."""
+"""Unpack the AWEM v1 resources.pak from Cradle of Rome Beta or Cradle of Rome 2."""
 
 import argparse
 import struct
@@ -8,7 +8,7 @@ from pathlib import Path
 from zipfile import _ZipDecrypter
 
 
-MAX_BYTES = 128 * 1024 * 1024
+MAX_BYTES = 192 * 1024 * 1024
 ENTRY_FLAGS = {0, 1, 9}
 
 
@@ -91,7 +91,7 @@ def unpack(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("pack", type=Path, help="path to the APK's assets/resources.pak")
+    parser.add_argument("pack", type=Path, help="path to the game's resources.pak")
     parser.add_argument("output", type=Path, help="new directory for extracted files")
     args = parser.parse_args()
     try:

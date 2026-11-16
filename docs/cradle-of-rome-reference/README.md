@@ -64,6 +64,34 @@ directory for an overview.
 
 The APK's separate audio and splash files are under `reference/cradle-of-rome/apk/assets/`.
 
+## Cradle of Rome 2 artwork
+
+The sequel reference comes from the [GameTop Windows release](https://www.gametop.com/download-free-games/cradle-of-rome-2/).
+The local `reference/cradle-of-rome-2/resources/` directory contains all 1,426
+files from its resource pack. Browse `visuals/board-pieces.png` and
+`visuals/board-backgrounds.png` in the same reference folder. The individual
+PNGs are under `visuals/sprites/settings/scenes/game/game_graphics/`. The 21 board
+backgrounds are also available as the original JPEGs in
+`resources/textures/scenes/game/backs/`.
+
+The Well unlocks the water bucket (`gmbn_5.png`), a 44×44 crop at `(0, 46)`
+in `textures/scenes/game/balls/gmf_balls_2.png`. Each matched bucket gives 3
+Food. This PC release also has a separate meat tile (`gmbn_7`).
+[Awem's resource guide](https://support.awem.com/hc/en-gb/articles/200686242-Building-the-City)
+
+Run from the repository root with `innoextract` 1.9 or later and Pillow available.
+
+```sh
+curl -fL https://cdn7.gametop.com/games/Cradle-of-Rome-2.exe -o /tmp/Cradle-of-Rome-2.exe
+printf '%s  %s\n' 6413521557996b116fd83605944225931164f7748039dd925d0a2e8f1948d767 /tmp/Cradle-of-Rome-2.exe | shasum -a 256 -c
+innoextract --extract --lowercase --include app/resources.pak --include app/splashes --output-dir reference/cradle-of-rome-2 /tmp/Cradle-of-Rome-2.exe
+python3 tools/cradle-of-rome-reference/extract_pak.py reference/cradle-of-rome-2/app/resources.pak reference/cradle-of-rome-2/resources
+python3 tools/cradle-of-rome-reference/export_art.py --root reference/cradle-of-rome-2/resources --board-only
+```
+
+The extracted pack's SHA-256 is
+`9ec46272ab4d9b4a2f40cd09781f7910775dbda72f9fa6830cdff81d8809f9d5`.
+
 ## Reproduce the counts
 
 Run these commands from the repository root with the downloaded APK and fresh output paths.

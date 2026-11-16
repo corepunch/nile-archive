@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Decode Cradle of Rome Beta textures and export the XML-defined sprites."""
+"""Export the XML-defined board artwork from Cradle of Rome Beta or Cradle of Rome 2."""
 
 import argparse
 import re
@@ -10,6 +10,9 @@ from PIL import Image, ImageDraw
 
 from analyze import DEFAULT_ROOT, legacy_xml
 
+
+BOARD_SCRIPT = Path("settings/scenes/game/game_graphics.xml")
+BOARD_ART = re.compile(r"gmbn_(?:\d+|skull)|bns_\w+_fld|gm_back_\d+")
 
 # ETC1 RGB8 modifier magnitudes, in codeword order.
 # https://registry.khronos.org/OpenGL/extensions/OES/OES_compressed_ETC1_RGB8_texture.txt
@@ -71,14 +74,17 @@ def export_textures(root, output):
     return decoded
 
 
-def export_sprites(root, apk_assets, output, decoded):
+def export_sprites(root, apk_assets, output, decoded, board_only):
     count = 0
-    for script in sorted(root.rglob("*.xml")):
+    scripts = [root / BOARD_SCRIPT] if board_only else sorted(root.rglob("*.xml"))
+    for script in scripts:
         if b"<Texture " not in script.read_bytes():
             continue
         folder = output / "sprites" / script.relative_to(root).with_suffix("")
         for texture in legacy_xml(script).iter("Texture"):
             sprites = texture.findall("Sprite")
+            if board_only:
+                sprites = [sprite for sprite in sprites if BOARD_ART.fullmatch(sprite.attrib["alias"])]
             if not sprites:
                 continue
             name = texture.attrib["file"].lower().replace("\\", "/")
@@ -120,7 +126,8 @@ def contact_sheet(paths, target, columns, cell):
             thumb = source.convert("RGBA")
             thumb.thumbnail((width - 12, height - 24), Image.Resampling.LANCZOS)
             sheet.paste(thumb, (cx - thumb.width // 2, row * height + 6), thumb)
-        draw.text((cx, (row + 1) * height - 6), path.stem, fill="white", anchor="ms")
+        label = path.parent.name if path.stem.isdecimal() else path.stem
+        draw.text((cx, (row + 1) * height - 6), label, fill="white", anchor="ms")
     sheet.save(target)
 
 
@@ -129,14 +136,18 @@ def main():
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="extracted resources directory")
     parser.add_argument("--apk-assets", type=Path, help="defaults to apk/assets next to the resources directory")
     parser.add_argument("--output", type=Path, help="new output directory, defaults to visuals next to resources")
+    parser.add_argument("--board-only", action="store_true", help="export board pieces, bonuses and backdrops")
     args = parser.parse_args()
     output = args.output or args.root.with_name("visuals")
     apk_assets = args.apk_assets or args.root.with_name("apk") / "assets"
     output.mkdir()
     decoded = export_textures(args.root, output)
-    count = export_sprites(args.root, apk_assets, output, decoded)
-    board = output / "sprites/settings/scenes/game/game_graphics"
+    count = export_sprites(args.root, apk_assets, output, decoded, args.board_only)
+    board = output / "sprites" / BOARD_SCRIPT.with_suffix("")
     chips = [board / f"gmbn_{n}.png" for n in range(1, 17)] + [board / "gmbn_skull.png"]
+    multiball = board / "gmbn_17/01.png"
+    if multiball.is_file():
+        chips.append(multiball)
     chips.extend(sorted(board.glob("bns_*_fld.png")))
     contact_sheet(chips, output / "board-pieces.png", 5, (118, 84))
     contact_sheet(sorted(board.glob("gm_back_*.png")), output / "board-backgrounds.png", 4, (236, 188))
