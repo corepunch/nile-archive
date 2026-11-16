@@ -61,7 +61,9 @@ do
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
-    check(R.make_board(9,19).resource_yields[1].key=='berries','rations are locked before the market')
+    local before_market = R.make_board(9,19)
+    check(before_market.resource_yields[1] ~= economy.unlocks[4] and before_market.tool_meter[4] == nil,
+        'both rations and Mixer are locked before the market')
     check(island.island_place_next(c,bank,9,0),'confirm the earned market')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
