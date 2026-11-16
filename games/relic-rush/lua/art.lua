@@ -81,6 +81,7 @@ function A.load()
         textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
     end
     textures["frame-leaves"] = texture.load("board-tiles/frame-leaves.png")
+    textures["frame-stone"] = texture.load("board-tiles/frame-stone.png")
     local result_atlas = texture.load("result-icons.png")
     for i, key in ipairs(A.result_icons) do
         textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))

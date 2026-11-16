@@ -6,6 +6,8 @@
   "grain": {"seed": 7},
   "outputs": ["games/relic-rush/data/board-tiles", "games/christmas-market/data/board-tiles"],
   "decor": {
+    "frame-stone": {"kind": "stone", "width": 512, "height": 24, "opacity": 0.7, "crack_gap": 44, "seed": 3,
+                    "grain": {"size": 512, "seed": 19, "stain": 0.35, "rings": 0.25, "mottle": 0.5, "fibre": 0.05, "speck": 0.4, "strength": 0.8}},
     "frame-leaves": {"size": 96, "fan": [[-58, 0.4, 0.2], [52, 0.36, 0.19], [-8, 0.47, 0.24]], "outline": "#1E4A12", "base": "#2F8A22", "tip": "#9BD83E", "vein": "#C9EE7A"}
   },
   "tiles": {

@@ -273,19 +273,41 @@ function E.silhouette_edges(R, rules)
     return edges, corners
 end
 
--- The frame's shadow on the cells along the board's edge, as in Cradle of
--- Rome's frame pieces: `shadow` = {width, alpha, steps}. Each step darkens a
--- narrower strip, so the shade is deepest right under the frame.
-local function draw_inner_shadow(R, edges, sx, alpha)
-    local spec = R.GROUND.inner_shadow
+-- The board's drop shadow, outside the frame: `drop_shadow` = {spread, drop,
+-- alpha, steps}. Each step is a wider, fainter copy of the frame's outline
+-- moved down by `drop`, so the shadow is soft at its edge.
+local function draw_drop_shadow(R, edges, reach, sx, alpha)
+    local spec = R.GROUND.drop_shadow
     if not spec then return end
     local ink = color(0, 0, 0, 255 * alpha * spec.alpha / spec.steps)
+    local shift = vec2(sx, spec.drop)
     for step = 1, spec.steps do
-        local depth = spec.width * step / spec.steps
-        for _, e in ipairs(edges) do
-            local inward = vec2(sx - e.n.x * depth / 2, -e.n.y * depth / 2)
-            gfx.line(e.a + inward, e.b + inward, depth, ink)
-        end
+        local w = reach + spec.spread * step / spec.steps
+        for _, e in ipairs(edges) do gfx.line(e.a + shift, e.b + shift, 2 * w, ink) end
+        for _, e in ipairs(edges) do gfx.circle(e.a + shift, w, ink); gfx.circle(e.b + shift, w, ink) end
+    end
+end
+
+-- Stone over the frame: R.GROUND.stone names a neutral texture strip (dark
+-- stains, light flecks and cracks with alpha, from tools/board_tiles.py) laid
+-- along each outside edge, across the frame's whole width.
+local stone_views = setmetatable({}, {__mode = "k"})
+local function draw_stone(R, edges, reach, sx, alpha)
+    local art = R.GROUND.stone and R.board_art[R.GROUND.stone]
+    if not art or art.w == 0 then return end
+    local views = stone_views[art]
+    if not views then
+        views = {}
+        local w = art.h * 3
+        for k = 0, 7 do views[k] = texture.region(art, rect((k * 131) % (art.w - w), 0, w, art.h)) end
+        stone_views[art] = views
+    end
+    local tint = color(255, 255, 255, 255 * alpha)
+    for i, e in ipairs(edges) do
+        local d = e.b - e.a
+        local mid = vec2((e.a.x + e.b.x) / 2 + e.n.x * reach / 2 + sx, (e.a.y + e.b.y) / 2 + e.n.y * reach / 2)
+        local length = math.sqrt(d.x * d.x + d.y * d.y) + reach
+        gfx.image_rot(views[i % 8], rect.centered(mid, size2(length, reach)), math.atan(d.y, d.x), tint)
     end
 end
 
@@ -323,7 +345,8 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
     -- outline's corners. While cells fly in, each cell grows its own hexes.
     local outline, corners
     if not R.intro then outline, corners = E.silhouette_edges(R, rules) end
-    R.GROUND.outline, R.GROUND.corners = outline, corners
+    R.GROUND.outline, R.GROUND.corners, R.GROUND.reach = outline, corners, reach
+    if outline then draw_drop_shadow(R, outline, reach, sx, alpha) end
     for k = #frame, 1, -1 do
         local band = frame[k]
         local top, bottom = color.alpha(band.top, alpha), color.alpha(band.bottom or band.top, alpha)
@@ -344,6 +367,7 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
         end
         reach = reach - band.width
     end
+    if outline then draw_stone(R, outline, look.reach, sx, alpha) end
     local seam = color.alpha(look.seam, alpha)
     local face = color.alpha(look.face, alpha)
     local inset = look.seam_width or FLOOR_INSET
@@ -378,22 +402,23 @@ function E.frame_ramp(width, stops, steps, shade)
 end
 
 -- Cradle of Rome's board, shared by the match-3 games, after the first game's
--- frame pieces. From the cells out: a thin dark edge, a tan inner lip, a rusty
--- line and dark brown wood. The frame shades the cells along the board's edge
--- and carries leaves on three corners. Dark brown grout separates the cells,
--- and the cell-state tiles are baked by tools/board_tiles.py.
+-- frame pieces. From the cells out: dark brown stone, a rusty line and a tan
+-- outer lip, all under a stone texture with cracks, then a soft drop shadow
+-- outside the board. Leaves sit on three corners, dark brown grout separates
+-- the cells, and the textures are baked by tools/board_tiles.py.
 local function band(width, top, bottom) return {width = width, top = color.hex(top), bottom = color.hex(bottom)} end
 local cradle_frame = {
-    band(.7, 0x5E4428, 0x4A3018),
-    band(3, 0xB28C5A, 0x9A7446),
-    band(.8, 0x733A12, 0x5A2A0C),
-    band(1.6, 0x664626, 0x56361A),
-    band(2.4, 0x58300F, 0x47240C),
+    band(1.7, 0x47240C, 0x3A1C08),
+    band(1.1, 0x5E3E20, 0x4E3218),
+    band(.55, 0x733A12, 0x5A2A0C),
+    band(2.1, 0xC09A66, 0x9A7446),
+    band(.5, 0x5E4428, 0x4A3018),
 }
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
     frame = cradle_frame,
-    inner_shadow = {width = 5, alpha = .55, steps = 5},
+    drop_shadow = {spread = 5, drop = 3, alpha = .55, steps = 6},
+    stone = "frame-stone",
     leaves = "frame-leaves",
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
              wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
@@ -486,10 +511,7 @@ function E.ground(R, rules, sx, floor, sweep)
             end
         end
     end
-    if R.GROUND.outline then
-        draw_inner_shadow(R, R.GROUND.outline, sx, alpha)
-        draw_leaves(R, R.GROUND.corners, sx, alpha)
-    end
+    if R.GROUND.outline then draw_leaves(R, R.GROUND.corners, sx, alpha) end
     E.cell_highlights(R, rules, sx, alpha)
     if story and story.floor == "oil" then
         draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])

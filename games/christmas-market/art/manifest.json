@@ -67,6 +67,7 @@
     "data/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
     "data/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
     "data/board-tiles/frame-leaves.png": "ecf7300f238273091e1fbc8440866f4a697f04d7196b21d0b5def88a156b41e6",
+    "data/board-tiles/frame-stone.png": "a3722747984025c5e883dd7b46a795765bc0b2768973d922a7993d98afa77adc",
     "data/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
     "data/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
     "data/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",

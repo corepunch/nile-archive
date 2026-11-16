@@ -251,6 +251,30 @@ def leaves(spec):
     return out.resize((spec["size"], spec["size"]), Image.Resampling.LANCZOS)
 
 
+def stone(spec):
+    """A neutral stone strip for the board frame: the shared grain for pits and
+    mottling, plus short dark cracks across the strip with a lit edge."""
+    w, h = spec["width"], spec["height"]
+    grain = board_grain.render(**spec["grain"])
+    out = grain.crop((0, 0, w, grain.height)).resize((w, h), Image.Resampling.BICUBIC) if grain.width >= w else grain.resize((w, h))
+    out.putalpha(out.getchannel("A").point(lambda a: round(a * spec["opacity"])))
+    draw = ImageDraw.Draw(out)
+    rng = random.Random(spec.get("seed", 3))
+    x = rng.uniform(0, spec["crack_gap"])
+    while x < w:
+        px, py = x, rng.choice((0, h))
+        heading = math.pi / 2 if py == 0 else -math.pi / 2
+        for _ in range(rng.randint(3, 6)):
+            heading += rng.uniform(-.7, .7)
+            step = h * rng.uniform(.18, .35)
+            nx, ny = px + step * math.cos(heading), py + step * math.sin(heading)
+            draw.line((px + 1, py + 1, nx + 1, ny + 1), fill=(255, 255, 255, 70), width=1)
+            draw.line((px, py, nx, ny), fill=(0, 0, 0, 190), width=1)
+            px, py = nx, ny
+        x += rng.uniform(.5, 1.2) * spec["crack_gap"]
+    return out
+
+
 def render_all(spec):
     grains = {}
     for tile in spec["tiles"].values():
@@ -259,7 +283,7 @@ def render_all(spec):
             grains[key] = board_grain.render(**{**spec["grain"], **tile.get("grain_params", {})})
     out = {name: bake(spec, tile, grains, i) for i, (name, tile) in enumerate(spec["tiles"].items())}
     for name, decor in spec.get("decor", {}).items():
-        out[name] = leaves(decor)
+        out[name] = stone(decor) if decor.get("kind") == "stone" else leaves(decor)
     return out
 
 
