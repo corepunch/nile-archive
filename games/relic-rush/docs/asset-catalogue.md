@@ -586,7 +586,7 @@ pause, guide and the island.
 | DIVE | Town <-> board transition (`wipe` in `engine/match3_dive.lua`): a diagonal edge sweeps left to right over 1.4 seconds, the town on one side and the board on the other; procedural (a masked draw of both screens), no art. Input waits for it; reduced motion skips it. Capture: `build/test/relic-rush relic-rush-town-dive` (`--city 3 --dive --reel`), frames in `build/shots/frames/` |
 | Idle | Base or special frame, optional selection/hint/blocker layers |
 | SWAP | Existing piece artwork moves to neighbour |
-| REJECT | Same artwork returns; no move spent |
+| REJECT | Existing artwork moves and returns with zero moves spent. Against a chain only the incoming gem moves (`engine/match3.lua`). Capture with `build/test/all --suite=relic-rush 'reel chain-reject'`. |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
 | FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
 | Special birth | Existing authored special plus transient halo/sparks |

@@ -482,6 +482,11 @@ rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced
 motion omits the bounce. Capture with
 `build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
+When a swap is rejected by a tinsel tie, only the incoming treat slides toward
+the tie and back. The shared `engine/match3.lua` animation moves the existing
+artwork and plays the normal reject haptic. Review the same motion with
+`build/test/all --suite=relic-rush 'reel chain-reject'`.
+
 See [checked in-game captures and commands](review/trickling/README.md) and the
 [engine contract](../../../docs/MATCH3_ENGINE.md). The default atlas's source,
 prompt, all supported states and crop/rotation registration are catalogued in

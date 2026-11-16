@@ -38,6 +38,8 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 Every expedition ends when all of its blue plaques are clear. Match on a blue
 cell to reveal the pale stone below. A chain absorbs the first hit on its piece.
+Swipe or tap a gem toward a chain and it slides toward the chain and back,
+with the same haptic as a rejected swap and zero moves spent.
 See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition.
 The [resource expedition design](docs/resource-expedition.md) covers how
 resource matches and restoration costs fit into the campaign.

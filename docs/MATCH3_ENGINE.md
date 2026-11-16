@@ -100,6 +100,11 @@ and turn each full meter into one charge. Tool hits still earn the base
 wallet yield. A game can supply `sunburst_targets` for the earned tool
 so the preview and the hit share the same cell mask.
 
+A swap into a chain sends the movable gem halfway toward the blocked cell
+and back. The chained gem stays in place. This plays the ordinary rejected
+swap's sound and haptic and spends zero moves. Reduced motion shortens the
+out-and-back animation.
+
 ## Diagonal refill
 
 A gravity step moves each gem at most one downward hex edge. A gem falls

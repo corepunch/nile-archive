@@ -759,10 +759,13 @@ function E.new(config)
     end
     local game_matches = M.game_matches
 
+    local function movable_for_swap(g, i)
+        return not locked(g, i) and g.tiles[i].kind ~= -1 and g.tiles[i].element ~= "cherry"
+    end
+
     function M.game_can_swap(g, a, b)
-        return cell_active(g, a) and cell_active(g, b) and hex_distance(a, b) == 1 and not locked(g, a) and not locked(g, b)
-            and g.tiles[a].kind ~= -1 and g.tiles[b].kind ~= -1
-            and g.tiles[a].element ~= "cherry" and g.tiles[b].element ~= "cherry"
+        return cell_active(g, a) and cell_active(g, b) and hex_distance(a, b) == 1
+            and movable_for_swap(g, a) and movable_for_swap(g, b)
     end
     local game_can_swap = M.game_can_swap
 
@@ -1519,6 +1522,7 @@ function E.new(config)
     local CELL_SIZE = R.piece_width or HEX_DY
     local PI = math.pi
     local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL = 0, 1, 2, 3, 4
+    local REJECT_LEG = .16
     R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL = PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL
     function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
     local cell_pos = R.cell_pos
@@ -1684,26 +1688,34 @@ function E.new(config)
             math.min(1, .6 + .1 * R.g.combo))
     end
 
+    local function reject_swap(chain)
+        R.phase, R.phase_time, R.reject_chain = PH_REJECT, 0, chain
+        R.play("reject")
+        haptic.play(haptic.ERROR, .5)
+    end
+
     function R.attempt_swap(a, b)
         if R.phase ~= PH_IDLE or R.overlay ~= R.OV_NONE or R.on_island then return end
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         R.idle_time = 0
         R.swap_a, R.swap_b = a, b
         snapshot()
-        if rules.game_swap(R.g, a, b, R.pending) then
+        local g = R.g
+        if rules.game_swap(g, a, b, R.pending) then
             local sa, sb = R.old_tiles[a].special, R.old_tiles[b].special
             R.fx_origin = sa == PRISM and b or sb == PRISM and a or b
             R.fx_combo = (sa == PRISM or sb == PRISM) and 3 or (sa ~= NORMAL and sb ~= NORMAL) and ((sa == BOMB or sb == BOMB) and 2 or 1) or 0
             R.phase = PH_SWAP
             R.phase_time = 0
             R.play("swap")
-        elseif rules.game_can_swap(R.g, a, b) then
-            R.phase = PH_REJECT
-            R.phase_time = 0
-            R.play("reject")
-            haptic.play(haptic.ERROR, .5)
+        elseif rules.game_can_swap(g, a, b) then
+            reject_swap(false)
         else
             R.notice(R.locked_notice or "Ice and chains must be broken first.")
+            if not g.won and not g.lost and cell_active(g, a) and cell_active(g, b) and hex_distance(a, b) == 1
+                and (g.chain[b] or 0) > 0 and movable_for_swap(g, a) then
+                reject_swap(true)
+            end
         end
     end
 
@@ -1749,7 +1761,7 @@ function E.new(config)
         R.phase_time = R.phase_time + dt
         local speed = R.reduced_motion and .35 or 1
         if R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
-        elseif R.phase == PH_REJECT and R.phase_time > .32 * speed then R.phase = PH_IDLE
+        elseif R.phase == PH_REJECT and R.phase_time >= 2 * REJECT_LEG * speed then R.phase = PH_IDLE
         elseif R.phase == PH_CLEAR and R.phase_time > (.24 + (next(R.flight_targets or {}) and .48 or 0)) * speed and not elements.maker_busy(R) then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
             elements.maker_observe(R)
@@ -1777,11 +1789,13 @@ function E.new(config)
     local clip = nil
     if R.phase == PH_SWAP or R.phase == PH_REJECT then
         t = R.old_tiles[i]
-        if i == R.swap_a or i == R.swap_b then
+        local into_chain = R.phase == PH_REJECT and R.reject_chain
+        if i == R.swap_a or (i == R.swap_b and not into_chain) then
             local other = i == R.swap_a and R.swap_b or R.swap_a
-            local f = R.phase_time / (R.phase == PH_SWAP and .17 or .16)
+            local leg = R.phase == PH_SWAP and .17 or REJECT_LEG * (R.reduced_motion and .35 or 1)
+            local f = R.phase_time / leg
             if R.phase == PH_REJECT and f > 1 then f = 2 - f end
-            at = at:lerp(cell_pos(other) + vec2(sx, 0), ease.out_cubic(f))
+            at = at:lerp(cell_pos(other) + vec2(sx, 0), (into_chain and .5 or 1) * ease.out_cubic(num.saturate(f)))
         end
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]

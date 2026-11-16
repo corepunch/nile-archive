@@ -20,6 +20,46 @@ local function pulse(expected, message)
     check(count == 1 and effect == expected, message)
 end
 
+do
+    local source, target = rules.hex_index(0, -1), rules.hex_center()
+    local from, to = R.cell_pos(source), R.cell_pos(target)
+    local g = setup()
+    for i = 0, rules.CELLS - 1 do g.active[i] = i == source or i == target end
+    R.board_input{released=true, press_pos=from, pos=to}
+    local count, effect, strength = testing.haptics()
+    check(count == 1 and effect == haptic.ERROR, 'a swap without a match gives one error pulse')
+
+    for _, reduced in ipairs({false, true}) do
+        g = setup()
+        R.reduced_motion = reduced
+        g.chain[target] = 1
+        local moving, chained, moves = g.tiles[source], g.tiles[target], g.moves
+        if reduced then R.board_input{released=true, press_pos=from, pos=from} end
+        R.board_input{released=true, press_pos=reduced and to or from, pos=to}
+        local pulses, chain_effect, chain_strength = testing.haptics()
+        check(pulses == 1 and chain_effect == effect and chain_strength == strength,
+            'a chain gives the normal reject pulse on a swipe or two taps')
+
+        local leg = reduced and .16 * .35 or .16
+        R.board_update(leg)
+        local _, moving_at = R.piece_pose(source, 0)
+        local _, chained_at = R.piece_pose(target, 0)
+        local halfway = from:lerp(to, .5)
+        near(moving_at:dist(halfway), 0, 'the moving gem reaches the chain')
+        near(chained_at:dist(to), 0, 'the chained gem stays in its slot')
+        R.board_update(leg / 2)
+        _, moving_at = R.piece_pose(source, 0)
+        check(moving_at:dist(from) < halfway:dist(from), 'the moving gem heads back')
+        testing.advance(2 * leg)
+        R.board_update(leg / 2 + .001)
+        _, moving_at = R.piece_pose(source, 0)
+        near(moving_at:dist(from), 0, 'the moving gem returns to its slot')
+        check(R.phase == R.PH_IDLE and g.moves == moves and g.chain[target] == 1
+            and g.tiles[source] == moving and g.tiles[target] == chained, 'the rejection preserves the board and moves')
+        check(testing.haptics() == 1, 'the return does not play a second pulse')
+    end
+end
+
 local g = setup()
 local m = rules.new_match()
 rules.game_matches(g,m,-1)
