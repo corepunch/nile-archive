@@ -1,6 +1,7 @@
 # Twenty campaign buildings for Relic Rush and Christmas Market
 
 > **Status:** proposal, 16 November 2026. Nothing here is implemented yet.
+> The Relic Rush section was revised the same day to build on its new bonus gems.
 > Prices are starting points for the campaign bot and `tools/tune_levels.py`,
 > not tuned values.
 
@@ -63,66 +64,82 @@ left, so a shuffle tool would rarely matter. The paper plane takes its slot.
 
 ## Relic Rush: the 20 restorations
 
-★ marks the existing story restorations. Their price, unlock and story beat
-are unchanged. The ten new buildings all have Blender renders already: they
-are shop buildings today, and this moves them into the campaign. Rings,
-scarabs, sandals and harps already exist and are already in the game; they
-come in today as the Courtyard's timed variants on boards 18, 21, 25 and 28.
-Here each becomes its own building's unlock on the same board. **Relic Rush
-needs no new building or piece art.**
+> **Revised 16 November 2026.** Since this proposal was first written, Relic
+> Rush has gained six of Rome's eight tools as matchable bonus gems with a
+> scaling toolbar (Dynamite, Hammer, Shutter Gear, Shield, Lightning, Star).
+> [Bonus pieces](../../games/relic-rush/docs/board-progression.md#bonus-pieces)
+> The opening specials and perks described above do not apply to Relic Rush.
+> Its ladder builds on those bonus gems instead. They remain the plan for
+> Christmas Market.
 
-| # | Build after | Building | From board | Adds | Kind | Price C / F / S |
-| ---: | ---: | --- | ---: | --- | --- | ---: |
+Today four story restorations give two things each: the Workshop, Market,
+Courtyard and Archive add a resource piece *and* a bonus gem. The Courtyard
+also brings rings, scarabs, sandals and harps on a timer. Rome gives each
+building one thing. So the ten new buildings take over those four bonuses and
+four treasures, and add Rome's two missing tools, the Hourglass and the Plus.
+That is exactly Rome I's set: twelve pieces and all eight tools.
+
+★ marks a story restoration. Its price and story beat are unchanged; it keeps
+its piece and gives up its second unlock. Every debut board stays where it is
+today, so the fitted budgets still hold. All ten new buildings are shop
+buildings with Blender renders today and move into the campaign.
+
+| # | Build after | Building | From board | Adds | Price C / F / S |
+| ---: | ---: | --- | ---: | --- | ---: |
 | **I. The landing** |
-| 1 | 1 | ★ Expedition camp | 2 | Dynamite, 2 uses | Tool | 0 / 3 / 8 |
-| 2 | 2 | Trapper's cabin | 3 | +1 use for every tool | Perk | 45 / 0 / 6 |
-| 3 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | Piece | 100 / 0 / 0 |
-| 4 | 5 | Valley lighthouse | 6 | One rocket on every opening board | Special | 50 / 15 / 10 |
+| 1 | 1 | ★ Expedition camp | 2 | Dynamite gems | 0 / 3 / 8 |
+| 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 100 / 0 / 0 |
+| 3 | 7 | Trapper's cabin | 8 | Hammer gems *(from the Workshop)* | 40 / 10 / 12 |
+| 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 70 / 20 / 24 |
 | **II. The quay** |
-| 5 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | Piece | 70 / 20 / 24 |
-| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | Piece | 85 / 24 / 30 |
-| 7 | 11 | Clock tower | 12 | +3 moves on every expedition | Perk | 80 / 30 / 25 |
-| 8 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | Piece | 85 / 34 / 36 |
+| 5 | 9 | Water mill | 10 | Shutter Gear gems *(from the Market)* | 45 / 12 / 15 |
+| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 85 / 24 / 30 |
+| 7 | 11 | Clock tower | 12 | **Hourglass gems, new:** +5 moves | 80 / 30 / 25 |
+| 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 50 / 18 / 18 |
 | **III. The terraces** |
-| 9 | 14 | Glass greenhouse | 15 | One rainbow ball on every opening board | Special | 110 / 20 / 30 |
-| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | Piece | 130 / 35 / 0 |
-| 11 | 17 | Trading post | 18 | Ring, 7 Coins | Piece | 90 / 45 / 20 |
-| 12 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | Piece | 145 / 85 / 40 |
+| 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 85 / 34 / 36 |
+| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | 130 / 35 / 0 |
+| 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 90 / 45 / 20 |
+| 12 | 19 | Valley lighthouse | 20 | Lightning gems *(from the Archive)* | 75 / 40 / 20 |
 | **IV. The wreck** |
-| 13 | 20 | Beached schooner | 21 | Scarab, 8 Coins | Piece | 120 / 30 / 70 |
-| 14 | 21 | Great aviary | 22 | One paper plane on every opening board | Special | 150 / 30 / 40 |
-| 15 | 22 | Water mill | 23 | Move bonus 3 Coins per move, cap 60 | Perk | 140 / 50 / 40 |
-| 16 | 23 | ★ Star observatory | 24 | Sunburst, 2 uses | Tool | 155 / 0 / 70 |
+| 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 145 / 85 / 40 |
+| 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 120 / 30 / 70 |
+| 15 | 22 | Cartographer's house | 23 | **Plus gems, new:** charge the other sockets | 140 / 50 / 40 |
+| 16 | 23 | ★ Star observatory | 24 | Star gems | 155 / 0 / 70 |
 | **V. The temple** |
-| 17 | 24 | Cartographer's house | 25 | Winged sandal, 9 Coins | Piece | 160 / 40 / 60 |
-| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | Piece | 160 / 0 / 65 |
-| 19 | 27 | Stone amphitheatre | 28 | Harp, 10 Coins | Piece | 170 / 90 / 50 |
-| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | Piece | 185 / 110 / 75 |
+| 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 160 / 40 / 60 |
+| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | 160 / 0 / 65 |
+| 19 | 27 | Relic museum | 28 | Harp, 10 Coins *(from the Courtyard)* | 170 / 90 / 50 |
+| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 185 / 110 / 75 |
 
-Twelve pieces, eight bonuses: two tools, three opening specials and three
-perks.
+Where a story restoration and the new building that took its bonus share a
+clear (7, 9, 13 and 19), the new one comes first on the ladder. The story
+building then requires it, so the bonus still debuts on the same board.
+Board 10 needs this most: its story gear is also the Shutter Gear piece.
 
 **Why each building gives what it does.**
 
-- **Trapper's cabin, +1 use per tool.** This is Rome's Plus. It comes second
-  so the first Dynamite board after the Camp already feels generous.
-- **Valley lighthouse, opening rocket.** A beam along one line. It also echoes
-  the story's lights and signals from board 3.
-- **Clock tower, +3 moves.** This is the Hourglass. It comes before the
-  Courtyard's price jump, where replays for Food start.
-- **Glass greenhouse, opening rainbow.** The glass splits light into colours.
-- **Trading post, Beached schooner, Cartographer's house, Stone amphitheatre.**
-  These take over the Courtyard's helmet → ring → scarab → sandal → harp
-  climb: trade goods, a wreck's cargo, a traveller's sandals, a theatre's
-  lyre. Rome's Arch, Ship, Statue and Temple of Saturn do the same.
-- **Great aviary, opening paper plane.** The birds fly to a target.
-- **Water mill, richer move bonus.** This is the one economy perk. Today each
-  move left pays 2 Coins, up to 40. After the mill it pays 3, up to 60, which
-  rewards finishing fast just before the expensive Gold purchases.
+- **Trapper's cabin, Hammer.** The trapper's tools. Rome's Forge.
+- **Water mill, Shutter Gear.** A turning wheel and gears, which shuffle.
+- **Clock tower, Hourglass.** Rome's Pantheon adds time to the amphora. Here a
+  charged Hourglass adds 5 moves, which saves a nearly finished board.
+- **Stone amphitheatre, Shield.** Rome's Colosseum.
+- **Valley lighthouse, Lightning.** A beam striking the board.
+- **Cartographer's house, Plus.** Rome's Tabularium, a record office. A charged
+  Plus fills every other socket by half its threshold.
+- **Trading post, Beached schooner, Great aviary, Relic museum.** The Coins
+  slot's climb: trade goods, a wreck's cargo, winged sandals, a museum's harp.
+  Rome's Arch, Ship, Statue and Temple of Saturn do the same.
 
-**What changes for the Courtyard.** It keeps its helmet. The timed variants
-stop: the slot pays 6 Coins until the Trading post, then climbs as each new
-building is placed.
+**What new art this needs.** Two bonus gems, the Hourglass and the Plus, each
+with its toolbar button states, made through the existing bonus-piece pipeline
+(`art/bonus-pieces/`). Every building and every other piece exists.
+
+**Eight buttons on a phone.** The bonus toolbar shrinks its buttons to fit the
+unlocked sockets. With all eight at 390 points wide, each is about 40 points,
+under the usual 44-point touch target. Check this at 390×844 before
+committing to eight. If it is too small, the fallback is to show only charged
+sockets and the one this board charges.
 
 ## Christmas Market: the 20 stalls
 
@@ -216,6 +233,9 @@ but doubles the construction stops and the replays for shortfalls.
 
 ### Engine
 
+Items 1 and 2 are for Christmas Market; Relic Rush's Hourglass and Plus
+are bonus effects in its bonus-gem system instead.
+
 1. **Opening specials.** A loadout field, for example
    `opening_specials={"ray"}`, places that special on the opening board, on a
    seeded open cell that is neither chained nor under a plaque. It needs
@@ -229,7 +249,7 @@ but doubles the construction stops and the replays for shortfalls.
 ### Games
 
 1. **One unlock table per game.** Each row names its building key and either
-   a slot and tier, a tool, a special or a perk. Relic Rush's `E.unlocks`
+   a slot and tier, a bonus, a special or a perk. Relic Rush's `E.unlocks`
    matches unlock *i* to city type *i − 1*; the promoted buildings have
    other type IDs, so rows must name their building key. Christmas Market's
    `ordinary` table is indexed by the number of stalls built and must become
@@ -241,7 +261,7 @@ but doubles the construction stops and the replays for shortfalls.
 3. **Prices and budgets.** Run the campaign bot over 30 seeded runs per
    game and record wallet before each purchase, shortfall and replays, as
    [the adaptation](ADAPTATION.md#how-to-judge-the-first-prototype) says.
-   Refit move budgets with the +3 moves included.
+   In Christmas Market, refit move budgets with the +3 moves included.
 4. **Story.** Each new building needs an arrival line and the card text
    stating its unlock. They are not new scenes. Christmas Market's lines stay
    joyful. Both get a cold read per [STORY_WRITING.md](../STORY_WRITING.md).
@@ -253,19 +273,20 @@ but doubles the construction stops and the replays for shortfalls.
 
 | Game | New art | How |
 | --- | --- | --- |
-| Relic Rush | None. All 10 buildings and 12 pieces exist. | Re-check the promoted buildings' footprints with `--footprints`. |
+| Relic Rush | Hourglass and Plus bonus gems with their toolbar states. All 10 buildings and 12 pieces exist. | The existing bonus-piece pipeline. Re-check the promoted buildings' footprints with `--footprints`. |
 | Christmas Market | 6 pieces: silver bell, pocket watch, snow globe, music box, star topper, roast chestnuts. Plus the Christmas cracker, which charges the Firecracker. | One ImageGen atlas for all seven pieces together, in the existing market-goods style |
 | Christmas Market | 2 buildings: Clockmaker's shop and Carol bandstand | New catalogue rows appended, then Blender, `make buildings`, and the paint pass in [BUILDING_STYLE.md](../BUILDING_STYLE.md) |
-| Both | Guide icons for +3 moves, starting charge and the move bonus | Authored together in one atlas |
+| Christmas Market | Guide icons for +3 moves and starting charge | Authored together in one atlas |
 
 Each addition goes in the game's asset catalogue in the same PR. Gaps that
 remain get a GitHub issue.
 
 ## Suggested order of work
 
-1. Engine: opening specials and extra moves, with tests.
-2. Relic Rush first. It needs no new art, so it tests the whole ladder
-   (unlock table, soft gate, migration, retune) on its own.
+1. Relic Rush first: the ladder data, soft gate and migration, moving the
+   four doubled bonuses and four treasures to their new buildings. Then the
+   Hourglass and Plus gems.
+2. Engine: opening specials and extra moves, with tests, for Christmas Market.
 3. Christmas Market's data and the three bonuses that need no new art
    (Firecracker, opening specials, perks), with placeholder pieces tracked
    in an issue.
