@@ -71,17 +71,13 @@ def button_face(base, mask, style):
 
 
 def engrave(plate, mask, highlight):
-    """Cut the disabled icon into the plate and light its rim."""
+    """Cast the upper-left edge's shadow onto the cutout floor."""
     face = plate.convert("RGB")
-    stone = rim_glow(face, mask, highlight, spread=1)
+    stone = rim_glow(face, mask, highlight, spread=3)
     floor = ImageEnhance.Brightness(face).enhance(0.32)
-    recess = bevel(floor, mask, 3, shadow=0.5, highlight=2.25)
-    rim_light = ImageChops.subtract(mask, ImageChops.offset(mask, -1, -1)).filter(ImageFilter.GaussianBlur(0.35))
-    lit_edge = Image.blend(face, Image.new("RGB", face.size, tuple(highlight)), 0.48)
-    recess = Image.composite(lit_edge, recess, rim_light)
-    result = Image.composite(recess, stone, mask)
-    result.putalpha(plate.getchannel("A"))
-    return result
+    shadow = ImageChops.subtract(mask, ImageChops.offset(mask, 3, 3))
+    recess = Image.composite(ImageEnhance.Brightness(floor).enhance(0.5), floor, shadow)
+    return Image.composite(recess, stone, mask)
 
 
 def pack(spec):
@@ -101,7 +97,7 @@ def pack(spec):
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))
         chip.thumbnail((BUTTON_ICON_SIZE, BUTTON_ICON_SIZE), Image.Resampling.LANCZOS)
         icon = center(chip)
-        # Sample the cut once from the original outline. Only the lighting is soft.
+        # Sample the cut once so the surrounding glow leaves a sharp outline.
         outline = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
         cut = center(outline.resize(chip.size, Image.Resampling.BICUBIC))
         assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), "Icon extends beyond the button"
