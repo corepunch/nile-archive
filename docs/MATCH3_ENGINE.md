@@ -157,6 +157,9 @@ default) at its radius. The seam shows the backing colour through that inset.
 `{width, top, bottom}`. Every band is drawn for every cell under the faces, so
 only the silhouette's outline remains, and as a vertical gradient, so the
 board's top edges catch the light and its bottom edges fall into shade.
+Once the board has settled, the frame is drawn along the silhouette's own
+edges (`E.silhouette_edges`) as thick lines with a disc at each corner, which
+rounds the outline's corners; while cells fly in, each cell grows its own hexes.
 `elements.cradle_ground(R)` applies the shared Cradle of Rome preset
 (`E.CRADLE_GROUND`): one band built by `E.frame_ramp`, from near-black under
 the board's edge through brown to a bright peach-tan lip and a thin dark line,

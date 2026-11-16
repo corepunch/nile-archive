@@ -240,6 +240,29 @@ local function each_ground_cell(R, rules, sx, fn)
     end
 end
 
+-- The cell edges that face off the board: {a, b} are the edge's corners and
+-- t, ta, tb say how low its middle and corners sit on their cell (0 top, 1 bottom).
+function E.silhouette_edges(R, rules)
+    local edges, r = {}, R.HEX_R
+    local apothem = r * math.sqrt(3) / 2
+    for i = 0, rules.CELLS - 1 do
+        if rules.game_cell_active(R.g, i) then
+            local at = R.cell_pos(i)
+            for k = 0, 5 do
+                local mid = math.rad(k * 60 + 30)
+                if R.cell_at(at + vec2(math.cos(mid) * 2 * apothem, math.sin(mid) * 2 * apothem)) < 0 then
+                    local a0, a1 = math.rad(k * 60), math.rad(k * 60 + 60)
+                    edges[#edges + 1] = {
+                        a = at + vec2(math.cos(a0) * r, math.sin(a0) * r), b = at + vec2(math.cos(a1) * r, math.sin(a1) * r),
+                        t = (math.sin(mid) * apothem / r + 1) / 2, ta = (math.sin(a0) + 1) / 2, tb = (math.sin(a1) + 1) / 2,
+                    }
+                end
+            end
+        end
+    end
+    return edges
+end
+
 local function draw_ground_backing(R, rules, sx, alpha, textured)
     local look = R.GROUND
     -- The frame: bands listed from the cells outwards, drawn outermost first.
@@ -247,13 +270,28 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
     -- catch the light (`top`) and its bottom edges fall into shade (`bottom`).
     local frame, reach = look.frame or {}, 0
     for _, band in ipairs(frame) do reach = reach + band.width end
+    -- Once the board has settled, only the silhouette's own edges are drawn:
+    -- a thick line along each with a disc at each corner, which rounds the
+    -- outline's corners. While cells fly in, each cell grows its own hexes.
+    local outline = not R.intro and E.silhouette_edges(R, rules)
     for k = #frame, 1, -1 do
         local band = frame[k]
         local top, bottom = color.alpha(band.top, alpha), color.alpha(band.bottom or band.top, alpha)
-        local grow = reach * GROW
-        each_ground_cell(R, rules, sx, function(_, at, scale, turn)
-            gfx.ngon_grad(at, (R.HEX_R + grow) * scale, 6, turn, top, bottom)
-        end)
+        if outline then
+            local shift = vec2(sx, 0)
+            for _, e in ipairs(outline) do
+                gfx.line(e.a + shift, e.b + shift, 2 * reach, color.lerp(top, bottom, e.t))
+            end
+            for _, e in ipairs(outline) do
+                gfx.circle(e.a + shift, reach, color.lerp(top, bottom, e.ta))
+                gfx.circle(e.b + shift, reach, color.lerp(top, bottom, e.tb))
+            end
+        else
+            local grow = reach * GROW
+            each_ground_cell(R, rules, sx, function(_, at, scale, turn)
+                gfx.ngon_grad(at, (R.HEX_R + grow) * scale, 6, turn, top, bottom)
+            end)
+        end
         reach = reach - band.width
     end
     local seam = color.alpha(look.seam, alpha)
@@ -294,8 +332,8 @@ end
 -- in it, through brown to a bright peach-tan lip, closed by a thin dark line.
 -- Dark brown grout separates the cells, and the cell-state tiles are baked by
 -- tools/board_tiles.py.
-local cradle_frame = E.frame_ramp(8.5, {{0, 0x240802}, {.3, 0x4A200A}, {.55, 0x6E3C18}, {.74, 0xB07444},
-                                        {.88, 0xE8BC8C}, {1, 0xF2D2A0}}, 10, .78)
+local cradle_frame = E.frame_ramp(7, {{0, 0x240802}, {.25, 0x4A200A}, {.45, 0x6E3C18}, {.62, 0xB07444},
+                                        {.78, 0xE8BC8C}, {1, 0xF2D2A0}}, 10, .78)
 cradle_frame[#cradle_frame + 1] = {width = 1, top = color.hex(0x1C0A02), bottom = color.hex(0x0C0400)}
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,

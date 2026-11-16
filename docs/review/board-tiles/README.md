@@ -19,6 +19,10 @@ cream at the upper left to deep gold at the lower right, with a thin edge light:
 
 ![Frame and parchment against Cradle of Rome](frame-vs-reference.jpg)
 
+The outline's corners are rounded and the frame is 1.5 units slimmer:
+
+![Rounded outline](frame-rounded.jpg)
+
 | Slot | Tile | Use |
 | --- | --- | --- |
 | 1 | `cell-normal` | Normal and cleared cells |
