@@ -1,5 +1,7 @@
 # Ornaments painted into the board rim
 
+[Current front-facing artwork and placement review](front.md).
+
 The ImageGen paint-over uses the two live board captures and Cradle of Rome's
 corner sheet as inputs. The stems crossing the rim and their short contact
 shadows informed the game atlas. The game uses its own flat-top hex geometry

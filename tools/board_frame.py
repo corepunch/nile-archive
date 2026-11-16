@@ -275,15 +275,20 @@ def ornament_join(atlas, art, group, direction, recipe):
     stone = atlas.crop((x, y, x + SLOT, y + SLOT))
     image.paste(stone, (centre - SLOT // 2, centre - SLOT // 2))
 
-    vx, vy = VERTICES[direction]
-    offset = -RADIUS * PPU if group == "inner" else RADIUS * PPU * .16 if group == "walls" else 0
+    if group == "inner":
+        dx, dy = (offset * PPU for offset in recipe["mount"])
+        assert image.getpixel((round(centre + dx), round(centre + dy)))[3] >= 230, "Ornament hub must meet the rim"
+        assert art.getpixel((art.width // 2, art.height // 2))[3] >= 230, "Ornament anchor must be painted"
+    else:
+        vx, vy = VERTICES[direction]
+        offset = RADIUS * PPU * .16 if group == "walls" else 0
+        dx, dy = vx * offset, vy * offset
     size = round(recipe.get("width", 2) * RADIUS * PPU)
     sprite = art.resize((size, size), Image.Resampling.LANCZOS)
     if recipe.get("outward"):
         sprite = sprite.rotate(-(direction * 60 + 90), Image.Resampling.BICUBIC, expand=True)
     foliage = Image.new("RGBA", image.size)
-    foliage.paste(sprite, (round(centre + vx * offset - sprite.width / 2),
-                           round(centre + vy * offset - sprite.height / 2)))
+    foliage.paste(sprite, (round(centre + dx - sprite.width / 2), round(centre + dy - sprite.height / 2)))
 
     # The board paint-over places a small contact shadow where stems cross
     # the lip. Confine it to the stone and preserve the base join's alpha.

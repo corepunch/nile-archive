@@ -419,13 +419,13 @@ with six straight runs, six outward joins and six inward joins. Its
 previous frame's bands, seeded grain and cracks with
 `python3 tools/board_frame.py --output build/board-frame`.
 The stone atlas also contains outer joins with three-leaf jungle sprigs and
-an inner join with a matte vine. The vine's diagonal pose comes from the
-[cutout source atlas](../../../engine/art/board-frame/cutout-source.png).
-Its stem crosses the stone and its foliage spans most of the visible empty hex.
-The generator bakes the sprigs and contact shadows into their joins and
+an inner join with a bright front-facing leaf cluster. The broad leaves fan
+diagonally out from a hub seated on top of the stone. The generator bakes the
+[painted leaves](../../../engine/art/board-frame/rim-rosette-source.png)
+and contact shadows into their joins and
 exports `lua/board_frame_atlas.lua` with the registration.
 Run `python3 tools/board_frame.py --game relic-rush --output build/board-frame/relic-rush`.
-[Board paint-over, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/baked.md).
+[Board close-ups, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/front.md).
 
 The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
 these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).

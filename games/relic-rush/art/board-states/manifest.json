@@ -1887,8 +1887,8 @@
     "stone": "data/board-frame/stone.png",
     "review": "docs/review/board-frame-atlas/README.md",
     "decorations": "engine/art/board-frame/decorations.json",
-    "decoration_review": "docs/review/board-frame-decorations/baked.md",
+    "decoration_review": "docs/review/board-frame-decorations/front.md",
     "layout": "lua/board_frame_atlas.lua",
-    "reference": "docs/review/board-frame-decorations/baked-reference.png"
+    "reference": "engine/art/board-frame/rim-attachment-guide.png"
   }
 }

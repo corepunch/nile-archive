@@ -365,13 +365,14 @@ this atlas with `python3 tools/board_frame.py --winter --output build/winter-fra
 
 Decorated joins in `data/board-frame/stone.png` combine the stone with painted
 corner trim and contact shadows. Small fir sprigs sit on the outer shoulders,
-with larger variants on the walls of the open-top chamber. The matte bell and
-pinecone project diagonally into the enclosed cutouts.
+with larger variants on the walls of the open-top chamber. The bright bell and
+pinecone ornaments face the viewer and project diagonally into the enclosed
+cutouts from hubs placed on top of the stone.
 The generator uses the [outer source](../../../engine/art/board-frame/decorations-source.png)
-and [cutout source](../../../engine/art/board-frame/cutout-source.png) and
+and [inner rim source](../../../engine/art/board-frame/rim-rosette-source.png) and
 writes the coordinates to `lua/board_frame_atlas.lua`.
 Run `python3 tools/board_frame.py --game christmas-market --output build/board-frame/christmas-market`.
-[Board paint-over, prompt and phone captures](../../../docs/review/board-frame-decorations/baked.md).
+[Board close-ups, prompt and phone captures](../../../docs/review/board-frame-decorations/front.md).
 
 The shared renderer gives each face a 0.18-unit inset over a dark spruce
 backing that supplies the hairline seams. The guide reuses the tablet

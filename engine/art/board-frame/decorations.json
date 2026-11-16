@@ -4,9 +4,9 @@
   "size": 96,
   "north_snow": {"crop": [549, 220, 970, 311], "anchor": [758, 296], "scale": 0.182, "turn": 0},
   "atlases": {
-    "cutout": {
-      "source": "engine/art/board-frame/cutout-source.png",
-      "prompt": "engine/art/board-frame/cutout.prompt.txt"
+    "rim": {
+      "source": "engine/art/board-frame/rim-rosette-source.png",
+      "prompt": "engine/art/board-frame/rim-rosette.prompt.txt"
     }
   },
   "frames": {
@@ -16,7 +16,7 @@
         {"art": "leaves", "width": 0.8, "outward": true},
         {"art": "leaves", "width": 0.88, "outward": true}
       ],
-      "inner": [{"art": "hanging-vine", "direction": 4}]
+      "inner": [{"art": "rim-leaves", "direction": 4, "width": 2.65, "mount": [2.5, 3.5]}]
     },
     "christmas-market": {
       "winter": true,
@@ -25,8 +25,8 @@
         {"art": "fir-pinecone", "width": 1.05}
       ],
       "inner": [
-        {"art": "hanging-bell", "direction": 4},
-        {"art": "hanging-pinecone", "direction": 5}
+        {"art": "rim-bell", "direction": 4, "width": 2.55, "mount": [2.5, 3.5]},
+        {"art": "rim-pinecone", "direction": 5, "width": 2.58, "mount": [-2.5, 3.5]}
       ],
       "walls": [
         {"art": "fir-pinecone", "direction": 0, "width": 1.85},
@@ -37,13 +37,13 @@
   "games": {
     "relic-rush": {
       "leaves": {"crop": [80, 588, 464, 921], "anchor": [280, 898], "scale": 0.147, "turn": 0},
-      "hanging-vine": {"atlas": "cutout", "crop": [34, 69, 686, 613], "anchor": [354, 328], "scale": 0.116, "turn": 0}
+      "rim-leaves": {"atlas": "rim", "crop": [68, 89, 541, 618], "anchor": [209, 222], "scale": 0.108, "turn": 0}
     },
     "christmas-market": {
       "fir-ribbon": {"crop": [591, 594, 946, 920], "anchor": [842, 825], "scale": 0.170, "turn": 0},
       "fir-pinecone": {"crop": [1121, 601, 1467, 922], "anchor": [1175, 878], "scale": 0.155, "turn": 0},
-      "hanging-bell": {"atlas": "cutout", "crop": [729, 69, 1379, 609], "anchor": [1043, 331], "scale": 0.116, "turn": 0},
-      "hanging-pinecone": {"atlas": "cutout", "crop": [1457, 68, 2145, 607], "anchor": [1807, 324], "scale": 0.118, "turn": 0}
+      "rim-bell": {"atlas": "rim", "crop": [711, 65, 1305, 630], "anchor": [914, 212], "scale": 0.105, "turn": 0},
+      "rim-pinecone": {"atlas": "rim", "crop": [1614, 89, 2103, 600], "anchor": [1993, 225], "scale": 0.111, "turn": 0}
     }
   }
 }

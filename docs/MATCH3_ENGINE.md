@@ -169,13 +169,14 @@ mask. Equal distances from that shifted outline get the same opacity. The
 mask is cached with the frame layout and follows board shake and resize.
 The renderer can substitute decorated atlas regions at outward tips and
 the inner shoulders above an opening. The source join contains the stone,
-diagonal ornament and contact shadow. An open-top channel can use larger
+front-facing ornament and contact shadow. The decorated joins are drawn over
+the tile faces, with the playable pieces drawn above them. An open-top channel can use larger
 sprigs baked into its inward tips.
 An optional atlas slot adds snow to the highest horizontal north edges of the
 outer rim. Inner channel edges use bare stone.
 Imported and neutral boards use the default ground geometry.
 [Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
-[Painted join atlas and in-game review](review/board-frame-decorations/baked.md).
+[Painted join atlas and in-game review](review/board-frame-decorations/front.md).
 [Board shadow before and after](review/board-frame-decorations/shadow.md).
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each

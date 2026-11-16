@@ -485,12 +485,12 @@ local function draw_stone(R, rules, sx, alpha)
     for _, j in ipairs(layout.joins) do
         if not j.paint then gfx.image_part(art, j.source, rect.centered(j.at + origin, size), tint) end
     end
-    for _, p in ipairs(layout.painted) do gfx.image_part(art, p.source, p.area:offset(origin), tint) end
+    return layout
 end
 
 local function draw_ground_backing(R, rules, sx, alpha, textured)
     local look = R.GROUND
-    draw_stone(R, rules, sx, alpha)
+    local frame = draw_stone(R, rules, sx, alpha)
     local seam = color.alpha(look.seam, alpha)
     local face = color.alpha(look.face, alpha)
     local inset = look.seam_width or FLOOR_INSET
@@ -500,6 +500,7 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
             gfx.ngon(at, (R.HEX_R - inset) * scale, 6, turn, face)
         end
     end)
+    return frame
 end
 
 -- Cradle of Rome's board, shared by the match-3 games. The games supply the
@@ -555,7 +556,7 @@ end
 function E.ground(R, rules, sx, floor, sweep)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    draw_ground_backing(R, rules, sx, alpha, sweep or floor and floor.normal)
+    local frame = draw_ground_backing(R, rules, sx, alpha, sweep or floor and floor.normal)
     -- A reveal can show during play or wait for the first clear.
     local level = rules.level_of(g)
     local story = reveal(R, rules) or level.reveal
@@ -602,6 +603,14 @@ function E.ground(R, rules, sx, floor, sweep)
     E.cell_highlights(R, rules, sx, alpha)
     if story and story.floor == "oil" then
         draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])
+    end
+    if frame then
+        -- The painted joins sit over the tile faces, so leaves crossing
+        -- the lip keep their full silhouette. Pieces are drawn afterwards.
+        local origin = R.board_origin + vec2(sx, 0)
+        local tint = color(255, 255, 255, 255 * alpha)
+        local art = R.board_art[R.GROUND.frame]
+        for _, p in ipairs(frame.painted) do gfx.image_part(art, p.source, p.area:offset(origin), tint) end
     end
     if intro then
         for i = 0, rules.CELLS - 1 do
