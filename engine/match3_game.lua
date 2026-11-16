@@ -449,6 +449,7 @@ function G.bind(R, over)
             {kind="image", id="sprite", height=205},
             {kind="spacer", height=18},
             {kind="label", id="about", height=62, wrap=true, em=22, text_style=PAL_CREAM},
+            {kind="label", id="unlock", height=38, wrap=true, em=17, text_style=PAL_GOLD, visible_field="show_unlock"},
             {kind="spacer", height=14},
             {kind="row", height=78, align="center", visible_field="show_price", children={
                 {kind="spacer",grow=1},
@@ -477,6 +478,7 @@ function G.bind(R, over)
         local i = R.inspect >= 0 and R.inspect or island.wonder_count(R.island)
         if i < 0 or i >= #R.buildings then return end
         local w = R.buildings[i + 1]
+        local unlock_text = island.buildings[i + 1].unlock_text
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=journey.building_about(i, R.prog.level, w.about),
             action=built and W.card.move or can_build and W.card.build or W.card.back}
@@ -484,9 +486,11 @@ function G.bind(R, over)
         local show_price = not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
         wonder_form.values.show_price, wonder_form.values.show_notice = show_price, not show_price
+        wonder_form.values.show_unlock = unlock_text ~= nil
+        wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price_parts(w.cost)))
         wonder_form:set("notice", built and W.card.moving or W.card.locked)
-        local bounds = rect.centered(vec2(240, 450), size2(math.min(420, R.SCREEN_W - 48), 592))
+        local bounds = rect.centered(vec2(240, 450), size2(math.min(420, R.SCREEN_W - 48), unlock_text and 630 or 592))
         R.modal_bounds = pr(bounds)
         local event = wonder_form:draw(bounds, skin, {hit_offset=vec2(0, R.hit_dy)})
         if event and event.id == "action" then

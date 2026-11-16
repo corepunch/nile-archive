@@ -38,19 +38,46 @@ replaces red berries with ration jars worth 4 Food from board 10.
 From board 14 the Courtyard improves Coins, from board 17 the Lodge replaces
 ration jars with grain, and from board 20 the Archive improves Supplies.
 The Fountain upgrades the blue water slot from board 27 and the Temple
-upgrades the Coins slot on board 30. The Camp and Observatory add tools on
-boards 2 and 24. These rewards persist wherever the slot is available.
+upgrades the Coins slot on board 30. These resources persist wherever their slot
+is available. A confirmed restoration can also add a bonus piece family.
 
 Leaves appear on boards 3, 6, 9, 12, 18 and 24. Flowers appear on boards 4, 6,
 7, 15, 21 and 27. They award score only. Earlier introductions use the score
 slot. Board 6 also uses the berries' slot for the flower and gets Food from
 the Well. Later appearances use the apple slot while rations or grain and
-water still pay Food.
+water still pay Food. A bonus may take the earlier score slot.
 
 Boards 5 and 9 use authored openings with seeded refills. The first idle hint
 matches three buckets on the quay approach or three cut blocks by the market
 steps. Each match clears three plaques and earns 9 Food or 15 Supplies
-after the relevant restoration.
+after the relevant restoration. The bonus uses a different slot from these
+featured resource matches.
+
+### Bonus pieces
+
+| Confirmed restoration | Debut | Bonus and effect |
+| --- | ---: | --- |
+| Expedition Camp | 2 | Dynamite hits the chosen cell and its six neighbors. |
+| Artisan Workshop | 8 | Hammer hits one chosen cell. |
+| Jungle Market | 10 | Shutter Gear reshuffles loose pieces. |
+| Sunstone Courtyard | 14 | Shield hits the row through the chosen cell, along the hex board's row axis. |
+| Lost-world Archive | 20 | Lightning immediately strikes up to 20 distinct random cells. |
+| Star Observatory | 24 | Star hits every piece of the chosen kind. |
+
+The first expedition after each of these restorations features its new piece.
+Later boards draw one family from the eligible restorations using the board seed.
+It takes an existing slot so the expedition keeps six kinds. The Workshop's
+Hammer uses the red slot on board 8, where the relay pliers occupy the score slot.
+Each matched bonus piece contributes three points to its own socket. The
+socket holds 18 points and one use. Matches beyond that cap cannot bank a
+second use. Both partial and full meters are saved across expeditions, and
+using a bonus empties its socket without spending a move. Only confirmed
+restorations add sockets to the panel.
+
+The market hoist makes the tide-room approach possible. Expedition 10 uses the
+Shutter Gear as both Tomas's recovery objective and the new Mixer piece.
+Matching it advances the story objective and fills the socket. The recovered
+item card shows the same gear the player matched.
 
 Four recurring silhouettes give the player readable working areas: parallel
 channels frame a narrow centre spine with bridges at both ends; a tapered cap
@@ -96,10 +123,7 @@ board are in [level-tuning.md](level-tuning.md).
 | 30 | The Warning Returns | Tapered bowl | 16 |
 
 Straight matches of three or more clear all pieces in the run. Board holes
-interrupt a match. Pickaxe hits a single cell, Dynamite hits a cell and its
-immediate hex neighbors, and Sunburst hits all pieces of the chosen kind.
-These are the campaign’s adaptations of Cradle of Rome’s Hammer, Bomb and
-Star. Blue plaques stay in their authored positions until cleared.
+interrupt a match. Blue plaques stay in their authored positions until cleared.
 
 Starting positions and targets are authored in `lua/campaign.lua`. Locks are
 ranked by the terrain priorities; the ranks favor seams and bridge approaches. The board shows its targets in blue. Points

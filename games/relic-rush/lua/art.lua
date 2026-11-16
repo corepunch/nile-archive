@@ -37,6 +37,8 @@ A.resource_upgrades = {
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
     ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
+A.bonus_tools = {"bonus-hammer", "bonus-dynamite", "bonus-star", "bonus-mixer", "bonus-shield", "bonus-lightning"}
+A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-mixer", "bonus-shield", "bonus-lightning", "bonus-star"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
@@ -60,11 +62,27 @@ function A.skin()
     return match3.skin(require("match3_skin"))
 end
 
+local function bonus_frames()
+    local frames = {}
+    for col, key in ipairs(A.bonus_atlas_order) do
+        frames[key] = {(col - 1) * 128, 0, 128, 128}
+        for row, state in ipairs(A.states) do
+            frames[key .. "-" .. state] = {(col - 1) * 128, row * 128, 128, 128}
+        end
+    end
+    return {path="bonus-gems.png", frames=frames}
+end
+local bonus_atlas = bonus_frames()
+
 function A.load_hud()
     local match3 = require("match3")
-    if app.arg("default-match3") then return match3.hud() end
-    local hud = match3.hud(require("match3_hud"))
-    assert(hud.signboard, "missing jade signboard")
+    local neutral = app.arg("default-match3")
+    local theme = match3.hud(not neutral and require("match3_hud") or nil)
+    assert(neutral or theme.signboard, "missing jade signboard")
+    local hud = {}
+    for key, image in pairs(theme) do hud[key] = image end
+    local bonus = match3.atlas(bonus_atlas)
+    for key in pairs(bonus_atlas.frames) do hud[key] = bonus[key] end
     return hud
 end
 
@@ -91,6 +109,8 @@ end
 function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
+    local bonus = require("match3").atlas(bonus_atlas)
+    for _, key in ipairs(A.bonus_tools) do textures[key] = bonus[key] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, require("match3").skin(require("match3_skin")))
     for _, key in ipairs(A.floor_tiles) do
@@ -147,6 +167,18 @@ function A.load()
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     return textures
+end
+
+function A.draw_bonus_catalogue(R)
+    gfx.round_rect(rect(13, 235, 454, 496), 18, color(12, 47, 41, 250))
+    R.say_at("BONUS ARTWORK", vec2(240, 260), 24, R.PAL_GOLD, 440)
+    for col, key in ipairs(A.bonus_atlas_order) do
+        local x = 37 + (col - 1) * 70
+        gfx.image(R.board_art[key], rect(x, 290, 56, 56), color.WHITE)
+        for row, state in ipairs(A.states) do
+            gfx.image(R.hud_art[key .. "-" .. state], rect(x, 353 + (row - 1) * 69, 56, 56), color.WHITE)
+        end
+    end
 end
 
 -- Rendered by the game, so review covers the same textures as the live board.

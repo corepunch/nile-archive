@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Campaign matches clear straight lines of three or more. Chains take a hit before a plaque can clear. The three tools hit one cell, its neighborhood, or every piece of the selected kind. Specials are kept for reference boards.",
+  "matching_rules": "Campaign matches clear straight lines of three or more. Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
@@ -436,6 +436,7 @@
     "data/board-tiles/selected.png",
     "data/board-tiles/tablet-double.png",
     "data/board-tiles/tablet-single.png",
+    "data/bonus-gems.png",
     "data/building-shadows/amphitheater.png",
     "data/building-shadows/apothecary.png",
     "data/building-shadows/archive.png",
@@ -1780,20 +1781,6 @@
       "runtime": "data/resource-pieces/emerald.png"
     }
   },
-  "tool_unlocks": {
-    "dynamite": {
-      "building": "camp",
-      "first_level": 2,
-      "charges": 2,
-      "review": "hex-late"
-    },
-    "sunburst": {
-      "building": "observatory",
-      "first_level": 24,
-      "charges": 2,
-      "review": "phone-story-level-30"
-    }
-  },
   "resource_pieces": {
     "source": "art/board-refresh/source.png",
     "prompt": "art/board-refresh/prompt.txt",
@@ -2086,6 +2073,152 @@
       },
       "runtime": "data/campaign-pieces.png",
       "building": "gateway"
+    }
+  },
+  "bonus_gems": {
+    "source": "art/bonus-gems/source.png",
+    "prompt": "art/bonus-gems/prompt.txt",
+    "generator": "built-in ImageGen with the original Cradle of Rome 2 hammer and lightning atlases as visual references",
+    "runtime": "data/bonus-gems.png",
+    "review": "docs/screenshots/bonus-states.jpg",
+    "columns": [
+      "hammer",
+      "dynamite",
+      "mixer",
+      "shield",
+      "lightning",
+      "star"
+    ],
+    "rows": [
+      "board",
+      "normal",
+      "selected",
+      "pressed",
+      "hover",
+      "disabled"
+    ],
+    "column_ranges": [
+      [
+        7,
+        214
+      ],
+      [
+        215,
+        422
+      ],
+      [
+        423,
+        630
+      ],
+      [
+        631,
+        838
+      ],
+      [
+        839,
+        1046
+      ],
+      [
+        1047,
+        1254
+      ]
+    ],
+    "row_ranges": [
+      [
+        0,
+        208
+      ],
+      [
+        214,
+        423
+      ],
+      [
+        423,
+        631
+      ],
+      [
+        631,
+        836
+      ],
+      [
+        836,
+        1042
+      ],
+      [
+        1042,
+        1246
+      ]
+    ],
+    "object_boxes": [
+      [
+        24,
+        12,
+        203,
+        203
+      ],
+      [
+        235,
+        0,
+        402,
+        207
+      ],
+      [
+        435,
+        15,
+        621,
+        200
+      ],
+      [
+        642,
+        15,
+        830,
+        206
+      ],
+      [
+        846,
+        11,
+        1025,
+        205
+      ],
+      [
+        1052,
+        12,
+        1243,
+        197
+      ]
+    ],
+    "registration": "Spatial crop and proportional resize into a centered 128 px transparent slot. 112 px board objects and 116 px sockets.",
+    "bonuses": {
+      "hammer": {
+        "building": "workshop",
+        "first_level": 8,
+        "effect": "Hit one cell"
+      },
+      "dynamite": {
+        "building": "camp",
+        "first_level": 2,
+        "effect": "Hit the selected cell and its six neighbors"
+      },
+      "mixer": {
+        "building": "market",
+        "first_level": 10,
+        "effect": "Shuffle loose pieces; also the Shutter Gear story objective on expedition 10"
+      },
+      "shield": {
+        "building": "gateway",
+        "first_level": 14,
+        "effect": "Hit the selected hex row"
+      },
+      "lightning": {
+        "building": "archive",
+        "first_level": 20,
+        "effect": "Hit up to twenty different cells"
+      },
+      "star": {
+        "building": "observatory",
+        "first_level": 24,
+        "effect": "Hit every piece of the chosen kind"
+      }
     }
   }
 }

@@ -25,7 +25,11 @@ M.buildings, M.wonders = M.catalogue, {}
 -- on a foundation); trees, statues, camp props and the rest are decorations.
 local HOUSES = {wonder = true, building = true}
 for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
-for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
+for i = 1, WONDERS do
+    local building = M.buildings[i]
+    building.unlock_text = "Unlocks " .. economy.building_unlock_text(economy.unlocks[i])
+    M.wonders[i] = building
+end
 
 function M.wonder_count(c)
     local n=0

@@ -129,8 +129,7 @@ local function result_screen()
     if w then
         picture_fit(w.sprite, next_icon, 255)
         local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
-        local unlock = economy.unlocks[next_kind]
-        heading, next_step = #missing == 0 and economy.unlock_text(unlock) or "REPLAY TO EARN THE REST", w.name
+        heading, next_step = #missing == 0 and island.wonders[next_kind].unlock_text or "REPLAY TO EARN THE REST", w.name
         local price = #missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)
         say_left(price, rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
     elseif breakdown.first then
@@ -156,7 +155,9 @@ R.dialogs[R.OV_RESULT] = result_screen
 function R.award_for(g)
     local object = rules.levels[g.level + 1].quest_object
     local textures = R.board_art or {}   -- window-free tests play the campaign without art
-    return object and {image = textures["find-" .. object.key], name = object.name, level = g.level + 1}
+    if not object then return end
+    local image = object.key == "gear" and g.bonus_debut and textures["bonus-mixer"] or textures["find-" .. object.key]
+    return {image = image, name = object.name, level = g.level + 1}
 end
 
 local function award_screen()
@@ -210,18 +211,22 @@ local guide_entries = {
      icon={special=rules.BOMB}},
     {id="rainbow", title="Line of 5+: rainbow ball", description="Swap with a piece to clear its kind; swap with a power-up to multiply it.",
      icon={special=rules.PRISM}},
-    {id="pickaxe", title="Pickaxe", description="Hits one cell.",
-     icon={tool="pickaxe"}},
 }
 local function guide_piece(unlock, title, availability)
     local description = economy.unlock_text(unlock) .. " " .. availability
     guide_entries[#guide_entries+1] = {id=unlock.key, title=title,
-        description=description .. (unlock.effect and " " .. unlock.effect or ""),
-        icon=unlock.tool and {tool=unlock.key} or {front=chip_prefix .. unlock.key}}
+        description=description, icon={front=chip_prefix .. unlock.key}}
 end
 guide_piece(economy.silver_coin, "Silver coins", ("On expedition %d."):format(economy.silver_coin.first_level))
 for i, unlock in ipairs(economy.unlocks) do
-    guide_piece(unlock, island.wonders[i].name, ("From expedition %d."):format(unlock.first_level))
+    local building = island.wonders[i].name
+    if unlock.kind then guide_piece(unlock, building, ("From expedition %d."):format(unlock.first_level)) end
+    local bonus = unlock.bonus
+    if bonus then
+        guide_entries[#guide_entries + 1] = {id=bonus.key, title=bonus.name,
+            description=("Restore %s. %s %s"):format(building, economy.bonus_lesson(bonus), bonus.effect),
+            icon={front="bonus-" .. bonus.key}}
+    end
     for _, variant in ipairs(unlock.variants or {}) do
         guide_piece(variant, variant.name, ("After the %s, from expedition %d."):format(island.wonders[i].name, variant.first_level))
     end
@@ -231,7 +236,6 @@ local function guide_icon(box, icon)
     if icon.floor then picture(R.board_art[icon.floor], layer, 255) end
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
-    if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end
     if icon.special then R.draw_relic(rules.tile(0, icon.special), pp(box:center()), P.scale, 255 * P.alpha, 1) end
 end
 local guide_form = match3.guide_form({

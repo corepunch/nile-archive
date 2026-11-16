@@ -56,7 +56,8 @@ empty and movable, and slide diagonally only when that cell is occupied,
 locked or missing. Locks still route gems around their sides.
 
 `data/match3.png` holds the board's backgrounds, pieces, blockers, materials,
-and effects. The HUD and tool controls use `data/match3-hud.png`.
+and effects. The HUD uses `data/match3-hud.png`, and the six campaign
+bonus pieces and sockets use `data/bonus-gems.png`.
 `python3 tools/match3_atlas.py` rebuilds both atlases from their source art.
 `--default-match3` previews the engine's neutral skin.
 
@@ -111,7 +112,7 @@ The island and the board share one wallet and Settings bar. The board shows
 Moves at the left of the resource balances. The medallion turns red at five
 moves. Blue plaques mark the board objective. Winning banks the resources
 earned in the three slots.
-The three tools sit along the bottom edge. Settings opens the Explorer's Guide,
+Unlocked bonus sockets sit along the bottom edge. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Dialogs reuse the engine's forms and
 cached blur. See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
 and [shared UI API](../../docs/UI_ENGINE.md).
@@ -148,7 +149,8 @@ The minimum match is **three identical relics in a straight line** along any of 
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue plaques in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
-The three power-up buttons use square artwork and 76×76 touch targets, with all five interaction states redrawn together. See the [square-button review](docs/review/square-tools/README.md).
+The round bonus sockets fill from bronze to blue as their pieces are matched.
+See the [bonus artwork and state review](docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets).
 
 ![All ten playable level shapes, actual SDL captures](docs/screenshots/level-shapes-overview.jpg)
 
@@ -264,14 +266,14 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 
 | # | Building | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | Expedition camp | 8 Supplies + 3 Food | Two sticks of Dynamite per expedition from board 2. |
+| 1 | Expedition camp | 8 Supplies + 3 Food | Dynamite pieces from board 2. |
 | 2 | Spring well | 100 Coins | Unlocks water buckets worth 3 Food each. |
-| 3 | Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Unlocks cut blocks worth 5 Supplies each. |
-| 4 | Jungle market | 85 Coins + 30 Supplies + 24 Food | Unlocks ration jars worth 4 Food each. |
-| 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Helmets worth 6 Coins, followed by rings, scarabs, sandals and harps. |
+| 3 | Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Hammer pieces and cut blocks worth 5 Supplies each. |
+| 4 | Jungle market | 85 Coins + 30 Supplies + 24 Food | Shutter Gear pieces and ration jars worth 4 Food each. |
+| 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Shield pieces and helmets worth 6 Coins, followed by rings, scarabs, sandals and harps. |
 | 6 | Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
-| 7 | Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Carved quartz worth 7 Supplies each. |
-| 8 | Star observatory | 155 Coins + 70 Supplies | Two Sunbursts per expedition from board 24. |
+| 7 | Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Lightning pieces and carved quartz worth 7 Supplies each. |
+| 8 | Star observatory | 155 Coins + 70 Supplies | Star pieces from board 24. |
 | 9 | Jade fountain | 160 Coins + 65 Supplies | Shrimp worth 6 Food each. |
 | 10 | Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Emeralds worth 11 Coins each. |
 
@@ -310,7 +312,11 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 - Swap two specials for a combination attack. A rainbow ball swapped with another power-up turns pieces of the commonest kind into that power-up before firing them.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
-- Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each available tool starts with two charges and costs zero moves. Restore the Camp for Dynamite and the Observatory for Sunburst.
+- Restore buildings to unlock Dynamite, Hammer, Shutter Gear, Shield, Lightning
+  and Star. An expedition features one bonus piece family at a time. Matching
+  six of its pieces fills one use, and the panel saves each unlocked bonus's
+  charge across expeditions. Activation costs zero moves and empties the
+  socket. The card for each restoration lists its unlocks.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
@@ -356,7 +362,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Controls and saved progress
 
-- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Select a tool and then its target. The top-right medallion pauses: level details, a Sound and Reduce motion group, Resume, Restart (asks first), Quit to island (keeps the board) and the guide; Escape does the same. Tap outside a closable popup to dismiss it; results require an explicit action.
+- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Tap a charged socket and then its target. Shutter Gear and Lightning activate immediately on tapping their sockets. The top-right medallion pauses: level details, a Sound and Reduce motion group, Resume, Restart (asks first), Quit to island (keeps the board) and the guide; Escape does the same. Tap outside a closable popup to dismiss it; results require an explicit action.
 - **Island:** drag the map to pan, including from buildings; pinch or use the mouse wheel to zoom. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
 - **Placement:** choose a grassy spot, check the green/red footprint, then confirm or cancel. Leave a tile of open ground between building bases. Footprints cannot cross the shoreline or occupy closed land. Moving a completed building is free.
 - **Save:** level progress, resources, opened regions and building positions persist; an unfinished puzzle restarts. Saves of the standalone prototype (`progress.txt`, `localStorage["relic-rush-v1"]`) are not imported.

@@ -6,7 +6,9 @@ local island = require("island")
 local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
 local flags = match3.LINE_MATCHES
 if not reference then flags = flags | match3.NO_RHOMBI | match3.COLOR_TOOL end
-local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=campaign.colors, match_min=3, refill_damping=not reference and 2 or nil,
+local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=campaign.colors, match_min=3,
+    refill_damping=not reference and 2 or nil,
+    extra_tools=not reference and {"shuffle", "row", "lightning"},
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 local start = M.game_start
@@ -14,8 +16,8 @@ function M.game_start(level, seed, restored)
     if reference then return start(level, seed) end
     local number = math.max(0, math.min(level, M.LEVELS-1)) + 1
     local spec = M.levels[number]
-    local yields, tools = economy.board_loadout(spec, number, restored)
-    local g = start(level, seed, yields)
+    local yields, loadout, bonus, debut = economy.board_loadout(spec, number, restored, seed)
+    local g = start(level, seed, yields, loadout)
     if spec.opening then
         -- Authored kind slots use the current restoration art and yields.
         -- The engine's seeded RNG still drives cascades and refills.
@@ -23,7 +25,8 @@ function M.game_start(level, seed, restored)
             if g.active[i] then g.tiles[i] = M.tile(tonumber(spec.opening:sub(i + 1, i + 1))) end
         end
     end
-    g.tools, g.starting_tools = {table.unpack(tools)}, tools
+    g.bonus, g.bonus_debut = bonus, debut
+    g.bonus_preview = restored and restored.preview
     g.backdrop = economy.board_backdrop(spec, number, restored)
     return g
 end

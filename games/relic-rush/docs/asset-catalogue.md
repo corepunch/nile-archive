@@ -498,11 +498,42 @@ sprites or derived artwork are used. The existing hint artwork still marks only
 legal swaps; [review captures and reproduction](review/dead-board/README.md)
 cover a zero-charge ring at both phone sizes.
 
-## Tools: complete interaction matrix
+## Campaign bonus pieces and sockets
 
-Each tool starts with two charges per level, costs no move, and is used by selecting
-it then tapping an active cell. Pickaxe hits one cell; dynamite hits its cell and
-six neighbours. Sunburst hits every piece of the tapped kind.
+The six standalone pieces are the Hammer, Dynamite, Shutter Gear, Shield,
+Lightning and Star. The board shows one unlocked family per expedition. Their
+rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
+All six sockets use authored bronze silhouettes when empty and aquamarine glass
+when charged. For partial charge, the renderer reveals the authored blue face
+from the bottom over its matching bronze face. The ready, selected, pressed and
+hover paintings use the same object silhouette and placement. The rounded, wide
+Lightning profile carries through the field chip and all five socket states.
+
+The [ImageGen source](../art/bonus-gems/source.png) contains all six standalone
+pieces and all 30 socket states in one atlas. The [prompt](../art/bonus-gems/prompt.txt)
+records the original Cradle of Rome 2 hammer and lightning references. The
+[manifest](../art/board-states/manifest.json) records the crop rectangles and
+state order. `python3 games/relic-rush/tools/prepare_bonus_gems.py` registers the
+crops in 128 × 128 RGBA slots in `data/bonus-gems.png`. The standalone area is
+at most 112 × 112 and sockets are registered to 116 × 116. The packer preserves
+the painted alpha and proportions. Every board pack uses the same six pieces.
+
+[Rendered states](screenshots/bonus-states.jpg) ·
+[480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
+[390 × 844 toolbar](screenshots/bonus-toolbar-phone.jpg) ·
+[Spent Hammer](screenshots/bonus-spent.jpg) ·
+[Workshop card](screenshots/bonus-workshop-card.jpg) ·
+[Market unlock on the results screen](screenshots/bonus-building-result.jpg) ·
+[Shutter Gear board](screenshots/bonus-gear.jpg) ·
+[Recovered gear](screenshots/bonus-gear-award.jpg).
+Reproduce the views and the real tap-to-spend check with
+`build/test/relic-rush 'shot bonus-' 'shot workshop-card-phone'`.
+
+## Earlier tool art and reference boards
+
+Reference boards use the Pickaxe, Dynamite and Sunburst controls.
+Pickaxe hits one cell, Dynamite hits its cell and six neighbours, and Sunburst
+hits every piece of the tapped kind.
 
 All fifteen buttons are separately painted in the same atlas, including their
 backgrounds. The renderer never desaturates, tints or synthesizes a disabled state.

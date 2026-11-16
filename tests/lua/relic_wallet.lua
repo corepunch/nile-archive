@@ -37,12 +37,14 @@ do
     local bank=purse(5000,5000,5000,90)
     local locked=R.make_board(1,19)
     local match=rules.new_match()
-    check(locked.tools[1]==2 and locked.tools[2]==0 and locked.tools[3]==0,'the pickaxe is the only starting tool')
+    check(next(locked.tool_meter) == nil, 'all bonus sockets require confirmed construction')
     check(not rules.game_tool(locked,1,rules.hex_center(),match),'locked dynamite cannot be used')
     check(locked.backdrop==rules.level_of(locked).background,'with nothing restored the board keeps its own scene')
     check(island.island_place_next(R.island,bank,4,0),'place the camp before the well')
     local c=R.island
-    check(R.make_board(1,19).tools[2]==2,'the camp stocks dynamite starting with expedition 2')
+    local dynamite = R.make_board(1,19)
+    check(dynamite.bonus_debut == economy.bonuses[2] and dynamite.tool_meter[2] == 0 and dynamite.tools[2] == 0,
+        'the camp introduces dynamite pieces and an empty meter on expedition 2')
     local fits,spot=c:find_spot(economy.WELL_KIND,island.island_suggestion(economy.WELL_KIND))
     check(fits,'well fits first region')
     c:begin_place(economy.WELL_KIND,spot)
@@ -55,6 +57,7 @@ do
     check(fits,'workshop has a placement spot')
     c:begin_place(workshop,spot)
     check(R.make_board(7,19).resource_yields[4].key=='stone','workshop preview does not unlock cut blocks')
+    check(R.make_board(7,19).tool_meter[1] == nil, 'workshop preview does not unlock the hammer')
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
@@ -70,9 +73,19 @@ do
         check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
         check(g.spawn_kinds==nil and rules.COLORS==6,'every expedition spawns all six kinds')
-        if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
+        local charge_kinds = 0
+        for _, piece in pairs(g.resource_yields) do
+            if piece.tool then charge_kinds = charge_kinds + 1 end
+        end
+        check(charge_kinds == (g.bonus and 1 or 0), 'at most one kind charges a bonus')
+        if spec.story_piece then
+            local piece = g.resource_yields[spec.goal_kind]
+            check(not piece or spec.story_piece == "gear" and piece == economy.bonuses[4],
+                'the shutter gear charges its own meter while story pieces never pay into the wallet')
+        end
         for kind in pairs(spec.score_pieces or {}) do
-            check(kind ~= spec.goal_kind and kind ~= spec.omit_kind and not g.resource_yields[kind],
+            local piece = g.resource_yields[kind]
+            check(kind ~= spec.goal_kind and kind ~= spec.omit_kind and not (piece and piece.slot),
                 'score pieces use their own active slot and never pay the wallet')
         end
     end
@@ -162,9 +175,8 @@ do
     for i=5,#economy.unlocks do
         local unlock=economy.unlocks[i]
         local before=R.make_board(unlock.first_level-1,41)
-        local was_locked=unlock.tool and before.tools[unlock.tool]==0
-            or not unlock.tool and before.resource_yields[unlock.kind]~=unlock
-        check(was_locked, unlock.name .. ' is locked until construction')
+        if unlock.bonus then check(before.tool_meter[unlock.bonus.tool] == nil, 'bonus is locked until construction') end
+        if unlock.kind then check(before.resource_yields[unlock.kind]~=unlock, unlock.name .. ' is locked until construction') end
         local cost=island.wonders[i].cost
         local balance=purse(table.unpack(wallet))
         check(island.island_place_next(c,wallet,journey.wonder_levels[i],0),'confirm ' .. island.wonders[i].name)
@@ -178,13 +190,10 @@ do
         end
         g.chain[cell],g.ice[cell],g.stone_hp[cell]=0,0,0
         local m=rules.new_match()
-        if unlock.tool then
-            local moves=g.moves
-            g.tiles[cell]=rules.tile(0)
-            check(g.tools[unlock.tool]==2 and rules.game_tool(g,unlock.tool-1,cell,m),'the observatory unlocks a usable Sunburst')
-            rules.game_apply(g,m)
-            check(g.earnings[economy.GOLD]>=6 and g.tools[unlock.tool]==1 and g.moves==moves,'Sunburst earns resources without spending a move')
-        else
+        if unlock.bonus then
+            check(g.bonus_debut == unlock.bonus and g.tool_meter[unlock.bonus.tool] == 0, 'newly restored bonus gets its first board')
+        end
+        if unlock.kind then
             check(g.resource_yields[unlock.kind]==unlock,'opening uses ' .. unlock.name)
             g.tiles[cell]=rules.tile(unlock.kind)
             m.mask[cell]=true
@@ -196,7 +205,56 @@ do
     check(final.resource_yields[0]==economy.unlocks[10] and final.resource_yields[1]==economy.unlocks[6] and
           final.resource_yields[3]==economy.unlocks[9] and final.resource_yields[4]==economy.unlocks[7],
           'the last board combines all current chip upgrades')
-    check(final.tools[2]==2 and final.tools[3]==2,'both restored tools replenish on a fresh run')
+    local seen = {}
+    for seed = 1, #economy.bonuses do
+        local g = R.make_board(29, seed)
+        seen[g.bonus] = true
+        for _, bonus in ipairs(economy.bonuses) do
+            check(g.tool_meter[bonus.tool] == 0, 'all six empty sockets remain available across boards')
+        end
+    end
+    for _, bonus in ipairs(economy.bonuses) do check(seen[bonus], 'seeded rotation includes ' .. bonus.name) end
+end
+
+-- Story matches charge one stored use. Applying a tool alone cannot replenish it.
+do
+    local gear = economy.bonuses[4]
+    R.prog, R.test_mode = {bonus_charge={}}, true
+    local g = R.make_board(9, 73)
+    local kind, m = g.goal_kind, rules.new_match()
+    local line = {rules.hex_index(0, -1), rules.hex_index(0, 0), rules.hex_index(0, 1)}
+    check(g.bonus_debut == gear and g.resource_yields[kind] == gear, 'the story gear itself charges Mixer')
+    for _ = 1, 3 do
+        for _, cell in ipairs(line) do
+            g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
+            g.tiles[cell] = rules.tile(kind)
+        end
+        rules.game_matches(g, m, -1)
+        rules.game_apply(g, m)
+    end
+    check(g.relics >= 6 and g.tools[gear.tool] == 1 and g.tool_meter[gear.tool] == g.tool_threshold,
+        'story progress still counts and extra matches cannot bank a second use')
+    local copy = rules.game_copy(g)
+    copy.tools[gear.tool], copy.tool_meter[gear.tool] = 0, 0
+    check(g.tools[gear.tool] == 1 and g.tool_meter[gear.tool] == g.tool_threshold, 'preview copies preserve the live meters')
+    R.g = g
+    R.update_bonus_charges()
+    local later = R.make_board(29, 1)
+    check(later.bonus ~= gear and later.tools[gear.tool] == 1, 'stored use survives on a board featuring another bonus')
+    local used, shuffled = rules.game_tool(later, gear.tool - 1, nil, m)
+    check(used and shuffled and later.moves == rules.level_of(later).moves and rules.game_hint(later),
+        'Mixer reshuffles loose pieces without spending a move or leaving a dead board')
+    R.g = later
+    R.update_bonus_charges()
+    check(R.make_board(29, 1).tool_meter[gear.tool] == 0, 'spending a charge clears it across boards')
+
+    local shield, lightning = economy.bonuses[5], economy.bonuses[6]
+    later.tools[shield.tool], later.tools[lightning.tool] = 1, 1
+    local center = rules.hex_center()
+    local row = rules.game_tool_area(later, shield.tool - 1, center)
+    check(row[center] and row[rules.hex_neighbor(center, 0)], 'Shield targets the selected row')
+    for cell in pairs(row) do check(rules.hex_r(cell) == rules.hex_r(center), 'Shield stays on its axis') end
+    check(rules.game_tool(later, lightning.tool - 1, nil, m) and m.hits == 20, 'Lightning spends a use on twenty distinct cells')
 end
 
 -- Clear regular pieces through the real match resolver. A blocker absorbs
@@ -265,6 +323,7 @@ do
         R.island:serialize(s)
     end),'write legacy fixture')
     check(save.read('relic-resource-legacy',R.serialize),'load legacy fixture')
+    check(R.make_board(4, 93).tool_meter[2] == 0, 'older saves start their unlocked bonus meters empty')
     local w=R.prog.wallet
     check(w[1]==155 and w[2]==0 and w[3]==9 and w[4]==12 and island.wonder_count(R.island)==1,
         'legacy saves preserve Gold, Stars, placements and combined Supplies')
@@ -283,13 +342,17 @@ do
         'migration covers an earned restoration at the new price and preserves other balances')
     check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
     R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
+    R.g.tool_meter[2] = 9
+    R.update_bonus_charges()
     R.stash_completed()
     check(save.write('relic-resource-complete',R.serialize),'write completed award')
     R.prog.completed=nil
+    R.prog.bonus_charge=nil
     check(save.read('relic-resource-complete',R.serialize),'load completed award')
     R.resume_completed()
     check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.unlocks[2],
         'completed award restores its counts on the correct palette')
+    check(R.g.tool_meter[2] == 9, 'partial charge survives writing, loading and resuming an award')
     check(rules.progress_reward(R.prog,R.g,R.wonders) and not R.prog.completed,'claim consumes the pending award')
     check(not rules.progress_reward(R.prog,R.g,R.wonders),'loaded award cannot bank twice')
 end

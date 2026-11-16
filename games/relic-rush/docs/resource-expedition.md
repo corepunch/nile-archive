@@ -88,19 +88,19 @@ the Coins slot for the tide chart. The Well purchase that follows uses Coins
 banked on earlier boards or earned from unused moves and replays.
 
 Confirmed placements change openings and refills from the listed expedition
-onward. Authored story pieces keep their slots. Pickaxes start with two uses.
-Dynamite and Sunburst replenish at the start of each eligible attempt.
+onward. Authored story pieces keep their slots. The six bonus families debut
+as matchable pieces and fill their own saved sockets. [Bonus rules and effects](board-progression.md#bonus-pieces)
 
 | Restoration | First board | Board payoff | How it funds the next restoration |
 | --- | ---: | --- | --- |
-| Expedition Camp | 2 | Dynamite, two uses | Blast coin clusters or save moves for the Well. |
+| Expedition Camp | 2 | Dynamite pieces | Charge a blast to clear clusters and save moves for the Well. |
 | Spring Well | 5 | Water buckets replace timber, 3 Food each | Feed the Workshop crew. |
-| Artisan Workshop | 8 | Cut blocks replace dressed stone, 5 Supplies each | Pay the Market's Supplies. |
-| Jungle Market | 10 | Ration jars replace red berries, 4 Food each | Feed the crew working on the Courtyard. |
-| Sunstone Courtyard | 14 | Helmets replace sun coins, 6 Coins each | Pay the Lodge's Coin cost. |
+| Artisan Workshop | 8 | Cut blocks replace dressed stone, 5 Supplies each. Hammer pieces debut. | Pay the Market's Supplies. |
+| Jungle Market | 10 | Ration jars replace red berries, 4 Food each. Shutter Gear pieces debut. | Feed the crew working on the Courtyard. |
+| Sunstone Courtyard | 14 | Helmets replace sun coins, 6 Coins each. Shield pieces debut. | Pay the Lodge's Coin cost. |
 | Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Food each | Pay the Archive's Food cost. |
-| Lost-world Archive | 20 | Carved quartz replaces cut blocks, 7 Supplies each | Pay the Observatory's Supplies. |
-| Star Observatory | 24 | Sunburst, two uses | Clear coin or quartz across the board for the Fountain. |
+| Lost-world Archive | 20 | Carved quartz replaces cut blocks, 7 Supplies each. Lightning pieces debut. | Pay the Observatory's Supplies. |
+| Star Observatory | 24 | Star pieces | Charge a Star to clear coin or quartz across the board for the Fountain. |
 | Jade Fountain | 27 | Shrimp replace water buckets, 6 Food each | Pay the Temple's Food cost. |
 | Temple of the Sun | 30 | Emeralds earn 11 Coins each | The finale and its replays earn Coins for island purchases. |
 
