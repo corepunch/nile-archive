@@ -1,6 +1,6 @@
 -- match3_shatter.lua — a floor layer (tablet, ice) breaking apart: the cell's
 -- own artwork is cut into Voronoi shards that crack, burst outwards, tumble and
--- fall under gravity, over a puff of tinted mist. Presentation only, with its
+-- fall under gravity, over a puff of dust. Presentation only, with its
 -- own random stream and fixed pools (`require("match3.shatter").bind(R, rules)`,
 -- called by match3.game after match3.vfx).
 --
@@ -18,6 +18,7 @@ S.CRACK = .07                                  -- shards hold, cracks glow, then
 S.SPEED, S.LIFT, S.GRAVITY = {3.4, 8.5}, {1.6, 4.2}, 46   -- r/s, r/s up, r/s²
 S.LIFE = {.62, .95}
 S.PUFFS, S.PUFF_LIFE = 6, {.8, 1.15}
+S.DUST = color(146, 118, 84)                   -- earthy smoke for every layer
 S.SHARD_CAP, S.PUFF_CAP = 220, 72
 
 -- The unit hex: vertices at +-x like the board's cells, clockwise on screen.
@@ -119,11 +120,11 @@ function S.bind(R, rules)
         shard_next, puff_next = 0, 0
     end
 
-    -- Break `art` into shards with a `mist` coloured puff. The art is drawn
+    -- Break `art` into shards over a puff of dust (`dust`, default S.DUST). The art is drawn
     -- as floor cells are: a 2r square centred on `at`, or, given `src`, that
     -- texture rectangle mapped onto the hex (gfx.image_hex). Reduce Motion
     -- shows nothing.
-    function R.vfx_shatter(at, radius, art, mist, src)
+    function R.vfx_shatter(at, radius, art, dust, src)
         if R.reduced_motion or not art then return end
         local pattern = patterns[1 + math.floor(rand() * #patterns)]
         local turn, flip = math.floor(rand() * 6) * PI / 3, rand() < .5 and -1 or 1
@@ -163,7 +164,7 @@ function S.bind(R, rules)
             s.pop = rand() < .35 and .18 + .22 * rand() or 0   -- some come towards the camera
             s.age, s.delay, s.life = 0, S.CRACK + d * .035, range(S.LIFE)
         end
-        local tint = mist or rgba(220, 240, 255)
+        local tint = dust or S.DUST
         for k = 1, S.PUFFS do
             local p = puffs[puff_next % S.PUFF_CAP + 1]
             puff_next = puff_next + 1
@@ -278,22 +279,19 @@ function S.bind(R, rules)
 
     -- Layers a clearing wave removed: ice, then tablets (two layers, then one).
     local elements = require("match3.elements_view")
-    local mist_double, mist_single, mist_ice = rgba(196, 255, 204), rgba(178, 236, 255), rgba(222, 246, 255)
     local function wave()
         local g = R.g
         local floor = R.board_floor and R.board_floor()
         local radius = R.HEX_R - (R.GROUND and R.GROUND.seam_width or .18)
         for i = 0, rules.CELLS - 1 do
             local oil, ice = R.wave_oil[i] or 0, R.wave_ice[i] or 0
-            local art, src, mist
+            local art, src
             if ice > (g.ice[i] or 0) then
                 art, src = elements.layer_art(R, floor, 0, ice)
-                mist = mist_ice
             elseif g.oil and oil > (g.oil[i] or 0) then
                 art, src = elements.layer_art(R, floor, oil, 0)
-                mist = oil > 1 and mist_double or mist_single
             end
-            if art then R.vfx_shatter(R.cell_pos(i), radius, art, mist, src) end
+            if art then R.vfx_shatter(R.cell_pos(i), radius, art, nil, src) end
         end
     end
 

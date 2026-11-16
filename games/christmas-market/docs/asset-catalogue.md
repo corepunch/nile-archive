@@ -392,8 +392,8 @@ layers, and the three tools use their five authored interaction states.
 [Regular, chained and partly lit boards](screenshots/review/spruce-palette/README.md).
 
 A pane, a double pane's green face or ice shatters when a hit removes it.
-The engine cuts that layer's existing tile into shards with mist in the
-layer's colour (`engine/match3_shatter.lua`). This is a procedural cut-out,
+The engine cuts that layer's existing tile into shards over a puff of
+earth-coloured dust (`engine/match3_shatter.lua`). This is a procedural cut-out,
 with no new bitmaps or states, and Reduce Motion hides it. Capture with
 `build/test/all --suite=christmas-market 'reel fx-shatter'`.
 [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg).
