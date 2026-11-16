@@ -366,6 +366,11 @@ void app_step(void)
 #endif
     update_logical_size();
     poll_events();
+#ifdef AX_PLATFORM_IOS
+    /* The standalone display link only calls us while active. The platform
+     * queues KillFocus on interruption but does not post SetFocus on resume. */
+    haptic_focus(true);
+#endif
     if (needs_rotation()) A.in = (input){.pos = A.in.pos, .pinch = 1};   /* the game waits behind the rotate prompt */
     struct AXsize output = {1, 1};
     axGetSize(&output);

@@ -49,6 +49,11 @@ TEST(haptic_disable_focus_and_reset)
     haptic_play(HAPTIC_PLACE, 4);
     haptic_flush();
     NEAR(haptic_test_strength(), 1);
+    haptic_focus(false);
+    haptic_focus(true);
+    haptic_play(HAPTIC_TICK, .6f);
+    haptic_flush();
+    CHECK(haptic_test_count() == 2 && haptic_test_effect() == HAPTIC_TICK);
     haptic_enable(false);
     app_test_reset();
     CHECK(haptic_enabled() && haptic_test_count() == 0);

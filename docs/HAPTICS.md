@@ -42,8 +42,10 @@ engine emits at most one effect: SUCCESS, PLACE, COMBO/ERROR, MATCH, COLLECT,
 then TICK in descending priority. Equal effects retain the greatest strength.
 Ticks use a 75 ms cooldown; other events use 100 ms, or 240 ms after SUCCESS.
 A higher-priority event can preempt the cooldown. Suppressed requests are
-discarded. Focus loss clears pending requests and releases platform resources;
-app/test resets clear all policy state.
+discarded. Focus loss clears pending requests and the cooldown, and releases
+platform resources. On native iOS, the first active frame after an interruption
+resumes feedback after processing the queued focus loss. App/test resets clear
+all policy state.
 
 `engine/haptic_platform.c` compiles in the platform unity unit, separately
 from engine C and generated Lua glue:

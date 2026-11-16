@@ -38,7 +38,11 @@ void haptic_enable(bool on)
 void haptic_focus(bool active)
 {
     H.suspended = !active;
-    if (!active) { H.pending = 0; haptic_platform_stop(); }
+    if (!active) {
+        H.pending = 0;
+        H.next = 0;
+        haptic_platform_stop();
+    }
 }
 
 void haptic_restart(void)
