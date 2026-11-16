@@ -219,7 +219,7 @@ At bind it makes eight Voronoi fractures of the unit hex; each break picks one
 and one of the hex's twelve symmetries. The pieces are cut from the layer's
 texture with `gfx.image_poly`. Cracks glow for 0.07 s, then the shards burst outwards,
 spin and tumble (a darker side face shows their thickness), fall under gravity
-and fade over about 0.8 s above a puff of earth-coloured dust (`S.DUST`). No
+and fade over about 0.55 s above a puff of earth-coloured dust (`S.DUST`). No
 art is baked, so new tile art and packs shatter unchanged.
 `E.layer_art` names the art `E.ground` paints, and a game's `R.board_floor()`
 returns the floor dress both use. Reduce Motion shows nothing. Review it
