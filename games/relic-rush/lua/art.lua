@@ -2,6 +2,7 @@
 -- Resource pieces appear at board size and also identify wallet currencies.
 local elements_view = require("match3.elements_view")
 local A = {}
+A.board_frame = {stone = "board-frame/stone.png", leaves = "board-frame/leaves.png"}
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
@@ -80,8 +81,7 @@ function A.load()
     for _, key in ipairs(A.floor_tiles) do
         textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
     end
-    textures["frame-leaves"] = texture.load("board-tiles/frame-leaves.png")
-    textures["frame-stone"] = texture.load("board-tiles/frame-stone.png")
+    elements_view.load_frame(textures, A.board_frame)
     local result_atlas = texture.load("result-icons.png")
     for i, key in ipairs(A.result_icons) do
         textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))

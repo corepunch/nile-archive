@@ -224,13 +224,6 @@ local function floor_pose(R, i)
     return scale, turn, lift
 end
 
--- The board stands in a frame like a Cradle of Rome plaque board: each band is
--- drawn for every cell before the next, so only what sticks out past the
--- silhouette survives as an outline. The full-radius backing joins edge to
--- edge, and the face leaves a seam of backing between neighbours, with the
--- same gap for painted and flat colours.
-local GROW = 2 / math.sqrt(3)   -- a hex grown by w along its edges has a corner radius this much larger
-
 local function each_ground_cell(R, rules, sx, fn)
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(R.g, i) then
@@ -240,75 +233,104 @@ local function each_ground_cell(R, rules, sx, fn)
     end
 end
 
--- The cell edges that face off the board: {a, b} are the edge's corners and
--- t, ta, tb say how low its middle and corners sit on their cell (0 top, 1 bottom).
-function E.silhouette_edges(R, rules)
-    local edges, corners, r = {}, {}, R.HEX_R
-    local apothem = r * math.sqrt(3) / 2
+-- Registration for the templates from tools/board_frame.py. The 80 px
+-- perimeter slots and 168 px entrance slot are painted at a 64 px hex radius.
+local FRAME_RADIUS, FRAME_SLOT = 64, 80
+local ENTRY_RIM = rect(0, 3 * FRAME_SLOT, 168, 168)
+local frame_vertices, frame_sources = {}, {}
+for k = 0, 5 do
+    local angle = math.rad(60 * k)
+    frame_vertices[k] = vec2(math.cos(angle), math.sin(angle))
+end
+for row = 0, 2 do
+    frame_sources[row] = {}
+    for k = 0, 5 do
+        frame_sources[row][k] = rect(k * FRAME_SLOT, row * FRAME_SLOT, FRAME_SLOT, FRAME_SLOT)
+    end
+end
+
+function E.load_frame(art, paths)
+    local sheet = texture.load(paths.stone)
+    art["frame-stone"] = sheet
+    art["frame-entrance"] = texture.region(sheet, ENTRY_RIM)
+    art["frame-leaves"] = texture.load(paths.leaves)
+end
+
+local function frame_layout(R, rules)
+    local g, r = R.g, R.HEX_R
+    local old, active = R.frame_layout, {}
+    local same = old and old.game == g and old.radius == r
     for i = 0, rules.CELLS - 1 do
-        if rules.game_cell_active(R.g, i) then
-            local at, open = R.cell_pos(i), {}
+        active[i] = rules.game_cell_active(g, i) == true
+        same = same and active[i] == old.active[i]
+    end
+    if same then return old end
+
+    -- Store positions relative to the board so a resize or shake moves the
+    -- whole frame and its shadow without rebuilding the list of sprites.
+    local edges, joins, convex = {}, {}, {}
+    for i = 0, rules.CELLS - 1 do
+        if active[i] then
+            local centre = R.cell_pos(i) - R.board_origin
+            local open = {}
+            for k = 0, 5 do open[k] = not active[rules.hex_neighbor(i, k)] end
             for k = 0, 5 do
-                local mid = math.rad(k * 60 + 30)
-                local n = vec2(math.cos(mid), math.sin(mid))
-                open[k] = R.cell_at(at + vec2(n.x * 2 * apothem, n.y * 2 * apothem)) < 0
                 if open[k] then
-                    local a0, a1 = math.rad(k * 60), math.rad(k * 60 + 60)
-                    edges[#edges + 1] = {
-                        a = at + vec2(math.cos(a0) * r, math.sin(a0) * r), b = at + vec2(math.cos(a1) * r, math.sin(a1) * r),
-                        n = n,   -- pointing off the board
-                        t = (math.sin(mid) * apothem / r + 1) / 2, ta = (math.sin(a0) + 1) / 2, tb = (math.sin(a1) + 1) / 2,
-                    }
-                end
-            end
-            -- A corner where two of a cell's open edges meet sticks out of the board.
-            for k = 0, 5 do
-                if open[k] and open[(k + 1) % 6] then
-                    local angle = math.rad(k * 60 + 60)
-                    corners[#corners + 1] = {p = at + vec2(math.cos(angle) * r, math.sin(angle) * r), angle = angle}
+                    local a = centre + frame_vertices[k]:scale(r)
+                    local b = centre + frame_vertices[(k + 1) % 6]:scale(r)
+                    edges[#edges + 1] = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k]}
+                    if open[(k + 5) % 6] then
+                        joins[#joins + 1] = {at = a, source = frame_sources[1][k]}
+                        convex[#convex + 1] = {p = a, angle = math.rad(60 * k)}
+                    else
+                        -- Two cells touch this vertex. The exposed edge that
+                        -- starts here owns the join. Index it by the empty
+                        -- neighbour's corner, rotated four steps from k.
+                        joins[#joins + 1] = {at = a, source = frame_sources[2][(k + 4) % 6]}
+                    end
                 end
             end
         end
     end
-    return edges, corners
+    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex}
+    R.frame_layout = layout
+    return layout
 end
 
 -- The board's drop shadow, outside the frame: `drop_shadow` = {spread, drop,
 -- alpha, steps}. Each step is a wider, fainter copy of the frame's outline
 -- moved down by `drop`, so the shadow is soft at its edge.
-local function draw_drop_shadow(R, edges, reach, sx, alpha)
+local function draw_drop_shadow(R, edges, origin, alpha)
     local spec = R.GROUND.drop_shadow
-    if not spec then return end
+    local scale = R.HEX_R / (FRAME_RADIUS / 2)
     local ink = color(0, 0, 0, 255 * alpha * spec.alpha / spec.steps)
-    local shift = vec2(sx, spec.drop)
+    local shift = origin + vec2(0, spec.drop * scale)
     for step = 1, spec.steps do
-        local w = reach + spec.spread * step / spec.steps
+        local w = (spec.reach + spec.spread * step / spec.steps) * scale
         for _, e in ipairs(edges) do gfx.line(e.a + shift, e.b + shift, 2 * w, ink) end
         for _, e in ipairs(edges) do gfx.circle(e.a + shift, w, ink); gfx.circle(e.b + shift, w, ink) end
     end
 end
 
--- Stone over the frame: R.GROUND.stone names a neutral texture strip (dark
--- stains, light flecks and cracks with alpha, from tools/board_tiles.py) laid
--- along each outside edge, across the frame's whole width.
-local stone_views = setmetatable({}, {__mode = "k"})
-local function draw_stone(R, edges, reach, sx, alpha)
-    local art = R.GROUND.stone and R.board_art[R.GROUND.stone]
+local function draw_stone(R, rules, sx, alpha)
+    local art = R.GROUND.frame and R.board_art[R.GROUND.frame]
     if not art or art.w == 0 then return end
-    local views = stone_views[art]
-    if not views then
-        views = {}
-        local w = art.h * 3
-        for k = 0, 7 do views[k] = texture.region(art, rect((k * 131) % (art.w - w), 0, w, art.h)) end
-        stone_views[art] = views
-    end
     local tint = color(255, 255, 255, 255 * alpha)
-    for i, e in ipairs(edges) do
-        local d = e.b - e.a
-        local mid = vec2((e.a.x + e.b.x) / 2 + e.n.x * reach / 2 + sx, (e.a.y + e.b.y) / 2 + e.n.y * reach / 2)
-        local length = math.sqrt(d.x * d.x + d.y * d.y) + reach
-        gfx.image_rot(views[i % 8], rect.centered(mid, size2(length, reach)), math.atan(d.y, d.x), tint)
+    local scale = R.HEX_R / FRAME_RADIUS
+    if R.intro then
+        each_ground_cell(R, rules, sx, function(_, at, amount, turn)
+            local size = ENTRY_RIM.w * scale * amount
+            gfx.image_rot(R.board_art["frame-entrance"], rect.centered(at, size2.splat(size)), turn, tint)
+        end)
+        return
     end
+    local layout = frame_layout(R, rules)
+    local origin = R.board_origin + vec2(sx, 0)
+    local size = size2.splat(FRAME_SLOT * scale)
+    if R.GROUND.drop_shadow then draw_drop_shadow(R, layout.edges, origin, alpha) end
+    for _, e in ipairs(layout.edges) do gfx.image_part(art, e.source, rect.centered(e.at + origin, size), tint) end
+    for _, j in ipairs(layout.joins) do gfx.image_part(art, j.source, rect.centered(j.at + origin, size), tint) end
+    return layout
 end
 
 -- Leaves on the frame, in the sprite R.GROUND.leaves (drawn pointing up): on
@@ -328,46 +350,14 @@ local function draw_leaves(R, corners, sx, alpha)
     local sizes = {1.5, 1.1, 1.25}
     for k, c in ipairs(picks) do
         local size = R.HEX_R * sizes[k]
-        gfx.image_rot(art, rect.centered(c.p + vec2(sx, 0), size2.splat(size)), c.angle + math.pi / 2,
+        gfx.image_rot(art, rect.centered(c.p + R.board_origin + vec2(sx, 0), size2.splat(size)), c.angle + math.pi / 2,
             color(255, 255, 255, 255 * alpha))
     end
 end
 
 local function draw_ground_backing(R, rules, sx, alpha, textured)
     local look = R.GROUND
-    -- The frame: bands listed from the cells outwards, drawn outermost first.
-    -- Each band is a vertical gradient per cell, so the board's top edges
-    -- catch the light (`top`) and its bottom edges fall into shade (`bottom`).
-    local frame, reach = look.frame or {}, 0
-    for _, band in ipairs(frame) do reach = reach + band.width end
-    -- Once the board has settled, only the silhouette's own edges are drawn:
-    -- a thick line along each with a disc at each corner, which rounds the
-    -- outline's corners. While cells fly in, each cell grows its own hexes.
-    local outline, corners
-    if not R.intro then outline, corners = E.silhouette_edges(R, rules) end
-    R.GROUND.outline, R.GROUND.corners, R.GROUND.reach = outline, corners, reach
-    if outline then draw_drop_shadow(R, outline, reach, sx, alpha) end
-    for k = #frame, 1, -1 do
-        local band = frame[k]
-        local top, bottom = color.alpha(band.top, alpha), color.alpha(band.bottom or band.top, alpha)
-        if outline then
-            local shift = vec2(sx, 0)
-            for _, e in ipairs(outline) do
-                gfx.line(e.a + shift, e.b + shift, 2 * reach, color.lerp(top, bottom, e.t))
-            end
-            for _, e in ipairs(outline) do
-                gfx.circle(e.a + shift, reach, color.lerp(top, bottom, e.ta))
-                gfx.circle(e.b + shift, reach, color.lerp(top, bottom, e.tb))
-            end
-        else
-            local grow = reach * GROW
-            each_ground_cell(R, rules, sx, function(_, at, scale, turn)
-                gfx.ngon_grad(at, (R.HEX_R + grow) * scale, 6, turn, top, bottom)
-            end)
-        end
-        reach = reach - band.width
-    end
-    if outline then draw_stone(R, outline, look.reach, sx, alpha) end
+    local frame = draw_stone(R, rules, sx, alpha)
     local seam = color.alpha(look.seam, alpha)
     local face = color.alpha(look.face, alpha)
     local inset = look.seam_width or FLOOR_INSET
@@ -377,48 +367,15 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
             gfx.ngon(at, (R.HEX_R - inset) * scale, 6, turn, face)
         end
     end)
+    return frame
 end
 
--- Frame bands that blend across the frame's width: `stops` are {position,
--- 0xRRGGBB} from the cells (0) to the outer edge (1). Each of the `steps`
--- bands takes the colour at its middle; `shade` darkens its lower edges.
-function E.frame_ramp(width, stops, steps, shade)
-    local function at(t)
-        for k = 2, #stops do
-            local a, b = stops[k - 1], stops[k]
-            if t <= b[1] then
-                local f = (t - a[1]) / (b[1] - a[1])
-                local function mix(shift) return ((a[2] >> shift) & 255) * (1 - f) + ((b[2] >> shift) & 255) * f end
-                return mix(16), mix(8), mix(0)
-            end
-        end
-    end
-    local bands = {}
-    for k = 1, steps do
-        local r, g, b = at((k - .5) / steps)
-        bands[k] = {width = width / steps, top = color(r, g, b), bottom = color(r * shade, g * shade, b * shade)}
-    end
-    return bands
-end
-
--- Cradle of Rome's board, shared by the match-3 games, after the first game's
--- frame pieces. From the cells out: dark brown stone, a rusty line and a tan
--- outer lip, all under a stone texture with cracks, then a soft drop shadow
--- outside the board. Leaves sit on three corners, dark brown grout separates
--- the cells, and the textures are baked by tools/board_tiles.py.
-local function band(width, top, bottom) return {width = width, top = color.hex(top), bottom = color.hex(bottom)} end
-local cradle_frame = {
-    band(1.7, 0x47240C, 0x3A1C08),
-    band(1.1, 0x5E3E20, 0x4E3218),
-    band(.55, 0x733A12, 0x5A2A0C),
-    band(2.1, 0xC09A66, 0x9A7446),
-    band(.5, 0x5E4428, 0x4A3018),
-}
+-- Cradle of Rome's board, shared by the match-3 games. The games supply the
+-- stone and leaf sprites independently of the floor tiles.
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
-    frame = cradle_frame,
-    drop_shadow = {spread = 5, drop = 3, alpha = .55, steps = 6},
-    stone = "frame-stone",
+    frame = "frame-stone",
+    drop_shadow = {reach = 5.95, spread = 5, drop = 3, alpha = .55, steps = 6},
     leaves = "frame-leaves",
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
              wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
@@ -467,7 +424,7 @@ end
 function E.ground(R, rules, sx, floor, sweep)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    draw_ground_backing(R, rules, sx, alpha, sweep or floor and floor.normal)
+    local frame = draw_ground_backing(R, rules, sx, alpha, sweep or floor and floor.normal)
     -- A reveal can show during play or wait for the first clear.
     local level = rules.level_of(g)
     local story = reveal(R, rules) or level.reveal
@@ -511,7 +468,7 @@ function E.ground(R, rules, sx, floor, sweep)
             end
         end
     end
-    if R.GROUND.outline then draw_leaves(R, R.GROUND.corners, sx, alpha) end
+    if frame then draw_leaves(R, frame.convex, sx, alpha) end
     E.cell_highlights(R, rules, sx, alpha)
     if story and story.floor == "oil" then
         draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])

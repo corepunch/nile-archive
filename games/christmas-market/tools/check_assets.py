@@ -55,6 +55,14 @@ def main():
     for name in spec['tiles']:
         assert png(ROOT/'data/board-tiles'/f'{name}.png') == ((128, 128), 6), name
     subprocess.run([sys.executable, str(ROOT.parents[1]/tiles['generator']), '--check'], check=True)
+    frame = manifest['board_frame']
+    art = (ROOT/'lua/art.lua').read_text()
+    assert (ROOT.parents[1]/frame['review']).is_file()
+    for role in ('stone', 'leaves'):
+        assert frame[role] in inventory and '"' + frame[role].removeprefix('data/') + '"' in art
+    assert png(ROOT/frame['leaves']) == ((96, 96), 6)
+    subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
+                    '--check', str(ROOT/frame['stone'])], check=True)
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}

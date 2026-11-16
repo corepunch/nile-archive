@@ -153,22 +153,20 @@ can reuse the board's chip and objective frames. The generated
 The shared floor renderer in `match3.elements_view` draws an edge-to-edge
 backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
 default) at its radius. The seam shows the backing colour through that inset.
-`R.GROUND.frame` lists the board's outline bands from the cells outwards, each
-`{width, top, bottom}`. Every band is drawn for every cell under the faces, so
-only the silhouette's outline remains, and as a vertical gradient, so the
-board's top edges catch the light and its bottom edges fall into shade.
-Once the board has settled, the frame is drawn along the silhouette's own
-edges (`E.silhouette_edges`) as thick lines with a disc at each corner, which
-rounds the outline's corners; while cells fly in, each cell grows its own hexes.
 `elements.cradle_ground(R)` applies the shared Cradle of Rome preset
-(`E.CRADLE_GROUND`), after the first game's frame: dark stone next to the
-cells, a rusty line and a tan outer lip; `stone`, a neutral texture strip with
-cracks laid along each outside edge; `drop_shadow` (`{spread, drop, alpha,
-steps}`), a soft shadow outside the board; `leaves`, a sprite drawn on the
-board's north-west, north-east and south-east outer corners;
-dark brown grout (`seam`, `seam_width`) and the cell-state
-tiles. Games supply the fallback face colour as the skin's `board_face`.
-Imported and neutral boards use the same geometry without a frame.
+(`E.CRADLE_GROUND`) for the frame, soft drop shadow, dark brown grout
+(`seam`, `seam_width`) and cell-state tiles. Games supply the fallback face
+colour as the skin's `board_face`.
+`elements.load_frame` loads each game's stone atlas and leaf sprite.
+The renderer checks each active cell's six neighbours and places atlas
+regions along the exposed edges, inward corners and outward corners,
+including the edges of holes. It keeps those placements relative to the board
+origin for shake and resize, and rebuilds them when the active mask changes.
+The atlas also provides the rim under each cell during the entrance.
+The soft shadow follows the settled outline, and the separate leaves sit on
+the board's north-west, north-east and south-east outward tips.
+Imported and neutral boards use the default ground geometry.
+[Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each
 listed game's `data/board-tiles/`: a bevel lit from above, a top-to-bottom face
@@ -183,7 +181,7 @@ plaque with two layers) and `wave` (the light that sweeps across the board
 in its entrance, in place of the halo). A level's `oil_double` lists `oil`
 cells that take two hits; each still counts once toward the goal.
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
-[In-game board review](review/match3-board-seams/README.md), [frame](review/match3-board-frame/README.md).
+[In-game board review](review/match3-board-seams/README.md).
 
 For a game view, initialize presentation data with `match3.view{...}`, then
 call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authored `piece_width`;

@@ -1,12 +1,14 @@
 -- Named presentation contract; tools/check_assets.py checks its coverage.
 -- The gold bell artwork also identifies spendable Gold in the island purse.
 -- The same painted pieces identify wallet resources and story finds.
+local elements_view = require("match3.elements_view")
 local A = {}
+A.board_frame = {stone = "board-frame/stone.png", leaves = "board-frame/leaves.png"}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
 -- Standalone power-ups, with one authored rocket per hex axis.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
-A.elements = require("match3.elements_view").assets
+A.elements = elements_view.assets
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="art/navigation/controls.png", roles={"navigation_build", "navigation_play", "navigation_levels"}, states=A.states}
@@ -65,7 +67,7 @@ function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    require("match3.elements_view").load(textures, require("match3").skin(require("match3_skin")))
+    elements_view.load(textures, require("match3").skin(require("match3_skin")))
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load("story-floors/" .. name .. ".jpg") end
@@ -77,8 +79,7 @@ function A.load()
     for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
         textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
     end
-    textures["frame-leaves"] = texture.load("board-tiles/frame-leaves.png")
-    textures["frame-stone"] = texture.load("board-tiles/frame-stone.png")
+    elements_view.load_frame(textures, A.board_frame)
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end

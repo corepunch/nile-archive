@@ -152,6 +152,14 @@ assert "games/relic-rush/data/board-tiles" in spec["outputs"]
 for name in spec["tiles"]:
     assert f"data/board-tiles/{name}.png" in actual and f"`tile-{name}`" in doc, name
 subprocess.run([sys.executable, str(ROOT.parents[1] / tiles["generator"]), "--check"], check=True)
+frame = manifest["board_frame"]
+assert (ROOT.parents[1] / frame["review"]).is_file()
+for role in ("stone", "leaves"):
+    assert frame[role] in actual and '"' + frame[role].removeprefix("data/") + '"' in art
+with Image.open(ROOT / frame["leaves"]) as leaves:
+    assert leaves.mode == "RGBA" and leaves.size == (96, 96) and leaves.getchannel("A").getbbox()
+subprocess.run([sys.executable, str(ROOT.parents[1] / frame["generator"]),
+                "--check", str(ROOT / frame["stone"])], check=True)
 finale = manifest["finale"]
 for name, item in finale["assets"].items():
     assert f'`{name}`' in doc and f'"{name}"' in art

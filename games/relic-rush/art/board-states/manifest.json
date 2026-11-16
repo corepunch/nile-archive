@@ -388,6 +388,8 @@
     "disabled"
   ],
   "runtime_inventory": [
+    "data/board-frame/leaves.png",
+    "data/board-frame/stone.png",
     "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
     "data/board-states/chain.png",
@@ -422,8 +424,6 @@
     "data/board-states/sunburst-selected.png",
     "data/board-tiles/bonus-area.png",
     "data/board-tiles/cell-normal.png",
-    "data/board-tiles/frame-leaves.png",
-    "data/board-tiles/frame-stone.png",
     "data/board-tiles/hover.png",
     "data/board-tiles/ice.png",
     "data/board-tiles/light-wave.png",
@@ -1652,11 +1652,7 @@
       "ice",
       "bonus-area"
     ],
-    "previous_source": "art/board-refresh/flat-ground.png",
-    "decor": [
-      "frame-leaves",
-      "frame-stone"
-    ]
+    "previous_source": "art/board-refresh/flat-ground.png"
   },
   "finale": {
     "generator": "built-in ImageGen",
@@ -1886,5 +1882,11 @@
         "economy-wallet"
       ]
     }
+  },
+  "board_frame": {
+    "generator": "tools/board_frame.py",
+    "stone": "data/board-frame/stone.png",
+    "leaves": "data/board-frame/leaves.png",
+    "review": "docs/review/board-frame-atlas/README.md"
   }
 }
