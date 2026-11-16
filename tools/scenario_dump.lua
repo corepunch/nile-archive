@@ -167,7 +167,7 @@ else
                          collection = (l.story_piece or goal_resource) and {
                              key = l.story_piece or goal_resource.key, count = l.relics, resource = goal_resource ~= nil,
                              regular = campaign.colors - (l.omit_kind ~= nil and 1 or 0) - (l.story_piece and 1 or 0)} or nil,
-                         plaques = l.dress and l.dress.floor and l.dress.floor.covered == "target-plaque" and #l.oil or nil,
+                         plaques = l.dress and l.dress.floor and l.dress.floor.covered == "tile-tablet-single" and #l.oil or nil,
                          signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,
                              covered_picture = reveal.covered_picture, cells = reveal.object and #l.oil or nil}}

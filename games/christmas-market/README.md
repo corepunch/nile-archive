@@ -24,9 +24,9 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-Each of Bellmere's thirty winter wishes asks you to light every red pane.
-Cleared panes glow amber. Tinsel ties protect treats for one hit and contribute
-to the goal only when they cover a red pane. The lamps lead from the market
+Each of Bellmere's thirty winter wishes asks you to light every blue pane.
+Cleared panes return to parchment. Tinsel ties protect treats for one hit and contribute
+to the goal only when they cover a blue pane. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
 [board progression](docs/board-progression.md) and [story](docs/story.md).
 
@@ -48,16 +48,16 @@ owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
 The game supplies the boards, artwork and straight-match rules.
 
 The puzzle and town use the same wallet and Pause button. The remaining moves
-are shown below the wallet on the puzzle. The cranberry red panes mark the objectives. Spruce faces meet at
-hairline seams, and cleared panes turn honey amber. Pause opens
+are shown below the wallet on the puzzle. The teal-blue tablets mark the objectives on parchment cells, which meet at
+hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
 `data/match3.png` holds the puzzle backdrop, pieces, blockers and effects.
 The HUD and tool controls use `data/match3-hud.png`. Run
 `python3 tools/match3_atlas.py` to rebuild the two atlases. The three lantern
-panes are drawn by the game from skin colours over a generated grain
-(`data/board-grain.png`, made by `tools/board_grain.py`).
+panes use the board tiles shared with Relic Rush, which `tools/board_tiles.py`
+bakes from `engine/art/board-tiles/tiles.json`.
 [Asset catalogue](docs/asset-catalogue.md#lantern-panes).
 
 The market keeps Relic Rush's bottom controls in its own skin: Build (the

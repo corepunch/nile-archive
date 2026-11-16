@@ -31,7 +31,6 @@
     "disabled"
   ],
   "runtime": {
-    "data/board-grain.png": "1a0066184a83d251ddbc872d39e068d682c7f717abec42b08800c4449fce76e5",
     "data/board-states/bomb.png": "ed81b5bdc22716892ea1510be38c268e2580908002ff35a0be630f9868907d6e",
     "data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
     "data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
@@ -65,6 +64,14 @@
     "data/board-states/sunburst-normal.png": "082084a6d8a5e8f9b519d996e085a22118a1941d3a4425672ec63a05a9c39299",
     "data/board-states/sunburst-pressed.png": "431a29a858bc098cec92d20b7e30c29a4d046509bc6dd788742b6f1a40710c5b",
     "data/board-states/sunburst-selected.png": "b265a8b8f0935b2c7444032f60176c7ab934f742f9e5dde103adf9afedae9ce9",
+    "data/board-tiles/bonus-area.png": "aec2d5b0d205644d1d992a395678b0084eeef0ee1623bbc9566dff7f54580fbd",
+    "data/board-tiles/cell-normal.png": "946d78e1e94c4db4257c50088be0a16dc2f1d47142f8c34d568e0224cab479f5",
+    "data/board-tiles/hover.png": "b0b39b62a0c16dc8acd9c41e716aabe8ff134fa9a4cd4dc54ae4083ef49c0c6f",
+    "data/board-tiles/ice.png": "b9e577721d808361b6028c4705068425c41430d06f649bf5aa9002aff9fdbe28",
+    "data/board-tiles/light-wave.png": "fa9fed9a6517c31521589f311efe3781227f7dfca674b510554bc33e0948e47b",
+    "data/board-tiles/selected.png": "1d6ec45b9f3c49f97068866dafb2e75bde285425243028ac254d5c73ec1474fb",
+    "data/board-tiles/tablet-double.png": "55101fe2843b5a208405481680998acddebbaffa2de95fdf36b12174f1fbe923",
+    "data/board-tiles/tablet-single.png": "178990e2f99013c1846f4768595d26450a838ddae3982ffed2c128c9bb1b9ad0",
     "data/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -515,24 +522,19 @@
       "review": "docs/screenshots/review/themed-terrain/README.md"
     }
   },
-  "materials": {
-    "generator": "tools/board_grain.py",
-    "runtime": "data/board-grain.png",
-    "args": [
-      "--seed",
-      "11"
+  "tiles": {
+    "spec": "engine/art/board-tiles/tiles.json",
+    "generator": "tools/board_tiles.py",
+    "frames": [
+      "cell-normal",
+      "tablet-single",
+      "tablet-double",
+      "light-wave",
+      "hover",
+      "selected",
+      "ice",
+      "bonus-area"
     ],
-    "colours": "lua/skin.lua",
-    "frames": {
-      "lantern-plain": "board_plain_*",
-      "lantern-red": "board_red_*",
-      "lantern-lit": "board_lit_*"
-    },
-    "meaning": {
-      "lantern-plain": "Unmarked board",
-      "lantern-red": "Pane to clear",
-      "lantern-lit": "Cleared pane"
-    },
     "previous_source": "art/lantern-panes/spruce-atlas.png",
     "reference": "art/lantern-panes/concept.png"
   },

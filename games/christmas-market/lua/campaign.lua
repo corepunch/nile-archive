@@ -1,4 +1,4 @@
--- Each wish has a fixed set of red panes. Only those panes need clearing.
+-- Each wish has a fixed set of blue panes. Only those panes need clearing.
 -- Axial coordinates follow the engine's zero-based cell IDs.
 local function cell(q, r)
     local i = 0
@@ -16,12 +16,12 @@ local function level(name, moves, chains, mask, positions)
     for i = 1, #mask do terrain[i] = i end
     for _, pos in ipairs(positions) do
         local i = cell(pos[1], pos[2])
-        assert(mask:sub(i + 1, i + 1) == "1" and not floor_marks[i], "invalid red pane")
+        assert(mask:sub(i + 1, i + 1) == "1" and not floor_marks[i], "invalid blue pane")
         oil[#oil + 1], floor_marks[i] = i, true
-        -- Rank panes first so tinsel covers some of the red objectives.
+        -- Rank panes first so tinsel covers some of the blue objectives.
         terrain[i + 1] = #oil - 100
     end
-    return {name=name, lesson="Light every red pane.", moves=moves, score=0, relics=0,
+    return {name=name, lesson="Light every blue pane.", moves=moves, score=0, relics=0,
         chains=chains, ice=0, mask=mask, terrain=terrain, oil=oil, oil_still=true,
         goals={"oil"}, floor_marks=floor_marks}
 end
@@ -104,7 +104,7 @@ levels[25].reveal = {picture="telegram", floor="oil", on_clear=true}
 levels[28].reveal = {picture="last-train", floor="oil", on_clear=true}
 
 -- The story object replaces its regular kind for the whole wish, including
--- refills. The red panes still decide the win.
+-- refills. The blue panes still decide the win.
 local finds = {
     [9]={key="cocoa", name="Cocoa mug", kind=1},
     [16]={key="scarf", name="Blue practice scarf", kind=3},

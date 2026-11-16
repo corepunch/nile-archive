@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Generate a tileable, neutral grain texture for match-3 cell materials.
+"""Generate a tileable, neutral grain texture for match-3 cell tiles.
 
 The texture holds no colour of its own. Dark stains are black and light
 flecks are white, each with alpha set by how far the grain strays from the
-mean. Drawn over a flat or gradient face it darkens and lightens that face
-like stained paper or worn stone, so a skin chooses every colour. The game
-cuts the hex out of it at draw time, so there is no separate mask.
+mean. Laid over a flat or gradient face it darkens and lightens that face
+like stained paper or worn stone. tools/board_tiles.py bakes it into the
+board tile sprites; run this directly only to preview the grain.
 
-    python3 tools/board_grain.py games/relic-rush/data/board-grain.png
+    python3 tools/board_grain.py /tmp/grain.png --seed 11
 """
 import argparse
 import random
@@ -49,47 +49,40 @@ def normalise(values):
     return [v / peak for v in values]
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("out", type=Path)
-    parser.add_argument("--size", type=int, default=512)
-    parser.add_argument("--seed", type=int, default=7)
-    parser.add_argument("--stain", type=float, default=.55, help="large soft blotches")
-    parser.add_argument("--rings", type=float, default=.35, help="dark tide marks at blotch edges")
-    parser.add_argument("--mottle", type=float, default=.3)
-    parser.add_argument("--fibre", type=float, default=.18)
-    parser.add_argument("--speck", type=float, default=.12)
-    parser.add_argument("--strength", type=float, default=.9, help="alpha at the strongest grain")
-    parser.add_argument("--check", action="store_true", help="fail if the file differs from a fresh render")
-    args = parser.parse_args()
+DEFAULTS = {"size": 512, "seed": 7, "stain": .55, "rings": .35, "mottle": .3, "fibre": .18,
+            "speck": .12, "strength": .9}
 
-    rng = random.Random(args.seed)
-    size = args.size
-    stain = normalise(layer(rng, size, OCTAVES["stain"]))
-    mottle = normalise(layer(rng, size, OCTAVES["mottle"]))
-    fibre = normalise(layer(rng, size, OCTAVES["fibre"]))
-    speck = normalise(layer(rng, size, OCTAVES["speck"]))
+
+def render(size=512, seed=7, stain=.55, rings=.35, mottle=.3, fibre=.18, speck=.12, strength=.9):
+    """The grain as an RGBA image: black stains and white flecks with alpha."""
+    rng = random.Random(seed)
+    stains = normalise(layer(rng, size, OCTAVES["stain"]))
+    mottles = normalise(layer(rng, size, OCTAVES["mottle"]))
+    fibres = normalise(layer(rng, size, OCTAVES["fibre"]))
+    specks = normalise(layer(rng, size, OCTAVES["speck"]))
     # Tide marks: dark where a stain blotch crosses its middle value.
-    rings = [max(0.0, 1 - abs(s) * 6) for s in stain]
-
-    grain = [args.stain * s - args.rings * r + args.mottle * m + args.fibre * f + args.speck * k
-             for s, r, m, f, k in zip(stain, rings, mottle, fibre, speck)]
+    tides = [max(0.0, 1 - abs(v) * 6) for v in stains]
+    grain = [stain * s - rings * r + mottle * m + fibre * f + speck * k
+             for s, r, m, f, k in zip(stains, tides, mottles, fibres, specks)]
     mean = sum(grain) / len(grain)
     grain = normalise([g - mean for g in grain])
-
     shade = Image.new("L", (size, size))
     shade.putdata([255 if g > 0 else 0 for g in grain])
     alpha = Image.new("L", (size, size))
-    alpha.putdata([min(255, round(abs(g) * 255 * args.strength)) for g in grain])
+    alpha.putdata([min(255, round(abs(g) * 255 * strength)) for g in grain])
     # A touch of softening keeps the speckle from aliasing when a cell is small.
     alpha = alpha.filter(ImageFilter.GaussianBlur(.6))
-    out = Image.merge("RGBA", (shade, shade, shade, alpha))
-    if args.check:
-        current = Image.open(args.out).convert("RGBA")
-        assert current.size == out.size and current.tobytes() == out.tobytes(), f"Stale grain texture: {args.out}"
-        return
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    out.save(args.out, optimize=True)
+    return Image.merge("RGBA", (shade, shade, shade, alpha))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("out", type=Path)
+    for key, value in DEFAULTS.items():
+        parser.add_argument("--" + key, type=type(value), default=value)
+    args = parser.parse_args()
+    params = {key: getattr(args, key) for key in DEFAULTS}
+    render(**params).save(args.out, optimize=True)
 
 
 if __name__ == "__main__":

@@ -9,6 +9,9 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
+-- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
+-- engine/art/board-tiles/tiles.json and loaded under "tile-" keys.
+A.floor_tiles = {"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = elements_view.assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
@@ -74,6 +77,9 @@ function A.load()
     local function load(name) textures[name] = skin[name] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, require("match3").skin(require("match3_skin")))
+    for _, key in ipairs(A.floor_tiles) do
+        textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
+    end
     local result_atlas = texture.load("result-icons.png")
     for i, key in ipairs(A.result_icons) do
         textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))
@@ -126,14 +132,12 @@ function A.draw_catalogue(R)
         gfx.image(R.board_art["resource-" .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
-                   "chain", "sandstone-floor", "target-plaque", "selected", "hint", "guide"}
+                   "chain", "tile-cell-normal", "tile-tablet-single", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 414 + math.floor((i - 1) / 6) * 75
         if i <= 6 then
             R.draw_relic({kind=i-1,special=i},vec2(x+24,y+24),1,255,1)
-        elseif not elements_view.draw_material(R, name, vec2(x + 24, y + 24), 24, 0, 1, i) then
-            gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
-        end
+        else gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE) end
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end
     for col, state in ipairs(A.states) do
@@ -147,21 +151,23 @@ function A.draw_catalogue(R)
     R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)
 end
 
--- Game-rendered samples at the same size as live board cells.
+-- Game-rendered samples at the same size as live board cells: the eight
+-- shared tiles in Cradle of Rome's slot order, then a chained plaque.
+local TILE_LABELS = {"Normal", "Tablet", "Double", "Light wave", "Hover", "Selected", "Ice", "Bonus area"}
 function A.draw_dressing_catalogue(R)
-    gfx.round_rect(rect(28, 315, 424, 180), 18, color(12, 47, 41, 250))
-    R.say_at("BOARD MATERIALS", vec2(240, 345), 25, R.PAL_GOLD, 420)
+    gfx.round_rect(rect(28, 300, 424, 300), 18, color(12, 47, 41, 250))
+    R.say_at("BOARD TILES", vec2(240, 328), 25, R.PAL_GOLD, 420)
     local side = 2 * (R.HEX_R - .65)
-    for i, name in ipairs{"sandstone-floor", "target-plaque", "chain"} do
-        local at = vec2(105 + (i - 1) * 135, 413)
-        local area = rect.centered(at, size2.splat(side))
-        elements_view.draw_material(R, i == 3 and "target-plaque" or name, at, side / 2, 0, 1, i)
-        if i == 3 then
-            gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
-            gfx.image(R.board_art.chain, area, color.WHITE)
-        end
-        R.say_at(({"Pale stone", "Blue plaque", "Chained plaque"})[i], at + vec2(0, 44), 13, R.PAL_CREAM, 120)
+    for i, key in ipairs(A.floor_tiles) do
+        local at = vec2(87 + (i - 1) % 4 * 102, 380 + (i - 1) // 4 * 92)
+        gfx.image(R.board_art["tile-" .. key], rect.centered(at, size2.splat(side)), color.WHITE)
+        R.say_at(TILE_LABELS[i], at + vec2(0, 42), 12, R.PAL_CREAM, 100)
     end
+    local at = vec2(240, 552)
+    local area = rect.centered(at, size2.splat(side))
+    gfx.image(R.board_art["tile-tablet-single"], area, color.WHITE)
+    gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
+    gfx.image(R.board_art.chain, area, color.WHITE)
 end
 
 -- Actual game rendering, all kinds and axes at board size; no replacement art.

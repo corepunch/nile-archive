@@ -4,7 +4,6 @@
 -- (engine/match3_game.lua); words are data/game.json.
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
-local elements = require("match3.elements_view")
 local rules = require("rules")
 local economy = require("economy")
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
@@ -134,10 +133,10 @@ R.dialogs[R.OV_RESULT] = result_screen
 local guide_entries = {
     {id="neighbors", title="Line up three or more", description="Match treats in a straight line along any of the three axes.",
      icon={kind=0}},
-    {id="panes", title="Light the red panes", description="Match on a red pane or hit it with a tool to light it. Light them all to finish.",
-     icon={back="lantern-red"}},
+    {id="panes", title="Light the blue panes", description="Match on a blue pane or hit it with a tool to light it. Light them all to finish.",
+     icon={back="tile-tablet-single"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
-     icon={back="lantern-red", kind=3, front="chain"}},
+     icon={back="tile-tablet-single", kind=3, front="chain"}},
     {id="supplies", title="Stock the market", description="Bells earn Gold, candy and gingerbread earn Treats, and holly, mittens and baubles earn Supplies.",
      icon={kind=2}},
     {id="finds", title="Story finds", description="A story object sometimes takes a regular piece's place. Light the panes to bring it back to Bellmere.",
@@ -149,7 +148,7 @@ local guide_entries = {
 local function guide_icon(box, icon)
     local at = box:center()
     local layer = rect.centered(at, size2(48, 48))
-    if icon.back then elements.draw_material(R, icon.back, pp(at), layer.w / 2 * P.scale, 0, P.alpha, 1) end
+    if icon.back then picture(R.board_art[icon.back], layer, 255) end
     if icon.kind then R.draw_relic(rules.tile(icon.kind), pp(at), P.scale, 255 * P.alpha, 1) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end

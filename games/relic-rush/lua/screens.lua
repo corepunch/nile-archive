@@ -4,7 +4,6 @@
 -- (engine/match3_game.lua); words are data/game.json.
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
-local elements = require("match3.elements_view")
 local rules = require("rules")
 local economy = require("economy")
 local island = require("island")
@@ -195,9 +194,9 @@ local guide_entries = {
     {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of the three axes.",
      icon={front="resource-coin"}},
     {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match pieces on a plaque or hit it with a tool.",
-     icon={floor="target-plaque"}},
+     icon={floor="tile-tablet-single"}},
     {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is blue, clear it with another hit.",
-     icon={floor="target-plaque", piece="resource-coin", front="chain"}},
+     icon={floor="tile-tablet-single", piece="resource-coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Gold, Provisions and Supplies.",
      icon={front="resource-timber"}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
@@ -211,7 +210,7 @@ for i, unlock in ipairs(economy.unlocks) do
 end
 local function guide_icon(box, icon)
     local layer = rect.centered(box:center(), size2.splat(48))
-    if icon.floor then elements.draw_material(R, icon.floor, pp(layer:center()), layer.w / 2 * P.scale, 0, P.alpha, 1) end
+    if icon.floor then picture(R.board_art[icon.floor], layer, 255) end
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end

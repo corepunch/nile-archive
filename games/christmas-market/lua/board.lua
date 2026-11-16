@@ -10,7 +10,7 @@ local match3 = require("match3")
 local elements = require("match3.elements_view")
 local skin = require("skin")
 local neutral = app.arg("default-match3")
-local lantern_floor = {plain="lantern-plain", normal="lantern-lit", covered="lantern-red"}
+local lantern_floor = {plain="tile-cell-normal", normal="tile-cell-normal", covered="tile-tablet-single"}
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- maximum registered canvas width for refill clipping
 rules.bind_view(R)
 if not neutral then
@@ -18,15 +18,6 @@ if not neutral then
         R.GROUND[name] = skin:color("board_" .. name)
     end
     R.GROUND.edge_width, R.GROUND.rim_width, R.GROUND.seam_width = 2.5, 3, .9
-    -- Lantern panes lit from above and stained by one grain, like the Relic Rush plaques.
-    local function material(key, grain)
-        return {top = skin:color("board_" .. key .. "_top"), bottom = skin:color("board_" .. key .. "_bottom"),
-                light = skin:color("board_" .. key .. "_light"), shade = skin:color("board_" .. key .. "_shade"),
-                bevel = 1.6, grain = grain}
-    end
-    R.GROUND.grain = "board-grain.png"
-    R.GROUND.materials = {["lantern-plain"] = material("plain", .45), ["lantern-red"] = material("red", .3),
-                          ["lantern-lit"] = material("lit", .5)}
 end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes

@@ -144,16 +144,14 @@ print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board 
 # Script, identities and presentation mapping must ship together.
 import subprocess
 import sys
-materials = manifest["materials"]
-board = (ROOT / "lua/board.lua").read_text()
-skin = (ROOT / materials["colours"]).read_text()
-assert materials["runtime"] in actual
-for name, prefix in materials["frames"].items():
-    assert f'["{name}"]' in board and f"`{name}`" in doc, name
-    for part in ("top", "bottom", "light", "shade"):
-        assert prefix.replace("*", part) + " = " in skin, (name, part)
-subprocess.run([sys.executable, str(ROOT.parents[1] / materials["generator"]), str(ROOT / materials["runtime"]),
-                *materials["args"], "--check"], check=True)
+tiles = manifest["tiles"]
+spec = json.loads((ROOT.parents[1] / tiles["spec"]).read_text())
+declaration = re.search(r"A\.floor_tiles = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == tiles["frames"] == list(spec["tiles"])
+assert "games/relic-rush/data/board-tiles" in spec["outputs"]
+for name in spec["tiles"]:
+    assert f"data/board-tiles/{name}.png" in actual and f"`tile-{name}`" in doc, name
+subprocess.run([sys.executable, str(ROOT.parents[1] / tiles["generator"]), "--check"], check=True)
 finale = manifest["finale"]
 for name, item in finale["assets"].items():
     assert f'`{name}`' in doc and f'"{name}"' in art

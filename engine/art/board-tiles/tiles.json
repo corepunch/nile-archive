@@ -1,0 +1,48 @@
+{
+  "size": 128,
+  "mask": "engine/art/hex-tile/hex-mask-128.png",
+  "bevel": 3.2,
+  "grain_sample": 150,
+  "grain": {"seed": 7},
+  "outputs": ["games/relic-rush/data/board-tiles", "games/christmas-market/data/board-tiles"],
+  "tiles": {
+    "cell-normal": {
+      "slot": 1, "meaning": "Normal cell (parchment)",
+      "top": "#EAD09A", "bottom": "#C69E62", "light": "#F8E6BE", "shade": "#8A6334", "grain": 0.5
+    },
+    "tablet-single": {
+      "slot": 2, "meaning": "Single marble tablet (teal blue)",
+      "top": "#2C9CA6", "bottom": "#0F6470", "light": "#71CDD2", "shade": "#07363C", "grain": 0.4
+    },
+    "tablet-double": {
+      "slot": 3, "meaning": "Double marble tablet (green)",
+      "top": "#94C452", "bottom": "#4F8526", "light": "#C8E893", "shade": "#2B4C12", "grain": 0.85,
+      "grain_params": {"seed": 23, "mottle": 0.7, "fibre": 0.1, "speck": 0.35}
+    },
+    "light-wave": {
+      "slot": 4, "meaning": "Light wave sweeping across the board (pale yellow)",
+      "top": "#FFFBE2", "bottom": "#F5E9A6", "light": "#FFFFF4", "shade": "#E2D184", "bevel": 2,
+      "glow": {"colour": "#FFFFFF", "opacity": 0.75, "reach": 0.95}
+    },
+    "hover": {
+      "slot": 5, "meaning": "Mouse hover highlight (white)",
+      "top": "#FFFFFF", "bottom": "#F0F0EC", "light": "#FFFFFF", "shade": "#D6D6CF", "bevel": 2, "grain": 0.08
+    },
+    "selected": {
+      "slot": 6, "meaning": "Selected cell highlight (warm yellow)",
+      "top": "#FFFCE8", "bottom": "#FFF1C0", "light": "#FFE98A", "shade": "#EFC447", "bevel": 7,
+      "glow": {"colour": "#FFFFFF", "opacity": 0.5, "reach": 0.8}
+    },
+    "ice": {
+      "slot": 7, "meaning": "Ice tablet (frosted gray-blue)",
+      "top": "#E9EFF5", "bottom": "#BCCAD8", "light": "#FFFFFF", "shade": "#8C9FB4", "grain": 0.9,
+      "grain_params": {"seed": 31, "stain": 0.2, "rings": 1.3, "mottle": 0.35, "fibre": 0.05, "speck": 0.25},
+      "cracks": {"seed": 5, "count": 7, "colour": "#7F93AA", "opacity": 0.55, "width": 0.8}
+    },
+    "bonus-area": {
+      "slot": 8, "meaning": "Area a bonus will affect (glowing light blue)",
+      "top": "#D7E7FB", "bottom": "#A9C6EE", "light": "#F2F8FF", "shade": "#7DA2D6", "bevel": 2.5,
+      "glow": {"colour": "#FFFFFF", "opacity": 0.9, "reach": 0.9}
+    }
+  }
+}

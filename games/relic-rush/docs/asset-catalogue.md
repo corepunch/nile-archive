@@ -388,28 +388,28 @@ and source-board diagnostics.
 
 | Frame | Meaning and use |
 | --- | --- |
-| `sandstone-floor` | Cream limestone for ordinary and cleared cells. |
-| `target-plaque` | Cobalt stone on cells required for a win. The Explorer’s Guide and art catalogue draw the same face. |
+| `tile-cell-normal` | Slot 1, parchment: ordinary and cleared cells. |
+| `tile-tablet-single` | Slot 2, teal blue: plaques required for a win. The Explorer’s Guide uses the same face. |
+| `tile-tablet-double` | Slot 3, green: a two-hit tablet. Not used yet: no rule has double plaques. |
+| `tile-light-wave` | Slot 4, pale yellow glow: a light sweep across the board. Not drawn yet. |
+| `tile-hover` | Slot 5, white: pointer hover. Not drawn yet. |
+| `tile-selected` | Slot 6, cream with a warm yellow border: selected cell. Not drawn yet; the ring layer `selected` still marks selection. |
+| `tile-ice` | Slot 7, frosted gray-blue with hairline cracks: ice tablet. Not drawn yet; ice keeps its `ice-1`/`ice-2` overlays. |
+| `tile-bonus-area` | Slot 8, glowing light blue: cells a tool will hit. Not drawn yet. |
 
-Both faces are drawn by the game, after Cradle of Rome's plaque boards. Each
-cell is lit from above: a bevel ring runs from a light upper edge to a shaded
-lower one, and inside it the face runs from a lighter top colour to a darker
-bottom. A neutral stained-paper grain (`data/board-grain.png`) then darkens and
-lightens it. The grain holds only black stains and white flecks with alpha, so
-it fits any colour, and each cell samples a different part of it. The game cuts
-the flat-top hex at draw time, so there is no mask file.
-
-- Colours: `board_plain_*` and `board_target_*` (`top`, `bottom`, `light`,
-  `shade`) in [`lua/skin.lua`](../lua/skin.lua).
-- Bevel width and grain opacity per face: `R.GROUND.materials` in
-  [`lua/board.lua`](../lua/board.lua).
-- Grain: `python3 tools/board_grain.py games/relic-rush/data/board-grain.png`
-  regenerates it; its options set stain, tide-mark, mottle, fibre and speck
-  amounts. `tools/check_art_catalogue.py` fails if the file is stale.
-- Renderer: `draw_material` in `engine/match3_elements_view.lua`.
+The eight tiles follow the slots of Cradle of Rome's board sheet and are
+shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
+from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
+into each game's `data/board-tiles/`. Each tile is lit from above: a bevel ring
+from a light upper edge to a shaded lower one, a face from a lighter top colour
+to a darker bottom, a neutral stained-paper grain (`tools/board_grain.py`), and
+where set a radial glow or hairline cracks. The canonical 128 px flat-top mask
+cuts the alpha, and every tile passes `tools/hex_tile_art.py --mode fill --strict`.
+Regenerate with `python3 tools/board_tiles.py`; `tools/check_art_catalogue.py`
+fails if a tile is stale. The `--art-states dressing` screen shows all eight.
 
 The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
-these replaced remains as a style reference. [In-game review](review/procedural-plaques/README.md).
+these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).
 
 The earlier [cover and terrain sources](../art/board-dressing/) and
 [historical review](screenshots/review/board-dressing/README.md) document the

@@ -4,8 +4,22 @@
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
     "option": "--rome-reference-art",
-    "pieces": {"coin": 4, "berries": 2, "emerald": 16, "timber": 6, "stone": 8, "water": 5, "rations": 9, "cut-blocks": 8},
-    "states": ["normal", "selected", "hinted", "falling"],
+    "pieces": {
+      "coin": 4,
+      "berries": 2,
+      "emerald": 16,
+      "timber": 6,
+      "stone": 8,
+      "water": 5,
+      "rations": 9,
+      "cut-blocks": 8
+    },
+    "states": [
+      "normal",
+      "selected",
+      "hinted",
+      "falling"
+    ],
     "transform": "Unmodified XML-defined source crops. Board selection, motion and hints use existing Relic Rush overlays."
   },
   "source": "art/board-states/source.png",
@@ -374,7 +388,6 @@
     "disabled"
   ],
   "runtime_inventory": [
-    "data/board-grain.png",
     "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
     "data/board-states/chain.png",
@@ -407,6 +420,14 @@
     "data/board-states/sunburst-normal.png",
     "data/board-states/sunburst-pressed.png",
     "data/board-states/sunburst-selected.png",
+    "data/board-tiles/bonus-area.png",
+    "data/board-tiles/cell-normal.png",
+    "data/board-tiles/hover.png",
+    "data/board-tiles/ice.png",
+    "data/board-tiles/light-wave.png",
+    "data/board-tiles/selected.png",
+    "data/board-tiles/tablet-double.png",
+    "data/board-tiles/tablet-single.png",
     "data/building-shadows/amphitheater.png",
     "data/building-shadows/apothecary.png",
     "data/building-shadows/archive.png",
@@ -1144,47 +1165,224 @@
       128,
       128
     ],
-    "states": ["first-clear award", "scenario icon"],
+    "states": [
+      "first-clear award",
+      "scenario icon"
+    ],
     "award_runtime": "data/finds/<slot>.png",
-    "shared_rewards": {"timber": "data/resource-pieces/timber.png"},
+    "shared_rewards": {
+      "timber": "data/resource-pieces/timber.png"
+    },
     "transform": "Compact props uniformly resized to fit 256 px inside a 320 px transparent canvas.",
     "gear_reward": {
       "source": "art/quest-objects/shutter-gear-states.png",
       "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
-      "crop": [969, 83, 1680, 821]
+      "crop": [
+        969,
+        83,
+        1680,
+        821
+      ]
     },
     "reward_sources": {
-      "marker": {"source": "art/resource-pieces/outlined-atlas.png", "prompt": "art/resource-pieces/outlined-atlas.prompt.txt", "crop": [1330, 443, 1774, 887]}
+      "marker": {
+        "source": "art/resource-pieces/outlined-atlas.png",
+        "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
+        "crop": [
+          1330,
+          443,
+          1774,
+          887
+        ]
+      }
     },
     "separate_rewards": {
-      "note": {"source": "art/quest-objects/ines-note-states.png", "prompt": "art/quest-objects/ines-note-states.prompt.txt", "runtime": "data/finds/note.png", "crop": [67, 99, 788, 787], "canvas": [320, 320], "paint_size": [228, 228]},
-      "broken-cable": {"source": "art/quest-objects/broken-cable-states.png", "prompt": "art/quest-objects/broken-cable-states.prompt.txt", "runtime": "data/finds/broken-cable.png", "crop": [1168, 116, 1823, 698], "canvas": [320, 320], "paint_size": [256, 256]}
+      "note": {
+        "source": "art/quest-objects/ines-note-states.png",
+        "prompt": "art/quest-objects/ines-note-states.prompt.txt",
+        "runtime": "data/finds/note.png",
+        "crop": [
+          67,
+          99,
+          788,
+          787
+        ],
+        "canvas": [
+          320,
+          320
+        ],
+        "paint_size": [
+          228,
+          228
+        ]
+      },
+      "broken-cable": {
+        "source": "art/quest-objects/broken-cable-states.png",
+        "prompt": "art/quest-objects/broken-cable-states.prompt.txt",
+        "runtime": "data/finds/broken-cable.png",
+        "crop": [
+          1168,
+          116,
+          1823,
+          698
+        ],
+        "canvas": [
+          320,
+          320
+        ],
+        "paint_size": [
+          256,
+          256
+        ]
+      }
     },
     "story_pieces": {
       "generator": "Built-in ImageGen, each matching set authored together",
-      "canvas": [128, 128],
-      "paint_size": [108, 108],
-      "states": ["board", "selected", "hint", "falling", "goal", "collection flight"],
+      "canvas": [
+        128,
+        128
+      ],
+      "paint_size": [
+        108,
+        108
+      ],
+      "states": [
+        "board",
+        "selected",
+        "hint",
+        "falling",
+        "goal",
+        "collection flight"
+      ],
       "atlases": [
         {
           "source": "art/resource-pieces/scenario-atlas.png",
           "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
           "items": {
-            "chart": {"boards": [4], "kind": 0, "crop": [320, 653, 619, 910], "runtime": "data/story-pieces/chart.png"},
-            "supplies": {"boards": [9], "kind": 3, "crop": [326, 952, 613, 1229], "runtime": "data/story-pieces/supplies.png"},
-            "lens": {"boards": [2], "kind": 3, "crop": [959, 343, 1230, 612], "runtime": "data/story-pieces/lens.png"},
-            "cable": {"boards": [3], "kind": 4, "crop": [12, 649, 300, 929], "runtime": "data/story-pieces/cable.png"},
-            "tools": {"boards": [7], "kind": 1, "crop": [934, 671, 1245, 899], "runtime": "data/story-pieces/tools.png"},
-            "note": {"boards": [13], "kind": 0, "crop": [970, 979, 1243, 1206], "runtime": "data/story-pieces/note.png"},
-            "gear": {"boards": [10], "kind": 5, "crop": [638, 954, 924, 1236], "runtime": "data/story-pieces/gear.png"},
-            "broken-cable": {"boards": [8], "kind": 4, "crop": [8, 1034, 303, 1150], "runtime": "data/story-pieces/broken-cable.png"}
+            "chart": {
+              "boards": [
+                4
+              ],
+              "kind": 0,
+              "crop": [
+                320,
+                653,
+                619,
+                910
+              ],
+              "runtime": "data/story-pieces/chart.png"
+            },
+            "supplies": {
+              "boards": [
+                9
+              ],
+              "kind": 3,
+              "crop": [
+                326,
+                952,
+                613,
+                1229
+              ],
+              "runtime": "data/story-pieces/supplies.png"
+            },
+            "lens": {
+              "boards": [
+                2
+              ],
+              "kind": 3,
+              "crop": [
+                959,
+                343,
+                1230,
+                612
+              ],
+              "runtime": "data/story-pieces/lens.png"
+            },
+            "cable": {
+              "boards": [
+                3
+              ],
+              "kind": 4,
+              "crop": [
+                12,
+                649,
+                300,
+                929
+              ],
+              "runtime": "data/story-pieces/cable.png"
+            },
+            "tools": {
+              "boards": [
+                7
+              ],
+              "kind": 1,
+              "crop": [
+                934,
+                671,
+                1245,
+                899
+              ],
+              "runtime": "data/story-pieces/tools.png"
+            },
+            "note": {
+              "boards": [
+                13
+              ],
+              "kind": 0,
+              "crop": [
+                970,
+                979,
+                1243,
+                1206
+              ],
+              "runtime": "data/story-pieces/note.png"
+            },
+            "gear": {
+              "boards": [
+                10
+              ],
+              "kind": 5,
+              "crop": [
+                638,
+                954,
+                924,
+                1236
+              ],
+              "runtime": "data/story-pieces/gear.png"
+            },
+            "broken-cable": {
+              "boards": [
+                8
+              ],
+              "kind": 4,
+              "crop": [
+                8,
+                1034,
+                303,
+                1150
+              ],
+              "runtime": "data/story-pieces/broken-cable.png"
+            }
           }
         },
         {
           "source": "art/resource-pieces/outlined-atlas.png",
           "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
           "items": {
-            "marker": {"boards": [5, 6], "kind": 2, "crop": [1376, 517, 1739, 795], "runtime": "data/story-pieces/marker.png"}
+            "marker": {
+              "boards": [
+                5,
+                6
+              ],
+              "kind": 2,
+              "crop": [
+                1376,
+                517,
+                1739,
+                795
+              ],
+              "runtime": "data/story-pieces/marker.png"
+            }
           }
         }
       ]
@@ -1439,15 +1637,19 @@
       "review": "docs/screenshots/review/themed-terrain/README.md"
     }
   },
-  "materials": {
-    "generator": "tools/board_grain.py",
-    "runtime": "data/board-grain.png",
-    "args": [],
-    "colours": "lua/skin.lua",
-    "frames": {
-      "sandstone-floor": "board_plain_*",
-      "target-plaque": "board_target_*"
-    },
+  "tiles": {
+    "spec": "engine/art/board-tiles/tiles.json",
+    "generator": "tools/board_tiles.py",
+    "frames": [
+      "cell-normal",
+      "tablet-single",
+      "tablet-double",
+      "light-wave",
+      "hover",
+      "selected",
+      "ice",
+      "bonus-area"
+    ],
     "previous_source": "art/board-refresh/flat-ground.png"
   },
   "finale": {
@@ -1506,34 +1708,126 @@
       "building": "well",
       "first_level": 5,
       "kind": 3,
-      "yield": {"provisions": 3},
+      "yield": {
+        "provisions": 3
+      },
       "runtime": "data/resource-pieces/water.png"
     },
     "cut-blocks": {
       "building": "workshop",
       "first_level": 9,
       "kind": 4,
-      "yield": {"supplies": 5},
+      "yield": {
+        "supplies": 5
+      },
       "runtime": "data/tile-sets/resources/4.png",
       "source": "art/tile-sets/source.png",
-      "source_cell": {"row": 3, "column": 5},
+      "source_cell": {
+        "row": 3,
+        "column": 5
+      },
       "registration": "tools/prepare_assets.py"
     },
-    "rations": {"building": "market", "first_level": 10, "kind": 1, "yield": {"provisions": 4}, "runtime": "data/resource-pieces/rations.png"},
-    "trade-coins": {"building": "gateway", "first_level": 14, "kind": 0, "yield": {"gold": 6}, "runtime": "data/tile-sets/resources/0.png",
-      "source": "art/tile-sets/source.png", "source_cell": {"row": 3, "column": 1}, "registration": "tools/prepare_assets.py"},
-    "grain": {"building": "lodge", "first_level": 17, "kind": 1, "yield": {"provisions": 5}, "runtime": "data/tile-sets/resources/5.png",
-      "source": "art/tile-sets/source.png", "source_cell": {"row": 3, "column": 6}, "registration": "tools/prepare_assets.py"},
-    "quartz": {"building": "archive", "first_level": 20, "kind": 4, "yield": {"supplies": 7}, "runtime": "data/tile-sets/relics/4.png",
-      "source": "art/tile-sets/source.png", "source_cell": {"row": 1, "column": 5}, "registration": "tools/prepare_assets.py"},
-    "springwater": {"building": "fountain", "first_level": 27, "kind": 3, "yield": {"provisions": 6}, "runtime": "data/tile-sets/resources/3.png",
-      "source": "art/tile-sets/source.png", "source_cell": {"row": 3, "column": 4}, "registration": "tools/prepare_assets.py"},
-    "sun-gem": {"building": "temple", "first_level": 30, "kind": 0, "yield": {"gold": 9}, "runtime": "data/tile-sets/jewels/0.png",
-      "source": "art/tile-sets/source-flat-hex.png", "crop": [12, 340, 315, 570], "registration": "tools/prepare_assets.py"}
+    "rations": {
+      "building": "market",
+      "first_level": 10,
+      "kind": 1,
+      "yield": {
+        "provisions": 4
+      },
+      "runtime": "data/resource-pieces/rations.png"
+    },
+    "trade-coins": {
+      "building": "gateway",
+      "first_level": 14,
+      "kind": 0,
+      "yield": {
+        "gold": 6
+      },
+      "runtime": "data/tile-sets/resources/0.png",
+      "source": "art/tile-sets/source.png",
+      "source_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "registration": "tools/prepare_assets.py"
+    },
+    "grain": {
+      "building": "lodge",
+      "first_level": 17,
+      "kind": 1,
+      "yield": {
+        "provisions": 5
+      },
+      "runtime": "data/tile-sets/resources/5.png",
+      "source": "art/tile-sets/source.png",
+      "source_cell": {
+        "row": 3,
+        "column": 6
+      },
+      "registration": "tools/prepare_assets.py"
+    },
+    "quartz": {
+      "building": "archive",
+      "first_level": 20,
+      "kind": 4,
+      "yield": {
+        "supplies": 7
+      },
+      "runtime": "data/tile-sets/relics/4.png",
+      "source": "art/tile-sets/source.png",
+      "source_cell": {
+        "row": 1,
+        "column": 5
+      },
+      "registration": "tools/prepare_assets.py"
+    },
+    "springwater": {
+      "building": "fountain",
+      "first_level": 27,
+      "kind": 3,
+      "yield": {
+        "provisions": 6
+      },
+      "runtime": "data/tile-sets/resources/3.png",
+      "source": "art/tile-sets/source.png",
+      "source_cell": {
+        "row": 3,
+        "column": 4
+      },
+      "registration": "tools/prepare_assets.py"
+    },
+    "sun-gem": {
+      "building": "temple",
+      "first_level": 30,
+      "kind": 0,
+      "yield": {
+        "gold": 9
+      },
+      "runtime": "data/tile-sets/jewels/0.png",
+      "source": "art/tile-sets/source-flat-hex.png",
+      "crop": [
+        12,
+        340,
+        315,
+        570
+      ],
+      "registration": "tools/prepare_assets.py"
+    }
   },
   "tool_unlocks": {
-    "dynamite": {"building": "camp", "first_level": 2, "charges": 2, "review": "hex-late"},
-    "sunburst": {"building": "observatory", "first_level": 24, "charges": 2, "review": "phone-story-level-30"}
+    "dynamite": {
+      "building": "camp",
+      "first_level": 2,
+      "charges": 2,
+      "review": "hex-late"
+    },
+    "sunburst": {
+      "building": "observatory",
+      "first_level": 24,
+      "charges": 2,
+      "review": "phone-story-level-30"
+    }
   },
   "resource_pieces": {
     "source": "art/board-refresh/source.png",
@@ -1555,10 +1849,36 @@
     },
     "generator": "built-in ImageGen, full-atlas revision with a sun engraving",
     "timber_emerald": {
-      "source": "art/resource-pieces/timber-emerald.png", "prompt": "art/resource-pieces/timber-emerald.prompt.txt",
-      "grid": [2, 1], "slots": {"timber": 1, "emerald": 2}, "resize": {"timber": [320, 285]},
-      "states": ["normal", "selected", "hinted", "falling", "wallet", "first-clear award"],
-      "review": ["hex-first", "phone-board", "timber-item-card", "economy-wallet"]
+      "source": "art/resource-pieces/timber-emerald.png",
+      "prompt": "art/resource-pieces/timber-emerald.prompt.txt",
+      "grid": [
+        2,
+        1
+      ],
+      "slots": {
+        "timber": 1,
+        "emerald": 2
+      },
+      "resize": {
+        "timber": [
+          320,
+          285
+        ]
+      },
+      "states": [
+        "normal",
+        "selected",
+        "hinted",
+        "falling",
+        "wallet",
+        "first-clear award"
+      ],
+      "review": [
+        "hex-first",
+        "phone-board",
+        "timber-item-card",
+        "economy-wallet"
+      ]
     }
   }
 }

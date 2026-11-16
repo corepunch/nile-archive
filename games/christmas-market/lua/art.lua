@@ -72,6 +72,11 @@ function A.load()
         local find = level.story_piece
         if find then textures["story-" .. find.key] = texture.load("story-pieces/" .. find.key .. ".png") end
     end
+    -- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
+    -- engine/art/board-tiles/tiles.json, under "tile-" keys.
+    for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
+        textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
+    end
     for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
@@ -91,9 +96,9 @@ function A.draw_catalogue(R)
             R.say_at(A.festive[k + 1], vec2(x + 23, 245), 10, R.PAL_CREAM, 66)
         end
     end
-    for i, name in ipairs{"plain", "red", "lit"} do
+    for i, name in ipairs{"cell-normal", "tablet-single", "tablet-double"} do
         local x = 104 + (i - 1) * 112
-        require("match3.elements_view").draw_material(R, "lantern-" .. name, vec2(x + 24, 296), 24, 0, 1, i)
+        gfx.image(R.board_art["tile-" .. name], rect(x, 272, 48, 48), color.WHITE)
         R.say_at(name, vec2(x + 24, 330), 11, R.PAL_CREAM, 88)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
