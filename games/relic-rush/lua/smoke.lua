@@ -172,7 +172,11 @@ function R.smoke()
         end
         if R.overlay == R.OV_RESULT then
             if R.modal_for == R.OV_RESULT and R.dialog_settled() then
-                shop.replay_reward = shop.replay and rules.level_reward(R.g,R.wonders,R.prog) or nil
+                shop.replay_reward = shop.replay and rules.level_reward(R.g,R.wonders,R.prog,R.island) or nil
+                if shop.replay then
+                    local base = rules.level_reward(R.g,R.wonders,R.prog)
+                    assert(shop.replay_reward[1] == base[1] + 1, "one placed decoration earns one Happiness Gold")
+                end
                 app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1
             end
             return
@@ -234,6 +238,8 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 23
     elseif stage == 23 and R.island.placing < 0 then
         assert(R.island.count == 1 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
+        assert(island.happiness(R.island)==4 and island.happiness_gold(R.island)==0,
+            "cancelling a decoration leaves Happiness unchanged")
         R.open_catalogue(); stage = 24
     elseif stage == 24 and R.overlay == R.OV_SHOP then
         if press_tile("shrub") then stage = 25 end
@@ -242,6 +248,8 @@ function R.smoke()
     elseif stage == 26 and R.island.placing < 0 then
         assert(R.island.count == 2 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
         assert(R.prog.wallet[1] == shop.gold - 15, "purchase must charge once")
+        assert(island.happiness(R.island)==5 and island.happiness_gold(R.island)==1,
+            "confirmed decoration adds Happiness and earns a Gold bonus")
         local c = R.island
         app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then

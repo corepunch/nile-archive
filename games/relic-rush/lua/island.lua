@@ -39,6 +39,18 @@ function M.owned(c, kind)
     return n
 end
 
+function M.happiness_points(kind) return kind < WONDERS and 4 or 1 end
+
+function M.happiness(c)
+    local points = 0
+    for _, item in ipairs(c.items) do points = points + M.happiness_points(item.type) end
+    return points
+end
+
+function M.happiness_gold(c)
+    return c and math.min(10, #c.items - M.wonder_count(c)) or 0
+end
+
 function M.can_buy(c, wallet, level, kind)
     if kind<0 or kind>=#M.buildings or c.count>=160 then return false end
     local d=M.buildings[kind+1]

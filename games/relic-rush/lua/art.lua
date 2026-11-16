@@ -14,14 +14,14 @@ A.elements = elements_view.assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "broken-cable", "marker"}
 A.separate_rewards = {"note", "broken-cable"}
-A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water", "rations"}
+A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
 A.resource_upgrades = {
     ["cut-blocks"]="tile-sets/resources/4.png", ["trade-coins"]="tile-sets/resources/0.png",
     grain="tile-sets/resources/5.png", quartz="tile-sets/relics/4.png",
     springwater="tile-sets/resources/3.png", ["sun-gem"]="tile-sets/jewels/0.png",
 }
 -- Local comparison art uses the exact source crops and the same board states.
-A.rome_reference = {coin=4, berries=2, plantains=1, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8}
+A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -79,7 +79,7 @@ function A.load()
         textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))
     end
     for _, key in ipairs(A.quest_objects) do
-        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
+        if key ~= "timber" then textures["find-" .. key] = texture.load("finds/" .. key .. ".png") end
     end
     for _, key in ipairs(A.separate_rewards) do
         textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
@@ -102,6 +102,7 @@ function A.load()
             textures["resource-" .. key] = image
         end
     end
+    textures["find-timber"] = textures["resource-timber"]
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
     for _, name in pairs(A.specials) do load(name) end

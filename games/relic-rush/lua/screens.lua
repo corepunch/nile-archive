@@ -65,7 +65,7 @@ function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 local function result_screen()
     local l = match3.result_rects(SCREEN_W, SCREEN_H)
-    local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog)
+    local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog,R.island)
     local reward = breakdown.total
     local pending = island.wonder_count(R.island) + 1
     local next_kind = breakdown.first and journey.wonder_at(R.g.level + 1)
@@ -107,8 +107,9 @@ local function result_screen()
         say(economy.currencies[k+1].name, rect(r.x + 3, r.y + 70, r.w - 6, 14), 13, PAL_CREAM)
         set_paint(s)
     end
-    say(("Move bonus +%d Gold"):format(breakdown.bonus),
-        rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
+    local bonuses = ("Move bonus +%d Gold"):format(breakdown.bonus)
+    if breakdown.happiness > 0 then bonuses = bonuses .. ("  ·  Happiness +%d Gold"):format(breakdown.happiness) end
+    say(bonuses, rect(l.rewards.x,l.rewards.y+l.rewards.h+1,l.rewards.w,15), 11, PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then
         local r = l.progress

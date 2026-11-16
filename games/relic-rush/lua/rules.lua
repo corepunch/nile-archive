@@ -2,6 +2,7 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
+local island = require("island")
 local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
 local flags = match3.LINE_MATCHES
 if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI | match3.COLOR_TOOL end
@@ -45,27 +46,28 @@ function M.lose_life(p,g,now)
     return true
 end
 
-function M.reward_breakdown(g, wonders, progress)
+function M.reward_breakdown(g, wonders, progress, town)
     local first = not progress or g.level == progress.level
     local bonus = math.min(M.MAX_MOVE_GOLD, math.max(0, g.moves) * M.MOVE_GOLD)
     local kind=M.wonder_at(g.level+1)
     local w=kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    local reward = matched + purse(bonus, 0, 0, first and 3 or 0)
+    local happiness = island.happiness_gold(town)
+    local reward = matched + purse(bonus + happiness, 0, 0, first and 3 or 0)
     if first and w and app.arg("debug-walkthrough") then
         reward = reward + economy.shortfall(w.cost, (progress and progress.wallet or purse()) + reward)
     end
-    return {first=first, bonus=bonus, total=reward}
+    return {first=first, bonus=bonus, happiness=happiness, total=reward}
 end
 
-function M.level_reward(g, wonders, progress)
-    return M.reward_breakdown(g,wonders,progress).total
+function M.level_reward(g, wonders, progress, town)
+    return M.reward_breakdown(g,wonders,progress,town).total
 end
 
-function M.progress_reward(p, g, wonders)
+function M.progress_reward(p, g, wonders, town)
     if reference then return false end
     if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
-    local reward = M.reward_breakdown(g,wonders,p)
+    local reward = M.reward_breakdown(g,wonders,p,town)
     p.wallet = p.wallet + reward.total
     if reward.first then p.level = p.level + 1 end
     p.seed = g.rng

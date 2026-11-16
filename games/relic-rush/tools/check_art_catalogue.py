@@ -16,10 +16,13 @@ for field, key in [("tools", "tools"), ("states", "tool_states")]:
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
 resources = manifest["resource_pieces"]
+new_pieces = resources["timber_emerald"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(resources["slots"])
-assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
-for name in resources["slots"]:
+pieces = [*resources["slots"], *new_pieces["slots"]]
+assert re.findall(r'"([^"]+)"', declaration) == pieces
+for atlas in (resources, new_pieces):
+    assert all((ROOT / atlas[key]).is_file() for key in ("source", "prompt"))
+for name in pieces:
     path = f"data/resource-pieces/{name}.png"
     assert path in actual and f"`{name}`" in doc
 for name, unlock in manifest["resource_unlocks"].items():
@@ -29,7 +32,7 @@ declaration = re.search(r"A\.resource_upgrades = \{([^}]+)\}", art).group(1)
 upgrades = {quoted or bare: "data/" + path for quoted, bare, path in
             re.findall(r'(?:\["([^"]+)"\]|(\w+))\s*=\s*"([^"]+)"', declaration)}
 assert upgrades == {name: item["runtime"] for name, item in manifest["resource_unlocks"].items()
-                    if name not in resources["slots"]}, "Runtime upgrades need catalogue coverage"
+                    if name not in pieces}, "Runtime upgrades need catalogue coverage"
 assert set(manifest["tool_unlocks"]) <= set(manifest["tools"])
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
@@ -170,6 +173,8 @@ declaration = re.search(r"A\.quest_objects = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == quest["slots"]
 for key in quest["slots"]:
     assert "`" + key + "`" in doc
+    path = quest["shared_rewards"].get(key, f"data/finds/{key}.png")
+    assert path in actual
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 assert all((ROOT / quest["gear_reward"][key]).is_file() for key in ("source", "prompt"))

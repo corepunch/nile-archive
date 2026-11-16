@@ -17,6 +17,20 @@ do
     check(not rules.lose_life(p,{lost=false},10000),'winning boards cost no life')
 end
 
+-- Happiness is derived from placed items, and only optional purchases earn Gold.
+do
+    local town={items={{type=0},{type=37}}}
+    local p={level=1,seed=1,wallet=purse(0,0,0,3)}
+    local g=rules.game_start(0,99);g.won=true;g.moves=0
+    check(island.happiness(town)==5,'wonder and decoration Happiness add together')
+    local reward=rules.reward_breakdown(g,island.wonders,p,town)
+    check(reward.happiness==1 and reward.total[1]==1,'Happiness Gold is itemized as part of the claim')
+    check(rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'a replay banks Happiness Gold')
+    check(not rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'cannot claim Happiness twice')
+    for _=1,12 do town.items[#town.items+1]={type=37} end
+    check(island.happiness(town)==17 and island.happiness_gold(town)==10,'Happiness continues above the Gold cap')
+end
+
 -- Confirmed restorations persist across eligible boards without taking story slots.
 do
     R.island=city.new();island.island_setup(R.island)

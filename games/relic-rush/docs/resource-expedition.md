@@ -67,15 +67,15 @@ visible cost.
 | --- | --- | ---: |
 | Gold sun coin | Gold | 4 |
 | Red berries | Provisions | 1 |
-| Green plantains | Provisions | 1 |
-| Blue-wrapped timber | Supplies | 2 |
+| Emerald | Provisions | 1 |
+| Timber log | Supplies | 2 |
 | Purple dressed stone | Supplies | 3 |
 
 Buy or restore a building using the family totals. Timber and stone are
-separate match kinds within Supplies, just as berries and plantains are
+separate match kinds within Supplies, just as berries and emeralds are
 separate kinds within Provisions. Each piece needs a recognizable shape at phone
-size. The shared town and board wallet uses the sun coin, berries and blue-tied
-timber. Pending earnings are visible on the board and are banked on a win.
+size. The shared town and board wallet uses the sun coin, berries and timber.
+Pending earnings are visible on the board and are banked on a win.
 
 Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
@@ -134,6 +134,10 @@ When a restoration costs more than is in the wallet, replay a cleared board
 with the missing resource and bank the earnings. Optional purchases reserve
 the price of any earned restoration. Confirmed placement debits the price
 once and Cancel returns the preview. Stars remain access requirements.
+Confirmed restorations add four Happiness. Each confirmed optional building
+or decoration adds one Happiness and earns one bonus Gold per win, capped at
+ten Gold. Moving items preserves the score and bonus. Both derive from saved
+placements.
 
 A save version identifies the Provisions and Supplies slots. Existing Gold,
 stars, placements, lives, unlocks, claimed levels and story checkpoints are

@@ -76,13 +76,7 @@ for chapter_index, chapter in ipairs(Q.chapters) do
     end
 end
 
-function Q.build_points(kind) return kind < island.WONDERS and 4 or 1 end
-
-function Q.points(city)
-    local points = 0
-    for _, item in ipairs(city.items) do points = points + Q.build_points(item.type) end
-    return points
-end
+Q.points = island.happiness
 
 local function complete_task(task, level, city)
     if task.board then return level >= task.board end
@@ -112,11 +106,11 @@ end
 function R.quest_allows_board(board)
     local required = Q.required_points(board)
     if Q.points(R.island) >= required then return true end
-    R.notice(("Reach %d decoration points to open this quest."):format(required))
+    R.notice(("Reach %d Happiness to open this quest."):format(required))
     return false
 end
 
-R.quest_build_points = Q.build_points
+R.quest_build_points = island.happiness_points
 
 local form = ui.form{root={kind="column", panel=true, role="quest", padding={13,9,13,9}, gap=2, children={
     {kind="label", id="chapter", em=14, text_style="cream", text_align="start", height=18},
@@ -132,13 +126,13 @@ function R.draw_quest(screen)
         form:set("chapter", "THE LOST VALLEY")
         form:set("quest", "Campaign complete")
         form:set("task", "Explore the island or replay a board")
-        form:set("points", ("%d decoration points"):format(points))
+        form:set("points", ("Happiness %d"):format(points))
     else
         form:set("chapter", ("CHAPTER %d  ·  %s"):format(quest.chapter_index, quest.chapter))
         form:set("quest", quest.title)
         form:set("task", task and (task.board and ("%02d  ·  %s"):format(task.board, task.label) or task.label)
             or "Restore the island to continue")
-        form:set("points", ("%d/%d tasks  ·  %d/%d decoration points"):format(done, #quest.tasks, points, quest.points))
+        form:set("points", ("%d/%d tasks  ·  Happiness %d/%d"):format(done, #quest.tasks, points, quest.points))
     end
     form:draw(rect(screen.x + 10, screen.y + 96, 300, 110), R.skin, {interactive=false})
 end

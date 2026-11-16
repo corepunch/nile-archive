@@ -35,8 +35,12 @@ Built-in ImageGen painted the [3 × 3 source atlas](../art/board-refresh/source.
 with seven expedition pieces and both cell faces. The [prompt](../art/board-refresh/prompt.txt)
 and [hex layout](../art/board-refresh/hex-template.png) record the generation inputs.
 The [manifest](../art/board-states/manifest.json) records the slot order, crop and
-registration. Each resource is trimmed with a four-pixel margin, fit inside 114 px
-and centred on a transparent 128 px square. Runtime sprites live in
+registration. Resources are trimmed with a four-pixel margin and centred on a
+transparent square. The [timber and emerald atlas](../art/resource-pieces/timber-emerald.png)
+was edited together in built-in ImageGen. The [edit prompt](../art/resource-pieces/timber-emerald.prompt.txt)
+records both slots. The emerald fits inside 114 px on a 128 px canvas. Timber
+fits inside 285 px on a 320 px canvas so the board, wallet and reward can use
+the same texture. Runtime sprites live in
 `data/resource-pieces/`. Selected, hinted and falling pieces reuse the same
 authored sprite with existing motion and separate indicators. Specials use
 their own authored art. The original scenario sheet is still the source of
@@ -46,8 +50,8 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | --- | --- | --- |
 | `coin` | Round gold coin engraved with an eight-ray sun, 4 Gold | Gold |
 | `berries` | Red berries, 1 Provisions | Provisions |
-| `plantains` | Green plantains, 1 Provisions | Board only |
-| `timber` | Blue-tied timber, 2 Supplies | Supplies |
+| `emerald` | Square-cut green gem, 1 Provisions | Board only |
+| `timber` | One unwrapped log, 2 Supplies | Supplies and the Camp Timber award |
 | `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
 | `water` | Teal water bucket, 3 Provisions. Replaces timber from board 5 after the Well is restored. | Board and guide |
 | `rations` | Orange ration jar, 4 Provisions in the Market slot from board 10 | Board and guide |
@@ -119,10 +123,10 @@ the weathered bronze reward. The new board gear uses the same open square bore. 
 [prompt](../art/quest-objects/shutter-gear-states.prompt.txt) and manifest
 record the source and crops.
 
-Run `python3 tools/relic_quest_art.py` to register the eight quest props
-in `data/quest-objects.png` for the scenario index and in individual
-`data/finds/<slot>.png` files for the item cards. Card props fit within
-256 px on a 320×320 canvas. Board 8 uses the separately registered `broken-cable`
+Run `python3 tools/relic_quest_art.py` after the resource registration to build
+the scenario index in `data/quest-objects.png` and the item card props in
+`data/finds/`. Camp Timber uses `data/resource-pieces/timber.png` directly.
+The other card props fit within 256 px on a 320×320 canvas. Board 8 uses the separately registered `broken-cable`
 card. The [broken cable sheet](../art/quest-objects/broken-cable-states.png) and
 [prompt](../art/quest-objects/broken-cable-states.prompt.txt) record that reward.
 On the new expedition sheet, the intact relay cable is coiled with two plugs.
@@ -143,9 +147,9 @@ sprites. The first clear recovers the story item.
 | Purple | 3, 8 | Coiled relay cable, snapped cable |
 | Orange | 10 | Bronze shutter gear |
 
-Board 1 uses the ordinary blue-tied timber chip. Most story sprites come
+Board 1 uses the ordinary timber chip. Most story sprites come
 from the [expedition atlas](../art/resource-pieces/scenario-atlas.png). The
-trail arrow chip plus the marker and timber recovery cards use the
+trail arrow chip and marker recovery card use the
 [outlined source sheet](../art/resource-pieces/outlined-atlas.png).
 The manifest records each crop, the boards it appears on and its colour slot.
 Run `python3 tools/relic_quest_art.py` to register the individual

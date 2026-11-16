@@ -25,7 +25,7 @@
     "notes": ["A life returns every 30 minutes, up to five.",
               "Gold buys buildings and decorations.",
               "Discovery Stars unlock stock and land. First clears only; never spent.",
-              "Placed buildings earn decoration points for the next quest."]
+              "Place buildings and decorations to raise Happiness."]
   },
   "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley", "leaderboard": "LEADERBOARD"},
   "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d"},
@@ -50,7 +50,7 @@
     "category": "building",
     "built": "RESTORED", "complete": "COMPLETE EXPEDITION %d", "earlier": "RESTORE EARLIER WONDERS",
     "poor": "MORE RESOURCES NEEDED", "reserved": "RESOURCES RESERVED FOR RESTORATION", "full": "ISLAND IS FULL",
-    "price": "%d Gold"
+    "price": "%d Gold", "build_points": "  /  +%d Happiness"
   },
   "expeditions": {
     "title": "Expeditions",

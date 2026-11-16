@@ -20,12 +20,15 @@ CROPS = [
 ]
 
 
-def sprites(rewards):
+def sprites(rewards, shared):
     source = Image.open(SOURCE)
     if source.mode != 'RGBA' or source.size != (1774, 887):
         raise ValueError('Expected the authored 1774×887 RGBA source')
     for key, crop in zip(KEYS, CROPS):
-        if key in rewards:
+        if key in shared:
+            with Image.open(ROOT / shared[key]) as artwork:
+                sprite = artwork.copy()
+        elif key in rewards:
             reward = rewards[key]
             with Image.open(ROOT / reward['source']) as source_atlas:
                 sprite = source_atlas.crop(reward['crop'])
@@ -39,17 +42,19 @@ def sprites(rewards):
                            min(sprite.width, right + 4), min(sprite.height, bottom + 4)))
 
 
-def atlas(rewards):
+def atlas(rewards, shared):
     out = Image.new('RGBA', (512, 256))
-    for index, sprite in enumerate(sprites(rewards)):
+    for index, sprite in enumerate(sprites(rewards, shared)):
         sprite.thumbnail((100, 87), Image.Resampling.LANCZOS)
         out.paste(sprite, (index % 4 * 128 + (128 - sprite.width) // 2,
                            index // 4 * 128 + (128 - sprite.height) // 2))
     return out
 
 
-def finds(rewards):
-    for key, sprite in zip(KEYS, sprites(rewards)):
+def finds(rewards, shared):
+    for key, sprite in zip(KEYS, sprites(rewards, shared)):
+        if key in shared:
+            continue
         sprite.thumbnail((FIND_PAINT, FIND_PAINT), Image.Resampling.LANCZOS)
         out = Image.new('RGBA', (FIND_SIZE, FIND_SIZE))
         out.paste(sprite, ((FIND_SIZE - sprite.width) // 2, (FIND_SIZE - sprite.height) // 2))
@@ -81,7 +86,8 @@ def main():
     manifest = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
     quest = manifest['quest_objects']
     rewards = {'gear': quest['gear_reward'], **quest['reward_sources']}
-    outputs = [(OUTPUT, atlas(rewards)), *finds(rewards)]
+    shared = quest['shared_rewards']
+    outputs = [(OUTPUT, atlas(rewards, shared)), *finds(rewards, shared)]
     for reward in quest['separate_rewards'].values():
         outputs.extend(register_sprites(reward['source'], [reward], reward['canvas'], reward['paint_size']))
     pieces = quest['story_pieces']

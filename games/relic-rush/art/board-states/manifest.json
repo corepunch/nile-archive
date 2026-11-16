@@ -4,7 +4,7 @@
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
     "option": "--rome-reference-art",
-    "pieces": {"coin": 4, "berries": 2, "plantains": 1, "timber": 6, "stone": 8, "water": 5, "rations": 9, "cut-blocks": 8},
+    "pieces": {"coin": 4, "berries": 2, "emerald": 16, "timber": 6, "stone": 8, "water": 5, "rations": 9, "cut-blocks": 8},
     "states": ["normal", "selected", "hinted", "falling"],
     "transform": "Unmodified XML-defined source crops. Board selection, motion and hints use existing Relic Rush overlays."
   },
@@ -621,7 +621,6 @@
     "data/finds/marker.png",
     "data/finds/note.png",
     "data/finds/supplies.png",
-    "data/finds/timber.png",
     "data/finds/tools.png",
     "data/fonts/LilitaOne-Regular.ttf",
     "data/fonts/lilitaone-OFL.txt",
@@ -648,7 +647,7 @@
     "data/quest-objects.png",
     "data/resource-pieces/berries.png",
     "data/resource-pieces/coin.png",
-    "data/resource-pieces/plantains.png",
+    "data/resource-pieces/emerald.png",
     "data/resource-pieces/rations.png",
     "data/resource-pieces/stone.png",
     "data/resource-pieces/timber.png",
@@ -1147,6 +1146,7 @@
     ],
     "states": ["first-clear award", "scenario icon"],
     "award_runtime": "data/finds/<slot>.png",
+    "shared_rewards": {"timber": "data/resource-pieces/timber.png"},
     "transform": "Compact props uniformly resized to fit 256 px inside a 320 px transparent canvas.",
     "gear_reward": {
       "source": "art/quest-objects/shutter-gear-states.png",
@@ -1154,7 +1154,6 @@
       "crop": [969, 83, 1680, 821]
     },
     "reward_sources": {
-      "timber": {"source": "art/resource-pieces/outlined-atlas.png", "prompt": "art/resource-pieces/outlined-atlas.prompt.txt", "crop": [1330, 0, 1774, 443]},
       "marker": {"source": "art/resource-pieces/outlined-atlas.png", "prompt": "art/resource-pieces/outlined-atlas.prompt.txt", "crop": [1330, 443, 1774, 887]}
     },
     "separate_rewards": {
@@ -1550,12 +1549,16 @@
     "slots": {
       "coin": 1,
       "berries": 2,
-      "plantains": 3,
-      "timber": 4,
       "stone": 5,
       "water": 6,
       "rations": 9
     },
-    "generator": "built-in ImageGen, full-atlas revision with a sun engraving"
+    "generator": "built-in ImageGen, full-atlas revision with a sun engraving",
+    "timber_emerald": {
+      "source": "art/resource-pieces/timber-emerald.png", "prompt": "art/resource-pieces/timber-emerald.prompt.txt",
+      "grid": [2, 1], "slots": {"timber": 1, "emerald": 2}, "resize": {"timber": [320, 285]},
+      "states": ["normal", "selected", "hinted", "falling", "wallet", "first-clear award"],
+      "review": ["hex-first", "phone-board", "timber-item-card", "economy-wallet"]
+    }
   }
 }

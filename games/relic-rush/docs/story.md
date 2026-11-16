@@ -1,6 +1,6 @@
 # Relic Rush: A Light Below
 
-**Status:** Fresh campaign plan and playable first chapter. Chapters 2–3 have provisional bridge dialogue so existing level slots remain coherent; they need a full dialogue pass and cold read. The town tracks quests and decoration points. Chapter 1 uses the existing character portraits and island views.
+**Status:** Fresh campaign plan and playable first chapter. Chapters 2–3 have provisional bridge dialogue so existing level slots remain coherent; they need a full dialogue pass and cold read. The town tracks quests and Happiness. Chapter 1 uses the existing character portraits and island views.
 
 **Play fantasy:** Rebuild an expedition base and follow a light answering from beneath the island. The feeling is curious, warm-hearted pulp adventure: danger gives friends a reason to act for one another.
 
@@ -71,7 +71,7 @@ The wrong theory is Elena's automatic reflection at 3. The changed rhythm breaks
 
 ## Delivery and choices
 
-Board 1 uses regular blue-tied timber, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Board 1 uses the regular timber log, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Chains and blue plaques
 

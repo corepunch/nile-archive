@@ -9,8 +9,8 @@ local E = {
     pieces={
         [0]={key="coin", name="Sun coin", slot=1, amount=4},
         {key="berries", name="Red berries", slot=2, amount=1},
-        {key="plantains", name="Green plantains", slot=2, amount=1},
-        {key="timber", name="Blue-tied timber", slot=3, amount=2},
+        {key="emerald", name="Emerald", slot=2, amount=1},
+        {key="timber", name="Timber", slot=3, amount=2},
         {key="stone", name="Dressed stone", slot=3, amount=3},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,

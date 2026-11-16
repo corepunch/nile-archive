@@ -8,7 +8,7 @@ it is out of the way. Boards 2–10 and 13 show a story piece in one colour slot
 
 | Boards | Palette |
 | --- | --- |
-| 1 | Five regular kinds, including blue-tied timber |
+| 1 | Five regular kinds, including emerald and the timber log |
 | 2, 5, 8, 10, 13 | Four regular kinds and one story piece |
 | 3, 4, 6, 7, 9 | Five regular kinds and one story piece |
 

@@ -68,7 +68,7 @@ G.DEFAULTS = {
         choose = "CHOOSE LOCATION", tap = "Tap to build", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
         stars = "REQUIRES %d STARS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
         price = "%d gold", unlock = "  /  %d stars to unlock",
-        details = "%d x %d tiles  /  Owned %d\n%s",
+        details = "%d x %d tiles  /  Owned %d\n%s", build_points = "  /  +%d decoration points",
     },
     expeditions = {
         title = "Levels", intro = "First clear: the story, Stars and building funding.\nReplay: gold.", close = "BACK TO TOWN",
@@ -660,7 +660,7 @@ function G.bind(R, over)
                 local price = R.currency_prices and R.cost_text(parts) or C.price:format(def.cost[1])
                 if i > island.WONDERS then price = price .. C.unlock:format(meta.stars) end
                 local details = C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  ")
-                if R.quest_build_points then details = details .. ("  /  +%d decoration points"):format(R.quest_build_points(i - 1)) end
+                if R.quest_build_points then details = details .. C.build_points:format(R.quest_build_points(i - 1)) end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts, state=state,
                     details=details, available=available, action=action}
                 records[#records + 1], tiles[meta.key] = record, record
@@ -1021,7 +1021,7 @@ function G.bind(R, over)
 
     -- After the results dialog closes: bank the reward and go build.
     function R.claim_reward()
-        local paid, first = rules.progress_reward(R.prog, R.g, R.wonders)
+        local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
         if not app.arg("debug-walkthrough") then R.submit_scores() end

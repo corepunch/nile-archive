@@ -270,19 +270,20 @@ local function test_moves_and_blockers()
 end
 
 local function test_island()
-    -- Scheduled first clears fund a wonder once; intervening clues fund decorations.
+    -- Use earned resources to exercise all confirmed placements without playing the boards.
     local c = city.new()
     island.island_setup(c)
     local p = {level = 0, seed = 0, wallet = purse()}
     for i = 0, LEVELS - 1 do
         local g = rules.game_start(i, i + 1)
         g.won = true
+        local kind=rules.wonder_at(i+1)
+        if kind then g.earnings={table.unpack(island.wonders[kind].cost)} end
         rules.progress_reward(p, g, island.wonders)
         local gold = p.wallet[rules.GOLD]
         rules.progress_reward(p, g, island.wonders)
         check(p.wallet[rules.GOLD] == gold and p.level == i + 1, "reward once")
         for z = 1, island.ISLAND_ZONES - 1 do c:unlock(z, p.wallet) end
-        local kind=rules.wonder_at(i+1)
         if kind then check(island.island_place_next(c,p.wallet,p.level,0) and c.count==kind,"scheduled wonder fits")
         else check(not island.island_place_next(c,p.wallet,p.level,0),"clue-only clear grants no wonder") end
         check(not island.island_place_next(c, p.wallet, p.level, 0), "only one wonder per win")
@@ -326,8 +327,10 @@ local function test_catalogue()
     local c=city.new();island.island_setup(c);c.open=63
     local wallet=purse(1000,500,500,30,10)
     local shrub=37
-    check(not island.can_buy(c,purse(84,30,60),7,shrub),"earned workshop gold is reserved")
-    check(island.can_buy(c,purse(85,30,60),7,shrub),"only spare gold funds decorations")
+    local reserve=island.reserved_cost(c,7)
+    local price=island.buildings[shrub+1].cost[rules.GOLD]
+    check(not island.can_buy(c,reserve+purse(price-1),7,shrub),"earned restoration gold is reserved")
+    check(island.can_buy(c,reserve+purse(price),7,shrub),"only spare gold funds decorations")
     check(not island.can_buy(c,purse(1000),0,10),"stars gate advanced buildings")
     for _=1,2 do
         local ok,spot=c:find_spot(shrub,vec2(760,2030));check(ok,"decoration fits")

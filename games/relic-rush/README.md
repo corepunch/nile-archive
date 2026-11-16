@@ -89,7 +89,7 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Board 1 uses five regular kinds, including blue-tied timber that earns Supplies.
+Board 1 uses five regular kinds, including the timber log that earns Supplies.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
 Boards 2, 5, 8, 10 and 13 use four regular kinds plus the story piece. Boards
 3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
@@ -169,10 +169,11 @@ In Chapter 1, complete each board’s match-3 goals to advance the quest. In the
 first-clear dialogue, the crew finds timber for the camp, the lamp lens, the tide
 chart and other objects that take them towards the quay.
 
-The island shows the active chapter, quest, next task and decoration progress. First clears
-award earned resources and Discovery Stars, and unlock scheduled restorations. Each confirmed
-wonder adds four decoration points. Other purchases add one. Required upgrades meet the
-thresholds for the next quests. Moving a building leaves its points intact.
+The island shows the active chapter, quest, next task and Happiness. Each confirmed
+wonder adds four Happiness and each optional building or decoration adds one.
+Optional placements also add one Gold to every won expedition, up to ten Gold.
+The shop previews the Happiness gain and the results show the Gold bonus.
+Required restorations cover quest thresholds. Moving a building preserves its Happiness.
 
 First-clear dialogue leads into Results. Board 30 reveals the signal plate at the cleared site, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
 wonder has a separate scene after confirmed placement. Replays bank matched resources.
@@ -200,8 +201,8 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Coins start at 4 Gold each. Red berries and green plantains pay 1 Provisions.
-Blue-tied timber and dressed stone pay 2 and 3 Supplies. Each confirmed
+Coins start at 4 Gold each. Red berries and emeralds pay 1 Provisions.
+Timber and dressed stone pay 2 and 3 Supplies. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
 Authored story pieces keep their slots. The result shows what the next
 restoration unlocks or what is still needed to afford it. Replays earn
