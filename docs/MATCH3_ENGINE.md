@@ -123,10 +123,11 @@ its original source ID (negative for a new gem). Each animation step contains
 `tiles` and immediate `from` maps: every move is a single neighboring edge;
 negative sources enter from above that inlet. Delivery tokens fall vertically,
 never diagonally.
-The controller displays all
-steps at `FALL_STEP` seconds per step, then the landing interval, before it
-checks another cascade or a terminal result. Reduced motion shortens the
-same schedule; it does not skip rule steps.
+The controller displays each step for `FALL_STEP` seconds. A gem briefly
+squashes and rebounds upward when it comes to rest in its slot, even if other
+gems are still falling. The last arrivals use the existing landing interval
+before the next cascade or result check. Reduced motion shortens the same
+schedule and omits the rebound.
 
 ## Graphics and the one-atlas skin
 

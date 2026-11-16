@@ -476,9 +476,11 @@ two files. Their source, prompt and per-game styling are not yet recorded:
 
 The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
-registrations. FALL uses engine-authored simultaneous one-edge movement steps,
-straight-down priority with blocked-down diagonal fallback, vertical spawning at every exposed column top and a short landing squash; static states
-continue to use the existing artwork. Input and animation timing are shared.
+registrations. FALL uses simultaneous one-edge movement steps, with vertical
+spawning at every exposed column top. Existing treat artwork squashes and
+rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced
+motion omits the bounce. Capture with
+`build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
 See [checked in-game captures and commands](review/trickling/README.md) and the
 [engine contract](../../../docs/MATCH3_ENGINE.md). The default atlas's source,

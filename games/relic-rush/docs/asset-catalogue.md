@@ -588,7 +588,7 @@ pause, guide and the island.
 | SWAP | Existing piece artwork moves to neighbour |
 | REJECT | Same artwork returns; no move spent |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
-| FALL | Engine one-edge gravity steps prefer straight down; diagonals require a blocked or missing cell below the donor, then land with a short squash; all exposed column tops spawn vertically; interior cells spawn only with blocked donors |
+| FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
 | Special birth | Existing authored special plus transient halo/sparks |
 | Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
 | Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |

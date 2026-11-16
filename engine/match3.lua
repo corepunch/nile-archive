@@ -1794,13 +1794,13 @@ function E.new(config)
         end
     elseif R.phase == PH_FALL then
         local steps = R.fall_steps or {}
-        local elapsed = R.phase_time / (R.reduced_motion and .35 or 1)
-        local step_index = math.floor(elapsed / rules.FALL_STEP) + 1
-        local step = steps[step_index]
-        if step then
-            t = step.tiles[i]
-            local from = step.from[i]
-            local f = num.saturate(elapsed / rules.FALL_STEP - (step_index - 1))
+        local elapsed_steps = R.phase_time / ((R.reduced_motion and .35 or 1) * rules.FALL_STEP)
+        local completed = math.floor(elapsed_steps)
+        local step, landed = steps[completed + 1], steps[completed]
+        local from = step and step.from[i] or i
+        local f = elapsed_steps - completed
+        if step then t = step.tiles[i] end
+        if from ~= i then
             local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, HEX_DY)
             at = (source + vec2(sx, 0)):lerp(at, f)
             if from < 0 then
@@ -1808,9 +1808,11 @@ function E.new(config)
                 local top = cell_pos(i).y - HEX_DY / 2
                 clip = rect(at.x - CELL_SIZE / 2 - 1, top, CELL_SIZE + 2, R.BOARD_CLIP.h)
             end
-        elseif not R.reduced_motion and #steps > 0 then
-            local f = num.saturate((elapsed - #steps * rules.FALL_STEP) / .08)
-            aspect = 1 + .08 * math.sin(f * PI)
+        elseif not R.reduced_motion and landed and landed.from[i] ~= i
+            and t == landed.tiles[i] and t.kind >= 0 and t.kind ~= M.DELIVERY then
+            -- Rebound only while the piece rests in the cell it just reached.
+            at.y = at.y - HEX_DY * .07 * (4 * f * (1 - f))
+            aspect = 1 + .08 * (1 - f)^3
         end
     end
     return t, at, scale, alpha, aspect, clip

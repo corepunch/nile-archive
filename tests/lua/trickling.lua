@@ -100,6 +100,32 @@ for _, blocker in ipairs({"ice", "chain"}) do
     _, steps = rules.game_collapse(g)
     check(steps[1].tiles[center].kind < 0 and steps[2].from[center] == left, "side inlet feeds below " .. blocker)
 end
+-- A gem can land while another is still falling. Only the landing gem rebounds.
+do
+    local R = require("board")
+    local g = board({{0, 0}, {0, -1, 2}, {1, -1, 3}, {-3, 1}, {-3, 0}, {-3, -1, 4}})
+    local lower, middle = index(-3, 1), index(-3, 0)
+    local _, steps = rules.game_collapse(g)
+    R.reset_board(g)
+    R.phase, R.fall_steps, R.reduced_motion = R.PH_FALL, steps, false
+    R.phase_time = rules.FALL_STEP * 1.5
+    local _, landed = R.piece_pose(center, 0)
+    local _, falling, _, _, aspect = R.piece_pose(lower, 0)
+    local _, still = R.piece_pose(right, 0)
+    check(landed.y < R.cell_pos(center).y, "a gem rebounds when it reaches its slot")
+    near(falling:dist(R.cell_pos(middle):lerp(R.cell_pos(lower), .5)), 0, "a gem still in transit follows its fall path")
+    near(aspect, 1, "a gem still in transit keeps its shape")
+    near(still:dist(R.cell_pos(right)), 0, "an untouched gem stays centred")
+    R.phase_time = rules.FALL_STEP * 2.5
+    _, landed = R.piece_pose(center, 0)
+    near(landed:dist(R.cell_pos(center)), 0, "an earlier landing has already settled")
+    _, landed = R.piece_pose(lower, 0)
+    check(landed.y < R.cell_pos(lower).y, "the last landing rebounds in the existing settle interval")
+    R.reduced_motion, R.phase_time = true, rules.FALL_STEP * .35 * 2.5
+    _, landed, _, _, aspect = R.piece_pose(lower, 0)
+    near(landed:dist(R.cell_pos(lower)), 0, "reduced motion skips the rebound")
+    near(aspect, 1, "reduced motion skips the landing squash")
+end
 -- Audit each simultaneous step, including competing destinations and deep gaps,
 -- on every campaign silhouette, and repeat to check determinism.
 for level = 0, rules.LEVELS - 1 do
