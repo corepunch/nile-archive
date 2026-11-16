@@ -15,7 +15,7 @@ for level, entry in ipairs(campaign.levels) do
     for i = 0, rules.CELLS - 1 do
         if g.active[i] then
             count, start = count + 1, i
-            chains = chains + g.chain[i]
+            chains = chains + (g.chain[i] > 0 and 1 or 0)
             ice = ice + (g.ice[i] > 0 and 1 or 0)
             check(type(entry.terrain[i+1]) == 'number', label .. 'authored terrain rank')
             -- No tip or pocket requires a booster just to make a local match.

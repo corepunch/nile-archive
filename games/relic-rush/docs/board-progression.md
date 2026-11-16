@@ -1,30 +1,39 @@
 # Relic Rush board progression
 
 Every expedition asks the player to clear its blue plaques. Chains hold
-pieces in place. A match or tool hit removes the chain, and a later hit
+pieces in place. A match or tool hit removes a chain (crossed double chains
+take two), and a later hit
 clears the plaque beneath it. A chain on plain stone can be left in place if
 it is out of the way. Boards 2–10 and 13 show a story piece in one colour slot.
 **Item recovered!** follows the first clear.
 
+Chains, double chains and move budgets are not authored per board. They are
+fitted to the difficulty curve in [lua/difficulty.lua](../lua/difficulty.lua)
+by `python3 games/relic-rush/tools/tune_levels.py`, which writes
+`lua/level_tuning.lua` and the review table in [level-tuning.md](level-tuning.md).
+To change difficulty, edit the curve's tiers or rhythm and rerun the tuner;
+the layout, plaques and story slots stay authored here.
+
+Every board spawns all six kinds. With five on a hex board, where each cell
+sits on three lines, refills chained so often that one move could clear a board.
+Refills are also damped from the second cascade wave (`refill_damping=2`).
+
 | Boards | Palette |
 | --- | --- |
-| 1 | Five resource kinds, including the green apple and timber log |
-| 2, 5, 8, 10, 13 | Four resource kinds and one story piece |
-| 3, 4, 7, 9 | Four resource kinds, one score piece and one story piece |
-| 6 | Three resource kinds, two score pieces and one story piece |
+| 1, 11, 12, 14–30 | Six resource kinds, some of them score pieces |
+| 2–10, 13 | Five resource or score kinds and one story piece |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
-to choose a story sprite and the colour slot it replaces. An optional
-`omit_kind` removes one other colour from that board's starting pieces and
-refills. Leave it unset for five regular kinds plus the story piece.
+to choose a story sprite and the colour slot it replaces. `omit_kind` is
+rejected: no board drops a colour.
 The [campaign atlas](asset-catalogue.md#campaign-piece-atlas) supplies the art
 for these slots and for the pieces introduced by restorations.
 
-Ordinary boards use five match kinds. Green apples earn 1 Food each.
+Green apples earn 1 Food each.
 Confirming the Spring Well replaces blue timber with a water
 bucket worth 3 Food from board 5. The Artisan Workshop replaces dressed
 stone with cut blocks worth 5 Supplies from board 8. The relay pliers occupy
-the orange slot on that board, and berries are omitted to keep five kinds. The Jungle Market
+the orange slot on that board. The Jungle Market
 replaces red berries with ration jars worth 4 Food from board 10.
 From board 14 the Courtyard improves Coins, from board 17 the Lodge replaces
 ration jars with grain, and from board 20 the Archive improves Supplies.
@@ -50,40 +59,41 @@ wide empty channel and connect at one end; and a compact court limits setup
 space. Relic's two chambers join at the top, the market's at the bottom. On
 the parallel-channel boards, mandatory terrain avoids the isolated central
 spine so its narrowness does not create inaccessible cleanup. Blockers and
-objectives move the emphasis within each family.
+objectives move the emphasis within each family. Chains and move budgets per
+board are in [level-tuning.md](level-tuning.md).
 
-| Level | Board | Family | Blue plaques | Moves |
-| ---: | --- | --- | ---: | ---: |
-| 1 | First Light | Tapered bowl | 7 | 24 |
-| 2 | The Lamp Lens | Tapered bowl | 9 | 29 |
-| 3 | The Relay Cable | Two chambers | 10 | 32 |
-| 4 | Under the Pump | Twin lanes | 11 | 35 |
-| 5 | The Quay Marker | Tapered bowl | 10 | 35 |
-| 6 | The Shore Marker | Two chambers | 11 | 37 |
-| 7 | The Tool Roll | Two chambers | 12 | 40 |
-| 8 | The Relay Pliers | Compact court | 12 | 40 |
-| 9 | The Supply Crate | Two chambers | 12 | 43 |
-| 10 | The Shutter Gear | Twin lanes | 12 | 46 |
-| 11 | The Long Terrace | Tapered bowl | 12 | 33 |
-| 12 | Twelve Crates | Twin lanes | 12 | 36 |
-| 13 | Names in the Stone | Twin lanes | 10 | 37 |
-| 14 | Static | Two chambers | 13 | 38 |
-| 15 | The Cracked Wall | Tapered bowl | 12 | 39 |
-| 16 | Supper for Twelve | Twin lanes | 13 | 40 |
-| 17 | The Torn Log | Tapered bowl | 13 | 42 |
-| 18 | Lantern Steps | Tapered bowl | 14 | 40 |
-| 19 | Under the Vines | Twin lanes | 12 | 45 |
-| 20 | The Archivist's Key | Twin lanes | 9 | 46 |
-| 21 | Tomas's Trail | Tapered bowl | 12 | 35 |
-| 22 | The Alternate Landing | Twin lanes | 13 | 40 |
-| 23 | The Star Road | Twin lanes | 12 | 40 |
-| 24 | Noon Shadow | Tapered bowl | 12 | 41 |
-| 25 | Smoke on the Water | Tapered bowl | 14 | 38 |
-| 26 | The Jade Deep | Twin lanes | 10 | 43 |
-| 27 | Six Sun Gates | Twin lanes | 12 | 45 |
-| 28 | The Last Terrace | Tapered bowl | 13 | 42 |
-| 29 | The Silent Temple | Twin lanes | 16 | 47 |
-| 30 | The Warning Returns | Tapered bowl | 16 | 49 |
+| Level | Board | Family | Blue plaques |
+| ---: | --- | --- | ---: |
+| 1 | First Light | Tapered bowl | 7 |
+| 2 | The Lamp Lens | Tapered bowl | 9 |
+| 3 | The Relay Cable | Two chambers | 10 |
+| 4 | Under the Pump | Twin lanes | 11 |
+| 5 | The Quay Marker | Tapered bowl | 10 |
+| 6 | The Shore Marker | Two chambers | 11 |
+| 7 | The Tool Roll | Two chambers | 12 |
+| 8 | The Relay Pliers | Compact court | 12 |
+| 9 | The Supply Crate | Two chambers | 12 |
+| 10 | The Shutter Gear | Twin lanes | 12 |
+| 11 | The Long Terrace | Tapered bowl | 12 |
+| 12 | Twelve Crates | Twin lanes | 12 |
+| 13 | Names in the Stone | Twin lanes | 10 |
+| 14 | Static | Two chambers | 13 |
+| 15 | The Cracked Wall | Tapered bowl | 12 |
+| 16 | Supper for Twelve | Twin lanes | 13 |
+| 17 | The Torn Log | Tapered bowl | 13 |
+| 18 | Lantern Steps | Tapered bowl | 14 |
+| 19 | Under the Vines | Twin lanes | 12 |
+| 20 | The Archivist's Key | Twin lanes | 9 |
+| 21 | Tomas's Trail | Tapered bowl | 12 |
+| 22 | The Alternate Landing | Twin lanes | 13 |
+| 23 | The Star Road | Twin lanes | 12 |
+| 24 | Noon Shadow | Tapered bowl | 12 |
+| 25 | Smoke on the Water | Tapered bowl | 14 |
+| 26 | The Jade Deep | Twin lanes | 10 |
+| 27 | Six Sun Gates | Twin lanes | 12 |
+| 28 | The Last Terrace | Tapered bowl | 13 |
+| 29 | The Silent Temple | Twin lanes | 16 |
+| 30 | The Warning Returns | Tapered bowl | 16 |
 
 Straight matches of three or more clear all pieces in the run. Board holes
 interrupt a match. Pickaxe hits a single cell, Dynamite hits a cell and its

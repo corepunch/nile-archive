@@ -446,7 +446,7 @@ and source-board diagnostics.
 | --- | --- |
 | `tile-cell-normal` | Slot 1, parchment lit from the upper left: ordinary and cleared cells. |
 | `tile-tablet-single` | Slot 2, deep blue: plaques required for a win. The Explorer’s Guide uses the same face. |
-| `tile-tablet-double` | Slot 3, green: a plaque listed in a level's `oil_double`, before its first hit. No campaign level uses one yet. |
+| `tile-tablet-double` | Slot 3, green: a plaque listed in a level's `oil_double`, before its first hit. The level tuner turns plaques green as a difficulty step ([level-tuning.md](level-tuning.md)). [Level 15 before/after](screenshots/review/level-tuning/after15.jpg). |
 | `tile-light-wave` | Slot 4, a diagonal streak of pale gold: the light that sweeps across the board as it arrives. |
 | `tile-hover` | Slot 5, white: the cell under a mouse pointer (not on touch). |
 | `tile-selected` | Slot 6, orange corner brackets on a clear tile: the selected cell. |

@@ -982,6 +982,7 @@ function E.new(config)
         return ay == by and a < b or ay > by
     end)
 
+    local damp_refills   -- defined with shape_at below
     function M.game_collapse(g)
         local from, steps, spawned = {}, {}, 0
         for i = 0, CELLS - 1 do from[i] = i end
@@ -1070,6 +1071,7 @@ function E.new(config)
             changed=changed or born
         end
         if changed then steps[#steps+1]=step end
+        damp_refills(g, from)
         return from, steps
     end
 
@@ -1121,6 +1123,37 @@ function E.new(config)
             if equal(g,i,cells[1]) and equal(g,i,cells[2]) and equal(g,i,cells[3]) and equal(g,i,cells[4]) then return true end
         end end
         return false
+    end
+
+    -- config.refill_damping = N: once a move's cascade reaches wave N, pieces
+    -- spawned by the refill take a kind that completes no match where one
+    -- exists. Pieces already on the board still fall and may match, so long
+    -- cascades become rare without disappearing. Spawned tables are recolored
+    -- in place, so every recorded fall step shows the final kind.
+    local DAMPING = config.refill_damping
+    assert(DAMPING == nil or math.type(DAMPING) == "integer" and DAMPING >= 1, "invalid refill damping")
+    damp_refills = function(g, from)
+        if not DAMPING or (g.combo or 0) < DAMPING then return end
+        local kinds, cells = g.spawn_kinds or default_kinds, {}
+        for _, i in ipairs(fall_order) do
+            local t = g.tiles[i]
+            if from[i] < 0 and cell_active(g, i) and not locked(g, i) and t.kind >= 0
+                and t.special == NORMAL and not t.element then
+                local matches = flags & E.LINE_MATCHES ~= 0 and shape_at(g, i)
+                    or flags & E.LINE_MATCHES == 0 and collect_group(g, i, cells) >= MATCH_MIN
+                if matches then
+                    local choices, original = {}, t.kind
+                    for _, k in ipairs(kinds) do
+                        t.kind = k
+                        local valid
+                        if flags & E.LINE_MATCHES ~= 0 then valid = not shape_at(g, i)
+                        else valid = collect_group(g, i, cells) < MATCH_MIN end
+                        if valid then choices[#choices + 1] = k end
+                    end
+                    t.kind = #choices > 0 and choices[randn(g, #choices) + 1] or original
+                end
+            end
+        end
     end
 
     -- Any move that clears something: ok, a, b. Only matches containing a
@@ -1316,9 +1349,14 @@ function E.new(config)
         for k = 0, n * 3 - 1 do
             if chain_count >= l.chains then break end
             local cell = order[(k * 3 + 1) % n + 1]
-            if not taken[cell] then g.chain[cell], taken[cell], chain_count = 1, true, chain_count + 1 end
+            if not taken[cell] then
+                -- The first double_chains strands placed take two hits.
+                g.chain[cell] = chain_count < (l.double_chains or 0) and 2 or 1
+                taken[cell], chain_count = true, chain_count + 1
+            end
         end
         assert(chain_count == l.chains, "not enough chain cells")
+        assert((l.double_chains or 0) <= l.chains, "double chains are counted within chains")
         local count = 0
         for k = 0, n - 1 do
             if count >= l.ice then break end

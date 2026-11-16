@@ -175,6 +175,23 @@ for _, mode in ipairs({{name='straight lines',flags=E.LINE_MATCHES},
         end)
     end
 end
+t:case('refill damping spawns no completed matches',function()
+    t:check(not pcall(E.new,{refill_damping=0}),'damping starts at wave one or later')
+    local R=E.new{colors=5,refill_damping=2}
+    local m=R.new_match()
+    local undamped=0
+    for seed=1,8 do
+        for combo=1,2 do
+            local g=H.board(R)
+            g.rng,g.combo=seed,combo
+            R.game_collapse(g)
+            R.game_matches(g,m,-1)
+            if combo==1 then undamped=undamped+(m.hits>0 and 1 or 0)
+            else t:check(m.hits==0,'a damped refill completes no line') end
+        end
+    end
+    t:check(undamped>0,'refills before the damping wave may still match')
+end)
 local failures=t:finish()
 return failures+require('contracts/puzzle')(E.new(config(0)),
     {name='engine match3',extended=testing.extended,goal_kind=0,wood_kind=2,stone_kind=4})

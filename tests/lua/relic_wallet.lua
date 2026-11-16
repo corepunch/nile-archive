@@ -69,7 +69,7 @@ do
         check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
         check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
-        if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
+        check(g.spawn_kinds==nil and rules.COLORS==6,'every expedition spawns all six kinds')
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
         for kind in pairs(spec.score_pieces or {}) do
             check(kind ~= spec.goal_kind and kind ~= spec.omit_kind and not g.resource_yields[kind],

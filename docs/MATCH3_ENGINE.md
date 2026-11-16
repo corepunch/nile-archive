@@ -78,7 +78,7 @@ Level descriptors are content: name/lesson, moves, score, collection target
 (`relics`), chains and ice counts. Optional `mask`
 is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
-strong ice. Each entry in `stones` reserves a cell for one carved hex stone.
+strong ice, and `double_chains=N` makes the first N of `chains` take two hits. Each entry in `stones` reserves a cell for one carved hex stone.
 An adjacent match or a direct hit clears that stone. Optional `goals` lists
 the HUD goals that win the level, in order,
 from `score`, `idols`, `locks` (every blocker), `deliveries`, `carpet` and
@@ -128,6 +128,11 @@ its original source ID (negative for a new gem). Each animation step contains
 `tiles` and immediate `from` maps: every move is a single neighboring edge;
 negative sources enter from above that inlet. Delivery tokens fall vertically,
 never diagonally.
+
+`refill_damping=N` in `match3.new` damps long cascades. From wave N of a
+move's cascade (`g.combo`), every piece the refill spawns takes a kind that
+completes no match where such a kind exists. Pieces already on the board still
+fall and can match, so long chains stay possible but rare. It is off by default.
 The controller displays each step for `FALL_STEP` seconds. A gem briefly
 squashes and rebounds upward when it comes to rest in its slot, even if other
 gems are still falling. The last arrivals use the existing landing interval

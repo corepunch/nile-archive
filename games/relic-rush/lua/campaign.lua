@@ -283,25 +283,19 @@ local quest_objects = {
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
 levels[13].quest_object = {key="note", name="Folded note"}
--- goal_kind registers the slot the story piece replaces. Set omit_kind to leave
--- one other slot out of a board's opening and refills.
-levels[1].goal_kind, levels[1].omit_kind = 3, 5         -- ordinary timber in a five-resource palette
+-- goal_kind registers the slot the story piece replaces. Every board spawns all
+-- six slots: with five kinds on a hex board, refills chained into one-move wins.
+levels[1].goal_kind = 3                                 -- ordinary timber
 levels[2].story_piece, levels[2].goal_kind = "lens", 3   -- blue replaces the scarab
-levels[2].omit_kind = 5
 levels[3].story_piece, levels[3].goal_kind = "cable", 4  -- purple replaces the crystal
 levels[4].story_piece, levels[4].goal_kind = "chart", 0  -- gold replaces the sun idol
 levels[5].story_piece, levels[5].goal_kind = "marker", 2 -- green replaces the leaf
-levels[5].omit_kind = 5
 levels[6].story_piece, levels[6].goal_kind = "marker", 2
 levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the flame
--- Keep the workshop's purple slot available on the expedition right after the build.
 levels[8].story_piece, levels[8].goal_kind = "pliers", 5
-levels[8].omit_kind = 1
 levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
 levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the amphora
-levels[10].omit_kind = 0
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
-levels[13].omit_kind = 5
 -- Score pieces occupy existing palette slots. Level 6 has both kinds,
 -- with the restored Well supplying Food on that expedition.
 levels[3].score_pieces = {[5]="leaf"}
@@ -384,10 +378,37 @@ local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single", t
 for i, l in ipairs(levels) do
     local cells = plaques[i]
     assert(cells and #cells > 0, "expedition " .. i .. " needs an authored plaque patch")
-    if not l.story_piece then l.omit_kind = 5 end
+    assert(l.omit_kind == nil, "expedition " .. i .. " must spawn all six kinds")
     l.oil, l.oil_still = cells, true
     l.dress = dress
     l.goals = {"oil"}
+end
+
+-- Green double tablets spread over the patch: odd entries first, then even.
+-- The signal plate keeps its own single-layer art.
+local function tablet_order(l)
+    local order = {}
+    for start = 1, 2 do
+        for k = start, #l.oil, 2 do
+            if l.oil[k] ~= l.signal_cell then order[#order + 1] = l.oil[k] end
+        end
+    end
+    return order
+end
+
+-- Blockers and move budgets are fitted to lua/difficulty.lua by
+-- tools/tune_levels.py; the authored values above are only its fallback.
+-- A board with an authored opening keeps its authored blockers, so the
+-- scripted first hint still plays as written; only its budget is fitted.
+-- Relative to this module, so another game's tests can load it by path.
+local here = (... or ""):match("^(.-)campaign$") or ""
+for i, fit in pairs(require(here .. "level_tuning")) do
+    local l = levels[i]
+    l.moves = fit.moves
+    if not l.opening then
+        l.chains, l.double_chains = fit.chains, fit.double_chains
+        l.oil_double = {table.unpack(tablet_order(l), 1, fit.double_tablets)}
+    end
 end
 
 -- Keep the one-cell central spine clear for swapping: the two openings are
@@ -401,4 +422,4 @@ end
 local shapes = {}
 for i, l in ipairs(levels) do shapes[i] = l.name end
 
-return {levels=levels, colors=6, shapes=shapes, wonder_levels={1,4,7,9,13,16,19,23,26,29}}
+return {levels=levels, colors=6, shapes=shapes, tablet_order=tablet_order, wonder_levels={1,4,7,9,13,16,19,23,26,29}}

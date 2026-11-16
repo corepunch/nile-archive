@@ -9,7 +9,12 @@ local function owned(c) return function(kind) return island.owned(c,kind)>0 end 
 
 -- A plaque is fixed to a cell. Nearby clears and blocker damage leave it in place.
 do
+    -- The authored rules alone: the tuned double layers are checked below.
+    local spec=rules.levels[5]
+    local doubles,tablets=spec.double_chains,spec.oil_double
+    spec.double_chains,spec.oil_double=0,nil
     local g=rules.game_start(4,123)
+    spec.double_chains,spec.oil_double=doubles,tablets
     local a,b=rules.hex_index(-1,0),rules.hex_index(-1,1)
     local initial=g.oil_left
     check(initial==10 and g.oil[a]==1 and g.chain[a]>0 and g.oil[b]==1, 'blue plaques are authored under both locked and ordinary pieces')
@@ -59,16 +64,16 @@ do
 end
 
 local collections = {
-    [1]={"Camp timber",3,5}, [2]={"Lamp lens",3,5}, [3]={"Relay cable",4},
-    [4]={"Tide chart",0}, [5]={"Quay marker",2,5}, [6]={"Shore marker",2},
-    [7]={"Tool roll",1}, [8]={"Relay pliers",5,1}, [9]={"Supply crate",3}, [10]={"Shutter gear",5,0},
-    [13]={"Folded note",0,5},
+    [1]={"Camp timber",3}, [2]={"Lamp lens",3}, [3]={"Relay cable",4},
+    [4]={"Tide chart",0}, [5]={"Quay marker",2}, [6]={"Shore marker",2},
+    [7]={"Tool roll",1}, [8]={"Relay pliers",5}, [9]={"Supply crate",3}, [10]={"Shutter gear",5},
+    [13]={"Folded note",0},
 }
 
 -- Story pieces occupy one palette slot and remain distinct through refills.
 for board, spec in pairs(collections) do
     local _, target, omitted = table.unpack(spec)
-    local expected_count = omitted~=nil and 5 or 6
+    local expected_count = 6   -- every board spawns all six kinds
     local g = rules.game_start(board-1,123)
     R.g = g
     local kinds, free = {}, {}
@@ -80,7 +85,8 @@ for board, spec in pairs(collections) do
     end
     local count = 0
     for _ in pairs(kinds) do count = count+1 end
-    check(count==expected_count and kinds[target] and not kinds[omitted],
+    -- An authored opening may show fewer kinds; refills bring the rest.
+    check((count==expected_count or rules.levels[board].opening) and kinds[target] and not kinds[omitted],
         'opening uses the configured palette including the story piece')
     local a,b=free[1],free[2]
     local regular=target~=rules.RELIC_IDOL and omitted~=rules.RELIC_IDOL and rules.RELIC_IDOL or rules.RELIC_FLAME
@@ -93,7 +99,7 @@ for board, spec in pairs(collections) do
     rules.game_collapse(g)
     for i=0,rules.CELLS-1 do
         local kind=g.tiles[i].kind
-        check(kind==-1 or kinds[kind], 'refill stays within the configured palette')
+        check(kind>=-1 and kind<rules.COLORS and kind~=omitted, 'refill stays within the configured palette')
     end
 end
 
@@ -118,7 +124,7 @@ for level=1,30 do
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
     local specs=rules.level_of(g)
-    check(g.carpet_total==0 and g.initial_obstacles==specs.chains,
+    check(g.carpet_total==0 and g.initial_obstacles==specs.chains+(specs.double_chains or 0),
         'Relic Rush expeditions use chains and fixed blue plaques')
     check(#specs.goals==1 and specs.goals[1]=='oil' and specs.oil_still and g.delivery_total==0,
         'fixed blue plaques are the only win condition')
