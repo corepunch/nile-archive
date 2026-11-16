@@ -1,4 +1,6 @@
-"""Register a game's CC0 Kenney sprites as additive match-3 atlas frames."""
+"""Register Kenney and Cradle of Rome 2 particle frames in the match-3 atlas."""
+
+from pathlib import Path
 
 from PIL import Image
 
@@ -12,6 +14,7 @@ SPRITES = {
     'twinkle': ('star_06', 128),    # spark particles
     'streak': ('trace_06', 128),    # shard particles, long axis vertical
 }
+ROME_HINT = Path(__file__).resolve().parents[1] / 'engine/art/match3/rome-2-cell-hint'
 
 
 def registered(root):
@@ -25,4 +28,9 @@ def registered(root):
         sprite = Image.new('RGBA', alpha.size, (255, 255, 255, 0))
         sprite.putalpha(alpha)
         frames[key], sources[key] = sprite, path
+    for key, name in {'fx-tablet-glow': 'Star_02_16.png', 'fx-tablet-spark': 'Star_16.png'}.items():
+        path = ROME_HINT / name
+        with Image.open(path) as source:
+            frames[key] = source.convert('RGBA')
+        sources[key] = path
     return frames, sources

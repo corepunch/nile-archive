@@ -1783,8 +1783,9 @@ function E.new(config)
     end
 
     function R.idle_hint_age()
-        if flags & E.NO_HINTS == 0 and R.phase == PH_IDLE and R.idle_time > 5 and not R.g.won and not R.g.lost then
-            return R.idle_time - 5
+        local age = R.idle_time - 5
+        if flags & E.NO_HINTS == 0 and R.phase == PH_IDLE and age > 0 and not R.g.won and not R.g.lost then
+            return age
         end
     end
 

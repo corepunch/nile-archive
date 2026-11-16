@@ -207,10 +207,11 @@ in its entrance, in place of the halo). A level's `oil_double` lists `oil`
 cells that take two hits; each still counts once toward the goal.
 Floors can set `tablet_hint=true` to help players spot the last one to three
 tablets. The reminder shares the move suggestion's five-second idle delay
-and resets with it on board interaction. A star leaves a fading ribbon of
-overlapping sparks around all six bevel edges. A double tablet has a green trail. Reduce Motion
-suppresses the moving sparks. See the
-[Cradle of Rome emitter reference](cradle-of-rome-reference/README.md#source-inventory).
+and resets with it on board interaction. A blue wash lights the floor while
+the original particle sprites sweep clockwise along the six bevel edges. A
+double tablet uses green. The 3.6-second pulse repeats every nine seconds of
+continued inactivity. Reduce Motion hides it. See the
+[Cradle of Rome 2 glow reference](cradle-of-rome-reference/README.md#last-puzzle-tile-glow).
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
 When a hit removes a floor layer (ice, a double tablet's green face or a
 tablet), `engine/match3_shatter.lua` breaks that cell's own artwork apart.

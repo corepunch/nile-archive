@@ -547,13 +547,13 @@ local function draw_tablet_hints(R, rules, sx, floor)
     local g = R.g
     if not (floor and floor.tablet_hint and g.oil_left > 0 and g.oil_left <= 3)
         or R.reduced_motion or R.overlay ~= R.OV_NONE then return end
-    local age = R.idle_hint_age()
-    if not age then return end
+    local time = R.tablet_hint_time(R.idle_hint_age())
+    if not time then return end
     local radius = R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET) - 1
     for i = 0, rules.CELLS - 1 do
         local layers = g.oil[i] or 0
         if layers > 0 and rules.game_cell_active(g, i) then
-            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, age, layers > 1)
+            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, time, layers > 1)
         end
     end
 end

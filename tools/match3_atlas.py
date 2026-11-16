@@ -10,6 +10,7 @@ import hashlib
 import io
 import json
 import math
+from os.path import relpath
 from pathlib import Path
 
 from PIL import Image, ImageChops
@@ -339,7 +340,7 @@ def build_game(game, check):
     write_asset(root / 'lua/match3_hud.lua', lua_table(hud_frames, 'match3-hud.png'))
     manifest = {'runtime': 'data/match3.png', 'size': [width, height], 'frames': frames,
                 'sources': {name: str(path.relative_to(root)) for name, path in sources.items()},
-                'effects': {name: str(path.relative_to(root)) for name, path in effect_sources.items()},
+                'effects': {name: relpath(path, root) for name, path in effect_sources.items()},
                 'hud': {'runtime': 'data/match3-hud.png', 'size': list(hud_image.size), 'frames': hud_frames,
                         'sources': {name: '../../' + str(path.relative_to(ROOT)) if name in board_pause_sources
                                     else str(path.relative_to(root)) for name, path in hud_sources.items()},

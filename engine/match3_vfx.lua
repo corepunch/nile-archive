@@ -47,7 +47,7 @@ function V.bind(R, rules)
     function R.vfx_init(board_skin)
         R.glow = board_skin.glow
         R.glow.additive = true
-        for _, name in ipairs{"shock", "flash", "burst", "ring", "glint", "twinkle", "streak"} do
+        for _, name in ipairs{"shock", "flash", "burst", "ring", "glint", "twinkle", "streak", "tablet-glow", "tablet-spark"} do
             local image = assert(board_skin["fx-" .. name], "missing match3 effect: " .. name)
             image.additive = true
             fx_art[name] = image
@@ -83,27 +83,39 @@ function V.bind(R, rules)
     local function ring_sprite(name, at, radius, c) sprite(name, at, radius * (name == "ring" and 3.5 or 2.86), 0, c) end
     local function spark(at, radius, angle, c) sprite("glint", at, radius * 2.6, angle, c) end
 
-    local blue_hint, green_hint = rgba(103, 213, 255), rgba(141, 255, 153)
-    local TABLET_TRAIL_PARTICLES = 60
-    function R.vfx_tablet_hint(center, radius, vertices, phase, double)
+    local blue_hint = {face = rgba(12, 76, 235), shadow = rgba(14, 44, 199), glow = rgba(28, 105, 255), spark = rgba(53, 222, 255)}
+    local green_hint = {face = rgba(18, 164, 47), shadow = rgba(12, 104, 39), glow = rgba(54, 203, 52), spark = rgba(161, 255, 105)}
+    local HINT_PERIOD, HINT_DURATION, HINT_LAP = 9, 3.6, 2.65
+    local TRAIL_PARTICLES = 36
+    function R.tablet_hint_time(age)
+        local time = age and age % HINT_PERIOD
+        if time and time < HINT_DURATION then return time end
+    end
+
+    function R.vfx_tablet_hint(center, radius, vertices, time, double)
+        local bright = num.saturate(time / .42) * num.saturate((HINT_DURATION - time) / .55)
+        local phase = 5.5 + 6 * time / HINT_LAP
         local ink = double and green_hint or blue_hint
-        -- Overlapping glow particles keep the full perimeter legible between sparkles.
-        for n = TABLET_TRAIL_PARTICLES, 0, -1 do
-            local age = n / TABLET_TRAIL_PARTICLES
-            local distance = phase - 6 * age
+        gfx.ngon_grad(center, radius + 1, 6, 0, color.alpha(ink.face, .54 * bright), color.alpha(ink.shadow, .52 * bright))
+
+        -- The soft blue trail lingers across the bevel. The brighter leading
+        -- particles follow it clockwise, with a hot spot one edge long.
+        for n = TRAIL_PARTICLES - 1, 0, -1 do
+            local behind = n / TRAIL_PARTICLES
+            local distance = phase - 6 * behind
             local edge = math.floor(distance)
             local at = center + vertices[edge % 6]:lerp(vertices[(edge + 1) % 6], distance - edge):scale(radius)
-            if n == 0 then
-                vfx_halo(at, radius * .31, color.alpha(ink, .7))
-                sprite("glint", at, radius * .57, PI / 4, rgba(246, 255, 255, 245))
-            else
-                local fade = .38 + .42 * (1 - age)^1.5
-                vfx_halo(at, radius * .15, color.alpha(ink, fade))
-                if n % 4 == 0 then
-                    local flicker = .75 + .25 * math.sin(phase * 7 + n * 2.3)
-                    sprite("twinkle", at, radius * (.13 + .26 * fade) * flicker, n,
-                        color.alpha(ink, fade * flicker))
-                end
+            local wake = math.max(0, 1 - behind * 2.4)
+            local head = math.max(0, 1 - behind * 7)
+            sprite("tablet-glow", at, radius * (1.08 + .20 * wake), 0,
+                color.alpha(ink.glow, bright * (.22 + .39 * wake)))
+            if head > 0 then
+                sprite("tablet-glow", at, radius * .74, 0, color.alpha(ink.spark, bright * head * .75))
+            end
+            if n % 3 == 0 and wake > 0 then
+                local flicker = .75 + .25 * math.sin(time * 18 + n * 2.3)
+                sprite("tablet-spark", at, radius * .38, time + n,
+                    color.alpha(ink.spark, bright * wake * flicker * .45))
             end
         end
     end

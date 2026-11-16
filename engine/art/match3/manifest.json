@@ -3373,12 +3373,30 @@
         128,
         128
       ]
+    },
+    "fx-tablet-glow": {
+      "source": "engine/art/match3/rome-2-cell-hint/Star_02_16.png",
+      "runtime": [
+        398,
+        3334,
+        16,
+        16
+      ]
+    },
+    "fx-tablet-spark": {
+      "source": "engine/art/match3/rome-2-cell-hint/Star_16.png",
+      "runtime": [
+        418,
+        3334,
+        16,
+        16
+      ]
     }
   },
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "40bde6a5ef386ced8884c71e4e320c51a3646390be5297e6e9835907d44948c1",
+    "recipe": "99f4a8f4234dede5bce3481c314d6bfe8506c88e65f41e8c6d6e939dd9827f34",
     "inputs": {
       "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
       "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
@@ -3486,6 +3504,8 @@
       "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
       "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
+      "engine/art/match3/rome-2-cell-hint/Star_02_16.png": "ef409a42ae1439436d45c301603b1a846b5a6e25dabe30220807eaac77a08074",
+      "engine/art/match3/rome-2-cell-hint/Star_16.png": "66ad0ed03e36c2be565f53c730794722515d3ce2ea00ec04b2b2b429295af992",
       "engine/art/match3/source-brick.png": "2aed0e247eb4f456c80b999ae1c6b30a99aff0934367bbedcaf4d92392ae602c",
       "engine/art/match3/source.png": "c27ae6e13b9205f04a20ec1f5daf24faec1e9238444eb938def89de55d9a04ee",
       "games/relic-rush/art/particles/kenney/circle_02.png": "697e6fa5948cc35cc779ae0b22995f5b17f0e02746406d05ec8548921e82ad1b",
@@ -3504,11 +3524,11 @@
       "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
       "tools/match3_theme_art.py": "c4aed4c24d6ad5222e715526e2f694c0af813aed53d4a17e9a326413379734f2",
-      "tools/pack_particles.py": "452599043c2f7ec9b4a3c649bd3a138c743c3e8d9e68e595f58e568b9517839a"
+      "tools/pack_particles.py": "7dd23246a40a4a3a5f64cdc2d50d9f053d79b6b4ffcd45e9aa1e325fbbe58231"
     },
     "outputs": {
-      "engine/data/match3.png": "06ecbedd9e725128c6fa077ae86024c3847c4ac654e3d1b03cef7b4688c6e71f",
-      "engine/match3_frames.lua": "82efa22d054245146d316bb38e1bb89606bd0e257d0da4eb6279c1abc62dd79d"
+      "engine/data/match3.png": "0d7c6e067b4125ca0f49283b3804f06f1b376343b135e0763737a2b9f4ecc4a3",
+      "engine/match3_frames.lua": "bcf1fbe5a3f0e28debf9c722fdee3ebc00df991ea87caa4886711a106ef720e6"
     }
   }
 }

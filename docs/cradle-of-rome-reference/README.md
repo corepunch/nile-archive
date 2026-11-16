@@ -75,6 +75,24 @@ PNGs are under `visuals/sprites/settings/scenes/game/game_graphics/`. The 21 boa
 backgrounds are also available as the original JPEGs in
 `resources/textures/scenes/game/backs/`.
 
+### Last puzzle tile glow
+
+`settings/scenes/game/game_settings.xml` names `LastPuzzlesGlow` in the Windows
+release. Its threshold is three puzzle tiles, with a four-second initial delay
+and a nine-second repeat period. `particles/cell_hint_blue.ptc` and
+`particles/cell_hint_green.ptc` define the color variants and contain identical
+`Star_02_16.png` and `Star_16.png` images. The original 16×16 PNGs sit at byte
+offsets 16873 and 20199. Extract them with
+`python3 tools/cradle-of-rome-reference/export_cell_hint_particles.py`, then
+pack them with `python3 tools/match3_atlas.py`.
+
+The supplied screen recording shows an electric-blue wash under the piece,
+with a soft cyan wake moving clockwise along the bevel. The glow lasts about
+3.6 seconds and the bright spot takes about 2.65 seconds to make a lap. The
+hex adaptation follows its six bevel edges and starts with the shared move hint.
+
+### Other artwork
+
 The Well unlocks the water bucket (`gmbn_5.png`), a 44×44 crop at `(0, 46)`
 in `textures/scenes/game/balls/gmf_balls_2.png`. Each matched bucket gives 3
 Food. This PC release also has a separate meat tile (`gmbn_7`).
