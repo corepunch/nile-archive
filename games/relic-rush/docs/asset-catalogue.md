@@ -390,12 +390,12 @@ and source-board diagnostics.
 | --- | --- |
 | `tile-cell-normal` | Slot 1, parchment: ordinary and cleared cells. |
 | `tile-tablet-single` | Slot 2, teal blue: plaques required for a win. The Explorer’s Guide uses the same face. |
-| `tile-tablet-double` | Slot 3, green: a two-hit tablet. Not used yet: no rule has double plaques. |
-| `tile-light-wave` | Slot 4, pale yellow glow: a light sweep across the board. Not drawn yet. |
-| `tile-hover` | Slot 5, white: pointer hover. Not drawn yet. |
-| `tile-selected` | Slot 6, cream with a warm yellow border: selected cell. Not drawn yet; the ring layer `selected` still marks selection. |
-| `tile-ice` | Slot 7, frosted gray-blue with hairline cracks: ice tablet. Not drawn yet; ice keeps its `ice-1`/`ice-2` overlays. |
-| `tile-bonus-area` | Slot 8, glowing light blue: cells a tool will hit. Not drawn yet. |
+| `tile-tablet-double` | Slot 3, green: a plaque listed in a level's `oil_double`, before its first hit. No campaign level uses one yet. |
+| `tile-light-wave` | Slot 4, pale yellow glow: the light that sweeps across the board as it arrives. |
+| `tile-hover` | Slot 5, white: the cell under a mouse pointer (not on touch). |
+| `tile-selected` | Slot 6, cream with a warm yellow border: the selected cell. |
+| `tile-ice` | Slot 7, frosted gray-blue with hairline cracks: the floor under an iced piece, which keeps its `ice-1`/`ice-2` overlay. |
+| `tile-bonus-area` | Slot 8, glowing light blue: every cell an armed tool will hit, at the hovered or pressed cell. |
 
 The eight tiles follow the slots of Cradle of Rome's board sheet and are
 shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
@@ -406,7 +406,8 @@ to a darker bottom, a neutral stained-paper grain (`tools/board_grain.py`), and
 where set a radial glow or hairline cracks. The canonical 128 px flat-top mask
 cuts the alpha, and every tile passes `tools/hex_tile_art.py --mode fill --strict`.
 Regenerate with `python3 tools/board_tiles.py`; `tools/check_art_catalogue.py`
-fails if a tile is stale. The `--art-states dressing` screen shows all eight.
+fails if a tile is stale. The `--art-states dressing` screen shows all eight, and
+`--level 6 --cell-states` shows them in use on a board.
 
 The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
 these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).

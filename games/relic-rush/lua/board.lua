@@ -18,6 +18,9 @@ if not neutral then
         R.GROUND[name] = skin:color("board_" .. name)
     end
     R.GROUND.edge_width, R.GROUND.rim_width, R.GROUND.seam_width = 2.5, 3, .9
+    -- Cradle of Rome cell states from the shared tile set (tools/board_tiles.py).
+    R.GROUND.tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
+                      wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"}
 end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes

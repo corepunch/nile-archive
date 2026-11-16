@@ -345,7 +345,9 @@ for all eight). Both games ship identical copies, loaded as `tile-<name>`:
 | --- | --- |
 | `tile-cell-normal` | Unmarked and cleared panes (parchment) |
 | `tile-tablet-single` | A pane that still needs a match or tool hit (teal blue) |
-| `tile-tablet-double`, `tile-light-wave`, `tile-hover`, `tile-selected`, `tile-ice`, `tile-bonus-area` | Generated and loaded, not yet drawn by any rule or state |
+| `tile-selected`, `tile-hover`, `tile-bonus-area` | Selected cell, mouse hover and the cells an armed tool will hit |
+| `tile-light-wave` | The light that sweeps across the board as it arrives |
+| `tile-ice`, `tile-tablet-double` | Under an iced treat; a two-hit pane from a level's `oil_double` (none yet) |
 
 Regenerate all of them for both games with `python3 tools/board_tiles.py`;
 `tools/check_assets.py` fails if a tile is stale. The painted

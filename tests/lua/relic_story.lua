@@ -24,6 +24,40 @@ do
     check(g.oil[a]==0 and g.oil[b]==1 and g.oil_left==initial-1, 'a direct clear removes only the plaque it reaches')
 end
 
+-- A double tablet takes two hits and counts once toward the goal.
+do
+    local b=rules.hex_index(-1,1)
+    local level=rules.levels[5]
+    level.oil_double={b}
+    local g=rules.game_start(4,123)
+    level.oil_double=nil
+    local initial=g.oil_left
+    check(g.oil[b]==2 and initial==10, 'oil_double starts a plaque at two layers without adding a goal')
+    local m=rules.new_match()
+    m.mask[b]=true
+    rules.game_apply(g,m)
+    check(g.oil[b]==1 and g.oil_left==initial, 'the first hit leaves a single tablet')
+    rules.game_apply(g,m)
+    check(g.oil[b]==0 and g.oil_left==initial-1, 'the second hit clears it')
+end
+
+-- The bonus-area preview names exactly the cells a tool would hit, without using it.
+do
+    local g=rules.game_start(4,123)
+    local b=rules.hex_index(-1,1)
+    g.tools={1,1,1}
+    local single, area=rules.game_tool_area(g,0,b), rules.game_tool_area(g,1,b)
+    local n=0
+    for i in pairs(area) do
+        n=n+1
+        check(rules.hex_distance(i,b)<=1 and rules.game_cell_active(g,i), 'dynamite area stays within one step on the board')
+    end
+    check(single[b] and next(single,b)==nil and next(single)==b, 'the pickaxe area is its own cell')
+    check(n>1 and g.tools[2]==1, 'previewing does not spend a charge')
+    g.tools={0,0,0}
+    check(rules.game_tool_area(g,1,b)==nil, 'no area without a charge')
+end
+
 local collections = {
     [1]={"Camp timber",3,5}, [2]={"Lamp lens",3,5}, [3]={"Relay cable",4},
     [4]={"Tide chart",0}, [5]={"Quay marker",2,5}, [6]={"Shore marker",2},

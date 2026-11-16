@@ -142,6 +142,7 @@ function D.bind(R, W)
     function R.debug_screens()
         talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
         floor_frames, floor_turn, floor_expected = 0, 0, nil
+        R.cell_state_review = nil
         if app.arg("stripe-states") then R.art_review = true end
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
@@ -171,6 +172,21 @@ function D.bind(R, W)
                 R.prog.level, R.quiet = g.level, false
                 R.debug_skip_level()   -- first clear, with its beat
             end
+        end
+        if app.arg("cell-states") and R.g then
+            -- --level N --cell-states: every Cradle of Rome cell state at once on that
+            -- board: selected, mouse hover, an armed Dynamite's area, ice and a double tablet.
+            local g, open = R.g, {}
+            for i = 0, rules.CELLS - 1 do
+                if rules.game_cell_active(g, i) and (g.oil[i] or 0) == 0 and g.chain[i] == 0 then open[#open + 1] = i end
+            end
+            for i = 0, rules.CELLS - 1 do
+                if (g.oil[i] or 0) == 1 then g.oil[i] = 2; break end
+            end
+            g.ice[open[#open]], g.obstacles = 1, g.obstacles + 1
+            g.tools[2] = math.max(g.tools[2], 1)
+            R.selected, R.tool = open[1], 1
+            R.cell_state_review = {hover = open[#open // 2], aim = open[#open - 3]}
         end
         a = app.arg("level")
         if floor_reel then

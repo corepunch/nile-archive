@@ -277,6 +277,28 @@ local function draw_floor_cell(R, i, at, material, alpha)
     end
 end
 
+-- Cell states drawn as whole tiles over the floor and under the pieces, from
+-- the art keys in R.GROUND.tiles: the cells an armed tool would hit
+-- (`bonus`), the mouse-hovered cell (`hover`) and the selected cell
+-- (`selected`). Missing keys draw nothing.
+function E.cell_highlights(R, rules, sx, alpha)
+    local tiles, g = R.GROUND.tiles, R.g
+    if not tiles then return end
+    local function draw(i, key, amount)
+        if key and i >= 0 and rules.game_cell_active(g, i) then
+            draw_floor_cell(R, i, R.cell_pos(i) + vec2(sx, 0), key, alpha * amount)
+        end
+    end
+    local area = tiles.bonus and (R.aim_cell or -1) >= 0 and rules.game_tool_area(g, R.tool, R.aim_cell)
+    if area then
+        local pulse = R.reduced_motion and .85 or .75 + .2 * math.sin(R.now * 6)
+        for i in pairs(area) do draw(i, tiles.bonus, pulse) end
+    end
+    local hover = R.hover_cell or -1
+    if hover ~= R.selected and not (area and area[hover]) then draw(hover, tiles.hover, .6) end
+    draw(R.selected or -1, tiles.selected, 1)
+end
+
 -- Paint the full board surface before pieces and blockers.
 function E.ground(R, rules, sx, floor, sweep)
     local g, intro = R.g, R.intro
@@ -299,7 +321,12 @@ function E.ground(R, rules, sx, floor, sweep)
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, i) then
             local at = R.cell_pos(i) + vec2(sx, 0)
-            if g.oil and (g.oil[i] or 0) > 0 then
+            local tiles = R.GROUND.tiles or {}
+            if tiles.ice and (g.ice[i] or 0) > 0 then
+                draw_floor_cell(R, i, at, tiles.ice, alpha)
+            elseif g.oil and (g.oil[i] or 0) > 1 and tiles.double then
+                draw_floor_cell(R, i, at, tiles.double, alpha)
+            elseif g.oil and (g.oil[i] or 0) > 0 then
                 draw_floor_cell(R, i, at, floor and floor.covered, alpha)
             elseif floor and floor.normal and g.stone_hp[i] == 0 then
                 local material = level.floor_marks and not level.floor_marks[i] and floor.plain or floor.normal
@@ -320,6 +347,7 @@ function E.ground(R, rules, sx, floor, sweep)
             end
         end
     end
+    E.cell_highlights(R, rules, sx, alpha)
     if story and story.floor == "oil" then
         draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])
     end
@@ -328,7 +356,12 @@ function E.ground(R, rules, sx, floor, sweep)
             if rules.game_cell_active(g, i) then
                 local scale, _, lift, flash = intro:cell(i)
                 if scale > .02 and flash > 0 then
-                    R.vfx_halo(R.cell_pos(i) + vec2(sx, lift), R.HEX_R * 1.6 * scale, color(255, 226, 150, 120 * flash))
+                    local wave = (R.GROUND.tiles or {}).wave
+                    if wave then   -- the light wave sweeps across the board as it arrives
+                        draw_floor_cell(R, i, R.cell_pos(i) + vec2(sx, 0), wave, flash)
+                    else
+                        R.vfx_halo(R.cell_pos(i) + vec2(sx, lift), R.HEX_R * 1.6 * scale, color(255, 226, 150, 120 * flash))
+                    end
                 end
             end
         end

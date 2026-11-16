@@ -2,8 +2,7 @@
 
 Relic Rush and Christmas Market share eight generated hex tiles that follow the
 slots of Cradle of Rome's board sheet. Parchment cells and teal-blue tablets
-are in use in both games; the other six are generated and loaded for the
-states still to be wired.
+are the floor in both games; the other six show cell states.
 
 ![The eight tiles](tiles.png)
 
@@ -11,12 +10,12 @@ states still to be wired.
 | --- | --- | --- |
 | 1 | `cell-normal` | Normal and cleared cells |
 | 2 | `tablet-single` | Plaques / panes required for a win |
-| 3 | `tablet-double` | Two-hit tablet (no rule yet) |
-| 4 | `light-wave` | Light sweeping across the board (not drawn yet) |
-| 5 | `hover` | Pointer hover (not drawn yet) |
-| 6 | `selected` | Selected cell (not drawn yet) |
-| 7 | `ice` | Ice tablet (not drawn yet) |
-| 8 | `bonus-area` | Cells a tool will hit (not drawn yet) |
+| 3 | `tablet-double` | Two-hit tablet from a level's `oil_double` (no campaign level yet) |
+| 4 | `light-wave` | Light sweeping across the board as it arrives |
+| 5 | `hover` | Mouse hover |
+| 6 | `selected` | Selected cell |
+| 7 | `ice` | Floor under an iced piece |
+| 8 | `bonus-area` | Cells an armed tool will hit |
 
 | Screen | Before | After |
 | --- | --- | --- |
@@ -29,9 +28,24 @@ states still to be wired.
 | --- | --- | --- |
 | ![](relic-guide.jpg) | ![](christmas-guide.jpg) | ![](tiles-screen.jpg) |
 
+## Cell states in play
+
+`--cell-states` pins a selected cell (top left), a hovered cell, an armed
+Dynamite's area (light blue), an iced piece and a double tablet (green).
+
+| Relic Rush level 6 | Christmas Market level 4 |
+| --- | --- |
+| ![](relic-states.jpg) | ![](christmas-states.jpg) |
+
+The light wave during the board's entrance, frames 30, 45 and 60:
+
+![Light wave](relic-wave.jpg)
+
 Every tile passes `tools/hex_tile_art.py --mode fill --strict` (coverage 1.0, no spill).
 
 ```sh
 python3 tools/board_tiles.py            # writes both games' data/board-tiles/
 ./build/relic-rush --headless --mute --fresh --size 480x900 --art-states dressing --shot tiles.png
+./build/relic-rush --headless --mute --fresh --size 480x900 --level 6 --cell-states --shot states.png
+./build/relic-rush --headless --mute --fresh --size 480x900 --level 6 --present --frames 45 --shot wave.png
 ```

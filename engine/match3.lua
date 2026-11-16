@@ -873,7 +873,9 @@ function E.new(config)
                     elseif g.chain[i] > 0 then
                         g.chain[i], g.obstacles, g.score = g.chain[i] - 1, g.obstacles - 1, g.score + 20
                     else
-                        if g.oil and g.oil[i] > 0 then
+                        if g.oil and g.oil[i] > 1 then   -- a double tablet loses one layer per hit
+                            g.oil[i], g.score = g.oil[i] - 1, g.score + 30
+                        elseif g.oil and g.oil[i] > 0 then
                             g.oil[i], g.oil_left, g.oil_cleared, g.score = 0, g.oil_left - 1, true, g.score + 30
                             if g.hs then home.credit(g, 'CELL_OIL') end
                         end
@@ -1275,6 +1277,11 @@ function E.new(config)
             assert(cell_active(g, cell), "oil outside the board")
             if g.oil[cell] == 0 then g.oil[cell], g.oil_left = 1, g.oil_left + 1 end
         end
+        -- `oil_double` lists cells among `oil` that take two hits: Cradle of Rome's double tablets.
+        for _, cell in ipairs(l.oil_double or {}) do
+            assert(g.oil[cell] == 1, "double tablet outside the level's oil cells")
+            g.oil[cell] = 2
+        end
         if l.homescapes then home.init(g,l.homescapes); return g end
         local m = new_match()
         game_matches(g, m, -1)
@@ -1344,6 +1351,20 @@ function E.new(config)
         return true
     end
 
+    -- The cells a tool would hit at `cell`, as {[cell]=true}, without using it.
+    -- nil when the tool cannot be used there. Drives the bonus-area preview.
+    function M.game_tool_area(g, tool, cell)
+        if flags & E.NO_TOOLS ~= 0 or tool < 0 or tool > 2 or g.tools[tool + 1] <= 0 or g.won or g.lost or not cell_active(g, cell) then return nil end
+        local m = {mask = {}, direct = {}}
+        if tool == 0 then m.mask[cell] = true
+        elseif tool == 1 then mark_area(g, m, cell, 1)
+        elseif flags & E.COLOR_TOOL ~= 0 then
+            if not equal(g, cell, cell) then return nil end
+            mark_color(g, m, g.tiles[cell].kind)
+        else for z = 0, 2 do mark_line(g, m, cell, z) end end
+        return m.mask
+    end
+
     -- How good a move is for a greedy player: score plus weighted goal progress.
     function M.game_evaluate_move(g, a, b)
         if not game_can_swap(g, a, b) then return -1 end
@@ -1379,6 +1400,7 @@ function E.new(config)
         R.g, R.pending = g, M.new_match()
         R.phase, R.phase_time, R.idle_time, R.shake = 0, 0, 0, 0
         R.swap_a, R.swap_b, R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1, -1, -1
+        R.hover_cell, R.aim_cell = -1, -1
         R.fall_steps, R.fall_from = nil, {}
         R.kudos, R.kudos_level, R.mission_banner = nil, 0, nil
     end
@@ -1531,6 +1553,12 @@ function E.new(config)
 
     function R.board_input(inp)
         assert(R.layout == layout, "the match3 board layout is engine-owned; games must not replace R.layout")
+        -- A mouse hovers a cell; with a tool armed, the hovered or pressed cell is its aim.
+        local ready = R.overlay == R.OV_NONE and R.phase == PH_IDLE and R.BOARD_CLIP:contains(inp.pos)
+        local at = ready and R.cell_at(inp.pos) or -1
+        R.hover_cell = inp.hover and not inp.down and at or -1
+        R.aim_cell = R.tool >= 0 and (inp.hover or inp.down) and at or -1
+        if R.cell_state_review then R.hover_cell, R.aim_cell = R.cell_state_review.hover, R.cell_state_review.aim end
         if not inp.released or R.overlay ~= R.OV_NONE then return end
         local d = inp.pos - inp.press_pos
         if R.phase == PH_IDLE and R.cell_at(inp.press_pos) >= 0 and (math.abs(d.x) > 16 or math.abs(d.y) > 16) then swipe(inp.press_pos, inp.pos)

@@ -164,7 +164,16 @@ Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each
 listed game's `data/board-tiles/`: a bevel lit from above, a top-to-bottom face
 gradient and a neutral stained-paper grain (`tools/board_grain.py`), cut by the
-canonical flat-top mask. Selection and hints animate piece scale.
+canonical flat-top mask.
+`R.GROUND.tiles` maps cell states to those sprites' art keys. A game that
+sets it gets Cradle of Rome's states drawn as whole tiles over the floor and
+under the pieces: `selected`, `hover` (mouse only, from `inp.hover`), `bonus`
+(every cell `rules.game_tool_area(g, tool, cell)` returns for the armed tool
+at the hovered or pressed cell), `ice` (under iced pieces), `double` (a
+plaque with two layers) and `wave` (the light that sweeps across the board
+in its entrance, in place of the halo). A level's `oil_double` lists `oil`
+cells that take two hits; each still counts once toward the goal.
+`--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
 [In-game board review](review/match3-board-seams/README.md), [frame](review/match3-board-frame/README.md).
 
 For a game view, initialize presentation data with `match3.view{...}`, then
