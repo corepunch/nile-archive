@@ -138,12 +138,15 @@ end
 
 ---------------------------------------------------------------------- input
 
+-- The lantern floor: its pane art, for painting and for shattering.
+function R.board_floor() return not R.g.hs and lantern_floor or nil end
+
 function R.board_screen(inp, dt)
     draw_backdrop()
     local intro = R.intro
     R.draw_board_hud()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
-    elements.ground(R, rules, sx, not R.g.hs and lantern_floor or nil)
+    elements.ground(R, rules, sx, R.board_floor())
     -- Overhanging blockers sit below treats, including those in adjacent cells.
     draw_relics(sx)
     draw_blockers(sx)

@@ -353,6 +353,42 @@ void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle,
     render_textured_geometry(t, mesh, n, NULL, 0);
 }
 
+/* A convex polygon cut out of t: uv gives each vertex's point in texture
+ * pixels. Either winding; the rim fades over one pixel as in draw_image_hex. */
+void draw_image_poly(texture t, const vec2 *pts, const vec2 *uv, int n, color tint)
+{
+    enum { MAX_POLY = 16 };
+    if (!t.tex || n < 3 || n > MAX_POLY) return;
+    vec2 path[MAX_POLY], tex[MAX_POLY], mid = v2(0, 0), uv_mid = v2(0, 0);
+    float area = 0;
+    for (int i = 0; i < n; i++) {
+        vec2 a = pts[i], b = pts[(i + 1) % n];
+        area += a.x * b.y - b.x * a.y;
+    }
+    for (int i = 0; i < n; i++) {   /* path_normal wants clockwise on screen */
+        int k = area < 0 ? n - 1 - i : i;
+        path[i] = pts[k];
+        tex[i] = uv[k];
+        mid = vec2_add(mid, pts[k]);
+        uv_mid = vec2_add(uv_mid, uv[k]);
+    }
+    mid = vec2_scale(mid, 1.0f / n);
+    uv_mid = vec2_scale(uv_mid, 1.0f / n);
+    render_vertex mesh[MAX_POLY * 9];
+    int m = 0;
+    for (int i = 0; i < n; i++) {
+        int j = (i + 1) % n;
+        render_vertex a = {path[i], tint, tex[i]}, b = {path[j], tint, tex[j]};
+        render_vertex outer_a = {vec2_add(path[i], vec2_scale(path_normal(path, n, i), feather())), color_alpha(tint, 0), tex[i]};
+        render_vertex outer_b = {vec2_add(path[j], vec2_scale(path_normal(path, n, j), feather())), color_alpha(tint, 0), tex[j]};
+        mesh[m++] = (render_vertex){mid, tint, uv_mid};
+        mesh[m++] = a; mesh[m++] = b;
+        mesh[m++] = a; mesh[m++] = outer_a; mesh[m++] = outer_b;
+        mesh[m++] = a; mesh[m++] = outer_b; mesh[m++] = b;
+    }
+    render_textured_geometry(t, mesh, m, NULL, 0);
+}
+
 void draw_star(vec2 center, float radius, float inner, int points, float angle, color c)
 {
     points = clampi(points, 2, 32);

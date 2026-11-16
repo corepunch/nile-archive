@@ -212,6 +212,17 @@ overlapping sparks around all six bevel edges. A double tablet has a green trail
 suppresses the moving sparks. See the
 [Cradle of Rome emitter reference](cradle-of-rome-reference/README.md#source-inventory).
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
+When a hit removes a floor layer (ice, a double tablet's green face or a
+tablet), `engine/match3_shatter.lua` breaks that cell's own artwork apart.
+At bind it makes eight Voronoi fractures of the unit hex; each break picks one
+and one of the hex's twelve symmetries. The pieces are cut from the layer's
+texture with `gfx.image_poly`. Cracks glow for 0.07 s, then the shards burst outwards,
+spin and tumble (a darker side face shows their thickness), fall under gravity
+and fade over about 0.8 s above a puff of mist in the layer's colour. No
+art is baked, so new tile art and packs shatter unchanged.
+`E.layer_art` names the art `E.ground` paints, and a game's `R.board_floor()`
+returns the floor dress both use. Reduce Motion shows nothing. Review it
+with `--fx shatter` (`reel fx-shatter` in Relic Rush and Christmas Market).
 [In-game board review](review/match3-board-seams/README.md).
 
 For a game view, initialize presentation data with `match3.view{...}`, then

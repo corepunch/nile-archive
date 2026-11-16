@@ -862,6 +862,13 @@ function gfx.image_rot(t, dst, angle, tint) end
 ---@param tint color
 function gfx.image_hex(t, src, center, radius, angle, tint) end
 
+---Cut a convex polygon (3 to 16 points, either winding) out of t: uvs gives each point's position in texture pixels. Anti-aliased rim. For shards and other cut-outs of existing artwork.
+---@param t texture
+---@param pts vec2[]
+---@param uvs vec2[]
+---@param tint color
+function gfx.image_poly(t, pts, uvs, tint) end
+
 ---Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
 ---@param t texture
 ---@param dst rect

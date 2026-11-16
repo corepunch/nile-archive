@@ -151,6 +151,7 @@ shot("homescapes-chains", "480x900", "--homescapes contest_005_06")
 shot("phone-homescapes-queue", "390x844", "--homescapes st0065 --safe-area 0,47,0,34")
 shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
 reel("fx-plane",18,2,"480x900","--fx plane --reel")
+reel("fx-shatter",24,2,"480x900","--fx shatter --reel")
 shot("phone-specials-board","390x844","--art-board --safe-area 0,47,0,34")
 
 shot("homescapes-art", "480x900", "--homescapes-art")

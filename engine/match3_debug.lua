@@ -274,14 +274,37 @@ function D.bind(R, W)
         end
         a = app.arg("fx")
         if a then   -- fire one special in the middle of level nine
-            local mode = a == "ray" and 0 or a == "bomb" and 1 or 2
+            local mode = a == "ray" and 0 or (a == "bomb" or a == "shatter") and 1 or 2
             local c = rules.hex_center()
-            R.g = rules.game_start(8, 123478)
+            R.g = rules.game_start(a == "shatter" and 4 or 8, 123478)
             R.pending = rules.new_match()
             R.on_island = false
             R.vfx_reset()
+            local function near(i, r)
+                local d = (R.cell_pos(i) - R.cell_pos(c)):len() / (2 * R.HEX_R)
+                return d < r and rules.game_cell_active(R.g, i), d
+            end
+            if a == "shatter" then   -- aim at the busiest part of level five
+                local best, most = c, -1
+                for i = 0, rules.CELLS - 1 do
+                    c = i
+                    local count = 0
+                    for j = 0, rules.CELLS - 1 do if near(j, 1.2) then count = count + 1 end end
+                    if rules.game_cell_active(R.g, i) and count > most then best, most = i, count end
+                end
+                c = best
+            end
             R.g.obstacles = R.g.obstacles - R.g.chain[c] - R.g.ice[c]
             R.g.chain[c], R.g.ice[c] = 0, 0
+            if a == "shatter" and R.g.oil then   -- a bomb in double (inner) and single tablets
+                for i = 0, rules.CELLS - 1 do
+                    local inside, d = near(i, 2.2)
+                    if inside and R.g.chain[i] == 0 and R.g.ice[i] == 0 then
+                        if R.g.oil[i] == 0 then R.g.oil_left = R.g.oil_left + 1 end
+                        R.g.oil[i] = (d < 1.2 and i % 2 == 0) and 2 or 1
+                    end
+                end
+            end
             R.g.active[c]=true;R.g.stone_hp[c]=0
             R.g.tiles[c] = rules.tile(mode == 2 and 0 or 3, mode == 0 and rules.ROW or mode == 1 and rules.BOMB or a=="plane" and rules.PLANE or rules.PRISM)
             R.pending.mask[c] = true

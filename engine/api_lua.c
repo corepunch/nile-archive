@@ -2783,6 +2783,21 @@ static int l_gfx_image_hex(lua_State *L)
     return 0;
 }
 
+/* gfx.image_poly(t, pts, uvs, tint) */
+static int l_gfx_image_poly(lua_State *L)
+{
+    texture a_t = api_check_texture(L, 1);
+    vec2 a_pts[API_MAX_ARRAY];
+    int n_pts = api_array_len(L, 2, API_MAX_ARRAY);
+    for (int k = 0; k < n_pts; k++) { lua_rawgeti(L, 2, k + 1); a_pts[k] = api_get_vec2(L, -1); lua_pop(L, 1); }
+    vec2 a_uvs[API_MAX_ARRAY];
+    int n_uvs = api_array_len(L, 3, API_MAX_ARRAY);
+    for (int k = 0; k < n_uvs; k++) { lua_rawgeti(L, 3, k + 1); a_uvs[k] = api_get_vec2(L, -1); lua_pop(L, 1); }
+    color a_tint = api_check_color(L, 4);
+    draw_image_poly(a_t, a_pts, a_uvs, n_pts, a_tint);
+    return 0;
+}
+
 /* gfx.image_striped(t, dst, angle, repeats, width, ink, tint) */
 static int l_gfx_image_striped(lua_State *L)
 {
@@ -4376,6 +4391,7 @@ static void open_gfx(lua_State *L)
         {"image_part", l_gfx_image_part},
         {"image_rot", l_gfx_image_rot},
         {"image_hex", l_gfx_image_hex},
+        {"image_poly", l_gfx_image_poly},
         {"image_striped", l_gfx_image_striped},
         {"rect", l_gfx_rect},
         {"rect_grad", l_gfx_rect_grad},

@@ -51,5 +51,22 @@ end
 for _, config in ipairs({{flags=1.5},{flags=512},{radius=0},{colors=1},{match_min=2}}) do
     check(not pcall(match3.new,config), "invalid descriptor is rejected")
 end
+-- A fracture must tile the cell exactly, or a hole shows as the layer cracks.
+do
+    local shatter = require("match3.shatter")
+    local seed = 0x1234567
+    local function rand() seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648 end
+    for _ = 1, 20 do
+        local shards = shatter.fracture(rand, shatter.SITES, shatter.SITE_GAP)
+        local area = 0
+        for _, f in ipairs(shards) do
+            area = area + f.area
+            check(#f.pts >= 3 and #f.pts <= 16, "a shard fits gfx.image_poly")
+        end
+        check(#shards >= shatter.SITES - 2, "a fracture has its shards")
+        near(area, 3 * math.sqrt(3) / 2, "shards cover the hex once")
+    end
+end
+
 print("match3 engine: independent games, configurable minimum, integer behavior/kind flags passed")
 return 0

@@ -517,6 +517,19 @@ function E.cradle_ground(R)
     for key, value in pairs(E.CRADLE_GROUND) do R.GROUND[key] = value end
 end
 
+-- The art a cell's breakable floor layer is painted with, as E.ground paints
+-- it, for effects that break it (match3.shatter): ice, else the top tablet
+-- layer. Returns the texture and, for the hex-mapped oil material, its sample.
+function E.layer_art(R, floor, oil, ice)
+    local tiles = R.GROUND.tiles or {}
+    if ice > 0 then return tiles.ice and R.board_art[tiles.ice] end
+    if oil > 1 and tiles.double then return R.board_art[tiles.double] end
+    if oil > 0 then
+        if floor and floor.covered then return R.board_art[floor.covered] end
+        return R.board_art["oil-material"], OIL_SAMPLE
+    end
+end
+
 local function draw_floor_cell(R, i, at, material, alpha)
     local scale, turn, lift = floor_pose(R, i)
     if scale <= .02 then return end
@@ -533,12 +546,14 @@ end
 local function draw_tablet_hints(R, rules, sx, floor)
     local g = R.g
     if not (floor and floor.tablet_hint and g.oil_left > 0 and g.oil_left <= 3)
-        or R.reduced_motion or R.overlay ~= R.OV_NONE or not R.idle_hint_ready() then return end
+        or R.reduced_motion or R.overlay ~= R.OV_NONE then return end
+    local age = R.idle_hint_age()
+    if not age then return end
     local radius = R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET) - 1
     for i = 0, rules.CELLS - 1 do
         local layers = g.oil[i] or 0
         if layers > 0 and rules.game_cell_active(g, i) then
-            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, R.now * 4.8 + i * 1.37, layers > 1)
+            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, age, layers > 1)
         end
     end
 end

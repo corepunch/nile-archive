@@ -1090,6 +1090,7 @@ function G.bind(R, over)
 
     require("match3.debug").bind(R, W)
     require("match3.vfx").bind(R, rules)
+    require("match3.shatter").bind(R, rules)
     return R
 end
 

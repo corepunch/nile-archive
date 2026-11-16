@@ -12,7 +12,7 @@ function E.view(state)
     state.SCREEN_W, state.SCREEN_H = state.SCREEN_W or 480, state.SCREEN_H or 900
     state.HEX_R, state.drop = state.HEX_R or 32, 0
     state.PH_IDLE, state.PH_SWAP, state.PH_REJECT, state.PH_CLEAR, state.PH_FALL = 0, 1, 2, 3, 4
-    state.old_tiles, state.fall_from, state.wave_ice, state.wave_chain = {}, {}, {}, {}
+    state.old_tiles, state.fall_from, state.wave_ice, state.wave_chain, state.wave_oil = {}, {}, {}, {}, {}
     state.phase, state.phase_time, state.idle_time, state.shake = 0, 0, 0, 0
     state.selected, state.swap_a, state.swap_b, state.tool, state.hint_a, state.hint_b = -1, -1, -1, -1, -1, -1
     return state
@@ -1655,6 +1655,7 @@ function E.new(config)
             R.old_tiles[i] = {}
             for k,v in pairs(t) do R.old_tiles[i][k]=v end
             R.wave_ice[i], R.wave_chain[i] = R.g.ice[i], R.g.chain[i]
+            R.wave_oil[i] = R.g.oil and R.g.oil[i] or 0
         end
     end
 
@@ -1781,8 +1782,10 @@ function E.new(config)
         R.idle_time = 0
     end
 
-    function R.idle_hint_ready()
-        return flags & E.NO_HINTS == 0 and R.phase == PH_IDLE and R.idle_time > 5 and not R.g.won and not R.g.lost
+    function R.idle_hint_age()
+        if flags & E.NO_HINTS == 0 and R.phase == PH_IDLE and R.idle_time > 5 and not R.g.won and not R.g.lost then
+            return R.idle_time - 5
+        end
     end
 
     function R.board_update(dt)
@@ -1798,7 +1801,7 @@ function E.new(config)
                 R.finish_wave()
             end
         end
-        if R.hint_a < 0 and R.idle_hint_ready() then
+        if R.hint_a < 0 and R.idle_hint_age() then
             local ok, a, b = rules.game_hint(R.g)
             if ok then R.hint_a, R.hint_b = a, b
             else settle() end   -- idle/resumed dead boards need the same recovery as a completed fall
