@@ -358,11 +358,13 @@ Regenerate the eight tiles with `python3 tools/board_tiles.py`;
 `frame-stone` (`data/board-frame/stone.png`) trims exposed board edges
 and the two openings in the level 4 board. Its six straight runs, six outward
 joins, six inward joins and `frame-entrance` rim use the previous bands,
-seeded grain and cracks from `python3 tools/board_frame.py --output build/board-frame`.
+seeded grain and cracks. The alternate north edge incorporates painted snow
+from the [registered source atlas](../../../engine/art/board-frame/decorations.json).
+It replaces the highest horizontal north edge in each hex column. Generate
+this atlas with `python3 tools/board_frame.py --winter --output build/winter-frame`.
 
-The settled board has five separate paintable sprites under `data/board-frame/`.
-`snow-rise`, `snow-flat` and `snow-fall` sit on the highest exposed edges,
-with a painted pose for each slope. `fir-ribbon` ties the left shoulder with
+The settled board has two separate paintable sprites under `data/board-frame/`.
+`fir-ribbon` ties the left shoulder with
 snowy needles, a ribbon and a bell. `fir-pinecone` puts a frosted cone and
 berries on the right shoulder. Rebuild the separate sprites from the shared
 [ImageGen source](../../../engine/art/board-frame/decorations-source.png) with

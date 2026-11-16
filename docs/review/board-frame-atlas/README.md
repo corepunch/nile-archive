@@ -15,6 +15,7 @@ frame pieces as the outside of the board.
 
 ```sh
 python3 tools/board_frame.py --output build/board-frame
+python3 tools/board_frame.py --winter --output build/winter-frame
 ```
 
 Use `stone.png` as the starter and `guide.png` as a separate reference layer.
@@ -33,10 +34,13 @@ The hex radius at this scale is 64 px. Keep the silhouette, join width and
 matching paint across the join lines. The engine overlaps those joins by a
 small amount to keep the stone continuous at both phone sizes. The 168×168 px
 rim in the bottom left follows each cell's scale and rotation as it flies in.
+The winter atlas adds a snowy north edge at `(240, 240)` in an 80×80 px slot.
+Christmas Market uses it on the highest horizontal north edge in each hex
+column, which keeps the snow above the playing field and away from openings.
 
 The frame generator writes the stone atlas and guide. The
 [decoration source and review](../board-frame-decorations/README.md) show
-the separate paintable leaves, snow and festive trim loaded over the stone.
+the painted snow on the north rim and the separate leaves and festive trim.
 
 ## Reproduce the captures
 

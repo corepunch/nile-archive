@@ -2,14 +2,12 @@
   "source": "engine/art/board-frame/decorations-source.png",
   "prompt": "engine/art/board-frame/decorations.prompt.txt",
   "size": 96,
+  "north_snow": {"crop": [549, 220, 970, 311], "anchor": [758, 296], "scale": 0.182, "turn": 0},
   "games": {
     "relic-rush": {
       "leaves": {"crop": [80, 588, 464, 921], "anchor": [280, 898], "scale": 0.147, "turn": 0}
     },
     "christmas-market": {
-      "snow-rise": {"crop": [122, 103, 391, 442], "anchor": [272, 283], "scale": 0.182, "turn": -6.2},
-      "snow-flat": {"crop": [549, 220, 970, 311], "anchor": [758, 296], "scale": 0.182, "turn": 0},
-      "snow-fall": {"crop": [1119, 112, 1402, 443], "anchor": [1252, 289], "scale": 0.182, "turn": 9.6},
       "fir-ribbon": {"crop": [591, 594, 946, 920], "anchor": [842, 825], "scale": 0.170, "turn": 0},
       "fir-pinecone": {"crop": [1121, 601, 1467, 922], "anchor": [1175, 878], "scale": 0.155, "turn": 0}
     }

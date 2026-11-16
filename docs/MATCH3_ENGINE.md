@@ -164,10 +164,10 @@ including the edges of holes. It keeps those placements relative to the board
 origin for shake and resize, and rebuilds them when the active mask changes.
 The atlas also provides the rim under each cell during the entrance.
 The soft shadow follows the settled outline. The skin can place separate sprites
-on the north-west, north-east and south-east outward tips. Three optional
-directional caps follow the highest exposed edge at each horizontal position.
+on the north-west, north-east and south-east outward tips. An optional atlas
+slot replaces the highest horizontal north edge in each hex column.
 Relic Rush uses the corner placements for leaves. Christmas Market uses the
-two upper corners for festive trim and the caps for snow.
+two upper corners for festive trim and the alternate rim slot for snow.
 Imported and neutral boards use the default ground geometry.
 [Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
 [Decoration source and in-game review](review/board-frame-decorations/README.md).

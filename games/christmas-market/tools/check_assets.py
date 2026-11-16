@@ -62,8 +62,11 @@ def main():
     decor = json.loads((ROOT.parents[1]/frame['decorations']).read_text())
     for path in [frame['stone'], *(f'data/board-frame/{name}.png' for name in decor['games'][ROOT.name])]:
         assert path in inventory and '"' + path.removeprefix('data/') + '"' in art
+    frame_args = ['--winter'] if frame['winter'] else []
+    if frame['winter']:
+        assert 'north_edge = true' in art
     subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
-                    '--check', str(ROOT/frame['stone'])], check=True)
+                    '--check', str(ROOT/frame['stone']), *frame_args], check=True)
     subprocess.run([sys.executable, str(ROOT.parents[1]/frame['registration']),
                     '--check', '--game', ROOT.name], check=True)
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)

@@ -33,10 +33,7 @@
   "runtime": {
     "data/board-frame/fir-pinecone.png": "46fbeab35d27c15580910d35cc5f55f9f0b28031cf297b2322ed8bd6076b82fc",
     "data/board-frame/fir-ribbon.png": "70f83dbebe7830eb49b7fd8d145a214f651b6f1f58f7cead240abcc10534d85c",
-    "data/board-frame/snow-fall.png": "40fbcb59b68bf18cf9b7c7659f665ebdb208f364785ba0a9b1c3e06ea7be17f5",
-    "data/board-frame/snow-flat.png": "2104e210cac90862ba6e9147270f56997a95c5dcf33394b9d142323bfe2d0fcc",
-    "data/board-frame/snow-rise.png": "017a9cbd40eaaba58a343d18b1473790341ef490db8d7417348a9b27f0c6b264",
-    "data/board-frame/stone.png": "26a07ca5e2f050c5e7001b3402a53a2a5f0a432d593a0118b991adcfc1c81e24",
+    "data/board-frame/stone.png": "bcdf108748543b42a8c8e226d73084a68546e45243e84584d23c312e0c2ba1b9",
     "data/board-states/bomb.png": "ed81b5bdc22716892ea1510be38c268e2580908002ff35a0be630f9868907d6e",
     "data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
     "data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
@@ -662,6 +659,7 @@
     "review": "docs/review/board-frame-atlas/README.md",
     "decorations": "engine/art/board-frame/decorations.json",
     "registration": "tools/board_frame_decor.py",
-    "decoration_review": "docs/review/board-frame-decorations/README.md"
+    "decoration_review": "docs/review/board-frame-decorations/README.md",
+    "winter": true
   }
 }

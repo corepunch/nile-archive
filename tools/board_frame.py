@@ -2,15 +2,18 @@
 """Bake a paintable flat-top hex border atlas and its registration guide.
 
     python3 tools/board_frame.py --output build/board-frame
+    python3 tools/board_frame.py --winter --output build/winter-frame
     python3 tools/board_frame.py --check games/relic-rush/data/board-frame/stone.png
 """
 import argparse
+import json
 import math
 import random
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageDraw
 
+import board_frame_decor
 import board_grain
 
 RADIUS = 32
@@ -20,6 +23,8 @@ INTRO = 168
 COLUMNS = 6
 ROWS = ("edge", "outside", "inside")
 SIZE = (COLUMNS * SLOT, len(ROWS) * SLOT + INTRO)
+NORTH_EDGE = 4
+WINTER_SLOT = (3 * SLOT, len(ROWS) * SLOT)
 REACH = 5.95
 UNDERLAP = 1.5
 JOIN = RADIUS / 4
@@ -169,13 +174,27 @@ def intro_rim():
     return image.resize((INTRO, INTRO), Image.Resampling.BOX)
 
 
-def generate():
+def snowy_north_edge(atlas):
+    spec = json.loads(board_frame_decor.SPEC.read_text())
+    with Image.open(board_frame_decor.ROOT / spec["source"]) as source:
+        snow = board_frame_decor.register(source, spec["north_snow"], spec["size"])
+    size = round(RADIUS * PPU * 1.12)
+    snow = snow.resize((size, size), Image.Resampling.LANCZOS)
+    edge = atlas.crop((NORTH_EDGE * SLOT, 0, (NORTH_EDGE + 1) * SLOT, SLOT))
+    centre = (SLOT - size) // 2
+    edge.alpha_composite(snow, (centre, centre - round(RADIUS * PPU * .145)))
+    return edge
+
+
+def generate(winter=False):
     atlas = Image.new("RGBA", SIZE)
     strip = stone_strip()
     for k in range(COLUMNS):
         for row, shape in enumerate((straight(k), corner(k, False), corner(k, True))):
             atlas.paste(bake(SLOT, shape, strip, row * COLUMNS + k), (k * SLOT, row * SLOT))
     atlas.paste(intro_rim(), (0, len(ROWS) * SLOT))
+    if winter:
+        atlas.paste(snowy_north_edge(atlas), WINTER_SLOT)
     return atlas
 
 
@@ -194,7 +213,7 @@ def joins(row, k):
     return ends
 
 
-def guide(atlas):
+def guide(atlas, winter=False):
     image = Image.new("RGB", SIZE, "#273239")
     image.paste(atlas, mask=atlas.getchannel("A"))
     draw = ImageDraw.Draw(image)
@@ -210,11 +229,17 @@ def guide(atlas):
                 draw.line((jx - 16 * nx, jy - 16 * ny, jx + 16 * nx, jy + 16 * ny), fill="#aee1f0")
     y = len(ROWS) * SLOT
     draw.rectangle((0, y, INTRO, y + INTRO - 1), outline="#52636b")
-    draw.text((INTRO + 16, y + 14), "Entrance rim\n\nBlue dot = anchor\nBlue lines = joins", fill="#fbecd6", spacing=4)
+    legend_y = y + 14
+    if winter:
+        x, top = WINTER_SLOT
+        draw.rectangle((x, top, x + SLOT, top + SLOT), outline="#52636b")
+        draw.text((x + 4, top + 3), "Snowy north", fill="#fbecd6")
+        legend_y = y + SLOT + 14
+    draw.text((INTRO + 16, legend_y), "Entrance rim\n\nBlue dot = anchor\nBlue lines = joins", fill="#fbecd6", spacing=4)
     return image
 
 
-def check(atlas):
+def check(atlas, winter=False):
     assert atlas.size == SIZE and atlas.mode == "RGBA", f"Expected {SIZE[0]}x{SIZE[1]} RGBA atlas"
     alpha = atlas.getchannel("A")
     for row, name in enumerate(ROWS):
@@ -227,6 +252,13 @@ def check(atlas):
                     assert alpha.getpixel((x, y)) >= 230, f"Open seam in {name} {k} at {(x, y)}"
     slots = [(k * SLOT, row * SLOT, SLOT) for row in range(len(ROWS)) for k in range(COLUMNS)]
     slots.append((0, len(ROWS) * SLOT, INTRO))
+    if winter:
+        x, y = WINTER_SLOT
+        snowy = alpha.crop((x, y, x + SLOT, y + SLOT))
+        stone = alpha.crop((NORTH_EDGE * SLOT, 0, (NORTH_EDGE + 1) * SLOT, SLOT))
+        assert not ImageChops.subtract(stone, snowy).getbbox(), "Winter slot must cover the north rim"
+        assert ImageChops.subtract(snowy, stone).getbbox(), "Winter slot must show its snow beyond the rim"
+        slots.append((x, y, SLOT))
     for x, y, side in slots:
         bounds = alpha.crop((x, y, x + side, y + side)).getbbox()
         assert bounds and min(*bounds[:2], side - bounds[2], side - bounds[3]) >= 2, (x, y, bounds)
@@ -239,17 +271,19 @@ def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--output", type=Path, default=Path("build/board-frame"))
     group.add_argument("--check", type=Path, metavar="ATLAS")
+    parser.add_argument("--winter", action="store_true", help="include the snowy north rim")
     args = parser.parse_args()
     if args.check:
         with Image.open(args.check) as atlas:
-            check(atlas)
-        print(f"{args.check}: 18 perimeter slots and entrance rim verified")
+            check(atlas, args.winter)
+        extra = " and snowy north edge" if args.winter else ""
+        print(f"{args.check}: 18 perimeter slots, entrance rim{extra} verified")
         return
-    atlas = generate()
-    check(atlas)
+    atlas = generate(args.winter)
+    check(atlas, args.winter)
     args.output.mkdir(parents=True, exist_ok=True)
     atlas.save(args.output / "stone.png", optimize=True)
-    guide(atlas).save(args.output / "guide.png", optimize=True)
+    guide(atlas, args.winter).save(args.output / "guide.png", optimize=True)
 
 
 if __name__ == "__main__":

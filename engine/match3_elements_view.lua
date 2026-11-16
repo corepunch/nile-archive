@@ -237,12 +237,12 @@ end
 -- perimeter slots and 168 px entrance slot are painted at a 64 px hex radius.
 local FRAME_RADIUS, FRAME_SLOT = 64, 80
 local ENTRY_RIM = rect(0, 3 * FRAME_SLOT, 168, 168)
-local frame_vertices, frame_normals, frame_sources = {}, {}, {}
+local NORTH_EDGE = 4
+local NORTH_RIM = rect(3 * FRAME_SLOT, 3 * FRAME_SLOT, FRAME_SLOT, FRAME_SLOT)
+local frame_vertices, frame_sources = {}, {}
 for k = 0, 5 do
     local angle = math.rad(60 * k)
     frame_vertices[k] = vec2(math.cos(angle), math.sin(angle))
-    local normal = angle + math.pi / 6
-    frame_normals[k] = vec2(math.cos(normal), math.sin(normal))
 end
 for row = 0, 2 do
     frame_sources[row] = {}
@@ -255,13 +255,13 @@ function E.load_frame(art, paths)
     local sheet = texture.load(paths.stone)
     art["frame-stone"] = sheet
     art["frame-entrance"] = texture.region(sheet, ENTRY_RIM)
-    local top_edges, corners, images = {}, {}, {}
-    for k, path in pairs(paths.top_edges or {}) do top_edges[k] = texture.load(path) end
+    art["frame-north"] = paths.north_edge and NORTH_RIM
+    local corners, images = {}, {}
     for i, spec in ipairs(paths.corners or {}) do
         images[spec.path] = images[spec.path] or texture.load(spec.path)
         corners[i] = {art = images[spec.path], width = spec.width, outward = spec.outward}
     end
-    art["frame-decorations"] = {top_edges = top_edges, corners = corners}
+    art["frame-decorations"] = corners
 end
 
 local function frame_layout(R, rules)
@@ -276,7 +276,7 @@ local function frame_layout(R, rules)
 
     -- Store positions relative to the board so a resize or shake moves the
     -- whole frame and its shadow without rebuilding the list of sprites.
-    local edges, joins, convex, exposed_top = {}, {}, {}, {}
+    local edges, joins, convex, north = {}, {}, {}, {}
     for i = 0, rules.CELLS - 1 do
         if active[i] then
             local centre = R.cell_pos(i) - R.board_origin
@@ -286,14 +286,13 @@ local function frame_layout(R, rules)
                 if open[k] then
                     local a = centre + frame_vertices[k]:scale(r)
                     local b = centre + frame_vertices[(k + 1) % 6]:scale(r)
-                    local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k], direction = k}
+                    local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k]}
                     edges[#edges + 1] = edge
-                    if k >= 3 then
-                        -- Pick the highest exposed edge at each horizontal
-                        -- position so decorations sit on top of the board.
-                        local x = math.floor(edge.at.x + .5)
-                        local above = exposed_top[x]
-                        if not above or edge.at.y < above.at.y then exposed_top[x] = edge end
+                    if k == NORTH_EDGE then
+                        -- The highest north-facing edge in each column is on
+                        -- the outer rim. Lower ones can border openings.
+                        local q = rules.hex_q(i)
+                        if not north[q] or edge.at.y < north[q].at.y then north[q] = edge end
                     end
                     if open[(k + 5) % 6] then
                         joins[#joins + 1] = {at = a, source = frame_sources[1][k]}
@@ -308,8 +307,8 @@ local function frame_layout(R, rules)
             end
         end
     end
-    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex,
-                    exposed_top = exposed_top}
+    for _, edge in pairs(north) do edge.north = true end
+    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex}
     R.frame_layout = layout
     return layout
 end
@@ -344,8 +343,11 @@ local function draw_stone(R, rules, sx, alpha)
     local layout = frame_layout(R, rules)
     local origin = R.board_origin + vec2(sx, 0)
     local size = size2.splat(FRAME_SLOT * scale)
+    local north = R.board_art["frame-north"]
     if R.GROUND.drop_shadow then draw_drop_shadow(R, layout.edges, origin, alpha) end
-    for _, e in ipairs(layout.edges) do gfx.image_part(art, e.source, rect.centered(e.at + origin, size), tint) end
+    for _, e in ipairs(layout.edges) do
+        gfx.image_part(art, e.north and north or e.source, rect.centered(e.at + origin, size), tint)
+    end
     for _, j in ipairs(layout.joins) do gfx.image_part(art, j.source, rect.centered(j.at + origin, size), tint) end
     return layout
 end
@@ -353,19 +355,12 @@ end
 -- Corners are selected clockwise from north-west.
 local corner_directions = {{-1, -1}, {1, -1}, {1, 1}}
 local function draw_frame_decorations(R, frame, sx, alpha)
-    local decor = R.board_art["frame-decorations"]
-    if not decor then return end
+    local corners = R.board_art["frame-decorations"]
+    if not corners then return end
     local origin = R.board_origin + vec2(sx, 0)
     local tint = color(255, 255, 255, 255 * alpha)
     local r = R.HEX_R
-    for _, edge in pairs(frame.exposed_top) do
-        local sprite = decor.top_edges[edge.direction]
-        if sprite then
-            local at = origin + edge.at + frame_normals[edge.direction]:scale(r * .145)
-            gfx.image(sprite, rect.centered(at, size2.splat(r * 1.12)), tint)
-        end
-    end
-    for k, spec in ipairs(decor.corners) do
+    for k, spec in ipairs(corners) do
         local d = corner_directions[k]
         local best, score
         for _, c in ipairs(frame.convex) do
