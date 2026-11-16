@@ -1505,21 +1505,36 @@
   "resource_unlocks": {
     "water": {
       "building": "well",
-      "levels": [5, 6],
+      "first_level": 5,
       "kind": 3,
-      "yield": {"provisions": 1},
+      "yield": {"provisions": 3},
       "runtime": "data/resource-pieces/water.png"
     },
     "cut-blocks": {
       "building": "workshop",
-      "levels": [9],
+      "first_level": 9,
       "kind": 4,
-      "yield": {"supplies": 1},
+      "yield": {"supplies": 5},
       "runtime": "data/tile-sets/resources/4.png",
       "source": "art/tile-sets/source.png",
       "source_cell": {"row": 3, "column": 5},
       "registration": "tools/prepare_assets.py"
-    }
+    },
+    "rations": {"building": "market", "first_level": 10, "kind": 1, "yield": {"provisions": 4}, "runtime": "data/resource-pieces/rations.png"},
+    "trade-coins": {"building": "gateway", "first_level": 14, "kind": 0, "yield": {"gold": 6}, "runtime": "data/tile-sets/resources/0.png",
+      "source": "art/tile-sets/source.png", "source_cell": {"row": 3, "column": 1}, "registration": "tools/prepare_assets.py"},
+    "grain": {"building": "lodge", "first_level": 17, "kind": 1, "yield": {"provisions": 5}, "runtime": "data/tile-sets/resources/5.png",
+      "source": "art/tile-sets/source.png", "source_cell": {"row": 3, "column": 6}, "registration": "tools/prepare_assets.py"},
+    "quartz": {"building": "archive", "first_level": 20, "kind": 4, "yield": {"supplies": 7}, "runtime": "data/tile-sets/relics/4.png",
+      "source": "art/tile-sets/source.png", "source_cell": {"row": 1, "column": 5}, "registration": "tools/prepare_assets.py"},
+    "springwater": {"building": "fountain", "first_level": 27, "kind": 3, "yield": {"provisions": 6}, "runtime": "data/tile-sets/resources/3.png",
+      "source": "art/tile-sets/source.png", "source_cell": {"row": 3, "column": 4}, "registration": "tools/prepare_assets.py"},
+    "sun-gem": {"building": "temple", "first_level": 30, "kind": 0, "yield": {"gold": 9}, "runtime": "data/tile-sets/jewels/0.png",
+      "source": "art/tile-sets/source-flat-hex.png", "crop": [12, 340, 315, 570], "registration": "tools/prepare_assets.py"}
+  },
+  "tool_unlocks": {
+    "dynamite": {"building": "camp", "first_level": 2, "charges": 2, "review": "hex-late"},
+    "sunburst": {"building": "observatory", "first_level": 24, "charges": 2, "review": "phone-story-level-30"}
   },
   "resource_pieces": {
     "source": "art/board-refresh/source.png",

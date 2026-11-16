@@ -1,6 +1,7 @@
 local rules=require("rules")
 local economy=require("economy")
 local island=require("island")
+local journey=require("journey")
 local R=require("state")
 require("main")
 -- Lives regenerate offline, stop at five, and charge a failed attempt once.
@@ -19,9 +20,14 @@ end
 -- Confirmed restorations persist across eligible boards without taking story slots.
 do
     R.island=city.new();island.island_setup(R.island)
-    local bank=purse(700,90,90,27)
+    local bank=purse(5000,5000,5000,90)
+    local locked=R.make_board(1,19)
+    local match=rules.new_match()
+    check(locked.tools[1]==2 and locked.tools[2]==0 and locked.tools[3]==0,'the pickaxe is the only starting tool')
+    check(not rules.game_tool(locked,1,rules.hex_center(),match),'locked dynamite cannot be used')
     check(island.island_place_next(R.island,bank,4,0),'place the camp before the well')
     local c=R.island
+    check(R.make_board(1,19).tools[2]==2,'the camp stocks dynamite starting with expedition 2')
     local fits,spot=c:find_spot(economy.WELL_KIND,island.island_suggestion(economy.WELL_KIND))
     check(fits,'well fits first region')
     c:begin_place(economy.WELL_KIND,spot)
@@ -43,14 +49,66 @@ do
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
         local spec=rules.level_of(g)
-        local water=g.resource_yields[3]==economy.unlocks.water
-        local blocks=g.resource_yields[4]==economy.unlocks['cut-blocks']
-        local rations=g.resource_yields[1]==economy.unlocks.rations
+        local water=g.resource_yields[3]==economy.unlocks[2]
+        local blocks=g.resource_yields[4]==economy.unlocks[3]
+        local rations=g.resource_yields[1]==economy.unlocks[4]
         check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
         check(blocks==(level>=8) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         if not spec.story_piece then check(#g.spawn_kinds==5,'ordinary expeditions spawn five pieces') end
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces only earn story progress') end
     end
+end
+
+for i, unlock in ipairs(economy.unlocks) do
+    local next_wonder=island.wonders[i+1]
+    if unlock.slot and next_wonder then
+        check(next_wonder.cost[unlock.slot]>0,unlock.name .. ' helps pay for ' .. next_wonder.name)
+    end
+end
+
+-- Late restorations charge the real wallet and change only subsequent boards.
+do
+    local c=R.island
+    local wallet=purse(5000,5000,5000,90)
+    for z=1,5 do c:unlock(z,wallet) end
+    for i=5,#economy.unlocks do
+        local unlock=economy.unlocks[i]
+        local before=R.make_board(unlock.first_level-1,41)
+        local was_locked=unlock.tool and before.tools[unlock.tool]==0
+            or not unlock.tool and before.resource_yields[unlock.kind]~=unlock
+        check(was_locked, unlock.name .. ' is locked until construction')
+        local cost=island.wonders[i].cost
+        local balance=purse(table.unpack(wallet))
+        check(island.island_place_next(c,wallet,journey.wonder_levels[i],0),'confirm ' .. island.wonders[i].name)
+        for slot=1,3 do check(wallet[slot]==balance[slot]-cost[slot],'restoration spends the listed price') end
+        local g=R.make_board(unlock.first_level-1,41)
+        local cell=rules.hex_center()
+        if not rules.game_cell_active(g,cell) then
+            for n=0,rules.CELLS-1 do
+                if rules.game_cell_active(g,n) then cell=n; break end
+            end
+        end
+        g.chain[cell],g.ice[cell],g.stone_hp[cell]=0,0,0
+        local m=rules.new_match()
+        if unlock.tool then
+            local moves=g.moves
+            g.tiles[cell]=rules.tile(0)
+            check(g.tools[unlock.tool]==2 and rules.game_tool(g,unlock.tool-1,cell,m),'the observatory unlocks a usable Sunburst')
+            rules.game_apply(g,m)
+            check(g.earnings[economy.GOLD]>=6 and g.tools[unlock.tool]==1 and g.moves==moves,'Sunburst earns resources without spending a move')
+        else
+            check(g.resource_yields[unlock.kind]==unlock,'opening uses ' .. unlock.name)
+            g.tiles[cell]=rules.tile(unlock.kind)
+            m.mask[cell]=true
+            rules.game_apply(g,m)
+            check(g.earnings[unlock.slot]==unlock.amount,unlock.name .. ' pays its configured yield')
+        end
+    end
+    local final=R.make_board(29,41)
+    check(final.resource_yields[0]==economy.unlocks[10] and final.resource_yields[1]==economy.unlocks[6] and
+          final.resource_yields[3]==economy.unlocks[9] and final.resource_yields[4]==economy.unlocks[7],
+          'the last board combines all current chip upgrades')
+    check(final.tools[2]==2 and final.tools[3]==2,'both restored tools replenish on a fresh run')
 end
 
 -- Clear regular pieces through the real match resolver. A blocker absorbs
@@ -142,7 +200,7 @@ do
     R.prog.completed=nil
     check(save.read('relic-resource-complete',R.serialize),'load completed award')
     R.resume_completed()
-    check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.unlocks.water,
+    check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.unlocks[2],
         'completed award restores its counts on the correct palette')
     check(rules.progress_reward(R.prog,R.g,R.wonders) and not R.prog.completed,'claim consumes the pending award')
     check(not rules.progress_reward(R.prog,R.g,R.wonders),'loaded award cannot bank twice')

@@ -116,12 +116,12 @@ sprite file is always `data/buildings/<key>.png`.
 | 1 / `well` | Spring well | wonder | 2 x 2 | 100 Gold | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 70 Gold + 20 Provisions + 24 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 3 / `market` | Jungle market | wonder | 3 x 2 | 85 Gold + 24 Provisions + 30 Supplies | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 22 Provisions + 26 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 70 Gold + 25 Provisions | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 100 Gold + 20 Provisions + 25 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 7 / `observatory` | Star observatory | wonder | 2 x 2 | 105 Gold + 30 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 110 Gold + 33 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 120 Gold + 30 Provisions + 36 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 85 Gold + 34 Provisions + 36 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 130 Gold + 35 Provisions | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 6 / `archive` | Lost-world archive | wonder | 3 x 3 | 145 Gold + 85 Provisions + 40 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 7 / `observatory` | Star observatory | wonder | 2 x 2 | 155 Gold + 70 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 160 Gold + 65 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 185 Gold + 110 Provisions + 75 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 10 / `log_cabin` | Trapper's cabin | building | 2 x 2 | 200 Gold + 13 Supplies | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 11 / `apothecary` | Herbalist's hut | building | 2 x 2 | 220 Gold + 15 Provisions | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 12 / `mess_hall` | Mess hall | building | 3 x 2 | 240 Gold + 16 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |

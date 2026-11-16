@@ -6,6 +6,8 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
+local economy = require("economy")
+local island = require("island")
 local elements = require("match3.elements_view")
 local skin = require("skin")
 local neutral = app.arg("default-match3")
@@ -33,6 +35,24 @@ local match3 = require("match3")
 match3.bind_board_ui(R, rules, art.tools)
 match3.bind_town_board_hud(R)
 
+local select_tool = R.select_tool
+function R.select_tool(kind)
+    local g = R.g
+    if R.phase == R.PH_IDLE and g.starting_tools and g.starting_tools[kind + 1] == 0 then
+        for i, unlock in ipairs(economy.unlocks) do
+            if unlock.tool == kind + 1 then
+                if g.level + 1 < unlock.first_level and island.owned(R.island, i - 1) > 0 then
+                    R.notice(("%s is available from expedition %d."):format(unlock.name, unlock.first_level))
+                else
+                    R.notice(("Restore %s to unlock %s."):format(island.wonders[i].name, unlock.name))
+                end
+                return
+            end
+        end
+    end
+    select_tool(kind)
+end
+
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local NORMAL = rules.NORMAL
 local cell_active = rules.game_cell_active
@@ -54,7 +74,7 @@ function R.board_piece_texture(kind)
     end
     local piece = R.g.resource_yields and R.g.resource_yields[kind]
     local pack = app.arg("tiles")
-    if piece and (kind == level.goal_kind or piece.building or not neutral and (not pack or pack == "relics")) then
+    if piece and (kind == level.goal_kind or piece.kind ~= nil or not neutral and (not pack or pack == "relics")) then
         return R.board_art["resource-" .. piece.key]
     end
     return R.relics[kind + 1]

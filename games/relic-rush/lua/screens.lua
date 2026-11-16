@@ -125,7 +125,8 @@ local function result_screen()
     if w then
         picture_fit(w.sprite, next_icon, 255)
         local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
-        heading, next_step = #missing == 0 and "READY TO RESTORE" or "REPLAY TO EARN THE REST", w.name
+        local unlock = economy.unlocks[next_kind]
+        heading, next_step = #missing == 0 and economy.unlock_text(unlock) or "REPLAY TO EARN THE REST", w.name
         local price = #missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)
         say_left(price, rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
     elseif breakdown.first then
@@ -196,21 +197,17 @@ local guide_entries = {
      icon={floor="target-plaque"}},
     {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is blue, clear it with another hit.",
      icon={floor="target-plaque", piece="resource-coin", front="chain"}},
-    {id="earnings", title="Stock the expedition", description="Coins earn Gold, fruit and water earn Provisions, and timber and stone earn Supplies. Win to bank them.",
+    {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Gold, Provisions and Supplies.",
      icon={front="resource-timber"}},
-    {id="water", title="Spring Well", description=economy.unlock_text(economy.unlocks.water) .. " Restoring the well adds them to later boards.",
-     icon={front="resource-water"}},
-    {id="cut-blocks", title="Artisan Workshop", description=economy.unlock_text(economy.unlocks["cut-blocks"]) .. " Restoring the workshop adds them to later boards.",
-     icon={front="resource-cut-blocks"}},
-    {id="rations", title="Jungle Market", description=economy.unlock_text(economy.unlocks.rations) .. " Restoring the market adds them to later boards.",
-     icon={front="resource-rations"}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
      icon={tool="pickaxe"}},
-    {id="dynamite", title="Dynamite", description="Hits a cell and its neighbors.",
-     icon={tool="dynamite"}},
-    {id="sunburst", title="Sunburst", description="Hits every piece that matches the one you tap.",
-     icon={tool="sunburst"}},
 }
+for i, unlock in ipairs(economy.unlocks) do
+    local description = economy.unlock_text(unlock) .. (" From expedition %d."):format(unlock.first_level)
+    guide_entries[#guide_entries+1] = {id=unlock.key, title=island.wonders[i].name,
+        description=description .. (unlock.effect and " " .. unlock.effect or ""),
+        icon=unlock.tool and {tool=unlock.key} or {front="resource-" .. unlock.key}}
+end
 local function guide_icon(box, icon)
     local layer = rect.centered(box:center(), size2.splat(48))
     if icon.floor then elements.draw_material(R, icon.floor, layer:center(), layer.w / 2, 0, 1, 1) end

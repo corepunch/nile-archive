@@ -5,10 +5,10 @@ local economy = require("economy")
 
 function R.board_context(preview)
     local restored = {}
-    for _, piece in pairs(economy.unlocks) do
-        local building = piece.building
+    for i, wonder in ipairs(island.wonders) do
+        local building = i - 1
         if preview then
-            restored[building] = not app.arg("before-" .. island.wonders[building + 1].key)
+            restored[building] = not app.arg("before-" .. wonder.key)
         else
             restored[building] = island.owned(R.island, building) > 0
         end
@@ -18,9 +18,11 @@ end
 
 function R.board_lesson(g)
     local level = rules.level_of(g)
-    for _, piece in pairs(economy.unlocks) do
-        if g.level + 1 == piece.first_level and g.resource_yields and g.resource_yields[piece.kind] == piece then
-            return level.lesson .. "\n" .. economy.unlock_text(piece)
+    for _, unlock in ipairs(economy.unlocks) do
+        if g.level + 1 == unlock.first_level then
+            local active = unlock.tool and g.starting_tools and g.starting_tools[unlock.tool] > 0
+                or g.resource_yields and g.resource_yields[unlock.kind] == unlock
+            if active then return level.lesson .. "\n" .. economy.unlock_text(unlock) end
         end
     end
     return level.lesson

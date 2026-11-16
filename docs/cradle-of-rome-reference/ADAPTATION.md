@@ -1,8 +1,8 @@
 # Applying Cradle of Rome to Relic Rush
 
 Relic Rush uses the purchase-to-tile loop from the [Cradle of Rome 2 Windows economy](rome-2-economy.json).
-Matches finance restorations, and three confirmed placements introduce
-higher-yield pieces on subsequent expeditions. Tropicats remains the
+Matches finance restorations, and every confirmed placement introduces
+a higher-yield piece or a tool on subsequent expeditions. Tropicats remains the
 companion reference for quest structure and story pacing.
 [Tropicats adaptation](../tropicats-reference/ADAPTATION.md)
 
@@ -13,7 +13,7 @@ companion reference for quest structure and story pacing.
 | Progress on the board and gather city currency at the same time | Plaques, story-piece recovery and deliveries determine victory. Ordinary coin clears earn 4 Gold, fruit earns 1 Provisions, timber earns 2 Supplies and dressed stone earns 3. Story pieces earn recovery credit. On a winning claim, cascades and clears from specials can contribute resources. A hit absorbed by a cover or chain does not pay for the protected piece. | Give the player a choice of earning matches while the win condition is still open. |
 | Quick finish pays | Each remaining move is worth 2 Gold, capped at 40. A first clear also awards 3 discovery stars. A replay can bank earnings and the move bonus without advancing the campaign or granting more stars. | With 1–20 moves left, one extra ordinary Supplies triple can trade 2 Gold for 3 Supplies before cascades. With more than 20 left, the next move costs no bonus Gold. Check which purse is scarce before changing the bonus. |
 | Spend several resources to build visibly | Ten required restorations unlock at clears 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. The next new expedition waits for earned construction. Players pay with banked earnings. Replays can cover a shortfall, and optional purchases respect the reserve. Discovery stars separately open land and shop stock. Placement is player-chosen. | Let good play leave more resources for optional spending. Keep the authored campaign progress independent of exceptional boards or discretionary purchases. |
-| A construction changes what spawns | The Spring Well unlocks 3-Provisions buckets from board 5. The Artisan Workshop unlocks 5-Supplies blocks from board 9. The Jungle Market unlocks 4-Provisions ration jars from board 10. Story pieces take priority in their authored slots. | This is the closest implemented counterpart to the Sawmill. Treat the before/after board and its payout as one feature. |
+| A construction changes the board | Eight restorations add a higher-yield chip. The Expedition Camp stocks Dynamite and the Star Observatory stocks Sunburst. Story pieces keep their authored slots. | A new chip pays a currency the next building uses. Tools collect resources from the pieces they clear and can save moves. The Temple's sun gems earn Gold for island purchases after the finale. |
 
 [Relic Rush economy design](../../games/relic-rush/docs/resource-expedition.md) · [Piece yields](../../games/relic-rush/lua/economy.lua) · [Claims and move bonus](../../games/relic-rush/lua/rules.lua) · [Construction reserve](../../games/relic-rush/lua/island.lua) · [Campaign palettes and milestones](../../games/relic-rush/lua/campaign.lua)
 

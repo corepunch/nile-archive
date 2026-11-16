@@ -10,8 +10,12 @@ local M = match3.new{flags=flags, radius=reference and reference.radius or 4, co
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 local start = M.game_start
 function M.game_start(level, seed, restored)
+    if reference then return start(level, seed) end
     local number = math.max(0, math.min(level, M.LEVELS-1)) + 1
-    return start(level, seed, not reference and economy.board_yields(M.levels[number], number, restored))
+    local yields, tools = economy.board_loadout(M.levels[number], number, restored)
+    local g = start(level, seed, yields)
+    g.tools, g.starting_tools = {table.unpack(tools)}, tools
+    return g
 end
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS

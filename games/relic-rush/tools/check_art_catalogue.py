@@ -25,7 +25,12 @@ for name in resources["slots"]:
 for name, unlock in manifest["resource_unlocks"].items():
     assert unlock["runtime"] in actual and f"`{name}`" in doc
     assert all((ROOT / unlock[key]).is_file() for key in ("source", "registration") if key in unlock)
-assert re.search(r'A\.cut_blocks = "([^"]+)"', art).group(1) == manifest["resource_unlocks"]["cut-blocks"]["runtime"].removeprefix("data/")
+declaration = re.search(r"A\.resource_upgrades = \{([^}]+)\}", art).group(1)
+upgrades = {quoted or bare: "data/" + path for quoted, bare, path in
+            re.findall(r'(?:\["([^"]+)"\]|(\w+))\s*=\s*"([^"]+)"', declaration)}
+assert upgrades == {name: item["runtime"] for name, item in manifest["resource_unlocks"].items()
+                    if name not in resources["slots"]}, "Runtime upgrades need catalogue coverage"
+assert set(manifest["tool_unlocks"]) <= set(manifest["tools"])
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)

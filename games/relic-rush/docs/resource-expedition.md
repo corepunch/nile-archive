@@ -85,14 +85,22 @@ orange slot can hold a story item or an amphora that pays score. Board 4 takes
 the Gold slot for the tide chart. The Well purchase that follows uses Gold
 banked on earlier boards or earned from unused moves and replays.
 
-Confirmed placements change ordinary slots in openings and refills from the
-listed expedition onward. Authored story pieces keep their slots.
+Confirmed placements change openings and refills from the listed expedition
+onward. Authored story pieces keep their slots. Pickaxes start with two uses.
+Dynamite and Sunburst replenish at the start of each eligible attempt.
 
-| Restoration | First board | Replaces | New piece | Yield per piece |
-| --- | ---: | --- | --- | --- |
-| Spring Well | 5 | Timber | Water bucket | 3 Provisions |
-| Artisan Workshop | 9 | Dressed stone | Cut blocks | 5 Supplies |
-| Jungle Market | 10 | Red berries | Ration jar | 4 Provisions |
+| Restoration | First board | Board payoff | How it funds the next restoration |
+| --- | ---: | --- | --- |
+| Expedition Camp | 2 | Dynamite, two uses | Blast coin clusters or save moves for Well Gold. |
+| Spring Well | 5 | Water buckets replace timber, 3 Provisions each | Pay the Workshop's Provisions. |
+| Artisan Workshop | 9 | Cut blocks replace dressed stone, 5 Supplies each | Pay the Market's Supplies. |
+| Jungle Market | 10 | Ration jars replace red berries, 4 Provisions each | Pay the Courtyard's Provisions. |
+| Sunstone Courtyard | 14 | Trade coin stacks replace sun coins, 6 Gold each | Pay the Lodge's Gold. |
+| Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Provisions each | Pay the Archive's Provisions. |
+| Lost-world Archive | 20 | Carved quartz replaces cut blocks, 7 Supplies each | Pay the Observatory's Supplies. |
+| Star Observatory | 24 | Sunburst, two uses | Clear coin or quartz across the board for the Fountain. |
+| Jade Fountain | 27 | Springwater drops replace water buckets, 6 Provisions each | Pay the Temple's Provisions. |
+| Temple of the Sun | 30 | Sun gems replace trade coin stacks, 9 Gold each | The finale and its replays earn Gold for island purchases. |
 
 ## Restoration prices and earnings
 
@@ -106,12 +114,12 @@ three currencies. Prices are in Relic Rush units for the shorter portrait boards
 | 4 | Spring well | 100 | — | — |
 | 7 | Artisan workshop | 70 | 20 | 24 |
 | 9 | Jungle market | 85 | 24 | 30 |
-| 13 | Sunstone courtyard | — | 22 | 26 |
-| 16 | Explorer's lodge | 70 | 25 | — |
-| 19 | Lost-world archive | 100 | 20 | 25 |
-| 23 | Star observatory | 105 | — | 30 |
-| 26 | Jade fountain | 110 | — | 33 |
-| 29 | Temple of the sun | 120 | 30 | 36 |
+| 13 | Sunstone courtyard | 85 | 34 | 36 |
+| 16 | Explorer's lodge | 130 | 35 | — |
+| 19 | Lost-world archive | 145 | 85 | 40 |
+| 23 | Star observatory | 155 | — | 70 |
+| 26 | Jade fountain | 160 | — | 65 |
+| 29 | Temple of the sun | 185 | 110 | 75 |
 
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and

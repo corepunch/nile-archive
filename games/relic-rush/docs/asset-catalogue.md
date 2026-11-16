@@ -52,12 +52,24 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `water` | Teal water bucket, 3 Provisions. Replaces timber from board 5 after the Well is restored. | Board and guide |
 | `rations` | Orange ration jar, 4 Provisions in the Market slot from board 10 | Board and guide |
 | `cut-blocks` | Workshop unlock from board 9, 5 Supplies | Board and guide |
+| `trade-coins` | Existing Resources stack (`data/tile-sets/resources/0.png`), 6 Gold | Board and guide from 14 |
+| `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Provisions | Board and guide from 17 |
+| `quartz` | Existing Relics purple crystal (`data/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
+| `springwater` | Existing Resources blue droplet (`data/tile-sets/resources/3.png`), 6 Provisions | Board and guide from 27 |
+| `sun-gem` | Existing Jewels gold gem (`data/tile-sets/jewels/0.png`), 9 Gold | Board and guide from 30 |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 The score-only amphora on early six-kind boards uses kind 5 of the selected
 pack. The default is `data/tile-sets/relics/5.png`.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
+The five later chips use their existing pack art at its authored orientation
+and alpha. Their selected, hinted and falling appearances use the normal chip
+with the existing board feedback. The Camp and Observatory enable existing
+Dynamite and Sunburst controls with their authored normal, selected, pressed,
+hover and disabled artwork. The locked and depleted tools share the disabled
+art and show different tap notices. Review `shot hex-first`, `shot hex-late`,
+`shot landing-briefing`, and `shot phone-story-level-30` in the Relic Rush suite.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
 
 `--rome-reference-art` uses the eight aliases in the manifest to load local

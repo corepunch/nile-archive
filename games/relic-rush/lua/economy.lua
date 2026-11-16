@@ -13,31 +13,43 @@ local E = {
         {key="timber", name="Blue-tied timber", slot=3, amount=2},
         {key="stone", name="Dressed stone", slot=3, amount=3},
     },
-    WELL_KIND=1, WORKSHOP_KIND=2, MARKET_KIND=3,
-    CAMPAIGN_VERSION=2,
+    WELL_KIND=1, WORKSHOP_KIND=2,
+    CAMPAIGN_VERSION=3,
 }
 
+-- Same order as the story catalogue and its stable city type IDs (zero-based).
+-- The workshop's first purple slot is on board 9 because board 8 needs it for the cable.
 E.unlocks = {
-    water={key="water", name="Water buckets", building=E.WELL_KIND, first_level=5, kind=3, slot=E.PROVISIONS, amount=3},
-    ["cut-blocks"]={key="cut-blocks", name="Cut blocks", building=E.WORKSHOP_KIND, first_level=9, kind=4, slot=E.SUPPLIES, amount=5},
-    rations={key="rations", name="Ration jars", building=E.MARKET_KIND, first_level=10, kind=1, slot=E.PROVISIONS, amount=4},
+    {key="dynamite", name="Dynamite", tool=2, amount=2, first_level=2, effect="Hits one cell and its neighbors."},
+    {key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
+    {key="cut-blocks", name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=9},
+    {key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
+    {key="trade-coins", name="Trade coin stacks", kind=0, slot=E.GOLD, amount=6, first_level=14},
+    {key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
+    {key="quartz", name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
+    {key="sunburst", name="Sunburst", tool=3, amount=2, first_level=24, effect="Hits every piece of the color you tap."},
+    {key="springwater", name="Springwater drops", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
+    {key="sun-gem", name="Sun gems", kind=0, slot=E.GOLD, amount=9, first_level=30},
 }
 
-function E.unlock_text(piece)
-    return ("%s earn +%d %s each."):format(piece.name, piece.amount, E.currencies[piece.slot].name)
+function E.unlock_text(unlock)
+    if unlock.tool then return ("%d %s charges per expedition."):format(unlock.amount, unlock.name) end
+    return ("%s earn +%d %s each."):format(unlock.name, unlock.amount, E.currencies[unlock.slot].name)
 end
 
-function E.board_yields(level, number, restored)
+function E.board_loadout(level, number, restored)
     local yields = {}
+    local tools = {2, 0, 0}
     for kind, piece in pairs(E.pieces) do
         if kind ~= level.omit_kind and not (level.story_piece and level.goal_kind == kind) then yields[kind] = piece end
     end
-    for _, piece in pairs(E.unlocks) do
-        if number >= piece.first_level and restored and restored[piece.building] and yields[piece.kind] then
-            yields[piece.kind] = piece
+    for i, unlock in ipairs(E.unlocks) do
+        if number >= unlock.first_level and restored and restored[i - 1] then
+            if unlock.tool then tools[unlock.tool] = unlock.amount
+            elseif yields[unlock.kind] then yields[unlock.kind] = unlock end
         end
     end
-    return yields
+    return yields, tools
 end
 
 function E.shortfall(cost, available)

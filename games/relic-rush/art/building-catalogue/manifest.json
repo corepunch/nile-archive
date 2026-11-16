@@ -40,7 +40,7 @@
         6,
         8
       ],
-      "about": "Every great discovery begins with a little canvas.",
+      "about": "Unlocks two sticks of Dynamite per expedition.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/camp.png",
@@ -186,7 +186,7 @@
         202.13
       ],
       "base_width": 359.808,
-      "gold": 0,
+      "gold": 85,
       "stars": 0,
       "runtime": "data/buildings/gateway.png",
       "image": [
@@ -196,11 +196,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Original dry gathering plaza",
       "cost": [
-        0,
-        22,
-        26
+        85,
+        34,
+        36
       ],
-      "about": "A sunlit gathering place brings the valley together.",
+      "about": "Adds trade coin stacks worth 6 Gold each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/gateway.png",
@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 70,
+      "gold": 130,
       "stars": 0,
       "runtime": "data/buildings/lodge.png",
       "image": [
@@ -236,11 +236,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        70,
-        25,
+        130,
+        35,
         0
       ],
-      "about": "A warm light after a long day of adventure.",
+      "about": "Adds grain bundles worth 5 Provisions each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lodge.png",
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 100,
+      "gold": 145,
       "stars": 0,
       "runtime": "data/buildings/archive.png",
       "image": [
@@ -276,11 +276,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        100,
-        20,
-        25
+        145,
+        85,
+        40
       ],
-      "about": "Protect the knowledge buried beneath the vines.",
+      "about": "Adds carved quartz worth 7 Supplies each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/archive.png",
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 105,
+      "gold": 155,
       "stars": 0,
       "runtime": "data/buildings/observatory.png",
       "image": [
@@ -316,11 +316,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        105,
+        155,
         0,
-        30
+        70
       ],
-      "about": "Follow the stars to the next discovery.",
+      "about": "Unlocks two Sunbursts per expedition.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/observatory.png",
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 110,
+      "gold": 160,
       "stars": 0,
       "runtime": "data/buildings/fountain.png",
       "image": [
@@ -356,11 +356,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        110,
+        160,
         0,
-        33
+        65
       ],
-      "about": "Let the ancient spring flow once more.",
+      "about": "Adds springwater drops worth 6 Provisions each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/fountain.png",
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 120,
+      "gold": 185,
       "stars": 0,
       "runtime": "data/buildings/temple.png",
       "image": [
@@ -396,11 +396,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        120,
-        30,
-        36
+        185,
+        110,
+        75
       ],
-      "about": "The heart of the valley shines again.",
+      "about": "Adds sun gems worth 9 Gold each.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/temple.png",

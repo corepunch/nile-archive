@@ -1,6 +1,6 @@
 {
   "camp": {
-    "about": "Every great discovery begins with a little canvas.",
+    "about": "Unlocks two sticks of Dynamite per expedition.",
     "cost": [0, 6, 8]
   },
   "well": {
@@ -16,28 +16,28 @@
     "cost": [85, 24, 30]
   },
   "gateway": {
-    "about": "A sunlit gathering place brings the valley together.",
-    "cost": [0, 22, 26]
+    "about": "Adds trade coin stacks worth 6 Gold each.",
+    "cost": [85, 34, 36]
   },
   "lodge": {
-    "about": "A warm light after a long day of adventure.",
-    "cost": [70, 25, 0]
+    "about": "Adds grain bundles worth 5 Provisions each.",
+    "cost": [130, 35, 0]
   },
   "archive": {
-    "about": "Protect the knowledge buried beneath the vines.",
-    "cost": [100, 20, 25]
+    "about": "Adds carved quartz worth 7 Supplies each.",
+    "cost": [145, 85, 40]
   },
   "observatory": {
-    "about": "Follow the stars to the next discovery.",
-    "cost": [105, 0, 30]
+    "about": "Unlocks two Sunbursts per expedition.",
+    "cost": [155, 0, 70]
   },
   "fountain": {
-    "about": "Let the ancient spring flow once more.",
-    "cost": [110, 0, 33]
+    "about": "Adds springwater drops worth 6 Provisions each.",
+    "cost": [160, 0, 65]
   },
   "temple": {
-    "about": "The heart of the valley shines again.",
-    "cost": [120, 30, 36]
+    "about": "Adds sun gems worth 9 Gold each.",
+    "cost": [185, 110, 75]
   },
   "log_cabin": {"cost": [200, 0, 13]},
   "apothecary": {"cost": [220, 15, 0]},

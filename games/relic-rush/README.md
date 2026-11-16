@@ -200,13 +200,12 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
 
-Coins pay 4 Gold each. Red berries and green plantains pay 1 Provisions.
-Blue-tied timber and dressed stone pay 2 and 3 Supplies. Confirming the Spring
-Well unlocks water buckets from board 5 at 3 Provisions each. The Workshop
-unlocks cut blocks from board 9 at 5 Supplies each. The Market unlocks ration
-jars from board 10 at 4 Provisions each. An authored story piece keeps its normal
-slot. The result shows any resources still needed for the next restoration.
-Replays earn matched resources and up to 40 Gold for unused moves.
+Coins start at 4 Gold each. Red berries and green plantains pay 1 Provisions.
+Blue-tied timber and dressed stone pay 2 and 3 Supplies. Each confirmed
+restoration unlocks a higher-yield chip or a tool on eligible expeditions.
+Authored story pieces keep their slots. The result shows what the next
+restoration unlocks or what is still needed to afford it. Replays earn
+matched resources and up to 40 Gold for unused moves.
 
 ## Campaign: thirty hex levels
 
@@ -249,21 +248,21 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 
 Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
 
-| # | Building | Price | Purpose in the story |
+| # | Building | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | Expedition camp | 6 Provisions + 8 Supplies | Every great discovery begins with a little canvas. |
+| 1 | Expedition camp | 6 Provisions + 8 Supplies | Two sticks of Dynamite per expedition from board 2. |
 | 2 | Spring well | 100 Gold | Unlocks water buckets worth 3 Provisions each. |
 | 3 | Artisan workshop | 70 Gold + 20 Provisions + 24 Supplies | Unlocks cut blocks worth 5 Supplies each. |
 | 4 | Jungle market | 85 Gold + 24 Provisions + 30 Supplies | Unlocks ration jars worth 4 Provisions each. |
-| 5 | Sunstone courtyard | 22 Provisions + 26 Supplies | A sunlit gathering place brings the valley together. |
-| 6 | Explorer's lodge | 70 Gold + 25 Provisions | A warm light after a long day of adventure. |
-| 7 | Lost-world archive | 100 Gold + 20 Provisions + 25 Supplies | Protect the knowledge buried beneath the vines. |
-| 8 | Star observatory | 105 Gold + 30 Supplies | Follow the stars to the next discovery. |
-| 9 | Jade fountain | 110 Gold + 33 Supplies | Let the ancient spring flow once more. |
-| 10 | Temple of the sun | 120 Gold + 30 Provisions + 36 Supplies | The heart of the valley shines again. |
+| 5 | Sunstone courtyard | 85 Gold + 34 Provisions + 36 Supplies | Trade coin stacks worth 6 Gold each. |
+| 6 | Explorer's lodge | 130 Gold + 35 Provisions | Grain bundles worth 5 Provisions each. |
+| 7 | Lost-world archive | 145 Gold + 85 Provisions + 40 Supplies | Carved quartz worth 7 Supplies each. |
+| 8 | Star observatory | 155 Gold + 70 Supplies | Two Sunbursts per expedition from board 24. |
+| 9 | Jade fountain | 160 Gold + 65 Supplies | Springwater drops worth 6 Provisions each. |
+| 10 | Temple of the sun | 185 Gold + 110 Provisions + 75 Supplies | Sun gems worth 9 Gold each. |
 
-Construction makes the next story beat available. The Spring Well and
-Artisan Workshop change the pieces on expeditions 5–6 and 9 respectively.
+Construction makes the next story beat available. The [economy table](docs/resource-expedition.md#board-rules-and-palette)
+lists the first expedition and currency for each payoff.
 
 The island's **SHOP** adds 86 repeatable buildings and decorations to these
 ten story wonders: buildings, trees, shrubs, flowers, monuments, water gardens,
@@ -296,7 +295,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. All pieces in a long line clear together.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Gold bonus and any remaining cost of the next restoration.
-- Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each tool has two charges per level and costs zero moves. The guide explains mechanics.
+- Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each available tool starts with two charges and costs zero moves. Restore the Camp for Dynamite and the Observatory for Sunburst.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).

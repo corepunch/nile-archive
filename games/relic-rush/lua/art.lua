@@ -15,7 +15,11 @@ A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "suppl
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "broken-cable", "marker"}
 A.separate_rewards = {"note", "broken-cable"}
 A.resource_pieces = {"coin", "berries", "plantains", "timber", "stone", "water", "rations"}
-A.cut_blocks = "tile-sets/resources/4.png"
+A.resource_upgrades = {
+    ["cut-blocks"]="tile-sets/resources/4.png", ["trade-coins"]="tile-sets/resources/0.png",
+    grain="tile-sets/resources/5.png", quartz="tile-sets/relics/4.png",
+    springwater="tile-sets/resources/3.png", ["sun-gem"]="tile-sets/jewels/0.png",
+}
 -- Local comparison art uses the exact source crops and the same board states.
 A.rome_reference = {coin=4, berries=2, plantains=1, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
@@ -86,7 +90,9 @@ function A.load()
     for _, key in ipairs(A.resource_pieces) do
         textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
     end
-    textures["resource-cut-blocks"] = texture.load(A.cut_blocks)
+    for key, path in pairs(A.resource_upgrades) do
+        textures["resource-" .. key] = texture.load(path)
+    end
     local rome_reference = app.arg("rome-reference-art")
     if rome_reference then
         for key, id in pairs(A.rome_reference) do
