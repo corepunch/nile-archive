@@ -298,16 +298,19 @@ end
 -- The header is one row, vertically centred: the wallet capsules and the menu
 -- button share a centre line however tall each is. A capsule's node includes
 -- its icon's overhang to the left of the pill.
-function View:header_layout(caps)
+function View:header_layout(caps, leading_width)
     local cfg, s = self.cfg.header, app.screen()
     local menu, oh = self.hooks.menu and cfg.menu, cfg.overhang
     local right = cfg.align == "right"
-    local key = {cfg.align}
+    local key = {cfg.align, leading_width or 0}
     for _, cap in ipairs(caps) do key[#key + 1] = cap.width or cfg.width end
     key = table.concat(key, ",")
     if self.header_key ~= key then
         local children = {}
         if right then children[1] = {kind = "spacer", grow = 1} end
+        if leading_width then
+            children[#children + 1] = {kind = "custom", id = "leading", width = leading_width, height = cfg.height}
+        end
         for k, cap in ipairs(caps) do
             children[#children + 1] = {kind = "custom", id = "cap" .. k, width = oh + (cap.width or cfg.width), height = cfg.height}
         end
@@ -331,10 +334,10 @@ function View:header_layout(caps)
     return boxes
 end
 
-function View:header()
+function View:header(leading_width)
     local h, cfg, skin = self.hooks, self.cfg.header, self.hooks.skin
     local caps = h.capsules and h.capsules() or {}
-    local boxes = self:header_layout(caps)
+    local boxes = self:header_layout(caps, leading_width)
     self.resource_targets = {}
     for k, cap in ipairs(caps) do
         local node = boxes["cap" .. k]
@@ -346,6 +349,7 @@ function View:header()
         if tapped and cap.note and h.notice then h.notice(cap.note) end
     end
     if h.menu then h.menu(self.menu_bounds) end
+    return boxes.leading
 end
 
 local function round_button(v, center)

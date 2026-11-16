@@ -141,7 +141,7 @@ return ui.skin{
             variants = {
                 goal = {icon_overhang = .24},
                 signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
-                wallet = {em = 16, icon_ratio = 1.14, icon_overhang = .19},
+                wallet = {em = 16, icon_ratio = 1.71, icon_overhang = .375},
             },
         },
 

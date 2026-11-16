@@ -287,11 +287,15 @@ function R.smoke()
         assert(R.g.score > 0, "restart smoke must exercise a partly played board")
         local capsules = R.header_capsules()
         assert(#capsules == 3, "the shared header shows only coins, supplies and food")
+        local boxes = R.town.header_form.boxes
+        assert(boxes.leading and boxes.leading:max().x <= boxes.cap1.x and boxes.cap3:max().x <= boxes.menu.x
+            and boxes.leading:center().y == boxes.menu:center().y,
+            "Moves, resources and Settings fit in the same row")
         for i, slot in ipairs{rules.GOLD, rules.SUPPLIES, rules.PROVISIONS} do
             assert(capsules[i].slot == slot and R.prog.wallet[slot] == shop.replay_wallet[slot]
                 and tonumber(capsules[i].value) == R.prog.wallet[slot] + R.g.earnings[slot],
                 "smoke: the shared header previews live match earnings without banking them")
-            local box = R.town.header_form.boxes["cap" .. i]
+            local box = boxes["cap" .. i]
             for kind, piece in pairs(R.g.resource_yields) do
                 if piece.slot == slot then
                     local target = R.resource_target(kind)

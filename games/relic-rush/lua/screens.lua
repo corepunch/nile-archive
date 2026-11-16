@@ -43,7 +43,7 @@ function R.currency_capsules(balance)
     for i, slot in ipairs(economy.currency_order) do
         local currency = economy.currencies[slot]
         local pending = earned and earned[slot] or 0
-        out[i] = {slot=slot, icon=currency_icon(slot), value=tostring(balance[slot] + pending), width=100,
+        out[i] = {slot=slot, icon=currency_icon(slot), value=tostring(balance[slot] + pending), width=90,
             note=earned and (currency.name .. " from matches is banked on a win.")
                 or (currency.name .. " earned from matches. Spend it on the island.")}
     end

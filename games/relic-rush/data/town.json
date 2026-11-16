@@ -2,10 +2,11 @@
   "background": "#166E77",
   "header": {
     "role": "wallet",
-    "x": 14,
+    "x": 18,
     "height": 32,
-    "gap": 7,
-    "overhang": 6,
+    "gap": 18,
+    "overhang": 12,
+    "moves_width": 66,
     "menu": {"size": 64, "inset": 7, "y": 4}
   },
   "bottom": {

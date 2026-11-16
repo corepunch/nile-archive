@@ -105,18 +105,18 @@ results (`--victory clue --dialog award` previews it).
 ## Shared UI and dialog layers
 
 The island and the board share one wallet and Settings bar. The board shows
-resources earned so far in the same three slots; winning banks them. The
-separate Moves medallion turns red at five moves. Blue cells show the goal
-directly on the board, so there is no objective row or entrance banner.
+Moves at the left of the resource balances. The medallion turns red at five
+moves. Blue plaques mark the board objective. Winning banks the resources
+earned in the three slots.
 The three tools sit along the bottom edge. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Dialogs reuse the engine's forms and
-cached blur. See the [board and wallet review](docs/review/blue-plaque-campaign/README.md)
+cached blur. See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
 and [shared UI API](../../docs/UI_ENGINE.md).
 
 
 ## Result screens and typography
 
-The result screen reveals Discovery Stars, score, rewards and what's next in sequence, with a short animated return to the island. The gold and turquoise Discovery Star badge also identifies the island wallet count. The next step shows the building to restore, a sealed papyrus for the next clue, or the Build hammer after a replay. See the [results and wallet captures](docs/screenshots/review/discovery-stars/README.md).
+The result screen reveals Discovery Stars, score, rewards and what's next in sequence, with a short animated return to the island. The next step shows the building to restore, a sealed papyrus for the next clue, or the Build hammer after a replay. See the [results and wallet captures](docs/screenshots/review/discovery-stars/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 

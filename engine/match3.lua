@@ -206,27 +206,29 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
 
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
-    function R.draw_moves(c, arrive)
-        local r, a = 40 * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
+    function R.draw_moves(c, arrive, radius)
+        radius = radius or 40
+        local scale = radius / 40
+        local r, a = radius * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
         local moves = R.g.moves
         local urgent = moves <= 5 and not R.g.won
         if urgent and not R.reduced_motion then
             gfx.additive(true)
-            gfx.glow(c, r + 14, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
+            gfx.glow(c, r + 14 * scale, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
             gfx.additive(false)
         end
-        gfx.ngon(c + vec2(0, 5), r, 6, a, rgba(3, 20, 18, 150))
+        gfx.ngon(c + vec2(0, 5 * scale), r, 6, a, rgba(3, 20, 18, 150))
         gfx.ngon(c, r, 6, a, rgba(116, 74, 33))
-        gfx.ngon(c, r - 2, 6, a, rgba(236, 196, 112))
-        gfx.ngon(c + vec2(0, 2), r - 5, 6, a, rgba(176, 120, 48))
+        gfx.ngon(c, r - 2 * scale, 6, a, rgba(236, 196, 112))
+        gfx.ngon(c + vec2(0, 2 * scale), r - 5 * scale, 6, a, rgba(176, 120, 48))
         local face = R.skin:color(urgent and "moves_low" or "moves_face")
         local glow = R.skin:color(urgent and "moves_low_glow" or "moves_glow")
-        gfx.ngon(c, r - 7, 6, a, face)
-        gfx.glow(c + vec2(0, -4), r - 12, glow, color.alpha(face, 0))
+        gfx.ngon(c, r - 7 * scale, 6, a, face)
+        gfx.glow(c + vec2(0, -4 * scale), r - 12 * scale, glow, color.alpha(face, 0))
         if arrive < .8 then return end   -- the numbers come with the settled medallion
-        text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17 * arrive), size2(56, 12)), vec2(.5, .5), "MOVES")
-        local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29 * arrive)
-        text.inside(s, rect.centered(c + vec2(0, 5 * arrive), size2(62, 34)), vec2(.5, .5), tostring(moves))
+        text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17 * arrive * scale), size2(56, 12)), vec2(.5, .5), "MOVES")
+        local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29 * arrive * scale)
+        text.inside(s, rect.centered(c + vec2(0, 5 * arrive * scale), size2(62, 34)), vec2(.5, .5), tostring(moves))
     end
 
     function R.goal_target(kind)
@@ -382,10 +384,13 @@ function E.bind_town_board_hud(R)
 
     function R.draw_board_hud()
         if neutral or R.g.hs then return goal_hud() end
-        R.town:header()
+        local box = R.town:header(R.town.cfg.header.moves_width)
         R.board_pause = R.town.menu_bounds
         local arrive = R.intro and R.intro:arrive(.16, 3, .42) or 1
-        if arrive > .05 then R.draw_moves(R.hud_rect:center() - vec2(0, 37), arrive) end
+        if arrive > .05 then
+            if box then R.draw_moves(box:center(), arrive, box.w * .5)
+            else R.draw_moves(R.hud_rect:center() - vec2(0, 37), arrive) end
+        end
     end
 
     function R.goal_target(kind)

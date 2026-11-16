@@ -506,6 +506,10 @@ only their wallet balances in the town and expedition headers. Each currency
 capsule can identify its `slot` in the saved purse. Match particles use the
 icon center for that slot, so a game's presentation can choose a display order.
 
+Set `header.moves_width` in `town.json` to give the expedition's Moves
+medallion the first slot in that row. The shared renderer sizes the medallion
+to that slot and keeps its low-moves feedback.
+
 ## Town building popups
 
 `engine/town.lua` draws the label above a tapped building. The game's
