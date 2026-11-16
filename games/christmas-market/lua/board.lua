@@ -46,9 +46,7 @@ local cell_pos = R.cell_pos
 -------------------------------------------------------------------- drawing
 
 function R.board_piece_texture(kind)
-    local spec = rules.level_of(R.g)
-    local find = spec.story_piece
-    if find and kind == find.kind then return R.board_art["story-" .. find.key] end
+    if R.g.resource_multipliers then return R.board_art["market-" .. kind] end
     return R.relics[kind + 1]
 end
 

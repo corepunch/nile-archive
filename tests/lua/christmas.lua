@@ -11,7 +11,9 @@ local opens = {[6]=1, [9]=2, [15]=3, [21]=4, [27]=5}
 for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')
-    g.won, g.moves, g.earnings = true, 0, {50, 12, 18}
+    local building = journey.wonder_at(level + 1)
+    local cost = building and island.wonders[building].cost or purse()
+    g.won, g.moves, g.earnings = true, 0, {cost[1] + 50, cost[2] + 12, cost[3] + 18}
     assert(rules.progress_reward(p,g,island.wonders), 'First clear must pay')
     local before = p.wallet[1]
     assert(not rules.progress_reward(p,g,island.wonders) and p.wallet[1]==before, 'Cannot pay twice')

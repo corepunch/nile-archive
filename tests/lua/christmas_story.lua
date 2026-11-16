@@ -13,16 +13,18 @@ local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 check(rules.LEVELS==30 and #journey.beats==36,'all three episodes are playable')
 local stocked = rules.game_start(0, 1)
+check(#stocked.spawn_kinds == 4 and stocked.tools[1] == 0, "opening board has two score pieces and two coins")
 local cell = rules.hex_center()
-for kind = 0, 2 do
+for kind = 0, 3 do
     local wave = rules.new_match()
     stocked.tiles[cell], stocked.tools[1] = rules.tile(kind), 1
-    check(rules.game_tool(stocked, 0, cell, wave), "the hammer can collect a regular resource")
+    check(rules.game_tool(stocked, 0, cell, wave), "hammer can hit a regular piece")
     rules.game_apply(stocked, wave)
 end
-check(stocked.earnings[1] == 3 and stocked.earnings[2] == 1 and stocked.earnings[3] == 1,
-      "cleared bells, candy and holly feed the three wallet slots")
-local intro = rules.game_start(3, 1)
+check(stocked.earnings[1] == 8 and stocked.earnings[2] == 0 and stocked.earnings[3] == 0,
+      "only the coins pay on the opening board")
+local intro = rules.game_start(4, 1)
+intro.tools[1] = 1
 local tied
 for _, i in ipairs(rules.level_of(intro).oil) do
     if intro.chain[i] > 0 then tied = i; break end
@@ -63,17 +65,14 @@ for level=1,30 do
           "tinsel is the only campaign blocker")
     if spec.story_piece then
         finds = finds + 1
-        local i = spec.oil[1]
-        local kind = spec.story_piece.kind
-        local wave = rules.new_match()
-        g.chain[i], g.tiles[i] = 0, rules.tile(kind)
-        check(g.goal_kind == kind and not g.resource_yields[kind], "a story object replaces its resource kind")
-        check(rules.game_tool(g, 0, i, wave), "the story piece uses ordinary tool matches")
-        rules.game_apply(g, wave)
-        check(g.relics == 1 and g.oil[i] == 0 and g.earnings[1] + g.earnings[2] + g.earnings[3] == 0,
-              "the story piece clears its blue pane and does not pay the replaced resource")
+        check(not spec.story_piece.kind and not g.goal_kind, "story finds leave all the board's goods in play")
     end
     g.won=true;g.moves=0
+    local building = journey.wonder_at(level)
+    if building then
+        local price = island.wonders[building].cost
+        g.earnings = {price[1], price[2], price[3]}
+    end
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     for z=1,5 do c:unlock(z,p.wallet) end
     local kind=journey.wonder_at(level)
@@ -87,12 +86,12 @@ for level=1,30 do
             end
             save.write("old-market-prices", function(s) s:ints("wallet", purse(100)) end)
             save.read("old-market-prices", wallet)
-            check(R.prog.wallet[1] == 100 and R.prog.wallet[2] == 18 and R.prog.wallet[3] == 12, "the revised bakery has the legacy Gold and enough new materials")
+            check(R.prog.wallet[1] == 300 and R.prog.wallet[2] == 0 and R.prog.wallet[3] == 200, "the revised bakery has enough Gold and Supplies")
             check(island.can_buy(c, R.prog.wallet, 7, 2), "the bakery can be built before continuing")
             check(not island.can_buy(c, R.prog.wallet, 7, 15), "the reserved grant cannot buy a lamp post")
             save.write("new-market-prices", wallet)
             save.read("new-market-prices", wallet)
-            check(R.prog.wallet[1] == 100 and R.prog.wallet[2] == 18 and R.prog.wallet[3] == 12, "saving the migrated wallet prevents a second top-up")
+            check(R.prog.wallet[1] == 300 and R.prog.wallet[2] == 0 and R.prog.wallet[3] == 200, "saving the migrated wallet prevents a second top-up")
         end
         check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
         check(island.can_buy(c,p.wallet,p.level,kind-1),'earned stall is affordable')
@@ -109,7 +108,7 @@ for level=1,30 do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(finds == 6, "six story wishes have authored replacement pieces")
+check(finds == 6, "six story wishes have authored finds")
 check(c.count==10 and c.open==63 and p.wallet[4]==90,'thirty clears build ten stalls and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
 

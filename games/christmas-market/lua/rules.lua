@@ -4,24 +4,25 @@ local campaign = require("campaign")
 local economy = require("economy")
 local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
 local flags = match3.LINE_MATCHES
-if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI | match3.COLOR_TOOL end
-local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=6, match_min=3,
+if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI end
+local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=reference and 6 or #economy.pieces + 1, match_min=3,
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
-    kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
+    sunburst_targets=not reference and economy.lightning_targets,
+    kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS
 local start = M.game_start
-function M.game_start(level, seed)
-    local spec = M.levels[math.max(0, math.min(level, LEVELS - 1)) + 1]
-    return start(level, seed, not reference and economy.board_yields(spec))
+function M.game_start(level, seed, built)
+    if reference then return start(level, seed) end
+    local yields, loadout = economy.loadout(built or require("journey").earned(level), level + 1, seed or 1)
+    return start(level, seed, yields, loadout)
 end
 M.wonder_levels=campaign.wonder_levels
 M.wonder_at=require("journey").wonder_at
 
 ------------------------------------------------------------------- economy
 
-M.GOLD, M.TREATS, M.SUPPLIES, M.STARS = economy.GOLD, economy.TREATS, economy.SUPPLIES, economy.STARS
-M.MOVE_GOLD, M.MAX_MOVE_GOLD = 2, 40
+M.GOLD, M.FOOD, M.SUPPLIES, M.STARS = economy.GOLD, economy.FOOD, economy.SUPPLIES, economy.STARS
 M.LIVES, M.LIFE_INTERVAL = 5, 1800
 function M.refill_lives(p, now)
     p.lives=num.clampi(p.lives or M.LIVES,0,M.LIVES)
@@ -42,17 +43,15 @@ end
 
 function M.reward_breakdown(g, wonders, progress)
     local first = not progress or g.level == progress.level
-    local bonus = math.min(M.MAX_MOVE_GOLD, math.max(0, g.moves) * M.MOVE_GOLD)
     local kind = M.wonder_at(g.level + 1)
     local w = kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    local reward = matched + purse(bonus, 0, 0, first and 3 or 0)
-    local delivery = purse()
-    if first and w then
+    local reward = matched + purse(0, 0, 0, first and 3 or 0)
+    if first and w and app.arg("debug-walkthrough") then
         local available = (progress and progress.wallet or purse()) + reward
-        for slot in ipairs(economy.currencies) do delivery[slot] = math.max(0, w.cost[slot] - available[slot]) end
+        for slot in ipairs(economy.currencies) do reward[slot] = reward[slot] + math.max(0, w.cost[slot] - available[slot]) end
     end
-    return {first=first, wonder=w, matched=matched, delivery=delivery, bonus=bonus, total=reward+delivery}
+    return {first=first, wonder=w, total=reward}
 end
 
 function M.level_reward(g, wonders, progress)

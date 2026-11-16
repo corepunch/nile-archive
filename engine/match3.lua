@@ -348,6 +348,8 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     function R.draw_board_tools(inp)
         if R.intro and R.intro:arrive(.05, 2.8, .58) <= 0 then return end
         for k = 0, 2 do
+            local meter = R.g.tool_meter and R.g.tool_meter[k + 1]
+            if R.g.tool_meter and not meter then goto next_tool end
             local r = R.board_tool_bounds(k)
             local x, y = r:center().x, r.y
             local charges = R.g.tools[k + 1]
@@ -363,7 +365,12 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             gfx.circle(vec2(x + 31, y + 4) + up, 14, rgba(116, 74, 33))
             gfx.circle(vec2(x + 31, y + 4) + up, 12, charges > 0 and rgba(46, 112, 70) or rgba(75, 94, 80))
             R.say(tostring(charges), rect(x + 18, y - 9, 26, 26):offset(up), 16, PAL_CREAM)
+            if meter then
+                R.say(("%d/%d"):format(meter, R.g.tool_threshold),
+                    rect(x - 37, drawn.y + drawn.h + 2, 74, 16), 12, PAL_CREAM)
+            end
             if ui.hit(r, 0).clicked and R.phase == R.PH_IDLE then R.select_tool(k) end
+            ::next_tool::
         end
     end
 end
@@ -388,7 +395,7 @@ function E.bind_town_board_hud(R)
     if not neutral and R.currency_capsules then
         function R.resource_target(kind)
             local piece = R.g.resource_yields and R.g.resource_yields[kind]
-            local box = piece and R.town.header_form and R.town.header_form.boxes["cap" .. (piece.slot + 1)]
+            local box = piece and piece.slot and R.town.header_form and R.town.header_form.boxes["cap" .. (piece.slot + 1)]
             if not box then return end
             local header = R.town.cfg.header
             local capsule = rect(box.x + header.overhang, box.y, box.w - header.overhang, box.h)
@@ -710,6 +717,7 @@ function E.new(config)
     function M.game_matches(g, m, preferred, alternate)
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
+        m.match_lengths = g.resource_multipliers and {}
         if flags & E.LINE_MATCHES ~= 0 then
             shapes.matches(M,g,m,preferred,alternate,MATCH_MIN,flags & E.NO_SPECIALS ~= 0,rhombus_matches,
                 function(board,i) return not locked(board,i) end,equal)
@@ -884,7 +892,18 @@ function E.new(config)
                             local normal = g.tiles[i].special == NORMAL
                             if normal and g.resource_yields then
                                 local resource = g.resource_yields[k]
-                                if resource then g.earnings[resource.slot] = g.earnings[resource.slot] + resource.amount end
+                                if resource then
+                                    local length = m.match_lengths and m.match_lengths[i]
+                                    local amount = resource.amount * (length and g.resource_multipliers[length] or 1)
+                                    if resource.slot then
+                                        g.earnings[resource.slot] = g.earnings[resource.slot] + amount
+                                    elseif resource.tool and m.ordinary[i] then
+                                        local tool = resource.tool
+                                        local charge = g.tool_meter[tool] + amount
+                                        g.tools[tool] = g.tools[tool] + charge // g.tool_threshold
+                                        g.tool_meter[tool] = charge % g.tool_threshold
+                                    end
+                                end
                             end
                             if normal and M.is_goal_kind(g,k) then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
                             if normal and (kind_flags[k] or 0) & E.WOOD ~= 0 then g.wood, g.last_wood = g.wood + 1, g.last_wood + 1 end
@@ -1025,6 +1044,9 @@ function E.new(config)
         c.oil = g.oil and copy_array(g.oil)
         c.stone_hp = copy_array(g.stone_hp)
         c.tools = {g.tools[1], g.tools[2], g.tools[3]}
+        if g.tool_meter then
+            c.tool_meter = {[1]=g.tool_meter[1], [2]=g.tool_meter[2], [3]=g.tool_meter[3]}
+        end
         if g.earnings then c.earnings = {table.unpack(g.earnings)} end
         return c
     end
@@ -1162,7 +1184,7 @@ function E.new(config)
     end
     local game_shuffle = M.game_shuffle
 
-    function M.game_start(lvl, seed, resource_yields)
+    function M.game_start(lvl, seed, resource_yields, loadout)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
             tiles = {}, active = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
@@ -1177,7 +1199,12 @@ function E.new(config)
         local l = M.levels[lvl + 1]
         g.resource_yields = resource_yields
         if g.resource_yields then g.earnings = {0, 0, 0} end
-        if l.omit_kind ~= nil then
+        if loadout then
+            g.spawn_kinds = loadout.kinds
+            g.resource_multipliers = loadout.multipliers
+            g.tool_threshold, g.tool_meter = loadout.tool_threshold, loadout.tool_meter
+            g.tools = {0, 0, 0}
+        elseif l.omit_kind ~= nil then
             -- The palette contains stable colour slots. Board copies share it read-only.
             assert(math.type(l.omit_kind) == "integer" and l.omit_kind >= 0
                 and l.omit_kind < COLORS and COLORS > 3, "invalid omitted match3 kind")
@@ -1341,10 +1368,13 @@ function E.new(config)
         if color_tool and not equal(g, cell, cell) then return false end
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
+        m.match_lengths = nil
         g.tools[tool + 1] = g.tools[tool + 1] - 1
         g.combo = 0
         if tool == 0 then m.mask[cell], m.direct[cell] = true, true
         elseif tool == 1 then mark_area(g, m, cell, 1)
+        elseif config.sunburst_targets and g.tool_meter and g.tool_meter[3] then
+            m.mask = config.sunburst_targets(g, cell, CELLS)
         elseif color_tool then mark_color(g, m, g.tiles[cell].kind)
         else for z = 0, 2 do mark_line(g, m, cell, z) end end
         count_hits(m)
@@ -1358,6 +1388,8 @@ function E.new(config)
         local m = {mask = {}, direct = {}}
         if tool == 0 then m.mask[cell] = true
         elseif tool == 1 then mark_area(g, m, cell, 1)
+        elseif config.sunburst_targets and g.tool_meter and g.tool_meter[3] then
+            return config.sunburst_targets(g, cell, CELLS)
         elseif flags & E.COLOR_TOOL ~= 0 then
             if not equal(g, cell, cell) then return nil end
             mark_color(g, m, g.tiles[cell].kind)
@@ -1511,6 +1543,8 @@ function E.new(config)
             R.tool = R.tool == k and -1 or k
             R.selected = -1
             R.notice(R.tool < 0 and "Tool put away." or R.tool_notes[k + 1])
+        elseif R.g.tool_meter then
+            R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Build its stall to unlock this tool.")
         else R.notice("No charges left. More tools next expedition.") end
     end
     local function tap_cell(at)

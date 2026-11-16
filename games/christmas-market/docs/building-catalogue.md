@@ -22,13 +22,11 @@ The build shop scrolls through the selected category. Its rows show each object'
 sprite, footprint, ownership and price, with a disabled action for unavailable
 stock. The category arrows stay above the list.
 
-Prices show the Gold, Treats and Supplies each purchase takes. A lamp post
-uses 20 Gold and 4 Supplies. A snowman takes 3 Treats and 3 Supplies. The bakery uses 75 Gold, 18 Treats and 12 Supplies.
-The first clear that earns a stall adds a neighbor's delivery if the wallet
-needs more to cover its price. The shop reserves those resources until the
-player confirms the build. Decorations use the spare balance. Existing saves
-carry their Gold forward and receive what is needed for any previously earned
-and unbuilt stalls.
+Prices show the Gold, Food and Supplies deducted at confirmed placement.
+The bakery costs 300 Gold and 200 Supplies. The shop reserves the cost of
+earned stalls when checking decoration purchases. Older saves retain their
+wallet and buildings and can afford any previously earned stall.
+[First 20 wishes and price sources](resource-prototype.md)
 
 ## Source and pipeline
 
@@ -104,16 +102,16 @@ A full render of all 37 objects takes about two minutes on four CPU cores.
 
 ## Runtime inventory
 
-| ID / key | Name | Category | Tiles | Cost (Gold / Treats / Supplies) | Stars | Reviewed city capture |
+| ID / key | Name | Category | Tiles | Cost (Gold / Food / Supplies) | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
-| 0 / `arch` | Welcome arch | wonder | 3 x 3 | 24 / 0 / 6 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 55 / 0 / 18 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 75 / 18 / 12 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 45 / 13 / 6 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 100 / 0 / 26 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 65 / 0 / 22 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 90 / 0 / 27 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 7 / `carousel` | Reindeer carousel | wonder | 3 x 3 | 145 / 0 / 45 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 0 / `arch` | Welcome arch | wonder | 3 x 3 | 50 / 0 / 0 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 100 / 0 / 100 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 300 / 0 / 200 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 400 / 0 / 500 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 300 / 200 / 300 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 500 / 400 / 400 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 500 / 500 / 600 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 7 / `carousel` | Reindeer carousel | wonder | 3 x 3 | 700 / 600 / 700 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 8 / `rink` | Winter skating rink | wonder | 3 x 3 | 160 / 20 / 42 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 9 / `tree` | Christmas tree | wonder | 3 x 3 | 175 / 25 / 50 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 10 / `firs` | Lantern firs | building | 2 x 2 | 55 / 0 / 8 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |

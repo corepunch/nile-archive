@@ -7,7 +7,6 @@ local match3 = require("match3")
 local rules = require("rules")
 local economy = require("economy")
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
-local RELIC_IDOL = rules.RELIC_IDOL
 local rgba = color
 local P, pp = R.P, R.pp
 local rrect, picture, picture_fit = R.rrect, R.picture, R.picture_fit
@@ -19,11 +18,11 @@ function R.star_icon(center, radius)
 end
 local star_icon = R.star_icon
 
-function R.wallet_icons() return {R.life_art, R.relics[RELIC_IDOL + 1], R.hud_art.complete} end
+function R.wallet_icons() return {R.life_art, R.board_art["market-3"], R.hud_art.complete} end
 function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 
 local function currency_icon(slot)
-    return R.relics[economy.currencies[slot].kind + 1]
+    return R.board_art["market-" .. economy.currencies[slot].kind]
 end
 
 function R.currency_capsules(balance)
@@ -103,10 +102,6 @@ local function result_screen()
         reward_chip(l.chips:col(#economy.currencies, slot - 1, 8), currency_icon(slot),
             ("+%d"):format(reward[slot]), currency.name)
     end
-    local delivery = R.currency_prices(breakdown.delivery)
-    if #delivery > 0 then
-        say("Market delivery " .. R.cost_text(delivery), rect(l.chips.x, 554, l.chips.w, 16), 11, PAL_CREAM)
-    end
     set_paint(s)
     s = section(.9, .26, 8)
     rrect(l.next, 14, rgba(240, 225, 180))
@@ -116,6 +111,11 @@ local function result_screen()
     else star_icon(vec2(l.next.x + 40, l.next:center().y), 22) end
     local heading = find and "RECOVERED  ·  " .. find.name or first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE"
     local next_name = first and (w and w.name or "The market has news") or "Build shop"
+    if first and w then
+        local stock = R.prog.wallet + reward
+        local value = stock:covers(w.cost) and "Ready to build" or "Replay a wish for more goods"
+        say(value, rect(l.chips.x, 554, l.chips.w, 16), 13, PAL_CREAM)
+    end
     say_left(heading, rect(l.next.x + 84, l.next.y + 10, l.next.w - 96, 18), 13, PAL_CREAM)
     say_left(next_name, rect(l.next.x + 84, l.next.y + 31, l.next.w - 96, 30), 24, PAL_GOLD)
     set_paint(s)
@@ -132,24 +132,24 @@ R.dialogs[R.OV_RESULT] = result_screen
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
     {id="neighbors", title="Line up three or more", description="Match treats in a straight line along any of the three axes.",
-     icon={kind=0}},
-    {id="panes", title="Light the blue panes", description="Match on a blue pane or hit it with a tool to light it. Light them all to finish.",
+     icon={front="market-3"}},
+    {id="panes", title="Light the panes", description="Match on a pane or hit it with a tool to light it. Light them all to finish.",
      icon={back="tile-tablet-single"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
-     icon={back="tile-tablet-single", kind=3, front="chain"}},
-    {id="supplies", title="Stock the market", description="Bells earn Gold, candy and gingerbread earn Treats, and holly, mittens and baubles earn Supplies.",
-     icon={kind=2}},
-    {id="finds", title="Story finds", description="A story object sometimes takes a regular piece's place. Light the panes to bring it back to Bellmere.",
-     icon={front="story-letter"}},
-    {id="hammer", title="Hammer", description="Hit one treat or its tinsel.", icon={tool="pickaxe"}},
-    {id="firecracker", title="Firecracker", description="Hit a treat and all its neighbors.", icon={tool="dynamite"}},
-    {id="wand", title="Star wand", description="Pick a treat and hit every treat of that kind.", icon={tool="sunburst"}},
+     icon={back="tile-tablet-single", piece="market-1", front="chain"}},
+    {id="supplies", title="Stock the market", description="Coins pay Gold. After you build stalls, their wood, food and other goods appear on the board. Holly and mittens earn score.",
+     icon={front="market-3"}},
+    {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",
+     icon={front="market-4"}},
+    {id="double-panes", title="Green double panes", description="A green pane turns blue after the first hit. Match again to light it.", icon={back="tile-tablet-double"}},
+    {id="hammer", title="Hammer", description="Build Theo's workshop and match toy hammers to charge a hit on one cell.", icon={tool="pickaxe"}},
+    {id="wand", title="Lantern lightning", description="Build the candle shop and match lantern stars to charge a strike across 15 cells.", icon={tool="sunburst"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()
     local layer = rect.centered(at, size2(48, 48))
     if icon.back then picture(R.board_art[icon.back], layer, 255) end
-    if icon.kind then R.draw_relic(rules.tile(icon.kind), pp(at), P.scale, 255 * P.alpha, 1) end
+    if icon.piece then picture(R.board_art[icon.piece], layer, 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end
 end

@@ -95,7 +95,12 @@ for level = 1, rules.LEVELS do
     local before = R.prog.wallet[1]
     R.claim_reward()
     check(R.prog.level == level and R.prog.wallet[1] == before + reward.total[1], 'win pays once and advances')
-    earned, bonus = earned + reward.total[1], bonus + reward.bonus
+    earned, bonus = earned + reward.total[1], bonus + (reward.bonus or 0)
+    if rules.FOOD then
+        local income, wallet = reward.total, R.prog.wallet
+        print(("wish %02d · earned %d/%d/%d · stock %d/%d/%d · %d moves left"):format(
+            level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], R.g.moves))
+    end
     if journey.clear_before_result and not first_exchange then scene(after) end
     local kind = journey.wonder_at(level)
     if kind then

@@ -31,7 +31,14 @@ function S.matches(M,g,m,preferred,alternate,minimum,no_specials,rhombus_matches
                 if not equal(g,i,M.hex_neighbor(i,axis+3)) and equal(g,i,M.hex_neighbor(M.hex_neighbor(i,axis),axis)) then
                     local cells,c={},i
                     while equal(g,i,c) do cells[#cells+1]=c;c=M.hex_neighbor(c,axis) end
-                    if #cells>=minimum then add(cells,#cells,axis,false) end
+                    if #cells>=minimum then
+                        add(cells,#cells,axis,false)
+                        if m.match_lengths then
+                            for _, cell in ipairs(cells) do
+                                m.match_lengths[cell] = math.max(m.match_lengths[cell] or 0, #cells)
+                            end
+                        end
+                    end
                 end
             end
             if rhombus_matches and minimum==3 then

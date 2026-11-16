@@ -164,8 +164,9 @@
     "data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
     "data/fonts/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
-    "data/game.json": "afb02ae0cacaf89d5335d087c656b05900376be485476c0e10197139287d5231",
+    "data/game.json": "917f57af6fec289e405df9f654704e95864032d8651fc2bdd4e3944184b7320a",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
+    "data/market-goods.png": "374fe50b734c2be447e3f67c2a0380b3052b9c7133c3c4688151db61087fe268",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
     "data/match3.png": "67e46a38deb46b59513f41a539019d4b525cadf5c0fd73e443be5d630de88a5b",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
@@ -564,7 +565,6 @@
     "frames": {
       "cocoa": {
         "level": 9,
-        "kind": 1,
         "crop": [
           0,
           0,
@@ -575,7 +575,6 @@
       },
       "scarf": {
         "level": 16,
-        "kind": 3,
         "crop": [
           512,
           0,
@@ -586,7 +585,6 @@
       },
       "letter": {
         "level": 19,
-        "kind": 5,
         "crop": [
           1024,
           0,
@@ -597,7 +595,6 @@
       },
       "ribbon": {
         "level": 24,
-        "kind": 1,
         "crop": [
           0,
           512,
@@ -608,7 +605,6 @@
       },
       "telegram": {
         "level": 25,
-        "kind": 3,
         "crop": [
           512,
           512,
@@ -619,7 +615,6 @@
       },
       "lantern": {
         "level": 27,
-        "kind": 0,
         "crop": [
           1024,
           512,
@@ -659,5 +654,26 @@
     "decoration_review": "docs/review/board-frame-decorations/front.md",
     "layout": "lua/board_frame_atlas.lua",
     "reference": "engine/art/board-frame/rim-attachment-guide.png"
+  },
+  "market_goods": {
+    "source": "art/market-goods/source.png",
+    "prompt": "art/market-goods/prompt.txt",
+    "runtime": "data/market-goods.png",
+    "registration": "tools/prepare_market_goods.py",
+    "review": "docs/screenshots/review/cradle-market/atlas.jpg",
+    "frames": [
+      "holly",
+      "mitten",
+      "silver coin",
+      "gold coin",
+      "firewood",
+      "toy hammer",
+      "packing blocks",
+      "gingerbread",
+      "milk",
+      "winter apple",
+      "lantern star",
+      "cocoa"
+    ]
   }
 }

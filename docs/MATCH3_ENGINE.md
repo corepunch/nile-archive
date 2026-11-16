@@ -92,6 +92,14 @@ restoration economy. Matching and input do not live in either game.
 Optional stones, deliveries, carpet and oil extend these descriptors. Their exact schema, timing,
 artwork and board-design rationale are in [Match-3 elements](MATCH3_ELEMENTS.md).
 
+Resource campaigns can pass a loadout to `game_start`. Its `kinds` feed
+both the seeded opening and refills. Its `multipliers` apply to the longest
+straight match through each clearing piece. Resource entries credit a
+wallet `slot` or a `tool` meter. An ordinary match can fill a tool meter
+and turn each full meter into one charge. Tool hits still earn the base
+wallet yield. A game can supply `sunburst_targets` for the earned tool
+so the preview and the hit share the same cell mask.
+
 ## Diagonal refill
 
 A gravity step moves each gem at most one downward hex edge. A gem falls

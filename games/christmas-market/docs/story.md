@@ -459,33 +459,33 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 
 ### Story finds and market resources
 
-| Wish | Piece that changes for this board | What it does in town |
+| Wish | First-clear result | What it does in town |
 | --- | --- | --- |
-| 9 | Red cocoa mug in place of candy cane | It becomes the cup Mrs Alder keeps available at the cocoa kiosk. |
-| 16 | Blue practice scarf in place of mitten | Pip gives the scarf he learned on to the market. The red scarf is for his mum. |
-| 19 | Brown envelope in place of gingerbread | The candle-shop lamp picks out the letter behind the postbox lining. |
-| 24 | Red wish ribbon in place of candy cane | The first-clear painting shows Noelle's childhood ribbon, which Rosa kept. Agnes tells Noelle who brought it out. |
-| 25 | Blue telegram in place of mitten | The message gives Pip a time to wait for and prompts the promise to light the path. |
-| 27 | Golden lantern in place of bell | Fenwick lends a lamp that goes at the bend in the station path. |
+| 9 | Cocoa mug | Mrs Alder keeps a cup available at the cocoa kiosk. |
+| 16 | Blue practice scarf | Pip gives the scarf he learned on to the market. The red scarf is for his mum. |
+| 19 | Brown envelope | The candle-shop lamp picks out the letter behind the postbox lining. |
+| 24 | Red wish ribbon | The first-clear painting shows Noelle’s childhood ribbon, which Rosa kept. Agnes tells Noelle who brought it out. |
+| 25 | Blue telegram | Pip learns when to wait for the train. The neighbors promise to light the path. |
+| 27 | Borrowed lantern | Fenwick lends a lamp for the bend in the station path. |
 
-Blue panes decide when the wish is complete. On these boards one kind is a
-story object and its match does not pay the regular kind's resources. The
-first clear brings the item home and advances the scene through its usual
-checkpoint. Replays bank the ordinary resources matched on the board.
-The scene and the shop describe the same work. Treats stock the bakery and
-the cocoa counter, and Supplies pay for wood, tinsel, cloth and lamps. A
-neighbor's delivery makes up any shortfall for the next earned stall.
+Light the panes to finish a board. The first clear shows the find and
+advances its scene at the normal story checkpoint. Replays bank matched
+goods. The arch adds the offcuts that pay for Theo’s lumber workshop.
+The cocoa kiosk starts supplying Food, which helps open Henrik’s workshop.
+The candle shop both charges the lantern tool and lights the undelivered
+letter. The [prototype](resource-prototype.md) traces these purchases
+against the two Rome references.
 
 ## Implementation
 
-- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Gold, Treats and Supplies. A first clear also pays Christmas Stars.
+- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Gold, Food and Supplies. A first clear also pays Christmas Stars.
 - **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. Players open regions from their markers and keep their Stars. Pip's region lines replace Noelle's one repeated line.
 - **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). Most scenes play over the live market.
 - **Story floors:** The first clears of 24, 25 and 28 show the finished board painting, then play the existing scene over it before the reward card. Collecting the reward acknowledges the scene. Replaying the wish uses the ordinary floor. The paintings and stage captures are in the [asset catalogue](asset-catalogue.md#story-floors).
 - **The cast** is in `lua/narrative.lua`. Noelle's automatic line when a stall is placed is gone; the tap card and bubble carry `about`, and the five changing bubbles above.
 - **`R.finale`** is the level 30 scene. Its end leads to the "To be continued" screen.
 - **Saves:** stable `narrative.v1.<phase>-<level>` keys are written only when a scene finishes or is skipped, so an unfinished scene replays after a reload. Replays are silent. Version 2 saves keep their level, wallet, regions and every stall, already-built later stalls count when their scene arrives, and a short recap bridges the old lines.
-- **Boards:** every wish uses fixed lantern panes. Level 20 places them on opposite sides of the square and level 30 arranges them like a fir. Levels 18 and 28 lighten the work for their scenes. See the [board progression](board-progression.md).
+- **Boards:** every wish uses fixed lantern panes. Level 20 places double panes across the square and level 30 arranges its panes like a fir. Level 28 gives the wait for the last train more space. See the [board progression](board-progression.md).
 - **Checked in the game:** the longest line, all five supporting portraits, a shout, the last finale line and the end screen, at 480×900 and 390×844. The longest scene (15 lines) plays through in the campaign smoke run.
 
 ## Changelog
@@ -505,3 +505,5 @@ neighbor's delivery makes up any shortfall for the next earned stall.
 - 2026-11-16: Connected six first-clear story objects to the live pieces. The extra mug, a practice scarf and a borrowed lantern carry the same act of hospitality through the market, and matched goods pay for its stalls.
 - 2026-11-16: The lantern panes to light are cranberry red instead of slate blue, beside spruce green; the lesson and guide say “red panes”. Dialogue is unchanged.
 - 2026-11-16: The board now uses the shared Cradle of Rome tiles: parchment cells and teal-blue panes to light, which return to parchment when cleared. The lesson and guide say “blue panes” again. Dialogue is unchanged.
+
+- 2026-11-16: Connected the first twenty wishes to the Rome I purchase ladder. Existing dialogue follows first clears and confirmed placements. Story finds appear on results while the board maintains its regular resource pool.

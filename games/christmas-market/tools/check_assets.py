@@ -64,6 +64,10 @@ def main():
     subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
                     '--game', ROOT.name, '--check', str(ROOT/frame['stone'])], check=True)
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
+    goods = manifest['market_goods']
+    assert (ROOT/goods['prompt']).is_file() and (ROOT/goods['review']).is_file()
+    assert png(ROOT/goods['runtime']) == ((512, 384), 6) and len(set(goods['frames'])) == 12
+    subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}
     for kind in ('build', 'play', 'levels'):

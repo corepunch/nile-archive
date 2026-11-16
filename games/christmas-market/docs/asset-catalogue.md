@@ -2,10 +2,8 @@
 
 ## Themed board art
 
-The six live chips are market goods. Their silhouettes and dominant colours
-make the gold bell, red candy cane, green holly, sky-blue knitted mitten, plum
-bauble and toasted gingerbread readable over both parchment and deep blue.
-The bell also identifies Gold in the wallet and shop.
+The live campaign uses [the Market goods atlas](#market-goods-and-tools).
+The earlier festive set remains available to the inherited preview surfaces.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -109,40 +107,53 @@ Reproduce draft runtime extraction with `python3 games/christmas-market/tools/pr
 
 The font and its license are inherited unmodified from Relic Rush in `data/fonts/`. Gameplay modules were adapted locally from Relic Rush; its original archaeological paintings are not used in this draft.
 
-## Town HUD
+## Market goods and tools
 
-Lives, Gold, Treats, Supplies and Christmas Stars share the top wallet on
-the market and puzzle. Lives use the existing heart, Gold uses the bell,
-Treats use gingerbread, Supplies use holly, and Stars use the completion
-medal. On a board the three resource totals include the current attempt.
-On a winning match the result card shows the resources to bank, including
-any delivery for the next stall. The shop uses the same three resource icons
-to show prices. [Wallet and shop review](screenshots/review/resources-and-finds/README.md).
+All twelve pieces were authored together in one transparent ImageGen
+[master](../art/market-goods/source.png) from the [recorded prompt](../art/market-goods/prompt.txt).
+The registrar crops the 4×3 bays, trims transparent borders, fits each
+object to the inner flat-top mask at up to 112 px, centers the result in
+a 128 px slot and preserves authored alpha. On the board all pieces share
+the idle sprite, selection and hint overlays, and the standard swap and
+clear poses. The existing hammer and star controls use the already authored
+normal, selected, pressed, hover and disabled art.
+
+| Slot | Piece | Role |
+| ---: | --- | --- |
+| 0 | Holly | Score |
+| 1 | Red mitten | Score |
+| 2 | Silver coin | 3 Gold |
+| 3 | Gold coin | 5 Gold |
+| 4 | Firewood | 5 Supplies |
+| 5 | Toy hammer | 3 Hammer charge |
+| 6 | Packing blocks | 7 Supplies |
+| 7 | Gingerbread | 5 Food |
+| 8 | Milk | 3 Food |
+| 9 | Winter apple | 6 Food |
+| 10 | Lantern star | 3 Lightning charge |
+| 11 | Cocoa | 4 Food |
+
+The runtime atlas is `data/market-goods.png`. The Gold coin, firewood and
+cocoa sprites identify their wallets and appear on prices and result
+cards. On the board, each spendable total includes goods earned on
+the current attempt. The [review](screenshots/review/cradle-market/README.md)
+shows the full atlas, the board at both phone sizes and the double panes.
+
+```sh
+python3 games/christmas-market/tools/prepare_market_goods.py
+python3 tools/hex_tile_art.py games/christmas-market/data/market-goods.png --atlas 4x3 --mode object --strict --overlay-dir /tmp/market-hex-review
+```
 
 ## Story pieces
 
-One normal chip kind is replaced for an entire wish, including refills.
-The find uses a shared selection pose and overlay, and regular chain art
-can cover it. The first-clear card uses the same isolated artwork.
-
-| Wish | Runtime `data/story-pieces/` | Replaces |
-| --- | --- | --- |
-| 9 | `cocoa.png` | Red candy cane |
-| 16 | `scarf.png` | Blue mitten |
-| 19 | `letter.png` | Gingerbread |
-| 24 | `ribbon.png` | Red candy cane |
-| 25 | `telegram.png` | Blue mitten |
-| 27 | `lantern.png` | Gold bell |
-
-ImageGen painted all six in one [transparent atlas](../art/story-pieces/source.png)
-using the [prompt](../art/story-pieces/prompt.txt), the
-[layout guide](../art/festive-pieces/layout.png) and the
-[ordinary festive sheet](../art/festive-pieces/source.png) as style reference.
-The [manifest](../art/manifest.json) records all six 512 px bays, active wishes,
-replacement kinds, runtime paths and canonical mask. Reproduce with
-`python3 games/christmas-market/tools/prepare_story_pieces.py`. The exporter
-scales the painted area using the same fit as a normal piece and preserves
-its authored alpha. [Board and first-clear capture review](screenshots/review/resources-and-finds/README.md).
+Six authored images appear on the first-clear results card. The finds
+belong to wishes 9, 16, 19, 24, 25 and 27. The card pulls the matching
+picture from `data/story-pieces/`. The [manifest](../art/manifest.json)
+records the original ImageGen sheet, prompt, bays, wishes and runtime PNGs.
+Reproduce the exports with
+`python3 games/christmas-market/tools/prepare_story_pieces.py`. The
+[letter result](screenshots/review/cradle-market/letter-result-390.jpg)
+shows the picture together with that wish’s three earnings.
 
 ## Puzzle backdrop
 

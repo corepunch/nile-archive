@@ -1,4 +1,4 @@
--- Each wish has a fixed set of blue panes. Only those panes need clearing.
+-- Each wish has a fixed set of panes. Only those panes need clearing.
 -- Axial coordinates follow the engine's zero-based cell IDs.
 local function cell(q, r)
     local i = 0
@@ -21,7 +21,7 @@ local function level(name, moves, chains, mask, positions)
         -- Rank panes first so tinsel covers some of the blue objectives.
         terrain[i + 1] = #oil - 100
     end
-    return {name=name, lesson="Light every blue pane.", moves=moves, score=0, relics=0,
+    return {name=name, lesson="Light every pane.", moves=moves, score=0, relics=0,
         chains=chains, ice=0, mask=mask, terrain=terrain, oil=oil, oil_still=true,
         goals={"oil"}, floor_marks=floor_marks}
 end
@@ -40,42 +40,89 @@ local levels = {
         {{-1,0}, {-1,1}, {0,-1}, {0,0}, {0,1}, {1,-1}, {1,0}}),
     level("Lumber Lane", 24, 0, bowl_mask,
         {{-2,0}, {-2,1}, {-1,0}, {-1,1}, {0,0}, {0,1}, {1,-1}, {2,-1}}),
-    level("Gingerbread Swirl", 26, 0, bowl_mask,
-        {{-2,1}, {-1,0}, {-1,1}, {0,-1}, {0,0}, {0,1}, {1,-1}, {1,0}, {2,-1}}),
-    level("Cocoa Corner", 30, 4, lanes_mask,
-        {{-3,1}, {-3,2}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1}, {3,-2}, {3,-1}}),
-    level("Toymaker Lane", 36, 4, chambers_mask,
-        {{-3,0}, {-3,1}, {-2,0}, {-2,1}, {-2,2}, {2,-1}, {2,0}, {2,1}, {3,-1}, {3,0}}),
-    level("Ribbon Wishes", 38, 0, compact_mask,
-        {{-1,0}, {-1,1}, {0,0}, {0,1}, {0,2}, {1,-1}, {1,1}, {2,-2}, {2,-1}, {2,0}}),
-    level("Candlelight Circle", 40, 4, chambers_mask,
-        {{-3,1}, {-3,2}, {-2,1}, {-2,2}, {-1,3}, {0,3}, {1,2}, {2,1}, {2,2}, {3,0}}),
-    level("Carousel Stars", 42, 4, bowl_mask,
-        {{-2,0}, {-2,1}, {-1,-1}, {-1,1}, {0,-2}, {0,-1}, {0,0}, {0,1}, {0,2}, {1,-1}, {1,0}}),
-    level("Skating Evening", 46, 5, lanes_mask,
-        {{-3,0}, {-3,1}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1}, {2,0}, {3,-2}, {3,-1}}),
-    level("Under the Big Fir", 46, 6, bowl_mask,
-        {{-2,1}, {-2,2}, {-1,0}, {-1,1}, {-1,2}, {0,-2}, {0,-1}, {0,0}, {0,1}, {0,2}, {1,-1}, {1,0}, {2,0}}),
-    level("Carols and Crumbs", 32, 0, chambers_mask,
-        {{-3,1}, {-3,2}, {-2,1}, {-2,2}, {2,-1}, {2,0}, {2,1}, {3,0}}),
-    level("Word from Fenwick", 35, 5, bowl_mask,
-        {{-2,1}, {-1,0}, {-1,1}, {-1,2}, {0,-1}, {0,0}, {1,-1}, {1,0}, {2,-2}, {2,-1}}),
-    level("Sawdust Row", 36, 6, lanes_mask,
-        {{-3,0}, {-3,1}, {-2,-1}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1}, {3,-2}, {3,-1}, {3,0}}),
-    level("The Bench by the Fir", 37, 7, bowl_mask,
-        {{-2,-1}, {-2,0}, {-2,1}, {-1,-1}, {-1,0}, {0,0}, {0,1}, {1,0}, {1,1}, {2,-1}, {2,0}, {2,1}}),
-    level("Tangled Tinsel", 38, 9, bowl_mask,
-        {{-2,1}, {-1,-1}, {-1,0}, {-1,1}, {-1,2}, {0,-2}, {0,-1}, {0,1}, {0,2}, {1,-2}, {1,-1}, {1,0}, {2,-1}}),
-    level("Paper and String", 40, 4, lanes_mask,
-        {{-3,2}, {-3,3}, {-2,1}, {-2,2}, {-2,3}, {2,-2}, {2,-1}, {2,0}, {3,-2}}),
-    level("Twelve Horses", 41, 5, bowl_mask,
-        {{-3,1}, {-2,0}, {-2,1}, {-2,2}, {-1,-1}, {-1,0}, {-1,2}, {1,-2}, {1,0}, {1,1}, {2,-2}, {2,-1}, {2,0}, {3,-1}}),
-    level("Fairy Lights", 42, 2, bowl_mask,
-        {{-2,1}, {-1,0}, {-1,1}, {0,-1}, {0,0}, {1,-1}, {2,-2}, {2,-1}}),
-    level("A Hundred Flames", 44, 6, chambers_mask,
-        {{-3,0}, {-3,1}, {-3,2}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1}, {2,0}, {2,1}, {3,-2}, {3,-1}, {3,0}}),
-    level("A Letter Forty Years Late", 46, 7, bowl_mask,
-        {{-3,1}, {-3,2}, {-2,0}, {-2,1}, {-2,2}, {-1,0}, {-1,1}, {1,-1}, {1,0}, {2,-2}, {2,-1}, {2,0}, {3,-2}, {3,-1}}),
+    level("Gingerbread Swirl", 30, 0, bowl_mask,
+        {{-2,1}, {-1,0}, {-1,1}, {0,-1}, {0,0}, {0,1}, {1,-1}, {1,0},
+         {2,-1}, {-2,0}, {-1,-1}, {0,-2}, {0,2}, {1,1}}),
+    level("Cocoa Corner", 57, 0, lanes_mask,
+        {{-3,1}, {-3,2}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1}, {3,-2},
+         {3,-1}, {2,0}, {-3,0}, {-2,-1}, {3,0}, {-4,1}, {-2,3}, {2,-3},
+         {4,-1}, {-4,2}, {-3,3}, {3,-3}, {4,-2}, {-4,3}, {4,-3}, {0,0}}),
+    level("Toymaker Lane", 60, 1, chambers_mask,
+        {{-3,0}, {-3,1}, {-2,0}, {-2,1}, {-2,2}, {2,-1}, {2,0}, {2,1},
+         {3,-1}, {3,0}, {-2,-1}, {1,2}, {-4,0}, {-3,-1}, {2,-2}, {2,2},
+         {3,1}, {4,0}, {-4,1}, {-3,2}, {-2,3}, {3,-2}, {4,-1}, {-4,2},
+         {-3,3}}),
+    level("Ribbon Wishes", 62, 5, compact_mask,
+        {{-1,0}, {-1,1}, {0,0}, {0,1}, {0,2}, {1,-1}, {1,1}, {2,-2},
+         {2,-1}, {2,0}, {0,-1}, {1,0}, {-2,0}, {-1,-1}, {-2,1}, {-1,2},
+         {0,3}, {1,-2}, {1,2}, {2,1}, {3,0}, {-2,2}, {-1,3}, {3,-1},
+         {2,-3}, {3,-2}}),
+    level("Candlelight Circle", 64, 0, chambers_mask,
+        {{-3,1}, {-3,2}, {-2,1}, {-2,2}, {-1,3}, {0,3}, {1,2}, {2,1},
+         {2,2}, {3,0}, {-2,0}, {2,0}, {-3,0}, {0,4}, {1,3}, {3,-1},
+         {3,1}, {4,0}, {-4,1}, {-2,3}, {-1,4}, {4,-1}, {-4,2}, {-3,3},
+         {-2,4}, {-4,3}, {-2,-1}, {2,-1}}),
+    level("Carousel Stars", 58, 5, bowl_mask,
+        {{-2,0}, {-2,1}, {-1,-1}, {-1,1}, {0,-2}, {0,-1}, {0,0}, {0,1},
+         {0,2}, {1,-1}, {1,0}, {-1,0}, {1,1}, {2,0}, {-3,0}, {-2,-1},
+         {-1,-2}, {-1,2}, {0,-3}, {0,3}, {1,-2}, {1,2}, {2,-1}}),
+    level("Skating Evening", 58, 1, lanes_mask,
+        {{-3,0}, {-3,1}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1}, {2,0},
+         {3,-2}, {3,-1}, {-2,-1}, {2,1}, {3,0}, {-4,0}, {-3,-1}, {-4,1},
+         {-3,2}, {-2,3}, {2,-3}, {4,-1}}),
+    level("Under the Big Fir", 78, 0, bowl_mask,
+        {{-2,1}, {-2,2}, {-1,0}, {-1,1}, {-1,2}, {0,-2}, {0,-1}, {0,0},
+         {0,1}, {0,2}, {1,-1}, {1,0}, {2,0}, {-2,0}, {-1,-1}, {1,1},
+         {-1,-2}, {0,-3}, {0,3}, {1,-2}, {1,2}, {2,-1}}),
+    level("Carols and Crumbs", 63, 0, chambers_mask,
+        {{-3,1}, {-3,2}, {-2,1}, {-2,2}, {2,-1}, {2,0}, {2,1}, {3,0},
+         {-2,0}, {-3,0}, {1,2}, {2,-2}, {2,2}, {3,-1}, {3,1}, {4,0},
+         {-4,1}, {-2,3}, {3,-2}, {4,-1}, {-4,2}, {-3,3}, {-4,3}, {-2,-1},
+         {0,3}, {-4,0}, {-3,-1}, {-1,3}}),
+    level("Word from Fenwick", 69, 2, bowl_mask,
+        {{-2,1}, {-1,0}, {-1,1}, {-1,2}, {0,-1}, {0,0}, {1,-1}, {1,0},
+         {2,-2}, {2,-1}, {0,1}, {-2,0}, {-1,-1}, {0,-2}, {0,2}, {1,1},
+         {2,0}, {1,-2}, {-3,1}, {-2,2}, {-1,3}, {3,-1}, {-3,2}, {-2,3},
+         {2,-3}, {3,-2}, {3,-3}, {-3,0}, {-2,-1}, {-1,-2}, {0,-3}, {0,3}}),
+    level("Sawdust Row", 65, 5, lanes_mask,
+        {{-3,0}, {-3,1}, {-2,-1}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1},
+         {3,-2}, {3,-1}, {3,0}, {2,0}, {2,1}, {-4,0}, {-3,-1}, {-2,-2},
+         {3,1}, {4,0}, {-4,1}, {-3,2}, {-2,3}, {2,-3}, {4,-1}, {-4,2},
+         {-3,3}, {3,-3}, {4,-2}, {4,-3}, {0,0}}),
+    level("The Bench by the Fir", 65, 0, bowl_mask,
+        {{-2,-1}, {-2,0}, {-2,1}, {-1,-1}, {-1,0}, {0,0}, {0,1}, {1,0},
+         {1,1}, {2,-1}, {2,0}, {2,1}, {0,-1}, {-1,1}, {0,-2}, {0,2},
+         {1,-1}, {-3,0}, {-1,-2}, {-1,2}, {1,2}, {3,0}, {-3,1}, {-2,2},
+         {2,-2}, {2,2}, {3,-1}, {3,1}, {-3,2}}),
+    level("Tangled Tinsel", 64, 1, bowl_mask,
+        {{-2,1}, {-1,-1}, {-1,0}, {-1,1}, {-1,2}, {0,-2}, {0,-1}, {0,1},
+         {0,2}, {1,-2}, {1,-1}, {1,0}, {2,-1}, {0,0}, {-2,0}, {1,1},
+         {2,0}, {-2,-1}, {-1,-2}, {0,-3}, {0,3}, {1,2}, {-3,1}, {-2,2},
+         {-1,3}, {1,-3}, {2,-2}, {3,-1}}),
+    level("Paper and String", 69, 0, lanes_mask,
+        {{-3,2}, {-3,3}, {-2,1}, {-2,2}, {-2,3}, {2,-2}, {2,-1}, {2,0},
+         {3,-2}, {-2,0}, {2,1}, {3,0}, {-3,1}, {3,-1}, {2,-3}, {-4,2},
+         {-2,4}, {3,-3}, {4,-2}, {-4,3}, {-3,4}, {4,-3}}),
+    level("Twelve Horses", 66, 0, bowl_mask,
+        {{-3,1}, {-2,0}, {-2,1}, {-2,2}, {-1,-1}, {-1,0}, {-1,2}, {1,-2},
+         {1,0}, {1,1}, {2,-2}, {2,-1}, {2,0}, {3,-1}, {0,0}, {0,-1},
+         {0,1}, {-1,1}, {0,-2}, {0,2}, {1,-1}, {-3,0}, {-2,-1}, {-1,-2},
+         {1,2}, {2,1}, {3,0}, {-1,3}, {1,-3}, {-4,1}}),
+    level("Fairy Lights", 72, 1, bowl_mask,
+        {{-2,1}, {-1,0}, {-1,1}, {0,-1}, {0,0}, {1,-1}, {2,-2}, {2,-1},
+         {0,1}, {1,0}, {-2,0}, {-1,-1}, {0,-2}, {2,0}, {-1,2}, {1,-2},
+         {-3,1}, {-2,2}, {3,-1}, {-3,2}, {2,-3}, {3,-2}, {3,-3}, {0,2},
+         {1,1}, {-3,0}, {-2,-1}, {-1,-2}, {0,-3}, {2,1}, {3,0}, {-1,3}}),
+    level("A Hundred Flames", 70, 0, chambers_mask,
+        {{-3,0}, {-3,1}, {-3,2}, {-2,0}, {-2,1}, {-2,2}, {2,-2}, {2,-1},
+         {2,0}, {2,1}, {3,-2}, {3,-1}, {3,0}, {-2,-1}, {1,2}, {-4,0},
+         {-3,-1}, {2,2}, {3,1}, {4,0}, {-4,1}, {-2,3}, {2,-3}, {4,-1},
+         {-4,2}, {-3,3}, {3,-3}, {4,-2}, {-4,3}, {4,-3}, {0,3}, {-2,-2}}),
+    level("A Letter Forty Years Late", 84, 0, bowl_mask,
+        {{-3,1}, {-3,2}, {-2,0}, {-2,1}, {-2,2}, {-1,0}, {-1,1}, {1,-1},
+         {1,0}, {2,-2}, {2,-1}, {2,0}, {3,-2}, {3,-1}, {0,0}, {0,-1},
+         {0,1}, {-1,-1}, {1,1}, {-3,0}, {-2,-1}, {-1,2}, {1,-2}, {2,1},
+         {3,0}}),
     level("Carolers Court", 34, 0, bowl_mask,
         {{-2,1}, {-2,2}, {-1,1}, {-1,2}, {0,0}, {0,1}, {1,0}, {1,1}, {2,0}}),
     level("Many Hands", 38, 6, bowl_mask,
@@ -98,23 +145,28 @@ local levels = {
         {{0,-3}, {0,-2}, {0,-1}, {0,0}, {0,1}, {0,2}, {0,3}, {-1,-1}, {-1,0}, {-1,1}, {-1,2}, {-2,1}, {1,-2}, {1,-1}, {1,0}, {1,1}, {2,-1}}),
 }
 
+-- Rome I introduces double plaques on 10 and repeats them on 20.
+for _, number in ipairs{10, 20} do
+    levels[number].oil_double = levels[number].oil
+end
+
 -- The finished board holds a painting before the first-clear scene.
 levels[24].reveal = {picture="wish-ribbon", floor="oil", on_clear=true}
 levels[25].reveal = {picture="telegram", floor="oil", on_clear=true}
 levels[28].reveal = {picture="last-train", floor="oil", on_clear=true}
 
--- The story object replaces its regular kind for the whole wish, including
--- refills. The blue panes still decide the win.
+-- Each find is part of the first-clear scene and results card. It has
+-- no colour slot, tally or effect on the goods delivered by the board.
 local finds = {
-    [9]={key="cocoa", name="Cocoa mug", kind=1},
-    [16]={key="scarf", name="Blue practice scarf", kind=3},
-    [19]={key="letter", name="Undelivered letter", kind=5},
-    [24]={key="ribbon", name="Wish ribbon", kind=1},
-    [25]={key="telegram", name="Station telegram", kind=3},
-    [27]={key="lantern", name="Borrowed lantern", kind=0},
+    [9]={key="cocoa", name="Cocoa mug"},
+    [16]={key="scarf", name="Blue practice scarf"},
+    [19]={key="letter", name="Undelivered letter"},
+    [24]={key="ribbon", name="Wish ribbon"},
+    [25]={key="telegram", name="Station telegram"},
+    [27]={key="lantern", name="Borrowed lantern"},
 }
 for index, find in pairs(finds) do
-    levels[index].story_piece, levels[index].goal_kind = find, find.kind
+    levels[index].story_piece = find
 end
 
 local shapes = {}

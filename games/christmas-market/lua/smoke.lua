@@ -127,16 +127,16 @@ function R.smoke()
             "drag must scroll decorations without choosing a building")
         smoke_stage=20
     elseif smoke_stage==20 and R.overlay==R.OV_SHOP then
-        if smoke_move.categories<2 then
+        if smoke_move.categories<3 then
             app.inject_click(R.catalogue_form.boxes.category_next:center())
             smoke_move.categories=smoke_move.categories+1
         else smoke_stage=21 end
     elseif smoke_stage==21 and R.overlay==R.OV_SHOP then
         local f=R.catalogue_form
-        assert(R.catalogue_tile("snowman") and not R.catalogue_tile("arch"),"category source must refresh")
-        local node,record=R.catalogue_tile("snowman")
+        assert(R.catalogue_tile("fir_snowy") and not R.catalogue_tile("arch"),"category source must refresh")
+        local node,record=R.catalogue_tile("fir_snowy")
         local balance = R.prog.wallet
-        assert(node and record.available, ("starter decoration should be affordable with %d Gold, %d Treats, %d Supplies")
+        assert(node and record.available, ("starter decoration should be affordable with %d Gold, %d Food, %d Supplies")
             :format(balance[1], balance[2], balance[3]))
         smoke_move.shop_wallet=R.prog.wallet+purse()
         smoke_move.shop_kind=record.kind
@@ -148,7 +148,7 @@ function R.smoke()
         assert(R.island.count==1 and same_wallet(R.prog.wallet, smoke_move.shop_wallet),"cancelled purchase changed save state")
         R.open_catalogue();smoke_stage=24
     elseif smoke_stage==24 and R.overlay==R.OV_SHOP then
-        local node=R.catalogue_tile("snowman")
+        local node=R.catalogue_tile("fir_snowy")
         if node then app.inject_click(R.catalogue_form.boxes[node.id]:center());smoke_stage=25 end
     elseif smoke_stage==25 and R.island.placing>=0 then
         app.inject_click(R.placement_form.boxes.confirm:center());smoke_stage=26

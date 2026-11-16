@@ -24,16 +24,15 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-Each of Bellmere's thirty winter wishes asks you to light every blue pane.
-Cleared panes return to parchment. Tinsel ties protect treats for one hit and contribute
-to the goal only when they cover a blue pane. The lamps lead from the market
+Each of Bellmere’s thirty winter wishes asks you to light every marked pane.
+Blue panes clear in one hit. Green panes first turn blue. A tinsel tie
+absorbs a hit before the piece and its pane can clear. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
 [board progression](docs/board-progression.md) and [story](docs/story.md).
 
 Mrs Alder sets aside a cup of cocoa for the next person who comes in cold.
 The guests who share it return with lamps when the wind takes the lights out.
-The same market goods appear on the board, from gingerbread at the bakery to
-a bright blue mitten that recalls Pip's knitting.
+Goods from the market appear on the board as Noelle opens the stalls.
 
 On the first clears of A Ribbon for Home, Word from the Station and The Last Train,
 the lit board gives way to a full-board painting and the next scene.
@@ -42,8 +41,9 @@ the lit board gives way to a full-board painting and the next scene.
 ## Shared match engine and atlas
 
 Swap adjacent treats or tap two neighbors to match three or more along a hex
-axis. Hammer hits one cell, Firecracker hits a cell and its six neighbors, and
-Star Wand hits all treats of the chosen kind. The [engine match-3 module](../../docs/MATCH3_ENGINE.md)
+axis. Match toy hammers from Theo’s workshop to charge a hit on one cell.
+Match stars after opening the candle shop to charge a lightning strike
+across 15 cells. The [engine match-3 module](../../docs/MATCH3_ENGINE.md)
 owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
 The game supplies the boards, artwork and straight-match rules.
 
@@ -53,7 +53,8 @@ hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
-`data/match3.png` holds the puzzle backdrop, pieces, blockers and effects.
+`data/market-goods.png` holds the live campaign pieces. `data/match3.png` holds
+the backdrop, blockers, effects and earlier pieces for previews.
 The HUD and tool controls use `data/match3-hud.png`. Run
 `python3 tools/match3_atlas.py` to rebuild the two atlases. The three lantern
 panes use the board tiles shared with Relic Rush, which `tools/board_tiles.py`
@@ -71,18 +72,19 @@ cream guides include that clearance and disappear behind buildings that cover
 them. Debug `--footprints` shows the full outline over
 each sprite. See the [placement captures](docs/review/placement-guides/README.md).
 
-## Draft implementation
+## Market economy
 
-Matches earn **Gold** from bells, **Treats** from candy canes and
-gingerbread, and **Supplies** from holly, mittens and baubles. Each win
-banks the resources and awards up to 40 Gold for the moves left. Three
-Christmas Stars come with each first clear and open more land and shop items.
-The town and board share the same wallet. On the board it shows the current
-attempt's earnings as you play.
+Silver coins pay 3 Gold and gold coins pay 5. Holly and mittens earn score.
+The arch adds firewood for Supplies. Later stalls add more materials,
+Food and chargeable tools. Longer lines multiply the yield. Each win
+banks the goods cleared on the board. A first clear also grants three
+Christmas Stars for land and shop access.
 
-Story stalls draw from those same balances. Neighbors make up any shortfall
-on the first clear that earns a stall, and the shop reserves its cost until
-you build. A 20-Gold lamp post also takes 4 Supplies. [Full price list](docs/building-catalogue.md).
+Confirmed placement spends Gold, Supplies and Food from that wallet.
+If a stall is beyond the current balance, replay any completed wish to
+earn more. The [first 20 wishes](docs/resource-prototype.md) compare both
+Cradle of Rome editions and record prices, unlocks and a measured payout
+for every board in the prototype.
 
 A failed wish uses a life. One returns every 30 minutes up to five.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
@@ -113,7 +115,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Story
 
-The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. On six wishes, one chip kind becomes a story object for that board. The first clear brings the object back to Bellmere. Most levels without a stall play their scene when you return to the market. Levels 24, 25 and 28 play theirs after the board painting and before Collect. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
+The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. On six wishes, the results card shows a story object after the first clear. The goods on those boards follow the regular pool. Most levels without a stall play their scene when you return to the market. Levels 24, 25 and 28 play theirs after the board painting and before Collect. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/match3_game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
@@ -123,7 +125,7 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 | --- | --- | --- |
 | ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/spruce-palette/letter.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
 
-Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
+Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board’s panes and the scheduled building’s test wallet are prepared before one real swap. The separate extended campaign run earns its own wallet through actual play. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 
 ## Leaderboards
 

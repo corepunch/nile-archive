@@ -62,6 +62,11 @@ function R.campaign_smoke()
         local g = R.g
         for i = 0, rules.CELLS - 1 do g.chain[i], g.oil[i] = 0, 0 end
         g.obstacles, g.oil_left = 0, 0
+        local kind = journey.wonder_at(g.level + 1)
+        if kind then
+            local cost = island.wonders[kind].cost
+            g.earnings = {cost[1], cost[2], cost[3]}
+        end
         local ok, a, b = rules.game_hint(g)
         assert(ok, "campaign smoke needs a legal move")
         app.inject_click(R.cell_pos(a)); partner = b

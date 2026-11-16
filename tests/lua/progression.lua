@@ -1,34 +1,64 @@
 local rules = require("rules")
 local island = require("island")
 
--- Even if the spare resources have all been spent, a story delivery covers a
--- first clear's shortfall. All three reserve slots survive catalogue purchases.
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
-for i = 0, rules.LEVELS - 1 do
-    local g = rules.game_start(i, i + 1)
-    g.won, g.moves = true, 0
-    check(rules.progress_reward(p, g, island.wonders), "first clear pays")
-    check(not rules.progress_reward(p, g, island.wonders), "result pays once")
-    local reserved = island.reserved_cost(c, p.level)
-    check(p.wallet:covers(reserved), "first clear funds every slot of the earned stall")
-    for slot = 1, 3 do p.wallet[slot] = reserved[slot] end
-    for z = 1, 5 do c:unlock(z, p.wallet) end
-    check(island.island_place_next(c, p.wallet, p.level, 0) == (rules.wonder_at(i + 1) ~= nil),
-          "each earned stall can be placed")
-end
-check(c.open == 63 and p.wallet[rules.STARS] == 90, "first clears open the full market")
 
-local g = rules.game_start(0, 7)
-g.earnings, g.moves = {9, 6, 7}, 999
-check(not rules.progress_reward(p, g, island.wonders), "a failed wish banks nothing")
-local bonus = rules.reward_breakdown(g, island.wonders, p)
-check(bonus.bonus == 40 and bonus.delivery[1] == 0, "replay bonus caps at 40 Gold")
-g.won = true
-check(rules.progress_reward(p, g, island.wonders), "replay can bank resources")
-check(p.wallet[1] == 49 and p.wallet[2] == 6 and p.wallet[3] == 7 and p.wallet[4] == 90,
-      "replay banks the actual matches without additional Stars")
-g = rules.game_start(1, 99)
-g.won = true
-check(not rules.progress_reward({level=0}, g, island.wonders), "future wish cannot be claimed")
+local g = rules.game_start(0, 7, 0)
+g.won, g.moves = true, 999
+check(rules.progress_reward(p, g, island.wonders), "first clear pays")
+check(not rules.progress_reward(p, g, island.wonders), "result pays once")
+check(p.wallet[1] == 0 and p.wallet[4] == 3 and p.level == 1, "first clear only pays matched Gold and Stars")
+check(not island.can_buy(c, p.wallet, p.level, 0), "story checkpoint does not give away the arch")
+
+local replay = rules.game_start(0, 7, 0)
+replay.earnings, replay.moves = {60, 0, 0}, 999
+check(not rules.progress_reward(p, replay, island.wonders), "a failed wish banks nothing")
+replay.won = true
+check(rules.progress_reward(p, replay, island.wonders), "replay can bank resources")
+check(p.wallet[1] == 60 and p.wallet[4] == 3 and p.level == 1, "replays pay actual matches")
+check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
+check(p.wallet[1] == 10, "confirmed placement debits Gold once")
+
+local wood = rules.game_start(1, 18, island.wonder_count(c))
+check(#wood.spawn_kinds == 5 and wood.resource_yields[4].amount == 5, "confirmed arch adds firewood")
+local plain = rules.game_start(1, 18, 0)
+check(not plain.resource_yields[4], "a cleared board alone does not add firewood")
+
+local function line(board, kind, length, wave)
+    for i = 0, rules.CELLS - 1 do board.tiles[i] = rules.tile(-1) end
+    local cell = rules.hex_index(-3, 0)
+    for _ = 1, length do
+        board.tiles[cell], board.chain[cell] = rules.tile(kind), 0
+        cell = rules.hex_neighbor(cell, 1)
+    end
+    rules.game_matches(board, wave, -1)
+    rules.game_apply(board, wave)
+end
+local wave = rules.new_match()
+line(wood, 4, 4, wave)
+check(wood.earnings[3] == 40 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
+      "four pieces credit eight times the base resource")
+local hammer = rules.game_start(4, 42, 2)
+hammer.tool_meter[1] = 194
+line(hammer, 5, 3, wave)
+check(hammer.tools[1] == 1 and hammer.tool_meter[1] == 3 and hammer.earnings[1] == 0,
+      "matching hammers earns a charge and no Gold")
+check(rules.game_tool(hammer, 0, rules.hex_index(-3, 0), wave) and hammer.tools[1] == 0,
+      "the charged hammer can be spent")
+
+local lightning = rules.game_start(19, 7, 7)
+lightning.tools[3] = 1
+local at = rules.hex_center()
+local area = rules.game_tool_area(lightning, 2, at)
+check(rules.game_tool(lightning, 2, at, wave) and wave.hits == 15, "lightning hits 15 cells")
+local pane_hit = false
+for i = 0, rules.CELLS - 1 do
+    check(area[i] == wave.mask[i], "lightning previews exactly the cells it hits")
+    if area[i] and lightning.oil[i] > 0 then pane_hit = true end
+end
+check(pane_hit and lightning.tools[3] == 0, "lightning spends one charge and reaches a blue pane")
+local future = rules.game_start(5, 99)
+future.won = true
+check(not rules.progress_reward(p, future, island.wonders), "future wish cannot be claimed")

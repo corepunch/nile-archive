@@ -10,14 +10,14 @@
   "board": {
     "kudos": ["Jolly!", "Merry!", "Magical!", "Christmas Magic!"],
     "tool_notes": ["Hammer: tap a treat to break it.", "Firecracker: tap a treat to blast around it.",
-                   "Star wand: tap a treat to clear all treats of that kind."],
+                   "Lantern lightning: strike 15 cells across the board."],
     "locked": "Match the tied piece to untangle the tinsel."
   },
   "notices": {
     "build_first": "Build your earned stall before the next winter wish.",
     "story_waiting": "Something's happening in the market square.",
     "no_lives": "A life returns every 30 minutes. Explore the market meanwhile.",
-    "reward_building": "Your next stall is ready to build.",
+    "reward_building": "Visit the Build shop to check the next stall.",
     "reward_story": "Something's happening in the market square.",
     "reward_replay": "Resources collected. Visit the build shop.",
     "all_open": "The whole market is open.",
@@ -58,8 +58,8 @@
     "close": "BACK TO MARKET",
     "resume": "RESUME", "replay": "REPLAY", "pending": "BUILD FIRST",
     "new": "PLAY", "earlier": "COMPLETE EARLIER WISHES",
-    "replay_note": "Earn the resources you match and a Gold bonus for moves left.",
-    "building_note": "Match resources for the next stall. Neighbors cover any shortfall.",
+    "replay_note": "Bank the goods you match when you win.",
+    "building_note": "Match goods to pay for the next stall.",
     "story_note": "First clear: a new story scene, matched resources and 3 Stars."
   },
   "debug": {"victory": 3, "catalogue_card": 10, "narrator": "noelle"}

@@ -1,7 +1,7 @@
 -- Named presentation contract; tools/check_assets.py checks its coverage.
--- The gold bell artwork also identifies spendable Gold in the island purse.
--- The same painted pieces identify wallet resources and story finds.
+-- The market goods atlas is shared by the board and the wallet.
 local elements_view = require("match3.elements_view")
+local economy = require("economy")
 local A = {}
 A.board_frame = require("board_frame_atlas")
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
@@ -74,6 +74,10 @@ function A.load()
         local find = level.story_piece
         if find then textures["story-" .. find.key] = texture.load("story-pieces/" .. find.key .. ".png") end
     end
+    local goods = texture.load("market-goods.png")
+    for kind = 0, #economy.pieces do
+        textures["market-" .. kind] = texture.region(goods, rect(kind % 4 * 128, kind // 4 * 128, 128, 128))
+    end
     -- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
     -- engine/art/board-tiles/tiles.json, under "tile-" keys.
     for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
@@ -90,14 +94,11 @@ end
 function A.draw_catalogue(R)
     gfx.rect(rect(18, 100, 444, 770), color(12, 47, 41, 250))
     R.say_at("ARTWORK CATALOGUE", vec2(240, 125), 26, R.PAL_GOLD, 420)
-    local packs = {"festive"}
-    for row, pack in ipairs(packs) do
-        R.say_at(pack:upper(), vec2(240, 175 + (row - 1) * 60), 13, R.PAL_CREAM, 0)
-        for k = 0, 5 do
-            local x = 39 + k * 68
-            gfx.image(R.art_packs[pack][k + 1], rect(x, 190 + (row - 1) * 60, 46, 46), color.WHITE)
-            R.say_at(A.festive[k + 1], vec2(x + 23, 245), 10, R.PAL_CREAM, 66)
-        end
+    local pieces = economy.pieces
+    for k = 0, #pieces do
+        local x, y = 39 + k % 6 * 68, 145 + k // 6 * 60
+        gfx.image(R.board_art["market-" .. k], rect(x, y, 46, 46), color.WHITE)
+        R.say_at(pieces[k].name, vec2(x + 23, y + 50), 10, R.PAL_CREAM, 68)
     end
     for i, name in ipairs{"cell-normal", "tablet-single", "tablet-double"} do
         local x = 104 + (i - 1) * 112
