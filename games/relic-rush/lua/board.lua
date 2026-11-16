@@ -12,9 +12,10 @@ local neutral = app.arg("default-match3")
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
 if not neutral then
-    for _, name in ipairs{"seam", "face"} do
+    for _, name in ipairs{"edge", "rim", "seam", "face"} do
         R.GROUND[name] = skin:color("board_" .. name)
     end
+    R.GROUND.edge_width, R.GROUND.rim_width, R.GROUND.seam_width = 2.5, 3, .9
 end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes

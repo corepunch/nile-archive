@@ -151,12 +151,16 @@ for board imagery and a 1024×1024 `data/match3-hud.png` for UI. Goal displays
 can reuse the board's chip and objective frames. The generated
 `lua/match3_skin.lua` and `lua/match3_hud.lua` register both textures.
 The shared floor renderer in `match3.elements_view` draws an edge-to-edge
-backing and insets each face by 0.18 design units at its radius. The hairline
-seam shows the backing colour through that inset. Campaign textures use the
-canonical flat-top mask and carry their paint to the edge. Games supply the
-seam and fallback face colours through their skins. Imported and neutral boards
-use the same geometry. Selection and hints animate piece scale.
-[In-game board review](review/match3-board-seams/README.md).
+backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
+default) at its radius. The seam shows the backing colour through that inset.
+When `R.GROUND` sets `edge`/`edge_width` and `rim`/`rim_width`, the board's
+silhouette gets a Cradle of Rome style frame: a dark edge outside a light rim,
+drawn for every cell under the faces so only the outline remains. Campaign
+textures use the canonical flat-top mask and carry their paint to the edge.
+Games supply the frame, seam and fallback face colours through their skins
+(`board_edge`, `board_rim`, `board_seam`, `board_face`). Imported and neutral
+boards use the same geometry without a frame. Selection and hints animate piece scale.
+[In-game board review](review/match3-board-seams/README.md), [frame](review/match3-board-frame/README.md).
 
 For a game view, initialize presentation data with `match3.view{...}`, then
 call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authored `piece_width`;

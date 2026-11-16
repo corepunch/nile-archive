@@ -224,23 +224,44 @@ local function floor_pose(R, i)
     return scale, turn, lift
 end
 
--- The full-radius backing joins edge to edge. The face leaves a hairline of
--- backing between neighbors, with the same gap for painted and flat colors.
-local function draw_ground_backing(R, rules, sx, alpha, textured)
-    local seam = color.alpha(R.GROUND.seam, alpha)
-    local face = color.alpha(R.GROUND.face, alpha)
+-- The board stands in a frame like a Cradle of Rome plaque board: each layer is
+-- drawn for every cell before the next, so only what sticks out past the
+-- silhouette survives as an outline: a dark edge, then a light rim. The
+-- full-radius backing joins edge to edge, and the face leaves a seam of backing
+-- between neighbours, with the same gap for painted and flat colours.
+local GROW = 2 / math.sqrt(3)   -- a hex grown by w along its edges has a corner radius this much larger
+
+local function each_ground_cell(R, rules, sx, fn)
     for i = 0, rules.CELLS - 1 do
         if rules.game_cell_active(R.g, i) then
             local scale, turn, lift = floor_pose(R, i)
-            if scale > .02 then
-                local at = R.cell_pos(i) + vec2(sx, lift)
-                gfx.ngon(at, R.HEX_R * scale, 6, turn, seam)
-                if not textured or R.g.stone_hp[i] > 0 then
-                    gfx.ngon(at, (R.HEX_R - FLOOR_INSET) * scale, 6, turn, face)
-                end
-            end
+            if scale > .02 then fn(i, R.cell_pos(i) + vec2(sx, lift), scale, turn) end
         end
     end
+end
+
+local function draw_ground_backing(R, rules, sx, alpha, textured)
+    local look = R.GROUND
+    local rim_w, edge_w = look.rim_width or 0, look.edge_width or 0
+    if look.edge and edge_w > 0 then
+        each_ground_cell(R, rules, sx, function(_, at, scale, turn)
+            gfx.ngon(at, (R.HEX_R + (rim_w + edge_w) * GROW) * scale, 6, turn, color.alpha(look.edge, alpha))
+        end)
+    end
+    if look.rim and rim_w > 0 then
+        each_ground_cell(R, rules, sx, function(_, at, scale, turn)
+            gfx.ngon(at, (R.HEX_R + rim_w * GROW) * scale, 6, turn, color.alpha(look.rim, alpha))
+        end)
+    end
+    local seam = color.alpha(look.seam, alpha)
+    local face = color.alpha(look.face, alpha)
+    local inset = look.seam_width or FLOOR_INSET
+    each_ground_cell(R, rules, sx, function(i, at, scale, turn)
+        gfx.ngon(at, R.HEX_R * scale, 6, turn, seam)
+        if not textured or R.g.stone_hp[i] > 0 then
+            gfx.ngon(at, (R.HEX_R - inset) * scale, 6, turn, face)
+        end
+    end)
 end
 
 local function draw_floor_cell(R, i, at, material, alpha)
@@ -248,7 +269,7 @@ local function draw_floor_cell(R, i, at, material, alpha)
     if scale <= .02 then return end
     at = at + vec2(0, lift)
     local tint = color(255, 255, 255, 255 * alpha)
-    local radius = (R.HEX_R - FLOOR_INSET) * scale
+    local radius = (R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET)) * scale
     if material then
         gfx.image_rot(R.board_art[material], rect.centered(at, size2.splat(2 * radius)), turn, tint)
     else
