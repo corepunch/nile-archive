@@ -396,16 +396,24 @@ local function tablet_order(l)
     return order
 end
 
--- Blockers and move budgets are fitted to lua/difficulty.lua by
--- tools/tune_levels.py; the authored values above are only its fallback.
--- A board with an authored opening keeps its authored blockers, so the
--- scripted first hint still plays as written; only its budget is fitted.
--- Relative to this module, so another game's tests can load it by path.
+for _, l in ipairs(levels) do l.authored_oil, l.authored_signal = l.oil, l.signal_cell end
+
+-- Plaque placement, blockers and move budgets are fitted to lua/difficulty.lua
+-- by tools/tune_levels.py; the authored values above are only its fallback.
+-- A board with an authored opening keeps its authored plaques and blockers,
+-- so the scripted first hint still plays as written; only its budget is fitted.
+-- The require is relative to this module, so another game's tests can load it by path.
 local here = (... or ""):match("^(.-)campaign$") or ""
 for i, fit in pairs(require(here .. "level_tuning")) do
     local l = levels[i]
     l.moves = fit.moves
     if not l.opening then
+        if fit.plaques then
+            for _, id in ipairs(fit.plaques) do
+                assert(l.mask:sub(id + 1, id + 1) == "1", "tuned plaque on an inactive cell")
+            end
+            l.oil, l.signal_cell = fit.plaques, l.signal_cell and fit.signal_cell
+        end
         l.chains, l.double_chains = fit.chains, fit.double_chains
         l.oil_double = {table.unpack(tablet_order(l), 1, fit.double_tablets)}
     end

@@ -49,8 +49,9 @@ end
 
 -- Blocker load, one step at a time: chains and green double tablets
 -- alternate (each capped), then chains turn into crossed double chains.
+local campaign = require('campaign')
 local plaques = {}
-for i, spec in ipairs(rules.levels) do plaques[i] = require('campaign').tablet_order(spec) end
+for i, spec in ipairs(rules.levels) do plaques[i] = campaign.tablet_order(spec) end
 local function split(level, load)
     local patch = #plaques[level]
     local chains, tablets = math.min(CHAIN_MAX, (load + 1) // 2), math.min(patch, load // 2)
@@ -95,12 +96,103 @@ local function json(t)
     return '{' .. table.concat(parts, ',') .. '}'
 end
 
+local PLACE_SEEDS = math.max(12, SEEDS * 2 // 5)
+
+-- Candidate plaque patches, each with the authored count: the authored
+-- shape moved up to two cells, and a compact patch grown around every
+-- playable cell. Each patch's signal plate (level 30) is the patch cell
+-- nearest the authored one.
+local function candidates_for(level, spec)
+    local active, list, seen = {}, {}, {}
+    for i = 0, rules.CELLS - 1 do if spec.mask:sub(i + 1, i + 1) == '1' then active[#active + 1] = i end end
+    local is_active = {}
+    for _, i in ipairs(active) do is_active[i] = true end
+    local function add(cells, distance, kind)
+        local key = {}
+        for k, id in ipairs(cells) do key[k] = id end
+        table.sort(key)
+        key = table.concat(key, ',')
+        if seen[key] then return end
+        seen[key] = true
+        local signal
+        if spec.authored_signal then
+            for _, id in ipairs(cells) do
+                if not signal or rules.hex_distance(id, spec.authored_signal) < rules.hex_distance(signal, spec.authored_signal) then signal = id end
+            end
+        end
+        list[#list + 1] = {cells=cells, signal=signal, distance=distance, kind=kind}
+    end
+    for dq = -2, 2 do
+        for dr = -2, 2 do
+            if math.abs(dq + dr) <= 2 then
+                local cells = {}
+                for k, id in ipairs(spec.authored_oil) do
+                    local moved = rules.hex_index(rules.hex_q(id) + dq, rules.hex_r(id) + dr)
+                    cells[k] = moved >= 0 and is_active[moved] and moved or nil
+                    if not cells[k] then cells = nil; break end
+                end
+                if cells then add(cells, (math.abs(dq) + math.abs(dr) + math.abs(dq + dr)) // 2, 'shifted') end
+            end
+        end
+    end
+    for _, anchor in ipairs(active) do
+        local order = {table.unpack(active)}
+        table.sort(order, function(a, b)
+            local da, db = rules.hex_distance(a, anchor), rules.hex_distance(b, anchor)
+            if da ~= db then return da < db end
+            return a < b
+        end)
+        add({table.unpack(order, 1, #spec.authored_oil)}, 10, 'grown')
+    end
+    return list
+end
+
+-- Bare win rate of every candidate patch at the curve budget. The hardest
+-- that still leaves blockers headroom (target + 0.10) wins, then the
+-- hardest that meets the target, else the easiest. Ties keep the patch
+-- nearest its authored place.
+local function place(level, spec, target)
+    local candidates = candidates_for(level, spec)
+    -- Stable order: nearest the authored place first.
+    for k, c in ipairs(candidates) do c.order = k end
+    table.sort(candidates, function(a, b)
+        if a.distance ~= b.distance then return a.distance < b.distance end
+        return a.order < b.order
+    end)
+    local function use(c)
+        spec.oil, spec.signal_cell = c.cells, c.signal
+        plaques[level] = campaign.tablet_order(spec)
+    end
+    for _, c in ipairs(candidates) do
+        use(c)
+        apply_load(spec, 0, level)
+        local wins = 0
+        for n = 1, PLACE_SEEDS do if play(level, 500 + n, target.moves) then wins = wins + 1 end end
+        c.rate = wins / PLACE_SEEDS
+    end
+    local function hardest(floor)
+        local best
+        for _, c in ipairs(candidates) do
+            if c.rate >= floor and (not best or c.rate < best.rate) then best = c end
+        end
+        return best
+    end
+    local best = hardest(math.min(1, target.win + 0.10)) or hardest(target.win)
+    if not best then
+        for _, c in ipairs(candidates) do if not best or c.rate > best.rate then best = c end end
+    end
+    use(best)
+    return best, #candidates
+end
+
 for level = first, last do
     local spec = rules.levels[level]
     local target = difficulty.target(level)
     local load, note, authored = 0, '', spec.opening ~= nil
+    local placed, placements = {distance=0, rate=-1, cells=spec.oil}, 1
+    if not authored then placed, placements = place(level, spec, target) end
     if authored then
-        note = 'authored opening: blockers kept'
+        note = 'authored opening: plaques and blockers kept'
     elseif target.blockers and not holds(level, 0, target.moves, target.win) then
         note = 'hard without blockers: moves raised'
     elseif target.blockers then
@@ -141,7 +233,9 @@ for level = first, last do
     for _, took in ipairs(used) do if took <= moves then wins = wins + 1 end end
     print('TUNE_JSON ' .. json{
         level=level, name=spec.name, tier=target.tier, target_moves=target.moves, target_win=target.win,
-        chains=spec.chains, double_chains=spec.double_chains or 0, tablets=#(spec.oil_double or {}), load=load, moves=moves,
+        chains=spec.chains, double_chains=spec.double_chains or 0, tablets=#(spec.oil_double or {}), load=load,
+        moved=placed.distance > 0, plaques=table.concat(spec.oil, ' '), signal=spec.signal_cell or -1,
+        placement=placed.kind or 'authored', bare_win=placed.rate, placements=placements, moves=moves,
         median=used[math.max(1, (#used + 1) // 2)] or -1, fastest=used[1] or -1,
         bot_win=wins / FINAL, won_in_3=quick / FINAL, samples=FINAL, note=note,
     })

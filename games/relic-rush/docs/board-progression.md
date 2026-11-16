@@ -7,12 +7,22 @@ clears the plaque beneath it. A chain on plain stone can be left in place if
 it is out of the way. Boards 2–10 and 13 show a story piece in one colour slot.
 **Item recovered!** follows the first clear.
 
-Chains, double chains and move budgets are not authored per board. They are
-fitted to the difficulty curve in [lua/difficulty.lua](../lua/difficulty.lua)
-by `python3 games/relic-rush/tools/tune_levels.py`, which writes
+Plaque placement, chains, double chains, green double tablets and move
+budgets are not authored per board. They are fitted to the difficulty curve
+in [lua/difficulty.lua](../lua/difficulty.lua) by
+`python3 games/relic-rush/tools/tune_levels.py`, which writes
 `lua/level_tuning.lua` and the review table in [level-tuning.md](level-tuning.md).
-To change difficulty, edit the curve's tiers or rhythm and rerun the tuner;
-the layout, plaques and story slots stay authored here.
+To change difficulty, edit the curve's tiers or rhythm and rerun the tuner.
+The layout, the plaque count and story slots stay authored here.
+
+Placement is the strongest lever on lane and chamber boards: the same twelve
+plaques on The Jade Deep range from a 25% to a 100% bare bot win rate by
+position. On tapered bowls it barely matters (83–100% anywhere on The Cracked
+Wall), so bowls rely on blockers and a tighter budget. The tuner tries the
+authored patch moved up to two cells and a compact patch grown around every
+playable cell, and keeps the hardest whose bare win rate is at least ten
+points above the target, leaving the blockers room to work. Boards with an
+authored opening keep their authored plaques.
 
 Every board spawns all six kinds. With five on a hex board, where each cell
 sits on three lines, refills chained so often that one move could clear a board.
