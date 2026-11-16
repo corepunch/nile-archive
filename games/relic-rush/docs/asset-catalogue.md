@@ -2,7 +2,7 @@
 
 ## Themed board art
 
-The live expedition uses [painted resources](#resource-pieces) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets remain in the atlas for previews and imported-board diagnostics.
+The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -17,7 +17,7 @@ The live expedition uses [painted resources](#resource-pieces) on pale limestone
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
-The earlier round sun coin at `relics-0` remains the Relics preview idol (kind 0). The campaign and its wallet use the newer `resource-coin` sprite. Selection, hints and blockers keep their separate overlays. Built-in ImageGen authored the [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
+The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet uses the `resource-coin` sprite. Built-in ImageGen authored the preview idol's [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
 Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
 
@@ -29,11 +29,41 @@ The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one b
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
+## Campaign piece atlas
+
+One built-in ImageGen edit painted all 23 campaign objects together. It used the
+[previous pieces assembled in slot order](../art/campaign-pieces/edit-target.png)
+as the edit target and the original Cradle of Rome's
+`reference/cradle-of-rome/visuals/board-pieces.png` as the style reference.
+The objects share an upper-left light, dark contours and compact silhouettes.
+The [transparent source](../art/campaign-pieces/source.png), [exact prompt](../art/campaign-pieces/prompt.txt)
+and [manifest](../art/board-states/manifest.json) record the inputs and registration.
+
+| Atlas row | Left to right |
+| --- | --- |
+| 1 | Sun coin, berries, emerald, timber, quarry stones |
+| 2 | Amphora, water bucket, cut blocks, ration jar, trade coins |
+| 3 | Grain, quartz, springwater, sun gem, lamp lens |
+| 4 | Relay cable, tide chart, trail arrow, tool roll, snapped cable |
+| 5 | Supply satchel, shutter gear, folded note |
+
+Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
+measured row bands and five columns, trim the transparent exterior and
+uniformly fit each object into a centered 128 px cell with a 112 px maximum
+extent. The runtime atlas is `data/campaign-pieces.png`. The same sprite appears
+in matches, refills, resource flights and the guide. The existing selection,
+hint and chain overlays supply their respective states. The game's shop and
+wallet use their own currency artwork, and first-clear cards use their prop art.
+The sprites are free-standing objects. At the board's actual draw size the
+23 pieces fit the canonical face in strict object mode.
+[In-game review](screenshots/review/campaign-pieces/README.md).
+
 ## Resource pieces
 
 Built-in ImageGen painted the [3 × 3 source atlas](../art/board-refresh/source.png)
 with seven expedition pieces and both cell faces. The [prompt](../art/board-refresh/prompt.txt)
-and [hex layout](../art/board-refresh/hex-template.png) record the generation inputs.
+and [hex layout](../art/board-refresh/hex-template.png) record the generation inputs
+for the earlier resource set used by the wallet and art previews.
 The [manifest](../art/board-states/manifest.json) records the slot order, crop and
 registration. Resources are trimmed with a four-pixel margin and centred on a
 transparent square. The [timber and emerald atlas](../art/resource-pieces/timber-emerald.png)
@@ -63,8 +93,8 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `sun-gem` | Existing Jewels gold gem (`data/tile-sets/jewels/0.png`), 9 Coins | Board and guide from 30 |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
-The score-only amphora on early six-kind boards uses kind 5 of the selected
-pack. The default is `data/tile-sets/relics/5.png`.
+The score-only amphora in the live campaign comes from the campaign atlas.
+Alternate previews draw kind 5 from the selected match-piece pack.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The five later chips use their existing pack art at its authored orientation
@@ -149,7 +179,8 @@ sprites. The first clear recovers the story item.
 | Purple | 3 | Coiled relay cable |
 | Orange | 8, 10 | Snapped cable, bronze shutter gear |
 
-Board 1 uses the ordinary timber chip. Most story sprites come
+Board 1 uses the ordinary timber chip. The campaign atlas includes all nine
+story sprites. In alternate art previews most story sprites come
 from the [expedition atlas](../art/resource-pieces/scenario-atlas.png). The
 trail arrow chip and marker recovery card use the
 [outlined source sheet](../art/resource-pieces/outlined-atlas.png).

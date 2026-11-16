@@ -11,6 +11,8 @@ local island = require("island")
 local elements = require("match3.elements_view")
 local skin = require("skin")
 local neutral = app.arg("default-match3")
+local pack = app.arg("tiles")
+local campaign_pieces = art.use_campaign_pieces()
 R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
 rules.bind_view(R)
 if not neutral then
@@ -59,12 +61,17 @@ local cell_pos = R.cell_pos
 -------------------------------------------------------------------- drawing
 
 function R.board_piece_texture(kind)
-    local level = rules.level_of(R.g)
+    local g = R.g
+    local level = rules.level_of(g)
+    local campaign = campaign_pieces and not g.hs
     if level.story_piece and kind == level.goal_kind then
-        return R.board_art["story-" .. level.story_piece]
+        return R.board_art[(campaign and "campaign-" or "story-") .. level.story_piece]
     end
-    local piece = R.g.resource_yields and R.g.resource_yields[kind]
-    local pack = app.arg("tiles")
+    local piece = g.resource_yields and g.resource_yields[kind]
+    if campaign then
+        if piece then return R.board_art["campaign-" .. piece.key] end
+        if kind == 5 then return R.board_art["campaign-amphora"] end
+    end
     if piece and (kind == level.goal_kind or piece.kind ~= nil or not neutral and (not pack or pack == "relics")) then
         return R.board_art["resource-" .. piece.key]
     end

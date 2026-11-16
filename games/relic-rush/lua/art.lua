@@ -19,6 +19,13 @@ A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "suppl
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "broken-cable", "marker"}
 A.separate_rewards = {"note", "broken-cable"}
 A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
+A.campaign_pieces = {
+    "coin", "berries", "emerald", "timber", "stone",
+    "amphora", "water", "cut-blocks", "rations", "trade-coins",
+    "grain", "quartz", "springwater", "sun-gem", "lens",
+    "cable", "chart", "marker", "tools", "broken-cable",
+    "supplies", "gear", "note",
+}
 A.resource_upgrades = {
     ["cut-blocks"]="tile-sets/resources/4.png", ["trade-coins"]="tile-sets/resources/0.png",
     grain="tile-sets/resources/5.png", quartz="tile-sets/relics/4.png",
@@ -36,6 +43,11 @@ A.wallet_icons={coins="coin", supplies="wallet-supplies", food="wallet-food"}
 A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
+
+function A.use_campaign_pieces()
+    local pack = app.arg("tiles")
+    return not app.arg("default-match3") and not app.arg("rome-reference-art") and (not pack or pack == "relics")
+end
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
@@ -98,6 +110,11 @@ function A.load()
     for _, key in ipairs(A.resource_pieces) do
         textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
     end
+    local campaign = texture.load("campaign-pieces.png")
+    for i, key in ipairs(A.campaign_pieces) do
+        local col, row = (i - 1) % 5, (i - 1) // 5
+        textures["campaign-" .. key] = texture.region(campaign, rect(col * 128, row * 128, 128, 128))
+    end
     for _, key in pairs(A.wallet_icons) do
         local name = "resource-" .. key
         textures[name] = textures[name] or texture.load("resource-pieces/" .. key .. ".png")
@@ -134,8 +151,9 @@ function A.draw_catalogue(R)
         end
     end
     R.say_at("EXPEDITION RESOURCES", vec2(240, 355), 13, R.PAL_CREAM, 0)
+    local prefix = A.use_campaign_pieces() and "campaign-" or "resource-"
     for i, key in ipairs(A.resource_pieces) do
-        gfx.image(R.board_art["resource-" .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
+        gfx.image(R.board_art[prefix .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "tile-cell-normal", "tile-tablet-single", "selected", "hint", "guide"}

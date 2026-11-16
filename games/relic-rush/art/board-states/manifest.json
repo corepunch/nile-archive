@@ -621,6 +621,7 @@
     "data/buildings/water_mill.png",
     "data/buildings/well.png",
     "data/buildings/workshop.png",
+    "data/campaign-pieces.png",
     "data/characters/adrian.png",
     "data/characters/elena.png",
     "data/characters/mara.png",
@@ -1913,6 +1914,63 @@
     "states": "Static currency readouts. The shared capsule handles pressed feedback.",
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
     "review": "docs/screenshots/review/three-resource-wallet/README.md"
+  },
+  "campaign_pieces": {
+    "source": "art/campaign-pieces/source.png",
+    "edit_target": "art/campaign-pieces/edit-target.png",
+    "prompt": "art/campaign-pieces/prompt.txt",
+    "style_reference": "../../reference/cradle-of-rome/visuals/board-pieces.png",
+    "generator": "built-in ImageGen, all 23 pieces in one edit",
+    "runtime": "data/campaign-pieces.png",
+    "cell_size": 128,
+    "extent": 112,
+    "row_edges": [
+      0,
+      268,
+      510,
+      741,
+      978,
+      1254
+    ],
+    "rows": [
+      [
+        "coin",
+        "berries",
+        "emerald",
+        "timber",
+        "stone"
+      ],
+      [
+        "amphora",
+        "water",
+        "cut-blocks",
+        "rations",
+        "trade-coins"
+      ],
+      [
+        "grain",
+        "quartz",
+        "springwater",
+        "sun-gem",
+        "lens"
+      ],
+      [
+        "cable",
+        "chart",
+        "marker",
+        "tools",
+        "broken-cable"
+      ],
+      [
+        "supplies",
+        "gear",
+        "note"
+      ]
+    ],
+    "states": "One authored sprite per match kind. Selection, hints, chains, press and motion use the existing board overlays and transforms.",
+    "registration": "Crop the five source columns and measured row bands, trim each object's transparent exterior, fit and center it without a mask.",
+    "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
+    "review": "docs/screenshots/review/campaign-pieces/README.md"
   },
   "board_frame": {
     "generator": "tools/board_frame.py",

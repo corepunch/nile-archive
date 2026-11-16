@@ -6,7 +6,8 @@ local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
 local economy = require("economy")
-local wallet_art = require("art").wallet_icons
+local art = require("art")
+local wallet_art = art.wallet_icons
 local island = require("island")
 local journey = require("journey")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
@@ -154,8 +155,8 @@ R.dialogs[R.OV_RESULT] = result_screen
 -- story beat that talks about it (engine: R.award_for, R.OV_AWARD).
 function R.award_for(g)
     local object = rules.levels[g.level + 1].quest_object
-    local art = R.board_art or {}   -- window-free tests play the campaign without art
-    return object and {image = art["find-" .. object.key], name = object.name, level = g.level + 1}
+    local textures = R.board_art or {}   -- window-free tests play the campaign without art
+    return object and {image = textures["find-" .. object.key], name = object.name, level = g.level + 1}
 end
 
 local function award_screen()
@@ -193,13 +194,14 @@ R.dialogs[R.OV_AWARD] = award_screen
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
+local chip_prefix = art.use_campaign_pieces() and "campaign-" or "resource-"
 local guide_entries = {
     {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of the three axes.",
-     icon={front="resource-coin"}},
+     icon={front=chip_prefix .. "coin"}},
     {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match pieces on a plaque or hit it with a tool.",
      icon={floor="tile-tablet-single"}},
     {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell is blue, clear it with another hit.",
-     icon={floor="tile-tablet-single", piece="resource-coin", front="chain"}},
+     icon={floor="tile-tablet-single", piece=chip_prefix .. "coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Coins, Supplies and Food.",
      icon={front="resource-wallet-supplies"}},
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
@@ -209,7 +211,7 @@ for i, unlock in ipairs(economy.unlocks) do
     local description = economy.unlock_text(unlock) .. (" From expedition %d."):format(unlock.first_level)
     guide_entries[#guide_entries+1] = {id=unlock.key, title=island.wonders[i].name,
         description=description .. (unlock.effect and " " .. unlock.effect or ""),
-        icon=unlock.tool and {tool=unlock.key} or {front="resource-" .. unlock.key}}
+        icon=unlock.tool and {tool=unlock.key} or {front=chip_prefix .. unlock.key}}
 end
 local function guide_icon(box, icon)
     local layer = rect.centered(box:center(), size2.splat(48))

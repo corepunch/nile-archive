@@ -16,6 +16,8 @@ Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
 to choose a story sprite and the colour slot it replaces. An optional
 `omit_kind` removes one other colour from that board's starting pieces and
 refills. Leave it unset for five regular kinds plus the story piece.
+The [campaign atlas](asset-catalogue.md#campaign-piece-atlas) supplies the art
+for these slots and for the pieces introduced by restorations.
 
 Ordinary boards use five resource pieces. The amber amphora on early six-kind
 boards earns score. Confirming the Spring Well replaces blue timber with a water

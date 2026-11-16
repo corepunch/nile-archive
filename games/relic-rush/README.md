@@ -322,8 +322,8 @@ pack, chain, tool and animation state, with source and runtime paths.
 `--art-states` shows the collection and `--art-board` previews the shared
 engine’s special pieces for development. Catalogue coverage runs in `make test`.
 
-The campaign uses the [expedition resource sprites](docs/asset-catalogue.md#resource-pieces).
-Story pieces and water take their authored slots. The **Jewels** and **Resources**
+The campaign uses one [painted atlas](docs/asset-catalogue.md#campaign-piece-atlas)
+for resources, upgrades and story pieces. The **Jewels** and **Resources**
 art previews remain available through `--tiles jewels` and `--tiles resources`.
 See the [tile-set comparison and construction research](docs/tile-sets.md).
 
