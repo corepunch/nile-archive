@@ -1,0 +1,275 @@
+# Twenty campaign buildings for Relic Rush and Christmas Market
+
+> **Status:** proposal, 16 November 2026. Nothing here is implemented yet.
+> Prices are starting points for the campaign bot and `tools/tune_levels.py`,
+> not tuned values.
+
+Both games have 30 boards and 10 story buildings today. Cradle of Rome has
+20 purchases in five epochs of four, and every purchase adds exactly one
+regular piece or one tool family. Twelve are pieces and eight are tools.
+[All 20 Rome I purchases](GAME_DESIGN.md#5-every-building-in-the-original-20-purchase-ladder)
+
+This proposal gives each game the same 12 + 8 split. It keeps the 10 existing
+story buildings, their story beats and their current unlocks, and adds 10
+buildings between them. Rome's skilled players finish all 20 purchases in
+about 30 levels, so 20 buildings across 30 boards matches the source's pace
+for a good player.
+[Rome pacing](GAME_DESIGN.md#what-progression-is--and-is-not)
+
+## The rules both ladders follow
+
+These come straight from the Rome ladder.
+
+1. **One purchase, one change.** Every building adds one piece or one bonus,
+   from the next board on. No building is cosmetic.
+2. **The new piece pays what the next price needs.** Rome's Sawmill costs Gold
+   and adds Lumber, and the Forge after it needs Supplies. Each new building
+   here sits after a piece that pays its scarcest currency.
+3. **Pieces climb a slot's ladder, they don't add slots.** The hex board fits
+   six kinds at most. A new piece replaces the one below it in the same slot,
+   as the Well, Workshop and Market already do in Relic Rush.
+4. **Gold treasures come late.** Rome's ring, pearl, diamond, goblet and brooch
+   are all in the last three epochs. Gold is in surplus early in both of our
+   games (Christmas Market holds 1,500 Gold by wish 4 in the measured run), so
+   early new buildings add bonuses and Food or Supplies, not Gold.
+5. **Eight tools don't fit on a phone.** The research says not to put Rome's
+   whole tool bar on an iPhone, and the engine draws three tool buttons. The
+   eight Rome tools therefore become three kinds of bonus, described next.
+
+## What a bonus looks like
+
+Rome's eight tools sort into what each one does for the player. On a
+move-limited hex board they become three kinds.
+
+| Kind | Rome tools it replaces | What the player gets | New art needed |
+| --- | --- | --- | --- |
+| **Tool** (one of the three buttons) | Hammer, Bomb, Lightning, Star | A tool on the bar, charged the game's existing way | None. Both games already have three tool icons in every state. |
+| **Opening special** | Shield (row), Star (one icon), Mixer | Every board starts with one rocket, rainbow ball or paper plane already placed | None. Both atlases already have `ray-*`, `prism` and `plane`. |
+| **Standing perk** | Hourglass, Plus | +3 moves, extra tool uses or tool charge, a bigger move bonus | A small guide icon each |
+
+**Why opening specials.** Rome's Shield clears a row and its Star clears one
+icon. A hex rocket clears a line and a rainbow ball clears a colour, so they
+are the same effects with no new button to find. The player taps them on the
+board like any other special. Christmas Market makes no specials from matches,
+so in that game these three buildings are the only source of specials, as
+building-granted bonuses are in Rome.
+
+**Why +3 moves.** The Hourglass adds time to the amphora. Our games count
+moves, so its equivalent is moves. `tools/tune_levels.py` must fit budgets
+with the bonus included, or the campaign gets easier past that building.
+
+**What Mixer becomes.** Both games already reshuffle a board with no moves
+left, so a shuffle tool would rarely matter. The paper plane takes its slot.
+
+## Relic Rush: the 20 restorations
+
+★ marks the existing story restorations. Their price, unlock and story beat
+are unchanged. The ten new buildings all have Blender renders already: they
+are shop buildings today, and this moves them into the campaign. Rings,
+scarabs, sandals and harps already exist and are already in the game; they
+come in today as the Courtyard's timed variants on boards 18, 21, 25 and 28.
+Here each becomes its own building's unlock on the same board. **Relic Rush
+needs no new building or piece art.**
+
+| # | Build after | Building | From board | Adds | Kind | Price C / F / S |
+| ---: | ---: | --- | ---: | --- | --- | ---: |
+| **I. The landing** |
+| 1 | 1 | ★ Expedition camp | 2 | Dynamite, 2 uses | Tool | 0 / 3 / 8 |
+| 2 | 2 | Trapper's cabin | 3 | +1 use for every tool | Perk | 45 / 0 / 6 |
+| 3 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | Piece | 100 / 0 / 0 |
+| 4 | 5 | Valley lighthouse | 6 | One rocket on every opening board | Special | 50 / 15 / 10 |
+| **II. The quay** |
+| 5 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | Piece | 70 / 20 / 24 |
+| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | Piece | 85 / 24 / 30 |
+| 7 | 11 | Clock tower | 12 | +3 moves on every expedition | Perk | 80 / 30 / 25 |
+| 8 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | Piece | 85 / 34 / 36 |
+| **III. The terraces** |
+| 9 | 14 | Glass greenhouse | 15 | One rainbow ball on every opening board | Special | 110 / 20 / 30 |
+| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | Piece | 130 / 35 / 0 |
+| 11 | 17 | Trading post | 18 | Ring, 7 Coins | Piece | 90 / 45 / 20 |
+| 12 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | Piece | 145 / 85 / 40 |
+| **IV. The wreck** |
+| 13 | 20 | Beached schooner | 21 | Scarab, 8 Coins | Piece | 120 / 30 / 70 |
+| 14 | 21 | Great aviary | 22 | One paper plane on every opening board | Special | 150 / 30 / 40 |
+| 15 | 22 | Water mill | 23 | Move bonus 3 Coins per move, cap 60 | Perk | 140 / 50 / 40 |
+| 16 | 23 | ★ Star observatory | 24 | Sunburst, 2 uses | Tool | 155 / 0 / 70 |
+| **V. The temple** |
+| 17 | 24 | Cartographer's house | 25 | Winged sandal, 9 Coins | Piece | 160 / 40 / 60 |
+| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | Piece | 160 / 0 / 65 |
+| 19 | 27 | Stone amphitheatre | 28 | Harp, 10 Coins | Piece | 170 / 90 / 50 |
+| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | Piece | 185 / 110 / 75 |
+
+Twelve pieces, eight bonuses: two tools, three opening specials and three
+perks.
+
+**Why each building gives what it does.**
+
+- **Trapper's cabin, +1 use per tool.** This is Rome's Plus. It comes second
+  so the first Dynamite board after the Camp already feels generous.
+- **Valley lighthouse, opening rocket.** A beam along one line. It also echoes
+  the story's lights and signals from board 3.
+- **Clock tower, +3 moves.** This is the Hourglass. It comes before the
+  Courtyard's price jump, where replays for Food start.
+- **Glass greenhouse, opening rainbow.** The glass splits light into colours.
+- **Trading post, Beached schooner, Cartographer's house, Stone amphitheatre.**
+  These take over the Courtyard's helmet → ring → scarab → sandal → harp
+  climb: trade goods, a wreck's cargo, a traveller's sandals, a theatre's
+  lyre. Rome's Arch, Ship, Statue and Temple of Saturn do the same.
+- **Great aviary, opening paper plane.** The birds fly to a target.
+- **Water mill, richer move bonus.** This is the one economy perk. Today each
+  move left pays 2 Coins, up to 40. After the mill it pays 3, up to 60, which
+  rewards finishing fast just before the expensive Gold purchases.
+
+**What changes for the Courtyard.** It keeps its helmet. The timed variants
+stop: the slot pays 6 Coins until the Trading post, then climbs as each new
+building is placed.
+
+## Christmas Market: the 20 stalls
+
+Christmas Market's first eight stalls already follow Rome I's first eight
+purchases. The rink and the tree add nothing today. This gives them bonuses
+and adds ten stalls. The stalls fill Rome I's remaining twelve roles: the
+Rostra's bomb, the Pantheon's hourglass, the Tabularium's plus, three Shield,
+Star and Mixer bonuses, and the five Gold treasures and one Food piece of
+epochs III–V.
+
+Eight of the ten new stalls are existing cottages and decorations with
+Blender renders. Two need new models.
+
+| # | Build after | Stall | From wish | Adds | Kind | Price G / S / F |
+| ---: | ---: | --- | ---: | --- | --- | ---: |
+| **I. First lights** |
+| 1 | 1 | ★ Welcome arch | 2 | Firewood, 5 Supplies | Piece | 50 / 0 / 0 |
+| 2 | 2 | Reindeer stable | 3 | One shooting star on every opening board | Special | 60 / 20 / 0 |
+| 3 | 4 | ★ Lumber workshop | 5 | Toy hammer · Hammer | Tool | 100 / 100 / 0 |
+| 4 | 5 | Gingerbread house | 6 | +3 moves on every wish | Perk | 150 / 120 / 0 |
+| **II. The bakery lane** |
+| 5 | 7 | ★ Gingerbread bakery | 8 | Packing blocks, 7 Supplies | Piece | 300 / 200 / 0 |
+| 6 | 9 | ★ Hot cocoa kiosk | 10 | Cocoa, 4 Food | Piece | 400 / 500 / 0 |
+| 7 | 11 | Santa's workshop | 12 | Christmas cracker · Firecracker | Tool | 250 / 250 / 150 |
+| 8 | 13 | ★ Toymaker's workshop | 14 | Milk, 3 Food | Piece | 300 / 300 / 200 |
+| **III. Gifts and letters** |
+| 9 | 14 | North Pole post office | 15 | Every tool starts each wish half charged | Perk | 350 / 300 / 300 |
+| 10 | 16 | ★ Gift wrapping pavilion | 17 | Winter apple, 6 Food | Piece | 500 / 400 / 400 |
+| 11 | 17 | Log cabin | 18 | Roast chestnuts, 7 Food | Piece | 450 / 400 / 450 |
+| 12 | 19 | ★ Candlelight shop | 20 | Lantern star · Lightning | Tool | 500 / 600 / 500 |
+| **IV. Bells and clocks** |
+| 13 | 20 | Snowy chapel | 21 | Silver bell, 6 Gold (replaces the silver coin) | Piece | 550 / 550 / 600 |
+| 14 | 21 | Clockmaker's shop *(new model)* | 22 | Pocket watch, 7 Gold (replaces the gold coin) | Piece | 600 / 600 / 600 |
+| 15 | 23 | ★ Reindeer carousel | 24 | Gingerbread, 5 Food | Piece | 700 / 700 / 600 |
+| 16 | 24 | Santa's sleigh | 25 | One paper plane on every opening board | Special | 650 / 650 / 650 |
+| **V. Christmas Eve** |
+| 17 | 25 | Igloo | 26 | Snow globe, 8 Gold (replaces the bell) | Piece | 700 / 700 / 750 |
+| 18 | 26 | ★ Winter skating rink | 27 | One rainbow ball on every opening board | Special | 750 / 700 / 700 |
+| 19 | 27 | Carol bandstand *(new model)* | 28 | Music box, 9 Gold (replaces the watch) | Piece | 800 / 750 / 800 |
+| 20 | 29 | ★ Christmas tree | 30 | Star topper, 10 Gold (replaces the globe) | Piece | 900 / 850 / 900 |
+
+Twelve pieces, eight bonuses: three tools, three opening specials and two
+perks, Rome I's exact split. Christmas prices are Gold / Supplies / Food,
+the order the resource prototype uses. The rink and tree prices above are
+new: their current prices (160 / 42 / 20 and 175 / 50 / 25) sit far below
+their neighbours and would make them free in a 20-stall economy.
+
+**Why each stall gives what it does.**
+
+- **Reindeer stable, shooting star.** A reindeer's streak across the sky; it
+  is the hex rocket and teaches specials on wish 3.
+- **Gingerbread house, +3 moves.** A snack that keeps everyone going. It
+  arrives as the first prices with Supplies make players earn deliberately.
+- **Santa's workshop, Firecracker.** Christmas crackers. The Firecracker icon
+  and all five button states are already in the tool atlas and unused. It
+  charges from its own matched cracker pieces like the Hammer.
+- **North Pole post office, half-charged tools.** This is the Plus: parcels of
+  tools arrive before the wish starts. A meter starts at 100 of 200.
+- **Log cabin, roast chestnuts.** By the fire. At 7 Food it tops the Food
+  ladder, as Rome's Port fish does.
+- **Chapel, clockmaker, igloo, bandstand, tree.** The five Gold treasures:
+  bells, watches, snow globes, music boxes and the tree's star topper, each
+  replacing the Gold piece below it, as Rome's ring through brooch do.
+- **Santa's sleigh, paper plane.** The sleigh flies to the pane it needs.
+- **Skating rink, rainbow ball.** Skaters swirl the colours. This is the Mixer
+  slot.
+
+**The Gold ladder needs two slots.** Christmas Market pays Gold from both
+silver (3) and gold (5) coins. The bell and globe climb the silver slot. The
+watch and music box climb the gold slot. The star topper replaces whichever
+of those is lower.
+
+## When a building blocks the next board
+
+Rome lets the player continue without the next purchase. Both games today
+hold the next new board until the due story building is placed. With 20
+buildings the hard gate would stop play every one or two boards.
+
+**Recommendation: a soft gate.** The ladder is strictly in order: each
+building appears in the shop once the one before it is placed. Only the ten
+★ story buildings hold the next new board, and a story building can't be
+bought until every building before it on the ladder is placed. A player
+short on Supplies after board 5 can play on to board 7 before the Workshop
+makes them build the Lighthouse. That gives Rome's slack without letting the
+ladder fall behind the story.
+
+The alternative is to gate on all 20, which is simpler to explain and test
+but doubles the construction stops and the replays for shortfalls.
+
+## What has to be built
+
+### Engine
+
+1. **Opening specials.** A loadout field, for example
+   `opening_specials={"ray"}`, places that special on the opening board, on a
+   seeded open cell that is neither chained nor under a plaque. It needs
+   C/Lua tests for placement, refill and the hint, and a reset under
+   `ENGINE_TEST`.
+2. **Move bonus.** A loadout `extra_moves`, applied once at board start,
+   shown in the HUD count and covered by the existing restart path.
+3. **Starting charge.** Christmas Market's `tool_meter` can already start
+   above zero. Relic Rush's per-board tool uses are game data.
+
+### Games
+
+1. **One unlock table per game.** Each row names its building key and either
+   a slot and tier, a tool, a special or a perk. Relic Rush's `E.unlocks`
+   matches unlock *i* to city type *i − 1*; the promoted buildings have
+   other type IDs, so rows must name their building key. Christmas Market's
+   `ordinary` table is indexed by the number of stalls built and must become
+   per-slot tiers. The catalogue row order stays as it is: it is save data.
+2. **Save migration.** For a save already past a new building's board: count
+   the building as placed if the player already bought it as a decoration.
+   Otherwise offer it in the shop at its price, but don't let it block the
+   next story building. Bump `CAMPAIGN_VERSION`.
+3. **Prices and budgets.** Run the campaign bot over 30 seeded runs per
+   game and record wallet before each purchase, shortfall and replays, as
+   [the adaptation](ADAPTATION.md#how-to-judge-the-first-prototype) says.
+   Refit move budgets with the +3 moves included.
+4. **Story.** Each new building needs an arrival line and the card text
+   stating its unlock. They are not new scenes. Christmas Market's lines stay
+   joyful. Both get a cold read per [STORY_WRITING.md](../STORY_WRITING.md).
+5. **UI.** The building card says what it adds. The first board after a
+   bonus building points at the new special or perk. The guide lists all
+   twelve pieces and eight bonuses.
+
+### Art
+
+| Game | New art | How |
+| --- | --- | --- |
+| Relic Rush | None. All 10 buildings and 12 pieces exist. | Re-check the promoted buildings' footprints with `--footprints`. |
+| Christmas Market | 6 pieces: silver bell, pocket watch, snow globe, music box, star topper, roast chestnuts. Plus the Christmas cracker, which charges the Firecracker. | One ImageGen atlas for all seven pieces together, in the existing market-goods style |
+| Christmas Market | 2 buildings: Clockmaker's shop and Carol bandstand | New catalogue rows appended, then Blender, `make buildings`, and the paint pass in [BUILDING_STYLE.md](../BUILDING_STYLE.md) |
+| Both | Guide icons for +3 moves, starting charge and the move bonus | Authored together in one atlas |
+
+Each addition goes in the game's asset catalogue in the same PR. Gaps that
+remain get a GitHub issue.
+
+## Suggested order of work
+
+1. Engine: opening specials and extra moves, with tests.
+2. Relic Rush first. It needs no new art, so it tests the whole ladder
+   (unlock table, soft gate, migration, retune) on its own.
+3. Christmas Market's data and the three bonuses that need no new art
+   (Firecracker, opening specials, perks), with placeholder pieces tracked
+   in an issue.
+4. Christmas Market's seven pieces and two buildings, then the final retune.
+
+Citizen challenges, Rome's second payoff for a building, stay out of scope.
+[Citizen upgrades](GAME_DESIGN.md#7-citizen-challenges-buildings-can-have-a-second-payoff)

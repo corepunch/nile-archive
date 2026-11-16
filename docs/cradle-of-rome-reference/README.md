@@ -13,6 +13,7 @@ restoration, with a board that gives the changed piece a reason to matter.
 | [Gem correspondence sheet](gem-correspondence.html) | Side-by-side tile art, original names, Relic Rush counterparts and gaps for both editions. Open in a browser. |
 | [Board design](BOARD_DESIGN.md) | All 115 numbered layouts, feature counts and worked examples of plaque placement, locks and supply. |
 | [Resources and city](ECONOMY_AND_CITY.md) | Piece yields, the finish bonus, all 20 purchases across five epochs, and examples of citizen rewards. |
+| [Twenty campaign buildings](TWENTY_BUILDINGS.md) | Proposal: a 20-building ladder for Relic Rush and Christmas Market, with each building's piece or bonus. |
 | [Applying it to Relic Rush](ADAPTATION.md) | What the game already does, which changes to prototype first, and how to check them. |
 | [Tropicats reference](../tropicats-reference/README.md) | Companion research for quests, story pacing and board objectives. |
 
