@@ -1,43 +1,87 @@
-"""Place the bonus icons on painted faces and engrave the disabled state."""
+"""Generate the bonus button states from a painted base and six icons."""
 import argparse
 import io
 import json
 from pathlib import Path
 
-from PIL import Image, ImageChops, ImageEnhance, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "art/board-states/manifest.json"
+SLOT_SIZE = 128
 BOARD_ICON_SIZE = 112
-BUTTON_FACE_SIZE = 116
 BUTTON_ICON_SIZE = 84
 
 
 def center(image):
-    frame = Image.new("RGBA", (128, 128))
-    frame.paste(image, ((128 - image.width) // 2, (128 - image.height) // 2))
+    frame = Image.new("RGBA", (SLOT_SIZE, SLOT_SIZE))
+    frame.paste(image, ((SLOT_SIZE - image.width) // 2, (SLOT_SIZE - image.height) // 2))
     return frame
 
 
-def engrave(plate, icon):
-    """Shade the cavity and give the edge a warm reflected glow."""
-    mask = icon.getchannel("A").point(lambda a: max(0, min(255, (a - 24) * 255 // 208)))
-    mask = mask.filter(ImageFilter.GaussianBlur(0.5))
-    face = plate.convert("RGB")
-    shade = ImageEnhance.Brightness(face)
-    amber = Image.new("RGB", face.size, (255, 198, 108))
+def rounded_mask(size, bounds, radius):
+    """Antialias the inset outline at the base plate's scale."""
+    scale = 8
+    left, top, right, bottom = bounds
+    mask = Image.new("L", (size[0] * scale, size[1] * scale))
+    ImageDraw.Draw(mask).rounded_rectangle(
+        (left * scale, top * scale, right * scale - 1, bottom * scale - 1),
+        radius=radius * scale, fill=255,
+    )
+    return mask.resize(size, Image.Resampling.LANCZOS)
 
-    # Reflected light falls off outside the cut and catches the lower wall.
+
+def bevel(face, mask, width, shadow=0.56, highlight=1.28):
+    """Light the inside walls of the shape. Negative widths raise the bevel."""
+    shade = ImageEnhance.Brightness(face)
+    upper = ImageChops.subtract(mask, ImageChops.offset(mask, width, width))
+    upper = ImageChops.multiply(mask, upper.filter(ImageFilter.GaussianBlur(abs(width) / 3)))
+    lower = ImageChops.subtract(mask, ImageChops.offset(mask, -width, -width))
+    face = Image.composite(shade.enhance(shadow), face, upper)
+    return Image.composite(shade.enhance(highlight), face, lower)
+
+
+def rim_glow(face, mask, color, strength=1):
     rim = ImageChops.subtract(mask.filter(ImageFilter.MaxFilter(5)), mask)
     halo = ImageChops.subtract(mask.filter(ImageFilter.GaussianBlur(3)), mask)
     glow = ImageChops.add(rim, halo, scale=2).filter(ImageFilter.GaussianBlur(0.7))
-    stone = Image.composite(amber, face, glow)
-    upper_wall = ImageChops.subtract(mask, ImageChops.offset(mask, 4, 3))
-    lower_wall = ImageChops.subtract(mask, ImageChops.offset(mask, -3, -3))
+    glow = glow.point(lambda a: min(255, round(a * strength)))
+    return Image.composite(Image.new("RGB", face.size, tuple(color)), face, glow)
+
+
+def recolor(face, palette):
+    shadow, midtone, highlight = map(tuple, palette)
+    return ImageOps.colorize(face.convert("L"), shadow, highlight, midtone, midpoint=182)
+
+
+def button_face(base, mask, style):
+    face = base.convert("RGB")
+    if "palette" in style:
+        face = recolor(face, style["palette"])
+    if "brightness" in style:
+        face = ImageEnhance.Brightness(face).enhance(style["brightness"])
+    if "inset_palette" in style or "bevel" in style:
+        inset = recolor(face, style["inset_palette"]) if "inset_palette" in style else face
+        inset = bevel(inset, mask, style.get("bevel", 0))
+        face = Image.composite(inset, face, mask)
+    if "glow" in style:
+        face = rim_glow(face, mask, style["glow"], style.get("glow_strength", 1))
+    face.putalpha(base.getchannel("A"))
+    return face
+
+
+def engrave(plate, icon):
+    """Cut the disabled icon into the plate and light its rim."""
+    mask = icon.getchannel("A").point(lambda a: max(0, min(255, (a - 24) * 255 // 208)))
+    mask = mask.filter(ImageFilter.GaussianBlur(0.5))
+    face = plate.convert("RGB")
+    amber = (255, 198, 108)
+    stone = rim_glow(face, mask, amber)
+    floor = ImageEnhance.Brightness(face).enhance(0.32)
+    recess = bevel(floor, mask, 4, shadow=0.5, highlight=2.25)
     rim_light = ImageChops.subtract(mask, ImageChops.offset(mask, -1, -1))
-    recess = Image.composite(shade.enhance(0.16), shade.enhance(0.32), upper_wall)
-    recess = Image.composite(shade.enhance(0.72), recess, lower_wall)
-    recess = Image.composite(Image.blend(face, amber, 0.48), recess, rim_light)
+    warm_edge = Image.blend(face, Image.new("RGB", face.size, amber), 0.48)
+    recess = Image.composite(warm_edge, recess, rim_light)
     result = Image.composite(recess, stone, mask)
     result.putalpha(plate.getchannel("A"))
     return result
@@ -45,22 +89,24 @@ def engrave(plate, icon):
 
 def pack(spec):
     chips = Image.open(ROOT / spec["source"])
-    faces = Image.open(ROOT / spec["button_source"])
-    assert chips.mode == faces.mode == "RGBA"
-    plates = [center(faces.crop(box).resize((BUTTON_FACE_SIZE, BUTTON_FACE_SIZE), Image.Resampling.LANCZOS))
-              for box in spec["button_boxes"]]
-    states = spec["rows"][1:]
-    assert len(plates) == len(states)
-    atlas = Image.new("RGBA", (128 * len(spec["columns"]), 128 * len(spec["rows"])))
+    base = Image.open(ROOT / spec["button_base"])
+    assert chips.mode == base.mode == "RGBA" and base.size == (SLOT_SIZE, SLOT_SIZE)
+    base_alpha = base.getchannel("A")
+    outside_button = base_alpha.point(lambda a: 255 if a < 128 else 0)
+    mask = rounded_mask(base.size, **spec["button_inset"])
+    states = [(state, button_face(base, mask, spec["button_states"][state])) for state in spec["rows"][1:]]
+    atlas = Image.new("RGBA", (SLOT_SIZE * len(spec["columns"]), SLOT_SIZE * len(spec["rows"])))
     for x, bounds in enumerate(spec["chip_boxes"]):
         chip = chips.crop(bounds)
         chip.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
-        atlas.paste(center(chip), (x * 128, 0))
+        atlas.paste(center(chip), (x * SLOT_SIZE, 0))
         chip.thumbnail((BUTTON_ICON_SIZE, BUTTON_ICON_SIZE), Image.Resampling.LANCZOS)
         icon = center(chip)
-        for y, (state, plate) in enumerate(zip(states, plates), 1):
+        assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), "Icon extends beyond the button"
+        for y, (state, plate) in enumerate(states, 1):
             face = engrave(plate, icon) if state == "disabled" else Image.alpha_composite(plate, icon)
-            atlas.paste(face, (x * 128, y * 128))
+            face.putalpha(base_alpha)
+            atlas.paste(face, (x * SLOT_SIZE, y * SLOT_SIZE))
     output = io.BytesIO()
     atlas.save(output, format="PNG", optimize=True)
     return output.getvalue()

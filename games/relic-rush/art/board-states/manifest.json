@@ -2097,7 +2097,7 @@
       "hover",
       "disabled"
     ],
-    "registration": "Source pixel boxes list six standalone chip crops in column order and five blank plate crops in button state order. Preserve chip proportions in 112 px board art and use the same centered 84 px icon on every 116 px button face. Runtime atlas slots are 128 × 128.",
+    "registration": "Center each standalone chip in a 112 px board slot and reuse its 84 px button icon across the same centered base. Generate the inner mask from the rounded rectangle and apply the state recipe at 128 × 128 without shifting the base alpha or icon.",
     "bonuses": {
       "hammer": {
         "building": "workshop",
@@ -2130,7 +2130,7 @@
         "effect": "Hit every piece of the chosen kind"
       }
     },
-    "disabled": "The sandstone plate uses the registered 84 px icon alpha for a deep cut with upper wall shadow, a warm lower rim, and a feathered amber glow. Lighting reference is the disabled sockets in Cradle of Rome 2 bns_hammer_full.png and bns_lightning_full.png.",
+    "disabled": "Recolor the shared base to sandstone. Use the registered icon alpha to cut a dark floor with directional shadows inside the upper-left wall, a warm lower-right rim and a feathered amber glow. Lighting reference is Cradle of Rome 2 bns_hammer_full.png and bns_lightning_full.png.",
     "chip_boxes": [
       [
         52,
@@ -2169,39 +2169,104 @@
         208
       ]
     ],
-    "button_source": "art/bonus-gems/button-faces.png",
-    "button_prompt": "art/bonus-gems/button-faces.prompt.txt",
-    "button_boxes": [
-      [
+    "button_base": "art/bonus-gems/button-base.png",
+    "button_base_origin": {
+      "commit": "6d05253e",
+      "source": "art/bonus-gems/button-faces.png",
+      "crop": [
         66,
         167,
         456,
         556
       ],
-      [
-        475,
-        165,
-        871,
-        556
+      "resize": [
+        116,
+        116
       ],
-      [
-        888,
-        167,
-        1284,
-        556
-      ],
-      [
-        1301,
-        166,
-        1698,
-        556
-      ],
-      [
-        1717,
-        167,
-        2106,
-        556
+      "center": [
+        64,
+        64
       ]
-    ]
+    },
+    "button_inset": {
+      "bounds": [
+        18,
+        18,
+        110,
+        110
+      ],
+      "radius": 18
+    },
+    "button_states": {
+      "normal": {},
+      "selected": {
+        "inset_palette": [
+          [
+            2,
+            32,
+            19
+          ],
+          [
+            9,
+            119,
+            72
+          ],
+          [
+            104,
+            198,
+            131
+          ]
+        ],
+        "bevel": 2,
+        "glow": [
+          255,
+          236,
+          140
+        ],
+        "glow_strength": 1.65
+      },
+      "pressed": {
+        "inset_palette": [
+          [
+            42,
+            15,
+            2
+          ],
+          [
+            150,
+            62,
+            9
+          ],
+          [
+            232,
+            150,
+            57
+          ]
+        ],
+        "bevel": 4
+      },
+      "hover": {
+        "brightness": 1.14
+      },
+      "disabled": {
+        "palette": [
+          [
+            43,
+            31,
+            25
+          ],
+          [
+            184,
+            164,
+            144
+          ],
+          [
+            255,
+            244,
+            225
+          ]
+        ]
+      }
+    }
   }
 }

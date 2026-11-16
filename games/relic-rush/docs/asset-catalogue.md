@@ -512,16 +512,20 @@ The rounded, wide Lightning profile carries through the field chip and all five
 button states.
 
 The first row of the [original ImageGen atlas](../art/bonus-gems/source.png)
-supplies the six pieces. The [button face strip](../art/bonus-gems/button-faces.png)
-and its [prompt](../art/bonus-gems/button-faces.prompt.txt) provide one painted
-blank face for each state. The [manifest](../art/board-states/manifest.json)
-records both sources' crop rectangles and state order.
-`python3 games/relic-rush/tools/prepare_bonus_gems.py` packs 128 × 128 RGBA slots
-into `data/bonus-gems.png`. It centers each board piece in a 112 × 112 area,
-aligns each face to 116 × 116, and places the same centered 84 px icon on every
-active face. The disabled recess uses that icon's alpha at those same bounds.
-The script preserves the plate alpha and openings such as the gear's center
-hole. Every board pack uses the same six pieces.
+supplies the six pieces. A [single painted button](../art/bonus-gems/button-base.png)
+supplies the material, rim, and silhouette for every state. The
+[manifest](../art/board-states/manifest.json) records its crop provenance,
+the generated inset's bounds and corner radius, and the state recipes.
+
+`python3 games/relic-rush/tools/prepare_bonus_gems.py` builds the rounded-square
+inset mask and packs all 30 combinations in `data/bonus-gems.png`. Each recipe
+can recolor the plate or inset with a three-tone palette, adjust brightness, and
+add rim glow. Positive bevel widths recess the inset and negative widths raise
+it. Recessed surfaces have a soft shadow inside the upper-left wall and a lit
+lower-right edge. The same centered icon fits in 84 × 84 px for every state.
+The disabled recess uses that icon's alpha, including openings such as the
+gear's center hole. Every board pack uses the same six pieces. The packer
+checks that every button keeps the same outer alpha.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
