@@ -1,4 +1,4 @@
-"""Register the painted limestone and blue plaque faces for Relic Rush."""
+"""Register the painted limestone and target plaque faces for Relic Rush."""
 import argparse
 import json
 from pathlib import Path
@@ -10,9 +10,28 @@ SPEC = json.loads((ROOT / "art/board-states/manifest.json").read_text())["dressi
 SIZE, STRIDE = 128, 132
 
 
+def grade(tile, spec):
+    """Recolour a face to spec["tone"], keeping its painted grain.
+
+    Each pixel's brightness relative to the face's mean brightness scales the
+    new tone; spec["grain"] scales how much of that variation survives.
+    """
+    rgb, alpha = tile.convert("RGB"), tile.getchannel("A")
+    luma = list(rgb.convert("L").getdata())
+    weights = list(alpha.getdata())
+    mean = sum(l * w for l, w in zip(luma, weights)) / max(1, sum(weights))
+    tone, amount = spec["tone"], spec.get("grain", 1)
+    out = Image.new("RGB", tile.size)
+    out.putdata([tuple(min(255, round(c * (1 + amount * (l / mean - 1)))) for c in tone) for l in luma])
+    out.putalpha(alpha)
+    return out
+
+
 def register(source, item, mask):
     assert item["fit"] == "fill", item
     tile = source.crop(item["crop"]).resize((SIZE, SIZE), Image.Resampling.LANCZOS)
+    if "grade" in item:
+        tile = grade(tile, item["grade"])
     # Full-bleed paint must reach the registered face before we cut it.
     unpainted = tile.getchannel("A").point(lambda a: 255 if a < 230 else 0)
     assert not ImageChops.multiply(unpainted, mask).getbbox(), item

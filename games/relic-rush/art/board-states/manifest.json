@@ -1453,10 +1453,11 @@
         "fit": "fill",
         "crop": [87, 86, 799, 798]
       },
-      "blue-plaque": {
+      "target-plaque": {
         "source": "plaques",
         "fit": "fill",
-        "crop": [974, 86, 1686, 798]
+        "crop": [974, 86, 1686, 798],
+        "grade": {"tone": [116, 64, 46], "grain": 1.0}
       }
     },
     "registration": "tools/prepare_board_dressing.py"

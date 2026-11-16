@@ -2,7 +2,7 @@
 
 ## Themed board art
 
-The live expedition uses [painted resources](#resource-pieces) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets remain in the atlas for previews and imported-board diagnostics.
+The live expedition uses [painted resources](#resource-pieces) on pale limestone. Dark red plaques mark the cells required to win. The older Relics, Jewels and Resources sheets remain in the atlas for previews and imported-board diagnostics.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -148,7 +148,7 @@ The earlier excavation art is documented in
 ## Additional board elements
 
 These sprites support the reference-board previews. The campaign uses chains
-and blue plaques.
+and red plaques.
 
 The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
 [exact prompt](../../../engine/art/match3-elements/prompt.txt) contain both games'
@@ -355,7 +355,7 @@ See [match rules](match4-rules.md) for special-combination resolution.
 
 The campaign uses the same silver chain art on each board. One hit breaks
 the chain and keeps the piece in place. A later hit clears the piece and its
-blue plaque. Ice and carpet textures are recorded here for shared engine
+red plaque. Ice and carpet textures are recorded here for shared engine
 and source-board diagnostics.
 
 ### Story materials
@@ -363,7 +363,7 @@ and source-board diagnostics.
 | Frame | Meaning and use |
 | --- | --- |
 | `sandstone-floor` | Pale limestone for ordinary and cleared cells. |
-| `blue-plaque` | Cobalt stone on cells required for a win. The Explorer’s Guide uses the same face. |
+| `target-plaque` | Red umber stone on cells required for a win. The Explorer’s Guide uses the same face. |
 
 ImageGen painted the two flat faces together in one [atlas](../art/board-refresh/flat-ground.png),
 using the [prompt](../art/board-refresh/flat-ground-prompt.txt) and
@@ -373,6 +373,12 @@ crops. The packer resizes each to 128 px and applies the exact canonical
 flat-top alpha. Run `python3 games/relic-rush/tools/prepare_board_dressing.py`
 to repack `data/board-dressing.png`. The game draws the faces over a shared
 backing with a hairline seam between them. [In-game before and after](../../../docs/review/match3-board-seams/README.md).
+
+`target-plaque` began as the cobalt face of that atlas. Blue cells merged into
+the blue jungle mist behind the board, so the packer colour-grades this one
+crop (manifest `grade`): each pixel keeps its painted brightness relative to
+the face's mean, applied to the tone `#74402E`. The source atlas is unchanged.
+[Before and after](review/target-plaque-grade/README.md).
 
 The earlier [cover and terrain sources](../art/board-dressing/) and
 [historical review](screenshots/review/board-dressing/README.md) document the

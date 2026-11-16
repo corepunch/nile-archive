@@ -6,7 +6,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear all blue plaques within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
+Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear all red plaques within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
@@ -33,7 +33,7 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-Every expedition ends when all of its blue plaques are clear. Match on a blue
+Every expedition ends when all of its red plaques are clear. Match on a red
 cell to reveal the pale stone below. A chain absorbs the first hit on its piece.
 See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition.
 The [resource expedition design](docs/resource-expedition.md) covers how
@@ -135,7 +135,7 @@ See [effect reference study](docs/effects.md). The reel uses deterministic test 
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
-The pale limestone and blue plaques meet at hairline seams on one continuous
+The pale limestone and red plaques meet at hairline seams on one continuous
 board surface. [Before and after at both phone sizes](../../docs/review/match3-board-seams/README.md).
 
 The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are thirty different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
@@ -194,7 +194,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 ## Expedition and restoration loop
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
-2. Clear all blue plaques within the move budget.
+2. Clear all red plaques within the move budget.
 3. Claim the matched resources, up to 40 Gold for saved moves, and three discovery stars on a first clear.
 4. Return to the island. At a wonder milestone, choose a location and confirm construction; otherwise the next story clue plays immediately.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
@@ -212,7 +212,7 @@ Gold per unused move, with a maximum move bonus of 40 Gold.
 
 Every stage uses its own connected active-cell mask within a radius-four hex grid. Chain placements shape seams and approaches, and [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Each row gives the starting number of blue plaques, including plaques under chains.
 
-| # | Expedition | Moves | Blue plaques | Chains |
+| # | Expedition | Moves | Red plaques | Chains |
 | --- | --- | ---: | ---: | ---: |
 | 1 | First Light | 24 | 7 | 0 |
 | 2 | The Lamp Lens | 29 | 9 | 0 |
@@ -294,7 +294,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 ## Play
 
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. All pieces in a long line clear together.
-- Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
+- Match or land a tool hit on a chained piece to break the chain. A later hit clears a red plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots; the result screen separately explains the guaranteed grant and spare Gold.
 - Pickaxe hits one cell, Dynamite hits the cell and its neighbors, and Sunburst hits every piece of the tapped kind. Each tool has two charges per level and costs zero moves. The guide explains mechanics.
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.

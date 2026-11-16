@@ -8,7 +8,7 @@ A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Row-major; packed by tools/prepare_board_dressing.py with a 2 px gutter.
-A.dressing_frames = {"sandstone-floor", "blue-plaque"}
+A.dressing_frames = {"sandstone-floor", "target-plaque"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = require("match3.elements_view").assets
@@ -113,7 +113,7 @@ function A.draw_catalogue(R)
         gfx.image(R.board_art["resource-" .. key], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
-                   "chain", "sandstone-floor", "blue-plaque", "selected", "hint", "guide"}
+                   "chain", "sandstone-floor", "target-plaque", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 414 + math.floor((i - 1) / 6) * 75
         if i <= 6 then
@@ -137,15 +137,15 @@ function A.draw_dressing_catalogue(R)
     gfx.round_rect(rect(28, 315, 424, 180), 18, color(12, 47, 41, 250))
     R.say_at("BOARD MATERIALS", vec2(240, 345), 25, R.PAL_GOLD, 420)
     local side = 2 * (R.HEX_R - .65)
-    for i, name in ipairs{"sandstone-floor", "blue-plaque", "chain"} do
+    for i, name in ipairs{"sandstone-floor", "target-plaque", "chain"} do
         local at = vec2(105 + (i - 1) * 135, 413)
         local area = rect.centered(at, size2.splat(side))
-        gfx.image(R.board_art[i == 3 and "blue-plaque" or name], area, color.WHITE)
+        gfx.image(R.board_art[i == 3 and "target-plaque" or name], area, color.WHITE)
         if i == 3 then
             gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
             gfx.image(R.board_art.chain, area, color.WHITE)
         end
-        R.say_at(({"Pale stone", "Blue plaque", "Chained plaque"})[i], at + vec2(0, 44), 13, R.PAL_CREAM, 120)
+        R.say_at(({"Pale stone", "Red plaque", "Chained plaque"})[i], at + vec2(0, 44), 13, R.PAL_CREAM, 120)
     end
 end
 
