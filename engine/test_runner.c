@@ -278,9 +278,11 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
     static char failures[4096];
     char spec[128], log[160];
     bool list = false;
-    bool fast = false, checks_only = false;
+    bool fast = false, checks_only = false, full = false, named = false;
     for (int i = 1; i < argc; i++) list |= !strcmp(argv[i], "--list");
     for (int i = 1; i < argc; i++) {
+        named |= argv[i][0] != '-';
+        full |= !strcmp(argv[i], "--full");
         fast |= !strcmp(argv[i], "--fast");
         checks_only |= !strcmp(argv[i], "--check");
         if (!strcmp(argv[i], "--extended")) setenv("SPRITE_TEST_EXTENDED", "1", 1);
@@ -304,7 +306,8 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         const test_job *j = i < c_test_count ? NULL : &jobs[i - c_test_count];
         const char *kind = j ? j->kind : "", *name = j ? j->name : c_tests[i].name;
         if (!j && shared_instance && strcmp(suite, "engine")) continue;   /* the C tests are the engine suite's */
-        if ((fast || checks_only) && j && strcmp(kind, "rules")) continue;
+        /* Screens, reels and smoke runs are slow: they run only when named or with --full. */
+        if (j && strcmp(kind, "rules") && (fast || checks_only || !(full || named))) continue;
         if (fast && !j && (
             !strcmp(name, "platform") || !strcmp(name, "platform_safe_area") ||
             !strcmp(name, "backdrop") || !strcmp(name, "story_layouts") ||

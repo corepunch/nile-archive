@@ -60,8 +60,10 @@ integration checks. `make test-full` retains them all and is used by cloud CI;
 check dimensions and non-flat pixels; repeatedly exporting them adds little to
 the rule and renderer assertions on every local edit.
 
-`build/test/all` runs the complete integration manifest by default; `--suite=<name>`
-(repeatable) keeps only those suites. A binary per suite still builds on request:
+`build/test/all` and the per-suite binaries run only rules and C tests by default.
+Screenshots, frames, reels, gestures and smoke runs never run unasked: they run
+when a name filter selects them (`"shot phone-board"`, `smoke`) or with `--full`,
+which `make test-full` passes. `--suite=<name>` (repeatable) keeps only those suites. A binary per suite still builds on request:
 
 | Binary | Runs |
 |---|---|
@@ -82,7 +84,8 @@ make test-full                  # complete smoke/capture integration, deliberate
 make test-full ONLY=smoke        # only smoke jobs, in every suite
 make test TEST_BUDGET=30         # explicit allowance for slower hardware
 build/test/all --suite=relic-rush --suite=christmas-market "shot island"   # some suites, one start
-build/test/relic-rush           # one suite
+build/test/relic-rush           # one suite: rules and C tests only
+build/test/relic-rush --full    # the whole manifest, captures included
 build/test/relic-rush --check   # rules only; engine --check also retains all C tests
 build/test/relic-rush rules     # part of one suite
 build/test/relic-rush --list    # what it would run

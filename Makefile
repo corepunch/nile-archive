@@ -192,7 +192,7 @@ test test-fast: build/test/all $(TEST_AUX_BINS)
 # Full integration/capture export is deliberate; keep it complete in cloud CI.
 test-full: gen-check xcode-check test-assets build/test/all $(TEST_AUX_BINS)
 	./build/test-audio
-	./build/test/all $(ONLY) $(TEST_ARGS)
+	./build/test/all --full $(ONLY) $(TEST_ARGS)
 
 $(TEST_GAMES:%=test-%): test-%: build/test/all
 	./build/test/all --suite=$* --fast $(TEST_ARGS)
