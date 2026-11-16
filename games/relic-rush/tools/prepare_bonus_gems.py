@@ -14,7 +14,7 @@ BUTTON_ICON_SIZE = 84
 
 
 def center(image):
-    frame = Image.new("RGBA", (SLOT_SIZE, SLOT_SIZE))
+    frame = Image.new(image.mode, (SLOT_SIZE, SLOT_SIZE))
     frame.paste(image, ((SLOT_SIZE - image.width) // 2, (SLOT_SIZE - image.height) // 2))
     return frame
 
@@ -41,10 +41,10 @@ def bevel(face, mask, width, shadow=0.56, highlight=1.28):
     return Image.composite(shade.enhance(highlight), face, lower)
 
 
-def rim_glow(face, mask, color, strength=1):
-    rim = ImageChops.subtract(mask.filter(ImageFilter.MaxFilter(5)), mask)
-    halo = ImageChops.subtract(mask.filter(ImageFilter.GaussianBlur(3)), mask)
-    glow = ImageChops.add(rim, halo, scale=2).filter(ImageFilter.GaussianBlur(0.7))
+def rim_glow(face, mask, color, strength=1, spread=2):
+    rim = ImageChops.subtract(mask.filter(ImageFilter.MaxFilter(2 * spread + 1)), mask)
+    halo = ImageChops.subtract(mask.filter(ImageFilter.GaussianBlur(1.5 * spread)), mask)
+    glow = ImageChops.add(rim, halo, scale=2).filter(ImageFilter.GaussianBlur(0.35 * spread))
     glow = glow.point(lambda a: min(255, round(a * strength)))
     return Image.composite(Image.new("RGB", face.size, tuple(color)), face, glow)
 
@@ -70,18 +70,15 @@ def button_face(base, mask, style):
     return face
 
 
-def engrave(plate, icon):
+def engrave(plate, mask, highlight):
     """Cut the disabled icon into the plate and light its rim."""
-    mask = icon.getchannel("A").point(lambda a: max(0, min(255, (a - 24) * 255 // 208)))
-    mask = mask.filter(ImageFilter.GaussianBlur(0.5))
     face = plate.convert("RGB")
-    amber = (255, 198, 108)
-    stone = rim_glow(face, mask, amber)
+    stone = rim_glow(face, mask, highlight, spread=1)
     floor = ImageEnhance.Brightness(face).enhance(0.32)
-    recess = bevel(floor, mask, 4, shadow=0.5, highlight=2.25)
-    rim_light = ImageChops.subtract(mask, ImageChops.offset(mask, -1, -1))
-    warm_edge = Image.blend(face, Image.new("RGB", face.size, amber), 0.48)
-    recess = Image.composite(warm_edge, recess, rim_light)
+    recess = bevel(floor, mask, 3, shadow=0.5, highlight=2.25)
+    rim_light = ImageChops.subtract(mask, ImageChops.offset(mask, -1, -1)).filter(ImageFilter.GaussianBlur(0.35))
+    lit_edge = Image.blend(face, Image.new("RGB", face.size, tuple(highlight)), 0.48)
+    recess = Image.composite(lit_edge, recess, rim_light)
     result = Image.composite(recess, stone, mask)
     result.putalpha(plate.getchannel("A"))
     return result
@@ -95,16 +92,21 @@ def pack(spec):
     outside_button = base_alpha.point(lambda a: 255 if a < 128 else 0)
     mask = rounded_mask(base.size, **spec["button_inset"])
     states = [(state, button_face(base, mask, spec["button_states"][state])) for state in spec["rows"][1:]]
+    disabled_highlight = spec["button_states"]["disabled"]["palette"][-1]
     atlas = Image.new("RGBA", (SLOT_SIZE * len(spec["columns"]), SLOT_SIZE * len(spec["rows"])))
     for x, bounds in enumerate(spec["chip_boxes"]):
-        chip = chips.crop(bounds)
+        source = chips.crop(bounds)
+        chip = source.copy()
         chip.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))
         chip.thumbnail((BUTTON_ICON_SIZE, BUTTON_ICON_SIZE), Image.Resampling.LANCZOS)
         icon = center(chip)
+        # Sample the cut once from the original outline. Only the lighting is soft.
+        outline = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
+        cut = center(outline.resize(chip.size, Image.Resampling.BICUBIC))
         assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), "Icon extends beyond the button"
         for y, (state, plate) in enumerate(states, 1):
-            face = engrave(plate, icon) if state == "disabled" else Image.alpha_composite(plate, icon)
+            face = engrave(plate, cut, disabled_highlight) if state == "disabled" else Image.alpha_composite(plate, icon)
             face.putalpha(base_alpha)
             atlas.paste(face, (x * SLOT_SIZE, y * SLOT_SIZE))
     output = io.BytesIO()

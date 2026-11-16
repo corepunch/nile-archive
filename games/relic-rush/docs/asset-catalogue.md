@@ -505,8 +505,9 @@ Lightning and Star. The board shows one unlocked family per expedition. Their
 rules, building unlocks and first-board story link are in [board progression](board-progression.md#bonus-pieces).
 The bonus buttons use Relic Rush's square bevels, warm gold ready and hover
 faces, jade selected faces, and dark amber pressed faces. Empty buttons show a
-deep sandstone recess with shadowed inner walls and a soft amber rim. The
-lighting follows the disabled hammer and lightning sockets in Cradle of Rome 2.
+sharp sandstone recess with shadowed inner walls and a thin rim in the
+sandstone highlight color. The lighting follows the disabled hammer and
+lightning sockets in Cradle of Rome 2.
 For partial charge, the renderer reveals the painted gold face from the bottom.
 The rounded, wide Lightning profile carries through the field chip and all five
 button states.
@@ -523,9 +524,10 @@ can recolor the plate or inset with a three-tone palette, adjust brightness, and
 add rim glow. Positive bevel widths recess the inset and negative widths raise
 it. Recessed surfaces have a soft shadow inside the upper-left wall and a lit
 lower-right edge. The same centered icon fits in 84 × 84 px for every state.
-The disabled recess uses that icon's alpha, including openings such as the
-gear's center hole. Every board pack uses the same six pieces. The packer
-checks that every button keeps the same outer alpha.
+The packer samples the disabled cut directly from the source icon's alpha
+at that placement, preserving edges and openings such as the gear's center
+hole. Every board pack uses the same six pieces. The packer checks that every
+button keeps the same outer alpha.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·

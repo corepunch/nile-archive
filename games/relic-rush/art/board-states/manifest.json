@@ -2130,7 +2130,7 @@
         "effect": "Hit every piece of the chosen kind"
       }
     },
-    "disabled": "Recolor the shared base to sandstone. Use the registered icon alpha to cut a dark floor with directional shadows inside the upper-left wall, a warm lower-right rim and a feathered amber glow. Lighting reference is Cradle of Rome 2 bns_hammer_full.png and bns_lightning_full.png.",
+    "disabled": "Recolor the shared base to sandstone. Sample a sharp cut directly from the source icon outline at the registered size. Shade the upper-left wall inside the cut and use the sandstone palette highlight for the lower-right rim and its glow. Lighting reference is Cradle of Rome 2 bns_hammer_full.png and bns_lightning_full.png.",
     "chip_boxes": [
       [
         52,
