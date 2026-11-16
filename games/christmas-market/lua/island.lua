@@ -7,6 +7,7 @@
 -- drawing are the engine's.
 local M = {}
 local journey = require("journey")
+local economy = require("economy")
 
 M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 6, 10
 local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
@@ -43,30 +44,33 @@ function M.can_buy(c, wallet, level, kind)
     if kind<0 or kind>=#M.buildings or c.count>=160 then return false end
     local d=M.buildings[kind+1]
     if kind<WONDERS and (kind~=M.wonder_count(c) or kind>=journey.earned(level)) then return false end
-    if kind>=WONDERS and wallet[1]-M.reserved_gold(c,level)<d.cost[1] then return false end
+    if kind>=WONDERS and not M.can_spend(c,wallet,level,d.cost) then return false end
     if not wallet:covers(d.needs) or not wallet:covers(d.cost) then return false end
     return true
 end
 
 -- Keep the earned story restorations affordable in the finite campaign economy.
-function M.reserved_gold(c, level)
-    local gold=0
+function M.reserved_cost(c, level)
+    local cost=purse()
     for kind=0,journey.earned(level)-1 do
-        if M.owned(c,kind)==0 then gold=gold+M.wonders[kind+1].cost[1] end
+        if M.owned(c,kind)==0 then cost=cost+M.wonders[kind+1].cost end
     end
-    return gold
+    return cost
 end
 
--- Saves made before the price change may hold funding for unbuilt stalls.
-local legacy_prices = {60, 80, 100, 120, 140, 160, 180, 200, 220, 250}
-function M.top_up_legacy_grants(c, progress)
-    local gold = 0
-    for kind = 1, journey.earned(progress.level) do
-        if M.owned(c, kind - 1) == 0 then
-            gold = gold + math.max(0, M.wonders[kind].cost[1] - legacy_prices[kind])
-        end
+function M.can_spend(c, wallet, level, cost)
+    local reserved = M.reserved_cost(c, level)
+    for slot in ipairs(economy.currencies) do
+        if cost[slot] > 0 and wallet[slot] - reserved[slot] < cost[slot] then return false end
     end
-    if gold > 0 then progress.wallet = progress.wallet + purse(gold) end
+    return true
+end
+
+function M.migrate_wallet(progress, c)
+    local reserved = M.reserved_cost(c, progress.level)
+    for slot in ipairs(economy.currencies) do
+        progress.wallet[slot] = math.max(progress.wallet[slot], reserved[slot])
+    end
 end
 
 function M.restore_saved(c,level)

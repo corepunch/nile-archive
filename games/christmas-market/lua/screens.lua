@@ -5,6 +5,7 @@
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
+local economy = require("economy")
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local RELIC_IDOL = rules.RELIC_IDOL
 local rgba = color
@@ -21,9 +22,37 @@ local star_icon = R.star_icon
 function R.wallet_icons() return {R.life_art, R.relics[RELIC_IDOL + 1], R.hud_art.complete} end
 function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 
--- The win card says three things: how well you did (stars, score), what you
--- earned (one chip per resource) and what comes next. Breakdowns of grants
--- and bonuses stay out of it; the build shop explains spending.
+local function currency_icon(slot)
+    return R.relics[economy.currencies[slot].kind + 1]
+end
+
+function R.currency_capsules(balance)
+    local out = {}
+    local earned = not R.on_island and R.g and not R.g.lost and not R.g.reward_claimed and R.g.earnings
+    for slot, currency in ipairs(economy.currencies) do
+        out[slot] = {icon=currency_icon(slot), value=tostring(balance[slot] + (earned and earned[slot] or 0)), width=67,
+            note=earned and currency.name .. " from matches is banked on a win."
+                or currency.name .. " from matches pays for stalls and decorations."}
+    end
+    return out
+end
+
+function R.currency_prices(cost)
+    local parts = {}
+    for slot, currency in ipairs(economy.currencies) do
+        if cost[slot] > 0 then
+            parts[#parts + 1] = {id=currency.name, name=currency.name, amount=cost[slot], icon=currency_icon(slot)}
+        end
+    end
+    return parts
+end
+
+function R.cost_text(parts)
+    local prices = {}
+    for i, part in ipairs(parts) do prices[i] = ("%d %s"):format(part.amount, part.name) end
+    return table.concat(prices, " + ")
+end
+
 local RESULT = {card = rect(40, 238, 400, 534), header = rect(64, 210, 352, 72), stars = rect(110, 310, 260, 74),
                 score = rect(90, 388, 300, 62), chips = rect(68, 462, 344, 92), next = rect(64, 572, 352, 72),
                 claim = rect(70, 676, 340, 60)}
@@ -31,15 +60,15 @@ local function reward_chip(box, icon, value, label)
     rrect(box:offset(vec2(0, 3)), 16, rgba(201, 164, 100))
     rrect(box, 16, rgba(255, 246, 214))
     rrect(box:inflate(-3), 13, rgba(255, 238, 190))
-    icon(rect(box.x + 12, box.y + (box.h - 54) / 2, 54, 54))
-    say_left(value, rect(box.x + 74, box.y + 10, box.w - 82, 42), 32, PAL_GOLD)
-    say_left(label, rect(box.x + 76, box.y + box.h - 34, box.w - 84, 20), 13, PAL_CREAM)
+    picture_fit(icon, rect.centered(vec2(box:center().x, box.y + 24), size2.splat(42)), 255)
+    say(value, rect(box.x + 4, box.y + 43, box.w - 8, 25), 24, PAL_GOLD)
+    say(label, rect(box.x + 4, box.y + 70, box.w - 8, 15), 12, PAL_CREAM)
 end
 local function result_screen()
     local l = RESULT
-    local kind = rules.wonder_at(R.g.level + 1)
-    local w = kind and R.wonders[kind]
+    local spec = rules.level_of(R.g)
     local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
+    local w = breakdown.wonder
     local reward = breakdown.total
     local first = breakdown.first
     local s
@@ -59,28 +88,36 @@ local function result_screen()
         star_icon(at, (k == 1 and 31 or 25) * pop)
         set_paint(s)
     end
-    if not first then say("GOLD FOR YOUR MARKET", l.stars, 22, PAL_GOLD) end
+    if first then
+        say("+3 CHRISTMAS STARS", rect(l.stars.x, l.stars.y + 62, l.stars.w, 16), 12, PAL_CREAM)
+    else
+        say("SUPPLIES FOR YOUR MARKET", l.stars, 21, PAL_GOLD)
+    end
     s = section(.43, .3, 9)
     say("SCORE", rect(l.score.x, l.score.y, l.score.w, 16), 13, PAL_CREAM)
     local count = R.dialog_part(.43, .65).f   -- the score counts up
     say(tostring(math.floor(R.g.score * count + .5)), rect(l.score.x, l.score.y + 16, l.score.w, 46), 42, PAL_GOLD)
     set_paint(s)
     s = section(.62, .28, 10)
-    local gold_icon = function(box) picture_fit(R.relics[RELIC_IDOL + 1], box, 255) end
-    if first then
-        local left, right = rect(l.chips.x, l.chips.y, l.chips.w / 2 - 8, l.chips.h), rect(l.chips:center().x + 8, l.chips.y, l.chips.w / 2 - 8, l.chips.h)
-        reward_chip(left, gold_icon, ("+%d"):format(reward[rules.GOLD]), "GOLD")
-        reward_chip(right, function(box) star_icon(box:center(), 21) end, ("+%d"):format(reward[rules.STARS]), "STARS")
-    else
-        reward_chip(rect.centered(l.chips:center(), size2(220, l.chips.h)), gold_icon, ("+%d"):format(reward[rules.GOLD]), "GOLD")
+    for slot, currency in ipairs(economy.currencies) do
+        reward_chip(l.chips:col(#economy.currencies, slot - 1, 8), currency_icon(slot),
+            ("+%d"):format(reward[slot]), currency.name)
+    end
+    local delivery = R.currency_prices(breakdown.delivery)
+    if #delivery > 0 then
+        say("Market delivery " .. R.cost_text(delivery), rect(l.chips.x, 554, l.chips.w, 16), 11, PAL_CREAM)
     end
     set_paint(s)
     s = section(.9, .26, 8)
     rrect(l.next, 14, rgba(240, 225, 180))
-    if first and w then picture_fit(w.sprite, rect(l.next.x + 8, l.next.y + 4, 66, l.next.h - 8), 255)
+    local find = first and spec.story_piece
+    local next_icon = find and R.board_art["story-" .. find.key] or first and w and w.sprite
+    if next_icon then picture_fit(next_icon, rect(l.next.x + 8, l.next.y + 4, 66, l.next.h - 8), 255)
     else star_icon(vec2(l.next.x + 40, l.next:center().y), 22) end
-    say_left(first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE", rect(l.next.x + 84, l.next.y + 10, l.next.w - 96, 18), 13, PAL_CREAM)
-    say_left(first and (w and w.name or "The market has news") or "Build shop", rect(l.next.x + 84, l.next.y + 31, l.next.w - 96, 30), 24, PAL_GOLD)
+    local heading = find and "RECOVERED  ·  " .. find.name or first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE"
+    local next_name = first and (w and w.name or "The market has news") or "Build shop"
+    say_left(heading, rect(l.next.x + 84, l.next.y + 10, l.next.w - 96, 18), 13, PAL_CREAM)
+    say_left(next_name, rect(l.next.x + 84, l.next.y + 31, l.next.w - 96, 30), 24, PAL_GOLD)
     set_paint(s)
     s = section(1.02, .22, 8)
     if button(l.claim, "COLLECT", not R.modal_closing) and not R.modal_closing then
@@ -100,6 +137,10 @@ local guide_entries = {
      icon={back="lantern-blue"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
      icon={back="lantern-blue", kind=3, front="chain"}},
+    {id="supplies", title="Stock the market", description="Bells earn Gold, candy and gingerbread earn Treats, and holly, mittens and baubles earn Supplies.",
+     icon={kind=2}},
+    {id="finds", title="Story finds", description="A story object sometimes takes a regular piece's place. Light the panes to bring it back to Bellmere.",
+     icon={front="story-letter"}},
     {id="hammer", title="Hammer", description="Hit one treat or its tinsel.", icon={tool="pickaxe"}},
     {id="firecracker", title="Firecracker", description="Hit a treat and all its neighbors.", icon={tool="dynamite"}},
     {id="wand", title="Star wand", description="Pick a treat and hit every treat of that kind.", icon={tool="sunburst"}},

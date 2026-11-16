@@ -1,7 +1,6 @@
 -- Named presentation contract; tools/check_assets.py checks its coverage.
 -- The gold bell artwork also identifies spendable Gold in the island purse.
--- Board clears score points; the fixed first-clear grant and Gold-only replay
--- payout are separate from colour counts (rules.reward_breakdown).
+-- The same painted pieces identify wallet resources and story finds.
 local A = {}
 A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
 -- Standalone power-ups, with one authored rocket per hex axis.
@@ -70,6 +69,8 @@ function A.load()
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load("story-floors/" .. name .. ".jpg") end
+        local find = level.story_piece
+        if find then textures["story-" .. find.key] = texture.load("story-pieces/" .. find.key .. ".png") end
     end
     for _, state in ipairs{"plain", "lit", "blue"} do
         textures["lantern-" .. state] = texture.load("lantern-panes/" .. state .. ".png")

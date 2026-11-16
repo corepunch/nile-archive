@@ -111,16 +111,38 @@ The font and its license are inherited unmodified from Relic Rush in `data/fonts
 
 ## Town HUD
 
-Lives, Gold and Christmas Stars use the same single-row layout and hit areas as
-Relic Rush. Lives reuse its heart, Gold uses the festive bell and Stars use
-the Christmas completion medal. Copy the heart from
-`games/relic-rush/data/expedition-hud/life.png`, then run
-`python3 tools/match3_atlas.py` to reproduce the atlas and registration. Region
-markers open their map cards. Stars qualify the player for a region and stay
-in the wallet when the region opens.
+Lives, Gold, Treats, Supplies and Christmas Stars share the top wallet on
+the market and puzzle. Lives use the existing heart, Gold uses the bell,
+Treats use gingerbread, Supplies use holly, and Stars use the completion
+medal. On a board the three resource totals include the current attempt.
+On a winning match the result card shows the resources to bank, including
+any delivery for the next stall. The shop uses the same three resource icons
+to show prices. [Wallet and shop review](screenshots/review/resources-and-finds/README.md).
 
-[Town, region, building and reward captures](screenshots/review/town-wallet/README.md)
-show the change in the game renderer.
+## Story pieces
+
+One normal chip kind is replaced for an entire wish, including refills.
+The find uses a shared selection pose and overlay, and regular chain art
+can cover it. The first-clear card uses the same isolated artwork.
+
+| Wish | Runtime `data/story-pieces/` | Replaces |
+| --- | --- | --- |
+| 9 | `cocoa.png` | Red candy cane |
+| 16 | `scarf.png` | Blue mitten |
+| 19 | `letter.png` | Gingerbread |
+| 24 | `ribbon.png` | Red candy cane |
+| 25 | `telegram.png` | Blue mitten |
+| 27 | `lantern.png` | Gold bell |
+
+ImageGen painted all six in one [transparent atlas](../art/story-pieces/source.png)
+using the [prompt](../art/story-pieces/prompt.txt), the
+[layout guide](../art/festive-pieces/layout.png) and the
+[ordinary festive sheet](../art/festive-pieces/source.png) as style reference.
+The [manifest](../art/manifest.json) records all six 512 px bays, active wishes,
+replacement kinds, runtime paths and canonical mask. Reproduce with
+`python3 games/christmas-market/tools/prepare_story_pieces.py`. The exporter
+scales the painted area using the same fit as a normal piece and preserves
+its authored alpha. [Board and first-clear capture review](screenshots/review/resources-and-finds/README.md).
 
 ## Puzzle backdrop
 

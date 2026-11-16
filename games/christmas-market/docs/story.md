@@ -114,7 +114,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 **Level 1 · Welcome Lights · builds Welcome arch**
 
 - **Theo:** Excuse me. Your arch is in my way.
-- **Noelle:** I lit the arch so anyone coming up from the station would know they could come in.
+- **Noelle:** We had enough trimmings for the arch. I left the lamp on for anyone walking up from the station.
 - **Theo:** It's the first thing my trees will hit. I've sold trees from this corner for eleven years.
 - **Noelle:** Help me move the little trees when you're ready. I think there's room for both of us.
 
@@ -134,7 +134,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 4 · Cocoa Corner · builds Lumber workshop**
 
-- **Theo:** Timber's stacked and dry. There's a short bit on top. Save that for somebody who needs a seat.
+- **Theo:** The supplies were enough for the workshop. There's a board left over for somebody who needs a seat.
 - **Noelle:** A seat by the cocoa, then. For the people who come without anyone.
 - **Theo:** Ask your friend with the broom if he wants a seat. He's been there since dawn.
 - **Noelle:** I thought he was yours.
@@ -162,7 +162,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Agnes:** Tell him nobody offered.
 - **Pip:** He gave me a penny for one anyway. He says it's for me. He says to leave it on his step, for me.
 - **Noelle:** Agnes, what happened with you two?
-- **Agnes:** Eat while it's hot. And leave one on the back of the tray, just in case.
+- **Agnes:** The first batch is for the market. Leave one on the back of the tray, just in case.
 
 **Level 8 · Carousel Stars** *(easier level)*
 
@@ -175,7 +175,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 - **Noelle:** First cocoa's on me, Mrs Alder. Gran left me a parcel for somebody here. Would you like it?
 - **Pip:** Mrs Alder says she only needs a stool. She's left a penny for the next person who comes in cold.
-- **Noelle:** All right. I'll put a cup out on the counter so we remember whose turn it is.
+- **Noelle:** Then this red mug can stay by the pot. Whoever comes in cold gets to borrow it.
 - **Mr Wren:** Put a second cup by yours, too. You've a bit of cocoa on your nose, by the way.
 - **Pip:** Another one came for you! "Dear anyone. You sound like you could use a day off. So could I. Someone."
 
@@ -252,11 +252,11 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 16 · Paper and String · builds Gift wrapping pavilion**
 
-- **Noelle:** That's a good bow, Pip! Who's the present for?
-- **Pip:** It's a scarf. I tried a mitten first. Didn't leave room for the thumb.
+- **Noelle:** I brought the blue scarf in. Is this red one yours too, Pip?
+- **Pip:** I taught myself on the blue one. It can go by the spare cup. The red one's for Mum.
 - **Noelle:** Pip. Do you want this parcel of mine? I think it might be for you.
 - **Pip:** Keep it. The tag says it's for whoever needs it most. If Mum can't come, I'll post the scarf.
-- **Noelle:** I hope you get to put it round her yourself. I've got a spare tag for it here.
+- **Noelle:** I hope you get to put it round her yourself. Here's a tag for the red one.
 
 **Level 17 · Twelve Horses**
 
@@ -273,7 +273,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 
 **Level 19 · A Hundred Flames · builds Candlelight shop**
 
-- **Noelle:** Try that new lamp, Pip. There's something wedged behind the lining of this old post box.
+- **Noelle:** Bring the candle-shop lamp, Pip. There's a corner of paper behind this old postbox lining.
 - **Pip:** I'll lift the lining. Oh! An envelope. Look, it's stuck fast at one corner.
 - **Noelle:** "H. Strand." There's flour in the fold. I think I know who wrote this.
 - **Pip:** I can take it! I can take it right now! A penny a message!
@@ -367,7 +367,7 @@ Order: result → market → place the wonder → beat → next goal. Most level
 - **Theo:** The Fenwick choir's behind me with lamps from their hall. Mrs Alder's got people at the arch.
 - **Noelle:** All of you came?
 - **Agnes:** You put a cup out for them. They put a lamp out for you. Where do you want them, love?
-- **Noelle:** Down both sides of the lane. One at the turn by the station. Come on, Pip. We'll light that one.
+- **Noelle:** Lamps down both sides. Pip, take this one from Fenwick. We'll put it at the bend.
 
 **Level 28 · The Last Train** *(easier level)* · *Board painting: a small train approaching the station, with lamps glowing beside the snowy track.*
 
@@ -457,9 +457,28 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 | 27–28 · Every Light in Bellmere and The Last Train | Neighbors bring enough lamps to light both ends of the walk. A gentler winding board gives Pip a moment to wait, then the first-clear painting shows the train arriving. |
 | 29–30 · The Big Fir and Light the Christmas Tree | The last two pockets of tinsel give way to a fir-shaped patch, finishing the tree lights before Noelle invites Theo to her window. |
 
+### Story finds and market resources
+
+| Wish | Piece that changes for this board | What it does in town |
+| --- | --- | --- |
+| 9 | Red cocoa mug in place of candy cane | It becomes the cup Mrs Alder keeps available at the cocoa kiosk. |
+| 16 | Blue practice scarf in place of mitten | Pip gives the scarf he learned on to the market. The red scarf is for his mum. |
+| 19 | Brown envelope in place of gingerbread | The candle-shop lamp picks out the letter behind the postbox lining. |
+| 24 | Red wish ribbon in place of candy cane | The first-clear painting shows Noelle's childhood ribbon, which Rosa kept. Agnes tells Noelle who brought it out. |
+| 25 | Blue telegram in place of mitten | The message gives Pip a time to wait for and prompts the promise to light the path. |
+| 27 | Golden lantern in place of bell | Fenwick lends a lamp that goes at the bend in the station path. |
+
+Blue panes decide when the wish is complete. On these boards one kind is a
+story object and its match does not pay the regular kind's resources. The
+first clear brings the item home and advances the scene through its usual
+checkpoint. Replays bank the ordinary resources matched on the board.
+The scene and the shop describe the same work. Treats stock the bakery and
+the cocoa counter, and Supplies pay for wood, tinsel, cloth and lamps. A
+neighbor's delivery makes up any shortfall for the next earned stall.
+
 ## Implementation
 
-- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. A first clear without a stall pays Gold and Christmas Stars.
+- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Gold, Treats and Supplies. A first clear also pays Christmas Stars.
 - **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. Players open regions from their markers and keep their Stars. Pip's region lines replace Noelle's one repeated line.
 - **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). Most scenes play over the live market.
 - **Story floors:** The first clears of 24, 25 and 28 show the finished board painting, then play the existing scene over it before the reward card. Collecting the reward acknowledges the scene. Replaying the wish uses the ordinary floor. The paintings and stage captures are in the [asset catalogue](asset-catalogue.md#story-floors).
@@ -482,3 +501,5 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 - 2026-11-15: Made lantern light the link between the boards and the story. Rosa's open-window line returns through Agnes's bakery, Henrik's walk across the square, Pip's welcome at the station and Noelle's decision to leave a lamp in her own window. The railway crew clears the line while the market lights the walk home. The ribbon, telegram and train paintings hold on their first clears. A separate cold read clarified the ribbon’s return and the train’s arrival.
 
 - 2026-11-15: Gave all three episodes a shared act of hospitality. Agnes asks for the first light, the spare cup brings Fenwick into the story, and both towns leave light for the last train. Noelle chooses Bellmere before opening Rosa's parcel. An independent cold read clarified the ribbon's return and moved the decision to stay into the scene with Wren.
+
+- 2026-11-16: Connected six first-clear story objects to the live pieces. The extra mug, a practice scarf and a borrowed lantern carry the same act of hospitality through the market, and matched goods pay for its stalls.

@@ -2,7 +2,7 @@
 -- the guide, plays level one through injected clicks, claims the reward,
 -- builds the first stall, runs the engine's pickup-and-move check, buys and
 -- cancels a decoration through the catalogue, taps it for its bubble, replays
--- a winter wish for Gold only, checks that an unfinished board hides the
+-- a winter wish for resources, checks that an unfinished board hides the
 -- market, and enters level two. --smoke --campaign is campaign_smoke.lua.
 local R = require("state")
 local rules = require("rules")
@@ -11,6 +11,9 @@ local island = require("island")
 local smoke_stage, smoke_frames, smoke_wait, smoke_partner = -2, 0, 0, -1
 local smoke_move={}
 local smoke_city_move
+local function same_wallet(a, b)
+    return a:covers(b) and b:covers(a)
+end
 local function press_tile(key)
     local node = R.catalogue_tile(key)
     if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
@@ -67,7 +70,10 @@ function R.smoke()
         app.inject_click(done:center()+vec2(0,R.drop/2));smoke_stage=0
     elseif smoke_stage == 0 then
         if R.overlay == R.OV_RESULT then
-            if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1 end
+            if R.dialog_settled() then
+                if smoke_move.replay then smoke_move.replay_reward = rules.level_reward(R.g, R.wonders, R.prog) end
+                app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1
+            end
             return
         end
         if R.phase == R.PH_IDLE and R.overlay == R.OV_NONE and R.selected < 0 then
@@ -87,9 +93,9 @@ function R.smoke()
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
         if smoke_move.replay then
-            local gain=R.prog.wallet[1]-smoke_move.replay_gold
-            assert(gain>=60 and gain<=100 and R.prog.wallet[4]==3 and R.prog.wallet[5]==0 and island.wonder_count(R.island)==1,
-                "replay must pay only Gold without changing discoveries or restoration")
+            assert(same_wallet(R.prog.wallet, smoke_move.replay_wallet + smoke_move.replay_reward)
+                and R.prog.wallet[4]==3 and island.wonder_count(R.island)==1,
+                "replay must bank matched resources without changing Stars or restoration")
             app.inject_click(R.town.buttons.play);smoke_stage=5;return
         end
         app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
@@ -127,25 +133,28 @@ function R.smoke()
         else smoke_stage=21 end
     elseif smoke_stage==21 and R.overlay==R.OV_SHOP then
         local f=R.catalogue_form
-        assert(R.catalogue_tile("firs") and not R.catalogue_tile("arch"),"category source must refresh")
-        local node,record=R.catalogue_tile("firs")
-        assert(node and record.available,"smoke: starter decoration should be affordable")
-        smoke_move.shop_gold=R.prog.wallet[1]
+        assert(R.catalogue_tile("snowman") and not R.catalogue_tile("arch"),"category source must refresh")
+        local node,record=R.catalogue_tile("snowman")
+        local balance = R.prog.wallet
+        assert(node and record.available, ("starter decoration should be affordable with %d Gold, %d Treats, %d Supplies")
+            :format(balance[1], balance[2], balance[3]))
+        smoke_move.shop_wallet=R.prog.wallet+purse()
+        smoke_move.shop_kind=record.kind
         app.inject_click(f.boxes[node.id]:center());smoke_stage=22
     elseif smoke_stage==22 and R.island.placing>=0 then
-        assert(R.island.placing==10,"catalogue action lost its stable item key")
+        assert(R.island.placing==smoke_move.shop_kind,"catalogue action lost its stable item key")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=23
     elseif smoke_stage==23 and R.island.placing<0 then
-        assert(R.island.count==1 and R.prog.wallet[1]==smoke_move.shop_gold,"cancelled purchase changed save state")
+        assert(R.island.count==1 and same_wallet(R.prog.wallet, smoke_move.shop_wallet),"cancelled purchase changed save state")
         R.open_catalogue();smoke_stage=24
     elseif smoke_stage==24 and R.overlay==R.OV_SHOP then
-        local node=R.catalogue_tile("firs")
+        local node=R.catalogue_tile("snowman")
         if node then app.inject_click(R.catalogue_form.boxes[node.id]:center());smoke_stage=25 end
     elseif smoke_stage==25 and R.island.placing>=0 then
         app.inject_click(R.placement_form.boxes.confirm:center());smoke_stage=26
     elseif smoke_stage==26 and R.island.placing<0 then
         assert(R.island.count==2 and island.wonder_count(R.island)==1,"decoration changed campaign restoration count")
-        assert(R.prog.wallet[1]==smoke_move.shop_gold-R.buildings[11].cost[1],"purchase must charge the catalogue price once")
+        assert(same_wallet(R.prog.wallet + R.buildings[smoke_move.shop_kind + 1].cost, smoke_move.shop_wallet),"purchase must charge the catalogue price once")
         local c=R.island
         R.island_focus(c.items[2].pos-vec2(0,80),.8)
         local bounds=c.cam:rect_to_screen(c:sprite_rect(c.items[2]))
@@ -157,11 +166,11 @@ function R.smoke()
         assert(target,"purchased decoration needs an exposed input target")
         app.inject_click(target);smoke_stage=27
     elseif smoke_stage==27 then   -- a tap names the building in a bubble; no popup opens
-        assert(R.overlay==R.OV_NONE and R.town.bubble and R.town.bubble.item==1 and R.town.bubble.text:find(R.buildings[11].name,1,true),
+        assert(R.overlay==R.OV_NONE and R.town.bubble and R.town.bubble.item==1 and R.town.bubble.text:find(R.buildings[smoke_move.shop_kind + 1].name,1,true),
                "tap shows the purchased building's name and words")
-        R.island_begin(10,true,1);smoke_stage=28
+        R.island_begin(smoke_move.shop_kind,true,1);smoke_stage=28
     elseif smoke_stage==28 and R.island.placing>=0 then
-        assert(R.island.moving==1 and R.island.placing==10,"move must lift the purchased instance")
+        assert(R.island.moving==1 and R.island.placing==smoke_move.shop_kind,"move must lift the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=29
     elseif smoke_stage==29 and R.island.placing<0 then
         app.inject_click(R.town.buttons.middle);smoke_stage=30
@@ -170,7 +179,7 @@ function R.smoke()
         for _,node in pairs(f.nodes) do
             if node.item_key=='0' and node.local_id=='play' then
                 assert(node.enabled,'completed expedition must be replayable')
-                smoke_move.replay_gold=R.prog.wallet[1];smoke_move.replay=true
+                smoke_move.replay_wallet=R.prog.wallet+purse();smoke_move.replay=true
                 app.inject_click(f.boxes[node.id]:center());smoke_stage=31;break
             end
         end
@@ -188,7 +197,7 @@ function R.smoke()
         smoke_stage=0
     elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
         if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> no island escape -> pause/background resume -> Gold only -> level 2")
+        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> no island escape -> pause/background resume -> replay resources -> level 2")
         app.quit()
     end
 end

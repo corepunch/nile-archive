@@ -103,6 +103,20 @@ levels[24].reveal = {picture="wish-ribbon", floor="oil", on_clear=true}
 levels[25].reveal = {picture="telegram", floor="oil", on_clear=true}
 levels[28].reveal = {picture="last-train", floor="oil", on_clear=true}
 
+-- The story object replaces its regular kind for the whole wish, including
+-- refills. The blue panes still decide the win.
+local finds = {
+    [9]={key="cocoa", name="Cocoa mug", kind=1},
+    [16]={key="scarf", name="Blue practice scarf", kind=3},
+    [19]={key="letter", name="Undelivered letter", kind=5},
+    [24]={key="ribbon", name="Wish ribbon", kind=1},
+    [25]={key="telegram", name="Station telegram", kind=3},
+    [27]={key="lantern", name="Borrowed lantern", kind=0},
+}
+for index, find in pairs(finds) do
+    levels[index].story_piece, levels[index].goal_kind = find, find.kind
+end
+
 local shapes = {}
 for i, entry in ipairs(levels) do shapes[i] = entry.name end
 

@@ -11,7 +11,7 @@ return {
     }},
     {key="after-01", phase="after", level=1, lines={
         {"theo", "Excuse me. Your arch is in my way."},
-        {"noelle", "I lit the arch so anyone coming up from the station would know they could come in."},
+        {"noelle", "We had enough trimmings for the arch. I left the lamp on for anyone walking up from the station."},
         {"theo", "It's the first thing my trees will hit. I've sold trees from this corner for eleven years."},
         {"noelle", "Help me move the little trees when you're ready. I think there's room for both of us."},
     }},
@@ -28,7 +28,7 @@ return {
         {"pip", "They've not talked in forty years. I get a penny a message. It's a good business."},
     }},
     {key="after-04", phase="after", level=4, lines={
-        {"theo", "Timber's stacked and dry. There's a short bit on top. Save that for somebody who needs a seat."},
+        {"theo", "The supplies were enough for the workshop. There's a board left over for somebody who needs a seat."},
         {"noelle", "A seat by the cocoa, then. For the people who come without anyone."},
         {"theo", "Ask your friend with the broom if he wants a seat. He's been there since dawn."},
         {"noelle", "I thought he was yours."},
@@ -53,7 +53,7 @@ return {
         {"agnes", "Tell him nobody offered."},
         {"pip", "He gave me a penny for one anyway. He says it's for me. He says to leave it on his step, for me."},
         {"noelle", "Agnes, what happened with you two?"},
-        {"agnes", "Eat while it's hot. And leave one on the back of the tray, just in case."},
+        {"agnes", "The first batch is for the market. Leave one on the back of the tray, just in case."},
     }},
     {key="after-08", phase="after", level=8, lines={
         {"noelle", "People keep stopping to look. And Bramble's got into all the tinsel. Whose goat is that?"},
@@ -64,7 +64,7 @@ return {
     {key="after-09", phase="after", level=9, lines={
         {"noelle", "First cocoa's on me, Mrs Alder. Gran left me a parcel for somebody here. Would you like it?"},
         {"pip", "Mrs Alder says she only needs a stool. She's left a penny for the next person who comes in cold."},
-        {"noelle", "All right. I'll put a cup out on the counter so we remember whose turn it is."},
+        {"noelle", "Then this red mug can stay by the pot. Whoever comes in cold gets to borrow it."},
         {"wren", "Put a second cup by yours, too. You've a bit of cocoa on your nose, by the way."},
         {"pip", "Another one came for you! \"Dear anyone. You sound like you could use a day off. So could I. Someone.\""},
     }},
@@ -130,11 +130,11 @@ return {
         {"theo", "I'd leave her up there. Best decoration in Bellmere."},
     }},
     {key="after-16", phase="after", level=16, lines={
-        {"noelle", "That's a good bow, Pip! Who's the present for?"},
-        {"pip", "It's a scarf. I tried a mitten first. Didn't leave room for the thumb."},
+        {"noelle", "I brought the blue scarf in. Is this red one yours too, Pip?"},
+        {"pip", "I taught myself on the blue one. It can go by the spare cup. The red one's for Mum."},
         {"noelle", "Pip. Do you want this parcel of mine? I think it might be for you."},
         {"pip", "Keep it. The tag says it's for whoever needs it most. If Mum can't come, I'll post the scarf."},
-        {"noelle", "I hope you get to put it round her yourself. I've got a spare tag for it here."},
+        {"noelle", "I hope you get to put it round her yourself. Here's a tag for the red one."},
     }},
     {key="after-17", phase="after", level=17, lines={
         {"henrik", "Old carousel's been in my shed for years. Twelve horses, no paint. Thought someone might want it."},
@@ -148,7 +148,7 @@ return {
         {"noelle", "Oh no. I signed it. I signed it, Pip, give it back! ...Pip? Come back here!"},
     }},
     {key="after-19", phase="after", level=19, lines={
-        {"noelle", "Try that new lamp, Pip. There's something wedged behind the lining of this old post box."},
+        {"noelle", "Bring the candle-shop lamp, Pip. There's a corner of paper behind this old postbox lining."},
         {"pip", "I'll lift the lining. Oh! An envelope. Look, it's stuck fast at one corner."},
         {"noelle", "\"H. Strand.\" There's flour in the fold. I think I know who wrote this."},
         {"pip", "I can take it! I can take it right now! A penny a message!"},
@@ -230,7 +230,7 @@ return {
         {"theo", "The Fenwick choir's behind me with lamps from their hall. Mrs Alder's got people at the arch."},
         {"noelle", "All of you came?"},
         {"agnes", "You put a cup out for them. They put a lamp out for you. Where do you want them, love?"},
-        {"noelle", "Down both sides of the lane. One at the turn by the station. Come on, Pip. We'll light that one."},
+        {"noelle", "Lamps down both sides. Pip, take this one from Fenwick. We'll put it at the bend."},
     }},
     {key="after-28", phase="after", level=28, lines={
         {"pip", "They've cleared the line! I can see her coat! Mum! MUM!", story.SHOUT},

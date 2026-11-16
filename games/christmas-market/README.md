@@ -73,19 +73,22 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 
 ## Draft implementation
 
-Story builds cost 40–500 Gold. The scheduled first clear funds the full
-price, and the shop reserves it until construction. Spare Gold buys extras
-such as a 20-Gold lamp post or a 500-Gold workshop.
-[Full price list](docs/building-catalogue.md).
+Matches earn **Gold** from bells, **Treats** from candy canes and
+gingerbread, and **Supplies** from holly, mittens and baubles. Each win
+banks the resources and awards up to 40 Gold for the moves left. Three
+Christmas Stars come with each first clear and open more land and shop items.
+The town and board share the same wallet. On the board it shows the current
+attempt's earnings as you play.
 
-The market header shows Lives, Gold and Christmas Stars in one row. A failed
-wish uses a life, and one returns every 30 minutes up to five. Gold funds
-construction and decorations. Open a region from its marker on the map once
-you have enough Stars. See the [town HUD review](docs/asset-catalogue.md#town-hud).
+Story stalls draw from those same balances. Neighbors make up any shortfall
+on the first clear that earns a stall, and the shop reserves its cost until
+you build. A 20-Gold lamp post also takes 4 Supplies. [Full price list](docs/building-catalogue.md).
+
+A failed wish uses a life. One returns every 30 minutes up to five.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
 flakes still.
 
-`make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has thirty puzzles in three story episodes, funded construction, player-chosen placement, land expansion, a shop and Noelle's dialogue. Native macOS and iOS project files are included.
+`make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has thirty puzzles in three story episodes, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
 use the mouse wheel. The shop shows three cards per row and keeps its category
@@ -110,7 +113,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Story
 
-The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Most levels without a stall play their scene when you return to the market. Levels 24, 25 and 28 play theirs after the board painting and before Collect. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
+The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. On six wishes, one chip kind becomes a story object for that board. The first clear brings the object back to Bellmere. Most levels without a stall play their scene when you return to the market. Levels 24, 25 and 28 play theirs after the board painting and before Collect. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/match3_game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
@@ -118,7 +121,7 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 
 | Snowy market | Festive puzzle | Noelle |
 | --- | --- | --- |
-| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/market-wishes/board-480.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
+| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/resources-and-finds/letter-480.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
 
 Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all ten building grants fit the land open by their levels, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board's goals are met before one real swap, so it checks the flow rather than the boards. All 36 scenes must play once, in script order, and the run must end on the end screen with ten stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 

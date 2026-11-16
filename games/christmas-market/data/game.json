@@ -17,15 +17,15 @@
     "build_first": "Build your earned stall before the next winter wish.",
     "story_waiting": "Something's happening in the market square.",
     "no_lives": "A life returns every 30 minutes. Explore the market meanwhile.",
-    "reward_building": "New stall funded! Spare Gold is yours to decorate.",
+    "reward_building": "Your next stall is ready to build.",
     "reward_story": "Something's happening in the market square.",
-    "reward_replay": "Replay Gold collected. Add some Christmas decorations.",
+    "reward_replay": "Resources collected. Visit the build shop.",
     "all_open": "The whole market is open.",
     "quit": "Your board is saved. Tap LEVEL %d or Winter wishes to continue."
   },
   "capsules": {
     "notes": ["A life returns every 30 minutes, up to five.",
-              "Gold buys stalls and decorations. Replay winter wishes to earn more.",
+              "Matched resources buy stalls and decorations.",
               "Christmas Stars unlock shop items and land. First clears only."]
   },
   "pause": {"guide": "MARKET GUIDE", "quit": "QUIT TO MARKET", "town": "Your Christmas market", "leaderboard": "LEADERBOARD"},
@@ -49,18 +49,18 @@
                    ["tree", "Snowy trees"], ["cottage", "Cottages"]],
     "category": "all",
     "built": "BUILT", "complete": "COMPLETE WISH %d", "earlier": "BUILD EARLIER STALLS",
-    "poor": "MORE GOLD NEEDED", "reserved": "GOLD RESERVED FOR STALLS", "full": "MARKET IS FULL",
+    "poor": "MORE RESOURCES NEEDED", "reserved": "RESERVED FOR STALLS", "full": "MARKET IS FULL",
     "price": "%d gold"
   },
   "expeditions": {
     "title": "Winter wishes",
-    "intro": "First clear: the next story scene, Christmas Stars and scheduled stall funding.\nReplay: 60 Gold + up to 40 for moves saved.",
+    "intro": "Bank the resources you match on every win.\nFirst clears also earn three Christmas Stars.",
     "close": "BACK TO MARKET",
     "resume": "RESUME", "replay": "REPLAY", "pending": "BUILD FIRST",
     "new": "PLAY", "earlier": "COMPLETE EARLIER WISHES",
-    "replay_note": "Gold only. Stars and story unlocks come from first clears.",
-    "building_note": "First clear: stall funded + 80–120 spare Gold, 3 Stars.",
-    "story_note": "First clear: the next story scene + 80–120 Gold, 3 Stars."
+    "replay_note": "Earn the resources you match and a Gold bonus for moves left.",
+    "building_note": "Match resources for the next stall. Neighbors cover any shortfall.",
+    "story_note": "First clear: a new story scene, matched resources and 3 Stars."
   },
   "debug": {"victory": 3, "catalogue_card": 10, "narrator": "noelle"}
 }

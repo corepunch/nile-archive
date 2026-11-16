@@ -1,6 +1,7 @@
 -- Game content, piece identities and restoration economy. Mechanics are shared.
 local match3 = require("match3")
 local campaign = require("campaign")
+local economy = require("economy")
 local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
 local flags = match3.LINE_MATCHES
 if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI | match3.COLOR_TOOL end
@@ -9,16 +10,18 @@ local M = match3.new{flags=flags, radius=reference and reference.radius or 4, co
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS
+local start = M.game_start
+function M.game_start(level, seed)
+    local spec = M.levels[math.max(0, math.min(level, LEVELS - 1)) + 1]
+    return start(level, seed, not reference and economy.board_yields(spec))
+end
 M.wonder_levels=campaign.wonder_levels
 M.wonder_at=require("journey").wonder_at
 
 ------------------------------------------------------------------- economy
 
-M.GOLD, M.STARS = 1, 4   -- Keep the legacy save slots reserved.
-
--- Guaranteed restoration funding is separate from the discretionary Gold purse.
--- Matches score points; their random colour mix cannot reduce a building grant.
-M.FIRST_GOLD, M.REPLAY_GOLD, M.MOVE_GOLD, M.MAX_MOVE_GOLD = 80, 60, 2, 40
+M.GOLD, M.TREATS, M.SUPPLIES, M.STARS = economy.GOLD, economy.TREATS, economy.SUPPLIES, economy.STARS
+M.MOVE_GOLD, M.MAX_MOVE_GOLD = 2, 40
 M.LIVES, M.LIFE_INTERVAL = 5, 1800
 function M.refill_lives(p, now)
     p.lives=num.clampi(p.lives or M.LIVES,0,M.LIVES)
@@ -42,10 +45,14 @@ function M.reward_breakdown(g, wonders, progress)
     local bonus = math.min(M.MAX_MOVE_GOLD, math.max(0, g.moves) * M.MOVE_GOLD)
     local kind = M.wonder_at(g.level + 1)
     local w = kind and wonders[kind]
-    local grant = first and w and w.cost or purse()
-    local gold = first and M.FIRST_GOLD or M.REPLAY_GOLD
-    return {first=first, wonder=w, grant=grant, base=gold, bonus=bonus,
-        total=purse(grant[1]+gold+bonus, 0, 0, first and 3 or 0)}
+    local matched = purse(table.unpack(g.earnings or {}))
+    local reward = matched + purse(bonus, 0, 0, first and 3 or 0)
+    local delivery = purse()
+    if first and w then
+        local available = (progress and progress.wallet or purse()) + reward
+        for slot in ipairs(economy.currencies) do delivery[slot] = math.max(0, w.cost[slot] - available[slot]) end
+    end
+    return {first=first, wonder=w, matched=matched, delivery=delivery, bonus=bonus, total=reward+delivery}
 end
 
 function M.level_reward(g, wonders, progress)
@@ -59,6 +66,7 @@ function M.progress_reward(p, g, wonders)
     p.wallet = p.wallet + reward.total
     if reward.first then p.level = p.level + 1 end
     p.seed = g.rng
+    p.completed = nil
     g.reward_claimed = true
     return true, reward.first
 end

@@ -7,16 +7,20 @@
 -- and screens.lua paint the game's own art. See docs/PORTRAIT_GAMES.md.
 local R = require("state")
 local island = require("island")
+local rules = require("rules")
+local match3_game = require("match3.game")
 require("screens")
 require("board")
 require("narrative")
 require("smoke")
 require("campaign_smoke")
 
+local serialize_completed = match3_game.bind_completed_rewards(R, rules)
 function R.serialize_campaign(s)
     local reading = save.is_reading(s)
-    local version = s:int("market_prices", reading and 0 or 1)
-    if reading and version == 0 then island.top_up_legacy_grants(R.island, R.prog) end
+    local version = s:int("market_resources", reading and 0 or 1)
+    if reading and version == 0 then island.migrate_wallet(R.prog, R.island) end
+    serialize_completed(s)
 end
 
-return require("match3.game").app(R)
+return match3_game.app(R)

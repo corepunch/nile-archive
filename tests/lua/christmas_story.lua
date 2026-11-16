@@ -12,6 +12,16 @@ for _,who in ipairs(R.cast) do cast[who.id]=true end
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 check(rules.LEVELS==30 and #journey.beats==36,'all three episodes are playable')
+local stocked = rules.game_start(0, 1)
+local cell = rules.hex_center()
+for kind = 0, 2 do
+    local wave = rules.new_match()
+    stocked.tiles[cell], stocked.tools[1] = rules.tile(kind), 1
+    check(rules.game_tool(stocked, 0, cell, wave), "the hammer can collect a regular resource")
+    rules.game_apply(stocked, wave)
+end
+check(stocked.earnings[1] == 3 and stocked.earnings[2] == 1 and stocked.earnings[3] == 1,
+      "cleared bells, candy and holly feed the three wallet slots")
 local intro = rules.game_start(3, 1)
 local tied
 for _, i in ipairs(rules.level_of(intro).oil) do
@@ -38,6 +48,7 @@ for _,b in ipairs(journey.beats) do
     end
 end
 check(lines==198,'the entire reviewed script ships')
+local finds = 0
 for level=1,30 do
     local before=journey.next(p,owned(c),level-1)
     if before then
@@ -50,6 +61,18 @@ for level=1,30 do
     check(#spec.goals == 1 and spec.goals[1] == "oil", "only the blue panes count toward the win")
     check(g.initial_obstacles == spec.chains and g.carpet_total == 0 and g.delivery_total == 0,
           "tinsel is the only campaign blocker")
+    if spec.story_piece then
+        finds = finds + 1
+        local i = spec.oil[1]
+        local kind = spec.story_piece.kind
+        local wave = rules.new_match()
+        g.chain[i], g.tiles[i] = 0, rules.tile(kind)
+        check(g.goal_kind == kind and not g.resource_yields[kind], "a story object replaces its resource kind")
+        check(rules.game_tool(g, 0, i, wave), "the story piece uses ordinary tool matches")
+        rules.game_apply(g, wave)
+        check(g.relics == 1 and g.oil[i] == 0 and g.earnings[1] + g.earnings[2] + g.earnings[3] == 0,
+              "the story piece clears its blue pane and does not pay the replaced resource")
+    end
     g.won=true;g.moves=0
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     for z=1,5 do c:unlock(z,p.wallet) end
@@ -64,12 +87,12 @@ for level=1,30 do
             end
             save.write("old-market-prices", function(s) s:ints("wallet", purse(100)) end)
             save.read("old-market-prices", wallet)
-            check(R.prog.wallet[1] == island.wonders[3].cost[1], "the revised bakery is funded on a legacy save")
+            check(R.prog.wallet[1] == 100 and R.prog.wallet[2] == 18 and R.prog.wallet[3] == 12, "the revised bakery has the legacy Gold and enough new materials")
             check(island.can_buy(c, R.prog.wallet, 7, 2), "the bakery can be built before continuing")
             check(not island.can_buy(c, R.prog.wallet, 7, 15), "the reserved grant cannot buy a lamp post")
             save.write("new-market-prices", wallet)
             save.read("new-market-prices", wallet)
-            check(R.prog.wallet[1] == island.wonders[3].cost[1], "saving the migrated wallet prevents a second top-up")
+            check(R.prog.wallet[1] == 100 and R.prog.wallet[2] == 18 and R.prog.wallet[3] == 12, "saving the migrated wallet prevents a second top-up")
         end
         check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
         check(island.can_buy(c,p.wallet,p.level,kind-1),'earned stall is affordable')
@@ -86,8 +109,20 @@ for level=1,30 do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
+check(finds == 6, "six story wishes have authored replacement pieces")
 check(c.count==10 and c.open==63 and p.wallet[4]==90,'thirty clears build ten stalls and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
+
+R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}
+save.write("pending-market-resources", R.serialize_campaign)
+R.prog.completed = nil
+save.read("pending-market-resources", R.serialize_campaign)
+R.resume_completed()
+check(R.g.won and R.g.oil_left == 0 and R.overlay == R.OV_RESULT, "a saved win resumes at Collect")
+check(R.g.earnings[1] == 33 and R.g.earnings[2] == 6 and R.g.earnings[3] == 9,
+      "an unclaimed win retains every matched resource after reloading")
+check(rules.progress_reward(R.prog, R.g, island.wonders) and not R.prog.completed,
+      "Collect consumes the completed snapshot")
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false

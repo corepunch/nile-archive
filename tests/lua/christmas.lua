@@ -11,7 +11,7 @@ local opens = {[6]=1, [9]=2, [15]=3, [21]=4, [27]=5}
 for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')
-    g.won, g.moves = true, 0
+    g.won, g.moves, g.earnings = true, 0, {50, 12, 18}
     assert(rules.progress_reward(p,g,island.wonders), 'First clear must pay')
     local before = p.wallet[1]
     assert(not rules.progress_reward(p,g,island.wonders) and p.wallet[1]==before, 'Cannot pay twice')
@@ -24,20 +24,20 @@ for level=0,rules.LEVELS-1 do
     end
     local kind = journey.wonder_at(p.level)
     if kind then
-        assert(island.reserved_gold(c,p.level)==island.wonders[kind].cost[1])
+        assert(island.reserved_cost(c,p.level):covers(island.wonders[kind].cost))
         assert(island.island_place_next(c,p.wallet,p.level,0), 'Every funded building must fit the land open by then')
         assert(island.wonder_count(c)==kind)
     else
         assert(not island.island_place_next(c,p.wallet,p.level,0), 'A story-only wish funds no stall')
     end
 end
-assert(c.open==63 and p.wallet[4]==90 and p.wallet[2]==0 and p.wallet[3]==0 and p.wallet[5]==0,
-       'Stars open every region and the campaign awards no legacy materials or bells')
+assert(c.open==63 and p.wallet[4]==90 and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
+       'Stars open every region and spare matched goods are banked')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)
-replay.won, replay.moves = true, 0
+replay.won, replay.moves, replay.earnings = true, 0, {12, 3, 4}
 assert(rules.progress_reward(p,replay,island.wonders))
-assert(p.wallet[1]==before+60 and p.wallet[4]==90 and p.level==30, 'Replay must pay only Gold')
+assert(p.wallet[1]==before+12 and p.wallet[4]==90 and p.level==30, 'Replays do not earn additional Stars')
 for kind=10,11 do
     assert(island.can_buy(c,p.wallet,p.level,kind))
     local ok,spot = c:find_spot(kind,vec2(760,2010))
