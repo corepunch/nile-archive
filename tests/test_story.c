@@ -35,6 +35,8 @@ static void init(void)
     test_style=(story_style){.text={.font=lettering,.size=21,.fill={20,20,20,255}},
         .name={.font=lettering,.size=15,.fill={255,255,255,255}},
         .bubble={250,230,200,255},.edge={180,40,30,255}};
+    /* cast is shared by every story test; a portrait left by an earlier one was freed in its quit. */
+    cast[0].portrait=cast[1].portrait=(texture){0};
     story_setup(cast,2,&test_style);
     unsigned char face[4*5*4];
     for (int i=0;i<20;i++) { face[i*4]=20;face[i*4+1]=70;face[i*4+2]=210;face[i*4+3]=255; }
