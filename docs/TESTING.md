@@ -35,10 +35,11 @@ Use either script's `--existing` option to export a completed run without
 rendering again. Avoid adding another manifest entry just to give an existing
 view a different review filename.
 
-`make test` builds one test binary, `build/test/all`, and starts it once. That one
-instance runs the engine's suite and then every game's, one after another, in a
-single process and a single window, so a run opens one app instead of one per
-suite. Beside it, worker processes run audio, the generated-code/project checks,
+`make test` builds one test binary, `build/test/all`, and starts it twice, side
+by side: one instance runs the engine's suite (`--suite=engine`), the other every
+game's suite one after another (a `--suite=` per game in `TEST_GAMES`). That keeps
+the slowest instance near half the work, and still never opens one app per
+suite. Choosing suites yourself with `--suite=` in `TEST_ARGS` runs one instance. Beside them, worker processes run audio, the generated-code/project checks,
 the asset audits and the launcher contracts; none of those opens a window.
 Results are grouped by suite, every invocation executes the checks again, and
 failures or budget overruns fail the target.
@@ -50,7 +51,7 @@ jobs and their children are terminated. `TEST_WORKERS` defaults to four;
 
 Measured on the development Mac (2026-11-16): `make test` passes in 4.6 to 5.0
 seconds; the suites take engine 1.8 s, Relic Rush 1.4 s, Christmas Market 1.1 s,
-Emergency 0.2 s and Nile Archive 0.1 s, one after another in one instance. The
+Emergency 0.2 s and Nile Archive 0.1 s; the engine's instance runs beside the games'. The
 board tile check reads recorded hashes instead of re-rendering (`--render-check`
 in `make test-assets` re-renders).
 
@@ -78,7 +79,7 @@ Clayfight and its native/JavaScript checks
 now live in the [standalone repository](https://github.com/corepunch/clayfight).
 
 ```sh
-make test                       # correctness + renderer + preflight, one instance, budget 5s
+make test                       # correctness + renderer + preflight, two instances, budget 5s
 make test-fast                  # same checks without a window/GPU
 make test-full                  # complete smoke/capture integration, deliberately slow
 make test-full ONLY=smoke        # only smoke jobs, in every suite

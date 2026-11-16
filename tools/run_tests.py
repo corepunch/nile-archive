@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Run every assertion suite once, in one app instance beside the script checks, within a wall-clock budget.
+"""Run every assertion suite once, beside the script checks, within a wall-clock budget.
+
+The engine suite and the game suites run in two test instances side by side.
 
 Screenshot/reel exports and long game smoke scenarios remain in make test-full.
 No successful results are cached; every invocation executes every selected check.
@@ -67,10 +69,14 @@ def run_jobs(jobs, budget, workers=4, output=None):
     return int(bool(failed))
 
 
-def checks(fast=False, arguments=()):
+def checks(fast=False, arguments=(), games=()):
     mode = "--fast" if fast else "--check"
-    # One instance runs the engine's suite and every game's: no app starts per suite.
-    jobs = [("suites", ["./build/test/all", mode, *arguments])]
+    if games and not any(a.startswith("--suite=") for a in arguments):
+        # Two instances, never one per suite: the engine's and every game's, side by side.
+        jobs = [("engine suite", ["./build/test/all", mode, "--suite=engine", *arguments]),
+                ("game suites", ["./build/test/all", mode, *(f"--suite={g}" for g in games), *arguments])]
+    else:
+        jobs = [("suites", ["./build/test/all", mode, *arguments])]
     jobs += [(name, [f"./build/{name}"]) for name in
              ("test-audio",)]
     scripts = [
@@ -100,12 +106,13 @@ def main():
     parser.add_argument("--budget", type=float, default=5)
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--games", default="", help="space-separated game suites to run beside the engine's")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     if not math.isfinite(args.budget) or args.budget <= 0 or args.jobs < 1:
         parser.error("budget and jobs must be positive (budget must be finite)")
     arguments = args.arguments[1:] if args.arguments[:1] == ["--"] else args.arguments
-    return run_jobs(checks(args.fast, arguments), args.budget, args.jobs)
+    return run_jobs(checks(args.fast, arguments, args.games.split()), args.budget, args.jobs)
 
 
 if __name__ == "__main__":

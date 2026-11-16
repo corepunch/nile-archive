@@ -188,7 +188,7 @@ TEST_WORKERS ?= 4
 TEST_AUX_BINS := build/test-audio
 .PHONY: test-full test-fast test-extended test-engine test-match3 $(TEST_GAMES:%=test-%)
 test test-fast: build/test/all $(TEST_AUX_BINS)
-	python3 tools/run_tests.py --budget $(TEST_BUDGET) --jobs $(TEST_WORKERS) $(if $(filter test-fast,$@),--fast) -- $(ONLY) $(TEST_ARGS)
+	python3 tools/run_tests.py --budget $(TEST_BUDGET) --jobs $(TEST_WORKERS) --games "$(TEST_GAMES)" $(if $(filter test-fast,$@),--fast) -- $(ONLY) $(TEST_ARGS)
 
 # Full integration/capture export is deliberate; keep it complete in cloud CI.
 test-full: gen-check xcode-check test-assets build/test/all $(TEST_AUX_BINS)

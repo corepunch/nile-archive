@@ -31,6 +31,15 @@ class RunnerTests(unittest.TestCase):
         jobs = checks(arguments=["rules", "--extended"])
         apps = [command for _, command in jobs if command[0].startswith("./build/test/")]
         self.assertEqual(apps, [["./build/test/all", "--check", "rules", "--extended"]])
+
+    def test_engine_and_games_run_in_two_instances(self):
+        apps = [command for _, command in checks(arguments=["rules"], games=["a", "b"])
+                if command[0].startswith("./build/test/")]
+        self.assertEqual(apps, [["./build/test/all", "--check", "--suite=engine", "rules"],
+                                ["./build/test/all", "--check", "--suite=a", "--suite=b", "rules"]])
+        chosen = [command for _, command in checks(arguments=["--suite=a"], games=["a", "b"])
+                  if command[0].startswith("./build/test/")]
+        self.assertEqual(chosen, [["./build/test/all", "--check", "--suite=a"]])
         self.assertEqual([command[1] for _, command in checks(True) if command[0].startswith("./build/test/")], ["--fast"])
 
 
