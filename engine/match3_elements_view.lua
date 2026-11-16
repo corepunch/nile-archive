@@ -267,18 +267,14 @@ local function draw_ground_backing(R, rules, sx, alpha, textured)
     end)
 end
 
--- Cradle of Rome's board, shared by the match-3 games: a carved frame (from the
--- cells out: a dark line, a brown band, a cream highlight, a dark line and a
--- wooden ledge), dark brown grout between cells, and the cell-state tiles
--- baked by tools/board_tiles.py.
+-- Cradle of Rome's board, shared by the match-3 games: one tan-gold frame band
+-- lit from above between thin dark lines, dark brown grout between cells, and
+-- the cell-state tiles baked by tools/board_tiles.py.
 E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
     frame = {
-        {width = 1.4, top = color.hex(0x2E1206), bottom = color.hex(0x1E0802)},
-        {width = 2.4, top = color.hex(0x84542A), bottom = color.hex(0x4A2408)},
-        {width = 1.4, top = color.hex(0xF6DCA8), bottom = color.hex(0xA07848)},
-        {width = 1.2, top = color.hex(0x2A1004), bottom = color.hex(0x160600)},
-        {width = 4.6, top = color.hex(0xDCB67C), bottom = color.hex(0x765628)},
+        {width = 1.2, top = color.hex(0x2E1206), bottom = color.hex(0x1E0802)},
+        {width = 5, top = color.hex(0xDCB67C), bottom = color.hex(0x765628)},
         {width = 1, top = color.hex(0x2A1606), bottom = color.hex(0x120600)},
     },
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",

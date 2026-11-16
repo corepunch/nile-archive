@@ -12,9 +12,8 @@ bevelled stones.
 
 ![Cradle of Rome's sheet above ours](strip-vs-reference.png)
 
-The board frame follows Cradle of Rome's: from the cells out, a dark line, a
-brown band, a cream highlight, a dark line and a tan-gold ledge, lit from above,
-with dark brown grout between cells:
+The board frame is one outline, as in Cradle of Rome: a tan-gold band lit from
+above between thin dark lines, with dark brown grout between cells:
 
 ![Frame against Cradle of Rome](frame-vs-reference.jpg)
 

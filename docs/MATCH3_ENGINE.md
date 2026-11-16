@@ -158,8 +158,8 @@ default) at its radius. The seam shows the backing colour through that inset.
 only the silhouette's outline remains, and as a vertical gradient, so the
 board's top edges catch the light and its bottom edges fall into shade.
 `elements.cradle_ground(R)` applies the shared Cradle of Rome preset
-(`E.CRADLE_GROUND`): a dark line, a brown band, a cream highlight, a dark line
-and a tan-gold ledge, dark brown grout (`seam`, `seam_width`) and the cell-state
+(`E.CRADLE_GROUND`): one tan-gold band lit from above between thin dark lines,
+dark brown grout (`seam`, `seam_width`) and the cell-state
 tiles. Games supply the fallback face colour as the skin's `board_face`.
 Imported and neutral boards use the same geometry without a frame.
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
