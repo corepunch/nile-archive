@@ -22,7 +22,7 @@ Q.chapters = {
             dig(7, "Recover the tool roll"), build("workshop"),
         }},
         {title="Open the tide room", points=16, tasks={
-            dig(8, "Recover the broken cable"), dig(9, "Gather supplies"),
+            dig(8, "Recover relay pliers"), dig(9, "Gather supplies"),
             build("market"), dig(10, "Recover the shutter gear"),
         }},
     }},

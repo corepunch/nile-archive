@@ -80,8 +80,8 @@ are visible on the board and bank on a win. The completion dialog shows score.
 Five types is the normal palette. A 4+1 recovery has four regular kinds and a
 story kind in the fifth slot. A 5+1 recovery has six total kinds and should
 earn that complexity through layout and enough legal opening swaps. Board 1
-uses five regular resources. Boards 4 and 9 use 5+1. Board 8 puts the snapped
-cable in the orange slot and omits red berries, leaving room for cut blocks in
+uses five regular resources. Boards 4 and 9 use 5+1. Board 8 puts the relay
+pliers in the orange slot and omits red berries, leaving room for cut blocks in
 a 4+1 palette. Leaves and flowers add score in their authored slots and clear
 plaques just like other matches. Board 4 takes
 the Coins slot for the tide chart. The Well purchase that follows uses Coins

@@ -636,7 +636,6 @@
     "data/expedition-hud/score.png",
     "data/expedition-hud/shop-built.png",
     "data/expedition-hud/shop-locked.png",
-    "data/finds/broken-cable.png",
     "data/finds/cable.png",
     "data/finds/chart.png",
     "data/finds/gear.png",
@@ -683,7 +682,6 @@
     "data/scene-lagoon.jpg",
     "data/scene-temple.jpg",
     "data/signal-plate.png",
-    "data/story-pieces/broken-cable.png",
     "data/story-pieces/cable.png",
     "data/story-pieces/chart.png",
     "data/story-pieces/gear.png",
@@ -1219,25 +1217,6 @@
           228,
           228
         ]
-      },
-      "broken-cable": {
-        "source": "art/quest-objects/broken-cable-states.png",
-        "prompt": "art/quest-objects/broken-cable-states.prompt.txt",
-        "runtime": "data/finds/broken-cable.png",
-        "crop": [
-          1168,
-          116,
-          1823,
-          698
-        ],
-        "canvas": [
-          320,
-          320
-        ],
-        "paint_size": [
-          256,
-          256
-        ]
       }
     },
     "story_pieces": {
@@ -1353,19 +1332,6 @@
                 1236
               ],
               "runtime": "data/story-pieces/gear.png"
-            },
-            "broken-cable": {
-              "boards": [
-                8
-              ],
-              "kind": 5,
-              "crop": [
-                8,
-                1034,
-                303,
-                1150
-              ],
-              "runtime": "data/story-pieces/broken-cable.png"
             }
           }
         },
@@ -1390,6 +1356,14 @@
           }
         }
       ]
+    },
+    "atlas_pieces": {
+      "pliers": {
+        "boards": [
+          8
+        ],
+        "kind": 5
+      }
     }
   },
   "homescapes": {
@@ -1922,16 +1896,27 @@
     "style_reference": "../../reference/cradle-of-rome/visuals/board-pieces.png",
     "generator": "built-in ImageGen, all 23 pieces in one edit",
     "runtime": "data/campaign-pieces.png",
-    "revision": {
-      "source": "art/campaign-pieces/fruit-and-score.png",
-      "prompt": "art/campaign-pieces/fruit-and-score.prompt.txt",
-      "boxes": {
-        "apple": [502, 0, 753, 268],
-        "leaf": [753, 978, 1004, 1254],
-        "flower": [1004, 978, 1254, 1254]
+    "revisions": [
+      {
+        "source": "art/campaign-pieces/fruit-and-score.png",
+        "prompt": "art/campaign-pieces/fruit-and-score.prompt.txt",
+        "boxes": {
+          "apple": [502, 0, 753, 268],
+          "leaf": [753, 978, 1004, 1254],
+          "flower": [1004, 978, 1254, 1254]
+        },
+        "generator": "built-in ImageGen, apple, leaf and flower authored together"
       },
-      "generator": "built-in ImageGen, apple, leaf and flower authored together"
-    },
+      {
+        "source": "art/campaign-pieces/relay-pliers.png",
+        "prompt": "art/campaign-pieces/relay-pliers.prompt.txt",
+        "boxes": {
+          "pliers": [979, 734, 1254, 973]
+        },
+        "generator": "built-in ImageGen, full-atlas edit with orange-handled relay pliers",
+        "review": "docs/screenshots/review/relay-pliers/README.md"
+      }
+    ],
     "cell_size": 128,
     "extent": 112,
     "row_edges": [
@@ -1969,7 +1954,7 @@
         "chart",
         "marker",
         "tools",
-        "broken-cable"
+        "pliers"
       ],
       [
         "supplies",
@@ -1980,7 +1965,7 @@
       ]
     ],
     "states": "One authored sprite per match kind. Selection, hints, chains, press and motion use the existing board overlays and transforms.",
-    "registration": "Crop revised pieces from the three named boxes and other pieces from the original columns and row bands; trim each object's transparent exterior, fit and center it.",
+    "registration": "Crop revised pieces from the named revision boxes and other pieces from the original columns and row bands; trim each object's transparent exterior, fit and center it.",
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
     "review": "docs/screenshots/review/fruit-and-score/README.md"
   },

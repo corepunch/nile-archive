@@ -11,7 +11,7 @@ The camp is abandoned, the old well is fouled, and the quay stairs and wall are 
 ## Truth timeline
 
 1. The original harbor builders cut a tide channel into the cliff and fitted a hand shutter for signalling to boats. Generations later, Tomas and Ines fitted an electric relay along the same route. The chart behind the well pump traces it, and the lamp bracket at camp lets a lookout answer.
-2. Tomas and Ines worked together. When the quay wall cracked, Tomas closed the room; Ines left to fetch repair plans and supplies. Tomas promised to maintain the warning, but a storm cut the cable. He believes Ines did not return.
+2. Tomas and Ines worked together. When the quay wall cracked, Tomas closed the room; Ines left to fetch repair plans and supplies. Tomas promised to maintain the warning, but a storm cut the cable. He tried to splice it and left his pliers at the break. He believes Ines did not return.
 3. Recently Ines returned by a different shore. She found the room flooded and, unable to reach camp, used its hand shutter to send the old warning. She changed its rhythm to attract attention. Tomas does not know she is back.
 4. Adrian financed the expedition using a promised exclusive claim on island discoveries. He has not told Elena; the claim puts the relay and islanders' work at risk. Kessler represents the claim holder, not a supernatural threat.
 5. The team repairs the route to the tide room and finds Ines's signed plan. Adrian gives up the claim, and the crew drains the foot of the wall and makes the quay safe. When Mara tests the warning lamp, Ines waits and answers with the same three flashes from the safe landing. Tomas gives her the key, and she brings a chart of the other stations.
@@ -37,7 +37,7 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | --- | --- | --- |
 | 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 gather camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 gather the tide chart pieces; **confirm Spring well**. | A changed flash and the chart lead to the quay. The crew fills buckets for the walk. |
 | 1. Find the lower quay — Elena needs to follow the chart | 5 recover the quay marker; 6 recover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | The markers lead to slipped steps. Tomas agrees to guide the crew and uses the tools to cut blocks for the approach. |
-| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover the broken cable; 9 recover the crate of rope and pulleys and earn Supplies from cut blocks; **confirm Jungle market** to rig its hoist; 10 recover the shutter gear. | The crew uses the hoist to lower blocks into place and reaches the tide room. Someone has changed the old warning. |
+| 1. Open the tide room — Tomas needs a safe way to inspect the warning | 8 recover Tomas’s relay pliers at the storm break; 9 recover the crate of rope and pulleys and earn Supplies from cut blocks; **confirm Jungle market** to rig its hoist; 10 recover the shutter gear. | The crew uses the hoist to lower blocks into place and reaches the tide room. Someone has changed the old warning. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the reply; 12 find recently delivered supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test the terrace route; 15 trace the crack through the quay wall; 16 prepare shelter; **confirm Explorer's lodge**. | The repair crew has a dry base. The direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 recover the keeper's log fragment; 18 check its measurements against the quay; 19 secure the records; **confirm Lost-world archive**; 20 open the locked chart cabinet. | Tomas hands over the key. Ines's signed plan shows how to divert the tide and repair the wall. Adrian's claim threatens access to the records. |
@@ -60,7 +60,7 @@ Each row identifies a concrete request, first-clear progress, the confirmed isla
 | Plant | Inference later / payoff |
 | --- | --- |
 | Empty lamp bracket (opening) | Camp lamp can answer the relay (2); warning is tested together (30). |
-| Electric cable clipped over an older stone channel (3) | The severed cable leaves the crew looking for a manual signal (8). The working hand shutter gives them their answer (10). |
+| Electric cable clipped over an older stone channel (3) | Tomas’s pliers turn up by the severed cable, so the crew looks for a manual signal (8). The working hand shutter gives them their answer (10). |
 | Answer repeats then changes (2–3) | A person changes the shutter (10). The note reveals I. R. on board 13 and Tomas names Ines at the courtyard. Her delayed three flashes from the safe landing confirm it (30). |
 | Pump chart shows a broken route (4) | Tomas knows the tide room (7); the signed repair plan explains the damaged wall (20). |
 | The well runs again (restoration 4) | The crew can carry water on both marker expeditions (5–6). Matching a bucket stocks Food. |
@@ -181,15 +181,15 @@ through the warning and her records until the finale.
 
 **Level 8**
 
-- **Tomas:** That’s the broken end. A storm tore it away years ago.
-- **Elena:** Then how is the lamp answering?
+- **Tomas:** My pliers. I left them here when I tried to splice the storm break.
+- **Elena:** The cable’s still in two pieces. How is the lamp answering?
 - **Tomas:** The old hand shutter opens onto the water. Ines could work it with a lantern.
 - **Mara:** Where is Ines?
 - **Tomas:** I haven’t seen her since she left. The market has a lifting tackle for those blocks.
 
 **Level 9**
 
-- **Mara:** Rope and pulleys in the crate. Let’s rig the old market hoist and lower the blocks.
+- **Mara:** Rope and pulleys. Pass me the pliers for this pin. We can rig the hoist and lower the blocks.
 
 **After restoration 9**
 
@@ -421,6 +421,8 @@ as the slipped steps and distinguishes the near viewing shutter from the
 hand-operated warning across the flooded gap.
 
 ## Changelog
+
+- 2026-11-16: Board 8 recovers Tomas’s relay pliers at the storm break. A cold reader followed the severed relay to the hand shutter and asked what the crew would use the pliers for. Mara asks for them while rigging the market hoist.
 
 - 2026-11-16: Set levels 1–20 at an ancient harbor in present-day use. The Well
   and Workshop supply water and cut blocks on the following boards. The

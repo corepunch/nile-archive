@@ -23,7 +23,7 @@ for these slots and for the pieces introduced by restorations.
 Ordinary boards use five match kinds. Green apples earn 1 Food each.
 Confirming the Spring Well replaces blue timber with a water
 bucket worth 3 Food from board 5. The Artisan Workshop replaces dressed
-stone with cut blocks worth 5 Supplies from board 8. The broken cable occupies
+stone with cut blocks worth 5 Supplies from board 8. The relay pliers occupy
 the orange slot on that board, and berries are omitted to keep five kinds. The Jungle Market
 replaces red berries with ration jars worth 4 Food from board 10.
 From board 14 the Courtyard improves Coins, from board 17 the Lodge replaces
@@ -61,7 +61,7 @@ objectives move the emphasis within each family.
 | 5 | The Quay Marker | Tapered bowl | 10 | 35 |
 | 6 | The Shore Marker | Two chambers | 11 | 37 |
 | 7 | The Tool Roll | Two chambers | 12 | 40 |
-| 8 | The Broken Cable | Compact court | 12 | 40 |
+| 8 | The Relay Pliers | Compact court | 12 | 40 |
 | 9 | The Supply Crate | Two chambers | 12 | 43 |
 | 10 | The Shutter Gear | Twin lanes | 12 | 46 |
 | 11 | The Long Terrace | Tapered bowl | 12 | 33 |

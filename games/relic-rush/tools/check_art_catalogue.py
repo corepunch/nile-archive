@@ -42,15 +42,20 @@ assert upgrades == {name: item["runtime"] for name, item in manifest["resource_u
 campaign = manifest["campaign_pieces"]
 assert campaign["runtime"] in actual
 assert all((ROOT / campaign[key]).is_file() for key in ("source", "edit_target", "prompt", "review"))
-revision = campaign["revision"]
-assert all((ROOT / revision[key]).is_file() for key in ("source", "prompt"))
-assert set(revision["boxes"]) == {"apple", "leaf", "flower"}
+revised_pieces = set()
+for revision in campaign["revisions"]:
+    assert all((ROOT / revision[key]).is_file() for key in ("source", "prompt"))
+    if "review" in revision:
+        assert (ROOT / revision["review"]).is_file()
+    assert not revised_pieces.intersection(revision["boxes"]), "Overlapping campaign revisions"
+    revised_pieces.update(revision["boxes"])
+assert revised_pieces == {"apple", "leaf", "flower", "pliers"}
 declaration = re.search(r"A\.campaign_pieces = \{([^}]+)\}", art).group(1)
 slots = [key for row in campaign["rows"] for key in row]
 assert re.findall(r'"([^"]+)"', declaration) == slots, "Campaign piece atlas order"
 story_pieces = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
 expected_pieces = (set(pieces) - {"emerald"}) | set(upgrades) | set(re.findall(r'"([^"]+)"', story_pieces))
-expected_pieces |= {"amphora", *revision["boxes"]}
+expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 assert set(manifest["tool_unlocks"]) <= set(manifest["tools"])
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
@@ -222,6 +227,14 @@ for sheet in sheets:
         for board in item["boards"]:
             assert board not in board_slots, f"Multiple story pieces on board {board}"
             board_slots[board] = name, item["kind"]
+atlas_pieces = quest["atlas_pieces"]
+declaration = re.search(r"A\.atlas_quest_pieces = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(atlas_pieces)
+for name, item in atlas_pieces.items():
+    assert name in slots and f"`{name}`" in doc
+    for board in item["boards"]:
+        assert board not in board_slots, f"Multiple story pieces on board {board}"
+        board_slots[board] = name, item["kind"]
 declarations = re.findall(r'levels\[(\d+)\]\.story_piece, levels\[\1\]\.goal_kind = "([^"]+)", (\d+)', campaign)
 assert {int(board): (name, int(kind)) for board, name, kind in declarations} == board_slots
 subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)

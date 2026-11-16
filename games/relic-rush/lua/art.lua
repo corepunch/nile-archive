@@ -16,14 +16,15 @@ A.floor_tiles = {"cell-normal", "tablet-single", "tablet-double", "light-wave", 
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = elements_view.assets
 A.quest_objects = {"timber", "lens", "cable", "chart", "marker", "tools", "supplies", "gear"}
-A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "broken-cable", "marker"}
-A.separate_rewards = {"note", "broken-cable"}
+A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "marker"}
+A.separate_rewards = {"note"}
+A.atlas_quest_pieces = {"pliers"}
 A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
 A.campaign_pieces = {
     "coin", "berries", "apple", "timber", "stone",
     "amphora", "water", "cut-blocks", "rations", "trade-coins",
     "grain", "quartz", "springwater", "sun-gem", "lens",
-    "cable", "chart", "marker", "tools", "broken-cable",
+    "cable", "chart", "marker", "tools", "pliers",
     "supplies", "gear", "note", "leaf", "flower",
 }
 A.resource_upgrades = {
@@ -114,6 +115,10 @@ function A.load()
     for i, key in ipairs(A.campaign_pieces) do
         local col, row = (i - 1) % 5, (i - 1) // 5
         textures["campaign-" .. key] = texture.region(campaign, rect(col * 128, row * 128, 128, 128))
+    end
+    for _, key in ipairs(A.atlas_quest_pieces) do
+        local piece = textures["campaign-" .. key]
+        textures["story-" .. key], textures["find-" .. key] = piece, piece
     end
     for _, key in pairs(A.wallet_icons) do
         local name = "resource-" .. key

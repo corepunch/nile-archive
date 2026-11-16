@@ -38,17 +38,20 @@ as the edit target and the original Cradle of Rome's
 The objects share an upper-left light, dark contours and compact silhouettes.
 The [transparent source](../art/campaign-pieces/source.png), [exact prompt](../art/campaign-pieces/prompt.txt)
 and [manifest](../art/board-states/manifest.json) record the inputs and registration.
-A [single revision](../art/campaign-pieces/fruit-and-score.png) redraws the
+A [fruit and score revision](../art/campaign-pieces/fruit-and-score.png) redraws the
 emerald as a green apple and adds a leaf and flower. The
 [revision prompt](../art/campaign-pieces/fruit-and-score.prompt.txt) and named
 crop boxes in the manifest register all three into the same runtime atlas.
+The [relay pliers revision](../art/campaign-pieces/relay-pliers.png) uses the
+[full atlas edit prompt](../art/campaign-pieces/relay-pliers.prompt.txt).
+Register its row 4, column 5 object from the named crop in the manifest.
 
 | Atlas row | Left to right |
 | --- | --- |
 | 1 | Sun coin, berries, green apple, timber, quarry stones |
 | 2 | Amphora, water bucket, cut blocks, ration jar, trade coins |
 | 3 | Grain, quartz, springwater, sun gem, lamp lens |
-| 4 | Relay cable, tide chart, trail arrow, tool roll, snapped cable |
+| 4 | Relay cable, tide chart, trail arrow, tool roll, relay pliers |
 | 5 | Supply satchel, shutter gear, folded note, leaf, flower |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
@@ -57,10 +60,12 @@ uniformly fit each object into a centered 128 px cell with a 112 px maximum
 extent. The runtime atlas is `data/campaign-pieces.png`. The same sprite appears
 in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
-wallet use their own currency artwork, and first-clear cards use their prop art.
+wallet use their own currency artwork. The level 8 first-clear card also uses the
+pliers from this atlas.
 The sprites are free-standing objects. At the board's actual draw size the
 25 pieces fit the canonical face in strict object mode.
-[In-game review](screenshots/review/fruit-and-score/README.md).
+[Fruit and score review](screenshots/review/fruit-and-score/README.md).
+[Relay pliers review](screenshots/review/relay-pliers/README.md).
 
 ## Resource pieces
 
@@ -111,7 +116,8 @@ art and show different tap notices. Review `shot hex-first`, `shot hex-late`,
 `shot landing-briefing`, and `shot phone-story-level-30` in the Relic Rush suite.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
 The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
-shows the new openings and the cut blocks sharing level 8 with the snapped cable.
+shows the original openings and the cut blocks on level 8. The relay pliers
+review above shows the current level 8 board.
 
 `--rome-reference-art` uses the eight aliases in the manifest to load local
 Cradle of Rome 2 crops for resource pieces and the matching coin and guide icons.
@@ -152,6 +158,7 @@ They are independent of the selected match piece pack.
 | `chart` | Tide chart | 4, read the route after restoring the Spring well |
 | `marker` | Green painted brass trail arrow | 5 and 6, locate the steps below the quay |
 | `tools` | Tool roll | 7, equip the Artisan workshop |
+| `pliers` | Relay pliers | 8, recover Tomas’s tool at the severed cable and use it on the market hoist |
 | `supplies` | Supply crate | 9, stock the Jungle market supply point |
 | `gear` | Shutter gear | 10, operate the near shutter and read the tide-room warning |
 
@@ -163,11 +170,9 @@ record the source and crops.
 Run `python3 tools/relic_quest_art.py` after the resource registration to build
 the scenario index in `data/quest-objects.png` and the item card props in
 `data/finds/`. Camp Timber uses `data/resource-pieces/timber.png` directly.
-The other card props fit within 256 px on a 320×320 canvas. Board 8 uses the separately registered `broken-cable`
-card. The [broken cable sheet](../art/quest-objects/broken-cable-states.png) and
-[prompt](../art/quest-objects/broken-cable-states.prompt.txt) record that reward.
-On the new expedition sheet, the intact relay cable is coiled with two plugs.
-The snapped cable has a gap between the exposed copper ends.
+Separate card props fit within 256 px on a 320×320 canvas. Board 8 uses its
+`pliers` atlas region on the card and in alternate board previews. The intact
+relay cable for board 3 is coiled with two plugs.
 
 ### Collectible story pieces
 
@@ -182,7 +187,7 @@ sprites. The first clear recovers the story item.
 | Green | 5, 6 | Painted brass trail arrow |
 | Blue | 2, 9 | Lamp lens, supply pack |
 | Purple | 3 | Coiled relay cable |
-| Orange | 8, 10 | Snapped cable, bronze shutter gear |
+| Orange | 8, 10 | Relay pliers, bronze shutter gear |
 
 Board 1 uses the ordinary timber chip. The campaign atlas includes all nine
 story sprites. In alternate art previews most story sprites come

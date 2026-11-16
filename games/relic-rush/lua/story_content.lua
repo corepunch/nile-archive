@@ -64,14 +64,14 @@ return {
         {"tomas", "Follow the cable around the bend. I lost its signal in a storm."},
     }},
     {key="after-08", phase="after", level=8, lines={
-        {"tomas", "That’s the broken end. A storm tore it away years ago."},
-        {"elena", "Then how is the lamp answering?"},
+        {"tomas", "My pliers. I left them here when I tried to splice the storm break."},
+        {"elena", "The cable’s still in two pieces. How is the lamp answering?"},
         {"tomas", "The old hand shutter opens onto the water. Ines could work it with a lantern."},
         {"mara", "Where is Ines?"},
         {"tomas", "I haven’t seen her since she left. The market has a lifting tackle for those blocks."},
     }},
     {key="after-09", phase="after", level=9, lines={
-        {"mara", "Rope and pulleys in the crate. Let’s rig the old market hoist and lower the blocks."},
+        {"mara", "Rope and pulleys. Pass me the pliers for this pin. We can rig the hoist and lower the blocks."},
     }},
     {key="restore-09", phase="restore", level=9, lines={
         {"mara", "The market hoist held. The crew set the blocks and I took the steps to the door."},

@@ -214,7 +214,7 @@ restoration unlocks or what is still needed to afford it. Replays earn
 matched resources and up to 40 Coins for unused moves.
 
 The Well adds water buckets on level 5. The Workshop adds cut blocks on level 8,
-alongside the broken cable. An arrival message names the building and the piece's
+alongside the relay pliers. An arrival message names the building and the piece's
 value. The first hint on level 5 earns 9 Food while clearing plaques. Level 9
 offers a similar cut-block match for 15 Supplies toward the Market.
 
@@ -231,7 +231,7 @@ Every stage uses its own connected active-cell mask within a radius-four hex gri
 | 5 | The Quay Marker | 35 | 10 | 4 |
 | 6 | The Shore Marker | 37 | 11 | 0 |
 | 7 | The Tool Roll | 40 | 12 | 3 |
-| 8 | The Broken Cable | 40 | 12 | 4 |
+| 8 | The Relay Pliers | 40 | 12 | 4 |
 | 9 | The Supply Crate | 43 | 12 | 5 |
 | 10 | The Shutter Gear | 46 | 12 | 6 |
 | 11 | The Long Terrace | 33 | 12 | 0 |

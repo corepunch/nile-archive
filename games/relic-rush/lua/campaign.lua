@@ -106,7 +106,7 @@ local levels = {
         return l
     end)(),
     (function()
-        local l = level("The Broken Cable", 40, 4)
+        local l = level("The Relay Pliers", 40, 4)
         l.mask = compact_mask
         l.terrain = seam(0, 1, -1, -1, 0)
         l.background = 2
@@ -278,7 +278,7 @@ local quest_objects = {
     {key="timber", name="Camp timber"}, {key="lens", name="Lamp lens"},
     {key="cable", name="Relay cable"}, {key="chart", name="Tide chart"},
     {key="marker", name="Quay marker"}, {key="marker", name="Shore marker"},
-    {key="tools", name="Tool roll"}, {key="broken-cable", name="Broken cable"},
+    {key="tools", name="Tool roll"}, {key="pliers", name="Relay pliers"},
     {key="supplies", name="Supply crate"}, {key="gear", name="Shutter gear"},
 }
 for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
@@ -295,7 +295,7 @@ levels[5].omit_kind = 5
 levels[6].story_piece, levels[6].goal_kind = "marker", 2
 levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the flame
 -- Keep the workshop's purple slot available on the expedition right after the build.
-levels[8].story_piece, levels[8].goal_kind = "broken-cable", 5
+levels[8].story_piece, levels[8].goal_kind = "pliers", 5
 levels[8].omit_kind = 1
 levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
 levels[10].story_piece, levels[10].goal_kind = "gear", 5 -- orange replaces the amphora

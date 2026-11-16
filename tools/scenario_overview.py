@@ -36,7 +36,7 @@ STORY_PIECE_NAMES = {
     'timber': 'timber pieces', 'lens': 'lenses', 'cable': 'cable coils',
     'chart': 'map pieces', 'marker': 'marker pieces', 'tools': 'tool rolls',
     'supplies': 'supply packs', 'gear': 'gears', 'note': 'folded notes',
-    'broken-cable': 'snapped cable pieces',
+    'pliers': 'relay pliers',
 }
 
 
