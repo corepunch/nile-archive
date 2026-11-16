@@ -16,12 +16,10 @@ for field, key in [("tools", "tools"), ("states", "tool_states")]:
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
 resources = manifest["resource_pieces"]
-new_pieces = resources["timber_emerald"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
-pieces = [*resources["slots"], *new_pieces["slots"]]
+pieces = [*resources["slots"], *resources["from_campaign"]]
 assert re.findall(r'"([^"]+)"', declaration) == pieces
-for atlas in (resources, new_pieces):
-    assert all((ROOT / atlas[key]).is_file() for key in ("source", "prompt"))
+assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
 for name in pieces:
     path = f"data/resource-pieces/{name}.png"
     assert path in actual and f"`{name}`" in doc
@@ -31,15 +29,19 @@ declaration = re.search(r"A\.wallet_icons\s*=\s*\{([^}]+)\}", art).group(1)
 assert {name: f"data/resource-pieces/{key}.png" for name, key in re.findall(r'(\w+)="([^"]+)"', declaration)} == wallet["runtime"]
 for path in wallet["runtime"].values():
     assert path in actual and f"`{Path(path).stem}`" in doc
-for name, unlock in manifest["resource_unlocks"].items():
+campaign = manifest["campaign_pieces"]
+for name, unlock in (manifest["resource_unlocks"] | manifest["featured_pieces"]).items():
     assert unlock["runtime"] in actual and f"`{name}`" in doc
     assert all((ROOT / unlock[key]).is_file() for key in ("source", "registration") if key in unlock)
 declaration = re.search(r"A\.resource_upgrades = \{([^}]+)\}", art).group(1)
 upgrades = {quoted or bare: "data/" + path for quoted, bare, path in
             re.findall(r'(?:\["([^"]+)"\]|(\w+))\s*=\s*"([^"]+)"', declaration)}
 assert upgrades == {name: item["runtime"] for name, item in manifest["resource_unlocks"].items()
-                    if name not in pieces}, "Runtime upgrades need catalogue coverage"
-campaign = manifest["campaign_pieces"]
+                    if name not in pieces and item["runtime"] != campaign["runtime"]}, "Runtime upgrades need catalogue coverage"
+declaration = re.search(r"A\.campaign_resources = \{([^}]+)\}", art).group(1)
+campaign_resources = set(re.findall(r'"([^"]+)"', declaration))
+assert campaign_resources == {"apple"} | {name for name, item in
+    (manifest["resource_unlocks"] | manifest["featured_pieces"]).items() if item["runtime"] == campaign["runtime"]}
 assert campaign["runtime"] in actual
 assert all((ROOT / campaign[key]).is_file() for key in ("source", "edit_target", "prompt", "review"))
 revised_pieces = set()
@@ -49,12 +51,12 @@ for revision in campaign["revisions"]:
         assert (ROOT / revision["review"]).is_file()
     assert not revised_pieces.intersection(revision["boxes"]), "Overlapping campaign revisions"
     revised_pieces.update(revision["boxes"])
-assert revised_pieces == {"apple", "leaf", "flower", "pliers"}
+assert set(resources["from_campaign"]) <= revised_pieces
 declaration = re.search(r"A\.campaign_pieces = \{([^}]+)\}", art).group(1)
 slots = [key for row in campaign["rows"] for key in row]
 assert re.findall(r'"([^"]+)"', declaration) == slots, "Campaign piece atlas order"
 story_pieces = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
-expected_pieces = (set(pieces) - {"emerald"}) | set(upgrades) | set(re.findall(r'"([^"]+)"', story_pieces))
+expected_pieces = set(pieces) | set(upgrades) | campaign_resources | set(re.findall(r'"([^"]+)"', story_pieces))
 expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 assert set(manifest["tool_unlocks"]) <= set(manifest["tools"])
@@ -141,7 +143,7 @@ assert '96' in doc and 'building-catalogue.md' in doc
 assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows', 'placement-guides'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
-print(f"Relic Rush catalogue: {len(actual)} runtime files, 18 pieces, 26 board states, 7 HUD icons, 96 buildings covered")
+print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, 26 board states, 7 HUD icons, 96 buildings covered")
 
 # Compare actual piece silhouettes with the renderer-authored cell. The sun
 # face remains upright: geometry is authored, not a runtime sprite rotation.

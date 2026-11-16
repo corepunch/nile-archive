@@ -16,7 +16,7 @@
     "cost": [85, 24, 30]
   },
   "gateway": {
-    "about": "Adds trade coin stacks worth 6 Coins each.",
+    "about": "Adds helmets worth 6 Coins, followed by more valuable treasures.",
     "cost": [85, 34, 36]
   },
   "lodge": {
@@ -32,11 +32,11 @@
     "cost": [155, 0, 70]
   },
   "fountain": {
-    "about": "Adds springwater drops worth 6 Food each.",
+    "about": "Adds shrimp worth 6 Food each.",
     "cost": [160, 0, 65]
   },
   "temple": {
-    "about": "Adds sun gems worth 9 Gold each.",
+    "about": "Adds emeralds worth 11 Coins each.",
     "cost": [185, 110, 75]
   },
   "log_cabin": {"cost": [200, 0, 13]},

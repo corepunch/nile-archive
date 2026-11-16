@@ -94,8 +94,8 @@
     }
     .relic {
       background-image: url("../../games/relic-rush/data/campaign-pieces.png");
-      background-size: 500% 500%;
-      background-position: calc(var(--col) * 25%) calc(var(--row) * 25%);
+      background-size: 500% 600%;
+      background-position: calc(var(--col) * 25%) calc(var(--row) * 20%);
     }
     .tile strong, .tile small { display: block; }
     small, .none { color: var(--muted); }
@@ -139,6 +139,7 @@
       .icon { width: 36px; height: 36px; flex-basis: 36px; }
       .tile { gap: 6px; line-height: 1.3; overflow-wrap: anywhere; }
     }
+    .empty { padding: 12px; color: var(--muted); }
     [hidden] { display: none !important; }
     @media print {
       main { width: 100%; padding: 0; }
@@ -146,6 +147,8 @@
       header p { color: var(--ink); }
       .legend label { display: none; }
       .comparison[hidden] { display: table-row !important; }
+      table[hidden] { display: table !important; }
+      .empty { display: none; }
       tr { break-inside: avoid; }
       * { print-color-adjust: exact; }
     }
@@ -155,12 +158,12 @@
 <main>
   <header>
     <h1>Cradle of Rome gem correspondence</h1>
-    <p>Eleven of the 16 regular Cradle of Rome 2 pieces have a Relic Rush counterpart by motif or wallet role. The five without a live counterpart are Silver coin, Ring, Scarab, Harp and Emerald.</p>
+    <p>All 16 regular Cradle of Rome 2 pieces have a Relic Rush counterpart by motif or wallet role. Silver coin, Ring, Scarab, Harp and Emerald now appear in the campaign.</p>
   </header>
 
   <nav class="overview" aria-label="Game editions">
-    <a href="#rome-2"><strong>Cradle of Rome 2</strong><span>6 same motifs · 5 roles adapted · 5 gaps</span></a>
-    <a href="#rome-1"><strong>Cradle of Rome</strong><span>4 same motifs · 7 roles adapted · 6 gaps</span></a>
+    <a href="#rome-2"><strong>Cradle of Rome 2</strong><span>14 same motifs · 2 roles adapted</span></a>
+    <a href="#rome-1"><strong>Cradle of Rome</strong><span>6 same motifs · 9 roles adapted · 2 gaps</span></a>
   </nav>
 
   <div class="legend">
@@ -170,7 +173,7 @@
 
   <section id="rome-2">
     <h2>Cradle of Rome 2</h2>
-    <p class="description">The Windows release used for the Relic Rush economy study. Expedition numbers are the earliest appearance after the relevant restoration.</p>
+    <p class="description">Expeditions use one coin-paying piece at a time. Helmets take over from sun coins after the Courtyard and the Temple introduces the 11-Coin Emerald. Shrimp take over the water bucket’s Food slot after the Fountain.</p>
     <div class="table-wrap">
       <table aria-label="Cradle of Rome 2 regular pieces">
         <thead><tr><th scope="col">Cradle of Rome 2</th><th scope="col">Relic Rush</th><th scope="col">Campaign coverage</th></tr></thead>
@@ -185,10 +188,10 @@
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:4" aria-hidden="true"></span><div><strong>Flower</strong><small>Score only · from expedition 4</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Both use a flower as a score piece.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="3">
+          <tr class="comparison" data-status="same" data-rome-type="3">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Gold · #03</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush starts with one coin type.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:0;--row:5" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Coins · expedition 3</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A laurel-rimmed profile coin. It takes the sun coin’s slot for one early expedition.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="4">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:3;--row:0" aria-hidden="true"></span><div><strong>Gold coin</strong><small>5 Gold · #04</small></div></div></th>
@@ -203,7 +206,7 @@
           <tr class="comparison" data-status="same" data-rome-type="6">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:5;--row:0" aria-hidden="true"></span><div><strong>Lumber</strong><small>5 Supplies · #06</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:0" aria-hidden="true"></span><div><strong>Timber</strong><small>2 Supplies · opening</small></div></div></td>
-            <td><span class="status same">Same motif</span><p>Timber starts at 2. Cut blocks take the 5-Supplies role at the Workshop.</p></td>
+            <td><span class="status same">Same motif</span><p>A bundle of three textured logs. Timber starts at 2 Supplies, and Cut blocks take the 5-Supplies role.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="7">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:6;--row:0" aria-hidden="true"></span><div><strong>Meat</strong><small>4 Food · #07</small></div></div></th>
@@ -220,43 +223,44 @@
             <td><div class="tile"><span class="icon relic" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Grain bundle</strong><small>5 Food · from expedition 17</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The same Food tier uses a grain bundle.</p></td>
           </tr>
-          <tr class="comparison" data-status="role" data-rome-type="10">
+          <tr class="comparison" data-status="same" data-rome-type="10">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:9;--row:0" aria-hidden="true"></span><div><strong>Shrimp</strong><small>6 Food · #10</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Springwater drop</strong><small>6 Food · from expedition 27</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The same Food tier uses a water drop.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Shrimp</strong><small>6 Food · from expedition 27</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>The Jade Fountain introduces shrimp in the bucket’s slot, with twice the Food yield.</p></td>
           </tr>
-          <tr class="comparison" data-status="role" data-rome-type="11">
+          <tr class="comparison" data-status="same" data-rome-type="11">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:10;--row:0" aria-hidden="true"></span><div><strong>Helmet</strong><small>6 Gold · #11</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:4;--row:1" aria-hidden="true"></span><div><strong>Trade coin stack</strong><small>6 Coins · from expedition 14</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The same currency tier uses a coin stack.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:4;--row:1" aria-hidden="true"></span><div><strong>Helmet</strong><small>6 Coins · expeditions 14–17</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A crested helmet from the Sunstone Courtyard at the 6-Coin tier.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="12">
+          <tr class="comparison" data-status="same" data-rome-type="12">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:11;--row:0" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Gold · #12</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush has no 7-Coin tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · expeditions 18–20</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A gold ring with a dark-green inset. It takes over the Courtyard’s coin slot at 7 Coins.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="13">
+          <tr class="comparison" data-status="same" data-rome-type="13">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:12;--row:0" aria-hidden="true"></span><div><strong>Scarab</strong><small>8 Gold · #13</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>A scarab appears in the legacy Relics pack. The campaign has no 8-Coin tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Scarab</strong><small>8 Coins · expeditions 21–24</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A bronze scarab with a green inset. The same currency tier pays 8 Coins.</p></td>
           </tr>
-          <tr class="comparison" data-status="role" data-rome-type="14">
+          <tr class="comparison" data-status="same" data-rome-type="14">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:13;--row:0" aria-hidden="true"></span><div><strong>Sandal</strong><small>9 Gold · #14</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Sun gem</strong><small>9 Coins · from expedition 30</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The same currency tier uses a gem.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:4;--row:5" aria-hidden="true"></span><div><strong>Sandal</strong><small>9 Coins · expeditions 25–27</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A winged leather sandal. It takes the 9-Coin tier.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="15">
+          <tr class="comparison" data-status="same" data-rome-type="15">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:14;--row:0" aria-hidden="true"></span><div><strong>Harp</strong><small>10 Gold · #15</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush has no 10-Coin tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:3;--row:5" aria-hidden="true"></span><div><strong>Harp</strong><small>10 Coins · from expedition 28</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A miniature gold lyre with strings and a turquoise inset. It pays 10 Coins.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="16">
+          <tr class="comparison" data-status="same" data-rome-type="16">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:15;--row:0" aria-hidden="true"></span><div><strong>Emerald / Amethyst</strong><small>11 Gold · #16</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>The Windows tutorial says Emerald. Awem’s online guide says Amethyst. Relic Rush’s legacy emerald is preview art. The live green apple yields 1 Food.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Emerald</strong><small>11 Coins · expedition 30</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>The Windows tutorial says Emerald. Awem’s guide says Amethyst. The green emerald is the Temple’s top-paying piece.</p></td>
           </tr>
         </tbody>
       </table>
+      <p class="empty" hidden>No gaps in the regular Cradle of Rome 2 pieces.</p>
     </div>
   </section>
 
@@ -277,10 +281,10 @@
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:4" aria-hidden="true"></span><div><strong>Flower</strong><small>Score only · from expedition 4</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The beta field file calls it Flower. The sprite is a ladybug.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="3">
+          <tr class="comparison" data-status="same" data-rome-type="3">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Gold · #03</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush starts with one coin type.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:0;--row:5" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Coins · expedition 3</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>A laurel-rimmed profile coin.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="4">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Gold coin</strong><small>5 Gold · #04</small></div></div></th>
@@ -295,7 +299,7 @@
           <tr class="comparison" data-status="same" data-rome-type="6">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:5;--row:1" aria-hidden="true"></span><div><strong>Lumber</strong><small>5 Supplies · #06</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:0" aria-hidden="true"></span><div><strong>Timber</strong><small>2 Supplies · opening</small></div></div></td>
-            <td><span class="status same">Same motif</span><p>Timber starts at 2. Cut blocks take the 5-Supplies role at the Workshop.</p></td>
+            <td><span class="status same">Same motif</span><p>A bundle of three textured logs. Timber starts at 2 Supplies, and Cut blocks take the 5-Supplies role.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="7">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:6;--row:1" aria-hidden="true"></span><div><strong>Flour</strong><small>4 Food · #07</small></div></div></th>
@@ -314,38 +318,38 @@
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="10">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:9;--row:1" aria-hidden="true"></span><div><strong>Watermelon</strong><small>6 Food · #10</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Springwater drop</strong><small>6 Food · from expedition 27</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The beta tutorial calls it Vegetables. GameHouse calls it Watermelon.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Shrimp</strong><small>6 Food · from expedition 27</small></div></div></td>
+            <td><span class="status role">Role adapted</span><p>The beta tutorial calls this tile Vegetables. Relic Rush uses the sequel’s shrimp for the same Food tier.</p></td>
           </tr>
           <tr class="comparison" data-status="gap" data-rome-type="11">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:10;--row:1" aria-hidden="true"></span><div><strong>Fish</strong><small>7 Food · #11</small></div></div></th>
             <td><span class="none">No campaign piece</span></td>
             <td><span class="status gap">Gap</span><p>Relic Rush has no 7-Food tier.</p></td>
           </tr>
-          <tr class="comparison" data-status="role" data-rome-type="12">
+          <tr class="comparison" data-status="same" data-rome-type="12">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:11;--row:1" aria-hidden="true"></span><div><strong>Ring</strong><small>6 Gold · #12</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:4;--row:1" aria-hidden="true"></span><div><strong>Trade coin stack</strong><small>6 Coins · from expedition 14</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The same currency tier uses a coin stack.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · expeditions 18–20</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>Both use a gold ring with a coloured inset. Relic Rush pays 7 Coins.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="13">
+          <tr class="comparison" data-status="role" data-rome-type="13">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:12;--row:1" aria-hidden="true"></span><div><strong>Pearl</strong><small>7 Gold · #13</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush has no 7-Coin tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · expeditions 18–20</small></div></div></td>
+            <td><span class="status role">Role adapted</span><p>The same currency tier uses a ring.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="14">
+          <tr class="comparison" data-status="role" data-rome-type="14">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:13;--row:1" aria-hidden="true"></span><div><strong>Brooch</strong><small>10 Gold · #14</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush has no 10-Coin tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:3;--row:5" aria-hidden="true"></span><div><strong>Harp</strong><small>10 Coins · from expedition 28</small></div></div></td>
+            <td><span class="status role">Role adapted</span><p>The same currency tier uses a harp.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="15">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:14;--row:1" aria-hidden="true"></span><div><strong>Goblet</strong><small>9 Gold · #15</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Sun gem</strong><small>9 Coins · from expedition 30</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The same currency tier uses a gem.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:4;--row:5" aria-hidden="true"></span><div><strong>Sandal</strong><small>9 Coins · expeditions 25–27</small></div></div></td>
+            <td><span class="status role">Role adapted</span><p>The same currency tier uses a sandal.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="16">
+          <tr class="comparison" data-status="role" data-rome-type="16">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:15;--row:1" aria-hidden="true"></span><div><strong>Diamond</strong><small>8 Gold · #16</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush has no 8-Coin tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Scarab</strong><small>8 Coins · expeditions 21–24</small></div></div></td>
+            <td><span class="status role">Role adapted</span><p>The same currency tier uses a scarab.</p></td>
           </tr>
           <tr class="comparison" data-status="gap" data-rome-type="17">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:16;--row:1" aria-hidden="true"></span><div><strong>Vase</strong><small>Score only · #17</small></div></div></th>
@@ -361,7 +365,7 @@
     <h2 id="local-title">Other Relic Rush pieces</h2>
     <ul class="name-list">
       <li><div class="tile"><span class="icon relic" style="--col:1;--row:0" aria-hidden="true"></span><div><strong>Red berries</strong><small>1 Food · opening</small></div></div><p>An opening Food piece. The preview uses Rome 2’s Flower sprite here.</p></li>
-      <li><div class="tile"><span class="icon relic" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Green apple</strong><small>1 Food · opening</small></div></div><p>An opening Food piece that replaced the legacy green emerald art.</p></li>
+      <li><div class="tile"><span class="icon relic" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Green apple</strong><small>1 Food · opening</small></div></div><p>An opening Food piece. The Emerald is a separate late-game treasure.</p></li>
       <li><div class="tile"><span class="icon relic" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Cut blocks</strong><small>5 Supplies · from expedition 8</small></div></div><p>Upgrades the stone slot and matches Rome’s Lumber yield. The preview uses Rome 2’s Stone sprite.</p></li>
       <li><div class="tile"><span class="icon relic" style="--col:1;--row:2" aria-hidden="true"></span><div><strong>Carved quartz</strong><small>7 Supplies · from expedition 20</small></div></div><p>Upgrades Cut blocks to Rome’s 7-Supplies Stone tier.</p></li>
     </ul>
@@ -387,7 +391,7 @@
   <details>
     <summary>Rome 2 preview art aliases</summary>
     <p>The <code>--rome-reference-art</code> option assigns original Windows crops for side-by-side testing. The aliases can differ from the live economic role.</p>
-    <p>Sun coin → Gold coin (#04) · Red berries → Flower (#02) · Legacy emerald → Emerald (#16) · Timber → Lumber (#06) · Dressed stone → Stone (#08) · Water bucket → Water bucket (#05) · Ration jar → Bread (#09) · Cut blocks → Stone (#08).</p>
+    <p>The coin, timber, water bucket, shrimp and seven Roman finds use their corresponding Windows originals. The older comparison aliases pair Red berries with Flower (#02), Ration jar with Bread (#09), and both Dressed stone and Cut blocks with Stone (#08).</p>
   </details>
 
   <details>
@@ -455,8 +459,12 @@
 <script>
   const gaps = document.querySelector("#gaps");
   const rows = document.querySelectorAll(".comparison");
+  const completeTable = document.querySelector("#rome-2 table");
+  const empty = document.querySelector("#rome-2 .empty");
   function filterRows() {
     for (const row of rows) row.hidden = gaps.checked && row.dataset.status !== "gap";
+    completeTable.hidden = gaps.checked;
+    empty.hidden = !gaps.checked;
   }
   gaps.addEventListener("change", filterRows);
   document.querySelector("#filter").hidden = false;

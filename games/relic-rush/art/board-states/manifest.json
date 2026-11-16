@@ -12,7 +12,14 @@
       "stone": 8,
       "water": 5,
       "rations": 9,
-      "cut-blocks": 8
+      "cut-blocks": 8,
+      "silver-coin": 3,
+      "shrimp": 10,
+      "helmet": 11,
+      "ring": 12,
+      "scarab": 13,
+      "sandal": 14,
+      "harp": 15
     },
     "states": [
       "normal",
@@ -1715,20 +1722,14 @@
       },
       "runtime": "data/resource-pieces/rations.png"
     },
-    "trade-coins": {
+    "helmet": {
       "building": "gateway",
       "first_level": 14,
       "kind": 0,
       "yield": {
         "gold": 6
       },
-      "runtime": "data/tile-sets/resources/0.png",
-      "source": "art/tile-sets/source.png",
-      "source_cell": {
-        "row": 3,
-        "column": 1
-      },
-      "registration": "tools/prepare_assets.py"
+      "runtime": "data/campaign-pieces.png"
     },
     "grain": {
       "building": "lodge",
@@ -1760,37 +1761,23 @@
       },
       "registration": "tools/prepare_assets.py"
     },
-    "springwater": {
+    "shrimp": {
       "building": "fountain",
       "first_level": 27,
       "kind": 3,
       "yield": {
         "provisions": 6
       },
-      "runtime": "data/tile-sets/resources/3.png",
-      "source": "art/tile-sets/source.png",
-      "source_cell": {
-        "row": 3,
-        "column": 4
-      },
-      "registration": "tools/prepare_assets.py"
+      "runtime": "data/campaign-pieces.png"
     },
-    "sun-gem": {
+    "emerald": {
       "building": "temple",
       "first_level": 30,
       "kind": 0,
       "yield": {
-        "gold": 9
+        "gold": 11
       },
-      "runtime": "data/tile-sets/jewels/0.png",
-      "source": "art/tile-sets/source-flat-hex.png",
-      "crop": [
-        12,
-        340,
-        315,
-        570
-      ],
-      "registration": "tools/prepare_assets.py"
+      "runtime": "data/resource-pieces/emerald.png"
     }
   },
   "tool_unlocks": {
@@ -1826,35 +1813,14 @@
       "rations": 9
     },
     "generator": "built-in ImageGen, full-atlas revision with a sun engraving",
-    "timber_emerald": {
-      "source": "art/resource-pieces/timber-emerald.png",
-      "prompt": "art/resource-pieces/timber-emerald.prompt.txt",
-      "grid": [
-        2,
-        1
+    "from_campaign": {
+      "timber": [
+        320,
+        285
       ],
-      "slots": {
-        "timber": 1,
-        "emerald": 2
-      },
-      "resize": {
-        "timber": [
-          320,
-          285
-        ]
-      },
-      "states": [
-        "normal",
-        "selected",
-        "hinted",
-        "falling",
-        "first-clear award"
-      ],
-      "review": [
-        "hex-first",
-        "phone-board",
-        "timber-item-card",
-        "economy-wallet"
+      "emerald": [
+        128,
+        114
       ]
     }
   },
@@ -1901,9 +1867,24 @@
         "source": "art/campaign-pieces/fruit-and-score.png",
         "prompt": "art/campaign-pieces/fruit-and-score.prompt.txt",
         "boxes": {
-          "apple": [502, 0, 753, 268],
-          "leaf": [753, 978, 1004, 1254],
-          "flower": [1004, 978, 1254, 1254]
+          "apple": [
+            502,
+            0,
+            753,
+            268
+          ],
+          "leaf": [
+            753,
+            978,
+            1004,
+            1254
+          ],
+          "flower": [
+            1004,
+            978,
+            1254,
+            1254
+          ]
         },
         "generator": "built-in ImageGen, apple, leaf and flower authored together"
       },
@@ -1911,14 +1892,85 @@
         "source": "art/campaign-pieces/relay-pliers.png",
         "prompt": "art/campaign-pieces/relay-pliers.prompt.txt",
         "boxes": {
-          "pliers": [979, 734, 1254, 973]
+          "pliers": [
+            979,
+            734,
+            1254,
+            973
+          ]
         },
         "generator": "built-in ImageGen, full-atlas edit with orange-handled relay pliers",
         "review": "docs/screenshots/review/relay-pliers/README.md"
+      },
+      {
+        "source": "art/campaign-pieces/rome-treasures.png",
+        "prompt": "art/campaign-pieces/rome-treasures.prompt.txt",
+        "boxes": {
+          "silver-coin": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "ring": [
+            418,
+            0,
+            836,
+            418
+          ],
+          "scarab": [
+            836,
+            0,
+            1254,
+            418
+          ],
+          "harp": [
+            0,
+            418,
+            418,
+            836
+          ],
+          "emerald": [
+            418,
+            418,
+            836,
+            836
+          ],
+          "timber": [
+            836,
+            418,
+            1254,
+            836
+          ],
+          "shrimp": [
+            0,
+            836,
+            418,
+            1254
+          ],
+          "helmet": [
+            418,
+            836,
+            836,
+            1254
+          ],
+          "sandal": [
+            836,
+            836,
+            1254,
+            1254
+          ]
+        },
+        "generator": "Built-in ImageGen, all nine motifs in one transparent atlas",
+        "reference": "../../reference/cradle-of-rome-2/visuals/board-pieces.png",
+        "review": "docs/screenshots/review/rome-treasures/README.md"
       }
     ],
     "cell_size": 128,
     "extent": 112,
+    "extent_overrides": {
+      "sandal": 108
+    },
     "row_edges": [
       0,
       268,
@@ -1940,13 +1992,13 @@
         "water",
         "cut-blocks",
         "rations",
-        "trade-coins"
+        "helmet"
       ],
       [
         "grain",
         "quartz",
-        "springwater",
-        "sun-gem",
+        "shrimp",
+        "emerald",
         "lens"
       ],
       [
@@ -1962,12 +2014,19 @@
         "note",
         "leaf",
         "flower"
+      ],
+      [
+        "silver-coin",
+        "ring",
+        "scarab",
+        "harp",
+        "sandal"
       ]
     ],
     "states": "One authored sprite per match kind. Selection, hints, chains, press and motion use the existing board overlays and transforms.",
-    "registration": "Crop revised pieces from the named revision boxes and other pieces from the original columns and row bands; trim each object's transparent exterior, fit and center it.",
+    "registration": "Crop revised pieces from their named boxes, then fill remaining base sprites from the original columns and row bands. Trim the transparent exterior, fit and center each object.",
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
-    "review": "docs/screenshots/review/fruit-and-score/README.md"
+    "review": "docs/screenshots/review/rome-treasures/README.md"
   },
   "board_frame": {
     "generator": "tools/board_frame.py",
@@ -1977,5 +2036,56 @@
     "decoration_review": "docs/review/board-frame-decorations/front.md",
     "layout": "lua/board_frame_atlas.lua",
     "reference": "engine/art/board-frame/rim-attachment-guide.png"
+  },
+  "featured_pieces": {
+    "silver-coin": {
+      "first_level": 3,
+      "last_level": 3,
+      "kind": 0,
+      "yield": {
+        "gold": 3
+      },
+      "runtime": "data/campaign-pieces.png"
+    },
+    "ring": {
+      "first_level": 18,
+      "last_level": 20,
+      "kind": 0,
+      "yield": {
+        "gold": 7
+      },
+      "runtime": "data/campaign-pieces.png",
+      "building": "gateway"
+    },
+    "scarab": {
+      "first_level": 21,
+      "last_level": 24,
+      "kind": 0,
+      "yield": {
+        "gold": 8
+      },
+      "runtime": "data/campaign-pieces.png",
+      "building": "gateway"
+    },
+    "sandal": {
+      "first_level": 25,
+      "last_level": 27,
+      "kind": 0,
+      "yield": {
+        "gold": 9
+      },
+      "runtime": "data/campaign-pieces.png",
+      "building": "gateway"
+    },
+    "harp": {
+      "first_level": 28,
+      "last_level": 29,
+      "kind": 0,
+      "yield": {
+        "gold": 10
+      },
+      "runtime": "data/campaign-pieces.png",
+      "building": "gateway"
+    }
   }
 }

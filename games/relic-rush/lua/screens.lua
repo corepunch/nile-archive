@@ -207,11 +207,18 @@ local guide_entries = {
     {id="pickaxe", title="Pickaxe", description="Hits one cell.",
      icon={tool="pickaxe"}},
 }
-for i, unlock in ipairs(economy.unlocks) do
-    local description = economy.unlock_text(unlock) .. (" From expedition %d."):format(unlock.first_level)
-    guide_entries[#guide_entries+1] = {id=unlock.key, title=island.wonders[i].name,
+local function guide_piece(unlock, title, availability)
+    local description = economy.unlock_text(unlock) .. " " .. availability
+    guide_entries[#guide_entries+1] = {id=unlock.key, title=title,
         description=description .. (unlock.effect and " " .. unlock.effect or ""),
         icon=unlock.tool and {tool=unlock.key} or {front=chip_prefix .. unlock.key}}
+end
+guide_piece(economy.silver_coin, "Silver coins", ("On expedition %d."):format(economy.silver_coin.first_level))
+for i, unlock in ipairs(economy.unlocks) do
+    guide_piece(unlock, island.wonders[i].name, ("From expedition %d."):format(unlock.first_level))
+    for _, variant in ipairs(unlock.variants or {}) do
+        guide_piece(variant, variant.name, ("After the %s, from expedition %d."):format(island.wonders[i].name, variant.first_level))
+    end
 end
 local function guide_icon(box, icon)
     local layer = rect.centered(box:center(), size2.splat(48))

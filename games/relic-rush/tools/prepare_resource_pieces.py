@@ -23,6 +23,16 @@ def fit_sprite(tile, name, size, extent):
     return canvas
 
 
+def register_piece(tile, name, size, extent, check):
+    canvas = fit_sprite(tile, name, size, extent)
+    target = ROOT / 'data' / 'resource-pieces' / f'{name}.png'
+    if check:
+        assert Image.open(target).tobytes() == canvas.tobytes(), f'Outdated sprite: {target.name}'
+    else:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        canvas.save(target, optimize=True)
+
+
 def register(spec, check):
     atlas = Image.open(ROOT / spec['source'])
     assert atlas.mode == 'RGBA'
@@ -32,13 +42,7 @@ def register(spec, check):
         size, extent = spec.get('resize', {}).get(name, (SPEC['size'], SPEC['extent']))
         row, col = divmod(slot - 1, cols)
         tile = atlas.crop((col*width//cols, row*height//rows, (col+1)*width//cols, (row+1)*height//rows))
-        canvas = fit_sprite(tile, name, size, extent)
-        target = ROOT / 'data' / 'resource-pieces' / f'{name}.png'
-        if check:
-            assert Image.open(target).tobytes() == canvas.tobytes(), f'Outdated sprite: {target.name}'
-        else:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            canvas.save(target, optimize=True)
+        register_piece(tile, name, size, extent, check)
 
 
 def register_campaign(spec, check):
@@ -48,10 +52,13 @@ def register_campaign(spec, check):
         with Image.open(ROOT / revision['source']) as revised:
             assert revised.mode == 'RGBA'
             replacements.update({key: revised.crop(box) for key, box in revision['boxes'].items()})
+    for key, (size, extent) in SPEC['from_campaign'].items():
+        register_piece(replacements[key], key, size, extent, check)
     edges = spec['row_edges']
     assert atlas.mode == 'RGBA' and edges[0] == 0 and edges[-1] == atlas.height
     rows, size = spec['rows'], spec['cell_size']
     columns = max(map(len, rows))
+    extents = spec.get('extent_overrides', {})
     packed = Image.new('RGBA', (columns * size, len(rows) * size))
     for row, keys in enumerate(rows):
         for col, key in enumerate(keys):
@@ -59,7 +66,7 @@ def register_campaign(spec, check):
             if tile is None:
                 tile = atlas.crop((col*atlas.width//columns, edges[row],
                                    (col+1)*atlas.width//columns, edges[row+1]))
-            packed.paste(fit_sprite(tile, key, size, spec['extent']), (col*size, row*size))
+            packed.paste(fit_sprite(tile, key, size, extents.get(key, spec['extent'])), (col*size, row*size))
     target = ROOT / spec['runtime']
     if check:
         with Image.open(target) as current:
@@ -72,7 +79,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    for spec in (SPEC, SPEC['timber_emerald'], MANIFEST['wallet_icons']):
+    for spec in (SPEC, MANIFEST['wallet_icons']):
         register(spec, args.check)
     register_campaign(MANIFEST['campaign_pieces'], args.check)
 

@@ -22,18 +22,20 @@ A.atlas_quest_pieces = {"pliers"}
 A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
 A.campaign_pieces = {
     "coin", "berries", "apple", "timber", "stone",
-    "amphora", "water", "cut-blocks", "rations", "trade-coins",
-    "grain", "quartz", "springwater", "sun-gem", "lens",
+    "amphora", "water", "cut-blocks", "rations", "helmet",
+    "grain", "quartz", "shrimp", "emerald", "lens",
     "cable", "chart", "marker", "tools", "pliers",
     "supplies", "gear", "note", "leaf", "flower",
+    "silver-coin", "ring", "scarab", "harp", "sandal",
 }
+A.campaign_resources = {"apple", "helmet", "shrimp", "silver-coin", "ring", "scarab", "harp", "sandal"}
 A.resource_upgrades = {
-    ["cut-blocks"]="tile-sets/resources/4.png", ["trade-coins"]="tile-sets/resources/0.png",
+    ["cut-blocks"]="tile-sets/resources/4.png",
     grain="tile-sets/resources/5.png", quartz="tile-sets/relics/4.png",
-    springwater="tile-sets/resources/3.png", ["sun-gem"]="tile-sets/jewels/0.png",
 }
 -- Local comparison art uses the exact source crops and the same board states.
-A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8}
+A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
+    ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -116,6 +118,9 @@ function A.load()
         local col, row = (i - 1) % 5, (i - 1) // 5
         textures["campaign-" .. key] = texture.region(campaign, rect(col * 128, row * 128, 128, 128))
     end
+    for _, key in ipairs(A.campaign_resources) do
+        textures["resource-" .. key] = textures["campaign-" .. key]
+    end
     for _, key in ipairs(A.atlas_quest_pieces) do
         local piece = textures["campaign-" .. key]
         textures["story-" .. key], textures["find-" .. key] = piece, piece
@@ -136,8 +141,6 @@ function A.load()
             textures["resource-" .. key] = image
         end
     end
-    -- Explicit art comparisons retain the earlier green piece for this slot.
-    textures["resource-apple"] = textures["resource-emerald"]
     textures["find-timber"] = textures["resource-timber"]
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
@@ -161,7 +164,7 @@ function A.draw_catalogue(R)
     local campaign = A.use_campaign_pieces()
     local prefix = campaign and "campaign-" or "resource-"
     for i, key in ipairs(A.resource_pieces) do
-        local name = campaign and key == "emerald" and "apple" or key
+        local name = key == "emerald" and "apple" or key
         gfx.image(R.board_art[prefix .. name], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",

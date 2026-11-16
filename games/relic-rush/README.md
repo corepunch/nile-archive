@@ -268,12 +268,12 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 | 2 | Spring well | 100 Coins | Unlocks water buckets worth 3 Food each. |
 | 3 | Artisan workshop | 70 Coins + 24 Supplies + 20 Food | Unlocks cut blocks worth 5 Supplies each. |
 | 4 | Jungle market | 85 Coins + 30 Supplies + 24 Food | Unlocks ration jars worth 4 Food each. |
-| 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Trade coin stacks worth 6 Coins each. |
+| 5 | Sunstone courtyard | 85 Coins + 36 Supplies + 34 Food | Helmets worth 6 Coins, followed by rings, scarabs, sandals and harps. |
 | 6 | Explorer's lodge | 130 Coins + 35 Food | Grain bundles worth 5 Food each. |
 | 7 | Lost-world archive | 145 Coins + 40 Supplies + 85 Food | Carved quartz worth 7 Supplies each. |
 | 8 | Star observatory | 155 Coins + 70 Supplies | Two Sunbursts per expedition from board 24. |
-| 9 | Jade fountain | 160 Coins + 65 Supplies | Springwater drops worth 6 Food each. |
-| 10 | Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Sun gems worth 9 Coins each. |
+| 9 | Jade fountain | 160 Coins + 65 Supplies | Shrimp worth 6 Food each. |
+| 10 | Temple of the sun | 185 Coins + 75 Supplies + 110 Food | Emeralds worth 11 Coins each. |
 
 Construction makes the next story beat available. The [economy table](docs/resource-expedition.md#board-rules-and-palette)
 lists the first expedition and currency for each payoff.
@@ -330,6 +330,8 @@ The campaign uses one [painted atlas](docs/asset-catalogue.md#campaign-piece-atl
 for resources, upgrades and story pieces. The **Jewels** and **Resources**
 art previews remain available through `--tiles jewels` and `--tiles resources`.
 See the [tile-set comparison and construction research](docs/tile-sets.md).
+The [Cradle of Rome gem sheet](../../docs/cradle-of-rome-reference/gem-correspondence.html)
+shows both games’ pieces and payouts side by side.
 
 Use `--rome-reference-art /absolute/path/to/game_graphics` to compare the
 extracted Cradle of Rome 2 chips in a local run. Point it at the directory with

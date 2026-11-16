@@ -68,7 +68,7 @@ visible cost.
 | Gold sun coin | Coins | 4 |
 | Red berries | Food | 1 |
 | Green apple | Food | 1 |
-| Timber log | Supplies | 2 |
+| Timber bundle | Supplies | 2 |
 | Purple dressed stone | Supplies | 3 |
 
 Buy or restore a building using the family totals. Timber and stone are
@@ -97,12 +97,18 @@ Dynamite and Sunburst replenish at the start of each eligible attempt.
 | Spring Well | 5 | Water buckets replace timber, 3 Food each | Feed the Workshop crew. |
 | Artisan Workshop | 8 | Cut blocks replace dressed stone, 5 Supplies each | Pay the Market's Supplies. |
 | Jungle Market | 10 | Ration jars replace red berries, 4 Food each | Feed the crew working on the Courtyard. |
-| Sunstone Courtyard | 14 | Trade coin stacks replace sun coins, 6 Coins each | Pay the Lodge's Coin cost. |
+| Sunstone Courtyard | 14 | Helmets replace sun coins, 6 Coins each | Pay the Lodge's Coin cost. |
 | Explorer's Lodge | 17 | Grain bundles replace ration jars, 5 Food each | Pay the Archive's Food cost. |
 | Lost-world Archive | 20 | Carved quartz replaces cut blocks, 7 Supplies each | Pay the Observatory's Supplies. |
 | Star Observatory | 24 | Sunburst, two uses | Clear coin or quartz across the board for the Fountain. |
-| Jade Fountain | 27 | Springwater drops replace water buckets, 6 Food each | Pay the Temple's Food cost. |
-| Temple of the Sun | 30 | Sun gems replace trade coin stacks, 9 Coins each | The finale and its replays earn Coins for island purchases. |
+| Jade Fountain | 27 | Shrimp replace water buckets, 6 Food each | Pay the Temple's Food cost. |
+| Temple of the Sun | 30 | Emeralds earn 11 Coins each | The finale and its replays earn Coins for island purchases. |
+
+One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. The
+Courtyard unlocks helmets on expeditions 14–17, then the same slot pays 7 with
+rings on 18–20, 8 with scarabs on 21–24, 9 with sandals on 25–27 and 10 with
+harps from 28. The Temple promotes it to Emerald on expedition 30.
+[Side-by-side Rome comparison](../../../docs/cradle-of-rome-reference/gem-correspondence.html)
 
 An arrival message credits the restored building and names the new piece's
 yield. The authored hint on board 5 trades one swap for three cleared plaques

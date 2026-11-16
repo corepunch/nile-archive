@@ -25,6 +25,9 @@ local function opening_unlock(g)
             if active then return unlock, island.wonders[i].name end
         end
     end
+    for _, piece in pairs(g.resource_yields or {}) do
+        if g.level + 1 == piece.first_level then return piece end
+    end
 end
 
 function R.board_lesson(g)
@@ -38,7 +41,10 @@ function R.present_board()
     local g = R.g
     if g.level < 20 and g.moves == rules.level_of(g).moves and not app.arg("mission") then
         local unlock, building = opening_unlock(g)
-        if unlock then R.notice(building .. " · " .. economy.unlock_text(unlock)) end
+        if unlock then
+            local text = economy.unlock_text(unlock)
+            R.notice(building and building .. " · " .. text or text)
+        end
     end
 end
 

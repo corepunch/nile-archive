@@ -19,18 +19,25 @@ local E = {
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 
+E.silver_coin = {key="silver-coin", name="Silver coins", kind=0, slot=E.GOLD, amount=3, first_level=3}
+
 -- Same order as the story catalogue and its stable city type IDs (zero-based).
 E.unlocks = {
     {key="dynamite", name="Dynamite", tool=2, amount=2, first_level=2, effect="Hits one cell and its neighbors."},
     {key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
     {key="cut-blocks", name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
     {key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
-    {key="trade-coins", name="Trade coin stacks", kind=0, slot=E.GOLD, amount=6, first_level=14},
+    {key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14, variants={
+        {key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
+        {key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
+        {key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9, first_level=25},
+        {key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10, first_level=28},
+    }},
     {key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
     {key="quartz", name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
     {key="sunburst", name="Sunburst", tool=3, amount=2, first_level=24, effect="Hits every piece of the color you tap."},
-    {key="springwater", name="Springwater drops", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
-    {key="sun-gem", name="Sun gems", kind=0, slot=E.GOLD, amount=9, first_level=30},
+    {key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
+    {key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
 }
 
 function E.unlock_text(unlock)
@@ -47,10 +54,17 @@ function E.board_loadout(level, number, restored)
             yields[kind] = piece
         end
     end
+    local silver = E.silver_coin
+    if number == silver.first_level and yields[silver.kind] then yields[silver.kind] = silver end
     for i, unlock in ipairs(E.unlocks) do
         if number >= unlock.first_level and restored and restored[i - 1] then
             if unlock.tool then tools[unlock.tool] = unlock.amount
-            elseif yields[unlock.kind] then yields[unlock.kind] = unlock end
+            elseif yields[unlock.kind] then
+                yields[unlock.kind] = unlock
+                for _, variant in ipairs(unlock.variants or {}) do
+                    if number >= variant.first_level then yields[variant.kind] = variant end
+                end
+            end
         end
     end
     return yields, tools

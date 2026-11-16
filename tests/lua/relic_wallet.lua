@@ -111,6 +111,35 @@ for _, entry in ipairs{{6, 1, 'flower'}, {6, 5, 'leaf'}, {1, 2, 'apple'}} do
         'apple matches pay Food and leaf or flower matches pay score only')
 end
 
+-- Roman finds change the appearance and payout of the same slot. The
+-- Courtyard gates its whole sequence and the Temple owns the final emerald.
+do
+    local finds = {
+        {2, "coin", 4}, {3, "silver-coin", 3}, {5, "coin", 4},
+        {14, "helmet", 6}, {18, "ring", 7}, {21, "scarab", 8},
+        {25, "sandal", 9}, {28, "harp", 10}, {30, "emerald", 11},
+    }
+    for _, find in ipairs(finds) do
+        local number, key, amount = table.unpack(find)
+        local g = rules.game_start(number - 1, 73, {[4]=true,[9]=true})
+        local piece = g.resource_yields[0]
+        check(piece.key == key and piece.slot == economy.GOLD, "the coin slot uses " .. key)
+        local m = rules.new_match()
+        for cell=0,rules.CELLS-1 do
+            if rules.game_cell_active(g,cell) then
+                g.chain[cell],g.ice[cell],g.stone_hp[cell] = 0,0,0
+                g.tiles[cell] = rules.tile(0)
+                m.mask[cell] = true
+                break
+            end
+        end
+        rules.game_apply(g,m)
+        check(g.earnings[economy.GOLD] == amount,key .. " banks its listed Coins")
+    end
+    check(rules.game_start(27,73,{}).resource_yields[0].key == "coin","the Courtyard gates the later finds")
+    check(rules.game_start(29,73,{[4]=true}).resource_yields[0].key == "harp","the Temple gates emeralds")
+end
+
 for i, unlock in ipairs(economy.unlocks) do
     local next_wonder=island.wonders[i+1]
     if unlock.slot and next_wonder then

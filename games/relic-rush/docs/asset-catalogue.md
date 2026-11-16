@@ -45,25 +45,34 @@ crop boxes in the manifest register all three into the same runtime atlas.
 The [relay pliers revision](../art/campaign-pieces/relay-pliers.png) uses the
 [full atlas edit prompt](../art/campaign-pieces/relay-pliers.prompt.txt).
 Register its row 4, column 5 object from the named crop in the manifest.
+The [Rome treasures revision](../art/campaign-pieces/rome-treasures.png) paints
+nine motifs together in built-in ImageGen. The [prompt](../art/campaign-pieces/rome-treasures.prompt.txt)
+uses the extracted Cradle of Rome 2 pieces for motif reference and the
+existing campaign artwork for style. The three-log bundle replaces the old
+single log in both matches and the first-clear award.
+[Side-by-side sheet](../../../docs/cradle-of-rome-reference/gem-correspondence.html) ·
+[In-game review](screenshots/review/rome-treasures/README.md)
 
 | Atlas row | Left to right |
 | --- | --- |
 | 1 | Sun coin, berries, green apple, timber, quarry stones |
-| 2 | Amphora, water bucket, cut blocks, ration jar, trade coins |
-| 3 | Grain, quartz, springwater, sun gem, lamp lens |
+| 2 | Amphora, water bucket, cut blocks, ration jar, helmet |
+| 3 | Grain, quartz, shrimp, emerald, lamp lens |
 | 4 | Relay cable, tide chart, trail arrow, tool roll, relay pliers |
 | 5 | Supply satchel, shutter gear, folded note, leaf, flower |
+| 6 | Silver coin, ring, scarab, harp, sandal |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
 measured row bands, columns and revision boxes, trim the transparent exterior and
 uniformly fit each object into a centered 128 px cell with a 112 px maximum
-extent. The runtime atlas is `data/campaign-pieces.png`. The same sprite appears
+extent (108 px for the winged sandal). The runtime atlas is
+`data/campaign-pieces.png`. The same sprite appears
 in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
 wallet use their own currency artwork. The level 8 first-clear card also uses the
 pliers from this atlas.
 The sprites are free-standing objects. At the board's actual draw size the
-25 pieces fit the canonical face in strict object mode.
+30 pieces fit the canonical face in strict object mode.
 [Fruit and score review](screenshots/review/fruit-and-score/README.md).
 [Relay pliers review](screenshots/review/relay-pliers/README.md).
 
@@ -75,11 +84,9 @@ and [hex layout](../art/board-refresh/hex-template.png) record the generation in
 for the earlier resource set used by the wallet and art previews.
 The [manifest](../art/board-states/manifest.json) records the slot order, crop and
 registration. Resources are trimmed with a four-pixel margin and centred on a
-transparent square. The [timber and emerald atlas](../art/resource-pieces/timber-emerald.png)
-was edited together in built-in ImageGen. The [edit prompt](../art/resource-pieces/timber-emerald.prompt.txt)
-records both slots. The emerald fits inside 114 px on a 128 px canvas. Timber
-fits inside 285 px on a 320 px canvas so the board and reward can use
-the same texture. Runtime sprites live in
+transparent square. The Rome treasures atlas also supplies the standalone
+Emerald, fitted inside 114 px on a 128 px canvas, and the timber for the
+reward card, fitted inside 285 px on a 320 px canvas. Standalone sprites live in
 `data/resource-pieces/`. Selected, hinted and falling pieces reuse the same
 authored sprite with existing motion and separate indicators. Specials use
 their own authored art. The original scenario sheet is still the source of
@@ -89,17 +96,21 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | --- | --- | --- |
 | `coin` | Round gold coin engraved with an eight-ray sun, 4 Coins | Coins icon |
 | `berries` | Red berries, 1 Food | Board only |
-| `emerald` | Square-cut green gem from the earlier palette | Alternate art previews |
-| `timber` | One unwrapped log, 2 Supplies | Camp Timber award |
+| `emerald` | Bright green faceted emerald, 11 Coins | Board and guide from 30 after the Temple |
+| `timber` | Three bark-covered logs with visible end grain, 2 Supplies | Board and Camp Timber award |
 | `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
 | `water` | Teal water bucket, 3 Food. Replaces timber from board 5 after the Well is restored. | Board and guide |
 | `rations` | Orange ration jar, 4 Food in the Market slot from board 10 | Board and guide |
 | `cut-blocks` | Workshop unlock from board 8, 5 Supplies | Board and guide |
-| `trade-coins` | Existing Resources stack (`data/tile-sets/resources/0.png`), 6 Coins | Board and guide from 14 |
+| `silver-coin` | Silver profile coin with a laurel border, 3 Coins | Board on 3 and guide |
+| `helmet` | Gold helmet with red crest, 6 Coins | Board on 14–17 after the Courtyard, and guide |
+| `ring` | Gold ring with a dark green inset, 7 Coins | Board on 18–20 after the Courtyard, and guide |
+| `scarab` | Bronze beetle with a jade inset, 8 Coins | Board on 21–24 after the Courtyard, and guide |
+| `sandal` | Roman leather sandal with a silver wing, 9 Coins | Board on 25–27 after the Courtyard, and guide |
+| `harp` | Gold lyre with a turquoise inset, 10 Coins | Board from 28 after the Courtyard, and guide |
 | `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Food | Board and guide from 17 |
 | `quartz` | Existing Relics purple crystal (`data/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
-| `springwater` | Existing Resources blue droplet (`data/tile-sets/resources/3.png`), 6 Food | Board and guide from 27 |
-| `sun-gem` | Existing Jewels gold gem (`data/tile-sets/jewels/0.png`), 9 Coins | Board and guide from 30 |
+| `shrimp` | Curled red-orange shrimp, 6 Food | Replaces the water bucket from 27 after the Fountain |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves and flowers use the same board match and scoring behavior as other
@@ -107,8 +118,8 @@ pieces. Their authored slots carry no wallet yield. The amphora asset serves
 legacy art previews.
 Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
-The five later chips use their existing pack art at its authored orientation
-and alpha. Their selected, hinted and falling appearances use the normal chip
+The alternate packs still supply separate grain and quartz sprites at their
+authored orientation and alpha. Selected, hinted and falling pieces use the normal chip
 with the existing board feedback. The Camp and Observatory enable existing
 Dynamite and Sunburst controls with their authored normal, selected, pressed,
 hover and disabled artwork. The locked and depleted tools share the disabled
@@ -119,7 +130,7 @@ The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
 shows the original openings and the cut blocks on level 8. The relay pliers
 review above shows the current level 8 board.
 
-`--rome-reference-art` uses the eight aliases in the manifest to load local
+`--rome-reference-art` uses the aliases in the manifest to load local
 Cradle of Rome 2 crops for resource pieces and the matching coin and guide icons.
 Selected, hinted and falling pieces use the same authored crop with the existing
 Relic Rush overlays and motion. The source is the Windows atlas `gmf_balls_2.png`.
