@@ -237,10 +237,12 @@ end
 -- perimeter slots and 168 px entrance slot are painted at a 64 px hex radius.
 local FRAME_RADIUS, FRAME_SLOT = 64, 80
 local ENTRY_RIM = rect(0, 3 * FRAME_SLOT, 168, 168)
-local frame_vertices, frame_sources = {}, {}
+local frame_vertices, frame_normals, frame_sources = {}, {}, {}
 for k = 0, 5 do
     local angle = math.rad(60 * k)
     frame_vertices[k] = vec2(math.cos(angle), math.sin(angle))
+    local normal = angle + math.pi / 6
+    frame_normals[k] = vec2(math.cos(normal), math.sin(normal))
 end
 for row = 0, 2 do
     frame_sources[row] = {}
@@ -253,7 +255,13 @@ function E.load_frame(art, paths)
     local sheet = texture.load(paths.stone)
     art["frame-stone"] = sheet
     art["frame-entrance"] = texture.region(sheet, ENTRY_RIM)
-    art["frame-leaves"] = texture.load(paths.leaves)
+    local top_edges, corners, images = {}, {}, {}
+    for k, path in pairs(paths.top_edges or {}) do top_edges[k] = texture.load(path) end
+    for i, spec in ipairs(paths.corners or {}) do
+        images[spec.path] = images[spec.path] or texture.load(spec.path)
+        corners[i] = {art = images[spec.path], width = spec.width, outward = spec.outward}
+    end
+    art["frame-decorations"] = {top_edges = top_edges, corners = corners}
 end
 
 local function frame_layout(R, rules)
@@ -268,7 +276,7 @@ local function frame_layout(R, rules)
 
     -- Store positions relative to the board so a resize or shake moves the
     -- whole frame and its shadow without rebuilding the list of sprites.
-    local edges, joins, convex = {}, {}, {}
+    local edges, joins, convex, exposed_top = {}, {}, {}, {}
     for i = 0, rules.CELLS - 1 do
         if active[i] then
             local centre = R.cell_pos(i) - R.board_origin
@@ -278,7 +286,15 @@ local function frame_layout(R, rules)
                 if open[k] then
                     local a = centre + frame_vertices[k]:scale(r)
                     local b = centre + frame_vertices[(k + 1) % 6]:scale(r)
-                    edges[#edges + 1] = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k]}
+                    local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k], direction = k}
+                    edges[#edges + 1] = edge
+                    if k >= 3 then
+                        -- Pick the highest exposed edge at each horizontal
+                        -- position so decorations sit on top of the board.
+                        local x = math.floor(edge.at.x + .5)
+                        local above = exposed_top[x]
+                        if not above or edge.at.y < above.at.y then exposed_top[x] = edge end
+                    end
                     if open[(k + 5) % 6] then
                         joins[#joins + 1] = {at = a, source = frame_sources[1][k]}
                         convex[#convex + 1] = {p = a, angle = math.rad(60 * k)}
@@ -292,7 +308,8 @@ local function frame_layout(R, rules)
             end
         end
     end
-    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex}
+    local layout = {game = g, radius = r, active = active, edges = edges, joins = joins, convex = convex,
+                    exposed_top = exposed_top}
     R.frame_layout = layout
     return layout
 end
@@ -333,25 +350,33 @@ local function draw_stone(R, rules, sx, alpha)
     return layout
 end
 
--- Leaves on the frame, in the sprite R.GROUND.leaves (drawn pointing up): on
--- the board's north-west, north-east and south-east outer corners.
-local function draw_leaves(R, corners, sx, alpha)
-    local art = R.GROUND.leaves and R.board_art[R.GROUND.leaves]
-    if not art or art.w == 0 or #corners == 0 then return end
-    local picks = {}
-    for k, score in ipairs{function(c) return -c.p.x - c.p.y end, function(c) return c.p.x - c.p.y end,
-                           function(c) return c.p.x + c.p.y end} do
-        local best
-        for _, c in ipairs(corners) do
-            if not best or score(c) > score(best) then best = c end
+-- Corners are selected clockwise from north-west.
+local corner_directions = {{-1, -1}, {1, -1}, {1, 1}}
+local function draw_frame_decorations(R, frame, sx, alpha)
+    local decor = R.board_art["frame-decorations"]
+    if not decor then return end
+    local origin = R.board_origin + vec2(sx, 0)
+    local tint = color(255, 255, 255, 255 * alpha)
+    local r = R.HEX_R
+    for _, edge in pairs(frame.exposed_top) do
+        local sprite = decor.top_edges[edge.direction]
+        if sprite then
+            local at = origin + edge.at + frame_normals[edge.direction]:scale(r * .145)
+            gfx.image(sprite, rect.centered(at, size2.splat(r * 1.12)), tint)
         end
-        picks[k] = best
     end
-    local sizes = {1.5, 1.1, 1.25}
-    for k, c in ipairs(picks) do
-        local size = R.HEX_R * sizes[k]
-        gfx.image_rot(art, rect.centered(c.p + R.board_origin + vec2(sx, 0), size2.splat(size)), c.angle + math.pi / 2,
-            color(255, 255, 255, 255 * alpha))
+    for k, spec in ipairs(decor.corners) do
+        local d = corner_directions[k]
+        local best, score
+        for _, c in ipairs(frame.convex) do
+            local next_score = d[1] * c.p.x + d[2] * c.p.y
+            if not best or next_score > score then best, score = c, next_score end
+        end
+        if best then
+            local dst = rect.centered(origin + best.p, size2.splat(r * spec.width))
+            local turn = spec.outward and best.angle + math.pi / 2 or 0
+            gfx.image_rot(spec.art, dst, turn, tint)
+        end
     end
 end
 
@@ -376,7 +401,6 @@ E.CRADLE_GROUND = {
     seam = color.hex(0x6A4214), seam_width = 1.4,
     frame = "frame-stone",
     drop_shadow = {reach = 5.95, spread = 5, drop = 3, alpha = .55, steps = 6},
-    leaves = "frame-leaves",
     tiles = {selected = "tile-selected", hover = "tile-hover", bonus = "tile-bonus-area",
              wave = "tile-light-wave", ice = "tile-ice", double = "tile-tablet-double"},
 }
@@ -468,7 +492,7 @@ function E.ground(R, rules, sx, floor, sweep)
             end
         end
     end
-    if frame then draw_leaves(R, frame.convex, sx, alpha) end
+    if frame then draw_frame_decorations(R, frame, sx, alpha) end
     E.cell_highlights(R, rules, sx, alpha)
     if story and story.floor == "oil" then
         draw_buried_picture(R, rules, story, sx, alpha, cover, floor and floor.excavated and R.board_art[floor.excavated])

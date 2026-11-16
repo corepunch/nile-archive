@@ -418,10 +418,12 @@ with six straight runs, six outward joins and six inward joins. Its
 `frame-entrance` region follows the incoming cells. The starter bakes the
 previous frame's bands, seeded grain and cracks with
 `python3 tools/board_frame.py --output build/board-frame`.
-`frame-leaves` (`data/board-frame/leaves.png`) is the original generated sprig
-saved as a separate paintable sprite. Its centred root snaps to three
-outward tips, and the renderer turns the sprite towards the outside.
-[Paint guide and level 6 at both phone sizes](../../../docs/review/board-frame-atlas/README.md).
+`data/board-frame/leaves.png` is a hand-painted-style three-leaf jungle sprig
+from the shared [ImageGen source](../../../engine/art/board-frame/decorations-source.png).
+Its centred stem anchors to three outward tips on the settled board. The
+renderer turns it towards the outside and varies its size by corner. Rebuild
+its separate sprite with `python3 tools/board_frame_decor.py --game relic-rush`.
+[Paint guide, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/README.md).
 
 The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
 these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).

@@ -34,10 +34,9 @@ matching paint across the join lines. The engine overlaps those joins by a
 small amount to keep the stone continuous at both phone sizes. The 168×168 px
 rim in the bottom left follows each cell's scale and rotation as it flies in.
 
-Each game's `data/board-frame/leaves.png` is a separate paintable 96×96 RGBA
-sprite. Its stem starts at the centre and points up. The renderer places it
-on three exposed corner tips and turns it outward. Both games currently use
-their original sprig. The frame generator writes the stone atlas and guide.
+The frame generator writes the stone atlas and guide. The
+[decoration source and review](../board-frame-decorations/README.md) show
+the separate paintable leaves, snow and festive trim loaded over the stone.
 
 ## Reproduce the captures
 

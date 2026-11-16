@@ -359,10 +359,15 @@ Regenerate the eight tiles with `python3 tools/board_tiles.py`;
 and the two openings in the level 4 board. Its six straight runs, six outward
 joins, six inward joins and `frame-entrance` rim use the previous bands,
 seeded grain and cracks from `python3 tools/board_frame.py --output build/board-frame`.
-`frame-leaves` (`data/board-frame/leaves.png`) keeps the original sprig as a
-separate paintable sprite. Its centred root snaps to three outward tips, and the
-renderer turns it towards the outside.
-[Paint guide and level 4 at both phone sizes](../../../docs/review/board-frame-atlas/README.md).
+
+The settled board has five separate paintable sprites under `data/board-frame/`.
+`snow-rise`, `snow-flat` and `snow-fall` sit on the highest exposed edges,
+with a painted pose for each slope. `fir-ribbon` ties the left shoulder with
+snowy needles, a ribbon and a bell. `fir-pinecone` puts a frosted cone and
+berries on the right shoulder. Rebuild the separate sprites from the shared
+[ImageGen source](../../../engine/art/board-frame/decorations-source.png) with
+`python3 tools/board_frame_decor.py --game christmas-market`.
+[Paint guide, prompt and level 4 at both phone sizes](../../../docs/review/board-frame-decorations/README.md).
 
 The shared renderer gives each face a 0.18-unit inset over a dark spruce
 backing that supplies the hairline seams. The guide reuses the tablet

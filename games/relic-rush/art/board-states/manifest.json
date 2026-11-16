@@ -1886,7 +1886,9 @@
   "board_frame": {
     "generator": "tools/board_frame.py",
     "stone": "data/board-frame/stone.png",
-    "leaves": "data/board-frame/leaves.png",
-    "review": "docs/review/board-frame-atlas/README.md"
+    "review": "docs/review/board-frame-atlas/README.md",
+    "decorations": "engine/art/board-frame/decorations.json",
+    "registration": "tools/board_frame_decor.py",
+    "decoration_review": "docs/review/board-frame-decorations/README.md"
   }
 }

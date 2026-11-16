@@ -157,16 +157,20 @@ default) at its radius. The seam shows the backing colour through that inset.
 (`E.CRADLE_GROUND`) for the frame, soft drop shadow, dark brown grout
 (`seam`, `seam_width`) and cell-state tiles. Games supply the fallback face
 colour as the skin's `board_face`.
-`elements.load_frame` loads each game's stone atlas and leaf sprite.
+`elements.load_frame` loads each game's stone atlas and separate decorations.
 The renderer checks each active cell's six neighbours and places atlas
 regions along the exposed edges, inward corners and outward corners,
 including the edges of holes. It keeps those placements relative to the board
 origin for shake and resize, and rebuilds them when the active mask changes.
 The atlas also provides the rim under each cell during the entrance.
-The soft shadow follows the settled outline, and the separate leaves sit on
-the board's north-west, north-east and south-east outward tips.
+The soft shadow follows the settled outline. The skin can place separate sprites
+on the north-west, north-east and south-east outward tips. Three optional
+directional caps follow the highest exposed edge at each horizontal position.
+Relic Rush uses the corner placements for leaves. Christmas Market uses the
+two upper corners for festive trim and the caps for snow.
 Imported and neutral boards use the default ground geometry.
 [Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
+[Decoration source and in-game review](review/board-frame-decorations/README.md).
 Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
 shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each
 listed game's `data/board-tiles/`: a bevel lit from above, a top-to-bottom face

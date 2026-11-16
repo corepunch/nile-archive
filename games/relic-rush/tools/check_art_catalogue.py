@@ -153,13 +153,15 @@ for name in spec["tiles"]:
     assert f"data/board-tiles/{name}.png" in actual and f"`tile-{name}`" in doc, name
 subprocess.run([sys.executable, str(ROOT.parents[1] / tiles["generator"]), "--check"], check=True)
 frame = manifest["board_frame"]
-assert (ROOT.parents[1] / frame["review"]).is_file()
-for role in ("stone", "leaves"):
-    assert frame[role] in actual and '"' + frame[role].removeprefix("data/") + '"' in art
-with Image.open(ROOT / frame["leaves"]) as leaves:
-    assert leaves.mode == "RGBA" and leaves.size == (96, 96) and leaves.getchannel("A").getbbox()
+for review in ("review", "decoration_review"):
+    assert (ROOT.parents[1] / frame[review]).is_file()
+decor = json.loads((ROOT.parents[1] / frame["decorations"]).read_text())
+for path in [frame["stone"], *(f"data/board-frame/{name}.png" for name in decor["games"][ROOT.name])]:
+    assert path in actual and '"' + path.removeprefix("data/") + '"' in art
 subprocess.run([sys.executable, str(ROOT.parents[1] / frame["generator"]),
                 "--check", str(ROOT / frame["stone"])], check=True)
+subprocess.run([sys.executable, str(ROOT.parents[1] / frame["registration"]),
+                "--check", "--game", ROOT.name], check=True)
 finale = manifest["finale"]
 for name, item in finale["assets"].items():
     assert f'`{name}`' in doc and f'"{name}"' in art
