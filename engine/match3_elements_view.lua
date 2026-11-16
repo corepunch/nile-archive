@@ -533,7 +533,7 @@ end
 local function draw_tablet_hints(R, rules, sx, floor)
     local g = R.g
     if not (floor and floor.tablet_hint and g.oil_left > 0 and g.oil_left <= 3)
-        or R.intro or R.reduced_motion or R.overlay ~= R.OV_NONE or g.won or g.lost then return end
+        or R.reduced_motion or R.overlay ~= R.OV_NONE or not R.idle_hint_ready() then return end
     local radius = R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET) - 1
     for i = 0, rules.CELLS - 1 do
         local layers = g.oil[i] or 0

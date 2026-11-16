@@ -205,10 +205,11 @@ at the hovered or pressed cell), `ice` (under iced pieces), `double` (a
 plaque with two layers) and `wave` (the light that sweeps across the board
 in its entrance, in place of the halo). A level's `oil_double` lists `oil`
 cells that take two hits; each still counts once toward the goal.
-Floors can set `tablet_hint=true` to mark the last one to three tablets. A
-star and fading sparks follow each of the six straight bevel edges. A
-double tablet has a green trail. The effect starts at the threshold and
-clears with each tablet. Reduce Motion suppresses the moving sparks. See the
+Floors can set `tablet_hint=true` to help players spot the last one to three
+tablets. The reminder shares the move suggestion's five-second idle delay
+and resets with it on board interaction. A star and fading sparks follow
+each bevel edge. A double tablet has a green trail. Reduce Motion
+suppresses the moving sparks. See the
 [Cradle of Rome emitter reference](cradle-of-rome-reference/README.md#source-inventory).
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
 [In-game board review](review/match3-board-seams/README.md).

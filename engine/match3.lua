@@ -1781,6 +1781,10 @@ function E.new(config)
         R.idle_time = 0
     end
 
+    function R.idle_hint_ready()
+        return flags & E.NO_HINTS == 0 and R.phase == PH_IDLE and R.idle_time > 5 and not R.g.won and not R.g.lost
+    end
+
     function R.board_update(dt)
         if R.art_review then return end
         R.shake = math.max(0, R.shake - dt)
@@ -1794,7 +1798,7 @@ function E.new(config)
                 R.finish_wave()
             end
         end
-        if flags & E.NO_HINTS == 0 and R.idle_time > 5 and R.hint_a < 0 and R.phase == PH_IDLE and not R.g.won and not R.g.lost then
+        if R.hint_a < 0 and R.idle_hint_ready() then
             local ok, a, b = rules.game_hint(R.g)
             if ok then R.hint_a, R.hint_b = a, b
             else settle() end   -- idle/resumed dead boards need the same recovery as a completed fall
