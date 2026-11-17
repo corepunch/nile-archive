@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" font-family="Helvetica, Arial, sans-serif" font-size="11">
+  <title>Christmas Market Advent UI wireframes</title>
+  <rect width="1000" height="420" fill="#f6f4ef"/>
+  <defs>
+    <g id="hud">
+      <rect x="8" y="8" width="38" height="16" rx="8" fill="#e8e4da"/><text x="15" y="20" fill="#2c2c2a">♥ 5</text>
+      <rect x="50" y="8" width="48" height="16" rx="8" fill="#e8e4da"/><text x="57" y="20" fill="#2c2c2a">Bell 340</text>
+      <rect x="102" y="8" width="40" height="16" rx="8" fill="#e8e4da"/><text x="109" y="20" fill="#2c2c2a">★ 90</text>
+    </g>
+  </defs>
+
+  <!-- 1 Town -->
+  <g transform="translate(10,10)">
+    <rect width="180" height="340" rx="16" fill="#fff" stroke="#b4b2a9"/>
+    <use href="#hud"/>
+    <rect x="156" y="8" width="16" height="16" rx="8" fill="#e8e4da"/><text x="160" y="20" fill="#2c2c2a">II</text>
+    <rect x="8" y="30" width="164" height="44" rx="8" fill="#faeeda"/>
+    <text x="14" y="44" fill="#633806" font-weight="bold">Advent 2 · Warm hands</text><text x="150" y="44" fill="#633806">2/4</text>
+    <rect x="14" y="50" width="30" height="18" rx="5" fill="#ef9f27"/><text x="25" y="63" fill="#412402">✓</text>
+    <rect x="48" y="50" width="30" height="18" rx="5" fill="#ef9f27"/><text x="59" y="63" fill="#412402">✓</text>
+    <rect x="82" y="50" width="30" height="18" rx="5" fill="none" stroke="#854f0b" stroke-width="1.5"/><text x="89" y="63" fill="#633806">cup</text>
+    <rect x="116" y="50" width="30" height="18" rx="5" fill="none" stroke="#854f0b" stroke-dasharray="3 2"/><text x="121" y="63" fill="#854f0b">lock</text>
+    <text x="151" y="64" fill="#ba7517" font-size="16">🕯</text>
+    <rect x="8" y="80" width="164" height="150" fill="#e6f1fb"/>
+    <rect x="28" y="100" width="34" height="24" rx="4" fill="#fff" stroke="#b4b2a9"/>
+    <rect x="90" y="92" width="34" height="24" rx="4" fill="#fff" stroke="#b4b2a9"/>
+    <rect x="110" y="150" width="34" height="24" rx="4" fill="#fff" stroke="#b4b2a9"/>
+    <rect x="44" y="170" width="34" height="24" rx="4" fill="#fff" stroke="#b4b2a9"/>
+    <rect x="8" y="238" width="164" height="54" rx="10" fill="#f1efe8" stroke="#b4b2a9"/>
+    <rect x="14" y="246" width="36" height="36" rx="6" fill="#faeeda"/><text x="19" y="268" fill="#633806">cocoa</text>
+    <text x="56" y="260" fill="#2c2c2a" font-weight="bold">Cocoa kiosk</text>
+    <text x="56" y="275" fill="#5f5e5a">Mrs Alder</text><text x="56" y="287" fill="#5f5e5a">needs a counter</text>
+    <rect x="128" y="250" width="38" height="30" rx="8" fill="#639922"/><text x="134" y="263" fill="#fff" font-weight="bold">Build</text><text x="137" y="275" fill="#fff">400</text>
+    <rect x="12" y="302" width="30" height="28" rx="8" fill="#3b6d11"/><text x="17" y="320" fill="#fff">Gift</text>
+    <circle cx="40" cy="304" r="7" fill="#e24b4a"/><text x="37" y="308" fill="#fff" font-size="10">3</text>
+    <rect x="58" y="298" width="64" height="34" rx="8" fill="#a32d2d"/><text x="68" y="320" fill="#fff" font-weight="bold">▶ Wish 9</text>
+    <rect x="138" y="302" width="30" height="28" rx="8" fill="#3b6d11"/><text x="142" y="320" fill="#fff">Story</text>
+    <text x="0" y="372" fill="#2c2c2a" font-weight="bold">1 · Town</text>
+    <text x="0" y="388" fill="#5f5e5a">One build card for the next landmark.</text>
+    <text x="0" y="402" fill="#5f5e5a">Strip: this Advent's four, then its candle.</text>
+  </g>
+
+  <!-- 1b Funding -->
+  <g transform="translate(210,10)">
+    <rect width="180" height="340" rx="16" fill="#fff" stroke="#b4b2a9"/>
+    <use href="#hud"/>
+    <rect x="8" y="30" width="164" height="200" fill="#e6f1fb"/>
+    <rect x="8" y="238" width="164" height="54" rx="10" fill="#f1efe8" stroke="#b4b2a9"/>
+    <rect x="14" y="246" width="36" height="36" rx="6" fill="#fff" stroke="#b4b2a9" stroke-dasharray="3 2"/><text x="19" y="268" fill="#888780">cocoa</text>
+    <text x="56" y="258" fill="#2c2c2a" font-weight="bold">Cocoa kiosk</text>
+    <rect x="56" y="264" width="108" height="6" rx="3" fill="#d3d1c7"/><rect x="56" y="264" width="65" height="6" rx="3" fill="#ef9f27"/>
+    <text x="56" y="284" fill="#5f5e5a">240 / 400 · wish 9</text>
+    <rect x="58" y="298" width="64" height="34" rx="8" fill="#a32d2d"/><text x="68" y="320" fill="#fff" font-weight="bold">▶ Wish 9</text>
+    <text x="0" y="372" fill="#2c2c2a" font-weight="bold">1b · Funding</text>
+    <text x="0" y="388" fill="#5f5e5a">No replays: the next wish</text>
+    <text x="0" y="402" fill="#5f5e5a">always brings the rest.</text>
+  </g>
+
+  <!-- 2 Place -->
+  <g transform="translate(410,10)">
+    <rect width="180" height="340" rx="16" fill="#fff" stroke="#b4b2a9"/>
+    <use href="#hud"/>
+    <rect x="8" y="30" width="164" height="262" fill="#e6f1fb"/>
+    <rect x="24" y="60" width="34" height="24" rx="4" fill="#fff" stroke="#b4b2a9"/>
+    <rect x="116" y="50" width="34" height="24" rx="4" fill="#fff" stroke="#b4b2a9"/>
+    <rect x="58" y="130" width="64" height="48" rx="6" fill="#eaf3de" stroke="#3b6d11" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="74" y="158" fill="#27500a">cocoa</text>
+    <circle cx="50" cy="192" r="4" fill="#3b6d11"/><circle cx="90" cy="198" r="4" fill="#3b6d11"/><circle cx="130" cy="192" r="4" fill="#3b6d11"/>
+    <text x="22" y="220" fill="#5f5e5a">lamp posts and rocks</text><text x="22" y="234" fill="#5f5e5a">will dress the ring</text>
+    <rect x="12" y="300" width="74" height="30" rx="8" fill="#f1efe8" stroke="#b4b2a9"/><text x="28" y="319" fill="#2c2c2a">✕ Cancel</text>
+    <rect x="94" y="300" width="74" height="30" rx="8" fill="#639922"/><text x="106" y="319" fill="#fff">✓ Confirm</text>
+    <text x="0" y="372" fill="#2c2c2a" font-weight="bold">2 · Place</text>
+    <text x="0" y="388" fill="#5f5e5a">Shared mover, unchanged. Confirm</text>
+    <text x="0" y="402" fill="#5f5e5a">plants the landmark's own dressing.</text>
+  </g>
+
+  <!-- 3 Advent end -->
+  <g transform="translate(610,10)">
+    <rect width="180" height="340" rx="16" fill="#d3d1c7" stroke="#b4b2a9"/>
+    <rect x="12" y="70" width="156" height="200" rx="12" fill="#fff" stroke="#b4b2a9"/>
+    <text x="48" y="100" fill="#ba7517" font-size="20">🔥🔥</text><text x="98" y="100" fill="#b4b2a9" font-size="20">🕯🕯</text>
+    <text x="90" y="124" fill="#2c2c2a" font-weight="bold" text-anchor="middle" font-size="13">Second candle lit</text>
+    <text x="90" y="142" fill="#5f5e5a" text-anchor="middle">Advent 2 complete.</text>
+    <text x="90" y="156" fill="#5f5e5a" text-anchor="middle">Market lights come on at dusk.</text>
+    <rect x="22" y="168" width="136" height="38" rx="8" fill="#faeeda"/>
+    <text x="90" y="184" fill="#633806" text-anchor="middle" font-weight="bold">Lantern set ×4</text>
+    <text x="90" y="198" fill="#633806" text-anchor="middle">added to your box</text>
+    <rect x="22" y="220" width="64" height="30" rx="8" fill="#f1efe8" stroke="#b4b2a9"/><text x="41" y="239" fill="#2c2c2a">Later</text>
+    <rect x="94" y="220" width="64" height="30" rx="8" fill="#639922"/><text x="100" y="239" fill="#fff">Place now</text>
+    <text x="90" y="300" fill="#444441" text-anchor="middle">Next: Advent 3 · locked silhouette</text>
+    <text x="0" y="372" fill="#2c2c2a" font-weight="bold">3 · Advent end</text>
+    <text x="0" y="388" fill="#5f5e5a">After the climax scene: candle, light</text>
+    <text x="0" y="402" fill="#5f5e5a">change, reward, next teaser.</text>
+  </g>
+
+  <!-- 4 Decorations -->
+  <g transform="translate(810,10)">
+    <rect width="180" height="340" rx="16" fill="#fff" stroke="#b4b2a9"/>
+    <text x="12" y="26" fill="#2c2c2a" font-weight="bold" font-size="13">Decorations</text><text x="160" y="26" fill="#5f5e5a">✕</text>
+    <text x="12" y="48" fill="#5f5e5a">In your box</text>
+    <g fill="#faeeda"><rect x="12" y="54" width="48" height="44" rx="6"/><rect x="66" y="54" width="48" height="44" rx="6"/><rect x="120" y="54" width="48" height="44" rx="6"/></g>
+    <g fill="#633806" text-anchor="middle"><text x="36" y="74">lantern</text><text x="36" y="90">×4</text><text x="90" y="74">snowman</text><text x="90" y="90">×2</text><text x="144" y="74">presents</text><text x="144" y="90">×1</text></g>
+    <text x="12" y="120" fill="#5f5e5a">Buy with Bells</text>
+    <g fill="#f1efe8"><rect x="12" y="126" width="48" height="44" rx="6"/><rect x="66" y="126" width="48" height="44" rx="6"/><rect x="120" y="126" width="48" height="44" rx="6"/><rect x="12" y="176" width="48" height="44" rx="6"/><rect x="66" y="176" width="48" height="44" rx="6"/><rect x="120" y="176" width="48" height="44" rx="6"/></g>
+    <g fill="#2c2c2a" text-anchor="middle"><text x="36" y="146">firs</text><text x="36" y="162">55</text><text x="90" y="146">bench</text><text x="90" y="162">25</text><text x="144" y="146">mailbox</text><text x="144" y="162">55</text><text x="36" y="196">ice star</text><text x="36" y="212">85</text><text x="90" y="196">reindeer</text><text x="90" y="212">110</text><text x="144" y="196">lamp</text><text x="144" y="212">20</text></g>
+    <text x="90" y="320" fill="#5f5e5a" text-anchor="middle">Nothing here is locked</text>
+    <text x="0" y="372" fill="#2c2c2a" font-weight="bold">4 · Decorations (gift button)</text>
+    <text x="0" y="388" fill="#5f5e5a">Rewards first, then anything</text>
+    <text x="0" y="402" fill="#5f5e5a">Bells can buy.</text>
+  </g>
+</svg>

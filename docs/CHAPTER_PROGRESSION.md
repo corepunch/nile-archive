@@ -10,6 +10,7 @@ The island advances one landmark at a time. Every four landmarks close a chapter
 
 - **The build order is already strictly linear.** The engine's campaign ladder (`G.campaign_ladder` in [engine/match3_game.lua](../engine/match3_game.lua)) puts every building in purchase order. `next_step` returns a single building. `ladder_blocked` reports every other one as `earlier` (another comes first), `later` (waits for a clear) or `built`.
 - **The shop shows the whole catalogue anyway.** It lists the ladder in purchase order and then everything else, with lock labels. Most rows say "not yet".
+- **Levels are never replayed.** The player only plays the next level, so every level clear is also the next step of funding. Relic Rush's results screen still has a leftover "REPLAY TO EARN THE REST" heading ([lua/screens.lua](../games/relic-rush/lua/screens.lua)) that should say the next level brings the rest.
 - **Both games have ten story buildings over thirty levels**, after clears 1, 4, 7, 9/10, 13, 16, 19, 23, 26 and 29 (`wonder_levels` in each game's `lua/campaign.lua`).
 - **Relic Rush has three chapters** of 4, 3 and 3 restorations ([story](../games/relic-rush/docs/story.md#campaign-milestones)). The catalogue has about 20 wonders plus Star-gated buildings (`apothecary`, `mess_hall`, `stilt_house`, `greenhouse`, `treehouse`, `hanging_gardens`) and trees ([catalogue](../games/relic-rush/docs/building-catalogue.md)).
 - **Christmas Market has three episodes** ([story](../games/christmas-market/docs/story.md)) and about 14 wonders, some of them 1 × 1 (`presents`, `giant_ornament`) ([catalogue](../games/christmas-market/docs/building-catalogue.md)).
@@ -46,10 +47,27 @@ The chapter budgets beats around exactly four builds, which is simpler to plan i
 
 ### UI
 
-1. **One build card** for the next landmark: its picture, name, price or shortfall, and the story line about why it matters now. Pressing it starts placement. It extends the "next restoration" slot on the results screen ([lua/screens.lua](../games/relic-rush/lua/screens.lua)).
+The [mockup](#mockup) shows these screens for Christmas Market.
+
+1. **One build card** for the next landmark: its picture, name and the story line about why it matters now. It extends the "next restoration" slot on the results screen ([lua/screens.lua](../games/relic-rush/lua/screens.lua)). It has two states:
+   - **Ready:** a Build button with the price. Pressing it starts placement with the shared mover. Confirming plants the landmark's own decorations.
+   - **Funding:** a progress bar and "wish 9 brings the rest". There is no replay prompt, because the play button is always the way forward. The finite economy (`reserved_cost`) guarantees that the chapter's levels pay for its four landmarks. Coins left over go to decorations.
 2. **A chapter strip** with four slots: built, current, and locked as a silhouette. In Christmas Market the slots are the four candles of the Advent wreath. The player always knows how close the chapter's climax is.
 3. **Later chapters stay hidden.** At most, show the next chapter's first silhouette once the strip is full.
-4. **The shop holds decorations only.** It covers the keepsake box and what Coins can buy, with no lock labels.
+4. **The shop holds decorations only.** It covers the keepsake box and what Coins can buy, with no lock labels. In Christmas Market the hammer button becomes a gift button with a badge counting unplaced rewards.
+5. **The chapter end is a card after the climax scene.** It shows the candle (or the epoch's emblem), the island change in one line, the decoration reward with Place now and Later, and the next chapter's locked silhouette.
+
+### Mockup
+
+Wireframes for Christmas Market at phone portrait. Icons stand in for the painted art.
+
+![Christmas Market Advent UI wireframes](mockups/chapter-progression.svg)
+
+- **1 · Town:** the HUD, the Advent strip (two built, the current one outlined, one locked, then the candle), the build card, and the gift, Play and story buttons.
+- **1b · Funding:** the build card's second state, with a progress bar and the next wish.
+- **2 · Place:** the existing Confirm and Cancel, plus dots for the dressing that will appear around the landmark.
+- **3 · Advent end:** the second candle lights, Lantern set ×4 goes into the box, and the next Advent is teased.
+- **4 · Decorations:** rewards in the box first, then anything Bells can buy. Nothing is locked.
 
 ## Per game
 
