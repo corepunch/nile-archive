@@ -65,6 +65,9 @@ static void test_lua_open(lua_State *S)
     lua_pushstring(S, test_suite()); lua_setfield(S, -2, "game");
     const char *extended = getenv("SPRITE_TEST_EXTENDED");
     lua_pushboolean(S, extended && !strcmp(extended, "1")); lua_setfield(S, -2, "extended");
+    /* Board plays per level for the extended balance runners; nil when unset. */
+    const char *runs = getenv("BALANCE_RUNS");
+    if (runs && atoi(runs) > 0) { lua_pushinteger(S, atoi(runs)); lua_setfield(S, -2, "balance_runs"); }
     lua_setglobal(S, "testing");
 }
 

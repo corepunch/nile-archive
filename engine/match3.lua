@@ -1030,21 +1030,26 @@ function E.new(config)
     -- Any move that clears something: ok, a, b. Only matches containing a
     -- swapped cell make a normal swap legal, so inspect those two cells rather
     -- than cloning and resolving the entire board for each candidate.
+    local hint_cells = {}
+    -- Whether swapping a and b makes a match, tested in place without a board copy.
+    function M.game_swap_matches(g, a, b)
+        if not game_can_swap(g, a, b) then return false end
+        swap_tiles(g, a, b)
+        local matched
+        if flags & E.LINE_MATCHES ~= 0 then
+            matched = shape_at(g, a) or shape_at(g, b)
+        else matched = collect_group(g, a, hint_cells) >= MATCH_MIN or collect_group(g, b, hint_cells) >= MATCH_MIN end
+        swap_tiles(g, a, b)
+        return matched
+    end
+    local game_swap_matches = M.game_swap_matches
+
     function M.game_hint(g)
         if g.won or g.lost then return false end
-        local cells = {}
         for i = 0, CELLS - 1 do
             for d = 0, 2 do
                 local j = hex_neighbor(i, d)
-                if game_can_swap(g, i, j) then
-                    swap_tiles(g, i, j)
-                    local matched
-                    if flags & E.LINE_MATCHES ~= 0 then
-                        matched=shape_at(g,i) or shape_at(g,j)
-                    else matched=collect_group(g,i,cells)>=MATCH_MIN or collect_group(g,j,cells)>=MATCH_MIN end
-                    swap_tiles(g, i, j)
-                    if matched then return true, i, j end
-                end
+                if game_swap_matches(g, i, j) then return true, i, j end
             end
         end
         return false
@@ -1352,7 +1357,7 @@ function E.new(config)
 
     -- How good a move is for a greedy player: score plus weighted goal progress.
     function M.game_evaluate_move(g, a, b)
-        if not game_can_swap(g, a, b) then return -1 end
+        if not M.game_swap_matches(g, a, b) then return -1 end
         local c = game_copy(g)
         local m = new_match()
         if not game_swap(c, a, b, m) then return -1 end
