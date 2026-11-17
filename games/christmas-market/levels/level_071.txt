@@ -4,25 +4,25 @@ teaches: Double tinsel hangs at the nose gate; frost on the face needs a second 
 
 x x x x x
  x x x x
-x p p p p
- p p j p
-p p p p p
- p j p p
-x p p p p
- x p p p
-x x p p x
- x p p p
-x x p p x
- x p p x
-x p K p x
- x p p x
-x p p x x
- p p p x
-x p p x x
- p p p x
-p p p p x
- p p j p
-p p p p p
- p j p p
-p p p p x
+x . . p .
+ . . j .
+. p p p .
+ . j . .
+x p p . .
+ x . . .
+x x . . x
+ x . . .
+x x p . x
+ x . . x
+x . K . x
+ x . . x
+x . p x x
+ . . . x
+x . . x x
+ . . . x
+. . p p x
+ . . j .
+. p p p .
+ . j . .
+. p . . x
  x x x x

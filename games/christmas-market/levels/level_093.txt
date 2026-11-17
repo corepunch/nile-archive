@@ -5,20 +5,20 @@ teaches: Break the tinsel band at the base of the lantern to let the pieces into
 x x . x x
  x . . x
 x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. p . p .
+ . . . .
+. . . . .
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+p . . . p
  K K K K
 K K K K K
  p p p p

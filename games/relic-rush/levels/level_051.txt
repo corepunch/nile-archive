@@ -4,23 +4,23 @@ teaches: Chains here take two hits: break the double chains below the tower to l
 
 x x x x x
  x x x x
-x p p p x
- x p p x
-x p p p x
- x p p x
-x p p p x
- x p p x
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x K K K x
  x K K x
-x p p p x
+x . . . x
  x p p x
-x p p p x
+x . p . x
  p p p p
 x p p p x
  x p p x

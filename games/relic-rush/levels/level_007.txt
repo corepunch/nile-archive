@@ -4,19 +4,19 @@ teaches: Ice holds its piece: break the ice at the base of the court and the pie
 
 . . . . .
  . . . .
-. . p . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+p . p . p
  . p p .
+p . . . p
+ p . . p
 . p p p .
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
  p p p p
 . p i p .
  . i i .

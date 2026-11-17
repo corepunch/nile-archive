@@ -6,20 +6,20 @@ x x . x x
  x . . x
 x x . x x
  x . . x
-x P P P x
- P P P P
-x P P P x
- P P P P
-x P P P x
- P P P P
-x P P P x
- P P P P
-P P P P P
- P P P P
-P P P P P
- P P P P
-P P P P P
- P P P P
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+P . . . P
+ . P P .
 P P x P P
  P x x P
 P P x P P

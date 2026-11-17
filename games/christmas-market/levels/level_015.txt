@@ -4,25 +4,25 @@ teaches: Snowed-in stones sit in the way: match beside a stone to carve it away,
 
 x . . . x
  x . . x
-x p p p x
- . p p .
-p p p p p
- p p p p
-p s p s p
- p . . p
-. . p . .
- s p p s
-x . p . x
- x p p x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. s . s .
+ . . . .
+. . . . .
+ s . . s
+x . . . x
+ x . . x
 x x s x x
  x c c x
-x p p p x
+x . p . x
  . p p .
-p p p p p
+. p p p .
  p p p p
 p p p p p
  p p p p
 x p p p x
  p p p p
 x p p p x
- x p p x
+ x . . x

@@ -6,19 +6,19 @@ x . . . x
  x . . x
 x . . . x
  x . . x
-x p p p x
- x p p x
-x p p p x
- x p p x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
 x x x x x
  x . . x
 . . . . .
  . . . .
 . . x . .
  . . . .
-p j p j p
- p p p p
-p p p p p
+. j . j .
+ . p p .
+. p p p .
  p p p p
 p j p j p
  p p p p

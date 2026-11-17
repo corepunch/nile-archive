@@ -4,25 +4,25 @@ teaches: Two small fir trees share the ground; each has a tinsel band across the
 
 x . x . x
  . . . .
-x p x p x
- p p p p
-. p x p .
- x p p x
-x p x p x
- p . . p
-. p x p .
- x p p x
-x p x p x
- p p p p
+x . x . x
+ . . . .
+. . x . .
+ x . . x
+x . x . x
+ . . . .
+. . x . .
+ x . . x
+x . x . x
+ . . . .
 K K x K K
  K K K K
 K p x p K
  p p p p
-x p x p x
+x . x . x
  p p p p
-x p x p x
- p p p p
-p p p p p
- p p p p
-. p p p .
+x . x . x
+ . . . .
+. . p . .
+ . . . .
+. . . . .
  x x x x

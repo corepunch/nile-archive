@@ -4,25 +4,25 @@ teaches: Double panes behind a tinsel gate: break the chains, then hit every pan
 
 x x . x x
  x . . x
-x P P P x
- x P P x
-x P P P x
- P P P P
-P P P P P
- P P P P
-P P P P P
- J P P J
-P P P P P
- P P P P
-x g P g x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ J . . J
+. . . . .
+ . . . .
+x g . g x
  x g g x
 x P P P x
- P P P P
-P P P P P
- J P P J
-P s P s P
- P P P P
-P P P P P
- P P P P
-x P P P x
- x P P x
+ P . . P
+P . . . P
+ J . . J
+P s . s P
+ P . . P
+P . . . P
+ . . . .
+x . . . x
+ x . . x

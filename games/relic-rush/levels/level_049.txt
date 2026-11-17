@@ -2,25 +2,25 @@ name: Warden's Colonnade
 tier: hard
 teaches: Chained pillars line the colonnade, and a chain row at the foot hides the last tablets.
 
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p k p k p
- p p p p
-p p p p p
- p p p p
-p k p k p
- p p p p
-p p p p p
- p p p p
-p k p k p
- p p p p
-p p p p p
- p p p p
-p p p p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. k . k .
+ . . . .
+. . . . .
+ . . . .
+. k . k .
+ . . . .
+. . . . .
+ . . . .
+. k . k .
+ . . . .
+p . . . p
+ . p p .
+p p . p p
  p p p p
 x k k k x
  k k k k

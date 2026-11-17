@@ -4,24 +4,24 @@ teaches: Two tinsel chains guard each lantern's bottom: break either to let piec
 
 x . x . x
  . x x .
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
 x k x k x
  x k k x
 x p p p x
  p p p p
 p p p p p
- p p p p
-p p p p p
- p p p p
+ . p p .
+. . . . .
+ . . . .
 x . . . x
  . . . .
 x x x x x

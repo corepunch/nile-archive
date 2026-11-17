@@ -10,15 +10,15 @@ teaches: A little fir with zigzag boughs: light the tablets in its middle.
  . . . .
 . . . . .
  . . . .
+. . . . .
+ . . . .
 . p p p .
  . p p .
 . p p p .
  . p p .
-. p p p .
- . p p .
-. p p p .
- x p p x
-x x p x x
+. . . . .
+ x . . x
+x x . x x
  x . . x
 x x . x x
  x x x x

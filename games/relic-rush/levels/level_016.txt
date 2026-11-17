@@ -4,20 +4,20 @@ teaches: Pieces funnel through the waist of the hourglass; iced cells guard each
 
 . . . . .
  . . . .
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-x p p p x
- x p p x
-x x p x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ x . . x
+x x . x x
+ x . . x
+x . . . x
+ . . . .
+p . . . p
+ . . . .
 p j p j p
  p p p p
 p p p p p

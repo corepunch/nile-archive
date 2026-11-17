@@ -4,25 +4,25 @@ teaches: Break the scarf of tinsel to reach the body; stones for the snowman's b
 
 x x x x x
  x x x x
-x p p p x
- x p p x
-x p p p x
- p p p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
 K K K K K
  K K K K
 x p s p x
+ p . . p
+x . . . x
  p p p p
-x p p p x
- p p p p
-x p s p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+x . s . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .

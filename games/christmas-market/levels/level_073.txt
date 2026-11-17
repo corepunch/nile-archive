@@ -4,25 +4,25 @@ teaches: A sloped tinsel roof, with frosted panes under it.
 
 x x . x x
  x . . x
-x x p x x
- x p p x
-x x p x x
- x p p x
-x p p p x
- x p p x
-x p p p x
- p p p p
+x x . x x
+ x . . x
+x x . x x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
 K K K K K
  K K K K
 x p p p x
- p p p p
-x j p j x
- p p p p
-x p p p x
- p p p p
-x j p j x
- p p p p
-x p p p x
- p p p p
-x j p j x
- p p p p
+ . . . .
+x j . j x
+ . . . .
+x . . . x
+ . . . .
+x j . j x
+ . p p .
+x . . . x
+ . p p .
+x j . j x
+ . p p .

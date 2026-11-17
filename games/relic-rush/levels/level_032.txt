@@ -4,25 +4,25 @@ teaches: A cleft splits the colonnade at the top; both wings feed the broad floo
 
 x x x x x
  x x x x
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. . . . .
+ . . . .
+p . . . p
+ . . . .
+p . . . p
+ p . . p
 p p p p p
  p p p p

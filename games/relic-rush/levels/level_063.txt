@@ -4,23 +4,23 @@ teaches: Two chained terraces hang over the garden below; open both to fill it.
 
 x x x x x
  x x x x
-p p p p p
- p p p p
-p p p p p
- p p p p
-p s p s p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. s . s .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 K x x x K
  K x x K
-p p x p p
+. . x . .
+ . . . .
+. . . . .
  p p p p
-p p p p p
- p p p p
-p p p p p
+. . p . .
  p p p p
 p p p p p
  p p p p

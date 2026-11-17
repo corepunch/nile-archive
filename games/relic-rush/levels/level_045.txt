@@ -2,27 +2,27 @@ name: Locked Courtyard
 tier: hard
 teaches: A double ring of chains locks the courtyard; break it, then work down through the ice.
 
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x k k k x
  x k k x
-x p p p x
- x p p x
-x p p p x
- x p p x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
 x k k k x
  x k k x
-x p p p x
+x . . . x
  p J J p
-p p p p p
+p p . p p
  p J J p
 . p p p .
  p p p p

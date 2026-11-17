@@ -4,18 +4,18 @@ teaches: One well is bridged at top and bottom; break the chains to feed the low
 
 . . . . .
  . . . .
-p p . p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p k x k p
- p p p p
-p s x s p
- p p p p
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. k x k .
+ . . . .
+. s x s .
+ . . . .
 p p x p p
  p p p p
 p p x p p

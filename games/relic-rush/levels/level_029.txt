@@ -2,24 +2,24 @@ name: The Dry Well
 tier: hard
 teaches: Tablets ring a hollow shaft, and pieces slide round the well, so plan the edges first.
 
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . J J .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+p . x . p
+ . J J .
 p p p p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p J J p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p J J p
-p p p p p
- p p p p
+ . p p .
 p p p p p
  p p p p
 x p p p x

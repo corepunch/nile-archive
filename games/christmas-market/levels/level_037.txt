@@ -4,15 +4,15 @@ teaches: A ring of tablets around the carousel pole: pieces slide round the cent
 
 x x . x x
  x . . x
-x p p p x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p x p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
  p s s p
 p p x p p
  p x x p
@@ -20,9 +20,9 @@ p p x p p
  p x x p
 p p x p p
  p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
-x p p p x
- x p p x
+. p p p .
+ . p p .
+x . p . x
+ . . . .
+x . . . x
+ x . . x

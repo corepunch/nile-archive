@@ -4,23 +4,23 @@ teaches: A chained seal splits the temple: clear the top before the vault can fi
 
 x x x x x
  x x x x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 K K K K K
  K K K K
-p p p p p
- p p p p
-p s p s p
- p p p p
+. . . . .
+ . . . .
+. s . s .
+ . . . .
+. . . . .
+ p . . p
 p . p . p
- p p p p
-p p p p p
  p p p p
 p p p p p
  p p p p

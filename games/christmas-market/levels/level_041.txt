@@ -2,27 +2,27 @@ name: Glass Ornament
 tier: easy
 teaches: A row of tinsel across the bauble: break it and the lower half comes alive.
 
-x p p p x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x k k k x
  x k k x
-x p p p x
- p p p p
+x . p . x
+ . p p .
 x j p j x
  p p p p
 x p p p x
- x p p x
-x x p x x
- x p p x
-x x p x x
- x p p x
+ x . . x
+x x . x x
+ x . . x
+x x . x x
+ x . . x
 x x x x x
  x x x x

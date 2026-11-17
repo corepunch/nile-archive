@@ -4,11 +4,11 @@ teaches: A star crowns the fir and is part of the same board: double ice guards 
 
 x x . x x
  x x x x
-x p p p x
- . p p .
-p p p p p
- p p p p
-x p p p x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+x . p . x
  x p p x
 x x p x x
  x p p x
@@ -18,11 +18,11 @@ x p p p x
  p p p p
 p p p p p
  x p p x
-p J J J p
- p p p p
-p p p p p
- . p p .
-x x p x x
- x p p x
+. J J J .
+ . . . .
+. . . . .
+ . . . .
+x x . x x
+ x . . x
 x x x x x
  x x x x

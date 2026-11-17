@@ -4,25 +4,25 @@ teaches: Double panes in two separate areas, with the lower stalls sealed by dou
 
 . . x . .
  x . . x
-. P x P .
- P P P P
-s P x P s
- P P P P
-J P P P J
- P P P P
-P P P P P
- P P P P
-J P P P J
- P P P P
-s P x P s
- P P P P
+. . x . .
+ . . . .
+s . x . s
+ . . . .
+J . . . J
+ . . . .
+. . . . .
+ . . . .
+J . p . J
+ . . . .
+s . x . s
+ . . . .
 G G x G G
  G G G G
 P P x P P
  P P P P
-P P x P P
- P P P P
-x P x P x
+. . x . .
+ p . . p
+x . x . x
  x . . x
 x . x . x
  x x x x

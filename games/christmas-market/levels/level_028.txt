@@ -4,24 +4,24 @@ teaches: A bell with a clapper: a round dome, a wide brim and ice hiding in the 
 
 x x . x x
  x . . x
-x p p p x
- x p p x
-x p p p x
- p p p p
-x p p p x
- p p p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
 x j p j x
  p p p p
 x p p p x
  p p p p
 x p p p x
  p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. j p j .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x . x x
  x . . x
 x x . x x

@@ -2,27 +2,27 @@ name: Golden Star
 tier: boss
 teaches: Every cell of the star holds a double tablet; ice and stones guard the points.
 
-x x P x x
- x P P x
-x P P P x
- x P P x
-x P P P x
- P P P P
-s P P P s
- P P P P
-P P P P P
- P P P P
-x P j P x
- P P P P
+x x . x x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+s . . . s
+ . . . .
+. . . . .
+ . . . .
+x . j . x
+ . P P .
 x P P P x
  x P P x
 x J P J x
- P P P P
-P J P J P
- P P P P
-P P x P P
- P x x P
-P P x P P
+ P . . P
+P J . J P
+ P . . P
+P . x . P
+ . x x .
+. . x . .
  . x x .
 x x x x x
  x x x x

@@ -2,24 +2,24 @@ name: The Weir
 tier: easy
 teaches: The weir narrows to three chains; break one to let pieces flow into the pool below.
 
-p p x p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x K K K x
  x x x x
-x p p p x
- p p p p
-p p p p p
- p p p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
 p p p p p
  p p p p
 p p p p p

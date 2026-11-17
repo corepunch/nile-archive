@@ -4,13 +4,13 @@ teaches: A wishing star trails a slanted comet tail down to its twin: pieces sli
 
 x x x x x
  x x x x
-p p p x x
- p p p x
-p p p x x
- p p p x
-p p p x x
- p p p x
-p p p x x
+. . . x x
+ . . . x
+. . . x x
+ . . . x
+. . . x x
+ . . p x
+. p p x x
  p p p x
 p p p x x
  p k p x
@@ -18,11 +18,11 @@ x p . p x
  x p k p
 x x p p p
  x p p p
-x x p p p
- x p p p
-x x p p p
- x p p p
-x x p p p
- x p p p
-x x p p p
+x x p p .
+ x p . .
+x x . . .
+ x . . .
+x x . . .
+ x . . .
+x x . . .
  x x x x

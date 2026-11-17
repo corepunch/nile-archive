@@ -4,25 +4,25 @@ teaches: Two wreath rings hang one above the other, each with a tinsel gate in i
 
 x x x x x
  x x x x
+x . . . x
+ . . . .
+. . x . .
+ . x x .
+. . x . .
+ . . . .
+x K K K x
+ K K K K
 x p p p x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . x . .
+ . x x .
+. . x . .
  p . . p
-p p x p p
- p x x p
-p p x p p
- p p p p
 x K K K x
  K K K K
-x p p p x
- x p p x
-x p p p x
- x p p x
-x p p p x
- p p p p
-p p x p p
- p x x p
-p p x p p
- p p p p
-x K K K x
- K K K K
-x p p p x
+x . p . x
  x p p x

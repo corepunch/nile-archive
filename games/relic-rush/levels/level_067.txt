@@ -2,25 +2,25 @@ name: Ruined Colonnade
 tier: normal
 teaches: Rows of fallen pillars leave narrow lanes; match along the colonnades.
 
-x p p p x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. s . s .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. s . s .
+ . . . .
+. p . p .
  p p p p
-p p p p p
- p p p p
-p p . p p
- p p p p
-p s p s p
- p p p p
-p p p p p
- p p p p
-p p x p p
- p p p p
-p p p p p
- p p p p
-p s p s p
- p p p p
-p p . p p
- p p p p
-p p x p p
+. p x p .
  p p p p
 p p . p p
  p p p p

@@ -2,27 +2,27 @@ name: Throne of the Valley
 tier: boss
 teaches: Every tablet on the throne takes two hits: the valley's last stand.
 
-x P P P x
- x P P x
-x P P P x
+x . . . x
+ x . . x
+x . . . x
  x j j x
-x P P P x
- x P P x
-x P P P x
- x P P x
-P P P P P
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. g . g .
+ s . . s
+. . . . .
+ . . . .
+. J . J .
+ . . . .
+. . x . .
+ P . . P
+. . x . .
  P P P P
-P P P P P
- P P P P
-P g P g P
- s P P s
-P P P P P
- P P P P
-P J P J P
- P P P P
-P P x P P
- P P P P
-P P x P P
- P P P P
-P P x P P
+. P x P .
  P P P P

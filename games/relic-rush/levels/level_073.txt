@@ -4,21 +4,21 @@ teaches: A chained wall holds back the flooded crypt; open it to refill the lowe
 
 x . . . x
  . . . .
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 K K K K K
  x x x x
-p p p p p
- p p p p
-p p p p p
+. . . . .
+ . . . .
+. p p p .
  p p p p
 p s p s p
  p p p p

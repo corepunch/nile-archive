@@ -4,25 +4,25 @@ teaches: One gift box with a ribbon down its middle: cut the tinsel ribbon rows 
 
 x . x . x
  . x x .
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 k k k k k
  k k k k
-p p p p p
+. . p . .
+ . p p .
+. p p p .
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. p p p .
+ . p p .
+. . p . .
+ . . . .
+. . . . .
+ . . . .

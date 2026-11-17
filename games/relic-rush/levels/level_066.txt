@@ -2,25 +2,25 @@ name: Triumphal Arch
 tier: easy
 teaches: An arch stands open at the bottom; clear every tablet under and around it.
 
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p j p p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . j . .
+ . . . .
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. . . . .
+ . p p .
+. p p p .
  p p p p
 p p x p p
  p x x p

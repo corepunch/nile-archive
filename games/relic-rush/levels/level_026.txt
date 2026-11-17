@@ -2,21 +2,21 @@ name: Lintel Door
 tier: easy
 teaches: Clear the tablets of the lintel wall and the door posts; plain matching with a little ice at the edges.
 
-p p p p p
- p p p p
-p p p p p
- p p p p
-j p p p j
- p p p p
-j p p p j
- p p p p
-p p . p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+j . . . j
+ . . . .
+j . . . j
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  p . . p
-p p . p p
- p . . p
-p p . p p
- p . . p
-p p . p p
+p . . . p
  p . . p
 p p . p p
  p . . p

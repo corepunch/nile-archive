@@ -4,24 +4,24 @@ teaches: One chain seals a deep plaza; break it and clear the whole lower court.
 
 . . . . .
  . . . .
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. j . j .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x K x x
  x x x x
-x x p x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
+x x . x x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ p . . p
 p p p p p
  p p p p
 p p p p p

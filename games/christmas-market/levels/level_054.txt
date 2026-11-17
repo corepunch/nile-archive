@@ -5,24 +5,24 @@ teaches: Frost sits on each snowflake's heart: break it, then clear the panes.
 x x x x x
  x x x x
 x x . x x
- x p p x
-x x p x x
- x p p x
-p x p x p
+ x . . x
+x x . x x
+ x . . x
+. x . x .
+ . . . .
+. . p . .
  p p p p
-p p p p p
- p p p p
-p p J p p
- p j j p
+. p J p .
+ . j j .
 x p p p x
- p j j p
-p p J p p
+ . j j .
+. p J p .
  p p p p
-p p p p p
- p p p p
-p x p x p
- x p p x
-x x p x x
- x p p x
+. p p p .
+ . . . .
+. x p x .
+ x . . x
+x x . x x
+ x . . x
 x x . x x
  x x x x

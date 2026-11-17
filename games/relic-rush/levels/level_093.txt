@@ -4,23 +4,23 @@ teaches: Chains bar every door of the gatehouse; open them to flood the lower ha
 
 x x x x x
  x x x x
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p s p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . s . .
+ . . . .
 x x x x x
  C C C C
-p p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+p . p . p
  p p p p
 p p p p p
  p p p p

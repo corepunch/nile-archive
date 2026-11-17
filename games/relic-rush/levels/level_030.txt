@@ -2,27 +2,27 @@ name: Hall of Pillars
 tier: boss
 teaches: Every tablet in the pillared hall takes two hits; make each match count twice.
 
-x P P P x
+x . . . x
+ . . . .
+. . . . .
+ . j j .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
  P P P P
-P P P P P
- P j j P
-P P P P P
- P P P P
-P P P P P
- P P P P
-P P x P P
- P P P P
-P P P P P
- P P P P
-P P x P P
- P P P P
-P P P P P
- P P P P
-P P x P P
- P P P P
-P P P P P
- P P P P
-P g P g P
- P P P P
+. g P g .
+ P . . P
 P P s P P
  P P P P

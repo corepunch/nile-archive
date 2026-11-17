@@ -4,25 +4,25 @@ teaches: Double panes everywhere and a double tinsel curtain across the middle o
 
 x x . x x
  x . . x
-x P P P x
- x P P x
-x P P P x
- x P P x
-x P P P x
- P P P P
-x J P J x
- P P P P
-x P P P x
- P P P P
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+x J . J x
+ . . . .
+x . . . x
+ . . . .
 G G G G G
  G G G G
-P P P P P
- P P P P
-J P P P J
- P P P P
-P P P P P
- P P P P
-P J P J P
- P P P P
-s P P P s
+P . P . P
+ . . . .
+J . . . J
+ . . . .
+. . . . .
+ . . . .
+. J . J .
+ P . . P
+s . p . s
  x x x x

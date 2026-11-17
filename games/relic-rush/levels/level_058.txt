@@ -4,23 +4,23 @@ teaches: Two chained doors flank the open eye; clear the chamber of tablets belo
 
 x x x x x
  x x x x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p x p p
- p x x p
-p p x p p
- p x x p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
 x K x K x
  x x x x
-x p x p x
- p p p p
-p p p p p
- p p p p
-p p p p p
+x . x . x
+ . . . .
+. . . . .
+ . p p .
+p p . p p
  p p p p
 p p p p p
  p p p p

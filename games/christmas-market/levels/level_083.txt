@@ -4,25 +4,25 @@ teaches: Three awnings top a row of stalls; the tinsel awning below them feeds a
 
 . x . x .
  . . . .
-. p p p .
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
+. . . . .
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
 K K K K K
  K K K K
 p p p p p
  p p p p
 p p p p p
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . p . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

@@ -3,22 +3,22 @@ tier: hard
 teaches: Two obelisk courts rise from a shared hall under a clipped skyline; every move counts on each side.
 
 x . x . x
- x p p x
-x p x p x
- p p p p
-x p x p x
- p p p p
-p p x p p
- p p p p
-p s x s p
- p p p p
-p p x p p
- p p p p
-p J x J p
- p p p p
-p p x p p
- p p p p
-p p p p p
+ x . . x
+x . x . x
+ . . . .
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+. s x s .
+ . . . .
+. . x . .
+ . . . .
+. J x J .
+ . . . .
+. . x . .
+ . . . .
+. . p . .
  p p p p
 p p p p p
  p p p p

@@ -6,16 +6,16 @@ x x x x x
  x x x x
 x x x x x
  x x x x
-p p x p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-K p p p K
- p p p p
-p p x p p
- p p p p
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+K . p . K
+ . . . .
+. . x . .
+ . . . .
 K K x K K
  K K K K
 x p x p x

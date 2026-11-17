@@ -4,25 +4,25 @@ teaches: A star hangs over the market, joined to it by a narrow bridge: pieces t
 
 x x . x x
  x x x x
-x p p p x
- . p p .
-x p p p x
- p p p p
-x p p p x
- x p p x
-x x . x x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
  x . . x
 x x . x x
  x . . x
+x x . x x
+ x . . x
 p p p p p
  p p p p
 p p p p p
  p p p p
-p . p . p
- p p p p
-p p p p p
- . p p .
-p p p p p
- p p p p
+. . p . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

@@ -2,27 +2,27 @@ name: Twin Sanctums
 tier: hard
 teaches: Two sanctums share a base; break the chains and ice to reach the inner tablets.
 
-x p x p x
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
 k k x k k
  k k k k
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
 p p x p p
  j j j j
-p p x p p
+p . x . p
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+p p . p p
+ p . . p
+p . . . p
+ . . . .

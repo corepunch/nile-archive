@@ -3,26 +3,26 @@ tier: normal
 teaches: Tablets on both banks; the slanted bridge keeps the two sides fed.
 
 x x x x x
- p p p x
-p p p p x
- p p p p
-p J p p x
- p p p x
-p p p x x
+ . . . x
+. . p . x
+ . . . p
+. J p . x
+ . p . x
+. . . x x
  p J x x
-p p p x x
- p p p x
-p p p p x
- p p p p
-p p p p p
- p p p p
-x p p p p
- x p p p
-x x p p p
+p . . x x
+ . . . x
+. . . . x
+ . . p .
+p . . . p
+ . p . .
+x . . . .
+ x . . .
+x x . . p
  x x J p
-x x p p p
- x p p p
-x p p J p
- p p p p
-x p p p p
- x p p p
+x x . . .
+ x . p .
+x . p J .
+ p . . .
+x . p . .
+ x . . .

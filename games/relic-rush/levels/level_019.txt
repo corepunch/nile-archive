@@ -2,25 +2,25 @@ name: Sun Court
 tier: hard
 teaches: A dense court of tablets: iced tablets glow at the rim of the sun, and every cell matters.
 
-x x p x x
- x p p x
-x p p p x
+x x . x x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ j . . j
+. . . . .
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- j p p j
-p p p p p
- p p p p
-p p p p p
+. p . p .
  p p p p
 p p p p p
  p p p p

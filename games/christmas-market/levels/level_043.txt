@@ -2,27 +2,27 @@ name: Market Stall
 tier: normal
 teaches: A row of latches along the counter gates the stock below the awning; break them, then clear the shelves.
 
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  x x x x
-x p p p x
- p p p p
-x . p . x
- p p p p
-x p p p x
- p p p p
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
 k k k k k
  k k k k
-p p p p p
+. . p . .
+ . p p .
+. p p p .
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
+. p p p .
+ . . . .
+x . . . x
+ . . . .

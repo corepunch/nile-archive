@@ -4,25 +4,25 @@ teaches: Work around the narrow crown of the bell and keep the wide mouth clear;
 
 x x . x x
  x . . x
-x p p p x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . p . x
+ . p p .
+. p p p .
  p p p p
-x p p p x
+. p p p .
  p p p p
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p x x p
-p p . p p
- p . . p
-p x . x p
+. p p p .
+ . p p .
+. . p . .
+ . p p .
+. . p . .
+ . x x .
+. . . . .
+ . . . .
+. x . x .
  x x x x
 x x x x x
  x x x x

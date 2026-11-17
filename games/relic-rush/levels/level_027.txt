@@ -2,27 +2,27 @@ name: Twin Obelisks
 tier: normal
 teaches: Two obelisks rise from one shared base; stones guard the lower shafts.
 
-x p x p x
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p s x s p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p s x s p
- p p p p
-p p x p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. s x s .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. s x s .
+ . . . .
+. . x . .
+ . . . .
+p p . p p
+ . p p .
+. p p p .
  p p p p
 p p p p p
  p p p p

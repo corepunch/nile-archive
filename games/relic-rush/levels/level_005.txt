@@ -19,10 +19,10 @@ x x c x x
 x x . x x
  x . . x
 x . . . x
- p p p p
-p p p p p
- p p p p
-p p p p p
+ . . . .
+. . . . .
+ . p p .
+. p p p .
  p p p p
 p p p p p
  p p p p

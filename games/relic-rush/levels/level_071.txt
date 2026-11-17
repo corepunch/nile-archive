@@ -4,22 +4,22 @@ teaches: Three chained locks hold the cistern; break any of them to let pieces f
 
 x x x x x
  x x x x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
 x K K K x
  x x x x
-x p p p x
- p p p p
-p p p p p
- p p p p
+x . . . x
+ . . . .
+. p . p .
+ p . . p
 p p p p p
  p p p p
 x p p p x

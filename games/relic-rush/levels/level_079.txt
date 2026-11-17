@@ -4,25 +4,25 @@ teaches: Two shrines rise from one hall; break the double chains to feed the tab
 
 x . x . x
  x . . x
-x p x p x
- p p p p
-p p x p p
- p p p p
-p s x s p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+. s x s .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
 K K x K K
  K K K K
 p p x p p
  p p p p
 p p x p p
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+p p . p p
+ p . . p
+p . . . p
+ . . . .
+. . . . .
+ . . . .

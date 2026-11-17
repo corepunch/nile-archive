@@ -3,26 +3,26 @@ tier: normal
 teaches: Two reindeer pull one sleigh by a shared harness: tinsel is scattered on their coats and ice sits in the antlers.
 
 x . x . x
- p p p p
-x p x p x
- p p p p
-x p x p x
- p p p p
+ . . . .
+x . x . x
+ . . . .
+x . x . x
+ . . . .
 x k x k x
- p p p p
-p p p p p
- p p p p
-p p p p p
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  k p p k
-p p p p p
+. p p p .
  p p p p
-p p p p p
+. p p p .
  k p p k
-p p p p p
- p j j p
-p k p k p
- p p p p
-p p x p p
- p x x p
+. . p . .
+ . j j .
+. k . k .
+ . . . .
+. . x . .
+ . x x .
 . . x . .
  . x x .

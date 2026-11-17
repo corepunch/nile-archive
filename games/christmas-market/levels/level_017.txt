@@ -6,20 +6,20 @@ teaches: Two bells hang from one bar: keep pieces flowing down both bells and ac
  . . . .
 x . x . x
  x x x x
-x p x p x
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . p p .
+. p x p .
  p p p p
 p p x p p
  p p p p
 p p x p p
  p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-x p x p x
- x p p x
+x . x . x
+ x . . x
 x . x . x
  x x x x
 x . x . x

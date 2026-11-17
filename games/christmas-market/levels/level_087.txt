@@ -3,24 +3,24 @@ tier: normal
 teaches: Green double panes ring the carousel pole under the canopy; hit the middle twice.
 
 x x . x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p P p x
- p p p p
-x p P p x
- p P P p
-x p P p x
- p P P p
-x p P p x
- p P P p
-x p P p x
- p p p p
-p p p p p
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . p . x
+ . p p .
+x . P . x
+ . p p .
+. p p p .
  p p p p
 . p p p .
  p p p p

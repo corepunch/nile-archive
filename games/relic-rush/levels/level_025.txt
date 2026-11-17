@@ -6,20 +6,20 @@ teaches: The sentinel walls are joined at the base; double ice holds the middle 
  . . . .
 . . . . .
  . . . .
-p p x p p
- p p p p
-p J x J p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
+. . x . .
+ . . . .
+. J x J .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
  J p p J
-p p x p p
- p p p p
+p . x . p
+ . p p .
 p p p p p
  p p p p
 p p p p p

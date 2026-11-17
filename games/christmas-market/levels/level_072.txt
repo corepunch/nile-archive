@@ -5,19 +5,19 @@ teaches: Single tinsel along the eaves: break it to let snow fall into the icicl
 x x x x x
  x x x x
 x x x x x
- x p p x
-p x p x p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p k p k p
- p p p p
-p p p p p
- p p p p
+ x . . x
+. x . x .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . p p .
+. k . k .
+ . . . .
+. p . p .
+ . p p .
 x K x K x
  K k k K
 x p x p x

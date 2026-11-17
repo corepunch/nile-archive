@@ -2,27 +2,27 @@ name: Wreath
 tier: hard
 teaches: A latched ring of tinsel across the top gates the lower wreath; clear the garland beneath.
 
-x p p p x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 k k x k k
  k k k k
-p p x p p
+. . x . .
+ . x x .
+. p x p .
  p x x p
 p p x p p
  p x x p
 p p x p p
  p x x p
 p p x p p
- p x x p
-p p x p p
- p p p p
-x p p p x
- p p p p
-x p p p x
- x p p x
+ . p p .
+x . p . x
+ . . . .
+x . . . x
+ x . . x

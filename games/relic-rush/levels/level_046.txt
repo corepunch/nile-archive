@@ -4,21 +4,21 @@ teaches: A ring of diagonal corridors around an open court; tablets lie along ev
 
 x x x x x
  x x x x
-x x p x x
- x p p x
-x p p p x
- p p p p
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p p p p
-p p p p p
+x x . x x
+ x . . x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . . . .
+p . . . p
  p p p p
 x p p p x
  p p p p

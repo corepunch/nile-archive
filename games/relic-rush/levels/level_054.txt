@@ -3,26 +3,26 @@ tier: normal
 teaches: Fallen columns lie slantwise from corner to corner; plan around the stones as the floor narrows.
 
 x x x x x
- x p p p
-x p p p p
- p p p p
-x p p p p
- x p s p
+ x . . .
+x p p . .
+ . . . .
+x . . . .
+ x p s .
 x x p s p
  x x p p
-x x x p p
- x x p p
-x x p p p
- x p p p
-x p p p x
- p p p x
-p p p x x
- p p x x
-p p x x x
+x x x . .
+ x x . p
+x x p . .
+ x p . p
+x . . . x
+ p . p x
+. . p x x
+ p . x x
+. . x x x
  p p x x
 p s p x x
- p s p x
-p p p p x
- p p p p
-p p p p x
- p p p x
+ . s p x
+. . . . x
+ . . . .
+. . p p x
+ . . . x

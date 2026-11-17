@@ -4,25 +4,25 @@ teaches: Every pane is double: two hits to light each lantern of the snowflake.
 
 x . . . x
  x . . x
-x P P P x
- x P P x
-x P P P x
- x P P x
-. x P x .
- . P P .
-. P P P .
- P P P P
-x P P P x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+. x . x .
+ . . . .
+. . . . .
+ . . . .
+x . P . x
  x P P x
 x P P P x
  P P P P
 . P P P .
  P P P P
 x x P x x
- P P P P
-x P P P x
- x P P x
-x P P P x
- x P P x
+ . . . .
+x . . . x
+ x . . x
+x . . . x
+ x . . x
 x . . . x
  x . . x

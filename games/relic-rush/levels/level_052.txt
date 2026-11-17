@@ -4,25 +4,25 @@ teaches: Clear the tablets terrace by terrace; the plain outer steps are free sp
 
 x x x x x
  x x x x
-x p p p x
- x p p x
-x p p p x
- p p p p
-x p p p x
- p p p p
-j p p p j
- p p p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+j . . . j
+ . . . .
+. . . . .
+ . . . .
+j . . . j
+ . . . .
+. . . . .
+ . . . .
+j . . . j
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 . p p p .
- p p p p
-j p p p j
- p p p p
-. p p p .
- p p p p
-j p p p j
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
  p p p p

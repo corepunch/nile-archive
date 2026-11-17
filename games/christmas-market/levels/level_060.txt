@@ -4,25 +4,25 @@ teaches: A boss with double panes, double frost, stones and double tinsel at onc
 
 x . x . x
  . x x .
-x P x P x
- P x x P
-P P x P P
- P P P P
-P P x P P
- J P P J
-P J P J P
- P P P P
-G P P P G
+x . x . x
+ . x x .
+. . x . .
+ . . . .
+. . x . .
+ J . . J
+. J . J .
+ . . . .
+G P p P G
  P G G P
-P P P P P
- s P P s
-P s x s P
- P P P P
-P P x P P
- P P P P
-G P x P G
- P G G P
-P I x I P
+. . . . .
+ s . . s
+. s x s .
+ . . . .
+. . x . .
+ . . . .
+G . x . G
+ . G G .
+. I x I .
  I P P I
 x P x P x
- P x x P
+ . x x .

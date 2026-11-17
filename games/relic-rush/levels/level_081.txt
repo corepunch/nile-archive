@@ -4,25 +4,25 @@ teaches: The stair slants down to a landing of double chains; break them as the 
 
 x x x x x
  x x x x
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p j p p
- p p p p
-p p p p p
- p p p p
-p p p p x
- p p p p
-p K K K p
- p p p p
-x p p p p
- p p p p
-p p p p p
- p p p p
-p p j p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+. . . . .
+ . . p .
+. p p p .
+ . . p .
+. . j . .
+ . . . .
+. . . p .
+ . . p .
+. . . . x
+ . . . p
+. K K K .
+ p . . .
+x . . . .
+ . p . .
+. p . . .
+ . . . .
+. . j . .
+ . p . .
+. p p p .
+ . p . .
+. . . . .
  x x x x

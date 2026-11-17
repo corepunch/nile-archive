@@ -2,24 +2,24 @@ name: Twin Courts
 tier: normal
 teaches: Two courtyards, each with a fountain, join in one hall; keep both sides moving.
 
-x p x p x
+x . x . x
  . . . .
-p p x p p
- p p p p
-p . x . p
- p p p p
-p s x s p
- p p p p
-p p x p p
- p p p p
-p j x j p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p p p p
- p p p p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. s x s .
+ . . . .
+. . x . .
+ . . . .
+. j x j .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
 p p p p p
  p p p p
 p p p p p

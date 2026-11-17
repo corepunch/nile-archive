@@ -2,25 +2,25 @@ name: Arch of Echoes
 tier: normal
 teaches: A great arch opens the temple floor; pieces slide round the doorway.
 
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. j . j .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
  p p p p
 p j p j p
  p p p p

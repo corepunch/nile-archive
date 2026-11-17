@@ -4,16 +4,16 @@ teaches: Two layers of chain guard a deep vault: break the gate, then the chains
 
 x x x x x
  x x x x
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x K K K x
  x K K x
 x p p p x

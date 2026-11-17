@@ -5,24 +5,24 @@ teaches: A stair of plain treads descends to the middle; chains seal the landing
 . x x x .
  x x x x
 . x x x .
- p x x p
-p p x p p
- p x x p
-p p x p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x k k k x
  k k k k
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 p s p s p
- p p p p
-p p p p p
- p p p p
+ p . . p
+p p . p p
+ p . . p
 p p p p p
  p p p p

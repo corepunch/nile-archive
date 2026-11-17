@@ -4,20 +4,20 @@ teaches: Vines choke a well; clear the ring of chains, then the cellar behind th
 
 x . . . x
  . . . .
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p K p p
- p K K p
-p p p p p
- p K K p
-p p K p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . K . .
+ . K K .
+. . p . .
+ . K K .
+. . K . .
+ . . . .
+p . p . p
+ . p p .
 x K K K x
  x x x x
 x p p p x

@@ -2,25 +2,25 @@ name: Skylight Hall
 tier: normal
 teaches: The roof is open at the top, but the hall has two pillars to match around.
 
-p p x p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p s p s p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. s . s .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+p p . p p
+ p . . p
+p p . p p
  p p p p
 p p p p p
  p p p p

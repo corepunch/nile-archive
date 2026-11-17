@@ -4,24 +4,24 @@ teaches: Frost over lanterns: break the ice first, then light the tablet beneath
 
 x x x x x
  x x x x
-. p p p .
- p p p p
-. p p p .
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 . j p j .
- p p p p
-. p p p .
- p p p p
-. p p p .
- p p p p
-. j p j .
- p p p p
-. p p p .
- p p p p
-. p p p .
- p p p p
-x p p p x
  . p p .
+. p p p .
+ p p p p
+. p p p .
+ . p p .
+. j p j .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
 x . . . x
  x . . x
 x x x x x

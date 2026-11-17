@@ -2,26 +2,26 @@ name: Bridge Footings
 tier: easy
 teaches: A deck rests on two piers, and chains guard the footings below; free them to reach the last tablets.
 
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
 k k x k k
  k k k k
-p p x p p
- p p p p
+. . x . .
+ . . . .
 p p x p p
  p p p p
 x x x x x

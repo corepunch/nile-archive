@@ -4,25 +4,25 @@ teaches: Two tinsel curtains stack: the upper one opens the middle of the stage,
 
 x x x x x
  x x x x
-p x x x p
- p x x p
-p p x p p
- p p p p
-p p x p p
- K p p K
-p K p K p
+. x x x .
+ . x x .
+. . x . .
+ . . . .
+. . x . .
+ K . . K
+. K . K .
  p K K p
-p p K p p
- p p p p
-p p K p p
- p p p p
-p p p p p
- K p p K
-x K p K x
+. p K p .
+ . . . .
+. . K . .
+ . . . .
+p . . . p
+ K . . K
+x K . K x
  p K K p
 x p K p x
  x p p x
 x x p x x
- x p p x
+ x . . x
 x x x x x
  x x x x

@@ -4,25 +4,25 @@ teaches: A tall fir of double panes: every lantern needs two hits.
 
 x x . x x
  x . . x
-x P P P x
- x P P x
-x P P P x
- P P P P
-x P P P x
- x P P x
-x P P P x
- P P P P
-P P P P P
- P P P P
-x P P P x
- P P P P
-P P P P P
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+x . P . x
  P P P P
 P P P P P
  P P P P
-x p p p x
- x p p x
-x p p p x
- x p p x
-x p p p x
- x p p x
+. P P P .
+ . P P .
+x . p . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ x . . x

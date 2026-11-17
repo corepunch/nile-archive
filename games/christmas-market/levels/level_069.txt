@@ -4,25 +4,25 @@ teaches: Striped tinsel everywhere, single and double.
 
 x x x x x
  x . . .
-x p p p .
- p p p p
-p p p p x
- p p p x
-p k k x x
- p p x x
-p p x x x
+x . . . .
+ . . . .
+. . p p x
+ . . p x
+. k k x x
+ . . x x
+p . x x x
  K K x x
 p p p x x
- p p p x
-x p p p x
- x p p p
+ p . p x
+x . . . x
+ x p . p
 x x p p p
  x x K K
-x x x p p
- x x p p
-x x k k p
- x p p p
-x p p p p
- p p p p
-. p p p x
+x x x . p
+ x x . .
+x x k k .
+ x p . .
+x p p . .
+ . . . .
+. . . . x
  . . . x

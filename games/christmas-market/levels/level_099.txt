@@ -5,21 +5,21 @@ teaches: Three snowballs with coal buttons: seal the base pocket and free it wit
 x x x x x
  x x x x
 x . . . x
- x p p x
-x p p p x
- p p p p
-x p p p x
- p p p p
-x p p p x
- x p p x
+ x . . x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ x . . x
 x x . x x
  x . . x
-x p p p x
- p p p p
-p p J p p
- p p p p
-p p J p p
- p p p p
+x . p . x
+ . p p .
+. . J . .
+ . . . .
+. p J p .
+ p . . p
 x K K K x
  x K K x
 x p p p x

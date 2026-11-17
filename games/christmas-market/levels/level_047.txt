@@ -2,27 +2,27 @@ name: Skating Rink
 tier: normal
 teaches: A wide oval rink, tablets everywhere except a patch of clear ice in the middle.
 
-x p p p x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . p . .
  p p p p
 p p . p p
  p j j p
 p p . p p
  p . . p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
-x p p p x
- x p p x
+. p p p .
+ . p p .
+. . p . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ x . . x

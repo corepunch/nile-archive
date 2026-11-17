@@ -2,27 +2,27 @@ name: Chained Cloisters
 tier: normal
 teaches: The cloisters meet at one base; chains lock the inner galleries.
 
-p p x p p
- p p p p
-p p x p p
- p p p p
-p k x k p
- p p p p
-p p x p p
- p p p p
-p x x x p
- p p p p
-k p x p k
- p p p p
-p p x p p
- p p p p
-p s x s p
- p p p p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. k x k .
+ . . . .
+. . x . .
+ . . . .
+. x x x .
+ . . . .
+k . x . k
+ . . . .
+. . x . .
+ . . . .
+. s x s .
+ . . . .
 k k x k k
  k k k k
-p p p p p
+p p . p p
  p p p p
-p p p p p
+p p . p p
  p p p p
 x x x x x
  x x x x

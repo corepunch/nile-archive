@@ -4,25 +4,25 @@ teaches: Stepped terraces slant across the ruins; mind the double ice and the st
 
 x x x x x
  x x x x
-p p p p p
- p p p p
-p p p p p
- p p J p
-p p p p p
- p s p p
-p p p p p
- p p p p
-x p p p p
- p p p p
-p p p p p
- p p p p
-p p p p x
- p p p p
-p p p p p
- p p s p
-p p p p p
- p J p p
-p p p p p
- p p p p
-p p p p p
+. p . . .
+ . . . p
+. p . . .
+ . p J .
+p . p p .
+ . s p .
+. . . . .
+ . . . .
+x . . p .
+ p p . .
+. . . . .
+ . . p p
+. p . . x
+ . . . .
+. . . . .
+ . p s .
+. p p . p
+ . J p .
+. . . p .
+ p . . .
+. . . p .
  x x x x
