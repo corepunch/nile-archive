@@ -62,7 +62,7 @@ game_lua    = $(wildcard games/$(1)/lua/*.lua)
 # the engine's own Lua, shared by every game (the web build serves it from /engine)
 ENGINE_LUA  := $(filter-out engine/engine.d.lua,$(wildcard engine/*.lua))
 
-.PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
+.PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings level-sheets web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: $(ENGINE_DEPS)
@@ -213,6 +213,14 @@ smoke: build/test/all
 
 buildings:
 	python3 tools/buildings.py $(GAME) $(KEYS) $(if $(REBUILD),--rebuild) $(if $(BLENDER),--blender)
+
+# One overview image of every match-3 board per game (docs/LEVEL_DESIGN.md).
+#   make level-sheets                       # both games, all 100 levels
+#   make level-sheets SHEET_GAMES=relic-rush LEVELS=1-30
+SHEET_GAMES ?= relic-rush christmas-market
+level-sheets:
+	@mkdir -p docs/review/level-sheets
+	@for g in $(SHEET_GAMES); do python3 tools/hex_levels.py $$g $(if $(LEVELS),--levels $(LEVELS)) --sheet docs/review/level-sheets/$$g.png | tail -2; done
 
 # --- WebAssembly (Emscripten) ------------------------------------------------
 # gnu11 rather than c11: Emscripten's EM_JS/EM_ASM macros need GNU extensions.
