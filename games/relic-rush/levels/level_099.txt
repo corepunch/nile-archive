@@ -1,21 +1,28 @@
 name: Last Door
 tier: hard
-teaches: A tiny sealed room at the foot of the ruins holds the last tablets.
+teaches: A small sealed room at the foot of the ruins holds the last tablets behind two gates.
 
-    p
-   p p
-  p p p
+x x x x x
+ . p p .
+p x p x p
  p p p p
-x p p p x
+p p p p p
  p p p p
-p p s p p
+p p p p p
+ p p p p
+p p . p p
  p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
 x p p p x
- p K K p
-  K x K
-   p p
-    p
+ p p p p
+x p p p x
+ x p p x
+x x K x x
+ x K K x
+x K K K x
+ K K K K
+. p p p .
+ . p p .

@@ -1,21 +1,28 @@
 name: Twin Wreaths
 tier: easy
-teaches: Two wreath rings, each with a tinsel gate in its lower half.
+teaches: Two wreath rings hang one above the other, each with a tinsel gate in its lower half.
 
-    x
-   . .
-  p x p
- p p p p
+x . . . x
+ x p p x
+x p p p x
+ p . . p
+p p x p p
+ p x x p
 p p x p p
  p p p p
-p p x p p
- p p p p
-p x x x p
+x K K K x
  K K K K
-K K x K K
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
  p p p p
 p p x p p
+ p x x p
+p p x p p
  p p p p
-  p x p
-   . .
-    x
+x K K K x
+ K K K K
+x p p p x
+ x p p x

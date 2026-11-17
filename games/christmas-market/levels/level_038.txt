@@ -1,21 +1,28 @@
 name: Pine Cone
 tier: normal
-teaches: One chain at the tip: break it and the whole cone below fills with pieces.
+teaches: Chains at the stem hold the whole cone: break them and the scales below fill with pieces.
 
-    p
-   p p
-  p p p
- p x x p
-p x k x p
- x p p x
+x x . x x
+ x . . x
+x . . . x
+ x . . x
+x k k k x
+ x k k x
 x p p p x
  p p p p
-p k p k p
+p p p p p
  p p p p
-k p p p k
+p p p p p
  p p p p
-p k p k p
+p p p p p
  p p p p
-  p p p
-   p p
-    p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x x p x x
+ x p p x
+x x p x x
+ x p p x

@@ -1,21 +1,28 @@
 name: Sentinel Walls
 tier: hard
-teaches: Double ice: it takes two matches to break each sentinel block.
+teaches: Double ice: it takes two matches to break each block on the sentinel walls.
 
-    x
-   p p
-  p x p
+x . x . x
+ x . . x
+. . x . .
+ . . . .
+. . x . .
  . . . .
 p p x p p
  p p p p
-p . x . p
- p p p p
-x J x J x
- p p p p
-p . x . p
- p p p p
 p J x J p
- . . . .
-  p x p
-   p p
-    x
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ J p p J
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p

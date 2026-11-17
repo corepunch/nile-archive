@@ -177,7 +177,8 @@ local function test_holes_and_shapes()
                 if j >= 0 and g.active[j] and not seen[j] then seen[j] = true; n = n + 1; queue[n] = j end
             end
         end
-        check(n == n_active, "shape is connected")
+        -- A board may have separate areas; tools/hex_levels.py keeps each one at 12 cells or more.
+        check(n >= 12, "the first area is big enough to play")
         rules.game_collapse(g)
         local fed = rules.game_fed_cells(g)
         for i = 0, CELLS - 1 do

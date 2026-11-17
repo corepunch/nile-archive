@@ -2,20 +2,27 @@ name: Hot Chestnuts
 tier: normal
 teaches: Two small gates, stones and a hole feed one big chamber.
 
-    .
-   p p
-  p s p
- p s s p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p x x x p
- x K K x
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+x K x K x
+ x x x x
+x p p p x
+ x p p x
 x p p p x
  p p p p
 p p p p p
  p p p p
-  p p p
-   p p
-    .
+p s s s p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p

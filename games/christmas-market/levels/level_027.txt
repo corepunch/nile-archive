@@ -2,20 +2,27 @@ name: Twin Candles
 tier: normal
 teaches: Two separate areas, each its own candle: pieces of one never reach the other.
 
-    x
-   p p
-  p x p
+x . x . x
+ x x x x
+x . x . x
+ . . . .
+x p x p x
  p p p p
 x p x p x
  p p p p
-p p x p p
+x p x p x
  p p p p
-p p x p p
+x p x p x
  p p p p
-p p x p p
+x p x p x
  p p p p
-p p x p p
+x p x p x
  p p p p
-  p x p
-   p p
-    x
+x p x p x
+ p p p p
+x p x p x
+ p p p p
+. p x p .
+ p p p p
+. p x p .
+ p p p p

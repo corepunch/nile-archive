@@ -1,21 +1,28 @@
 name: Twin Wells
 tier: normal
-teaches: A watchtower stands apart from the court; stones and chains guard the lower wells.
+teaches: Two courts, a well in each: a carved stone sits at its heart, and a vine holds the rim.
 
-    p
-   . .
-  x p x
- p p p p
-p x p x p
- p p p p
-p x p x p
- p x x p
+x . x . x
+ x . . x
+. . x . .
+ . . . .
 p p x p p
  p p p p
-p k . k p
+p p x p p
  p p p p
-s p . p s
+p p x p p
  p p p p
-  p . p
-   . .
-    .
+p p x p p
+ p p p p
+p k x k p
+ p p p p
+p s x s p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+x . x . x
+ . . . .

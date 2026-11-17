@@ -1,21 +1,28 @@
 name: Terrace Gate
 tier: normal
-teaches: A chained shaft feeds a great terrace hall; a second line of chains waits within.
+teaches: A chained gate feeds a great terrace hall; a second line of chains waits within.
 
-    p
-   p p
-  p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+x x . x x
+ x . . x
+x x p x x
+ x p p x
+x x p x x
+ x p p x
 x x K x x
  x K K x
-x K p K x
+x p p p x
  p p p p
-K p K p K
+p p p p p
  p p p p
-  p p p
-   p p
-    p
+p p p p p
+ p p p p
+p p . p p
+ p p p p
+K K K K K
+ K K K K
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p

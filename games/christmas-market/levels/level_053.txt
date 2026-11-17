@@ -2,20 +2,27 @@ name: Sleigh Slide
 tier: normal
 teaches: Break the slanted tinsel on each side to open the slide below.
 
-    x
-   . .
-  . x .
- p p p p
+. . x . .
+ . x x .
 p p x p p
- p p p p
+ p x x p
 p p x p p
+ p x x p
+p p p p p
  p p p p
-p p x p p
- p k k p
-p K x K p
- K p p K
-K p x p K
+p p p p p
  p p p p
-  p x p
-   p p
-    x
+p p p p p
+ p p p p
+k K p K k
+ K K K K
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x x p x x
+ x p p x

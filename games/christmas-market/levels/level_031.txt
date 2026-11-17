@@ -1,21 +1,28 @@
 name: Gingerbread House
 tier: easy
-teaches: Break the chain on the doorstep so pieces can fall into the cosy rooms below.
+teaches: Break the chains on the doorstep so pieces can fall into the cosy rooms below.
 
-    p
-   p p
-  . p .
- . p p .
-p p p p p
- p . . p
-p . p . p
- p x x p
-p x k x p
+x x p x x
  x p p x
+x p p p x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x x k x x
+ x k k x
+x p p p x
+ p p p p
+x . p . x
+ p p p p
+x . p . x
+ p p p p
+x p p p x
+ p p p p
 x p . p x
- p . . p
-p k . k p
- p . . p
-  . p .
-   p p
-    p
+ p p p p

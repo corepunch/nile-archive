@@ -1,21 +1,28 @@
 name: Overgrown Stair
 tier: easy
-teaches: Ice and a chain-like gate hold the last steps of the stair; break the ice to reach the bottom.
+teaches: The stair descends to a sunken floor; ice sits on the tablets of the lower steps, so match twice to clear them.
 
-    .
-   . .
-  . . .
+. x x x .
+ x x x x
+. x x x .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . . . .
+p p p p p
  p p p p
-x p p p x
+p p p p p
  p p p p
-x j p j x
+p p p p p
+ p p p p
+p p p p p
+ j p p j
+p j p j p
+ p p p p
+p p p p p
  p p p p
 p j p j p
  p p p p
-x j p j x
+p p p p p
  p p p p
-x p p p x
- p x x p
-  x j x
-   . .
-    p

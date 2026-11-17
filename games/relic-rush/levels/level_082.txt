@@ -2,20 +2,27 @@ name: Colonnade
 tier: easy
 teaches: A row of chained tablets seals the crypt under the colonnade.
 
-    p
-   p p
-  p p p
+x x p x x
+ x p p x
+x . p . x
  p p p p
-. p s p .
- p x x p
-p j p j p
- p x x p
-. p p p .
+p . s . p
  p p p p
+. x p x .
+ . p p .
+. x p x .
+ . p p .
+. x p x .
+ . p p .
+. x p x .
+ . p p .
 K K K K K
  K K K K
-p x p x p
+p p p p p
  p p p p
-  p p p
-   p p
-    p
+p j p j p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p

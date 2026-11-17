@@ -68,6 +68,9 @@ static void test_lua_open(lua_State *S)
     /* Board plays per level for the extended balance runners; nil when unset. */
     const char *runs = getenv("BALANCE_RUNS");
     if (runs && atoi(runs) > 0) { lua_pushinteger(S, atoi(runs)); lua_setfield(S, -2, "balance_runs"); }
+    /* The level range tools/tune_moves.py fits, as "A-B"; nil when unset. */
+    const char *tune = getenv("TUNE_LEVELS");
+    if (tune && *tune) { lua_pushstring(S, tune); lua_setfield(S, -2, "tune_levels"); }
     lua_setglobal(S, "testing");
 }
 

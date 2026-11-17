@@ -32,29 +32,46 @@ of every level). Regenerate both with
 
 ## Our rules
 
-1. **A mirror board.** The shape, tablets and chains are all left-right
-   symmetric.
-2. **At least 49 cells** of the radius-4 hexagon's 61.
-3. **Tablets win the board.** Every board has tablets (`oil` in the engine).
+1. **A symmetric board.** The shape, tablets and blockers are a left-right
+   mirror, or the same after a half turn (180 degrees about the middle cell,
+   `q, r -> -q, -r`), which is how an S or a Z is symmetric. A half-turn board
+   has no partner for the top cell of each even column (the first line of
+   the file), so leave those slots as holes; check it with `--show`.
+2. **Use the space.** The envelope is 9 columns by 12 rows of flat-top hexes
+   (108 cells), with the odd columns half a cell lower, as in King's Blossom
+   Blast. A board is 9 to 12 rows tall: vary it, and make about a third of the
+   boards shorter than 12 (tutorials and breathers especially). Use at least
+   60 cells. Holes and the outline make the shape: a temple, a tree, a tower
+   over a vault.
+3. **One board.** Every cell connects to every other. Parts may be joined by
+   a single cell (a neck), but join wide parts by two or more cells. Two
+   halves side by side read as two puzzles, not one board.
+4. **Use the hex.** A hex grid has diagonals a square grid lacks. Prefer
+   shapes only it can make: an S or a Z, a zigzag, a chevron, a slanted
+   staircase, and **diagonal tunnels** running at 60 degrees. Pieces slide
+   down a diagonal tunnel one cell at a time when nothing lies straight above
+   them, so a tunnel from one chamber to another trickles pieces at an angle.
+   Put a few such boards in every ten.
+5. **Tablets win the board.** Every board has tablets (`oil` in the engine).
    Clear them all to win. The move budget is set later by the tuner, not by
    you.
-4. **Chains as gates.** Pieces fall only from the sky: a cell refills if
+6. **Chains as gates.** Pieces fall only from the sky: a cell refills if
    nothing on the board lies above it in its column, or if a piece can reach
    it falling straight down or diagonally down from a fed, unchained cell. A
    chain, or a hole, closes that path. A cell that only a chain can feed
    starts empty and stays empty until the chain breaks. Then pieces trickle
    through and the tablets below can be cleared.
-5. **Every feature by level 100.** Cradle of Rome's Adventure never uses ice
+7. **Every feature by level 100.** Cradle of Rome's Adventure never uses ice
    or stones. We introduce both gradually: ice early (7), stones at 15, so the
    campaign uses every board feature we have. Each first appearance gets a
    one-line hint card naming the feature in the game's own terms.
-6. **Follow the schedule below.** The validator rejects a feature before its
+8. **Follow the schedule below.** The validator rejects a feature before its
    first level.
 
 ## The 100-level schedule
 
 Level N follows Cradle of Rome's Adventure level N: use the same features it
-uses (read its row in `levels.json`). Adapt its coverage to our smaller board.
+uses (read its row in `levels.json`). Its boards are about as big as ours.
 
 | Levels | Tablets (share of cells) | Chains | What is new |
 | --- | --- | --- | --- |
@@ -63,7 +80,7 @@ uses (read its row in `levels.json`). Adapt its coverage to our smaller board.
 | 6 | 50–60% | several, over tablets | Chained pieces sit on tablets. |
 | 7 | 40–60% | optional | **Ice** on plain cells: it holds its piece, a match on the cell breaks it, and it gates the fall below it like a chain. Use 2–6, mirrored. |
 | 8 | 40–60% | optional | Practice, one breather. |
-| 9 | 50–70% | optional | Two separate areas, each open to the sky. |
+| 9 | 50–70% | optional | Two wings joined by a narrow bridge (Cradle's first two-area board; ours stay one board). |
 | 10 | 70–90%, nearly all double | none | The first double-tablet board: a test. |
 | 11 | 60–80% | optional | **Ice on tablets:** the ice breaks first, then the tablet. |
 | 12–14 | 60–90% | about half the boards, mostly gates | Combine known rules. Ice on about one board in three. |
@@ -77,9 +94,9 @@ uses (read its row in `levels.json`). Adapt its coverage to our smaller board.
 **Rhythm.** Inside every ten levels after the first ten, use the tiers
 `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`. Levels
 1–4 are `tutorial`. A boss is a dense, combined board, and the board after
-it is a breather. The tier sets the bot win rate the tuner aims for (tutorial
-100%, easy 92%, normal 80%, hard 62%, boss 50%; see
-`games/relic-rush/lua/difficulty.lua`).
+it is a breather. The tier sets the share of games the bot must win within
+the budget (tutorial 95%, easy 92%, normal 80%, hard 62%, boss 50%; see
+[Move budgets](#move-budgets)).
 
 **Shapes.** Make each board recognizable. Relic Rush uses ruins: temple fronts,
 terraces, arches, stairways and courtyards. Christmas Market uses festive
@@ -90,44 +107,57 @@ notch. Give every board a one-sentence intent (`teaches:`).
 ## The level file
 
 One file per level: `games/<game>/levels/level_NNN.txt` (three digits). A few
-header lines, a blank line, then the board as a 17-line honeycomb:
+header lines, a blank line, then the board as a 24-line honeycomb:
 
 ```text
 name: The Neck
-tier: normal
-teaches: Break the chain at the neck so pieces can fall into the treasure room below.
+tier: easy
+teaches: Break the chain at the neck so pieces can fall into the vault below.
 
-    .
-   . .
-  . . .
- . . . .
 . . . . .
  . . . .
 . . p . .
  . p p .
+. p . p .
+ . p p .
 . . p . .
  . . . .
 . . . . .
- . x x .
-. x c x .
+ . . . .
+x . . . x
+ x . . x
+x x c x x
+ x x x x
+x x p x x
  x p p x
-  p p p
-   p p
-    p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x x x x
 ```
 
-Each line holds up to 9 characters. The board slots alternate between even
-columns (1, 3, 5, 7, 9) on odd lines and odd columns (2, 4, 6, 8) on even
-lines, as the empty template shows. Every board slot gets a symbol; the
-spaces between slots stay spaces. **A mirror board reads the same reversed**,
-line by line.
+Each line holds up to 9 characters. Two lines make one row of the board: the
+even columns (1, 3, 5, 7, 9) on the first line and the odd columns (2, 4, 6,
+8), half a cell lower, on the second, as the empty template shows. Every board
+slot gets a symbol; the spaces between slots stay spaces. **A mirror board
+reads the same reversed**, line by line.
 
-Empty template (all 61 cells plain):
+Empty template (all 108 cells plain):
 
 ```text
-    .
-   . .
-  . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  . . . .
 . . . . .
  . . . .
@@ -139,9 +169,10 @@ Empty template (all 61 cells plain):
  . . . .
 . . . . .
  . . . .
-  . . .
-   . .
-    .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 ```
 
 | Symbol | Cell |
@@ -178,23 +209,29 @@ Empty template (all 61 cells plain):
 - **A neck.** To make one cell the only way into a chamber, close every slot
   that could feed the chamber around it: the slots beside the neck on its own
   line, the slots straight above the chamber's top cells, and the chamber's
-  outer upper diagonals. In `The Neck`, lines 12–14 close six slots around
-  the chain. The open cells at the ends of lines 12 and 13 are dead ends:
-  they fill from above but feed nothing below.
+  outer upper diagonals. In `The Neck`, lines 13–15 close every slot around
+  the chain at line 13, so the vault fills only through it.
 - **A funnel.** Below a one-cell neck, pieces spread one slot wider every line.
   A lower chamber wider than that cone has corners that are never fed, and the
   validator rejects it. Widen chambers gradually, or open more necks.
-- **Two areas.** Separate areas each need a cell open to the sky and at least
-  7 cells. A lone island of one or two cells is not an area: nothing can be
-  matched there.
-- **Every tablet can be matched.** Each tablet must sit on a straight run of
-  three board cells along one of the three axes.
+- **A diagonal tunnel.** A run of cells along a 60-degree diagonal, with the
+  slots straight above each cell closed, fills by sliding: each piece drops
+  to the next cell down the slant. Make tunnels at least two cells wide where
+  they carry tablets, so every tablet still has two lines of three.
+- **No separate parts.** The validator rejects a board that falls apart. A
+  small tower joined by one cell still refills only through that cell, so give
+  towers and wings a two-cell joint.
+- **Every tablet has two ways in.** Each tablet must sit on straight runs of
+  three playable cells (not stones) along at least two of the three axes. A
+  tablet in a one-line pocket deadlocks: its three pieces never change, and
+  no swap from outside can line them up. The bot showed boards stalling on
+  the last few tablets for hundreds of moves.
 
 ## Check a board
 
 ```sh
 python3 tools/hex_levels.py relic-rush --levels 1-20      # validate and summarize
-python3 tools/hex_levels.py relic-rush --show 5           # print a board; ~ marks gated cells (The Neck: 8)
+python3 tools/hex_levels.py relic-rush --show 5           # print a board; ~ marks gated cells (The Neck: 31)
 python3 tools/hex_levels.py relic-rush --lua              # write lua/boards.lua once all 100 pass
 make level-sheets                                         # every board of both games on one image each
 make level-sheets SHEET_GAMES=relic-rush LEVELS=41-60     # one game, a range
@@ -205,9 +242,27 @@ make level-sheets SHEET_GAMES=relic-rush LEVELS=41-60     # one game, a range
 rings, stones grey, holes outlined and gated cells marked with a red dot.
 Regenerate it after changing boards and look at it before committing.
 
-The validator checks the format, the mirror, the 49-cell minimum, tablets on a
-matchable run, areas of at least 7 cells with an inlet each, cells that stay unfed even with every
+The validator checks the format, the mirror, the 70-cell minimum, tablets on
+runs of three on two axes, every cell on a run of three, one connected board 9 to 12 rows tall, cells that stay unfed even with every
 chain broken, and the schedule's first levels. It prints each board's cells,
-tablets, chains, gated cells and areas. A board is done when it passes and
-does what its `teaches:` line says. Move budgets come from
-`python3 games/relic-rush/tools/tune_levels.py` afterwards.
+tablets, chains and gated cells. A board is done when it passes and
+does what its `teaches:` line says.
+
+## Move budgets
+
+You never write a move budget. Once the boards pass, compile them and fit the
+budgets:
+
+```sh
+python3 tools/hex_levels.py relic-rush --lua           # lua/boards.lua
+make build/test/relic-rush
+python3 tools/tune_moves.py relic-rush                # lua/level_moves.lua, docs/level-moves.md
+python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boards
+```
+
+The greedy bot (`tests/lua/level_moves.lua`) clears each board 40 times on
+hashed seeds with no move limit. The budget is the number of moves it needed
+in the tier's share of those games. Its rates order and space the boards;
+they are not human win rates. Read `games/<game>/docs/level-moves.md`
+afterwards: a board whose budget jumps far from its neighbours of the same
+tier is usually a board that does not play as its `teaches:` line says.

@@ -2,20 +2,27 @@ name: Market Stalls
 tier: easy
 teaches: Frost on the awnings: break the ice, then clear the stalls.
 
-    p
-   p p
-  p p p
- p p p p
 p p p p p
+ p p p p
+i i p i i
  i i i i
-p . p . p
+p p p p p
+ p p p p
+. x p x .
+ . p p .
+. x p x .
+ . p p .
+. x p x .
+ . p p .
+. x p x .
  . p p .
 p p p p p
  p p p p
 p p p p p
- i i i i
-p . p . p
- . p p .
-  p p p
-   p p
-    p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p

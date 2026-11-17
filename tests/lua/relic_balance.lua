@@ -17,17 +17,11 @@ local SHARE = .8   -- a stop spends 80% of the expected wallet in the currencies
 local CURRENCIES = #economy.currencies
 local m = rules.new_match()
 
--- The greedy campaign bot: best evaluated swap, no tools.
+-- The reference bot (tests/lua/greedy_bot.lua): best evaluated swap, no tools.
+local best_move = require('greedy_bot')(rules)
 local function play(g)
     while not g.won and not g.lost do
-        local best, a, b = -1, -1, -1
-        for i = 0, rules.CELLS - 1 do
-            for d = 0, 2 do
-                local j = rules.hex_neighbor(i, d)
-                local value = rules.game_evaluate_move(g, i, j)
-                if value > best then best, a, b = value, i, j end
-            end
-        end
+        local a, b = best_move(g)
         if a < 0 then
             if not rules.game_shuffle(g) then g.lost = true end
         else
@@ -43,7 +37,7 @@ local function play(g)
 end
 
 -- Consecutive small seeds start xorshift on similar streams and bias the
--- boards, so every sample seed is hashed first (as tools/tune_levels.lua does).
+-- boards, so every sample seed is hashed first (as tests/lua/level_moves.lua does).
 -- The game itself seeds from the previous board's random state.
 local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 end
 

@@ -2,20 +2,27 @@ name: Star Gallery
 tier: hard
 teaches: Three chained arches close the lower gallery; break one to reach the tablets.
 
-    x
-   x x
-  . p .
+x . . . x
+ x . . x
+p p p p p
  p p p p
-x p K p x
+p p p p p
  p p p p
-. K p K .
+p p p p p
  p p p p
-. K . K .
+p J p J p
  p p p p
-. p K p .
- x x x x
+p p J p p
+ p p p p
+p J p J p
+ p p p p
 x K K K x
+ x x x x
+x p p p x
  p p p p
-  . p .
-   p p
-    .
+p p p p p
+ p p p p
+x K K K x
+ x K K x
+x . . . x
+ x . . x

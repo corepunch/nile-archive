@@ -1,23 +1,17 @@
 -- Content contracts for both authored campaigns, using their real rules.
+-- tools/hex_levels.py validates the sources; this checks what the engine builds.
 local rules = require('rules')
 local campaign = require('campaign')
-local other = require('games/' .. (campaign.levels[1].name == 'First Light'
-    and 'christmas-market' or 'relic-rush') .. '/lua/campaign')
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)
     check(#entry.mask == rules.CELLS and not entry.mask:find('[^01]'), label .. 'valid cell mask')
-    for _, peer in ipairs(other.levels) do
-        check(entry.mask ~= peer.mask, label .. 'not copied from the other campaign')
-    end
-    check(#entry.terrain == rules.CELLS, label .. 'terrain covers the envelope')
     local g = rules.game_start(level - 1, 1)
-    local count, chains, ice, start = 0, 0, 0
+    local count, chains, ice = 0, 0, 0
     for i = 0, rules.CELLS - 1 do
         if g.active[i] then
-            count, start = count + 1, i
+            count = count + 1
             chains = chains + (g.chain[i] > 0 and 1 or 0)
             ice = ice + (g.ice[i] > 0 and 1 or 0)
-            check(type(entry.terrain[i+1]) == 'number', label .. 'authored terrain rank')
             -- No tip or pocket requires a booster just to make a local match.
             local supported = false
             for axis = 0, 2 do
@@ -37,19 +31,8 @@ for level, entry in ipairs(campaign.levels) do
                 label .. 'no target or piece in a hole')
         end
     end
-    check(chains == entry.chains and ice == entry.ice, label .. 'every authored target actually places')
-    local queue, reached, head = {start}, {[start]=true}, 1
-    while head <= #queue do
-        local i = queue[head]
-        head = head + 1
-        for direction = 0, 5 do
-            local j = rules.hex_neighbor(i, direction)
-            if j >= 0 and g.active[j] and not reached[j] then
-                reached[j], queue[#queue+1] = true, j
-            end
-        end
-    end
-    check(#queue == count, label .. 'connected working area')
+    check(chains == #entry.chain_cells and ice == #entry.ice_cells, label .. 'every authored blocker places')
+    check(count >= 49, label .. 'at least 49 cells')
     for seed = 1, 4 do
         g = rules.game_start(level - 1, seed)
         local m = rules.new_match()

@@ -3,7 +3,7 @@
 
 Each level is a text file, games/<game>/levels/level_NNN.txt, in the format
 docs/LEVEL_DESIGN.md describes: a few `key: value` header lines, then the
-radius-4 board as a 17-line honeycomb.
+9 x 12 board as a 24-line honeycomb.
 
     python3 tools/hex_levels.py relic-rush                 # validate and summarize every level
     python3 tools/hex_levels.py relic-rush --levels 1-20   # a range
@@ -19,10 +19,11 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-RADIUS = 4
-LINES, COLUMNS = 4 * RADIUS + 1, 2 * RADIUS + 1   # 17 doubled-y rows, 9 columns
-MIN_CELLS = 49
-MIN_AREA = 7           # a separate area must be big enough to play
+BOARD_COLUMNS, BOARD_ROWS = 9, 12   # the engine's envelope: rules.lua `columns`, `rows`
+HALF = (BOARD_COLUMNS - 1) // 2
+LINES, COLUMNS = 2 * BOARD_ROWS, BOARD_COLUMNS   # 24 half-row lines, 9 columns
+MIN_CELLS = 60         # of the 81-108 a 9-12 row board offers
+MIN_ROWS = 9           # boards are 9 to 12 rows tall
 TIERS = ('tutorial', 'easy', 'normal', 'hard', 'boss')
 # Symbol -> (tablet layers, chain hits, ice layers, stone). 'x' is a hole;
 # every in-hexagon slot has a symbol.
@@ -35,7 +36,7 @@ HOLE = 'x'
 # The first level each feature may appear on: Cradle of Rome's Adventure order
 # (docs/cradle-of-rome-reference/LEVELS.md), with our stones and ice slotted
 # into its gaps (docs/LEVEL_DESIGN.md).
-FIRST = {'chain': 5, 'chain_on_tablet': 6, 'gate': 5, 'ice': 7, 'areas': 9, 'double_tablet': 10,
+FIRST = {'chain': 5, 'chain_on_tablet': 6, 'gate': 5, 'ice': 7, 'double_tablet': 10,
          'ice_on_tablet': 11, 'stone': 15, 'double_ice': 25, 'double_chain': 51}
 
 
@@ -46,11 +47,12 @@ def blocker(symbol):
 
 
 def cells():
-    """Engine cell ids, in the engine's order: q ascending, then r ascending."""
+    """Engine cell ids, in the engine's order: q ascending, then r ascending.
+    Odd columns sit half a cell lower (engine/match3.lua, `columns`/`rows`)."""
     out, n = {}, 0
-    for q in range(-RADIUS, RADIUS + 1):
-        for r in range(max(-RADIUS, -q - RADIUS), min(RADIUS, -q + RADIUS) + 1):
-            out[q, r] = n
+    for q in range(-HALF, HALF + 1):
+        for row in range(BOARD_ROWS):
+            out[q, row - q // 2 - BOARD_ROWS // 2] = n
             n += 1
     return out
 
@@ -60,7 +62,7 @@ CELLS = cells()
 
 def slot(q, r):
     """Line and column of an axial cell in the honeycomb."""
-    return 2 * r + q + 2 * RADIUS, q + RADIUS
+    return 2 * (r + q // 2 + BOARD_ROWS // 2) + q % 2, q + HALF
 
 
 def parse(path):
@@ -106,7 +108,7 @@ NEIGHBORS = [(1, 0), (0, 1), (-1, 1), (-1, 0), (0, -1), (1, -1)]   # engine dire
 
 def is_inlet(layout, q, r):
     """Open to the sky: nothing on the board above it in its column."""
-    return not any((q, k) in layout for k in range(-RADIUS - 4, r))
+    return not any((q, k) in layout for k in range(-BOARD_ROWS - HALF, r))
 
 
 def fed(layout):
@@ -168,24 +170,36 @@ def summarize(number, head, layout, problems):
         problems.append(f'{len(layout)} cells, needs at least {MIN_CELLS}')
     if not tablets:
         problems.append('no tablets: every board is won by clearing its tablets')
-    lines = {c: any(all((c[0] + k * dq, c[1] + k * dr) in layout for k in ks) for dq, dr in NEIGHBORS[:3]
-                    for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)))
-             for c in layout}
-    stuck = [c for c in tablets if not lines[c]]
+    # A tablet must sit on runs of three matchable cells (not stones) along
+    # two axes. With one, three fixed pieces can deadlock it for good.
+    play = {c for c, s in layout.items() if not SYMBOLS[s][3]}
+    axes = {c: sum(any(all((c[0] + k * dq, c[1] + k * dr) in play for k in ks)
+                       for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2))) for dq, dr in NEIGHBORS[:3])
+            for c in layout}
+    lonely = [c for c in play if not any(all((c[0] + k * dq, c[1] + k * dr) in layout for k in ks)
+                                         for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)) for dq, dr in NEIGHBORS[:3])]
+    if lonely:
+        problems.append(f'{len(lonely)} cells sit on no straight run of 3 board cells: '
+                        + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(lonely, key=lambda c: slot(*c))))
+    stuck = [c for c in tablets if axes[c] < 2]
     if stuck:
-        problems.append(f'{len(stuck)} tablets sit on no straight run of 3 board cells, so no match can clear them')
-    for group in groups:
-        if len(group) < MIN_AREA:
-            problems.append(f'an area has only {len(group)} cells; separate areas need at least {MIN_AREA}')
-        if not any(is_inlet(layout, q, r) for q, r in group):
-            problems.append(f'an area of {len(group)} cells has no inlet (a cell open to the sky)')
+        problems.append(f'{len(stuck)} tablets sit on runs of 3 along fewer than two axes: '
+                        + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(stuck, key=lambda c: slot(*c))))
+    # One board: every part joins the rest through at least one cell (two is better).
+    if len(groups) > 1:
+        problems.append(f'the board falls apart into {len(groups)} separate parts of '
+                        + ', '.join(str(len(g)) for g in sorted(groups, key=len, reverse=True))
+                        + ' cells; join them with at least one cell, better two')
+    rows = {slot(q, r)[0] // 2 for q, r in layout}
+    if rows and max(rows) - min(rows) + 1 < MIN_ROWS:
+        problems.append(f'the board is {max(rows) - min(rows) + 1} rows tall; use {MIN_ROWS} to {BOARD_ROWS}')
     # Every gated cell must open once its chains break.
     open_board = {c: ('.' if blocker(s) else s) for c, s in layout.items()}
     never = [c for c in layout if c not in fed(open_board)]
     if never:
         problems.append(f'{len(never)} cells can never be fed, even with every chain broken')
     used = {'chain': chains, 'chain_on_tablet': on_tablets, 'gate': gated, 'double_tablet': doubles,
-            'double_chain': double_chains, 'areas': groups[1:], 'stone': stones, 'ice': ice,
+            'double_chain': double_chains, 'stone': stones, 'ice': ice,
             'ice_on_tablet': ice_on_tablets, 'double_ice': double_ice}
     for feature, first in FIRST.items():
         if used[feature] and number < first:
@@ -193,10 +207,16 @@ def summarize(number, head, layout, problems):
     return info
 
 
-def mirror(rows, problems):
-    for line, row in enumerate(row.ljust(COLUMNS) for row in rows):
-        if row != row[::-1]:
-            problems.append(f'line {line + 1} is not a left-right mirror: {row!r}')
+def symmetry(rows, layout, problems):
+    """A board is a left-right mirror or a half turn (an S or a Z): turned 180
+    degrees about the middle cell it shows the same cells and symbols."""
+    lines = [row.ljust(COLUMNS) for row in rows]
+    if all(row == row[::-1] for row in lines):
+        return 'mirror'
+    if layout and all(layout.get((-q, -r)) == s for (q, r), s in layout.items()):
+        return 'half turn'
+    bad = next(line for line, row in enumerate(lines) if row != row[::-1])
+    problems.append(f'neither a left-right mirror (line {bad + 1}: {lines[bad]!r}) nor the same after a half turn')
 
 
 def lua(game, levels):
@@ -225,18 +245,18 @@ def sheet(levels, path, title):
     from PIL import Image, ImageDraw
     import math
     size, columns = 11, 10
-    cell_w, cell_h = int(size * 1.5 * 9 + size * 2), int(size * math.sqrt(3) * 9 + 46)
+    cell_w, cell_h = int(size * 1.5 * 9 + size * 2), int(size * math.sqrt(3) * (BOARD_ROWS + .5) + 46)
     rows = (len(levels) + columns - 1) // columns
     image = Image.new('RGB', (columns * cell_w + 20, rows * cell_h + 50), (30, 34, 40))
     draw = ImageDraw.Draw(image)
     draw.text((10, 12), title, fill=(240, 240, 240))
     for n, (number, head, layout) in enumerate(levels):
         ox = 10 + (n % columns) * cell_w + cell_w // 2
-        oy = 40 + (n // columns) * cell_h + 26 + size * math.sqrt(3) * 4.5
-        draw.text((ox - cell_w // 2 + 4, oy - size * math.sqrt(3) * 4.5 - 24), f"{number} {head.get('tier', '')[:4]} {head.get('name', '')[:18]}", fill=(220, 220, 220))
+        oy = 40 + (n // columns) * cell_h + 26 + size * math.sqrt(3) * (BOARD_ROWS + .5) / 2
+        draw.text((ox - cell_w // 2 + 4, oy - size * math.sqrt(3) * (BOARD_ROWS + .5) / 2 - 24), f"{number} {head.get('tier', '')[:4]} {head.get('name', '')[:18]}", fill=(220, 220, 220))
         gated = {c for c in layout if c not in fed(layout) and not blocker(layout[c])}
         for (q, r) in CELLS:
-            x, y = ox + size * 1.5 * q, oy + size * math.sqrt(3) * (r + q / 2)
+            x, y = ox + size * 1.5 * q, oy + size * math.sqrt(3) * (r + q / 2 + .25)
             hexagon = [(x + size * math.cos(math.pi / 3 * k), y + size * math.sin(math.pi / 3 * k)) for k in range(6)]
             if (q, r) not in layout:
                 draw.polygon(hexagon, outline=(55, 60, 68))
@@ -284,7 +304,7 @@ def main():
         head, rows = parse(files[number])
         problems = []
         layout = board(rows, problems)
-        mirror(rows, problems)
+        symmetry(rows, layout, problems)
         info = summarize(number, head, layout, problems) if layout else {}
         levels.append((number, head, layout))
         status = 'ok ' if not problems else 'BAD'

@@ -1,21 +1,28 @@
 name: Twin Terraces
 tier: hard
-teaches: Two separate areas: each terrace needs its own matches, and a chain blocks each one.
+teaches: Two separate areas: each terrace needs its own matches, and a chain blocks the way down in each.
 
-    x
-   . .
-  . x .
+x . x . x
+ x . . x
+x . x . x
+ x . . x
+x . x . x
+ x . . x
+. . x . .
  . . . .
+. p x p .
+ p p p p
+. p x p .
+ x x x x
+x c x c x
+ . . . .
+. . x . .
+ p p p p
 p p x p p
  p p p p
-p . x . p
- p . . p
-p c x c p
- p . . p
-p . x . p
+p p x p p
  p p p p
 p p x p p
- . . . .
-  . x .
-   . .
-    x
+ p p p p
+p p x p p
+ p p p p

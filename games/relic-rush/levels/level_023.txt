@@ -1,21 +1,28 @@
 name: Triple Terrace Gate
 tier: normal
-teaches: A web of chains and stones guards the upper terraces and the lower gate.
+teaches: A web of chains and stones guards the terraces: break a gate chain to open the terrace below.
 
-    x
-   x x
-  . . .
- . . . .
-p k p k p
+x x . x x
+ x . . x
+. . . . .
  p p p p
-s k p k s
+p p p p p
  p p p p
-p s p s p
- p p p p
-p k p k p
+p p p p p
  x x x x
-x k x k x
+x k k k x
+ . . . .
+p p p p p
+ p s s p
+p p p p p
  p p p p
-  p p p
-   p p
-    p
+p p p p p
+ x x x x
+x k k k x
+ . . . .
+p p p p p
+ p s s p
+p p p p p
+ p p p p
+p p p p p
+ p p p p

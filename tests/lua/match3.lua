@@ -12,6 +12,18 @@ local a = match3.new{radius=2}
 local b = match3.new{radius=3, match_min=4, flags=match3.NO_TOOLS | match3.NO_TRICKLE}
 check(a.CELLS==19 and b.CELLS==37 and a.MATCH_MIN==3 and b.MATCH_MIN==4)
 check(a.hex_center()==9 and a.hex_index(3,0)==-1 and b.hex_index(3,0)>=0, "independent geometry")
+-- A rectangle of 9 x 12 flat-top cells; odd columns sit half a cell lower.
+do
+    local r = match3.new{columns=9, rows=12}
+    local top, odd_top = r.hex_index(0, -6), r.hex_index(1, -6)
+    check(r.CELLS == 108 and top == 48 and r.hex_neighbor(top, 4) == -1 and r.hex_neighbor(top, 1) == 49,
+        "rectangle: cells by column, the top cell has nothing above it")
+    check(odd_top >= 0 and r.hex_r(odd_top) + r.hex_q(odd_top) * .5 == -5.5 and r.hex_index(1, -7) == -1,
+        "rectangle: an odd column starts half a cell lower")
+    check(r.hex_neighbor(r.hex_index(-4, -4), 2) == -1 and r.envelope.max_y - r.envelope.min_y == 11.5,
+        "rectangle: the left edge has no neighbours and the board is 12.5 cells tall")
+    check(not pcall(match3.new, {columns=8, rows=12}), "rectangle: the columns are odd so the board mirrors")
+end
 for _, r in ipairs({a,b}) do
     local g, m = empty(r), r.new_match()
     for q=-1,1 do g.tiles[r.hex_index(q,0)]=r.tile(2) end

@@ -2,20 +2,27 @@ name: Twin Arches
 tier: easy
 teaches: Two chained arches carry the fall into the hall; break either one to start the flow.
 
-    .
-   . .
-  . . .
+p p p p p
+ p p p p
+p p p p p
  p p p p
 p p p p p
  p p p p
 p p p p p
- x x x x
+ p p p p
+p p p p p
+ p p p p
 x k x k x
+ x x x x
+x p x p x
  p p p p
 p p p p p
  p p p p
-p s p s p
+p p p p p
+ p s s p
+p p p p p
  p p p p
-  p p p
-   x x
-    x
+p p p p p
+ p p p p
+p p p p p
+ p p p p

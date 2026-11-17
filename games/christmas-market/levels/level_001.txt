@@ -1,21 +1,28 @@
 name: Welcome Lights
 tier: tutorial
-teaches: Match pieces on top of a tablet to light it; clear all six lanterns to win.
+teaches: Match pieces on top of a tablet to light it; clear the lanterns in the middle to win.
 
-    x
-   . .
-  . . .
- . . . .
+x x x x x
+ x x x x
 x . . . x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . p . .
+ . p p .
+. p p p .
  . p p .
 . . p . .
  . p p .
-. . p . .
+. . . . .
  . . . .
 . . . . .
  . . . .
 x . . . x
  . . . .
-  . . .
-   . .
-    x
+x . . . x
+ x . . x
+x x x x x
+ x x x x

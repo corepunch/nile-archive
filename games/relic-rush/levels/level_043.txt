@@ -1,10 +1,8 @@
 name: The Cistern
 tier: normal
-teaches: A ring of chains seals the cistern; once broken, pieces drain into the plain pool and its tablets.
+teaches: A ring of chains seals the cistern; once broken, pieces drain into the plain pool and its ice.
 
-    .
-   . .
-  p p p
+x p p p x
  p p p p
 p p p p p
  p p p p
@@ -12,10 +10,19 @@ p p p p p
  p p p p
 p p p p p
  p p p p
-k k x k k
- k k k k
-p p i p p
- p i i p
-  p p p
-   p p
-    p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x k k k x
+ x k k x
+x k k k x
+ x p p x
+x p . p x
+ x . . x
+x i i i x
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p p p p

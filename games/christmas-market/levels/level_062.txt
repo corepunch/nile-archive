@@ -1,21 +1,28 @@
 name: Market Tent
 tier: easy
-teaches: A tent roof of tinsel: single tinsel on the pane edge.
+teaches: A tent roof of tinsel: break the ridge and the eaves to open the awning.
 
-    .
-   . .
-  p . p
+x x . x x
+ x x x x
+x x . x x
+ x . . x
+x p p p x
  p p p p
 p p p p p
  p p p p
+x p K p x
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ K p p K
 p p p p p
  p p p p
-p p K p p
+p p x p p
  p x x p
-p K p K p
- x p p x
-k p p p k
- p p p p
-  p p p
-   p p
-    p
+p p x p p
+ p x x p
+. p x p .
+ . x x .
+x x x x x
+ x x x x

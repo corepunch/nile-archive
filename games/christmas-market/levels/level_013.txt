@@ -1,21 +1,28 @@
 name: Chestnut Cart
 tier: normal
-teaches: Break the chain at the cart's hatch, then light the tablets in the cellar below.
+teaches: Break a chain at the cart's hatch, then light the tablets in the cellar below.
 
-    x
-   x x
-  . . .
- p . . p
-. k . k .
+x x . x x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+x k k k x
+ x k k x
+x p p p x
  . p p .
-k . p . k
- p . . p
-. k . k .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
  . p p .
-k j p j k
- p x x p
-. x k x .
- x p p x
-  p p p
-   p p
-    p
+. . x . .
+ . x x .
+x . x . x
+ . x x .

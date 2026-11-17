@@ -1,277 +1,19 @@
 -- Campaign content only; all match mechanics live in engine/match3.lua.
-local function level(name, moves, chains)
-    return {name=name, lesson="Clear every blue plaque.", moves=moves, score=0, relics=0, chains=chains, ice=0}
+-- One hundred expeditions, authored as hex boards in games/relic-rush/levels
+-- and compiled to lua/boards.lua by tools/hex_levels.py (docs/LEVEL_DESIGN.md).
+-- Move budgets come from tools/tune_moves.py, which writes lua/level_moves.lua.
+-- The requires are relative to this module, so other games' tests can load it.
+local here = (... or ""):match("^(.-)campaign$") or ""
+local boards, budgets = require(here .. "boards"), require(here .. "level_moves")
+
+local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single", tablet_hint=true}}
+local levels = {}
+for i, b in ipairs(boards) do
+    levels[i] = {name=b.name, tier=b.tier, lesson="Clear every blue plaque.", moves=budgets[i] or 30,
+        score=0, relics=0, chains=0, ice=0, mask=b.mask, oil=b.oil, oil_double=b.oil_double,
+        chain_cells=b.chain_cells, ice_cells=b.ice_cells, stones=b.stones,
+        goals={"oil"}, dress=dress, background=(i - 1) // 5 % 2 + 1}
 end
-
--- Masks are ordered by axial q, then r, exactly as the engine enumerates cells.
--- Terrain priorities trace an authored axial seam and then sweep along it.
--- Locks sample the first ranks as documented in
--- docs/board-progression.md. The priority values are unique, including ties.
-local function seam(a, b, offset, c, d)
-    local ranks, i = {}, 0
-    for q = -4, 4 do
-        for r = math.max(-4, -q - 4), math.min(4, -q + 4) do
-            i = i + 1
-            ranks[i] = math.abs(a * q + b * r - offset) * 10000
-                + (c * q + d * r + 8) * 100 + i
-        end
-    end
-    return ranks
-end
-
--- Prioritise the centre of the horizontal seam to avoid leaving its distant ends as cleanup.
-local function central_seam(offset)
-    local ranks, i = {}, 0
-    for q = -4, 4 do
-        for r = math.max(-4, -q - 4), math.min(4, -q + 4) do
-            i = i + 1
-            ranks[i] = math.abs(r - offset) * 1000 + math.abs(q) * 1500 + i
-        end
-    end
-    return ranks
-end
-
--- Authored axial positions, converted to the engine's zero-based cell IDs.
-local function cell(q, r)
-    local i = 0
-    for x = -4, 4 do
-        for y = math.max(-4, -x - 4), math.min(4, -x + 4) do
-            if x == q and y == r then return i end
-            i = i + 1
-        end
-    end
-    error("invalid campaign coordinate")
-end
-
--- Deliberate repeated silhouettes: two cut lanes, a tapered court, and
--- two chambers joined by an end bridge.
-local lanes_mask = "1111111111111111111100001111111111111000011111111111111111111"
-local bowl_mask = "0111100111100111111111111111111111111111111001111100111101111"
-local chambers_mask = "1111111111111111111100000011000000011000000111111111111111111"
-
--- Compact radius-three court, offset to suit each game.
-local compact_mask = "1111011111011111101111111001111110001111100011110000000000000"
-
-local levels = {
-    (function()
-        local l = level("First Light", 24, 0)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 0, 0, 0, 1)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Lamp Lens", 29, 0)
-        l.mask = bowl_mask
-        l.terrain = seam(0, 1, -1, 1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Relay Cable", 32, 0)
-        l.mask = chambers_mask
-        l.terrain = seam(1, 1, 0, 1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Under the Pump", 35, 4)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 0, -1, 0, 1)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Quay Marker", 35, 4)
-        l.mask = bowl_mask
-        l.terrain = seam(0, 1, 0, 1, 0)
-        l.background = 1
-        -- The first idle hint makes a water match across three plaques.
-        l.opening = ".1302" .. "..3413" .. "..24042" .. "00423323" .. "232033032"
-            .. "24304010" .. "..42230" .. "..3113" .. ".2343"
-        return l
-    end)(),
-    (function()
-        local l = level("The Shore Marker", 37, 0)
-        l.mask = chambers_mask
-        l.terrain = seam(1, 1, 1, -1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Tool Roll", 40, 3)
-        l.mask = chambers_mask
-        l.terrain = seam(0, 1, 0, 1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Relay Pliers", 40, 4)
-        l.mask = compact_mask
-        l.terrain = seam(0, 1, -1, -1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Supply Crate", 43, 5)
-        l.mask = chambers_mask
-        l.terrain = seam(1, 1, 0, 1, 0)
-        l.background = 2
-        -- Put a cut-block match in the first hint while leaving the crate to find.
-        l.opening = "31355" .. "440543" .. "5424340" .. "32......" .. "55......."
-            .. "15......" .. "0014105" .. "454204" .. "05142"
-        l.featured_resource = "cut-blocks"
-        return l
-    end)(),
-    (function()
-        local l = level("The Shutter Gear", 46, 6)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 0, 0, 0, -1)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Long Terrace", 33, 0)
-        l.mask = bowl_mask
-        l.terrain = seam(0, 1, 1, 1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Twelve Crates", 36, 5)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 1, -1, -1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Names in the Stone", 37, 6)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 0, 0, 0, 1)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Static", 38, 7)
-        l.mask = chambers_mask
-        l.terrain = seam(0, 1, 1, -1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Cracked Wall", 39, 4)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 1, 0, 1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Supper for Twelve", 40, 4)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 0, -1, 0, -1)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Torn Log", 42, 5)
-        l.mask = bowl_mask
-        l.terrain = seam(0, 1, -1, 1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("Lantern Steps", 40, 2)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 1, 1, -1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("Under the Vines", 45, 4)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 0, 1, 0, 1)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Archivist's Key", 46, 5)
-        l.mask = lanes_mask
-        l.terrain = central_seam(0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("Tomas's Trail", 35, 0)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 1, -1, 1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Alternate Landing", 40, 2)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 0, -1, 0, 1)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Star Road", 40, 3)
-        l.mask = lanes_mask
-        l.terrain = seam(0, 1, 1, 1, 0)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Noon Shadow", 41, 4)
-        l.mask = bowl_mask
-        l.terrain = central_seam(1)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("Smoke on the Water", 38, 6)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 0, 0, 0, -1)
-        l.background = 1
-        return l
-    end)(),
-    (function()
-        local l = level("The Jade Deep", 43, 4)
-        l.mask = lanes_mask
-        l.terrain = central_seam(-1)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("Six Sun Gates", 45, 7)
-        l.mask = lanes_mask
-        l.terrain = seam(1, 1, 0, 1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Last Terrace", 42, 2)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 0, 1, 0, -1)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Silent Temple", 47, 8)
-        l.mask = lanes_mask
-        l.terrain = seam(0, 1, 0, 1, 0)
-        l.background = 2
-        return l
-    end)(),
-    (function()
-        local l = level("The Warning Returns", 49, 8)
-        l.mask = bowl_mask
-        l.terrain = seam(1, 1, 0, -1, 0)
-        l.background = 2
-        return l
-    end)(),
-}
-
 
 -- The first clear hands recovered quest objects to the story.
 local quest_objects = {
@@ -307,127 +49,31 @@ for _, i in ipairs{12,18,24} do levels[i].score_pieces = {[2]="leaf"} end
 for _, i in ipairs{15,21,27} do levels[i].score_pieces = {[2]="flower"} end
 levels[3].signal = "cliff"
 levels[30].signal = "landing"
-levels[30].signal_cell = cell(1,2)
--- Clear the marked cells directly. A chain on a plaque protects it.
--- Each patch names the part of the site the crew needs to uncover.
-local plaques = {
-    [1] = {cell(-1,0), cell(-1,1), cell(0,-1), cell(0,0), cell(0,1), cell(1,-1), cell(1,0)},
-    [2] = {cell(-2,1), cell(-1,0), cell(-1,1), cell(0,-1), cell(0,0),
-        cell(0,1), cell(1,-2), cell(1,-1), cell(2,-2)},
-    [3] = {cell(-3,0), cell(-3,1), cell(-2,-1), cell(-2,0), cell(-2,1),
-        cell(2,-2), cell(2,-1), cell(3,-2), cell(3,-1), cell(3,0)},
-    [4] = {cell(-3,0), cell(-3,1), cell(-3,2), cell(-2,-1), cell(-2,0), cell(-2,1),
-        cell(2,-2), cell(2,-1), cell(2,0), cell(3,-2), cell(3,-1)},
-    [5] = {cell(-2,1), cell(-1,0), cell(-1,1), cell(-1,2), cell(0,-1),
-        cell(0,0), cell(0,1), cell(1,-1), cell(1,0), cell(2,0)},
-    [6] = {cell(-3,0), cell(-3,1), cell(-2,-1), cell(-2,0), cell(-2,1),
-        cell(2,-2), cell(2,-1), cell(2,0), cell(3,-2), cell(3,-1), cell(3,0)},
-    [7] = {cell(-3,-1), cell(-3,0), cell(-3,1), cell(-2,-1), cell(-2,0), cell(-2,1),
-        cell(2,-2), cell(2,-1), cell(2,1), cell(3,-2), cell(3,-1), cell(3,0)},
-    [8] = {cell(-2,0), cell(-2,1), cell(-1,-1), cell(-1,0), cell(-1,1), cell(0,-2),
-        cell(0,-1), cell(0,0), cell(0,1), cell(1,-2), cell(1,-1), cell(1,0)},
-    [9] = {cell(-3,0), cell(-3,1), cell(-3,2), cell(-2,-1), cell(-2,0), cell(-2,1),
-        cell(2,-3), cell(2,-2), cell(2,-1), cell(3,-3), cell(3,-2), cell(3,-1)},
-    [10] = {cell(-3,1), cell(-3,2), cell(-3,3), cell(-2,0), cell(-2,1), cell(-2,2),
-        cell(2,-2), cell(2,-1), cell(2,0), cell(2,1), cell(3,-2), cell(3,-1)},
-    [11] = {cell(-3,2), cell(-2,1), cell(-2,2), cell(-1,0), cell(-1,1), cell(-1,2),
-        cell(0,-1), cell(0,0), cell(0,1), cell(1,-2), cell(1,-1), cell(2,-2)},
-    [12] = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,0), cell(-3,1), cell(-3,2),
-        cell(-3,3), cell(-2,-1), cell(-2,0), cell(-2,1), cell(-2,2), cell(-2,3)},
-    [13] = {cell(-3,-1), cell(-3,0), cell(-3,1), cell(-2,-1), cell(-2,0),
-        cell(1,-4), cell(1,-3), cell(2,-3), cell(2,-2), cell(3,-3)},
-    [14] = {cell(-4,2), cell(-3,1), cell(-3,2), cell(-2,0), cell(-2,1), cell(-2,2),
-        cell(2,-2), cell(2,-1), cell(2,0), cell(3,-2), cell(3,-1), cell(3,0), cell(4,-2)},
-    [15] = {cell(-2,0), cell(-2,1), cell(-1,-1), cell(-1,0), cell(-1,1), cell(0,-2),
-        cell(0,-1), cell(0,1), cell(1,-2), cell(1,-1), cell(1,0), cell(2,-1)},
-    [16] = {cell(-4,1), cell(-4,2), cell(-3,0), cell(-3,1), cell(-3,2), cell(-2,-1), cell(-2,0),
-        cell(2,-1), cell(2,0), cell(2,1), cell(3,-1), cell(3,0), cell(4,-1)},
-    [17] = {cell(-2,2), cell(-1,1), cell(-1,2), cell(0,0), cell(0,1), cell(0,2),
-        cell(1,-1), cell(1,0), cell(1,1), cell(2,-2), cell(2,-1), cell(2,0), cell(3,-1)},
-    [18] = {cell(-3,2), cell(-2,2), cell(-2,3), cell(-1,1), cell(-1,2), cell(-1,3),
-        cell(0,0), cell(0,1), cell(0,2), cell(1,-1), cell(1,0), cell(1,1), cell(2,-1), cell(2,0)},
-    [19] = {cell(-4,2), cell(-4,3), cell(-4,4), cell(-3,1), cell(-3,2), cell(-3,3),
-        cell(-3,4), cell(-2,0), cell(-2,1), cell(-2,2), cell(-2,3), cell(-1,3)},
-    [20] = {cell(-4,1), cell(-4,2), cell(-4,3), cell(-3,0), cell(-3,1),
-        cell(-3,2), cell(-3,3), cell(-2,0), cell(-2,1)},
-    [21] = {cell(-2,2), cell(-1,1), cell(-1,2), cell(-1,3), cell(0,-2), cell(0,-1),
-        cell(0,0), cell(0,1), cell(0,2), cell(1,-3), cell(1,-2), cell(1,-1)},
-    [22] = {cell(-3,0), cell(-3,1), cell(-3,2), cell(-2,-1), cell(-2,0), cell(-2,1),
-        cell(-2,2), cell(-2,3), cell(2,-2), cell(2,-1), cell(2,1), cell(3,-1), cell(3,0)},
-    [23] = {cell(-4,1), cell(-4,2), cell(-3,1), cell(-3,2), cell(-2,1), cell(-2,2),
-        cell(2,-3), cell(2,-2), cell(3,-3), cell(3,-2), cell(4,-3), cell(4,-2)},
-    [24] = {cell(-2,1), cell(-1,0), cell(-1,1), cell(-1,2), cell(0,-1), cell(0,0),
-        cell(0,1), cell(0,2), cell(1,0), cell(1,1), cell(1,2), cell(2,0)},
-    [25] = {cell(-3,2), cell(-3,3), cell(-2,1), cell(-2,2), cell(-2,3), cell(-1,0),
-        cell(-1,1), cell(-1,2), cell(0,-1), cell(0,0), cell(0,1), cell(1,-2), cell(1,-1), cell(2,-2)},
-    [26] = {cell(2,-2), cell(2,-1), cell(2,0), cell(3,-4), cell(3,-3), cell(3,-2),
-        cell(3,-1), cell(4,-4), cell(4,-3), cell(4,-2)},
-    [27] = {cell(-4,1), cell(-3,0), cell(-3,2), cell(-2,2), cell(-3,4), cell(-2,3),
-        cell(2,-4), cell(3,-4), cell(2,-2), cell(3,-2), cell(3,0), cell(4,-1)},
-    [28] = {cell(-1,2), cell(-1,3), cell(0,1), cell(0,2), cell(0,3), cell(1,-3),
-        cell(1,-2), cell(1,-1), cell(1,0), cell(1,1), cell(1,2), cell(2,0), cell(2,1)},
-    [29] = {cell(-4,0), cell(-4,1), cell(-3,-1), cell(-3,0), cell(-3,1), cell(-2,-2),
-        cell(-2,-1), cell(-2,0), cell(-1,-3), cell(-1,-2), cell(0,-4), cell(1,-4),
-        cell(2,-4), cell(2,-3), cell(3,-4), cell(3,-3)},
-    [30] = {cell(-1,0), cell(-1,1), cell(-1,2), cell(0,-1), cell(0,0), cell(0,1),
-        cell(0,2), cell(1,-2), cell(1,-1), cell(1,0), cell(1,1), cell(1,2),
-        cell(2,-1), cell(2,0), cell(2,1), cell(2,2)},
-}
-
-local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single", tablet_hint=true}}
-for i, l in ipairs(levels) do
-    local cells = plaques[i]
-    assert(cells and #cells > 0, "expedition " .. i .. " needs an authored plaque patch")
-    assert(l.omit_kind == nil, "expedition " .. i .. " must spawn all six kinds")
-    l.oil = cells
-    l.dress = dress
-    l.goals = {"oil"}
-end
-
--- Green double tablets spread over the patch: odd entries first, then even.
--- The signal plate keeps its own single-layer art.
-local function tablet_order(l)
-    local order = {}
-    for start = 1, 2 do
-        for k = start, #l.oil, 2 do
-            if l.oil[k] ~= l.signal_cell then order[#order + 1] = l.oil[k] end
-        end
-    end
-    return order
-end
-
-for _, l in ipairs(levels) do l.authored_oil, l.authored_signal = l.oil, l.signal_cell end
-
--- Plaque placement, blockers and move budgets are fitted to lua/difficulty.lua
--- by tools/tune_levels.py; the authored values above are only its fallback.
--- A board with an authored opening keeps its authored plaques and blockers,
--- so the scripted first hint still plays as written; only its budget is fitted.
--- The require is relative to this module, so another game's tests can load it by path.
-local here = (... or ""):match("^(.-)campaign$") or ""
-for i, fit in pairs(require(here .. "level_tuning")) do
-    local l = levels[i]
-    l.moves = fit.moves
-    if not l.opening then
-        if fit.plaques then
-            for _, id in ipairs(fit.plaques) do
-                assert(l.mask:sub(id + 1, id + 1) == "1", "tuned plaque on an inactive cell")
+-- The final board's signal plate is its tablet nearest the centre, a bare
+-- single one when the board has one.
+local function signal_plate(l)
+    local double, best = {}, nil
+    for _, cell in ipairs(l.oil_double) do double[cell] = true end
+    for _, e in ipairs(l.chain_cells) do double[e.cell] = true end
+    for _, e in ipairs(l.ice_cells) do double[e.cell] = true end
+    for _, cell in ipairs(l.oil) do
+        local q, r = 0, 0
+        local i = 0
+        for x = -4, 4 do
+            for y = math.max(-4, -x - 4), math.min(4, -x + 4) do
+                if i == cell then q, r = x, y end
+                i = i + 1
             end
-            l.oil, l.signal_cell = fit.plaques, l.signal_cell and fit.signal_cell
         end
-        l.chains, l.double_chains = fit.chains, fit.double_chains
-        l.oil_double = {table.unpack(tablet_order(l), 1, fit.double_tablets)}
+        local d = (math.abs(q) + math.abs(r) + math.abs(q + r)) // 2
+        local rank = (double[cell] and 100 or 0) + d
+        if not best or rank < best[2] then best = {cell, rank} end
     end
+    return best and best[1]
 end
-
--- Keep the one-cell central spine clear for swapping: the two openings are
--- passage, not unreachable mandatory cleanup. Locks can occupy the bridges.
-for _, board in ipairs(levels) do
-    if board.mask == lanes_mask then
-        for r = -2, 2 do board.terrain[cell(0,r) + 1] = 10000000 + r end
-    end
-end
+levels[30].signal_cell = signal_plate(levels[30])
 
 local shapes = {}
 for i, l in ipairs(levels) do shapes[i] = l.name end
 
-return {levels=levels, colors=6, shapes=shapes, tablet_order=tablet_order, wonder_levels={1,4,7,9,13,16,19,23,26,29}}
+return {levels=levels, colors=6, shapes=shapes, wonder_levels={1,4,7,9,13,16,19,23,26,29}}

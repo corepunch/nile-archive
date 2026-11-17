@@ -2,20 +2,27 @@ name: Frosty Pass
 tier: hard
 teaches: Snowed-in stones sit in the way: match beside a stone to carve it away, and open the neck chain below.
 
-    x
-   . .
-  p p p
- p p p p
+x . . . x
+ x . . x
 x p p p x
- p p p p
-x p p p x
- p s s p
+ . p p .
 p p p p p
+ p p p p
+p s p s p
+ p . . p
+. . p . .
  s p p s
-p p p p p
- p x x p
-p x c x p
+x . p . x
  x p p x
-  k p k
-   p p
-    p
+x x s x x
+ x c c x
+x p p p x
+ . p p .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x

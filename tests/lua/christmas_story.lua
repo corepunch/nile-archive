@@ -11,7 +11,7 @@ for _,who in ipairs(R.cast) do cast[who.id]=true end
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
-check(rules.LEVELS==30 and #journey.beats==36,'all three episodes are playable')
+check(rules.LEVELS==100 and #journey.beats==36,'all three episodes are playable')
 local stocked = rules.game_start(0, 1)
 check(#stocked.spawn_kinds == 4 and stocked.tools[1] == 0, "opening board has two score pieces and two coins")
 local cell = rules.hex_center()
@@ -23,11 +23,11 @@ for kind = 0, 3 do
 end
 check(stocked.earnings[1] == 8 and stocked.earnings[2] == 0 and stocked.earnings[3] == 0,
       "only the coins pay on the opening board")
-local intro = rules.game_start(4, 1)
+local intro = rules.game_start(5, 1)   -- wish 6 first ties tinsel over panes
 intro.tools[1] = 1
 local tied
 for _, i in ipairs(rules.level_of(intro).oil) do
-    if intro.chain[i] > 0 then tied = i; break end
+    if intro.chain[i] > 0 and intro.ice[i] == 0 then tied = i; break end
 end
 check(tied ~= nil, "the first tinsel board has a chain over a blue pane")
 if tied then
@@ -61,8 +61,10 @@ for level=1,30 do
     local spec = rules.level_of(g)
     check(g.oil_left == #spec.oil and g.oil_left > 0, "every wish opens with fixed blue panes")
     check(#spec.goals == 1 and spec.goals[1] == "oil", "only the blue panes count toward the win")
-    check(g.initial_obstacles == spec.chains,
-          "tinsel is the only campaign blocker")
+    local layers = #spec.stones
+    for _, e in ipairs(spec.chain_cells) do layers = layers + e.hits end
+    for _, e in ipairs(spec.ice_cells) do layers = layers + e.layers end
+    check(g.initial_obstacles == layers, "every wish places exactly its authored tinsel, frost and stones")
     if spec.story_piece then
         finds = finds + 1
         check(not spec.story_piece.kind and not g.goal_kind, "story finds leave all the board's goods in play")

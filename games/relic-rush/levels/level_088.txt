@@ -1,21 +1,28 @@
 name: Twin Courts
 tier: normal
-teaches: Two courtyards, each with a fountain; keep both sides moving.
+teaches: Two courtyards, each with a fountain, join in one hall; keep both sides moving.
 
-    x
-   p p
-  p x p
- p p p p
-p j x j p
- p p p p
+x p x p x
+ . . . .
 p p x p p
  p p p p
-p x x x p
+p . x . p
  p p p p
 p s x s p
  p p p p
 p p x p p
  p p p p
-  p x p
-   p p
-    x
+p j x j p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p . p x
+ p p p p

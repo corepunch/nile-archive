@@ -26,9 +26,20 @@ check(#wood.spawn_kinds == 5 and wood.resource_yields[4].amount == 5, "confirmed
 local plain = rules.game_start(1, 18, 0)
 check(not plain.resource_yields[4], "a cleared board alone does not add firewood")
 
+-- The top of the first column of four playable cells, straight down.
+local function column_top(board)
+    for i = 0, rules.CELLS - 1 do
+        local ok, cell = true, i
+        for _ = 1, 4 do
+            ok = ok and cell >= 0 and rules.game_cell_active(board, cell) and board.stone_hp[cell] == 0
+            cell = ok and rules.hex_neighbor(cell, 1) or -1
+        end
+        if ok then return i end
+    end
+end
 local function line(board, kind, length, wave)
     for i = 0, rules.CELLS - 1 do board.tiles[i] = rules.tile(-1) end
-    local cell = rules.hex_index(-3, 0)
+    local cell = column_top(board)
     for _ = 1, length do
         board.tiles[cell], board.chain[cell] = rules.tile(kind), 0
         cell = rules.hex_neighbor(cell, 1)
@@ -45,7 +56,7 @@ hammer.tool_meter[1] = 194
 line(hammer, 5, 3, wave)
 check(hammer.tools[1] == 1 and hammer.tool_meter[1] == 3 and hammer.earnings[1] == 0,
       "matching hammers earns a charge and no Gold")
-check(rules.game_tool(hammer, 0, rules.hex_index(-3, 0), wave) and hammer.tools[1] == 0,
+check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] == 0,
       "the charged hammer can be spent")
 
 local lightning = rules.game_start(19, 7, 7)

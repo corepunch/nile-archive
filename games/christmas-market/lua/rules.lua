@@ -2,7 +2,7 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
-local M = match3.new{flags=match3.LINE_MATCHES, radius=4, colors=#economy.pieces + 1, match_min=3,
+local M = match3.new{flags=match3.LINE_MATCHES, columns=9, rows=12, colors=#economy.pieces + 1, match_min=3,
     levels=campaign.levels, level_shapes=campaign.shapes,
     sunburst_targets=economy.lightning_targets,
     kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}

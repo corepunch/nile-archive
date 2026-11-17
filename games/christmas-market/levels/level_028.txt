@@ -1,21 +1,28 @@
 name: Silver Bell
 tier: normal
-teaches: A bell with a clapper: wide brim, narrow dome, tablets all the way round.
+teaches: A bell with a clapper: a round dome, a wide brim and ice hiding in the tablets.
 
-    p
-   x x
-  x p x
+x x . x x
+ x . . x
+x p p p x
  x p p x
 x p p p x
  p p p p
-p p p p p
+x p p p x
+ p p p p
+x j p j x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
  p p p p
 p j p j p
  p p p p
-p j p j p
+p p p p p
  p p p p
 p p p p p
  p p p p
-  p p p
-   x x
-    p
+x x . x x
+ x . . x
+x x . x x
+ x . . x

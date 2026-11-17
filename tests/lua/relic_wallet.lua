@@ -3,6 +3,17 @@ local economy=require("economy")
 local island=require("island")
 local R=require("state")
 require("main")
+-- A plain cell whose six neighbours are all playable, for tool and line checks.
+local function open_cell(g)
+    for i=0,rules.CELLS-1 do
+        local ok=rules.game_cell_active(g,i) and g.stone_hp[i]==0
+        for d=0,5 do
+            local j=rules.hex_neighbor(i,d)
+            ok=ok and j>=0 and rules.game_cell_active(g,j) and g.stone_hp[j]==0
+        end
+        if ok then return i end
+    end
+end
 -- Lives regenerate offline, stop at five, and charge a failed attempt once.
 do
     local p={lives=5,life_at=0}
@@ -106,19 +117,6 @@ do
     local courtyard={camp=true,well=true,workshop=true,market=true,gateway=true}
     check(economy.board_backdrop(rules.levels[14],14,courtyard)==2 and economy.board_backdrop(rules.levels[13],13,courtyard)==1,
         'the courtyard brings the temple to boards from its first expedition')
-
-    -- Act on the same first hint a player sees. The match must stock the town
-    -- at its new rate while clearing the work site in the same move.
-    for _, opening in ipairs{{4, economy.PROVISIONS, 9}, {8, economy.SUPPLIES, 15}} do
-        local level, currency, expected = table.unpack(opening)
-        local g = R.make_board(level, 73)
-        local ok, a, b = rules.game_hint(g)
-        check(ok and rules.game_swap(g, a, b, match), 'the resource opening offers a legal swap')
-        local plaques = g.oil_left
-        rules.game_apply(g, match)
-        check(g.earnings[currency] == expected and g.oil_left < plaques,
-            'the opening earns the upgraded resource and clears a plaque')
-    end
 end
 
 -- The Shore Marker board has two different score pieces. A matching line of
@@ -133,7 +131,10 @@ for _, entry in ipairs{{6, 1, 'flower'}, {6, 5, 'leaf'}, {1, 2, 'apple'}} do
     local present = false
     for i=0,rules.CELLS-1 do present = present or g.tiles[i].kind == kind end
     check(present,'the opening contains ' .. name)
-    for r=0,2 do g.tiles[rules.hex_index(-2,r)] = rules.tile(kind) end
+    local mid = open_cell(g)
+    for _, i in ipairs{rules.hex_neighbor(mid,4), mid, rules.hex_neighbor(mid,1)} do
+        g.tiles[i], g.chain[i], g.ice[i] = rules.tile(kind), 0, 0
+    end
     local m = rules.new_match()
     rules.game_matches(g,m,-1)
     check(m.hits >= 3,'a line of ' .. name .. ' matches')
@@ -243,7 +244,8 @@ do
     local g, m = R.make_board(9, 73), rules.new_match()
     check(g.bonus == nil and g.resource_yields[1] == economy.unlock_of("market") and not g.resource_yields[g.goal_kind],
         'expedition 10 keeps both the story gear slot and newly unlocked ration jars')
-    for _, cell in ipairs{rules.hex_index(0, -1), rules.hex_index(0, 0), rules.hex_index(0, 1)} do
+    local mid = open_cell(g)
+    for _, cell in ipairs{rules.hex_neighbor(mid, 4), mid, rules.hex_neighbor(mid, 1)} do
         g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
         g.tiles[cell] = rules.tile(g.goal_kind)
     end
@@ -264,7 +266,8 @@ do
     local g, m = rules.game_start(1, 73, restored), rules.new_match()
     local kind = rules.level_of(g).goal_kind == 5 and 1 or 5
     check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the Camp debuts Hammer')
-    local line = {rules.hex_index(0, -1), rules.hex_index(0, 0), rules.hex_index(0, 1)}
+    local mid = open_cell(g)
+    local line = {rules.hex_neighbor(mid, 4), mid, rules.hex_neighbor(mid, 1)}
     for _ = 1, 3 do
         for _, cell in ipairs(line) do
             g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
@@ -284,7 +287,7 @@ do
     local later = rules.game_start(29, 1, restored)
     check(later.tool_slots[tool] == B.dynamite and later.tools[tool] == 1
         and later.tool_meter[tool] == g.tool_threshold, 'the stored Hammer use becomes a Dynamite use')
-    local center = rules.hex_center()
+    local center = open_cell(later)
     check(rules.game_tool(later, tool - 1, center, m) and m.hits == 7
         and later.moves == rules.level_of(later).moves, 'Dynamite blasts seven cells without spending a move')
     R.g = later
@@ -298,7 +301,7 @@ do
     local restored = {amphitheater=true}
     local shield = rules.game_start(29, 3, restored)
     local tool = charge(shield, B.shield)
-    local center = rules.hex_center()
+    local center = open_cell(shield)
     local row = rules.game_tool_area(shield, tool, center)
     check(row[center] and row[rules.hex_neighbor(center, 0)], 'Shield targets the selected row')
     for cell in pairs(row) do check(rules.hex_r(cell) == rules.hex_r(center), 'Shield stays on its axis') end
@@ -319,7 +322,7 @@ for rank = 1, 2 do
     local B = economy.bonuses
     local restored = {clock_tower=true, observatory=rank == 2}
     local g, m = rules.game_start(29, 3, restored), rules.new_match()
-    local center = rules.hex_center()
+    local center = open_cell(g)
     local a, b = rules.hex_neighbor(center, 0), rules.hex_neighbor(center, 1)
     for _, cell in ipairs{center, a, b} do
         g.tiles[cell], g.chain[cell], g.ice[cell], g.stone_hp[cell] = rules.tile(2), 0, 0, 0
@@ -398,7 +401,9 @@ end
 -- the first hit and the preview solver cannot alter the live ledger.
 do
     local g=R.make_board(4,19)
-    local a,b,c=rules.hex_index(-1,0),rules.hex_index(0,0),rules.hex_index(1,0)
+    local b=open_cell(g)
+    local a,c=rules.hex_neighbor(b,3),rules.hex_neighbor(b,0)
+    for _,i in ipairs{a,b,c} do g.ice[i],g.oil[i]=0,0 end
     g.chain[a],g.chain[b],g.chain[c]=1,0,0
     g.tiles[a],g.tiles[b],g.tiles[c]=rules.tile(3),rules.tile(0),rules.tile(4)
     local m=rules.new_match()

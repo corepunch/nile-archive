@@ -1,21 +1,28 @@
 name: Temple Steps
 tier: tutorial
-teaches: The board grows: work up from the bottom terraces and clear the whole row of tablets.
+teaches: The board grows in steps: work down the temple stairs and clear the tablets on each landing.
 
-    x
-   x x
-  x . x
+x x . x x
  x . . x
-. . . . .
+x x . x x
+ x . . x
+x x . x x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+x p p p x
+ x p p x
+x . . . x
  . . . .
-. . . . .
+x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-p p p p p
+x p p p x
  p p p p
-  p p p
-   . .
-    .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .

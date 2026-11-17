@@ -2,20 +2,27 @@ name: Fallen Colonnade
 tier: easy
 teaches: Ice over a tablet: break the ice first, then clear the tablet beneath.
 
-    x
-   . .
-  . . .
+x . . . x
  . . . .
-p j p j p
- p p p p
-p x p x p
- p p p p
-p j p j p
- p p p p
-p x p x p
+. . . . .
+ . . . .
+p p p p p
  p p p p
 p p p p p
- . . . .
-  . . .
-   . .
-    x
+ x p p x
+p p p p p
+ p j j p
+p p p p p
+ x p p x
+p p p p p
+ p p p p
+p j p j p
+ x p p x
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+p p p p p
+ p p p p
+x p p p x
+ x p p x

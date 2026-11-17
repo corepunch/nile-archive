@@ -1,21 +1,28 @@
 name: Hall of Idols
 tier: boss
-teaches: Every tablet is double: win through two layers of idols in the hall and in the tower beside it.
+teaches: Every tablet is double: win through two layers of idols in the long hall.
 
-    P
-   P P
-  x P x
+x P P P x
+ P P P P
+P P P P P
+ P P P P
+P s P s P
+ P P P P
+P P J P P
+ P P P P
+J P P P J
+ P P P P
+P P P P P
+ P P P P
+P s P s P
+ P P P P
+P P J P P
+ P P P P
+J P P P J
+ P P P P
+P P P P P
+ P P P P
+P s P s P
+ P P P P
+x P P P x
  x P P x
-. x P x .
- P x x P
-P J x J P
- P P P P
-P s x s P
- P P P P
-P J P J P
- P P P P
-. s P s .
- P P P P
-  . J .
-   P P
-    P

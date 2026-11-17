@@ -2,20 +2,27 @@ name: Row of Stalls
 tier: easy
 teaches: Frost on the market: match next to a frosted cell to break the ice, which also blocks the fall below it.
 
-    x
-   x x
-  x x x
+x x x x x
+ x x x x
+. . . . .
+ . . . .
+. . i . .
+ . . . .
+p p p p p
+ p . . p
+p . p . p
  p p p p
 p i p i p
  p p p p
-. p . p .
+p p p p p
+ p . . p
+p . p . p
  p p p p
-p i p i p
- p p p p
-. . . . .
+p p p p p
+ p . . p
+x . . . x
  . . . .
-. . . . .
- . . . .
-  x x x
-   x x
-    x
+x . . . x
+ x . . x
+x x x x x
+ x x x x

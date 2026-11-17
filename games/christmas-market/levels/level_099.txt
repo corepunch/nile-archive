@@ -1,21 +1,28 @@
 name: Snowman
 tier: hard
-teaches: The snowman buttons: seal the base pocket and free it with a single tinsel break.
+teaches: Three snowballs with coal buttons: seal the base pocket and free it with a single tinsel break.
 
-    p
-   p p
-  p p p
+x x . x x
+ x . . x
+x . . . x
  x p p x
-x x p x x
+x p p p x
  p p p p
-p p p p p
+x p p p x
  p p p p
-J p p p J
+x p p p x
+ x p p x
+x x . x x
+ x . . x
+x p p p x
  p p p p
-x x p x x
+p p J p p
  p p p p
-p p p p p
- p K K p
-  K K K
-   p p
-    p
+p p J p p
+ p p p p
+x K K K x
+ x K K x
+x p p p x
+ p p p p
+. p p p .
+ . p p .

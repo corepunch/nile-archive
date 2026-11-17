@@ -2,10 +2,14 @@ name: Twin Lanterns
 tier: easy
 teaches: Each lantern hangs behind double tinsel; break it so new pieces drop in.
 
-    x
-   . .
-  . x .
- p . . p
+x . x . x
+ . x x .
+x . x . x
+ . x x .
+. . x . .
+ . . . .
+p p x p p
+ p p p p
 p p x p p
  p p p p
 p p x p p
@@ -16,6 +20,9 @@ K K x K K
  K K K K
 p p x p p
  p p p p
-  p x p
-   p p
-    x
+p p x p p
+ p p p p
+x p x p x
+ p p p p
+x p x p x
+ x p p x

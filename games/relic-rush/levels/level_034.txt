@@ -2,20 +2,27 @@ name: Sundered Gallery
 tier: normal
 teaches: A gallery cut in two by a fallen column; each half has its own sky, and the plain aisles are worth saving.
 
-    x
-   p p
-  x x x
- p p p p
-p p x p p
- p s s p
-p p x p p
- p p p p
-p p x p p
- p s s p
-p p x p p
- p p p p
 p p x p p
  p . . p
-  p x p
-   p p
-    x
+p p x p p
+ p . . p
+p p x p p
+ p . . p
+p p x p p
+ p . . p
+p s x s p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p s x s p
+ p x x p
+p p x p p
+ p . . p
+p p x p p
+ p . . p
+p p x p p
+ p . . p
+p p x p p
+ p . . p

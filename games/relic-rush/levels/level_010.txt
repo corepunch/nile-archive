@@ -2,20 +2,27 @@ name: Jaguar Throne
 tier: boss
 teaches: Every tablet is double: hit each one twice to dethrone the jaguar.
 
-    P
-   P P
-  P P P
+x x . x x
+ x . . x
+x x . x x
+ x . . x
+x P P P x
  P P P P
 x P P P x
  P P P P
-P P . P P
- P . . P
-P . . . P
- P . . P
-P P . P P
+x P P P x
  P P P P
 x P P P x
  P P P P
-  P P P
-   P P
-    P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P P x P P
+ P x x P
+P P x P P
+ P x x P
+P P x P P
+ x x x x

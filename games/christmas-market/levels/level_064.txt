@@ -2,9 +2,13 @@ name: Carousel
 tier: normal
 teaches: Tinsel rings the carousel: break the outer ring to reach its heart.
 
-    p
-   p p
-  p p p
+x x . x x
+ x x x x
+x x . x x
+ x . . x
+x p p p x
+ x p p x
+x p p p x
  p p p p
 p p K p p
  p K K p
@@ -16,6 +20,9 @@ p K p K p
  p K K p
 p p K p p
  p p p p
-  p p p
-   p p
-    p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x x p x x
+ x p p x

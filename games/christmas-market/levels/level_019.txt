@@ -1,21 +1,28 @@
 name: Gift Stack
 tier: hard
-teaches: Two stacked gift boxes, almost every cell a tablet: keep every corner supplied.
+teaches: Two stacked gift boxes with ribbon: keep every corner supplied.
 
-    x
-   x x
-  p p p
- . p p .
-p p p p p
+x . x . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+x p . p x
  p p p p
-p j p j p
+x p . p x
  p p p p
-x p p p x
+x p . p x
  p p p p
-p j p j p
+p p . p p
  p p p p
-p p p p p
- . p p .
-  p p p
-   x x
-    x
+p p . p p
+ p p p p
+p p . p p
+ p p p p
+. . . . .
+ . . . .
+p p . p p
+ p p p p
+p p . p p
+ p p p p

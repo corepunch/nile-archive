@@ -2,20 +2,27 @@ name: The Altar
 tier: boss
 teaches: Double tablets crowd the altar chamber behind a double-chained row.
 
-    p
-   x x
-  p p p
- p p p p
-J P P P J
+x P P P x
  P P P P
-P s I s P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P J P J P
+ P P P P
+P s P s P
+ P P P P
+P P P P P
  P P P P
 G G G G G
  G G G G
 P P P P P
  P P P P
+P I P I P
+ P P P P
 P P P P P
  P P P P
-  P P P
-   P P
-    P
+P P P P P
+ P P P P
+x P P P x
+ P P P P

@@ -1,21 +1,28 @@
 name: Tinsel Garlands
 tier: easy
-teaches: Chained lanterns: break the garland at the top of the grotto to let pieces reach the rooms below.
+teaches: Chained lanterns hang in swags: break a garland link to let pieces down to the lanterns below.
 
-    x
-   . .
-  . . .
+x . . . x
+ x . . x
+x . . . x
  . . . .
+. . . . .
+ . . . .
+k . . . k
+ k . . k
 . k . k .
+ . k k .
+p p k p p
  p p p p
-k p . p k
- p x x p
-. x k x .
+p p p p p
+ . . . .
+p p p p p
+ p p p p
+p p p p p
+ . . . .
+x p p p x
+ p p p p
+x . p . x
  x p p x
-x k p k x
- . p p .
-p . p . p
- p . . p
-  p . p
-   p p
-    p
+x x . x x
+ x . . x

@@ -2,9 +2,15 @@ name: Twin Gardens
 tier: easy
 teaches: Two walled gardens each lock their lower tablets behind a chained terrace.
 
-    x
-   p p
-  p x p
+x x x x x
+ x . . x
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+p p x p p
+ p p p p
+p p x p p
  p p p p
 p p x p p
  p p p p
@@ -14,8 +20,9 @@ K K x K K
  K K K K
 p p x p p
  p p p p
-x p x p x
+p p x p p
  p p p p
-  p x p
-   p p
-    x
+p p x p p
+ p p p p
+p p x p p
+ p p p p

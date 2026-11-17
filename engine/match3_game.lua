@@ -113,6 +113,9 @@ end
 -- call each other without import cycles. A game's lua/state.lua returns it.
 function G.state()
     return require("match3").view{
+        -- A 9 x 12 board between the HUD and the bonus tray on a 480 x 900
+        -- screen; the cell art is painted at a 26.5 px radius.
+        HEX_R = 30,
         hit_dy = 0,          -- where the open dialog's buttons sit below their layout
 
         intro = nil,

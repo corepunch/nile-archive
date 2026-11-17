@@ -1,21 +1,28 @@
 name: Twin Towers
 tier: normal
-teaches: Two towers hold tablets either side of a notch; work the valley between them.
+teaches: Two towers hold tablets either side of a valley; work the hall that joins them.
 
-    x
-   x x
-  p x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p j x j p
+ p x x p
+p p x p p
  p x x p
 p p x p p
  p p p p
 p p p p p
  p p p p
+p p p p p
+ p p p p
 p j p j p
  p p p p
-. p p p .
+p p p p p
+ p . . p
+p p p p p
  p p p p
-. p p p .
+x p p p x
  p p p p
-  p p p
-   p p
-    p
+x x p x x
+ x p p x

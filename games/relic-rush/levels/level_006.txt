@@ -1,21 +1,28 @@
 name: Vine-Bound Terraces
 tier: normal
-teaches: Tablets under chains: break the chain over the doorway to reach the deep chamber.
+teaches: Tablets under chains: break a vine over the doorway to reach the deep chamber.
 
-    .
-   . .
-  . . .
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
  . . . .
-p p p p p
- . . . .
-p p p p p
- . . . .
-p k p k p
- . x x .
-. x k x .
- x p p x
-x k p k x
+x p p p x
  p p p p
-  p p p
-   p p
-    p
+p p p p p
+ p p p p
+x p p p x
+ x x x x
+x k k k x
+ . . . .
+. . . . .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p

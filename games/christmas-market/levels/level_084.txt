@@ -1,21 +1,28 @@
 name: Snowflake
 tier: normal
-teaches: Clear six crystal arms around the middle; every branch needs its own match.
+teaches: Clear six crystal arms around the middle; every branch needs its own match, and the ice on the arms must melt first.
 
-    p
-   p p
-  x p x
+x x . x x
+ x . . x
+x . p . x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
  p p p p
 j p p p j
  p p p p
-p p p p p
+x p p p x
  p p p p
 x p J p x
  p p p p
-p p p p p
+x p p p x
  p p p p
 j p p p j
  p p p p
-  x p x
-   p p
-    p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x . . . x
+ x . . x

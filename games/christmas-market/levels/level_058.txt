@@ -2,20 +2,27 @@ name: Wrapped Present
 tier: normal
 teaches: The ribbon is tinsel stretched over plain cells; break it to open the gift.
 
-    .
-   . .
-  p . p
+x . x . x
+ . x x .
+x . . . x
+ . . . .
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
+ p p p p
+p p C p p
  p p p p
 p p p p p
  p p p p
-C C C C C
- C C C C
-p p . p p
- p p p p
-p p . p p
- p p p p
-p p . p p
- p p p p
-  p . p
-   p p
-    .

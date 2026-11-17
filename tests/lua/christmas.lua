@@ -5,7 +5,7 @@ local journey = require('journey')
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
-assert(#island.catalogue == 37 and island.WONDERS == 10 and rules.LEVELS == 30)
+assert(#island.catalogue == 37 and island.WONDERS == 10 and rules.LEVELS == 100)
 -- Pip announces each region on the level the script gives it (docs/story.md#small-lines).
 local opens = {[6]=1, [9]=2, [15]=3, [21]=4, [27]=5}
 for level=0,rules.LEVELS-1 do
@@ -35,13 +35,13 @@ for level=0,rules.LEVELS-1 do
     assert(island.campaign_count(c)==due, 'Every funded stall must fit the land open by then, in ladder order')
     assert(island.wonder_count(c)==journey.earned(p.level), 'Story stalls keep their schedule')
 end
-assert(c.open==63 and p.wallet[4]==90 and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
+assert(c.open==63 and p.wallet[4]==3*rules.LEVELS and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
        'Stars open every region and spare matched goods are banked')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)
 replay.won, replay.moves, replay.earnings = true, 0, {12, 3, 4}
 assert(rules.progress_reward(p,replay,island.wonders))
-assert(p.wallet[1]==before+12 and p.wallet[4]==90 and p.level==30, 'Replays do not earn additional Stars')
+assert(p.wallet[1]==before+12 and p.wallet[4]==3*rules.LEVELS and p.level==rules.LEVELS, 'Replays do not earn additional Stars')
 for kind=10,11 do
     assert(island.can_buy(c,p.wallet,p.level,kind))
     local ok,spot = c:find_spot(kind,vec2(760,2010))

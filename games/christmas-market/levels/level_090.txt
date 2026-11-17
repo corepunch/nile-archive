@@ -2,13 +2,17 @@ name: Gift Mountain
 tier: boss
 teaches: Double panes everywhere and a double tinsel curtain across the middle of the pile.
 
-    P
-   P P
-  J P J
+x x . x x
+ x . . x
+x P P P x
+ x P P x
+x P P P x
+ x P P x
+x P P P x
  P P P P
-J P P P J
+x J P J x
  P P P P
-s P P P s
+x P P P x
  P P P P
 G G G G G
  G G G G
@@ -16,6 +20,9 @@ P P P P P
  P P P P
 J P P P J
  P P P P
-  x P x
-   x x
-    x
+P P P P P
+ P P P P
+P J P J P
+ P P P P
+s P P P s
+ x x x x

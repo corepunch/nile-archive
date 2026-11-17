@@ -1,21 +1,28 @@
 name: Jungle Bridge
 tier: easy
-teaches: Cross the bridge, then break its chain to drop pieces into the gorge below.
+teaches: Cross the hourglass bridge, then break its chains to drop pieces into the gorge below.
 
-    x
-   x x
-  x p x
+. . . . .
+ . . . .
+p p p p p
  p p p p
-. p p p .
+j p p p j
  p p p p
-. i K i .
+x p p p x
  p p p p
-. K K K .
- p p p p
-. j p j .
- p x x p
-p x K x p
+x p p p x
  x p p x
-  p p p
-   p p
-    p
+x K K K x
+ x K K x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ . . . .

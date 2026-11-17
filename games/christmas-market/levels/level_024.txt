@@ -2,20 +2,27 @@ name: Reindeer Stable
 tier: normal
 teaches: Open the stable door at the chain; more chained lanterns wait inside.
 
-    x
-   x x
-  p p p
+x x . x x
+ x . . x
+x . . . x
+ x . . x
+x p p p x
+ . p p .
+p p p p p
  p p p p
-p j p j p
+. p p p .
  p p p p
-k p p p k
+x x c x x
+ x c c x
+x p p p x
+ . p p .
+p p p p p
  p p p p
-p k p k p
- p x x p
-p x k x p
- x p p x
-x k p k x
+p k k k p
+ p k k p
+p p p p p
  p p p p
-  p p p
-   p p
-    p
+p p p p p
+ p p p p
+x p p p x
+ p p p p

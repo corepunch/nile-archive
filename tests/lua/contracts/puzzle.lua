@@ -62,13 +62,14 @@ return function(R, options)
                 -- Independent oracle: sort same-axis cells by coordinates,
                 -- then find consecutive equal-colour spans, stopping at holes.
                 for axis=0,2 do
-                    for lane=-4,4 do
-                        local cells={}
-                        for i=0,N-1 do
-                            local q,r=coord(i)
-                            local value=axis==0 and r or axis==1 and q or q+r
-                            if value==lane then cells[#cells+1]=i end
-                        end
+                    local lanes={}
+                    for i=0,N-1 do
+                        local q,r=coord(i)
+                        local value=axis==0 and r or axis==1 and q or q+r
+                        lanes[value]=lanes[value] or {}
+                        table.insert(lanes[value],i)
+                    end
+                    for _,cells in pairs(lanes) do
                         table.sort(cells,function(a,b)
                             local aq,ar=coord(a);local bq,br=coord(b)
                             return axis==1 and ar<br or axis~=1 and aq<bq
@@ -152,26 +153,30 @@ return function(R, options)
         end
     end
 
-    -- Every occupancy of the nine-cell central column retains survivor order.
-    for mask=0,511 do
+    -- Every occupancy of the central column (its lowest nine cells on a tall
+    -- board) retains survivor order.
+    local top,bottom=math.huge,-math.huge
+    for i=0,N-1 do if R.hex_q(i)==0 then top,bottom=math.min(top,R.hex_r(i)),math.max(bottom,R.hex_r(i)) end end
+    local low=math.max(top,bottom-8)
+    for mask=0,(1<<(bottom-low+1))-1 do
         t:case('gravity occupancy='..mask,function()
             local g=blank();local survivors={}
             -- Isolate this lane: lateral flow belongs to the shared trickling suite.
-            for i=0,N-1 do g.active[i]=R.hex_q(i)==0 end
-            for r=-4,4 do
+            for i=0,N-1 do g.active[i]=R.hex_q(i)==0 and R.hex_r(i)>=low end
+            for r=low,bottom do
                 local cell=R.hex_index(0,r)
-                if mask&(1<<(r+4))~=0 then
-                    g.tiles[cell]=R.tile((r+4)%R.COLORS)
+                if mask&(1<<(r-low))~=0 then
+                    g.tiles[cell]=R.tile((r-low)%R.COLORS)
                     survivors[#survivors+1]={cell=cell,tile=g.tiles[cell]}
                 end
             end
             local from=R.game_collapse(g)
-            local first=5-#survivors
+            local first=bottom+1-#survivors
             for k,old in ipairs(survivors) do
                 local dst=R.hex_index(0,first+k-1)
                 t:check(g.tiles[dst]==old.tile and from[dst]==old.cell,'stable survivor identity and source')
             end
-            for r=-4,first-1 do
+            for r=low,first-1 do
                 local cell=R.hex_index(0,r)
                 t:check(from[cell]<0 and g.tiles[cell].kind>=0 and g.tiles[cell].kind<R.COLORS,
                     'new ordinary piece spawns above survivors')

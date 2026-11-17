@@ -2,20 +2,27 @@ name: Chapel Bells
 tier: hard
 teaches: Snow stones and a tinsel roof: free the bells.
 
-    .
-   . .
-  p p p
+x x . x x
+ x x x x
+x x . x x
+ x . . x
+x p p p x
+ x p p x
+x p p p x
+ p j j p
+x p p p x
+ p p p p
+x j p j x
+ p p p p
+x p p p x
+ p j j p
+x K K K x
+ K K K K
+x p p p x
+ p p p p
+p p p p p
  p p p p
 p s s s p
  p p p p
-j p p p j
+. p p p .
  p p p p
-j p p p j
- p p p p
-j p K p j
- p K K p
-p K p K p
- K p p K
-  p p p
-   p p
-    p

@@ -1,21 +1,28 @@
 name: Split Stair
 tier: easy
-teaches: Climb either side of the ravine; a small chained crypt waits on each.
+teaches: Climb either side of the ravine; a small chained crypt waits under each stair.
 
-    x
-   p p
-  p x p
- p p p p
 p p x p p
- p p p p
-x i x i x
- p p p p
+ p x x p
+p p x p p
+ p x x p
 p p x p p
  p p p p
 p p x p p
+ p p p p
+p p p p p
+ p p p p
+p i p i p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
  p p p p
 K K x K K
- K K K K
-  p x p
-   p p
-    x
+ K x x K
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ . x x .

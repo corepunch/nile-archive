@@ -2,20 +2,27 @@ name: The Big Fir
 tier: boss
 teaches: A tall fir of double panes: every lantern needs two hits.
 
-    .
-   . .
-  . . .
+x x . x x
+ x . . x
+x P P P x
+ x P P x
+x P P P x
+ P P P P
+x P P P x
+ x P P x
+x P P P x
  P P P P
 P P P P P
- x P P x
+ P P P P
+x P P P x
+ P P P P
 P P P P P
- x P P x
+ P P P P
 P P P P P
- x P P x
-P P P P P
- x P P x
-P P P P P
- x P P x
-  P P P
-   P P
-    x
+ P P P P
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ x p p x

@@ -1,21 +1,28 @@
 name: Holly Ring
 tier: easy
-teaches: Go round the wreath: dense panes with a hollow centre.
+teaches: Go round the wreath: dense panes with a hollow centre, and a few ice berries to melt on the way.
 
-    .
-   p p
-  p p p
+x p p p x
  p p p p
-i p p p i
+p p p p p
  p p p p
 p p x p p
  p x x p
 p p x p p
  p x x p
+i p x p i
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+i p x p i
+ p x x p
 p p x p p
  p p p p
-i p p p i
+p p p p p
  p p p p
-  p p p
-   p p
-    .
+p p p p p
+ p p p p
+x p p p x
+ x x x x

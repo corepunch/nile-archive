@@ -2,20 +2,27 @@ name: Tree Topper
 tier: hard
 teaches: Double frost takes two hits to break; a lone star hovers over the tree.
 
-    p
-   p p
-  p p p
+x x . x x
+ x . . x
+x . p . x
  x p p x
-p x p x p
- p x x p
-. J x J .
+x p p p x
  . p p .
-p k p k p
+x . p . x
+ x p p x
+x . . . x
+ x x x x
+. x x x .
+ . x x .
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+p J p J p
+ p p p p
+x p I p x
  p . . p
-p J . J p
+p p p p p
  p p p p
 x p p p x
- p p p p
-  p p p
-   p p
-    x
+ . p p .

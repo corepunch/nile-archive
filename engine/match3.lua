@@ -583,50 +583,72 @@ function E.new(config)
     local flags, kind_flags = config.flags or E.LINE_MATCHES, config.kind_flags or {}
     assert(math.type(flags) == "integer" and flags >= 0 and flags < 512, "invalid match3 flags")
     assert(not config.radius or math.type(config.radius) == "integer" and config.radius >= 1 and config.radius <= 16, "invalid hex radius")
+    assert((config.columns == nil) == (config.rows == nil), "a rectangular board needs both columns and rows")
+    assert(not config.columns or math.type(config.columns) == "integer" and config.columns % 2 == 1
+        and config.columns <= 31 and math.type(config.rows) == "integer" and config.rows >= 2 and config.rows <= 31,
+        "a rectangular board has an odd number of columns")
     local M = {flags=flags}
-    -- Axial hex grid; neighbours are
-    -- numbered 0..5 and opposite directions differ by 3.
-    M.HEX_RADIUS = config.radius or 4
-    M.CELLS = 1 + 3 * M.HEX_RADIUS * (M.HEX_RADIUS + 1)
-    local radius, stride = M.HEX_RADIUS, M.HEX_RADIUS * 4 + 1
-    local CELLS = M.CELLS
+    -- Axial hex grid of flat-top cells; neighbours are numbered 0..5 and
+    -- opposite directions differ by 3. The envelope is a hexagon of `radius`
+    -- or a rectangle of `columns` x `rows`, whose odd columns sit half a cell
+    -- lower (as in Blossom Blast). Cells are numbered by q, then r, ascending.
     local qs, rs, index = {}, {}, {}
+    local function key(q, r) return q * 1024 + r end
+    local CELLS
     do
         local n = 0
-        for q = -radius, radius do
-            for r = math.max(-radius, -q - radius), math.min(radius, -q + radius) do
-                qs[n], rs[n] = q, r
-                index[q * stride + r] = n
-                n = n + 1
+        local function add(q, r) qs[n], rs[n], index[key(q, r)] = q, r, n; n = n + 1 end
+        if config.columns then
+            M.COLUMNS, M.ROWS = config.columns, config.rows
+            local half = (config.columns - 1) // 2
+            for q = -half, half do
+                for row = 0, config.rows - 1 do add(q, row - q // 2 - config.rows // 2) end
             end
+            M.HEX_RADIUS = math.max(half, config.rows // 2)
+        else
+            local radius = config.radius or 4
+            for q = -radius, radius do
+                for r = math.max(-radius, -q - radius), math.min(radius, -q + radius) do add(q, r) end
+            end
+            M.HEX_RADIUS = radius
         end
+        CELLS = n
     end
+    M.CELLS = CELLS
+    local radius = M.HEX_RADIUS
     -- direction d: 0 = (+1, 0), 1 = (0, +1), 2 = (-1, +1), 3..5 the opposites
     local dirs = {[0] = {1, 0}, {0, 1}, {-1, 1}, {-1, 0}, {0, -1}, {1, -1}}
     local neighbors = {}
     for i = 0, CELLS - 1 do
         neighbors[i] = {}
         for d = 0, 5 do
-            local q, r = qs[i] + dirs[d][1], rs[i] + dirs[d][2]
-            neighbors[i][d] = (math.abs(q) <= radius and math.abs(r) <= radius and math.abs(q + r) <= radius) and index[q * stride + r] or -1
+            neighbors[i][d] = index[key(qs[i] + dirs[d][1], rs[i] + dirs[d][2])] or -1
         end
     end
 
-    function M.hex_index(q, r)
-        if math.abs(q) > radius or math.abs(r) > radius or math.abs(q + r) > radius then return -1 end
-        return index[q * stride + r]
-    end
+    function M.hex_index(q, r) return index[key(q, r)] or -1 end
     function M.hex_q(cell) return qs[cell] or 0 end
     function M.hex_r(cell) return rs[cell] or 0 end
     function M.hex_neighbor(cell, d)
         local n = neighbors[cell]
         return n and n[d] or -1
     end
-    function M.hex_center() return index[0] end
+    -- The cell nearest the envelope's middle.
+    local centre = index[key(0, 0)]
+    function M.hex_center() return centre end
     function M.hex_distance(a, b)
         if a < 0 or a >= CELLS or b < 0 or b >= CELLS then return 10000 end
         local q, r = qs[a] - qs[b], rs[a] - rs[b]
         return (math.abs(q) + math.abs(r) + math.abs(q + r)) // 2
+    end
+    -- The envelope's extent in cell units: q, and screen rows (r + q / 2).
+    do
+        local min_q, max_q, min_y, max_y = math.huge, -math.huge, math.huge, -math.huge
+        for i = 0, CELLS - 1 do
+            local y = rs[i] + qs[i] * .5
+            min_q, max_q, min_y, max_y = math.min(min_q, qs[i]), math.max(max_q, qs[i]), math.min(min_y, y), math.max(max_y, y)
+        end
+        M.envelope = {min_q=min_q, max_q=max_q, min_y=min_y, max_y=max_y}
     end
     local hex_index, hex_q, hex_r, hex_neighbor, hex_distance, hex_center =
         M.hex_index, M.hex_q, M.hex_r, M.hex_neighbor, M.hex_distance, M.hex_center
@@ -1258,6 +1280,12 @@ function E.new(config)
             assert(not taken[entry.cell], "overlapping chains")
             g.chain[entry.cell], taken[entry.cell] = entry.hits or 1, true
         end
+        -- `ice_cells` places authored ice: {cell=id, layers=1 or 2}.
+        for _, entry in ipairs(l.ice_cells or {}) do
+            valid_cell(entry.cell)
+            assert(not taken[entry.cell], "ice overlaps a chain or stone")
+            g.ice[entry.cell], taken[entry.cell] = entry.layers or 1, true
+        end
         local chain_count = 0
         for k = 0, n * 3 - 1 do
             if chain_count >= (l.chains or 0) then break end
@@ -1272,7 +1300,7 @@ function E.new(config)
         assert((l.double_chains or 0) <= l.chains, "double chains are counted within chains")
         local count = 0
         for k = 0, n - 1 do
-            if count >= l.ice then break end
+            if count >= (l.ice or 0) then break end
             local cell = order[(k + 4) % n + 1]
             if not taken[cell] and hex_distance(cell, hex_center()) <= math.max(1, radius - 1) then
                 g.ice[cell] = (l.ice_layers == 2 and count % 3 == 0) and 2 or 1
@@ -1280,7 +1308,7 @@ function E.new(config)
                 count = count + 1
             end
         end
-        assert(count == l.ice, "not enough ice cells")
+        assert(count == (l.ice or 0), "not enough ice cells")
         for i = 0, CELLS - 1 do
             g.initial_obstacles = g.initial_obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i]
         end
@@ -1457,7 +1485,8 @@ function E.new(config)
     local BONUS_GAP, BONUS_MARGIN = 8, 8
     local neutral_hud = app.arg("default-match3")
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
-    local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
+    local env = M.envelope
+    local board_size = size2(((env.max_q - env.min_q) * 1.5 + 2) * HEX_R + 12, (env.max_y - env.min_y + 1) * HEX_DY + 12)
     local centred_game, centre_q, centre_row = nil, 0, 0
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900

@@ -2,20 +2,27 @@ name: Candy Cane
 tier: hard
 teaches: Striped tinsel everywhere, single and double.
 
-    .
-   p p
-  p p p
- p k k p
-p p p p p
- c p p c
-p p p p p
- p k k p
-p p p p p
- c p p c
-p p p p p
- p k k p
-K K K K K
+x p x p x
+ p x x p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+x p x p x
+ p p p p
+x K x K x
  K K K K
-  p p p
-   p p
-    .
+x p x p x
+ p p p p
+x p x p x
+ p p p p
+x k x k x
+ k k k k
+x p x p x
+ p p p p
+x p x p x
+ p p p p
+x K x K x
+ c c c c
+x p x p x
+ p p p p

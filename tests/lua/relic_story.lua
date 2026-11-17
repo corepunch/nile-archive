@@ -8,18 +8,24 @@ local function empty_queue() while story.active() do story.next() end end
 local function owned(c) return function(kind) return island.owned(c,kind)>0 end end
 
 -- A plaque is fixed to a cell. Nearby clears and blocker damage leave it in place.
+-- Board 6 first puts chains over plaques.
+local function plaques_of(g)
+    local locked, plain
+    for i=0,rules.CELLS-1 do
+        if g.oil[i]==1 and g.ice[i]==0 then
+            if g.chain[i]>0 and not locked then locked=i elseif g.chain[i]==0 and not plain then plain=i end
+        end
+    end
+    return locked, plain
+end
 do
-    -- The authored rules alone: the tuned double layers are checked below.
-    local spec=rules.levels[5]
-    local doubles,tablets=spec.double_chains,spec.oil_double
-    spec.double_chains,spec.oil_double=0,nil
-    local g=rules.game_start(4,123)
-    spec.double_chains,spec.oil_double=doubles,tablets
-    local a,b=rules.hex_index(-1,0),rules.hex_index(-1,1)
+    local g=rules.game_start(5,123)
+    local a,b=plaques_of(g)
     local initial=g.oil_left
-    check(initial==10 and g.oil[a]==1 and g.chain[a]>0 and g.oil[b]==1, 'blue plaques are authored under both locked and ordinary pieces')
+    check(a and b and initial==#rules.levels[6].oil, 'blue plaques are authored under both locked and ordinary pieces')
     local m=rules.new_match()
     m.mask[a]=true
+    g.chain[a]=1
     rules.game_apply(g,m)
     check(g.oil_left==initial and g.chain[a]==0, 'the first hit removes the lock')
     rules.game_apply(g,m)
@@ -28,13 +34,14 @@ end
 
 -- A double tablet takes two hits and counts once toward the goal.
 do
-    local b=rules.hex_index(-1,1)
-    local level=rules.levels[5]
+    local _,b=plaques_of(rules.game_start(5,123))
+    local level=rules.levels[6]
+    local saved=level.oil_double
     level.oil_double={b}
-    local g=rules.game_start(4,123)
-    level.oil_double=nil
+    local g=rules.game_start(5,123)
+    level.oil_double=saved
     local initial=g.oil_left
-    check(g.oil[b]==2 and initial==10, 'oil_double starts a plaque at two layers without adding a goal')
+    check(g.oil[b]==2 and initial==#level.oil, 'oil_double starts a plaque at two layers without adding a goal')
     local m=rules.new_match()
     m.mask[b]=true
     rules.game_apply(g,m)
@@ -45,9 +52,9 @@ end
 
 -- The bonus-area preview names exactly the cells a tool would hit, without using it.
 do
-    local hammer=rules.game_start(4,123,{camp=true})
-    local g=rules.game_start(4,123,{camp=true,log_cabin=true})
-    local b=rules.hex_index(-1,1)
+    local hammer=rules.game_start(5,123,{camp=true})
+    local g=rules.game_start(5,123,{camp=true,log_cabin=true})
+    local _,b=plaques_of(g)
     hammer.tools[1], g.tools[1] = 1, 1
     local single, area=rules.game_tool_area(hammer,0,b), rules.game_tool_area(g,0,b)
     local n=0
@@ -104,7 +111,7 @@ end
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
-check(rules.LEVELS==30 and #journey.beats==47,'all chapters and their restoration scenes are playable')
+check(rules.LEVELS==100 and #journey.beats==47,'all chapters and their restoration scenes are playable')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -122,8 +129,11 @@ for level=1,30 do
     end
     local g=rules.game_start(level-1,level);g.won=true;g.moves=0
     local specs=rules.level_of(g)
-    check(g.initial_obstacles==specs.chains+(specs.double_chains or 0),
-        'Relic Rush expeditions use chains and fixed blue plaques')
+    local layers=0
+    for _,e in ipairs(specs.chain_cells) do layers=layers+e.hits end
+    for _,e in ipairs(specs.ice_cells) do layers=layers+e.layers end
+    check(g.initial_obstacles==layers+#specs.stones,
+        'Relic Rush expeditions place exactly their authored blockers')
     check(#specs.goals==1 and specs.goals[1]=='oil',
         'fixed blue plaques are the only win condition')
     check(g.oil_left>0 and g.oil_left==#specs.oil, 'each authored plaque is present on an active cell')
@@ -131,7 +141,7 @@ for level=1,30 do
         check(g.active[i] and g.stone_hp[i]==0, 'plaque is visible on a playable cell')
     end
     if specs.signal_cell then
-        check(g.oil[specs.signal_cell]==1, 'the signal plate appears on the cleared final site')
+        check(g.oil[specs.signal_cell]>=1, 'the signal plate appears on the cleared final site')
     end
     rules.game_check_end(g)
     check(not g.won, 'a board cannot win before its plaques are cleared')
@@ -262,7 +272,7 @@ end
 g.oil_left=1
 local m=rules.new_match()
 m.mask[signal]=true
-for _=1,1+g.chain[signal] do rules.game_apply(g,m) end
+for _=1,g.chain[signal]+g.ice[signal]+g.oil[signal] do rules.game_apply(g,m) end
 rules.game_check_end(g)
 check(g.won and g.oil[signal]==0 and g.obstacles>0,'the final plaque wins even while ordinary blockers remain')
 R.story_tick()

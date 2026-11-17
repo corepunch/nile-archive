@@ -1,21 +1,28 @@
 name: Skates
 tier: normal
-teaches: Two skates, two areas: a long boot on each side with every cell holding a tablet.
+teaches: Two skates, two areas: a tall boot on each side, with double ice in the ankles.
 
-    x
-   p p
-  p x p
- p p p p
-p p x p p
- p p p p
-p p x p p
+x . x . x
+ . . . .
+x p x p x
  p p p p
 x p x p x
  p p p p
-p J x J p
+x p x p x
  p p p p
-p J x J p
+x J x J x
  p p p p
-  p x p
-   p p
-    x
+x p x p x
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ J p p J
+p p x p p
+ p p p p
+. . x . .
+ . . . .
+. . x . .
+ . . . .

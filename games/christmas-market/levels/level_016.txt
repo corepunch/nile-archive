@@ -2,20 +2,27 @@ name: Snowman
 tier: easy
 teaches: Three snowballs, one big lantern board: a breather before the next gates.
 
-    x
-   p p
-  p p p
- p . . p
-p p p p p
+x x . x x
+ x . . x
+x p p p x
  x p p x
-p . p . p
+x p p p x
+ x p p x
+x x . x x
+ x . . x
+x p p p x
+ x p p x
+x p p p x
+ . p p .
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x p p p x
  p p p p
 p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
  . p p .
-p p . p p
- x p p x
-. p p p .
- p . . p
-  p p p
-   p p
-    x

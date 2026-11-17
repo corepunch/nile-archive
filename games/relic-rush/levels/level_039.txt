@@ -2,10 +2,6 @@ name: Broken Causeway
 tier: hard
 teaches: The causeway is broken in two; clear both banks, each fed from its own sky.
 
-    x
-   . .
-  . x .
- . . . .
 p p x p p
  p p p p
 p p x p p
@@ -15,7 +11,18 @@ p p x p p
 p p x p p
  p p p p
 p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
  p p p p
-  x x x
-   p p
-    x
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p

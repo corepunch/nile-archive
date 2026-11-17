@@ -1,21 +1,28 @@
 name: Parted Cloister
 tier: easy
-teaches: Two cloisters side by side; take the one that is easier first.
+teaches: Two cloisters side by side with bumpy inner walls; take the one that is easier first.
 
-    x
-   . .
-  . x .
- p p p p
-p . x . p
- p p p p
 p p x p p
  p p p p
 p p x p p
  p p p p
 p p x p p
  p p p p
-x p x p x
+p p x p p
+ p x x p
+p p x p p
  p p p p
-  p x p
-   p p
-    x
+p p x p p
+ p x x p
+p p x p p
+ p p p p
+p p x p p
+ p x x p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p

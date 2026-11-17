@@ -1,21 +1,28 @@
 name: Snowflake
 tier: hard
-teaches: Six notched points and a packed heart: every cell holds a tablet, with no spare room.
+teaches: Six arms and a packed heart: every cell holds a tablet, and two stones sit in the waist.
 
-    p
-   x x
-  p p p
+x x p x x
+ x p p x
+x p p p x
+ x p p x
+p x p x p
  p p p p
 p p p p p
  p p p p
+p p p p p
+ p p p p
+x s p s x
+ x p p x
 x p p p x
  p p p p
-x p p p x
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p x p x p
  p p p p
 x p p p x
- p p p p
-s p p p s
- p p p p
-  p p p
-   x x
-    p
+ x p p x
+x x p x x
+ x p p x

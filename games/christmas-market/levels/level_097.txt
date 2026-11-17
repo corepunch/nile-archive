@@ -1,21 +1,28 @@
 name: Sleigh Ride
 tier: normal
-teaches: Curled sleigh ends are narrow; clear them before the long body.
+teaches: Curled sleigh ends are narrow; clear them before the long body, and mind the ice under the gifts.
 
-    x
-   x x
-  p x p
+x x x x x
+ x x x x
+s x x x s
+ . x x .
+p p x p p
  p x x p
 p p x p p
- p p p p
+ p x x p
 p p p p p
  p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
-s p j p s
- . . . .
-  j . j
-   . .
-    .
+p p p p p
+ p p p p
+p p j p p
+ p p p p
+j p p p j
+ p p p p
+p p p p p
+ p p p p
+. . . . .
+ x x x x

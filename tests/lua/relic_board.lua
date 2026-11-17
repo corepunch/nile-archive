@@ -109,6 +109,8 @@ do
     local g = dead_board()
     local columns = {"00132", "101453", "2245134", "532--414", "104---203",
                      "500--231", "2335543", "450152", "03504"}
+    -- The photo is a radius-4 hexagon: nothing else of the board is in it.
+    for i = 0, rules.CELLS - 1 do g.active[i], g.stone_hp[i], g.oil[i] = false, 0, 0 end
     for column, kinds in ipairs(columns) do
         local q = column - 5
         for offset = 1, #kinds do
@@ -250,7 +252,7 @@ do
         if testing.game == "relic-rush" then
             local left = R.cell_pos(rules.hex_index(-4, 0)).x - R.HEX_R
             local right = R.SCREEN_W - R.cell_pos(rules.hex_index(4, 0)).x - R.HEX_R
-            check(left >= 12 and left <= 20 and right >= 12 and right <= 20,
+            check(left >= 24 and left <= 36 and right >= 24 and right <= 36,
                   "widest board retains narrow phone side margins")
             -- A 1x pose alone misses an enlarged sprite canvas. Check the
             -- rectangles actually submitted for every normal piece, including

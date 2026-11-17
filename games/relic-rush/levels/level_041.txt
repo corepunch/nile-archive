@@ -2,20 +2,27 @@ name: Needle Gate
 tier: easy
 teaches: One chain guards the needle's eye; break it and pieces trickle into the hall below.
 
-    .
-   . .
-  . . .
- p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
 p p p p p
- p x x p
-p x k x p
+ p p p p
+x p p p x
+ x p p x
+x x . x x
+ x . . x
+x x . x x
+ x x x x
+x x c x x
+ x x x x
+x x p x x
  x p p x
 x p p p x
  p p p p
-  p p p
-   p p
-    p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p

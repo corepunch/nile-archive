@@ -1,21 +1,28 @@
 name: Heart of the Temple
 tier: boss
-teaches: Every tablet is double, and the central shaft splits the board: clear them all twice.
+teaches: Every tablet is double, and the notch at the top splits the heart: clear them all twice.
 
-    P
-   P P
-  P P P
+x x x x x
+ x x x x
+P P x P P
+ P x x P
+P P P P P
  P P P P
 P P P P P
  P P P P
-P P x P P
- P P P P
-P P x P P
- P P P P
-P P x P P
+P P P P P
  P P P P
 P P P P P
  P P P P
-  P P P
-   P P
-    P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+x P P P x
+ P P P P
+x P P P x
+ x P P x
+x x P x x
+ x P P x

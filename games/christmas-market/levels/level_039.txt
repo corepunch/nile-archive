@@ -1,21 +1,28 @@
 name: Stockings
 tier: hard
-teaches: Two stockings, no spare cells: every piece of both areas matters.
+teaches: Two stockings, no spare cells: every piece of both areas matters, and stones block the toes.
 
-    x
-   p p
-  p x p
- p p p p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
 p p x p p
  p p p p
 p p x p p
  p p p p
 p p x p p
  p p p p
-s p x p s
- p p p p
 p p x p p
  p p p p
-  x x x
-   p p
-    x

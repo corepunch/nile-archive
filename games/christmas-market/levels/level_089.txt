@@ -1,21 +1,28 @@
 name: Twin Snowmen
 tier: hard
-teaches: Two snowmen with pinched waists: each area needs its own matches through the narrow middle.
+teaches: Two snowmen with pinched waists: each area needs its own matches through the narrow middle, and the coal buttons are stones.
 
-    x
-   p p
-  p x p
+x . x . x
+ . . . .
+. . x . .
  p p p p
-s p x p s
+x p x p x
  p p p p
-p p x p p
+x p x p x
  p p p p
+x p x p x
+ x p p x
 x p x p x
  p p p p
 p p x p p
  p p p p
 s p x p s
  p p p p
-  p x p
-   p p
-    x
+p p x p p
+ p p p p
+p s x s p
+ p p p p
+p p x p p
+ p p p p
+. . x . .
+ x x x x

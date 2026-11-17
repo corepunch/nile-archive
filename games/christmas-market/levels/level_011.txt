@@ -2,20 +2,27 @@ name: Skating Rink
 tier: easy
 teaches: Frost over lanterns: break the ice first, then light the tablet beneath.
 
-    x
-   p p
-  p p p
- . p p .
-x . p . x
- p . . p
-p j . j p
+x x x x x
+ x x x x
+. p p p .
  p p p p
-. p x p .
- . p p .
-p j p j p
- p . . p
-x p . p x
+. p p p .
  p p p p
-  p p p
-   p p
-    x
+. j p j .
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+. j p j .
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+x p p p x
+ . p p .
+x . . . x
+ x . . x
+x x x x x
+ x x x x

@@ -2,20 +2,27 @@ name: Citadel Keep
 tier: hard
 teaches: A walled keep with a tablet in every room; no gates, only tight lanes.
 
-    x
-   x x
-  p p p
+p x p x p
  p p p p
-x p . p x
+p p p p p
  p p p p
-p I p I p
+p p p p p
  p p p p
-. J . J .
+p p p p p
  p p p p
 p I p I p
  p p p p
-x p . p x
+p p x p p
  p p p p
-  p p p
-   x x
-    x
+p p J p p
+ p p p p
+p p x p p
+ p p p p
+p I p I p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. x . x .
+ x . . x
