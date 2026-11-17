@@ -164,4 +164,4 @@ shot("phone-pieces-board","390x844","--art-board --safe-area 0,47,0,34")
 if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-christmas-market-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
 end
-rules("level_moves")
+rules("tune_moves")

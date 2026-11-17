@@ -265,7 +265,7 @@ python3 tools/tune_moves.py relic-rush                # lua/level_moves.lua, doc
 python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boards
 ```
 
-The greedy bot (`tests/lua/level_moves.lua`) clears each board 40 times on
+The greedy bot (`tests/lua/tune_moves.lua`) clears each board 40 times on
 hashed seeds with no move limit. The budget is the number of moves it needed
 in the tier's share of those games. Its rates order and space the boards;
 they are not human win rates. Read `games/<game>/docs/level-moves.md`

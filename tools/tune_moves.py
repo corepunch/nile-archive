@@ -2,7 +2,7 @@
 """Fit every authored board's move budget to its tier.
 
 Boards are authored in games/<game>/levels (docs/LEVEL_DESIGN.md); only the
-budget is fitted. The greedy bot (tests/lua/level_moves.lua) plays each board
+budget is fitted. The greedy bot (tests/lua/tune_moves.lua) plays each board
 on hashed seeds with no move limit, and the budget is the moves it needed in
 the tier's target share of games: tutorial 95%, easy 92%, normal 80%, hard
 62%, boss 50%. Writes games/<game>/lua/level_moves.lua and a review table in
@@ -36,7 +36,7 @@ def run(game, first, last, seeds):
         (tmp / 'build/test').mkdir(parents=True)
         env = {**os.environ, 'TUNE_LEVELS': f'{first}-{last}', 'BALANCE_RUNS': str(seeds),
                'SPRITE_SAVE_DIR': str(tmp / 'save')}
-        subprocess.run([str(ROOT / f'build/test/{game}'), '--headless', '--mute', 'rules level_moves'],
+        subprocess.run([str(ROOT / f'build/test/{game}'), '--headless', '--mute', 'rules tune_moves'],
                        cwd=tmp, env=env, capture_output=True, text=True)
         log = (tmp / f'build/test/{game}.log').read_text()
     rows = [json.loads(line.split('MOVES_JSON ', 1)[1]) for line in log.splitlines() if 'MOVES_JSON ' in line]

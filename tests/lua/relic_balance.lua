@@ -37,7 +37,7 @@ local function play(g)
 end
 
 -- Consecutive small seeds start xorshift on similar streams and bias the
--- boards, so every sample seed is hashed first (as tests/lua/level_moves.lua does).
+-- boards, so every sample seed is hashed first (as tests/lua/tune_moves.lua does).
 -- The game itself seeds from the previous board's random state.
 local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 end
 
