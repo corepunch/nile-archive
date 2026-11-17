@@ -28,7 +28,7 @@ local function press_row(form, key, id)
     end
 end
 
--- --smoke --campaign: all thirty expeditions through the real result, Claim,
+-- --smoke --campaign: the thirty story expeditions, to the finale, through the real result, Claim,
 -- region, placement, dialogue and Play controls. Each board's goals are met
 -- before one real swap, so this checks the flow; the extended greedy-bot
 -- rules test checks that the boards themselves can be won.
@@ -36,7 +36,7 @@ local played = {}
 local awards = 0   -- recovered-item cards stepped through
 local function campaign()
     local journey = require("journey")
-    if frames > 16000 then
+    if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
         error(("campaign smoke stalled at level %d (overlay %d, island %s, story %s)"):format(
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
@@ -61,7 +61,7 @@ local function campaign()
                "campaign smoke: beats played out of order: " .. table.concat(played, " "))
         for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
         assert(R.prog.story_choices["after-10"] == 1, "campaign smoke: Mara answered the signal")
-        assert(R.prog.level == rules.LEVELS and island.campaign_count(c) == #island.ladder and c.open == 63,
+        assert(R.prog.level == journey.beats[#journey.beats].level and island.campaign_count(c) == #island.ladder and c.open == 63,
                "campaign smoke: thirty clears restore all twenty buildings and open every region")
         print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations, every region in %d frames"):format(
             R.prog.level, #played, island.campaign_count(c), frames))

@@ -19,7 +19,7 @@ rules("relic_leaderboard")
 smoke()
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/relic-rush/lua;. --review-game relic-rush", "walkthrough-pointer")
 smoke("--empty-lives","empty-lives")
-smoke("--campaign","campaign")   -- all thirty expeditions and every story beat
+smoke("--campaign","campaign")   -- the thirty story expeditions and every story beat
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 
 shot("debug-board", "480x900", "--debug-walkthrough --level 4 --frames 180")

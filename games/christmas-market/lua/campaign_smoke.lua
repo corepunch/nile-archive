@@ -1,4 +1,4 @@
--- campaign_smoke.lua — --smoke --campaign: all thirty winter wishes through the
+-- campaign_smoke.lua — --smoke --campaign: the thirty story wishes, to the finale, through the
 -- real result, Collect, region, stall card, placement, dialogue and Play
 -- controls. Each board's goals are met before one real swap, so this checks
 -- the flow; the extended greedy-bot rules test checks the boards themselves.
@@ -12,7 +12,7 @@ local played = {}
 
 function R.campaign_smoke()
     frames = frames + 1
-    if frames > 16000 then
+    if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
         error(("campaign smoke stalled at level %d (overlay %d, market %s, story %s)"):format(
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
@@ -35,7 +35,7 @@ function R.campaign_smoke()
         assert(table.concat(played, " ") == table.concat(want, " "),
                "campaign smoke: beats played out of order: " .. table.concat(played, " "))
         for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
-        assert(R.prog.level == rules.LEVELS and island.campaign_count(c) == #island.ladder and c.open == 63,
+        assert(R.prog.level == journey.beats[#journey.beats].level and island.campaign_count(c) == #island.ladder and c.open == 63,
                "campaign smoke: thirty wishes build all twenty stalls and open every region")
         print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls, every region in %d frames"):format(
             R.prog.level, #played, island.campaign_count(c), frames))

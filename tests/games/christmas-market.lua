@@ -16,7 +16,7 @@ rules("christmas_story")
 rules("christmas_leaderboard")
 smoke()
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer")
-smoke("--campaign", "campaign")   -- all thirty winter wishes and every story beat
+smoke("--campaign", "campaign")   -- the thirty story wishes and every story beat
 
 shot("debug-board", "480x900", "--debug-walkthrough --level 4 --frames 180")
 shot("debug-town", "480x900", "--debug-walkthrough --city 2 --frames 180")
