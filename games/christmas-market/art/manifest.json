@@ -73,7 +73,7 @@
     "data/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
     "data/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
     "data/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
-    "data/bonus-buttons.png": "04d19363ca7bcb3284b00411cfe9cd9684b3645a8bcc5bff340a9b5c1d802513",
+    "data/bonus-buttons.png": "95b227930fa8ec26d9f231ac72564c806a01928ea99ad9ce503f70652fd6b943",
     "data/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -148,6 +148,7 @@
     "data/buildings/toys.png": "53866212bcb2ad0818bcbff38b542ad6d1bfc7de67897c8d2ef38b0d5fe757fb",
     "data/buildings/tree.png": "acfd2d54ac76075b9236305b10def2b9018fe662c6852a56b0fffbebce1a30a6",
     "data/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
+    "data/campaign-buttons.png": "d02f1fd8d742fad6d3732d3ed5f8a24a668975d050c93071a2644ff7ba964f07",
     "data/characters/agnes.png": "85e9ac46ec23ae2b4b451208f4ec639ba6b1fa41aedf742f060c72a593eb5c09",
     "data/characters/henrik.png": "614fe67fcddde03fa8dce7e6f08b0b854fb1c5e535261b865ed4e85557a918a3",
     "data/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
@@ -202,7 +203,7 @@
     "data/tile-sets/festive/3.png": "47771b09452c047dce4ccb7ab7efe0bf5af92560a74923ae407d61e7d008888e",
     "data/tile-sets/festive/4.png": "c14aeb68832b8fbce56b9d2c55539c2c6824e821088a67a5913c37078d684166",
     "data/tile-sets/festive/5.png": "88b1d3cbe317a6afe2137298558fe92c9f30b06b72ea1b6d97b855ecff5ad671",
-    "data/town.json": "7b861632271642cef56ecdc48ef661427fd1a67e0db2cb94ee145de1d584f9d6",
+    "data/town.json": "1888c40c3263cb115de966ee6587d224b6e423b4104ef343eb5ce46190420d20",
     "data/winter.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7"
   },
   "matching_rules": "Three hex axes: straight 3 clears, 4 makes an axis rocket, 5+ makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a plane.",
@@ -656,6 +657,7 @@
     "layout": "lua/board_frame_atlas.lua",
     "reference": "engine/art/board-frame/rim-attachment-guide.png"
   },
+  "campaign_buttons": "../../art/match3-buttons/manifest.json",
   "bonus_buttons": {
     "generator": "games/christmas-market/tools/prepare_bonus_buttons.py",
     "recipe": "../relic-rush/art/board-states/manifest.json#bonus_gems",

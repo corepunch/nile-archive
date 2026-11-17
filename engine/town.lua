@@ -20,8 +20,8 @@
 --   notice(text)            show a short message
 --   capsules()              {{icon=texture|fn(box), value=string, note=string, width=n, slot=wallet slot,
 --                             reserve=n, decorate=fn(box)}, ...}
---   menu(bounds)            draw the top-right menu button; handle its tap
---   build(), play(), middle()   bottom actions
+--   menu(bounds)            draw and handle an optional header menu
+--   build(), play(), middle(), pause()   bottom actions
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
 --   about(item)             the bubble's words for a placed building (0-based item)
@@ -132,7 +132,16 @@ function T.new(c, config, hooks)
         {kind = "spacer", grow = 1},
         {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     }}
-    if b.layout == "play-primary" then
+    if b.layout == "play-primary" and b.pause then
+        v.navigation = ui.form{kind = "row", align = "center", gap = 10, children = {
+            {kind = "spacer", grow = 1},
+            {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
+            {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+            {kind = "button", id = "levels", text = "", role = "navigation_levels", width = b.build, height = b.secondary_height},
+            {kind = "button", id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
+            {kind = "spacer", grow = 1},
+        }}
+    elseif b.layout == "play-primary" then
         v.navigation = ui.form{kind = "row", align = "center", gap = 8, children = {
             {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
             {kind = "spacer", grow = 1},
@@ -162,15 +171,17 @@ function View:layout()
     self.buttons.middle = m.kind == "round" and vec2(row.x + b.build + m.gap + m.diameter / 2, s:max().y - m.from_bottom)
         or vec2(row:center().x, s:max().y - m.from_bottom)
     if b.layout == "play-primary" then
-        -- Measured from the physical display edge (app.bleed includes the
-        -- home-indicator inset), so Play's gap below matches Build's gap beside.
-        row = rect(row.x, app.bleed():max().y - b.bottom - b.height, row.w, b.height)
+        if not b.pause then
+            -- The three-button variant extends to the physical edge.
+            row = rect(row.x, app.bleed():max().y - b.bottom - b.height, row.w, b.height)
+        end
         self.bottom_row = row
         local boxes = self.navigation:layout(row, self.hooks.skin)
         self.buttons.build = boxes.build:center()
         self.buttons.play = boxes.play:center()
         self.buttons.levels = boxes.levels:center()
         self.buttons.middle = self.buttons.levels
+        self.buttons.pause = boxes.pause and boxes.pause:center()
     end
     self:header_layout({})
     return self.buttons
@@ -302,10 +313,10 @@ function View:header_layout(caps, cfg)
     cfg = cfg or self.cfg.header
     local s, leading_width = app.screen(), cfg.leading_width
     local menu, oh = self.hooks.menu and cfg.menu, cfg.overhang
-    local right = cfg.align == "right"
-    local h = menu and menu.size or cfg.height
+    local right, center = cfg.align == "right", cfg.align == "center"
+    local h = menu and menu.size or cfg.band_height or cfg.height
     local top = s.y + (menu and menu.y or cfg.y)
-    local left = s.x + cfg.x - (right and 0 or oh)
+    local left = s.x + cfg.x - ((right or center) and 0 or oh)
     local band = rect(left, top, s:max().x - (menu and menu.inset or cfg.x) - left, h)
     local gap = right and cfg.gap or cfg.gap - oh
     local spacer = right or menu
@@ -321,6 +332,7 @@ function View:header_layout(caps, cfg)
     end
     -- Preserve the moves and square menu slots when the row runs out of room.
     local scale = wanted > 0 and num.clamp((band.w - reserved) / wanted, 0, 1) or 1
+    if center then band = rect.centered(band:center(), size2(reserved + wanted * scale, h)) end
     key[#key + 1] = scale
     key = table.concat(key, ",")
     if self.header_cfg ~= cfg or self.header_key ~= key then
@@ -360,11 +372,13 @@ function View:header(caps, cfg)
         local r = rect(node.x + cfg.overhang, node.y, node.w - cfg.overhang, node.h)
         if cap.slot then self.resource_targets[cap.slot] = skin:resource_icon_box(r, cfg.role):center() end
         local hit = rect(r.x - cfg.overhang, r.y - 12, r.w + cfg.overhang, r.h + 24)
-        local tapped = skin:draw_resource(r, cap.icon, cap.value, {role = cfg.role, hit = hit, reserve = cap.reserve})
+        local tapped = skin:draw_resource(r, cap.icon, cap.value, {
+            role = cfg.role, hit = hit, reserve = cap.reserve, interactive = cfg.interactive,
+        })
         if cap.decorate then cap.decorate(r) end
         if tapped and cap.note and h.notice then h.notice(cap.note) end
     end
-    if h.menu then h.menu(self.menu_bounds) end
+    if h.menu and boxes.menu then h.menu(self.menu_bounds) end
     return boxes.leading
 end
 
@@ -401,10 +415,13 @@ function View:bottom()
     if primary then gfx.bleed(true) end
     local event = self.navigation:draw(self.bottom_row, skin)
     if primary then gfx.bleed(false) end
-    if event and (event.id == "build" or event.id == "play" or event.id == "levels") then haptic.play(haptic.TICK, .6) end
+    if event and (event.id == "build" or event.id == "play" or event.id == "levels" or event.id == "pause") then
+        haptic.play(haptic.TICK, .6)
+    end
     if event and event.id == "build" and h.build then h.build()
     elseif event and event.id == "play" and h.play then h.play()
-    elseif event and event.id == "levels" and h.middle then h.middle() end
+    elseif event and event.id == "levels" and h.middle then h.middle()
+    elseif event and event.id == "pause" and h.pause then h.pause() end
 end
 
 -- Cancel and Confirm stand under the lifted building, kept on screen.

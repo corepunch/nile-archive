@@ -503,21 +503,23 @@ cover a zero-charge ring at both phone sizes.
 
 The six standalone pieces are Hammer, Dynamite, Shield, Lightning, Star and
 Plus. Their effects and restoration unlocks are documented in
-[board progression](board-progression.md#bonus-pieces). The four 108 px
-circular buttons stay in one row. Blast swaps the Hammer sprite for Dynamite
+[board progression](board-progression.md#bonus-pieces). The four 76 px
+booster slots share a centered row with an equally sized Pause button. Blast swaps the Hammer sprite for Dynamite
 at level II, and Sweep swaps Shield for Lightning. Star II and Plus II use
 the same generated button art as their first tiers. Every level II button
 shows a small runtime II label even when its charge is empty.
 
-The generator uses one [painted button base](../art/bonus-gems/button-base.png)
-and a [strip of six standalone gems](../art/bonus-gems/six-bonuses.png).
+The [shared button generator](../../../art/match3-buttons/README.md) uses
+one painted Pause base for navigation and a [strip of six standalone gems](../art/bonus-gems/six-bonuses.png)
+for the boosters.
 It maps the painted rim to a 57 px radius and uses a 47 px circular inset.
 The strip comes from the first row of the previous atlas at commit
 `20ad450b`. Its [original prompt](../art/bonus-gems/six-bonuses.prompt.txt)
 records where the gem paintings came from.
 
-The five generated faces are normal gold, selected jade, pressed amber,
-brighter gold on hover, and carved sandstone for locked and empty sockets.
+The five generated faces are ivory with a gold rim, selected jade, pressed
+amber, brighter ivory on hover, and carved sandstone for locked and empty
+sockets. The engravings preserve subpixel coverage through a 4× render pass.
 The engraver casts the inner shadow from each gem's own silhouette. The
 shadow offset is 3.5 × 4.5 px, half the original 7 × 9 px. All five states
 share the circular base's alpha. Partial charge reveals the normal face from the
@@ -585,8 +587,9 @@ buttons without captions; choosing one names it and its effect in the toast.
 
 ## Expedition header
 
-The campaign board uses the shared header row for Moves, Coins, Supplies,
-Food and Pause. The Moves medallion shows its low-move state when needed.
+The campaign board centers its display-only row of Moves, Coins, Supplies
+and Food. Pause sits at the right end of the booster row. The Moves medallion
+shows its low-move state when needed.
 Resource counts include pending earnings, and matched pieces land on their
 currency icons. [Current board](screenshots/bonus-toolbar-phone.jpg)
 

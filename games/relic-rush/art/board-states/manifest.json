@@ -629,6 +629,7 @@
     "data/buildings/water_mill.png",
     "data/buildings/well.png",
     "data/buildings/workshop.png",
+    "data/campaign-buttons.png",
     "data/campaign-pieces.png",
     "data/characters/adrian.png",
     "data/characters/elena.png",
@@ -2189,25 +2190,8 @@
       }
     },
     "cell_size": 209,
-    "button_base": "art/bonus-gems/button-base.png",
-    "button_base_origin": {
-      "commit": "6d05253e",
-      "source": "art/bonus-gems/button-faces.png",
-      "crop": [
-        66,
-        167,
-        456,
-        556
-      ],
-      "resize": [
-        116,
-        116
-      ],
-      "center": [
-        64,
-        64
-      ]
-    },
+    "button_base": "../../art/match3-buttons/base.png",
+    "button_base_origin": "../../art/match3-buttons/manifest.json",
     "button_inset": {
       "bounds": [
         17,
@@ -2323,7 +2307,8 @@
         "star",
         "recharge"
       ],
-      "button_size": 108,
+      "button_size": 76,
+      "pause": true,
       "rank_label": "Level II overlays a small II badge on its generated button.",
       "shape": "circle"
     },

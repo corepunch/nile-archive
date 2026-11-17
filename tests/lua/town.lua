@@ -28,7 +28,10 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
     check(b.layout == "play-primary" and b.play > b.build, "Play is the primary button")
     check(b.build == b.secondary_height, "Build and Levels use matching square slots")
     local view = town.new({}, config, {skin={}, wallet=function() return {} end})
-    near(view.buttons.play.x, view.bottom_row:center().x, "Play stays centered")
+    local buttons = view.navigation.boxes
+    check(buttons.pause and buttons.play.w > buttons.pause.w, "Pause joins the bottom row and Play is largest")
+    near((buttons.build.x + buttons.pause:max().x) / 2, view.bottom_row:center().x, "the four-button row stays centered")
+    near(buttons.pause:center().y, view.buttons.play.y, "Pause and Play share a center line")
     near(view.buttons.build.y, view.buttons.levels.y, "secondary buttons align")
     check(view.buttons.build.x + b.build/2 < view.buttons.play.x - b.play/2, "Build does not overlap Play")
     check(view.buttons.play.x + b.play/2 < view.buttons.levels.x - b.build/2, "Levels does not overlap Play")

@@ -73,8 +73,8 @@ variant_art = {key: art_key or key for key, art_key in variants}
 assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
 assert set(variant_art.values()) == set(gems["columns"])
 assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", levels=\{', economy)
-assert gems["toolbar"]["button_size"] == int(re.search(r'bonus_size=(\d+)', rules).group(1))
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
+assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)
 assert specials == list(manifest["specials"]), "Rule specials need artwork and catalogue entries"
@@ -276,3 +276,4 @@ for particles in (manifest['particle_sprites'], manifest['smoke_sprites']):
 
 # Exact crop freshness for the changed town controls, without re-exporting the board HUD.
 subprocess.run([sys.executable, str(ROOT/"tools/prepare_hud.py"), "--navigation-only", "--check"], check=True)
+subprocess.run([sys.executable, str(ROOT.parents[1]/"tools/match3_buttons.py"), "--check"], check=True)

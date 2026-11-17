@@ -10,7 +10,7 @@ local function check_layout(g)
     local last = first
     for i in ipairs(g.tool_slots) do
         local box = R.board_tool_bounds(i - 1)
-        assert(box.y == first.y and box.w >= 100 and app.screen():contains(box:center()),
+        assert(box.y == first.y and box.w <= 80 and box.w >= 64 and app.screen():contains(box:center()),
             "the four large buttons stay on one on-screen line")
         if i > 1 then
             assert(box.x >= last:max().x and box.x - last:max().x <= 10,
@@ -19,11 +19,13 @@ local function check_layout(g)
         last = box
     end
     assert(first.x >= 0 and last:max().x <= app.screen().w, "the full row fits in the safe area")
+    local pause = R.board_pause
+    assert(pause.w == first.w and pause.h == pause.w and pause.y == first.y and pause.x >= last:max().x,
+        "the round Pause button is the fifth slot")
+    assert(math.abs((first.x + pause:max().x) / 2 - app.screen():center().x) < .01, "the five slots are centered")
     local header = R.town.header_form.boxes
-    assert(math.abs(header.menu.w - header.menu.h) < .01 and header.menu.h == R.town.cfg.header.menu.size,
-        "the pause button retains its square slot beside the wallet")
-    assert(math.abs(header.cap1.w - header.cap3.w) < .01 and header.cap3:max().x < header.menu.x,
-        "the wallet shares the available space without overlapping pause")
+    assert(not header.menu and math.abs((header.leading.x + header.cap3:max().x) / 2 - app.screen():center().x) < .01,
+        "the display-only header is centered")
     local min_x, max_x, min_y, max_y = math.huge, -math.huge, math.huge, -math.huge
     for cell = 0, rules.CELLS - 1 do
         if rules.game_cell_active(g, cell) then

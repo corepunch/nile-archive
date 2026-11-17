@@ -13,11 +13,12 @@ MANIFEST = ROOT / "art/board-states/manifest.json"
 SLOT_SIZE = 128
 BOARD_ICON_SIZE = 112
 BUTTON_ICON_SIZE = 84
+ENGRAVE_SCALE = 4
 
 
-def center(image):
-    frame = Image.new(image.mode, (SLOT_SIZE, SLOT_SIZE))
-    frame.paste(image, ((SLOT_SIZE - image.width) // 2, (SLOT_SIZE - image.height) // 2))
+def center(image, side=SLOT_SIZE):
+    frame = Image.new(image.mode, (side, side))
+    frame.paste(image, ((side - image.width) // 2, (side - image.height) // 2))
     return frame
 
 
@@ -133,21 +134,22 @@ def cutout_floor(plate, cut):
 
 def engrave(plate, mask, floor, style):
     """Light a dark floor through the cutout and reflect light around its edge."""
-    face = plate.convert("RGB")
+    face = plate.convert("RGB").resize(mask.size, Image.Resampling.BICUBIC)
+    floor = floor.resize(mask.size, Image.Resampling.BICUBIC)
     cut = style["cutout"]
-    halo = mask.filter(ImageFilter.GaussianBlur(cut["glow_radius"]))
+    halo = mask.filter(ImageFilter.GaussianBlur(cut["glow_radius"] * ENGRAVE_SCALE))
     glow = ImageChops.multiply(halo, ImageChops.invert(mask))
     glow = glow.point(lambda a: min(255, round(a * cut["glow_strength"])))
     highlight = Image.new("RGB", face.size, tuple(style["palette"][-1]))
     stone = Image.composite(highlight, face, glow)
 
     shadow = ImageEnhance.Brightness(floor).enhance(cut["shadow_brightness"])
-    dx, dy = cut["shadow_offset"]
-    light = mask.filter(ImageFilter.GaussianBlur(cut["shadow_softness"])).transform(
+    dx, dy = (d * ENGRAVE_SCALE for d in cut["shadow_offset"])
+    light = mask.filter(ImageFilter.GaussianBlur(cut["shadow_softness"] * ENGRAVE_SCALE)).transform(
         mask.size, Image.Transform.AFFINE, (1, 0, -dx, 0, 1, -dy), Image.Resampling.BICUBIC,
     )
     recess = Image.composite(floor, shadow, light)
-    return Image.composite(recess, stone, mask)
+    return Image.composite(recess, stone, mask).resize(plate.size, Image.Resampling.LANCZOS)
 
 
 def pack(spec, root=ROOT, icons=None):
@@ -181,9 +183,12 @@ def pack(spec, root=ROOT, icons=None):
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))
         chip.thumbnail((button_size, button_size), Image.Resampling.LANCZOS)
         icon = center(chip)
-        # Sample the cut once so the surrounding glow leaves a sharp outline.
-        outline = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
-        cut = center(outline.resize(chip.size, Image.Resampling.BICUBIC))
+        # Keep subpixel alpha coverage through the engraving and inner shadow.
+        # The small optical softness also smooths outlines from prepacked glyphs.
+        size = (chip.width * ENGRAVE_SCALE, chip.height * ENGRAVE_SCALE)
+        outline = source.getchannel("A").resize(size, Image.Resampling.LANCZOS)
+        outline = outline.filter(ImageFilter.GaussianBlur(.28 * ENGRAVE_SCALE))
+        cut = center(outline, SLOT_SIZE * ENGRAVE_SCALE)
         assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), "Icon extends beyond the button"
         for y, (state, plate) in enumerate(plates.items(), 1):
             face = engrave(plate, cut, floor, disabled_style) if state == "disabled" else Image.alpha_composite(plate, icon)

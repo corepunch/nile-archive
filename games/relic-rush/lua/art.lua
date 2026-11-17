@@ -45,7 +45,7 @@ A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
 A.wallet_icons={coins="coin", supplies="wallet-supplies", food="wallet-food"}
 A.result_icons = {"discovery-star", "next-clue"}
-A.navigation={source="art/navigation/controls.png",roles={"navigation_build","navigation_play", "navigation_levels"},states=A.states}
+A.navigation={source="../../art/match3-buttons/manifest.json",roles={"navigation_build","navigation_play", "navigation_levels","navigation_pause"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
 function A.use_campaign_pieces()
@@ -91,7 +91,7 @@ function A.draw_hud_catalogue(R)
     R.say_at("EXPEDITION ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
     for i,state in ipairs(A.states) do
         local x=62+(i-1)*89
-        gfx.image(R.hud_art["pause-"..state],rect(x-32,280,64,64),color.WHITE)
+        gfx.image(R.hud_art["action-pause-"..state],rect(x-32,280,64,64),color.WHITE)
         R.say_at(state,vec2(x,365),12,R.PAL_CREAM,85)
     end
     gfx.image(R.hud_art.score,rect(56,397,46,46),color.WHITE)

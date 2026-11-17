@@ -154,7 +154,7 @@ function R.smoke()
     if stage == -2 and R.overlay == R.OV_NONE then
         assert(R.selected < 0 and R.g.moves == rules.level_of(R.g).moves, "smoke: the tap that skips the entrance must not play")
         assert(not R.mission_banner, "smoke: the blue plaques replace the mission banner")
-        app.inject_click(R.town.menu_bounds:point(vec2(.1, .5))); stage = -3
+        app.inject_click(R.board_pause:point(vec2(.1, .5))); stage = -3
     elseif stage == -3 and R.overlay == R.OV_PAUSE and R.dialog_settled() then   -- Sound off, then on again
         smoke_sound = R.sound
         app.inject_click(R.pause_form.boxes.sound:center() + vec2(0, R.drop / 2)); stage = -4
@@ -274,7 +274,7 @@ function R.smoke()
         app.inject_click(vec2(40, 38)); stage = 32
     elseif stage == 32 then
         assert(not R.on_island and R.overlay == R.OV_NONE, "old header corner must not return to the island")
-        app.inject_click(R.town.menu_bounds:center()); stage = 33
+        app.inject_click(R.board_pause:center()); stage = 33
     elseif stage == 33 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(vec2(12, 220 + R.drop / 2)); stage = 34
     elseif stage == 34 and R.overlay == R.OV_NONE then
@@ -291,9 +291,9 @@ function R.smoke()
         local capsules = R.header_capsules()
         assert(#capsules == 3, "the shared header shows only coins, supplies and food")
         local boxes = R.town.header_form.boxes
-        assert(boxes.leading and boxes.leading:max().x <= boxes.cap1.x and boxes.cap3:max().x <= boxes.menu.x
-            and boxes.leading:center().y == boxes.menu:center().y,
-            "Moves, resources and Settings fit in the same row")
+        assert(boxes.leading and boxes.leading:max().x <= boxes.cap1.x and boxes.cap3 and not boxes.menu
+            and boxes.leading:center().y == boxes.cap3:center().y,
+            "the board header only shows Moves and resources")
         for i, slot in ipairs{rules.GOLD, rules.SUPPLIES, rules.PROVISIONS} do
             assert(capsules[i].slot == slot and R.prog.wallet[slot] == shop.replay_wallet[slot]
                 and tonumber(capsules[i].value) == R.prog.wallet[slot] + R.g.earnings[slot],
@@ -307,7 +307,7 @@ function R.smoke()
                 end
             end
         end
-        app.inject_click(R.town.menu_bounds:center()); stage = 35
+        app.inject_click(R.board_pause:center()); stage = 35
     -- Pause > Restart asks first: Keep playing returns to Pause, Restart starts over.
     elseif stage == 35 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(R.pause_form.nodes.sound and R.pause_form.nodes.motion, "pause groups the Sound and Reduce motion checkboxes")
@@ -325,7 +325,7 @@ function R.smoke()
                and R.phase == R.PH_IDLE and R.shake == 0,
                "restart must create a fresh attempt of the same expedition")
         shop.resume_game, shop.resume_moves = R.g, R.g.moves
-        app.inject_click(R.town.menu_bounds:center()); stage = 40
+        app.inject_click(R.board_pause:center()); stage = 40
     -- Pause > Quit to island keeps the board and pays nothing; the browser resumes it.
     elseif stage == 40 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(R.pause_form.boxes.quit:center() + vec2(0, R.drop / 2)); stage = 41
@@ -334,7 +334,7 @@ function R.smoke()
         assert(R.prog.wallet[1] == shop.pause_gold and R.prog.level == 1
                and R.prog.wallet[4] == 3 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
                "restart and quit must not award rewards or change restoration progress")
-        app.inject_click(vec2(440, 58)); stage = 42   -- enlarged city Pause's lower edge
+        app.inject_click(R.town.buttons.pause); stage = 42
     elseif stage == 42 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43

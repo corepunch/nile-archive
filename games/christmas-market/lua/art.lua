@@ -11,7 +11,7 @@ A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.elements = elements_view.assets
 A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
-A.navigation = {source="art/navigation/controls.png", roles={"navigation_build", "navigation_play", "navigation_levels"}, states=A.states}
+A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_levels","navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
@@ -53,7 +53,7 @@ function A.draw_hud_catalogue(R)
     R.say_at("CHRISTMAS HUD ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
     for i,state in ipairs(A.states) do
         local x=62+(i-1)*89
-        gfx.image(R.hud_art["pause-"..state],rect(x-32,280,64,64),color.WHITE)
+        gfx.image(R.hud_art["action-pause-"..state],rect(x-32,280,64,64),color.WHITE)
         R.say_at(state,vec2(x,365),12,R.PAL_CREAM,85)
     end
     gfx.image(R.hud_art.score,rect(56,414,66,66),color.WHITE)

@@ -7,7 +7,7 @@ local flags = match3.LINE_MATCHES
 if not reference then flags = flags | match3.NO_SPECIALS | match3.NO_RHOMBI end
 local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=reference and 6 or #economy.pieces + 1, match_min=3,
     levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
-    bonus_size=108, sunburst_targets=not reference and economy.lightning_targets,
+    sunburst_targets=not reference and economy.lightning_targets,
     kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS

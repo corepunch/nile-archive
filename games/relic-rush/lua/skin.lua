@@ -8,14 +8,8 @@
 -- `inset` (number or {left, top, right, bottom}), `offset` {x, y} and
 -- `height_ratio` (the top fraction, taken before the inset); a state's
 -- `offset` moves every layer that isn't `fixed`.
--- Complete image buttons: each interaction state is an authored atlas crop.
-local function navigation_button(kind)
-    local spec={}
-    for _,state in ipairs{"normal","hover","pressed","selected","disabled"} do
-        spec[state]={offset={0,0},layers={{image="navigation/"..kind.."-"..state..".png",fit="contain"}}}
-    end
-    return spec
-end
+local navigation_button = require("match3").navigation_button
+
 return ui.skin{
     fonts = {
         -- Lilita One measures ascent to descent: 1.17 of its em.
@@ -80,6 +74,7 @@ return ui.skin{
                 navigation_build=navigation_button("build"),
                 navigation_play=navigation_button("play"),
                 navigation_levels = navigation_button("levels"),
+                navigation_pause = navigation_button("pause"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE
                 -- Secondary actions (Restart, Quit) in carved wood, beside the jade primary.
                 secondary = {normal = {set = {shadow = {fill = "#4A2C12"}, body = {fill = "#7A4C22"},

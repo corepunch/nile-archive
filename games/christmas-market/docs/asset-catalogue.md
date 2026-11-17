@@ -109,15 +109,17 @@ The font and its license are inherited unmodified from Relic Rush in `data/fonts
 
 ## Campaign board header
 
-The board uses the same safe-area header row as Relic Rush. It starts with
-Moves, followed by Gold, Food, Supplies and the round Pause button. Pending
-earnings appear in the three currency counters and matched resources fly
-to their icons. Lives and Christmas Stars appear in the town header.
+The centered, display-only row contains Moves, Gold, Food and Supplies.
+Pending earnings appear in the counters and matched resources fly to their
+icons. The board is centered vertically, with four boosters and Pause in
+one bottom row. The town centers its readouts for Lives, Gold, Food,
+Supplies and Christmas Stars above a row of Build, Play, Wishes and Pause.
+Play is the largest control.
 [480 × 900 board](screenshots/booster-toolbar.jpg) · [390 × 844 board](screenshots/booster-toolbar-phone.jpg)
 
 ## Campaign booster buttons
 
-The four circular buttons use the same [painted base and five state recipes](../../relic-rush/docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets) as Relic Rush. The [manifest](../art/manifest.json) records the toy hammer and lantern star from the market goods atlas, plus the bomb and rocket from the shared board artwork. The generator fits each silhouette into the same circular socket and packs normal, selected, pressed, hover and engraved disabled states beneath the standalone icons.
+The four circular boosters and the Build, Play, Wishes and Pause actions use the same [painted Pause base and state generator](../../../art/match3-buttons/README.md) as Relic Rush. The [manifest](../art/manifest.json) records the toy hammer and lantern star from the market goods atlas, plus the bomb and rocket from the shared board artwork. The generator fits each silhouette into the same circular socket and packs normal, selected, pressed, hover and engraved disabled states beneath the standalone icons.
 
 The toy hammer fits within 76 px on the board and 74 px on the button.
 Matched toy hammers and lantern stars use the engine's resource flight arc,
@@ -125,9 +127,8 @@ trail and landing flash. They follow the same timing as currency and land in
 their respective booster buttons. The meter or stored-use badge updates on
 arrival. Reduce Motion shows the earned charge immediately.
 
-Run `python3 games/christmas-market/tools/prepare_market_goods.py` followed by
-`python3 games/christmas-market/tools/prepare_bonus_buttons.py` to rebuild
-the two atlases. The [flight review](screenshots/booster-flights.gif) shows a
+Use the [button tool commands](../../../art/match3-buttons/README.md) to
+rebuild the action and booster atlases. The [flight review](screenshots/booster-flights.gif) shows a
 currency and a booster match in the same move for each charging piece.
 [Desktop toolbar](screenshots/booster-toolbar.jpg) · [Phone toolbar](screenshots/booster-toolbar-phone.jpg) · [Five interaction states](screenshots/art-states.jpg)
 

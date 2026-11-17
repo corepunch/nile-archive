@@ -68,6 +68,8 @@ def main():
     assert (ROOT/goods['prompt']).is_file() and (ROOT/goods['review']).is_file()
     assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
+    assert (ROOT/manifest['campaign_buttons']).is_file()
+    assert png(ROOT/'data/campaign-buttons.png') == ((512, 768), 6)
     buttons = manifest['bonus_buttons']
     assert len(set(buttons['columns'])) == 4 and set(buttons['columns']) == set(buttons['icons'])
     assert png(ROOT/buttons['runtime']) == ((512, 768), 6)

@@ -994,7 +994,7 @@ function G.bind(R, over)
             wallet = function() return R.prog.wallet end,
             notice = R.notice,
             capsules = R.header_capsules,
-            menu = function(bounds) if match3.pause_button(R, bounds) then R.overlay = R.OV_PAUSE end end,
+            pause = function() R.overlay = R.OV_PAUSE end,
             middle = R.open_expeditions,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() R.open_catalogue(owes_building() and "wonder" or "building") end,
@@ -1471,6 +1471,7 @@ function G.app(R)
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
         R.board_art = art.load()
         R.hud_art = art.load_hud()
+        require("match3").load_action_buttons(R.skin, R.hud_art)
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
         R.life_art = R.hud_art.life or texture.load("expedition-hud/life.png")
         if app.arg("art-states") then

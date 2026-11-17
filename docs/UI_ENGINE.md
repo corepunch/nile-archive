@@ -496,17 +496,18 @@ In this layout `bottom.bottom` is measured from the physical display edge
 with `gfx.bleed(true)`. That lets Play's gap below match Build's gap beside it
 on phones as well as on the 480×900 design size.
 
-The town header is one `ui.form` row with `align = "center"`: every wallet
-capsule and the menu button are `custom` nodes, so the pills and the taller
-menu share one centre line. `buttons.menu` and the bottom row's tap points
-come from the forms' layout boxes, not separate arithmetic.
+The town header is a `ui.form` row that aligns the wallet capsules and
+optional menu on one center line. With `header.align = "center"`, the row
+centers the group. With `header.interactive = false`, the figures are
+display-only. Hit and flight targets come from the same layout boxes.
 
 Match-3 towns can set `capsules.currencies_only` in `game.json` to show only
-their currency balances. Campaign boards use the engine's shared header
-geometry with the Moves medallion, currency capsules and Pause on one row.
-Each currency capsule identifies its `slot` in the saved purse. Match
-particles use the icon center for that slot, so games can choose their
-currency display order.
+their currency balances. Campaign boards center a display-only row of Moves
+and currency capsules. Each capsule identifies its currency slot so matched
+pieces land on its icon. The centered board keeps four boosters and Pause
+in one bottom row. The town's `bottom.pause` option adds Pause to Build,
+Play and Wishes. Play is the largest control. Both surfaces use the same
+[painted button generator](../art/match3-buttons/README.md).
 
 ## Town building popups
 

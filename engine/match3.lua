@@ -104,7 +104,28 @@ function E.hud(override)
     return hud
 end
 
--- The same board controls use the authored images from either skin.
+-- Both campaign skins use the same generated action atlas.
+local action_atlas = {path="campaign-buttons.png", frames={}}
+local action_states = {"normal", "selected", "pressed", "hover", "disabled"}
+for col, name in ipairs{"build", "play", "levels", "pause"} do
+    for row, state in ipairs(action_states) do
+        action_atlas.frames["action-" .. name .. "-" .. state] = {(col - 1) * 128, row * 128, 128, 128}
+    end
+end
+
+function E.navigation_button(name)
+    local spec = {}
+    for _, state in ipairs(action_states) do
+        spec[state] = {offset={0, 0}, layers={{image="action-" .. name .. "-" .. state, fit="contain"}}}
+    end
+    return spec
+end
+
+function E.load_action_buttons(skin, hud)
+    local art = E.atlas(action_atlas)
+    for key in pairs(action_atlas.frames) do skin.images[key], hud[key] = art[key], art[key] end
+end
+
 E.TOOL_SIZE = 76
 local GOAL_W, GOAL_GAP = 70, 16
 
@@ -272,7 +293,9 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if medallion > .05 then R.draw_moves(vec2(moves_x, centre.y), medallion) end
         if R.draw_earnings then R.draw_earnings(centre) end
         local pause_art = signboard and R.hud_art["board-pause-normal"] and "board-pause-"
-        if E.pause_button(R, R.board_pause:offset(offset), pause_art) then R.overlay = R.OV_PAUSE end
+        if not R.g.tool_slots and E.pause_button(R, R.board_pause:offset(offset), pause_art) then
+            R.overlay = R.OV_PAUSE
+        end
     end
 
     -- The level's mission arrives across the middle of the screen, holds,
@@ -384,14 +407,14 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
                     end
                 end
                 if entry.rank == 2 then
-                    local rank = rect(drawn:max().x - 33, drawn.y + 10, 23, 20)
-                    gfx.round_rect(rank, 5, rgba(59, 41, 23, 242))
-                    R.say("II", rank, 14, PAL_CREAM)
+                    local rank = rect(drawn:max().x - 25, drawn.y + 8, 17, 16)
+                    gfx.round_rect(rank, 4, rgba(59, 41, 23, 242))
+                    R.say("II", rank, 11, PAL_CREAM)
                 elseif charges > 1 then
                     local at = vec2(drawn.x + drawn.w * .78, drawn.y + drawn.h * .22)
-                    gfx.circle(at, 13, rgba(116, 74, 33))
-                    gfx.circle(at, 11, rgba(46, 112, 70))
-                    R.say(tostring(charges), rect.centered(at, size2(26, 26)), 14, PAL_CREAM)
+                    gfx.circle(at, 10, rgba(116, 74, 33))
+                    gfx.circle(at, 8, rgba(46, 112, 70))
+                    R.say(tostring(charges), rect.centered(at, size2(20, 20)), 12, PAL_CREAM)
                 end
             else
                 gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
@@ -407,13 +430,17 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             if ui.hit(r, 0).clicked and R.phase == R.PH_IDLE and charges == R.g.tools[i] then R.select_tool(k) end
             ::next_tool::
         end
+        if slots then
+            local rise = R.intro and R.intro:arrive(.14, 3, .48) or 1
+            local button = R.board_pause:offset(vec2(0, (1 - rise) * 120))
+            if E.pause_button(R, button, "action-pause-") then R.overlay = R.OV_PAUSE end
+        end
     end
 end
 
--- Campaign boards share one safe-area row: Moves, three resources, Pause.
 local BOARD_HEADER = {
-    role="wallet", align="left", x=18, height=32, gap=18, overhang=12, width=90, leading_width=66,
-    menu={size=76, inset=7, y=-2},
+    role="wallet", align="center", interactive=false, x=12, y=-2, height=32, band_height=72,
+    gap=18, overhang=16, width=90, leading_width=66,
 }
 
 function E.bind_town_board_hud(R)
@@ -423,7 +450,6 @@ function E.bind_town_board_hud(R)
     function R.draw_board_hud()
         if neutral or R.g.hs then return goal_hud() end
         local box = R.town:header(R.header_capsules(true), BOARD_HEADER)
-        R.board_pause = R.town.menu_bounds
         local arrive = R.intro and R.intro:arrive(.16, 3, .42) or 1
         if arrive > .05 then R.draw_moves(box:center(), arrive, box.w * .5) end
     end
@@ -1715,7 +1741,7 @@ function E.new(config)
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
         local h = math.max(design_h, app.screen().h)
         local g = R.g
-        local bonuses = g and g.single_charge_tools
+        local bonuses = g and g.tool_slots
         R.drop = h - design_h
         R.tools_y = h - TOOLS_FROM_BOTTOM
         if g ~= centred_game then
@@ -1744,7 +1770,8 @@ function E.new(config)
             if neutral_hud then hud_y = toast_y - HUD_H - 4 end
         end
         R.hud_rect = rect(0, hud_y, w, HUD_H)
-        R.board_pause = rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
+        R.board_pause = bonuses and R.board_tool_bounds(#bonuses)
+            or rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
         R.board_toast = rect(38, toast_y, w - 76, 28)
         if fitted then
             local top,bottom=R.hud_rect.y+HUD_H+16,R.tools_y-18
@@ -1764,8 +1791,8 @@ function E.new(config)
         local w, side = R.SCREEN_W or 480, E.TOOL_SIZE
         local offset_x = (k - 1) * 120
         if R.g and R.g.tool_slots then
-            local count = #R.g.tool_slots
-            side = math.min(config.bonus_size or side, (w - 2 * BONUS_MARGIN - (count - 1) * BONUS_GAP) / count)
+            local count = #R.g.tool_slots + 1   -- four boosters and Pause
+            side = math.min(side, (w - 2 * BONUS_MARGIN - (count - 1) * BONUS_GAP) / count)
             offset_x = (k - (count - 1) / 2) * (side + BONUS_GAP)
         end
         return rect(w / 2 + offset_x - side / 2, R.tools_y + (E.TOOL_SIZE - side) / 2, side, side)
