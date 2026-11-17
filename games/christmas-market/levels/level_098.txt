@@ -1,0 +1,21 @@
+name: Tinsel Curtain
+tier: normal
+teaches: Two tinsel curtains stack: the upper one opens the middle, the lower one the base.
+
+    .
+   p p
+  p p p
+ p p p p
+p p p p p
+ K K K K
+K K K K K
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ K K K K
+K K K K K
+ p p p p
+  p p p
+   p p
+    x

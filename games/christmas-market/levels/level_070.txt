@@ -1,0 +1,21 @@
+name: Stocking Pair
+tier: boss
+teaches: A boss: double panes, double frost on the lower roof, stones and chains.
+
+    x
+   P P
+  P x P
+ P P P P
+P K x K P
+ P g g P
+s P x P s
+ P P P P
+P P x P P
+ g P P g
+s P x P s
+ P P P P
+J J x J J
+ J J J J
+  P x P
+   P P
+    x

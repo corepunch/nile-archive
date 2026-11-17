@@ -1,0 +1,21 @@
+name: Gold Star
+tier: hard
+teaches: A dense star with frosted lantern panes and no chains.
+
+    p
+   p p
+  p p p
+ x p p x
+p p p p p
+ p p p p
+p j p j p
+ j p p j
+p p j p p
+ j p p j
+p j p j p
+ p p p p
+p p p p p
+ x p p x
+  p p p
+   p p
+    p

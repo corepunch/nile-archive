@@ -1,0 +1,21 @@
+name: Moat Gate
+tier: normal
+teaches: Two halves of the court sit apart; break the gate chains to drain the lower moat.
+
+    x
+   p p
+  p x p
+ . . . .
+. p x p .
+ p p p p
+p k x k p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p x x p
+p k x k p
+ k p p k
+  p x p
+   p p
+    x

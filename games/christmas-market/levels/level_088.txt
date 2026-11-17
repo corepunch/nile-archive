@@ -1,0 +1,21 @@
+name: Two Stalls
+tier: normal
+teaches: Two separate stalls, each open to the sky, share no pieces.
+
+    x
+   x x
+  p x p
+ p p p p
+I p x p I
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+I p x p I
+ p p p p
+  . x .
+   p p
+    x

@@ -1,0 +1,21 @@
+name: Sack of Gifts
+tier: normal
+teaches: Open the chain at the sack's mouth, then clear the gifts piled inside.
+
+    x
+   x x
+  . . .
+ . . . .
+. . . . .
+ . p p .
+. k . k .
+ . p p .
+. . p . .
+ . x x .
+. x k x .
+ x p p x
+x k p k x
+ p p p p
+  p p p
+   p p
+    p

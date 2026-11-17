@@ -1,0 +1,21 @@
+name: Jingle Bells
+tier: normal
+teaches: Two bells joined along a seam: keep pieces flowing on both sides of the gap.
+
+    .
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+. p x p .
+ . p p .
+p . x . p
+ p . . p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+  p x p
+   p p
+    p

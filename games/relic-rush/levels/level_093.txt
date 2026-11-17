@@ -1,0 +1,21 @@
+name: Barred Gate
+tier: normal
+teaches: Chains bar every door of the gatehouse; open them to flood the lower hall.
+
+    p
+   p p
+  p p p
+ p p p p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+s p p p s
+ p p p p
+K x K x K
+ K x x K
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

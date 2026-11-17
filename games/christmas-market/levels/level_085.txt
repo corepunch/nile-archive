@@ -1,0 +1,21 @@
+name: Glass Ornament
+tier: hard
+teaches: A round ornament with a tinsel ring around its lower half; open it to fill the bottom.
+
+    .
+   x x
+  x . x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+K K K K K
+ K K K K
+x p p p x
+ p p p p
+  p p p
+   p p
+    p

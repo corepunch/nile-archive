@@ -1,0 +1,21 @@
+name: Grand Lantern
+tier: boss
+teaches: Double panes behind a tinsel gate: break the chains, then hit every pane twice.
+
+    P
+   P P
+  P P P
+ P P P P
+P P P P P
+ P P P P
+P J P J P
+ P x x P
+P x g x P
+ x P P x
+x J P J x
+ P P P P
+s g g g s
+ P P P P
+  P P P
+   x x
+    P

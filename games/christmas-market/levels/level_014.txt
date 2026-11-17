@@ -1,0 +1,21 @@
+name: Holly Wreath
+tier: normal
+teaches: Light the whole wreath ring and mind the hole in the middle.
+
+    x
+   p p
+  p p p
+ p p p p
+p . p . p
+ p . . p
+p p . p p
+ p x x p
+. p x p .
+ . x x .
+p . x . p
+ p . . p
+p p . p p
+ p p p p
+  p p p
+   p p
+    x

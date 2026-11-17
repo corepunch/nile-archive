@@ -1,0 +1,21 @@
+name: Flooded Crypt
+tier: normal
+teaches: A chained wall holds back the flooded crypt; open it to refill the lower floor.
+
+    x
+   x x
+  x x x
+ p p p p
+. . K . .
+ p p p p
+s K K K s
+ x x x x
+x K K K x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+  . p .
+   p p
+    .

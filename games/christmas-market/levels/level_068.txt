@@ -1,0 +1,21 @@
+name: Cocoa Mug
+tier: normal
+teaches: Frosted steam rises from the mug.
+
+    i
+   i i
+  x . x
+ x p p x
+x p j p x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p j p p
+ p p p p
+  p x p
+   p p
+    p

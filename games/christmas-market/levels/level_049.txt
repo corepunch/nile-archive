@@ -1,0 +1,21 @@
+name: Advent Calendar
+tier: hard
+teaches: Twelve locked doors and one tinsel latch at the foot guarding the last cells.
+
+    p
+   p p
+  p p p
+ p p p p
+p k p k p
+ p p p p
+p k p k p
+ p p p p
+k k p k k
+ p p p p
+p k p k p
+ p p p p
+p k p k p
+ p x x p
+  k x k
+   p p
+    p

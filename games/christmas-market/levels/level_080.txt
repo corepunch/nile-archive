@@ -1,0 +1,21 @@
+name: Reindeer Pair
+tier: boss
+teaches: Double panes in two separate areas, with the bottom pockets sealed by double tinsel.
+
+    x
+   P P
+  P x P
+ P P P P
+x J x J x
+ P P P P
+s P x P s
+ P P P P
+P J x J P
+ P P P P
+s P x P s
+ P P P P
+P P x P P
+ P G G P
+  G x G
+   P P
+    x

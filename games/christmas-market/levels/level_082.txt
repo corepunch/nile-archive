@@ -1,0 +1,21 @@
+name: Ribbon Box
+tier: easy
+teaches: The ribbon around the box is tinsel: break it and the pieces fall into the gift.
+
+    .
+   . .
+  x . x
+ . p p .
+s p p p s
+ p p p p
+K K K K K
+ K K K K
+p p p p p
+ p p p p
+s p p p s
+ p p p p
+p p p p p
+ p p p p
+  . p .
+   x x
+    x

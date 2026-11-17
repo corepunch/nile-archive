@@ -1,0 +1,21 @@
+name: Fir Tree
+tier: easy
+teaches: Plain tablets on a layered fir: clear the boughs and the trunk.
+
+    p
+   p p
+  p p p
+ p p p p
+x p p p x
+ p . . p
+. i p i .
+ p p p p
+x p p p x
+ p . . p
+. i p i .
+ p p p p
+x p p p x
+ x p p x
+  x p x
+   p p
+    p

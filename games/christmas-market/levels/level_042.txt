@@ -1,0 +1,21 @@
+name: Cocoa Mug
+tier: easy
+teaches: A short row of chains under the rim keeps the bottom of the mug empty until it breaks.
+
+    p
+   x x
+  p p p
+ . p p .
+p p p p p
+ p . . p
+p p p p p
+ p p p p
+. p p p .
+ . p p .
+x x x x x
+ k k k k
+p p p p p
+ p . . p
+  s p s
+   p p
+    p

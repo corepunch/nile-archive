@@ -1,0 +1,21 @@
+name: Candle Tower
+tier: hard
+teaches: A tinsel gate high up shuts off almost the whole tower; open it first.
+
+    p
+   p p
+  p p p
+ p p p p
+K K K K K
+ K K K K
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+  p p p
+   p p
+    p

@@ -1,0 +1,21 @@
+name: Grand Observatory
+tier: boss
+teaches: A grand dome of double tablets around a central void, with a tower apart that needs two hits per cell too.
+
+    P
+   P P
+  x P x
+ x P P x
+. x P x .
+ P x x P
+P J x J P
+ P P P P
+. s P s .
+ P x x P
+P J x J P
+ P P P P
+P P I P P
+ P P P P
+  . s .
+   P P
+    P

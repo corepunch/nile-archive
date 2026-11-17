@@ -1,0 +1,21 @@
+name: Mittens
+tier: easy
+teaches: Two mittens side by side: each side is its own area, so work both.
+
+    x
+   . .
+  p x p
+ p . . p
+p p x p p
+ . p p .
+p i x i p
+ p p p p
+p p x p p
+ p p p p
+p . x . p
+ . . . .
+x . x . x
+ p p p p
+  . x .
+   . .
+    x

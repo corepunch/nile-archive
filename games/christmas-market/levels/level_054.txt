@@ -1,0 +1,21 @@
+name: Snowflake Pair
+tier: normal
+teaches: Frost sits on each snowflake's heart: break it, then clear the panes.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p i x i p
+ . . . .
+p I x I p
+ . . . .
+p i x i p
+ p p p p
+p p x p p
+ p p p p
+  p x p
+   p p
+    x

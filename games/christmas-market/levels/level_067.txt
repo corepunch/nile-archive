@@ -1,0 +1,21 @@
+name: Winter Wreath
+tier: normal
+teaches: Double frost fills the heart of the wreath.
+
+    p
+   p p
+  p p p
+ x p p x
+x p p p x
+ p p p p
+p p i p p
+ p i i p
+p p I p p
+ . i i .
+p . i . p
+ p . . p
+x p p p x
+ x p p x
+  p p p
+   p p
+    p

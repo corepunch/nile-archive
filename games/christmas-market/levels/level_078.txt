@@ -1,0 +1,21 @@
+name: Bright Star
+tier: normal
+teaches: Clear the points of the star, where few neighbours make matches rare.
+
+    .
+   p p
+  x p x
+ x p p x
+i p p p i
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ p p p p
+i p p p i
+ p p p p
+  p x p
+   p p
+    .

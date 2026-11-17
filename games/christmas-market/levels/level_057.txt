@@ -1,0 +1,21 @@
+name: Tall Candle
+tier: normal
+teaches: Snowed-in stones sit in the wax: break them with adjacent matches.
+
+    .
+   . .
+  x p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ p s s p
+p p p p p
+ p p p p
+p p p p p
+ p s s p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

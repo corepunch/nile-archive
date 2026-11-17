@@ -25,8 +25,8 @@ of every level). Regenerate both with
   them, and that board is dense with them.
 - **Double chains replace single chains late.** From 51, most chained boards
   use double chains.
-- **No ice and no stones in the campaign.** Ice (`freeze`) and disabled cells
-  appear only in two Extras levels (105 and 112), never in Adventure.
+- **No ice and no stones in Adventure.** Ice (`freeze`) and disabled cells
+  appear only in two Extras levels (105 and 112). We add both; see our rules.
 - **Mostly symmetric.** 71 of the 100 shapes and 68 layouts are left-right
   mirrors. Ours are all mirrors.
 
@@ -44,7 +44,10 @@ of every level). Regenerate both with
    chain, or a hole, closes that path. A cell that only a chain can feed
    starts empty and stays empty until the chain breaks. Then pieces trickle
    through and the tablets below can be cleared.
-5. **No ice, no stones** in levels 1–100, as in Cradle of Rome's Adventure.
+5. **Every feature by level 100.** Cradle of Rome's Adventure never uses ice
+   or stones. We introduce both gradually: ice early (7), stones at 15, so the
+   campaign uses every board feature we have. Each first appearance gets a
+   one-line hint card naming the feature in the game's own terms.
 6. **Follow the schedule below.** The validator rejects a feature before its
    first level.
 
@@ -58,12 +61,18 @@ uses (read its row in `levels.json`). Adapt its coverage to our smaller board.
 | 1–4 | 10–20% → 40% | none | Matching over tablets. Grow the area each board. |
 | 5 | 30–50% | 1–2 single, as a gate | The first chain blocks the way into a lower chamber. |
 | 6 | 50–60% | several, over tablets | Chained pieces sit on tablets. |
-| 7–8 | 40–60% | optional | Practice, one breather. |
+| 7 | 40–60% | optional | **Ice** on plain cells: it holds its piece, a match on the cell breaks it, and it gates the fall below it like a chain. Use 2–6, mirrored. |
+| 8 | 40–60% | optional | Practice, one breather. |
 | 9 | 50–70% | optional | Two separate areas, each open to the sky. |
 | 10 | 70–90%, nearly all double | none | The first double-tablet board: a test. |
-| 11–50 | 60–90% | about half the boards, mostly gates | Combine known rules. About one double-tablet board in ten. |
-| 51 | 60–90% | double chains | The first double chain. |
-| 52–100 | 70–95% | about half the boards; most use double chains | Late combinations. About one double-tablet board in ten. |
+| 11 | 60–80% | optional | **Ice on tablets:** the ice breaks first, then the tablet. |
+| 12–14 | 60–90% | about half the boards, mostly gates | Combine known rules. Ice on about one board in three. |
+| 15 | 60–80% | optional | **Carved stones:** a solid cell with no piece. An adjacent match breaks it. It also gates the fall below it. Use 2–6, mirrored. |
+| 16–24 | 60–90% | about half the boards | Stones on about one board in four, ice on about one in three. |
+| 25 | 60–90% | optional | **Double ice:** two hits. |
+| 26–50 | 60–90% | about half the boards | Mix everything known; about one double-tablet board in ten. |
+| 51 | 60–90% | double chains | The first double chain (Cradle). |
+| 52–100 | 70–95% | about half the boards; most use double chains | Late combinations of every feature. Stones on about one board in four, ice on about one board in three, about one double-tablet board in ten. Bosses combine several. |
 
 **Rhythm.** Inside every ten levels after the first ten, use the tiers
 `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`. Levels
@@ -147,6 +156,11 @@ Empty template (all 61 cells plain):
 | `K` | Double chain on a blue tablet |
 | `g` | Chain on a green double tablet |
 | `G` | Double chain on a green double tablet |
+| `i` | Ice (one hit) on a plain cell |
+| `I` | Double ice (two hits) on a plain cell |
+| `j` | Ice on a blue tablet |
+| `J` | Double ice on a blue tablet |
+| `s` | Carved stone: solid, no piece, one hit from an adjacent match or a tool |
 
 ### Reading the honeycomb
 
@@ -158,6 +172,9 @@ Empty template (all 61 cells plain):
   in its column. Only those cells create new pieces. A hole inside the board
   is a roof: the cells under it are fed from their upper diagonals, or not at
   all.
+- **Every blocker is a gate.** Chains, ice and stones all stop pieces falling
+  through their cell until they break. Ice and chains keep their own piece;
+  a stone has none.
 - **A neck.** To make one cell the only way into a chamber, close every slot
   that could feed the chamber around it: the slots beside the neck on its own
   line, the slots straight above the chamber's top cells, and the chamber's
@@ -167,7 +184,11 @@ Empty template (all 61 cells plain):
 - **A funnel.** Below a one-cell neck, pieces spread one slot wider every line.
   A lower chamber wider than that cone has corners that are never fed, and the
   validator rejects it. Widen chambers gradually, or open more necks.
-- **Two areas.** Separate areas each need a cell open to the sky.
+- **Two areas.** Separate areas each need a cell open to the sky and at least
+  7 cells. A lone island of one or two cells is not an area: nothing can be
+  matched there.
+- **Every tablet can be matched.** Each tablet must sit on a straight run of
+  three board cells along one of the three axes.
 
 ## Check a board
 
@@ -177,8 +198,8 @@ python3 tools/hex_levels.py relic-rush --show 5           # print a board; ~ mar
 python3 tools/hex_levels.py relic-rush --lua              # write lua/boards.lua once all 100 pass
 ```
 
-The validator checks the format, the mirror, the 49-cell minimum, tablets,
-connectivity, an inlet in every area, cells that stay unfed even with every
+The validator checks the format, the mirror, the 49-cell minimum, tablets on a
+matchable run, areas of at least 7 cells with an inlet each, cells that stay unfed even with every
 chain broken, and the schedule's first levels. It prints each board's cells,
 tablets, chains, gated cells and areas. A board is done when it passes and
 does what its `teaches:` line says. Move budgets come from

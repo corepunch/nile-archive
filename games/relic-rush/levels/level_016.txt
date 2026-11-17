@@ -1,0 +1,21 @@
+name: The Overlook
+tier: easy
+teaches: Pieces funnel through the waist of the hourglass; iced cells guard each lobe.
+
+    .
+   . .
+  . . .
+ . . . .
+. i p i .
+ p p p p
+p p p p p
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p i p i p
+ . . . .
+  . . .
+   . .
+    .

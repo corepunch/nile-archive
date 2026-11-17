@@ -1,0 +1,21 @@
+name: Twin Obelisks
+tier: normal
+teaches: Two towers stand apart, and each fills from its own sky; clear both before the moves run out.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p . . p
+p s x s p
+ p p p p
+p p x p p
+ p p p p
+p s x s p
+ p p p p
+p p x p p
+ p p p p
+  p x p
+   p p
+    x

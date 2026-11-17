@@ -1,0 +1,21 @@
+name: Moon Well
+tier: normal
+teaches: A chained neck feeds the moon well below; clear the rim, then the well.
+
+    x
+   . .
+  x p x
+ . p p .
+. J p J .
+ p p p p
+. K K K .
+ p p p p
+. p . p .
+ p x x p
+p x K x p
+ x p p x
+x j K j x
+ p p p p
+  . p .
+   p p
+    .

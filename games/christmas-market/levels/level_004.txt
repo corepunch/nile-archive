@@ -1,0 +1,21 @@
+name: Gingerbread House
+tier: tutorial
+teaches: A full house of tablets: windows, walls and roof all need lighting.
+
+    .
+   . .
+  . . .
+ . . . .
+. . . . .
+ . p p .
+p . p . p
+ . p p .
+p . p . p
+ . p p .
+p . p . p
+ . p p .
+p p x p p
+ x x x x
+  x x x
+   x x
+    x

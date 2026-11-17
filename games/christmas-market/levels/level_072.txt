@@ -1,0 +1,21 @@
+name: Icicle Row
+tier: easy
+teaches: Single tinsel along the eaves with gaps: break it to let snow fall below.
+
+    p
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+k k k k k
+ K K K K
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

@@ -1,0 +1,21 @@
+name: Chained Cloisters
+tier: normal
+teaches: Two cloisters, chains scattered through both; the bottom doors need their chains broken first.
+
+    x
+   . .
+  . x .
+ p k k p
+p p x p p
+ k p p k
+p p x p p
+ p k k p
+p p x p p
+ p s s p
+p p x p p
+ p p p p
+p k x k p
+ k k k k
+  p x p
+   p p
+    x

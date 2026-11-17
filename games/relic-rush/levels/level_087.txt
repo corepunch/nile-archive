@@ -1,0 +1,21 @@
+name: Pillared Hall
+tier: normal
+teaches: Double tablets fill the inner hall between the pillars.
+
+    p
+   p p
+  p p p
+ p p p p
+p J p J p
+ p p p p
+P P P P P
+ P P P P
+P P P P P
+ x P P x
+P P P P P
+ p p p p
+p p p p p
+ x p p x
+  p p p
+   p p
+    p

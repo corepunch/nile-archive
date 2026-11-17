@@ -1,0 +1,21 @@
+name: Tall Lantern
+tier: easy
+teaches: A narrow lantern: a quick board after the boss.
+
+    .
+   p p
+  p p p
+ . p p .
+x p p p x
+ p p p p
+x j p j x
+ p p p p
+x . p . x
+ p p p p
+x j p j x
+ p p p p
+x p p p x
+ p . . p
+  p p p
+   p p
+    p

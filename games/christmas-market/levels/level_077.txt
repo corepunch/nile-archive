@@ -1,0 +1,21 @@
+name: Silver Bell
+tier: normal
+teaches: Work around the narrow dome of the bell and keep the wide mouth clear.
+
+    .
+   x x
+  x p x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+  x . x
+   x x
+    .

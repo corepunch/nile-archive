@@ -1,0 +1,21 @@
+name: Silver Bell
+tier: hard
+teaches: One double tinsel guards the bell; frost and chains protect the panes below.
+
+    .
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x x p
+p x K x p
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p K K p
+  p j p
+   j j
+    .

@@ -1,0 +1,21 @@
+name: Overgrown Arches
+tier: normal
+teaches: Chains guard tablets on the arches; free the keystone chain to open the vault.
+
+    x
+   x x
+  . . .
+ . . . .
+p p p p p
+ . . . .
+k p p p k
+ . . . .
+p k p k p
+ . . . .
+. . . . .
+ . x x .
+. x k x .
+ x p p x
+  p p p
+   p p
+    p

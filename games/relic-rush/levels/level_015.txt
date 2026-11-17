@@ -1,0 +1,21 @@
+name: Broken Aqueduct
+tier: hard
+teaches: Carved stones block the aqueduct: a match beside a stone breaks it; chains seal the channel below.
+
+    x
+   x x
+  . . .
+ . . . .
+. . . . .
+ p p p p
+p s p s p
+ p p p p
+p s p s p
+ p p p p
+p p p p p
+ x x x x
+x k x k x
+ p p p p
+  p p p
+   p p
+    p

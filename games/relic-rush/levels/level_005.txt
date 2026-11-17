@@ -1,0 +1,21 @@
+name: Vault Door
+tier: easy
+teaches: Break the chain at the neck so pieces can fall into the treasure vault below.
+
+    x
+   x x
+  . . .
+ . . . .
+. . . . .
+ . . . .
+. p . p .
+ . . . .
+p p p p p
+ . . . .
+. p . p .
+ . x x .
+. x c x .
+ x p p x
+  p p p
+   p p
+    p

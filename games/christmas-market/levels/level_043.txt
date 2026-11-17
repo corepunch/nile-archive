@@ -1,0 +1,21 @@
+name: Market Stall
+tier: normal
+teaches: A single latch on the counter gates the awning's shelves; break it, then clear the stock.
+
+    p
+   p p
+  p p p
+ p p p p
+p k p k p
+ p p p p
+k p p p k
+ p p p p
+p k p k p
+ p x x p
+p x k x p
+ x p p x
+x k p k x
+ p . . p
+  . p .
+   p p
+    p

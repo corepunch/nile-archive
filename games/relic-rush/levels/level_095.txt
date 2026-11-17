@@ -1,0 +1,21 @@
+name: Sealed Vault
+tier: hard
+teaches: A chained seal splits the temple: clear the top before the vault can fill.
+
+    p
+   p p
+  p p p
+ p p p p
+p p p p p
+ K K K K
+K K K K K
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

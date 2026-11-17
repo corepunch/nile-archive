@@ -1,0 +1,21 @@
+name: Star Over the Market
+tier: normal
+teaches: A little star floats above the market as its own area with its own pieces.
+
+    .
+   p p
+  p p p
+ x . . x
+. x x x .
+ p x x p
+. . x . .
+ p p p p
+. . p . .
+ p p p p
+. . p . .
+ p p p p
+. . c . .
+ p p p p
+  . p .
+   p p
+    .

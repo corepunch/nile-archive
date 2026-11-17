@@ -1,0 +1,21 @@
+name: Stockings
+tier: hard
+teaches: Two stockings, no spare cells: every piece of both areas matters.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+s p x p s
+ p p p p
+p p x p p
+ p p p p
+  x x x
+   p p
+    x

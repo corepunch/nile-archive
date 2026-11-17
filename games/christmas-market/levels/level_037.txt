@@ -1,0 +1,21 @@
+name: Carousel
+tier: normal
+teaches: A ring of tablets around the carousel pole: pieces slide round the central gap.
+
+    p
+   p p
+  p p p
+ p p p p
+p s p s p
+ p p p p
+. p p p .
+ p x x p
+p p x p p
+ p p p p
+. p p p .
+ p p p p
+p . p . p
+ p p p p
+  p p p
+   x x
+    p

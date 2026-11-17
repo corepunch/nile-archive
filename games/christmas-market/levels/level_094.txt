@@ -1,0 +1,21 @@
+name: Twin Trees
+tier: normal
+teaches: Two small trees, each with a tinsel band across the middle that gates its lower half.
+
+    x
+   p p
+  . x .
+ p p p p
+p K x K p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ K K K K
+K K x K K
+ p p p p
+p p x p p
+ p p p p
+  x x x
+   p p
+    x

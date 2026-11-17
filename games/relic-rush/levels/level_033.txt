@@ -1,0 +1,21 @@
+name: Sealed Stair
+tier: normal
+teaches: Chains seal the stair; break them and the lower chamber finally fills.
+
+    .
+   . .
+  . . .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ k k k k
+x k k k x
+ p p p p
+p p p p p
+ x p p x
+x p p p x
+ p s s p
+  p p p
+   p p
+    p

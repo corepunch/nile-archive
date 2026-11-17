@@ -1,0 +1,21 @@
+name: Nutcracker
+tier: normal
+teaches: A tall soldier in a close-fitting uniform: all tablets and no room for error.
+
+    x
+   x x
+  p p p
+ p p p p
+p p p p p
+ p p p p
+s p p p s
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   x x
+    x

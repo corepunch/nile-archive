@@ -1,0 +1,21 @@
+name: Carousel
+tier: normal
+teaches: Green double panes ring the carousel pole; hit the middle twice.
+
+    x
+   p p
+  p p p
+ p p p p
+s p P p s
+ p p p p
+p p P p p
+ p P P p
+. P P P .
+ p P P p
+p p P p p
+ p p p p
+s p P p s
+ p p p p
+  p p p
+   p p
+    x

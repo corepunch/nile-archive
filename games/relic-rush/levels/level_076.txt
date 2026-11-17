@@ -1,0 +1,21 @@
+name: Ziggurat
+tier: easy
+teaches: Learn the stepped temple front: clear tablets on the broad terraces.
+
+    x
+   x x
+  x p x
+ x p p x
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ p . . p
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+  p p p
+   p p
+    p

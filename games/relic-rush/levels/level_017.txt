@@ -1,0 +1,21 @@
+name: Moss Bridge
+tier: normal
+teaches: The moss bridge is gone: two separate areas, each fed from the sky on its own.
+
+    x
+   . .
+  . x .
+ p p p p
+p p x p p
+ . p p .
+p . x . p
+ p . . p
+x . x . x
+ p . . p
+p . x . p
+ . p p .
+p p x p p
+ p p p p
+  . x .
+   . .
+    x

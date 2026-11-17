@@ -1,0 +1,21 @@
+name: Temple Eye
+tier: normal
+teaches: Two chained doors flank the open eye; clear the chamber of tablets below.
+
+    x
+   x x
+  . p .
+ p p p p
+. p p p .
+ p K K p
+p p K p p
+ x x x x
+x K x K x
+ p p p p
+p p p p p
+ p K K p
+. p K p .
+ p K K p
+  . p .
+   p p
+    p

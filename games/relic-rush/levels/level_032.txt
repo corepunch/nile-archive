@@ -1,0 +1,21 @@
+name: Cloven Colonnade
+tier: easy
+teaches: A colonnade split into two halves, each fed from its own sky.
+
+    x
+   . .
+  p x p
+ p p p p
+x p x p x
+ p p p p
+p i x i p
+ p p p p
+p p x p p
+ p p p p
+p i x i p
+ p p p p
+p p x p p
+ p p p p
+  p x p
+   p p
+    x

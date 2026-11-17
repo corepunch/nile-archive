@@ -1,0 +1,21 @@
+name: Skating Rink
+tier: normal
+teaches: Tinsel along the ice edge, with stones piled on the rink.
+
+    p
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+K p p p K
+ K p p K
+p K p K p
+ p K K p
+p p K p p
+ p p p p
+  p s p
+   s s
+    .

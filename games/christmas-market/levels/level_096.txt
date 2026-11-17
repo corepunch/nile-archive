@@ -1,0 +1,21 @@
+name: Holly Ring
+tier: easy
+teaches: Go round the wreath: dense panes with a hollow centre.
+
+    .
+   p p
+  p p p
+ p p p p
+i p p p i
+ p p p p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p p p p
+i p p p i
+ p p p p
+  p p p
+   p p
+    .

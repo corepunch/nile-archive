@@ -1,0 +1,21 @@
+name: Portcullis
+tier: hard
+teaches: Two chained gates and a barred row hold back the vault of tablets.
+
+    p
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x K x K x
+ K K K K
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

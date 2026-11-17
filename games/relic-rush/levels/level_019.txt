@@ -1,0 +1,21 @@
+name: Sun Court
+tier: hard
+teaches: A dense court of tablets: iced stones sit in the sun, every cell matters.
+
+    x
+   x x
+  p p p
+ . . . .
+p p p p p
+ p p p p
+p j p j p
+ p p p p
+x p p p x
+ p p p p
+p j p j p
+ p p p p
+p p p p p
+ . . . .
+  p p p
+   x x
+    x

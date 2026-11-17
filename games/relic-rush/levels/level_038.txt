@@ -1,0 +1,21 @@
+name: Nested Vaults
+tier: normal
+teaches: A vault inside a vault: break two sets of chains to reach the deepest tablets.
+
+    .
+   . .
+  . . .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ k k k k
+x k k k x
+ p p p p
+p s p s p
+ p p p p
+k k k k k
+ k k k k
+  p p p
+   p p
+    p

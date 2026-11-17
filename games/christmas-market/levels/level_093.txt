@@ -1,0 +1,21 @@
+name: Lantern
+tier: normal
+teaches: Break the tinsel band in the lantern base to let pieces into the funnel below.
+
+    .
+   x x
+  . . .
+ x p p x
+j p p p j
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+K K K K K
+ K K K K
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

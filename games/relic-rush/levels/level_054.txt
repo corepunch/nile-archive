@@ -1,0 +1,21 @@
+name: Fallen Columns
+tier: normal
+teaches: Broken columns cut a stranded tower from the main hall; plan around the ruined gaps.
+
+    p
+   p p
+  x p x
+ x p p x
+. x p x .
+ p x x p
+p p x p p
+ p p p p
+. s p s .
+ p p p p
+p x p x p
+ p p p p
+. . s . .
+ p p p p
+  p p p
+   p p
+    p

@@ -1,0 +1,21 @@
+name: Warden's Colonnade
+tier: hard
+teaches: Chained pillars line the colonnade, and a chain at the foot hides the last gap.
+
+    .
+   . .
+  . . .
+ p p p p
+k p p p k
+ p p p p
+p k p k p
+ p p p p
+k p k p k
+ p p p p
+p k p k p
+ p p p p
+k p k p k
+ p x x p
+  p p p
+   p p
+    p

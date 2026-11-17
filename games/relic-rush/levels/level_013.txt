@@ -1,0 +1,21 @@
+name: The Spire Keep
+tier: normal
+teaches: A separate watchtower stands apart; chains hold the keep, free them to flood the chamber below.
+
+    p
+   . .
+  x p x
+ . p p .
+p x p x p
+ p x x p
+p k x k p
+ x p p x
+p p . p p
+ p p p p
+p p . p p
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

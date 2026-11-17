@@ -1,0 +1,21 @@
+name: Sleigh
+tier: normal
+teaches: Two tinsel locks hold the runners shut; break them to reach the presents in the sleigh.
+
+    p
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ x x x x
+x k x k x
+ p p p p
+p p p p p
+ p p p p
+s p . p s
+ p p p p
+  . p .
+   x x
+    p

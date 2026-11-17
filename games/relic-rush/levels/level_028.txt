@@ -1,0 +1,21 @@
+name: Ziggurat Steps
+tier: normal
+teaches: A stepped temple widens from the summit, and the terraces at the edges are easy to leave for last.
+
+    x
+   x x
+  x . x
+ x . . x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+i p p p i
+ p p p p
+p p p p p
+ p p p p
+i p p p i
+ p p p p
+  p p p
+   p p
+    p

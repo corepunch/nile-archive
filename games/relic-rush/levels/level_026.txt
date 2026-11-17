@@ -1,0 +1,21 @@
+name: Lintel Door
+tier: easy
+teaches: Clear the tablets around the doorway in the lintel wall; plain matching with no obstacles.
+
+    x
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p i i p
+p p p p p
+ p p p p
+p p . p p
+ p . . p
+p . . . p
+ p . . p
+  p p p
+   x x
+    x

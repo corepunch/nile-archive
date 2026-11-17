@@ -1,0 +1,21 @@
+name: Rope Bridges
+tier: easy
+teaches: Chains hang across both banks; free the pockets at the foot of each.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p K K p
+p p x p p
+ K p p K
+x p x p x
+ p K K p
+p K x K p
+ K K K K
+  p x p
+   p p
+    x

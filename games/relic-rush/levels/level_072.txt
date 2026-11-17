@@ -1,0 +1,21 @@
+name: Sunken Plaza
+tier: easy
+teaches: One chain seals a deep plaza; break it and clear the whole lower court.
+
+    x
+   p p
+  . p .
+ p . . p
+x i j i x
+ p p p p
+. K K K .
+ p x x p
+p x K x p
+ x p p x
+x p p p x
+ p p p p
+. p p p .
+ p p p p
+  . p .
+   p p
+    .

@@ -1,0 +1,21 @@
+name: Mantel Stockings
+tier: easy
+teaches: Garlands of chained lanterns hang above a small hidden nook.
+
+    x
+   . .
+  p p p
+ p p p p
+x k p k x
+ p p p p
+p k p k p
+ p p p p
+p k p k p
+ p p p p
+p k p k p
+ p x x p
+p x k x p
+ x p p x
+  p p p
+   p p
+    p

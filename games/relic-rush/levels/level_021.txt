@@ -1,0 +1,21 @@
+name: The Great Well
+tier: easy
+teaches: A wide well sits at the heart of the ruins; stones rim it.
+
+    .
+   . .
+  . . .
+ . p p .
+p s p s p
+ p p p p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p p p p
+p s p s p
+ . p p .
+  . . .
+   . .
+    .

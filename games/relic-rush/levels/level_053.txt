@@ -1,0 +1,21 @@
+name: Cellar Door
+tier: normal
+teaches: A tower stands apart above the hall; break the double chains stacked over the cellar door.
+
+    p
+   p p
+  x p x
+ x p p x
+. x p x .
+ p x x p
+p p x p p
+ p p p p
+. p K p .
+ p p p p
+p K p K p
+ p p p p
+p p K p p
+ p x x p
+  K K K
+   p p
+    p

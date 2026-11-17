@@ -1,0 +1,21 @@
+name: Twin Shrines
+tier: hard
+teaches: Two shrines stand apart; break the double chains to feed the tablets in each crypt.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p s x s p
+ p p p p
+p p x p p
+ p p p p
+K K x K K
+ K K K K
+p p x p p
+ p p p p
+  p x p
+   p p
+    x

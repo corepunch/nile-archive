@@ -1,0 +1,21 @@
+name: Twin Lanterns
+tier: easy
+teaches: Two tinsel chains guard the cellar: break either to let pieces down into the lantern room.
+
+    x
+   . .
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ x x x x
+x k x k x
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

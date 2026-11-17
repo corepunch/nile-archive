@@ -1,0 +1,21 @@
+name: Skates
+tier: normal
+teaches: Two skates, two areas: a long boot on each side with every cell holding a tablet.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+x p x p x
+ p p p p
+p J x J p
+ p p p p
+p J x J p
+ p p p p
+  p x p
+   p p
+    x

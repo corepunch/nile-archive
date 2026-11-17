@@ -1,0 +1,21 @@
+name: Candle Pair
+tier: easy
+teaches: Two candle halves with loose tinsel on the panes and one sealed pocket at the base.
+
+    x
+   p p
+  . x .
+ p p p p
+p p x p p
+ x p p x
+K K x K K
+ p p p p
+p p x p p
+ p p p p
+K K x K K
+ p p p p
+p p x p p
+ p K K p
+  K x K
+   p p
+    x

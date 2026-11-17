@@ -1,0 +1,21 @@
+name: Santa's Workshop
+tier: normal
+teaches: A wide chained gate seals the whole workshop floor: break a chain to get pieces to it.
+
+    x
+   . .
+  p p p
+ p p p p
+p s p s p
+ p p p p
+s p p p s
+ x x x x
+x k x k x
+ p p p p
+p k p k p
+ p p p p
+p p k p p
+ p p p p
+  k p k
+   p p
+    p

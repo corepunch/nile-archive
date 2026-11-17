@@ -1,0 +1,21 @@
+name: Twin Wells
+tier: normal
+teaches: Each court sinks into a chained well; break both to refill the depths.
+
+    x
+   p p
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p K K p
+x K x K x
+ p p p p
+p p x p p
+ p p p p
+  p x p
+   p p
+    x

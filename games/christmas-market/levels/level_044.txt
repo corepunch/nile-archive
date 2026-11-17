@@ -1,0 +1,21 @@
+name: Reindeer Duo
+tier: normal
+teaches: Two areas with tinsel scattered on tablets, and a tiny gated nook at each foot.
+
+    x
+   . .
+  . x .
+ p p p p
+p k x k p
+ p p p p
+k j x j k
+ p p p p
+p k x k p
+ p p p p
+k p x p k
+ p . . p
+p k x k p
+ p x x p
+  k x k
+   p p
+    x

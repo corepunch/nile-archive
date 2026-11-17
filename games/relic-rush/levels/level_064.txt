@@ -1,0 +1,21 @@
+name: Overgrown Well
+tier: normal
+teaches: Vines choke a well; clear the ring of chains, then the cellar behind the three-chain gate.
+
+    .
+   p p
+  . p .
+ p p p p
+. p p p .
+ p K K p
+p p K p p
+ p K K p
+p p x p p
+ p K K p
+p p K p p
+ p p p p
+. p p p .
+ x x x x
+  K K K
+   p p
+    .

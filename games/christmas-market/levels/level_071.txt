@@ -1,0 +1,21 @@
+name: Reindeer Run
+tier: easy
+teaches: Double tinsel at the gate; frost inside the chamber needs a second hit.
+
+    .
+   . .
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x x p
+p x K x p
+ x p p x
+x p p p x
+ p J J p
+  p p p
+   J J
+    p

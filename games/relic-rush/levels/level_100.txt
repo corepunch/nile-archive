@@ -1,0 +1,21 @@
+name: The Valley Temple
+tier: boss
+teaches: The grand temple: double tablets everywhere, a sanctum hole at the heart and the great door below.
+
+    P
+   P P
+  I P I
+ P P P P
+j P P P j
+ P P P P
+P s I s P
+ P P P P
+P P x P P
+ P P P P
+P s P s P
+ P P P P
+P J P J P
+ P P P P
+  P x P
+   P P
+    x

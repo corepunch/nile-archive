@@ -1,0 +1,21 @@
+name: Snowman
+tier: easy
+teaches: Break the scarf of tinsel; stones for the snowman's buttons.
+
+    .
+   . .
+  p . p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+K K K K K
+ K K K K
+p p s p p
+ p p p p
+p . p . p
+ p p p p
+  p s p
+   p p
+    p

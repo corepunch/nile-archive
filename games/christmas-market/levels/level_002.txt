@@ -1,0 +1,21 @@
+name: The Little Fir
+tier: tutorial
+teaches: The board is bigger now: light the tablets running down the middle of the little fir.
+
+    .
+   . .
+  . . .
+ . . . .
+. . . . .
+ x . . x
+. . . . .
+ . p p .
+. . . . .
+ x p p x
+. . . . .
+ . p p .
+. . . . .
+ x p p x
+  . . .
+   . .
+    x

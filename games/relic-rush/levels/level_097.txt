@@ -1,0 +1,21 @@
+name: Crossroads
+tier: normal
+teaches: Four roads meet at the old crossing; tablets line every arm.
+
+    p
+   p p
+  x p x
+ x p p x
+p p p p p
+ p p p p
+p j p j p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+  x p x
+   p p
+    p

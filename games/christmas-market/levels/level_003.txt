@@ -1,0 +1,21 @@
+name: Silver Bell
+tier: tutorial
+teaches: Tablets fill the belly of the bell and its clapper; work from the rim up.
+
+    .
+   . .
+  . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . p . .
+ . p p .
+p p p p p
+ . p p .
+p . . . p
+ x x x x
+  x p x
+   x x
+    x

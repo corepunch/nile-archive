@@ -1,0 +1,21 @@
+name: Choked Gateway
+tier: easy
+teaches: Two chains seal the gateway; free either to let pieces trickle into the hall below.
+
+    .
+   . .
+  . . .
+ . p p .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x x x x
+x k x k x
+ p p p p
+p p p p p
+ p p p p
+  k p k
+   p p
+    p

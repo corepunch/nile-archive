@@ -1,0 +1,21 @@
+name: Twin Lanterns
+tier: hard
+teaches: Two lantern halves each hide a pane room behind double tinsel; break the curtain to refill it.
+
+    x
+   . .
+  p x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ K K K K
+K K x K K
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+  p x p
+   . .
+    x

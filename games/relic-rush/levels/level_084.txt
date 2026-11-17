@@ -1,0 +1,21 @@
+name: The Bridge
+tier: normal
+teaches: Tablets on both banks; keep the narrow bridge supplied.
+
+    p
+   p p
+  i p i
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ p p p p
+p J p J p
+ p p p p
+  p p p
+   p p
+    p

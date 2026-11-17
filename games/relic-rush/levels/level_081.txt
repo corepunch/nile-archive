@@ -1,0 +1,21 @@
+name: Sunken Stair
+tier: easy
+teaches: Break the chains at the narrow of the stair to reach the tablets at the bottom.
+
+    p
+   p p
+  p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p j p j p
+ p p p p
+x p K p x
+ x K K x
+x x p x x
+ x p p x
+  p p p
+   p p
+    p

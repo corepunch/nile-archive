@@ -1,0 +1,21 @@
+name: Sleigh Run
+tier: hard
+teaches: Gaps, tinsel and snowed-in stones on the runner line.
+
+    p
+   p p
+  p p p
+ p p p p
+p p s p p
+ p p p p
+s p p p s
+ p p p p
+p p p p p
+ p p p p
+k k k k k
+ x x x x
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

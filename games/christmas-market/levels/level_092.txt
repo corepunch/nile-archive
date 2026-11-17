@@ -1,0 +1,21 @@
+name: Cocoa Cart
+tier: easy
+teaches: A small gated pocket at the cart foot, sealed by tinsel on two separate carts.
+
+    x
+   . .
+  p x p
+ p p p p
+p K x K p
+ p p p p
+p K x K p
+ p p p p
+s p x p s
+ p p p p
+p K x K p
+ p p p p
+p p x p p
+ x K K x
+  K x K
+   p p
+    x

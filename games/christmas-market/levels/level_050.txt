@@ -1,0 +1,21 @@
+name: Crown Jewel
+tier: boss
+teaches: A crown of double tablets with a notch cut from the top: no chains, only brute persistence.
+
+    x
+   P P
+  P x P
+ P P P P
+P J x J P
+ P P P P
+P P j P P
+ P P P P
+s P P P s
+ P P P P
+P P j P P
+ P P P P
+P J P J P
+ P P P P
+  P P P
+   P P
+    P

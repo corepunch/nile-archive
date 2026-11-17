@@ -1,0 +1,21 @@
+name: Wishing Star
+tier: normal
+teaches: A little star floats alone above the market; two chained lanterns wait below.
+
+    p
+   p p
+  p p p
+ x p p x
+x x x x x
+ p x x p
+p p x p p
+ p p p p
+p s p s p
+ p p p p
+p k p k p
+ p p p p
+x s p s x
+ p p p p
+  p p p
+   . .
+    .

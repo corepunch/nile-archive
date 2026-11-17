@@ -1,0 +1,21 @@
+name: Market Row
+tier: normal
+teaches: The top row of stalls feeds a broad gated square once the tinsel awning breaks.
+
+    x
+   x x
+  . x .
+ . p p .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+K K K K K
+ K K K K
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+  p p p
+   p p
+    p

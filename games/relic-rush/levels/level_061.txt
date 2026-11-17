@@ -1,0 +1,21 @@
+name: Temple Stairs
+tier: easy
+teaches: Climb the stairs and break the double chain at the landing to flood the lower hall.
+
+    .
+   p p
+  p . p
+ x p p x
+x p p p x
+ p p p p
+. K p K .
+ p p p p
+. K . K .
+ p x x p
+p x K x p
+ x p p x
+x p p p x
+ p p p p
+  p . p
+   p p
+    p

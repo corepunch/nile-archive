@@ -1,0 +1,21 @@
+name: Twin Baubles
+tier: boss
+teaches: A boss with double panes, double frost, stones and double tinsel at once.
+
+    x
+   I I
+  I x I
+ P P P P
+P P x P P
+ J P P J
+s P x P s
+ P P P P
+P J x J P
+ P P P P
+s P x P s
+ P P P P
+G G x G G
+ G G G G
+  P x P
+   P P
+    x

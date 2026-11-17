@@ -1,0 +1,21 @@
+name: Terraces
+tier: easy
+teaches: Stepped terraces of tablets, plain and open.
+
+    p
+   p p
+  p p p
+ p p p p
+x p p p x
+ p p p p
+p I p I p
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x p s p x
+ p p p p
+  p p p
+   p p
+    p
