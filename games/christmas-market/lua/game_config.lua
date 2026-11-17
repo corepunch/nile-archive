@@ -56,8 +56,8 @@ return {
     failed = {title = "One more winter wish?", subtitle = "THE MARKET WILL WAIT FOR YOU.", town = "VISIT MARKET"},
     zone = {
         subtitle = "MORE ROOM FOR CHRISTMAS CHEER",
-        earn = "EARN STARS IN NEW WINTER WISHES",
-        keep = "CHRISTMAS STARS STAY WITH YOU.",
+        cleared = "WISHES GRANTED  %d / %d",
+        earn = "GRANT NEW WISHES TO OPEN IT",
     },
     finale = {
         title = "To be continued",

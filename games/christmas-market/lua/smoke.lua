@@ -94,7 +94,7 @@ function R.smoke()
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
         if smoke_move.replay then
             assert(same_wallet(R.prog.wallet, smoke_move.replay_wallet + smoke_move.replay_reward)
-                and R.prog.wallet[4]==3 and island.wonder_count(R.island)==1,
+                and R.prog.wallet[4]==1 and island.wonder_count(R.island)==1,
                 "replay must bank matched resources without changing Stars or restoration")
             app.inject_click(R.town.buttons.play);smoke_stage=5;return
         end

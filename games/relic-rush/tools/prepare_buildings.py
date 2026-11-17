@@ -32,8 +32,8 @@ def main():
             source=registry['master'], reference=reference, cost=cost, about=about, road=road,
             shadow=dict(runtime=art['shadow'], source=registry['master'], pivot=art['shadow_pivot'],
                         base_width=art['shadow_base_width'])))
-        lua.append('    {key=%s, %sname=%s, category=%s, stars=%d, about=%s, cost=purse(%d,%d,%d), needs=purse(0,0,0,%d)},' % (
-            json.dumps(key), 'road=true, ' if road else '', json.dumps(name), json.dumps(category), stars, json.dumps(about), *cost, stars))
+        lua.append('    {key=%s, %sname=%s, category=%s, cleared=%d, about=%s, cost=purse(%d,%d,%d), needs=purse(0,0,0,%d)},' % (
+            json.dumps(key), 'road=true, ' if road else '', json.dumps(name), json.dumps(category), stars // 3, json.dumps(about), *cost, stars // 3))
     lua += ['}', 'for _, b in ipairs(items) do', '    for field, value in pairs(sprites[b.key]) do b[field] = value end', 'end', 'return items']
     (ROOT / 'lua/buildings.lua').write_text('\n'.join(lua) + '\n')
     (ART / 'manifest.json').write_text(json.dumps(dict(source=registry['master'], generator=registry['scene_generator'],

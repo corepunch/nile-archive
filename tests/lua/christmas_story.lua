@@ -114,7 +114,7 @@ for level=1,30 do
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
 check(finds == 6, "six story wishes have authored finds")
-check(c.count==20 and c.open==63 and p.wallet[4]==90,'thirty clears build twenty stalls and open every region')
+check(c.count==20 and c.open==63 and p.wallet[4]==30,'thirty clears build twenty stalls and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
 
 R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}

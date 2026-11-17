@@ -24,7 +24,7 @@ M.wonder_at=require("journey").wonder_at
 
 ------------------------------------------------------------------- economy
 
-M.GOLD, M.PROVISIONS, M.SUPPLIES, M.STARS = economy.GOLD, economy.PROVISIONS, economy.SUPPLIES, economy.STARS
+M.GOLD, M.PROVISIONS, M.SUPPLIES, M.CLEARED = economy.GOLD, economy.PROVISIONS, economy.SUPPLIES, economy.CLEARED
 M.COMPASSES = 5   -- reserved slot retained in old saves
 M.MOVE_GOLD, M.MAX_MOVE_GOLD = 2, 40
 function M.reward_breakdown(g, wonders, progress, town)
@@ -34,7 +34,7 @@ function M.reward_breakdown(g, wonders, progress, town)
     local w=kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
     local happiness = island.happiness_gold(town)
-    local reward = matched + purse(bonus + happiness, 0, 0, first and 3 or 0)
+    local reward = matched + purse(bonus + happiness, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then
         reward = reward + economy.shortfall(w.cost, (progress and progress.wallet or purse()) + reward)
     end

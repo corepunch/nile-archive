@@ -17,10 +17,6 @@ local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_
 local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
 local set_paint, section = R.set_paint, R.section
 
-local function star_icon(center, side)
-    picture(R.board_art["discovery-star"], rect.centered(center, size2.splat(side)), 255)
-end
-
 function R.compass_icon(center, radius)
     disc(center, radius, rgba(112, 81, 40))
     disc(center, radius - 2, rgba(255, 232, 162))
@@ -78,16 +74,9 @@ local function result_screen()
     rrect(l.header:inflate(-3), 15, rgba(44, 108, 84))
     say(breakdown.first and "Expedition complete" or "Replay complete", rect(l.header.x + 14, l.header.y + 9, l.header.w - 28, 34), 31, PAL_GOLD)
     say(("LEVEL %d  -  WELL EXPLORED"):format(R.g.level + 1), rect(l.header.x + 12, l.header.y + 48, l.header.w - 24, 15), 14, PAL_GOLD)
-    for k = 0, breakdown.first and 2 or -1 do
-        local slot = l.stars:col(3, k, 8)
-        local part
-        s, part = section(.24 + k * .13, .32, 13)
-        local pop = 1 + math.sin(part.u * math.pi) * .14
-        local center = slot:center() + vec2(0, k == 1 and -4 or 2)
-        star_icon(center, (k == 1 and 68 or 54) * pop)
-        set_paint(s)
-    end
-    if not breakdown.first then say("SUPPLY RUN",l.stars,23,PAL_GOLD) end
+    s = section(.24, .32, 13)
+    say(breakdown.first and "SITE CLEARED" or "SUPPLY RUN", l.stars, 23, PAL_GOLD)
+    set_paint(s)
     s = section(.43, .3, 9)
     say("EXPEDITION SCORE", l.score_label, 12, PAL_CREAM)
     local count = R.dialog_part(.43, .65).f   -- the score counts up
@@ -115,13 +104,7 @@ local function result_screen()
     end
     say(bonuses, l.bonus, 11, PAL_CREAM)
     s = section(.93, .24, 8)
-    if breakdown.first then
-        local r = l.progress
-        rrect(r, 16, rgba(221,228,182))
-        star_icon(vec2(r.x + 24, r:center().y), 30)
-        say("+3 DISCOVERY STARS",rect(r.x+44,r.y,r.w-52,r.h),18,PAL_CREAM)
-    end
-    if not breakdown.first then say("DISCOVERY REWARDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
+    if not breakdown.first then say("STORY FINDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
     set_paint(s)
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))

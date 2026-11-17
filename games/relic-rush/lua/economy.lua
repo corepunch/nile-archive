@@ -1,6 +1,7 @@
 -- Three wallet slots. Score-only pieces have no wallet yield.
 local E = {
-    GOLD=1, PROVISIONS=2, SUPPLIES=3, STARS=4,
+    GOLD=1, PROVISIONS=2, SUPPLIES=3,
+    CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
     currencies={
         {key="coins", name="Coins"},
         {key="food", name="Food"},

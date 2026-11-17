@@ -18,7 +18,7 @@
 --   R.award_for(g), R.dialogs[R.OV_AWARD]   an item a first clear recovers (nil for none),
 --                           shown big on its own card before the win's story beat and results
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
---   R.wallet_icons()        three icons: unused, gold and stars capsules
+--   R.wallet_icons()        three icons: unused, gold, unused (the gold capsule's is the second)
 --   R.town_middle_icon(at)  the round middle button's icon in the town
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
@@ -53,8 +53,8 @@ G.DEFAULTS = {
                restart = "RESTART", cancel = "KEEP PLAYING"},
     failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Look for longer lines or use a tool.",
               retry = "TRY AGAIN", town = "VISIT TOWN"},
-    zone = {subtitle = "A NEW PLACE TO DISCOVER", stars = "STARS  %d / %d", earn = "EARN STARS IN NEW LEVELS",
-            open = "OPEN THIS AREA", wait = "KEEP EXPLORING", keep = "STARS STAY WITH YOU.", close = "CLOSE"},
+    zone = {subtitle = "A NEW PLACE TO DISCOVER", cleared = "LEVELS CLEARED  %d / %d", earn = "CLEAR NEW LEVELS TO OPEN IT",
+            open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", back = "BACK TO TOWN",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
@@ -63,7 +63,7 @@ G.DEFAULTS = {
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
         category = "all",
         build = "BUILD", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
-        stars = "REQUIRES %d STARS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
+        cleared = "CLEAR %d LEVELS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
         row = "%d x %d tiles  ·  Owned %d", build_points = "  ·  +%d decoration points",
     },
     expeditions = {
@@ -467,7 +467,7 @@ function G.bind(R, over)
     end
 
     -- The wallet row. capsules.show in game_config.lua lists what it holds, in order:
-    -- "stars" or a currency's id (its capsule's `id`; "gold" when the
+    -- a currency's id (its capsule's `id`; "gold" when the
     -- game has one currency). Without the list it holds them all. A board with
     -- several currencies shows only those, at the shared row's width.
     function R.header_capsules(board)
@@ -478,7 +478,6 @@ function G.bind(R, over)
             capsule.id = id
             all[#all + 1], by_id[id] = capsule, capsule
         end
-        local extras = not (board and currencies)
         if currencies then
             for i, capsule in ipairs(currencies) do
                 capsule.slot = capsule.slot or i
@@ -486,14 +485,11 @@ function G.bind(R, over)
                 add(capsule.id or tostring(capsule.slot), capsule)
             end
         else add("gold", {icon=icons[2], value=tostring(R.prog.wallet[rules.GOLD]), note=notes[2]}) end
-        if extras then
-            add("stars", {icon=icons[3], value=tostring(R.prog.wallet[rules.STARS]), note=notes[3], width=currencies and 65 or nil})
-        end
         local show = W.capsules.show
         if not show then return all end
         local out = {}
         for _, id in ipairs(show) do
-            assert(by_id[id] or id == "stars", "capsules.show names no capsule: " .. id)
+            assert(by_id[id], "capsules.show names no capsule: " .. id)
             out[#out + 1] = by_id[id]
         end
         return out
@@ -706,7 +702,7 @@ function G.bind(R, over)
         panel(rect(30, 263, 420, 365))
         say_at(zone.name, vec2(240, 304), 34, PAL_GOLD, 380)
         say_at(t.subtitle, vec2(240, 349), 16, PAL_CREAM, 0)
-        say_at(t.stars:format(R.prog.wallet[rules.STARS], zone.needs[rules.STARS]), vec2(240, 397), 24, PAL_GOLD, 0)
+        say_at(t.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]), vec2(240, 397), 24, PAL_GOLD, 0)
         say_at(t.earn, vec2(240, 441), 19, PAL_CREAM, 0)
         if button(rect(72, 487, 336, 47), ready and t.open or t.wait, true) then
             if R.island:unlock(z, R.prog.wallet) then
@@ -717,7 +713,6 @@ function G.bind(R, over)
             end
             R.overlay = R.OV_NONE
         end
-        say_at(t.keep, vec2(240, 559), 12, PAL_WHITE, 0)
         say_at(t.close, vec2(240, 592), 15, PAL_WHITE, 0)
         if tapped(rect(180, 575, 120, 38)) then R.overlay = R.OV_NONE end
     end
@@ -843,7 +838,7 @@ function G.bind(R, over)
                         blocked == "earlier" and C.earlier
                     if reason then action, state = reason, owned > 0 and "built" or "locked" end
                     if not reason and not wallet:covers(def.cost) then action, state = C.poor, "poor" end
-                elseif wallet[rules.STARS] < meta.stars then action, state = C.stars:format(meta.stars), "locked"
+                elseif wallet[rules.CLEARED] < meta.cleared then action, state = C.cleared:format(meta.cleared), "locked"
                 elseif not wallet:covers(def.cost) then action, state = C.poor, "poor"
                 elseif island.can_spend and not island.can_spend(R.island, wallet, R.prog.level, def.cost)
                     or not island.can_spend and wallet[rules.GOLD] - island.reserved_gold(R.island, R.prog.level) < def.cost[1] then
@@ -1133,6 +1128,9 @@ function G.bind(R, over)
         R.prog.level = s:int("level", R.prog.level)
         R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
         R.prog.wallet = s:ints("wallet", R.prog.wallet)
+        -- The fourth slot counts boards cleared. Saves from the star economy
+        -- held three stars a board there, so it is always rebuilt from the level.
+        if save.is_reading(s) then R.prog.wallet[rules.CLEARED] = R.prog.level end
         R.island:serialize(s)
         story.serialize(s)
         journey.serialize(s, R.prog)
@@ -1239,7 +1237,7 @@ function G.bind(R, over)
     function R.submit_scores()
         local c = W.leaderboard
         if not c then return end
-        gamecenter.submit(c.board, R.prog.wallet[rules.STARS])
+        gamecenter.submit(c.board, R.prog.level)
         if c.level_board and R.g then gamecenter.submit(c.level_board:format(R.g.level + 1), R.g.score) end
     end
     -- The board of the whole game, or of one expedition (0-based level).
@@ -1485,7 +1483,7 @@ function G.app(R)
         R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         if not app.arg("smoke") then save.read(R.progress_slot(), R.serialize) end
         if W.leaderboard and not app.arg("smoke") and not app.arg("debug-walkthrough") then
-            gamecenter.submit(W.leaderboard.board, R.prog.wallet[rules.STARS])
+            gamecenter.submit(W.leaderboard.board, R.prog.level)
         end
         R.story_current, R.story_preview, R.story_before_result = nil, false, false
         R.story_choice_beat, R.story_choice_preview = nil, nil

@@ -8,7 +8,6 @@ local rules = require("rules")
 local economy = require("economy")
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local rgba = color
-local P, pp = R.P, R.pp
 local rrect, picture, picture_fit = R.rrect, R.picture, R.picture_fit
 local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
 local set_paint, section = R.set_paint, R.section
@@ -77,21 +76,9 @@ local function result_screen()
     rrect(l.header:inflate(-3), 15, rgba(44, 108, 84))
     say(first and "Wish granted!" or "Replay complete", rect(l.header.x + 14, l.header.y + 8, l.header.w - 28, 36), 32, PAL_GOLD)
     say(("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name), rect(l.header.x + 12, l.header.y + 46, l.header.w - 24, 16), 15, PAL_CREAM)
-    for k = 0, first and 2 or -1 do
-        local slot = l.stars:col(3, k, 8)
-        local part
-        s, part = section(.24 + k * .13, .32, 13)
-        local pop = 1 + math.sin(part.u * math.pi) * .14
-        local at = slot:center() + vec2(0, k == 1 and -6 or 4)
-        R.vfx_halo(pp(at), 48 * P.scale, rgba(255, 201, 77, 65 * P.alpha))
-        star_icon(at, (k == 1 and 31 or 25) * pop)
-        set_paint(s)
-    end
-    if first then
-        say("+3 CHRISTMAS STARS", rect(l.stars.x, l.stars.y + 62, l.stars.w, 16), 12, PAL_CREAM)
-    else
-        say("SUPPLIES FOR YOUR MARKET", l.stars, 21, PAL_GOLD)
-    end
+    s = section(.24, .32, 13)
+    say(first and "EVERY PANE IS LIT" or "SUPPLIES FOR YOUR MARKET", l.stars, 21, PAL_GOLD)
+    set_paint(s)
     s = section(.43, .3, 9)
     say("SCORE", rect(l.score.x, l.score.y, l.score.w, 16), 13, PAL_CREAM)
     local count = R.dialog_part(.43, .65).f   -- the score counts up

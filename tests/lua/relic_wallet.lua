@@ -431,7 +431,7 @@ do
     local camp=island.wonders[1].cost
     g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={8,camp[2]+2,camp[3]+4}
     check(rules.progress_reward(p,g,island.wonders),'replay resources bank')
-    check(p.wallet[1]==48 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==3 and p.level==1,
+    check(p.wallet[1]==48 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==1 and p.level==1,
         'replay pays matched resources and capped move bonus without discoveries')
     check(island.island_place_next(c,p.wallet,p.level,0) and island.wonder_count(c)==1,'replay can fund the camp')
     check(not rules.progress_reward(p,{won=false},island.wonders),'failed attempt pays nothing')
@@ -456,8 +456,8 @@ do
     check(R.make_board(4, 93).tool_meter[1] == 0, 'older saves start their unlocked bonus meters empty')
     local w=R.prog.wallet
     local well=island.wonders[2].cost[1]
-    check(w[1]==math.max(155,well) and w[2]==0 and w[3]==9 and w[4]==12 and island.wonder_count(R.island)==1,
-        'legacy saves preserve Gold, Stars, placements and combined Supplies')
+    check(w[1]==math.max(155,well) and w[2]==0 and w[3]==9 and w[4]==4 and island.wonder_count(R.island)==1,
+        'legacy saves preserve Gold, placements and combined Supplies; old stars become boards cleared')
     local spare=w[1]-well
     check(not island.can_spend(R.island,w,4,purse(spare+1)) and (spare==0 or island.can_spend(R.island,w,4,purse(spare))),
         'optional building cannot spend the Gold reserved for the well')
@@ -470,7 +470,7 @@ do
     end),'write an old wallet with the previous well price')
     check(save.read('relic-resource-v1',R.serialize),'load the old price')
     w=R.prog.wallet
-    check(w[1]==well and w[2]==10 and w[3]==22 and w[4]==12,
+    check(w[1]==well and w[2]==10 and w[3]==22 and w[4]==4,
         'migration covers an earned restoration at the new price and preserves other balances')
     check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
     -- Relic Rush serializes each meter by name. Reordered tools retain their

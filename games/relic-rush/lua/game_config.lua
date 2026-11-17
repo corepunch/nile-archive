@@ -49,8 +49,8 @@ return {
     failed = {title = "One more adventure?", subtitle = "THE RUINS WILL WAIT FOR YOU.", town = "VISIT ISLAND"},
     zone = {
         subtitle = "A NEW PLACE TO DISCOVER",
-        earn = "EARN STARS IN NEW EXPEDITIONS",
-        keep = "DISCOVERY STARS STAY WITH YOU.",
+        cleared = "EXPEDITIONS CLEARED  %d / %d",
+        earn = "CLEAR NEW EXPEDITIONS TO OPEN IT",
     },
     finale = {
         title = "To be continued...",

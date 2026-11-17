@@ -201,7 +201,7 @@ for level=1,30 do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(c.count==20 and c.open==63 and p.wallet[4]==90 and quests.points(c)==80,
+check(c.count==20 and c.open==63 and p.wallet[4]==30 and quests.points(c)==80,
     'thirty clears restore twenty buildings, fund every region and award 80 points')
 check(not quests.current(p,c),'all nine quests finish')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')

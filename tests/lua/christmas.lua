@@ -35,13 +35,13 @@ for level=0,rules.LEVELS-1 do
     assert(island.campaign_count(c)==due, 'Every funded stall must fit the land open by then, in ladder order')
     assert(island.wonder_count(c)==journey.earned(p.level), 'Story stalls keep their schedule')
 end
-assert(c.open==63 and p.wallet[4]==3*rules.LEVELS and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
-       'Stars open every region and spare matched goods are banked')
+assert(c.open==63 and p.wallet[4]==rules.LEVELS and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
+       'Cleared wishes open every region and spare matched goods are banked')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)
 replay.won, replay.moves, replay.earnings = true, 0, {12, 3, 4}
 assert(rules.progress_reward(p,replay,island.wonders))
-assert(p.wallet[1]==before+12 and p.wallet[4]==3*rules.LEVELS and p.level==rules.LEVELS, 'Replays do not earn additional Stars')
+assert(p.wallet[1]==before+12 and p.wallet[4]==rules.LEVELS and p.level==rules.LEVELS, 'Replays do not count as cleared wishes')
 for kind=10,11 do
     assert(island.can_buy(c,p.wallet,p.level,kind))
     local ok,spot = c:find_spot(kind,vec2(760,2010))

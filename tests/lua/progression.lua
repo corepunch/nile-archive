@@ -9,7 +9,7 @@ local g = rules.game_start(0, 7, 0)
 g.won, g.moves = true, 999
 check(rules.progress_reward(p, g, island.wonders), "first clear pays")
 check(not rules.progress_reward(p, g, island.wonders), "result pays once")
-check(p.wallet[1] == 0 and p.wallet[4] == 3 and p.level == 1, "first clear only pays matched Gold and Stars")
+check(p.wallet[1] == 0 and p.wallet[4] == 1 and p.level == 1, "first clear only pays matched Gold and counts the board")
 check(not island.can_buy(c, p.wallet, p.level, 0), "story checkpoint does not give away the arch")
 
 local replay = rules.game_start(0, 7, 0)
@@ -17,7 +17,7 @@ replay.earnings, replay.moves = {60, 0, 0}, 999
 check(not rules.progress_reward(p, replay, island.wonders), "a failed wish banks nothing")
 replay.won = true
 check(rules.progress_reward(p, replay, island.wonders), "replay can bank resources")
-check(p.wallet[1] == 60 and p.wallet[4] == 3 and p.level == 1, "replays pay actual matches")
+check(p.wallet[1] == 60 and p.wallet[4] == 1 and p.level == 1, "replays pay actual matches")
 check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
 check(p.wallet[1] == 10, "confirmed placement debits Gold once")
 

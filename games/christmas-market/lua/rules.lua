@@ -37,7 +37,7 @@ M.wonder_at=require("journey").wonder_at
 
 ------------------------------------------------------------------- economy
 
-M.GOLD, M.FOOD, M.SUPPLIES, M.STARS = economy.GOLD, economy.FOOD, economy.SUPPLIES, economy.STARS
+M.GOLD, M.FOOD, M.SUPPLIES, M.CLEARED = economy.GOLD, economy.FOOD, economy.SUPPLIES, economy.CLEARED
 function M.reward_breakdown(g, wonders, progress)
     local first = not progress or g.level == progress.level
     local kind = M.wonder_at(g.level + 1)
@@ -45,7 +45,7 @@ function M.reward_breakdown(g, wonders, progress)
     local matched = purse(table.unpack(g.earnings or {}))
     -- The rink's and presents' takings pay on every win, as Rome's citizens do.
     local income = g.win_income or purse()
-    local reward = matched + income + purse(0, 0, 0, first and 3 or 0)
+    local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then
         local available = (progress and progress.wallet or purse()) + reward
         for slot in ipairs(economy.currencies) do reward[slot] = reward[slot] + math.max(0, w.cost[slot] - available[slot]) end

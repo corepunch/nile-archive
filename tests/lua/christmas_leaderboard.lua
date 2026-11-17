@@ -19,8 +19,8 @@ check(config and config.board == 'stars' and config.level_board == 'level_%02d' 
 R.g = rules.game_start(0, 1)
 R.g.won, R.g.score = true, 4321
 R.claim_reward()
-check(R.prog.level == 1 and R.prog.wallet[rules.STARS] > 0, 'the first clear awards discovery stars')
-check(gamecenter.best('stars') == R.prog.wallet[rules.STARS], 'the stars board holds the lifetime stars')
+check(R.prog.level == 1 and R.prog.wallet[rules.CLEARED] == 1, 'the first clear counts one board')
+check(gamecenter.best('stars') == R.prog.level, 'the campaign board holds the boards cleared')
 check(gamecenter.best('level_01') == 4321, 'the expedition board holds its score')
 
 -- a weaker replay keeps the best; a better one raises it; other levels have their own boards

@@ -199,7 +199,7 @@ function R.smoke()
             for slot = 1, 3 do
                 assert(R.prog.wallet[slot] == shop.replay_wallet[slot] + shop.replay_reward[slot], "replay must pay its matched resources")
             end
-            assert(R.prog.wallet[4] == 3 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
+            assert(R.prog.wallet[4] == 1 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
                    "replay cannot change discoveries or restoration")
             app.inject_click(R.town.buttons.play); stage = 5; return
         end
@@ -339,7 +339,7 @@ function R.smoke()
     elseif stage == 41 and R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and not R.g.won and not R.g.lost, "Quit must keep the unfinished board")
         assert(R.prog.wallet[1] == shop.pause_gold and R.prog.level == 1
-               and R.prog.wallet[4] == 3 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
+               and R.prog.wallet[4] == 1 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
                "restart and quit must not award rewards or change restoration progress")
         app.inject_click(R.town.buttons.pause); stage = 42
     elseif stage == 42 and R.overlay == R.OV_PAUSE and R.dialog_settled() then

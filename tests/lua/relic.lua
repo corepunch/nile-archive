@@ -278,7 +278,7 @@ local function test_island()
         check(island.wonder_count(c) == require("journey").earned(p.level), "story restorations keep their schedule")
     end
     check(c.count == #island.ladder, "the ladder has twenty restorations")
-    check(p.wallet[rules.STARS] == LEVELS*3, "stars accumulate")
+    check(p.wallet[rules.CLEARED] == LEVELS, "every first clear counts once")
 
     -- shoreline, collisions, failed builds change nothing, moving is free
     c = city.new()
@@ -305,9 +305,9 @@ local function test_island()
     island.island_setup(c)
     wallet = purse()
     check(not c:unlock(1, wallet) and not c:can_place(vec2(1330, 2100), 0), "closed region")
-    wallet[rules.STARS] = c.zones[2].needs[rules.STARS]
-    local stars=wallet[rules.STARS]
-    check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.STARS] == stars, "stars alone unlock land and remain in the wallet")
+    wallet[rules.CLEARED] = c.zones[2].needs[rules.CLEARED]
+    local cleared=wallet[rules.CLEARED]
+    check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.CLEARED] == cleared, "cleared boards alone open land and are not spent")
     check(not c:unlock(1, wallet) and c:can_place(vec2(1330, 2100), 0), "open region builds")
     check(not island.island_zone_touches(5, 1), "the temple ridge is far from the harbour")
 end

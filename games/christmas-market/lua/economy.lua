@@ -1,6 +1,7 @@
 -- Wallet slots are save data. Prices are Gold, Food, Supplies.
 local E = {
-    GOLD=1, FOOD=2, SUPPLIES=3, STARS=4,
+    GOLD=1, FOOD=2, SUPPLIES=3,
+    CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
     currencies={
         {name="Gold", kind=3},
         {name="Food", kind=11},

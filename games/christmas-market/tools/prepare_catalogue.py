@@ -36,12 +36,12 @@ for i, (key, name, category, w, h, cost, stars, about, *flags) in enumerate(cata
     road = bool(flags and flags[0].get('road'))   # a decoration on a foundation slab: a road leads to it
     art = registry['items'][key]
     assert art['size'] == [w, h], key
-    needs = 'purse()' if category == 'wonder' or not stars else 'purse(0,0,0,%d)' % stars
+    needs = 'purse()' if category == 'wonder' or not stars else 'purse(0,0,0,%d)' % (stars // 3)
     entries.append(dict(id=i, key=key, name=name, category=category, size=[w, h], pivot=art['pivot'], base_width=art['base_width'],
                         cost=cost, stars=stars, about=about, road=road, image=art['image'], runtime=art['sprite'], shadow=art['shadow'],
                         source=registry['master'] + '#' + key))
-    lua.append('    {key=%s,%sname=%s,category=%s,stars=%d,about=%s,cost=purse(%s),needs=%s},' % (
-        json.dumps(key), 'road=true,' if road else '', json.dumps(name, ensure_ascii=False), json.dumps(category), stars,
+    lua.append('    {key=%s,%sname=%s,category=%s,cleared=%d,about=%s,cost=purse(%s),needs=%s},' % (
+        json.dumps(key), 'road=true,' if road else '', json.dumps(name, ensure_ascii=False), json.dumps(category), stars // 3,
         json.dumps(about, ensure_ascii=False), ','.join(str(c) for c in cost), needs))
 lua += ['}', 'for _, b in ipairs(items) do', '    for field, value in pairs(sprites[b.key]) do b[field] = value end', 'end', 'return items']
 text = '\n'.join(lua) + '\n'
