@@ -193,6 +193,21 @@ def summarize(number, head, layout, problems):
     rows = {slot(q, r)[0] // 2 for q, r in layout}
     if rows and max(rows) - min(rows) + 1 < MIN_ROWS:
         problems.append(f'the board is {max(rows) - min(rows) + 1} rows tall; use {MIN_ROWS} to {BOARD_ROWS}')
+    # As in Cradle of Rome (869 of its 871 chains sit on plaques), a chain or
+    # ice must cover a tablet, or gate cells below it: otherwise nothing makes
+    # the player break it.
+    now_fed = fed(layout)
+    idle = []
+    for c, sym in layout.items():
+        tablet, chain, ice, _ = SYMBOLS[sym]
+        if (chain or ice) and not tablet:
+            opened = dict(layout)
+            opened[c] = '.'
+            if not (fed(opened) - now_fed - {c}):
+                idle.append(c)
+    if idle:
+        problems.append(f'{len(idle)} chains or ice sit on plain cells and gate nothing; put them on tablets: '
+                        + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(idle, key=lambda c: slot(*c))))
     # Every gated cell must open once its chains break.
     open_board = {c: ('.' if blocker(s) else s) for c, s in layout.items()}
     never = [c for c in layout if c not in fed(open_board)]

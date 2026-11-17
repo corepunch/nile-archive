@@ -55,17 +55,22 @@ of every level). Regenerate both with
 5. **Tablets win the board.** Every board has tablets (`oil` in the engine).
    Clear them all to win. The move budget is set later by the tuner, not by
    you.
-6. **Chains as gates.** Pieces fall only from the sky: a cell refills if
+6. **Chains guard tablets.** In Cradle of Rome 869 of 871 chains sit on
+   plaques; the other two are teaching gates. Put every chain and every ice
+   on a tablet (`k K g G j J`). A chain or ice on a plain cell (`c C i I`) is
+   allowed only as a gate, when breaking it lets pieces into cells below;
+   otherwise the player never needs to break it, and the validator says so.
+7. **Chains as gates.** Pieces fall only from the sky: a cell refills if
    nothing on the board lies above it in its column, or if a piece can reach
    it falling straight down or diagonally down from a fed, unchained cell. A
    chain, or a hole, closes that path. A cell that only a chain can feed
    starts empty and stays empty until the chain breaks. Then pieces trickle
    through and the tablets below can be cleared.
-7. **Every feature by level 100.** Cradle of Rome's Adventure never uses ice
+8. **Every feature by level 100.** Cradle of Rome's Adventure never uses ice
    or stones. We introduce both gradually: ice early (7), stones at 15, so the
    campaign uses every board feature we have. Each first appearance gets a
    one-line hint card naming the feature in the game's own terms.
-8. **Follow the schedule below.** The validator rejects a feature before its
+9. **Follow the schedule below.** The validator rejects a feature before its
    first level.
 
 ## The 100-level schedule
