@@ -8,7 +8,7 @@ local W = game.config()
 check(W.app.id == testing.game, "game_config.lua is read at load time and names its game")
 check(#W.packs >= 1 and #W.catalogue.categories >= 3, "packs and shop categories come from the game")
 for _, cat in ipairs(W.catalogue.categories) do check(#cat == 2, "a category is {key, label}") end
-check(W.notices.no_lives ~= game.DEFAULTS.notices.no_lives, "the game words replace the engine defaults")
+check(W.notices.build_first ~= game.DEFAULTS.notices.build_first, "the game words replace the engine defaults")
 check(W.confirm.body == game.DEFAULTS.confirm.body, "words a game leaves out keep the engine default")
 
 local merged = game.config({catalogue = {categories = {{"all", "All"}}}, speech = {scale = 2}})

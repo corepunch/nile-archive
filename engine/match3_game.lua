@@ -1,6 +1,6 @@
 -- match3_game.lua — the portrait match-3 city game around the board, shared by
 -- Relic Rush and Christmas Market (`require("match3.game")`): progress and
--- saving, the level flow and lives, the frame, the paint helpers and every
+-- saving, the level flow, the frame, the paint helpers and every
 -- dialog (pause and its Restart confirmation, failed, region card, building
 -- card, finale), the build shop, the level list, the town hooks, story
 -- delivery, the journey's bookkeeping and the debug entry points.
@@ -18,7 +18,7 @@
 --   R.award_for(g), R.dialogs[R.OV_AWARD]   an item a first clear recovers (nil for none),
 --                           shown big on its own card before the win's story beat and results
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
---   R.wallet_icons()        three icons for lives, gold and stars capsules
+--   R.wallet_icons()        three icons: unused, gold and stars capsules
 --   R.town_middle_icon(at)  the round middle button's icon in the town
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
@@ -38,7 +38,6 @@ G.DEFAULTS = {
     notices = {
         build_first = "Build your earned building before the next level.",
         story_waiting = "Something is happening in town.",
-        no_lives = "A life returns every 30 minutes. Explore the town meanwhile.",
         reward_building = "Building funded! Spare gold is yours to decorate.",
         reward_story = "Something is happening in town.",
         reward_replay = "Replay gold collected. Choose something in the shop.",
@@ -47,14 +46,13 @@ G.DEFAULTS = {
         quit = "Your board is saved. Tap LEVEL %d or the level list to continue.",
     },
     capsules = {
-        lives_full = "5 FULL",
-        notes = {"A life returns every 30 minutes, up to five.", "Gold buys buildings.", "Stars unlock shop items and land."},
+        notes = {"", "Gold buys buildings.", "Stars unlock shop items and land."},
     },
     pause = {guide = "GUIDE", quit = "QUIT", town = "Your town", leaderboard = "LEADERBOARD"},
     confirm = {title = "Restart this level?", body = "The board starts over: moves, goals and tools reset. Retrying is always free.",
                restart = "RESTART", cancel = "KEEP PLAYING"},
     failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Look for longer lines or use a tool.",
-              no_lives = "A life returns every 30 minutes.", retry = "TRY AGAIN", town = "VISIT TOWN"},
+              retry = "TRY AGAIN", town = "VISIT TOWN"},
     zone = {subtitle = "A NEW PLACE TO DISCOVER", stars = "STARS  %d / %d", earn = "EARN STARS IN NEW LEVELS",
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", keep = "STARS STAY WITH YOU.", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
@@ -469,7 +467,7 @@ function G.bind(R, over)
     end
 
     -- The wallet row. capsules.show in game_config.lua lists what it holds, in order:
-    -- "lives", "stars" or a currency's id (its capsule's `id`; "gold" when the
+    -- "stars" or a currency's id (its capsule's `id`; "gold" when the
     -- game has one currency). Without the list it holds them all. A board with
     -- several currencies shows only those, at the shared row's width.
     function R.header_capsules(board)
@@ -481,12 +479,6 @@ function G.bind(R, over)
             all[#all + 1], by_id[id] = capsule, capsule
         end
         local extras = not (board and currencies)
-        if extras then
-            local remaining = math.max(0, math.ceil((R.prog.life_at or 0) - app.clock()))
-            local lives = (R.prog.lives or rules.LIVES) == rules.LIVES and W.capsules.lives_full
-                or ("%d %d:%02d"):format(R.prog.lives, remaining // 60, remaining % 60)
-            add("lives", {icon=icons[1], value=lives, note=notes[1], width=currencies and 78 or nil})
-        end
         if currencies then
             for i, capsule in ipairs(currencies) do
                 capsule.slot = capsule.slot or i
@@ -501,7 +493,7 @@ function G.bind(R, over)
         if not show then return all end
         local out = {}
         for _, id in ipairs(show) do
-            assert(by_id[id] or id == "lives" or id == "stars", "capsules.show names no capsule: " .. id)
+            assert(by_id[id] or id == "stars", "capsules.show names no capsule: " .. id)
             out[#out + 1] = by_id[id]
         end
         return out
@@ -694,15 +686,14 @@ function G.bind(R, over)
         elseif event and event.id == "cancel" then R.overlay = R.OV_PAUSE end
     end
 
-    -- Out of moves. With no lives left, Try Again waits and says why.
+    -- Out of moves: try again at once, as often as the player likes.
     R.dialogs[R.OV_FAILED] = function()
         local f = W.failed
         panel(rect(38, 272, 404, 333))
         say_at(f.title, vec2(240, 317), 32, PAL_GOLD, 0)
         say_at(f.subtitle, vec2(240, 366), 16, PAL_WHITE, 0)
-        local can_retry = (R.prog.lives or rules.LIVES) > 0
-        say_at(can_retry and f.hint or f.no_lives, vec2(240, 404), 17, PAL_CREAM, 0)
-        if button(rect(83, 448, 314, 50), f.retry, can_retry) and can_retry then R.start_level(R.g.level) end
+        say_at(f.hint, vec2(240, 404), 17, PAL_CREAM, 0)
+        if button(rect(83, 448, 314, 50), f.retry, true) then R.start_level(R.g.level) end
         if button(rect(115, 520, 250, 42), f.town, true) then R.on_island, R.overlay = true, R.OV_NONE end
     end
 
@@ -1142,8 +1133,6 @@ function G.bind(R, over)
         R.prog.level = s:int("level", R.prog.level)
         R.prog.seed = s:int("seed", R.prog.seed) & 0xFFFFFFFF
         R.prog.wallet = s:ints("wallet", R.prog.wallet)
-        R.prog.lives = s:int("lives", R.prog.lives or rules.LIVES)
-        R.prog.life_at = s:int("life_at", R.prog.life_at or 0)
         R.island:serialize(s)
         story.serialize(s)
         journey.serialize(s, R.prog)
@@ -1175,8 +1164,6 @@ function G.bind(R, over)
         if lvl == R.prog.level and owes_building() then R.notice(W.notices.build_first); return false end
         if lvl == R.prog.level and journey.awaiting_return(R.prog) then R.notice(W.notices.story_waiting); return false end
         if lvl == R.prog.level and R.quest_allows_board and not R.quest_allows_board(lvl + 1) then return false end
-        rules.refill_lives(R.prog, app.clock())
-        if R.prog.lives <= 0 then R.on_island = true; R.notice(W.notices.no_lives); return false end
         R.reset_board(R.make_board(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
         R.on_island = false
         R.overlay = R.OV_NONE
@@ -1413,9 +1400,6 @@ function G.app(R)
         if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
         if not (dive and dive.t < dive.style.out) then R.board_update(dt) end   -- the board waits behind the dive
-        local now = app.clock()   -- lives return on the clock; a lost board costs one at once
-        rules.refill_lives(R.prog, now)
-        if rules.lose_life(R.prog, R.g, now) then R.save_progress() end
         R.vfx_update(dt)
         ui.set_enabled(R.overlay == R.OV_NONE and not talking and not board and not dive)
         if dive then dive_screen(world, dt)
@@ -1498,10 +1482,8 @@ function G.app(R)
         R.inspect, R.zone_card = -1, -1
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
-        R.prog = {level = 0, seed = 782341, wallet = purse(), lives = rules.LIVES, life_at = 0, story_seen = {}}
+        R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         if not app.arg("smoke") then save.read(R.progress_slot(), R.serialize) end
-        if app.arg("empty-lives") then R.prog.lives, R.prog.life_at, R.quiet = 0, app.clock() + rules.LIFE_INTERVAL, true end
-        rules.refill_lives(R.prog, app.clock())
         if W.leaderboard and not app.arg("smoke") and not app.arg("debug-walkthrough") then
             gamecenter.submit(W.leaderboard.board, R.prog.wallet[rules.STARS])
         end
@@ -1509,10 +1491,10 @@ function G.app(R)
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.layout()
         if not R.start_level() then
-            -- A loaded zero-life wallet still needs an inert board for shared view
-            -- updates. It cannot be resumed as an unfinished level.
+            -- A save the story or a building holds on the island still needs an
+            -- inert board for shared view updates.
             R.reset_board(R.make_board(math.min(R.prog.level, LEVELS - 1), R.prog.seed))
-            R.g.lost, R.g.life_paid = true, true
+            R.g.lost = true
             R.on_island = true
         end
         if R.prog.level >= LEVELS then R.g.won = true end -- no unfinished attempt is created at campaign completion

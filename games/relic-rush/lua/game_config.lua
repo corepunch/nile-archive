@@ -31,7 +31,6 @@ return {
     notices = {
         build_first = "Restore the next wonder. Replay an expedition to gather missing resources.",
         story_waiting = "A new clue awaits on your island.",
-        no_lives = "A life returns every 30 minutes. Explore your valley meanwhile.",
         reward_building = "Resources banked. Check the next restoration in the Build Shop.",
         reward_story = "A new clue awaits on your island.",
         reward_replay = "Resources banked. Spend them in the Build Shop.",

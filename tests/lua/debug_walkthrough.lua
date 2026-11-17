@@ -6,7 +6,7 @@ require('main')
 R.test_mode, R.quiet, R.overlay, R.on_island = true, true, R.OV_NONE, false
 R.island = city.new(); island.island_setup(R.island)
 R.wonders, R.buildings = island.wonders, island.buildings
-R.prog = {level=0, seed=1, wallet=purse(), lives=rules.LIVES, life_at=0, story_seen={}}
+R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.g = rules.game_start(0, 1)
 check(R.debug_skip_level() and R.g.won and R.overlay == R.OV_RESULT, 'skip opens the normal result')
 check(not R.debug_skip_level(), 'a completed board cannot be skipped twice')

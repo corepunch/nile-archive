@@ -14,19 +14,6 @@ local function open_cell(g)
         if ok then return i end
     end
 end
--- Lives regenerate offline, stop at five, and charge a failed attempt once.
-do
-    local p={lives=5,life_at=0}
-    local g={lost=true}
-    check(rules.lose_life(p,g,1000) and p.lives==4 and p.life_at==2800,'first failed attempt costs one life')
-    check(not rules.lose_life(p,g,1001) and p.lives==4,'failed board charges once')
-    check(rules.lose_life(p,{lost=true},1010) and p.lives==3 and p.life_at==2800,'timer does not restart when another life is spent')
-    rules.refill_lives(p,2799);check(p.lives==3,'refill waits for the full interval')
-    rules.refill_lives(p,2800);check(p.lives==4 and p.life_at==4600,'one interval restores one life')
-    rules.refill_lives(p,10000);check(p.lives==5 and p.life_at==0,'offline refill caps at five')
-    check(not rules.lose_life(p,{lost=false},10000),'winning boards cost no life')
-end
-
 -- Happiness is derived from placed items, and only optional purchases earn Gold.
 do
     local town={items={{type=0},{type=37}}}
@@ -456,7 +443,7 @@ end
 do
     R.island=city.new();island.island_setup(R.island)
     R.wonders=island.wonders
-    R.prog={level=4,seed=1,wallet=purse(),story_seen={},lives=3}
+    R.prog={level=4,seed=1,wallet=purse(),story_seen={}}
     local bank=purse(700,90,90,12)
     check(island.island_place_next(R.island,bank,4,0),'legacy camp already placed')
     check(save.write('relic-resource-legacy',function(s)

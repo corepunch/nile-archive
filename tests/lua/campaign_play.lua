@@ -13,7 +13,7 @@ R.test_mode, R.quiet, R.overlay = true, false, R.OV_NONE
 R.island = city.new()
 island.island_setup(R.island)
 R.wonders = island.wonders
-R.prog = {level=0, seed=1, wallet=purse(), lives=rules.LIVES, life_at=0, story_seen={}}
+R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, bonus, replays = 0, 0, 0, 0, 0

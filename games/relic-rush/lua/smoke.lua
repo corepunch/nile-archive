@@ -121,12 +121,6 @@ end
 function R.smoke()
     frames = frames + 1
     if app.arg("campaign") then return campaign() end
-    if app.arg("empty-lives") then
-        assert(R.g and R.on_island and R.prog.lives==0,"empty-life load must keep a valid, inert island view")
-        if frames==4 then app.inject_click(R.town.buttons.play) end
-        if frames==10 then app.quit() end
-        return
-    end
     if frames > 8000 or R.g.lost then
         error(("smoke test failed at stage %d (overlay %d, level %d)"):format(stage, R.overlay, R.g.level))
     end

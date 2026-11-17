@@ -33,7 +33,6 @@ return {
     notices = {
         build_first = "Build your earned stall before the next winter wish.",
         story_waiting = "Something's happening in the market square.",
-        no_lives = "A life returns every 30 minutes. Explore the market meanwhile.",
         reward_building = "Visit the Build shop to check the next stall.",
         reward_story = "Something's happening in the market square.",
         reward_replay = "Resources collected. Visit the build shop.",

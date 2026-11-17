@@ -56,18 +56,6 @@ for kind=10,11 do
 end
 assert(c.count==22 and island.wonder_count(c)==10 and island.campaign_count(c)==20, 'Decorations cannot advance the campaign')
 
-local old_save = {}
-rules.refill_lives(old_save, 100)
-check(old_save.lives == 5 and old_save.life_at == 0, 'An older save starts with five lives')
-local failed = {lost=true}
-check(rules.lose_life(old_save, failed, 100) and old_save.lives == 4 and old_save.life_at == 1900,
-      'A failed wish costs one life and starts the refill timer')
-check(not rules.lose_life(old_save, failed, 101) and old_save.lives == 4, 'A failed wish can charge only once')
-rules.refill_lives(old_save, 1899)
-check(old_save.lives == 4, 'No life returns before thirty minutes')
-rules.refill_lives(old_save, 1900)
-check(old_save.lives == 5 and old_save.life_at == 0, 'A life returns after thirty minutes')
-
 local first_wish = rules.game_start(0, 123478, {})
 check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
       'locked boosters keep all four slots')

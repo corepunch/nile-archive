@@ -96,7 +96,7 @@ shot("level-leaderboard", "480x900", "--victory --dialog level-leaderboard --gam
 shot("restart", "480x900", "--level 4 --dialog confirm")
 shot("guide", "480x900", "--level 4 --dialog guide")
 shot("phone-guide", "390x844", "--level 4 --dialog guide --safe-area 0,47,0,34")
-shot("failed", "480x900", "--level 4 --dialog failed --empty-lives")
+shot("failed", "480x900", "--level 4 --dialog failed")
 shot("finale", "480x900", "--dialog finale")
 shot("footprints", "480x900", "--showcase --footprints")
 shot("phone-footprints", "390x844", "--showcase --footprints --safe-area 0,47,0,34")
