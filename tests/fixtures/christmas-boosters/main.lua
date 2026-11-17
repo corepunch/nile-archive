@@ -17,6 +17,20 @@ function game.frame(dt)
     frame(dt)
     ticks = ticks + 1
     if ticks == 1 then
+        local boxes = R.town.header_form.boxes
+        assert(boxes.leading and boxes.cap3 and boxes.cap4 == nil, "the board shows Moves and only three resources")
+        local previous = boxes.leading
+        for slot = 1, 3 do
+            local box = boxes["cap" .. slot]
+            local icon_center = R.town.resource_targets[slot]
+            assert(box.x >= previous:max().x and box:center().y == boxes.leading:center().y,
+                "resource counters follow Moves on the same line")
+            assert(icon_center and box:contains(icon_center), "matched resources land on their counter")
+            previous = box
+        end
+        assert(boxes.menu.w == boxes.menu.h and boxes.menu:center().y == boxes.leading:center().y
+            and boxes.menu.x >= previous:max().x and boxes.menu:max().x <= app.screen():max().x,
+            "Pause fits in the same row with its square aspect")
         assert(#R.g.tool_slots == 4, "four boosters are visible")
         local first = R.board_tool_bounds(0)
         local last = first

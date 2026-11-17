@@ -585,10 +585,10 @@ buttons without captions; choosing one names it and its effect in the toast.
 
 ## Expedition header
 
-The campaign draws the same town wallet, lives, stars and Settings in both
-views. The board adds a separate Moves medallion, with its existing low-move
-state. The three resource icons show pending earnings in that same layout;
-flights land on the matching wallet icon. See the [current review](review/blue-plaque-campaign/README.md).
+The campaign board uses the shared header row for Moves, Coins, Supplies,
+Food and Pause. The Moves medallion shows its low-move state when needed.
+Resource counts include pending earnings, and matched pieces land on their
+currency icons. [Current board](screenshots/bonus-toolbar-phone.jpg)
 
 The earlier jade `signboard` is a static backplate packed in `data/match3-hud.png`.
 Moves, goal counts and Settings share its face. A green check replaces a

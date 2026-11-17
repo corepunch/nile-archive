@@ -475,12 +475,15 @@ function G.bind(R, over)
         end
     end
 
-    -- The town's wallet capsules (engine/town.lua lays them out).
-    function R.header_capsules()
+    -- Campaign boards use the shared wallet row's width for each currency.
+    function R.header_capsules(board)
         local currencies = R.currency_capsules and R.currency_capsules(R.prog.wallet)
         if currencies then
-            for i, cap in ipairs(currencies) do cap.slot = cap.slot or i end
-            if W.capsules.currencies_only then return currencies end
+            for i, cap in ipairs(currencies) do
+                cap.slot = cap.slot or i
+                if board then cap.width = nil end
+            end
+            if board or W.capsules.currencies_only then return currencies end
         end
         local remaining = math.max(0, math.ceil((R.prog.life_at or 0) - app.clock()))
         local lives = (R.prog.lives or rules.LIVES) == rules.LIVES and W.capsules.lives_full

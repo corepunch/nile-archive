@@ -6,7 +6,6 @@
     "height": 32,
     "gap": 18,
     "overhang": 12,
-    "moves_width": 66,
     "menu": {"size": 76, "inset": 7, "y": -2}
   },
   "bottom": {

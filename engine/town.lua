@@ -298,8 +298,9 @@ end
 -- The header is one row, vertically centred: the wallet capsules and the menu
 -- button share a centre line however tall each is. A capsule's node includes
 -- its icon's overhang to the left of the pill.
-function View:header_layout(caps, leading_width)
-    local cfg, s = self.cfg.header, app.screen()
+function View:header_layout(caps, cfg)
+    cfg = cfg or self.cfg.header
+    local s, leading_width = app.screen(), cfg.leading_width
     local menu, oh = self.hooks.menu and cfg.menu, cfg.overhang
     local right = cfg.align == "right"
     local h = menu and menu.size or cfg.height
@@ -322,7 +323,7 @@ function View:header_layout(caps, leading_width)
     local scale = wanted > 0 and num.clamp((band.w - reserved) / wanted, 0, 1) or 1
     key[#key + 1] = scale
     key = table.concat(key, ",")
-    if self.header_key ~= key then
+    if self.header_cfg ~= cfg or self.header_key ~= key then
         local children = {}
         if right then children[1] = {kind = "spacer", grow = 1} end
         if leading_width then
@@ -338,7 +339,7 @@ function View:header_layout(caps, leading_width)
         end
         -- Left-aligned pills let the next icon overhang into the gap.
         self.header_form = ui.form{kind = "row", align = "center", gap = gap, children = children}
-        self.header_key = key
+        self.header_cfg, self.header_key = cfg, key
     end
     local boxes = self.header_form:layout(band, self.hooks.skin)
     if menu then
@@ -348,10 +349,11 @@ function View:header_layout(caps, leading_width)
     return boxes
 end
 
-function View:header(leading_width)
-    local h, cfg, skin = self.hooks, self.cfg.header, self.hooks.skin
-    local caps = h.capsules and h.capsules() or {}
-    local boxes = self:header_layout(caps, leading_width)
+function View:header(caps, cfg)
+    local h, skin = self.hooks, self.hooks.skin
+    cfg = cfg or self.cfg.header
+    caps = caps or (h.capsules and h.capsules()) or {}
+    local boxes = self:header_layout(caps, cfg)
     self.resource_targets = {}
     for k, cap in ipairs(caps) do
         local node = boxes["cap" .. k]

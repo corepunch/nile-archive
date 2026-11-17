@@ -107,6 +107,14 @@ Reproduce draft runtime extraction with `python3 games/christmas-market/tools/pr
 
 The font and its license are inherited unmodified from Relic Rush in `data/fonts/`. Gameplay modules were adapted locally from Relic Rush; its original archaeological paintings are not used in this draft.
 
+## Campaign board header
+
+The board uses the same safe-area header row as Relic Rush. It starts with
+Moves, followed by Gold, Food, Supplies and the round Pause button. Pending
+earnings appear in the three currency counters and matched resources fly
+to their icons. Lives and Christmas Stars appear in the town header.
+[480 × 900 board](screenshots/booster-toolbar.jpg) · [390 × 844 board](screenshots/booster-toolbar-phone.jpg)
+
 ## Campaign booster buttons
 
 The four circular buttons use the same [painted base and five state recipes](../../relic-rush/docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets) as Relic Rush. The [manifest](../art/manifest.json) records the toy hammer and lantern star from the market goods atlas, plus the bomb and rocket from the shared board artwork. The generator fits each silhouette into the same circular socket and packs normal, selected, pressed, hover and engraved disabled states beneath the standalone icons.
