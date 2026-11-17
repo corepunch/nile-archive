@@ -1,6 +1,5 @@
 """Generate the bonus button states from a painted base and the bonus icons."""
 import argparse
-import io
 import json
 import math
 import random
@@ -219,9 +218,14 @@ def pack(spec, root=ROOT, icons=None):
             face = engrave(plate, cut, floor, disabled_style) if state == "disabled" else Image.alpha_composite(plate, icon)
             face.putalpha(base_alpha)
             atlas.paste(face, (x * SLOT_SIZE, y * SLOT_SIZE))
-    output = io.BytesIO()
-    atlas.save(output, format="PNG", optimize=True)
-    return output.getvalue()
+    return atlas
+
+
+def png_matches(path, expected):
+    # PNG compression can differ across platforms even when the pixels match.
+    with Image.open(path) as actual:
+        return (actual.format == "PNG" and actual.mode == expected.mode
+                and actual.size == expected.size and actual.tobytes() == expected.tobytes())
 
 
 def main():
@@ -229,11 +233,11 @@ def main():
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     spec = json.loads(MANIFEST.read_text())["bonus_gems"]
-    path, data = ROOT / spec["runtime"], pack(spec)
+    path, atlas = ROOT / spec["runtime"], pack(spec)
     if args.check:
-        assert path.read_bytes() == data, "Run games/relic-rush/tools/prepare_bonus_gems.py"
+        assert png_matches(path, atlas), "Run games/relic-rush/tools/prepare_bonus_gems.py"
     else:
-        path.write_bytes(data)
+        atlas.save(path, optimize=True)
 
 
 if __name__ == "__main__":

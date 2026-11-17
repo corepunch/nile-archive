@@ -4,7 +4,7 @@ import re
 import struct
 from PIL import Image
 from pathlib import Path
-from prepare_bonus_gems import pack
+from prepare_bonus_gems import pack, png_matches
 
 ROOT = Path(__file__).resolve().parents[1]
 manifest = json.loads((ROOT / "art/board-states/manifest.json").read_text())
@@ -70,7 +70,7 @@ expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 gems = manifest["bonus_gems"]
 assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "button_base", "review"))
-assert (ROOT / gems["runtime"]).read_bytes() == pack(gems), "Bonus gem atlas registration is stale"
+assert png_matches(ROOT / gems["runtime"], pack(gems)), "Bonus gem atlas registration is stale"
 assert gems["rows"] == ["board", *manifest["tool_states"]]
 assert set(gems["button_states"]) == set(manifest["tool_states"])
 declaration = re.search(r"A\.bonus_atlas_order = \{([^}]+)\}", art).group(1)

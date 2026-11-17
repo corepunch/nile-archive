@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Prepare the painted Pause plate and pack four shared campaign actions."""
 import argparse
-import io
 import json
 from pathlib import Path
 import sys
@@ -12,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RELIC = ROOT / "games/relic-rush"
 MANIFEST = ROOT / "art/match3-buttons/manifest.json"
 sys.path.insert(0, str(RELIC / "tools"))
-from prepare_bonus_gems import bevel, pack
+from prepare_bonus_gems import bevel, pack, png_matches
 
 
 def pause_parts(source, box):
@@ -38,11 +37,11 @@ def navigation_glyph(source, box):
     return ink
 
 
-def write(path, data, check):
+def write(path, image, check):
     if check:
-        assert path.read_bytes() == data, f"Stale {path.relative_to(ROOT)}. Run tools/match3_buttons.py"
+        assert png_matches(path, image), f"Stale {path.relative_to(ROOT)}. Run tools/match3_buttons.py"
     else:
-        path.write_bytes(data)
+        image.save(path, optimize=True)
 
 
 def main():
@@ -53,9 +52,7 @@ def main():
     recipe = json.loads((RELIC / "art/board-states/manifest.json").read_text())["bonus_gems"]
     with Image.open(ROOT / spec["source"]) as source:
         base, pause = pause_parts(source, spec["pause_glyph"])
-    encoded = io.BytesIO()
-    base.save(encoded, format="PNG", optimize=True)
-    write(ROOT / spec["base"], encoded.getvalue(), args.check)
+    write(ROOT / spec["base"], base, args.check)
     glyphs = {"pause": pause}
     for name, box in spec["navigation_crops"].items():
         with Image.open(ROOT / spec["navigation_dir"] / f"{name}-normal.png") as source:

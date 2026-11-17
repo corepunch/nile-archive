@@ -10,7 +10,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 RELIC = ROOT.parent / "relic-rush"
 sys.path.insert(0, str(RELIC / "tools"))
-from prepare_bonus_gems import pack
+from prepare_bonus_gems import pack, png_matches
 
 
 def main():
@@ -35,11 +35,11 @@ def main():
                 with Image.open(ROOT / f"data/board/{frame['atlas']}.png") as board:
                     icons.append(board.crop((x, y, x + w, y + h)))
     path = ROOT / spec["runtime"]
-    data = pack({**recipe, **spec}, root=RELIC, icons=icons)
+    atlas = pack({**recipe, **spec}, root=RELIC, icons=icons)
     if args.check:
-        assert path.read_bytes() == data, f"Run {spec['generator']}"
+        assert png_matches(path, atlas), f"Run {spec['generator']}"
     else:
-        path.write_bytes(data)
+        atlas.save(path, optimize=True)
 
 
 if __name__ == "__main__":
