@@ -21,12 +21,35 @@ end
 -- localized copy, skin colors, and records with stable keys via set_items.
 E.CATALOGUE_ROW, E.CATALOGUE_SLIM, E.EXPEDITION_ROW = 84, 56, 62
 
+-- The subtitle value also owns its row's visibility. Hidden rows take no gap.
+local function header_title(title)
+    assert(type(title) == "string" and title:find("%S"), "popup title must contain text")
+    return title
+end
+
+local function header_subtitle(text)
+    assert(text == nil or type(text) == "string", "popup subtitle must be text")
+    if text and text:find("%S") then return text end
+end
+
+function E.popup_header(title, subtitle)
+    return {kind="column",id="header",panel=true,role="popup_header",padding={12,8,12,10},gap=2,children={
+        {kind="label",id="title",value=header_title(title),wrap=true,em=31,text_style="gold"},
+        {kind="label",id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
+            wrap=true,em=14,text_style="cream"},
+    }}
+end
+
+function E.set_popup_header(form, title, subtitle)
+    form:set("title", header_title(title)):set("subtitle", header_subtitle(subtitle))
+end
+
 -- Full-screen sheets under the wallet row. One building per row: the whole
 -- row is the button (id 'pick') and paint_row draws its art, name, price and
 -- action. A record marked slim (already built) takes a short row.
 function E.catalogue_form(title, close, paint_row)
     return ui.form{kind='column',panel=true,padding={14,12,14,14},gap=8,children={
-        {kind='label',text=title,height=34,em=28},
+        E.popup_header(title),
         {kind='row',height=38,gap=8,children={
             {kind='button',id='category_prev',text='<',width=42,em=22},
             {kind='label',id='category',grow=1,em=21},
@@ -46,7 +69,7 @@ end
 -- draws its number, name, note and action.
 function E.expedition_form(title, close, paint_level)
     return ui.form{kind='column',panel=true,padding={14,12,14,14},gap=8,children={
-        {kind='label',text=title,height=34,em=28},
+        E.popup_header(title),
         {kind='list',id='levels',scroll=true,grow=1,gap=6,item=function(e)
             return {kind='overlay',height=E.EXPEDITION_ROW,children={
                 {kind='custom',paint=function(box) paint_level(box, e) end},
@@ -473,8 +496,7 @@ end
 
 function E.guide_form(copy, guide_icon)
     return ui.form{kind="column",panel=true,padding=20,children={
-        {kind="label",text=copy.title,height=44,em=34},
-        {kind="label",text=copy.instructions,height=26,em=13,text_style="white"},
+        E.popup_header(copy.title, copy.instructions),
         {kind="spacer",height=14},
         {kind="list",id="topics",scroll=true,height=520,gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
@@ -496,8 +518,7 @@ end
 function E.pause_form(guide_label, quit_label, leaderboard_label)
     return ui.form{
         root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
-            {kind="label",text="Settings",height=44,em=34},
-            {kind="label",id="level",height=22,em=16,text_style="cream"},
+            E.popup_header("Settings"),
             {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
                 {kind="checkbox",id="sound",text="SOUND",height=50},
                 {kind="checkbox",id="motion",text="REDUCE MOTION",height=50},

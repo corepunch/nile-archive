@@ -44,7 +44,7 @@ return ui.skin{
             {fill = "#EFCC87", radius = 16, inset = 2},
             {fill = "#FFEFBC", radius = 13, inset = 5},
         }}, variants = {
-                result_heading = {normal = {layers = {
+                popup_header = {normal = {layers = {
                     {fill = "#4D3A1F", radius = 16, offset = {0, 4}},
                     {fill = "#1F5345", radius = 16},
                     {fill = "#2C6C54", radius = 13, inset = 3},

@@ -339,7 +339,7 @@ by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
 The shared match-3 popup renderer also requires a column-root form. It owns
 measurement, centering, hit testing and dismissal for Results, Settings, the
 Guide, restart confirmation, building details, the out-of-moves prompt, region
-unlock and finale. Games supply data or a vertical form. Results use three equal
+unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form. Results use three equal
 columns in one row. Optional content participates in the measured stack only
 when visible, so the Collect button follows the last row. The building shop,
 expeditions, story choice and leaderboard use the same root contract through

@@ -119,7 +119,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The result card fits its contents. Score, a row of three resource totals, an available restoration and Collect stack vertically. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
+The result card fits its contents. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Score, a row of three resource totals, an available restoration and Collect stack vertically. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 

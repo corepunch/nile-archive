@@ -43,7 +43,6 @@ return {
     pause = {
         guide = "MARKET GUIDE",
         quit = "QUIT TO MARKET",
-        town = "Your Christmas market",
         leaderboard = "LEADERBOARD",
     },
     leaderboard = {

@@ -46,8 +46,8 @@ G.DEFAULTS = {
     capsules = {
         notes = {"", "Gold buys buildings.", ""},
     },
-    pause = {guide = "GUIDE", quit = "QUIT", town = "Your town", leaderboard = "LEADERBOARD"},
-    confirm = {title = "Restart this level?", body = "The board starts over: moves, goals and tools reset. Retrying is always free.",
+    pause = {guide = "GUIDE", quit = "QUIT", leaderboard = "LEADERBOARD"},
+    confirm = {title = "Restart this level?", body = "Restarting discards the resources you matched on this board.",
                restart = "RESTART", cancel = "KEEP PLAYING"},
     failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Look for longer lines or use a tool.",
               retry = "TRY AGAIN", town = "VISIT TOWN"},
@@ -598,16 +598,14 @@ function G.bind(R, over)
     local popups = {}
     local function popup(id, form, config)
         assert(form.root.kind == "column" and not popups[id], "popup requires a unique vertical form")
+        assert(form.root.children[1] and form.root.children[1].role == "popup_header", "popup requires a shared header")
         popups[id] = config
         config.form = form
     end
 
     function R.register_result(model)
         local form = ui.form{kind="column",panel=true,padding={21,20,21,23},gap=15,children={
-            {kind="column",panel=true,role="result_heading",padding={12,8,12,10},gap=2,children={
-                {kind="label",id="title",wrap=true,em=31,text_style="gold"},
-                {kind="label",id="subtitle",wrap=true,em=14,text_style="cream"},
-            }},
+            match3.popup_header("Results"),
             {kind="column",gap=1,paint_group={.24,.32,9},children={
                 {kind="label",text="SCORE",em=13,text_style="cream"},
                 {kind="label",id="score",em=44,text_style="gold"},
@@ -641,7 +639,8 @@ function G.bind(R, over)
             if not d.fresh then return end
             local data = model()
             local next_step = data.next_step
-            form:set("title", data.title):set("subtitle", data.subtitle):set("claim", data.action)
+            match3.set_popup_header(form, data.title, data.subtitle)
+            form:set("claim", data.action)
             assert(form:set_items("resources", data.resources))
             form.values.show_next = next_step ~= nil
             form.values.show_next_icon = next_step and next_step.icon ~= nil
@@ -663,7 +662,7 @@ function G.bind(R, over)
     -- The building card: a story building or a shop item, to build or move.
     local wonder_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
-            {kind="label", id="name", height=44, em=34},
+            match3.popup_header("Building details"),
             {kind="image", id="sprite", height=205},
             {kind="label", id="about", wrap=true, em=22, text_style=PAL_CREAM},
             {kind="label", id="unlock", wrap=true, em=17, text_style=PAL_GOLD, visible_field="show_unlock"},
@@ -683,7 +682,7 @@ function G.bind(R, over)
             {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
         }},
         bindings={
-            {id="name",field="name",readonly=true},{id="sprite",field="sprite",type="texture",readonly=true},
+            {id="sprite",field="sprite",type="texture",readonly=true},
             {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
         },
     }
@@ -697,7 +696,8 @@ function G.bind(R, over)
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
         local movable = built and not fixed
-        local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=journey.building_about(i, R.prog.level, w.about),
+        match3.set_popup_header(wonder_form, w.name)
+        local ok, message = wonder_form:push{sprite=w.sprite, about=journey.building_about(i, R.prog.level, w.about),
             action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or W.card.back}
         assert(ok, message)
         local show_price = not built and (can_build or R.currency_prices and w.needs and
@@ -717,10 +717,11 @@ function G.bind(R, over)
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
-        local level = R.on_island and W.pause.town or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
+        local level
+        if not R.on_island then level = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name) end
         assert(pause_form:push(R))
         pause_form.values.expedition = not R.on_island
-        pause_form:set("level", level)
+        match3.set_popup_header(pause_form, "Settings", level)
     end, handle=function(event)
         local action = event.id
         if event.kind == "change" then
@@ -737,8 +738,7 @@ function G.bind(R, over)
     end})
 
     local confirm_form = ui.form{kind="column",panel=true,padding={36,22,36,18},gap=14,children={
-        {kind="label",text=W.confirm.title,wrap=true,em=28},
-        {kind="label",text=W.confirm.body,wrap=true,em=18,text_style=PAL_CREAM},
+        match3.popup_header(W.confirm.title, W.confirm.body),
         {kind="button",id="confirm",text=W.confirm.restart,height=50},
         {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
     }}
@@ -750,8 +750,7 @@ function G.bind(R, over)
 
     local failed = W.failed
     popup(R.OV_FAILED, ui.form{kind="column",panel=true,padding={32,24,32,22},gap=14,children={
-        {kind="label",text=failed.title,wrap=true,em=32,text_style=PAL_GOLD},
-        {kind="label",text=failed.subtitle,wrap=true,em=16,text_style=PAL_WHITE},
+        match3.popup_header(failed.title, failed.subtitle),
         {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
         {kind="button",id="retry",text=failed.retry,height=50},
         {kind="button",id="town",text=failed.town,height=42,role="secondary"},
@@ -761,8 +760,7 @@ function G.bind(R, over)
 
     local region = W.zone
     local zone_form = ui.form{kind="column",panel=true,padding={32,24,32,20},gap=14,children={
-        {kind="label",id="name",wrap=true,em=34,text_style=PAL_GOLD},
-        {kind="label",text=region.subtitle,wrap=true,em=16,text_style=PAL_CREAM},
+        match3.popup_header("Region"),
         {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
         {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
         {kind="button",id="open",height=47},
@@ -771,8 +769,8 @@ function G.bind(R, over)
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
         local zone = R.island.zones[z + 1]
-        zone_form:set("name", zone.name)
-            :set("cleared", region.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]))
+        match3.set_popup_header(zone_form, zone.name, region.subtitle)
+        zone_form:set("cleared", region.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]))
             :set("open", R.island:zone_available(z, R.prog.wallet) and region.open or region.wait)
     end, handle=function(event)
         local z = R.zone_card
@@ -785,7 +783,7 @@ function G.bind(R, over)
         R.overlay = R.OV_NONE
     end})
 
-    local finale = {{kind="label",text=W.finale.title,wrap=true,em=31,text_style=PAL_GOLD}}
+    local finale = {match3.popup_header(W.finale.title)}
     for _, line in ipairs(W.finale.lines) do
         finale[#finale+1] = {kind="label",text=line[1],wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
     end
@@ -1114,7 +1112,7 @@ function G.bind(R, over)
     end
 
     function R.open_story_choice(beat, preview)
-        local children = {{kind="label", text=beat.prompt, wrap=true, em=27}}
+        local children = {match3.popup_header(beat.prompt)}
         for index, option in ipairs(beat.choices) do
             children[#children + 1] = {kind="button", id=tostring(index), text=option.label, height=54}
         end
@@ -1299,7 +1297,7 @@ function G.bind(R, over)
     -- "leaderboard" block turns it on: `board` holds the boards cleared,
     -- `level_board` (a format with the level number, e.g. "level_%02d") each
     -- expedition's best score. Scores are reported when a reward is claimed.
-    local boards = require("leaderboard").boards{skin = skin, width = 400, texts = W.leaderboard and W.leaderboard.texts}
+    local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, texts = W.leaderboard and W.leaderboard.texts}
     function R.submit_scores()
         local c = W.leaderboard
         if not c then return end

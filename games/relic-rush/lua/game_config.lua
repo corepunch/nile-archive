@@ -38,7 +38,7 @@ return {
         quit = "Your board is saved. Tap LEVEL %d or Expeditions to continue.",
     },
     capsules = {show = {"coins", "supplies", "food"}},
-    pause = {guide = "EXPLORER'S GUIDE", quit = "QUIT TO ISLAND", town = "Your valley", leaderboard = "LEADERBOARD"},
+    pause = {guide = "EXPLORER'S GUIDE", quit = "QUIT TO ISLAND", leaderboard = "LEADERBOARD"},
     leaderboard = {
         board = "stars",
         title = "Top explorers",

@@ -2,6 +2,22 @@
 local E=require('match3')
 local H=require('support')
 local t=H.suite('engine match3 factory and flags')
+t:case('popup header measures only visible text',function()
+    t:check(not pcall(E.popup_header, "  "), "a popup requires a nonblank title")
+    local form = ui.form{kind="column",children={E.popup_header("Settings")}}
+    local function height()
+        local _, h = form:measure(300)
+        form:layout(rect(0,0,300,h))
+        return h
+    end
+    local title_height = height()
+    t:check(not form.boxes.subtitle, "a title alone has no subtitle box")
+    E.set_popup_header(form, "Settings", "Temple steps")
+    t:check(height() > title_height and form.boxes.subtitle, "adding context adds a measured row")
+    E.set_popup_header(form, "Settings", "  ")
+    t:check(height() == title_height and not form.boxes.subtitle, "removing context also removes its gap")
+    t:check(not pcall(E.set_popup_header, form, nil), "an updated title must also contain text")
+end)
 local function config(flags)
     return {flags=flags, radius=4, colors=6, match_min=4,
         levels={{name='Test',moves=20,score=1000,relics=3,chains=0,ice=0}},
