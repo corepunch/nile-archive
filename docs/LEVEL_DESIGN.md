@@ -228,11 +228,12 @@ Empty template (all 108 cells plain):
   slots straight above each cell closed, fills by sliding: each piece drops
   to the next cell down the slant. Make tunnels at least two cells wide where
   they carry tablets, so every tablet still has two lines of three.
-- **A gate must be breakable.** A chain or ice that gates cells must sit on a
-  line of three whose other cells are filled while it holds. Ice at the foot
-  of a one-cell spur, whose only line runs through the empty cell it gates,
-  waits for pieces only it can let in: the board never ends. The validator
-  checks this.
+- **A gate must be breakable.** A chain or ice must sit on a line of three
+  whose other cells fill while it holds, now or once an earlier gate has
+  broken; gates in series (two vault doors) are fine. Ice at the foot of a
+  one-cell spur, whose only line runs through the empty cell it gates, waits
+  for pieces only it can let in: the board never ends. The validator breaks
+  the gates in order and rejects any that never break.
 - **No separate parts.** The validator rejects a board that falls apart. A
   small tower joined by one cell still refills only through that cell, so give
   towers and wings a two-cell joint.
