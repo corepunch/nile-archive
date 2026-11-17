@@ -95,7 +95,10 @@ and turn each full meter into one charge. The `tool_meter` keys identify
 unlocked slots. A campaign can supply `tool_slots` as an ordered list of
 descriptors with an `action`, `icon`, `rank` and `effect` (targeting hint).
 The slot index owns the meter and the target geometry across descriptor
-changes. `bonus_size` sets the preferred button width in that toolbar.
+changes. `match3.TOOL_SIZE` (86 points) is the toolbar's button width. The
+slots and Pause share one row with 4-point gaps and margins, and narrower
+screens shrink all five evenly. At 480 points a button's glyph draws about a
+fifth larger than a board piece; keep it at least piece-sized everywhere.
 Relic Rush uses `single_charge_tools` to cap a slot at one use.
 Christmas Market keeps a count and a remainder. Both games persist the
 inventory through `update_bonus_charges` as waves resolve. Tool hits still

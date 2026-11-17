@@ -10,7 +10,7 @@ local function check_layout(g)
     local last = first
     for i in ipairs(g.tool_slots) do
         local box = R.board_tool_bounds(i - 1)
-        assert(box.y == first.y and box.w <= 80 and box.w >= 64 and app.screen():contains(box:center()),
+        assert(box.y == first.y and box.w <= require("match3").TOOL_SIZE and box.w >= 64 and app.screen():contains(box:center()),
             "the four large buttons stay on one on-screen line")
         if i > 1 then
             assert(box.x >= last:max().x and box.x - last:max().x <= 10,

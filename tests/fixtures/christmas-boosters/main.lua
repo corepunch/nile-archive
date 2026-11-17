@@ -44,7 +44,7 @@ function game.frame(dt)
         local last = first
         for slot = 0, 3 do
             local box = R.board_tool_bounds(slot)
-            assert(box.w <= 80 and box.w >= 64 and box.w == box.h and box.y == first.y,
+            assert(box.w <= require("match3").TOOL_SIZE and box.w >= 64 and box.w == box.h and box.y == first.y,
                 "boosters share one row of large square art cells")
             assert(box.x >= 0 and box:max().x <= app.screen().w and box:max().y <= app.screen().h,
                 "the complete toolbar stays on screen")

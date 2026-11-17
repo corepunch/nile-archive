@@ -145,7 +145,9 @@ function E.load_action_buttons(skin, hud)
     for key in pairs(action_atlas.frames) do skin.images[key], hud[key] = art[key], art[key] end
 end
 
-E.TOOL_SIZE = 76
+-- Toolbar buttons: their glyphs draw about a fifth larger than board pieces.
+-- Five buttons and their gaps fit 480 points; narrower screens shrink them.
+E.TOOL_SIZE = 86
 local GOAL_W, GOAL_GAP = 70, 16
 
 function E.tool_state(charges, selected, inside, down, started_inside, hover, idle)
@@ -1505,7 +1507,7 @@ function E.new(config)
     -- compact tray at the bottom, below the centred playable field.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
-    local BONUS_GAP, BONUS_MARGIN = 8, 8
+    local BONUS_GAP, BONUS_MARGIN = 4, 4   -- the round button art carries its own clear border
     local neutral_hud = app.arg("default-match3")
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
     local env = M.envelope

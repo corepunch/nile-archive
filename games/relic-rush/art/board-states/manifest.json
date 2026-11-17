@@ -1721,7 +1721,7 @@
         "star",
         "recharge"
       ],
-      "button_size": 76,
+      "button_size": 86,
       "pause": true,
       "rank_label": "Level II overlays a small II badge on its generated button.",
       "shape": "circle"
