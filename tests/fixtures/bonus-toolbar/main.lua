@@ -5,15 +5,15 @@ local init, frame = game.init, game.frame
 local ticks, tool, swap_a, swap_b, took_charge = 0
 
 local function check_layout(g)
-    assert(#g.tool_order == 6, "all bonuses keep their toolbar slots")
-    local first = R.board_tool_bounds(g.tool_order[1] - 1)
+    assert(#g.tool_slots == 4, "all bonuses keep their toolbar slots")
+    local first = R.board_tool_bounds(0)
     local last = first
-    for i, index in ipairs(g.tool_order) do
-        local box = R.board_tool_bounds(index - 1)
-        assert(box.y == first.y and box.w >= 72 and app.screen():contains(box:center()),
-            "the six full-size buttons stay on one on-screen line")
+    for i in ipairs(g.tool_slots) do
+        local box = R.board_tool_bounds(i - 1)
+        assert(box.y == first.y and box.w >= 100 and app.screen():contains(box:center()),
+            "the four large buttons stay on one on-screen line")
         if i > 1 then
-            assert(box.x >= last:max().x and box.x - last:max().x <= 6,
+            assert(box.x >= last:max().x and box.x - last:max().x <= 10,
                 "adjacent buttons stay tightly spaced")
         end
         last = box
@@ -40,7 +40,7 @@ end
 
 local function prepare_flight(g)
     tool, took_charge = g.bonus.tool, false
-    assert(g.tool_meter[1] == nil, "locked bonuses keep their toolbar slots")
+    assert(g.tool_meter[4] == nil, "locked bonuses keep their toolbar slots")
     for a = 0, rules.CELLS - 1 do
         for d = 0, 2 do
             local b = rules.hex_neighbor(a, d)
@@ -48,7 +48,7 @@ local function prepare_flight(g)
                 local copy, wave = rules.game_copy(g), rules.new_match()
                 if rules.game_swap(copy, a, b, wave) then
                     rules.game_apply(copy, wave)
-                    if copy.tool_meter[tool] == 9 then swap_a, swap_b = a, b; return end
+                    if copy.tool_meter[tool] == g.bonus.amount * 3 then swap_a, swap_b = a, b; return end
                 end
             end
         end
@@ -66,28 +66,29 @@ function game.init()
         return prepare_flight(g)
     end
     tool = nil
-    assert(#g.tool_order == 6)
+    assert(#g.tool_slots == 4)
     g.tools[1], g.tool_meter[1] = 1, g.tool_threshold
-    g.tools[4], g.tool_meter[4] = 1, g.tool_threshold
-    g.tool_meter[2], g.tool_meter[6] = 6, 12
+    g.tools[2], g.tool_meter[2] = 1, g.tool_threshold
+    g.tool_meter[3], g.tool_meter[4] = g.tool_threshold // 3, g.tool_threshold * 2 // 3
 end
 
 local function review_flight()
-    if ticks == 2 then app.inject_click(R.board_tool_bounds(0):center()) end
+    if ticks == 2 then app.inject_click(R.board_tool_bounds(3):center()) end
     if ticks == 6 then
-        assert(R.tool == -1 and R.g.tool_meter[1] == nil, "a locked bonus cannot be selected")
+        assert(R.tool == -1 and R.g.tool_meter[4] == nil, "a locked bonus cannot be selected")
         app.inject_click(R.cell_pos(swap_a))
     end
     if ticks == 10 then app.inject_click(R.cell_pos(swap_b)) end
     local actual = R.g.tool_meter[tool]
     local visible = R.bonus_display_charge(tool)
+    local triple = R.g.bonus.amount * 3
     if actual > 0 and not took_charge then
         took_charge = true
-        assert(actual == 9 and visible == (R.reduced_motion and 9 or 0),
-            "the first triple earns nine points and its artwork fills on arrival")
+        assert(actual == triple and visible == (R.reduced_motion and triple or 0),
+            "the first triple fills the socket as the gems arrive")
     end
     if ticks == 62 then
-        assert(took_charge and visible >= 9, "the matched triple must land and reveal all nine points")
+        assert(took_charge and visible >= triple, "the matched triple must land and reveal its charge")
     end
 end
 
@@ -98,12 +99,12 @@ function game.frame(dt)
     if tool then return review_flight() end
     if ticks == 3 then app.inject_click(R.board_tool_bounds(0):center()) end
     if ticks == 7 then
-        assert(R.tool == 0 and R.g.tools[1] == 1, "selecting a stored Hammer must leave its charge intact")
+        assert(R.tool == 0 and R.g.tools[1] == 1, "selecting a stored Dynamite must leave its charge intact")
         if app.arg("spend-bonus") then app.inject_click(R.cell_pos(rules.hex_center())) end
     end
     if ticks == 11 and app.arg("spend-bonus") then
-        assert(R.g.tools[1] == 0 and R.g.tool_meter[1] == 0 and R.g.tools[4] == 1,
-            "using Hammer must drain just the selected bonus")
+        assert(R.g.tools[1] == 0 and R.g.tool_meter[1] == 0 and R.g.tools[2] == 1,
+            "using Dynamite must drain just the selected bonus")
     end
 end
 

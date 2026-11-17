@@ -128,7 +128,7 @@ local goal_icon_adjustments = {
     ["stone-1"] = {scale = .9},
 }
 
-function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
+function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     local rgba, PI = color, math.pi
     local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
     function R.goal_entries()
@@ -349,15 +349,16 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
 
     function R.draw_board_tools(inp)
         if R.intro and R.intro:arrive(.05, 2.8, .58) <= 0 then return end
-        local gems = R.g.single_charge_tools
-        for i, icon in ipairs(gems and bonus_art or tool_art) do
+        local slots = R.g.tool_slots
+        for i, entry in ipairs(slots or tool_art) do
+            local icon = slots and entry.icon or entry
             local k = i - 1
             local meter = R.g.tool_meter and R.g.tool_meter[i]
-            if not gems and R.g.tool_meter and not meter then goto next_tool end
+            if not slots and R.g.tool_meter and not meter then goto next_tool end
             local r = R.board_tool_bounds(k)
             local x, y = r:center().x, r.y
             local charges = R.g.tools[i]
-            if gems and meter then
+            if slots and meter then
                 meter = R.bonus_display_charge(i)
                 charges = meter // R.g.tool_threshold
             end
@@ -365,10 +366,10 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
                                        inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover,
                                        R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT)
             -- The tools spring up from the bottom edge one by one; they take taps at rest.
-            local rise = R.intro and R.intro:arrive(.14 + (gems and 0 or k * .07), 3, .48) or 1
+            local rise = R.intro and R.intro:arrive(.14 + (slots and 0 or k * .07), 3, .48) or 1
             local up = vec2(0, (1 - rise) * 120)
             local drawn = r:offset(up)
-            if gems then
+            if slots then
                 if charges > 0 then
                     gfx.image(R.hud_art[icon .. "-" .. (state == "disabled" and "normal" or state)], drawn, color.WHITE)
                 else
@@ -380,6 +381,11 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments, bonus_art)
                         gfx.image(R.hud_art[icon .. "-normal"], drawn, color.WHITE)
                         gfx.unclip()
                     end
+                end
+                if entry.rank == 2 then
+                    local rank = rect(drawn:max().x - 33, drawn.y + 10, 23, 20)
+                    gfx.round_rect(rank, 5, rgba(59, 41, 23, 242))
+                    R.say("II", rank, 14, PAL_CREAM)
                 end
             else
                 gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
@@ -780,6 +786,7 @@ function E.new(config)
     end
 
     function M.game_matches(g, m, preferred, alternate)
+        m.pierce_kind = nil
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
         m.match_lengths = g.resource_multipliers and {}
@@ -836,6 +843,7 @@ function E.new(config)
     function M.game_swap(g, a, b, m)
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
         swap_tiles(g, a, b)
+        m.pierce_kind = nil
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
         local sa, sb = g.tiles[a].special, g.tiles[b].special
@@ -888,6 +896,7 @@ function E.new(config)
     local game_swap = M.game_swap
     function M.game_activate(g,cell,m)
         if g.won or g.lost or not cell_active(g,cell) or locked(g,cell) or g.tiles[cell].special==NORMAL then return false end
+        m.pierce_kind = nil
         m.mask,m.make,m.direct,m.ordinary,m.hits={[cell]=true},{},{[cell]=true},{},1
         m.consumed,m.flights,m.spread={},{},{}
         m.carrycarpet=g.hs and (g.hs.cells[cell] or {}).carpet or g.carpet and (g.carpet[cell] or 0) > 0 or false
@@ -895,10 +904,17 @@ function E.new(config)
         return true
     end
 
+    local function hit_gem_protection(g, i)
+        local layers = g.ice[i] > 0 and g.ice or g.chain
+        if layers[i] == 0 then return false end
+        layers[i], g.obstacles, g.score = layers[i] - 1, g.obstacles - 1, g.score + 20
+        return true
+    end
+
     -- Clear one wave, fire specials; returns the relics cleared.
     function M.game_apply(g, m)
-        local fired = {}
-        m.activations, m.bonus_charge_by_cell = {}, nil
+        local fired, pierce_kind = {}, m.pierce_kind
+        m.activations, m.bonus_charge_by_cell, m.pierce_kind = {}, nil, nil
         m.direct, m.ordinary = m.direct or {}, m.ordinary or {}
         local more = true
         while more do   -- specials hit by the wave fire, possibly hitting more specials
@@ -944,11 +960,8 @@ function E.new(config)
                     g.carpet[i], g.carpeted = 1, g.carpeted + 1
                 end
                 if m.mask[i] and not protected[i] and not solid(g, i) and g.tiles[i].kind ~= M.DELIVERY then
-                    if g.ice[i] > 0 then
-                        g.ice[i], g.obstacles, g.score = g.ice[i] - 1, g.obstacles - 1, g.score + 20
-                    elseif g.chain[i] > 0 then
-                        g.chain[i], g.obstacles, g.score = g.chain[i] - 1, g.obstacles - 1, g.score + 20
-                    else
+                    local absorbed = hit_gem_protection(g, i)
+                    if not absorbed or (g.tiles[i].kind == pierce_kind and equal(g, i, i) and not locked(g, i)) then
                         if g.oil and g.oil[i] > 1 then   -- a double tablet loses one layer per hit
                             g.oil[i], g.score = g.oil[i] - 1, g.score + 30
                         elseif g.oil and g.oil[i] > 0 then
@@ -1346,9 +1359,10 @@ function E.new(config)
             g.resource_multipliers = loadout.multipliers
             g.tool_threshold, g.tool_meter = loadout.tool_threshold, loadout.tool_meter
             g.single_charge_tools = loadout.single_charge_tools
-            g.tool_order = loadout.tool_order
+            g.tool_slots = loadout.tool_slots
             g.tools = {}
-            for i = 1, 3 + #(config.extra_tools or {}) do
+            local count = g.tool_slots and #g.tool_slots or 3 + #(config.extra_tools or {})
+            for i = 1, count do
                 g.tools[i] = g.single_charge_tools and (g.tool_meter[i] or 0) // g.tool_threshold or 0
             end
         elseif l.omit_kind ~= nil then
@@ -1518,86 +1532,98 @@ function E.new(config)
     end
 
     local extra_tools = config.extra_tools or {}
+    local default_tools = {"hit", "blast", "sunburst"}
+    local function tool_slot(g, tool)
+        return g and g.tool_slots and g.tool_slots[tool + 1]
+    end
     local function tool_ready(g, tool)
-        return flags & E.NO_TOOLS == 0 and tool >= 0 and tool < 3 + #extra_tools
+        local count = g.tool_slots and #g.tool_slots or #default_tools + #extra_tools
+        return flags & E.NO_TOOLS == 0 and tool >= 0 and tool < count
             and (g.tools[tool + 1] or 0) > 0 and not g.won and not g.lost
     end
-    -- Extra tools that act on the whole board when tapped. "moves" adds
-    -- config.extra_moves moves; "charge" adds half a use to every other
-    -- unlocked bonus socket.
     local INSTANT = {shuffle=true, lightning=true, moves=true, charge=true}
-    function M.game_tool_effect(tool) return extra_tools[tool - 2] end
-    function M.game_tool_untargeted(tool)
-        return INSTANT[extra_tools[tool - 2]] == true
+    function M.game_tool_effect(tool, g)
+        local descriptor = tool_slot(g, tool)
+        return descriptor and descriptor.action or default_tools[tool + 1] or extra_tools[tool - 2]
     end
-    local function charge_others(g, tool)
-        if not g.tool_meter or not g.single_charge_tools then return false end
+    function M.game_tool_untargeted(tool, g)
+        return INSTANT[M.game_tool_effect(tool, g)] == true
+    end
+    local function charge_others(g, tool, amount)
         local charged = false
         for i, meter in pairs(g.tool_meter) do
             if i ~= tool + 1 and meter < g.tool_threshold then
-                g.tool_meter[i] = math.min(g.tool_threshold, meter + g.tool_threshold // 2)
+                g.tool_meter[i] = math.min(g.tool_threshold, meter + amount)
                 g.tools[i] = g.tool_meter[i] // g.tool_threshold
                 charged = true
             end
         end
         return charged
     end
-    local function target_tool(g, tool, cell, m)
-        if not cell or not cell_active(g, cell) then return false end
-        if tool == 0 then m.mask[cell], m.direct[cell] = true, true
-        elseif tool == 1 then mark_area(g, m, cell, 1)
-        elseif extra_tools[tool - 2] == "row" then mark_line(g, m, cell, 0)
-        elseif config.sunburst_targets and g.tool_meter and g.tool_meter[3] then
-            m.mask = config.sunburst_targets(g, cell, CELLS)
-        elseif flags & E.COLOR_TOOL ~= 0 then
-            if not equal(g, cell, cell) then return false end
-            mark_color(g, m, g.tiles[cell].kind)
-        else for z = 0, 2 do mark_line(g, m, cell, z) end end
-        return true
-    end
-    local function lightning(g, m)
+    local function lightning(g, m, limit, random)
         local candidates = {}
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and g.tiles[i].kind ~= M.DELIVERY then
+            if cell_active(g, i) and not m.mask[i] and g.tiles[i].kind ~= M.DELIVERY then
                 candidates[#candidates + 1] = i
             end
         end
-        for i = 1, math.min(20, #candidates) do
-            local pick = i + randn(g, #candidates - i + 1)
+        for i = 1, math.min(limit, #candidates) do
+            local pick = i + randn(random, #candidates - i + 1)
             candidates[i], candidates[pick] = candidates[pick], candidates[i]
             local cell = candidates[i]
             m.mask[cell], m.direct[cell] = true, true
         end
     end
+    local function target_tool(g, effect, cell, m, preview)
+        if not cell or not cell_active(g, cell) then return false end
+        if effect == "hit" then m.mask[cell], m.direct[cell] = true, true
+        elseif effect == "blast" then mark_area(g, m, cell, 1)
+        elseif effect == "row" or effect == "row_lightning" then
+            mark_line(g, m, cell, 0)
+            if effect == "row_lightning" then
+                lightning(g, m, 20 - count_hits(m), preview and {rng=g.rng} or g)
+            end
+        elseif effect == "sunburst" and config.sunburst_targets and g.tool_meter and g.tool_meter[3] then
+            m.mask = config.sunburst_targets(g, cell, CELLS)
+        elseif effect == "color" or effect == "color_pierce" or flags & E.COLOR_TOOL ~= 0 then
+            if not equal(g, cell, cell) then return false end
+            local kind = g.tiles[cell].kind
+            mark_color(g, m, kind)
+            if effect == "color_pierce" then m.pierce_kind = kind end
+        else for z = 0, 2 do mark_line(g, m, cell, z) end end
+        return true
+    end
 
     function M.game_tool(g, tool, cell, m)
         if not tool_ready(g, tool) then return false end
-        local effect = extra_tools[tool - 2]
+        local effect = M.game_tool_effect(tool, g)
         m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
         m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
-        m.match_lengths = nil
+        m.match_lengths, m.pierce_kind = nil, nil
         if effect == "shuffle" then
             if not game_shuffle(g) then return false end
         elseif effect == "moves" then g.moves = g.moves + (config.extra_moves or 5)
         elseif effect == "charge" then
-            if not charge_others(g, tool) then return false end
-        elseif effect == "lightning" then lightning(g, m)
-        elseif not target_tool(g, tool, cell, m) then return false end
+            if not g.tool_meter or not g.single_charge_tools then return false end
+            local descriptor = tool_slot(g, tool)
+            local amount = g.tool_threshold // (descriptor and descriptor.charge_divisor or 2)
+            if not charge_others(g, tool, amount) then return false end
+        elseif effect == "lightning" then lightning(g, m, 20, g)
+        elseif not target_tool(g, effect, cell, m) then return false end
         g.tools[tool + 1] = g.tools[tool + 1] - 1
         if g.single_charge_tools and g.tool_meter[tool + 1] then g.tool_meter[tool + 1] = 0 end
         g.combo = 0
         count_hits(m)
-        -- The effects that clear nothing, by name, so the caller skips the clear.
+        -- Effects that clear nothing skip the clearing animation.
         local still = (effect == "shuffle" or effect == "moves" or effect == "charge") and effect or nil
         return true, still
     end
 
-    -- The cells a tool would hit at `cell`, as {[cell]=true}, without using it.
-    -- nil when the tool cannot be used there. Drives the bonus-area preview.
+    -- Preview the same cells a targeted tool will hit without advancing the RNG.
     function M.game_tool_area(g, tool, cell)
-        if not tool_ready(g, tool) or M.game_tool_untargeted(tool) then return nil end
+        if not tool_ready(g, tool) or M.game_tool_untargeted(tool, g) then return nil end
         local m = {mask = {}, direct = {}}
-        if target_tool(g, tool, cell, m) then return m.mask end
+        if target_tool(g, M.game_tool_effect(tool, g), cell, m, true) then return m.mask end
     end
 
     -- How good a move is for a greedy player: score plus weighted goal progress.
@@ -1633,7 +1659,7 @@ function E.new(config)
     R.tool_notes = R.tool_notes or {"Choose a piece to remove.", "Choose the centre of a blast.", "Choose a piece to clear its axes."}
     -- What an untargeted bonus did, and why it could not act, by effect name.
     R.tool_done_notes = R.tool_done_notes or {shuffle="Pieces reshuffled.", moves="More moves added.",
-        charge="Your other bonuses are charged."}
+        charge="Your other bonuses gained charge."}
     R.tool_refused_notes = R.tool_refused_notes or {shuffle="No shuffle available.",
         charge="Your other bonuses are already charged."}
     function R.reset_board(g)
@@ -1650,7 +1676,7 @@ function E.new(config)
     -- compact tray at the bottom, below the centred playable field.
     assert(R.layout == nil, "the match3 board layout is engine-owned; games must not define R.layout")
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
-    local BONUS_GAP, BONUS_MARGIN = 4, 8
+    local BONUS_GAP, BONUS_MARGIN = 8, 8
     local neutral_hud = app.arg("default-match3")
     -- Imported boards can occupy only part of their enclosing hex grid. Fit
     -- their actual cells, including the hex faces, into the space between HUD
@@ -1728,14 +1754,10 @@ function E.new(config)
     function R.board_tool_bounds(k)
         local w, side = R.SCREEN_W or 480, E.TOOL_SIZE
         local offset_x = (k - 1) * 120
-        if R.g and R.g.single_charge_tools then
-            local order, position = R.g.tool_order, 0
-            for i, tool in ipairs(order) do
-                if tool == k + 1 then position = i - 1; break end
-            end
-            local count = math.max(1, #order)
-            side = math.min(side, (w - 2 * BONUS_MARGIN - (count - 1) * BONUS_GAP) / count)
-            offset_x = (position - (count - 1) / 2) * (side + BONUS_GAP)
+        if R.g and R.g.tool_slots then
+            local count = #R.g.tool_slots
+            side = math.min(config.bonus_size or side, (w - 2 * BONUS_MARGIN - (count - 1) * BONUS_GAP) / count)
+            offset_x = (k - (count - 1) / 2) * (side + BONUS_GAP)
         end
         return rect(w / 2 + offset_x - side / 2, R.tools_y + (E.TOOL_SIZE - side) / 2, side, side)
     end
@@ -1776,17 +1798,17 @@ function E.new(config)
                 R.notice(R.tool_done_notes[still])
                 if R.update_bonus_charges then R.update_bonus_charges() end
             else R.finish_wave() end
-        elseif rules.game_tool_untargeted(k) then R.notice(R.tool_refused_notes[rules.game_tool_effect(k)] or "Nothing to do.") end
+        elseif rules.game_tool_untargeted(k, R.g) then R.notice(R.tool_refused_notes[rules.game_tool_effect(k, R.g)] or "Nothing to do.") end
     end
 
     function R.select_tool(k)
         if R.phase ~= PH_IDLE then return end
         if (R.g.tools[k + 1] or 0) > 0 and flags & E.NO_TOOLS == 0 then
             R.selected = -1
-            if rules.game_tool_untargeted(k) then use_tool(k); return end
+            if rules.game_tool_untargeted(k, R.g) then use_tool(k); return end
             R.tool = R.tool == k and -1 or k
-            local notes = R.g.single_charge_tools and R.bonus_tool_notes or R.tool_notes
-            R.notice(R.tool < 0 and "Tool put away." or notes[k + 1])
+            local descriptor = tool_slot(R.g, k)
+            R.notice(R.tool < 0 and "Tool put away." or descriptor and descriptor.effect or R.tool_notes[k + 1])
         elseif R.g.tool_meter then
             R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Restore its building to unlock this tool.")
         else R.notice("No charges left. More tools next expedition.") end
@@ -2050,8 +2072,8 @@ function E.new(config)
         end
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]
-        if R.wave_chain[i] == 0 and R.wave_ice[i] == 0 and not R.pending.make[i]
-            and t.kind ~= M.DELIVERY then   -- a small pop, then shrink away
+        if ((R.wave_chain[i] == 0 and R.wave_ice[i] == 0) or g.tiles[i].kind < 0)
+            and not R.pending.make[i] and t.kind ~= M.DELIVERY then   -- a small pop, then shrink away
             local delay = (R.flight_targets or {})[i] and .48 or 0
             local f = num.saturate((R.phase_time - delay) / .24)
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)

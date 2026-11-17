@@ -6,7 +6,6 @@
 local R = require("state")
 local rules = require("rules")
 local art = require("art")
-local economy = require("economy")
 local elements = require("match3.elements_view")
 local skin = require("skin")
 local neutral = app.arg("default-match3")
@@ -21,12 +20,10 @@ if not neutral then
 end
 local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
-R.bonus_tool_notes = {}
-for i, bonus in ipairs(economy.bonuses) do R.bonus_tool_notes[i] = bonus.effect end
 R.locked_notice = words.locked
 board_intro.bind(R, rules)
 local match3 = require("match3")
-match3.bind_board_ui(R, rules, art.tools, nil, art.bonus_tools)
+match3.bind_board_ui(R, rules, art.tools)
 match3.bind_town_board_hud(R)
 
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
@@ -48,7 +45,7 @@ function R.board_piece_texture(kind)
     local level = rules.level_of(g)
     local campaign = campaign_pieces and not g.hs
     local piece = g.resource_yields and g.resource_yields[kind]
-    if piece and piece.tool then return R.board_art["bonus-" .. piece.key] end
+    if piece and piece.tool then return R.board_art[piece.icon] end
     if level.story_piece and kind == level.goal_kind then
         return R.board_art[(campaign and "campaign-" or "story-") .. level.story_piece]
     end

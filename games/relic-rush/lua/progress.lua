@@ -34,12 +34,37 @@ function R.update_bonus_charges()
     end
 end
 
+-- Apply restorations made while an unfinished board was parked on the island.
+-- Existing tile kinds, charge and the position of every socket stay in place.
+function R.refresh_board_bonuses()
+    local g = R.g
+    if not g.tool_slots or g.bonus_preview then return end
+    local slots, meters = economy.active_bonus_slots(g.level + 1, R.board_context())
+    for tool, charge in pairs(meters) do
+        if g.tool_meter[tool] == nil then
+            g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
+        end
+    end
+    local bonus = g.bonus
+    if bonus and slots[bonus.tool] ~= bonus then
+        g.bonus, g.bonus_debut = slots[bonus.tool], nil
+        for kind, reward in pairs(g.resource_yields) do
+            if reward == bonus then g.resource_yields[kind] = g.bonus end
+        end
+    end
+    g.tool_slots = slots
+end
+
 local function opening_unlock(g)
     local level = rules.level_of(g)
     for n, unlock in ipairs(economy.unlocks) do
         local building = island.buildings[island.ladder[n].kind + 1].name
         if g.bonus_debut and unlock.bonus == g.bonus_debut then
-            return economy.bonus_lesson(g.bonus_debut), building
+            local text = economy.bonus_lesson(g.bonus_debut)
+            if unlock.kind and g.resource_yields[unlock.kind] == unlock then
+                text = text .. " " .. economy.unlock_text(unlock)
+            end
+            return text, building
         elseif unlock.kind and (g.level + 1 == unlock.first_level or level.featured_resource == unlock.key) then
             if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
                 return economy.unlock_text(unlock), building
@@ -82,10 +107,18 @@ function R.serialize_campaign(s)
         local wallet = R.prog.wallet
         R.prog.wallet = wallet + economy.shortfall(island.reserved_cost(R.island, R.prog.level), wallet)
     end
-    local charges = R.prog.bonus_charge or {}
-    for _, bonus in ipairs(economy.bonuses) do
-        local tool = bonus.tool
-        charges[tool] = num.clampi(s:int("bonus_" .. bonus.key, reading and 0 or charges[tool] or 0), 0, economy.BONUS_THRESHOLD)
+    local saved, charges = R.prog.bonus_charge or {}, {}
+    for tool, slot in ipairs(economy.bonus_slots) do
+        local name = "bonus_slot_" .. slot.key
+        local charge
+        if reading and version < 5 then
+            -- Old tools were independent and used half as many points per use.
+            charge = 0
+            for _, bonus in ipairs(slot.levels) do
+                charge = charge + 2 * num.clampi(s:int("bonus_" .. bonus.key, 0), 0, 18)
+            end
+        else charge = s:int(name, reading and 0 or saved[tool] or 0) end
+        charges[tool] = num.clampi(charge, 0, economy.BONUS_THRESHOLD)
     end
     R.prog.bonus_charge = charges
     serialize_completed(s)

@@ -112,7 +112,7 @@ The island and the board share one wallet and Settings bar. The board shows
 Moves at the left of the resource balances. The medallion turns red at five
 moves. Blue plaques mark the board objective. Winning banks the resources
 earned in the three slots.
-All six bonus sockets sit in one row below the centered board from the first
+Four large bonus sockets sit in one row below the centered board from the first
 expedition. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Dialogs reuse the engine's forms and
 cached blur. See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
@@ -269,22 +269,22 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 
 | # | Restoration | Price | Board payoff |
 | --- | --- | --- | --- |
-| 1 | ★ Expedition camp | 20 Supplies + 10 Food | Dynamite gems from board 2. |
+| 1 | ★ Expedition camp | 20 Supplies + 10 Food | Hammer gems from board 2. |
 | 2 | ★ Spring well | 130 Coins | Water buckets worth 3 Food each. |
-| 3 | Trapper's cabin | 80 Coins + 75 Supplies + 55 Food | Hammer gems. |
+| 3 | Trapper's cabin | 80 Coins + 75 Supplies + 55 Food | Dynamite upgrades Hammer. |
 | 4 | ★ Artisan workshop | 145 Coins + 150 Supplies + 105 Food | Cut blocks worth 5 Supplies each. |
 | 5 | Water mill | 75 Coins + 75 Supplies + 50 Food | Opens the Jungle market restoration. |
 | 6 | ★ Jungle market | 145 Coins + 150 Supplies + 95 Food | Ration jars worth 4 Food each. |
-| 7 | Clock tower | 180 Coins + 200 Supplies + 140 Food | Opens the Sunstone courtyard restoration. |
+| 7 | Clock tower | 180 Coins + 200 Supplies + 140 Food | Star gems. |
 | 8 | Stone amphitheatre | 60 Coins + 80 Supplies + 80 Food | Shield gems. |
 | 9 | ★ Sunstone courtyard | 90 Coins + 160 Supplies + 150 Food | Helmets worth 6 Coins. |
 | 10 | ★ Explorer's lodge | 300 Coins + 340 Food | Grain bundles worth 5 Food each. |
 | 11 | Trading post | 250 Coins + 360 Supplies + 290 Food | Rings worth 7 Coins. |
-| 12 | Valley lighthouse | 100 Coins + 120 Supplies + 110 Food | Lightning gems. |
+| 12 | Valley lighthouse | 100 Coins + 120 Supplies + 110 Food | Lightning upgrades Shield. |
 | 13 | ★ Lost-world archive | 195 Coins + 240 Supplies + 230 Food | Carved quartz worth 7 Supplies each. |
 | 14 | Beached schooner | 190 Coins + 190 Supplies + 190 Food | Scarabs worth 8 Coins. |
-| 15 | Cartographer's house | 285 Coins + 270 Supplies + 250 Food | Plus gems: half-charge the other bonuses. |
-| 16 | ★ Star observatory | 205 Coins + 200 Supplies | Star gems from board 24. |
+| 15 | Cartographer's house | 285 Coins + 270 Supplies + 250 Food | Plus gems give a quarter charge to other unlocked bonuses. |
+| 16 | ★ Star observatory | 205 Coins + 200 Supplies | Star II upgrades Star. |
 | 17 | Great aviary | 200 Coins + 180 Supplies + 240 Food | Sandals worth 9 Coins. |
 | 18 | ★ Jade fountain | 280 Coins + 300 Supplies | Shrimp worth 6 Food each. |
 | 19 | Relic museum | 220 Coins + 220 Supplies + 420 Food | Harps worth 10 Coins. |
@@ -330,11 +330,10 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 - Swap two specials for a combination attack. A rainbow ball swapped with another power-up turns pieces of the commonest kind into that power-up before firing them.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
-- Restore buildings to unlock Dynamite, Hammer, Shield, Lightning, Plus and
-  Star. An expedition can feature one bonus piece family. Matching six of its
-  pieces fills one use, and the panel saves each unlocked bonus's
-  charge across expeditions. Activation costs zero moves and empties the
-  socket. The restoration card lists any unlock.
+- Restore buildings to unlock Hammer, Shield, Star and Plus. A later restoration
+  upgrades each of the four slots and carries its charge forward. An expedition
+  can feature one bonus gem family. Matching six fills one use, and activation
+  costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
@@ -380,7 +379,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Controls and saved progress
 
-- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Tap a charged socket and then its target. Shutter Gear and Lightning activate immediately on tapping their sockets. The top-right medallion pauses: level details, a Sound and Reduce motion group, Resume, Restart (asks first), Quit to island (keeps the board) and the guide; Escape does the same. Tap outside a closable popup to dismiss it; results require an explicit action.
+- **Board:** swipe to one of six neighbors, or tap two adjacent relics. Tap a charged socket and then its target. Plus activates as soon as you tap its socket. The top-right medallion pauses: level details, a Sound and Reduce motion group, Resume, Restart (asks first), Quit to island (keeps the board) and the guide; Escape does the same. Tap outside a closable popup to dismiss it; results require an explicit action.
 - **Island:** drag the map to pan, including from buildings; pinch or use the mouse wheel to zoom. Tap a building for its card, or hold it still for half a second to pick it up and move it. Tap clouded land to see what opening it needs.
 - **Placement:** choose a grassy spot, check the green/red footprint, then confirm or cancel. Leave a tile of open ground between building bases. Footprints cannot cross the shoreline or occupy closed land. Moving a completed building is free.
 - **Save:** level progress, resources, opened regions and building positions persist; an unfinished puzzle restarts. Saves of the standalone prototype (`progress.txt`, `localStorage["relic-rush-v1"]`) are not imported.

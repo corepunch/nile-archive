@@ -40,7 +40,7 @@
         10,
         20
       ],
-      "about": "The crew stocks its first expedition supplies here.",
+      "about": "Match Hammer gems to charge a hit on one cell.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/camp.png",
@@ -320,7 +320,7 @@
         0,
         200
       ],
-      "about": "From the lookout, a lamp can guide boats away from the damaged quay.",
+      "about": "Upgrades Star to Star II so it can hit through one layer of chain or ice.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/observatory.png",
@@ -440,7 +440,7 @@
         55,
         75
       ],
-      "about": "Hammer gems join later expeditions. Match them to charge a hit on one cell.",
+      "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/log_cabin.png",
@@ -600,7 +600,7 @@
         250,
         270
       ],
-      "about": "Plus gems join later expeditions. Match them to half-charge your other bonuses.",
+      "about": "Match Plus gems to add a quarter charge to your other unlocked bonuses.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/map_room.png",
@@ -760,7 +760,7 @@
         140,
         200
       ],
-      "about": "Restore the Clock tower before rebuilding the Sunstone courtyard.",
+      "about": "Match Star gems to charge a hit on every piece of one kind.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/clock_tower.png",
@@ -800,7 +800,7 @@
         110,
         120
       ],
-      "about": "Lightning gems join later expeditions. Match them to charge a strike on 20 cells.",
+      "about": "Upgrades Shield to Lightning. Hit a row and strike up to 20 cells in total.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/lighthouse.png",
@@ -1000,7 +1000,7 @@
         420,
         220
       ],
-      "about": "Harps replace sandals, 10 Coins each.",
+      "about": "Harps replace sandals and earn 10 Coins each. Plus II gives the other unlocked bonuses a half charge.",
       "road": false,
       "shadow": {
         "runtime": "data/building-shadows/museum.png",

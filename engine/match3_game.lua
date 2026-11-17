@@ -1178,6 +1178,7 @@ function G.bind(R, over)
         if R.g and R.g.level == level and not R.g.won and not R.g.lost then
             if level == R.prog.level and (owes_building() or journey.awaiting_return(R.prog)) then return false end
             if level == R.prog.level and R.quest_allows_board and not R.quest_allows_board(level + 1) then return false end
+            if R.refresh_board_bonuses then R.refresh_board_bonuses() end
             R.on_island = false; R.overlay = R.OV_NONE
             if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end
             return true

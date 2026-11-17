@@ -175,7 +175,7 @@ function D.bind(R, W)
         end
         if app.arg("cell-states") and R.g then
             -- --level N --cell-states: every Cradle of Rome cell state at once on that
-            -- board: selected, mouse hover, an armed Dynamite's area, ice and a double tablet.
+            -- board: selected, mouse hover, an armed tool's area, ice and a double tablet.
             local g, open = R.g, {}
             for i = 0, rules.CELLS - 1 do
                 if rules.game_cell_active(g, i) and (g.oil[i] or 0) == 0 and g.chain[i] == 0 then open[#open + 1] = i end
@@ -184,8 +184,10 @@ function D.bind(R, W)
                 if (g.oil[i] or 0) == 1 then g.oil[i] = 2; break end
             end
             g.ice[open[#open]], g.obstacles = 1, g.obstacles + 1
-            g.tools[2] = math.max(g.tools[2], 1)
-            R.selected, R.tool = open[1], 1
+            local tool = g.tool_slots and 1 or 2
+            g.tools[tool] = math.max(g.tools[tool], 1)
+            if g.tool_slots then g.tool_meter[tool] = g.tool_threshold end
+            R.selected, R.tool = open[1], tool - 1
             R.cell_state_review = {hover = open[#open // 2], aim = open[#open - 3]}
         end
         a = app.arg("level")

@@ -65,32 +65,31 @@ featured resource matches.
 
 ### Bonus pieces
 
-| Confirmed restoration | Debut | Bonus and effect |
-| --- | ---: | --- |
-| Expedition Camp | 2 | Dynamite hits the chosen cell and its six neighbors. |
-| Trapper's cabin | 8 | Hammer hits one chosen cell. |
-| Stone amphitheatre | 14 | Shield hits the row through the chosen cell, along the hex board's row axis. |
-| Valley lighthouse | 20 | Lightning immediately strikes up to 20 distinct random cells. |
-| Cartographer's house | 23 | Plus adds half a use to every other unlocked bonus. It keeps its use when they are all full. |
-| Star Observatory | 24 | Star hits every piece of the chosen kind. |
+| Slot | Level I | Level II |
+| --- | --- | --- |
+| Blast | **Hammer** from the Expedition camp on board 2 hits one chosen cell. | **Dynamite** from the Trapper's cabin on board 8 also hits the six neighbors. |
+| Sweep | **Shield** from the Stone amphitheatre on board 14 hits a chosen row. | **Lightning** from the Valley lighthouse on board 20 hits that row and adds strikes elsewhere, up to twenty cells total. |
+| Star | **Star** from the Clock tower on board 12 hits every piece of the chosen kind. | **Star II** from the Star observatory on board 24 hits through one layer of chain or ice and clears the piece if exposed. |
+| Recharge | **Plus** from the Cartographer's house on board 23 gives a quarter charge to each other unlocked bonus. | **Plus II** from the Relic museum on board 28 gives half. |
 
-These six tools cover a precision hit, a local blast, a row clear, a random
-strike, a piece-type clear, and a charge refill. The sockets keep their
-positions in restoration order from the first expedition, in one compact
-row below the centered board.
+Four large sockets stay in the same positions in one row throughout the
+campaign. An upgrade takes over its slot and uses the charge already stored
+there, including when a parked expedition resumes. A II badge identifies the
+upgraded bonus. Hammer, Dynamite, Shield, Lightning and both Stars start by
+choosing a cell. Lightning previews its full strike pattern before applying it.
+Plus activates from its socket and keeps its use when the other unlocked
+meters are already full.
 
-The first expedition after a bonus restoration features its new piece.
-Later boards draw a family from the eligible restorations using the board
-seed. The bonus takes an existing slot so the expedition keeps six kinds.
-The cabin's Hammer uses the red slot on board 8, where the relay pliers
-occupy the orange slot. Expedition 10 introduces the market's ration jars
-and gives the orange slot to the Shutter Gear quest piece.
-Each matched bonus piece flies to its own socket and contributes three points.
-The gold fill rises as the gems land, or immediately with Reduce Motion on.
-The socket holds 18 points and one use. Matches beyond that cap cannot bank a
-second use. Both partial and full meters are saved across expeditions, and using
-a bonus empties its socket without spending a move. Confirming a restoration
-unlocks its visible socket for charging.
+The debut board features its newly unlocked or upgraded gem. Later boards
+draw one eligible slot by seed and use its current gem. The bonus takes an
+existing slot so the expedition keeps six kinds. Dynamite uses red on
+board 8, where the relay pliers occupy orange. Expedition 10 introduces
+the market's ration jars and gives orange to the Shutter Gear quest piece.
+
+Six matched gems fill one use. Each gem flies into its own socket and adds
+a sixth of a meter. Reduce Motion fills it immediately. Using a bonus costs
+no moves. Old saves combine each pair of separate meters into one slot at
+their original charge fractions, capped at one use.
 
 The market hoist makes the tide-room approach possible. The Shutter Gear
 counts toward the expedition 10 recovery objective, and the first clear

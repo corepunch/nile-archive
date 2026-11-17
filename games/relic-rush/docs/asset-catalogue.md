@@ -503,8 +503,11 @@ cover a zero-charge ring at both phone sizes.
 
 The six standalone pieces are Hammer, Dynamite, Shield, Lightning, Star and
 Plus. Their effects and restoration unlocks are documented in
-[board progression](board-progression.md#bonus-pieces). One compact row
-shows every socket in restoration order from the first expedition.
+[board progression](board-progression.md#bonus-pieces). The four 108 px
+toolbar targets stay in one row. Blast swaps the Hammer sprite for Dynamite
+at level II, and Sweep swaps Shield for Lightning. Star II and Plus II use
+the same generated button art as their first tiers. Every level II button
+shows a small runtime II label even when its charge is empty.
 
 The generator uses one [painted button base](../art/bonus-gems/button-base.png)
 and a [strip of six standalone gems](../art/bonus-gems/six-bonuses.png).
@@ -530,9 +533,10 @@ atlas cells.
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
 [390 × 844 toolbar](screenshots/bonus-toolbar-phone.jpg) ·
 [Locked sockets on expedition 1](screenshots/bonus-locked-phone.jpg) ·
-[Spent Hammer](screenshots/bonus-spent.jpg) ·
+[Spent Dynamite](screenshots/bonus-spent.jpg) ·
 [Workshop card](screenshots/bonus-workshop-card.jpg) ·
 [Water mill on the results screen](screenshots/bonus-building-result.jpg) ·
+[Hammer debut](screenshots/bonus-hammer-debut.jpg) ·
 [Plus debut](screenshots/bonus-plus-debut.jpg) ·
 [Shutter Gear board](screenshots/bonus-gear.jpg) ·
 [Recovered gear](screenshots/bonus-gear-award.jpg).

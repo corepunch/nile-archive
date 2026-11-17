@@ -48,19 +48,20 @@ end
 
 -- The bonus-area preview names exactly the cells a tool would hit, without using it.
 do
-    local g=rules.game_start(4,123)
+    local hammer=rules.game_start(4,123,{camp=true})
+    local g=rules.game_start(4,123,{camp=true,log_cabin=true})
     local b=rules.hex_index(-1,1)
-    g.tools={1,1,1}
-    local single, area=rules.game_tool_area(g,0,b), rules.game_tool_area(g,1,b)
+    hammer.tools[1], g.tools[1] = 1, 1
+    local single, area=rules.game_tool_area(hammer,0,b), rules.game_tool_area(g,0,b)
     local n=0
     for i in pairs(area) do
         n=n+1
         check(rules.hex_distance(i,b)<=1 and rules.game_cell_active(g,i), 'dynamite area stays within one step on the board')
     end
     check(single[b] and next(single,b)==nil and next(single)==b, 'the pickaxe area is its own cell')
-    check(n>1 and g.tools[2]==1, 'previewing does not spend a charge')
-    g.tools={0,0,0}
-    check(rules.game_tool_area(g,1,b)==nil, 'no area without a charge')
+    check(n>1 and g.tools[1]==1, 'previewing does not spend a charge')
+    g.tools[1]=0
+    check(rules.game_tool_area(g,0,b)==nil, 'no area without a charge')
 end
 
 local collections = {

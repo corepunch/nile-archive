@@ -1,7 +1,7 @@
 # Twenty campaign buildings for Relic Rush and Christmas Market
 
 > Both twenty-step ladders are implemented and priced from measured campaign
-> runs. Relic Rush uses [six matchable bonus gems](../../games/relic-rush/docs/board-progression.md#bonus-pieces)
+> runs. Relic Rush uses [four upgradeable bonus slots](../../games/relic-rush/docs/board-progression.md#bonus-pieces)
 > with dedicated artwork.
 
 Both games have 30 boards and 10 story buildings today. Cradle of Rome has
@@ -63,8 +63,8 @@ left, so a shuffle tool would rarely matter. The paper plane takes its slot.
 
 ## Relic Rush: the 20 restorations
 
-Relic Rush has twelve resource upgrades and six matchable bonus gems.
-Restoring the Water mill and Clock tower advances the building ladder.
+Relic Rush has twelve resource upgrades and four bonus slots with two levels each.
+Restoring the Water mill opens the Jungle market restoration.
 
 ★ marks the ten story restorations. The other buildings open after their
 listed clear and come before the next story restoration.
@@ -72,29 +72,29 @@ listed clear and come before the next story restoration.
 | # | Build after | Building | From board | Adds | Price C / F / S |
 | ---: | ---: | --- | ---: | --- | ---: |
 | **I. The landing** |
-| 1 | 1 | ★ Expedition camp | 2 | Dynamite gems | 0 / 10 / 20 |
+| 1 | 1 | ★ Expedition camp | 2 | Hammer gems | 0 / 10 / 20 |
 | 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 130 / 0 / 0 |
-| 3 | 7 | Trapper's cabin | 8 | Hammer gems *(from the Workshop)* | 80 / 55 / 75 |
+| 3 | 7 | Trapper's cabin | 8 | Dynamite upgrades Hammer | 80 / 55 / 75 |
 | 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 145 / 105 / 150 |
 | **II. The quay** |
 | 5 | 9 | Water mill | — | Opens the Jungle market restoration | 75 / 50 / 75 |
 | 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 145 / 95 / 150 |
-| 7 | 11 | Clock tower | — | Opens the Sunstone courtyard restoration | 180 / 140 / 200 |
+| 7 | 11 | Clock tower | 12 | Star gems | 180 / 140 / 200 |
 | 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 60 / 80 / 80 |
 | **III. The terraces** |
 | 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 90 / 150 / 160 |
 | 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | 300 / 340 / 0 |
 | 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 250 / 290 / 360 |
-| 12 | 19 | Valley lighthouse | 20 | Lightning gems *(from the Archive)* | 100 / 110 / 120 |
+| 12 | 19 | Valley lighthouse | 20 | Lightning upgrades Shield | 100 / 110 / 120 |
 | **IV. The wreck** |
 | 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 195 / 230 / 240 |
 | 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 190 / 190 / 190 |
-| 15 | 22 | Cartographer's house | 23 | Plus gems charge the other sockets | 285 / 250 / 270 |
-| 16 | 23 | ★ Star observatory | 24 | Star gems | 205 / 0 / 200 |
+| 15 | 22 | Cartographer's house | 23 | Plus gems give a quarter charge to other sockets | 285 / 250 / 270 |
+| 16 | 23 | ★ Star observatory | 24 | Star II upgrades Star | 205 / 0 / 200 |
 | **V. The temple** |
 | 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 200 / 240 / 180 |
 | 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | 280 / 0 / 300 |
-| 19 | 27 | Relic museum | 28 | Harp, 10 Coins *(from the Courtyard)* | 220 / 420 / 220 |
+| 19 | 27 | Relic museum | 28 | Harp, 10 Coins. Plus II upgrades Plus | 220 / 420 / 220 |
 | 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 330 / 430 / 330 |
 
 When two restorations unlock on the same clear (7, 9, 13 and 19), the
@@ -103,17 +103,17 @@ alongside the Shutter Gear quest piece.
 
 **Why each building gives what it does.**
 
-- **Trapper's cabin, Hammer.** The trapper's tools. Rome's Forge.
+- **Expedition camp and Trapper's cabin.** The camp provides Hammer and the cabin upgrades it to Dynamite.
 - **Stone amphitheatre, Shield.** Rome's Colosseum.
-- **Valley lighthouse, Lightning.** A beam striking the board.
+- **Valley lighthouse, Lightning.** Adds scattered strikes to Shield’s row.
 - **Cartographer's house, Plus.** Rome's Tabularium, a record office. A charged
-  Plus fills every other socket by half its threshold.
+  Plus fills the other unlocked sockets by a quarter of their meter. Plus II from the museum adds half.
 - **Trading post, Beached schooner, Great aviary, Relic museum.** The Coins
   slot's climb: trade goods, a wreck's cargo, winged sandals, a museum's harp.
   Rome's Arch, Ship, Statue and Temple of Saturn do the same.
 
 The [bonus atlas](../../games/relic-rush/data/bonus-gems.png)
-contains the gems and the five states of each button. All six sockets stay
+contains the gems and the five states of each button. All four sockets stay
 visible in one row.
 
 ## Christmas Market: the 20 stalls

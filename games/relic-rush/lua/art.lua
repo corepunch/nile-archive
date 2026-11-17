@@ -37,7 +37,6 @@ A.resource_upgrades = {
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
     ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
 A.tools = {"pickaxe", "dynamite", "sunburst"}
-A.bonus_tools = {"bonus-hammer", "bonus-dynamite", "bonus-star", "bonus-shield", "bonus-lightning", "bonus-plus"}
 A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-shield", "bonus-lightning", "bonus-star", "bonus-plus"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -111,7 +110,7 @@ function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
     local bonus = require("match3").atlas(bonus_atlas)
-    for _, key in ipairs(A.bonus_tools) do textures[key] = bonus[key] end
+    for _, key in ipairs(A.bonus_atlas_order) do textures[key] = bonus[key] end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, require("match3").skin(require("match3_skin")))
     for _, key in ipairs(A.floor_tiles) do

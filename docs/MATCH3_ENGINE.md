@@ -97,19 +97,25 @@ both the seeded opening and refills. Its `multipliers` apply to the longest
 straight match through each clearing piece. Resource entries credit a
 wallet `slot` or a `tool` meter. An ordinary match can fill a tool meter
 and turn each full meter into one charge. The `tool_meter` keys identify
-the unlocked tools. Single-charge campaigns supply `tool_order` for all visible
-slots, including locked ones. Relic Rush shows them in one compact row and
-caps each tool at one use. Christmas Market keeps a count and a remainder.
-Both games persist the inventory through `update_bonus_charges` as waves
-resolve. Tool hits still earn the base wallet yield. A game can supply `sunburst_targets` for the earned tool
-so the preview and the hit share the same cell mask.
+unlocked slots. A campaign can supply `tool_slots` as an ordered list of
+descriptors with an `action`, `icon`, `rank` and `effect` (targeting hint).
+The slot index owns the meter and the target geometry across descriptor
+changes. `bonus_size` sets the preferred button width in that toolbar.
+Relic Rush uses `single_charge_tools` to cap a slot at one use.
+Christmas Market keeps a count and a remainder. Both games persist the
+inventory through `update_bonus_charges` as waves resolve. Tool hits still
+earn the base wallet yield. A game can supply `sunburst_targets` for the
+legacy earned tool so the preview and hit share the same cell mask.
 
-`extra_tools` names the tools after the first three, in order. `"row"` is
-targeted. `"shuffle"`, `"lightning"`, `"moves"` and `"charge"` act as soon as
-they are tapped. `"moves"` adds `extra_moves` moves (default 5). `"charge"`
-adds half a use to every other unlocked socket and keeps its own use when
-they are all full. `game_tool` returns the name of an effect that clears
-nothing, and the board shows `R.tool_done_notes[name]`.
+Targeted slot actions include `hit`, `blast`, `row`, `row_lightning`,
+`color` and `color_pierce`. The row-lightning preview runs the same
+selection against a copy of the seed. Color pierce removes at most one lock
+per targeted gem and clears the gem if exposed. The instant `charge` action
+fills the other unlocked meters by their threshold divided by its descriptor's
+`charge_divisor` (default two). It keeps its own use if there is nothing to
+charge. Legacy `extra_tools` names the effects after the first three tools.
+`game_tool` returns the effect's name for an action that clears nothing, so
+the view can display `R.tool_done_notes[name]` without starting a clear wave.
 
 A loadout's `extra_moves` adds moves to the level's budget, and its
 `opening_specials` (`"rocket"`, `"bomb"`, `"prism"`, `"plane"`) turn ordinary

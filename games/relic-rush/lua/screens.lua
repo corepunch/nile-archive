@@ -224,7 +224,7 @@ for n, unlock in ipairs(economy.unlocks) do
     if bonus then
         guide_entries[#guide_entries + 1] = {id=bonus.key, title=bonus.name,
             description=("Restore %s. %s %s"):format(building, economy.bonus_lesson(bonus), bonus.effect),
-            icon={front="bonus-" .. bonus.key}}
+            icon={front=bonus.icon}}
     end
 end
 local function guide_icon(box, icon)

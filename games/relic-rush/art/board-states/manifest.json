@@ -2118,34 +2118,68 @@
     "registration": "Crop each standalone gem from the strip, fit to 112 px for the board and 84 px for the buttons, then center on a 128 px cell. Derive all button faces from the painted base and use the gem silhouette for disabled recesses.",
     "bonuses": {
       "hammer": {
-        "building": "log_cabin",
-        "first_level": 8,
+        "slot": "blast",
+        "rank": 1,
+        "art": "hammer",
+        "building": "camp",
+        "first_level": 2,
         "effect": "Hit one cell"
       },
       "dynamite": {
-        "building": "camp",
-        "first_level": 2,
+        "slot": "blast",
+        "rank": 2,
+        "art": "dynamite",
+        "building": "log_cabin",
+        "first_level": 8,
         "effect": "Hit the selected cell and its six neighbors"
       },
       "shield": {
+        "slot": "sweep",
+        "rank": 1,
+        "art": "shield",
         "building": "amphitheater",
         "first_level": 14,
         "effect": "Hit the selected hex row"
       },
       "lightning": {
+        "slot": "sweep",
+        "rank": 2,
+        "art": "lightning",
         "building": "lighthouse",
         "first_level": 20,
-        "effect": "Hit up to twenty different cells"
+        "effect": "Hit the selected row and additional cells up to twenty"
       },
       "star": {
-        "building": "observatory",
-        "first_level": 24,
+        "slot": "star",
+        "rank": 1,
+        "art": "star",
+        "building": "clock_tower",
+        "first_level": 12,
         "effect": "Hit every piece of the chosen kind"
       },
+      "star-ii": {
+        "slot": "star",
+        "rank": 2,
+        "art": "star",
+        "building": "observatory",
+        "first_level": 24,
+        "effect": "Hit the chosen kind through one layer of chain or ice"
+      },
       "plus": {
+        "slot": "recharge",
+        "rank": 1,
+        "art": "plus",
         "building": "map_room",
         "first_level": 23,
-        "effect": "Add half a use to every other unlocked bonus"
+        "effect": "Add a quarter charge to each other unlocked slot"
+      },
+      "plus-ii": {
+        "slot": "recharge",
+        "rank": 2,
+        "art": "plus",
+        "building": "museum",
+        "first_level": 28,
+        "effect": "Add half a charge to each other unlocked slot"
       }
     },
     "cell_size": 209,
@@ -2275,6 +2309,16 @@
           "floor_grain": 11
         }
       }
+    },
+    "toolbar": {
+      "slots": [
+        "blast",
+        "sweep",
+        "star",
+        "recharge"
+      ],
+      "button_size": 108,
+      "rank_label": "Level II overlays a small II badge on its generated button."
     }
   }
 }

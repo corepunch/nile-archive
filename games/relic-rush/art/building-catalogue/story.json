@@ -1,6 +1,6 @@
 {
   "camp": {
-    "about": "The crew stocks its first expedition supplies here.",
+    "about": "Match Hammer gems to charge a hit on one cell.",
     "cost": [0, 10, 20]
   },
   "well": {
@@ -28,7 +28,7 @@
     "cost": [195, 230, 240]
   },
   "observatory": {
-    "about": "From the lookout, a lamp can guide boats away from the damaged quay.",
+    "about": "Upgrades Star to Star II so it can hit through one layer of chain or ice.",
     "cost": [205, 0, 200]
   },
   "fountain": {
@@ -40,14 +40,14 @@
     "cost": [330, 430, 330]
   },
   "log_cabin": {
-    "about": "Hammer gems join later expeditions. Match them to charge a hit on one cell.",
+    "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
     "cost": [80, 55, 75]
   },
   "apothecary": {"cost": [220, 15, 0]},
   "mess_hall": {"cost": [240, 0, 16]},
   "stilt_house": {"cost": [260, 0, 17]},
   "map_room": {
-    "about": "Plus gems join later expeditions. Match them to half-charge your other bonuses.",
+    "about": "Match Plus gems to add a quarter charge to your other unlocked bonuses.",
     "cost": [285, 250, 270]
   },
   "greenhouse": {"cost": [300, 20, 0]},
@@ -60,11 +60,11 @@
     "cost": [75, 50, 75]
   },
   "clock_tower": {
-    "about": "Restore the Clock tower before rebuilding the Sunstone courtyard.",
+    "about": "Match Star gems to charge a hit on every piece of one kind.",
     "cost": [180, 140, 200]
   },
   "lighthouse": {
-    "about": "Lightning gems join later expeditions. Match them to charge a strike on 20 cells.",
+    "about": "Upgrades Shield to Lightning. Hit a row and strike up to 20 cells in total.",
     "cost": [100, 110, 120]
   },
   "treehouse": {"cost": [400, 0, 27]},
@@ -81,7 +81,7 @@
     "cost": [60, 80, 80]
   },
   "museum": {
-    "about": "Harps replace sandals, 10 Coins each.",
+    "about": "Harps replace sandals and earn 10 Coins each. Plus II gives the other unlocked bonuses a half charge.",
     "cost": [220, 420, 220]
   },
   "hanging_gardens": {"cost": [550, 37, 0]}

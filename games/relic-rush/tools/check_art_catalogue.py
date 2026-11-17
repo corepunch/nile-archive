@@ -67,12 +67,13 @@ assert gems["rows"] == ["board", *manifest["tool_states"]]
 assert set(gems["button_states"]) == set(manifest["tool_states"])
 declaration = re.search(r"A\.bonus_atlas_order = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"bonus-([^"]+)"', declaration) == gems["columns"]
-declaration = re.search(r"A\.bonus_tools = \{([^}]+)\}", art).group(1)
 economy = (ROOT / "lua/economy.lua").read_text()
-bonus_keys = re.findall(r'\{key="([^"]+)",[^\n]* tool=(\d+),', economy)
-assert [name for name, _ in bonus_keys] == re.findall(r'"bonus-([^"]+)"', declaration)
-assert [int(tool) for _, tool in bonus_keys] == list(range(1, len(gems["columns"]) + 1))
-assert set(gems["columns"]) == set(gems["bonuses"])
+variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', economy)
+variant_art = {key: art_key or key for key, art_key in variants}
+assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
+assert set(variant_art.values()) == set(gems["columns"])
+assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", levels=\{', economy)
+assert gems["toolbar"]["button_size"] == int(re.search(r'bonus_size=(\d+)', rules).group(1))
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
 specials = re.findall(r"M\.([A-Z_]+)", special_line)
