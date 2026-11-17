@@ -11,35 +11,35 @@ are not measured human win rates. Median and fastest count the bot's winning gam
 
 | # | Board | Tier | Plaques | Bare win | Chains (double) | Green tablets | Moves (curve) | Bot win (target) | Median | Fastest | Won in ≤3 | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | First Light | tutorial | authored (of 1) | — | 0 (0) | 0 | 13 (22) | 100% (100%) | 4 | 1 | 46% |  |
-| 2 | The Lamp Lens | tutorial | authored (of 1) | — | 0 (0) | 0 | 17 (22) | 100% (100%) | 4 | 2 | 25% |  |
-| 3 | The Relay Cable | hard | authored (of 1) | — | 2 (0) | 1 | 16 (22) | 62% (62%) | 10 | 3 | 1% |  |
-| 4 | Under the Pump | easy | authored (of 1) | — | 0 (0) | 0 | 46 (23) | 86% (92%) | 10 | 3 | 1% | bot misses the target even at twice the curve |
-| 5 | The Quay Marker | normal | authored (of 1) | — | 4 (0) | 0 | 13 (23) | 98% (80%) | 6 | 4 | 0% | authored opening: blockers kept |
-| 6 | The Shore Marker | normal | authored (of 1) | — | 0 (0) | 0 | 39 (24) | 80% (80%) | 9 | 3 | 2% | hard without blockers: moves raised |
-| 7 | The Tool Roll | normal | authored (of 1) | — | 0 (0) | 0 | 42 (24) | 80% (80%) | 11 | 3 | 1% | hard without blockers: moves raised |
-| 8 | The Relay Pliers | hard | authored (of 1) | — | 12 (12) | 12 | 24 (24) | 66% (62%) | 22 | 7 | 0% | blocker cap reached: moves lowered |
-| 9 | The Supply Crate | easy | authored (of 1) | — | 5 (0) | 0 | 50 (25) | 90% (92%) | 21 | 8 | 0% | bot misses the target even at twice the curve |
-| 10 | The Shutter Gear | boss | authored (of 1) | — | 6 (0) | 5 | 29 (25) | 50% (50%) | 23 | 7 | 0% |  |
-| 11 | The Long Terrace | normal | authored (of 1) | — | 12 (12) | 12 | 21 (26) | 81% (80%) | 17 | 5 | 0% | blocker cap reached: moves lowered |
-| 12 | Twelve Crates | normal | authored (of 1) | — | 4 (0) | 4 | 21 (26) | 82% (80%) | 14 | 4 | 0% |  |
-| 13 | Names in the Stone | hard | authored (of 1) | — | 1 (0) | 1 | 16 (26) | 64% (62%) | 11 | 5 | 0% |  |
-| 14 | Static | easy | authored (of 1) | — | 0 (0) | 0 | 54 (27) | 82% (92%) | 9 | 5 | 0% | bot misses the target even at twice the curve |
-| 15 | The Cracked Wall | normal | authored (of 54) | 100% | 12 (12) | 12 | 26 (27) | 80% (80%) | 20 | 10 | 0% | blocker cap reached: moves lowered |
-| 16 | Supper for Twelve | normal | authored (of 1) | — | 0 (0) | 0 | 56 (28) | 76% (80%) | 12 | 5 | 0% | bot misses the target even at twice the curve |
-| 17 | The Torn Log | normal | authored (of 1) | — | 12 (4) | 13 | 26 (28) | 80% (80%) | 19 | 10 | 0% |  |
-| 18 | Lantern Steps | hard | authored (of 1) | — | 12 (12) | 14 | 20 (28) | 62% (62%) | 19 | 7 | 0% | blocker cap reached: moves lowered |
-| 19 | Under the Vines | easy | authored (of 1) | — | 0 (0) | 0 | 26 (29) | 94% (92%) | 10 | 2 | 2% |  |
-| 20 | The Archivist's Key | boss | authored (of 1) | — | 12 (12) | 9 | 30 (29) | 51% (50%) | 28 | 8 | 0% | blocker cap reached: moves lowered |
-| 21 | Tomas's Trail | normal | authored (of 1) | — | 12 (12) | 12 | 28 (30) | 81% (80%) | 21 | 11 | 0% | blocker cap reached: moves lowered |
-| 22 | The Alternate Landing | normal | authored (of 1) | — | 0 (0) | 0 | 41 (30) | 80% (80%) | 10 | 4 | 0% | hard without blockers: moves raised |
-| 23 | The Star Road | hard | authored (of 1) | — | 1 (0) | 0 | 18 (30) | 69% (62%) | 13 | 4 | 0% |  |
-| 24 | Noon Shadow | easy | authored (of 1) | — | 12 (6) | 12 | 40 (31) | 92% (92%) | 22 | 9 | 0% |  |
-| 25 | Smoke on the Water | normal | authored (of 1) | — | 12 (12) | 14 | 29 (31) | 85% (80%) | 21 | 10 | 0% | blocker cap reached: moves lowered |
-| 26 | The Jade Deep | normal | grown (of 55) | 100% | 12 (12) | 10 | 29 (32) | 82% (80%) | 21 | 11 | 0% | blocker cap reached: moves lowered |
-| 27 | Six Sun Gates | normal | authored (of 1) | — | 0 (0) | 0 | 51 (32) | 80% (80%) | 15 | 5 | 0% | hard without blockers: moves raised |
-| 28 | The Last Terrace | hard | authored (of 1) | — | 12 (12) | 13 | 25 (32) | 65% (62%) | 23 | 13 | 0% | blocker cap reached: moves lowered |
-| 29 | The Silent Temple | easy | authored (of 1) | — | 0 (0) | 0 | 54 (33) | 92% (92%) | 14 | 5 | 0% | hard without blockers: moves raised |
-| 30 | The Warning Returns | boss | authored (of 1) | — | 12 (12) | 15 | 22 (33) | 50% (50%) | 22 | 11 | 0% | blocker cap reached: moves lowered |
+| 1 | First Light | tutorial | authored (of 46) | 100% | 0 (0) | 0 | 13 (22) | 100% (100%) | 4 | 1 | 48% |  |
+| 2 | The Lamp Lens | tutorial | authored (of 59) | 100% | 0 (0) | 0 | 13 (22) | 100% (100%) | 5 | 3 | 10% |  |
+| 3 | The Relay Cable | hard | shifted (of 42) | 75% | 0 (0) | 0 | 42 (22) | 65% (62%) | 13 | 5 | 0% | hard without blockers: moves raised |
+| 4 | Under the Pump | easy | grown (of 56) | 100% | 0 (0) | 0 | 16 (23) | 95% (92%) | 7 | 3 | 8% |  |
+| 5 | The Quay Marker | normal | authored (of 1) | — | 4 (0) | 0 | 13 (23) | 88% (80%) | 5 | 4 | 0% | authored opening: plaques and blockers kept |
+| 6 | The Shore Marker | normal | grown (of 38) | 92% | 6 (0) | 6 | 28 (24) | 80% (80%) | 13 | 7 | 0% |  |
+| 7 | The Tool Roll | normal | grown (of 36) | 92% | 3 (0) | 3 | 20 (24) | 80% (80%) | 13 | 4 | 0% |  |
+| 8 | The Relay Pliers | hard | shifted (of 45) | 75% | 12 (0) | 11 | 21 (24) | 72% (62%) | 19 | 11 | 0% |  |
+| 9 | The Supply Crate | easy | authored (of 1) | — | 5 (0) | 0 | 47 (25) | 92% (92%) | 22 | 6 | 0% | authored opening: plaques and blockers kept |
+| 10 | The Shutter Gear | boss | shifted (of 57) | 67% | 6 (0) | 6 | 31 (25) | 50% (50%) | 21 | 10 | 0% |  |
+| 11 | The Long Terrace | normal | grown (of 54) | 92% | 9 (0) | 8 | 24 (26) | 80% (80%) | 17 | 10 | 0% |  |
+| 12 | Twelve Crates | normal | grown (of 53) | 92% | 10 (0) | 10 | 25 (26) | 80% (80%) | 20 | 9 | 0% |  |
+| 13 | Names in the Stone | hard | authored (of 53) | 75% | 1 (0) | 1 | 15 (26) | 65% (62%) | 10 | 6 | 0% |  |
+| 14 | Static | easy | grown (of 41) | 100% | 0 (0) | 0 | 36 (27) | 92% (92%) | 16 | 5 | 0% | hard without blockers: moves raised |
+| 15 | The Cracked Wall | normal | grown (of 54) | 92% | 3 (0) | 2 | 20 (27) | 80% (80%) | 13 | 5 | 0% |  |
+| 16 | Supper for Twelve | normal | shifted (of 54) | 92% | 0 (0) | 0 | 56 (28) | 70% (80%) | 13 | 4 | 0% | bot misses the target even at twice the curve |
+| 17 | The Torn Log | normal | shifted (of 59) | 92% | 9 (0) | 9 | 39 (28) | 80% (80%) | 16 | 9 | 0% |  |
+| 18 | Lantern Steps | hard | shifted (of 58) | 75% | 8 (0) | 8 | 27 (28) | 62% (62%) | 23 | 11 | 0% |  |
+| 19 | Under the Vines | easy | grown (of 54) | 100% | 4 (0) | 4 | 20 (29) | 95% (92%) | 11 | 4 | 0% |  |
+| 20 | The Archivist's Key | boss | grown (of 53) | 67% | 5 (0) | 4 | 22 (29) | 50% (50%) | 20 | 4 | 0% |  |
+| 21 | Tomas's Trail | normal | shifted (of 52) | 92% | 2 (0) | 1 | 18 (30) | 82% (80%) | 8 | 4 | 0% |  |
+| 22 | The Alternate Landing | normal | grown (of 54) | 92% | 5 (0) | 4 | 27 (30) | 80% (80%) | 16 | 7 | 0% |  |
+| 23 | The Star Road | hard | authored (of 57) | 75% | 3 (0) | 3 | 26 (30) | 62% (62%) | 17 | 6 | 0% |  |
+| 24 | Noon Shadow | easy | authored (of 57) | 100% | 6 (0) | 6 | 30 (31) | 95% (92%) | 14 | 6 | 0% |  |
+| 25 | Smoke on the Water | normal | shifted (of 54) | 92% | 11 (0) | 11 | 39 (31) | 80% (80%) | 24 | 10 | 0% |  |
+| 26 | The Jade Deep | normal | grown (of 55) | 92% | 8 (0) | 8 | 30 (32) | 80% (80%) | 15 | 9 | 0% |  |
+| 27 | Six Sun Gates | normal | grown (of 54) | 92% | 3 (0) | 3 | 41 (32) | 85% (80%) | 23 | 9 | 0% |  |
+| 28 | The Last Terrace | hard | grown (of 55) | 75% | 8 (0) | 8 | 44 (32) | 62% (62%) | 33 | 13 | 0% |  |
+| 29 | The Silent Temple | easy | grown (of 52) | 100% | 1 (0) | 0 | 20 (33) | 92% (92%) | 12 | 5 | 0% |  |
+| 30 | The Warning Returns | boss | grown (of 52) | 67% | 8 (0) | 7 | 29 (33) | 50% (50%) | 27 | 12 | 0% |  |
 
 20 starts per search step; the fit is re-measured on 40 fresh starts.

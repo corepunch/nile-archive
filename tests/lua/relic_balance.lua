@@ -42,6 +42,11 @@ local function play(g)
     end
 end
 
+-- Consecutive small seeds start xorshift on similar streams and bias the
+-- boards, so every sample seed is hashed first (as tools/tune_levels.lua does).
+-- The game itself seeds from the previous board's random state.
+local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 end
+
 -- Board n is played with every ladder restoration due before it.
 local function restored_by(number)
     local restored = {}
@@ -57,7 +62,7 @@ for level = 1, rules.LEVELS do
     for slot = 1, CURRENCIES do stats.income[slot] = 0 end
     local restored = restored_by(level)
     for run = 1, RUNS do
-        local g = rules.game_start(level - 1, 7919 * run + level, restored)
+        local g = rules.game_start(level - 1, seed_of(1000 * level + run), restored)
         play(g)
         if g.won then
             local reward = rules.reward_breakdown(g, {}, nil).total
