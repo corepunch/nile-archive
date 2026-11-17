@@ -2,13 +2,9 @@
 local rules = require("rules")
 local index, tile = rules.hex_index, rules.tile
 -- These regressions audit ordinary three-edge trickling on every silhouette.
--- Solid blockers and delivery pieces have their own rule tests.
+-- Solid blockers have their own rule tests.
 local function ordinary_gravity(g)
-    g.delivery_exits = {}
-    for i = 0, rules.CELLS - 1 do
-        g.stone_hp[i] = 0
-        if g.tiles[i].kind == rules.DELIVERY then g.tiles[i] = tile(i % rules.COLORS) end
-    end
+    for i = 0, rules.CELLS - 1 do g.stone_hp[i] = 0 end
     return g
 end
 local function board(cells)

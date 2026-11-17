@@ -22,7 +22,7 @@ local function level(name, moves, chains, mask, positions)
         terrain[i + 1] = #oil - 100
     end
     return {name=name, lesson="Light every pane.", moves=moves, score=0, relics=0,
-        chains=chains, ice=0, mask=mask, terrain=terrain, oil=oil, oil_still=true,
+        chains=chains, ice=0, mask=mask, terrain=terrain, oil=oil,
         goals={"oil"}, floor_marks=floor_marks}
 end
 

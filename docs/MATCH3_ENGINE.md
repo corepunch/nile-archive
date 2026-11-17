@@ -1,6 +1,6 @@
 # Shared match-3 engine
 
-The current default rules and original-art atlas are documented in [Homescapes on hexes](HOMESCAPES_HEX.md). Legacy opt-in flags below remain supported; board elements are limited to those in Homescapes' story levels.
+The engine follows Cradle of Rome: matches only clear, and the board elements are chains, ice, carved stones and tablets. See [Match-3 elements](MATCH3_ELEMENTS.md).
 
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
 `engine/match3.lua` owns the hex grid, matching, swaps, blockers,
@@ -77,15 +77,14 @@ is a string of `CELLS` zero/one entries in axial column order; optional
 strong ice, and `double_chains=N` makes the first N of `chains` take two hits. Each entry in `stones` reserves a cell for one carved hex stone.
 An adjacent match or a direct hit clears that stone. Optional `goals` lists
 the HUD goals that win the level, in order,
-from `score`, `idols`, `locks` (every blocker), `deliveries`, `carpet` and
-`oil`. Without it, every counter on the board must be finished. Relic Rush
-and Christmas Market name one to three per level and never `score`, as in
-Homescapes. The
+from `score`, `idols`, `locks` (every blocker) and `oil` (tablets). Without
+it, every counter on the board must be finished. Relic Rush and Christmas
+Market name one to three per level and never `score`. The
 games' `campaign.lua` files contain these data; their
 `rules.lua` modules only configure the engine, name kinds and handle the
 restoration economy. Matching and input do not live in either game.
 
-Optional stones, deliveries, carpet and oil extend these descriptors. Their exact schema, timing,
+Optional stones and tablets extend these descriptors. Their exact schema, timing,
 artwork and board-design rationale are in [Match-3 elements](MATCH3_ELEMENTS.md).
 
 Resource campaigns can pass a loadout to `game_start`. Its `kinds` feed
@@ -155,8 +154,7 @@ inactive or locked. Pieces never cross a missing cell or a locked donor.
 `game_collapse(g)` fills the board and returns `from, steps`. `from[cell]` is
 its original source ID (negative for a new gem). Each animation step contains
 `tiles` and immediate `from` maps: every move is a single neighboring edge;
-negative sources enter from above that inlet. Delivery tokens fall vertically,
-never diagonally.
+negative sources enter from above that inlet.
 
 `refill_damping=N` in `match3.new` damps long cascades. From wave N of a
 move's cascade (`g.combo`), every piece the refill spawns takes a kind that
@@ -171,9 +169,8 @@ schedule and omits the rebound.
 ## Graphics and the one-atlas skin
 
 `match3.skin()` loads `engine/data/match3.png` from its resource directory.
-The six pieces and available blocker states
-come from the original Homescapes resources. Existing controls, HUD and effect
-frames remain in the same atlas. The [registration manifest](../engine/art/match3/manifest.json)
+The pieces, controls, HUD, blockers and effect
+frames come from the engine's own authored art. The [registration manifest](../engine/art/match3/manifest.json)
 records source hashes and transforms; the retired original-art
 [prompt](../engine/art/match3/prompt.txt) remains historical provenance.
 

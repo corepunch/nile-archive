@@ -7,7 +7,6 @@ from pathlib import Path
 from statistics import median
 from PIL import Image, ImageChops, ImageFilter
 
-from homescapes_atlas import SOURCE as HOMESCAPES
 
 ART = Path(__file__).resolve().parents[1] / 'art'
 POWER_UP_PAINT = ART / 'match3-power-up-paint'
@@ -23,18 +22,12 @@ CHAIN_CROPS = (
     ((38, -6, 576, 532), (3, -10, 548, 535), (-6, 2, 517, 525)),
     ((38, -58, 576, 480), (2, -60, 547, 485), (-6, -50, 517, 473)),
 )
-FLOOR_PAINT = ART / 'match3-terrain'
-PAINTED_FLOORS = ('carpet-swatch', 'oil-material', 'goal-carpet', 'goal-oil')
-FLOOR_COLUMNS = (0, 444, 887, 1331, 1774)
-FLOOR_ROWS = (0, 485, 887)  # Transparent gap between the swatches and goal icons.
 BLOCKER_PAINT = ART / 'match3-blockers'
-MATERIALS = {'carpet-swatch', 'oil-material'}
 FESTIVE_ATLAS = 'art/festive-pieces'
 
 SLOTS = (
-    'chip-0', 'chip-1', 'chip-2', 'chip-3', 'chip-4',
-    'chip-5', 'delivery',
-) + PAINTED_FLOORS + ('stone-1',)
+    'chip-0', 'chip-1', 'chip-2', 'chip-3', 'chip-4', 'chip-5', 'stone-1',
+)
 SIZE = 128
 
 
@@ -42,26 +35,10 @@ def silhouette(image):
     return image.getchannel('A').point(lambda alpha: 255 if alpha >= 128 else 0)
 
 
-def reference_areas():
-    """Size painted objects to the native Homescapes silhouettes they replace."""
-    groups = {
-        'chip': tuple(f'chip-{i}' for i in range(6)),
-        'rocket': ('rocket-horizontal', 'rocket-vertical'),
-        'bomb': ('bomb',),
-        'delivery': ('donut',),
-    }
-    result = {}
-    for family, names in groups.items():
-        areas = []
-        for name in names:
-            with Image.open(HOMESCAPES / f'{name}.png') as original:
-                areas.append(silhouette(original).histogram()[255])
-        # Chips and deliveries already draw on a smaller quad than standalone objects.
-        scale = .86 if family in ('chip', 'delivery') else .80
-        if family == 'rocket':
-            scale *= .80  # Reduce the painted rockets' width and height by 20%.
-        result[family] = round(median(areas) * scale ** 2)
-    return result
+# Target silhouette areas in px, measured once from the original chip, rocket
+# and bomb sprites this art replaced, then scaled: chips by .86, rockets by
+# .80 * .80 and the bomb by .80. Painted objects are fitted to these areas.
+REFERENCE_AREAS = {'chip': 6273, 'rocket': 2960, 'bomb': 5180}
 
 
 def object_offset(sprite, mask):
@@ -173,15 +150,13 @@ def inputs(root):
     paint = [BLOCKER_PAINT / name for name in ('source.png', 'prompt.txt', 'reference.png')]
     if root.name == 'christmas-market':
         paint += [POWER_UP_PAINT / name for name in ('source.png', 'prompt.txt', 'scener-strip.png')]
-        paint += [HOMESCAPES / f'{name}.png' for name in ('rocket-horizontal', 'rocket-vertical', 'bomb')]
-    paint += [FLOOR_PAINT / name for name in ('source.png', 'prompt.txt', 'relic-rush-concepts.png', 'christmas-market-concepts.png')]
     return painted(root) + sun_coin + festive + paint + chain_inputs()
 
 
 def registered(root, mask):
     path, prompt, *_ = painted(root)
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
-    areas = reference_areas()
+    areas = REFERENCE_AREAS
     hex_silhouette = mask.point(lambda alpha: 255 if alpha >= 128 else 0)
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
@@ -189,9 +164,9 @@ def registered(root, mask):
         festive = stack.enter_context(Image.open(root / FESTIVE_ATLAS / 'source.png')) if pack == 'festive' else None
         if festive:
             assert festive.mode == 'RGBA' and festive.size == (1536, 1024), festive.filename
-        power_ups, floors, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
-                 for folder in (POWER_UP_PAINT, FLOOR_PAINT, BLOCKER_PAINT)]
-        for sheet in (power_ups, floors, blockers):
+        power_ups, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
+                 for folder in (POWER_UP_PAINT, BLOCKER_PAINT)]
+        for sheet in (power_ups, blockers):
             assert sheet.mode == 'RGBA', sheet.filename
         assert source.mode == 'RGBA' and source.size == (1254, 1254), source.filename
         frames, records = registered_chains(root.name, root)
@@ -200,7 +175,6 @@ def registered(root, mask):
             name = f'{pack}-{i}' if i < 6 else slot
             row, col = divmod(i, 5)
             is_power_up_paint = name in BOOSTER_ICONS
-            is_floor_paint = name in PAINTED_FLOORS
             is_blocker_paint = name == 'stone-1'
             is_festive_piece = festive is not None and i < 6
             if is_festive_piece:
@@ -224,24 +198,7 @@ def registered(root, mask):
                 sheet, sprite_prompt = blockers, BLOCKER_PAINT / 'prompt.txt'
                 col = int(root.name == 'christmas-market')
                 crop = (col * sheet.width // 2, 0, (col + 1) * sheet.width // 2, sheet.height)
-            elif is_floor_paint:
-                row, col = divmod(PAINTED_FLOORS.index(name), 2)
-                if root.name == 'christmas-market':
-                    col += 2
-                sheet, sprite_prompt = floors, FLOOR_PAINT / 'prompt.txt'
-                assert sheet.size == (FLOOR_COLUMNS[-1], FLOOR_ROWS[-1]), sheet.filename
-                crop = (FLOOR_COLUMNS[col], FLOOR_ROWS[row], FLOOR_COLUMNS[col + 1], FLOOR_ROWS[row + 1])
-                if name in MATERIALS:
-                    # Register the interior of the square, keeping paint clear of its edges.
-                    left, top, right, bottom = silhouette(sheet.crop(crop)).getbbox()
-                    side = min(right - left, bottom - top) - 20
-                    x = crop[0] + (left + right - side) // 2
-                    y = crop[1] + (top + bottom - side) // 2
-                    crop = (x, y, x + side, y + side)
             else:
-                # Delivery occupies the third cell of the base sheet's last row.
-                if name == 'delivery':
-                    row, col = 4, 2
                 crop = (
                     round(col * source.width / 5), 265 if row == 1 else round(row * source.height / 5),
                     round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
@@ -251,13 +208,7 @@ def registered(root, mask):
             painted_as = BOOSTER_ICONS.get(name, name)
             family = 'chip' if i < 6 else 'rocket' if painted_as.startswith('ray-') else painted_as
             target = areas.get(family)
-            if name in MATERIALS:
-                # The live board SDF supplies the alpha at the patch boundary.
-                assert sprite.getchannel('A').getextrema()[0] >= 240, name
-                frame = sprite.convert('RGB').resize((SIZE, SIZE), Image.Resampling.LANCZOS).convert('RGBA')
-                fit = 'tiled material'
-                fitted_size = [SIZE, SIZE]
-            elif is_blocker_paint:
+            if is_blocker_paint:
                 frame, fitted_size, offset = register_stone(sprite, mask)
                 fit = 'full flat-top hex with the canonical face mask'
             else:
@@ -286,16 +237,12 @@ def registered(root, mask):
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['edit_target'] = os.path.relpath(POWER_UP_PAINT / 'scener-strip.png', root)
                 records[name]['painted_as'] = BOOSTER_ICONS[name]
-            if is_floor_paint or is_blocker_paint:
+            if is_blocker_paint:
                 records[name]['generator'] = 'built-in ImageGen'
-                if is_blocker_paint:
-                    records[name]['reference'] = os.path.relpath(BLOCKER_PAINT / 'reference.png', root)
-                else:
-                    records[name]['reference'] = os.path.relpath(FLOOR_PAINT / f'{root.name}-concepts.png', root)
-                if name not in MATERIALS:
-                    records[name]['offset'] = offset
+                records[name]['reference'] = os.path.relpath(BLOCKER_PAINT / 'reference.png', root)
+                records[name]['offset'] = offset
             if target:
                 records[name]['offset'] = offset
-                records[name]['homescapes_target_area_px'] = target
+                records[name]['target_area_px'] = target
                 records[name]['silhouette_area_px'] = silhouette(frame).histogram()[255]
     return frames, records

@@ -188,12 +188,6 @@ Theo’s workshop introduces Hammer pieces and the Candlelight shop introduces
 Lightning pieces. Match them to charge their tools. Stored uses and partial
 charge carry between wishes.
 
-### Homescapes board mechanics
+### Board
 
-The shared hex board uses original Homescapes pieces and blockers. Homescapes power-ups (rockets, bombs, planes and rainbow balls) are not part of the engine: matches only clear, and imported power-up cells and generator tokens become ordinary pieces. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.
-
-The field uses the market's slate-blue hex palette.
-
-Original blocker artwork now covers nuts, statues, cookie stacks and ceramic tiles, with original components for platters, blinds and visible queues. [Source/state inventory](../../docs/HOMESCAPES_ART.md) records all six original jelly layers, both portal rings, the recovered maker dome and the remaining field artwork.
-
-Imported Homescapes fields fit their active-cell bounds to the phone area between HUD and tools. Source-packed inverted objects are corrected during extraction; see the [before/after review](../../docs/review/homescapes-restored-art/README.md). The donut exit uses the original animated arrow, and the maker uses the original base and glass layer offsets. [Portrait captures](../../docs/review/homescapes-arrow-maker/README.md)
+The shared hex board follows Cradle of Rome: chains, ice, carved stones and blue tablets, drawn with the recreated Cradle of Rome hex tiles. Matches only clear; power comes from the tools. The field uses the market's slate-blue hex palette.

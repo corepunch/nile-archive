@@ -1205,11 +1205,8 @@ function G.bind(R, over)
         if R.on_island or not R.g or R.g.won or R.g.lost or R.overlay ~= R.OV_NONE then return false end
         local g = R.g
         g.score = math.max(g.score, rules.level_of(g).score)
-        g.delivered, g.carpeted = g.delivery_total, g.carpet_total
-        if rules.level_of(g).oil_still then
-            for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
-            g.oil_left = 0
-        end
+        for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
+        g.oil_left = 0
         g.won = true
         R.overlay = R.OV_RESULT
         return true
@@ -1297,11 +1294,8 @@ function G.bind_completed_rewards(R, rules)
         local g = R.make_board(completed.level,completed.rng)
         g.rng, g.moves, g.score, g.earnings = completed.rng, completed.moves, completed.score, completed.earnings
         local spec = rules.level_of(g)
-        g.won, g.relics, g.delivered, g.oil_left = true, spec.relics, g.delivery_total, 0
-        for i = 0, rules.CELLS-1 do
-            g.oil[i] = 0
-            if g.tiles[i].kind == rules.DELIVERY then g.tiles[i] = rules.tile(-1) end
-        end
+        g.won, g.relics, g.oil_left = true, spec.relics, 0
+        for i = 0, rules.CELLS-1 do g.oil[i] = 0 end
         R.reset_board(g)
         R.on_island, R.overlay, R.intro = false, R.OV_RESULT, nil
     end

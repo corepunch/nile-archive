@@ -35,8 +35,6 @@
     "data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
     "data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
     "data/board-states/chain.png": "ae805d47172a2179d0840850ed5e171e98298044f36fa1d6f73d7a158cf77339",
-    "data/board-states/delivery-exit.png": "466df7e04619cf906702ec1f6087e1a74e2b145d48c44d0c0ee195565cf09a67",
-    "data/board-states/delivery.png": "0487d638343be5690e652bf59976a758378c524ab6586345cd131ecc985c2cd9",
     "data/board-states/dynamite-disabled.png": "b1de17dae5b084c824a8faeebd6a4d7cd543494ba0e5b6af07c0690cf0a0e86c",
     "data/board-states/dynamite-hover.png": "0bd70e5b9fd9a37633e9d9cc8f0597a139fc6f79958dd2ed4a7ad9d3908dcdad",
     "data/board-states/dynamite-normal.png": "3af8e04f293dcea94a8fb01633bc728732e2a6b759e5b4e1b0533b8008608b93",
@@ -165,7 +163,7 @@
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/market-goods.png": "7158aae3eabf4a2b11343ff23f9d9c0b82256017fb4ad388c48c5a41f0151640",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-    "data/match3.png": "b42fb80a6ecf3c963713cd22518df9531f7f8f76fb0f2cfcd3eaec0a28c64d11",
+    "data/match3.png": "8fe7575f2eda9c26941eb5c0b50301720e690c21f20b782a5a4af4dd3f729978",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -281,124 +279,14 @@
       "hidden-partial": "data/board-states/hidden-partial.png",
       "hidden-revealed": "data/board-states/hidden-revealed.png",
       "growth": "data/board-states/growth.png",
-      "delivery": "data/board-states/delivery.png",
-      "delivery-exit": "data/board-states/delivery-exit.png",
       "object-goal": "data/board-states/object-goal.png"
     },
     "review": [
       "../../docs/review/match3-elements/christmas-market-states.png",
       "../../docs/review/match3-elements/christmas-market-state-narrow.png"
     ],
-    "delivery_source": "../../engine/art/match3-elements/source-v1.png",
-    "delivery_prompt": "../../engine/art/match3-elements/prompt-v1.txt",
     "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
-    "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask; free-standing delivery retains original authored alpha. No recoloring or derived damage states."
-  },
-  "homescapes": {
-    "registration": "art/match3-atlas.json",
-    "documentation": "../../docs/HOMESCAPES_HEX.md",
-    "gaps": "https://github.com/corepunch/nile-archive/issues/98",
-    "state_inventory": "../../docs/HOMESCAPES_ART.md",
-    "restored_states": {
-      "hazelnut": [
-        1,
-        2,
-        3
-      ],
-      "statue": [
-        1,
-        2,
-        3
-      ],
-      "cookie-stack": [
-        1,
-        2,
-        3
-      ],
-      "membrane-fill": [
-        1,
-        2
-      ],
-      "apple-platter": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
-      ],
-      "blind": [
-        "body",
-        "top"
-      ],
-      "generator": [
-        "shell",
-        "next-queued-original-piece"
-      ],
-      "jelly": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
-      "jelly_cherry": [
-        "clear at strength 1",
-        "soft at strength 2"
-      ],
-      "portal": [
-        "yellow entrance",
-        "blue output"
-      ],
-      "donut_maker_glass": [
-        "original back and front layers registered at source offsets"
-      ],
-      "goal_color_box": [
-        "HUD"
-      ],
-      "carry_exit": [
-        "original arrow with three staggered copies"
-      ],
-      "donut_maker_charge": [
-        "empty",
-        "raw",
-        "heated",
-        "glazed",
-        "green sprinkles",
-        "yellow sprinkles"
-      ],
-      "color_box_field": {
-        "colors": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
-        "health": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ]
-      }
-    },
-    "restoration_review": "../../docs/review/homescapes-restored-art/README.md",
-    "remaining": [
-      "exact original group composition",
-      "original maker animation timing and output indicator placement"
-    ],
-    "followup_review": "../../docs/review/homescapes-jelly-portals/README.md",
-    "arrow_and_maker_review": "../../docs/review/homescapes-arrow-maker/README.md",
-    "maker_pose_review": "../../docs/review/homescapes-maker-poses/README.md",
-    "windows_art_review": "../../docs/review/homescapes-windows-art/README.md"
+    "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask. No recoloring or derived damage states."
   },
   "board_theme": {
     "source": "art/board-theme/source.png",
@@ -408,14 +296,6 @@
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/board-palette/README.md",
     "states": {
-      "carpet": [
-        "carpet-swatch",
-        "goal-carpet"
-      ],
-      "oil": [
-        "oil-material",
-        "goal-oil"
-      ],
       "stone": [
         "stone-1"
       ],
@@ -426,9 +306,6 @@
         "festive-3",
         "festive-4",
         "festive-5"
-      ],
-      "delivery": [
-        "delivery"
       ],
       "chains": [
         "chain",
@@ -480,21 +357,6 @@
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/board-floors/README.md"
-    },
-    "terrain_paint": {
-      "generator": "built-in ImageGen",
-      "source": "../../art/match3-terrain/source.png",
-      "prompt": "../../art/match3-terrain/prompt.txt",
-      "reference": "../../art/match3-terrain/christmas-market-concepts.png",
-      "frames": {
-        "carpet-swatch": "Lanternlight surface beneath pieces",
-        "goal-carpet": "Lanternlight goal counter and guide icon",
-        "oil-material": "Powder snow surface beneath pieces",
-        "goal-oil": "Powder snow goal counter and guide icon"
-      },
-      "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/themed-terrain/README.md"
     }
   },
   "tiles": {

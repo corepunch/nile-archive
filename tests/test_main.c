@@ -11,12 +11,12 @@
 
 TEST(script_boot_arguments)
 {
-    char *args[] = {"test", "--homescapes", "st0065", "--fresh"};
+    char *args[] = {"test", "--level", "4", "--fresh"};
     app_boot_args(4, args);
-    CHECK(!strcmp(app_arg("homescapes"), "st0065"));
+    CHECK(!strcmp(app_arg("level"), "4"));
     CHECK(app_arg("fresh") && !*app_arg("fresh"));
     app_boot_args(0, NULL);
-    CHECK(app_arg("homescapes") == NULL);
+    CHECK(app_arg("level") == NULL);
 }
 
 TEST(script_module_roots)

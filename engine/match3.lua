@@ -153,36 +153,20 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
     function R.goal_entries()
         local g, l = R.g, rules.level_of(R.g)
-        if g.hs then
-            local icons={CELL_JELLY="goal-carpet",CELL_OIL="goal-oil",BOX="goal-box",TRASH="goal-trash",ICE="ice-1",LOCK="goal-lock",CARRY="goal-carry",COLLECT_PIGGY="goal-piggy",TARGET_GENERATOR="goal-target-generator",TRASHSTONE="hazelnut-3",STATUE="statue-1",BUBBLE_MEMBRANE="membrane-fill-2",SHUTTERS="blind-body"}
-            local entries={}
-            for n,goal in ipairs(g.hs.goals) do entries[#entries+1]={id="source-"..n,
-                kind=goal.type=='CHIPS' and goal.subtype or nil, icon=icons[goal.type],
-                remaining=math.max(0,goal.max-goal.current)} end
-            return entries
-        end
         local entries = {{id="score",icon="score",remaining=math.max(0,l.score-g.score)},
             {id="idols",icon=not g.goal_kind and "idols" or nil,kind=g.goal_kind,
                 remaining=math.max(0,l.relics-g.relics)}}
-        if g.delivery_total>0 then
-            local icon = l.deliveries and l.deliveries.icon or "delivery"
-            entries[#entries+1]={id="deliveries",icon=icon,remaining=g.delivery_total-g.delivered}
-        end
         if g.initial_obstacles>0 then
             local stone_only = (l.chains or 0)==0 and (l.ice or 0)==0 and l.stones and #l.stones>0
             local icon = (R.board_goal_icon and R.board_goal_icon(l, "locks"))
                 or (stone_only and "stone-1" or "chain")
             entries[#entries+1]={id="locks",icon=icon,remaining=math.max(0,g.obstacles)}
         end
-        if (g.carpet_total or 0)>0 then
-            local icon = R.board_goal_icon and R.board_goal_icon(l, "carpet")
-            entries[#entries+1]={id="carpet",icon=icon or "goal-carpet",remaining=g.carpet_total-g.carpeted}
-        end
         if g.oil_left>0 or l.oil and #l.oil>0 then
             -- A buried find (reveal.object) is its own goal icon.
             local find = l.reveal and l.reveal.object and l.reveal.icon
             local floor = R.board_goal_icon and R.board_goal_icon(l, "oil")
-            entries[#entries+1]={id="oil",icon=find or floor or "goal-oil",remaining=g.oil_left}
+            entries[#entries+1]={id="oil",icon=find or floor or "tile-tablet-single",remaining=g.oil_left}
         end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}
@@ -447,14 +431,14 @@ function E.bind_town_board_hud(R)
     local neutral = app.arg("default-match3")
 
     function R.draw_board_hud()
-        if neutral or R.g.hs then return goal_hud() end
+        if neutral then return goal_hud() end
         local box = R.town:header(R.header_capsules(true), BOARD_HEADER)
         local arrive = R.intro and R.intro:arrive(.16, 3, .42) or 1
         if arrive > .05 then R.draw_moves(box:center(), arrive, box.w * .5) end
     end
 
     function R.goal_target(kind)
-        if neutral or R.g.hs then return goal_target(kind) end
+        if neutral then return goal_target(kind) end
     end
 
     if not neutral and R.currency_capsules then
@@ -466,7 +450,7 @@ function E.bind_town_board_hud(R)
     end
 
     function R.mission(...)
-        if app.arg("mission") or R.g.hs then mission(...) end
+        if app.arg("mission") then mission(...) end
     end
 end
 
@@ -655,7 +639,6 @@ function E.new(config)
     M.LEVELS, M.level_shapes = #M.levels, config.level_shapes or {}
     assert(M.LEVELS > 0, "match3 needs a level")
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
-    M.DELIVERY = -2
     local shapes = require("match3.shapes")
     function M.level_of(g) return M.levels[g.level + 1] end
     function M.is_goal_kind(g, kind)
@@ -681,15 +664,13 @@ function E.new(config)
         local kinds = g.spawn_kinds or default_kinds
         return kinds[randn(g, #kinds) + 1]
     end
-    local home = require("match3.homescapes").bind(M,randn)
-
     -- Matches only clear. As in Cradle of Rome, power is earned through tools,
     -- never made by a longer line, so a piece is just its kind.
     local function tile(kind) return {kind = kind} end
     M.tile = tile
 
     local function swap_tiles(g, a, b) g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a] end
-    local function solid(g, i) return home.solid(g,i) or (g.stone_hp[i] or 0) > 0 end
+    local function solid(g, i) return (g.stone_hp[i] or 0) > 0 end
     local function locked(g, i) return (g.chain[i] or 0) > 0 or (g.ice[i] or 0) > 0 or solid(g, i) end
 
     local function cell_active(g, cell) return cell >= 0 and cell < CELLS and g.active[cell] end
@@ -697,13 +678,12 @@ function E.new(config)
 
     local function equal(g, a, b)
         return cell_active(g, a) and cell_active(g, b) and not solid(g,a) and not solid(g,b)
-            and not g.tiles[a].element and not g.tiles[b].element
             and g.tiles[a].kind >= 0 and g.tiles[a].kind == g.tiles[b].kind
     end
 
     -- An empty match: which cells clear (mask), which a match cleared
     -- (ordinary) and which a tool hit directly (direct).
-    local function new_match() return {mask = {}, direct = {}, ordinary = {}, spread = {}, hits = 0} end
+    local function new_match() return {mask = {}, direct = {}, ordinary = {}, hits = 0} end
     M.new_match = new_match
 
     local function count_hits(m)
@@ -756,7 +736,6 @@ function E.new(config)
             local c = hex_neighbor(cell, d)
             while c >= 0 do
                 if cell_active(g, c) then m.mask[c], m.direct[c] = true, true end
-                if g.tiles[c].element == "cookie" then break end
                 c = hex_neighbor(c, d)
             end
         end
@@ -775,7 +754,7 @@ function E.new(config)
     end
 
     local function reset_match(m)
-        m.mask, m.direct, m.ordinary, m.spread, m.hits = {}, {}, {}, {}, 0
+        m.mask, m.direct, m.ordinary, m.hits = {}, {}, {}, 0
         m.match_lengths, m.pierce_kind = nil, nil
     end
 
@@ -805,7 +784,7 @@ function E.new(config)
     local game_matches = M.game_matches
 
     local function movable_for_swap(g, i)
-        return not locked(g, i) and g.tiles[i].kind ~= -1 and g.tiles[i].element ~= "cherry"
+        return not locked(g, i) and g.tiles[i].kind ~= -1
     end
 
     function M.game_can_swap(g, a, b)
@@ -825,7 +804,7 @@ function E.new(config)
             return false
         end
         g.moves = g.moves - 1
-        g.combo, g.turn_pending, g.oil_cleared = 0, true, false
+        g.combo = 0
         return true
     end
     local game_swap = M.game_swap
@@ -857,25 +836,18 @@ function E.new(config)
         for i = 0, CELLS - 1 do
             if damage[i] and g.stone_hp[i] > 0 then g.stone_hp[i], g.obstacles = 0, g.obstacles - 1 end
         end
-        local protected = home.apply(g,m)
         local cleared = 0
         g.last_gold, g.last_wood, g.last_stone = 0, 0, 0
         g.combo = g.combo + 1
         for i = 0, CELLS - 1 do
             if cell_active(g, i) then
-                -- A match touching carpet, or a move begun on it, carpets every cell it hits.
-                if not g.hs and g.carpet and m.mask[i] and g.carpet[i] == 0 and not solid(g, i)
-                    and (m.spread or {})[i] then
-                    g.carpet[i], g.carpeted = 1, g.carpeted + 1
-                end
-                if m.mask[i] and not protected[i] and not solid(g, i) and g.tiles[i].kind ~= M.DELIVERY then
+                if m.mask[i] and not solid(g, i) then
                     local absorbed = hit_gem_protection(g, i)
                     if not absorbed or (g.tiles[i].kind == pierce_kind and equal(g, i, i) and not locked(g, i)) then
                         if g.oil and g.oil[i] > 1 then   -- a double tablet loses one layer per hit
                             g.oil[i], g.score = g.oil[i] - 1, g.score + 30
                         elseif g.oil and g.oil[i] > 0 then
-                            g.oil[i], g.oil_left, g.oil_cleared, g.score = 0, g.oil_left - 1, true, g.score + 30
-                            if g.hs then home.credit(g, 'CELL_OIL') end
+                            g.oil[i], g.oil_left, g.score = 0, g.oil_left - 1, g.score + 30
                         end
                         local k = g.tiles[i].kind
                         if k >= 0 then
@@ -935,19 +907,10 @@ function E.new(config)
     function M.game_collapse(g)
         local from, steps, spawned = {}, {}, 0
         for i = 0, CELLS - 1 do from[i] = i end
-        local function collect_deliveries()
-            for i = 0, CELLS - 1 do
-                if g.delivery_exits[i] and g.tiles[i].kind == M.DELIVERY and not locked(g,i) then
-                    home.credit(g,"CARRY")
-                    g.tiles[i], g.delivered = tile(-1), g.delivered + 1
-                end
-            end
-        end
-        collect_deliveries()
-        local function movable(i) return cell_active(g, i) and not locked(g, i) and g.tiles[i].element ~= "cherry" end
+        local function movable(i) return cell_active(g, i) and not locked(g, i) end
         local function donor(i) return movable(i) and g.tiles[i].kind ~= -1 end
         local function side_donor(i)
-            if not donor(i) or g.tiles[i].kind == M.DELIVERY then return false end
+            if not donor(i) then return false end
             local down = hex_neighbor(i, 1)
             return not movable(down) or g.tiles[down].kind ~= -1
         end
@@ -965,7 +928,7 @@ function E.new(config)
                     if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
-                    local inlet = home.source(g,i) or not cell_active(g, above)
+                    local inlet = not cell_active(g, above)
                     if not inlet then
                         if donor(above) and not used[above] then source = above
                         elseif side_donor(left) and not used[left] then source = left
@@ -977,7 +940,7 @@ function E.new(config)
                         progress = true
                     elseif inlet or not movable(left) and not movable(right) and not movable(above) then
                         spawned = spawned + 1
-                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(spawn_kind(g)), -1, -spawned
+                        step.tiles[i], step.from[i], next_from[i] = tile(spawn_kind(g)), -1, -spawned
                         progress = true
                     end
                 end
@@ -985,41 +948,18 @@ function E.new(config)
             if empty == 0 then break end
             if not progress then
                 -- A whole pass moved and made nothing, so no neighbour will ever give these
-                -- holes a piece (seen on a deliveries board with locks). Fill them as blocked cells do.
+                -- holes a piece. Fill them as blocked cells do.
                 for _, i in ipairs(fall_order) do
                     if movable(i) and g.tiles[i].kind == -1 then
                         spawned = spawned + 1
-                        step.tiles[i], step.from[i], next_from[i] = home.spawn(g,i,step.tiles) or tile(spawn_kind(g)), -1, -spawned
+                        step.tiles[i], step.from[i], next_from[i] = tile(spawn_kind(g)), -1, -spawned
                     end
                 end
             end
             steps[#steps + 1] = step
             g.tiles, from = step.tiles, next_from
-            local has_delivery = false
-            for i = 0, CELLS - 1 do
-                if g.delivery_exits[i] and g.tiles[i].kind == M.DELIVERY then has_delivery = true; break end
-            end
-            if has_delivery then
-                local next_tiles = {}
-                for i = 0, CELLS - 1 do next_tiles[i] = g.tiles[i] end
-                g.tiles = next_tiles
-                collect_deliveries()
-            end
             assert(#steps <= CELLS * CELLS, "gravity failed to settle")
         end
-        local before = g.tiles
-        g.tiles = {}
-        for i=0,CELLS-1 do g.tiles[i]=before[i] end
-        home.release(g)
-        local step,changed={tiles=g.tiles,from={}},false
-        for i=0,CELLS-1 do
-            local a,b=before[i],g.tiles[i]
-            local born=a.kind~=b.kind or a.element~=b.element
-            step.from[i]=born and -1 or i
-            if born then from[i]=-1 end
-            changed=changed or born
-        end
-        if changed then steps[#steps+1]=step end
         damp_refills(g, from)
         return from, steps
     end
@@ -1035,10 +975,8 @@ function E.new(config)
         local c = {}
         for k, v in pairs(g) do c[k] = v end
         c.tiles = {}
-        for i = 0, CELLS - 1 do c.tiles[i] = home.copy(g.tiles[i]) end
-        c.hs = home.copy(g.hs)
+        for i = 0, CELLS - 1 do c.tiles[i] = tile(g.tiles[i].kind) end
         c.active, c.chain, c.ice = copy_array(g.active), copy_array(g.chain), copy_array(g.ice)
-        c.carpet = g.carpet and copy_array(g.carpet)
         c.oil = g.oil and copy_array(g.oil)
         c.stone_hp = copy_array(g.stone_hp)
         c.tools = {table.unpack(g.tools)}
@@ -1071,8 +1009,7 @@ function E.new(config)
         local kinds, cells = g.spawn_kinds or default_kinds, {}
         for _, i in ipairs(fall_order) do
             local t = g.tiles[i]
-            if from[i] < 0 and cell_active(g, i) and not locked(g, i) and t.kind >= 0
-                and not t.element then
+            if from[i] < 0 and cell_active(g, i) and not locked(g, i) and t.kind >= 0 then
                 local matches = flags & E.LINE_MATCHES ~= 0 and shape_at(g, i)
                     or flags & E.LINE_MATCHES == 0 and collect_group(g, i, cells) >= MATCH_MIN
                 if matches then
@@ -1117,10 +1054,10 @@ function E.new(config)
     local function fill_without_matches(g)
         local cells, kinds = {}, g.spawn_kinds or default_kinds
         for i = 0, CELLS - 1 do
-            if not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then g.tiles[i] = tile(-1) end
+            if not locked(g, i) then g.tiles[i] = tile(-1) end
         end
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then
+            if cell_active(g, i) and not locked(g, i) then
                 local choices, n = {}, 0
                 if flags & E.LINE_MATCHES ~= 0 and MATCH_MIN==3 then
                     local forbidden={}
@@ -1164,7 +1101,7 @@ function E.new(config)
     function M.game_shuffle(g)
         local cells, pieces, original = {}, {}, {}
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY and not g.tiles[i].element then
+            if cell_active(g, i) and not locked(g, i) then
                 cells[#cells + 1], pieces[#pieces + 1] = i, g.tiles[i]
                 original[i] = g.tiles[i]
             end
@@ -1192,9 +1129,7 @@ function E.new(config)
     function M.game_start(lvl, seed, resource_yields, loadout)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
         local g = {
-            tiles = {}, active = {}, chain = {}, ice = {}, carpet = {}, carpeted = 0, carpet_total = 0,
-            oil = {}, oil_left = 0, oil_cleared = false, stone_hp = {},
-            delivery_exits = {}, delivered = 0, delivery_total = 0,
+            tiles = {}, active = {}, chain = {}, ice = {}, oil = {}, oil_left = 0, stone_hp = {},
             level = lvl, moves = 0, score = 0, relics = 0, obstacles = 0, initial_obstacles = 0,
             combo = 0, cleared = 0, last_gold = 0, last_wood = 0, last_stone = 0, wood = 0, stone = 0,
             rng = (seed and seed ~= 0) and (seed & 0xFFFFFFFF) or 12345,
@@ -1232,35 +1167,21 @@ function E.new(config)
         for i = 0, CELLS - 1 do
             g.active[i] = not l.mask or l.mask:sub(i + 1, i + 1) == "1"
             g.tiles[i] = tile(-1)
-            g.chain[i], g.ice[i], g.stone_hp[i], g.carpet[i], g.oil[i] = 0, 0, 0, 0, 0
+            g.chain[i], g.ice[i], g.stone_hp[i], g.oil[i] = 0, 0, 0, 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
-        if l.homescapes then home.init(g,l.homescapes);return g end
         local used = {}
         local function valid_cell(cell)
-            assert(math.type(cell) == "integer" and cell_active(g, cell), "element cell must be active")
+            assert(math.type(cell) == "integer" and cell_active(g, cell), "level cell must be active")
         end
         local function reserve(cell)
             valid_cell(cell)
-            assert(not used[cell], "overlapping elements")
+            assert(not used[cell], "overlapping stones")
             used[cell] = true
         end
         for _, entry in ipairs(l.stones or {}) do
             reserve(entry.cell)
             g.stone_hp[entry.cell] = 1
-        end
-        local delivery = l.deliveries or {}
-        for _, cell in ipairs(delivery.exits or {}) do reserve(cell); g.delivery_exits[cell] = true end
-        for _, cell in ipairs(delivery.tokens or {}) do reserve(cell); g.delivery_total = g.delivery_total + 1 end
-        if g.delivery_total > 0 then
-            assert(#(delivery.exits or {}) > 0, "delivery requires an exit")
-            -- Delivery tokens fall vertically. Check the route after removable
-            -- locks clear, without relying on sideways trickling.
-            for _, token in ipairs(delivery.tokens) do
-                local here = token
-                while cell_active(g, here) and not g.delivery_exits[here] do here = hex_neighbor(here, 1) end
-                assert(g.delivery_exits[here], "delivery exit is unreachable")
-            end
         end
         -- Solid cells cannot receive terrain or generated pieces.
         local eligible = {}
@@ -1268,7 +1189,6 @@ function E.new(config)
         order, n = eligible, #eligible
         assert(n > 0, "empty playable board")
         generate_board(g)
-        for _, cell in ipairs(delivery.tokens or {}) do g.tiles[cell] = tile(M.DELIVERY) end
         for i = 1, n do   -- selection sort, exactly as the original orders ties
             for j = i + 1, n do
                 if l.terrain and l.terrain[order[j] + 1] < l.terrain[order[i] + 1] then order[i], order[j] = order[j], order[i] end
@@ -1303,18 +1223,8 @@ function E.new(config)
             g.initial_obstacles = g.initial_obstacles + g.ice[i] + g.chain[i] + g.stone_hp[i]
         end
         g.obstacles = g.initial_obstacles
-        -- Carpet (Homescapes' CELL_JELLY): seed cells start covered and every
-        -- active cell must be covered by spreading it.
-        if l.carpet and #l.carpet > 0 then
-            for _, cell in ipairs(l.carpet) do
-                valid_cell(cell)
-                assert(cell_active(g, cell), "carpet seed outside the board")
-                if g.carpet[cell] == 0 then g.carpet[cell], g.carpeted = 1, g.carpeted + 1 end
-            end
-            for i = 0, CELLS - 1 do if cell_active(g, i) then g.carpet_total = g.carpet_total + 1 end end
-        end
-        -- Oil (Homescapes' CELL_OIL): one layer under a piece. `oil_still`
-        -- keeps it from spreading: the cover over a buried find.
+        -- Tablets (`oil`): one layer under a piece, cleared by a match on its
+        -- cell or a hit. They never spread.
         for _, cell in ipairs(l.oil or {}) do
             valid_cell(cell)
             assert(cell_active(g, cell), "oil outside the board")
@@ -1325,7 +1235,6 @@ function E.new(config)
             assert(g.oil[cell] == 1, "double tablet outside the level's oil cells")
             g.oil[cell] = 2
         end
-        if l.homescapes then home.init(g,l.homescapes); return g end
         local m = new_match()
         game_matches(g, m)
         if m.hits > 0 or not game_hint(g) then generate_board(g) end
@@ -1333,44 +1242,14 @@ function E.new(config)
         return g
     end
 
-    -- Oil spreads after a turn that cleared none of it (Homescapes'
-    -- GrowsByInactivity): one random neighbouring cell, under its piece.
-    local function grow_oil(g)
-        if not g.oil or (g.oil_left or 0) == 0 or g.oil_cleared then return false end
-        if M.levels[g.level + 1].oil_still then return false end   -- the cover over a buried find stays put
-        local seen, options = {}, {}
-        for i = 0, CELLS - 1 do
-            if g.oil[i] > 0 then
-                for d = 0, 5 do
-                    local j = hex_neighbor(i, d)
-                    if not seen[j] and cell_active(g, j) and g.oil[j] == 0 and not solid(g, j) then
-                        seen[j], options[#options + 1] = true, j
-                    end
-                end
-            end
-        end
-        if #options == 0 then return false end
-        local j = options[randn(g, #options) + 1]
-        g.oil[j], g.oil_left, g.oil_grew = 1, g.oil_left + 1, j
-        return true
-    end
-
-    function M.game_end_turn(g)
-        if not g.turn_pending then return false end
-        g.turn_pending = false
-        return grow_oil(g)
-    end
-
     function M.game_check_end(g)
-        M.game_end_turn(g)
         local l = M.levels[g.level + 1]
         local done = {score = g.score >= l.score, idols = g.relics >= l.relics,
-            locks = g.obstacles == 0, deliveries = g.delivered == g.delivery_total,
-            carpet = g.carpeted >= g.carpet_total, oil = g.oil_left == 0}
+            locks = g.obstacles == 0, oil = g.oil_left == 0}
         -- A level's own goal list is all it needs; otherwise every counter must be done.
         local cleared = true
-        for _, id in ipairs(l.goals or {"score", "idols", "locks", "deliveries", "carpet", "oil"}) do cleared = cleared and done[id] end
-        g.won = g.hs and home.won(g) or not g.hs and cleared
+        for _, id in ipairs(l.goals or {"score", "idols", "locks", "oil"}) do cleared = cleared and done[id] end
+        g.won = cleared
         g.lost = not g.won and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
             return game_shuffle(g)   -- discard stale selection/hints only after recovery
@@ -1410,7 +1289,7 @@ function E.new(config)
     local function lightning(g, m, limit, random)
         local candidates = {}
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and not m.mask[i] and g.tiles[i].kind ~= M.DELIVERY then
+            if cell_active(g, i) and not m.mask[i] then
                 candidates[#candidates + 1] = i
             end
         end
@@ -1481,23 +1360,14 @@ function E.new(config)
         local level = M.levels[g.level + 1]
         local goal = level.relics
         local relics = math.min(c.relics, goal) - math.min(g.relics, goal)
-        local delivery_access = 0
-        for i = 0, CELLS - 1 do
-            if g.tiles[i].kind == M.DELIVERY then
-                local below = hex_neighbor(i, 1)
-                if cell_active(c, below) and not locked(c, below) and c.tiles[below].kind == -1
-                    and g.tiles[below].kind ~= -1 then delivery_access = delivery_access + 1 end
-            end
-        end
-        return c.score - g.score + relics * 90 + (c.carpeted - g.carpeted) * 160 + (g.oil_left - c.oil_left) * 200
-            + (g.obstacles - c.obstacles) * 220 + delivery_access * 350
+        return c.score - g.score + relics * 90 + (g.oil_left - c.oil_left) * 200
+            + (g.obstacles - c.obstacles) * 220
     end
 
 
     -- Presentation adapter: callbacks below emit graphics, sound, haptics and notices.
     -- The engine owns selection, gestures, phase timing and all piece poses.
     function M.bind_view(R)
-        local elements = require("match3.elements_view")
     local function noop() end
     R.tone, R.vfx_wave = R.tone or noop, R.vfx_wave or noop
     R.notice = R.notice or function(message) R.toast, R.toast_time = message, 3.6 end
@@ -1523,27 +1393,6 @@ function E.new(config)
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
     local BONUS_GAP, BONUS_MARGIN = 8, 8
     local neutral_hud = app.arg("default-match3")
-    -- Imported boards can occupy only part of their enclosing hex grid. Fit
-    -- their actual cells, including the hex faces, into the space between HUD
-    -- and tools; empty grid padding must not shrink or displace the field.
-    local fitted, offset = nil, vec2(0,0)
-    if #M.levels==1 and M.levels[1].homescapes then
-        local mask=M.levels[1].mask
-        local minx,maxx,miny,maxy=math.huge,-math.huge,math.huge,-math.huge
-        for i=0,CELLS-1 do if mask:sub(i+1,i+1)=='1' then
-            local x,y=hex_q(i)*1.5,(hex_r(i)+hex_q(i)*.5)*math.sqrt(3)
-            minx,maxx=math.min(minx,x-1),math.max(maxx,x+1)
-            miny,maxy=math.min(miny,y-math.sqrt(3)/2),math.max(maxy,y+math.sqrt(3)/2)
-        end end
-        assert(minx<maxx,"source board has no active cells")
-        local width,height=maxx-minx,maxy-miny
-        local available_h=HUD_FROM_BOTTOM-HUD_H-16-TOOLS_FROM_BOTTOM-18
-        local face_radius=math.min(((R.SCREEN_W or 480)-16)/width,available_h/height)
-        if R.piece_width then R.piece_width=R.piece_width*face_radius/R.HEX_R end
-        R.HEX_R=face_radius
-        offset=vec2((minx+maxx)*face_radius/2,(miny+maxy)*face_radius/2)
-        fitted=size2(width*face_radius,height*face_radius)
-    end
     local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
     local board_size = size2(((1.5 * M.HEX_RADIUS + 1) * HEX_R + 6) * 2, ((M.HEX_RADIUS + .5) * HEX_DY + 6) * 2)
     local centred_game, centre_q, centre_row = nil, 0, 0
@@ -1556,7 +1405,7 @@ function E.new(config)
         R.tools_y = h - TOOLS_FROM_BOTTOM
         if g ~= centred_game then
             centred_game, centre_q, centre_row = g, 0, 0
-            if g and not fitted then
+            if g then
                 local min_q, max_q, min_row, max_row = math.huge, -math.huge, math.huge, -math.huge
                 for i = 0, CELLS - 1 do
                     if cell_active(g, i) then
@@ -1583,12 +1432,6 @@ function E.new(config)
         R.board_pause = bonuses and R.board_tool_bounds(#bonuses)
             or rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
         R.board_toast = rect(38, toast_y, w - 76, 28)
-        if fitted then
-            local top,bottom=R.hud_rect.y+HUD_H+16,R.tools_y-18
-            local center=vec2(w/2,(top+bottom)/2)
-            R.board_origin=center-offset
-            R.BOARD_CLIP=rect.centered(center,size2(fitted.w+12,fitted.h+12))
-        end
     end
     -- Where a backdrop of this pixel size goes in the bleed rect `full`:
     -- Covering the screen on the bottom edge, normally at least 1040 tall.
@@ -1763,10 +1606,8 @@ function E.new(config)
     function R.finish_wave()
         snapshot()
         local old_score = R.g.score
-        elements.maker_observe(R)
         rules.game_apply(R.g, R.pending)
         if R.update_bonus_charges then R.update_bonus_charges() end
-        elements.maker_observe(R)
         R.phase = PH_CLEAR
         R.phase_time = 0
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
@@ -1847,7 +1688,6 @@ function E.new(config)
         if R.art_review then return end
         R.shake = math.max(0, R.shake - dt)
         if R.overlay ~= R.OV_NONE or R.on_island then return end
-        elements.maker_update(R,dt)
         R.idle_time = R.idle_time + dt
         if R.phase == PH_IDLE and not R.g.won and not R.g.lost then   -- ready groups resolve before any input
             rules.game_matches(R.g, R.pending)
@@ -1866,9 +1706,8 @@ function E.new(config)
         local speed = R.reduced_motion and .35 or 1
         if R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
         elseif R.phase == PH_REJECT and R.phase_time >= 2 * REJECT_LEG * speed then R.phase = PH_IDLE
-        elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed and not elements.maker_busy(R) then
+        elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
-            elements.maker_observe(R)
             R.phase = PH_FALL
             R.phase_time = 0
             R.fall_landed = 0
@@ -1904,7 +1743,7 @@ function E.new(config)
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]
         if ((R.wave_chain[i] == 0 and R.wave_ice[i] == 0) or g.tiles[i].kind < 0)
-            and t.kind ~= M.DELIVERY then   -- a small pop, then shrink away
+            then   -- a small pop, then shrink away
             local f = num.saturate(R.phase_time / .24)
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)
             alpha = 255 * (1 - f * f)
@@ -1926,7 +1765,7 @@ function E.new(config)
                 clip = rect(at.x - CELL_SIZE / 2 - 1, top, CELL_SIZE + 2, R.BOARD_CLIP.h)
             end
         elseif not R.reduced_motion and landed and landed.from[i] ~= i
-            and t == landed.tiles[i] and t.kind >= 0 and t.kind ~= M.DELIVERY then
+            and t == landed.tiles[i] and t.kind >= 0 then
             -- Rebound only while the piece rests in the cell it just reached.
             at.y = at.y - HEX_DY * .07 * (4 * f * (1 - f))
             aspect = 1 + .08 * (1 - f)^3

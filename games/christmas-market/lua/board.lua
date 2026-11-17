@@ -46,7 +46,6 @@ function R.board_piece_texture(kind)
 end
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
-    if elements.delivery(R, rules, t, at, scale, alpha, aspect, ART_CELL_SIZE * .95) then return end
     if t.kind < 0 then return end
     -- Same piece size as Relic Rush: the whole 128px canvas, gutter included,
     -- spans 95% of the authored cell, so pieces never crowd the cell edges.
@@ -84,11 +83,9 @@ local function draw_relics(sx)
     for i = 0, CELLS - 1 do
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
-            if not elements.covers_cherry(g, i, t) then
-                if clip then gfx.clip(clip) end
-                draw_relic(t, at, scale * BOARD_SCALE * elements.piece_scale(g, i) * elements.selection_scale(R,i), alpha * cover, aspect, true)
-                if clip then gfx.clip(R.BOARD_CLIP) end
-            end
+            if clip then gfx.clip(clip) end
+            draw_relic(t, at, scale * BOARD_SCALE * elements.selection_scale(R,i), alpha * cover, aspect, true)
+            if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end
     gfx.unclip()
@@ -131,7 +128,7 @@ end
 ---------------------------------------------------------------------- input
 
 -- The lantern floor: its pane art, for painting and for shattering.
-function R.board_floor() return not R.g.hs and lantern_floor or nil end
+function R.board_floor() return lantern_floor end
 
 function R.board_screen(inp, dt)
     draw_backdrop()

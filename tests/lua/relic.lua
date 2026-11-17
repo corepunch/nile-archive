@@ -10,15 +10,14 @@ local tile = rules.tile
 
 
 local function blank()
-    local g = {tiles = {}, active = {}, chain = {}, ice = {}, stone_hp = {}, delivery_exits = {},
-               carpet = {}, carpeted = 0, carpet_total = 0, oil = {}, oil_left = 0, oil_cleared = false,
-               delivered = 0, delivery_total = 0, level = 0, moves = 80, score = 0, relics = 0,
+    local g = {tiles = {}, active = {}, chain = {}, ice = {}, stone_hp = {}, oil = {}, oil_left = 0,
+               level = 0, moves = 80, score = 0, relics = 0,
                obstacles = 0, initial_obstacles = 0, combo = 0, cleared = 0, last_gold = 0, last_wood = 0,
                last_stone = 0, wood = 0, stone = 0, rng = 123, won = false, lost = false, tools = {0, 0, 0}}
     for i = 0, CELLS - 1 do
         g.active[i] = true
         g.tiles[i] = tile(-1)
-        g.chain[i], g.ice[i], g.stone_hp[i], g.carpet[i], g.oil[i] = 0, 0, 0, 0, 0
+        g.chain[i], g.ice[i], g.stone_hp[i], g.oil[i] = 0, 0, 0, 0
     end
     return g
 end
@@ -183,7 +182,7 @@ local function test_holes_and_shapes()
         for i = 0, CELLS - 1 do
             local kind = g.tiles[i].kind
             local fixed = g.stone_hp[i] > 0
-            check(g.active[i] and (fixed and kind == -1 or not fixed and (kind >= 0 or kind == rules.DELIVERY))
+            check(g.active[i] and (fixed and kind == -1 or not fixed and kind >= 0)
                 or not g.active[i] and kind == -1, "collapse fills playable cells and leaves solids and voids empty")
         end
     end

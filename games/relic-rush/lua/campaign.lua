@@ -379,7 +379,7 @@ for i, l in ipairs(levels) do
     local cells = plaques[i]
     assert(cells and #cells > 0, "expedition " .. i .. " needs an authored plaque patch")
     assert(l.omit_kind == nil, "expedition " .. i .. " must spawn all six kinds")
-    l.oil, l.oil_still = cells, true
+    l.oil = cells
     l.dress = dress
     l.goals = {"oil"}
 end

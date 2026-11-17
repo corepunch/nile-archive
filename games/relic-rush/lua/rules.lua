@@ -3,16 +3,11 @@ local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
 local island = require("island")
-local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
-local flags = match3.LINE_MATCHES
-if not reference then flags = flags | match3.COLOR_TOOL end
-local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=campaign.colors, match_min=3,
-    refill_damping=not reference and 2 or nil,
-    levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
+local M = match3.new{flags=match3.LINE_MATCHES | match3.COLOR_TOOL, radius=4, colors=campaign.colors, match_min=3,
+    refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 local start = M.game_start
 function M.game_start(level, seed, restored)
-    if reference then return start(level, seed) end
     local number = math.max(0, math.min(level, M.LEVELS-1)) + 1
     local spec = M.levels[number]
     local yields, loadout, bonus, debut = economy.board_loadout(spec, number, restored, seed)
@@ -76,7 +71,6 @@ function M.level_reward(g, wonders, progress, town)
 end
 
 function M.progress_reward(p, g, wonders, town)
-    if reference then return false end
     if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
     local reward = M.reward_breakdown(g,wonders,p,town)
     p.wallet = p.wallet + reward.total

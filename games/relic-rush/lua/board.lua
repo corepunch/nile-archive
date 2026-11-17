@@ -41,7 +41,7 @@ local cell_pos = R.cell_pos
 function R.board_piece_texture(kind)
     local g = R.g
     local level = rules.level_of(g)
-    local campaign = campaign_pieces and not g.hs
+    local campaign = campaign_pieces
     local piece = g.resource_yields and g.resource_yields[kind]
     if piece and piece.tool then return R.board_art[piece.icon] end
     if level.story_piece and kind == level.goal_kind then
@@ -60,7 +60,6 @@ function R.board_piece_texture(kind)
 end
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
-    if elements.delivery(R, rules, t, at, scale, alpha, aspect, ART_CELL_SIZE * .95 * (board and BOARD_SCALE or 1)) then return end
     if t.kind < 0 then return end
     -- Preserve the original piece canvas, including its transparent gutter.
     -- Filling the cell with the opaque interior makes pieces crowd its edges.
@@ -104,11 +103,9 @@ local function draw_relics(sx)
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
             alpha = alpha * cover
-            if not elements.covers_cherry(g, i, t) then
-                if clip then gfx.clip(clip) end
-                draw_relic(t, at, scale * elements.piece_scale(g, i) * elements.selection_scale(R,i), alpha, aspect, true)
-                if clip then gfx.clip(R.BOARD_CLIP) end
-            end
+            if clip then gfx.clip(clip) end
+            draw_relic(t, at, scale * elements.selection_scale(R,i), alpha, aspect, true)
+            if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end
     gfx.unclip()
@@ -146,7 +143,7 @@ end
 
 -- The level's floor dress: its tablet art, for painting and for shattering.
 function R.board_floor()
-    local dress = not R.g.hs and rules.level_of(R.g).dress
+    local dress = rules.level_of(R.g).dress
     return dress and dress.floor
 end
 

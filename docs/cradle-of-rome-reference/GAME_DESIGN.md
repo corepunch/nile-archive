@@ -243,7 +243,7 @@ A direct-match special (e.g. a rocket spawned by a four-in-a-row) is not the sam
 - **City tool:** unlocked by construction, charged by matching its dedicated piece, stored in the toolbar and activated when needed.
 - **Citizen upgrade:** persistent improvement earned by a separate challenge at a building.
 
-Some editions also feature a special arrow for a five-plus match; see Awem Tips and Tricks. Do not assume that a contemporary Homescapes-like rocket implementation is an exact recreation of that rule.
+Some editions also feature a special arrow for a five-plus match; see Awem Tips and Tricks. Do not assume that a contemporary rocket implementation is an exact recreation of that rule.
 
 ## 7. Citizen challenges: buildings can have a second payoff
 
@@ -368,9 +368,9 @@ At the time of that resource-prototype document:
 - **Lumber workshop → Hammer**, debut board 5.
 - **Candlelight shop → Lightning**, debut board 20.
 - The prototype describes tools **starting uncharged on each board**, a seeded choice of one unlocked charge family when several exist, and a 200-charge threshold.
-- The market also has **stars for land/decor access**; these are not spent as universal Homescapes-style repair currency.
+- The market also has **stars for land/decor access**; these are not spent as a universal repair currency.
 
-**Important potential documentation mismatch:** the game's [README](../../games/christmas-market/README.md) also describes a broader set of Homescapes-derived match-board specials. These should be distinguished from Rome-style inventory tools. Verify the current runtime and tests before changing special-generation behavior or asserting that all variants share the prototype's rule.
+The shared engine has no match-made specials: as in Rome, power comes only from the inventory tools.
 
 ### Differences we should preserve
 

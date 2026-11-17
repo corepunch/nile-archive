@@ -7,10 +7,7 @@ The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pa
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `relics-0` through `relics-5` | Round gold sun coin, red flame, jade leaf, blue scarab, violet crystal and orange amphora. Source and preview boards use these older frames. |
-| `carpet-swatch`, `goal-carpet` | Dusty blue tesserae and a limestone chevron mark restored floor. Matching on the mosaic restores the cells it clears. The goal shows a fragment of the restored pattern. |
-| `oil-material`, `goal-oil` | Matte rose-brown sediment gathers in shallow banks. Matching on it clears it. If the turn clears none, silt spreads to a neighbouring cell. A silt bank icon identifies the goal. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
-| `delivery` | Carved tablet from the earlier delivery boards. Imported boards use their own tokens. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
@@ -21,7 +18,6 @@ The engine has no special pieces, so the atlas carries no rocket, bomb, plane or
 
 One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
 
-The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one built-in ImageGen call for both games using the [approved concepts](../../../art/match3-terrain/relic-rush-concepts.png). The [prompt](../../../art/match3-terrain/prompt.txt) and [registration manifest](../art/match3-atlas.json) record the opaque swatch crops and alpha-preserving goal icon placement. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/themed-terrain/README.md).
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
@@ -230,9 +226,7 @@ The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
 [exact prompt](../../../engine/art/match3-elements/prompt.txt) contain both games'
 24-state families in one ImageGen call. The full-bleed tile faces are cropped,
 resized and registered with the [canonical engine hex mask](../../../engine/art/hex-tile/README.md).
-The two free-standing delivery pieces retain their authored alpha from the earlier
-[master](../../../engine/art/match3-elements/source-v1.png) and
-[prompt](../../../engine/art/match3-elements/prompt-v1.txt). The
+The
 [registration manifest](../../../engine/art/match3-elements/manifest.json) records
 all sources, crops and runtime paths. From the repository root, reproduce the
 states with `python3 tools/match3_elements_art.py`, then pack the runtime atlas
@@ -242,16 +236,15 @@ states against the canonical mask.
 
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
-| Carved stone | `stone-1` | Solid; one adjacent match or direct power-up hit breaks it. |
-| Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
+| Carved stone | `stone-1` | Solid; one adjacent match or a direct tool hit breaks it. |
 
-The master's crate, tunnel, hidden-object and growth cells belong to mechanics
-the engine no longer has (they are not in Homescapes' story levels). They stay
+The master's crate, tunnel, hidden-object, growth and delivery cells belong to
+mechanics the engine no longer has. They stay
 in the master image but are not registered, and their frames left the atlas.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review the carved stone and the delivery on the actual board with
+Review the carved stone on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/relic-rush-states.png)
 and [narrow](../../../docs/review/match3-elements/relic-rush-state-narrow.png).
@@ -375,8 +368,7 @@ and resizing; it does not create new colours or states.
 
 Live expeditions make no special pieces: matches of any length or shape only
 clear, and power comes from the charged bonus tools (Cradle of Rome rules).
-Rockets, bombs, planes and rainbow balls appear only on Homescapes reference
-boards (`--homescapes`), in art previews and in effect captures (`--fx`).
+The engine has no rockets, bombs, planes or rainbow balls.
 
 Source for every new sprite below: `art/board-states/source.png`, generated together
 in one built-in ImageGen call. The exact prompt is
@@ -426,16 +418,13 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `chain` | A silver chain holds the chip between two bolted hex edges. One hit unlocks the piece. |
 | `ice-2` | Diagnostic ice pane with two hits remaining. |
 | `ice-1` | Diagnostic ice pane with one hit remaining. |
-| `carpet-swatch`, `goal-carpet` | Shared mosaic art for the neutral atlas and source-level reviews. |
-| `oil-material`, `goal-oil` | Shared spreading-silt art for the neutral atlas and source-level reviews. The campaign overrides this slot with blue plaques and sets the fixed-cell rule. |
 | `selected` | Soft filled mint glow under the tapped piece; no outline |
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
 The campaign uses the same silver chain art on each board. One hit breaks
 the chain and keeps the piece in place. A later hit clears the piece and its
-blue plaque. Ice and carpet textures are recorded here for shared engine
-and source-board diagnostics.
+blue plaque. Ice textures are recorded here for shared engine diagnostics.
 
 ### Story materials
 
@@ -653,9 +642,7 @@ pause, guide and the island.
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
 | FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
 | Last tablets | Cradle of Rome 2's original `Star_02_16.png` and `Star_16.png` are packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in `data/match3.png`. `engine/match3_vfx.lua` sweeps them clockwise along the bevel over a soft blue wash. One to three tablets receive the first pulse with the move suggestion. The cue repeats every nine seconds until board input. Reduce Motion hides it. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow). |
-| Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single`, or the `oil-material` hex sample on undressed levels) into about eight Voronoi shards (`engine/match3_shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above billowing smoke: four Kenney puff sprites per cell (`fx-smoke-0..3`, below), turning slowly, tinted pale earth and fading over about 1.25 s, after the shards. The shards are procedural cut-outs of existing art with no new states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg); smoke [before](screenshots/review/shatter/smoke-before.jpg) and [after](screenshots/review/shatter/smoke-after.jpg) (24 reel frames, 2 apart). |
-| Special birth | Existing authored special plus transient halo/sparks |
-| Attack | Procedural travelling rays, bomb rings, prism links and combo effects |
+| Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single` levels) into about eight Voronoi shards (`engine/match3_shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above billowing smoke: four Kenney puff sprites per cell (`fx-smoke-0..3`, below), turning slowly, tinted pale earth and fading over about 1.25 s, after the shards. The shards are procedural cut-outs of existing art with no new states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg); smoke [before](screenshots/review/shatter/smoke-before.jpg) and [after](screenshots/review/shatter/smoke-after.jpg) (24 reel frames, 2 apart). |
 | Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |
 | Reduced motion | Suppresses trails, shake, squash and effect spawns; the board's entrance becomes a short fade; rule resolution stays active |
 
@@ -1036,33 +1023,6 @@ All 46 scenes / 120 lines reuse the authored cast sheet `art/art-direction/exped
 The runtime cast all face right. The portrait import mirrors Adrian’s crop from the original lineup to match the other three. It also isolates Mara’s bust from a stray fragment of the neighboring portrait while keeping her canvas and anchors. Run `python3 games/relic-rush/tools/prepare_assets.py --portraits-only` to reproduce the exports. The story renderer mirrors the portrait on the right side and keeps partners facing one another across turns. [Phone captures](review/portrait-facing/README.md) show the staging. Body text is 31.5 points, names/building bubbles 22.5 points, retaining the cream/ink palette. All thirty boards use the existing packs and the Lagoon/Temple paintings; the island and all ten wonder sprites/registration remain unchanged. Narrative-specific building bubbles reveal only clues the player has reached. The implementation intentionally stages scenes over existing paintings rather than adding cinematic panel assets.
 
 Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.json:story`. Script compilation: `python3 games/relic-rush/tools/prepare_story.py`. Reproduction and inspected game captures are in [story review](review/story/README.md); use `--story-beat before-11`, `--story-beat after-28`, or `--story-beat after-30 --story-line 9`.
-
-## Original Homescapes board atlas
-
-Before the themed board art above, the Homescapes import replaced the earlier striped-gem and themed-piece mappings. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` were standalone original power-ups and all piece packs aliased `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
-
-See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
-
-Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. The donut collection exit remains diagnostic under issue #98.
-
-## Recovered original blocker and generator artwork
-
-The shared [source/state inventory](../../../docs/HOMESCAPES_ART.md) records every added state, the 9.2.601/3.5.9 source versions, exact crops/rotations/hashes, original goal icons, manually registered group composites, reproduction commands and unresolved requirements under issue #98. [Actual game review](../../../docs/review/homescapes-restored-art/README.md) includes both portrait sizes. No state recoloring or generated artwork was used. All six jelly layers, the glass dome and the colored-box goal icon use original parts. Exact maker charge poses and colored-box field artwork remain open. [Jelly, portal and maker captures](../../../docs/review/homescapes-jelly-portals/README.md).
-
-Original atlas orientation: statues, nuts, cookie stacks, platter, maker base, blind header and queue shell use recorded 180° extraction rotations. Active source fields now fit the available phone area; both sizes and pointer registration are covered in the [review](../../../docs/review/homescapes-restored-art/README.md).
-
-The donut exit uses the original `CarryExitForAnim` sprite. The maker base and
-both glass layers use the original shared-frame offsets. See the [source
-registration and portrait review](../../../docs/review/homescapes-arrow-maker/README.md).
-
-The Windows 9.2.601 x64 atlas supplies the
-classic donut maker charge layers. See the [source registration and portrait
-review](../../../docs/review/homescapes-windows-art/README.md).
-
-The maker plays queued, approximate source-video stage transitions on the field;
-[durations, uncertainty and review command](../../../docs/HOMESCAPES_ART.md)
-are recorded in the shared inventory. Original particle curves remain open in
-[issue #98](https://github.com/corepunch/nile-archive/issues/98).
 
 ## Island streets
 

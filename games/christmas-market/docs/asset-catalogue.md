@@ -9,10 +9,7 @@ The earlier festive set remains available to the inherited preview surfaces.
 | --- | --- |
 | `festive-0` through `festive-5` | Bell, candy cane, holly, knitted mitten, bauble and gingerbread, in atlas order. |
 | `booster-star-icon`, `booster-firework-icon` | The Shooting Star and Firework Bomb booster icons: the painted cranberry-red row rocket with vanilla-ivory tips, and the evergreen bomb with a warm-gold belt, rope fuse and lit tip. Never drawn on the board: the engine has no special pieces. |
-| `carpet-swatch`, `goal-carpet` | Warm apricot light spreads across the paving when a match touches a lit cell. A bronze lantern identifies the goal. |
-| `oil-material`, `goal-oil` | Pale matte snow drifts beneath treats. Matching on it clears it. If the turn clears none, snow drifts into a neighbouring cell. A snow mound identifies the goal. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
-| `delivery` | The campaign's red parcel. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
 ImageGen painted all six market goods in one [transparent atlas](../art/festive-pieces/source.png)
@@ -35,7 +32,6 @@ Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for bot
 
 One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
 
-The [terrain atlas](../../../art/match3-terrain/source.png) was painted in one built-in ImageGen call for both games using the [approved concepts](../../../art/match3-terrain/christmas-market-concepts.png). The [prompt](../../../art/match3-terrain/prompt.txt) and [registration manifest](../art/match3-atlas.json) record the opaque swatch crops and alpha-preserving goal icon placement. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/themed-terrain/README.md).
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
@@ -45,9 +41,7 @@ The 48-cell [surface master](../../../engine/art/match3-elements/source.png) and
 [exact prompt](../../../engine/art/match3-elements/prompt.txt) contain both games'
 24-state families in one ImageGen call. The full-bleed tile faces are cropped,
 resized and registered with the [canonical engine hex mask](../../../engine/art/hex-tile/README.md).
-The two free-standing delivery pieces retain their authored alpha from the earlier
-[master](../../../engine/art/match3-elements/source-v1.png) and
-[prompt](../../../engine/art/match3-elements/prompt-v1.txt). The
+The
 [registration manifest](../../../engine/art/match3-elements/manifest.json) records
 all sources, crops and runtime paths. From the repository root, reproduce the
 states with `python3 tools/match3_elements_art.py`, then pack the runtime atlas
@@ -57,16 +51,15 @@ states against the canonical mask.
 
 | Role | Runtime atlas keys | Rule and visual states |
 | --- | --- | --- |
-| Carved stone | `stone-1` | Solid; one adjacent match or direct power-up hit breaks it. |
-| Delivery | `delivery`, `delivery-exit` | A nonmatching movable piece and its fixed destination. |
+| Carved stone | `stone-1` | Solid; one adjacent match or a direct tool hit breaks it. |
 
-The master's crate, tunnel, hidden-object and growth cells belong to mechanics
-the engine no longer has (they are not in Homescapes' story levels). They stay
+The master's crate, tunnel, hidden-object, growth and delivery cells belong to
+mechanics the engine no longer has. They stay
 in the master image but are not registered, and their frames left the atlas.
 
 Board rendering, guide icons and goal icons use the same named atlas artwork;
 the neutral skin preview falls back to this game's authored element sprites.
-Review the carved stone and the delivery on the actual board with
+Review the carved stone on the actual board with
 `--element-states --headless --fresh --mute --size 480x900`, and at 390×844.
 The reviewed captures are [full size](../../../docs/review/match3-elements/christmas-market-states.png)
 and [narrow](../../../docs/review/match3-elements/christmas-market-state-narrow.png).
@@ -444,8 +437,7 @@ into `data/match3.png`. The legacy board art review shows the full shell. The
 registration and [portrait captures](screenshots/review/ice/README.md).
 
 The snow floor (the engine's former `soil` layer) and the snow and ice rims
-(`sand-edge`, `ice-1-edge`, `ice-2-edge`) are retired: Homescapes' story levels
-have only carpet and oil floors, and no screen drew the rims. Their frames
+(`sand-edge`, `ice-1-edge`, `ice-2-edge`) are retired: no screen drew the rims. Their frames
 left the atlas. The `art/icons.png` cell for snow keeps its place on the sheet
 but is no longer registered. The earlier
 [frost-edge review](screenshots/review/frost-edges/after-480x900.jpg) shows the
@@ -619,30 +611,3 @@ building in hand retains its green/red footprint, and the old plot of a
 building being moved is free. Confirm or Cancel hides the guides. Debug
 `--footprints` draws the full outlines above the sprites. See the
 [phone captures](review/placement-guides/README.md).
-
-## Original Homescapes board atlas
-
-Before the themed board art above, the Homescapes import replaced the earlier striped-gem and themed-piece mappings. `ray-row`, `ray-column`, `ray-diagonal`, `bomb`, `prism` and `plane` were standalone original power-ups and all piece packs aliased `kind-0` through `kind-5`. Original cookies, donut, cherry, box strengths, ice and chain variants share `data/match3.png` with retained board controls. No new art was generated and no states were recolored.
-
-See [the shared feature/asset catalogue](../../../docs/HOMESCAPES_HEX.md) and `art/match3-atlas.json` for source PNGs, original regions, exact registration transforms, hashes, reproduction command and reviewed captures. Diagnostic blocker/generator states are tracked in [issue #98](https://github.com/corepunch/nile-archive/issues/98); these are not finished 1:1 artwork. Existing selected/hint/pressed/hover/disabled control artwork remains in the atlas.
-
-Live field correction: removed all legacy gold/snow/sand edges, selection/hint frames and ice badges. Only original Homescapes sprites plus the temporarily retained quest resource appear on the flat hex field. Surrounding interface artwork is retained by explicit user choice. The donut collection exit remains diagnostic under issue #98.
-
-## Recovered original blocker and generator artwork
-
-The shared [source/state inventory](../../../docs/HOMESCAPES_ART.md) records every added state, the 9.2.601/3.5.9 source versions, exact crops/rotations/hashes, original goal icons, manually registered group composites, reproduction commands and unresolved requirements under issue #98. [Actual game review](../../../docs/review/homescapes-restored-art/README.md) includes both portrait sizes. No state recoloring or generated artwork was used. All six jelly layers, the glass dome and the colored-box goal icon use original parts. Exact maker charge poses and colored-box field artwork remain open. [Jelly, portal and maker captures](../../../docs/review/homescapes-jelly-portals/README.md).
-
-Original atlas orientation: statues, nuts, cookie stacks, platter, maker base, blind header and queue shell use recorded 180° extraction rotations. Active source fields now fit the available phone area; both sizes and pointer registration are covered in the [review](../../../docs/review/homescapes-restored-art/README.md).
-
-The donut exit uses the original `CarryExitForAnim` sprite. The maker base and
-both glass layers use the original shared-frame offsets. See the [source
-registration and portrait review](../../../docs/review/homescapes-arrow-maker/README.md).
-
-The Windows 9.2.601 x64 atlas supplies the
-classic donut maker charge layers. See the [source registration and portrait
-review](../../../docs/review/homescapes-windows-art/README.md).
-
-The maker plays queued, approximate source-video stage transitions on the field;
-[durations, uncertainty and review command](../../../docs/HOMESCAPES_ART.md)
-are recorded in the shared inventory. Original particle curves remain open in
-[issue #98](https://github.com/corepunch/nile-archive/issues/98).

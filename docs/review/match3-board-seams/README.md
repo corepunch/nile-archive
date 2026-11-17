@@ -20,6 +20,6 @@ Capture in one run with the game renderer.
 ```sh
 make all build/test/all
 build/test/all --suite=relic-rush --suite=christmas-market \
-  "shot dressing-shore" "shot dressing-states" "shot homescapes-chains" \
+  "shot dressing-shore" "shot dressing-states" \
   "shot main-character-board" "shot phone-board"
 ```

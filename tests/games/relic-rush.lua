@@ -248,21 +248,8 @@ shot("phone-story-finale", "390x844", "--story-beat after-30 --story-line 3 --fr
 shot("story-level-20", "480x900", "--level 20")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
 
-shot("homescapes-queue", "480x900", "--homescapes st0065")
-shot("homescapes-chains", "480x900", "--homescapes contest_005_06")
-shot("phone-homescapes-queue", "390x844", "--homescapes st0065 --safe-area 0,47,0,34")
-shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
 
-shot("homescapes-art", "480x900", "--homescapes-art")
-shot("phone-homescapes-art", "390x844", "--homescapes-art --safe-area 0,47,0,34")
-shot("homescapes-art-generators", "480x900", "--homescapes-art generators")
-shot("phone-homescapes-art-generators", "390x844", "--homescapes-art generators --safe-area 0,47,0,34")
-shot("homescapes-jelly", "480x900", "--homescapes-art jelly")
-shot("phone-homescapes-jelly", "390x844", "--homescapes-art jelly --safe-area 0,47,0,34")
-shot("homescapes-maker-stages", "480x900", "--homescapes-art maker")
-shot("phone-homescapes-maker-stages", "390x844", "--homescapes-art maker --safe-area 0,47,0,34")
 
-reel("homescapes-maker-transition", 40, 3, "480x900", "--maker-reel --reel")
 
 -- tools/scenario_overview.py --capture: every board as it opens, for the scenario overview.
 -- Only with SPRITE_SCENARIO=1, so make test, test-full and shots never run them.

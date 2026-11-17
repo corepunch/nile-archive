@@ -88,7 +88,7 @@ for name, asset in manifest["assets"].items():
     assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"
     assert len(asset["box"]) == 4
     if asset.get("atlas_frame"):
-        assert asset["atlas_frame"] in atlas[asset.get("atlas_section", "homescapes")]
+        assert asset["atlas_frame"] in atlas[asset.get("atlas_section", "board_theme")]
         assert asset["runtime"] == "data/match3.png"
         continue
     data = (ROOT / asset["runtime"]).read_bytes()

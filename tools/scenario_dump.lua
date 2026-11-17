@@ -146,7 +146,6 @@ else
             if l.dress.cover then materials[#materials + 1] = l.dress.cover end
             if l.dress.floor then materials[#materials + 1] = l.dress.floor.covered
             elseif l.oil then materials[#materials + 1] = "river-silt" end
-            if l.carpet then materials[#materials + 1] = "drift-sand" end
         end
         local resources, goal_resource
         if economy then
@@ -168,7 +167,7 @@ else
                              key = l.story_piece or goal_resource.key, count = l.relics, resource = goal_resource ~= nil,
                              regular = campaign.colors - (l.omit_kind ~= nil and 1 or 0) - (l.story_piece and 1 or 0)} or nil,
                          plaques = l.dress and l.dress.floor and l.dress.floor.covered == "tile-tablet-single" and #l.oil or nil,
-                         signal = l.signal, delivery_icon = l.deliveries and l.deliveries.icon,
+                         signal = l.signal,
                          reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,
                              covered_picture = reveal.covered_picture, cells = reveal.object and #l.oil or nil}}
     end

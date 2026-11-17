@@ -15,7 +15,6 @@ from pathlib import Path
 
 from PIL import Image, ImageChops
 from match3_elements_art import NAMES as ELEMENT_NAMES
-import homescapes_atlas
 import match3_theme_art
 import pack_particles
 
@@ -173,10 +172,7 @@ def build_default(check):
         frames[name] = [x, y, 128, 128]
         registration[name] = {'source': str(path.relative_to(ROOT)), 'runtime': frames[name],
                               'transform': 'RGBA canvas copied without change'}
-    originals, registration_h = homescapes_atlas.registered()
-    ice, ice_records = registered_ice()
-    originals.update(ice)
-    registration_h.update(ice_records)
+    originals, registration_h = registered_ice()
     chains, chain_records = match3_theme_art.registered_chains('relic-rush', ROOT)
     originals.update(chains)
     registration_h.update(chain_records)
@@ -217,7 +213,7 @@ def build_default(check):
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
         [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']]
-        + element_sources + homescapes_atlas.inputs() + ICE_INPUTS + match3_theme_art.chain_inputs()
+        + element_sources + ICE_INPUTS + match3_theme_art.chain_inputs()
         + list(effect_sources.values()) + [Path(pack_particles.__file__), Path(match3_theme_art.__file__)],
         [ROOT / 'engine/data/match3.png', ROOT / 'engine/match3_frames.lua'])
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
@@ -291,9 +287,6 @@ def build_game(game, check):
     hud_sprites['signboard'] = signboard
     effects, effect_sources = pack_particles.registered(root)
     loaded.update(effects)
-    originals, original_registration = homescapes_atlas.registered()
-    loaded.update(originals)
-    for name in originals: sources.pop(name, None)
     with Image.open(HEX_MASK) as mask:
         theme, theme_registration = match3_theme_art.registered(root, mask.getchannel('A'))
     ice, ice_records = registered_ice()
@@ -302,14 +295,6 @@ def build_game(game, check):
     loaded.update(theme)
     for name in theme:
         sources.pop(name, None)
-        original_registration.pop(name, None)
-    # The themed campaign hazards use matte surfaces. The neutral atlas retains the source glints.
-    loaded.pop('oil-bubbles')
-    original_registration.pop('oil-bubbles')
-    for i in range(6):
-        name = f'kind-{i}'
-        loaded.pop(name)
-        original_registration.pop(name)
     glow = Image.new("RGBA", (64, 64))
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
@@ -350,14 +335,13 @@ def build_game(game, check):
                                       'reference': '../../art/match3-signboards/concept.jpg',
                                       'crop': list(signboard_crop), 'size': list(signboard.size),
                                       'state': 'static backplate', 'frame': 'signboard'}},
-                'homescapes': original_registration,
                 'board_theme': theme_registration,
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
     inputs = list(sources.values()) + list(hud_sources.values()) + list(effect_sources.values())
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
-    inputs += homescapes_atlas.inputs() + ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
+    inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
     outputs = [root / name for name in ('data/match3.png', 'lua/match3_skin.lua', 'data/match3-hud.png', 'lua/match3_hud.lua')]
     if game == 'relic-rush':
         inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]

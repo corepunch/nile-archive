@@ -2,11 +2,9 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
-local reference=app.arg("homescapes") and assert(require("match3.reference")[app.arg("homescapes")],"unknown Homescapes reference level")
-local flags = match3.LINE_MATCHES
-local M = match3.new{flags=flags, radius=reference and reference.radius or 4, colors=reference and 6 or #economy.pieces + 1, match_min=3,
-    levels=reference and {reference.level} or campaign.levels, level_shapes=campaign.shapes,
-    sunburst_targets=not reference and economy.lightning_targets,
+local M = match3.new{flags=match3.LINE_MATCHES, radius=4, colors=#economy.pieces + 1, match_min=3,
+    levels=campaign.levels, level_shapes=campaign.shapes,
+    sunburst_targets=economy.lightning_targets,
     kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS
@@ -28,7 +26,6 @@ end
 
 local start = M.game_start
 function M.game_start(level, seed, built)
-    if reference then return start(level, seed) end
     local yields, loadout = economy.loadout(restored_from(built, level), level + 1, seed or 1)
     local g = start(level, seed, yields, loadout)
     g.win_income, g.opening_tools = loadout.win_income, loadout.opening_tools
@@ -79,7 +76,6 @@ function M.level_reward(g, wonders, progress)
 end
 
 function M.progress_reward(p, g, wonders)
-    if reference then return false end
     if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
     local reward = M.reward_breakdown(g,wonders,p)
     p.wallet = p.wallet + reward.total

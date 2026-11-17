@@ -17,35 +17,6 @@ local function setup(g)
     R.fall_steps = nil
 end
 
--- Imported source masks fill the phone area, not their mostly empty enclosing
--- grid. Drawing and pointer lookup must retain the same shifted origin.
-do
-    local match3=require("match3")
-    for _,spec in pairs(require("match3.reference")) do
-        local model=match3.new{radius=spec.radius,levels={spec.level},colors=6}
-        for _,width in ipairs{480,390} do
-            local view=match3.view{SCREEN_W=width}
-            model.bind_view(view)
-            view.g=model.game_start(0,spec.seed)
-            local minx,maxx,miny,maxy=math.huge,-math.huge,math.huge,-math.huge
-            for i=0,model.CELLS-1 do if model.game_cell_active(view.g,i) then
-                local p=view.cell_pos(i)
-                check(view.cell_at(p)==i,"fitted source cell remains hit-testable")
-                minx,maxx=math.min(minx,p.x-view.HEX_R),math.max(maxx,p.x+view.HEX_R)
-                miny,maxy=math.min(miny,p.y-math.sqrt(3)*view.HEX_R/2),math.max(maxy,p.y+math.sqrt(3)*view.HEX_R/2)
-            end end
-            local top,bottom=view.hud_rect.y+view.hud_rect.h+16,view.tools_y-18
-            check(minx>=8-.001 and maxx<=width-8+.001 and miny>=top-.001 and maxy<=bottom+.001,
-                  "all source hex faces fit between HUD, tools and screen edges")
-            check(math.abs(maxx-minx-(width-16))<.001 or math.abs(maxy-miny-(bottom-top))<.001,
-                  "source board uses the maximum unclipped scale")
-            near((minx+maxx)/2,width/2,"source field is horizontally centred")
-            near((miny+maxy)/2,(top+bottom)/2,"source field is vertically centred")
-            near(view.board_tool_bounds(1):center().x,width/2,"tools stay centred for asymmetric source masks")
-        end
-    end
-end
-
 local function inventory(g)
     local counts = {}
     for i=0,rules.CELLS-1 do
@@ -91,8 +62,7 @@ for level = 0, rules.LEVELS - 1 do
     for i = 0, rules.CELLS - 1 do
         check(g.active[i] == before.active[i] and g.chain[i] == before.chain[i] and g.ice[i] == before.ice[i]
               and g.stone_hp[i] == before.stone_hp[i], "terrain survives recovery")
-        if g.chain[i] > 0 or g.ice[i] > 0 or g.stone_hp[i] > 0
-            or g.tiles[i].kind == rules.DELIVERY or not g.active[i] then
+        if g.chain[i] > 0 or g.ice[i] > 0 or g.stone_hp[i] > 0 or not g.active[i] then
             check(g.tiles[i].kind == before.tiles[i].kind,
                   "locked relics and holes survive recovery")
         end
@@ -172,8 +142,7 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     if mode == "fall" then R.phase, R.phase_time = R.PH_FALL, 1
     elseif mode == "won" then
         local l = rules.level_of(g)
-        g.score, g.relics, g.obstacles, g.moves, g.carpeted, g.oil_left = l.score, l.relics, 0, 0, g.carpet_total, 0
-        g.delivered = g.delivery_total
+        g.score, g.relics, g.obstacles, g.moves, g.oil_left = l.score, l.relics, 0, 0, 0
     else g.moves = 0 end
     R.board_update(.02)
     if mode == "fall" then
@@ -360,99 +329,3 @@ do
     check(R.guide_form:scroll_to("topics",R.guide_entries[#R.guide_entries].id),"last mechanic remains reachable by scrolling")
 end
 
--- A shared source obstacle is drawn once, and looking at a queue never consumes it.
-do
-    local elements=require("match3.elements_view")
-    local saved_game,saved_art,saved_intro,saved_image=R.g,R.board_art,R.intro,gfx.image
-    local g=rules.game_start(require("support").plain_level(rules),123478)
-    g.hs={cells={},groups={},queues={}}
-    g.delivery_exits={}
-    g.oil_left=0
-    for i=0,rules.CELLS-1 do g.active[i]=true;g.hs.cells[i]={};g.stone_hp[i],g.oil[i]=0,0 end
-    local a=rules.hex_index(0,0)
-    local cells={a,rules.hex_index(1,0),rules.hex_index(0,1),rules.hex_index(1,1)}
-    g.hs.groups[a]={kind="TARGET_GEN",count=8,cells=cells}
-    for _,i in ipairs(cells) do g.hs.cells[i].group=a end
-    local function maker(q,r,period,hits)
-        local footprint={rules.hex_index(q,r),rules.hex_index(q+1,r),
-            rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}
-        local anchor=footprint[1]
-        g.hs.groups[anchor]={kind="CARRY_GEN",cells=footprint,period=period,hits=hits}
-        for _,i in ipairs(footprint) do g.hs.cells[i].group=anchor end
-        return g.hs.groups[anchor]
-    end
-    local charged_maker=maker(-2,-2,5,1)
-    maker(0,-3,5,2)
-    maker(2,-3,3,1)
-    local inlet=rules.hex_index(-3,0)
-    g.hs.cells[inlet].visibleGenerator=true
-    local queue={cursor=1,spawns=0,units={{element="cookie",hp=2}}}
-    g.hs.queues[inlet]=queue
-    local floor=rules.hex_index(3,0);g.hs.cells[floor].tile=2
-    g.delivery_exits[rules.hex_index(3,1)] = true
-    local cherry_cell, empty_jelly = rules.hex_index(-2,1), rules.hex_index(-2,2)
-    g.hs.cells[cherry_cell].jelly, g.hs.cells[empty_jelly].jelly = 2, 2
-    g.tiles[cherry_cell] = {kind=0, element="cherry", hp=1}
-    g.tiles[empty_jelly] = rules.tile(-1)
-    g.hs.goals = {{type="BOX", max=3, current=1}}
-    local draws={}
-    R.g,R.intro,R.board_art=g,nil,{}
-    for _,name in ipairs(elements.assets) do R.board_art[name]=name end
-    gfx.image=function(frame) draws[frame]=(draws[frame] or 0)+1 end -- luacheck: ignore 122
-    elements.ground(R,rules,0)
-    elements.blockers(R,rules,0)
-    local goals = R.goal_entries()
-    local first_draws=draws
-    draws={}
-    local box=rules.hex_index(3,1)
-    for health=1,6 do
-        g.hs.cells[box]={box=health}
-        elements.blockers(R,rules,0)
-    end
-    local box_draws=draws
-    draws={}
-    for hit=3,5 do
-        charged_maker.hits=hit
-        elements.blockers(R,rules,0)
-    end
-    gfx.image,R.g,R.board_art,R.intro=saved_image,saved_game,saved_art,saved_intro -- luacheck: ignore 122
-    local charge_draws=draws
-    draws=first_draws
-    check(draws["apple-platter-8"]==1,"one source image spans a shared four-cell group")
-    check(draws["donut-maker-1"]==1,"the first hit in a five-hit maker holds the original raw pose")
-    check(draws["donut-maker-2"]==2,"the heated pose follows either two individual stages or one combined stage")
-    for hit=3,5 do check(charge_draws["donut-maker-"..hit]==1,"each later charge has its own maker frame") end
-    check(draws["generator-shell"]==1 and draws["cookie-2"]==1,"inlet shows its exact next authored object state")
-    check(queue.cursor==1 and queue.spawns==0,"rendering the source queue does not advance simulation")
-    check(draws["membrane-fill-2"]==1,"covered source floor uses its authored intact material")
-    check(draws["carry-exit-arrow"]==3,"donut exit draws three staggered copies of its original arrow")
-    check(draws["jelly-2-cherry"]==1 and draws["jelly-2"]==1,"jelly displays a soft cherry only when one is present")
-    check(elements.covers_cherry(g,cherry_cell,g.tiles[cherry_cell]),"the covered cherry is not drawn twice")
-    check(goals[1].icon=="goal-box" and goals[1].remaining==2,"box goal uses its source icon and rule count")
-    for health=1,6 do
-        check(box_draws["box-"..health]==1,"box uses its own frame: box-"..health)
-    end
-end
-
--- A maker may receive another hit or release while its visual transition runs.
-do
-    local elements=require("match3.elements_view")
-    local group={kind="CARRY_GEN",period=3,hits=0}
-    local view={g={hs={groups={[1]=group}}}}
-    elements.maker_observe(view)
-    group.hits=1; elements.maker_observe(view)
-    elements.maker_update(view,.5)
-    check(view.maker_visual[1].pose==1,"combined hit shows its first stage")
-    elements.maker_update(view,1.9)
-    check(view.maker_visual[1].pose==2,"combined hit reaches its held pose")
-    group.hits=3; elements.maker_observe(view)
-    group.hits=0; elements.maker_observe(view)
-    elements.maker_update(view,1.11)
-    check(view.maker_visual[1].pose==0 and #view.maker_visual[1].queue==0,"queued release follows every stage")
-    group.hits=1; elements.maker_observe(view)
-    view.reduced_motion=true; elements.maker_update(view,0)
-    check(view.maker_visual[1].pose==2,"reduced motion immediately settles")
-    view.g={hs={groups={[1]={kind="CARRY_GEN",period=5,hits=0}}}}
-    elements.maker_observe(view)
-    check(view.maker_visual[1].pose==0,"new board resets maker presentation")
-end

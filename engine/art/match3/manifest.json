@@ -16,88 +16,120 @@
   "runtime": "engine/data/match3.png",
   "registration": {
     "kind-0": {
-      "source": "engine/art/homescapes/sprites/chip-0.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        108,
-        85
+      "crop": [
+        0,
+        0,
+        157,
+        167
       ],
-      "canvas": [
+      "rotation": 0,
+      "size": [
+        117,
+        124
+      ],
+      "runtime": [
+        0,
+        0,
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "kind-1": {
-      "source": "engine/art/homescapes/sprites/chip-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        106
+      "crop": [
+        156,
+        36,
+        315,
+        163
       ],
-      "canvas": [
+      "rotation": 0,
+      "size": [
+        124,
+        99
+      ],
+      "runtime": [
+        128,
+        0,
         128,
         128
       ],
-      "mask": false
+      "source": "engine/art/match3/source-brick.png",
+      "prompt": "engine/art/match3/brick.prompt.txt"
     },
     "kind-2": {
-      "source": "engine/art/homescapes/sprites/chip-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        98
+      "crop": [
+        314,
+        0,
+        470,
+        167
       ],
-      "canvas": [
+      "rotation": 0,
+      "size": [
+        116,
+        124
+      ],
+      "runtime": [
+        256,
+        0,
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "kind-3": {
-      "source": "engine/art/homescapes/sprites/chip-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        97,
-        104
+      "crop": [
+        470,
+        0,
+        627,
+        167
       ],
-      "canvas": [
+      "rotation": 0,
+      "size": [
+        117,
+        124
+      ],
+      "runtime": [
+        384,
+        0,
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "kind-4": {
-      "source": "engine/art/homescapes/sprites/chip-4.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        111
+      "crop": [
+        627,
+        0,
+        784,
+        167
       ],
-      "canvas": [
+      "rotation": 0,
+      "size": [
+        117,
+        124
+      ],
+      "runtime": [
+        512,
+        0,
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "kind-5": {
-      "source": "engine/art/homescapes/sprites/chip-5.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        102
+      "crop": [
+        784,
+        0,
+        940,
+        167
       ],
-      "canvas": [
+      "rotation": 0,
+      "size": [
+        116,
+        124
+      ],
+      "runtime": [
+        640,
+        0,
         128,
         128
-      ],
-      "mask": false
+      ]
     },
     "kind-6": {
       "crop": [
@@ -1134,645 +1166,6 @@
       ],
       "transform": "RGBA canvas copied without change"
     },
-    "delivery": {
-      "source": "engine/art/homescapes/sprites/donut.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        111
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "delivery-exit": {
-      "source": "games/relic-rush/data/board-states/delivery-exit.png",
-      "runtime": [
-        512,
-        1024,
-        128,
-        128
-      ],
-      "transform": "RGBA canvas copied without change"
-    },
-    "apple-platter-1": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-2": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-3": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-4": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ],
-        [
-          52,
-          83
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-5": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ],
-        [
-          52,
-          83
-        ],
-        [
-          93,
-          83
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-6": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ],
-        [
-          52,
-          83
-        ],
-        [
-          93,
-          83
-        ],
-        [
-          134,
-          83
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-7": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ],
-        [
-          52,
-          83
-        ],
-        [
-          93,
-          83
-        ],
-        [
-          134,
-          83
-        ],
-        [
-          52,
-          124
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-8": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ],
-        [
-          52,
-          83
-        ],
-        [
-          93,
-          83
-        ],
-        [
-          134,
-          83
-        ],
-        [
-          52,
-          124
-        ],
-        [
-          93,
-          124
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-9": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "apple-platter-base",
-        "goal-target-generator"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "plate_size": [
-        246,
-        219
-      ],
-      "apple_size": [
-        70,
-        70
-      ],
-      "apple_positions": [
-        [
-          52,
-          42
-        ],
-        [
-          93,
-          42
-        ],
-        [
-          134,
-          42
-        ],
-        [
-          52,
-          83
-        ],
-        [
-          93,
-          83
-        ],
-        [
-          134,
-          83
-        ],
-        [
-          52,
-          124
-        ],
-        [
-          93,
-          124
-        ],
-        [
-          134,
-          124
-        ]
-      ],
-      "registration": "manual spatial approximation of official illustration; ninth position is a hex adaptation",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "apple-platter-base": {
-      "source": "engine/art/homescapes/sprites/apple-platter-base.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        98
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "blind-body": {
-      "source": "engine/art/homescapes/sprites/blind-body.png",
-      "rotation": 0,
-      "crop": [
-        13,
-        0,
-        115,
-        128
-      ],
-      "registered_size": [
-        128,
-        128
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": true
-    },
-    "blind-top": {
-      "source": "engine/art/homescapes/sprites/blind-top.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        41
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "box-1": {
-      "source": "engine/art/homescapes/sprites/box-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        99,
-        104
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "box-2": {
-      "source": "engine/art/homescapes/sprites/box-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        100,
-        99
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "box-3": {
-      "source": "engine/art/homescapes/sprites/box-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        102,
-        99
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "box-4": {
-      "source": "engine/art/homescapes/sprites/box-4.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        102,
-        99
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "box-5": {
-      "source": "engine/art/homescapes/sprites/box-5.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        100,
-        97
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "box-6": {
-      "source": "engine/art/homescapes/sprites/box-6.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        102,
-        98
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "carpet-roll": {
-      "source": "engine/art/homescapes/sprites/carpet-roll.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        33,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "carpet-swatch": {
-      "source": "engine/art/homescapes/sprites/carpet-swatch.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        128,
-        128
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "carry-exit-arrow": {
-      "source": "engine/art/homescapes/sprites/carry-exit-arrow.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        80,
-        32
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "ceramic-tile-1": {
-      "source": "engine/art/homescapes/sprites/ceramic-tile-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        72,
-        77
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "ceramic-tile-2": {
-      "source": "engine/art/homescapes/sprites/ceramic-tile-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        77,
-        77
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "chain-1": {
       "source": "art/match3-chain-paint/edge-anchors.png",
       "prompt": "art/match3-chain-paint/edge-anchors-prompt.txt",
@@ -1846,1336 +1239,11 @@
         128
       ]
     },
-    "cherry": {
-      "source": "engine/art/homescapes/sprites/cherry.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        94,
-        85
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chip-0": {
-      "source": "engine/art/homescapes/sprites/chip-0.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        108,
-        85
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chip-1": {
-      "source": "engine/art/homescapes/sprites/chip-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        106
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chip-2": {
-      "source": "engine/art/homescapes/sprites/chip-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        98
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chip-3": {
-      "source": "engine/art/homescapes/sprites/chip-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        97,
-        104
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chip-4": {
-      "source": "engine/art/homescapes/sprites/chip-4.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        111
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "chip-5": {
-      "source": "engine/art/homescapes/sprites/chip-5.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        102
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "cookie-1": {
-      "source": "engine/art/homescapes/sprites/cookie-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        105,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "cookie-2": {
-      "source": "engine/art/homescapes/sprites/cookie-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        107,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "cookie-3": {
-      "source": "engine/art/homescapes/sprites/cookie-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        105,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "cookie-stack-1": {
-      "source": "engine/art/homescapes/sprites/cookie-stack-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        108
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "cookie-stack-2": {
-      "source": "engine/art/homescapes/sprites/cookie-stack-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        108
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "cookie-stack-3": {
-      "source": "engine/art/homescapes/sprites/cookie-stack-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        110
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut": {
-      "source": "engine/art/homescapes/sprites/donut.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        111
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut-maker-0": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "maker-source-match3carrygeneratorbase.png",
-        "maker-source-match3carrygeneratorglassback.png",
-        "maker-source-match3carrygeneratorglassfront.png"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "native_layer_offsets": {
-        "maker-source-match3carrygeneratorbase.png": [
-          99,
-          157
-        ],
-        "maker-source-match3carrygeneratorglassback.png": [
-          117,
-          90
-        ],
-        "maker-source-match3carrygeneratorglassfront.png": [
-          117,
-          151
-        ]
-      },
-      "source_canvas": [
-        460,
-        420
-      ],
-      "source_crop": [
-        99,
-        90,
-        375,
-        364
-      ],
-      "registration": "native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "donut-maker-1": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "maker-source-match3carrygeneratorbase.png",
-        "maker-source-match3carrygeneratorglassback.png",
-        "maker-source-match3carrygeneratorglassfront.png",
-        "engine/art/homescapes/maker-source/windows-charge_0034_01.png"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "native_layer_offsets": {
-        "maker-source-match3carrygeneratorbase.png": [
-          99,
-          157
-        ],
-        "maker-source-match3carrygeneratorglassback.png": [
-          117,
-          90
-        ],
-        "maker-source-match3carrygeneratorglassfront.png": [
-          117,
-          151
-        ],
-        "_0034_01": [
-          99,
-          102
-        ]
-      },
-      "source_canvas": [
-        460,
-        420
-      ],
-      "source_crop": [
-        99,
-        90,
-        375,
-        364
-      ],
-      "registration": "native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "donut-maker-2": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "maker-source-match3carrygeneratorbase.png",
-        "maker-source-match3carrygeneratorglassback.png",
-        "maker-source-match3carrygeneratorglassfront.png",
-        "engine/art/homescapes/maker-source/windows-charge_0033_02.png"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "native_layer_offsets": {
-        "maker-source-match3carrygeneratorbase.png": [
-          99,
-          157
-        ],
-        "maker-source-match3carrygeneratorglassback.png": [
-          117,
-          90
-        ],
-        "maker-source-match3carrygeneratorglassfront.png": [
-          117,
-          151
-        ],
-        "_0033_02": [
-          99,
-          102
-        ]
-      },
-      "source_canvas": [
-        460,
-        420
-      ],
-      "source_crop": [
-        99,
-        90,
-        375,
-        364
-      ],
-      "registration": "native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "donut-maker-3": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "maker-source-match3carrygeneratorbase.png",
-        "maker-source-match3carrygeneratorglassback.png",
-        "maker-source-match3carrygeneratorglassfront.png",
-        "engine/art/homescapes/maker-source/windows-charge_0033_02.png",
-        "engine/art/homescapes/maker-source/windows-charge_0031_glaze.png"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "native_layer_offsets": {
-        "maker-source-match3carrygeneratorbase.png": [
-          99,
-          157
-        ],
-        "maker-source-match3carrygeneratorglassback.png": [
-          117,
-          90
-        ],
-        "maker-source-match3carrygeneratorglassfront.png": [
-          117,
-          151
-        ],
-        "_0033_02": [
-          99,
-          102
-        ],
-        "_0031_glaze": [
-          99,
-          102
-        ]
-      },
-      "source_canvas": [
-        460,
-        420
-      ],
-      "source_crop": [
-        99,
-        90,
-        375,
-        364
-      ],
-      "registration": "native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "donut-maker-4": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "maker-source-match3carrygeneratorbase.png",
-        "maker-source-match3carrygeneratorglassback.png",
-        "maker-source-match3carrygeneratorglassfront.png",
-        "engine/art/homescapes/maker-source/windows-charge_0033_02.png",
-        "engine/art/homescapes/maker-source/windows-charge_0031_glaze.png",
-        "engine/art/homescapes/maker-source/windows-charge_0012_Green-3.png",
-        "engine/art/homescapes/maker-source/windows-charge_0013_Green-4.png",
-        "engine/art/homescapes/maker-source/windows-charge_0014_Green-5.png",
-        "engine/art/homescapes/maker-source/windows-charge_0015_Green-6.png",
-        "engine/art/homescapes/maker-source/windows-charge_0016_Green-1.png"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "native_layer_offsets": {
-        "maker-source-match3carrygeneratorbase.png": [
-          99,
-          157
-        ],
-        "maker-source-match3carrygeneratorglassback.png": [
-          117,
-          90
-        ],
-        "maker-source-match3carrygeneratorglassfront.png": [
-          117,
-          151
-        ],
-        "_0033_02": [
-          99,
-          102
-        ],
-        "_0031_glaze": [
-          99,
-          102
-        ],
-        "_0012_Green-3": [
-          99,
-          102
-        ],
-        "_0013_Green-4": [
-          99,
-          102
-        ],
-        "_0014_Green-5": [
-          99,
-          102
-        ],
-        "_0015_Green-6": [
-          99,
-          102
-        ],
-        "_0016_Green-1": [
-          99,
-          102
-        ]
-      },
-      "source_canvas": [
-        460,
-        420
-      ],
-      "source_crop": [
-        99,
-        90,
-        375,
-        364
-      ],
-      "registration": "native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "donut-maker-5": {
-      "placement": "shared four-cell footprint",
-      "sources": [
-        "maker-source-match3carrygeneratorbase.png",
-        "maker-source-match3carrygeneratorglassback.png",
-        "maker-source-match3carrygeneratorglassfront.png",
-        "engine/art/homescapes/maker-source/windows-charge_0033_02.png",
-        "engine/art/homescapes/maker-source/windows-charge_0031_glaze.png",
-        "engine/art/homescapes/maker-source/windows-charge_0012_Green-3.png",
-        "engine/art/homescapes/maker-source/windows-charge_0013_Green-4.png",
-        "engine/art/homescapes/maker-source/windows-charge_0014_Green-5.png",
-        "engine/art/homescapes/maker-source/windows-charge_0015_Green-6.png",
-        "engine/art/homescapes/maker-source/windows-charge_0016_Green-1.png",
-        "engine/art/homescapes/maker-source/windows-charge_0009_Yelow-3.png",
-        "engine/art/homescapes/maker-source/windows-charge_0010_Yelow-2.png",
-        "engine/art/homescapes/maker-source/windows-charge_0011_Yelow-1.png"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "native_layer_offsets": {
-        "maker-source-match3carrygeneratorbase.png": [
-          99,
-          157
-        ],
-        "maker-source-match3carrygeneratorglassback.png": [
-          117,
-          90
-        ],
-        "maker-source-match3carrygeneratorglassfront.png": [
-          117,
-          151
-        ],
-        "_0033_02": [
-          99,
-          102
-        ],
-        "_0031_glaze": [
-          99,
-          102
-        ],
-        "_0012_Green-3": [
-          99,
-          102
-        ],
-        "_0013_Green-4": [
-          99,
-          102
-        ],
-        "_0014_Green-5": [
-          99,
-          102
-        ],
-        "_0015_Green-6": [
-          99,
-          102
-        ],
-        "_0016_Green-1": [
-          99,
-          102
-        ],
-        "_0009_Yelow-3": [
-          99,
-          102
-        ],
-        "_0010_Yelow-2": [
-          99,
-          102
-        ],
-        "_0011_Yelow-1": [
-          99,
-          102
-        ]
-      },
-      "source_canvas": [
-        460,
-        420
-      ],
-      "source_crop": [
-        99,
-        90,
-        375,
-        364
-      ],
-      "registration": "native shell offsets and shared charge layer frame; charge frame placement over shell matched visually to original gameplay",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "donut-maker-base": {
-      "source": "engine/art/homescapes/sprites/donut-maker-base.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        88
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut-maker-dome": {
-      "source": "engine/art/homescapes/sprites/donut-maker-dome.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        104,
-        63
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut-maker-dough-1": {
-      "source": "engine/art/homescapes/sprites/donut-maker-dough-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        96
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut-maker-dough-2": {
-      "source": "engine/art/homescapes/sprites/donut-maker-dough-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        97
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut-maker-dough-3": {
-      "source": "engine/art/homescapes/sprites/donut-maker-dough-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        97
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "donut-maker-legacy-progress-back-source": {
-      "source": "engine/art/homescapes/sprites/donut-maker-legacy-progress-back-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        102
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "generator-shell": {
-      "source": "engine/art/homescapes/sprites/generator-shell.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        106
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-box": {
-      "source": "engine/art/homescapes/sprites/goal-box.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-carpet": {
-      "source": "engine/art/match3/goal-carpet.png",
-      "canvas": [
-        128,
-        128
-      ],
-      "generator": "python3 tools/carpet_goal_icon.py"
-    },
-    "goal-carry": {
-      "source": "engine/art/homescapes/sprites/goal-carry.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-chip-0": {
-      "source": "engine/art/homescapes/sprites/goal-chip-0.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-chip-1": {
-      "source": "engine/art/homescapes/sprites/goal-chip-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-chip-2": {
-      "source": "engine/art/homescapes/sprites/goal-chip-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-chip-3": {
-      "source": "engine/art/homescapes/sprites/goal-chip-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-chip-4": {
-      "source": "engine/art/homescapes/sprites/goal-chip-4.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-chip-5": {
-      "source": "engine/art/homescapes/sprites/goal-chip-5.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-jelly": {
-      "source": "engine/art/homescapes/sprites/goal-jelly.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-lock": {
-      "source": "engine/art/homescapes/sprites/goal-lock.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-oil": {
-      "source": "engine/art/match3/goal-oil.png",
-      "canvas": [
-        128,
-        128
-      ],
-      "generator": "python3 tools/oil_art.py"
-    },
-    "goal-piggy": {
-      "source": "engine/art/homescapes/sprites/goal-piggy.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-target-generator": {
-      "source": "engine/art/homescapes/sprites/goal-target-generator.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "goal-trash": {
-      "source": "engine/art/homescapes/sprites/goal-trash.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "hazelnut-1": {
-      "source": "engine/art/homescapes/sprites/hazelnut-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "hazelnut-2": {
-      "source": "engine/art/homescapes/sprites/hazelnut-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        108,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "hazelnut-3": {
-      "source": "engine/art/homescapes/sprites/hazelnut-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        108,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "honey-swatch": {
-      "source": "engine/art/homescapes/sprites/honey-swatch.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        82,
-        82
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-1": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": null,
-      "cherry_transform": null,
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-1-cherry": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-cherry-clear-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": [
-        86,
-        86
-      ],
-      "cherry_transform": "horizontal mirror",
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-2": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-flower-frame-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": null,
-      "cherry_transform": null,
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-2-cherry": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-cherry-soft-source",
-        "jelly-flower-frame-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": [
-        86,
-        86
-      ],
-      "cherry_transform": "horizontal mirror; clip soft cherry to authored flower hole",
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-3": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-flower-fill-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": null,
-      "cherry_transform": null,
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-4": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-flower-three-pale-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": null,
-      "cherry_transform": null,
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-5": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-flower-five-pale-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": null,
-      "cherry_transform": null,
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-6": {
-      "placement": "single-cell object",
-      "sources": [
-        "jelly-square-source",
-        "jelly-flower-dark-source"
-      ],
-      "canvas": [
-        256,
-        256
-      ],
-      "base_size": [
-        200,
-        200
-      ],
-      "flower_size_limit": [
-        94,
-        94
-      ],
-      "cherry_size_limit": null,
-      "cherry_transform": null,
-      "registration": "original square and centered source layers, matched to Playrix illustration",
-      "registered_size": [
-        128,
-        128
-      ]
-    },
-    "jelly-cherry-clear-source": {
-      "source": "engine/art/homescapes/sprites/jelly-cherry-clear-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        90,
-        86
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-cherry-soft-source": {
-      "source": "engine/art/homescapes/sprites/jelly-cherry-soft-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        98,
-        94
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-flower-dark-source": {
-      "source": "engine/art/homescapes/sprites/jelly-flower-dark-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        106,
-        105
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-flower-fill-source": {
-      "source": "engine/art/homescapes/sprites/jelly-flower-fill-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        106,
-        105
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-flower-five-pale-source": {
-      "source": "engine/art/homescapes/sprites/jelly-flower-five-pale-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        106,
-        105
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-flower-frame-source": {
-      "source": "engine/art/homescapes/sprites/jelly-flower-frame-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        110,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-flower-three-pale-source": {
-      "source": "engine/art/homescapes/sprites/jelly-flower-three-pale-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        106,
-        105
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "jelly-square-source": {
-      "source": "engine/art/homescapes/sprites/jelly-square-source.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        100,
-        100
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "membrane-fill-1": {
-      "source": "engine/art/homescapes/sprites/membrane-fill-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        128,
-        128
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": true
-    },
-    "membrane-fill-2": {
-      "source": "engine/art/homescapes/sprites/membrane-fill-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        128,
-        128
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": true
-    },
-    "oil-bubbles": {
-      "source": "engine/art/match3/oil-bubbles.png",
-      "canvas": [
-        128,
-        128
-      ],
-      "generator": "python3 tools/oil_art.py"
-    },
-    "oil-material": {
-      "source": "engine/art/match3/oil-material.png",
-      "canvas": [
-        128,
-        128
-      ],
-      "generator": "python3 tools/oil_art.py"
-    },
-    "statue-1": {
-      "source": "engine/art/homescapes/sprites/statue-1.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        100,
-        100
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "statue-2": {
-      "source": "engine/art/homescapes/sprites/statue-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        104,
-        100
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "statue-3": {
-      "source": "engine/art/homescapes/sprites/statue-3.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        102,
-        102
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "web-2": {
-      "source": "engine/art/homescapes/sprites/web-2.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        104,
-        92
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "fx-burst": {
       "source": "games/relic-rush/art/particles/kenney/star_09.png",
       "runtime": [
         2,
-        2946,
+        1538,
         256,
         256
       ]
@@ -3184,7 +1252,7 @@
       "source": "games/relic-rush/art/particles/kenney/light_01.png",
       "runtime": [
         262,
-        2946,
+        1538,
         256,
         256
       ]
@@ -3193,7 +1261,7 @@
       "source": "games/relic-rush/art/particles/kenney/circle_03.png",
       "runtime": [
         522,
-        2946,
+        1538,
         256,
         256
       ]
@@ -3202,7 +1270,7 @@
       "source": "games/relic-rush/art/particles/kenney/star_07.png",
       "runtime": [
         782,
-        2946,
+        1538,
         128,
         128
       ]
@@ -3211,7 +1279,7 @@
       "source": "games/relic-rush/art/particles/kenney/circle_02.png",
       "runtime": [
         2,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3220,7 +1288,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff00.png",
       "runtime": [
         134,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3229,7 +1297,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff04.png",
       "runtime": [
         266,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3238,7 +1306,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff08.png",
       "runtime": [
         398,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3247,7 +1315,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff12.png",
       "runtime": [
         530,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3256,7 +1324,7 @@
       "source": "games/relic-rush/art/particles/kenney/trace_06.png",
       "runtime": [
         662,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3265,7 +1333,7 @@
       "source": "games/relic-rush/art/particles/kenney/star_06.png",
       "runtime": [
         794,
-        3206,
+        1798,
         128,
         128
       ]
@@ -3274,7 +1342,7 @@
       "source": "engine/art/match3/rome-2-cell-hint/Star_02_16.png",
       "runtime": [
         926,
-        3206,
+        1798,
         16,
         16
       ]
@@ -3283,7 +1351,7 @@
       "source": "engine/art/match3/rome-2-cell-hint/Star_16.png",
       "runtime": [
         946,
-        3206,
+        1798,
         16,
         16
       ]
@@ -3292,7 +1360,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "4c3144a346efc8aae08fc64836bb9c650cf6ee9826f065326b0d4b20ca51c640",
+    "recipe": "99aafd47a193e2316a0117b762438c233b82ebeba9c668653146ae73adcf8ee2",
     "inputs": {
       "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
       "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
@@ -3307,96 +1375,11 @@
       "art/match3-ice/transparency-prompt.txt": "4b7b548389430d6dd6b99806911a53ab5413d5073c41eacefcd8e39f99a75d0f",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/hex-tile/hex-mask-preview.png": "43b59e7300f7f4377f03d65db8f33f0e6920ee94694e14e7c401af93fcdd344f",
-      "engine/art/homescapes/maker-charge-sources.json": "c0963e0990ceb026d825aaf1f9203d707d0a80743e07b0f4155fa1bde6b0d7c9",
-      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorbase.png": "928492c7eb695ffce280a872433fc674d7437497875f8675a2849f9cb04c3aee",
-      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassback.png": "1985e7a943b1a5ac423bf2841e6f382a4862d520efe1daac2958b7c946b53a8f",
-      "engine/art/homescapes/maker-source/maker-source-match3carrygeneratorglassfront.png": "d27fcfe884371a573646c1b02bc504520a5d9cb63e762c09b584822449871536",
-      "engine/art/homescapes/maker-source/windows-charge_0009_Yelow-3.png": "1e659e23687ec3d71879806cc6344f2574696456bb5ba94026d5a6e96233502f",
-      "engine/art/homescapes/maker-source/windows-charge_0010_Yelow-2.png": "21c28f9a1cafbfecc7688ba5fce69240aa41796b4e3d82ca1878c179f138f0bc",
-      "engine/art/homescapes/maker-source/windows-charge_0011_Yelow-1.png": "ccd4a0d89b5385aedbeeb2a55886f47de18c2f185b33906e57cfda28edebc9a3",
-      "engine/art/homescapes/maker-source/windows-charge_0012_Green-3.png": "66109e83aa1986e559820d4382e92560d97a126b521f1a05807b967a2962331a",
-      "engine/art/homescapes/maker-source/windows-charge_0013_Green-4.png": "0fd3d30428a9a9ac76df768547ad66bd347195fb09935ea4fe73176acee26139",
-      "engine/art/homescapes/maker-source/windows-charge_0014_Green-5.png": "2ab04101246462fe5ae464f8a91d4bfe4769032b8bf722b165791a9201437496",
-      "engine/art/homescapes/maker-source/windows-charge_0015_Green-6.png": "0f621a3a4d118fa532b5fb3fc642b61375f66c738f11245b0faf9a3201824bd0",
-      "engine/art/homescapes/maker-source/windows-charge_0016_Green-1.png": "50de31f7d759d9b3931b8f16f926d70149c030dca3bf750d5f82790fe55ad397",
-      "engine/art/homescapes/maker-source/windows-charge_0031_glaze.png": "2fa30954cfe3394bdee23b8c0050ecbcba0a973039815cfce736943c636f5c83",
-      "engine/art/homescapes/maker-source/windows-charge_0033_02.png": "0166c053d117b761da088516ba8141f8da99b931f5e387d627122cbf3a2f3f32",
-      "engine/art/homescapes/maker-source/windows-charge_0034_01.png": "b9302231f84e3312813e9bec671e0cb4f144e793d63765cffc03b797979ef333",
-      "engine/art/homescapes/sprites/apple-platter-base.png": "9f255fb0c7b602ca501f1072fd5a2a0dd48ed97372b4cd99ca1c8129f7243050",
-      "engine/art/homescapes/sprites/blind-body.png": "c25d99b31eadce8e84cebf5d6af366ac4b51d6afa0ca92145797fac1b9cffbb4",
-      "engine/art/homescapes/sprites/blind-top.png": "f9148124ea1c5df62cb53e55cc0947cc9575afab822d9f575c0264ece0a31d8a",
-      "engine/art/homescapes/sprites/box-1.png": "c1fc6d424c43ee5e4c6a2ae59c61f35f39762597535296cbfeabf63040bb5244",
-      "engine/art/homescapes/sprites/box-2.png": "3a712a3f569ea4dc84df51e15e1e1faed536d903d6b17acde91fc3b9800f300a",
-      "engine/art/homescapes/sprites/box-3.png": "c205d253ddbb6f62952c292497a156f045946b0e2fd777cd23f1547ceb0025fe",
-      "engine/art/homescapes/sprites/box-4.png": "4bb4f86e8c5a002f477eaa87e8d8998131a89b951a9e853892842b942d87a524",
-      "engine/art/homescapes/sprites/box-5.png": "99e5c27a43898a9957ac98c82f4fbc3070132ae55fc2f9aca536dfd3bea7dd4a",
-      "engine/art/homescapes/sprites/box-6.png": "b3822d10d2107dcbb075e7273968bf9941a94524808333b872c3a2ec66672795",
-      "engine/art/homescapes/sprites/carpet-roll.png": "bc19ce532d3efe05cd827aa4d21b3ec8b75102f5d30b79bb74af2dfc3d7265b4",
-      "engine/art/homescapes/sprites/carpet-swatch.png": "92008c0e25e0fc45ba5d741bcabc1382686a84432710183587115b4a623528fe",
-      "engine/art/homescapes/sprites/carry-exit-arrow.png": "ab748d9b2d5d108b0fa7dddcb6ff1711640ae0afc43ebb64615d496d79b945e4",
-      "engine/art/homescapes/sprites/ceramic-tile-1.png": "82372f7906f29f60a8ec01809000fb9b992c83ae89e23205fd8fd604d960b98c",
-      "engine/art/homescapes/sprites/ceramic-tile-2.png": "0f4bbcd8ac2ce12a6ea1358ea53e7e08f02af79b19025577536d9c019eddd198",
-      "engine/art/homescapes/sprites/cherry.png": "26a4e2666f714bb2eee3c860338c21d80c1fef944f90364710045a06a5e6cf57",
-      "engine/art/homescapes/sprites/chip-0.png": "094a4dd120f6872221659620a8173c3cd5102efa6595fb0b905427dc339f0f7d",
-      "engine/art/homescapes/sprites/chip-1.png": "cb86082a22841f680c69fe75abdcc79c1c1d238e9528af4ff3253004f5835218",
-      "engine/art/homescapes/sprites/chip-2.png": "995b5c46a2076aabe93bc0866a82ace271cc04f51589ebf630e984bbd694c826",
-      "engine/art/homescapes/sprites/chip-3.png": "194d24be0e7133a78db8d8f66a40bcf49ca2d6b665e2ed96bb062ed511ca6dd9",
-      "engine/art/homescapes/sprites/chip-4.png": "94bb1af374d2cf7ca8af06244d22f0ade12b3805440735d835755373557621b3",
-      "engine/art/homescapes/sprites/chip-5.png": "376d97edcd50e46e448a692de7a0f22785c5a510d3c92f351779a7f797968e65",
-      "engine/art/homescapes/sprites/cookie-1.png": "2f6f9ec34b9ea8c91d4ca13bd23ffffaeee2119d1329b489a19543670ba2bf35",
-      "engine/art/homescapes/sprites/cookie-2.png": "7647fa0c786bcb9b8cd14c36f5d8a81749ca9636caae9506114e47fdd0037216",
-      "engine/art/homescapes/sprites/cookie-3.png": "fbf7c33fb76ddbb40ba97632d3f809edc60408d430f5f0264c3a03fc8977a0cf",
-      "engine/art/homescapes/sprites/cookie-stack-1.png": "dea7e45f8eb7897a8dcd2d51c2f441c0ef1a16dbcdf50d9bd5442bd5b9f9f729",
-      "engine/art/homescapes/sprites/cookie-stack-2.png": "daf3fce71bc3f4f2fb99dee65e3679c22b31276a2bb5b938f04beb7f6f791c6d",
-      "engine/art/homescapes/sprites/cookie-stack-3.png": "d95aa8993d933557a10af0ca04a9a62e247bf312311ab463eb059062b8a48268",
-      "engine/art/homescapes/sprites/donut-maker-base.png": "9c9c2771a5ba4df4972f2ba09c00819bb3d0b2aa55ebb9c33233bac24c93d3dd",
-      "engine/art/homescapes/sprites/donut-maker-dome.png": "a23ba2efd48638ac58c759f9b2716632015647d442c00d70d8ddbd733aaf3069",
-      "engine/art/homescapes/sprites/donut-maker-dough-1.png": "3e984d7fcf42477412cb4fdc4bee78a971da344ab3a23fe20c69ec32986c8dd2",
-      "engine/art/homescapes/sprites/donut-maker-dough-2.png": "cdcde252d7cf39d4f337827709f0d8911873f421b855e9015b176faf221c2c3c",
-      "engine/art/homescapes/sprites/donut-maker-dough-3.png": "2440fa6e48b5c5aa140d29292d3f6e50bb13a66d82e9791d87d3f11d953db3dd",
-      "engine/art/homescapes/sprites/donut-maker-legacy-progress-back-source.png": "b74b0a42be2f14debdf9189ac84c04fc51b1c2ea3a38c5e2b343669b3c53dc63",
-      "engine/art/homescapes/sprites/donut.png": "6430452c03918a5541a79f8d5f6d07f9958f54fb5fb38f8a1c5a263ce47a0253",
-      "engine/art/homescapes/sprites/generator-shell.png": "9967588063202a30d63d473a334ca0eb1b92c3380a7fd5ffb1d904e3339d5a52",
-      "engine/art/homescapes/sprites/goal-box.png": "65014904f089b2623a73f9f428b632b0b1537e4632ccab4eb8443e9ac5d739c0",
-      "engine/art/homescapes/sprites/goal-carry.png": "184b2cf9e3abf6b6acfa869274ae4e9b7db213715029fb514a81bf7363bc8445",
-      "engine/art/homescapes/sprites/goal-chip-0.png": "66e347f81858a7c9f4fdafda0ace5bcdcacaa4785d3fa53aed1aadd772af004b",
-      "engine/art/homescapes/sprites/goal-chip-1.png": "5e12b05bf3e1c910a5896d8769835f4cc9b25c4cbb7f41d3441fc1ac644c7f30",
-      "engine/art/homescapes/sprites/goal-chip-2.png": "a86415bd8cf60b6507ae7942732bad45bf3795a800b948062f9c9397db52ec92",
-      "engine/art/homescapes/sprites/goal-chip-3.png": "27d7b3cf8d7f060c29f0b64912b721b5ccd63a9aac33dda1d37180107e5b1b1d",
-      "engine/art/homescapes/sprites/goal-chip-4.png": "fb07ab43b6d935ddfc2e475f1bea31dd5cc740199038837a152c76a52ab900e8",
-      "engine/art/homescapes/sprites/goal-chip-5.png": "2ae16905149659526218e431574c64d7ef1c8ccd2f54eb3cfc91e609a369d3d9",
-      "engine/art/homescapes/sprites/goal-jelly.png": "8cfa9a42cad588c49e25293b8c3935436a94a6ebec44c29cdb575024fe76d19f",
-      "engine/art/homescapes/sprites/goal-lock.png": "b5fecce7c60e9d340285b98b83312e51b79058208bfb5cb4aeb3583afd4d01d0",
-      "engine/art/homescapes/sprites/goal-piggy.png": "58cd8577712c2848fcd69420bec28b2addeee6c20b2ff7a41f3537e26d01494e",
-      "engine/art/homescapes/sprites/goal-target-generator.png": "b97acb65fcdfc08b8a33a87843066b92db845a7559ba6cea920b6febf4a7fc88",
-      "engine/art/homescapes/sprites/goal-trash.png": "5804ad34c6701fc9870145d91c0a7306d9a8c308e19c167eb5008a684577923a",
-      "engine/art/homescapes/sprites/hazelnut-1.png": "0216a9ac530146be7b9d272a6c68a31a73743cb522157c566bc4e1d217d89aeb",
-      "engine/art/homescapes/sprites/hazelnut-2.png": "0656948a81190c39e141b7a95bdb34dd69f0b7310d11a7eaa75df8e1cde54fa0",
-      "engine/art/homescapes/sprites/hazelnut-3.png": "fcdc99550be5fd2bc6e9243d9fc0864ef6c71d2e477f432ec26fd5b202efd062",
-      "engine/art/homescapes/sprites/honey-swatch.png": "66d65742cec7372ed3333265e2138931e5d02f5fa5a0212ad661f0c3aa95f4a5",
-      "engine/art/homescapes/sprites/jelly-cherry-clear-source.png": "cccef2c0d24ad54d04eadeb29694489e977e787617e055ebfe550df662f64f18",
-      "engine/art/homescapes/sprites/jelly-cherry-soft-source.png": "47e66cc9955aa41fb9d43743bef73d7b3707bbb14e8dd79440d542264b078f7f",
-      "engine/art/homescapes/sprites/jelly-flower-dark-source.png": "637cf95b8754e6ec4c4670dc557484268c91ae28eb6ea38414a31781b075c896",
-      "engine/art/homescapes/sprites/jelly-flower-fill-source.png": "f36c76f3e6c7afa8989d37a176c587598ecce4ea66402302c189a4d5f9d81f09",
-      "engine/art/homescapes/sprites/jelly-flower-five-pale-source.png": "717947516b6613496dd4f437d96c2007100105811839c9b29b4b0565279f478c",
-      "engine/art/homescapes/sprites/jelly-flower-frame-source.png": "8e2e25d6fbb813d4388a3f4d255c9d16ddf76639bdc114d1050479662db7ae74",
-      "engine/art/homescapes/sprites/jelly-flower-three-pale-source.png": "69c4e26e63a2fba0e17bdbf24bf8e2c5dba0e13be57dc0a6c6350877dc9896b3",
-      "engine/art/homescapes/sprites/jelly-square-source.png": "9242a1db622d53b6b0dfb9f84f347d32151789db119b5c5798b089cd893249c4",
-      "engine/art/homescapes/sprites/membrane-fill-1.png": "2f37cbeb76261c777210e3091f0608ef5fa081eabdabc4dfe23bf0ee2733c2bf",
-      "engine/art/homescapes/sprites/membrane-fill-2.png": "2867f3b6c61ccc4c5cb1d9add33e704f5922c98cb2e70649c77965a37e1231e5",
-      "engine/art/homescapes/sprites/statue-1.png": "aa2402e3f3ea88ad0d0aaaa94c70a460a0fa27a98b659c7d44165854b2da8818",
-      "engine/art/homescapes/sprites/statue-2.png": "0c9a604b6eeea9dd14171860dcfc46168d03aa00e59cb4e75648089b8dd3446d",
-      "engine/art/homescapes/sprites/statue-3.png": "38cb145d2b8e8cd7f34fca18f1a8ec17a1bd0f158d45f6cd256fb12377b7691c",
-      "engine/art/homescapes/sprites/web-2.png": "54bc25ae19d5f7e5aa9770347ad0d04bc9eba8ab945a73786c819728d75cd8b3",
       "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",
-      "engine/art/match3/goal-carpet.png": "513b2a02163ce5f2c04dddff35e1ed6707a37f1baac71292671d6d38408d9358",
-      "engine/art/match3/goal-oil.png": "601c50314226dbde49347ad0df21a755b264629d64345b32fb222e9321ea908c",
       "engine/art/match3/kenney-smoke/whitePuff00.png": "6a94cdfef4752465348840e1c127493ce9cafbe65093541d348c64d3985d7b9b",
       "engine/art/match3/kenney-smoke/whitePuff04.png": "38a902c019ab4eccff027aab227bc41c522774df707a59d31709fb1de2ab368c",
       "engine/art/match3/kenney-smoke/whitePuff08.png": "dc234acc53f3f64a235603c910e54005eb34392024ff2439077afd620dd3cf65",
       "engine/art/match3/kenney-smoke/whitePuff12.png": "f87ace669d6aff1060e2ca52e53b2c8d2a6655cd9525c4bd6caf338f4aa8350c",
-      "engine/art/match3/oil-bubbles.png": "1d4b6cc7da7b4cc325afef881329980b08122bba7180a9b9d833967ac7b49ed2",
-      "engine/art/match3/oil-material.png": "f49f747e961d4dd7825e01601d4061cbcc11f3f8a624c02acab2dad19720f2a1",
       "engine/art/match3/prompt.txt": "9cf051ba0b82afedfdf6eeb86ac98d7d8c9a43e90415040003ebf5e4895ed2f1",
       "engine/art/match3/rome-2-cell-hint/Star_02_16.png": "ef409a42ae1439436d45c301603b1a846b5a6e25dabe30220807eaac77a08074",
       "engine/art/match3/rome-2-cell-hint/Star_16.png": "66ad0ed03e36c2be565f53c730794722515d3ce2ea00ec04b2b2b429295af992",
@@ -3409,20 +1392,15 @@
       "games/relic-rush/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
       "games/relic-rush/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
       "games/relic-rush/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
-      "games/relic-rush/data/board-states/delivery-exit.png": "df14674ded59969438e1fc73a51b841c55f9f166482db6866406a6e90b4c636b",
-      "games/relic-rush/data/board-states/delivery.png": "beee8c50597fca44605761f636d9d2b4861c0aee4c22fff27d36ed5d7f05ed24",
       "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
       "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
-      "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "cc0360737285d2bfc209e42fad85a9082c4951465d85b89b322d60554a8ce5c5",
-      "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_theme_art.py": "12b67bcf496e3f5ce12242e84bdfb69eac9785864c7318e5f76989d91570ba74",
+      "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "engine/data/match3.png": "c1ec1e70145f83c6c7b18a4194e6c27b3f9d5278692ca86e9ca039e184b00777",
-      "engine/match3_frames.lua": "65fae562c5747397e345fba43af83c0008ca71801d315f1fdfd8d9a2353c75c8"
+      "engine/data/match3.png": "90db261e7894937b8cae14ed3f034a539e57fd917ab9ebeb7ed14f0d3bfa2c3a",
+      "engine/match3_frames.lua": "ff54583ff7b27060006ca1c3035d89dee946c6dc64bf3f4a656d17b6085b24ba"
     }
   }
 }

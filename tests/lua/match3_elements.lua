@@ -3,8 +3,7 @@ local geo = E.new{radius=2}
 local function cell(q,r) return geo.hex_index(q,r) end
 local function level()
     return {name='elements',moves=20,score=0,relics=0,chains=0,ice=0,
-        stones={{cell=cell(-1,0)}},
-        deliveries={tokens={cell(1,-2)},exits={cell(1,1)}}}
+        stones={{cell=cell(-1,0)}}}
 end
 local function rules(l) return E.new{radius=2,flags=E.LINE_MATCHES,levels={l}} end
 local R = rules(level())
@@ -21,7 +20,7 @@ end
 
 do
     local g=R.game_start(0, 351)
-    for i=0,R.CELLS-1 do if g.tiles[i].kind~=R.DELIVERY then g.tiles[i]=R.tile(-1) end end
+    for i=0,R.CELLS-1 do g.tiles[i]=R.tile(-1) end
     local a,b=cell(0,0),cell(0,-1)
     g.tiles[a],g.tiles[b]=R.tile(3),R.tile(2)
     g.tiles[cell(1,0)],g.tiles[cell(2,0)]=R.tile(2),R.tile(2)
@@ -32,16 +31,14 @@ do
             and g.chain[i]==before.chain[i] and g.ice[i]==before.ice[i] and g.stone_hp[i]==before.stone_hp[i],
             'hint cannot mutate tiles or elements')
     end
-    check(g.rng==before.rng and g.moves==before.moves and g.obstacles==before.obstacles
-        and g.delivered==before.delivered, 'hint preserves counters')
+    check(g.rng==before.rng and g.moves==before.moves and g.obstacles==before.obstacles, 'hint preserves counters')
 end
 
 do
     local g = R.game_start(0, 357)
-    local token, stone = cell(1,-2),cell(-1,0)
+    local stone = cell(-1,0)
     R.game_shuffle(g)
-    check(g.tiles[token].kind==R.DELIVERY and g.stone_hp[stone]==1,
-        'shuffle preserves fixed blockers and delivery token')
+    check(g.stone_hp[stone]==1, 'shuffle preserves fixed blockers')
 end
 
 do
@@ -51,11 +48,6 @@ do
     m.mask[left], m.mask[upper] = true, true
     R.game_apply(g,m)
     check(g.stone_hp[blocker]==0 and g.obstacles==0, 'two adjacent hits clear one obstacle')
-    local token=cell(1,-2)
-    g.tiles[token]=R.tile(R.DELIVERY)
-    m=R.new_match();m.mask[token],m.direct[token]=true,true
-    R.game_apply(g,m)
-    check(g.tiles[token].kind==R.DELIVERY, 'delivery token survives a direct hit')
 end
 
 do
@@ -72,30 +64,6 @@ do
 end
 
 do
-    local g=R.game_start(0,987)
-    g.obstacles=0
-    R.game_check_end(g)
-    check(not g.won, 'undelivered token prevents victory')
-    g.delivered=g.delivery_total
-    R.game_check_end(g)
-    check(g.won, 'victory accepts the delivered token')
-end
-
-do
-    local g=R.game_start(0,321)
-    for i=0,R.CELLS-1 do
-        g.active[i]=false;g.tiles[i]=R.tile(-1);g.chain[i]=0;g.ice[i]=0;g.stone_hp[i]=0
-    end
-    local top,exit=cell(0,-1),cell(0,0)
-    g.active[top],g.active[exit]=true,true
-    g.delivery_exits={[exit]=true};g.delivered=0;g.tiles[top]=R.tile(R.DELIVERY)
-    local _,steps=R.game_collapse(g)
-    check(g.delivered==1 and steps[1].from[exit]==top, 'delivery falls to its exit once')
-    check(steps[1].tiles[exit].kind==R.DELIVERY, 'fall snapshot retains the delivered token')
-    check(g.tiles[top].kind~=R.DELIVERY and g.tiles[exit].kind~=R.DELIVERY, 'delivered token is consumed')
-end
-
-do
     local g=R.game_start(0,721)
     local left, stone = cell(0,0),cell(-1,0)
     g.tiles[left]=R.tile(1);g.ice[left]=1;g.obstacles=g.obstacles+1
@@ -105,15 +73,11 @@ do
 end
 
 do
-    local invalid=level();invalid.stones[1].cell=invalid.deliveries.tokens[1]
-    check(not pcall(function() rules(invalid).game_start(0,1) end), 'overlapping elements are rejected')
-    invalid=level();invalid.deliveries.exits={}
-    check(not pcall(function() rules(invalid).game_start(0,1) end), 'token requires an exit')
-    invalid=level();invalid.deliveries.exits={cell(2,-2)}
-    check(not pcall(function() rules(invalid).game_start(0,1) end), 'uphill unreachable delivery exit is rejected')
+    local invalid=level();invalid.stones[2]={cell=invalid.stones[1].cell}
+    check(not pcall(function() rules(invalid).game_start(0,1) end), 'overlapping stones are rejected')
 end
 -- Compare the fast hint search with the actual swap operation in both match
--- modes, including live blockers and delivery pieces.
+-- modes, including live blockers.
 for _, flags in ipairs({0,E.LINE_MATCHES}) do
     local r=E.new{radius=2,flags=flags,levels={level()}}
     for seed=1,4 do
@@ -133,68 +97,36 @@ for _, flags in ipairs({0,E.LINE_MATCHES}) do
         check(found==expected and (not found or x==a and y==b), 'fast hint agrees with full swap oracle')
     end
 end
--- Carpet spreads only through a match that touches it, and counts down the
--- cells left to cover.
-do
-    local C = rules{name='carpet',moves=20,score=0,relics=0,chains=0,ice=0,carpet={cell(0,0)},goals={'carpet'}}
-    local g = C.game_start(0,7)
-    check(g.carpeted==1 and g.carpet_total==C.CELLS - (function() local n=0 for i=0,C.CELLS-1 do if not g.active[i] then n=n+1 end end return n end)(),
-        'carpet goal covers every active cell')
-    for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
-    local away = {cell(2,-2),cell(2,-1),cell(2,0)}
-    for _,i in ipairs(away) do g.tiles[i]=C.tile(1) end
-    local m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
-    check(g.carpeted==1 and g.carpet[away[2]]==0, 'a match away from the carpet does not spread it')
-    local line = {cell(0,-1),cell(0,0),cell(0,1)}
-    for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
-    for _,i in ipairs(line) do g.tiles[i]=C.tile(2) end
-    m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
-    check(g.carpeted==3 and g.carpet[line[1]]==1 and g.carpet[line[3]]==1, 'a match through the carpet carpets every matched cell')
-    check(C.game_copy(g).carpet ~= g.carpet, 'copy owns the carpet layer')
-end
-
--- Oil clears under a match on it and spreads after a move that clears none.
+-- Tablets clear under a match on them and never spread.
 do
     local C = rules{name='oil',moves=20,score=0,relics=0,chains=0,ice=0,oil={cell(0,0),cell(0,1)},goals={'oil'}}
     local g = C.game_start(0,9)
-    check(g.oil_left==2, 'oil seeds count')
+    check(g.oil_left==2, 'tablet count')
     for i=0,C.CELLS-1 do g.tiles[i]=C.tile(-1) end
     for _,i in ipairs({cell(-1,0),cell(0,0),cell(1,0)}) do g.tiles[i]=C.tile(3) end
-    g.turn_pending,g.oil_cleared = true,false
-    local m=C.new_match();C.game_matches(g,m,-1);C.game_apply(g,m)
-    check(g.oil[cell(0,0)]==0 and g.oil_left==1 and g.oil_cleared, 'a match on oil clears it')
-    check(not C.game_end_turn(g) and g.oil_left==1, 'oil does not spread after a move that cleared some')
-    g.turn_pending,g.oil_cleared = true,false
-    check(C.game_end_turn(g) and g.oil_left==2, 'oil spreads after a move that cleared none')
-    local grown = g.oil_grew
-    check(grown and g.oil[grown]==1 and grown~=cell(0,1), 'it spreads into a new cell')
-    check(C.game_copy(g).oil ~= g.oil, 'copy owns the oil layer')
-    -- The cover over a buried find is oil that stays put.
-    local S = rules{name='find',moves=20,score=0,relics=0,chains=0,ice=0,oil={cell(0,0),cell(0,1)},oil_still=true,goals={'oil'}}
-    local s = S.game_start(0, 7)
-    s.turn_pending,s.oil_cleared = true,false
-    check(not S.game_end_turn(s) and s.oil_left==2, 'a still cover never spreads')
-    s.oil_left = 0
-    S.game_check_end(s)
-    check(s.won, 'uncovering every cell of a find wins its board')
-    g.oil_left = 0; g.turn_pending = false
+    local m=C.new_match();C.game_matches(g,m);C.game_apply(g,m)
+    check(g.oil[cell(0,0)]==0 and g.oil_left==1, 'a match on a tablet clears it')
     C.game_check_end(g)
-    check(g.won, 'clearing the oil wins an oil-only level')
+    check(g.oil_left==1 and g.oil[cell(0,1)]==1, 'tablets never spread')
+    check(C.game_copy(g).oil ~= g.oil, 'copy owns the tablet layer')
+    g.oil_left = 0
+    C.game_check_end(g)
+    check(g.won, 'clearing every tablet wins a tablet-only level')
 end
 
 -- A story mosaic shows its picture on every play; only a first clear speaks
 -- once at half and holds the finished picture before the first-clear beat.
 do
     local V = require('match3.elements_view')
-    local C = rules{name='reveal',moves=20,score=0,relics=0,chains=0,ice=0,carpet={cell(0,0)},goals={'carpet'},
-        reveal={picture='p',bark='half'}}
+    local C = rules{name='reveal',moves=20,score=0,relics=0,chains=0,ice=0,oil={cell(0,0),cell(0,1)},goals={'oil'},
+        reveal={picture='p',bark='half',floor='oil',object=true}}
     local said = {}
     local view = {now=0, prog={level=1}, notice=function(s) said[#said+1]=s end}
     view.g = C.game_start(0,7); view.g.won = true
     check(V.reveal_cover(view,C)==1 and not V.reveal_holding(view,C), 'a replay keeps its pieces and does not hold')
     view.prog.level, view.g = 0, C.game_start(0,7)
     check(V.reveal_cover(view,C)==1 and #said==0, 'pieces stay and nobody speaks before half')
-    view.g.carpeted = math.ceil(view.g.carpet_total/2)
+    view.g.oil_left = 1
     V.reveal_cover(view,C); V.reveal_cover(view,C)
     check(#said==1 and said[1]=='half', 'the bark is said once at half')
     view.g.won = true
@@ -205,5 +137,5 @@ do
     check(not V.reveal_holding(view,C), 'the hold ends and lets the beat play')
 end
 
-print('match3 elements: stones, deliveries, carpet and oil passed')
+print('match3 elements: stones and tablets passed')
 return 0

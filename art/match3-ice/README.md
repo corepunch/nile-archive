@@ -10,9 +10,8 @@ one layer. Both ice overlays tint the piece underneath through their baked alpha
 | `ice-2` | Translucent cyan pane with high-contrast facets across the entire hex face | Two hits remaining. Also used in both guides. |
 
 Built-in ImageGen painted both strengths together on one transparent sheet.
-The [first pass](concept.png) used the archived Homescapes
-[broken shell](../../engine/art/homescapes/sprites/ice-1.png) and
-[full shell](../../engine/art/homescapes/sprites/ice-2.png) as visual references.
+The [first pass](concept.png) used two earlier ice shells, kept outside the
+repository with the other reference material, as visual references.
 The [second pass](clear-shell.png) added a transparent opening to the full
 shell. The [third pass](open-hex.png) fitted that pair to the board's
 [flat-top hex](../../engine/art/hex-tile/hex-mask-preview.png). The

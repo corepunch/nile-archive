@@ -12,5 +12,5 @@ one and two silver strands. The source board also shows the mirrored gold strand
 
 ```sh
 python3 tools/match3_atlas.py
-./build/test/all --suite=christmas-market 'shot specials-board' 'shot phone-specials-board' 'shot homescapes-chains'
+./build/test/all --suite=christmas-market 'shot pieces-board' 'shot phone-pieces-board'
 ```

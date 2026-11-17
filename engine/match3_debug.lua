@@ -5,7 +5,7 @@
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces.
--- --floor-reel carpet|oil plays three swaps on the chosen campaign level.
+-- --floor-reel oil plays three swaps that clear tablets on the chosen campaign level.
 -- Nothing here runs in a normal game.
 local D = {}
 
@@ -40,7 +40,7 @@ function D.bind(R, W)
 
     -- --talk-through N moves the dialogue on every N frames, to film it;
     -- --scroll-review drags the open shop or level list.
-    local talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
+    local talk_frames, scroll_frames, dive_frames = 0, 0, 0
     local floor_reel = app.arg("floor-reel")
     local floor_frames, floor_turn = 0, 0
 
@@ -62,16 +62,10 @@ function D.bind(R, W)
                             rules.game_matches(copy, match)
                         until match.hits == 0 or duration > 1.7
                         if match.hits == 0 and duration <= 1.7 then
-                            rules.game_end_turn(copy)
-                            local delta = copy.carpeted - g.carpeted
-                            if floor_reel == "oil" then
-                                local growing = floor_turn == 0 and not rules.level_of(g).oil_still
-                                delta = growing and copy.oil_left - g.oil_left or g.oil_left - copy.oil_left
-                            end
-                            local score = delta * 10 - duration
+                            local score = (g.oil_left - copy.oil_left) * 10 - duration
                             if score > best then
                                 best, first, second = score, a, b
-                                expected = floor_reel == "oil" and copy.oil_left or copy.carpeted
+                                expected = copy.oil_left
                             end
                         end
                     end
@@ -89,7 +83,7 @@ function D.bind(R, W)
         if floor_reel then
             floor_frames = floor_frames + 1
             if floor_expected and R.phase == R.PH_IDLE then
-                local current = floor_reel == "oil" and R.g.oil_left or R.g.carpeted
+                local current = R.g.oil_left
                 assert(current == floor_expected, "floor reel differed from the predicted move")
                 print(("floor reel %s move %d, frame %d, %d covered cells"):format(floor_reel, floor_turn, floor_frames, current))
                 floor_expected = nil
@@ -122,16 +116,6 @@ function D.bind(R, W)
                 end
             end
         end
-        if app.arg("maker-reel") and R.g.hs then
-            local elements=require("match3.elements_view")
-            local group=R.g.hs.groups[rules.hex_index(1,-1)]
-            maker_frames=maker_frames+1
-            elements.maker_observe(R)
-            if maker_frames==10 then group.hits=4
-            elseif maker_frames==55 then group.hits=5
-            elseif maker_frames==80 then group.hits=0 end
-            elements.maker_update(R,1/60)
-        end
         local every = tonumber(app.arg("talk-through"))
         if not every then return end
         talk_frames = talk_frames + 1
@@ -139,32 +123,22 @@ function D.bind(R, W)
     end
 
     function R.debug_screens()
-        talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
+        talk_frames, scroll_frames, dive_frames = 0, 0, 0
         floor_frames, floor_turn, floor_expected = 0, 0, nil
         R.cell_state_review = nil
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
         if a then R.g = R.make_board(tonumber(a) - 1, 123478, true); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
-        a = app.arg("reveal")   -- --level N --reveal F: restore/clear that share of the floor; 1 wins the board
+        a = app.arg("reveal")   -- --level N --reveal F: clear that share of the tablets; 1 wins the board
         if a and R.g then
             local g, share = R.g, tonumber(a)
             local l = rules.level_of(g)
-            if l.reveal and l.reveal.floor == "oil" then
-                for j = 1, math.min(#l.oil, math.ceil(share * #l.oil)) do
-                    g.oil[l.oil[j]], g.oil_left = 0, g.oil_left - 1
-                end
-            else
-                for i = 0, rules.CELLS - 1 do
-                    if rules.game_cell_active(g, i) and g.carpet[i] == 0 and g.carpeted < share * g.carpet_total then
-                        g.carpet[i], g.carpeted = 1, g.carpeted + 1
-                    end
-                end
+            for j = 1, math.min(#(l.oil or {}), math.ceil(share * #l.oil)) do
+                g.oil[l.oil[j]], g.oil_left = 0, g.oil_left - 1
             end
             if share >= 1 then
                 for i = 0, rules.CELLS - 1 do
                     g.chain[i], g.ice[i], g.stone_hp[i] = 0, 0, 0
-                    if g.tiles[i].kind == rules.DELIVERY then g.tiles[i] = rules.tile(-1) end
-                    if g.carpet_total > 0 and rules.game_cell_active(g, i) then g.carpet[i] = 1 end
                 end
                 g.obstacles = 0
                 R.prog.level, R.quiet = g.level, false
@@ -190,8 +164,7 @@ function D.bind(R, W)
         end
         a = app.arg("level")
         if floor_reel then
-            assert(a and ((floor_reel == "carpet" and R.g.carpeted > 0)
-                or (floor_reel == "oil" and R.g.oil_left > 0)), "floor reel needs a level with the named patch")
+            assert(floor_reel == "oil" and a and R.g.oil_left > 0, "floor reel needs a level with tablets")
         end
         a = app.arg("city")
         if a then island_with(num.clampi(tonumber(a), 0, WONDERS)); R.on_island = true; R.toast_time = 0 end
@@ -359,11 +332,11 @@ function D.bind(R, W)
         end
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
         if app.arg("element-states") then
-            -- Review neighbouring stones, both floor materials and a delivery.
+            -- Review neighbouring stones and the tablet floor material.
             R.g = rules.game_start(0, 123478)
             R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, true
             local g = R.g
-            g.stone_hp, g.delivery_exits = {}, {}
+            g.stone_hp = {}
             for i = 0, rules.CELLS - 1 do
                 g.active[i], g.chain[i], g.ice[i], g.stone_hp[i] = true, 0, 0, 0
                 if g.tiles[i].kind < 0 then g.tiles[i] = rules.tile(i % rules.COLORS) end
@@ -374,17 +347,13 @@ function D.bind(R, W)
             end
             g.stone_hp[rules.hex_index(-2, 0)] = 1
             g.tiles[rules.hex_index(-2, 0)] = rules.tile(-1)
-            g.carpet, g.oil = {}, {}
-            for _, cell in ipairs({rules.hex_index(-2,1), rules.hex_index(-1,1), rules.hex_index(-1,2)}) do
-                g.carpet[cell] = 1
-            end
+            g.oil = {}
+            for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
             for _, cell in ipairs({rules.hex_index(1,0), rules.hex_index(2,0), rules.hex_index(2,1)}) do
                 g.oil[cell] = 1
             end
-            g.carpet_total, g.carpeted, g.oil_left = 6, 3, 3
-            g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 4, 4, 1, 0
-            g.delivery_exits[rules.hex_index(3, -2)] = true
-            g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY)
+            g.oil_left = 3
+            g.initial_obstacles, g.obstacles = 4, 4
         end
         if app.arg("art-board") then
             R.g = rules.game_start(8, 123478)
@@ -404,86 +373,6 @@ function D.bind(R, W)
             R.g.tools[1], R.g.tools[2], R.g.tools[3] = 2, 2, 0
             R.tool, R.toast_time, R.on_island = 1, 0, false
             R.art_review = true
-        end
-        local art=app.arg("maker-reel") and "maker" or app.arg("homescapes-art")
-        if art then
-            -- Real board drawing paths, with every recovered blocker strength.
-            R.g=rules.game_start(0,123478)
-            local g=R.g
-            g.hs={cells={},groups={},queues={},palettes={},sources={},goals={
-                {type="STATUE",max=3,current=0},{type="TRASHSTONE",max=3,current=0},
-                {type="TRASH",max=3,current=0},{type="BUBBLE_MEMBRANE",max=3,current=0}}}
-            for i=0,rules.CELLS-1 do
-                g.active[i]=true;g.chain[i]=0;g.ice[i]=0
-                g.stone_hp[i]=0;g.hs.cells[i]={}
-            end
-            g.delivery_exits={}
-            for hp=1,3 do
-                local statue=rules.hex_index(hp-2,-2)
-                local nut=rules.hex_index(hp-2,-1)
-                local stack=rules.hex_index(hp-2,0)
-                g.hs.cells[statue].statue=hp;g.tiles[statue]=rules.tile(-1)
-                g.tiles[nut]={kind=0,element="hazelnut",hp=hp}
-                g.hs.cells[stack].stack=hp;g.tiles[stack]=rules.tile(-1)
-            end
-            for hp=1,2 do
-                local i=rules.hex_index(hp-2,1);g.hs.cells[i].tile=hp
-                g.tiles[i]=rules.tile(-1)
-            end
-            if art == "jelly" then
-                for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
-                for hp=1,6 do
-                    local i=rules.hex_index(3-hp,0)
-                    g.hs.cells[i].jelly=hp
-                    g.tiles[i]={kind=0,element="cherry",hp=1}
-                end
-                for hp=1,2 do
-                    local i=rules.hex_index(1-hp,2)
-                    g.hs.cells[i].jelly=hp
-                    g.tiles[i]=rules.tile(-1)
-                end
-                g.hs.goals={{type="COLLECT_PIGGY",max=6,current=0}}
-            elseif art=="generators" or art=="maker" then
-                for i=0,rules.CELLS-1 do g.hs.cells[i]={};g.tiles[i]=rules.tile(i%6) end
-                local function group(q,r,kind,count,hits,period)
-                    local cells={rules.hex_index(q,r),rules.hex_index(q+1,r),rules.hex_index(q,r+1),rules.hex_index(q+1,r+1)}
-                    local anchor=cells[1]
-                    g.hs.groups[anchor]={kind=kind,count=count,cells=cells,hits=hits or 0,period=period or 3,batch=3}
-                    for _,i in ipairs(cells) do assert(i>=0,"art footprint");g.hs.cells[i].group=anchor;g.tiles[i]=rules.tile(-1) end
-                end
-                if art=="maker" then
-                    group(1,-3,"CARRY_GEN",1,0,5)
-                    group(-1,-2,"CARRY_GEN",1,1,5)
-                    group(-3,0,"CARRY_GEN",1,2,5)
-                    group(1,-1,"CARRY_GEN",1,3,5)
-                    group(-1,0,"CARRY_GEN",1,4,5)
-                    group(-3,2,"CARRY_GEN",1,5,5)
-                    g.hs.goals={{type="CARRY",max=6,current=0}}
-                else
-                    group(-3,0,"TARGET_GEN",9)
-                    group(-1,-2,"TARGET_GEN",4)
-                    group(1,-3,"CARRY_GEN",1,0)
-                    group(1,-1,"CARRY_GEN",1,1,5)
-                    group(-1,1,"CARRY_GEN",1,2,5)
-                    group(1,1,"CARRY_GEN",1,1,3)
-                    local anchor=rules.hex_index(-3,2)
-                    g.hs.groups[anchor]={kind="SHUTTERS",count=3,cells={}}
-                    for r=2,4 do
-                        local i=rules.hex_index(-3,r);g.hs.cells[i].group=anchor
-                        table.insert(g.hs.groups[anchor].cells,i)
-                    end
-                    local inlet=rules.hex_index(-1,-3)
-                    g.hs.cells[inlet].visibleGenerator=true;g.tiles[inlet]=rules.tile(-1)
-                    g.hs.queues[inlet]={cursor=1,units={{element="cookie",hp=3}}}
-                    g.hs.goals={{type="TARGET_GENERATOR",max=13,current=0},{type="CARRY",max=12,current=0},{type="SHUTTERS",max=1,current=0}}
-                end
-            end
-            R.pending=rules.new_match();R.on_island=false;R.overlay=R.OV_NONE;R.toast_time=0;R.art_review=true
-        end
-        if app.arg("homescapes") then
-            R.g=rules.game_start(0,require("match3.reference")[app.arg("homescapes")].seed)
-            assert(R.g.hs,"source preview must load source mechanics")
-            R.pending=rules.new_match();R.on_island=false;R.overlay=R.OV_NONE;R.toast_time=0;R.art_review=true
         end
         if app.arg("present") then R.present_board() end
         if app.arg("mission") then   -- the level's mission banner, as a level starts

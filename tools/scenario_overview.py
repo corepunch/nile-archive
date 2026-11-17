@@ -172,10 +172,6 @@ def match3_section(data, title):
             icon = icons.get(key) or picture(page.data_dir / f'finds/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip award">{img}Recovers <b>{esc(lv["quest"]["name"])}</b></span>')
-        if lv.get('delivery_icon') == 'signal-plate':
-            icon = picture(page.data_dir / 'signal-plate.png', 96, 'PNG')
-            img = f'<img src="{icon}" alt="">' if icon else ''
-            chips.append(f'<span class="chip award">{img}Delivers <b>Signal plate</b></span>')
         if lv.get('wonder'):
             w = lv['wonder']
             sprite = picture(page.data_dir / w['sprite'], 120, 'PNG') if w.get('sprite') else None

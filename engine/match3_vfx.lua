@@ -204,14 +204,14 @@ function V.bind(R, rules)
                 local kind = R.wave_ice[i] > 0 and 6 or R.wave_chain[i] > 0 and 7 or was.kind
                 add(FX_IMPACT, at, vec2(0, 0), kind, .3, 0, 0)
                 vfx_emit(at, kind, false)
-                if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 and not was.element then
+                if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
                     local to
                     local bonus_hits = R.pending.bonus_charge_by_cell
                     local charge = bonus_hits and bonus_hits[i]
                     local tool = charge and R.g.resource_yields[was.kind].tool
                     if tool then
                         to = R.board_tool_bounds(tool - 1):center()
-                    elseif R.resource_target and R.g.earnings and not R.g.hs then
+                    elseif R.resource_target and R.g.earnings then
                         to = R.resource_target(was.kind)
                     elseif rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL then
                         to = R.goal_target(was.kind)

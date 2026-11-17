@@ -8,7 +8,7 @@ from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
-from match3_theme_art import fit_object, reference_areas, silhouette
+from match3_theme_art import REFERENCE_AREAS, fit_object, silhouette
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     mask = silhouette(Image.open(ROOT / spec['mask'])).filter(ImageFilter.MinFilter(5))
     source = Image.open(ROOT / spec['source'])
     assert source.mode == 'RGBA' and source.size == (1536, 1024)
-    target = reference_areas()['chip']
+    target = REFERENCE_AREAS['chip']
     for name, entry in spec['frames'].items():
         cell = source.crop(entry['crop'])
         left, top, right, bottom = silhouette(cell).getbbox()

@@ -1,7 +1,7 @@
 {
   "source": "engine/art/match3-elements/source.png",
   "prompt": "engine/art/match3-elements/prompt.txt",
-  "generator": "built-in ImageGen; 48-cell surface atlas authored together on 2026-11-12; two freestanding delivery icons retained from first 48-cell atlas",
+  "generator": "built-in ImageGen; 48-cell surface atlas authored together on 2026-11-12",
   "source_size": [
     1448,
     1086
@@ -10,7 +10,7 @@
     8,
     6
   ],
-  "transform": "Fixed 181px cell crop, uniform resize to 128px; full-bleed surfaces cut with canonical engine hex mask. Delivery icons retain original authored alpha. No recoloring or derived damage states.",
+  "transform": "Fixed 181px cell crop, uniform resize to 128px; full-bleed surfaces cut with canonical engine hex mask. No recoloring or derived damage states.",
   "mask": "engine/art/hex-tile/hex-mask-128.png",
   "reproduction": "python3 tools/match3_elements_art.py && python3 tools/match3_atlas.py",
   "review": "docs/review/match3-elements/README.md",
@@ -67,40 +67,6 @@
       ]
     },
     {
-      "game": "relic-rush",
-      "name": "delivery",
-      "crop": [
-        905,
-        362,
-        1086,
-        543
-      ],
-      "source": "engine/art/match3-elements/source-v1.png",
-      "mode": "object",
-      "runtime": "games/relic-rush/data/board-states/delivery.png",
-      "size": [
-        128,
-        128
-      ]
-    },
-    {
-      "game": "relic-rush",
-      "name": "delivery-exit",
-      "crop": [
-        1086,
-        362,
-        1267,
-        543
-      ],
-      "source": "engine/art/match3-elements/source.png",
-      "mode": "fill",
-      "runtime": "games/relic-rush/data/board-states/delivery-exit.png",
-      "size": [
-        128,
-        128
-      ]
-    },
-    {
       "game": "christmas-market",
       "name": "stone-1",
       "crop": [
@@ -150,59 +116,19 @@
         128,
         128
       ]
-    },
-    {
-      "game": "christmas-market",
-      "name": "delivery",
-      "crop": [
-        905,
-        905,
-        1086,
-        1086
-      ],
-      "source": "engine/art/match3-elements/source-v1.png",
-      "mode": "object",
-      "runtime": "games/christmas-market/data/board-states/delivery.png",
-      "size": [
-        128,
-        128
-      ]
-    },
-    {
-      "game": "christmas-market",
-      "name": "delivery-exit",
-      "crop": [
-        1086,
-        905,
-        1267,
-        1086
-      ],
-      "source": "engine/art/match3-elements/source.png",
-      "mode": "fill",
-      "runtime": "games/christmas-market/data/board-states/delivery-exit.png",
-      "size": [
-        128,
-        128
-      ]
     }
   ],
   "fingerprints": {
     "engine/art/match3-elements/source.png": "698854e311c161f0c610709369573899d91797348bf5d4c36eeb23e2b31615e6",
     "engine/art/match3-elements/prompt.txt": "56b26b45f3e99132bdfd9e11ac5ce91d67103d015faee72a97fe8c11bd2f2d1c",
-    "engine/art/match3-elements/source-v1.png": "d6e56d430cf05ad0837604f07e63f86e1cbcd58e5fcca7fc085b77dca1ab8ed6",
-    "engine/art/match3-elements/prompt-v1.txt": "cc09b77da005e55968e6161a56ddcf016353a71f157a0974220273b5a14f10e0",
     "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
     "engine/art/hex-tile/atlas-template-8x6-181.png": "6d2ff6b2b1967f2c82d6ff54085c659e4841541da8af6f38c13dc7c846c90e00",
-    "tools/match3_elements_art.py": "0dd034e5af30348b03fb3c270205c06b2dcce27c225c2b8315c8ef6b1472e423",
+    "tools/match3_elements_art.py": "84d40813d43a0eba3a3e41876fb6b25151082f56b1485d3869592444a3db1525",
     "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
     "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
     "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
-    "games/relic-rush/data/board-states/delivery.png": "beee8c50597fca44605761f636d9d2b4861c0aee4c22fff27d36ed5d7f05ed24",
-    "games/relic-rush/data/board-states/delivery-exit.png": "df14674ded59969438e1fc73a51b841c55f9f166482db6866406a6e90b4c636b",
     "games/christmas-market/data/board-states/stone-1.png": "5878a8835b6a159be473b2aeb2f044512453fa1fa97df7c3fb7c1512e37dafa0",
     "games/christmas-market/data/board-states/stone-2.png": "e74589be9e08c844e52f5e438e0ed1f9093f7f63119dc5441100746a2d79c337",
-    "games/christmas-market/data/board-states/stone-3.png": "4de3d35bcfe876b27ab6bb4bdd219c3140e997f30d396bbcfc54bceae6de366e",
-    "games/christmas-market/data/board-states/delivery.png": "0487d638343be5690e652bf59976a758378c524ab6586345cd131ecc985c2cd9",
-    "games/christmas-market/data/board-states/delivery-exit.png": "466df7e04619cf906702ec1f6087e1a74e2b145d48c44d0c0ee195565cf09a67"
+    "games/christmas-market/data/board-states/stone-3.png": "4de3d35bcfe876b27ab6bb4bdd219c3140e997f30d396bbcfc54bceae6de366e"
   }
 }
