@@ -13,5 +13,6 @@ require("narrative")
 require("quests")
 require("progress")
 require("smoke")
+require("user_events_runtime")   -- after every hook it wraps
 
 return require("match3.game").app(R)

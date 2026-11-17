@@ -110,6 +110,9 @@ local function result_screen()
     end
     local bonuses = ("Move bonus +%d Coins"):format(breakdown.bonus)
     if breakdown.happiness > 0 then bonuses = bonuses .. ("  ·  Happiness +%d Coins"):format(breakdown.happiness) end
+    for _, part in ipairs(breakdown.citizens and economy.price_parts(breakdown.citizens) or {}) do   -- user_events.lua
+        bonuses = bonuses .. ("  ·  Citizens +%d %s"):format(part.amount, part.name)
+    end
     say(bonuses, l.bonus, 11, PAL_CREAM)
     s = section(.93, .24, 8)
     if breakdown.first then

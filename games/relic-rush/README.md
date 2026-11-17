@@ -226,6 +226,31 @@ alongside the relay pliers. An arrival message names the building and the piece'
 value. The first hint on level 5 earns 9 Food while clearing plaques. Level 9
 offers a similar cut-block match for 15 Supplies toward the Market.
 
+### Tutorials and citizens (`lua/user_events.lua`)
+
+[`lua/user_events.lua`](lua/user_events.lua) ports Cradle of Rome's
+`settings/user_events.xml`. It uses the same event ids, `If` conditions,
+`Then` effects and `available` chaining.
+[`lua/user_events_runtime.lua`](lua/user_events_runtime.lua) lists every
+condition and effect it supports. Each event fires once per profile, and the
+save keeps which events are done.
+
+- **Tutorials.** The move hint repeats with the board's 1st, 2nd, 3rd and
+  5th suggestion until the first line of three. Toasts introduce plaques,
+  double plaques, chains, double chains, ice, the low-moves warning, each
+  charged bonus and the catalogue.
+- **Citizens.** Placing one of eleven buildings opens its citizen's
+  challenge. Examples: a line of five after the Workshop, 120 Supplies on
+  one expedition after the Archive. Meeting the challenge upgrades the
+  building and adds a lasting reward. The reward is either income on every
+  claim, itemized as "Citizens" on the results card, or a faster charge for
+  a bonus gem.
+- **Test flag.** `--user-events-test` fires the `test=true` events at once,
+  like Rome's F5 cheat.
+
+The citizen amounts are a first pass. The building upgrade is recorded but
+has no art yet.
+
 ## Campaign: thirty hex levels
 
 Every stage uses its own connected active-cell mask within a radius-four hex grid. Chain placements shape seams and approaches, and [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Each row gives the starting number of blue plaques, including plaques under chains.
