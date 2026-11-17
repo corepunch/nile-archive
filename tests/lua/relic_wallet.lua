@@ -66,21 +66,22 @@ do
     check(R.make_board(7,19).resource_yields[4].key=='stone','workshop preview does not unlock cut blocks')
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
-    check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
-    c:unlock(1,bank)
-    check(island.island_place_next(c,bank,9,0), 'confirm the water mill')
-    check(not island.island_place_next(c,bank,9,0), 'the quay repair opens after expedition ten')
     local steps = island.kinds.quay_steps
-    local restored, site = c:find_spot(steps, vec2(640,1900))
-    check(restored and not c:can_place(site, 0, -1), 'the fixed steps reserve their footprint')
-    check(not c:can_place(site + vec2(500,0), steps, -1), 'the steps use the original location')
-    c:begin_place(steps, vec2(640,1900))
-    check((c.ghost-site):len()<.01, 'the repair preview stays at the site')
-    c:cancel()
-    check(island.owned(c,steps)==0, 'cancelling keeps the site unrestored')
-    check(island.island_place_next(c,bank,10,0), 'confirm the fixed quay repair')
+    check(island.owned(c, steps)==0 and not island.can_buy(c,bank,10,steps),
+        'the cancelled Workshop preview leaves the fixed quay reserved and off sale')
+    check(not island.island_place_next(c,bank,9,0), 'Workshop waits for its epoch milestone')
+    local balance, price = purse(table.unpack(bank)), island.buildings[workshop+1].cost
+    check(island.island_place_next(c,bank,10,0),'confirm the earned Workshop')
+    for slot=1,3 do check(bank[slot]==balance[slot]-price[slot], 'one Workshop price pays for both buildings') end
+    local quay = c.items[c.count]
+    check(quay.type == steps and (quay.pos-c:snap(island.island_suggestion(steps),steps)):len()<.01,
+        'Workshop repairs the original quay footprint')
     c:begin_move(c.count-1)
     check(c.placing<0, 'the repaired stairs cannot be moved')
+    island.purchase_confirmed(c,workshop,0)
+    check(island.owned(c,steps)==1, 'reprocessing a Workshop cannot duplicate the quay')
+    c:unlock(1,bank)
+    check(island.island_place_next(c,bank,10,0), 'confirm the water mill')
     local market=island.kinds.market
     check(island.can_buy(c,bank,10,market), 'the market is optional after the quay chapter')
     local market_fits, market_site=c:find_spot(market, vec2(770,1900))
@@ -190,7 +191,7 @@ do
     local c=R.island
     local wallet=purse(5000,5000,5000,90)
     for z=1,5 do c:unlock(z,wallet) end
-    for i=7,#island.ladder do
+    for i=6,#island.ladder do
         local unlock=island.ladder[i].unlock
         local building=island.buildings[island.ladder[i].kind+1]
         local before=R.make_board(unlock.first_level-1,41)
@@ -353,6 +354,7 @@ do
     end
     check(not island.can_buy(c, bank, 13, 4), 'without a waiver the courtyard waits for the earlier ladder')
     island.waive_passed(c, 13)
+    island.waived(c)[3] = true -- this pre-epoch save had already passed the cabin
     local steps = island.kinds.quay_steps
     local can_restore, site = c:find_spot(steps, island.island_suggestion(steps))
     check(can_restore, 'the migration can grant the earlier quay repair')
@@ -369,7 +371,7 @@ do
     R.island = fresh
     save.read("relic-ladder-waived", R.serialize_campaign)
     local waived = island.waived(fresh)
-    check(waived[3] and waived[5] and waived[7] and waived[8] and not waived[9] and not waived[11],
+    check(waived[3] and waived[5] and waived[6] and waived[7] and not waived[8] and not waived[10],
         'the waived positions survive a save')
     local wallet = R.prog.wallet
     check(wallet[1] == 1 and wallet[2] == 2 and wallet[3] == 3, 'reading a current save leaves the wallet alone')
@@ -523,4 +525,27 @@ do
         and w[1] == 12 and w[2] == 34 and w[3] == 56, 'keep the market and restore the steps at no expense')
     check(R.prog.story_seen['after-10'] and R.prog.story_choices['after-10'] == 2,
         'keep the chosen reply and acknowledged scene')
+end
+
+-- A full old town with a paid Workshop keeps its whole inventory, and the
+-- removal of the old sixth paid step does not move a waiver to a different building.
+do
+    local c = city.new(); island.island_setup(c)
+    c:add(vec2(760,2030), island.kinds.workshop, 0)
+    for i=2,160 do c:add(vec2(760+i,2030), island.kinds.shrub, 0) end
+    R.island, R.prog = c, {level=10, wallet=purse(12,34,56,10), story_seen={}, bonus_charge={}}
+    save.write("relic-epoch-v6", function(s)
+        s:int("resource_version", 6)
+        s:int("ladder_waived", 1 << 6) -- the old clock tower
+    end)
+    save.read("relic-epoch-v6", R.serialize_campaign)
+    check(c.count==161 and island.owned(c,island.kinds.quay_steps)==1 and island.owned(c,island.kinds.shrub)==159,
+        "a full legacy town keeps every item and receives its original quay")
+    check(island.waived(c)[island.ladder_position[island.kinds.clock_tower]] and R.prog.wallet[1]==12,
+        "the clock tower waiver and the wallet survive migration")
+    save.write("relic-epoch-upgraded", function(s) c:serialize(s) end)
+    local reload=city.new(); island.island_setup(reload)
+    save.read("relic-epoch-upgraded", function(s) reload:serialize(s) end)
+    check(reload.count==161 and island.owned(reload,island.kinds.quay_steps)==1,
+        "the granted landmark round-trips with a full town")
 end

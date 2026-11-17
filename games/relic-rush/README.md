@@ -19,7 +19,7 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 ## Island navigation and resources
 
-Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are full-screen sheets under the wallet row: continuous measured scrolling lists with bounded inertia, one entry per row. A building's row shows its art, what it unlocks, its whole price in Coins, Supplies and Food (an amount the wallet cannot cover is red) and a BUILD button or the reason it waits; restored buildings keep their art on a shorter ticked row. An expedition's row shows its number, name, what a win brings and PLAY, REPLAY or RESUME. The building catalogue keeps its category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
+Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are full-screen sheets under the wallet row: continuous measured scrolling lists with bounded inertia, one entry per row. A building's row shows its art, what it unlocks, its whole price in Coins, Supplies and Food (an amount the wallet cannot cover is red) and a BUILD button or the reason it waits; restored buildings keep their art on a shorter ticked row. An expedition's row shows its number, name, what a win brings and PLAY, REPLAY or RESUME. During epoch one, Buildings opens the current quest card with the requester, price and unlock. Its shop link opens the full catalogue and category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
 
 The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
@@ -167,7 +167,7 @@ Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, T
 
 ## Story and world
 
-In **A Light Below** (levels 1–10), placing the Expedition Camp lets Mara answer a light under the cliff. Restoring the Spring Well brings Tomas to camp, and the Artisan Workshop cuts blocks for the quay. Confirming the Quay Steps repair triggers a brief flashback to the ancient keeper and the player’s choice of who answers the signal. Camp and Workshop are freely placed. Well and Steps are restored at fixed sites. The Jungle Market is an optional purchase.
+In **A Light Below** (levels 1–10), placing the Expedition Camp lets Mara answer a light under the cliff. Restoring the Spring Well brings Tomas to camp, and the Cabin gives Mara and Tomas shelter to measure the missing tread at low tide. Confirming the Workshop cuts the first tread, repairs the original quay steps, and triggers a brief flashback to the ancient keeper and the player’s choice of who answers the signal. Camp, Cabin and Workshop are freely placed. The Well and the Workshop’s quay repair have fixed sites. The Jungle Market is an optional purchase.
 
 In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard, Lodge and Archive to use. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes at the restored steps.
 
@@ -200,7 +200,7 @@ Timber and dressed stone pay 2 and 3 Supplies. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
 The result shows what the next restoration unlocks or what is still needed to afford it. Matches and cascades earn resources. Direct tool hits can clear plaques and start cascades.
 
-The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds cut blocks on level 8. An arrival message names the building and piece. Boards 5 and 9 introduce these resources in the opening match.
+The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds cut blocks on level 11. An arrival message names the building and piece.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
 
@@ -236,26 +236,25 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 10, 13, 16, 19, 23, 
 | --- | --- | --- | --- |
 | 1 | ★ Expedition camp | 20 Supplies + 10 Food | Hammer gems from board 2. |
 | 2 | ★ Spring well | 125 Coins | Water buckets worth 3 Food each. |
-| 3 | Trapper's cabin | 65 Coins + 45 Supplies + 40 Food | Dynamite upgrades Hammer. |
-| 4 | ★ Artisan workshop | 120 Coins + 90 Supplies + 80 Food | Cut blocks worth 5 Supplies each. |
-| 5 | Water mill | 65 Coins + 60 Supplies + 35 Food | Prepares the quay repair. |
-| 6 | ★ Quay Steps | 75 Coins + 100 Supplies | Opens Chapter 2 and the shore expeditions. |
-| 7 | Clock tower | 150 Coins + 150 Supplies + 200 Food | Star gems. |
-| 8 | Stone amphitheatre | 35 Coins + 35 Supplies + 50 Food | Shield gems. |
-| 9 | ★ Sunstone courtyard | 55 Coins + 65 Supplies + 95 Food | Helmets worth 6 Coins. |
-| 10 | ★ Explorer's lodge | 330 Coins + 325 Food | Grain bundles worth 5 Food each. |
-| 11 | Trading post | 170 Coins + 290 Supplies + 215 Food | Rings worth 7 Coins. |
-| 12 | Valley lighthouse | 70 Coins + 55 Supplies + 70 Food | Lightning upgrades Shield. |
-| 13 | ★ Lost-world archive | 140 Coins + 110 Supplies + 145 Food | Carved quartz worth 7 Supplies each. |
-| 14 | Beached schooner | 145 Coins + 125 Supplies + 140 Food | Scarabs worth 8 Coins. |
-| 15 | Cartographer's house | 275 Coins + 180 Supplies + 230 Food | Plus gems give a quarter charge to other unlocked bonuses. |
-| 16 | ★ Star observatory | 120 Coins + 85 Supplies | Star II upgrades Star. |
-| 17 | Great aviary | 210 Coins + 175 Supplies + 285 Food | Sandals worth 9 Coins. |
-| 18 | ★ Jade fountain | 315 Coins + 225 Supplies | Shrimp worth 6 Food each. |
-| 19 | Relic museum | 205 Coins + 115 Supplies + 420 Food | Harps worth 10 Coins. |
-| 20 | ★ Temple of the sun | 435 Coins + 260 Supplies + 450 Food | Emeralds worth 11 Coins each. |
+| 3 | ★ Trapper's cabin | 65 Coins + 45 Supplies + 40 Food | Dynamite upgrades Hammer. |
+| 4 | ★ Artisan workshop | 120 Coins + 90 Supplies + 80 Food | Cut blocks worth 5 Supplies each and the repaired quay. |
+| 5 | Water mill | 65 Coins + 60 Supplies + 35 Food | Opens the miller’s cascade challenge. |
+| 6 | Clock tower | 150 Coins + 150 Supplies + 200 Food | Star gems. |
+| 7 | Stone amphitheatre | 35 Coins + 35 Supplies + 50 Food | Shield gems. |
+| 8 | ★ Sunstone courtyard | 55 Coins + 65 Supplies + 95 Food | Helmets worth 6 Coins. |
+| 9 | ★ Explorer's lodge | 330 Coins + 325 Food | Grain bundles worth 5 Food each. |
+| 10 | Trading post | 170 Coins + 290 Supplies + 215 Food | Rings worth 7 Coins. |
+| 11 | Valley lighthouse | 70 Coins + 55 Supplies + 70 Food | Lightning upgrades Shield. |
+| 12 | ★ Lost-world archive | 140 Coins + 110 Supplies + 145 Food | Carved quartz worth 7 Supplies each. |
+| 13 | Beached schooner | 145 Coins + 125 Supplies + 140 Food | Scarabs worth 8 Coins. |
+| 14 | Cartographer's house | 275 Coins + 180 Supplies + 230 Food | Plus gems give a quarter charge to other unlocked bonuses. |
+| 15 | ★ Star observatory | 120 Coins + 85 Supplies | Star II upgrades Star. |
+| 16 | Great aviary | 210 Coins + 175 Supplies + 285 Food | Sandals worth 9 Coins. |
+| 17 | ★ Jade fountain | 315 Coins + 225 Supplies | Shrimp worth 6 Food each. |
+| 18 | Relic museum | 205 Coins + 115 Supplies + 420 Food | Harps worth 10 Coins. |
+| 19 | ★ Temple of the sun | 435 Coins + 260 Supplies + 450 Food | Emeralds worth 11 Coins each. |
 
-The twenty restorations follow this order. ★ marks the ten story restorations,
+These nineteen purchases restore twenty buildings, including the Workshop’s quay steps. ★ marks the ten story restorations,
 which hold the next new expedition. The others open after their clear and
 must be placed before the next ★ one. Resource and bonus unlocks follow the
 table above.

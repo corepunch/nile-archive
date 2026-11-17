@@ -1,6 +1,6 @@
 # Each epoch tells one chapter in four purchases
 
-**Design proposal for Relic Rush and Christmas Market.** The purchase ladders already exist. The four building quests below sketch a proposed revision of the Relic Rush opening. The epoch strip, build card and keepsake box are proposed UI. Nile Archive keeps its June's Journey structure.
+**Design proposal for Relic Rush and Christmas Market.** Relic Rush implements the four opening building quests and their next-building card. The epoch strip and keepsake box are proposed UI. Nile Archive keeps its June's Journey structure.
 
 ## The epoch is the chapter
 
@@ -36,7 +36,7 @@ Keep the rhythm of Cradle of Rome. The player matches pieces, banks resources an
 
 **Match** coins for **65 Coins**, dressed stone for **45 Supplies**, and water buckets or fruit for **40 Food**. The crew needs a roof and provisions for an early start.
 
-**On placement**, Mara unrolls two bedrolls in the cabin. The Cabin upgrades Hammer to Dynamite on the board. At low tide Tomas takes Mara to the foot of the steps. One tread is missing. He stretches a line between its two sockets, knots it to length and takes it back to camp.
+**On placement**, Mara unrolls two bedrolls in the cabin. The Cabin upgrades Hammer to Dynamite on the board. At low tide Tomas takes Mara to the foot of the steps. One tread is missing. Tomas holds a line between the two sockets while Mara knots it to length. They take it back to camp.
 
 ### 4. Cut a tread to fit · Artisan Workshop
 

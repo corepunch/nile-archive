@@ -19,7 +19,7 @@ local E = {
     -- (1 Food, never upgraded) carries the bonus gem, a story item or a score
     -- piece; the red slot takes the bonus when a story item holds it.
     SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
-    CAMPAIGN_VERSION=6,
+    CAMPAIGN_VERSION=7,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
@@ -59,18 +59,26 @@ for tool, slot in ipairs(E.bonus_slots) do
 end
 E.bonuses = B
 
+-- Requests shown on the next-building card before the purchase. Costs and
+-- board unlocks come from the building catalogue and ladder.
+E.quests = {
+    camp={title="Bring the crew ashore", matches="Match timber or stone and fruit.", request="Mara: The others are still on the boat. Let’s pitch the tents and have supper ready."},
+    well={title="Get the pump running", matches="Match coins for the pump seal.", request="Mara: That’s the last of the cask. Can we buy a new seal for the old pump?"},
+    log_cabin={title="Be there for low tide", matches="Match coins, stone, and water or fruit.", request="Tomas: Low tide comes before dawn. Give us a dry cabin and we’ll see what the steps need."},
+    workshop={title="Cut a tread to fit", matches="Match coins, stone, and water or fruit.", request="Tomas: These knots mark the gap. Build me a stone bench and we can cut a tread to fit."},
+}
+
 -- The campaign ladder, in purchase order, after Cradle of Rome's 20
--- constructions. Most buildings add a resource or bonus piece. `building`
+-- constructions. The Workshop includes the fixed quay repair. `building`
 -- is the catalogue key. The ten story restorations hold the next new
--- expedition; the other ten must be placed before the next story restoration.
+-- expedition. Other required purchases precede the next story restoration.
 -- backdrop is the board painting the restored building brings: 1 lagoon, 2 temple.
 E.unlocks = {
     {building="camp", backdrop=1, first_level=2, bonus=B.hammer},
     {building="well", key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
     {building="log_cabin", first_level=8, bonus=B.dynamite},
-    {building="workshop", key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
-    {building="water_mill", first_level=10},
-    {building="quay_steps", first_level=11},
+    {building="workshop", after=10, key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
+    {building="water_mill", first_level=11},
     {building="market", key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=11, optional=true},
     {building="clock_tower", first_level=12, bonus=B.star},
     {building="amphitheater", first_level=14, bonus=B.shield},
@@ -89,7 +97,7 @@ E.unlocks = {
 }
 -- A restoration is placed after the clear before its first board.
 for _, unlock in ipairs(E.unlocks) do
-    unlock.after = unlock.first_level - 1
+    unlock.after = unlock.after or unlock.first_level - 1
     if unlock.bonus then unlock.bonus.first_level = unlock.first_level end
 end
 

@@ -1,7 +1,7 @@
 # Buildings and decorations
 
 Relic Rush has **97 registered sprites**: twenty campaign restorations (ten
-story wonders and ten ladder buildings, each placed once), the optional Jungle Market and 76 repeatable buildings and decorations. Open **SHOP** on the island. Browse
+story purchases, nine intervening purchases and the Workshop’s fixed quay repair), the optional Jungle Market and 76 repeatable buildings and decorations. Open **SHOP** on the island. Browse
 categories with the arrows and pages with Prev/Next. Each measured row shows its
 sprite, tile footprint, owned count, price and unlock requirement. Choose a
 location, move the preview to open grass and confirm. Confirmation spends the listed resources once. Cancellation is free. Boards
@@ -10,7 +10,7 @@ Purchased objects use the same hold-to-move, Confirm/Cancel and save system as
 story wonders. There is a 160-object island limit.
 
 The twenty restorations follow the [campaign ladder](resource-expedition.md#restoration-prices-and-earnings):
-the ten wonders unlock at the story milestones and the other ten between them.
+ten purchases trigger scenes, nine fill out the ladder, and confirming the Workshop also restores the quay.
 The Trapper's cabin, Cartographer's house, Trading post, Water mill, Clock
 tower, Valley lighthouse, Great aviary, Beached schooner, Stone amphitheatre
 and Relic museum were shop buildings; they are now campaign rows with no
@@ -211,7 +211,7 @@ sprite file is always `data/city/buildings/<key>.png`.
 | 93 / `boulder` | Boulder | rock | 1 x 1 | 15 Coins | 0 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
 | 94 / `crystal` | Crystal cluster | rock | 1 x 1 | 120 Coins | 18 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
 | 95 / `mossy_rocks` | Mossy boulders | rock | 2 x 2 | 60 Coins | 3 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
-| 96 / `quay_steps` | Quay steps | wonder | 2 x 2 | 75 Coins + 100 Supplies | 0 | [Fixed site](review/chapter-one/quay-footprint.jpg) |
+| 96 / `quay_steps` | Quay steps | wonder | 2 x 2 | Included with Artisan Workshop | 0 | [Fixed site](review/chapter-one/quay-footprint.jpg) |
 
 ## Style and prompt provenance
 

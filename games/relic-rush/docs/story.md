@@ -38,8 +38,8 @@ Each row connects a character’s request with the expedition clears and confirm
 | --- | --- | --- |
 | 1. Set up camp | Clear 1 and place the Expedition Camp. | Mara uses the old lookout and gets two flashes back. The crew needs water. |
 | 1. Restore water | Clear through 4 and restore the Spring Well at its original site. | Tomas joins, explains the severed relay and points the crew toward the lower quay. |
-| 1. Cut replacement stone | Clear through 7 and place the Artisan Workshop. | Tomas sizes the blocks and explains how the two shutters face each other. |
-| 1. Reach the lower quay | Clear through 10 and restore the Quay Steps at their original site. | The restored tread cues the ancient keeper’s scene. Back in the present, the crew opens the viewing shutter, sees three flashes and chooses who answers. |
+| 1. Catch the low tide | Clear through 7 and place the Trapper’s Cabin. | Tomas and Mara set out before dawn and knot a line to the width of the missing tread. |
+| 1. Reach the lower quay | Clear through 10 and place the Artisan Workshop. Its first tread repairs the quay on the same purchase. | The restored tread cues the ancient keeper’s scene. Back in the present, the crew opens the viewing shutter, sees three flashes and chooses who answers. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the reply; 12 find recently delivered supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test the terrace route; 15 trace the crack through the quay wall; 16 prepare shelter; **confirm Explorer's lodge**. | The repair crew has a dry base. The direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 recover the keeper's log fragment; 18 check its measurements against the quay; 19 secure the records; **confirm Lost-world archive**; 20 open the locked chart cabinet. | Tomas hands over the key. Ines's signed plan shows how to divert the tide and repair the wall. Adrian's claim threatens access to the records. |
@@ -52,7 +52,7 @@ Each row connects a character’s request with the expedition clears and confirm
 | Point | Player and crew | Tomas | Adrian |
 | --- | --- | --- | --- |
 | Camp | Two flashes answer Mara’s lamp under the cliff | Knows the old relay and Ines | Knows his claim and hides it |
-| Well and workshop | The relay is severed. Sound steps will put the viewing shutter within reach. | Closed the quay and knows the old warning shutter. Thinks Ines is absent. | Same evidence as crew |
+| Well and cabin | The relay is severed. Sound steps will put the viewing shutter within reach. | Closed the quay and knows the old warning shutter. Thinks Ines is absent. | Same evidence as crew |
 | Quay steps | The player sees how the keeper used the steps. The crew knows someone is working the far shutter by hand. | Remembers that Ines worked the far shutter. Still thinks she is absent. | Same evidence as crew |
 | 13–20 | Ines's note identifies the sender. Her plan and the claim surface. | Recognizes Ines’s handwriting and hands over the key | Discloses the claim |
 | 21–30 | Safe route and repair plan; claim surrendered | Shares key and duty | Gives up claim |
@@ -63,7 +63,7 @@ Each row connects a character’s request with the expedition clears and confirm
 | --- | --- |
 | Two flashes answer Mara’s lamp (camp) | The answer changes to three at the steps. Ines confirms her identity with the same delayed pattern at the safe landing (30). |
 | Tomas tells the crew the relay cable is severed (well) | The crew checks the working hand shutter instead (steps). |
-| Tomas sizes the blocks to fit the old cuts (workshop) | The restored tread seats at the ancient keeper’s high-tide notch (steps). |
+| Tomas knots a line between the empty sockets (cabin) | The restored tread seats at the ancient keeper’s high-tide notch (steps). |
 | The crew can reach the viewing shutter (steps) | The far warning shutter can answer across the gap. The crew follows the answer at 11. |
 | Tomas names Ines as an earlier operator (steps) | He recognizes her handwriting at the courtyard (13), then hands over her cabinet key (20). |
 | Tomas finds a pencilled measurement in the torn log (17) | The stone gauge confirms it (18). The signed plan explains where the harbor can divert the tide (20). |
@@ -89,10 +89,10 @@ where a boat can reach them.
 
 | Chapter | Before-level scenes | First-clear scenes | Placement scenes |
 | --- | --- | --- | --- |
-| 1 | — | — | Camp at 1, Well and Tomas at 4, Workshop at 7, Quay Steps and two-choice reply at 10 |
+| 1 | — | — | Camp at 1, Well and Tomas at 4, Cabin at 7, Workshop with quay repair and reply at 10 |
 | 2 | 11 and 20 | 11–20 | Courtyard at 13, Lodge at 16, Archive at 19 |
 
-The first three scenes use five or six lines each. The quay scene uses captions to enter and leave a two-line flashback and ends with the player’s reply choice. The ancient keeper appears in the portrait dialogue while the island stays on screen. Ines appears through the warning and her records until the finale.
+The first three scenes use five lines each. The quay scene uses captions to enter and leave a two-line flashback and ends with the player’s reply choice. The ancient keeper appears in the portrait dialogue while the island stays on screen. Ines appears through the warning and her records until the finale.
 
 ### More story to put on the board
 
@@ -102,39 +102,37 @@ The first three scenes use five or six lines each. The quay scene uses captions 
 
 **After restoration 1**
 
-- **Mara:** Camp's up. I'll bring the rest of the crew ashore.
+- **Narrator:** The crew comes ashore. By dusk the tents are up and the supper pot is empty.
 - **Elena:** Try your lamp from the old lookout. There's a bracket in the cliff wall.
 - **Mara:** Two flashes out. Two back, right under the cliff.
-- **Elena:** It could be a reflection. Let's see if anyone here knows that light.
-- **Mara:** We'd better get the old well running. We've only got the water we brought ashore.
+- **Elena:** Could be our light off the water. Try again when we can see what's down there.
+- **Mara:** Morning already? That's the last water in the cask. Let's get the old pump working.
 
 **After restoration 4**
 
+- **Mara:** One full cask. Want a turn at the pump?
 - **Tomas:** That pump hasn't drawn clear water in years. Tomas Reed. I keep the harbor.
-- **Mara:** Want to stay with us? There's water now, and room for another bedroll.
-- **Tomas:** I'll take you up on that. You were flashing at the old warning station.
-- **Tomas:** Ines and I wired an electric relay there. A storm severed the cable.
-- **Elena:** Then the relay couldn’t have sent those flashes. Can you take us down there?
-- **Tomas:** I closed the lower quay when the wall cracked. First we'll need sound steps.
+- **Mara:** Stay for supper, Tomas. There's a spare bedroll. Do you know the light below the cliff?
+- **Tomas:** The electric relay? Ines and I wired it. A storm cut the cable.
+- **Tomas:** Our viewing shutter faces the warning station across the inlet. I'll take you down at low tide.
 
 **After restoration 7**
 
-- **Mara:** The stone bench is ready. How big do you want the blocks?
-- **Tomas:** Wide enough to seat in the cuts on both sides. I'll show you the old steps.
-- **Elena:** From the steps, can we see who's signalling?
-- **Tomas:** They lead to our viewing shutter. The warning shutter’s across the inlet.
-- **Mara:** Two shutters, one good climb. Let's cut some stone.
+- **Mara:** Two dry bedrolls. Wake me when the tide turns.
+- **Tomas:** Bring a line. We'll want to measure whatever's gone from those steps.
+- **Narrator:** Before dawn, low tide bares the path to the steps. One tread is missing.
+- **Mara:** Hold that end. I'll knot the line at mine.
+- **Tomas:** There's the width of our missing tread. Now we need a bench to cut it square.
 
 **After restoration 10**
 
-- **Elena:** Look at that notch. The first builders set the tread this high on purpose.
-
-*The replacement tread seats in the old notch. Cut to the same notch freshly carved.*
-
-- **Narrator:** At the harbor, generations earlier.
+- **Tomas:** Lay the line along the bench. Cut the first block here, at Mara's knot.
+- **Narrator:** At the quay, both ends of the new tread slide into the old sockets.
+- **Elena:** My thumb fits this notch. Someone marked the height before they cut the stone.
+- **Narrator:** The same notch, freshly cut. The harbor, generations earlier.
 - **Ancient keeper:** Set the tread up to that notch. The night watch needs dry footing at high tide.
 - **Ancient keeper:** Come up with me. A boat's nearing the reef. We'll open the warning shutter.
-- **Narrator:** The lower quay, today.
+- **Narrator:** The lower quay, that evening.
 - **Mara:** The steps held. Tomas, can you open the viewing shutter from here?
 - **Tomas:** I’ve opened it. Stay this side of the crack. The warning light’s across the flooded gap.
 - **Mara:** I'll try two again. One, two… Wait. Three back this time.
@@ -328,6 +326,8 @@ A cold reader followed the two shutters and suspected Ines. They asked for a cle
 The Chapter 2 cold read followed the fresh supplies to the note and Tomas’s recognition. The note and the terrace chart are both legible across the courtyard, where Tomas compares the handwriting. The log, gauge and signed plan establish how to drain the foot of the wall.
 
 ## Changelog
+
+- 2026-11-17: Each epoch-one build card carries its character’s request. The Cabin supplies the measurement. The Workshop repairs the quay and keeps the original keeper scene and saved reply.
 
 - 2026-11-17: Chapter 1 scenes move to town actions. Tomas arrives at the restored well. The Quay Steps replace the required market and cue the ancient keeper flashback. The reply choice keeps its save key.
 

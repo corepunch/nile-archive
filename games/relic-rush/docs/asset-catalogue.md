@@ -146,7 +146,7 @@ The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived w
 
 ## Ancient keeper portrait
 
-The Quay Steps dialogue shows the ancient keeper during the flashback. The
+The Workshop repairs the Quay Steps. Its dialogue shows the ancient keeper during the flashback. The
 static portrait has transparent edges and uses the standard story speaker slot.
 The [ImageGen original](../art/art-direction/ancient-keeper.png) and [prompt](../art/art-direction/ancient-keeper-prompt.txt)
 are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-only`
@@ -237,7 +237,7 @@ Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot 
 ## Buildings and decorations
 
 The [building catalogue](building-catalogue.md) covers **97** registered sprites,
-including twenty campaign restorations (ten story wonders and ten ladder
+including twenty campaign restorations (ten story wonders, the quay and nine ladder
 buildings, all placed once), the optional Jungle Market and 76 repeatable shop items. It records the full
 source/prompt history, runtime paths, whole-tile measurements, supported states,
 import commands and reviewed in-game captures. The board manifest links the

@@ -69,6 +69,8 @@ local function campaign()
         if box then app.inject_click(box:center()); wait = 10 end
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() and R.result_form.boxes.claim then app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); wait = 20 end
+    elseif R.overlay == R.OV_WONDER then
+        if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
     elseif R.overlay == R.OV_ZONE then
         if R.dialog_settled() then app.inject_click(rect(72, 487, 336, 47):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then
@@ -76,7 +78,9 @@ local function campaign()
     elseif R.on_island and R.overlay == R.OV_NONE then
         local z = c:next_zone(R.prog.wallet)
         if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
-        elseif island.next_step(c, R.prog.level) then R.island_begin(island.next_step(c, R.prog.level), true)
+        elseif island.next_step(c, R.prog.level) then
+            if island.next_quest(c, R.prog.level) then app.inject_click(R.town.buttons.build); wait = 10
+            else R.island_begin(island.next_step(c, R.prog.level), true) end
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10
         end
@@ -199,8 +203,8 @@ function R.smoke()
         local node = press_row(R.expedition_form, "0", "play")
         assert(node and node.enabled, "smoke: a cleared expedition can be replayed for resources")
         shop.skipped = false; stage = 0
-    elseif stage == 2 and R.overlay == R.OV_SHOP then
-        press_tile("camp");stage=3
+    elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
+        app.inject_click(R.wonder_form.boxes.action:center()); stage = 3
     elseif stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then

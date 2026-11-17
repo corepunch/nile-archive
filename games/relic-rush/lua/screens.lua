@@ -54,6 +54,11 @@ function R.cost_text(parts)
     return table.concat(amounts, " + ")
 end
 
+function R.funding_shortfall(cost)
+    local missing = R.currency_prices(economy.shortfall(cost, R.prog.wallet))
+    if #missing > 0 then return "Need " .. R.cost_text(missing) end
+end
+
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 R.register_result(function()
@@ -64,7 +69,9 @@ R.register_result(function()
         local kind = economy.currencies[slot]
         resources[#resources+1] = {id=kind.key, name=kind.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
     end
-    local next_kind = island.next_step(R.island, breakdown.first and R.g.level + 1 or R.prog.level)
+    local level = breakdown.first and R.g.level + 1 or R.prog.level
+    local quest, step = island.next_quest(R.island, level)
+    local next_kind = quest and step.kind or island.next_step(R.island, level)
     local w = next_kind and R.buildings[next_kind + 1]
     local next_step
     if w then
@@ -72,8 +79,9 @@ R.register_result(function()
         local unlock = island.buildings[next_kind + 1].unlock_text
         next_step = {
             icon=w.sprite, title=w.name,
-            heading=#missing == 0 and (unlock or "NEXT RESTORATION") or "REPLAY TO EARN THE REST",
-            detail=#missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing),
+            heading=quest and quest.title or #missing == 0 and (unlock or "NEXT RESTORATION") or "REPLAY TO EARN THE REST",
+            detail=(quest and quest.request .. "\n" or "") ..
+                (#missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)),
         }
     end
     return {

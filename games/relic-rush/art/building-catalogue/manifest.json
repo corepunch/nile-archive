@@ -124,7 +124,7 @@
         80,
         90
       ],
-      "about": "Cut blocks earn 5 Supplies each from expedition 8.",
+      "about": "Cut blocks earn 5 Supplies each. The first tread repairs the quay steps.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/workshop.png",
@@ -724,7 +724,7 @@
         35,
         60
       ],
-      "about": "Put the Water mill back to work before repairing the quay steps.",
+      "about": "A two-stage cascade can bring a miller to the working mill.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/water_mill.png",
@@ -3870,7 +3870,7 @@
         152.009
       ],
       "base_width": 273.205,
-      "gold": 75,
+      "gold": 0,
       "stars": 0,
       "runtime": "data/city/buildings/quay_steps.png",
       "image": [
@@ -3880,11 +3880,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "A Light Below",
       "cost": [
-        75,
         0,
-        100
+        0,
+        0
       ],
-      "about": "Repair the old steps to reach the tide room below the cliff.",
+      "about": "The Workshop's first tread opens the way to the viewing shutter.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/quay_steps.png",

@@ -9,8 +9,8 @@
     "fixed_site": [610, 1840]
   },
   "quay_steps": {
-    "about": "Repair the old steps to reach the tide room below the cliff.",
-    "cost": [75, 0, 100],
+    "about": "The Workshop's first tread opens the way to the viewing shutter.",
+    "cost": [0, 0, 0],
     "fixed_site": [925, 2195],
     "paint": {
       "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
@@ -21,7 +21,7 @@
     }
   },
   "workshop": {
-    "about": "Cut blocks earn 5 Supplies each from expedition 8.",
+    "about": "Cut blocks earn 5 Supplies each. The first tread repairs the quay steps.",
     "cost": [120, 80, 90]
   },
   "market": {
@@ -69,7 +69,7 @@
     "cost": [170, 215, 290]
   },
   "water_mill": {
-    "about": "Put the Water mill back to work before repairing the quay steps.",
+    "about": "A two-stage cascade can bring a miller to the working mill.",
     "cost": [65, 35, 60]
   },
   "clock_tower": {

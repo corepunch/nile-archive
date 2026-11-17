@@ -39,7 +39,7 @@ for these slots and for the pieces introduced by restorations.
 Green apples earn 1 Food each.
 Confirming the Spring Well replaces blue timber with a water
 bucket worth 3 Food from board 5. The Artisan Workshop replaces dressed
-stone with cut blocks worth 5 Supplies from board 8. The optional Jungle Market replaces red berries with ration jars worth 4 Food from board 11.
+stone with cut blocks worth 5 Supplies after the Workshop purchase at clear 10. Older saves that already own the Workshop keep their cut blocks from board 8. The optional Jungle Market replaces red berries with ration jars worth 4 Food from board 11.
 From board 14 the Courtyard improves Coins, from board 17 the Lodge replaces
 ration jars with grain, and from board 20 the Archive improves Supplies.
 The Fountain upgrades the blue water slot from board 27 and the Temple
@@ -75,4 +75,4 @@ a sixth of a meter. Reduce Motion fills it immediately. Using a bonus costs
 no moves. Old saves combine each pair of separate meters into one slot at
 their original charge fractions, capped at one use.
 
-The Workshop cuts the replacement blocks, and the Quay Steps repair after expedition 10 opens the tide-room approach.
+After expedition 7, the Cabin lets Tomas and Mara measure the broken tread at low tide. After expedition 10, the Workshop cuts its first block and repairs the original quay steps in the same purchase.

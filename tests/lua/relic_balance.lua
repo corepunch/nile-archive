@@ -45,7 +45,7 @@ local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 
 local function restored_by(number)
     local restored = {}
     for _, unlock in ipairs(economy.unlocks) do
-        if unlock.first_level <= number then restored[unlock.building] = true end
+        if unlock.after < number then restored[unlock.building] = true end
     end
     return restored
 end

@@ -198,7 +198,7 @@ for level=1,30 do
         check(placed and placed.key==(level==10 and 'after-10' or ('restore-%02d'):format(level)),
             'confirmed construction or citizen arrival releases its scene')
         if level==10 then
-            check(placed.phase=='restore' and placed.lines[3][1]=='keeper', 'the ancient keeper appears at the repaired steps')
+            check(placed.phase=='restore' and placed.lines[5][1]=='keeper', 'the ancient keeper appears at the repaired steps')
         end
         p.story_seen[placed.key]=true
     end

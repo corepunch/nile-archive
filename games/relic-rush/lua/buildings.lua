@@ -3,7 +3,7 @@ local sprites = require("building_sprites")
 local items = {
     {key="camp", name="Expedition camp", category="wonder", cleared=0, about="Match Hammer gems to charge a hit on one cell.", cost=purse(0,10,20), needs=purse(0,0,0,0)},
     {key="well", name="Spring well", category="wonder", cleared=0, about="Water buckets earn 3 Food each from expedition 5.", cost=purse(125,0,0), needs=purse(0,0,0,0), fixed_site=vec2(610,1840)},
-    {key="workshop", name="Artisan workshop", category="wonder", cleared=0, about="Cut blocks earn 5 Supplies each from expedition 8.", cost=purse(120,80,90), needs=purse(0,0,0,0)},
+    {key="workshop", name="Artisan workshop", category="wonder", cleared=0, about="Cut blocks earn 5 Supplies each. The first tread repairs the quay steps.", cost=purse(120,80,90), needs=purse(0,0,0,0)},
     {key="market", name="Jungle market", category="building", cleared=10, about="Adds ration jars to later expeditions.", cost=purse(125,70,125), needs=purse(0,0,0,10)},
     {key="gateway", name="Sunstone courtyard", category="wonder", cleared=0, about="Helmets replace sun coins, 6 Coins each.", cost=purse(55,95,65), needs=purse(0,0,0,0)},
     {key="lodge", name="Explorer's lodge", category="wonder", cleared=0, about="Adds grain bundles worth 5 Food each.", cost=purse(330,325,0), needs=purse(0,0,0,0)},
@@ -18,7 +18,7 @@ local items = {
     {key="map_room", name="Cartographer's house", category="wonder", cleared=0, about="Match Plus gems to add a quarter charge to your other unlocked bonuses.", cost=purse(275,230,180), needs=purse(0,0,0,0)},
     {key="greenhouse", name="Glass greenhouse", category="building", cleared=4, about="Place this treasure anywhere on open grass.", cost=purse(300,20,0), needs=purse(0,0,0,4)},
     {key="trading_post", name="Trading post", category="wonder", cleared=0, about="Rings replace helmets, 7 Coins each.", cost=purse(170,215,290), needs=purse(0,0,0,0)},
-    {key="water_mill", name="Water mill", category="wonder", cleared=0, about="Put the Water mill back to work before repairing the quay steps.", cost=purse(65,35,60), needs=purse(0,0,0,0)},
+    {key="water_mill", name="Water mill", category="wonder", cleared=0, about="A two-stage cascade can bring a miller to the working mill.", cost=purse(65,35,60), needs=purse(0,0,0,0)},
     {key="clock_tower", name="Clock tower", category="wonder", cleared=0, about="Match Star gems to charge a hit on every piece of one kind.", cost=purse(150,200,150), needs=purse(0,0,0,0)},
     {key="lighthouse", name="Valley lighthouse", category="wonder", cleared=0, about="Upgrades Shield to Lightning. Hit a row and strike up to 20 cells in total.", cost=purse(70,70,55), needs=purse(0,0,0,0)},
     {key="treehouse", name="Canopy treehouse", category="building", cleared=7, about="Place this treasure anywhere on open grass.", cost=purse(400,0,27), needs=purse(0,0,0,7)},
@@ -97,7 +97,7 @@ local items = {
     {key="boulder", name="Boulder", category="rock", cleared=0, about="Place this treasure anywhere on open grass.", cost=purse(15,0,0), needs=purse(0,0,0,0)},
     {key="crystal", name="Crystal cluster", category="rock", cleared=6, about="Place this treasure anywhere on open grass.", cost=purse(120,0,0), needs=purse(0,0,0,6)},
     {key="mossy_rocks", name="Mossy boulders", category="rock", cleared=1, about="Place this treasure anywhere on open grass.", cost=purse(60,0,0), needs=purse(0,0,0,1)},
-    {key="quay_steps", name="Quay steps", category="wonder", cleared=0, about="Repair the old steps to reach the tide room below the cliff.", cost=purse(75,0,100), needs=purse(0,0,0,0), fixed_site=vec2(925,2195)},
+    {key="quay_steps", name="Quay steps", category="wonder", cleared=0, about="The Workshop's first tread opens the way to the viewing shutter.", cost=purse(0,0,0), needs=purse(0,0,0,0), fixed_site=vec2(925,2195)},
 }
 for _, b in ipairs(items) do
     for field, value in pairs(sprites[b.key]) do b[field] = value end

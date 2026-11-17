@@ -44,8 +44,8 @@ local function place_due(level)
         return
     end
     while island.next_step(R.island, level) do
-        local count = R.island.count
-        local placed = R.debug_advance_town() and R.island.count == count + 1
+        local count = island.campaign_count(R.island)
+        local placed = R.debug_advance_town() and island.campaign_count(R.island) == count + 1
         check(placed, 'place the intervening restoration')
         if not placed then break end
     end

@@ -29,7 +29,7 @@ for i, d in ipairs(M.buildings) do
     d.decoration = not (HOUSES[d.category] or d.road)
     M.kinds[d.key] = i - 1
 end
-M.wonder_kinds = {M.kinds.camp, M.kinds.well, M.kinds.workshop, M.kinds.quay_steps,
+M.wonder_kinds = {M.kinds.camp, M.kinds.well, M.kinds.log_cabin, M.kinds.workshop,
     M.kinds.gateway, M.kinds.lodge, M.kinds.archive, M.kinds.observatory, M.kinds.fountain, M.kinds.temple}
 local story_kind = {}
 for i, kind in ipairs(M.wonder_kinds) do
@@ -40,6 +40,8 @@ end
 function M.wonder_count(c)
     local n=0
     for _,b in ipairs(c.items) do if story_kind[b.type] then n=n+1 end end
+    -- Older campaigns could pass the cabin before it carried a story scene.
+    if M.waived(c)[M.ladder_position[M.kinds.log_cabin]] and M.owned(c, M.kinds.log_cabin) == 0 then n = n + 1 end
     return n
 end
 
@@ -55,6 +57,38 @@ require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.cur
 for _, entry in ipairs(economy.unlocks) do
     local unlock = economy.building_unlock_text(entry)
     if unlock then M.buildings[M.kinds[entry.building] + 1].unlock_text = "Unlocks " .. unlock end
+end
+
+-- The quay is a fixed part of the Workshop purchase. Keep its catalogue ID
+-- for saved cities and its footprint reserved, but never offer it for sale.
+local steps = M.kinds.quay_steps
+for i, row in ipairs(M.catalogue_order) do
+    if row == steps + 1 then table.remove(M.catalogue_order, i); break end
+end
+
+function M.restore_quay(c, now)
+    if M.owned(c, steps) > 0 then return end
+    local site = c:snap(M.buildings[steps + 1].fixed_site, steps)
+    assert(c:add(site, steps, now) >= 0, "no room for the Workshop's quay repair")
+end
+
+function M.purchase_confirmed(c, kind, now)
+    if kind == M.kinds.workshop then
+        M.restore_quay(c, now)
+        return M.buildings[steps + 1].fixed_site
+    end
+end
+
+local can_buy = M.can_buy
+function M.can_buy(c, wallet, level, kind)
+    if kind == steps then return false end
+    return can_buy(c, wallet, level, kind)
+end
+
+function M.next_quest(c, level)
+    local _, position = M.next_step(c, level)
+    local step = M.ladder[position]
+    if step then return economy.quests[step.unlock.building], step end
 end
 
 function M.migrate_wallet(progress, c)
@@ -191,6 +225,7 @@ end
 
 -- A ladder restoration is suggested beside the story restoration after it.
 function M.island_suggestion(kind)
+    if kind == M.kinds.log_cabin then return vec2(875, 2050) end
     local site = M.buildings[kind + 1].fixed_site
     if site then return site end
     local n = M.ladder_position[kind]
@@ -227,11 +262,14 @@ end
 -- Build the next ladder restoration at a free spot.
 function M.island_place_next(c, wallet, built_limit, now)
     local nxt = M.next_step(c, built_limit)
-    if not nxt then return false end
+    if not nxt or not M.can_buy(c, wallet, built_limit, nxt) then return false end
     local ok, spot = c:find_spot(nxt, M.island_suggestion(nxt))
     if not ok then return false end
     c:begin_place(nxt, spot)
-    if c:confirm(wallet, now).result == city.BUILT then return true end
+    if c:confirm(wallet, now).result == city.BUILT then
+        M.purchase_confirmed(c, nxt, now)
+        return true
+    end
     c:cancel()
     return false
 end

@@ -616,7 +616,7 @@ rect speech_bubble(vec2 tip, const char *utf8, text_style s, color fill, color e
  * so change the art with them. */
 #define CITY_CAMERA_YAW 30.f
 #define CITY_CAMERA_ELEVATION 40.f
-#define CITY_MAX 160
+#define CITY_MAX 161  /* Storage includes one granted landmark for legacy towns with 160 objects. */
 #define CITY_ZONES 16
 
 /* An amount of each resource; the game names the slots (coins, stars, ...). */

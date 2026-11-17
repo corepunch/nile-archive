@@ -79,7 +79,7 @@ local function opening_unlock(g)
                 text = text .. " " .. economy.unlock_text(unlock)
             end
             return text, building
-        elseif unlock.kind and (g.level + 1 == unlock.first_level or level.featured_resource == unlock.key) then
+        elseif unlock.kind and (g.level + 1 == unlock.after + 1 or level.featured_resource == unlock.key) then
             if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
                 local amount = g.yield_amounts and g.yield_amounts[unlock.kind]
                 return economy.unlock_text(unlock, amount), building
@@ -116,11 +116,19 @@ function R.serialize_campaign(s)
     -- Version 4 added the twenty-step ladder. Restorations an older save had
     -- already passed stay optional rather than holding its next expedition.
     island.serialize_waivers(s, R.island, R.prog.level, reading and version < 4)
-    -- Legacy expeditions after the quay chapter already reached the tide room.
-    local steps = island.kinds.quay_steps
-    if reading and version < 6 and R.prog.level >= 10 and island.owned(R.island, steps) == 0 then
-        local ok, spot = R.island:find_spot(steps, island.island_suggestion(steps))
-        if ok then R.island:add(spot, steps, 0) end
+    if reading and version < 7 then
+        local c, p = R.island, R.prog
+        local waived = island.waived(c)
+        if version >= 4 then
+            -- The old sixth position was the separately purchased quay.
+            local mask = s:int("ladder_waived", 0)
+            for n = 6, #island.ladder do waived[n] = mask & (1 << n) ~= 0 or nil end
+        end
+        if island.owned(c, island.kinds.workshop) > 0 or version < 6 and p.level >= 10 then
+            island.restore_quay(c, 0)
+            if island.owned(c, island.kinds.log_cabin) == 0 then waived[3] = true end
+        end
+        if waived[3] then p.story_seen["restore-07"] = true end
     end
     if reading and version < 1 then
         island.migrate_wallet(R.prog, R.island)

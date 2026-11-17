@@ -29,9 +29,9 @@ return {
         },
     },
     notices = {
-        build_first = "Restore the next wonder. Replay an expedition to gather missing resources.",
+        build_first = "See what the crew needs for the next building.",
         story_waiting = "Finish the conversation on your island.",
-        reward_building = "Resources banked. Check the next restoration in the Build Shop.",
+        reward_building = "Resources banked. Open Buildings for the crew’s next request.",
         reward_story = "Resources banked. Spend them in the Build Shop.",
         reward_replay = "Resources banked. Spend them in the Build Shop.",
         all_open = "Your whole island is open to explore.",
@@ -61,6 +61,7 @@ return {
         button = "BACK TO MY ISLAND",
     },
     card = {
+        quest_subtitle = "%s · A Light Below · %d/4",
         back = "BACK TO ISLAND",
         moving = "HOLD AND DRAG ON THE ISLAND TO MOVE",
         locked = "COMPLETE MORE LEVELS TO RESTORE THIS WONDER",

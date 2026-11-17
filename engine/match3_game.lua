@@ -679,6 +679,7 @@ function G.bind(R, over)
             }},
             {kind="label",id="notice",wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
             {kind="button",id="action",height=56},
+            {kind="button",id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
             {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
         }},
         bindings={
@@ -687,7 +688,7 @@ function G.bind(R, over)
         },
     }
     R.wonder_form = wonder_form
-    local wonder_action
+    local wonder_action, quest_funding
     popup(R.OV_WONDER, wonder_form, {width=420, prepare=function()
         local i = R.inspect >= 0 and R.inspect or next_build()
         if not i or i < 0 or i >= #R.buildings then return false end
@@ -696,21 +697,38 @@ function G.bind(R, over)
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
         local movable = built and not fixed
-        match3.set_popup_header(wonder_form, w.name)
-        local ok, message = wonder_form:push{sprite=w.sprite, about=journey.building_about(i, R.prog.level, w.about),
-            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or W.card.back}
+        local quest, step
+        if not built and island.next_quest then quest, step = island.next_quest(R.island, R.prog.level) end
+        if quest and step.kind ~= i then quest = nil end
+        quest_funding = quest ~= nil and not can_build
+        local subtitle = quest and W.card.quest_subtitle:format(w.name, island.ladder_position[i])
+        match3.set_popup_header(wonder_form, quest and quest.title or w.name, subtitle)
+        local ok, message = wonder_form:push{sprite=w.sprite, about=quest and quest.request or journey.building_about(i, R.prog.level, w.about),
+            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or quest_funding and W.expeditions.title or W.card.back}
         assert(ok, message)
-        local show_price = not built and (can_build or R.currency_prices and w.needs and
+        local show_price = quest ~= nil or not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
-        wonder_form.values.show_price, wonder_form.values.show_notice = show_price, not show_price
+        wonder_form.values.show_price = show_price
+        wonder_form.values.show_notice = not show_price or quest ~= nil and not can_build
+        wonder_form.values.show_shop = quest ~= nil
+        if quest then unlock_text = quest.matches .. (unlock_text and "\n" .. unlock_text or "") end
         wonder_form.values.show_unlock = unlock_text ~= nil
         wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price_parts(w.cost)))
-        wonder_form:set("notice", built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
+        local funding
+        if quest and not can_build then
+            local missing = R.funding_shortfall and R.funding_shortfall(w.cost)
+            if R.prog.level < step.after then
+                funding = W.catalogue.complete:format(step.after) .. (missing and "\n" .. missing or "")
+            else funding = missing or W.catalogue.poor end
+        end
+        wonder_form:set("notice", funding or built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
         wonder_action = (can_build or movable) and {kind=i, item=movable and R.inspect_item or nil} or nil
     end, handle=function(event)
         local action = wonder_action
         if event.id == "action" and action then R.island_begin(action.kind, true, action.item)
+        elseif event.id == "action" and quest_funding then R.open_expeditions()
+        elseif event.id == "shop" then R.open_catalogue("all")
         else R.overlay = R.OV_NONE end
     end})
 
@@ -1058,6 +1076,17 @@ function G.bind(R, over)
 
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
 
+    local function open_building(filter)
+        if island.next_quest then
+            local quest, step = island.next_quest(R.island, R.prog.level)
+            if quest then
+                R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER
+                return
+            end
+        end
+        R.open_catalogue(filter)
+    end
+
     function R.town_setup()
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
@@ -1067,9 +1096,9 @@ function G.bind(R, over)
             pause = function() R.overlay = R.OV_PAUSE end,
             middle = R.open_expeditions,
             middle_icon = function(at) R.town_middle_icon(at) end,
-            build = function() R.open_catalogue(owes_building() and "wonder" or "building") end,
+            build = function() open_building(owes_building() and "wonder" or "building") end,
             play = function()
-                if owes_building() then R.notice(W.notices.build_first); R.open_catalogue("wonder")
+                if owes_building() then R.notice(W.notices.build_first); open_building("wonder")
                 elseif R.prog.level >= LEVELS then R.open_expeditions()
                 else R.play_level(R.prog.level) end
             end,
@@ -1077,7 +1106,11 @@ function G.bind(R, over)
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
             suggest = function(kind) return island.island_suggestion(kind) end,
-            placed = function(ev)
+            placed = function(ev, fresh)
+                if fresh and island.purchase_confirmed then
+                    local site = island.purchase_confirmed(R.island, R.island.items[ev.building + 1].type, app.clock())
+                    if site then R.island_focus(site, R.island.cam.zoom) end
+                end
                 for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
                 R.tone(740)
                 R.save_progress()   -- the building's story beat follows from R.story_tick
